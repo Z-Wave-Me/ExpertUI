@@ -13,7 +13,9 @@ var config_data = {
     'interval': 3000, // Set interval in miliseconds to refresh data
     'server_url': 'http://192.168.10.167:8083', // Remote JSON
     'update_url': '/ZWaveAPI/Data/', // Url for update (refresh data)
-    'store_url': '/ZWaveAPI/Run/' // Url for store data
+    'store_url': '/ZWaveAPI/Run/', // Url for store data
+    'lang_dir': 'app/core/lang/', // Language directory
+    'lang_list': ["en","de","fr","es","ru"] // List of languages
     
   }
 };

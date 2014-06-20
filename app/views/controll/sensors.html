@@ -1,18 +1,18 @@
 <!-- Sensors view -->
 <div ng-controller="SensorsController">
-    <div class="page-header"><h1>Sensor Data</h1></div>
+    <div class="page-header"><h1>{{ _t('h1_sensor') }}</h1></div>
     
      <div class="table-responsive">
-    <table class="table table-hover">
+    <table class="table table-striped table-hover">
         <thead>
             <tr>
                 <th><a href="" ng-click="predicate = 'id';reverse = !reverse">#</a></th>
-                <th><a href="" ng-click="predicate = 'name';reverse = !reverse">Name</a></th>
-                 <th>Type</th>
-                 <th class="text-right"><a href="" ng-click="predicate = 'level';reverse = !reverse">Level</a></th>
+                <th><a href="" ng-click="predicate = 'name';reverse = !reverse">{{ _t('device_name') }}</a></th>
+                 <th>{{ _t('device_description_device_type') }}</th>
+                 <th class="text-right"><a href="" ng-click="predicate = 'level';reverse = !reverse">{{ _t('th_level') }}</a></th>
                 <th>&nbsp;</th>
-                <th><a href="" ng-click="predicate = 'updateTime';reverse = !reverse">Date</a></th>
-                <th><button class="btn btn-success" data-ng-click="storeAll('all_1')" id="btn_update_all_1">Update all</button>&nbsp;<btn-spinner /></th>
+                <th><a href="" ng-click="predicate = 'updateTime';reverse = !reverse">{{ _t('datetime') }}</a></th>
+                <th><button class="btn btn-success" data-ng-click="storeAll('all_1')" id="btn_update_all_1">{{ _t('switches_update_all') }}</button>&nbsp;<btn-spinner /></th>
             </tr>
         </thead>
         <tbody>
@@ -28,7 +28,7 @@
                 <td class="row-level text-right">{{ v.level }}</td>
                  <td class="row-level-ext">{{ v.levelExt }}</td>
                 <td class="row-time is-updated-{{v.isUpdated}}">{{ v.updateTime | isTodayFromUnix }}</td>
-               <td><button data-ng-click="store(v.rowId)" data-store-url="{{ v.urlToStore }}" class="btn btn-primary btn-spinner" id="btn_update_{{ v.rowId }}">Update</button>&nbsp;<btn-spinner /></td>
+               <td><button data-ng-click="store(v.rowId)" data-store-url="{{ v.urlToStore }}" class="btn btn-primary btn-spinner" id="btn_update_{{ v.rowId }}">{{ _t('update') }}</button>&nbsp;<btn-spinner /></td>
             </tr>
         </tbody>
     </table>

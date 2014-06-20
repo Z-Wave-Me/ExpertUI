@@ -6,6 +6,7 @@
 //Define an angular module for our app
 var angApp = angular.module('angApp', [
     'ngRoute',
+    'ngCookies',
     'appController',
     'appFactory',
     'appConfig'

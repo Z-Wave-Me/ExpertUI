@@ -60,8 +60,12 @@ body {
   border-right: 1px solid #1e578c;
 }
 
-.lang-switch a{
-    width: 24px;
+li.lang-switch_ a{
+    padding: 15px 5px;
+/*    width: 24px;*/
+}
+.current-lang{
+    text-transform: uppercase;
 }
 
 

@@ -17,6 +17,7 @@
   <script src="app/vendor/angular/angular-1.2.14/angular.js"></script>
   <script src="app/vendor/angular/angular-1.2.14/angular-route.js"></script>
   <script src="app/vendor/angular/angular-1.2.14/angular-resource.js"></script>
+  <script src="app/vendor/angular/angular-1.2.14/angular-cookies.js"></script>
   <!-- Bootstrap js -->
   <script src="app/vendor/bootstrap/bootstrap.js"></script>
   <script src="app/vendor/bootstrap/bootstrap-slider.js"></script>
@@ -25,11 +26,12 @@
   <script src="app/core/config.js"></script>
   <script src="app/core/directives/directives.js"></script>
   <script src="app/core/filters/filters.js"></script>
+  <script src="app/core/factories/factories.js"></script>
   <script src="app/core/controllers/controllers.js"></script>
   <script src="app/core/jquery/jquery-app.js"></script>
   <script src="app/vendor/slider/angular-slider.js"></script>
 </head>
-<body ng-app="angApp">
+ <body ng-app="angApp" ng-controller="BaseController">
     <div class="navbar navbar-inverse navbar-fixed-top___" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -47,67 +49,75 @@
                     <ul class="nav navbar-nav" id="main_nav">
                          <li class="divider-vertical remove-margin"></li>
                         <li class="dropdown">
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown">Controll <b class="caret"></b></a>
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown">{{ _t('nav_control') }} <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#controll/switch" class="navigation-selector">Switch</a></li>
+                                <li><a href="#controll/switch" class="navigation-selector">{{ _t('nav_switch') }}</a></li>
                                  <!-- <li><a href="#controll/dimmer" class="navigation-selector">Dimmer</a></li> -->
-                                <li><a href="#controll/sensors" class="navigation-selector">Sensors</a></li>
+                                <li><a href="#controll/sensors" class="navigation-selector">{{ _t('nav_sensors') }}</a></li>
                                  <!-- <li><a href="#controll/meters" class="navigation-selector">Meters</a></li> -->
-                                <li><a href="#controll/thermostat" class="navigation-selector">Thermostat</a></li>
-                                <li><a href="#controll/locks" class="navigation-selector">Locks</a></li>
+                                <li><a href="#controll/thermostat" class="navigation-selector">{{ _t('nav_thermostat') }}</a></li>
+                                <li><a href="#controll/locks" class="navigation-selector">{{ _t('nav_locks') }}</a></li>
                             </ul>
                         </li>
                          <li class="divider-vertical remove-margin"></li>
                         <li class="dropdown">
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown">Device <b class="caret"></b></a>
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown">{{ _t('nav_device') }} <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#device/status" class="navigation-selector">Status</a></li>
-                                <li><a href="#device/battery" class="navigation-selector">Battery</a></li>
-                                <li><a href="#device/type" class="navigation-selector">Type info</a></li>
-                                <li><a href="#device/firmware" class="navigation-selector">Firmware update</a></li>
-                                <li><a href="#device/security" class="navigation-selector">Security Status</a></li>
+                                <li><a href="#device/status" class="navigation-selector">{{ _t('nav_status') }}</a></li>
+                                <li><a href="#device/battery" class="navigation-selector">{{ _t('nav_battery') }}</a></li>
+                                <li><a href="#device/type" class="navigation-selector">{{ _t('nav_type_info') }}</a></li>
+                                <li><a href="#device/firmware" class="navigation-selector">{{ _t('nav_firmware_update') }}</a></li>
+                                <li><a href="#device/security" class="navigation-selector">{{ _t('nav_security_status') }}</a></li>
                             </ul>
                         </li>
                          <li class="divider-vertical remove-margin"></li>
                         <li class="dropdown">
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown">Device Config <b class="caret"></b></a>
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown">{{ _t('nav_device_config') }} <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#config/assoc" class="navigation-selector">Assoc</a></li>
-                                <li><a href="#config/wakeup" class="navigation-selector">Wakeup</a></li>
-                                <li><a href="#config/protection" class="navigation-selector">Protection</a></li>
-                                <li><a href="#config/configuration" class="navigation-selector">Configuration configs</a></li>
+                                <li><a href="#config/assoc" class="navigation-selector">{{ _t('nav_assoc') }}</a></li>
+                                <li><a href="#config/wakeup" class="navigation-selector">{{ _t('nav_wakeup') }}</a></li>
+                                <li><a href="#config/protection" class="navigation-selector">{{ _t('nav_protection') }}</a></li>
+                                <li><a href="#config/configuration" class="navigation-selector">{{ _t('nav_configuration_config') }}</a></li>
                             </ul>
                         </li>
                          <li class="divider-vertical remove-margin"></li>
                         <li class="dropdown">
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown">Network <b class="caret"></b></a>
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown">{{ _t('nav_network') }} <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#network/controll" class="navigation-selector">Controll</a></li>
-                                <li><a href="#network/routing" class="navigation-selector">Routing</a></li>
-                                <li><a href="#network/reorganization" class="navigation-selector">Reorganization</a></li>
-                                <li><a href="#network/statistics" class="navigation-selector">Statistics</a></li>
+                                <li><a href="#network/controll" class="navigation-selector">{{ _t('nav_control') }}</a></li>
+                                <li><a href="#network/routing" class="navigation-selector">{{ _t('nav_routing') }}</a></li>
+                                <li><a href="#network/reorganization" class="navigation-selector">{{ _t('nav_reorganization') }}</a></li>
+                                <li><a href="#network/statistics" class="navigation-selector">{{ _t('nav_statistics') }}</a></li>
                             </ul>
                         </li>
                          <li class="divider-vertical remove-margin"></li>
                         <li class="dropdown">
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown">Expert <b class="caret"></b></a>
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown">{{ _t('nav_expert') }} <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#expert/controller" class="navigation-selector">Controller Info</a></li>
-                                <li><a href="#expert/commands" class="navigation-selector">Expert Commands</a></li>
+                                <li><a href="#expert/controller" class="navigation-selector">{{ _t('nav_controller_info') }}</a></li>
+                                <li><a href="#expert/commands" class="navigation-selector">{{ _t('nav_expert_commands') }}</a></li>
                             </ul>
                         </li>
                         <li class="divider-vertical remove-margin"></li>
                         <li><a href="#test" class="navigation-selector">Test</a></li>
+                        <li class="divider-vertical remove-margin"></li>
+                        
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                          <li class="divider-vertical remove-margin"></li>
                         <li><a href="#home" class="navigation-selector"><i class="fa fa-home fa-lg"></i></a></li>
-                         <li class="divider-vertical remove-margin"></li>
-                        <li><a href=""><i class="fa fa-clock-o"></i> <span id="update_time_tick">{{time}}</span></a></li>
                         <li class="divider-vertical remove-margin"></li>
-                        <li class="lang-switch"><a href="" class="navigation-selector" ng-click="changeLang('en')"><img src="app/images/en.png" alt="en"/></a></li>
-                        <li class="lang-switch"><a href="" class="navigation-selector" ng-click="changeLang('de')"><img src="app/images/de.png" alt="de"/></a></li>
-                     </ul>
+                        <li class="dropdown">
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe fa-lg"></i> <span class="current-lang"></span> <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li ng-repeat="v in lang_list" class="lang-switch"><a href="" ng-click="changeLang(v)"><img src="app/images/{{ v }}.png" alt="{{ v }}"/> {{ v }}</a></li>
+                            </ul>
+                        </li>
+                        <li class="divider-vertical remove-margin"></li>
+                        <li><a href=""><i class="fa fa-clock-o"></i> <span id="update_time_tick">{{time}}</span></a></li>
+                        
+                        
+                    </ul>
                 </div> <!-- /.navbar-collapse -->
             </div> <!-- /.container -->
         </div> <!-- /.navbar --> 
