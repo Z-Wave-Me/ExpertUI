@@ -9,7 +9,7 @@
   <!-- Z-Wave css -->
   <link media="screen" type="text/css" rel="stylesheet" href="app/css/main.css">
   <!-- Font awesome css -->
-  <link media="screen" type="text/css" rel="stylesheet" href="app/css/font-awesome-4.0.3/css/font-awesome.min.css">
+  <link media="screen" type="text/css" rel="stylesheet" href="app/css/font-awesome-4.1.0/css/font-awesome.min.css">
   <link media="screen" type="text/css" rel="stylesheet" href="app/css/angular-slider.css">
    <!-- jQuery js -->
   <script src="app/vendor/jquery/jquery-1.11.1.js"></script>
@@ -39,10 +39,13 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Z-Wave</a>
+                     <a class="navbar-brand" href="#">
+                         <img src="app/images/z-wave-logo-white.png" class="header-logo" alt="Z-Wave" height="40" />
+                    </a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav" id="main_nav">
+                         <li class="divider-vertical remove-margin"></li>
                         <li class="dropdown">
                             <a href="" class="dropdown-toggle" data-toggle="dropdown">Controll <b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -54,6 +57,7 @@
                                 <li><a href="#controll/locks" class="navigation-selector">Locks</a></li>
                             </ul>
                         </li>
+                         <li class="divider-vertical remove-margin"></li>
                         <li class="dropdown">
                             <a href="" class="dropdown-toggle" data-toggle="dropdown">Device <b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -64,6 +68,7 @@
                                 <li><a href="#device/security" class="navigation-selector">Security Status</a></li>
                             </ul>
                         </li>
+                         <li class="divider-vertical remove-margin"></li>
                         <li class="dropdown">
                             <a href="" class="dropdown-toggle" data-toggle="dropdown">Device Config <b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -73,6 +78,7 @@
                                 <li><a href="#config/configuration" class="navigation-selector">Configuration configs</a></li>
                             </ul>
                         </li>
+                         <li class="divider-vertical remove-margin"></li>
                         <li class="dropdown">
                             <a href="" class="dropdown-toggle" data-toggle="dropdown">Network <b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -82,6 +88,7 @@
                                 <li><a href="#network/statistics" class="navigation-selector">Statistics</a></li>
                             </ul>
                         </li>
+                         <li class="divider-vertical remove-margin"></li>
                         <li class="dropdown">
                             <a href="" class="dropdown-toggle" data-toggle="dropdown">Expert <b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -89,11 +96,17 @@
                                 <li><a href="#expert/commands" class="navigation-selector">Expert Commands</a></li>
                             </ul>
                         </li>
+                        <li class="divider-vertical remove-margin"></li>
                         <li><a href="#test" class="navigation-selector">Test</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
+                         <li class="divider-vertical remove-margin"></li>
                         <li><a href="#home" class="navigation-selector"><i class="fa fa-home fa-lg"></i></a></li>
+                         <li class="divider-vertical remove-margin"></li>
                         <li><a href=""><i class="fa fa-clock-o"></i> <span id="update_time_tick">{{time}}</span></a></li>
+                        <li class="divider-vertical remove-margin"></li>
+                        <li class="lang-switch"><a href="" class="navigation-selector" ng-click="changeLang('en')"><img src="app/images/en.png" alt="en"/></a></li>
+                        <li class="lang-switch"><a href="" class="navigation-selector" ng-click="changeLang('de')"><img src="app/images/de.png" alt="de"/></a></li>
                      </ul>
                 </div> <!-- /.navbar-collapse -->
             </div> <!-- /.container -->
@@ -105,7 +118,9 @@
 
         <div id="footer">
             <div class="container-fluid">
-                <p class="text-muted">Footer content</p>
+                 <p class="text-muted">
+                    &COPY; 2012 Z-Wave Europe GmbH
+                </p>
             </div>
         </div>
 
