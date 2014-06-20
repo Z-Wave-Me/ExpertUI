@@ -1,0 +1,30 @@
+<!-- Dimmer view -->
+<div ng-controller="MetersController">
+    <div class="page-header"><h1>Meters</h1></div>
+    <div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                 <th><a href="" ng-click="predicate = 'id';reverse = !reverse">#</a></th>
+                <th><a href="" ng-click="predicate = 'name';reverse = !reverse">Name</a></th>
+                 <th>Type</th>
+                 <th><a href="" ng-click="predicate = 'level';reverse = !reverse">Level</a></th>
+                <th><a href="" ng-click="predicate = 'date';reverse = !reverse">Date</a></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="i in data | orderBy:predicate:reverse" id="{{ v.rowId }}">
+                <td>{{ i.id }}</td>
+                <td><i class="fa fa-lightbulb-o fa-lg"></i> {{ i.name }}</td>
+                <td>{{ i.purpose }}</td>
+                <td>{{ i.level }}</td>
+                <td>{{ i.date }}</td>
+                <td>
+                    <button class="btn btn-primary">Update</button> 
+                    <button class="btn btn-primary">Reset</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+</div>

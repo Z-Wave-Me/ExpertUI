@@ -1,0 +1,31 @@
+<!-- Thermostat view -->
+<div ng-controller="ThermostatController">
+    <div class="page-header"><h1>Thermostat</h1></div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th><a href="" ng-click="predicate = 'id';
+                                reverse = !reverse">#</a></th>
+                    <th><a href="" ng-click="predicate = 'name';
+                                reverse = !reverse">Name</a></th>
+                    <th>Temperature</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="i in data| orderBy:predicate:reverse">
+                    <td>{{ i.id}}</td>
+                    <td><i class="fa fa-sort-amount-asc fa-lg"></i> {{ i.name}}</td>
+                    <td><span class="spinner-target">{{ i.temp}}</span>&nbsp; <span>grd C</span>&nbsp;</td>
+                    <td> <div class="btn-group">
+                            <button class="btn btn-info spinner-selector" data-spinner-direction="-" data-spinner-scale="1" data-spinner-max="32" data-spinner-min="15">-</button>
+                            <button class="btn btn-primary spinner-selector" data-spinner-direction="+" data-spinner-scale="1" data-spinner-max="32" data-spinner-min="15">+</button>
+                        </div></td>
+                    <td><div class="app-range-slider" range-slider min="range.min" max="32" model-max="range.max" pin-handle="min"></div></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

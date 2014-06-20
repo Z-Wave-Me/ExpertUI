@@ -1,0 +1,26 @@
+[
+    {
+        "id": 0,
+        "name": "Rowland",
+        "zone": "Virginia Place",
+        "temp": "28"
+    },
+    {
+        "id": 1,
+        "name": "Head",
+        "zone": "Columbia Place",
+        "temp": "26"
+    },
+    {
+        "id": 2,
+        "name": "Wall",
+        "zone": "Stoddard Place",
+        "temp": "30"
+    },
+    {
+        "id": 3,
+        "name": "Dickerson",
+        "zone": "Atlantic Avenue",
+        "temp": "26"
+    }
+]
