@@ -67,10 +67,12 @@ angApp.filter('isTodayFromUnix', function() {
         var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
         
     if (d.toDateString() == (new Date()).toDateString()){
-        return hrs + ':' + min + ':' + sec;
+        //return hrs + ':' + min + ':' + sec;
+         return hrs + ':' + min;
        
     }else{
-        return day + '.' + mon + '.' + year + ' ' + hrs + ':' + min + ':' + sec;;
+        //return day + '.' + mon + '.' + year + ' ' + hrs + ':' + min + ':' + sec;
+        return day + '.' + mon + '.' + year;
     }
     };
 });

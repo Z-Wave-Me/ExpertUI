@@ -10,7 +10,6 @@ var appController = angular.module('appController', []);
 // Base controller
 appController.controller('BaseController', function($scope, $cookies, cfg, langFactory, langTransFactory) {
      $scope.lang_list = cfg.lang_list;
-     console.log($scope.lang_list);
     // Set language
     $scope.lang = (angular.isDefined($cookies.lang) ? $cookies.lang : cfg.lang);
     $('.current-lang').html($scope.lang);  
@@ -148,6 +147,7 @@ appController.controller('SensorsController', function($scope, $http, $log, $fil
     // Load data
     $scope.load = function(lang) {
         DataFactory.all('0').query(function(data) {
+            //DataTestFactory.all('all.json').query(function(data) {
             $scope.updateTime = data.updateTime;
             $scope.controllerId = data.controller.data.nodeId.value;
 
@@ -228,7 +228,7 @@ appController.controller('SensorsController', function($scope, $http, $log, $fil
                     var meters = instance.commandClasses[0x32];
                     if (angular.isObject(meters)) {
                         angular.forEach(meters.data, function(meter, key) {
-                            realEMeterScales = [0, 1, 3, 8, 9];
+                            realEMeterScales = [0, 1, 3, 8, 9];// Not in [0, 1, 3, 8, 9] !== -1
                             var sensor_type = parseInt(key, 10);
                             if (isNaN(sensor_type)) {
                                 return;
@@ -277,30 +277,39 @@ appController.controller('SensorsController', function($scope, $http, $log, $fil
                 if (v.cmd in data) {
                     var obj = data[v.cmd];
                     var level = '';
+                     var updateTime;
                     // var date = $filter('isTodayFromUnix')(data.updateTime);
                     var levelExt;
                     if (v.cmdId == 0x30) {
                         levelExt = (obj.level.value ? $scope._t('sensor_triggered') : $scope._t('sensor_idle'));
+                        updateTime = $filter('isTodayFromUnix')(obj.level.updateTime);
                     } else {
                         level = obj.val.value;
                         levelExt = obj.scaleString.value;
+                        updateTime = $filter('isTodayFromUnix')(obj.val.updateTime);
                     }
 
                     // Set updated row
                     $('#' + v.rowId + ' .row-level').html(level);
-                    $('#' + v.rowId + ' .row-time').html($filter('getCurrentTime')).removeClass('is-updated-false');
+                     $('#' + v.rowId + ' .row-time').html(updateTime).removeClass('is-updated-false');
                     $('#update_time_tick').html($filter('getCurrentTime'));
 
-                    $log.info('Updating:' + v.rowId + ' with: ' + level);//REM
+                    $log.info('Updating:' + v.rowId + ' | At: ' +updateTime + ' | with: ' + level);//REM
                 } else {
                     $log.warn(v.cmd + ': Nothing to update --- ' + $scope.lang);//REM
                 }
             });
-            $log.debug('-----------');//REM
+            //$log.debug('-----------');//REM
         });
         $timeout(refresh, cfg.interval);
     };
     $timeout(refresh, cfg.interval);
+    
+     // Order by
+    $scope.orderBy = function(field) {
+        $scope.predicate = field;
+        $scope.reverse = !$scope.reverse;
+    };
 
     // Store data from sensor on remote server
     $scope.store = function(id) {
