@@ -2,80 +2,136 @@
 <div ng-controller="SwitchController">
     <div class="page-header"><h1>Switch</h1></div>
     <div class="table-responsive">
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th><a href="" ng-click="predicate = 'id';reverse = !reverse">#</a></th>
-                <th><a href="" ng-click="predicate = 'name';reverse = !reverse">Name</a></th>
-                <th>Status</th>
-               <th><a href="" ng-click="predicate = 'date';reverse = !reverse">Date</a></th>
-               
-                 <th>&nbsp;</th>
-                  <th>&nbsp;</th>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        <a href="" ng-click="orderBy('id')">#  
+                            <span ng-show="predicate == 'id'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                     <th>
+                        <a href="" ng-click="orderBy('name')">{{ _t('device_name')}}
+                            <span ng-show="predicate == 'name'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                     <th class="text-right">
+                        <a href="" ng-click="orderBy('level')">{{ _t('th_level')}}
+                            <span ng-show="predicate == 'level'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="" ng-click="orderBy('updateTime')">{{ _t('datetime')}}
+                            <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                     <th>
+                         <button 
+                             class="btn btn-success" 
+                             data-ng-click="storeAll('all_1')" 
+                             id="btn_update_all_1"
+                             >{{ _t('switches_update_all')}}</button>&nbsp;<btn-spinner />
+                     </th>
             </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="i in data | orderBy:predicate:reverse">
-                <td>{{ i.id }}</td>
-                <td ng-switch on="i.type">
-                    <i ng-switch-when="1" class="fa fa-power-off fa-lg"></i> 
-                    <i ng-switch-when="2" class="fa fa-lightbulb-o fa-lg"></i>
-                    <i ng-switch-default class="fa fa-bullseye fa-lg"></i> 
-                      {{ i.name }}
-                </td>
-                <td ng-switch on="i.status">
-                        
-                         <div ng-switch-when="true" >
-                             <i class="fa fa-check fa-lg" style="color: green;"></i>
-                             <span ng-switch on="i.type">
-                                 <i ng-switch-when="1"> {{ i.val_percent }}%</i>
-                             </span>
-                         </div>
-                       
+                </tr>
+            </thead>
+            <tbody>
+                 <tr ng-repeat="v in switches| orderBy:predicate:reverse" id="{{ v.rowId}}">
+                    <td>{{ v.id }}</td>
+                     <td>{{ v.name }}</td>
+                     <td class="row-level text-right">{{ v.level}}</td>
+                     <td class="row-time is-updated-{{v.isUpdated}}">{{ v.updateTime | isTodayFromUnix }}</td>
+                     <td>
+                         <button 
+                             data-ng-click="store(v.rowId)" 
+                             data-store-url="{{ v.urlToStore}}" 
+                             class="btn btn-primary btn-spinner" 
+                             id="btn_update_{{ v.rowId}}"
+                             >{{ _t('update')}}</button>
+                         &nbsp;<btn-spinner /></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Demo table -->   
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th><a href="" ng-click="predicate = 'id';
+                                reverse = !reverse">#</a></th>
+                    <th><a href="" ng-click="predicate = 'name';
+                                reverse = !reverse">Name</a></th>
+                    <th>Status</th>
+                    <th><a href="" ng-click="predicate = 'date';
+                                reverse = !reverse">Date</a></th>
+
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="i in data| orderBy:predicate:reverse">
+                    <td>{{ i.id}}</td>
+                    <td ng-switch on="i.type">
+                        <i ng-switch-when="1" class="fa fa-power-off fa-lg"></i> 
+                        <i ng-switch-when="2" class="fa fa-lightbulb-o fa-lg"></i>
+                        <i ng-switch-default class="fa fa-bullseye fa-lg"></i> 
+                        {{ i.name}}
+                    </td>
+                    <td ng-switch on="i.status">
+
+                        <div ng-switch-when="true" >
+                            <i class="fa fa-check fa-lg" style="color: green;"></i>
+                            <span ng-switch on="i.type">
+                                <i ng-switch-when="1"> {{ i.val_percent}}%</i>
+                            </span>
+                        </div>
+
                         <i ng-switch-default class="fa fa-exclamation fa-lg" style="color: red;"></i>
                     </td>
-                <td>{{ i.date }}</td>
-                <td><button class="btn btn-primary">Update</button></td>
-                <td ng-switch on="i.type">
-                    <div ng-switch-when="1">
-                        <div class="btn-group">
+                    <td>{{ i.date}}</td>
+                    <td><button class="btn btn-primary">Update</button></td>
+                    <td ng-switch on="i.type">
+                        <div ng-switch-when="1">
+                            <div class="btn-group">
+                                <button class="btn btn-info">Off</button>
+                                <button class="btn btn-primary">On</button>
+                            </div>
+                            <div class="slider slider-horizontal" style="width: 140px;">
+                                <div class="slider-track">
+                                    <div class="slider-selection" style="left: 0%; width: 40%;"></div>
+                                    <div class="slider-handle round" style="left: 40%;"></div>
+                                    <div class="slider-handle round hide" style="left: 0%;"></div>
+
+                                </div>
+                                <input type="text" class="span2" value="4" />
+                            </div>
+                            <button class="btn btn-info">Full</button>
+                        </div>
+                        <div class="btn-group" ng-switch-when="2">
                             <button class="btn btn-info">Off</button>
-                        <button class="btn btn-primary">On</button>
-                          </div>
-                        <div class="slider slider-horizontal" style="width: 140px;">
-                            <div class="slider-track">
-                                <div class="slider-selection" style="left: 0%; width: 40%;"></div>
-                                <div class="slider-handle round" style="left: 40%;"></div>
-                                <div class="slider-handle round hide" style="left: 0%;"></div>
-
-                            </div>
-                            <input type="text" class="span2" value="4" />
+                            <button class="btn btn-primary">On</button>
                         </div>
-                        <button class="btn btn-info">Full</button>
-                    </div>
-                     <div class="btn-group" ng-switch-when="2">
-                        <button class="btn btn-info">Off</button>
-                        <button class="btn btn-primary">On</button>
-                    </div>
-                     <div ng-switch-when="3">
-                         <div class="btn-group">
-                            <button class="btn btn-info">Up</button>
-                            <button class="btn btn-primary">Down</button>
-                          </div>
-                         <div class="slider slider-horizontal" style="width: 140px;">
-                            <div class="slider-track">
-                                <div class="slider-selection" style="left: 0%; width: 40%;"></div>
-                                <div class="slider-handle round" style="left: 40%;"></div>
-                                <div class="slider-handle round hide" style="left: 0%;"></div>
-
+                        <div ng-switch-when="3">
+                            <div class="btn-group">
+                                <button class="btn btn-info">Up</button>
+                                <button class="btn btn-primary">Down</button>
                             </div>
-                            <input type="text" class="span2" value="4" />
+                            <div class="slider slider-horizontal" style="width: 140px;">
+                                <div class="slider-track">
+                                    <div class="slider-selection" style="left: 0%; width: 40%;"></div>
+                                    <div class="slider-handle round" style="left: 40%;"></div>
+                                    <div class="slider-handle round hide" style="left: 0%;"></div>
+
+                                </div>
+                                <input type="text" class="span2" value="4" />
+                            </div>
                         </div>
-                    </div>
-                    <div ng-switch-default>&nbsp;</div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                        <div ng-switch-default>&nbsp;</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>

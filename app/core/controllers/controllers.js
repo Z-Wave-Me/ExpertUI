@@ -67,70 +67,155 @@ appController.controller('HomeController', function($scope) {
 
 // Switch controller
 appController.controller('SwitchController', function($scope, $http, $log, $filter, $timeout, DataFactory, DataTestFactory, cfg) {
-    $scope.witches = [];
-    $('#update_time_tick').html($filter('getCurrentTime'));
-    DataFactory.all('0').query(function(data) {
-        $scope.controllerId = data.controller.data.nodeId.value;
-
-        // Loop throught devices
-        angular.forEach(data.devices, function(nodeId, node) {
-            if (nodeId == 255 || nodeId == $scope.controllerId || node.data.isVirtual.value) {
-                return;
-            }
-
-            // Loop throught instances
-            angular.forEach(node.instances, function(instance, instanceId) {
-                if (instanceId == 0 && node.instances.length > 1) {
+    $scope.switches = [];
+    // Load data
+    $scope.load = function(lang) {
+        DataFactory.all('0').query(function(ZWaveAPIData) {
+            var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
+            // Loop throught devices
+            angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+                if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
                     return;
                 }
 
-                var hasBinary = 0x25 in instance.commandClasses;
-                var hasMultilevel = 0x26 in instance.commandClasses;
-                var hasSwitchAll = (0x27 in instance.commandClasses) && (instanceId == 0);
-                var ccId;
+                // Loop throught instances
+                var cnt = 1;
+                angular.forEach(node.instances, function(instance, instanceId) {
+                    if (instanceId == 0 && node.instances.length > 1) {
+                        return;
+                    }
 
-                if (hasMultilevel)
-                    ccId = 0x26;
-                else if (hasBinary)
-                    ccId = 0x25;
-                else
-                    return; // we skip instance if there is no SwitchBinary or SwitchMultilevel CCs
+                    var hasBinary = 0x25 in instance.commandClasses;
+                    var hasMultilevel = 0x26 in instance.commandClasses;
+                    var hasSwitchAll = (0x27 in instance.commandClasses) && (instanceId == 0);
+                    var ccId;
 
-                $log.info(instanceId);
-                return;
-                // ---------------------------------------- this is not finished --------------------------------------------//
-                // Look for SensorBinary - Loop throught 0x30 commandClasses
-                var sensorBinary = instance.commandClasses[0x30];
-                if (angular.isObject(sensorBinary)) {
-                    angular.forEach(sensorBinary.data, function(val, key) {
-                        // Not a sensor type
-                        var sensor_type = parseInt(key, 10);
-                        if (isNaN(sensor_type)) {
-                            return;
-                        }
-                        // Set object
-                        var obj = {};
-                        obj['id'] = k;
-                        obj['cmd'] = sensorBinary.data.name + '.' + val.name;
-                        obj['cmdId'] = '48';
-                        obj['rowId'] = sensorBinary.name + '_' + val.name + '_' + k;
-                        obj['name'] = device.data.name;
-                        obj['type'] = sensorBinary.name;
-                        obj['purpose'] = val.sensorTypeString.value;
-                        obj['level'] = (val.level.value ? 'Triggered' : 'Idle');
-                        obj['levelExt'] = null;
-                        obj['invalidateTime'] = val.invalidateTime;
-                        obj['updateTime'] = val.updateTime;
-                        obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
-                        obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[0].commandClasses[48].Get()';
-                        // Push to sensors
-                        $scope.sensors.push(obj);
-                    });
-                }
+                    if (hasMultilevel) {
+                        ccId = 0x26;
+                    } else if (hasBinary) {
+                        ccId = 0x25;
+                    } else {
+                        return; // we skip instance if there is no SwitchBinary or SwitchMultilevel CCs
+                    }
 
+
+                    // Set object
+                    var obj = {};
+                    obj['id'] = nodeId;
+                    obj['rowId'] = 'switch_' + nodeId + '_' + cnt;
+                    obj['name'] = node.data.name;
+                    obj['updateTime'] = instance.commandClasses[ccId].data.level.updateTime;
+                    obj['urlToStore'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Get()';
+                    //obj['level'] = ZWaveAPIData.devices[nodeId].instances[instanceId].commandClasses[ccId].data.level;
+                    obj['level'] =$scope.updateLevel(instance.commandClasses[ccId].data.level,ccId);
+                   
+
+                    $scope.switches.push(obj);
+                    $log.info( obj['level'] );
+                    cnt++;
+                    return;
+                    // ---------------------------------------- this is not finished --------------------------------------------//
+                    // Look for SensorBinary - Loop throught 0x30 commandClasses
+                    var sensorBinary = instance.commandClasses[0x30];
+                    if (angular.isObject(sensorBinary)) {
+                        angular.forEach(sensorBinary.data, function(val, key) {
+                            // Not a sensor type
+                            var sensor_type = parseInt(key, 10);
+                            if (isNaN(sensor_type)) {
+                                return;
+                            }
+                            // Set object
+                            var obj = {};
+                            obj['id'] = k;
+                            obj['cmd'] = sensorBinary.data.name + '.' + val.name;
+                            obj['cmdId'] = '48';
+                            obj['rowId'] = sensorBinary.name + '_' + val.name + '_' + k;
+                            obj['name'] = device.data.name;
+                            obj['type'] = sensorBinary.name;
+                            obj['purpose'] = val.sensorTypeString.value;
+                            obj['level'] = (val.level.value ? 'Triggered' : 'Idle');
+                            obj['levelExt'] = null;
+                            obj['invalidateTime'] = val.invalidateTime;
+                            obj['updateTime'] = val.updateTime;
+                            obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
+                            obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[0].commandClasses[48].Get()';
+                            // Push to sensors
+                            $scope.sensors.push(obj);
+                        });
+                    }
+
+                });
             });
         });
-    });
+    };
+    
+     // Load data
+    $scope.load($scope.lang);
+
+    // Store data from on remote server
+    $scope.store = function(id) {
+        var btn = '#btn_update_' + id;
+        var spinner = '.fa-spinner';
+        $(btn).attr('disabled', true);
+        $(btn).next(spinner).show();
+        DataFactory.store($(btn).attr('data-store-url')).query();
+        $timeout(function() {
+            $(btn).next(spinner).fadeOut();
+            $(btn).removeAttr('disabled');
+        }, 1000);
+    };
+
+    // Store all data on remote server
+    $scope.storeAll = function(id) {
+        var btn = '#btn_update_' + id;
+        var spinner = '.fa-spinner';
+        $(btn).attr('disabled', true);
+        $(btn).next(spinner).show();
+        angular.forEach($scope.switches, function(v, k) {
+            DataFactory.store(v.urlToStore).query();
+        });
+        $timeout(function() {
+            $(btn).next(spinner).fadeOut();
+            $(btn).removeAttr('disabled');
+        }, 1000);
+    };
+    
+    // Update level
+    $scope.updateLevel = function(obj,ccId) {
+		var level_cont;
+		var level_color;
+
+		//var level = obj.value;
+                var level = (angular.isDefined(obj.value)? obj.value : null);
+
+		if (level === '' || level === null) {
+			level_cont = '?';
+			level_color = 'gray';
+		} else {
+			if (level === false)
+				level = 0;
+			if (level === true)
+				level = 255;
+			level = parseInt(level, 10);
+			if (level === 0) {
+				level_cont = $scope._t('switched_off');
+				level_color = 'black';
+			} else if (level === 255 || level === 99) {
+				level_cont = $scope._t('switched_on');
+				level_color = '#FFCF00';
+			} else {
+				level_cont = level.toString() + ((ccId == 0x26) ? '%' : '');
+				var lvlc_r = ('00' + parseInt(0x9F + 0x60 * level / 99).toString(16)).slice(-2);
+				var lvlc_g = ('00' + parseInt(0x7F + 0x50 * level / 99).toString(16)).slice(-2);
+				level_color = '#' + lvlc_r + lvlc_g + '00';
+			}
+		};
+                
+                console.log(level_cont,level_color);
+                return level_cont;
+		//$(this).html(level_cont).css('color', level_color);
+		//$(this).parent().find('#updateTime').html(getUpdated(obj));
+	};
     $http.get('storage/demo/switch.json').
             success(function(data) {
                 $scope.data = data;
@@ -320,7 +405,7 @@ appController.controller('SensorsController', function($scope, $http, $log, $fil
 
 
 
-    // Store data from sensor on remote server
+    // Store data from on remote server
     $scope.store = function(id) {
         var btn = '#btn_update_' + id;
         var spinner = '.fa-spinner';
@@ -333,7 +418,7 @@ appController.controller('SensorsController', function($scope, $http, $log, $fil
         }, 1000);
     };
 
-    // Store all data from sensors on remote server
+    // Store all data on remote server
     $scope.storeAll = function(id) {
         var btn = '#btn_update_' + id;
         var spinner = '.fa-spinner';
@@ -405,7 +490,7 @@ appController.controller('MetersController', function($scope, $http, $log, $filt
                             obj['updateTime'] = meter.updateTime;
                             obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
                             obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[0].commandClasses[50].Get()';
-                            if (ZWaveAPIData.devices[obj['id']].instances[instanceId].commandClasses[0x32].data.version.value < 2 
+                            if (ZWaveAPIData.devices[obj['id']].instances[instanceId].commandClasses[0x32].data.version.value < 2
                                     || !ZWaveAPIData.devices[obj['id']].instances[instanceId].commandClasses[0x32].data.resettable.value) {
                                 obj['urlToReset'] = null;
                             } else {
