@@ -8,11 +8,11 @@
 var appController = angular.module('appController', []);
 
 // Base controller
-appController.controller('BaseController', function($scope, $cookies, cfg, langFactory, langTransFactory) {
-     $scope.lang_list = cfg.lang_list;
+appController.controller('BaseController', function($scope, $cookies, $filter, cfg, langFactory, langTransFactory) {
+    $scope.lang_list = cfg.lang_list;
     // Set language
     $scope.lang = (angular.isDefined($cookies.lang) ? $cookies.lang : cfg.lang);
-    $('.current-lang').html($scope.lang);  
+    $('.current-lang').html($scope.lang);
     $scope.changeLang = function(lang) {
         $cookies.lang = lang;
         $scope.lang = lang;
@@ -33,6 +33,14 @@ appController.controller('BaseController', function($scope, $cookies, cfg, langF
         $('.current-lang').html($scope.lang);
         $scope.loadLang($scope.lang);
     });
+    // Navi time
+    $scope.navTime = $filter('getCurrentTime');
+    //$('#update_time_tick').html($filter('getCurrentTime'));
+    // Order by
+    $scope.orderBy = function(field) {
+        $scope.predicate = field;
+        $scope.reverse = !$scope.reverse;
+    };
 });
 
 // Test controller
@@ -58,7 +66,7 @@ appController.controller('HomeController', function($scope) {
 });
 
 // Switch controller
-appController.controller('SwitchController', function($scope, $http, $log) {
+appController.controller('SwitchController', function($scope, $http, $log, $filter, $timeout, DataFactory, DataTestFactory, cfg) {
     $scope.witches = [];
     $('#update_time_tick').html($filter('getCurrentTime'));
     DataFactory.all('0').query(function(data) {
@@ -137,13 +145,15 @@ appController.controller('DimmerController', function($scope, $http, $log) {
             });
 });
 
-// Sensors controller
+/**
+ * Meters controller
+ */
 appController.controller('SensorsController', function($scope, $http, $log, $filter, $timeout, DataFactory, DataTestFactory, cfg) {
     $scope.sensors = [];
     $scope.reset = function() {
         $scope.sensors = angular.copy([]);
     };
-    $('#update_time_tick').html($filter('getCurrentTime'));
+
     // Load data
     $scope.load = function(lang) {
         DataFactory.all('0').query(function(data) {
@@ -261,23 +271,26 @@ appController.controller('SensorsController', function($scope, $http, $log, $fil
             });
         });
     };
+    // Load data
+    $scope.load($scope.lang);
 
-    // Watch for lang change
-//   $scope.$watch('lang', function() {
+//    // Watch for lang change
+//    $scope.$watch('lang', function() {
 //        $scope.reset();
-        $scope.load($scope.lang);
+//        $scope.load($scope.lang);
 //    });
-    
+
     // Refresh data 
     var refresh = function() {
         DataFactory.all($filter('getTimestamp')).query(function(data) {
             //DataTestFactory.all('device_31_updated.json').query(function(data) {
             angular.forEach($scope.sensors, function(v, k) {
+
                 // Check for updated data
                 if (v.cmd in data) {
                     var obj = data[v.cmd];
                     var level = '';
-                     var updateTime;
+                    var updateTime;
                     // var date = $filter('isTodayFromUnix')(data.updateTime);
                     var levelExt;
                     if (v.cmdId == 0x30) {
@@ -291,10 +304,10 @@ appController.controller('SensorsController', function($scope, $http, $log, $fil
 
                     // Set updated row
                     $('#' + v.rowId + ' .row-level').html(level);
-                     $('#' + v.rowId + ' .row-time').html(updateTime).removeClass('is-updated-false');
+                    $('#' + v.rowId + ' .row-time').html(updateTime).removeClass('is-updated-false');
                     $('#update_time_tick').html($filter('getCurrentTime'));
 
-                    $log.info('Updating:' + v.rowId + ' | At: ' +updateTime + ' | with: ' + level);//REM
+                    $log.info('Updating:' + v.rowId + ' | At: ' + updateTime + ' | with: ' + level);//REM
                 } else {
                     $log.warn(v.cmd + ': Nothing to update --- ' + $scope.lang);//REM
                 }
@@ -304,12 +317,8 @@ appController.controller('SensorsController', function($scope, $http, $log, $fil
         $timeout(refresh, cfg.interval);
     };
     $timeout(refresh, cfg.interval);
-    
-     // Order by
-    $scope.orderBy = function(field) {
-        $scope.predicate = field;
-        $scope.reverse = !$scope.reverse;
-    };
+
+
 
     // Store data from sensor on remote server
     $scope.store = function(id) {
@@ -340,12 +349,146 @@ appController.controller('SensorsController', function($scope, $http, $log, $fil
     };
 });
 
-// Meters controller
-appController.controller('MetersController', function($scope, $http, $log) {
-    $http.get('storage/demo/meters.json').
-            success(function(data) {
-                $scope.data = data;
+/**
+ * Meters controller
+ */
+appController.controller('MetersController', function($scope, $http, $log, $filter, $timeout, DataFactory, DataTestFactory, cfg) {
+    $scope.meters = [];
+    $scope.reset = function() {
+        $scope.meters = angular.copy([]);
+    };
+
+    // Load data
+    $scope.load = function(lang) {
+        DataFactory.all('0').query(function(ZWaveAPIData) {
+            //DataTestFactory.all('all.json').query(function(data) {
+            $scope.updateTime = ZWaveAPIData.updateTime;
+            $scope.controllerId = ZWaveAPIData.controller.data.nodeId.value;
+
+            // Loop throught devices
+            angular.forEach(ZWaveAPIData.devices, function(device, k) {
+                if (k == 255 || k == $scope.controllerId || device.data.isVirtual.value) {
+                    return false;
+                }
+                // Loop throught instances
+                angular.forEach(device.instances, function(instance, instanceId) {
+                    if (instanceId == 0 && device.instances.length > 1) {
+                        return;
+                    }
+
+                    // Look for Meter - Loop throught 0x32 commandClasses
+                    var meters = instance.commandClasses[0x32];
+                    if (angular.isObject(meters)) {
+                        angular.forEach(meters.data, function(meter, key) {
+                            realEMeterScales = [0, 1, 3, 8, 9];// Not in [0, 1, 3, 8, 9] !== -1
+                            var sensor_type = parseInt(key, 10);
+                            if (isNaN(sensor_type)) {
+                                return;
+                            }
+                            if (meter.sensorType.value == 1 && realEMeterScales.indexOf(sensor_type) != -1) {
+                                return; // filter only for eMeters
+                            }
+                            if (meter.sensorType.value > 1) {
+                                return; //  gas and water have real meter scales
+                            }
+                            var obj = {};
+                            obj['id'] = k;
+                            obj['cmd'] = meters.data.name + '.' + meter.name;
+                            obj['cmdId'] = '50';
+                            obj['rowId'] = meters.name + '_' + meter.name + '_' + k;
+                            obj['name'] = device.data.name;
+                            obj['type'] = meters.name;
+                            obj['purpose'] = meter.sensorTypeString.value;
+                            obj['level'] = meter.val.value;
+                            obj['levelExt'] = meter.scaleString.value;
+                            obj['invalidateTime'] = meter.invalidateTime;
+                            obj['updateTime'] = meter.updateTime;
+                            obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
+                            obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[0].commandClasses[50].Get()';
+                            if (ZWaveAPIData.devices[obj['id']].instances[instanceId].commandClasses[0x32].data.version.value < 2 
+                                    || !ZWaveAPIData.devices[obj['id']].instances[instanceId].commandClasses[0x32].data.resettable.value) {
+                                obj['urlToReset'] = null;
+                            } else {
+                                obj['urlToReset'] = 'devices[' + obj['id'] + '].instances[0].commandClasses[50].Reset()';
+                            }
+
+                            $scope.meters.push(obj);
+                        });
+                    }
+
+                });
             });
+        });
+    };
+
+    $scope.load($scope.lang);
+
+    // Refresh data 
+    var refresh = function() {
+        DataFactory.all($filter('getTimestamp')).query(function(data) {
+            //DataTestFactory.all('device_31_updated.json').query(function(data) {
+            angular.forEach($scope.meters, function(v, k) {
+                // Check for updated data
+                if (v.cmd in data) {
+                    var obj = data[v.cmd];
+                    var level = '';
+                    var updateTime;
+                    var levelExt;
+                    if (v.cmdId == 0x30) {
+                        levelExt = (obj.level.value ? $scope._t('sensor_triggered') : $scope._t('sensor_idle'));
+                        updateTime = $filter('isTodayFromUnix')(obj.level.updateTime);
+                        // Set updated row
+                        $('#' + v.rowId + ' .row-level').html(level);
+                        $('#' + v.rowId + ' .row-time').html(updateTime).removeClass('is-updated-false');
+                        $('#update_time_tick').html($filter('getCurrentTime'));
+                        $log.info('Updating:' + v.rowId + ' | At: ' + updateTime + ' | with: ' + level);//REM
+                    } else {
+                        $log.warn(v.cmd + ': Nothing to update');//REM
+                    }
+                }
+            });
+
+        });
+        $timeout(refresh, cfg.interval);
+    };
+    $timeout(refresh, cfg.interval);
+
+    // Store data from meter on remote server
+    $scope.store = function(btn) {
+        // Is clicked on RESET?
+        var action = $(btn).attr('data-action');
+        if (action === 'reset' && !window.confirm($scope._t('are_you_sure_reset_meter'))) {
+            return;
+        }
+
+        // Spinner
+        var spinner = $(btn).parent('td').find('.fa-spinner');
+        spinner.show();
+        $(btn).attr('disabled', true);
+
+        DataFactory.store($(btn).attr('data-store-url')).query();
+//         $scope.reset();
+//        $scope.load($scope.lang);
+        $timeout(function() {
+            spinner.fadeOut();
+            $(btn).removeAttr('disabled');
+        }, 1000);
+    };
+
+    // Store all data from sensors on remote server
+    $scope.storeAll = function(id) {
+        var btn = '#btn_update_' + id;
+        var spinner = '.fa-spinner';
+        $(btn).attr('disabled', true);
+        $(btn).next(spinner).show();
+        angular.forEach($scope.meters, function(v, k) {
+            DataFactory.store(v.urlToStore).query();
+        });
+        $timeout(function() {
+            $(btn).next(spinner).fadeOut();
+            $(btn).removeAttr('disabled');
+        }, 1000);
+    };
 });
 
 // Thermostat controller
