@@ -1,0 +1,17 @@
+{
+    "devices.36.data.lastReceived": {
+      "name": "lastReceived",
+      "value": 0,
+      "type": "int",
+      "invalidateTime": 1402671682,
+      "updateTime": 1403618334
+    },
+    "devices.36.instances.0.commandClasses.37.data.level": {
+      "name": "level",
+      "value": true,
+      "type": "bool",
+      "invalidateTime": 1403618332,
+      "updateTime": 1403618334
+    },
+  "updateTime": 1403618336
+}

@@ -10,12 +10,12 @@
                             <span ng-show="predicate == 'id'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
-                     <th>
+                    <th>
                         <a href="" ng-click="orderBy('name')">{{ _t('device_name')}}
                             <span ng-show="predicate == 'name'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
-                     <th class="text-right">
+                    <th class="text-right">
                         <a href="" ng-click="orderBy('level')">{{ _t('th_level')}}
                             <span ng-show="predicate == 'level'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
@@ -25,31 +25,106 @@
                             <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
-                     <th>
-                         <button 
-                             class="btn btn-success" 
-                             data-ng-click="storeAll('all_1')" 
-                             id="btn_update_all_1"
-                             >{{ _t('switches_update_all')}}</button>&nbsp;<btn-spinner />
-                     </th>
+                    <th>&nbsp;</th>
+                    <th>
+                        <button 
+                            class="btn btn-primary" 
+                            data-ng-click="storeAll('all_1')" 
+                            id="btn_update_all_1"
+                            >{{ _t('switches_update_all')}}
+                        </button>&nbsp;<btn-spinner />
+            </th>
+            <th>
+            <div class="btn-group">
+                <button 
+                    class="btn btn-info"
+                    data-store-url="urlToOff" 
+                    data-ng-click="storeSwitchAll('#btn_all_of')"
+                    id="btn_all_of"
+                    >{{ _t('btn_all_off')}}</button>
+                <button 
+                    class="btn btn-primary"
+                    data-store-url="urlToOn" 
+                    data-ng-click="storeSwitchAll('#btn_all_on')"
+                    id="btn_all_on"
+                    >{{ _t('btn_all_on')}}</button>
+            </div>
+            </th>
             </tr>
-                </tr>
+
             </thead>
             <tbody>
-                 <tr ng-repeat="v in switches| orderBy:predicate:reverse" id="{{ v.rowId}}">
-                    <td>{{ v.id }}</td>
-                     <td>{{ v.name }}</td>
-                     <td class="row-level text-right">{{ v.level}}</td>
-                     <td class="row-time is-updated-{{v.isUpdated}}">{{ v.updateTime | isTodayFromUnix }}</td>
-                     <td>
-                         <button 
-                             data-ng-click="store(v.rowId)" 
-                             data-store-url="{{ v.urlToStore}}" 
-                             class="btn btn-primary btn-spinner" 
-                             id="btn_update_{{ v.rowId}}"
-                             >{{ _t('update')}}</button>
-                         &nbsp;<btn-spinner /></td>
-                </tr>
+                <tr ng-repeat="v in switches| orderBy:predicate:reverse" id="{{ v.rowId}}">
+                    <td>{{ v.id}}</td>
+                    <td><switch-type-icon generic="{{ v.genericType}}" specific="{{ v.specificType}}"></switch-type-icon> {{ v.name}}</td>
+            <td class="row-level text-right">
+                <span style="color: {{ v.levelColor}};">{{ v.level}}</span> 
+                <i ng-if="v.levelStatus == 'on'" class="fa fa-check fa-lg" style="color: #3c763d;"></i>
+                <i ng-if="v.levelStatus == 'off'" class="fa fa-exclamation fa-lg" style="color: #a94442;"></i>
+            </td>
+            <td class="row-time is-updated-{{v.isUpdated}}">{{ v.updateTime | isTodayFromUnix }}</td>
+            <td>
+            <switch-all-icon hasall="{{ v.switchAllValue}}" ng-if="v.switchAllValue !== null"></switch-all-icon>
+            </td>
+            <td>
+                <button 
+                    data-ng-click="store(v.rowId)" 
+                    data-store-url="{{ v.urlToStore}}" 
+                    class="btn btn-primary btn-spinner" 
+                    id="btn_update_{{ v.rowId}}"
+                    >{{ _t('update')}}</button>
+                &nbsp;<btn-spinner />
+            </td>
+            <td ng-switch on="v.deviceType">
+                <div ng-switch-when="multilevel">
+                    <div class="btn-group">
+                        <button 
+                            data-ng-click="store('#btn_off_' + v.rowId)" 
+                            data-store-url="{{ v.urlToOff}}" 
+                            class="btn btn-info btn-spinner" 
+                            id="btn_off_{{ v.rowId}}"
+                            >{{ _t('switched_off')}}</button>
+                        <button 
+                            data-ng-click="store('#btn_on_' + v.rowId)" 
+                            data-store-url="{{ v.urlToOn}}" 
+                            class="btn btn-primary btn-spinner" 
+                            id="btn_on_{{ v.rowId}}"
+                            >{{ _t('switched_on')}}</button>
+                    </div>
+                    <div class="slider slider-horizontal" style="width: 140px;">
+                        <div class="slider-track">
+                            <div class="slider-selection" style="left: 0%; width: 40%;"></div>
+                            <div class="slider-handle round" style="left: 40%;"></div>
+                            <div class="slider-handle round hide" style="left: 0%;"></div>
+
+                        </div>
+                        <input type="text" class="span2" value="4" />
+                    </div>
+                    <button 
+                        data-ng-click="store('#btn_full_' + v.rowId)" 
+                        data-store-url="{{ v.urlToFull}}" 
+                        class="btn btn-info btn-spinner" 
+                        id="btn_full_{{ v.rowId}}"
+                        >{{ _t('btn_full')}}</button>
+                </div>
+                <div class="btn-group" ng-switch-when="binary">
+                    <button 
+                        data-ng-click="store('#btn_off_' + v.rowId)" 
+                        data-store-url="{{ v.urlToOff}}" 
+                        class="btn btn-info btn-spinner" 
+                        id="btn_off_{{ v.rowId}}"
+                        >{{ _t('switched_off')}}</button>
+                    <button 
+                        data-ng-click="store('#btn_on_' + v.rowId)" 
+                        data-store-url="{{ v.urlToOn}}" 
+                        class="btn btn-primary btn-spinner" 
+                        id="btn_on_{{ v.rowId}}"
+                        >{{ _t('switched_on')}}</button>
+
+                </div>
+                <div ng-switch-default>&nbsp;</div>
+            </td>
+            </tr>
             </tbody>
         </table>
 
