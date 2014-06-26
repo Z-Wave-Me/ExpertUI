@@ -5,6 +5,73 @@
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th>
+                        <a href="" ng-click="orderBy('id')">#  
+                            <span ng-show="predicate == 'id'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="" ng-click="orderBy('name')">{{ _t('device_name')}}
+                            <span ng-show="predicate == 'name'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                      <th>
+                        <a href="" ng-click="orderBy('temp')">{{ _t('switch_point_temp')}}
+                            <span ng-show="predicate == 'temp'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                     <th>
+                        <a href="" ng-click="orderBy('updateTime')">{{ _t('datetime')}}
+                            <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="i in data| orderBy:predicate:reverse">
+                    <td>{{ i.id}}</td>
+                    <td><i class="fa fa-sort-amount-asc fa-lg"></i> {{ i.name}}</td>
+                    <td><span class="spinner-target">{{ i.temp}}</span>&nbsp; <span>grd C</span>&nbsp;</td>
+                    <td>Update time</td>
+                    <td> 
+                        <!-- <span ng-bind="rangeSlider[$index]"></span>  -->
+                        <div class="btn-group">
+                            <button 
+                                class="btn btn-info spinner-selector_"
+                                ng-click="tempChange($index,'-')"
+                                data-spinner-direction="-" 
+                                data-spinner-scale="1" 
+                                data-spinner-max="32" 
+                                data-spinner-min="15">-</button>
+                             <button 
+                                class="btn btn-primary spinner-selector_"
+                                ng-click="tempChange($index,'+')"
+                                data-spinner-direction="-" 
+                                data-spinner-scale="1" 
+                                data-spinner-max="32" 
+                                data-spinner-min="15">+</button>
+                        </div></td>
+                        <td>
+                            <div id="range_slider_{{$index}}" 
+                                 class="app-range-slider" 
+                                 range-slider min="15" 
+                                 max="35" model-max="rangeSlider[$index]" 
+                                 pin-handle="min" 
+                                on-handle-up="sliderChange(v.urlToSlide,$index)">
+                            </div>
+                        </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Demo table -->
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
                     <th><a href="" ng-click="predicate = 'id';
                                 reverse = !reverse">#</a></th>
                     <th><a href="" ng-click="predicate = 'name';

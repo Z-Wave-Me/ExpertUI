@@ -2,7 +2,6 @@
  * Application controllers and factories
  * @author Martin Vach
  */
-//var app = angular.module("MyApp", ["ngResource"]);
 
 /*** Controllers ***/
 var appController = angular.module('appController', []);
@@ -70,11 +69,6 @@ appController.controller('HomeController', function($scope) {
 // Switch controller
 appController.controller('SwitchController', function($scope, $http, $log, $filter, $timeout, DataFactory, DataTestFactory, cfg) {
     $scope.switches = [];
-    // Slider range
-     $scope.range = {
-        min: 0,
-        max:0
-    };
     $scope.rangeSlider = [];
     // Load data
     $scope.load = function(lang) {
@@ -270,10 +264,13 @@ appController.controller('SwitchController', function($scope, $http, $log, $filt
         ;
         return {"level_cont": level_cont, "level_color": level_color, "level_status": level_status,"level_val": level_val};
     };
-    $http.get('storage/demo/switch.json').
-            success(function(data) {
-                $scope.data = data;
-            });
+    /**
+     * @todo Remove
+     */
+//    $http.get('storage/demo/switch.json').
+//            success(function(data) {
+//                $scope.data = data;
+//            });
 });
 
 // Dimmer controller
@@ -287,7 +284,7 @@ appController.controller('DimmerController', function($scope, $http, $log) {
 /**
  * Meters controller
  */
-appController.controller('SensorsController', function($scope, $http, $log, $filter, $timeout, DataFactory, DataTestFactory, cfg) {
+appController.controller('SensorsController', function($scope, $log, $filter, $timeout, DataFactory, DataTestFactory, cfg) {
     $scope.sensors = [];
     $scope.reset = function() {
         $scope.sensors = angular.copy([]);
@@ -491,7 +488,7 @@ appController.controller('SensorsController', function($scope, $http, $log, $fil
 /**
  * Meters controller
  */
-appController.controller('MetersController', function($scope, $http, $log, $filter, $timeout, DataFactory, DataTestFactory, cfg) {
+appController.controller('MetersController', function($scope, $log, $filter, $timeout, DataFactory, DataTestFactory, cfg) {
     $scope.meters = [];
     $scope.reset = function() {
         $scope.meters = angular.copy([]);
@@ -606,8 +603,7 @@ appController.controller('MetersController', function($scope, $http, $log, $filt
         $(btn).attr('disabled', true);
 
         DataFactory.store($(btn).attr('data-store-url')).query();
-//         $scope.reset();
-//        $scope.load($scope.lang);
+        
         $timeout(function() {
             spinner.fadeOut();
             $(btn).removeAttr('disabled');
@@ -631,11 +627,87 @@ appController.controller('MetersController', function($scope, $http, $log, $filt
 });
 
 // Thermostat controller
-appController.controller('ThermostatController', function($scope, $http, $log) {
-    $scope.range = {
-        min: 15,
-        max: 25
+appController.controller('ThermostatController', function($scope, $http, $log, $filter, $timeout, DataFactory, DataTestFactory, cfg) {
+     $scope.thermostats = [];
+    $scope.rangeSlider = {
+        0: 22,
+       1: 29,
+         2: 18,
+          3: 25
     };
+    
+    
+    // Load datafnc
+    $scope.load = function(lang) {};
+
+    // Load data
+    $scope.load($scope.lang);
+    
+    // Refresh data 
+    var refresh = function() {};
+    //$timeout(refresh, cfg.interval);
+
+    // Store data from on remote server
+    $scope.store = function(btn) {
+        $(btn).attr('disabled', true);
+        var url = $(btn).attr('data-store-url');
+        DataFactory.store(url).query();
+        $timeout(function() {
+             $(btn).removeAttr('disabled');
+        }, 1000);
+    };
+
+    // Store all data on remote server
+    $scope.storeAll = function(id) {
+        var btn = '#btn_update_' + id;
+        var spinner = '.fa-spinner';
+        $(btn).attr('disabled', true);
+        $(btn).next(spinner).show();
+        angular.forEach($scope.switches, function(v, k) {
+            DataFactory.store(v.urlToStore).query();
+        });
+        $timeout(function() {
+            $(btn).next(spinner).fadeOut();
+            $(btn).removeAttr('disabled');
+        }, 1000);
+    };
+    
+    // Store data with switch all
+    $scope.storeSwitchAll = function(btn) {
+        $(btn).attr('disabled', true);
+        var action_url = $(btn).attr('data-store-url');
+        var url;
+        angular.forEach($scope.switches, function(v, k) {
+            url = 'devices[' + v['id'] + '].instances[0].commandClasses[0x27].' +  action_url;
+            if(v.hasSwitchAll){
+                DataFactory.store(url).query();
+             }
+         });
+        $timeout(function() {
+            $(btn).removeAttr('disabled');
+        }, 1000);
+    };
+    
+     // Change temperature on click
+    $scope.tempChange = function(index,type) {
+       var val = $scope.rangeSlider[index];
+       var count = (type === '-' ? val - 1 : val + 1);
+       $scope.rangeSlider[index] = count;
+        console.log(val);
+        //DataFactory.store(url).query();
+    };
+    
+    // Store data after slider handle
+    $scope.sliderChange = function(cmd,index) {
+        var val = $scope.rangeSlider[index];
+        var url = cmd + '.Set('+ val +')';
+        console.log(cmd);
+        //DataFactory.store(url).query();
+    };
+    
+    /**
+     * @todo: remove
+     */
     $http.get('storage/demo/thermostat.json').
             success(function(data) {
                 $scope.data = data;
