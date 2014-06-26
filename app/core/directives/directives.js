@@ -40,11 +40,12 @@ angApp.directive('switchTypeIcon', function() {
             scope.specific = attr.specific;
             switch (parseInt(attr.generic, 10)) {
                 case 17:
-                    icon = 'fa-power-off';
+                    
+                    icon = 'fa-lightbulb-o';
                     break;
 
                 case 16:
-                    icon = 'fa-lightbulb-o';
+                    icon = 'fa-power-off';
                     break;
                     
                 case 9:

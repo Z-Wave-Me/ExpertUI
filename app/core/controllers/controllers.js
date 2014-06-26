@@ -19,7 +19,9 @@ appController.controller('BaseController', function($scope, $cookies, $filter, c
     };
     // Load language files
     $scope.loadLang = function(lang) {
-        langFactory.get(lang).query(function(data) {
+        // Is lang in language list?
+        var lang_file = (cfg.lang_list.indexOf(lang) > -1 ? lang : cfg.lang);
+        langFactory.get(lang_file).query(function(data) {
             $scope.languages = data;
             return;
         });
@@ -68,6 +70,12 @@ appController.controller('HomeController', function($scope) {
 // Switch controller
 appController.controller('SwitchController', function($scope, $http, $log, $filter, $timeout, DataFactory, DataTestFactory, cfg) {
     $scope.switches = [];
+    // Slider range
+     $scope.range = {
+        min: 0,
+        max:0
+    };
+    $scope.rangeSlider = [];
     // Load data
     $scope.load = function(lang) {
         DataFactory.all('0').query(function(ZWaveAPIData) {
@@ -111,6 +119,7 @@ appController.controller('SwitchController', function($scope, $http, $log, $filt
                     // Set object
                     var obj = {};
                     var level = $scope.updateLevel(instance.commandClasses[ccId].data.level, ccId);
+                    
                     obj['id'] = nodeId;
                     obj['cmd'] = instance.commandClasses[ccId].data.name + '.level';
                     obj['ccId'] = ccId;
@@ -127,12 +136,14 @@ appController.controller('SwitchController', function($scope, $http, $log, $filt
                     obj['level'] = level.level_cont;
                     obj['levelColor'] = level.level_color;
                     obj['levelStatus'] = level.level_status;
+                    obj['levelVal'] = level.level_val;
                      obj['urlToOff'] = 'devices[' + nodeId + '].instances[0].commandClasses['+ ccId +'].Set(0)';
                      obj['urlToOn'] = 'devices[' + nodeId + '].instances[0].commandClasses['+ ccId +'].Set(255)';
                      obj['urlToFull'] = 'devices[' + nodeId + '].instances[0].commandClasses['+ ccId +'].Set(99)';
+                     obj['urlToSlide'] = 'devices[' + nodeId + '].instances[0].commandClasses['+ ccId +']';
                     $scope.switches.push(obj);
-                    //console.log(obj['cmd']);
-                    cnt++;
+                    $scope.rangeSlider.push(obj['range_' + nodeId] = level.level_val);
+                     cnt++;
                 });
             });
         });
@@ -152,29 +163,19 @@ appController.controller('SwitchController', function($scope, $http, $log, $filt
                     var obj = data[v.cmd];
                     var level = $scope.updateLevel(obj, v.ccId);
                     var updateTime = $filter('isTodayFromUnix')(obj.updateTime);
+                    var level_html = '<span style="color: ' + level.level_color + ';">' + level.level_cont + '</span> ';
+                    if(level.level_status === 'on'){
+                        level_html += ' <i class="fa fa-check fa-lg" style="color: #3c763d;"></i>';
+                    }else{
+                        level_html += ' <i class="fa fa-exclamation fa-lg" style="color: #a94442;"></i>';
+                    }
                     $('#' + v.rowId + ' .row-time').html(updateTime).removeClass('is-updated-false');
-                    console.log(level,updateTime);
-//                    var level = '';
-//                    var updateTime;
-//                    // var date = $filter('isTodayFromUnix')(data.updateTime);
-//                    var levelExt;
-//                    if (v.cmdId == 0x30) {
-//                        levelExt = (obj.level.value ? $scope._t('sensor_triggered') : $scope._t('sensor_idle'));
-//                        updateTime = $filter('isTodayFromUnix')(obj.level.updateTime);
-//                    } else {
-//                        level = obj.val.value;
-//                        levelExt = obj.scaleString.value;
-//                        updateTime = $filter('isTodayFromUnix')(obj.val.updateTime);
-//                    }
-//
-//                    // Set updated row
-//                    $('#' + v.rowId + ' .row-level').html(level);
-//                    $('#' + v.rowId + ' .row-time').html(updateTime).removeClass('is-updated-false');
-//                    $('#update_time_tick').html($filter('getCurrentTime'));
-//
-//                    $log.info('Updating:' + v.rowId + ' | At: ' + updateTime + ' | with: ' + level);//REM
+                    $('#' + v.rowId + ' .row-level').html(level_html);
+                   
+
+                    $log.info('Updating:' + v.rowId + ' | At: ' + updateTime + ' | with: ' + level);//REM
                 } else {
-                    //$log.warn(v.cmd + ': Nothing to update --- ' + $scope.lang);//REM
+                    $log.warn(v.cmd + ': Nothing to update --- ' + $scope.lang);//REM
                 }
             });
             //$log.debug('-----------');//REM
@@ -186,9 +187,8 @@ appController.controller('SwitchController', function($scope, $http, $log, $filt
     // Store data from on remote server
     $scope.store = function(btn) {
         $(btn).attr('disabled', true);
-        DataFactory.store($(btn).attr('data-store-url')).query();
-//         $scope.reset();
-//        $scope.load($scope.lang);
+        var url = $(btn).attr('data-store-url');
+        DataFactory.store(url).query();
         $timeout(function() {
              $(btn).removeAttr('disabled');
         }, 1000);
@@ -212,15 +212,23 @@ appController.controller('SwitchController', function($scope, $http, $log, $filt
     // Store data with switch all
     $scope.storeSwitchAll = function(btn) {
         $(btn).attr('disabled', true);
-        var url = $(btn).attr('data-store-url');
+        var action_url = $(btn).attr('data-store-url');
+        var url;
         angular.forEach($scope.switches, function(v, k) {
+            url = 'devices[' + v['id'] + '].instances[0].commandClasses[0x27].' +  action_url;
             if(v.hasSwitchAll){
-                DataFactory.store(v[url]).query();
+                DataFactory.store(url).query();
              }
          });
         $timeout(function() {
             $(btn).removeAttr('disabled');
         }, 1000);
+    };
+    
+    $scope.sliderChange = function(cmd,index) {
+        var val = $scope.rangeSlider[index];
+        var url = cmd + '.Set('+ val +')';
+        DataFactory.store(url).query();
     };
 
     // Update level
@@ -228,6 +236,7 @@ appController.controller('SwitchController', function($scope, $http, $log, $filt
         var level_cont;
         var level_color;
         var level_status = 'off';
+        var level_val = 0;
 
         //var level = obj.value;
         var level = (angular.isDefined(obj.value) ? obj.value : null);
@@ -248,16 +257,18 @@ appController.controller('SwitchController', function($scope, $http, $log, $filt
                 level_status = 'on';
                 level_cont = $scope._t('switched_on');
                 level_color = '#3c763d';
+               level_val = (level < 100 ? level : 99);
             } else {
                 level_cont = level.toString() + ((ccId == 0x26) ? '%' : '');
                 var lvlc_r = ('00' + parseInt(0x9F + 0x60 * level / 99).toString(16)).slice(-2);
                 var lvlc_g = ('00' + parseInt(0x7F + 0x50 * level / 99).toString(16)).slice(-2);
                 level_color = '#' + lvlc_r + lvlc_g + '00';
                 level_status = 'on';
+                level_val = (level < 100 ? level : 99);
             }
         }
         ;
-        return {"level_cont": level_cont, "level_color": level_color, "level_status": level_status};
+        return {"level_cont": level_cont, "level_color": level_color, "level_status": level_status,"level_val": level_val};
     };
     $http.get('storage/demo/switch.json').
             success(function(data) {

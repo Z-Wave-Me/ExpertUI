@@ -46,7 +46,7 @@
 /* line 69, scss/angular.rangeSlider.scss */
 .ngrs-range-slider {
   position: relative;
-  margin: 10px 0 30px;
+  margin: 0 20px 0 0;
   padding: 4px;
   border: 1px solid #ccc;
   background: #fff;
@@ -174,16 +174,16 @@
 /* line 182, scss/angular.rangeSlider.scss */
 .ngrs-range-slider .ngrs-value {
   position: absolute;
-  top: 100%;
-  left: 0;
+  top: 0;
+  left: -10px;
   padding: 5px 0 0 0;
   font-size: 12px;
   color: #999;
 }
 /* line 190, scss/angular.rangeSlider.scss */
 .ngrs-range-slider .ngrs-value.ngrs-value-max {
-  left: auto;
-  right: 0;
+/*  left: -50px;*/
+  right:-20px;
   text-align: right;
 }
 /* line 198, scss/angular.rangeSlider.scss */
