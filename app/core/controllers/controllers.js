@@ -125,7 +125,9 @@ appController.controller('SwitchController', function($scope, $http, $log, $filt
                     obj['rowId'] = 'switch_' + nodeId + '_' + cnt;
                     obj['name'] = node.data.name;
                     obj['updateTime'] = instance.commandClasses[ccId].data.level.updateTime;
+                     obj['invalidateTime'] =  instance.commandClasses[ccId].data.level.invalidateTime;
                     obj['urlToStore'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Get()';
+                    obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
                     //obj['level'] = ZWaveAPIData.devices[nodeId].instances[instanceId].commandClasses[ccId].data.level;
                     obj['level'] = level.level_cont;
                     obj['levelColor'] = level.level_color;
@@ -521,7 +523,7 @@ appController.controller('MetersController', function($scope, $log, $filter, $ti
                             if (isNaN(sensor_type)) {
                                 return;
                             }
-                            if (meter.sensorType.value == 1 && realEMeterScales.indexOf(sensor_type) != -1) {
+                            if (meter.sensorType.value == 1 && realEMeterScales.indexOf(sensor_type) === -1) {
                                 return; // filter only for eMeters
                             }
                             if (meter.sensorType.value > 1) {

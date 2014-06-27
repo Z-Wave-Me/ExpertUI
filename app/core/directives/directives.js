@@ -89,7 +89,7 @@ angApp.directive('switchAllIcon', function() {
                         break;
 
                     default:
-                        src = 'app/images/icons/no_img.png';
+                        src = 'app/images/icons/1x1.png';
                         break;
                 }
             }
