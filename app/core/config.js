@@ -16,7 +16,11 @@ var config_data = {
     'store_url': '/ZWaveAPI/Run/', // Url for store data
     'lang': 'en', // Default language
     'lang_dir': 'app/core/lang/', // Language directory
-    'lang_list': ["en","de","fr","es","ru"] // List of languages
+    'lang_list': ["en","de","fr","es","ru"], // List of languages
+    'thermostat_range': {// Min and max thermostat range
+        "min":"0", 
+        "max":"40"
+    } 
     
   }
 };

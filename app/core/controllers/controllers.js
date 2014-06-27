@@ -8,6 +8,10 @@ var appController = angular.module('appController', []);
 
 // Base controller
 appController.controller('BaseController', function($scope, $cookies, $filter, cfg, langFactory, langTransFactory) {
+    // Global config
+    $scope.cfg = cfg;
+
+    // Lang settings
     $scope.lang_list = cfg.lang_list;
     // Set language
     $scope.lang = (angular.isDefined($cookies.lang) ? $cookies.lang : cfg.lang);
@@ -36,7 +40,6 @@ appController.controller('BaseController', function($scope, $cookies, $filter, c
     });
     // Navi time
     $scope.navTime = $filter('getCurrentTime');
-    //$('#update_time_tick').html($filter('getCurrentTime'));
     // Order by
     $scope.orderBy = function(field) {
         $scope.predicate = field;
@@ -113,7 +116,7 @@ appController.controller('SwitchController', function($scope, $http, $log, $filt
                     // Set object
                     var obj = {};
                     var level = $scope.updateLevel(instance.commandClasses[ccId].data.level, ccId);
-                    
+
                     obj['id'] = nodeId;
                     obj['cmd'] = instance.commandClasses[ccId].data.name + '.level';
                     obj['ccId'] = ccId;
@@ -125,7 +128,7 @@ appController.controller('SwitchController', function($scope, $http, $log, $filt
                     obj['rowId'] = 'switch_' + nodeId + '_' + cnt;
                     obj['name'] = node.data.name;
                     obj['updateTime'] = instance.commandClasses[ccId].data.level.updateTime;
-                     obj['invalidateTime'] =  instance.commandClasses[ccId].data.level.invalidateTime;
+                    obj['invalidateTime'] = instance.commandClasses[ccId].data.level.invalidateTime;
                     obj['urlToStore'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Get()';
                     obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
                     //obj['level'] = ZWaveAPIData.devices[nodeId].instances[instanceId].commandClasses[ccId].data.level;
@@ -133,13 +136,13 @@ appController.controller('SwitchController', function($scope, $http, $log, $filt
                     obj['levelColor'] = level.level_color;
                     obj['levelStatus'] = level.level_status;
                     obj['levelVal'] = level.level_val;
-                     obj['urlToOff'] = 'devices[' + nodeId + '].instances[0].commandClasses['+ ccId +'].Set(0)';
-                     obj['urlToOn'] = 'devices[' + nodeId + '].instances[0].commandClasses['+ ccId +'].Set(255)';
-                     obj['urlToFull'] = 'devices[' + nodeId + '].instances[0].commandClasses['+ ccId +'].Set(99)';
-                     obj['urlToSlide'] = 'devices[' + nodeId + '].instances[0].commandClasses['+ ccId +']';
+                    obj['urlToOff'] = 'devices[' + nodeId + '].instances[0].commandClasses[' + ccId + '].Set(0)';
+                    obj['urlToOn'] = 'devices[' + nodeId + '].instances[0].commandClasses[' + ccId + '].Set(255)';
+                    obj['urlToFull'] = 'devices[' + nodeId + '].instances[0].commandClasses[' + ccId + '].Set(99)';
+                    obj['urlToSlide'] = 'devices[' + nodeId + '].instances[0].commandClasses[' + ccId + ']';
                     $scope.switches.push(obj);
                     $scope.rangeSlider.push(obj['range_' + nodeId] = level.level_val);
-                     cnt++;
+                    cnt++;
                 });
             });
         });
@@ -147,8 +150,8 @@ appController.controller('SwitchController', function($scope, $http, $log, $filt
 
     // Load data
     $scope.load($scope.lang);
-    
-    // Refresh data 
+
+    // Refresh data
     var refresh = function() {
         DataFactory.all($filter('getTimestamp')).query(function(data) {
             //DataTestFactory.all('refresh_switches.json').query(function(data) {
@@ -160,14 +163,14 @@ appController.controller('SwitchController', function($scope, $http, $log, $filt
                     var level = $scope.updateLevel(obj, v.ccId);
                     var updateTime = $filter('isTodayFromUnix')(obj.updateTime);
                     var level_html = '<span style="color: ' + level.level_color + ';">' + level.level_cont + '</span> ';
-                    if(level.level_status === 'on'){
+                    if (level.level_status === 'on') {
                         level_html += ' <i class="fa fa-check fa-lg" style="color: #3c763d;"></i>';
-                    }else{
+                    } else {
                         level_html += ' <i class="fa fa-exclamation fa-lg" style="color: #a94442;"></i>';
                     }
                     $('#' + v.rowId + ' .row-time').html(updateTime).removeClass('is-updated-false');
                     $('#' + v.rowId + ' .row-level').html(level_html);
-                   
+                    $('#update_time_tick').html($filter('getCurrentTime'));
 
                     $log.info('Updating:' + v.rowId + ' | At: ' + updateTime + ' | with: ' + level);//REM
                 } else {
@@ -186,7 +189,7 @@ appController.controller('SwitchController', function($scope, $http, $log, $filt
         var url = $(btn).attr('data-store-url');
         DataFactory.store(url).query();
         $timeout(function() {
-             $(btn).removeAttr('disabled');
+            $(btn).removeAttr('disabled');
         }, 1000);
     };
 
@@ -204,26 +207,26 @@ appController.controller('SwitchController', function($scope, $http, $log, $filt
             $(btn).removeAttr('disabled');
         }, 1000);
     };
-    
+
     // Store data with switch all
     $scope.storeSwitchAll = function(btn) {
         $(btn).attr('disabled', true);
         var action_url = $(btn).attr('data-store-url');
         var url;
         angular.forEach($scope.switches, function(v, k) {
-            url = 'devices[' + v['id'] + '].instances[0].commandClasses[0x27].' +  action_url;
-            if(v.hasSwitchAll){
+            url = 'devices[' + v['id'] + '].instances[0].commandClasses[0x27].' + action_url;
+            if (v.hasSwitchAll) {
                 DataFactory.store(url).query();
-             }
-         });
+            }
+        });
         $timeout(function() {
             $(btn).removeAttr('disabled');
         }, 1000);
     };
-    
-    $scope.sliderChange = function(cmd,index) {
+
+    $scope.sliderChange = function(cmd, index) {
         var val = $scope.rangeSlider[index];
-        var url = cmd + '.Set('+ val +')';
+        var url = cmd + '.Set(' + val + ')';
         DataFactory.store(url).query();
     };
 
@@ -253,7 +256,7 @@ appController.controller('SwitchController', function($scope, $http, $log, $filt
                 level_status = 'on';
                 level_cont = $scope._t('switched_on');
                 level_color = '#3c763d';
-               level_val = (level < 100 ? level : 99);
+                level_val = (level < 100 ? level : 99);
             } else {
                 level_cont = level.toString() + ((ccId == 0x26) ? '%' : '');
                 var lvlc_r = ('00' + parseInt(0x9F + 0x60 * level / 99).toString(16)).slice(-2);
@@ -264,7 +267,7 @@ appController.controller('SwitchController', function($scope, $http, $log, $filt
             }
         }
         ;
-        return {"level_cont": level_cont, "level_color": level_color, "level_status": level_status,"level_val": level_val};
+        return {"level_cont": level_cont, "level_color": level_color, "level_status": level_status, "level_val": level_val};
     };
     /**
      * @todo Remove
@@ -418,7 +421,7 @@ appController.controller('SensorsController', function($scope, $log, $filter, $t
 //        $scope.load($scope.lang);
 //    });
 
-    // Refresh data 
+    // Refresh data
     var refresh = function() {
         DataFactory.all($filter('getTimestamp')).query(function(data) {
             //DataTestFactory.all('device_31_updated.json').query(function(data) {
@@ -561,7 +564,7 @@ appController.controller('MetersController', function($scope, $log, $filter, $ti
 
     $scope.load($scope.lang);
 
-    // Refresh data 
+    // Refresh data
     var refresh = function() {
         DataFactory.all($filter('getTimestamp')).query(function(data) {
             //DataTestFactory.all('device_31_updated.json').query(function(data) {
@@ -605,7 +608,7 @@ appController.controller('MetersController', function($scope, $log, $filter, $ti
         $(btn).attr('disabled', true);
 
         DataFactory.store($(btn).attr('data-store-url')).query();
-        
+
         $timeout(function() {
             spinner.fadeOut();
             $(btn).removeAttr('disabled');
@@ -630,90 +633,125 @@ appController.controller('MetersController', function($scope, $log, $filter, $ti
 
 // Thermostat controller
 appController.controller('ThermostatController', function($scope, $http, $log, $filter, $timeout, DataFactory, DataTestFactory, cfg) {
-     $scope.thermostats = [];
-    $scope.rangeSlider = {
-        0: 22,
-       1: 29,
-         2: 18,
-          3: 25
+    $scope.thermostats = [];
+    $scope.rangeSlider = [];
+    
+    // Load data
+    $scope.load = function(lang) {
+        DataFactory.all('0').query(function(ZWaveAPIData) {
+            var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
+            // Loop throught devices
+            angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+                if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+                    return;
+                }
+
+                // Loop throught instances
+                var cnt = 1;
+                angular.forEach(node.instances, function(instance, instanceId) {
+                    if (instanceId == 0 && node.instances.length > 1) {
+                        return;
+                    }
+                    // we skip devices without ThermostatSetPint AND ThermostatMode CC
+                   if (!(0x43 in instance.commandClasses) && !(0x40 in instance.commandClasses)){
+                       return;
+                   }
+                   var ccId = 0x43;
+                   var curThermMode = 1;
+
+                    // Set object
+                    var obj = {};
+                    //var level = $scope.updateLevel(instance.commandClasses[ccId].data.level, ccId);
+
+                    obj['id'] = nodeId;
+                    obj['cmd'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.'+ curThermMode;
+                    obj['ccId'] = ccId;
+                    obj['rowId'] = 'row_' + nodeId + '_' + cnt;
+                    obj['name'] = node.data.name;
+                    obj['level'] = instance.commandClasses[ccId].data[curThermMode].setVal.value;
+                    obj['updateTime'] = instance.commandClasses[ccId].data[curThermMode].updateTime;
+                    obj['invalidateTime'] = instance.commandClasses[ccId].data[curThermMode].invalidateTime;
+                    obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
+                    obj['urlToStore'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']';
+                    $scope.thermostats.push(obj);
+                    $scope.rangeSlider.push(obj['range_' + nodeId] = obj['level']);
+                    cnt++;
+                });
+            });
+        });
     };
-    
-    
-    // Load datafnc
-    $scope.load = function(lang) {};
 
     // Load data
     $scope.load($scope.lang);
-    
-    // Refresh data 
-    var refresh = function() {};
-    //$timeout(refresh, cfg.interval);
 
-    // Store data from on remote server
-    $scope.store = function(btn) {
-        $(btn).attr('disabled', true);
-        var url = $(btn).attr('data-store-url');
-        DataFactory.store(url).query();
-        $timeout(function() {
-             $(btn).removeAttr('disabled');
-        }, 1000);
-    };
+    // Refresh data
+    var refresh = function() {
+        DataFactory.all($filter('getTimestamp')).query(function(data) {
+            //DataTestFactory.all('refresh_switches.json').query(function(data) {
+            angular.forEach($scope.thermostats, function(v, k) {
+                // Check for updated data
+               if (v.cmd in data) {
+                    $log.warn(v.cmd + ':' + v.id);//REM
+                    var obj = data[v.cmd];
+                    var level = obj.setVal.value;
+                    var updateTime = $filter('isTodayFromUnix')(obj.updateTime);
+                    $('#' + v.rowId + ' .row-time').html(updateTime).removeClass('is-updated-false');
+                    $('#' + v.rowId + ' .row-level .level-val').html(level);
+                    $('#update_time_tick').html($filter('getCurrentTime'));
 
-    // Store all data on remote server
-    $scope.storeAll = function(id) {
-        var btn = '#btn_update_' + id;
-        var spinner = '.fa-spinner';
-        $(btn).attr('disabled', true);
-        $(btn).next(spinner).show();
-        angular.forEach($scope.switches, function(v, k) {
-            DataFactory.store(v.urlToStore).query();
+                    $log.info('Updating:' + v.rowId + ' | At: ' + updateTime + ' | with: ' + level);//REM
+                } else {
+                    $log.warn(v.cmd + ': Nothing to update --- ');//REM
+                }
+            });
+            //$log.debug('-----------');//REM
         });
-        $timeout(function() {
-            $(btn).next(spinner).fadeOut();
-            $(btn).removeAttr('disabled');
-        }, 1000);
+        $timeout(refresh, cfg.interval);
     };
-    
-    // Store data with switch all
-    $scope.storeSwitchAll = function(btn) {
-        $(btn).attr('disabled', true);
-        var action_url = $(btn).attr('data-store-url');
-        var url;
-        angular.forEach($scope.switches, function(v, k) {
-            url = 'devices[' + v['id'] + '].instances[0].commandClasses[0x27].' +  action_url;
-            if(v.hasSwitchAll){
-                DataFactory.store(url).query();
-             }
-         });
-        $timeout(function() {
-            $(btn).removeAttr('disabled');
-        }, 1000);
-    };
-    
-     // Change temperature on click
-    $scope.tempChange = function(index,type) {
-       var val = $scope.rangeSlider[index];
-       var count = (type === '-' ? val - 1 : val + 1);
-       $scope.rangeSlider[index] = count;
-        console.log(val);
-        //DataFactory.store(url).query();
-    };
-    
-    // Store data after slider handle
-    $scope.sliderChange = function(cmd,index) {
+    $timeout(refresh, cfg.interval);
+
+    // Change temperature on click
+    $scope.tempChange = function(cmd,index, type) {
         var val = $scope.rangeSlider[index];
-        var url = cmd + '.Set('+ val +')';
-        console.log(cmd);
-        //DataFactory.store(url).query();
+        var min = parseInt($scope.cfg.thermostat_range.min, 10);
+        var max = parseInt($scope.cfg.thermostat_range.max, 10);
+        var count = (type === '-' ? val - 1 : val + 1);
+        if (count < min) {
+            count = min;
+        }
+        if (count > max) {
+            count = max;
+        }
+        $scope.rangeSlider[index] = count;
+        var url = cmd + '.Set(1,' + count + ')';
+        console.log('Sending value: ' + $scope.rangeSlider[index]);
+        DataFactory.store(url).query();
     };
-    
+
+    // Change temperature after slider handle
+    $scope.sliderChange = function(cmd, index) {
+        var count = parseInt($scope.rangeSlider[index]);
+        var min = parseInt($scope.cfg.thermostat_range.min, 10);
+        var max = parseInt($scope.cfg.thermostat_range.max, 10);
+        if (count < min) {
+            count = min;
+        }
+        if (count > max) {
+            count = max;
+        }
+        $scope.rangeSlider[index] = count;
+        var url = cmd + '.Set(1,' + count + ')';
+        console.log(url);
+        DataFactory.store(url).query();
+    };
+
     /**
      * @todo: remove
      */
-    $http.get('storage/demo/thermostat.json').
-            success(function(data) {
-                $scope.data = data;
-            });
+//    $http.get('storage/demo/thermostat.json').
+//            success(function(data) {
+//                $scope.data = data;
+//            });
 });
 
 // Locks controller

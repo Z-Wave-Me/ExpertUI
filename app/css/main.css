@@ -95,6 +95,10 @@ h3 {
     color: red;
 }
 
+.is-rfreshed{
+    color: green;
+}
+
 .main_spinner{
     font-size: 14px;
     color:#555;

@@ -1,6 +1,7 @@
 <!-- Thermostat view -->
 <div ng-controller="ThermostatController">
     <div class="page-header"><h1>Thermostat</h1></div>
+   {{cfg.thermostat_range.min}}
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
@@ -30,67 +31,38 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="i in data| orderBy:predicate:reverse">
-                    <td>{{ i.id}}</td>
-                    <td><i class="fa fa-sort-amount-asc fa-lg"></i> {{ i.name}}</td>
-                    <td><span class="spinner-target">{{ i.temp}}</span>&nbsp; <span>grd C</span>&nbsp;</td>
-                    <td>Update time</td>
+                <tr ng-repeat="v in thermostats | orderBy:predicate:reverse" id="{{ v.rowId}}">
+                    <td>{{ v.id}}</td>
+                    <td><i class="fa fa-sort-amount-asc fa-lg"></i> {{ v.name}}</td>
+                    <td class="row-level"><span class="level-val">{{ v.level}}</span>&nbsp;<span>&deg;C</span></td>
+                    <td class="row-time is-updated-{{v.isUpdated}}">{{ v.updateTime | isTodayFromUnix }}</td>
                     <td> 
                         <!-- <span ng-bind="rangeSlider[$index]"></span>  -->
                         <div class="btn-group">
                             <button 
                                 class="btn btn-info spinner-selector_"
-                                ng-click="tempChange($index,'-')"
-                                data-spinner-direction="-" 
+                                ng-click="tempChange(v.urlToStore,$index,'-')"
                                 data-spinner-scale="1" 
-                                data-spinner-max="32" 
-                                data-spinner-min="15">-</button>
+                                data-spinner-max="{{cfg.thermostat_range.max}}" 
+                                data-spinner-min="{{cfg.thermostat_range.min}}">{{_t.('btn_plus')}}</button>
                              <button 
                                 class="btn btn-primary spinner-selector_"
-                                ng-click="tempChange($index,'+')"
-                                data-spinner-direction="-" 
+                                ng-click="tempChange(v.urlToStore,$index,'+')"
                                 data-spinner-scale="1" 
-                                data-spinner-max="32" 
-                                data-spinner-min="15">+</button>
+                                data-spinner-max="{{cfg.thermostat_range.max}}" 
+                                data-spinner-min="{{cfg.thermostat_range.min}}">{{_t.('btn_minus')}}</button>
                         </div></td>
                         <td>
                             <div id="range_slider_{{$index}}" 
                                  class="app-range-slider" 
-                                 range-slider min="15" 
-                                 max="35" model-max="rangeSlider[$index]" 
+                                 range-slider 
+                                 min='cfg.thermostat_range.min' 
+                                 max='cfg.thermostat_range.max'  
+                                 model-max="rangeSlider[$index]" 
                                  pin-handle="min" 
-                                on-handle-up="sliderChange(v.urlToSlide,$index)">
+                                on-handle-up="sliderChange(v.urlToStore,$index)">
                             </div>
                         </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    
-    <!-- Demo table -->
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th><a href="" ng-click="predicate = 'id';
-                                reverse = !reverse">#</a></th>
-                    <th><a href="" ng-click="predicate = 'name';
-                                reverse = !reverse">Name</a></th>
-                    <th>Temperature</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="i in data| orderBy:predicate:reverse">
-                    <td>{{ i.id}}</td>
-                    <td><i class="fa fa-sort-amount-asc fa-lg"></i> {{ i.name}}</td>
-                    <td><span class="spinner-target">{{ i.temp}}</span>&nbsp; <span>grd C</span>&nbsp;</td>
-                    <td> <div class="btn-group">
-                            <button class="btn btn-info spinner-selector" data-spinner-direction="-" data-spinner-scale="1" data-spinner-max="32" data-spinner-min="15">-</button>
-                            <button class="btn btn-primary spinner-selector" data-spinner-direction="+" data-spinner-scale="1" data-spinner-max="32" data-spinner-min="15">+</button>
-                        </div></td>
-                    <td><div class="app-range-slider" range-slider min="range.min" max="32" model-max="range.max" pin-handle="min"></div></td>
                 </tr>
             </tbody>
         </table>

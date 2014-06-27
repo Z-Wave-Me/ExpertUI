@@ -1,17 +1,59 @@
 {
-    "devices.36.data.lastReceived": {
-      "name": "lastReceived",
-      "value": 0,
-      "type": "int",
-      "invalidateTime": 1402671682,
-      "updateTime": 1403618334
+    "devices.23.instances.0.commandClasses.67.data.1": {
+      "name": "1",
+      "value": null,
+      "type": "NoneType",
+      "val": {
+        "name": "val",
+        "value": 28,
+        "type": "float",
+        "invalidateTime": 1403865164,
+        "updateTime": 1403864980
+      },
+      "scale": {
+        "name": "scale",
+        "value": 0,
+        "type": "int",
+        "invalidateTime": 1403865164,
+        "updateTime": 1403864980
+      },
+      "scaleString": {
+        "name": "scaleString",
+        "value": "°C",
+        "type": "str",
+        "invalidateTime": 1403865164,
+        "updateTime": 1403864980
+      },
+      "setVal": {
+        "name": "setVal",
+        "value": 23,
+        "type": "float",
+        "invalidateTime": 1403865164,
+        "updateTime": 1403865163
+      },
+      "modeName": {
+        "name": "modeName",
+        "value": "Heating",
+        "type": "str",
+        "invalidateTime": 1403865164,
+        "updateTime": 1402669427
+      },
+      "deviceScale": {
+        "name": "deviceScale",
+        "value": 0,
+        "type": "int",
+        "invalidateTime": 1403865164,
+        "updateTime": 1403864980
+      },
+      "deviceScaleString": {
+        "name": "deviceScaleString",
+        "value": "°C",
+        "type": "str",
+        "invalidateTime": 1403865164,
+        "updateTime": 1403864980
+      },
+      "invalidateTime": 1403865164,
+      "updateTime": 1403864980
     },
-    "devices.36.instances.0.commandClasses.37.data.level": {
-      "name": "level",
-      "value": true,
-      "type": "bool",
-      "invalidateTime": 1403618332,
-      "updateTime": 1403618334
-    },
-  "updateTime": 1403618336
+  "updateTime": 1403865165
 }
