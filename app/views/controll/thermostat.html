@@ -44,13 +44,13 @@
                                 ng-click="tempChange(v.urlToStore,$index,'-')"
                                 data-spinner-scale="1" 
                                 data-spinner-max="{{cfg.thermostat_range.max}}" 
-                                data-spinner-min="{{cfg.thermostat_range.min}}">{{_t.('btn_plus')}}</button>
+                                data-spinner-min="{{cfg.thermostat_range.min}}">{{_t.('btn_minus')}}</button>
                              <button 
                                 class="btn btn-primary spinner-selector_"
                                 ng-click="tempChange(v.urlToStore,$index,'+')"
                                 data-spinner-scale="1" 
                                 data-spinner-max="{{cfg.thermostat_range.max}}" 
-                                data-spinner-min="{{cfg.thermostat_range.min}}">{{_t.('btn_minus')}}</button>
+                                data-spinner-min="{{cfg.thermostat_range.min}}">{{_t.('btn_plus')}}</button>
                         </div></td>
                         <td>
                             <div id="range_slider_{{$index}}" 
