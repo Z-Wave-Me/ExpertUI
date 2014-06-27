@@ -4,15 +4,18 @@
  */
 // Convert unix timastamp to date
 angApp.filter('getTimestamp', function() {
-    return Math.round(+new Date()/1000);
- });
+    return Math.round(+new Date() / 1000);
+});
 
+/**
+ * Strip HTML tags
+ */
 angApp.filter('stripTags', function() {
-   return function(input) {
-       return String(input).replace(/<[^>]+>/gm, '');
+    return function(input) {
+        return String(input).replace(/<[^>]+>/gm, '');
         //return  input.replace(/<\/?[^>]+(>|$)/g, "");
     };
- });
+});
 // Convert unix timastamp to date
 angApp.filter('dateFromUnix', function() {
     return function(input) {
@@ -31,7 +34,7 @@ angApp.filter('dateFromUnix', function() {
 // Get current date time
 angApp.filter('getCurrentDate', function() {
     return function() {
-    var d = new Date();
+        var d = new Date();
         var day = d.getDate();
         var mon = d.getMonth() + 1; //Months are zero based
         var year = d.getFullYear();
@@ -46,7 +49,7 @@ angApp.filter('getCurrentDate', function() {
 // Get current time
 angApp.filter('getCurrentTime', function() {
     return function() {
-    var d = new Date();
+        var d = new Date();
         var hrs = (d.getHours() < 10 ? '0' + d.getHours() : d.getHours());
         var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
         var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
@@ -65,14 +68,45 @@ angApp.filter('isTodayFromUnix', function() {
         var hrs = (d.getHours() < 10 ? '0' + d.getHours() : d.getHours());
         var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
         var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
-        
-    if (d.toDateString() == (new Date()).toDateString()){
-        //return hrs + ':' + min + ':' + sec;
-         return hrs + ':' + min;
-       
-    }else{
-        //return day + '.' + mon + '.' + year + ' ' + hrs + ':' + min + ':' + sec;
-        return day + '.' + mon + '.' + year;
-    }
+
+        if (d.toDateString() == (new Date()).toDateString()) {
+            //return hrs + ':' + min + ':' + sec;
+            return hrs + ':' + min;
+
+        } else {
+            //return day + '.' + mon + '.' + year + ' ' + hrs + ':' + min + ':' + sec;
+            return day + '.' + mon + '.' + year;
+        }
+    };
+});
+
+/**
+ * Replace Lock state with text
+ */
+angApp.filter('lockStatus', function() {
+    return function(input) {
+        var mode = input;
+        var mode_lbl;
+
+        if (mode === '' || mode === null) {
+            mode_lbl = '?';
+        } else {
+            switch (mode) {
+                case 0x00:
+                    mode_lbl = 'Open';
+                    break;
+                case 0x10:
+                    mode_lbl = 'Open from inside';
+                    break;
+                case 0x20:
+                    mode_lbl = 'Open from outside';
+                    break;
+                case 0xff:
+                    mode_lbl = 'Closed';
+                    break;
+            }
+            ;
+        };
+        return  mode_lbl;
     };
 });

@@ -1,59 +1,59 @@
 {
-    "devices.23.instances.0.commandClasses.67.data.1": {
-      "name": "1",
-      "value": null,
-      "type": "NoneType",
-      "val": {
-        "name": "val",
-        "value": 28,
-        "type": "float",
-        "invalidateTime": 1403865164,
-        "updateTime": 1403864980
-      },
-      "scale": {
-        "name": "scale",
-        "value": 0,
-        "type": "int",
-        "invalidateTime": 1403865164,
-        "updateTime": 1403864980
-      },
-      "scaleString": {
-        "name": "scaleString",
-        "value": "°C",
-        "type": "str",
-        "invalidateTime": 1403865164,
-        "updateTime": 1403864980
-      },
-      "setVal": {
-        "name": "setVal",
-        "value": 23,
-        "type": "float",
-        "invalidateTime": 1403865164,
-        "updateTime": 1403865163
-      },
-      "modeName": {
-        "name": "modeName",
-        "value": "Heating",
-        "type": "str",
-        "invalidateTime": 1403865164,
-        "updateTime": 1402669427
-      },
-      "deviceScale": {
-        "name": "deviceScale",
-        "value": 0,
-        "type": "int",
-        "invalidateTime": 1403865164,
-        "updateTime": 1403864980
-      },
-      "deviceScaleString": {
-        "name": "deviceScaleString",
-        "value": "°C",
-        "type": "str",
-        "invalidateTime": 1403865164,
-        "updateTime": 1403864980
-      },
-      "invalidateTime": 1403865164,
-      "updateTime": 1403864980
+    "devices.37.data.lastSend": {
+      "name": "lastSend",
+      "value": 32058221,
+      "type": "int",
+      "invalidateTime": 1403510632,
+      "updateTime": 1403874018
     },
-  "updateTime": 1403865165
+    "devices.37.data.lastReceived": {
+      "name": "lastReceived",
+      "value": 0,
+      "type": "int",
+      "invalidateTime": 1403510632,
+      "updateTime": 1403874018
+    },
+    "devices.37.instances.0.commandClasses.98.data.mode": {
+      "name": "mode",
+      "value": 255,
+      "type": "int",
+      "invalidateTime": 1403510650,
+      "updateTime": 1403874018
+    },
+    "devices.37.instances.0.commandClasses.98.data.insideMode": {
+      "name": "insideMode",
+      "value": 0,
+      "type": "int",
+      "invalidateTime": 1403510650,
+      "updateTime": 1403874018
+    },
+    "devices.37.instances.0.commandClasses.98.data.outsideMode": {
+      "name": "outsideMode",
+      "value": 1,
+      "type": "int",
+      "invalidateTime": 1403510650,
+      "updateTime": 1403874018
+    },
+    "devices.37.instances.0.commandClasses.98.data.lockMinutes": {
+      "name": "lockMinutes",
+      "value": 254,
+      "type": "int",
+      "invalidateTime": 1403510650,
+      "updateTime": 1403874018
+    },
+    "devices.37.instances.0.commandClasses.98.data.lockSeconds": {
+      "name": "lockSeconds",
+      "value": 254,
+      "type": "int",
+      "invalidateTime": 1403510650,
+      "updateTime": 1403874018
+    },
+    "devices.37.instances.0.commandClasses.98.data.condition": {
+      "name": "condition",
+      "value": 0,
+      "type": "int",
+      "invalidateTime": 1403510650,
+      "updateTime": 1403874018
+    },
+  "updateTime": 1403874019
 }

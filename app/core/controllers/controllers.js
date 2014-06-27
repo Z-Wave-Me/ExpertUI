@@ -635,7 +635,7 @@ appController.controller('MetersController', function($scope, $log, $filter, $ti
 appController.controller('ThermostatController', function($scope, $http, $log, $filter, $timeout, DataFactory, DataTestFactory, cfg) {
     $scope.thermostats = [];
     $scope.rangeSlider = [];
-    
+
     // Load data
     $scope.load = function(lang) {
         DataFactory.all('0').query(function(ZWaveAPIData) {
@@ -653,18 +653,18 @@ appController.controller('ThermostatController', function($scope, $http, $log, $
                         return;
                     }
                     // we skip devices without ThermostatSetPint AND ThermostatMode CC
-                   if (!(0x43 in instance.commandClasses) && !(0x40 in instance.commandClasses)){
-                       return;
-                   }
-                   var ccId = 0x43;
-                   var curThermMode = 1;
+                    if (!(0x43 in instance.commandClasses) && !(0x40 in instance.commandClasses)) {
+                        return;
+                    }
+                    var ccId = 0x43;
+                    var curThermMode = 1;
 
                     // Set object
                     var obj = {};
                     //var level = $scope.updateLevel(instance.commandClasses[ccId].data.level, ccId);
 
                     obj['id'] = nodeId;
-                    obj['cmd'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.'+ curThermMode;
+                    obj['cmd'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.' + curThermMode;
                     obj['ccId'] = ccId;
                     obj['rowId'] = 'row_' + nodeId + '_' + cnt;
                     obj['name'] = node.data.name;
@@ -690,7 +690,7 @@ appController.controller('ThermostatController', function($scope, $http, $log, $
             //DataTestFactory.all('refresh_switches.json').query(function(data) {
             angular.forEach($scope.thermostats, function(v, k) {
                 // Check for updated data
-               if (v.cmd in data) {
+                if (v.cmd in data) {
                     $log.warn(v.cmd + ':' + v.id);//REM
                     var obj = data[v.cmd];
                     var level = obj.setVal.value;
@@ -711,7 +711,7 @@ appController.controller('ThermostatController', function($scope, $http, $log, $
     $timeout(refresh, cfg.interval);
 
     // Change temperature on click
-    $scope.tempChange = function(cmd,index, type) {
+    $scope.tempChange = function(cmd, index, type) {
         var val = $scope.rangeSlider[index];
         var min = parseInt($scope.cfg.thermostat_range.min, 10);
         var max = parseInt($scope.cfg.thermostat_range.max, 10);
@@ -755,7 +755,100 @@ appController.controller('ThermostatController', function($scope, $http, $log, $
 });
 
 // Locks controller
-appController.controller('LocksController', function($scope, $http, $log) {
+appController.controller('LocksController', function($scope, $http, $log, $filter, $timeout, DataFactory, DataTestFactory, cfg) {
+
+    $scope.locks = [];
+
+    // Load data
+    $scope.load = function(lang) {
+        DataFactory.all('0').query(function(ZWaveAPIData) {
+            var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
+            var doorLockCCId = 0x62;
+            // Loop throught devices
+            angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+                if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+                    return;
+                }
+
+                // Loop throught instances
+                var cnt = 1;
+                angular.forEach(node.instances, function(instance, instanceId) {
+                    if (instanceId == 0 && node.instances.length > 1) {
+                        return;
+                    }
+                    // we don't want devices without DoorLock CC
+                    if (!(doorLockCCId in instance.commandClasses)) {
+                        return;
+                    }
+
+                    // CC gui
+                    var mode = instance.commandClasses[doorLockCCId].data.mode.value;
+                    if (mode === '' || mode === null) {
+                        mode = 0;
+                    }
+
+                    var ccId = 98;
+
+                    // Set object
+                    var obj = {};
+                    //var level = $scope.updateLevel(instance.commandClasses[ccId].data.level, ccId);
+
+                    obj['id'] = nodeId;
+                    obj['cmd'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.mode';
+                    obj['ccId'] = doorLockCCId;
+                    obj['rowId'] = 'row_' + nodeId + '_' + cnt;
+                    obj['name'] = node.data.name;
+                    obj['level'] = mode;
+                    obj['updateTime'] = instance.commandClasses[ccId].data.mode.updateTime;
+                    obj['invalidateTime'] = instance.commandClasses[ccId].data.mode.invalidateTime;
+                    obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
+                    obj['urlToStore'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']';
+                    $scope.locks.push(obj);
+                    cnt++;
+                });
+            });
+        });
+    };
+
+    // Load data
+    $scope.load($scope.lang);
+
+    // Refresh data
+    var refresh = function() {
+        DataFactory.all($filter('getTimestamp')).query(function(data) {
+          //DataTestFactory.all('refresh_switches.json').query(function(data) {
+            angular.forEach($scope.locks, function(v, k) {
+                // Check for updated data
+                if (v.cmd in data) {
+                    var obj = data[v.cmd];
+                    var level = $filter('lockStatus')(obj.value);
+                    var updateTime = $filter('isTodayFromUnix')(obj.updateTime);
+                    $('#' + v.rowId + ' .row-time').html(updateTime).removeClass('is-updated-false');
+                    $('#' + v.rowId + ' .row-level').html(level);
+                    $('#update_time_tick').html($filter('getCurrentTime'));
+
+                    $log.info('Updating:' + v.rowId + ' | At: ' + updateTime + ' | with: ' + level);//REM
+                } else {
+                    $log.warn(v.cmd + ': Nothing to update --- ');//REM
+                }
+            });
+            //$log.debug('-----------');//REM
+        });
+        $timeout(refresh, cfg.interval);
+    };
+    $timeout(refresh, cfg.interval);
+
+    // Store data from on remote server
+    $scope.store = function(btn) {
+        $(btn).attr('disabled', true);
+        var url = $(btn).attr('data-store-url');
+        DataFactory.store(url).query();
+        console.log(btn, url);
+        $timeout(function() {
+            $(btn).removeAttr('disabled');
+        }, 1000);
+    };
+
     $http.get('storage/demo/lock.json').
             success(function(data) {
                 $scope.data = data;
