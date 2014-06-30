@@ -110,3 +110,34 @@ angApp.filter('lockStatus', function() {
         return  mode_lbl;
     };
 });
+
+/**
+ * Replace Lock state with text
+ */
+angApp.filter('lockIsOpen', function() {
+    return function(input) {
+        var mode = input;
+        var status = true;
+
+        if (mode === '' || mode === null) {
+            status = false;
+        } else {
+            switch (mode) {
+                case 0x00:
+                   status = true;
+                    break;
+                case 0x10:
+                    status = true;
+                    break;
+                case 0x20:
+                    status = true;
+                    break;
+                case 0xff:
+                   status = false;
+                    break;
+            }
+            ;
+        };
+        return  status;
+    };
+});

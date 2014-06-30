@@ -43,8 +43,8 @@
                             id="btn_update_{{ v.rowId}}"
                             >{{ _t('update')}}</button>
                     </td>
-                    <td ng-switch on="i.locked" class="lock-controll">
-                        <div class="btn-group" ng-switch-when="true">
+                    <td ng-switch on="v.level |lockIsOpen" class="lock-controll">
+                        <div class="btn-group" ng-switch-when="false">
                             <button type="button" class="btn btn-primary active"><i class="fa fa-lock fa-lg"></i></button>
                             <button type="button" class="btn btn-primary"><i class="fa fa-unlock fa-lg"></i></button>
                         </div>
