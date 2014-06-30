@@ -2,50 +2,104 @@
 <div ng-controller="StatusController">
     <div class="page-header"><h1>Status</h1></div>
     <div class="table-responsive">
-    <table class="table table-striped">
-        <thead>
-            <tr>
-               <th><a href="" ng-click="predicate = 'id';reverse = !reverse">#</a></th>
-                <th><a href="" ng-click="predicate = 'name';reverse = !reverse">Name</a></th>
-                <th>Zone</th>
-                <th>Sleeping</th>
-                <th>Awake</th>
-                 <th><a href="" ng-click="predicate = 'date';reverse = !reverse">Date</a></th>
-                   <th><a href="" ng-click="predicate = 'battery';reverse = !reverse">Battery</a></th>
-                   <th>&nbsp;</th>
-                  
-                <th>&nbsp;</th>
-            </tr>
-        </thead>
-        <tbody>
-             <tr ng-repeat="i in data | orderBy:predicate:reverse">
-                <td>{{ i.id }}</td>
-                <td><i class="fa fa-lightbulb-o fa-lg"></i> {{ i.name }}</td>
-                <td>{{ i.zone }}</td>
-                <td ng-switch on="i.sleeping">
-                    <p ng-switch-when="true">11:40 → 11:45<i class="fa fa-clock-o fa-lg"></i></p>
-                    <p ng-switch-default>&nbsp;</p>
-                 </td>
-                 <td ng-switch on="i.sleeping">
-                    <p ng-switch-when="true"><i class="fa fa-moon-o fa-lg text-primary"></i></p>
-                    <p ng-switch-default>&nbsp;</p>
-                 </td>
-                 <td>  <i class="fa fa-check fa-lg text-success"></i> {{ i.date }}</td>
-                  <td>
-                      <i ng-show="i.battery >= 80" class="fa fa-star fa-lg text-success"></i> 
-                      <i ng-show="i.battery > 50 && i.battery < 80" class="fa fa-star-half-o fa-lg text-success"></i>
-                      <i ng-show="i.battery > 10 && i.battery <= 50" class="fa fa-star-half-o fa-lg text-danger"></i> 
-                      <i ng-show="i.battery <= 10" class="fa fa-star-o fa-lg text-danger"></i> 
-                      &nbsp;{{ i.battery }}%
-                  </td>
-                  <td ng-switch on="i.interview">
-                    <p ng-switch-when="true"><i class="fa fa-question-circle fa-lg text-info"></i></p>
-                    <p ng-switch-default>&nbsp;</p>
-                 </td>
-                  
-                <td><button class="btn btn-primary">Check connectivity</button></td>
-            </tr>
-        </tbody>
-    </table>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        <a href="" ng-click="orderBy('id')">#  
+                            <span ng-show="predicate == 'id'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="" ng-click="orderBy('name')">{{ _t('device_name')}}
+                            <span ng-show="predicate == 'name'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th>{{ _t('th_sleeping')}}</th>
+                    <th>{{ _t('th_awake')}}</th>
+                    <th>
+                        <a href="" ng-click="orderBy('updateTime')">{{ _t('datetime')}}
+                            <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th>&nbsp;</th>
+
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="v in statuses| orderBy:predicate:reverse" id="{{ v.rowId}}">
+                    <td>{{ v.id}}</td>
+                    <td><i class="fa fa-lightbulb-o fa-lg"></i> {{ v.name}}</td>
+                    <td ng-bind-html="v.sleeping | toTrusted"></td>
+                    <td ng-bind-html="v.awake | toTrusted"></td>
+                    <td ng-bind-html="v.updateTime | toTrusted"></td>
+                    <td ng-bind-html="v.interview | toTrusted"></td>
+                    <td class="device-ping">
+                        <button
+                            ng-if="v.urlToStore"
+                            data-ng-click="store('#btn_ping_' + v.rowId)" 
+                            data-store-url="{{ v.urlToStore}}" 
+                            class="btn btn-primary btn-spinner" 
+                            id="btn_ping_{{ v.rowId}}"
+                            >{{ _t('pingDevice')}}</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <!-- DEMO table -->
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th><a href="" ng-click="predicate = 'id';
+                                reverse = !reverse">#</a></th>
+                    <th><a href="" ng-click="predicate = 'name';
+                                reverse = !reverse">Name</a></th>
+                    <th>Zone</th>
+                    <th>Sleeping</th>
+                    <th>Awake</th>
+                    <th><a href="" ng-click="predicate = 'date';
+                                reverse = !reverse">Date</a></th>
+                    <th><a href="" ng-click="predicate = 'battery';
+                                reverse = !reverse">Battery</a></th>
+                    <th>&nbsp;</th>
+
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="i in data| orderBy:predicate:reverse">
+                    <td>{{ i.id}}</td>
+                    <td><i class="fa fa-lightbulb-o fa-lg"></i> {{ i.name}}</td>
+                    <td>{{ i.zone}}</td>
+                    <td ng-switch on="i.sleeping">
+                        <p ng-switch-when="true">11:40 → 11:45<i class="fa fa-clock-o fa-lg"></i></p>
+                        <p ng-switch-default>&nbsp;</p>
+                    </td>
+                    <td ng-switch on="i.sleeping">
+                        <p ng-switch-when="true"><i class="fa fa-moon-o fa-lg text-primary"></i></p>
+                        <p ng-switch-default>&nbsp;</p>
+                    </td>
+                    <td>  <i class="fa fa-check fa-lg text-success"></i> {{ i.date}}</td>
+                    <td>
+                        <i ng-show="i.battery >= 80" class="fa fa-star fa-lg text-success"></i> 
+                        <i ng-show="i.battery > 50 && i.battery < 80" class="fa fa-star-half-o fa-lg text-success"></i>
+                        <i ng-show="i.battery > 10 && i.battery <= 50" class="fa fa-star-half-o fa-lg text-danger"></i> 
+                        <i ng-show="i.battery <= 10" class="fa fa-star-o fa-lg text-danger"></i> 
+                        &nbsp;{{ i.battery}}%
+                    </td>
+                    <td ng-switch on="i.interview">
+                        <p ng-switch-when="true"><i class="fa fa-question-circle fa-lg text-info"></i></p>
+                        <p ng-switch-default>&nbsp;</p>
+                    </td>
+
+                    <td><button class="btn btn-primary">Check connectivity</button></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>

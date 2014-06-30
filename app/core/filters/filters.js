@@ -16,6 +16,14 @@ angApp.filter('stripTags', function() {
         //return  input.replace(/<\/?[^>]+(>|$)/g, "");
     };
 });
+/**
+ * Display HTML tags in scope
+ */
+angApp.filter('toTrusted', ['$sce', function($sce){
+        return function(text) {
+            return $sce.trustAsHtml(text);
+        };
+    }]);
 // Convert unix timastamp to date
 angApp.filter('dateFromUnix', function() {
     return function(input) {

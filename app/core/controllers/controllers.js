@@ -816,7 +816,7 @@ appController.controller('LocksController', function($scope, $http, $log, $filte
     // Refresh data
     var refresh = function() {
         DataFactory.all($filter('getTimestamp')).query(function(data) {
-          //DataTestFactory.all('refresh_switches.json').query(function(data) {
+            //DataTestFactory.all('refresh_switches.json').query(function(data) {
             angular.forEach($scope.locks, function(v, k) {
                 // Check for updated data
                 if (v.cmd in data) {
@@ -849,14 +849,206 @@ appController.controller('LocksController', function($scope, $http, $log, $filte
         }, 1000);
     };
 
-    $http.get('storage/demo/lock.json').
-            success(function(data) {
-                $scope.data = data;
-            });
+//    $http.get('storage/demo/lock.json').
+//            success(function(data) {
+//                $scope.data = data;
+//            });
 });
 
 // Status controller
-appController.controller('StatusController', function($scope, $http, $log) {
+appController.controller('StatusController', function($scope, $http, $log, $filter, $timeout, DataFactory, DataTestFactory, cfg) {
+
+    $scope.statuses = [];
+
+    // Load data
+    $scope.load = function(lang) {
+        DataFactory.all('0').query(function(ZWaveAPIData) {
+            var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
+            var doorLockCCId = 0x62;
+            // Loop throught devices
+            angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+                if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+                    return;
+                }
+
+                var basicType = node.data.basicType.value;
+                var genericType = node.data.genericType.value;
+                var specificType = node.data.specificType.value;
+                var isListening = node.data.isListening.value;
+                var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
+                var hasWakeup = 0x84 in node.instances[0].commandClasses;
+                var hasBattery = 0x80 in node.instances[0].commandClasses;
+
+                // Update
+                var node = ZWaveAPIData.devices[nodeId];
+                var lastReceive = parseInt(node.data.lastReceived.updateTime, 10) || 0;
+                var lastSend = parseInt(node.data.lastSend.updateTime, 10) || 0;
+                var lastCommunication = (lastSend > lastReceive) ? lastSend : lastReceive;
+                var isFailed = node.data.isFailed.value;
+                var isAwake = node.data.isAwake.value;
+                $scope.updateDeviceInfo(ZWaveAPIData, nodeId, basicType, genericType, specificType, isFLiRS, hasWakeup, hasBattery, isListening);
+
+
+
+
+            });
+        });
+    };
+
+
+    $scope.updateDeviceInfo = function(ZWaveAPIData, nodeId, basicType, genericType, specificType, isFLiRS, hasWakeup, hasBattery, isListening) {
+        //var nodeId = $(this).attr('device');
+        var node = ZWaveAPIData.devices[nodeId];
+        var lastReceive = parseInt(node.data.lastReceived.updateTime, 10) || 0;
+        var lastSend = parseInt(node.data.lastSend.updateTime, 10) || 0;
+        var lastCommunication = (lastSend > lastReceive) ? lastSend : lastReceive;
+        var isFailed = node.data.isFailed.value;
+        var isAwake = node.data.isAwake.value;
+
+        var sleeping_cont;
+        if (isListening)
+            sleeping_cont = ''; // mains powered device
+        else if (!isListening && hasWakeup) {
+            var approx = '';
+            var sleepingSince = parseInt(node.instances[0].commandClasses[0x84].data.lastSleep.value, 10);
+            var lastWakeup = parseInt(node.instances[0].commandClasses[0x84].data.lastWakeup.value, 10);
+            if (isNaN(sleepingSince) || sleepingSince < lastWakeup) {
+                sleepingSince = lastWakeup
+                if (!isNaN(lastWakeup))
+                    approx = '<span title="' + $scope._t('sleeping_since_approximately') + '">~</span> ';
+            }
+            ;
+            var interval = parseInt(node.instances[0].commandClasses[0x84].data.interval.value, 10);
+            if (interval == 0)
+                interval = NaN; // to indicate that interval and hence next wakeup are unknown
+            var lastSleep = $filter('isTodayFromUnix')(sleepingSince);
+            var nextWakeup = $filter('isTodayFromUnix')(sleepingSince + interval);
+            sleeping_cont = '<span title="' + $scope._t('sleeping_since') + '" class="not_important">' + approx + lastSleep + '</span> &#8594; <span title="' + $scope._t('next_wakeup') + '">' + approx + nextWakeup + '</span> <img src="app/images/icons/type_battery_with_wakeup.png" title="' + $scope._t('battery_operated_device_with_wakeup') + '"/>';
+        } else if (!isListening && isFLiRS)
+            sleeping_cont = '<img src="app/images/icons/type_flirs.png" title="' + $scope._t('FLiRS_device') + '"/>';
+        else
+            sleeping_cont = '<img src="app/images/icons/type_remote.png" title="' + $scope._t('battery_operated_remote_control') + '"/>';
+
+        var awake_cont = '';
+        if (!isListening && !isFLiRS)
+            awake_cont = isAwake ? ('<img src="app/images/icons/status_awake.png" title="' + $scope._t('device_is_active') + '"/>') : ('<img src="app/images/icons/status_sleep.png" title="' + $scope._t('device_is_sleeping') + '"/>');
+
+        var operating_cont = (isFailed ? ('<img src="app/images/icons/status_dead.png" title="' + $scope._t('device_is_dead') + '"/>') : ('<img src="app/images/icons/status_ok.png" title="' + $scope._t('device_is_operating') + '"/>')) + ' <span title="' + $scope._t('last_communication') + '" class="not_important">' + $filter('isTodayFromUnix')(lastCommunication) + '</span>';
+
+        var interview_cont = '';
+        var _interview_cont = '<a href="#" id="interviewNotFinished"><img src="app/images/icons/interview_unfinished.png" title="' + $scope._t('device_is_not_fully_interviewed') + '"/></a>';
+        if (ZWaveAPIData.devices[nodeId].data.nodeInfoFrame.value && ZWaveAPIData.devices[nodeId].data.nodeInfoFrame.value.length) {
+            for (var iId in ZWaveAPIData.devices[nodeId].instances)
+                for (var ccId in ZWaveAPIData.devices[nodeId].instances[iId].commandClasses)
+                    if (!ZWaveAPIData.devices[nodeId].instances[iId].commandClasses[ccId].data.interviewDone.value) {
+                        interview_cont = _interview_cont;
+                    }
+        } else
+            interview_cont = _interview_cont;
+
+        var battery_cont = '';
+        if (hasBattery) {
+            var battery_charge = parseInt(node.instances[0].commandClasses[0x80].data.last.value);
+            var battery_updateTime = $filter('isTodayFromUnix')(node.instances[0].commandClasses[0x80].data.last.updateTime);
+            var battery_warn;
+            var battery_charge_icon;
+            var battery_charge_text;
+            if (battery_charge != null) {
+                if (battery_charge == 255) // by CC Battery specs
+                    battery_charge = 0;
+                battery_warn = (battery_charge < 10)
+                battery_charge_text = battery_charge.toString() + '%';
+                battery_charge_icon = (battery_charge < 10) ? '0' : ((battery_charge < 50) ? '50' : '100');
+            } else {
+                battery_warn = true;
+                battery_charge_text = '?';
+                battery_charge_icon = '0';
+            }
+            ;
+            battery_cont = '<img src="app/images/icons/battery_' + battery_charge_icon + '.png" title="' + $scope._t('battery_powered_device') + '"/> <span class="' + (battery_warn ? 'red' : '') + '" title="' + battery_updateTime + '">' + battery_charge_text + '</span>';
+        }
+        ;
+
+        $(this).find('#sleeping').html(sleeping_cont);
+        $(this).find('#awake').html(awake_cont);
+        $(this).find('#operating').html(operating_cont);
+        $(this).find('#battery').html(battery_cont);
+        $(this).find('#interview').html(interview_cont);
+        if (ZWaveAPIData.controller.data.countJobs.value)
+            $(this).find('#queue_length').html(node.data.queueLength.value ? node.data.queueLength.value : '');
+        else
+            $(this).find('#queue_length').html('-');
+
+        if (isListening || isFLiRS)
+            $(this).find('#pingDevice').show();
+        else
+            $(this).find('#pingDevice').hide();
+
+
+        // Set object
+        var obj = {};
+
+        obj['id'] = nodeId;
+        obj['rowId'] = 'row_' + nodeId;
+        obj['name'] = node.data.name;
+        obj['sleeping'] = sleeping_cont;
+        obj['awake'] = awake_cont;
+        obj['updateTime'] = operating_cont;
+        obj['interview'] = interview_cont;
+        obj['urlToStore'] = (isListening || isFLiRS ? 'devices[' + nodeId + '].SendNoOperation()' : false) ;
+        obj['interview'] = interview_cont;
+        if (isListening || isFLiRS)
+            $("#btn_ping_" + obj['rowId']).show();
+        else
+           $("#btn_ping_" + obj['rowId']).hide();
+//                    obj['cmd'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.mode';
+//                    obj['ccId'] = doorLockCCId;
+//                    obj['rowId'] = 'row_' + nodeId + '_' + cnt;
+
+//                    obj['level'] = mode;
+
+//                    obj['invalidateTime'] = instance.commandClasses[ccId].data.mode.invalidateTime;
+//                    obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
+        $scope.statuses.push(obj);
+    };
+
+    // Load data
+    $scope.load($scope.lang);
+
+    // Refresh data
+    var refresh = function() {
+        DataFactory.all($filter('getTimestamp')).query(function(data) {
+            //DataTestFactory.all('refresh_switches.json').query(function(data) {
+            angular.forEach($scope.statuses, function(v, k) {
+                // Check for updated data
+                if (v.cmd in data) {
+                    var obj = data[v.cmd];
+                    var level = $filter('lockStatus')(obj.value);
+                    var updateTime = $filter('isTodayFromUnix')(obj.updateTime);
+                    $('#' + v.rowId + ' .row-time').html(updateTime).removeClass('is-updated-false');
+                    $('#' + v.rowId + ' .row-level').html(level);
+                    $('#update_time_tick').html($filter('getCurrentTime'));
+
+                    $log.info('Updating:' + v.rowId + ' | At: ' + updateTime + ' | with: ' + level);//REM
+                } else {
+                    $log.warn(v.cmd + ': Nothing to update --- ');//REM
+                }
+            });
+            //$log.debug('-----------');//REM
+        });
+        $timeout(refresh, cfg.interval);
+    };
+    //$timeout(refresh, cfg.interval);
+
+    // Store data from on remote server
+    $scope.store = function(btn) {
+        $(btn).attr('disabled', true);
+        var url = $(btn).attr('data-store-url');
+        DataFactory.store(url).query();
+        $timeout(function() {
+            $(btn).removeAttr('disabled');
+        }, 1000);
+    };
     $http.get('storage/demo/status.json').
             success(function(data) {
                 $scope.data = data;

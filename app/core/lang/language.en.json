@@ -28,6 +28,8 @@
         "th_level": "Level",
         "th_scale": "Scale",
         "th_switchall": "Switch all",
+         "th_sleeping": "Sleeping",
+          "th_awake": "Awake",
         "btn_full": "Full",
         "btn_all_off": "All off",
         "btn_all_on": "All on",
