@@ -39,8 +39,10 @@ angApp.directive('switchTypeIcon', function() {
             scope.generic = attr.generic;
             scope.specific = attr.specific;
             switch (parseInt(attr.generic, 10)) {
+                case 1:
+                    icon = 'fa-eye';
+                    break;
                 case 17:
-                    
                     icon = 'fa-lightbulb-o';
                     break;
 
@@ -48,9 +50,22 @@ angApp.directive('switchTypeIcon', function() {
                     icon = 'fa-power-off';
                     break;
                     
+                 case 8:
+                    icon = 'fa-sort-amount-desc';
+                    break;
+                
                 case 9:
                     icon = 'fa-bullseye fa-lg';
                     break;
+                case 32:
+                    icon = 'fa-eye';
+                    break;
+                    
+                 case 64:
+                    icon = 'fa-lock fa-lg';
+                    break;
+                    
+               
 
                 default:
                     icon = '';

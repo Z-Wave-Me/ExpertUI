@@ -1,0 +1,311 @@
+{
+    "devices.20.data.isAwake": {
+      "name": "isAwake",
+      "value": false,
+      "type": "bool",
+      "invalidateTime": 1402668332,
+      "updateTime": 1404216110
+    },
+    "devices.20.data.lastSend": {
+      "name": "lastSend",
+      "value": 9266057,
+      "type": "int",
+      "invalidateTime": 1404109041,
+      "updateTime": 1404216098
+    },
+    "devices.20.data.lastNonceGet": {
+      "name": "lastNonceGet",
+      "value": 9265057,
+      "type": "int",
+      "invalidateTime": 1404109041,
+      "updateTime": 1404216098
+    },
+    "devices.20.data.lastReceived": {
+      "name": "lastReceived",
+      "value": 0,
+      "type": "int",
+      "invalidateTime": 1402668332,
+      "updateTime": 1404216098
+    },
+    "devices.20.instances.0.commandClasses.132.data.lastWakeup": {
+      "name": "lastWakeup",
+      "value": 1404216098,
+      "type": "int",
+      "invalidateTime": 1402669521,
+      "updateTime": 1404216098
+    },
+    "devices.20.instances.0.commandClasses.132.data.lastSleep": {
+      "name": "lastSleep",
+      "value": 1404216098,
+      "type": "int",
+      "invalidateTime": 1402669521,
+      "updateTime": 1404216098
+    },
+    "devices.23.data.isAwake": {
+      "name": "isAwake",
+      "value": false,
+      "type": "bool",
+      "invalidateTime": 1402668332,
+      "updateTime": 1404216110
+    },
+    "devices.23.data.lastSend": {
+      "name": "lastSend",
+      "value": 9265503,
+      "type": "int",
+      "invalidateTime": 1404109041,
+      "updateTime": 1404216091
+    },
+    "devices.23.data.lastNonceGet": {
+      "name": "lastNonceGet",
+      "value": 9264494,
+      "type": "int",
+      "invalidateTime": 1404109041,
+      "updateTime": 1404216091
+    },
+    "devices.23.data.lastReceived": {
+      "name": "lastReceived",
+      "value": 0,
+      "type": "int",
+      "invalidateTime": 1402668332,
+      "updateTime": 1404216091
+    },
+    "devices.23.instances.0.commandClasses.67.data.1": {
+      "name": "1",
+      "value": null,
+      "type": "NoneType",
+      "val": {
+        "name": "val",
+        "value": 14,
+        "type": "float",
+        "invalidateTime": 1402985216,
+        "updateTime": 1404216091
+      },
+      "scale": {
+        "name": "scale",
+        "value": 0,
+        "type": "int",
+        "invalidateTime": 1402985216,
+        "updateTime": 1404216091
+      },
+      "scaleString": {
+        "name": "scaleString",
+        "value": "°C",
+        "type": "str",
+        "invalidateTime": 1402985216,
+        "updateTime": 1404216091
+      },
+      "setVal": {
+        "name": "setVal",
+        "value": 14,
+        "type": "float",
+        "invalidateTime": 1402985216,
+        "updateTime": 1404216091
+      },
+      "modeName": {
+        "name": "modeName",
+        "value": "Heating",
+        "type": "str",
+        "invalidateTime": 1402985216,
+        "updateTime": 1402669427
+      },
+      "deviceScale": {
+        "name": "deviceScale",
+        "value": 0,
+        "type": "int",
+        "invalidateTime": 1402985216,
+        "updateTime": 1404216091
+      },
+      "deviceScaleString": {
+        "name": "deviceScaleString",
+        "value": "°C",
+        "type": "str",
+        "invalidateTime": 1402985216,
+        "updateTime": 1404216091
+      },
+      "invalidateTime": 1402985216,
+      "updateTime": 1404216091
+    },
+    "devices.23.instances.0.commandClasses.128.data.history.77": {
+      "name": "77",
+      "value": 1404216091,
+      "type": "int",
+      "invalidateTime": 1403541587,
+      "updateTime": 1404216091
+    },
+    "devices.23.instances.0.commandClasses.128.data.last": {
+      "name": "last",
+      "value": 77,
+      "type": "int",
+      "invalidateTime": 1402669426,
+      "updateTime": 1404216091
+    },
+    "devices.23.instances.0.commandClasses.132.data.lastWakeup": {
+      "name": "lastWakeup",
+      "value": 1404216091,
+      "type": "int",
+      "invalidateTime": 1402669429,
+      "updateTime": 1404216091
+    },
+    "devices.23.instances.0.commandClasses.132.data.lastSleep": {
+      "name": "lastSleep",
+      "value": 1404216091,
+      "type": "int",
+      "invalidateTime": 1402669428,
+      "updateTime": 1404216091
+    },
+    "devices.32.data.isAwake": {
+      "name": "isAwake",
+      "value": false,
+      "type": "bool",
+      "invalidateTime": 1402670099,
+      "updateTime": 1404216007
+    },
+    "devices.32.data.lastSend": {
+      "name": "lastSend",
+      "value": 9258070,
+      "type": "int",
+      "invalidateTime": 1404109041,
+      "updateTime": 1404216007
+    },
+    "devices.32.data.lastNonceGet": {
+      "name": "lastNonceGet",
+      "value": 9257061,
+      "type": "int",
+      "invalidateTime": 1404109041,
+      "updateTime": 1404216007
+    },
+    "devices.32.data.lastReceived": {
+      "name": "lastReceived",
+      "value": 0,
+      "type": "int",
+      "invalidateTime": 1402670099,
+      "updateTime": 1404216007
+    },
+    "devices.32.instances.0.commandClasses.132.data.lastWakeup": {
+      "name": "lastWakeup",
+      "value": 1404216007,
+      "type": "int",
+      "invalidateTime": 1402670113,
+      "updateTime": 1404216007
+    },
+    "devices.32.instances.0.commandClasses.132.data.lastSleep": {
+      "name": "lastSleep",
+      "value": 1404216007,
+      "type": "int",
+      "invalidateTime": 1402670113,
+      "updateTime": 1404216007
+    },
+    "devices.36.data.lastReceived": {
+      "name": "lastReceived",
+      "value": 0,
+      "type": "int",
+      "invalidateTime": 1402671682,
+      "updateTime": 1404216008
+    },
+    "devices.36.instances.0.commandClasses.50.data.2": {
+      "name": "2",
+      "value": null,
+      "type": "NoneType",
+      "sensorType": {
+        "name": "sensorType",
+        "value": 1,
+        "type": "int",
+        "invalidateTime": 1402671692,
+        "updateTime": 1402671693
+      },
+      "sensorTypeString": {
+        "name": "sensorTypeString",
+        "value": "Electric ",
+        "type": "str",
+        "invalidateTime": 1402671692,
+        "updateTime": 1402671693
+      },
+      "val": {
+        "name": "val",
+        "value": 0,
+        "type": "float",
+        "invalidateTime": 1402671692,
+        "updateTime": 1404216008
+      },
+      "scale": {
+        "name": "scale",
+        "value": 2,
+        "type": "int",
+        "invalidateTime": 1402671692,
+        "updateTime": 1402671693
+      },
+      "scaleString": {
+        "name": "scaleString",
+        "value": "W",
+        "type": "str",
+        "invalidateTime": 1402671692,
+        "updateTime": 1402671693
+      },
+      "ratetype": {
+        "name": "ratetype",
+        "value": 1,
+        "type": "int",
+        "invalidateTime": 1402671692,
+        "updateTime": 1404216008
+      },
+      "delta": {
+        "name": "delta",
+        "value": 0,
+        "type": "int",
+        "invalidateTime": 1402671692,
+        "updateTime": 1404216008
+      },
+      "previous": {
+        "name": "previous",
+        "value": null,
+        "type": "NoneType",
+        "invalidateTime": 1402671692,
+        "updateTime": 1402671693
+      },
+      "invalidateTime": 1403620126,
+      "updateTime": 1404216008
+    },
+    "devices.38.data.isAwake": {
+      "name": "isAwake",
+      "value": false,
+      "type": "bool",
+      "invalidateTime": 1403520812,
+      "updateTime": 1404216042
+    },
+    "devices.38.data.lastSend": {
+      "name": "lastSend",
+      "value": 9261179,
+      "type": "int",
+      "invalidateTime": 1404109041,
+      "updateTime": 1404216042
+    },
+    "devices.38.data.lastNonceGet": {
+      "name": "lastNonceGet",
+      "value": 9260170,
+      "type": "int",
+      "invalidateTime": 1404109041,
+      "updateTime": 1404216042
+    },
+    "devices.38.data.lastReceived": {
+      "name": "lastReceived",
+      "value": 0,
+      "type": "int",
+      "invalidateTime": 1403520812,
+      "updateTime": 1404216042
+    },
+    "devices.38.instances.0.commandClasses.132.data.lastWakeup": {
+      "name": "lastWakeup",
+      "value": 1404216042,
+      "type": "int",
+      "invalidateTime": 1403520824,
+      "updateTime": 1404216042
+    },
+    "devices.38.instances.0.commandClasses.132.data.lastSleep": {
+      "name": "lastSleep",
+      "value": 1404216042,
+      "type": "int",
+      "invalidateTime": 1403520824,
+      "updateTime": 1404216042
+    },
+  "updateTime": 1404216112
+}

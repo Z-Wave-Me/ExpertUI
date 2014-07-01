@@ -104,6 +104,13 @@ h3 {
     color:#555;
 }
 
+.text-yellow{
+    color: yellow;
+}
+.text-orange{
+    color: orange;
+}
+
 /* Page CSS
 -------------------------------------------------- */
 .page-header {
