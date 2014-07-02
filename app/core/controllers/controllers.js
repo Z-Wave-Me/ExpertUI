@@ -1017,14 +1017,13 @@ appController.controller('StatusController', function($scope, $http, $log, $filt
             $(btn).removeAttr('disabled');
         }, 1000);
     };
-    
+
     // Store all data on remote server
     $scope.storeAll = function(btn) {
         $(btn).attr('disabled', true);
         angular.forEach($scope.statuses, function(v, k) {
-            if(v.urlToStore){
-                console.log(v.id + ': ' + v.urlToStore);
-               DataFactory.store(v.urlToStore).query(); 
+            if (v.urlToStore) {
+                DataFactory.store(v.urlToStore).query();
             }
         });
         $timeout(function() {
@@ -1124,16 +1123,16 @@ appController.controller('BatteryController', function($scope, $log, $filter, $t
             //DataTestFactory.all('device_31_updated.json').query(function(data) {
             angular.forEach($scope.battery, function(v, k) {
                 // Check for updated data
-               if (v.cmd in data) {
+                if (v.cmd in data) {
                     var obj = data[v.cmd];
                     var level = obj.value;
                     var updateTime = $filter('isTodayFromUnix')(obj.updateTime);
                     var levelIcon = $filter('batteryIcon')(level);
-                    
+
                     $('#' + v.rowId + ' .row-level').html(level + '% <i class="' + levelIcon + '"></i>');
                     $('#' + v.rowId + ' .row-time').html(updateTime).removeClass('is-updated-false');
                     $('#update_time_tick').html($filter('getCurrentTime'));
-               }
+                }
             });
 
         });
@@ -1165,11 +1164,102 @@ appController.controller('BatteryController', function($scope, $log, $filter, $t
 });
 
 // Type controller
-appController.controller('TypeController', function($scope, $http, $log) {
-    $http.get('storage/demo/type.json').
-            success(function(data) {
-                $scope.data = data;
+appController.controller('TypeController', function($scope, $log, $filter, $timeout, DataFactory, DataTestFactory, cfg) {
+    $scope.devices = [];
+    $scope.reset = function() {
+        $scope.devices = angular.copy([]);
+    };
+
+    // Load data
+    $scope.load = function(lang) {
+        DataFactory.all('0').query(function(ZWaveAPIData) {
+            //DataTestFactory.all('all.json').query(function(data) {
+            var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
+
+            // Loop throught devices
+            angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+                if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+                    return;
+                }
+                var node = ZWaveAPIData.devices[nodeId];
+                var instanceId = 0;
+                var ccId =32;
+
+                var basicType = node.data.basicType.value;
+                var genericType = node.data.genericType.value;
+                var specificType = node.data.specificType.value;
+                var deviceType = node.data.deviceTypeString.value;
+                var sdk = node.data.SDK.value;
+                var appVersion = node.data.applicationMajor.value;
+                var security = node.instances[instanceId].commandClasses[ccId];
+                console.log(security);
+                // Set object
+                var obj = {};
+                obj['id'] = nodeId;
+                obj['cmd'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].data.last';
+                obj['rowId'] = 'row_' + nodeId;
+                obj['name'] = node.data.name;
+                obj['security'] = 'YES/NO';
+                obj['zWavePlus'] = 'YES/NO';
+                obj['sdk'] = sdk;
+                obj['appVersion'] = appVersion;
+                obj['type'] = deviceType;
+                obj['basicType'] = basicType;
+                obj['genericType'] = genericType;
+        obj['specificType'] = specificType;
+//                obj['level'] = battery_charge;
+//                obj['updateTime'] = battery_updateTime;
+//                obj['urlToStore'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Get()';
+                $scope.devices.push(obj);
             });
+        });
+    };
+
+    $scope.load($scope.lang);
+
+    // Refresh data
+    var refresh = function() {
+        DataFactory.all($filter('getTimestamp')).query(function(data) {
+            //DataTestFactory.all('device_31_updated.json').query(function(data) {
+            angular.forEach($scope.devices, function(v, k) {
+                // Check for updated data
+                if (v.cmd in data) {
+                    var obj = data[v.cmd];
+                    var level = obj.value;
+                    var updateTime = $filter('isTodayFromUnix')(obj.updateTime);
+                    var levelIcon = $filter('batteryIcon')(level);
+
+                    $('#' + v.rowId + ' .row-level').html(level + '% <i class="' + levelIcon + '"></i>');
+                    $('#' + v.rowId + ' .row-time').html(updateTime).removeClass('is-updated-false');
+                    $('#update_time_tick').html($filter('getCurrentTime'));
+                }
+            });
+
+        });
+        $timeout(refresh, cfg.interval);
+    };
+    //$timeout(refresh, cfg.interval);
+
+    // Store single data on remote server
+    $scope.store = function(btn) {
+        $(btn).attr('disabled', true);
+        DataFactory.store($(btn).attr('data-store-url')).query();
+
+        $timeout(function() {
+            $(btn).removeAttr('disabled');
+        }, 1000);
+    };
+
+    // Store all data on remote server
+    $scope.storeAll = function(btn) {
+        $(btn).attr('disabled', true);
+        angular.forEach($scope.devices, function(v, k) {
+            DataFactory.store(v.urlToStore).query();
+        });
+        $timeout(function() {
+            $(btn).removeAttr('disabled');
+        }, 1000);
+    };
 });
 
 // Firmware controller
