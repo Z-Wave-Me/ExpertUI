@@ -887,15 +887,15 @@ appController.controller('StatusController', function($scope, $http, $log, $filt
                 var isFailed = node.data.isFailed.value;
                 var isAwake = node.data.isAwake.value;
                 var prefixD = 'devices.' + nodeId + '.data.';
-                var prefixIC = 'devices.' + nodeId + '.instances[0].commandClasses'
-                var bindPath = prefixD + 'isFailed,' + prefixD + 'isAwake,' + prefixD + 'lastSend,' + prefixD + 'lastReceived,' + prefixD + 'queueLength,devices.' + nodeId + '.instances[*].commandClasses[*].data.interviewDone,' + prefixIC + '[' + 0x84 + '].data.lastWakeup,' + prefixIC + '[' + 0x84 + '].data.lastSleep,' + prefixIC + '[' + 0x84 + '].data.interval,' + prefixIC + '[' + 0x80 + '].data.last';
-                $scope.updateDeviceInfo(false, ZWaveAPIData, nodeId, basicType, genericType, specificType, isFLiRS, hasWakeup, hasBattery, isListening, bindPath);
+                var prefixIC = 'devices.' + nodeId + '.instances.0.commandClasses';
+                var bindPath = prefixD + 'isFailed,' + prefixD + 'isAwake,' + prefixD + 'lastSend,' + prefixD + 'lastReceived,' + prefixD + 'queueLength,devices.' + nodeId + '.instances[*].commandClasses[*].data.interviewDone,' + prefixIC + '.' + 0x84 + '.data.lastWakeup,' + prefixIC + '.' + 0x84 + '.data.lastSleep,' + prefixIC + '.' + 0x84 + '.data.interval,' + prefixIC + '.' + 0x80 + '.data.last';
+                $scope.updateDeviceInfo(ZWaveAPIData, nodeId, basicType, genericType, specificType, isFLiRS, hasWakeup, hasBattery, isListening, bindPath);
             });
         });
     };
 
 
-    $scope.updateDeviceInfo = function(refresh, ZWaveAPIData, nodeId, basicType, genericType, specificType, isFLiRS, hasWakeup, hasBattery, isListening, bindPath) {
+    $scope.updateDeviceInfo = function(ZWaveAPIData, nodeId, basicType, genericType, specificType, isFLiRS, hasWakeup, hasBattery, isListening, bindPath) {
         //var nodeId = $(this).attr('device');
         var node = ZWaveAPIData.devices[nodeId];
         var lastReceive = parseInt(node.data.lastReceived.updateTime, 10) || 0;
@@ -903,39 +903,24 @@ appController.controller('StatusController', function($scope, $http, $log, $filt
         var lastCommunication = (lastSend > lastReceive) ? lastSend : lastReceive;
         var isFailed = node.data.isFailed.value;
         var isAwake = node.data.isAwake.value;
-
-        var sleeping_cont;
-        if (isListening)
-            sleeping_cont = ''; // mains powered device
-        else if (!isListening && hasWakeup) {
-            var approx = '';
-            var sleepingSince = parseInt(node.instances[0].commandClasses[0x84].data.lastSleep.value, 10);
-            var lastWakeup = parseInt(node.instances[0].commandClasses[0x84].data.lastWakeup.value, 10);
-            if (isNaN(sleepingSince) || sleepingSince < lastWakeup) {
-                sleepingSince = lastWakeup
-                if (!isNaN(lastWakeup))
-                    approx = '<span title="' + $scope._t('sleeping_since_approximately') + '">~</span> ';
-            }
-            ;
-            var interval = parseInt(node.instances[0].commandClasses[0x84].data.interval.value, 10);
-            if (interval == 0)
-                interval = NaN; // to indicate that interval and hence next wakeup are unknown
-            var lastSleep = $filter('isTodayFromUnix')(sleepingSince);
-            var nextWakeup = $filter('isTodayFromUnix')(sleepingSince + interval);
-            sleeping_cont = '<span title="' + $scope._t('sleeping_since') + '" class="not_important">' + approx + lastSleep + '</span> &#8594; <span title="' + $scope._t('next_wakeup') + '">' + approx + nextWakeup + '</span> <i class="fa fa-clock-o fa-lg" title="' + $scope._t('battery_operated_device_with_wakeup') + '"></i>';
-        } else if (!isListening && isFLiRS)
-            sleeping_cont = '<i class="fa fa-headphones fa-lg" title="' + $scope._t('FLiRS_device') + '"></i>';
-        else
-            sleeping_cont = '<i class="fa fa-rss fa-lg" title="' + $scope._t('battery_operated_remote_control') + '"></i>';
-
-        var awake_cont =  awakeCont(isAwake,isListening,isFLiRS);
-        //if (!isListening && !isFLiRS)
-           // awake_cont = isAwake ? ('<i class="fa fa-certificate fa-lg text-orange" title="' + $scope._t('device_is_active') + '"></i>') : ('<i class="fa fa-moon-o fa-lg text-primary" title="' + $scope._t('device_is_sleeping') + '"></i>');
-
-       // var operating_cont = (isFailed ? ('<i class="fa fa-power-off fa-lg text-danger" title="' + $scope._t('device_is_dead') + '"></i>') : ('<i class="fa fa-check fa-lg text-success" title="' + $scope._t('device_is_operating') + '"></i>')) + ' <span title="' + $scope._t('last_communication') + '" class="not_important">' + $filter('isTodayFromUnix')(lastCommunication) + '</span>';
-        var operating_cont = operatingCont(isFailed,lastCommunication);
+        
+         var sleepingSince = 0;
+         var lastWakeup = 0;
+          var interval = 0;
+          
+          if (!isListening && hasWakeup) {
+            sleepingSince = parseInt(node.instances[0].commandClasses[0x84].data.lastSleep.value, 10);
+            lastWakeup = parseInt(node.instances[0].commandClasses[0x84].data.lastWakeup.value, 10);
+            interval = parseInt(node.instances[0].commandClasses[0x84].data.interval.value, 10);
+            
+        }
+        // Conts
+        var sleeping_cont = sleepingCont(isListening, hasWakeup,isFLiRS,sleepingSince,lastWakeup, interval);
+        var awake_cont = awakeCont(isAwake, isListening, isFLiRS);
+        var operating_cont = operatingCont(isFailed, lastCommunication);
+        
         var interview_cont = '';
-        var _interview_cont = '<a href="" id="interviewNotFinished" title="' + $scope._t('device_is_not_fully_interviewed') + '"><i class="fa fa-question-circle fa-lg"></i></a>';
+        var _interview_cont = '<i class="fa fa-question-circle fa-lg text-info" title="' + $scope._t('device_is_not_fully_interviewed') + '"></i>';
         if (ZWaveAPIData.devices[nodeId].data.nodeInfoFrame.value && ZWaveAPIData.devices[nodeId].data.nodeInfoFrame.value.length) {
             for (var iId in ZWaveAPIData.devices[nodeId].instances)
                 for (var ccId in ZWaveAPIData.devices[nodeId].instances[iId].commandClasses)
@@ -945,49 +930,8 @@ appController.controller('StatusController', function($scope, $http, $log, $filt
         } else
             interview_cont = _interview_cont;
 
-//        var battery_cont = '';
-//        if (hasBattery) {
-//            var battery_charge = parseInt(node.instances[0].commandClasses[0x80].data.last.value);
-//            var battery_updateTime = $filter('isTodayFromUnix')(node.instances[0].commandClasses[0x80].data.last.updateTime);
-//            var battery_warn;
-//            var battery_charge_icon;
-//            var battery_charge_text;
-//            if (battery_charge != null) {
-//                if (battery_charge == 255) // by CC Battery specs
-//                    battery_charge = 0;
-//                battery_warn = (battery_charge < 10)
-//                battery_charge_text = battery_charge.toString() + '%';
-//                battery_charge_icon = (battery_charge < 10) ? '0' : ((battery_charge < 50) ? '50' : '100');
-//            } else {
-//                battery_warn = true;
-//                battery_charge_text = '?';
-//                battery_charge_icon = '0';
-//            }
-//            ;
-//            battery_cont = '<img src="app/images/icons/battery_' + battery_charge_icon + '.png" title="' + $scope._t('battery_powered_device') + '"/> <span class="' + (battery_warn ? 'red' : '') + '" title="' + battery_updateTime + '">' + battery_charge_text + '</span>';
-//        }
-//        ;
-
-//        $(this).find('#sleeping').html(sleeping_cont);
-//        $(this).find('#awake').html(awake_cont);
-//        $(this).find('#operating').html(operating_cont);
-//        $(this).find('#battery').html(battery_cont);
-//        $(this).find('#interview').html(interview_cont);
-//        if (ZWaveAPIData.controller.data.countJobs.value)
-//            $(this).find('#queue_length').html(node.data.queueLength.value ? node.data.queueLength.value : '');
-//        else
-//            $(this).find('#queue_length').html('-');
-//
-//        if (isListening || isFLiRS)
-//            $(this).find('#pingDevice').show();
-//        else
-//            $(this).find('#pingDevice').hide();
-        if (refresh) {
-
-        } else {
-            // Set object
+        
             var obj = {};
-
             obj['id'] = nodeId;
             obj['rowId'] = 'row_' + nodeId;
             obj['cmd'] = bindPath.split(',');
@@ -1000,14 +944,17 @@ appController.controller('StatusController', function($scope, $http, $log, $filt
             obj['interview'] = interview_cont;
             obj['urlToStore'] = (isListening || isFLiRS ? 'devices[' + nodeId + '].SendNoOperation()' : false);
             obj['interview'] = interview_cont;
-            obj['isListening'] =  isListening;
-           obj['isFLiRS'] =  isFLiRS;
-           obj['hasWakeup'] =  hasWakeup;
-            obj['lastCommunication'] =  lastCommunication;
+            obj['isListening'] = isListening;
+            obj['isFLiRS'] = isFLiRS;
+            obj['hasWakeup'] = hasWakeup;
+            obj['lastCommunication'] = lastCommunication;
+             obj['sleepingSince'] = sleepingSince;
+             obj['lastWakeup'] = lastWakeup;
+             obj['interval'] = interval;
 
             $scope.statuses.push(obj);
             //console.log(bindPath.split(','));
-        }
+        
 
 
     };
@@ -1018,50 +965,54 @@ appController.controller('StatusController', function($scope, $http, $log, $filt
     // Refresh data
     var refresh = function() {
         DataFactory.all($filter('getTimestamp')).query(function(data) {
-
-        //DataTestFactory.all('refresh_device_status.json').query(function(data) {
+            //DataTestFactory.all('refresh_device_status.json').query(function(data) {
             angular.forEach($scope.statuses, function(v, k) {
                 angular.forEach(v.cmd, function(ccId, key) {
-                    console.log(ccId);
                     if (ccId in data) {
                         var node = 'devices.' + v.id;
                         var isAwakeCmd = node + '.data.isAwake';
                         var isFailedCmd = node + '.data.isFailed';
                         var lastReceiveCmd = node + '.data.lastReceived';
                         var lastSendCmd = node + '.data.lastSend';
-                        var lastCommunication  = v.lastCommunication;
+                        var lastWakeupCmd = node + '.instances.0.commandClasses.132.data.lastWakeup';
+                        var lastSleepCmd = node + '.instances.0.commandClasses.132.data.lastSleep';
+                        var lastCommunication = v.lastCommunication;
                         switch (ccId) {
                             case isAwakeCmd:
-                               var isAwake = data[isAwakeCmd].value;
-                                var awake_cont =  awakeCont(isAwake,v.isListening,v.isFLiRS);
+                                var isAwake = data[isAwakeCmd].value;
+                                var awake_cont = awakeCont(isAwake, v.isListening, v.isFLiRS);
                                 $('#' + v.rowId + ' .row-awake').html(awake_cont);
-                                 console.log(awake_cont);
                                 break;
                             case isFailedCmd:
-                                var isFailed  = data[isFailedCmd].value;
-                                var operating_cont = operatingCont(isFailed,lastCommunication);
+                                var isFailed = data[isFailedCmd].value;
+                                var operating_cont = operatingCont(isFailed, lastCommunication);
                                 $('#' + v.rowId + ' .row-time').html(operating_cont);
-                                //console.log(operating_cont);
                                 break;
                             case lastReceiveCmd:
                                 var lastReceive = data[lastReceiveCmd].updateTime;
-                                lastCommunication = (lastReceive  > lastCommunication) ? lastReceive : lastCommunication;
-                                var operating_cont_rec = operatingCont(false,lastCommunication);
+                                lastCommunication = (lastReceive > lastCommunication) ? lastReceive : lastCommunication;
+                                var operating_cont_rec = operatingCont(false, lastCommunication);
                                 $('#' + v.rowId + ' .row-time').html(operating_cont_rec);
                                 break;
                             case lastSendCmd:
                                 var lastSend = data[lastSendCmd].updateTime;
                                 lastCommunication = (lastSend > lastCommunication) ? lastSend : lastCommunication;
-                                 var operating_cont_send = operatingCont(false,lastCommunication);
-                                  $('#' + v.rowId + ' .row-time').html(operating_cont_send);
+                                var operating_cont_send = operatingCont(false, lastCommunication);
+                                $('#' + v.rowId + ' .row-time').html(operating_cont_send);
                                 break;
-                        }
-                        ;
-                        
-                        //var isAwake = node.data.isAwake.value;
+                            case lastWakeupCmd:
+                                var lastWakeup = data[lastWakeupCmd].value;
+                                var  sleepingSince = data[lastSleepCmd].value;
+                                var sleeping_cont = sleepingCont(v.isListening, v.hasWakeup,v.isFLiRS,sleepingSince,lastWakeup, v.interval);
+                                $('#' + v.rowId + ' .row-sleeping').html(sleeping_cont);
+                                break;
+                            case lastSleepCmd:
+                                //console.log(lastSleepCmd);
+                                break;
+                        };
 
                     }
-                   
+
                 });
             });
         });
@@ -1078,24 +1029,46 @@ appController.controller('StatusController', function($scope, $http, $log, $filt
             $(btn).removeAttr('disabled');
         }, 1000);
     };
-    
+
     // Get Awake HTML
-    function awakeCont(isAwake,isListening,isFLiRS){
-        awake_cont = '';
+    function awakeCont(isAwake, isListening, isFLiRS) {
+        var awake_cont = '';
         if (!isListening && !isFLiRS)
             awake_cont = isAwake ? ('<i class="fa fa-certificate fa-lg text-orange" title="' + $scope._t('device_is_active') + '"></i>') : ('<i class="fa fa-moon-o fa-lg text-primary" title="' + $scope._t('device_is_sleeping') + '"></i>');
         return awake_cont;
     }
     // Get operating HTML
-    function operatingCont(isFailed,lastCommunication){
+    function operatingCont(isFailed, lastCommunication) {
         var operating_cont = (isFailed ? ('<i class="fa fa-power-off fa-lg text-danger" title="' + $scope._t('device_is_dead') + '"></i>') : ('<i class="fa fa-check fa-lg text-success" title="' + $scope._t('device_is_operating') + '"></i>')) + ' <span title="' + $scope._t('last_communication') + '" class="not_important">' + $filter('isTodayFromUnix')(lastCommunication) + '</span>';
         return operating_cont;
     }
-    
-    $http.get('storage/demo/status.json').
-            success(function(data) {
-                $scope.data = data;
-            });
+
+     // Get Sleeping HTML
+        function sleepingCont(isListening, hasWakeup,isFLiRS,sleepingSince,lastWakeup, interval) {
+            var sleeping_cont;
+            if (isListening)
+                sleeping_cont = ''; // mains powered device
+            else if (!isListening && hasWakeup) {
+                var approx = '';
+               
+                if (isNaN(sleepingSince) || sleepingSince < lastWakeup) {
+                    sleepingSince = lastWakeup
+                    if (!isNaN(lastWakeup))
+                        approx = '<span title="' + $scope._t('sleeping_since_approximately') + '">~</span> ';
+                }
+                ;
+                if (interval == 0)
+                    interval = NaN; // to indicate that interval and hence next wakeup are unknown
+                var lastSleep = $filter('isTodayFromUnix')(sleepingSince);
+                var nextWakeup = $filter('isTodayFromUnix')(sleepingSince + interval);
+                sleeping_cont = '<span title="' + $scope._t('sleeping_since') + '" class="not_important">' + approx + lastSleep + '</span> &#8594; <span title="' + $scope._t('next_wakeup') + '">' + approx + nextWakeup + '</span> <i class="fa fa-clock-o fa-lg" title="' + $scope._t('battery_operated_device_with_wakeup') + '"></i>';
+            } else if (!isListening && isFLiRS)
+                sleeping_cont = '<i class="fa fa-headphones fa-lg" title="' + $scope._t('FLiRS_device') + '"></i>';
+            else
+                sleeping_cont = '<i class="fa fa-rss fa-lg" title="' + $scope._t('battery_operated_remote_control') + '"></i>';
+            
+            return sleeping_cont;
+        }
 });
 
 // Battery controller
