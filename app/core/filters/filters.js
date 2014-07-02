@@ -149,3 +149,26 @@ angApp.filter('lockIsOpen', function() {
         return  status;
     };
 });
+
+
+/**
+ * Set battery icon
+ */
+angApp.filter('batteryIcon', function() {
+    return function(input) {
+        var icon = '';
+        if(input >= 80){
+            icon = 'fa fa-star fa-lg text-success';
+        }
+        if(input > 50 && input < 80){
+            icon = 'fa fa-star-half-o fa-lg text-success';
+        }
+        if(input > 10 && input <= 50){
+            icon = 'fa fa-star-half-o fa-lg text-danger';
+        }
+        if(input <= 10){
+            icon = 'fa fa-star-o fa-lg text-danger';
+        }
+        return  icon;
+    };
+});
