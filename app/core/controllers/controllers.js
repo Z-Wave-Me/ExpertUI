@@ -847,6 +847,7 @@ appController.controller('LocksController', function($scope, $http, $log, $filte
 appController.controller('StatusController', function($scope, $http, $log, $filter, $timeout, DataFactory, DataTestFactory, cfg) {
 
     $scope.statuses = [];
+    $scope.interviews = [];
 
     // Load data
     $scope.load = function(lang) {
@@ -907,8 +908,9 @@ appController.controller('StatusController', function($scope, $http, $log, $filt
         var awake_cont = awakeCont(isAwake, isListening, isFLiRS);
         var operating_cont = operatingCont(isFailed, lastCommunication);
 
-        var interview_cont = '';
-        var _interview_cont = '<i class="fa fa-question-circle fa-lg text-info" title="' + $scope._t('device_is_not_fully_interviewed') + '"></i>';
+        var interview_cont = false;
+        //var _interview_cont = '<i class="fa fa-question-circle fa-lg text-info" title="' + $scope._t('device_is_not_fully_interviewed') + '"></i>';
+        var _interview_cont = $scope._t('device_is_not_fully_interviewed');
         if (ZWaveAPIData.devices[nodeId].data.nodeInfoFrame.value && ZWaveAPIData.devices[nodeId].data.nodeInfoFrame.value.length) {
             for (var iId in ZWaveAPIData.devices[nodeId].instances)
                 for (var ccId in ZWaveAPIData.devices[nodeId].instances[iId].commandClasses)
@@ -939,8 +941,22 @@ appController.controller('StatusController', function($scope, $http, $log, $filt
         obj['sleepingSince'] = sleepingSince;
         obj['lastWakeup'] = lastWakeup;
         obj['interval'] = interval;
+       
+            var interview = {};
+            interview['nodeId'] = nodeId;
+            interview['rows'] = '';
+            for (var iId in ZWaveAPIData.devices[nodeId].instances) {
+                var cnt = 0;
+                for (var ccId in ZWaveAPIData.devices[nodeId].instances[iId].commandClasses) {
+                    //interview['rows'] += '<tr><td><a href="" class="a_instance">' + iId + '</a></td><td><a href="" class="a_command_class">' + ZWaveAPIData.devices[nodeId].instances[iId].commandClasses[ccId].name + '</a></td><td>' + (ZWaveAPIData.devices[nodeId].instances[iId].commandClasses[ccId].data.interviewDone.value ? 'Done' : '<button class="run geek"></button>') + '</td></tr>';
+                     interview['rows'] += '<tr><td>' + iId + '</td><td>' + ZWaveAPIData.devices[nodeId].instances[iId].commandClasses[ccId].name + '</td><td>' + (ZWaveAPIData.devices[nodeId].instances[iId].commandClasses[ccId].data.interviewDone.value ? 'Done' : '<button id="btn_interview_' +  nodeId + '" class="btn btn-primary" ng-click="showOnClick()">'+ $scope._t('config_ui_force_interview') + '</button>') + '</td></tr>';
+                    cnt++;
 
+                } ;
+            };
+       
         $scope.statuses.push(obj);
+        $scope.interviews.push(interview);
 
 
 
@@ -1031,6 +1047,25 @@ appController.controller('StatusController', function($scope, $http, $log, $filt
         }, 1000);
     };
 
+    // Store all data on remote server
+    $scope.showModal = function(target, nodeId) {
+        // Modal example http://plnkr.co/edit/D29YjKGbY63OSa1EeixT?p=preview
+        // alert(id);
+        $(target).modal();
+        var html = '<table class="table">';
+        html += '<tr><th>Instance</th><th>Command Class</th><th>Result</th></th>';
+        angular.forEach($scope.interviews, function(v, k) {
+            if (v.nodeId == nodeId) {
+                html += v.rows;
+            }
+        });
+        html += '</table>';
+        $(target).on('shown.bs.modal', function() {
+            $(target + ' .modal-body').html('<p>Interview result for device: ' + nodeId + '</p>' + html);
+
+        });
+       
+    };
     // Get Awake HTML
     function awakeCont(isAwake, isListening, isFLiRS) {
         var awake_cont = '';
@@ -1183,7 +1218,7 @@ appController.controller('TypeController', function($scope, $log, $filter, $time
                 }
                 var node = ZWaveAPIData.devices[nodeId];
                 var instanceId = 0;
-                var ccIds =[32,34,37,38,43,70,91,94,96,114,119,129,134,138,143,152];
+                var ccIds = [32, 34, 37, 38, 43, 70, 91, 94, 96, 114, 119, 129, 134, 138, 143, 152];
 
                 var basicType = node.data.basicType.value;
                 var genericType = node.data.genericType.value;
@@ -1191,25 +1226,24 @@ appController.controller('TypeController', function($scope, $log, $filter, $time
                 var deviceType = node.data.deviceTypeString.value;
                 // SDK
                 var sdk = (node.data.SDK.value == '' ? node.data.ZWProtocolMajor.value + '.' + node.data.ZWProtocolMinor.value : node.data.SDK.value);
-                 // Version
+                // Version
                 var appVersion = node.data.applicationMajor.value + '.' + node.data.applicationMinor.value;
-                
+
                 // Security
                 var security = 0;
-                angular.forEach(ccIds, function(v,k) {
+                angular.forEach(ccIds, function(v, k) {
                     var cmd = node.instances[instanceId].commandClasses[v];
-                    if(angular.isObject(cmd)){
+                    if (angular.isObject(cmd)) {
                         security = node.instances[instanceId].commandClasses[v].data.security.value;
                         return;
                     }
-                   
-                
+
+
                 });
                 //console.log(security);
                 // Set object
                 var obj = {};
                 obj['id'] = nodeId;
-                //obj['cmd'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].data.last';
                 obj['rowId'] = 'row_' + nodeId;
                 obj['name'] = node.data.name;
                 obj['security'] = security;
@@ -1219,10 +1253,7 @@ appController.controller('TypeController', function($scope, $log, $filter, $time
                 obj['type'] = deviceType;
                 obj['basicType'] = basicType;
                 obj['genericType'] = genericType;
-        obj['specificType'] = specificType;
-//                obj['level'] = battery_charge;
-//                obj['updateTime'] = battery_updateTime;
-//                obj['urlToStore'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Get()';
+                obj['specificType'] = specificType;
                 $scope.devices.push(obj);
             });
         });
