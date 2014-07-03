@@ -1183,23 +1183,36 @@ appController.controller('TypeController', function($scope, $log, $filter, $time
                 }
                 var node = ZWaveAPIData.devices[nodeId];
                 var instanceId = 0;
-                var ccId =32;
+                var ccIds =[32,34,37,38,43,70,91,94,96,114,119,129,134,138,143,152];
 
                 var basicType = node.data.basicType.value;
                 var genericType = node.data.genericType.value;
                 var specificType = node.data.specificType.value;
                 var deviceType = node.data.deviceTypeString.value;
-                var sdk = node.data.SDK.value;
-                var appVersion = node.data.applicationMajor.value;
-                var security = node.instances[instanceId].commandClasses[ccId];
-                console.log(security);
+                // SDK
+                var sdk = (node.data.SDK.value == '' ? node.data.ZWProtocolMajor.value + '.' + node.data.ZWProtocolMinor.value : node.data.SDK.value);
+                 // Version
+                var appVersion = node.data.applicationMajor.value + '.' + node.data.applicationMinor.value;
+                
+                // Security
+                var security = 0;
+                angular.forEach(ccIds, function(v,k) {
+                    var cmd = node.instances[instanceId].commandClasses[v];
+                    if(angular.isObject(cmd)){
+                        security = node.instances[instanceId].commandClasses[v].data.security.value;
+                        return;
+                    }
+                   
+                
+                });
+                //console.log(security);
                 // Set object
                 var obj = {};
                 obj['id'] = nodeId;
-                obj['cmd'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].data.last';
+                //obj['cmd'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].data.last';
                 obj['rowId'] = 'row_' + nodeId;
                 obj['name'] = node.data.name;
-                obj['security'] = 'YES/NO';
+                obj['security'] = security;
                 obj['zWavePlus'] = 'YES/NO';
                 obj['sdk'] = sdk;
                 obj['appVersion'] = appVersion;

@@ -172,3 +172,19 @@ angApp.filter('batteryIcon', function() {
         return  icon;
     };
 });
+
+/**
+ * Set security icon
+ */
+angApp.filter('securityIcon', function() {
+    return function(input) {
+        var icon = 'fa fa-minus';
+        if(input === false){
+            icon = 'fa fa-power-off fa-lg text-danger';
+        }
+        if(input === true){
+            icon = 'fa fa-check fa-lg text-success';
+        }
+        return  icon;
+    };
+});

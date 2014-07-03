@@ -46,11 +46,11 @@
                 <tr ng-repeat="v in devices | orderBy:predicate:reverse" id="{{ v.rowId}}">
                     <td>{{ v.id }}</td>
                     <td><switch-type-icon generic="{{ v.genericType}}" specific="{{ v.specificType}}"></switch-type-icon> {{ v.name }}</td>
-                    <td>{{ v.security }}</td>
+                    <td><i class="{{ v.security | securityIcon }}"></i></td>
                     <td>{{ v.zWavePlus }}</td>
                     <td>{{ v.sdk }}</td>
                     <td>{{ v.appVersion }}</td>
-                    <td>{{ v.type }}</td>
+                    <td>{{ v.specificType}} {{ v.genericType}} </td>
                 </tr>
             </tbody>
         </table>
