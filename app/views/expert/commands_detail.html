@@ -12,7 +12,61 @@
             </div>
         </div>
     </div>
-
-    <p>Display commands for device {{deviceName}}</p>
+     <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Instance</th>
+                     <th>CommandClass</th>
+                    <th>Command</th>
+                    <th>Parameter</th>
+                     
+            </thead>
+            <tbody>
+                 <tr ng-repeat="(k,v) in commands | orderBy:predicate:reverse" id="{{ v.nodeId}}">
+                    <td><a href="" ng-click="showModal('#modal_command',v.instanceId)">{{v.instanceId}}</a></td>
+                    <td><a href="" ng-click="showModal('#modal_command',v.commandClass)">{{v.commandClass}}</a></td>
+                    <td>
+                        <div ng-repeat="c in v.command | orderBy:predicate:reverse">
+                            <h4>{{c.method}} </h4>
+                            <button class="btn btn-primary">{{c.method}}</button>
+                            <div ng-repeat="p in c.params">
+                             {{p.label}}
+                            <hr />
+                            </div>
+                            <div ng-repeat="p in c.params">
+                             {{p}}
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-repeat="c in v.command">
+                            
+                            {{c.values}}
+                           
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Modal debugging -->
+    <div class="modal fade" id="modal_command" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{_t('commandClass')}}</h4>
+                </div>
+               <div class="modal-body">
+                    Content comes here
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.Modal -->
 
 </div>
