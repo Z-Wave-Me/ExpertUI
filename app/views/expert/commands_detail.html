@@ -28,15 +28,16 @@
                     <td><a href="" ng-click="showModal('#modal_command',v.commandClass)">{{v.commandClass}}</a></td>
                     <td>
                         <div ng-repeat="c in v.command | orderBy:predicate:reverse">
-                            <h4>{{c.method}} </h4>
-                            <button class="btn btn-primary">{{c.method}}</button>
-                            <div ng-repeat="p in c.params">
-                             {{p.label}}
-                            <hr />
+                            <h4>{{c.data.method}} </h4>
+                            <button class="btn btn-primary">{{c.data.method}}</button>
+                            <div ng-repeat="(pk,p) in c.data.params">
+                              {{pk}} {{p}} 
+                               {{c.data.values[pk]}}
                             </div>
-                            <div ng-repeat="p in c.params">
-                             {{p}}
+                            <div>
+                             {{c.data.values[pk]}}
                             </div>
+                             <hr />
                         </div>
                     </td>
                     <td>

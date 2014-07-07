@@ -1511,7 +1511,7 @@ appController.controller('CommandsDetailController', function($scope, $routePara
                     obj['commandClass'] = commandClass.name;
                     obj['command'] = getCommands(methods, ZWaveAPIData);
                     $scope.commands.push(obj);
-                    console.log(obj);
+                    
                 });
 
 
@@ -1526,25 +1526,20 @@ appController.controller('CommandsDetailController', function($scope, $routePara
         var methodsArr = [];
        
         angular.forEach(methods, function(params, method) {
+           //str.split(',');
              var cmd = {};
+             var values = repr_array(method_defaultValues(ZWaveAPIData, methods[method]));
+              cmd['data'] ={ 
+                  'method' : method,
+                  'params' : methods[method],
+                  'values' :method_defaultValues(ZWaveAPIData, methods[method])
+              };
             cmd['method'] = method;
-            cmd['values'] = repr_array(method_defaultValues(ZWaveAPIData, methods[method]));
              cmd['params'] = methods[method];
+            cmd['values'] = repr_array(method_defaultValues(ZWaveAPIData, methods[method]));
+            
             methodsArr.push(cmd);
-            //console.log(method);
-//                        instancesCount++;
-//                        commandClassesCount++;
-//                        methodsCount++;
-            // var params = '[' + repr_array(method_defaultValues(ZWaveAPIData, methods[method])) + ']';
-            //console.log(commandClass.name,method);
-
-//                        cmd[method] = {
-//                        'name': method,
-//                        'params':params[0]
-//                    };
-
-            //var params = method_defaultValues(ZWaveAPIData,methods[method]);
-
+             console.log(values);
         });
         return methodsArr;
     }
