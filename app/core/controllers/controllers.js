@@ -1231,16 +1231,22 @@ appController.controller('TypeController', function($scope, $log, $filter, $time
                 // Version
                 var appVersion = node.data.applicationMajor.value + '.' + node.data.applicationMinor.value;
 
-                // Security
+                // Security and ZWavePlusInfo
                 var security = 0;
                 angular.forEach(ccIds, function(v, k) {
                     var cmd = node.instances[instanceId].commandClasses[v];
-                    if (angular.isObject(cmd)) {
-                        security = node.instances[instanceId].commandClasses[v].data.security.value;
+                    if (angular.isObject(cmd)&& cmd.name === 'Security') {
+                        security = cmd.data.interviewDone.value;
                         return;
                     }
-
-
+                });
+                 var ZWavePlusInfo = false;
+                angular.forEach(ccIds, function(v, k) {
+                    var cmd = node.instances[instanceId].commandClasses[v];
+                    if (angular.isObject(cmd)&& cmd.name === 'ZWavePlusInfo') {
+                        ZWavePlusInfo = true;
+                        return;
+                    }
                 });
                 //console.log(security);
                 // Set object
@@ -1249,7 +1255,7 @@ appController.controller('TypeController', function($scope, $log, $filter, $time
                 obj['rowId'] = 'row_' + nodeId;
                 obj['name'] = node.data.name;
                 obj['security'] = security;
-                obj['zWavePlus'] = 'YES/NO';
+                obj['ZWavePlusInfo'] = ZWavePlusInfo;
                 obj['sdk'] = sdk;
                 obj['appVersion'] = appVersion;
                 obj['type'] = deviceType;

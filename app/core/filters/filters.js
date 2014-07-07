@@ -180,10 +180,23 @@ angApp.filter('securityIcon', function() {
     return function(input) {
         var icon = 'fa fa-minus';
         if(input === false){
-            icon = 'fa fa-power-off fa-lg text-danger';
+            icon = 'fa fa-check fa-lg text-danger';
         }
         if(input === true){
             icon = 'fa fa-check fa-lg text-success';
+        }
+        return  icon;
+    };
+});
+
+/**
+ * Set zWavePlus icon
+ */
+angApp.filter('zWavePlusIcon', function() {
+    return function(input) {
+        var icon = 'fa fa-minus';
+        if(input === true){
+            icon = 'fa fa-plus fa-lg text-success';
         }
         return  icon;
     };
