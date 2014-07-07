@@ -1226,8 +1226,15 @@ appController.controller('TypeController', function($scope, $log, $filter, $time
                 var genericType = node.data.genericType.value;
                 var specificType = node.data.specificType.value;
                 var deviceType = node.data.deviceTypeString.value;
+                var fromSdk = true;
+                var sdk;
                 // SDK
-                var sdk = (node.data.SDK.value == '' ? node.data.ZWProtocolMajor.value + '.' + node.data.ZWProtocolMinor.value : node.data.SDK.value);
+                if (node.data.SDK.value == '') {
+                    sdk = node.data.ZWProtocolMajor.value + '.' + node.data.ZWProtocolMinor.value;
+                    fromSdk = false;
+                } else {
+                    sdk = node.data.SDK.value;
+                }
                 // Version
                 var appVersion = node.data.applicationMajor.value + '.' + node.data.applicationMinor.value;
 
@@ -1235,20 +1242,19 @@ appController.controller('TypeController', function($scope, $log, $filter, $time
                 var security = 0;
                 angular.forEach(ccIds, function(v, k) {
                     var cmd = node.instances[instanceId].commandClasses[v];
-                    if (angular.isObject(cmd)&& cmd.name === 'Security') {
+                    if (angular.isObject(cmd) && cmd.name === 'Security') {
                         security = cmd.data.interviewDone.value;
                         return;
                     }
                 });
-                 var ZWavePlusInfo = false;
+                var ZWavePlusInfo = false;
                 angular.forEach(ccIds, function(v, k) {
                     var cmd = node.instances[instanceId].commandClasses[v];
-                    if (angular.isObject(cmd)&& cmd.name === 'ZWavePlusInfo') {
+                    if (angular.isObject(cmd) && cmd.name === 'ZWavePlusInfo') {
                         ZWavePlusInfo = true;
                         return;
                     }
                 });
-                //console.log(security);
                 // Set object
                 var obj = {};
                 obj['id'] = nodeId;
@@ -1257,6 +1263,7 @@ appController.controller('TypeController', function($scope, $log, $filter, $time
                 obj['security'] = security;
                 obj['ZWavePlusInfo'] = ZWavePlusInfo;
                 obj['sdk'] = sdk;
+                obj['fromSdk'] = fromSdk;
                 obj['appVersion'] = appVersion;
                 obj['type'] = deviceType;
                 obj['basicType'] = basicType;
@@ -1455,8 +1462,9 @@ appController.controller('CommandsController', function($scope, $location, $cook
 });
 
 // Commands controller
-appController.controller('CommandsDetailController', function($scope, $routeParams, $location, $cookies, DataFactory) {
+appController.controller('CommandsDetailController', function($scope, $routeParams, $location, $cookies,$timeout, DataFactory) {
     $scope.devices = [];
+    $scope.ZWaveAPIData;
     $scope.commands = [];
     $scope.deviceId = $routeParams.nodeId;
     $scope.deviceName = '';
@@ -1499,6 +1507,7 @@ appController.controller('CommandsDetailController', function($scope, $routePara
     // Load data
     $scope.load = function() {
         DataFactory.all('0').query(function(ZWaveAPIData) {
+            $scope.ZWaveAPIData = ZWaveAPIData;
             //DataTestFactory.all('all.json').query(function(data) {
             // Loop throught devices
             var ZWaveAPIData = ZWaveAPIData;
@@ -1513,16 +1522,14 @@ appController.controller('CommandsDetailController', function($scope, $routePara
                     var methods = getMethodSpec(ZWaveAPIData, nodeId, instanceId, ccId, null);
                     var obj = {};
                     obj['nodeId'] = nodeId;
+                    obj['rowId'] = 'row_' + nodeId + '_' + ccId;
                     obj['instanceId'] = instanceId;
+                    obj['cmd'] = 'devices['+ nodeId+ '].instances[0].commandClasses['+ccId+']';
                     obj['commandClass'] = commandClass.name;
                     obj['command'] = getCommands(methods, ZWaveAPIData);
                     $scope.commands.push(obj);
-                    
+
                 });
-
-
-
-
             });
         });
     };
@@ -1530,26 +1537,40 @@ appController.controller('CommandsDetailController', function($scope, $routePara
 
     function getCommands(methods, ZWaveAPIData) {
         var methodsArr = [];
-       
+
         angular.forEach(methods, function(params, method) {
-           //str.split(',');
-             var cmd = {};
-             var values = repr_array(method_defaultValues(ZWaveAPIData, methods[method]));
-              cmd['data'] ={ 
-                  'method' : method,
-                  'params' : methods[method],
-                  'values' :method_defaultValues(ZWaveAPIData, methods[method])
-              };
+            //str.split(',');
+            var cmd = {};
+            var values = repr_array(method_defaultValues(ZWaveAPIData, methods[method]));
+            cmd['data'] = {
+                'method': method,
+                'params': methods[method],
+                'values': method_defaultValues(ZWaveAPIData, methods[method])
+            };
             cmd['method'] = method;
-             cmd['params'] = methods[method];
+            cmd['params'] = methods[method];
             cmd['values'] = repr_array(method_defaultValues(ZWaveAPIData, methods[method]));
-            
+
             methodsArr.push(cmd);
-             console.log(values);
+            //console.log(values);
         });
         return methodsArr;
     }
     ;
+
+    $scope.getNodeDevices = function() {
+        var devices = [];
+        angular.forEach($scope.devices, function(v, k) {
+            if (devices_htmlSelect_filter($scope.ZWaveAPIData,'span', v.id, 'node')) {
+                return;
+            } ;
+            var obj = {};
+            obj['id'] = v.id;
+            obj['name'] = v.name;
+            devices.push(obj);
+        });
+        return devices;
+    };
 
 // Show modal dialog
     $scope.showModal = function(target, nodeId) {
@@ -1567,6 +1588,16 @@ appController.controller('CommandsDetailController', function($scope, $routePara
     $cookies.expert_commands_id = $routeParams.nodeId;
     $scope.goToDetail = function(detailId) {
         $location.path('/expert/commands/' + detailId);
+    };
+    
+    // Store single data on remote server
+    $scope.store = function(btn) {
+        $(btn).attr('disabled', true);
+        DataFactory.store($(btn).attr('data-store-url')).query();
+
+        $timeout(function() {
+            $(btn).removeAttr('disabled');
+        }, 1000);
     };
 
 });
