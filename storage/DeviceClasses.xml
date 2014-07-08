@@ -1,0 +1,836 @@
+<?xml version="1.0"?>
+<DeviceClasses>
+	<Generic id="0x01">
+		<Mandatory></Mandatory>
+		<name>
+			<lang xml:lang="en">Portable Controller</lang>
+			<lang xml:lang="de">Mobiler Controller</lang>
+			<lang xml:lang="ru">Переносной контроллер</lang>
+		</name>
+		<Specific id="0">
+			<Mandatory></Mandatory>
+			<name>
+				<lang xml:lang="en"></lang>
+				<lang xml:lang="de"></lang>
+				<lang xml:lang="ru"></lang>
+			</name>
+		</Specific>
+		<Specific id="1">
+			<Mandatory></Mandatory>
+			<name>
+				<lang xml:lang="en">Portable Remote Controller</lang>
+				<lang xml:lang="de">Mobile Fernbedienung</lang>
+				<lang xml:lang="ru">Переносной пульт управления</lang>
+			</name>
+		</Specific>
+		<Specific id="2">
+			<Mandatory>Association</Mandatory>
+			<Mandatory>SceneControllerConf</Mandatory>
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<name>
+				<lang xml:lang="en">Portable Scene Controller</lang>
+				<lang xml:lang="de">Mobiler Scenen-Controller</lang>
+				<lang xml:lang="ru">Переносной пульт управления сценами</lang>
+			</name>
+		</Specific>
+		<Specific id="3">
+			<Mandatory>MultiCmd</Mandatory>
+			<Mandatory>ControllerReplication</Mandatory>
+			<name>
+				<lang xml:lang="en">Portable Installer Tool</lang>
+				<lang xml:lang="de">Mobiler Installer-Controller</lang>
+				<lang xml:lang="ru">Перенасное устройство инсталятора</lang>
+			</name>
+		</Specific>
+	</Generic>
+	<Generic id="0x02">
+		<Mandatory>Basic</Mandatory>
+		<name>
+			<lang xml:lang="en">Static Controller</lang>
+			<lang xml:lang="de">Statischer Controller</lang>
+			<lang xml:lang="ru">Статический контролер</lang>
+		</name>
+		<Specific id="0">
+			<Mandatory></Mandatory>
+			<name>
+				<lang xml:lang="en"></lang>
+				<lang xml:lang="de"></lang>
+				<lang xml:lang="ru"></lang>
+			</name>
+		</Specific>
+		<Specific id="1">
+			<Mandatory></Mandatory>
+			<name>
+				<lang xml:lang="en">Static PC Controller</lang>
+				<lang xml:lang="de">Statischer PC Controller</lang>
+				<lang xml:lang="ru">Статический контролер ПК</lang>
+			</name>
+		</Specific>
+		<Specific id="2">
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<Mandatory>Association</Mandatory>
+			<Mandatory>SceneControllerConf</Mandatory>
+			<name>
+  				<lang xml:lang="en">Static Scene Controller</lang>
+				<lang xml:lang="de">Statischer Scenen-Controller</lang>
+				<lang xml:lang="ru">Статически контролер сцен</lang>
+			</name>
+		</Specific>
+		<Specific id="3">
+			<Mandatory>Version</Mandatory>
+			<Mandatory>MultiCmd</Mandatory>
+			<Mandatory>ControllerReplication</Mandatory>
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<name>
+				<lang xml:lang="en">Static Installer Tool</lang>
+				<lang xml:lang="de">Statisches Installer-Controller</lang>
+				<lang xml:lang="ru">Статический контролер инсталятора</lang>
+			</name>
+		</Specific>
+	</Generic>
+	<Generic id="0x10">
+		<Mandatory>Basic</Mandatory>
+		<Mandatory>SwitchBinary</Mandatory>
+		<name>
+			<lang xml:lang="en">Binary Switch</lang>
+			<lang xml:lang="de">Ein/Aus Schalter</lang>
+			<lang xml:lang="ru">Двухпозиционный включатель</lang>
+		</name>
+		<Specific id="0">
+			<Mandatory></Mandatory>
+			<name>
+				<lang xml:lang="en"></lang>
+				<lang xml:lang="de"></lang>
+				<lang xml:lang="ru"></lang>
+			</name>
+		</Specific>
+		<Specific id="1">
+			<Mandatory>SwitchAll</Mandatory>
+			<name>
+				<lang xml:lang="en">Binary Power Switch</lang>
+				<lang xml:lang="de">Ein/Aus Stromschalter</lang>
+				<lang xml:lang="ru">Двухпозиционный включатель питания</lang>
+			</name>
+		</Specific>
+		<Specific id="3">
+			<Mandatory>SwitchAll</Mandatory>
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<Mandatory>SceneActivation</Mandatory>
+			<Mandatory>SceneActuatorConf</Mandatory>
+			<name>
+				<lang xml:lang="en">Binary Scene Switch</lang>
+				<lang xml:lang="de">Ein/Aus Szenen-Schalter</lang>
+				<lang xml:lang="ru">Двухпозиционный переключатель сцен</lang>
+			</name>
+		</Specific>
+	</Generic>
+	<Generic id="0x11">
+		<Mandatory>Basic</Mandatory>
+		<Mandatory>SwitchMultilevel</Mandatory>
+		<name>
+			<lang xml:lang="en">Multilevel Switch</lang>
+			<lang xml:lang="de">Multipositionsschalter</lang>
+			<lang xml:lang="ru">Многопозиционный включатель</lang>
+		</name>
+		<Specific id="0">
+			<Mandatory></Mandatory>
+			<name>
+				<lang xml:lang="en"></lang>
+				<lang xml:lang="de"></lang>
+				<lang xml:lang="ru"></lang>
+			</name>
+		</Specific>
+		<Specific id="1">
+			<Mandatory>SwitchAll</Mandatory>
+			<name>
+				<lang xml:lang="en">Routing Multilevel Switch</lang>
+				<lang xml:lang="de">Routing Multipositions-Schalter</lang>
+				<lang xml:lang="ru">Маршрутизирующий многопозиционный включатель</lang>
+			</name>
+		</Specific>
+		<Specific id="3">
+			<Mandatory>Version</Mandatory>
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<name>
+				<lang xml:lang="en">Multiposition Motor Switch</lang>
+				<lang xml:lang="de">Multipositions-Motor-Schalter</lang>
+				<lang xml:lang="ru">Многопозиционный включатель двигателя</lang>
+			</name>
+		</Specific>
+		<Specific id="4">
+			<Mandatory>SwitchAll</Mandatory>
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<Mandatory>SceneActivation</Mandatory>
+			<Mandatory>SceneActuatorConf</Mandatory>
+			<name>
+				<lang xml:lang="en">Multilevel Scene Switch</lang>
+				<lang xml:lang="de">Multipositions-Scenen-Umschalter</lang>
+				<lang xml:lang="ru">Многопозиционный переключатель сцен</lang>
+			</name>
+		</Specific>
+		<Specific id="5">
+			<Mandatory>Version</Mandatory>
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<Mandatory>SwitchBinary</Mandatory>
+			<name>
+				<lang xml:lang="en">Motor Control Device (A)</lang>
+				<lang xml:lang="de">Motorsteuerung (A)</lang>
+				<lang xml:lang="ru">Устройство управления двигателем (A)</lang>
+			</name>
+		</Specific>
+		<Specific id="6">
+			<Mandatory>Version</Mandatory>
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<Mandatory>SwitchBinary</Mandatory>
+			<name>
+				<lang xml:lang="en">Motor Control Device (B)</lang>
+				<lang xml:lang="de">Motorsteuerung (B)</lang>
+				<lang xml:lang="ru">Устройство управления двигателем (B)</lang>
+			</name>
+		</Specific>
+		<Specific id="7">
+			<Mandatory>Version</Mandatory>
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<Mandatory>SwitchBinary</Mandatory>
+			<name>
+				<lang xml:lang="en">Motor Control Device (C)</lang>
+				<lang xml:lang="de">Motorsteuerung (C)</lang>
+				<lang xml:lang="ru">Устройство управления двигателем (C)</lang>
+			</name>
+		</Specific>
+	</Generic>
+	<Generic id="0x20">
+		<Mandatory>Basic</Mandatory>
+		<Mandatory>SensorBinary</Mandatory>
+		<name>
+			<lang xml:lang="en">Binary Sensor</lang>
+			<lang xml:lang="de">Binär-Sensor</lang>
+			<lang xml:lang="ru">Бинарный датчик</lang>
+		</name>
+		<Specific id="0">
+			<Mandatory></Mandatory>
+			<name>
+				<lang xml:lang="en"></lang>
+				<lang xml:lang="de"></lang>
+				<lang xml:lang="ru"></lang>
+			</name>
+		</Specific>
+		<Specific id="1">
+			<Mandatory></Mandatory>
+			<name>
+				<lang xml:lang="en">Routing Binary Sensor</lang>
+				<lang xml:lang="de">Routing Binär-Sensor</lang>
+				<lang xml:lang="ru">Маршрутизирующий бинарный датчик</lang>
+			</name>
+		</Specific>
+	</Generic>
+	<Generic id="0x21">
+		<Mandatory>Basic</Mandatory>
+		<Mandatory>SensorMultilevel</Mandatory>
+		<name>
+			<lang xml:lang="en">Multilevel Sensor</lang>
+			<lang xml:lang="de">Sensor</lang>
+			<lang xml:lang="ru">Многоуровневый датчик</lang>
+		</name>
+		<Specific id="0">
+			<Mandatory></Mandatory>
+			<name>
+				<lang xml:lang="en"></lang>
+				<lang xml:lang="de"></lang>
+				<lang xml:lang="ru"></lang>
+			</name>
+		</Specific>
+		<Specific id="1">
+			<Mandatory></Mandatory>
+			<name>
+				<lang xml:lang="en">Routing Multilevel Sensor</lang>
+				<lang xml:lang="de">Routing-Sensor</lang>
+				<lang xml:lang="ru">Маршрутизирующий многоуровневый датчик</lang>
+			</name>
+		</Specific>
+		<Specific id="2">
+			<Mandatory></Mandatory>
+			<name>
+				<lang xml:lang="en">Chimney Fan</lang>
+				<lang xml:lang="de">Chimney Fan</lang>
+				<lang xml:lang="ru">Каминный вентилятор</lang>
+			</name>
+		</Specific>
+	</Generic>
+	<Generic id="0x14">
+		<Mandatory></Mandatory>
+		<name>
+			<lang xml:lang="en">ZIP Gateway</lang>
+			<lang xml:lang="de">Z-IP Gateway</lang>
+			<lang xml:lang="ru">Маршрутизатор Z-на-IP</lang>
+		</name>
+		<Specific id="0">
+			<Mandatory></Mandatory>
+			<name>
+				<lang xml:lang="en"></lang>
+				<lang xml:lang="de"></lang>
+				<lang xml:lang="ru"></lang>
+			</name>
+		</Specific>
+		<Specific id="1">
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<Mandatory>Version</Mandatory>
+			<name>
+				<lang xml:lang="en">ZIP Gateway</lang>
+				<lang xml:lang="de">Z-IP Gateway</lang>
+				<lang xml:lang="ru">Маршрутизатор Z-на-IP</lang>
+			</name>
+		</Specific>
+		<Specific id="2">
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<Mandatory>Version</Mandatory>
+			<name>
+				<lang xml:lang="en">Advanced ZIP Gateway</lang>
+				<lang xml:lang="de">Erweitertes Z-IP Gateway</lang>
+				<lang xml:lang="ru">Продвинутый маршрутизатор Z-на-IP</lang>
+			</name>
+		</Specific>
+	</Generic>
+	<Generic id="0x15">
+		<Mandatory></Mandatory>
+		<name>
+			<lang xml:lang="en">ZIP Node</lang>
+			<lang xml:lang="de">Z-IP Gerät</lang>
+			<lang xml:lang="ru">Устройство Z-на-IP </lang>
+		</name>
+		<Specific id="1">
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<Mandatory>Version</Mandatory>
+			<name>
+				<lang xml:lang="en">ZIP Node</lang>
+				<lang xml:lang="de">Z-IP Gerät</lang>
+				<lang xml:lang="ru">Устрйство Z-на-IP</lang>
+			</name>
+		</Specific>
+		<Specific id="2">
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<Mandatory>Version</Mandatory>
+			<name>
+				<lang xml:lang="en">Advanced ZIP Node</lang>
+				<lang xml:lang="de">Erweitertes Z-IP Gerät</lang>
+				<lang xml:lang="ru">Продвинутое устрйство Z-на-IP</lang>
+			</name>
+		</Specific>
+	</Generic>
+	<Generic id="0x16">
+		<Mandatory>Basic</Mandatory>
+		<name>
+			<lang xml:lang="en">Ventilation</lang>
+			<lang xml:lang="de">Lüftung</lang>
+			<lang xml:lang="ru">Устройство вентиляции</lang>
+		</name>
+		<Specific id="1">
+		<Mandatory></Mandatory>
+		<name>
+			<lang xml:lang="en">Residential Heat Recovery Ventilation</lang>
+			<lang xml:lang="de">Wohnraum-Wärmetauscher-Lüftung</lang>
+			<lang xml:lang="ru">Устройство ветиляции с рекуперацией</lang>
+		</name>
+		</Specific>
+	</Generic> 
+	<Generic id="0xA1">
+		<Mandatory>Basic</Mandatory>
+		<name>
+			<lang xml:lang="en">Alarm Sensor</lang>
+			<lang xml:lang="de">Alarm Sensor</lang>
+			<lang xml:lang="ru">Датчик тревоги</lang>
+		</name>
+		<Specific id="0">
+			<Mandatory></Mandatory>
+			<name>
+				<lang xml:lang="en"></lang>
+				<lang xml:lang="de"></lang>
+				<lang xml:lang="ru"></lang>
+			</name>
+		</Specific>
+		<Specific id="1">
+			<Mandatory>AlarmSensor</Mandatory>
+			<Mandatory>Version</Mandatory>
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<Mandatory>Association</Mandatory>
+			<name>
+				<lang xml:lang="en">Basic Routing Alarm Sensor</lang>
+				<lang xml:lang="de">Basic-Routing-Alarm-Sensor</lang>
+				<lang xml:lang="ru">Базовый маршрутизирующий датчик тревоги</lang>
+			</name>
+		</Specific>
+		<Specific id="2">
+			<Mandatory>AlarmSensor</Mandatory>
+			<Mandatory>Version</Mandatory>
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<Mandatory>Association</Mandatory>
+			<Mandatory>Battery</Mandatory>
+			<name>
+				<lang xml:lang="en">Routing Alarm Sensor</lang>
+				<lang xml:lang="de">Routing-Alarm-Sensor</lang>
+				<lang xml:lang="ru">Маршрутизирующий датчик тревоги</lang>
+			</name>
+		</Specific>
+		<Specific id="3">
+			<Mandatory>AlarmSensor</Mandatory>
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<Mandatory>Version</Mandatory>
+			<name>
+				<lang xml:lang="en">Basic Zensor-Net Alarm Sensor</lang>
+				<lang xml:lang="de">Basic-Zensor-Net Alarm-Sensor</lang>
+				<lang xml:lang="ru">Базовый датчик тревоги Zensor-Net</lang>
+			</name>
+		</Specific>
+		<Specific id="4">
+			<Mandatory>AlarmSensor</Mandatory>
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<Mandatory>Version</Mandatory>
+			<Mandatory>Battery</Mandatory>
+			<name>
+				<lang xml:lang="en">Zensor-Net Alarm Sensor</lang>
+				<lang xml:lang="de">Zensor-Net Alarm-Sensor</lang>
+				<lang xml:lang="ru">Датчик тревоги Zensor-Net</lang>
+			</name>
+		</Specific>
+		<Specific id="5">
+			<Mandatory>AlarmSensor</Mandatory>
+			<Mandatory>RemoteAssociationActivate</Mandatory>
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<Mandatory>Association</Mandatory>
+			<Mandatory>Battery</Mandatory>
+			<name>
+				<lang xml:lang="en">Advanced Zensor-Net Alarm Sensor</lang>
+				<lang xml:lang="de">Erweiterter Zensor-Net Alarm-Sensor</lang>
+				<lang xml:lang="ru">Продвинутый датчик тревоги Zensor-Net</lang>
+			</name>
+		</Specific>
+		<Specific id="6">
+			<Mandatory>AlarmSensor</Mandatory>
+			<Mandatory>Version</Mandatory>
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<Mandatory>Association</Mandatory>
+			<name>
+				<lang xml:lang="en">Basic Routing Smoke Sensor</lang>
+				<lang xml:lang="de">Basic-Routing-Rauchmelder</lang>
+				<lang xml:lang="ru">Базовый маршрутизирующий датчик дыма</lang>
+			</name>
+		</Specific>
+		<Specific id="7">
+			<Mandatory>AlarmSensor</Mandatory>
+			<Mandatory>Version</Mandatory>
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<Mandatory>Association</Mandatory>
+			<Mandatory>Battery</Mandatory>
+			<name>
+				<lang xml:lang="en">Routing Smoke Sensor</lang>
+				<lang xml:lang="de">Routing-Rauchmelder</lang>
+				<lang xml:lang="ru">Маршрутизирующий датчик дыма</lang>
+			</name>
+		</Specific>
+		<Specific id="8">
+			<Mandatory>AlarmSensor</Mandatory>
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<Mandatory>Version</Mandatory>
+			<name>
+				<lang xml:lang="en">Basic Zensor-Net Smoke Sensor</lang>
+				<lang xml:lang="de">Basic-Zensor-Net Rauchmelder</lang>
+				<lang xml:lang="ru">Базовый датчик дыма Zensor-Net</lang>
+			</name>
+		</Specific>
+		<Specific id="9">
+			<Mandatory>AlarmSensor</Mandatory>
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<Mandatory>Version</Mandatory>
+			<Mandatory>Battery</Mandatory>
+			<name>
+				<lang xml:lang="en">Zensor-Net Smoke Sensor</lang>
+				<lang xml:lang="de">Zensor-Net Rauchmelder</lang>
+				<lang xml:lang="ru">Датчик дыма Zensor-Net</lang>
+			</name>
+		</Specific>
+		<Specific id="A">
+			<Mandatory>AlarmSensor</Mandatory>
+			<Mandatory>Version</Mandatory>
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<Mandatory>Association</Mandatory>
+			<Mandatory>Battery</Mandatory>
+			<name>
+				<lang xml:lang="en">Advanced Zensor-Net Smoke Sensor</lang>
+				<lang xml:lang="de">Erweiterter Zensor-Net Rauchmelder</lang>
+				<lang xml:lang="ru">Продвинутый датчик дыма Zensor-Net</lang>
+			</name>
+		</Specific>
+	</Generic>
+	<Generic id="0x08">
+		<Mandatory></Mandatory>
+		<name>
+			<lang xml:lang="en">Thermostat</lang>
+			<lang xml:lang="de">Thermostat</lang>
+			<lang xml:lang="ru">Термостат</lang>
+		</name>
+		<Specific id="0">
+			<Mandatory></Mandatory>
+			<name>
+				<lang xml:lang="en"></lang>
+				<lang xml:lang="de"></lang>
+				<lang xml:lang="ru"></lang>
+			</name>
+		</Specific>
+		<Specific id="1">
+			<Mandatory></Mandatory>
+			<name>
+				<lang xml:lang="en">Thermostat Heating</lang>
+				<lang xml:lang="de">Heizungsthermostat</lang>
+				<lang xml:lang="ru">Термостат нагрева</lang>
+			</name>
+		</Specific>
+		<Specific id="2">
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<Mandatory>Version</Mandatory>
+			<Mandatory>ThermostatMode</Mandatory>
+			<Mandatory>ThermostatSetPoint</Mandatory>
+			<name>
+				<lang xml:lang="en">Thermostat General</lang>
+				<lang xml:lang="de">Thermostat</lang>
+				<lang xml:lang="ru">Термостат общего назначения</lang>
+			</name>
+		</Specific>
+		<Specific id="3">
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<Mandatory>Version</Mandatory>
+			<Mandatory>MultiCmd</Mandatory>
+			<Mandatory>ClimateControlSchedule</Mandatory>
+			<name>
+				<lang xml:lang="en">Setback Schedule Thermostat</lang>
+				<lang xml:lang="de">Programmierbares Absenk-Thermostat</lang>
+				<lang xml:lang="ru">Термостат с программируемым расписанием</lang>
+			</name>
+		</Specific>
+		<Specific id="4">
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<Mandatory>Version</Mandatory>
+			<Mandatory>MultiCmd</Mandatory>
+			<name>
+				<lang xml:lang="en">Thermostat</lang>
+				<lang xml:lang="de">Setpoint-Thermostat</lang>
+				<lang xml:lang="ru">Термостат</lang>
+			</name>
+		</Specific>
+		<Specific id="5">
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<Mandatory>Version</Mandatory>
+			<Mandatory>ThermostatMode</Mandatory>
+			<Mandatory>ThermostatSetBack</Mandatory>
+			<name>
+				<lang xml:lang="en">Setback Thermostat</lang>
+				<lang xml:lang="de">Absenk-Thermostat</lang>
+				<lang xml:lang="ru">Термостат с программируемым расписанием (? TODO)</lang>
+			</name>
+		</Specific>
+		<Specific id="6">
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<Mandatory>Version</Mandatory>
+			<Mandatory>ThermostatMode</Mandatory>
+			<Mandatory>ThermostatSetPoint</Mandatory>
+			<name>
+				<lang xml:lang="en">General Thermostat V2</lang>
+				<lang xml:lang="de">Thermostat V2</lang>
+				<lang xml:lang="ru">Термостат общего назначения V2</lang>
+			</name>
+		</Specific>
+	</Generic>
+	<Generic id="0x31">
+		<Mandatory>Basic</Mandatory>
+		<name>
+			<lang xml:lang="en">Meter</lang>
+			<lang xml:lang="de">Zaehler</lang>
+			<lang xml:lang="ru">Счётчик</lang>
+		</name>
+		<Specific id="0">
+			<Mandatory></Mandatory>
+			<name>
+				<lang xml:lang="en"></lang>
+				<lang xml:lang="de"></lang>
+				<lang xml:lang="ru"></lang>
+			</name>
+		</Specific>
+		<Specific id="1">
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<Mandatory>Version</Mandatory>
+			<Mandatory>Meter</Mandatory>
+			<name>
+				<lang xml:lang="en">Simple Meter</lang>
+				<lang xml:lang="de">Einfacher Zaehler</lang>
+				<lang xml:lang="ru">Простой счётчик</lang>
+			</name>
+		</Specific>
+	</Generic>
+	<Generic id="0x12">
+		<Mandatory>Basic</Mandatory>
+		<name>
+			<lang xml:lang="en">Switch Remote</lang>
+			<lang xml:lang="de">Fernbedienter Schalter</lang>
+			<lang xml:lang="ru">Switch Remote TODO</lang>
+		</name>
+		<Specific id="0">
+			<Mandatory></Mandatory>
+			<name>
+				<lang xml:lang="en"></lang>
+				<lang xml:lang="de"></lang>
+				<lang xml:lang="ru"></lang>
+			</name>
+		</Specific>
+		<Specific id="1">
+			<Mandatory></Mandatory>
+			<name>
+				<lang xml:lang="en">Switch Remote Binary</lang>
+				<lang xml:lang="de">Fernbedienter Ein/Aus-Schalter</lang>
+				<lang xml:lang="ru">Switch Remote Binary TODO</lang>
+			</name>
+		</Specific>
+		<Specific id="2">
+			<Mandatory></Mandatory>
+			<name>
+				<lang xml:lang="en">Switch Remote Multilevel</lang>
+				<lang xml:lang="de">Fernbedienter Dimmer</lang>
+				<lang xml:lang="ru">Switch Remote Multilevel TODO</lang>
+			</name>
+		</Specific>
+		<Specific id="3">
+			<Mandatory></Mandatory>
+			<name>
+				<lang xml:lang="en">Switch Remote Toggle Binary</lang>
+				<lang xml:lang="de">Fernbedienter Ein/Aus-Schalter</lang>
+				<lang xml:lang="ru">Switch Remote Toggle Binary TODO</lang>
+			</name>
+		</Specific>
+		<Specific id="4">
+			<Mandatory></Mandatory>
+			<name>
+				<lang xml:lang="en">Switch Remote Toggle Multilevel</lang>
+				<lang xml:lang="de">Fernbedienter Dimmer</lang>
+				<lang xml:lang="ru">Switch Remote Toggle Multilevel TODO</lang>
+			</name>
+		</Specific>
+	</Generic>
+	<Generic id="0x0f">
+		<Mandatory></Mandatory>
+		<name>
+			<lang xml:lang="en">Repeater Slave</lang>
+			<lang xml:lang="de">Repeater</lang>
+			<lang xml:lang="ru">Повторитель</lang>
+		</name>
+		<Specific id="0">
+			<Mandatory></Mandatory>
+			<name>
+				<lang xml:lang="en"></lang>
+				<lang xml:lang="de"></lang>
+				<lang xml:lang="ru"></lang>
+			</name>
+		</Specific>
+		<Specific id="1">
+			<Mandatory></Mandatory>
+			<name>
+				<lang xml:lang="en">Repeater Slave</lang>
+				<lang xml:lang="de">Repeater</lang>
+				<lang xml:lang="ru">Повторитель</lang>
+			</name>
+		</Specific>
+	</Generic>
+	<Generic id="0x30">
+		<Mandatory>Basic</Mandatory>
+		<Mandatory>MeterPulse</Mandatory>
+		<name>
+			<lang xml:lang="en">Meter Pulse</lang>
+			<lang xml:lang="de">Impulszaehler</lang>
+			<lang xml:lang="ru">Счётчик импульсов</lang>
+		</name>
+		<Specific id="0">
+			<Mandatory></Mandatory>
+			<name>
+				<lang xml:lang="en"></lang>
+				<lang xml:lang="de"></lang>
+				<lang xml:lang="ru"></lang>
+			</name>
+		</Specific>
+		<Specific id="1">
+			<Mandatory></Mandatory>
+			<name>
+				<lang xml:lang="en">Meter Pulse</lang>
+				<lang xml:lang="de">Zaehler</lang>
+				<lang xml:lang="ru">Счётчик импульсов</lang>
+			</name>
+		</Specific>
+	</Generic>
+	<Generic id="0x40">
+		<Mandatory>Basic</Mandatory>
+		<name>
+			<lang xml:lang="en">Entry Control</lang>
+			<lang xml:lang="de">Zugangskontrolle</lang>
+			<lang xml:lang="ru">Управление входом</lang>
+		</name>
+		<Specific id="0">
+			<Mandatory></Mandatory>
+			<name>
+				<lang xml:lang="en"></lang>
+				<lang xml:lang="de"></lang>
+				<lang xml:lang="ru"></lang>
+			</name>
+		</Specific>
+		<Specific id="1">
+			<Mandatory>DoorLock</Mandatory>
+			<name>
+				<lang xml:lang="en">Door Lock</lang>
+				<lang xml:lang="de">Tuerschloss</lang>
+				<lang xml:lang="ru">Дверной замок</lang>
+			</name>
+		</Specific>
+		<Specific id="2">
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<Mandatory>Version</Mandatory>
+			<Mandatory>DoorLock</Mandatory>
+			<name>
+				<lang xml:lang="en">Advanced Door Lock</lang>
+				<lang xml:lang="de">Erweitertes Tuerschloss</lang>
+				<lang xml:lang="ru">Продвинутый дверной замок</lang>
+			</name>
+		</Specific>
+		<Specific id="3">
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<Mandatory>Version</Mandatory>
+			<Mandatory>Security</Mandatory>
+			<Mandatory>DoorLock</Mandatory>
+			<name>
+				<lang xml:lang="en">Secure Keypad</lang>
+				<lang xml:lang="de">Sicherheitstastatur</lang>
+				<lang xml:lang="ru">Защищённая клавиатура</lang>
+			</name>
+		</Specific>
+	</Generic>
+	<Generic id="0x04">
+		<Mandatory>Basic</Mandatory>
+		<name>
+			<lang xml:lang="en">Display</lang>
+			<lang xml:lang="de">Display</lang>
+			<lang xml:lang="ru">Экран</lang>
+		</name>
+		<Specific id="0">
+			<Mandatory></Mandatory>
+			<name>
+				<lang xml:lang="en"></lang>
+				<lang xml:lang="de"></lang>
+				<lang xml:lang="ru"></lang>
+			</name>
+		</Specific>
+		<Specific id="1">
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<Mandatory>Version</Mandatory>
+			<Mandatory>ScreenMD</Mandatory>
+			<Mandatory>ScreenAttributes</Mandatory>
+			<name>
+				<lang xml:lang="en">Simple Display</lang>
+				<lang xml:lang="de">Display</lang>
+				<lang xml:lang="ru">Простой экран</lang>
+			</name>
+		</Specific>
+	</Generic>
+	<Generic id="0x50">
+		<Mandatory>ManufacturerSpecific</Mandatory>
+		<Mandatory>Version</Mandatory>
+		<Mandatory>Basic</Mandatory>
+		<Mandatory>Proprietary</Mandatory>
+		<name>
+			<lang xml:lang="en">Semi Interoperable</lang>
+			<lang xml:lang="de">eingeschraenkt interoperables Gerät</lang>
+			<lang xml:lang="ru">Частично совместимый</lang>
+		</name>
+		<Specific id="0">
+			<Mandatory></Mandatory>
+			<name>
+				<lang xml:lang="en"></lang>
+				<lang xml:lang="de"></lang>
+				<lang xml:lang="ru"></lang>
+			</name>
+		</Specific>
+		<Specific id="1">
+			<Mandatory>EnergyProduction</Mandatory>
+			<name>
+				<lang xml:lang="en">Energy Production</lang>
+				<lang xml:lang="de">Energieerzeuger</lang>
+				<lang xml:lang="ru">Генератор (? TODO)</lang>
+			</name>
+		</Specific>
+	</Generic>
+	<Generic id="0x03">
+		<Mandatory>Basic</Mandatory>
+		<name>
+			<lang xml:lang="en">GenericTypeAVControl</lang>
+			<lang xml:lang="de">Audio/Video-Steuerung</lang>
+			<lang xml:lang="ru">Базовое управление звуком и видео</lang>
+		</name>
+		<Specific id="0">
+			<Mandatory></Mandatory>
+			<name>
+				<lang xml:lang="en"></lang>
+				<lang xml:lang="de"></lang>
+				<lang xml:lang="ru"></lang>
+			</name>
+		</Specific>
+		<Specific id="1">
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<Mandatory>Version</Mandatory>
+			<Mandatory>SimpleAVControl</Mandatory>
+			<name>
+				<lang xml:lang="en">Satellite Receiver</lang>
+				<lang xml:lang="de">Satelittenempfaenger</lang>
+				<lang xml:lang="ru">Спутниковый ресивер</lang>
+			</name>
+		</Specific>
+		<Specific id="2">
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<Mandatory>Version</Mandatory>
+			<Mandatory>SensorBinary</Mandatory>
+			<Mandatory>SimpleAVControl</Mandatory>
+			<name>
+				<lang xml:lang="en">Door Bell</lang>
+				<lang xml:lang="de">Tuergong</lang>
+				<lang xml:lang="ru">Дверной звонок</lang>
+			</name>
+		</Specific>
+		<Specific id="3">
+			<Mandatory>ManufacturerSpecific</Mandatory>
+			<Mandatory>Version</Mandatory>
+			<Mandatory>SimpleAVControl</Mandatory>
+			<name>
+				<lang xml:lang="en">Satellite Receiver V2</lang>
+				<lang xml:lang="de">Satelittenempfaenger V2</lang>
+				<lang xml:lang="ru">Спутниковый ресивер V2</lang>
+			</name>
+		</Specific>
+	</Generic>
+	<Generic id="0x09">
+		<Mandatory>Basic</Mandatory>
+		<name>
+			<lang xml:lang="en">WindowCovering</lang>
+			<lang xml:lang="de">Rolladensteuerung</lang>
+			<lang xml:lang="ru">Управление жалюзи</lang>
+		</name>
+		<Specific id="0">
+			<Mandatory></Mandatory>
+			<name>
+				<lang xml:lang="en"></lang>
+				<lang xml:lang="de"></lang>
+				<lang xml:lang="ru"></lang>
+			</name>
+		</Specific>
+		<Specific id="1">
+			<Mandatory></Mandatory>
+			<name>
+				<lang xml:lang="en">Simple</lang>
+				<lang xml:lang="de">Standard</lang>
+ 				<lang xml:lang="ru">Простое</lang>
+			</name>
+		</Specific>	
+	</Generic>	
+</DeviceClasses>
+ 
