@@ -81,7 +81,7 @@ appController.controller('TestController', function($scope, $routeParams, cfg, $
 
             //console.log(val.name.lang[2].__text);
 //             angular.forEach(val, function(v, k) {
-//            
+//
 //             });
         });
         //console.log($scope.dataSet);
@@ -1237,7 +1237,7 @@ appController.controller('TypeController', function($scope, $log, $filter, $time
     };
     $scope.dataXml = [];
 
-    //This is the callback function
+    //Load xml data
     setXml = function(data) {
         var lang = 'en';
         angular.forEach(data.DeviceClasses.Generic, function(val, key) {
@@ -1319,13 +1319,12 @@ appController.controller('TypeController', function($scope, $log, $filter, $time
                 angular.forEach(deviceXml, function(v, k) {
                     if (genericType == v.id) {
                         deviceType = v.generic;
-                        console.log(v.specific);
                         angular.forEach(v.specific, function(s, sk) {
                             if (specificType == s._id) {
-                                if(angular.isDefined(s.name.lang[v.langId].__text)){
+                                if (angular.isDefined(s.name.lang[v.langId].__text)) {
                                     deviceType = s.name.lang[v.langId].__text;
                                 }
-                             }
+                            }
                         });
                         return;
                     }
@@ -1517,7 +1516,7 @@ appController.controller('CommandsController', function($scope, $location, $cook
 });
 
 // Commands controller
-appController.controller('CommandsDetailController', function($scope, $routeParams, $location, $cookies, $timeout, DataFactory) {
+appController.controller('CommandsDetailController', function($scope, $routeParams, $filter, $location, $cookies, $timeout, DataFactory) {
     $scope.devices = [];
     $scope.ZWaveAPIData;
     $scope.commands = [];
@@ -1579,7 +1578,9 @@ appController.controller('CommandsDetailController', function($scope, $routePara
                     obj['nodeId'] = nodeId;
                     obj['rowId'] = 'row_' + nodeId + '_' + ccId;
                     obj['instanceId'] = instanceId;
-                    obj['cmd'] = 'devices[' + nodeId + '].instances[0].commandClasses[' + ccId + ']';
+                    obj['cmd'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']';
+                    obj['cmdData'] = ZWaveAPIData.devices[nodeId].instances[instanceId].commandClasses[ccId].data;
+                    obj['cmdDataIn'] = ZWaveAPIData.devices[nodeId].instances[instanceId].data;
                     obj['commandClass'] = commandClass.name;
                     obj['command'] = getCommands(methods, ZWaveAPIData);
                     $scope.commands.push(obj);
@@ -1629,17 +1630,39 @@ appController.controller('CommandsDetailController', function($scope, $routePara
     };
 
 // Show modal dialog
-    $scope.showModal = function(target, nodeId) {
+    $scope.showModal = function(target, data) {
         // Modal example http://plnkr.co/edit/D29YjKGbY63OSa1EeixT?p=preview
         $(target).modal();
-        var html = 'Command Class data';
+        // Formated output
+        var getCmdData = function(data, space) {
+            var html = '<div class="data-element">' + space + data.name + ': <span class="' + ((data.updateTime > data.invalidateTime) ? 'green' : 'red') + '">' + ((typeof (data.value) !== 'undefined' && data.value != null) ? data.value.toString() : 'None') + '</span>' + ' (<span class="' + ((data.updateTime > data.invalidateTime) ? '' : 'red') + '">' + $filter('isTodayFromUnix')(data.updateTime) + '</span>)</div>';
+            return html;
+        };
 
-        $(target).on('shown.bs.modal', function() {
-            $(target + ' .modal-body').html('<p>Command class data: ' + nodeId + '</p>');
+        // Get data
+        var html = getCmdData(data, '');
 
+        angular.forEach(data, function(el, key) {
+            if (key != 'name' && key != 'type' && key != 'updateTime' && key != 'invalidateTime' && key != 'value' && // these are internal values
+                    key != 'capabilitiesNames') { // these make the dialog monstrious
+                html += getCmdData(el, '');
+                angular.forEach(el, function(v, k) {
+                    if (angular.isObject(v)) {
+                        html += getCmdData(v, ' - ');
+                        console.log(v);
+                    }
+
+                });
+            }
         });
-
+        
+        // Fill modal with data
+        $(target).on('shown.bs.modal', function() {
+            $(target + ' .modal-body').html(html);
+        });
     };
+
+
     // Redirect to another device
     $cookies.expert_commands_id = $routeParams.nodeId;
     $scope.goToDetail = function(detailId) {

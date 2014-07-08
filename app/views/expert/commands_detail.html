@@ -25,8 +25,8 @@
             </thead>
             <tbody>
                 <tr ng-repeat="(k,v) in commands | orderBy:predicate:reverse" id="{{ v.nodeId}}">
-                    <td><a href="" ng-click="showModal('#modal_command', v.instanceId)">{{v.instanceId}}</a></td>
-                    <td><a href="" ng-click="showModal('#modal_command', v.commandClass)">{{v.commandClass}}</a></td>
+                    <td><a ng-show="$index == 0" href="" ng-click="showModal('#modal_command', v.cmdDataIn)">{{v.instanceId}}</a></td>
+                    <td><a href="" ng-click="showModal('#modal_command', v.cmdData)">{{v.commandClass}}</a></td>
                     <td>
                         <div ng-repeat="c in v.command| orderBy:predicate:reverse">
                             <h4>{{c.data.method}} </h4>
