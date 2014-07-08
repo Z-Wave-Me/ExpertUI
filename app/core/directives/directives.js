@@ -26,6 +26,7 @@ angApp.directive('btnSpinner', function() {
 
 /**
  *  Switches directives
+ *  @todo: move to filters
  */
 
 // Switch type
@@ -49,23 +50,23 @@ angApp.directive('switchTypeIcon', function() {
                 case 16:
                     icon = 'fa-power-off';
                     break;
-                    
-                 case 8:
+
+                case 8:
                     icon = 'fa-sort-amount-desc';
                     break;
-                
+
                 case 9:
                     icon = 'fa-bullseye fa-lg';
                     break;
                 case 32:
                     icon = 'fa-eye';
                     break;
-                    
-                 case 64:
+
+                case 64:
                     icon = 'fa-lock fa-lg';
                     break;
-                    
-               
+
+
 
                 default:
                     icon = '';
@@ -78,6 +79,7 @@ angApp.directive('switchTypeIcon', function() {
 });
 
 // Switch all icons
+//@todo: move to filters
 angApp.directive('switchAllIcon', function() {
     return {
         restrict: "E",
@@ -110,6 +112,84 @@ angApp.directive('switchAllIcon', function() {
             }
             ;
             scope.src = src;
+        }
+    };
+});
+
+/*** Fixes ***/
+// js holder fix
+angApp.directive('expertCommandInput', function() {
+    // Get text input
+    function getText(label, value, min, max) {
+        var input = '';
+        input += '<label>' + label + '</label> ';
+        input += '<input type="text" class="form-control" value="' + value + '"> min: "' + min + '", max: "' + max + '" ';
+        return input;
+    }
+    // Get node
+    function getNode(label, devices, selected) {
+        var input = '';
+        input += '<label>' + label + '</label> ';
+        input += '<select>';
+        input += '<option value="1">RaZberry</option>';
+        angular.forEach(devices, function(v, k) {
+            input += '<option value="' + v.id + '">' + v.name + '</option>';
+        });
+
+        input += '</select>';
+
+        return input;
+    }
+
+    // Get enumerators
+    function getEnum(label, enums, checked) {
+        var input = '';
+        input += '<label>' + label + '</label><br />';
+        var cnt = 1;
+        angular.forEach(enums.enumof, function(v, k) {
+            var title = v.label;
+            var type = v.type;
+            var checked = (cnt == 1 ? ' checked="checked"' : '');
+
+            if ('fix' in type) {
+                input += '<input type="radio" name="radio_' + label + '" value="' + type.fix.value + '"' +  checked +' /> ' + title + '<br />';
+            } else if ('range' in type) {
+                var min = type.range.min;
+                var max = type.range.max;
+                input += '<input type="radio" name="radio_' + label + '" value=""' +  checked +' /> ' + title + ' <input type="text" class="form-control" value="' + min + '"> min: "' + min + '", max: "' + max + '" <br />';
+            } else {
+                input = '';
+            }
+            cnt++;
+
+        });
+        return input;
+    }
+    return {
+        restrict: "E",
+        replace: true,
+        template: '<div class="form-group" ng-bind-html="input | toTrusted"></div>',
+        scope: {
+            collection: '=',
+            devices: '=',
+            getNodeDevices: '='
+        },
+        link: function(scope, element, attrs) {
+            var input = '';
+            var label = scope.collection.label;
+            var type = scope.collection.type;
+            if (label && type) {
+                if ('range' in type) {
+                    input = getText(label, attrs.value, type.range.min, type.range.max);
+                } else if ('node' in type) {
+                    input = getNode(label, scope.getNodeDevices(), 'null');
+                } else if ('enumof' in type) {
+                    input = getEnum(label, type, 'checked');
+                } else {
+                    input = 'NO';
+                }
+            }
+            scope.input = input;
         }
     };
 });

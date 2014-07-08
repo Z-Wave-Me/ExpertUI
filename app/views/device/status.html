@@ -48,7 +48,9 @@
                     <td class="row-sleeping" ng-bind-html="v.sleeping | toTrusted"></td>
                     <td class="row-awake" ng-bind-html="v.awake | toTrusted"></td>
                     <td class="row-time" ng-bind-html="v.updateTime | toTrusted"></td>
-                    <td class="row-interview" ng-bind-html="v.interview | toTrusted"></td>
+                    <td class="row-interview">
+                        <a href="" ng-show="v.interview" ng-click="showModal('#modal_controller',v.id)" title="{{v.interview}}"><i class="fa fa-question-circle fa-lg text-info"></i></a>
+                    </td>
                     <td class="row-ping">
                         <button
                             ng-if="v.urlToStore"
@@ -62,4 +64,20 @@
             </tbody>
         </table>
     </div>
+    
+    <!-- Modal controller -->
+    <div class="modal fade" id="modal_controller" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{_t('interview_results_dialog_title')}}</h4>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.Modal -->
 </div>

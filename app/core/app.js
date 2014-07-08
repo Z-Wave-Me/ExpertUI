@@ -92,12 +92,8 @@ angApp.config(['$routeProvider',
                 when('/expert/commands', {
                     templateUrl: 'app/views/expert/commands.html'
                 }).
-                // Test
-                when('/detail/:phoneId', {
-                    templateUrl: 'app/views/detail.html'
-                }).
-                when('/list', {
-                    templateUrl: 'app/views/list.html'
+                when('/expert/commands/:nodeId', {
+                    templateUrl: 'app/views/expert/commands_detail.html'
                 }).
                 otherwise({
                     redirectTo: '/'
