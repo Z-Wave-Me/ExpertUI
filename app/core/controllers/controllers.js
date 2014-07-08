@@ -1239,7 +1239,7 @@ appController.controller('TypeController', function($scope, $log, $filter, $time
 
     //This is the callback function
     setXml = function(data) {
-        var lang = 'en'; 
+        var lang = 'en';
         angular.forEach(data.DeviceClasses.Generic, function(val, key) {
             var obj = {};
             var langs = {
@@ -1247,21 +1247,24 @@ appController.controller('TypeController', function($scope, $log, $filter, $time
                 "de": "1",
                 "ru": "2"
             };
-           
-            if(angular.isDefined(langs[$scope.lang])){
+
+            if (angular.isDefined(langs[$scope.lang])) {
                 lang = $scope.lang;
             }
             var langId = langs[lang];
-            
+
             obj['id'] = parseInt(val._id);
-            obj['title'] = val.name.lang[langId].__text;
+            obj['generic'] = val.name.lang[langId].__text;
+            obj['specific'] = val.Specific;
+            obj['langId'] = langId;
             $scope.dataXml.push(obj);
+
         });
-       
+
     };
     XmlFactory.get(setXml, $scope.cfg.server_url + '/translations/DeviceClasses.xml');
     //XmlFactory.get(setXml, 'storage/DeviceClasses.xml');
-    
+
     // Load data
     $scope.load = function(lang) {
         DataFactory.all('0').query(function(ZWaveAPIData) {
@@ -1280,7 +1283,6 @@ appController.controller('TypeController', function($scope, $log, $filter, $time
                 var basicType = node.data.basicType.value;
                 var genericType = node.data.genericType.value;
                 var specificType = node.data.specificType.value;
-                var deviceType = '';
                 var fromSdk = true;
                 var sdk;
                 // SDK
@@ -1310,12 +1312,22 @@ appController.controller('TypeController', function($scope, $log, $filter, $time
                         return;
                     }
                 });
-                
+
                 // Device type
                 var deviceXml = $scope.dataXml;
+                var deviceType = $scope._t('unknown_device_type') + ': ' + genericType;
                 angular.forEach(deviceXml, function(v, k) {
                     if (genericType == v.id) {
-                        deviceType = v.title;
+                        deviceType = v.generic;
+                        console.log(v.specific);
+                        angular.forEach(v.specific, function(s, sk) {
+                            if (specificType == s._id) {
+                                if(angular.isDefined(s.name.lang[v.langId].__text)){
+                                    deviceType = s.name.lang[v.langId].__text;
+                                }
+                             }
+                        });
+                        return;
                     }
                 });
                 // Set object

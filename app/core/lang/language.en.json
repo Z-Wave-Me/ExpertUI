@@ -40,6 +40,7 @@
     "btn_checkall": "Check all",
     "btn_plus": "+",
     "btn_minus": "-",
+     "unknown_device_type": "Unknown device type",
     "---": "---",
     "syntax_error": "XML Syntax error: ",
     "area_new": "New Zone",
