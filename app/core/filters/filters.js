@@ -100,18 +100,18 @@ angApp.filter('lockStatus', function() {
             mode_lbl = '?';
         } else {
             switch (mode) {
-                case 0x00:
-                    mode_lbl = 'Open';
-                    break;
-                case 0x10:
-                    mode_lbl = 'Open from inside';
-                    break;
-                case 0x20:
-                    mode_lbl = 'Open from outside';
-                    break;
-                case 0xff:
-                    mode_lbl = 'Closed';
-                    break;
+            case 0x00:
+                mode_lbl = 'Open';
+                break;
+            case 0x10:
+                mode_lbl = 'Open from inside';
+                break;
+            case 0x20:
+                mode_lbl = 'Open from outside';
+                break;
+            case 0xff:
+                mode_lbl = 'Closed';
+                break;
             }
             ;
         };
@@ -131,18 +131,18 @@ angApp.filter('lockIsOpen', function() {
             status = false;
         } else {
             switch (mode) {
-                case 0x00:
-                   status = true;
-                    break;
-                case 0x10:
-                    status = true;
-                    break;
-                case 0x20:
-                    status = true;
-                    break;
-                case 0xff:
-                   status = false;
-                    break;
+            case 0x00:
+               status = true;
+                break;
+            case 0x10:
+                status = true;
+                break;
+            case 0x20:
+                status = true;
+                break;
+            case 0xff:
+               status = false;
+                break;
             }
             ;
         };
@@ -172,3 +172,53 @@ angApp.filter('batteryIcon', function() {
         return  icon;
     };
 });
+
+/**
+ * Count Routes
+ */
+angApp.filter('getRoutesCount', function() {
+    return function(ZWaveAPIData, nodeId) {
+        var in_array=function(v, arr, return_index){
+            for (var i=0; i<arr.length; i++)
+                if (arr[i]==v) 
+                    return return_index?i:true;
+            return false;
+        };
+        var getFarNeighbours=function(nodeId, exludeNodeIds, hops) {
+            if (hops === undefined) {
+                var hops = 0;
+                var exludeNodeIds = [nodeId];
+            };
+
+            if (hops > 2) // Z-Wave allows only 4 routers, but we are interested in only 2, since network becomes unstable if more that 2 routers are used in communications
+                return [];
+
+            var nodesList = [];
+            angular.forEach(ZWaveAPIData.devices[nodeId].data.neighbours.value, function(nnodeId, index) {
+                if (!(nnodeId in ZWaveAPIData.devices))
+                    return; // skip deviced reported in routing table but absent in reality. This may happen after restore of routing table.
+                if (!in_array(nnodeId, exludeNodeIds)) {
+                    nodesList.push({ nodeId: nnodeId, hops: hops });
+                    if (ZWaveAPIData.devices[nnodeId].data.isListening.value && ZWaveAPIData.devices[nnodeId].data.isRouting.value)
+                        $.merge(nodesList, getFarNeighbours(nnodeId, $.merge([nnodeId], exludeNodeIds) /* this will not alter exludeNodeIds */, hops + 1));
+                }
+            });
+            return nodesList;
+        };
+
+        var routesCount = {};
+        angular.forEach(getFarNeighbours(nodeId), function(nnode, index) {
+            if (nnode.nodeId in routesCount) {
+            if (nnode.hops in routesCount[nnode.nodeId])
+                routesCount[nnode.nodeId][nnode.hops]++;
+            else
+                routesCount[nnode.nodeId][nnode.hops] = 1;
+            } else {
+            routesCount[nnode.nodeId] = new Array();
+            routesCount[nnode.nodeId][nnode.hops] = 1;
+            }
+        });
+        return routesCount;
+    };
+});
+

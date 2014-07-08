@@ -1328,11 +1328,96 @@ appController.controller('ControllController', function($scope, $http, $log) {
 });
 
 // Routing controller
-appController.controller('RoutingController', function($scope, $http, $log) {
-    $http.get('storage/demo/routing.json').
-            success(function(data) {
-                $scope.data = data;
+appController.controller('RoutingController', function($scope, $log, $filter, $timeout, DataFactory, DataTestFactory, cfg) {
+
+    $scope.devices = [];
+    $scope.labels = {};
+    $scope.data = {};
+
+    // Load data
+    $scope.load = function(lang) {
+        DataFactory.all('0').query(function(ZWaveAPIData) {
+            var device_name = function(device, options) {
+
+                options = $.extend({
+                    nameOnly : false,
+                    withoutId : false
+                }, options);
+
+                var suffix = '';
+
+                if (device == 255)
+                    return $scope
+                    ._t('all_nodes');
+                try {
+                    if (!ZWaveAPIData.devices[device])
+                        suffix = ' (' + $scope._t('undefined_device') + ')';
+
+                    if (config.devices && $(config.devices).find('device[device=' + device + ']').attr('description'))
+                        return $(config.devices).find('device[device=' + device + ']').attr('description')
+                                + (options.withoutId ? '' : ' (' + device + ')' + suffix);
+                    else
+                        return $scope._t('_device') + ' ' + device + (options.nameOnly ? ''    : suffix);
+                } catch (e) {
+                    return $scope._t('_device') + ' ' + device;
+                }
+            };
+
+            // used to minimize routing table by removing not interesting lines
+            var skipPortableAndVirtual = true; 
+
+            // Loop throught devices
+            angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+                if (nodeId == 255)
+                    return;
+                if (skipPortableAndVirtual
+                        && (node.data.isVirtual.value || node.data.basicType.value == 1))
+                    return;
+                var routesCount = $filter('getRoutesCount')(ZWaveAPIData, nodeId);
+                $scope.devices
+                .push(nodeId);
+                $scope.labels[nodeId] = device_name(nodeId);
+                var line = [];
+                angular.forEach(ZWaveAPIData.devices, function(nnode, nnodeId) {
+                    if (nnodeId == 255)
+                        return;
+                    if (skipPortableAndVirtual
+                            && (nnode.data.isVirtual.value || nnode.data.basicType.value == 1))
+                        return;
+                    var routeHops = '0/0';
+                    if (nnodeId in routesCount) {
+                        routeHops = (routesCount[nnodeId][1] || '0') + '/' + (routesCount[nnodeId][2] || '0');
+                    }
+                    var clazz = 'line' + nodeId + ' ';
+                    if (nodeId == nnodeId
+                            || node.data.isVirtual.value
+                            || nnode.data.isVirtual.value
+                            || node.data.basicType.value == 1
+                            || nnode.data.basicType.value == 1) {
+                        clazz += 'rtUnavailable';
+                        routeHops = '';
+                    } else if ($.inArray(parseInt(nnodeId, 10), node.data.neighbours.value) != -1)
+                        clazz += 'rtDirect';
+                    else if (routesCount[nnodeId]
+                    && routesCount[nnodeId][1] > 1)
+                        clazz += 'rtRouted';
+                    else if (routesCount[nnodeId]
+                    && routesCount[nnodeId][1] == 1)
+                        clazz += 'rtBadlyRouted';
+                    else
+                        clazz += 'rtNotLinked';
+                    line[nnodeId] = {
+                            routeHops : routeHops,
+                            clazz : clazz
+                    };
+
+                });
+                $scope.data[nodeId] = line;
             });
+        });
+    };
+
+    $scope.load($scope.lang);
 });
 
 // Reorganization controller

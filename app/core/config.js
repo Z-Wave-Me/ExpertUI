@@ -11,7 +11,7 @@ var config_data = {
     'user_field': 'USERXXXX',
     'pass_field': 'PSWDXXXX',
     'interval': 3000, // Set interval in miliseconds to refresh data
-    'server_url': 'http://192.168.10.167:8083', // Remote JSON
+    'server_url': 'http://next.de', // Remote JSON
     'update_url': '/ZWaveAPI/Data/', // Url for update (refresh data)
     'store_url': '/ZWaveAPI/Run/', // Url for store data
     'lang': 'en', // Default language
