@@ -1,10 +1,59 @@
 /**
  * App filters
  * @author Martin Vach
+ * @author Martin Hartnagel
  */
-// Convert unix timastamp to date
+/**
+ * Convert unix timastamp to date
+ */
 angApp.filter('getTimestamp', function() {
-    return Math.round(+new Date() / 1000);
+    return function() {
+        return Math.round(+new Date() / 1000);
+    };
+});
+
+/**
+ * Calculates difference between two dates in days
+ */
+angApp.filter('days_between', function() {
+    return function(date1, date2) {
+        return Math.round(Math.abs(date2.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24));
+    };
+});
+
+/**
+ * Return string with date in smart format: "hh:mm" if current day, "hh:mm dd" if this week, "hh:mm dd mmmm" if this year, else "hh:mm dd mmmm yyyy"
+ */ 
+angApp.filter('getTime', function($filter) {
+    return function(timestamp, invalidReturn) {
+        var d = new Date(parseInt(timestamp, 10)*1000);
+        if (timestamp === 0 || isNaN(d.getTime()))
+            return invalidReturn
+
+            var cd = new Date();
+
+        var fmt;
+        if ($filter('days_between')(cd, d) < 1 && cd.getDate() == d.getDate()) // this day
+            fmt = 'HH:MM';
+        else if ($filter('days_between')(cd, d)  < 7 && ((cd < d) ^ (cd.getDay() >= d.getDay()))) // this week
+            fmt = 'dddd HH:MM';
+        else if (cd.getFullYear() == d.getFullYear()) // this year
+            fmt = 'dddd, d mmmm HH:MM';
+        else // one upon a time
+            fmt = 'dddd, d mmmm yyyy HH:MM';
+
+        return ""+d;//TODO with jquery.dateformat.js: .format(fmt);
+    };
+});
+
+
+/**
+ * Return "red" if the data is outdated or "" if up to date
+ */
+angApp.filter('getUpdated', function() {
+    return function(data) {
+        return ((data.updateTime > data.invalidateTime) ?'':'red');
+    };
 });
 
 /**
@@ -20,11 +69,11 @@ angApp.filter('stripTags', function() {
  * Display HTML tags in scope
  */
 angApp.filter('toTrusted', ['$sce', function($sce){
-        return function(text) {
-            return $sce.trustAsHtml(text);
-        };
-    }]);
-// Convert unix timastamp to date
+    return function(text) {
+        return $sce.trustAsHtml(text);
+    };
+}]);
+//Convert unix timastamp to date
 angApp.filter('dateFromUnix', function() {
     return function(input) {
         var d = new Date(input * 1000);
@@ -39,7 +88,7 @@ angApp.filter('dateFromUnix', function() {
     };
 });
 
-// Get current date time
+//Get current date time
 angApp.filter('getCurrentDate', function() {
     return function() {
         var d = new Date();
@@ -54,7 +103,7 @@ angApp.filter('getCurrentDate', function() {
     };
 });
 
-// Get current time
+//Get current time
 angApp.filter('getCurrentTime', function() {
     return function() {
         var d = new Date();
@@ -66,7 +115,7 @@ angApp.filter('getCurrentTime', function() {
     };
 });
 
-// Check for today
+//Check for today
 angApp.filter('isTodayFromUnix', function() {
     return function(input) {
         var d = new Date(input * 1000);
@@ -132,7 +181,7 @@ angApp.filter('lockIsOpen', function() {
         } else {
             switch (mode) {
             case 0x00:
-               status = true;
+                status = true;
                 break;
             case 0x10:
                 status = true;
@@ -141,7 +190,7 @@ angApp.filter('lockIsOpen', function() {
                 status = true;
                 break;
             case 0xff:
-               status = false;
+                status = false;
                 break;
             }
             ;
@@ -176,7 +225,7 @@ angApp.filter('batteryIcon', function() {
 /**
  * Count Routes
  */
-angApp.filter('getRoutesCount', function() {
+angApp.filter('getRoutesCount', function($filter) {
     return function(ZWaveAPIData, nodeId) {
         var in_array=function(v, arr, return_index){
             for (var i=0; i<arr.length; i++)
@@ -209,13 +258,13 @@ angApp.filter('getRoutesCount', function() {
         var routesCount = {};
         angular.forEach(getFarNeighbours(nodeId), function(nnode, index) {
             if (nnode.nodeId in routesCount) {
-            if (nnode.hops in routesCount[nnode.nodeId])
-                routesCount[nnode.nodeId][nnode.hops]++;
-            else
-                routesCount[nnode.nodeId][nnode.hops] = 1;
+                if (nnode.hops in routesCount[nnode.nodeId])
+                    routesCount[nnode.nodeId][nnode.hops]++;
+                else
+                    routesCount[nnode.nodeId][nnode.hops] = 1;
             } else {
-            routesCount[nnode.nodeId] = new Array();
-            routesCount[nnode.nodeId][nnode.hops] = 1;
+                routesCount[nnode.nodeId] = new Array();
+                routesCount[nnode.nodeId][nnode.hops] = 1;
             }
         });
         return routesCount;

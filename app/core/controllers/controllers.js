@@ -1441,15 +1441,128 @@ appController.controller('ControllController', function($scope, $http, $log) {
 });
 
 // Routing controller
-appController.controller('RoutingController', function($scope, $log, $filter, $timeout, DataFactory, DataTestFactory, cfg) {
+appController.controller('RoutingController', function($scope, $log, $filter, $route, $timeout, DataFactory, DataTestFactory, XmlFactory, cfg) {
 
     $scope.devices = [];
-    $scope.labels = {};
+    $scope.nodes = {};
     $scope.data = {};
+    $scope.ZWaveAPIData;
+
+    $scope.dataXml = [];
+
+    //Load xml data
+    setXml = function(data) {
+        var lang = 'en';
+        angular.forEach(data.DeviceClasses.Generic, function(val, key) {
+            var obj = {};
+            var langs = {
+                    "en": "0",
+                    "de": "1",
+                    "ru": "2"
+            };
+
+            if (angular.isDefined(langs[$scope.lang])) {
+                lang = $scope.lang;
+            }
+            var langId = langs[lang];
+
+            obj['id'] = parseInt(val._id);
+            obj['generic'] = val.name.lang[langId].__text;
+            obj['specific'] = val.Specific;
+            obj['langId'] = langId;
+            $scope.dataXml.push(obj);
+
+        });
+
+    };
+    // TODO XmlFactory.get(setXml, $scope.cfg.server_url + '/config/Rules.xml');
+
+    $scope.processUpdateNodesNeighbours = function(processQueue) {
+        if (processQueue.length == 0) {
+            $('div.rtDiv').css({ "border-color": ""});
+            $('.update').button("enable");
+            // run overall routing-table update
+            /*DataFactory.store('controller.RequestNetworkUpdate()').query(function(response) {
+            $route.reload();
+        });*/
+            return;
+        }
+        var current=processQueue[0];
+        $('div.line'+current.nodeId).css({ "border-color": "blue"});
+        DataFactory.store('devices[' + current.nodeId + '].RequestNodeNeighbourUpdate()').query(function(response) {
+            var routesCount = $filter('getRoutesCount')($scope.ZWaveAPIData, current.nodeId);        
+            var retry=false;
+            $.each($scope.ZWaveAPIData.devices, function (nnodeId, nnode) {
+                if (nnodeId == current.nodeId) {
+                    $('#update'+current.nodeId).attr('class', $filter('getUpdated')(nnode.data.neighbours));
+                    $('#update'+current.nodeId).html($filter('getTime')(nnode.data.neighbours.updateTime));
+                }
+                if (!routesCount[nnodeId]) {
+                    return;
+                }
+                if (routesCount[nnodeId][1] == 0) {
+                    retry=true;
+                    return;
+                }
+                $('#cell'+current.nodeId+'-'+nnodeId).css({ "border-color": ""});
+            });
+            if (!retry || current.retry >= 4) {
+                processQueue.shift();
+            } else {
+                current.retry++;
+            }
+            $scope.processUpdateNodesNeighbours(processQueue);
+        });
+    };
+
+    // updateAll routes
+    $scope.updateAll = function() {
+        // retry each element up to 4 times
+        var processQueue=[];
+        // first RequestNodeNeighbourUpdate for non-battery devices
+        $.each($scope.devices, function (index, nodeId) {
+            var node = $scope.nodes[nodeId].node;
+            var hasBattery = 0x80 in node.instances[0].commandClasses;
+            var nodeIsVirtual = node.data.isVirtual;
+            var nodeBasicType = node.data.basicType;
+            if (hasBattery || nodeId == 255 || nodeIsVirtual == null || nodeIsVirtual.value == true || nodeBasicType == null || nodeBasicType.value == 1)
+                return;
+            processQueue.push({"nodeId": nodeId, "retry": 0});
+        });
+        // second RequestNodeNeighbourUpdate for battery devices
+        $.each($scope.devices, function (index, nodeId) {
+            var node = $scope.nodes[nodeId].node;
+            var hasBattery = 0x80 in node.instances[0].commandClasses;
+            var nodeIsVirtual = node.data.isVirtual;
+            var nodeBasicType = node.data.basicType;
+            if (!hasBattery || nodeId == 255 || nodeIsVirtual == null || nodeIsVirtual.value == true || nodeBasicType == null || nodeBasicType.value == 1)
+                return;
+            processQueue.push({"nodeId": nodeId, "retry": 0});
+        });
+        $('.update').button("disable");
+        $scope.processUpdateNodesNeighbours(processQueue);
+    };
+
+    // update a route
+    $scope.update = function(nodeId) {
+        // retry each element up to 4 times
+        var processQueue=[];
+        var node = $scope.nodes[nodeId].node;
+        var hasBattery = 0x80 in node.instances[0].commandClasses;
+        var nodeIsVirtual = node.data.isVirtual;
+        var nodeBasicType = node.data.basicType;
+        if (hasBattery || nodeId == 255 || nodeIsVirtual == null || nodeIsVirtual.value == true || nodeBasicType == null || nodeBasicType.value == 1)
+            return;
+        processQueue.push({"nodeId": nodeId, "retry": 0});
+        // avoid overall routing-table updates during update
+        $('.update').button("disable");
+        $scope.processUpdateNodesNeighbours(processQueue);
+    };
 
     // Load data
     $scope.load = function(lang) {
         DataFactory.all('0').query(function(ZWaveAPIData) {
+            $scope.ZWaveAPIData = ZWaveAPIData;
             var device_name = function(device, options) {
 
                 options = $.extend({
@@ -1466,9 +1579,25 @@ appController.controller('RoutingController', function($scope, $log, $filter, $t
                     if (!ZWaveAPIData.devices[device])
                         suffix = ' (' + $scope._t('undefined_device') + ')';
 
+                    var deviceXml = $scope.dataXml;
+                    var deviceType = $scope._t('unknown_device_type') + ': ' + genericType;
+                    angular.forEach(deviceXml, function(v, k) {
+                        if (genericType == v.id) {
+                            deviceType = v.generic;
+                            angular.forEach(v.specific, function(s, sk) {
+                                if (specificType == s._id) {
+                                    if (angular.isDefined(s.name.lang[v.langId].__text)) {
+                                        deviceType = s.name.lang[v.langId].__text;
+                                    }
+                                }
+                            });
+                            return;
+                        }
+                    });
+
                     if (config.devices && $(config.devices).find('device[device=' + device + ']').attr('description'))
                         return $(config.devices).find('device[device=' + device + ']').attr('description')
-                                + (options.withoutId ? '' : ' (' + device + ')' + suffix);
+                        + (options.withoutId ? '' : ' (' + device + ')' + suffix);
                     else
                         return $scope._t('_device') + ' ' + device + (options.nameOnly ? ''    : suffix);
                 } catch (e) {
@@ -1487,9 +1616,8 @@ appController.controller('RoutingController', function($scope, $log, $filter, $t
                         && (node.data.isVirtual.value || node.data.basicType.value == 1))
                     return;
                 var routesCount = $filter('getRoutesCount')(ZWaveAPIData, nodeId);
-                $scope.devices
-                .push(nodeId);
-                $scope.labels[nodeId] = device_name(nodeId);
+                $scope.devices.push(nodeId);
+                $scope.nodes[nodeId] = {"label":device_name(nodeId), "node": node};
                 var line = [];
                 angular.forEach(ZWaveAPIData.devices, function(nnode, nnodeId) {
                     if (nnodeId == 255)

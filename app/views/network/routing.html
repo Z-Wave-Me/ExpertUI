@@ -5,12 +5,14 @@
     <table id="RoutingTable" class="table table-striped">
         <thead>
             <tr>
-                <th class="rtHeader">ID</th>
-                <th class="rtHeader">Name</th>
-                <th ng-repeat="d in devices" style="text-align:center;">{{labels[d]}}</th>
+                <th class="rtHeader">{{ _t('device_name')}}</th>
+                <th class="rtHeader">{{ _t('rt_header_node_id')}}</th>
+                <th ng-repeat="d in devices" style="text-align:center;">{{nodes[d].label}}</th>
+                <th class="rtHeader">{{ _t('rt_header_update_time')}}</th>
                 <th><button 
-                    class="btn btn-primary" 
-                    data-ng-click="storeAll('all_1')" 
+                    class="btn btn-primary update" 
+                    data-ng-click="updateAll()"
+                    data-action="updateAll"  
                     id="btn_update_all_1"
                     >{{ _t('rt_update_nodes_neightbours')}}
                 </button>&nbsp;<btn-spinner></btn-spinner></th>
@@ -18,10 +20,12 @@
         </thead>
         <tbody>
             <tr ng-repeat="d in devices">
-                <td>({{d}})</td>
-                <td>{{labels[d]}}</td>
-                <td ng-repeat="n in devices" class="rtCell"><div class="rtDiv {{data[d][n].clazz}}"><span class="geek routeHops">{{data[d][n].routeHops}}</span></div></td>
-                <td><button class="btn btn-primary">{{ _t('update')}}</button></td>
+                <td>{{nodes[d].label}}</td>
+                <td>{{d}}</td>
+                <td ng-repeat="n in devices" class="rtCell"><div id="cell{{d}}-{{n}}" class="rtDiv {{data[d][n].clazz}}"><span class="geek routeHops">{{data[d][n].routeHops}}</span></div></td>
+                <td><span id="update{{d}}" class="{{nodes[d].node.data.neighbours| getUpdated}}">{{nodes[d].node.data.neighbours.updateTime| getTime}}</span></td>
+                <td><button class="btn btn-primary update"
+                    data-ng-click="update(d)" >{{ _t('update')}}</button></td>
             </tr>
         </tbody>
     </table>
