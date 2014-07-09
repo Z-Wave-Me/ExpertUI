@@ -1,0 +1,39 @@
+<!-- Configuration view -->
+<div ng-controller="ConfigurationController">
+    <div class="page-header">
+        <div class="row">
+            <div class="col-md-6">
+                <h1>{{_t('nav_configuration')}} - {{deviceName}}</h1>
+            </div>
+            <div class="col-md-6">
+                <select name="devices" class="form-control" style="width: 260px;" ng-model="detailId" ng-change="goToDetail(detailId)" >
+                    <option value="">---</option>
+                    <option ng-repeat="v in devices| orderBy:predicate:reverse" value="{{v.id}}" selected="{{v.selected}}">{{v.name}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="active"><a href="" data-target="#device_interview" data-toggle="tab">{{_t('nav_device_interview')}}</a></li>
+        <li><a href="" data-target="#device_configuration" data-toggle="tab">{{_t('nav_device_configuration')}}</a></li>
+        <li><a href="" data-target="#device_assoc" data-toggle="tab">{{_t('nav_device_assoc')}}</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+         <!-- ConfigInterviewController -->
+        <div class="tab-pane active" id="device_interview" ng-controller="ConfigInterviewController" ng-include="'app/views/config/interview.html'">
+          
+        </div>
+          <!-- ConfigConfigurationController -->
+        <div class="tab-pane" id="device_configuration" ng-controller="ConfigConfigurationController" ng-include="'app/views/config/configuration.html'">
+        </div>
+           <!-- ConfigAssocController -->
+        <div class="tab-pane" id="device_assoc" ng-controller="ConfigAssocController" ng-include="'app/views/config/assoc.html'">
+            Assoc
+        </div>
+    </div>
+
+</div><!-- /ng-controler -->

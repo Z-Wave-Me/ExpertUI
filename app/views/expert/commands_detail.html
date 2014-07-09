@@ -28,35 +28,31 @@
                     <td><a class="btn btn-info" href="" ng-controller="CommandModalController" ng-click="showModal('#modal_command', v.cmdData)">{{v.commandClass}}</a></td>
                     <td>
                         <div class="commands-data" ng-repeat="c in v.command| orderBy:predicate:reverse" ng-init="formName = 'form_' + v.commandClass + '_' + c.data.method + '_' + $index">
-                            <form name="{{formName}}" id="{{formName}}" ng-submit="submitForm(formName,v.cmd +'.' + c.data.method)" class="form row" role="form" novalidate>
-                                <div class="col-sm-3">
-                                     <p> <i class="fa fa-chevron-right"></i> {{c.data.method}}</p>
-                                </div>
-                           
-                            <div class="col-sm-9 commands-data-control">
-                            <div class="form-inline" ng-repeat="(pk,p) in c.data.params">
-                                <expert-command-input 
-                                    collection='p' 
-                                    value="{{c.data.values[pk]}}"
-                                    devices='devices'
-                                    get-node-devices='getNodeDevices'
-                                    ></expert-command-input>
-                                <!-- {{pk}} {{p}} 
-                                {{c.data.values[pk]}}-->
+                            <form name="{{formName}}" id="{{formName}}" ng-submit="submitForm(formName, v.cmd + '.' + c.data.method)" class="form" role="form" novalidate>
+                                <div class="commands-data-control">
+                                    <div class="form-inline" ng-repeat="(pk,p) in c.data.params">
+                                        <expert-command-input 
+                                            collection='p' 
+                                            value="{{c.data.values[pk]}}"
+                                            devices='devices'
+                                            get-node-devices='getNodeDevices'
+                                            ></expert-command-input>
+                                        <!-- {{pk}} {{p}} 
+                                        {{c.data.values[pk]}}-->
 
-                            </div>
-                                <button
-                                type="submit"
-                                class="btn btn-primary" 
-                                id="btn_update_{{ v.rowId}}"
-                                >{{_t('btn_update')}}</button>
-                                  </div>
-                                
-                            
+                                    </div>
+                                    <button
+                                        type="submit"
+                                        class="btn btn-primary" 
+                                        id="btn_update_{{ v.rowId}}"
+                                        >{{c.data.method}}</button>
+                                </div>
+
+
                             </form>
                         </div>
                     </td>
-                 </tr>
+                </tr>
             </tbody>
         </table>
     </div>

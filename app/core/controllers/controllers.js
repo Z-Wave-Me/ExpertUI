@@ -860,12 +860,11 @@ appController.controller('LocksController', function($scope, $http, $log, $filte
     };
     $timeout(refresh, cfg.interval);
 
-    // Store data from on remote server
+    // Store data on remote server
     $scope.store = function(btn) {
         $(btn).attr('disabled', true);
         var url = $(btn).attr('data-store-url');
         DataFactory.store(url).query();
-        console.log(btn, url);
         $timeout(function() {
             $(btn).removeAttr('disabled');
         }, 1000);
@@ -1078,7 +1077,7 @@ appController.controller('StatusController', function($scope, $http, $log, $filt
         }, 1000);
     };
 
-    // Store all data on remote server
+    // Show modal window
     $scope.showModal = function(target, nodeId) {
         // Modal example http://plnkr.co/edit/D29YjKGbY63OSa1EeixT?p=preview
         // alert(id);
@@ -1390,46 +1389,114 @@ appController.controller('SecurityController', function($scope, $http, $log) {
             });
 });
 
-// Assoc controller
-appController.controller('AssocController', function($scope, $http, $log) {
-    $http.get('storage/demo/assoc.json').
-            success(function(data) {
-                $scope.data = data;
-            });
-});
-
-// Wakeup controller
-appController.controller('WakeupController', function($scope, $http, $log) {
-    $http.get('storage/demo/wakeup.json').
-            success(function(data) {
-                $scope.data = data;
-            });
-});
-
-// Protection controller
-appController.controller('ProtectionController', function($scope, $http, $log) {
-    $http.get('storage/demo/protection.json').
-            success(function(data) {
-                $scope.data = data;
-            });
-});
-
 // Configuration controller
-appController.controller('ConfigurationController', function($scope, $http, $routeParams, $log) {
-    var device_id = parseInt($routeParams.device_id);
-    $scope.device_id = device_id;
-    $scope.message = '';
-    $http.get('storage/demo/configuration.json').
-            success(function(data) {
-                $scope.data = data;
+appController.controller('ConfigurationController', function($scope, $routeParams, $filter, $location, $cookies, $timeout, DataFactory, DataTestFactory) {
+   $scope.devices = [];
+    $scope.ZWaveAPIData;
+    $scope.commands = [];
+    $scope.deviceId = $routeParams.nodeId;
+    $scope.deviceName = '';
+    $scope.reset = function() {
+        $scope.devices = angular.copy([]);
+    };
+    
+    // Remember
+    $scope.detailId = (angular.isDefined($cookies.configuration_id) ? $cookies.configuration_id : 0);
+    // Redirect to detail page
+    $scope.redirectToDetail = function(detailId) {
+        if (detailId > 0) {
+            $location.path('/config/configuration/' + detailId);
+        }
+    };
+   
+    // Load navigation
+    $scope.navigation = function() {
+        DataFactory.all('0').query(function(ZWaveAPIData) {
+        //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
+         $scope.ZWaveAPIData = ZWaveAPIData;
+            var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
+
+            // Loop throught devices
+            angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+                if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+                    return;
+                }
+                var node = ZWaveAPIData.devices[nodeId];
+
+                if (nodeId == $routeParams.nodeId) {
+                    $scope.deviceName = node.data.name;
+                }
+                // Set object
+                var obj = {};
+                obj['id'] = nodeId;
+                obj['rowId'] = 'row_' + nodeId;
+                obj['name'] = node.data.name;
+                obj['slected'] = '';
+                if (nodeId == $routeParams.nodeId) {
+                    $scope.deviceName = node.data.name;
+                    obj['slected'] = 'selected';
+                }
+                $scope.devices.push(obj);
             });
-    $http.get('storage/demo/devices.json').
-            success(function(data) {
-                $scope.devices = data;
+        });
+    };
+    $scope.navigation();
+
+    // Load data
+    $scope.load = function(nodeId,ZWaveAPIData) {
+       DataFactory.all('0').query(function(ZWaveAPIData) {
+        //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
+           
+
+            // Loop throught devices
+            var ZWaveAPIData = ZWaveAPIData;
+            var nodeId = $routeParams.nodeId;
+
+            angular.forEach(ZWaveAPIData.devices[nodeId].instances, function(instance, instanceId) {
+                angular.forEach(instance.commandClasses, function(commandClass, ccId) {
+                    var obj = {};
+                    obj['nodeId'] = nodeId;
+                    obj['rowId'] = 'row_' + nodeId + '_' + ccId;
+                    obj['instanceId'] = instanceId;
+                    obj['cmd'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']';
+                    obj['cmdData'] = ZWaveAPIData.devices[nodeId].instances[instanceId].commandClasses[ccId].data;
+                    obj['cmdDataIn'] = ZWaveAPIData.devices[nodeId].instances[instanceId].data;
+                    obj['commandClass'] = commandClass.name;
+                    $scope.commands.push(obj);
+
+                });
             });
-    $log.info(device_id);
+        });
+    };
+     if(parseInt($routeParams.nodeId,10) > 0){
+            $scope.load($routeParams.nodeId);
+        }else{
+             $scope.redirectToDetail($scope.detailId);
+        }
+    
+
+    // Redirect to another device
+    $scope.goToDetail = function(detailId) {
+        $cookies.configuration_id = $routeParams.nodeId;
+        $location.path('/config/configuration/' + detailId);
+    };
 
 
+});
+
+// Device config interview controller
+appController.controller('ConfigInterviewController', function($scope) {
+   
+});
+
+// Device config configuration controller
+appController.controller('ConfigConfigurationController', function($scope) {
+   
+});
+
+// Device config assoc controller
+appController.controller('ConfigAssocController', function($scope) {
+   
 });
 
 // Controll controller
@@ -1678,7 +1745,6 @@ appController.controller('CommandModalController', function($scope, $filter) {
                 angular.forEach(el, function(v, k) {
                     if (angular.isObject(v)) {
                         html += getCmdData(v, ' - ');
-                        console.log(v);
                     }
 
                 });
