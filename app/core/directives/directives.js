@@ -123,14 +123,14 @@ angApp.directive('expertCommandInput', function() {
     function getText(label, value, min, max) {
         var input = '';
         input += '<label>' + label + '</label> ';
-        input += '<input type="text" class="form-control" value="' + value + '"> min: "' + min + '", max: "' + max + '" ';
+        input += '<input class="form-control" name="' + label + '" type="text" class="form-control" value="' + value + '" title=" min: ' + min + ', max: ' + max +'" />';
         return input;
     }
     // Get node
     function getNode(label, devices, selected) {
         var input = '';
         input += '<label>' + label + '</label> ';
-        input += '<select>';
+        input += '<select name="select_'+ label +'" class="form-control">';
         input += '<option value="1">RaZberry</option>';
         angular.forEach(devices, function(v, k) {
             input += '<option value="' + v.id + '">' + v.name + '</option>';
@@ -152,11 +152,11 @@ angApp.directive('expertCommandInput', function() {
             var checked = (cnt == 1 ? ' checked="checked"' : '');
 
             if ('fix' in type) {
-                input += '<input type="radio" name="radio_' + label + '" value="' + type.fix.value + '"' +  checked +' /> ' + title + '<br />';
+                input += '<input name="radio_'+ label + '" class="commands-data-chbx" type="radio" value="' + type.fix.value + '"' +  checked +' /> ' + title + '<br />';
             } else if ('range' in type) {
                 var min = type.range.min;
                 var max = type.range.max;
-                input += '<input type="radio" name="radio_' + label + '" value=""' +  checked +' /> ' + title + ' <input type="text" class="form-control" value="' + min + '"> min: "' + min + '", max: "' + max + '" <br />';
+                input += '<input name="radio_'+ label + '" class="commands-data-chbx" type="radio" value=""' +  checked +' /> ' + title + ' <input type="text" name="radio_'+ label + '_txt" class="form-control commands-data-txt-chbx" value="' + min + '" title=" min: ' + min + ', max: ' + max +'" disabled="true" /><br />';
             } else {
                 input = '';
             }

@@ -34,6 +34,7 @@
     "th_zwaveplus": "Z-Wave Plus",
      "th_sdk": "Version",
      "th_appversion": "App version",
+     "btn_update": "Update",
     "btn_full": "Full",
     "btn_all_off": "All off",
     "btn_all_on": "All on",

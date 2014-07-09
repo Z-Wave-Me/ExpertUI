@@ -76,7 +76,7 @@ h1, .h1, h2, .h2, h3, .h3 {
     margin-bottom: 10px;
 }
 h1 {
-    font-size: 26px;
+    font-size: 20px;
     /*    text-shadow: 3px 1px 2px rgba(150, 150, 150, 1);*/
     color: #2A6496;
     /*    color: #083B84;*/
@@ -115,13 +115,13 @@ h3 {
 -------------------------------------------------- */
 .page-header {
     padding-bottom: 0;
-    margin: 0;
+    margin: 0 0 20px 0;
     border-bottom: 0;
 }
 
 .container {}
 
-/* Commands CSS
+/* Expert Commands CSS
 -------------------------------------------------- */
 #row_commands .thumbnail{
    width: 100%;
@@ -136,6 +136,19 @@ h3 {
 
 #row_commands img{
     vertical-align: top !important;
+}
+
+.commands-data{
+    padding: 10px 0;
+    border-top: solid 1px #9fd8ef;
+}
+
+.commands-data-control{
+    padding: 10px;
+     background-color: #e4f5fc;
+}
+.commands-data-control .form-group{
+    margin-bottom: 10px;
 }
 
 /* Tables

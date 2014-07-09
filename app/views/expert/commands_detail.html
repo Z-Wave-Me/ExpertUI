@@ -14,29 +14,26 @@
         </div>
     </div>
     <div class="table-responsive">
-        <table class="table table-striped table-hover">
+        <table class="table">
             <thead>
                 <tr>
                     <th>Instance</th>
                     <th>CommandClass</th>
-                    <th>Command</th>
-                    <th>Parameter</th>
+                    <th>Command / Parameter</th>
 
             </thead>
             <tbody>
                 <tr ng-repeat="(k,v) in commands | orderBy:predicate:reverse" id="{{ v.nodeId}}">
-                    <td><a ng-show="$index == 0" href="" ng-click="showModal('#modal_command', v.cmdDataIn)">{{v.instanceId}}</a></td>
-                    <td><a href="" ng-click="showModal('#modal_command', v.cmdData)">{{v.commandClass}}</a></td>
+                    <td><a ng-show="$index == 0" href="" ng-controller="CommandModalController" ng-click="showModal('#modal_command', v.cmdDataIn)">{{v.instanceId}}</a></td>
+                    <td><a class="btn btn-info" href="" ng-controller="CommandModalController" ng-click="showModal('#modal_command', v.cmdData)">{{v.commandClass}}</a></td>
                     <td>
-                        <div ng-repeat="c in v.command| orderBy:predicate:reverse">
-                            <h4>{{c.data.method}} </h4>
-                            <button 
-                                class="btn btn-primary"
-                                data-ng-click="store('#btn_update_' + v.rowId)" 
-                                data-store-url="{{ v.cmd}}.{{c.data.method}}()" 
-                                class="btn btn-primary btn-spinner" 
-                                id="btn_update_{{ v.rowId}}"
-                                >{{c.data.method}}</button>
+                        <div class="commands-data" ng-repeat="c in v.command| orderBy:predicate:reverse" ng-init="formName = 'form_' + v.commandClass + '_' + c.data.method + '_' + $index">
+                            <form name="{{formName}}" id="{{formName}}" ng-submit="submitForm(formName,v.cmd +'.' + c.data.method)" class="form row" role="form" novalidate>
+                                <div class="col-sm-3">
+                                     <p> <i class="fa fa-chevron-right"></i> {{c.data.method}}</p>
+                                </div>
+                           
+                            <div class="col-sm-9 commands-data-control">
                             <div class="form-inline" ng-repeat="(pk,p) in c.data.params">
                                 <expert-command-input 
                                     collection='p' 
@@ -48,16 +45,18 @@
                                 {{c.data.values[pk]}}-->
 
                             </div>
-                            <div>
-                                {{c.data.values[pk]}}
-                            </div>
-                            <hr />
+                                <button
+                                type="submit"
+                                class="btn btn-primary" 
+                                id="btn_update_{{ v.rowId}}"
+                                >{{_t('btn_update')}}</button>
+                                  </div>
+                                
+                            
+                            </form>
                         </div>
                     </td>
-                    <td>
-            <expert-command-input collection='commands'></expert-command-input>
-            </td>
-            </tr>
+                 </tr>
             </tbody>
         </table>
     </div>

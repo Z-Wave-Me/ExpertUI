@@ -1516,7 +1516,7 @@ appController.controller('CommandsController', function($scope, $location, $cook
 });
 
 // Commands controller
-appController.controller('CommandsDetailController', function($scope, $routeParams, $filter, $location, $cookies, $timeout, DataFactory) {
+appController.controller('CommandsDetailController', function($scope, $routeParams, $filter, $location, $cookies, $timeout, DataFactory, DataTestFactory) {
     $scope.devices = [];
     $scope.ZWaveAPIData;
     $scope.commands = [];
@@ -1529,7 +1529,7 @@ appController.controller('CommandsDetailController', function($scope, $routePara
     // Load navigation
     $scope.navigation = function() {
         DataFactory.all('0').query(function(ZWaveAPIData) {
-            //DataTestFactory.all('all.json').query(function(data) {
+        //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
             var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
 
             // Loop throught devices
@@ -1561,8 +1561,9 @@ appController.controller('CommandsDetailController', function($scope, $routePara
     // Load data
     $scope.load = function() {
         DataFactory.all('0').query(function(ZWaveAPIData) {
+        //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
-            //DataTestFactory.all('all.json').query(function(data) {
+
             // Loop throught devices
             var ZWaveAPIData = ZWaveAPIData;
             var nodeId = $routeParams.nodeId;
@@ -1629,7 +1630,35 @@ appController.controller('CommandsDetailController', function($scope, $routePara
         return devices;
     };
 
-// Show modal dialog
+    // Redirect to another device
+    $cookies.expert_commands_id = $routeParams.nodeId;
+    $scope.goToDetail = function(detailId) {
+        $location.path('/expert/commands/' + detailId);
+    };
+    
+    // Store single data on remote server
+    $scope.submitForm = function(form,cmd) {
+        //var data = $('#' + form).serialize();
+        var data = $('#' + form).serializeArray();
+        var dataJoined = [];
+        angular.forEach(data, function(v, k) {
+            if(v.value !== ''){
+                dataJoined.push(v.value);
+            }
+                   
+        });
+        var request = cmd + '('+ dataJoined.join() + ')';
+        DataFactory.store(request).query();
+        console.log(request);
+        return;
+        
+    };
+
+});
+
+// Command class modal window controller
+appController.controller('CommandModalController', function($scope, $filter) {
+    // Show modal dialog
     $scope.showModal = function(target, data) {
         // Modal example http://plnkr.co/edit/D29YjKGbY63OSa1EeixT?p=preview
         $(target).modal();
@@ -1655,28 +1684,11 @@ appController.controller('CommandsDetailController', function($scope, $routePara
                 });
             }
         });
-        
+
         // Fill modal with data
         $(target).on('shown.bs.modal', function() {
             $(target + ' .modal-body').html(html);
         });
-    };
-
-
-    // Redirect to another device
-    $cookies.expert_commands_id = $routeParams.nodeId;
-    $scope.goToDetail = function(detailId) {
-        $location.path('/expert/commands/' + detailId);
-    };
-
-    // Store single data on remote server
-    $scope.store = function(btn) {
-        $(btn).attr('disabled', true);
-        DataFactory.store($(btn).attr('data-store-url')).query();
-
-        $timeout(function() {
-            $(btn).removeAttr('disabled');
-        }, 1000);
     };
 
 });
