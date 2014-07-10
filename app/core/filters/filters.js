@@ -22,7 +22,7 @@ angApp.filter('days_between', function() {
 });
 
 /**
- * Return string with date in smart format: "hh:mm" if current day, "hh:mm dd" if this week, "hh:mm dd mmmm" if this year, else "hh:mm dd mmmm yyyy"
+ * Return string with date in smart format: "hh:mm:ss" if current day, "hh:mm dd" if this week, "hh:mm dd mmmm" if this year, else "hh:mm dd mmmm yyyy"
  */ 
 angApp.filter('getTime', function($filter) {
     return function(timestamp, invalidReturn) {
@@ -30,19 +30,26 @@ angApp.filter('getTime', function($filter) {
         if (timestamp === 0 || isNaN(d.getTime()))
             return invalidReturn
 
-            var cd = new Date();
+            var day = d.getDate();
+        var mon = d.getMonth() + 1; //Months are zero based
+        var year = d.getFullYear();
+        var hrs = d.getHours();
+        var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
+        var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
 
-        var fmt;
+        var cd = new Date();
+
+        var time;
         if ($filter('days_between')(cd, d) < 1 && cd.getDate() == d.getDate()) // this day
-            fmt = 'HH:MM';
+            time = hrs + ':' + min + ':' + sec;
         else if ($filter('days_between')(cd, d)  < 7 && ((cd < d) ^ (cd.getDay() >= d.getDay()))) // this week
-            fmt = 'dddd HH:MM';
+            time = day + '. ' + hrs + ':' + min;
         else if (cd.getFullYear() == d.getFullYear()) // this year
-            fmt = 'dddd, d mmmm HH:MM';
+            time = day + '.' + mon + '. ' + hrs + ':' + min;
         else // one upon a time
-            fmt = 'dddd, d mmmm yyyy HH:MM';
+            time = day + '.' + mon + '.' + year + ' ' + hrs + ':' + min;
 
-        return ""+d;//TODO with jquery.dateformat.js: .format(fmt);
+        return time;
     };
 });
 
@@ -219,6 +226,25 @@ angApp.filter('batteryIcon', function() {
             icon = 'fa fa-star-o fa-lg text-danger';
         }
         return  icon;
+    };
+});
+
+/**
+ * Filter nodes which are updateable concerning routes.
+ * @param batteryOnly if undefined includes all devices, if true includes only battery devices, if false includes only non-battery devices
+ */
+angApp.filter('updateable', function() {
+    return function(node, nodeId, batteryOnly) {
+        var nodeIsVirtual = node.data.isVirtual;
+        var nodeBasicType = node.data.basicType;
+        if (nodeId == 255 || nodeIsVirtual == null || nodeIsVirtual.value == true || nodeBasicType == null || nodeBasicType.value == 1) {
+            return false;
+        }
+        if (batteryOnly != undefined) {
+            var hasBattery = 0x80 in node.instances[0].commandClasses;
+            return batteryOnly == hasBattery;
+        }
+        return true;
     };
 });
 
