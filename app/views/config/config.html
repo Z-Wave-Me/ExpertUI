@@ -17,8 +17,9 @@
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
         <li class="active"><a href="" data-target="#device_interview" data-toggle="tab">{{_t('nav_device_interview')}}</a></li>
+         <li><a href="" data-target="#device_configuration" data-toggle="tab">{{_t('nav_device_configuration')}}</a></li>
         <li><a href="" data-target="#device_assoc" data-toggle="tab">{{_t('nav_device_assoc')}}</a></li>
-        <li><a href="" data-target="#device_configuration" data-toggle="tab">{{_t('nav_device_configuration')}}</a></li>
+       
     </ul>
 
     <!-- Tab panes -->
@@ -59,14 +60,15 @@
                 </div>
             </div>
         </div>
-        <!-- ConfigAssocController -->
-        <div class="tab-pane" id="device_assoc" ng-controller="ConfigAssocController">
-            Assoc
-        </div>
         <!-- ConfigConfigurationController -->
         <div class="tab-pane" id="device_configuration" ng-controller="ConfigConfigurationController">
             Configuration
         </div>
+        <!-- ConfigAssocController -->
+        <div class="tab-pane" id="device_assoc" ng-controller="ConfigAssocController">
+            Assoc
+        </div>
+        
 
     </div>
 
