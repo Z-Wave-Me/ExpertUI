@@ -17,23 +17,57 @@
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
         <li class="active"><a href="" data-target="#device_interview" data-toggle="tab">{{_t('nav_device_interview')}}</a></li>
-        <li><a href="" data-target="#device_configuration" data-toggle="tab">{{_t('nav_device_configuration')}}</a></li>
         <li><a href="" data-target="#device_assoc" data-toggle="tab">{{_t('nav_device_assoc')}}</a></li>
+        <li><a href="" data-target="#device_configuration" data-toggle="tab">{{_t('nav_device_configuration')}}</a></li>
     </ul>
 
     <!-- Tab panes -->
     <div class="tab-content">
-         <!-- ConfigInterviewController -->
-        <div class="tab-pane active" id="device_interview" ng-controller="ConfigInterviewController" ng-include="'app/views/config/interview.html'">
-          
+        <!-- ConfigInterviewController -->
+        <div class="tab-pane active" id="device_interview" ng-controller="ConfigInterviewController">
+            <div class="configuration-block">
+                <h4><a href="" ng-click="goXml = !goXml"><i class="fa fa-caret-down"></i> {{_t('selectxml_list')}}</a></h4>
+                <div ng-show="goXml">
+                    <button class="btn btn-primary">{{_t('config_ui_select_xml')}}</button> <button class="btn btn-primary">{{_t('config_ui_request_node_info')}}</button>
+                </div>
+            </div>
+            <div class="configuration-block">
+               
+                
+                <h4><a href="" ng-click="goDescription = !goDescription"><i class="fa fa-caret-down"></i> {{_t('device_description_title')}}</a></h4>
+                <div ng-hide="goDescription">
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                             <div class="table-responsive">
+                        <table class="table table-striped">
+                            <tbody>
+                                <tr ng-repeat="(k,v) in configData.contDescription ">
+                                    <th>{{_t(k)}}</th>
+                                    <td>{{v}}</td>
+                                 </tr>
+                                 
+                            </tbody>
+                        </table>
+                    </div>
+                        </div>
+                        <div class="col-md-6">
+                            Device image
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
         </div>
-          <!-- ConfigConfigurationController -->
-        <div class="tab-pane" id="device_configuration" ng-controller="ConfigConfigurationController" ng-include="'app/views/config/configuration.html'">
-        </div>
-           <!-- ConfigAssocController -->
-        <div class="tab-pane" id="device_assoc" ng-controller="ConfigAssocController" ng-include="'app/views/config/assoc.html'">
+        <!-- ConfigAssocController -->
+        <div class="tab-pane" id="device_assoc" ng-controller="ConfigAssocController">
             Assoc
         </div>
+        <!-- ConfigConfigurationController -->
+        <div class="tab-pane" id="device_configuration" ng-controller="ConfigConfigurationController">
+            Configuration
+        </div>
+
     </div>
 
 </div><!-- /ng-controler -->

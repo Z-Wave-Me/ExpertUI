@@ -54,15 +54,15 @@ body {
 }
 
 .navbar .divider-vertical {
-  height: 50px;
-  /*    margin: 0 9px;*/
-  border-left: 1px solid #1C3B67;
-  border-right: 1px solid #1e578c;
+    height: 50px;
+    /*    margin: 0 9px;*/
+    border-left: 1px solid #1C3B67;
+    border-right: 1px solid #1e578c;
 }
 
 li.lang-switch_ a{
     padding: 15px 5px;
-/*    width: 24px;*/
+    /*    width: 24px;*/
 }
 .current-lang{
     text-transform: uppercase;
@@ -124,14 +124,14 @@ h3 {
 /* Expert Commands CSS
 -------------------------------------------------- */
 #row_commands .thumbnail{
-   width: 100%;
+    width: 100%;
 }
 #row_commands .thumbnail:hover{
-   border: solid 1px #6BA2C8;
+    border: solid 1px #6BA2C8;
 }
 #row_commands .thumbnail-title a{
-   color: #012F49;
-   font-weight: bold;
+    color: #012F49;
+    font-weight: bold;
 }
 
 #row_commands img{
@@ -145,7 +145,7 @@ h3 {
 
 .commands-data-control{
     padding: 10px;
-     background-color: #e4f5fc;
+    background-color: #e4f5fc;
 }
 .commands-data-control .form-group{
     margin-bottom: 10px;
@@ -167,8 +167,50 @@ h3 {
 .table-hover > tbody > tr:hover > td, .table-hover > tbody > tr:hover > th {
     background-color: #e4f5fc;
 }
+
+/* Tabs
+-------------------------------------------------- */
+.nav-tabs {
+    border-bottom: 1px solid #9fd8ef;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    color: #555;
+    cursor: default;
+    background-color: #fff;
+    border: 1px solid #9fd8ef;
+    border-bottom-color: transparent;
+}
+
+.nav > li > a:hover, .nav > li > a:focus {
+text-decoration: none;
+background-color: #e4f5fc;
+}
+
+.nav-tabs > li > a:hover {
+border-color:  #9fd8ef;
+}
+
+.tab-content{
+    padding: 20px;
+    margin: 0 0 20px 0;
+    border: solid 1px #9fd8ef;
+     border-top-color: transparent;
+}
+
+/* Panel CSS
+-------------------------------------------------- */
+.panel-default > .panel-heading {
+color: #333;
+background-color: #e4f5fc;
+border-color: #9fd8ef;
+}
 /* Form CSS
 -------------------------------------------------- */
+.form-control {
+
+border: 1px solid #9fd8ef;
+}
 
 /* Footer
 -------------------------------------------------- */
@@ -180,7 +222,7 @@ h3 {
     width: 100%;
     /* Set the fixed height of the footer here */
     height: 60px;
-   
+
 }
 #footer .text-muted{
     margin: 15px 0;

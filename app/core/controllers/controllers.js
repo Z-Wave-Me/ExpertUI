@@ -57,36 +57,7 @@ appController.controller('TestController', function($scope, $routeParams, cfg, $
     };
     $timeout(countUp, 1000);
 
-    //This is the callback function
-    setData = function(data) {
-        $scope.dataSet = data;
-        console.log(data.DeviceClasses);
-        angular.forEach(data.DeviceClasses.Generic, function(val, key) {
-            var obj = {};
-            var langs = {
-                "en": "0",
-                "de": "1",
-                "ru": "2"
-            };
-            var langId = langs['en'];
-            obj['id'] = parseInt(val._id);
-            obj['title'] = val.name.lang[langId].__text;
-            console.log(obj);
-            //console.log(val.name.lang);
-//              //console.log(parseInt(val._id));
-//             //yourNumber.toString(16);
-//             if(parseInt(val._id) == 3){
-//                  console.log(val.name.lang[0].__text);
-//             }
-
-            //console.log(val.name.lang[2].__text);
-//             angular.forEach(val, function(v, k) {
-//
-//             });
-        });
-        //console.log($scope.dataSet);
-    };
-    XmlFactory.get(setData, 'storage/DeviceClasses.xml');
+    
 
 
 });
@@ -1390,10 +1361,9 @@ appController.controller('SecurityController', function($scope, $http, $log) {
 });
 
 // Configuration controller
-appController.controller('ConfigurationController', function($scope, $routeParams, $filter, $location, $cookies, $timeout, DataFactory, DataTestFactory) {
+appController.controller('ConfigurationController', function($scope, $routeParams, $filter, $location, $cookies, $timeout, DataFactory,  XmlFactory,DataTestFactory) {
    $scope.devices = [];
-    $scope.ZWaveAPIData;
-    $scope.commands = [];
+    $scope.configData;
     $scope.deviceId = $routeParams.nodeId;
     $scope.deviceName = '';
     $scope.reset = function() {
@@ -1413,8 +1383,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     $scope.navigation = function() {
         DataFactory.all('0').query(function(ZWaveAPIData) {
         //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
-         $scope.ZWaveAPIData = ZWaveAPIData;
-            var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
+         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
 
             // Loop throught devices
             angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
@@ -1441,31 +1410,28 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         });
     };
     $scope.navigation();
+    
+    $scope.dataXml = [];
+
+    //Load xml data
+    var loadXml = function(data) {
+        console.log(data);
+
+    };
+    XmlFactory.get(loadXml, $scope.cfg.server_url + '/ZDDX/35-0064-5002-0000-00-00-00-00-00.xml');
 
     // Load data
-    $scope.load = function(nodeId,ZWaveAPIData) {
+    $scope.load = function(nodeId) {
        DataFactory.all('0').query(function(ZWaveAPIData) {
         //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
+           // Loop throught devices
+           var node = ZWaveAPIData.devices[nodeId];
+           $scope.configData = {
+               "contDescription": contDescription(node,nodeId)
+           };
            
+          return;
 
-            // Loop throught devices
-            var ZWaveAPIData = ZWaveAPIData;
-            var nodeId = $routeParams.nodeId;
-
-            angular.forEach(ZWaveAPIData.devices[nodeId].instances, function(instance, instanceId) {
-                angular.forEach(instance.commandClasses, function(commandClass, ccId) {
-                    var obj = {};
-                    obj['nodeId'] = nodeId;
-                    obj['rowId'] = 'row_' + nodeId + '_' + ccId;
-                    obj['instanceId'] = instanceId;
-                    obj['cmd'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']';
-                    obj['cmdData'] = ZWaveAPIData.devices[nodeId].instances[instanceId].commandClasses[ccId].data;
-                    obj['cmdDataIn'] = ZWaveAPIData.devices[nodeId].instances[instanceId].data;
-                    obj['commandClass'] = commandClass.name;
-                    $scope.commands.push(obj);
-
-                });
-            });
         });
     };
      if(parseInt($routeParams.nodeId,10) > 0){
@@ -1480,12 +1446,53 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         $cookies.configuration_id = $routeParams.nodeId;
         $location.path('/config/configuration/' + detailId);
     };
+    
+    function contDescription(node,nodeId){
+        //var deviceDescriptionTag = ZDDX(nodeId).find('deviceDescription');
+	var deviceDescriptionAppVersion = parseInt(node.data.applicationMajor.value, 10);
+	var deviceDescriptionAppSubVersion = parseInt(node.data.applicationMinor.value, 10);
+	if (isNaN(deviceDescriptionAppVersion)) deviceDescriptionAppVersion = '-';
+	if (isNaN(deviceDescriptionAppSubVersion)) deviceDescriptionAppSubVersion = '-';
+        var zwNodeName = '';
+	if (0x77 in node.instances[0].commandClasses) {
+		// NodeNaming
+		zwNodeName = node.instances[0].commandClasses[0x77].data.nodename.value;
+		if (zwNodeName != ''){
+                    zwNodeName = ' (' + zwNodeName + ')';
+                }
+			
+		
+	}
+        var obj = {};
+        obj['device_node_id'] = nodeId;
+        obj['device_node_name'] = node.data.name + zwNodeName;
+        obj['device_node_type'] = '';
+        obj['device_description_brand'] = '';
+        obj['device_description_device_type'] = node.data.deviceTypeString.value;
+        obj['device_description_product'] = '';
+        obj['device_description_description'] = '';
+        obj['device_description_inclusion_note'] = '';
+        obj['device_description_wakeup_note'] = '';
+        obj['device_description_resources'] = '';
+        obj['device_description_interview'] = '';
+        obj['device_sleep_state'] = '';
+         obj['device_sleep_state'] = '';
+          obj['device_queue_length'] = '';
+          obj['device_description_app_version'] = deviceDescriptionAppVersion;
+          obj['device_description_sdk_version'] = node.data.SDK.value;
+         
+         
+        console.log(node.data.ZDDXMLFile.value);
+        return obj;
+        
+    }
 
 
 });
 
 // Device config interview controller
-appController.controller('ConfigInterviewController', function($scope) {
+appController.controller('ConfigInterviewController', function($scope,DataFactory) {
+    
    
 });
 
