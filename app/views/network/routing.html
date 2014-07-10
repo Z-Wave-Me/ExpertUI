@@ -7,7 +7,7 @@
             <tr>
                 <th class="rtHeader">{{ _t('device_name')}}</th>
                 <th class="rtHeader">{{ _t('rt_header_node_id')}}</th>
-                <th ng-repeat="d in devices" style="text-align:center;">{{nodes[d].label}}</th>
+                <th ng-repeat="d in devices" style="text-align:center;">{{d}}</th>
                 <th class="rtHeader">{{ _t('rt_header_update_time')}}</th>
                 <th><button 
                     class="btn btn-primary update" 

@@ -186,18 +186,19 @@ h3 {
 /* Routing table cell styles
 -------------------------------------------------- */
 #RoutingTable td.rtCell {
-    height: 25px;
-    padding: 1px;
+    width: 10px;
+    height: 10px;
+    padding: 0px 0px 1px 1px;
 }
 
 #RoutingTable div.rtDiv {
-    min-width: 25px;
-    min-height: 25px;
+    min-width: 10px;
+    min-height: 10px;
     height: 100%;
     width: 100%;
-    border-radius: 14px;
+    border-radius: 4px;
     border-collapse: separate;
-    border: 3px solid white;
+    border: 1px solid white;
     display: table;
     text-align: center;
 }
@@ -205,6 +206,7 @@ h3 {
 #RoutingTable span.routeHops {
     display: table-cell;
     vertical-align: middle;
+    border: 0;
 }
 
 #RoutingTable td.rtInfo {
@@ -231,6 +233,16 @@ h3 {
     padding: 0 1em 0 0;
 }
 
+#RoutingTable td {
+    white-space: nowrap;
+    padding: 0px 0px 1px 1px;
+}
+
+#RoutingTable th {
+    white-space: nowrap;
+    padding: 0px 0px 1px 1px;
+}
+
 #RoutingTable div.rtDirect {
     background-color: green;
 }
@@ -254,3 +266,8 @@ h3 {
 #RoutingTable .routeHops {
     font-size: smaller;
 }
+
+#RoutingTable button {
+    padding: 0px 6px;
+}
+

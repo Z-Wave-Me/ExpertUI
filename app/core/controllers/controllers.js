@@ -1497,41 +1497,53 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
         $('div.line'+current.nodeId).css({ "border-color": "blue"});
         DataFactory.store('devices[' + current.nodeId + '].RequestNodeNeighbourUpdate()').query(function(response) {
             var pollForNodeNeighbourUpdate = function() {
-                DataFactory.all(updateTime).query(function(ZWaveAPIData) {
-                    if ("devices."+current.nodeId+".data.neighbours" in ZWaveAPIData) {
-                        var obj=ZWaveAPIData["devices."+current.nodeId+".data.neighbours"]
+                DataFactory.all(updateTime).query(function(updateZWaveAPIData) {
+                    if ("devices."+current.nodeId+".data.neighbours" in updateZWaveAPIData) {
+                        var obj=updateZWaveAPIData["devices."+current.nodeId+".data.neighbours"]
                         $('#update'+current.nodeId).attr('class', $filter('getUpdated')(obj));
                         $('#update'+current.nodeId).html($filter('getTime')(obj.updateTime));
                         var nodeInvalidateTime=obj.invalidateTime;
                         var nodeUpdateTime=obj.updateTime;
                         var currentRequestUpdateTime = updateTime;
                         // set updateTime for following call
-                        updateTime = ZWaveAPIData.updateTime;
+                        updateTime = updateZWaveAPIData.updateTime;
                         if (currentRequestUpdateTime < nodeUpdateTime && nodeInvalidateTime < nodeUpdateTime) {
-                            // routes updated
-                            var routesCount = $filter('getRoutesCount')($scope.ZWaveAPIData, current.nodeId);        
-                            var retry=false;
-                            $.each($scope.ZWaveAPIData.devices, function (nnodeId, nnode) {
-                                if (!routesCount[nnodeId]) {
-                                    return;
+                            DataFactory.all('0').query(function(ZWaveAPIData) {
+                                $scope.ZWaveAPIData = ZWaveAPIData;
+                                // update prepared nodes 
+                                angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+                                    if (nodeId == 255)
+                                        return;
+                                    if (skipPortableAndVirtual
+                                            && (node.data.isVirtual.value || node.data.basicType.value == 1))
+                                        return;
+                                    $scope.nodes[nodeId].node = node;
+                                });
+                                // routes updated
+                                var routesCount = $filter('getRoutesCount')($scope.ZWaveAPIData, current.nodeId);        
+                                var retry=false;
+                                $.each($scope.ZWaveAPIData.devices, function (nnodeId, nnode) {
+                                    if (!routesCount[nnodeId]) {
+                                        return;
+                                    }
+                                    if (routesCount[nnodeId][1] == 0) {
+                                        retry=true;
+                                        return;
+                                    }
+                                    var cellState=$scope.cellState(current.nodeId, nnodeId, routesCount);
+                                    $('#cell'+current.nodeId+'-'+nnodeId).attr("class", cellState.clazz);
+                                    $('#cell'+current.nodeId+'-'+nnodeId+" span.routeHops").html(cellState.routeHops);
+                                    $('#cell'+current.nodeId+'-'+nnodeId).css({ "border-color": ""});
+                                });
+                                if (!retry || current.retry >= 4) {
+                                    $('div.rtDiv').css({ "border-color": ""});
+                                    processQueue.shift();
+                                } else {
+                                    current.retry++;
                                 }
-                                if (routesCount[nnodeId][1] == 0) {
-                                    retry=true;
-                                    return;
-                                }
-                                var cellState=$scope.cellState(current.nodeId, nnodeId, routesCount);
-                                $('#cell'+current.nodeId+'-'+nnodeId).attr("class", cellState.clazz);
-                                $('#cell'+current.nodeId+'-'+nnodeId+" span.routeHops").html(cellState.routeHops);
-                                $('#cell'+current.nodeId+'-'+nnodeId).css({ "border-color": ""});
+                                $scope.processUpdateNodesNeighbours(processQueue, updateTime);
+                                return;
                             });
-                            if (!retry || current.retry >= 4) {
-                                $('div.rtDiv').css({ "border-color": ""});
-                                processQueue.shift();
-                            } else {
-                                current.retry++;
-                            }
-                            $scope.processUpdateNodesNeighbours(processQueue, updateTime);
-                            return;
                         }
                     } else if (current.timeout < (new Date()).getTime()) {
                         // timeout waiting for an update-route occured, proceed
