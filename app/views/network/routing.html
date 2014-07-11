@@ -23,7 +23,7 @@
             <tr ng-repeat="d in devices">
                 <td>{{nodes[d].label}}</td>
                 <td>{{d}}</td>
-                <td ng-repeat="n in devices" class="rtCell"><div id="cell{{d}}-{{n}}" class="{{data[d][n].clazz}}"><span class="geek routeHops">{{data[d][n].routeHops}}</span></div></td>
+                <td ng-repeat="n in devices" class="rtCell"><div id="cell{{d}}-{{n}}" class="{{data[d][n].clazz}}"><span class="info">{{data[d][n].info}}</span></div></td>
                 <td><span id="update{{d}}" class="{{nodes[d].node.data.neighbours| getUpdated}}">{{nodes[d].node.data.neighbours.updateTime| getTime}}</span></td>
                 <td ng-if="nodes[d].node | updateable :d"><button class="btn btn-primary update"
                     data-ng-click="update(d)" ng-disabled="updating">{{ _t('update')}}</button></td>
@@ -31,4 +31,6 @@
         </tbody>
     </table>
     </div>
+    <b>Log:</b>
+    <div id="log">{{log}}</div>
 </div>

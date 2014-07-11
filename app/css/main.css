@@ -186,14 +186,14 @@ h3 {
 /* Routing table cell styles
 -------------------------------------------------- */
 #RoutingTable td.rtCell {
-    width: 10px;
-    height: 10px;
+    width: 18px;
+    height: 18px;
     padding: 0px 0px 1px 1px;
 }
 
 #RoutingTable div.rtDiv {
-    min-width: 10px;
-    min-height: 10px;
+    min-width: 18px;
+    min-height: 18px;
     height: 100%;
     width: 100%;
     border-radius: 4px;
@@ -263,7 +263,7 @@ h3 {
     background-color: gray;
 }
 
-#RoutingTable .routeHops {
+#RoutingTable .info {
     font-size: smaller;
 }
 
