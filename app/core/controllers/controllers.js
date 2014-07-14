@@ -1528,7 +1528,7 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
     $scope.data = {};
     $scope.ZWaveAPIData;
     $scope.updating = false;
-    $scope.log = "";
+    $scope.log = [];
 
     $scope.cellState = function(nodeId, nnodeId, routesCount) {
         var node = $scope.nodes[nodeId].node;
@@ -1557,10 +1557,17 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
         };
     };
 
-    $scope.processUpdateNodesNeighbours = function(processQueue) {
+    $scope.processUpdateNodesNeighbours = function(processQueue, result) {
         if (processQueue.length == 0) {
-            $scope.log += "completed<br/>\n";
-            $('#log').html($scope.log);
+            $scope.log.push("Reorganisation completed:\n");
+            if ("mains_completed" in result) 
+                $scope.log.push(result.mains_completed + " mains powered nodes found and reorganized\n");
+            if ("battery_completed" in result) 
+                $scope.log.push(result.battery_completed + " battery powered nodes found and reorganized\n");
+            if ("mains_pending" in result) 
+                $scope.log.push(result.mains_pending + " mains powered nodes still pending\n");
+            if ("battery_pending" in result) 
+                $scope.log.push(result.battery_pending + " battery powered nodes still pending\n");
             $('div.rtDiv').css({ "border-color": ""});
             $scope.updating = false;
             // run overall routing-table update
@@ -1570,8 +1577,7 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
             return;
         }
         var current=processQueue[0];
-        $scope.log += current.nodeId + " (" + current.type + " powered) requesting update " + (current.retry > 0? current.retry + ". retry": "") +  "<br/>\n";
-        $('#log').html($scope.log);
+        $scope.log.push("reorg " + current.nodeId + " " + (current.retry > 0? current.retry + ". retry": "") + " ");
 
         // process-states
         if (!("timeout" in current)) {
@@ -1581,6 +1587,7 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
         DataFactory.store('devices[' + current.nodeId + '].RequestNodeNeighbourUpdate()').query(function(response) {
             var pollForNodeNeighbourUpdate = function() {
                 DataFactory.all(current.since).query(function(updateZWaveAPIData) {
+                    $scope.log[$scope.log.length - 1] +=".";
                     if ("devices."+current.nodeId+".data.neighbours" in updateZWaveAPIData) {
                         var obj=updateZWaveAPIData["devices."+current.nodeId+".data.neighbours"]
                         $('#update'+current.nodeId).attr('class', $filter('getUpdated')(obj));
@@ -1600,25 +1607,49 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
                                 $('#cell'+current.nodeId+'-'+nnodeId).css({ "border-color": ""});
                             });
                             $('div.rtDiv').css({ "border-color": ""});
-                            $scope.log += current.nodeId + " updated<br/>\n";
-                            $('#log').html($scope.log);
+                            $scope.log[$scope.log.length - 1] +=" done\n";
+                            if (current.type == "battery") {
+                                if ("battery_completed" in result) {
+                                    result.battery_completed++;
+                                } else {
+                                    result.battery_completed = 1;
+                                }
+                            } else {
+                                if ("mains_completed" in result) {
+                                    result.mains_completed++;
+                                } else {
+                                    result.mains_completed = 1;
+                                }
+                            }
                             // remove all further retries from processQueue
                             for(var i = processQueue.length - 1; i >= 0; i--) {
                                 if (processQueue[i].nodeId  == current.nodeId) {
                                     processQueue.splice(i, 1);
                                 }
                             }
-                            $scope.processUpdateNodesNeighbours(processQueue);
+                            $scope.processUpdateNodesNeighbours(processQueue, result);
                             return;
                         }
                     } 
                     if (current.timeout < (new Date()).getTime()) {
                         // timeout waiting for an update-route occured, proceed
-                        $scope.log += current.nodeId + " timed out<br/>\n";
-                        $('#log').html($scope.log);
+                        $scope.log[$scope.log.length - 1] +=" timed out\n";
+                        if (current.type == "battery") {
+                            if ("battery_pending" in result) {
+                                result.battery_pending++;
+                            } else {
+                                result.battery_pending = 1;
+                            }
+                        } else {
+                            if ("mains_pending" in result) {
+                                result.mains_pending++;
+                            } else {
+                                result.mains_pending = 1;
+                            }
+                        }
                         $('div.rtDiv').css({ "border-color": ""});
                         processQueue.shift();
-                        $scope.processUpdateNodesNeighbours(processQueue);
+                        $scope.processUpdateNodesNeighbours(processQueue, result);
                         return;
                     }
                     // routes not yet updated, poll again
@@ -1632,40 +1663,64 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
 
     // updateAll routes
     $scope.updateAll = function() {
-        $scope.log = "";
+        $scope.log = [];
+        $scope.log.push("Reorganization started\n");
         // retry each element up to 4 times
         var processQueue=[];
+        var logInfo="";
         for (var retry = 0; retry < 4; retry++) {
             // first RequestNodeNeighbourUpdate for non-battery devices
             $.each($scope.devices, function (index, nodeId) {
                 if ($filter('updateable')($scope.nodes[nodeId].node, nodeId, false)) {
                     processQueue.push({"nodeId": nodeId, "retry": retry, "type": "mains", "since": $scope.ZWaveAPIData.updateTime});
+                    if (retry == 0) {
+                        if (logInfo != "") {
+                            logInfo+=", ";
+                        }
+                        logInfo+=nodeId;
+                    }
                 }
             });
+            if (retry == 0) {
+                $scope.log.push("Reorg all mains powered nodes: " + logInfo + "\n");
+                logInfo="";
+            }
             // second RequestNodeNeighbourUpdate for battery devices
             $.each($scope.devices, function (index, nodeId) {
                 if ($filter('updateable')($scope.nodes[nodeId].node, nodeId, true)) {
                     processQueue.push({"nodeId": nodeId, "retry": retry, "type": "battery", "since": $scope.ZWaveAPIData.updateTime});
+                    if (retry == 0) {
+                        if (logInfo != "") {
+                            logInfo+=", ";
+                        }
+                        logInfo+=nodeId;
+                    }
                 }
             });
+            if (retry == 0) {
+                $scope.log.push("Reorg all battery powered nodes: " + logInfo + "\n");
+            }
         }
         $scope.updating = true;
-        $scope.processUpdateNodesNeighbours(processQueue);
+        $scope.processUpdateNodesNeighbours(processQueue, {});
     };
 
     // update a route
     $scope.update = function(nodeId) {
-        $scope.log = "";
+        $scope.log = [];
         // retry each element up to 4 times
         var processQueue=[];
         if ($filter('updateable')($scope.nodes[nodeId].node, nodeId)) {
             var hasBattery = 0x80 in $scope.nodes[nodeId].node.instances[0].commandClasses;
             for (var retry = 0; retry < 4; retry++) {
                 processQueue.push({"nodeId": nodeId, "retry": retry, "type": (hasBattery?"battery":"mains"), "since": $scope.ZWaveAPIData.updateTime});
+                if (retry == 0) {
+                    $scope.log.push("Reorg of " + (hasBattery?"battery":"mains") + " powered node: " + nodeId + "\n");
+                }
             }
             // avoid overall routing-table updates during update
             $scope.updating = true;
-            $scope.processUpdateNodesNeighbours(processQueue);
+            $scope.processUpdateNodesNeighbours(processQueue, {});
         }
     };
 

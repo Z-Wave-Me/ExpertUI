@@ -31,6 +31,23 @@
         </tbody>
     </table>
     </div>
-    <b>Log:</b>
-    <div id="log">{{log}}</div>
+    <button class="btn btn-primary" data-toggle="tab" data-target="#modal_log" ng-disabled="log.length == 0">Log</button>
+     <!-- Non-Modal log -->
+    <div class="modal fade" id="modal_log" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Log</h4>
+                </div>
+               <div class="modal-body">
+                    <div ng-repeat="line in log track by $index">{{line}}</div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary update" data-ng-click="downloadLog()" ng-disabled="log == ''">Download</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.Non-Modal -->
 </div>
