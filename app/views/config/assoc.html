@@ -1,24 +1,23 @@
 <!-- Assoc view -->
 <div ng-controller="AssocController">
-    <div class="page-header"><h1>Assoc</h1></div>
-    <div class="alert alert-danger alert-dismissable">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <strong>Content is not defined.</strong> 
-    </div>
+    <div class="page-header"><h1>Associations</h1></div>
     <div class="table-responsive">
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>&nbsp;</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Remaining</th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="i in data">
-                <td>{{ i.id }}</td>
-                <td>{{ i.name }}</td>
-                <td><button class="btn btn-primary">Update</button></td>
+            <tr ng-repeat="key in keys">
+                <td>{{data[key].label}}</td>
+                <td><button class="btn btn-primary update" 
+                            ng-if="data[key].remaining > 0"
+                            data-ng-click="add()">+</button> <span ng-repeat="a in data[key].association.nodes.value"><span>{{nodes[a].label}} <span ng_if="data[key].association.nodesInstances.value.length > 0">(Instance {{data[key].association.nodesInstances.value[$index]}})</span> <button class="btn btn-primary update" 
+                            data-ng-click="remove(key, $index)">-</button> </span></span></td>
+                <td>{{data[key].remaining}}</td>
             </tr>
         </tbody>
     </table>

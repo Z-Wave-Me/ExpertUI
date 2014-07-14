@@ -230,6 +230,71 @@ angApp.filter('batteryIcon', function() {
 });
 
 /**
+ * Returns an object with (o.associations and o.multiChannelAssociations) associaton data-objects of the given node.
+ * @param node of which to get the association data-objects.
+ */
+angApp.filter('associable', function() {
+    return function(node) {
+        var associations = [];
+        var multiChannelAssociations = [];
+        $.each(node.instances, function (index, instance) {
+            if (!("commandClasses" in instance)) {
+                return;
+            }
+            
+            if (0x85 in instance.commandClasses) {
+                for(var group = 0 ; group < instance.commandClasses[0x85].data.groups.value; group++) {
+                    associations.push(instance.commandClasses[0x85].data[group + 1]);
+                }
+            }
+            if (0x8e in instance.commandClasses) {
+                for(var group = 0 ; group < instance.commandClasses[0x8e].data.groups.value; group++) {
+                    multiChannelAssociations.push(instance.commandClasses[0x8e].data[group + 1]);
+                }
+            }
+        });
+        return {associations: associations,  multiChannelAssociations: multiChannelAssociations};
+    };
+});
+
+/**
+ * Returns <code>true</code> if an association (in Association or Multichannel Association
+class) form fromNode is set to toNodeId, <code>false</code> elsewise.
+ * @param fromNode node to check if an association is set to toNodeId.
+ * @param toNodeId node to check if an association from fromNode exists.
+ */
+angApp.filter('associationExists', function() {
+    return function(fromNode, toNodeId) {
+        var exists = false;
+        $.each(fromNode.instances, function (index, instance) {
+            if (!("commandClasses" in instance)) {
+                return;
+            }
+            
+            if (0x85 in instance.commandClasses) {
+                for(var group = 0 ; group < instance.commandClasses[0x85].data.groups.value; group++) {
+                    var associations = instance.commandClasses[0x85].data[group + 1].nodes.value
+                    if ($.inArray(parseInt(toNodeId), associations) != -1) {
+                        exists = true;
+                        return false;
+                    }
+                }
+            }
+            if (0x8e in instance.commandClasses) {
+                for(var group = 0 ; group < instance.commandClasses[0x8e].data.groups.value; group++) {
+                    var associations = instance.commandClasses[0x8e].data[group + 1].nodes.value
+                    if ($.inArray(parseInt(toNodeId), associations) != -1) {
+                        exists = true;
+                        return false;
+                    }
+                }
+            }
+        });
+        return exists;
+    };
+});
+
+/**
  * Filter nodes which are updateable concerning routes.
  * @param batteryOnly if undefined includes all devices, if true includes only battery devices, if false includes only non-battery devices
  */
