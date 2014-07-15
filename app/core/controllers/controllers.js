@@ -57,7 +57,7 @@ appController.controller('TestController', function($scope, $routeParams, cfg, $
     };
     $timeout(countUp, 1000);
 
-    
+
 
 
 });
@@ -1361,15 +1361,16 @@ appController.controller('SecurityController', function($scope, $http, $log) {
 });
 
 // Configuration controller
-appController.controller('ConfigurationController', function($scope, $routeParams, $filter, $location, $cookies, $timeout, DataFactory,  XmlFactory,DataTestFactory) {
-   $scope.devices = [];
+appController.controller('ConfigurationController', function($scope, $routeParams, $http, $location, $cookies, $timeout, DataFactory, XmlFactory, DataTestFactory) {
+    $scope.devices = [];
     $scope.configData;
     $scope.deviceId = $routeParams.nodeId;
     $scope.deviceName = '';
+    $scope.deviceImage = '';
     $scope.reset = function() {
         $scope.devices = angular.copy([]);
     };
-    
+
     // Remember
     $scope.detailId = (angular.isDefined($cookies.configuration_id) ? $cookies.configuration_id : 0);
     // Redirect to detail page
@@ -1378,12 +1379,12 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             $location.path('/config/configuration/' + detailId);
         }
     };
-   
+
     // Load navigation
     $scope.navigation = function() {
         DataFactory.all('0').query(function(ZWaveAPIData) {
-        //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
-         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
+            //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
+            var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
 
             // Loop throught devices
             angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
@@ -1410,100 +1411,210 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         });
     };
     $scope.navigation();
-    
-    $scope.dataXml = [];
 
-    //Load xml data
-    var loadXml = function(data) {
-        console.log(data);
-
-    };
-    XmlFactory.get(loadXml, $scope.cfg.server_url + '/ZDDX/35-0064-5002-0000-00-00-00-00-00.xml');
 
     // Load data
     $scope.load = function(nodeId) {
-       DataFactory.all('0').query(function(ZWaveAPIData) {
-        //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
-           // Loop throught devices
-           var node = ZWaveAPIData.devices[nodeId];
-           $scope.configData = {
-               "contDescription": contDescription(node,nodeId)
-           };
-           
-          return;
+        DataFactory.all('0').query(function(ZWaveAPIData) {
+            //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
+            var node = ZWaveAPIData.devices[nodeId];
+            var zddXmlFile = node.data.ZDDXMLFile.value;
+//            setXml = function(zddXml) {
+//                $scope.configData = {
+//                    "contDescription": contDescription(node, nodeId, zddXml, ZWaveAPIData)
+//                };
+//
+//            };
+//            XmlFactory.get(setXml, $scope.cfg.server_url + '/ZDDX/' + zddXmlFile);
+
+            // Load XML service
+            //$http.get($scope.cfg.server_url + '/ZDDX/' + zddXmlFile).then(function(response) {
+            $http.get($scope.cfg.zddx_url + zddXmlFile).then(function(response) {
+                var x2js = new X2JS();
+                var zddXml = x2js.xml_str2json(response.data);
+                $scope.configData = {
+                    "contDescription": contDescription(node, nodeId, zddXml, ZWaveAPIData)
+                };
+            });
+            return;
 
         });
     };
-     if(parseInt($routeParams.nodeId,10) > 0){
-            $scope.load($routeParams.nodeId);
-        }else{
-             $scope.redirectToDetail($scope.detailId);
-        }
-    
+    if (parseInt($routeParams.nodeId, 10) > 0) {
+        $scope.load($routeParams.nodeId);
+
+    } else {
+        $scope.redirectToDetail($scope.detailId);
+    }
+
 
     // Redirect to another device
     $scope.goToDetail = function(detailId) {
         $cookies.configuration_id = $routeParams.nodeId;
         $location.path('/config/configuration/' + detailId);
     };
-    
-    function contDescription(node,nodeId){
-        //var deviceDescriptionTag = ZDDX(nodeId).find('deviceDescription');
-	var deviceDescriptionAppVersion = parseInt(node.data.applicationMajor.value, 10);
-	var deviceDescriptionAppSubVersion = parseInt(node.data.applicationMinor.value, 10);
-	if (isNaN(deviceDescriptionAppVersion)) deviceDescriptionAppVersion = '-';
-	if (isNaN(deviceDescriptionAppSubVersion)) deviceDescriptionAppSubVersion = '-';
+    // Device description
+    function contDescription(node, nodeId, zddXml, ZWaveAPIData) {
+        // Set device data
+        var deviceImage = 'app/images/no_device_image.png';
+        var deviceDescription = '';
+        var productName = '';
+        var inclusionNote = '';
+        var brandName = node.data.vendorString.value;
+        var inclusionNote = '';
+        var wakeupNote = '';
+
+        console.log(zddXml);
+        var deviceDescriptionAppVersion = parseInt(node.data.applicationMajor.value, 10);
+        var deviceDescriptionAppSubVersion = parseInt(node.data.applicationMinor.value, 10);
+        if (isNaN(deviceDescriptionAppVersion))
+            deviceDescriptionAppVersion = '-';
+        if (isNaN(deviceDescriptionAppSubVersion))
+            deviceDescriptionAppSubVersion = '-';
         var zwNodeName = '';
-	if (0x77 in node.instances[0].commandClasses) {
-		// NodeNaming
-		zwNodeName = node.instances[0].commandClasses[0x77].data.nodename.value;
-		if (zwNodeName != ''){
-                    zwNodeName = ' (' + zwNodeName + ')';
-                }
-			
-		
-	}
+        if (0x77 in node.instances[0].commandClasses) {
+            // NodeNaming
+            zwNodeName = node.instances[0].commandClasses[0x77].data.nodename.value;
+            if (zwNodeName != '') {
+                zwNodeName = ' (' + zwNodeName + ')';
+            }
+
+
+        }
+
+        // Has device a zddx XML file
+        if (zddXml) {
+            var lang = 'en';
+            var langs = {
+                "en": "1",
+                "de": "0",
+                "ru": "2"
+            };
+
+            if (angular.isDefined(langs[$scope.lang])) {
+                lang = $scope.lang;
+            }
+            var langId = langs[lang];
+            if (angular.isDefined(zddXml.ZWaveDevice.deviceDescription.description.lang[langId])) {
+                deviceDescription = zddXml.ZWaveDevice.deviceDescription.description.lang[langId].__text;
+            }
+            if ('productName' in zddXml.ZWaveDevice.deviceDescription) {
+                productName = zddXml.ZWaveDevice.deviceDescription.productName;
+            }
+            if (angular.isDefined(zddXml.ZWaveDevice.deviceDescription.inclusionNote.lang[langId])) {
+                inclusionNote = zddXml.ZWaveDevice.deviceDescription.inclusionNote.lang[langId].__text;
+            }
+
+            if ('brandName' in zddXml.ZWaveDevice.deviceDescription) {
+                brandName = zddXml.ZWaveDevice.deviceDescription.brandName;
+            }
+            if (angular.isDefined(zddXml.ZWaveDevice.deviceDescription.inclusionNote.lang[langId])) {
+                inclusionNote = zddXml.ZWaveDevice.deviceDescription.inclusionNote.lang[langId].__text;
+            }
+            if (angular.isDefined(zddXml.ZWaveDevice.deviceDescription.wakeupNote.lang[langId])) {
+                wakeupNote = zddXml.ZWaveDevice.deviceDescription.wakeupNote.lang[langId].__text;
+            }
+            if (angular.isDefined(zddXml.ZWaveDevice.resourceLinks)) {
+                deviceImage = zddXml.ZWaveDevice.resourceLinks.deviceImage._url;
+            }
+        }
+
+        // Set device image
+        $scope.deviceImage = deviceImage;
+
+        // OBJ
         var obj = {};
-        obj['device_node_id'] = nodeId;
-        obj['device_node_name'] = node.data.name + zwNodeName;
-        obj['device_node_type'] = '';
-        obj['device_description_brand'] = '';
-        obj['device_description_device_type'] = node.data.deviceTypeString.value;
-        obj['device_description_product'] = '';
-        obj['device_description_description'] = '';
-        obj['device_description_inclusion_note'] = '';
-        obj['device_description_wakeup_note'] = '';
-        obj['device_description_resources'] = '';
-        obj['device_description_interview'] = '';
-        obj['device_sleep_state'] = '';
-         obj['device_sleep_state'] = '';
-          obj['device_queue_length'] = '';
-          obj['device_description_app_version'] = deviceDescriptionAppVersion;
-          obj['device_description_sdk_version'] = node.data.SDK.value;
-         
-         
-        console.log(node.data.ZDDXMLFile.value);
+        obj["a"] = {"key": "device_node_name", "val": node.data.name + zwNodeName};
+        obj["b"] = {"key": "device_node_id", "val": nodeId};
+        obj["c"] = {"key": "device_node_type", "val": ''};
+        obj["d"] = {"key": "device_description_brand", "val": brandName};
+        obj["e"] = {"key": "device_description_device_type", "val": node.data.deviceTypeString.value};
+        obj["f"] = {"key": "device_description_product", "val": productName};
+        obj["g"] = {"key": "device_description_description", "val": deviceDescription};
+        obj["h"] = {"key": "device_description_inclusion_note", "val": inclusionNote};
+        obj["i"] = {"key": "device_description_wakeup_note", "val": wakeupNote};
+        obj["j"] = {"key": "device_description_interview", "val": interviewStage(ZWaveAPIData, nodeId)};
+        obj["k"] = {"key": "device_sleep_state", "val": deviceState(node)};
+        obj["l"] = {"key": "device_queue_length", "val": queueLength(ZWaveAPIData, node)};
+        obj["m"] = {"key": "device_description_app_version", "val": deviceDescriptionAppVersion + '.' + deviceDescriptionAppSubVersion};
+        obj["o"] = {"key": "device_description_sdk_version", "val": node.data.SDK.value};
+
+        //obj[99] = {"key": "device_description_resources", "val": ''};
         return obj;
-        
+
+    }
+    // Set interview stage
+    function interviewStage(ZWaveAPIData, id) {
+        var istages = [];
+        istages.push((ZWaveAPIData.devices[id].data.nodeInfoFrame.value && ZWaveAPIData.devices[id].data.nodeInfoFrame.value.length) ? '+' : '-');
+        istages.push('&nbsp;');
+        istages.push((0x86 in ZWaveAPIData.devices[id].instances[0].commandClasses) ? (ZWaveAPIData.devices[id].instances[0].commandClasses[0x86].data.interviewDone.value ? '+' : (ZWaveAPIData.devices[id].instances[0].commandClasses[0x86].data.interviewCounter.value > 0 ? '.' : '&oslash;')) : '+'); // Version
+        istages.push((0x72 in ZWaveAPIData.devices[id].instances[0].commandClasses) ? (ZWaveAPIData.devices[id].instances[0].commandClasses[0x72].data.interviewDone.value ? '+' : (ZWaveAPIData.devices[id].instances[0].commandClasses[0x72].data.interviewCounter.value > 0 ? '.' : '&oslash;')) : '+'); // ManufacturerSpecific
+        istages.push((0x60 in ZWaveAPIData.devices[id].instances[0].commandClasses) ? (ZWaveAPIData.devices[id].instances[0].commandClasses[0x60].data.interviewDone.value ? '+' : (ZWaveAPIData.devices[id].instances[0].commandClasses[0x60].data.interviewCounter.value > 0 ? '.' : '&oslash;')) : '+'); // MultiChannel
+        var moreCCs = false;
+        for (var i in ZWaveAPIData.devices[id].instances) {
+            istages.push('&nbsp;');
+            var instance = ZWaveAPIData.devices[id].instances[i];
+            for (var cc in instance.commandClasses) {
+                moreCCs = true;
+                if ((cc == 0x60 && i != 0) || ((cc == 0x86 || cc == 0x72 || cc == 0x60) && i == 0))
+                    continue; // skip MultiChannel announced inside a MultiChannel and previously handled CCs.
+                istages.push(instance.commandClasses[cc].data.interviewDone.value ? '+' : (instance.commandClasses[cc].data.interviewCounter.value > 0 ? '.' : '&oslash;'));
+            }
+        }
+        ;
+        if (!moreCCs) {
+            istages.push('.');
+        }
+
+        var descr;
+        if (istages.indexOf('&oslash;') == -1) {
+            if (istages.indexOf('.') == -1 && istages.indexOf('-') == -1)
+                descr = $scope._t('device_interview_stage_done');
+            else
+                descr = $scope._t('device_interview_stage_not_complete');
+        } else
+            descr = $scope._t('device_interview_stage_failed');
+
+        return descr + '<br />' + istages.join('');
     }
 
+    // Set device state
+    function deviceState(node) {
+        var out = '';
+        if (!node.data.isListening.value && !node.data.sensor250.value && !node.data.sensor1000.value) {
+            out = (node.data.isAwake.value ? '<i class="fa fa-certificate fa-lg text-orange""></i> ' + $scope._t('device_is_active') : '<i class="fa fa-moon-o fa-lg text-primary"></i> ' + $scope._t('device_is_sleeping'));
+        } else {
+            out = (node.data.isFailed.value ? '<i class="fa fa-power-off fa-lg text-danger"></i> ' + $scope._t('device_is_dead') : '<i class="fa fa-check fa-lg text-success"></i> ' + $scope._t('device_is_operating'));
+        }
+        return out;
+    }
+
+    // Queue length
+    function queueLength(ZWaveAPIData, node) {
+        var out = $scope._t('nm_queue_count_jobs_disabled');
+        if (ZWaveAPIData.controller.data.countJobs.value) {
+            out = node.data.queueLength.value;
+        }
+        return out;
+    }
 
 });
 
 // Device config interview controller
-appController.controller('ConfigInterviewController', function($scope,DataFactory) {
-    
-   
+appController.controller('ConfigInterviewController', function($scope, DataFactory) {
+
+
 });
 
 // Device config configuration controller
 appController.controller('ConfigConfigurationController', function($scope) {
-   
+
 });
 
 // Device config assoc controller
 appController.controller('ConfigAssocController', function($scope) {
-   
+
 });
 
 // Controll controller
@@ -1603,7 +1714,7 @@ appController.controller('CommandsDetailController', function($scope, $routePara
     // Load navigation
     $scope.navigation = function() {
         DataFactory.all('0').query(function(ZWaveAPIData) {
-        //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
+            //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
             var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
 
             // Loop throught devices
@@ -1635,7 +1746,7 @@ appController.controller('CommandsDetailController', function($scope, $routePara
     // Load data
     $scope.load = function() {
         DataFactory.all('0').query(function(ZWaveAPIData) {
-        //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
+            //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
 
             // Loop throught devices
@@ -1709,23 +1820,23 @@ appController.controller('CommandsDetailController', function($scope, $routePara
     $scope.goToDetail = function(detailId) {
         $location.path('/expert/commands/' + detailId);
     };
-    
+
     // Store single data on remote server
-    $scope.submitForm = function(form,cmd) {
+    $scope.submitForm = function(form, cmd) {
         //var data = $('#' + form).serialize();
         var data = $('#' + form).serializeArray();
         var dataJoined = [];
         angular.forEach(data, function(v, k) {
-            if(v.value !== ''){
+            if (v.value !== '') {
                 dataJoined.push(v.value);
             }
-                   
+
         });
-        var request = cmd + '('+ dataJoined.join() + ')';
+        var request = cmd + '(' + dataJoined.join() + ')';
         DataFactory.store(request).query();
         console.log(request);
         return;
-        
+
     };
 
 });

@@ -17,9 +17,9 @@
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
         <li class="active"><a href="" data-target="#device_interview" data-toggle="tab">{{_t('nav_device_interview')}}</a></li>
-         <li><a href="" data-target="#device_configuration" data-toggle="tab">{{_t('nav_device_configuration')}}</a></li>
+        <li><a href="" data-target="#device_configuration" data-toggle="tab">{{_t('nav_device_configuration')}}</a></li>
         <li><a href="" data-target="#device_assoc" data-toggle="tab">{{_t('nav_device_assoc')}}</a></li>
-       
+
     </ul>
 
     <!-- Tab panes -->
@@ -33,30 +33,30 @@
                 </div>
             </div>
             <div class="configuration-block">
-               
-                
+
+
                 <h4><a href="" ng-click="goDescription = !goDescription"><i class="fa fa-caret-down"></i> {{_t('device_description_title')}}</a></h4>
                 <div ng-hide="goDescription">
-                    
+
                     <div class="row">
-                        <div class="col-md-6">
-                             <div class="table-responsive">
-                        <table class="table table-striped">
-                            <tbody>
-                                <tr ng-repeat="(k,v) in configData.contDescription ">
-                                    <th>{{_t(k)}}</th>
-                                    <td>{{v}}</td>
-                                 </tr>
-                                 
-                            </tbody>
-                        </table>
-                    </div>
+                        <div class="col-md-8">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <tbody>
+                                        <tr ng-repeat="v in configData.contDescription" ng-show="v.val != ''">
+                                            <th>{{_t(v.key)}}</th>
+                                            <td  ng-bind-html="v.val | toTrusted"></td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            Device image
+                        <div class="col-md-4">
+                            <img src="{{deviceImage}}" class="config-device-img" alt="Image"/>
                         </div>
                     </div>
-                   
+
                 </div>
             </div>
         </div>
@@ -68,7 +68,7 @@
         <div class="tab-pane" id="device_assoc" ng-controller="ConfigAssocController">
             Assoc
         </div>
-        
+
 
     </div>
 
