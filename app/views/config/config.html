@@ -13,7 +13,6 @@
             </div>
         </div>
     </div>
-
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
         <li class="active"><a href="" data-target="#device_interview" data-toggle="tab">{{_t('nav_device_interview')}}</a></li>
@@ -25,25 +24,16 @@
     <!-- Tab panes -->
     <div class="tab-content">
         <!-- ConfigInterviewController -->
-        <div class="tab-pane active" id="device_interview" ng-controller="ConfigInterviewController">
-            <div class="configuration-block">
-                <h4><a href="" ng-click="goXml = !goXml"><i class="fa fa-caret-down"></i> {{_t('selectxml_list')}}</a></h4>
-                <div ng-show="goXml">
-                    <button class="btn btn-primary">{{_t('config_ui_select_xml')}}</button> <button class="btn btn-primary">{{_t('config_ui_request_node_info')}}</button>
-                </div>
-            </div>
-            <div class="configuration-block">
-
-
-                <h4><a href="" ng-click="goDescription = !goDescription"><i class="fa fa-caret-down"></i> {{_t('device_description_title')}}</a></h4>
+        <div class="tab-pane active" id="device_interview">
+           <div class="configuration-block">
+                 <!-- <h4><a href="" ng-click="goDescription = !goDescription"><i class="fa fa-caret-down"></i> {{_t('device_description_title')}}</a></h4>  -->
                 <div ng-hide="goDescription">
-
                     <div class="row">
                         <div class="col-md-8">
                             <div class="table-responsive">
                                 <table class="table table-striped">
                                     <tbody>
-                                        <tr ng-repeat="v in configData.contDescription" ng-show="v.val != ''">
+                                        <tr ng-repeat="v in configData.contInterview" ng-show="v.val != ''">
                                             <th>{{_t(v.key)}}</th>
                                             <td  ng-bind-html="v.val | toTrusted"></td>
                                         </tr>
@@ -59,13 +49,25 @@
 
                 </div>
             </div>
+            
+             <div class="configuration-block">
+                 <!--  <h4><a href="" ng-click="goXml = !goXml"><i class="fa fa-caret-down"></i> {{_t('selectxml_list')}}</a></h4>  -->
+                <div ng-hide="goXml" ng-controller="ConfigStoreController">
+                    <button
+                            data-ng-click="store('#btn_request_nif')" 
+                            data-store-url="devices[{{deviceId}}].RequestNodeInformation()" 
+                            class="btn btn-primary btn-spinner" 
+                            id="btn_request_nif"
+                            >{{_t('config_ui_request_node_info')}}</button>
+                </div>
+            </div>
         </div>
         <!-- ConfigConfigurationController -->
-        <div class="tab-pane" id="device_configuration" ng-controller="ConfigConfigurationController">
+        <div class="tab-pane" id="device_configuration">
             Configuration
         </div>
         <!-- ConfigAssocController -->
-        <div class="tab-pane" id="device_assoc" ng-controller="ConfigAssocController">
+        <div class="tab-pane" id="device_assoc">
             Assoc
         </div>
 

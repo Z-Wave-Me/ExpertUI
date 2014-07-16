@@ -1429,17 +1429,24 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 
             // Load XML service
             //$http.get($scope.cfg.server_url + '/ZDDX/' + zddXmlFile).then(function(response) {
-            $http.get($scope.cfg.zddx_url + zddXmlFile).then(function(response) {
-                var x2js = new X2JS();
-                var zddXml = x2js.xml_str2json(response.data);
-                $scope.configData = {
-                    "contDescription": contDescription(node, nodeId, zddXml, ZWaveAPIData)
-                };
-            });
+            if (zddXmlFile != '') {
+                $http.get($scope.cfg.zddx_url + zddXmlFile).then(function(response) {
+                    var x2js = new X2JS();
+                    var zddXml = x2js.xml_str2json(response.data);
+                    $scope.configData = {
+                        "contInterview": contDescription(node, nodeId, zddXml, ZWaveAPIData)
+                    };
+                });
+            } else {
+                 $scope.configData = {
+                        "contInterview": contDescription(node, nodeId, null, ZWaveAPIData)
+                    };
+            }
             return;
 
         });
     };
+    // Load
     if (parseInt($routeParams.nodeId, 10) > 0) {
         $scope.load($routeParams.nodeId);
 
@@ -1463,8 +1470,6 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         var brandName = node.data.vendorString.value;
         var inclusionNote = '';
         var wakeupNote = '';
-
-        console.log(zddXml);
         var deviceDescriptionAppVersion = parseInt(node.data.applicationMajor.value, 10);
         var deviceDescriptionAppSubVersion = parseInt(node.data.applicationMinor.value, 10);
         if (isNaN(deviceDescriptionAppVersion))
@@ -1601,9 +1606,19 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 
 });
 
-// Device config interview controller
-appController.controller('ConfigInterviewController', function($scope, DataFactory) {
+// Device config update controller
+appController.controller('ConfigStoreController', function($scope, $routeParams, $http, $location, $cookies, $timeout, DataFactory, XmlFactory, DataTestFactory) {
+ // Store data on remote server
+    $scope.store = function(btn) {
+        $(btn).attr('disabled', true);
+        var url = $scope.cfg.server_url + $scope.cfg.store_url + $(btn).attr('data-store-url');
+        console.log(url);
+        DataFactory.store($(btn).attr('data-store-url')).query();
 
+        $timeout(function() {
+            $(btn).removeAttr('disabled');
+        }, 1000);
+    };
 
 });
 
