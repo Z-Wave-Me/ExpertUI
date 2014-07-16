@@ -1,3 +1,110 @@
-<div>
-    Interview 
+<div class="configuration-block">
+    <!-- <h4><a href="" ng-click="goDescription = !goDescription"><i class="fa fa-caret-down"></i> {{_t('device_description_title')}}</a></h4>  -->
+    <div ng-hide="goDescription">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr ng-repeat="v in descriptionCont" ng-show="v.val != ''">
+                                <th>{{_t(v.key)}}</th>
+                                <td  ng-bind-html="v.val | toTrusted"></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <img src="{{deviceImage}}" class="config-device-img" alt="Image"/>
+            </div>
+        </div>
+
+    </div>
 </div>
+
+<div class="configuration-block">
+    <!--  <h4><a href="" ng-click="goXml = !goXml"><i class="fa fa-caret-down"></i> {{_t('selectxml_list')}}</a></h4>  -->
+    <div ng-hide="goXml" ng-controller="ConfigStoreController">
+        <button
+            data-ng-click="store('#btn_request_nif')" 
+            data-store-url="devices[{{deviceId}}].RequestNodeInformation()" 
+            class="btn btn-primary btn-spinner" 
+            id="btn_request_nif"
+            >{{_t('config_ui_request_node_info')}}</button>
+        <button
+            data-ng-click="store('#btn_interview_force')" 
+            data-store-url="devices[{{deviceId}}].InterviewForce()"
+            data-redirect="{{deviceId}}" 
+            class="btn btn-primary btn-spinner" 
+            id="btn_interview_force"
+            >{{_t('config_ui_force_interview')}}</button>
+        <button
+            data-ng-click="showModalInterview('#modal_interview', null)"
+            class="btn btn-primary btn-spinner" 
+            id="btn_request_nif"
+            >{{_t('config_ui_show_interview_results')}}</button>
+    </div>
+</div>
+
+<!-- Modal interview -->
+<div class="modal fade" id="modal_interview" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">{{_t('interview_results_dialog_title')}}</h4>
+            </div>
+            <div class="modal-body">
+                <p>{{_t('interview_results_title')}} <a href="" ng-controller="CommandModalController" ng-click="showModal('#modal_command', interviewCommandsDevice)">{{deviceName}}</a></p>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Instance</th>
+                                <th>CommandClass</th>
+                                <th>Result</th>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="v in interviewCommands" id="{{ v.ccId}}">
+                                <td><a ng-show="$index == 0" href="" ng-controller="CommandModalController" ng-click="showModal('#modal_command', v.cmdDataIn)">{{v.iId}}</a></td>
+                                <td><a href="" ng-controller="CommandModalController" ng-click="showModal('#modal_command',v.cmdData)">{{v.ccName}}</a></td>
+                                <td>
+                                    <p ng-if="v.interviewDone">Done</p>
+                                    <button
+                                        ng-controller="ConfigStoreController"
+                                        ng-if="!v.interviewDone"
+                                        data-store-url="devices[{{deviceId}}].instances[{{v.iId}}].commandClasses[{{v.ccId}}].Interview()"
+                                         data-ng-click="store('#btn_force_interview_' + v.ccId)" 
+                                        class="btn btn-primary" 
+                                        id="btn_force_interview_{{v.ccId}}"
+                                        >{{_t('config_ui_force_interview')}}</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div><!-- /.Modal -->
+
+
+ <!-- Modal command -->
+    <div class="modal fade" id="modal_command" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{_t('commandClass')}}</h4>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.Modal -->

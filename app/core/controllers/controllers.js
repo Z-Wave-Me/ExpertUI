@@ -1363,7 +1363,15 @@ appController.controller('SecurityController', function($scope, $http, $log) {
 // Configuration controller
 appController.controller('ConfigurationController', function($scope, $routeParams, $http, $location, $cookies, $timeout, DataFactory, XmlFactory, DataTestFactory) {
     $scope.devices = [];
-    $scope.configData;
+    $scope.descriptionCont;
+    $scope.configCont;
+    $scope.switchAllCont;
+    $scope.protectionCont;
+    $scope.wakeupCont;
+    $scope.fwupdateCont;
+     $scope.interviewCommandsDevice;
+    $scope.interviewCommands;
+    $scope.assocCont;
     $scope.deviceId = $routeParams.nodeId;
     $scope.deviceName = '';
     $scope.deviceImage = '';
@@ -1419,6 +1427,9 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
             var node = ZWaveAPIData.devices[nodeId];
             var zddXmlFile = node.data.ZDDXMLFile.value;
+            $scope.interviewCommands = interviewCommands(node);
+             $scope.interviewCommandsDevice = node.data;
+           console.log($scope.interviewCommandsDevice);
 //            setXml = function(zddXml) {
 //                $scope.configData = {
 //                    "contDescription": contDescription(node, nodeId, zddXml, ZWaveAPIData)
@@ -1429,18 +1440,27 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 
             // Load XML service
             //$http.get($scope.cfg.server_url + '/ZDDX/' + zddXmlFile).then(function(response) {
-            if (zddXmlFile != '') {
+            if (zddXmlFile) {
+                 console.log('File: ' + zddXmlFile);
                 $http.get($scope.cfg.zddx_url + zddXmlFile).then(function(response) {
                     var x2js = new X2JS();
                     var zddXml = x2js.xml_str2json(response.data);
-                    $scope.configData = {
-                        "contInterview": contDescription(node, nodeId, zddXml, ZWaveAPIData)
-                    };
+                    $scope.descriptionCont = descriptionCont(node, nodeId, zddXml, ZWaveAPIData);
+                    $scope.configCont = configCont(node);
+                    $scope.switchAllCont = switchAllCont(node);
+                    $scope.protectionCont = protectionCont(node);
+                    $scope.wakeupCont = wakeupCont(node);
+                    $scope.fwupdateCont = fwupdateCont(node);
+                    $scope.assocCont = assocCont(node);
                 });
             } else {
-                 $scope.configData = {
-                        "contInterview": contDescription(node, nodeId, null, ZWaveAPIData)
-                    };
+                $scope.descriptionCont = descriptionCont(node, nodeId, null, ZWaveAPIData);
+                $scope.configCont = configCont(node);
+                $scope.switchAllCont = switchAllCont(node);
+                $scope.protectionCont = protectionCont(node);
+                $scope.wakeupCont = wakeupCont(node);
+                $scope.fwupdateCont = fwupdateCont(node);
+                $scope.assocCont = assocCont(node);
             }
             return;
 
@@ -1460,8 +1480,10 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         $cookies.configuration_id = $routeParams.nodeId;
         $location.path('/config/configuration/' + detailId);
     };
-    // Device description
-    function contDescription(node, nodeId, zddXml, ZWaveAPIData) {
+    /**
+     * Device description
+     */
+    function descriptionCont(node, nodeId, zddXml, ZWaveAPIData) {
         // Set device data
         var deviceImage = 'app/images/no_device_image.png';
         var deviceDescription = '';
@@ -1603,21 +1625,121 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         }
         return out;
     }
+    
+    // Interview commands
+    function interviewCommands(node){
+        var interviews = [];
+        for (var iId in node.instances) {
+            var cnt = 0;
+            for (var ccId in node.instances[iId].commandClasses) {
+               var obj = {};
+               obj['iId'] = iId;
+               obj['ccId'] = ccId;
+               obj['ccName'] = node.instances[iId].commandClasses[ccId].name;
+               obj['interviewDone'] = node.instances[iId].commandClasses[ccId].data.interviewDone.value;
+               obj['cmdData'] = node.instances[iId].commandClasses[ccId].data;
+                    obj['cmdDataIn'] = node.instances[iId].data;
+               interviews.push(obj);
+                cnt++;
+
+            };
+        };
+        return interviews;
+    }
+
+    /**
+     * Config cont
+     */
+    function configCont(node) {
+        var config_cont = null;
+        if (0x70 in node.instances[0].commandClasses) {
+            config_cont = true;
+        }
+        ;
+        return config_cont;
+    }
+
+    /**
+     * Switch all cont
+     */
+    function switchAllCont(node) {
+        var switchall_cont = null;
+        if (0x27 in node.instances[0].commandClasses) {
+            switchall_cont = true;
+        }
+        ;
+        return switchall_cont;
+    }
+
+    /**
+     * Protection cont
+     */
+    function protectionCont(node) {
+        var protection_cont = null;
+        if (0x75 in node.instances[0].commandClasses) {
+            protection_cont = true;
+        }
+        ;
+        return protection_cont;
+    }
+    /**
+     * Wakeup cont
+     */
+    function wakeupCont(node) {
+        var wakeup_cont = null;
+        if (0x84 in node.instances[0].commandClasses) {
+            wakeup_cont = true;
+        }
+        ;
+        return wakeup_cont;
+    }
+
+    /**
+     * Fwupdate cont
+     */
+    function fwupdateCont(node) {
+        var fwupdate_cont = null;
+        if (0x7a in node.instances[0].commandClasses) {
+            fwupdate_cont = true;
+        }
+        ;
+        return fwupdate_cont;
+    }
+
+    /**
+     * Assoc cont
+     */
+    function assocCont(node) {
+        var assoc_cont = null;
+        if (0x85 in node.instances[0].commandClasses) {
+            assoc_cont = true;
+        }
+        ;
+        return assoc_cont;
+    }
 
 });
 
 // Device config update controller
 appController.controller('ConfigStoreController', function($scope, $routeParams, $http, $location, $cookies, $timeout, DataFactory, XmlFactory, DataTestFactory) {
- // Store data on remote server
+    // Store data on remote server
     $scope.store = function(btn) {
-        $(btn).attr('disabled', true);
+        //$(btn).attr('disabled', true);
         var url = $scope.cfg.server_url + $scope.cfg.store_url + $(btn).attr('data-store-url');
-        console.log(url);
         DataFactory.store($(btn).attr('data-store-url')).query();
+//        if($(btn).attr('data-redirect')){
+//           $location.path('/config/configuration/' + $(btn).attr('data-redirect'));
+//        }
+        
 
-        $timeout(function() {
-            $(btn).removeAttr('disabled');
-        }, 1000);
+//        $timeout(function() {
+//            $(btn).removeAttr('disabled');
+//        }, 1000);
+    };
+    
+    // Show modal dialog
+    $scope.showModalInterview = function(target) {
+        $(target).modal();
     };
 
 });
