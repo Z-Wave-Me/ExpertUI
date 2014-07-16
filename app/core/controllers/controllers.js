@@ -1398,60 +1398,42 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
     $scope.data = {};
     $scope.ZWaveAPIData;
     $scope.updating = false;
+    $scope.removeData = null;
+    $scope.removeIndex = null;
+    $scope.addData = null;
+    $scope.addInstances = {};
+
+    // Open remove assocation dialog
+    $scope.openRemove = function(data, $index) {
+        $scope.removeData = data;
+        $scope.removeIndex = $index;
+        $('#modal_remove').modal({});
+    };
+
+    // Open add assocation dialog
+    $scope.openAdd = function(data) {
+        $scope.addData = data;
+        $scope.addInstances = {};
+        // Prepare devices and nodes 
+        angular.forEach($scope.ZWaveAPIData.devices, function(node, nodeId) {
+            if (nodeId == 255)
+                return;
+            $scope.addInstances[nodeId] = $filter('deviceName')(nodeId);
+        });   
+        $('#modal_add').modal({});
+    };
 
     // Load data
     $scope.load = function(lang) {
         DataFactory.all('0').query(function(ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
-            var device_name = function(device, options) {
-
-                options = $.extend({
-                    nameOnly : false,
-                    withoutId : false
-                }, options);
-
-                var suffix = '';
-
-                if (device == 255)
-                    return $scope
-                    ._t('all_nodes');
-                try {
-                    if (!ZWaveAPIData.devices[device])
-                        suffix = ' (' + $scope._t('undefined_device') + ')';
-
-                    var deviceXml = []; // TODO init device names from htdocs/config/devicenames.xml
-                    var deviceType = $scope._t('unknown_device_type') + ': ' + genericType;
-                    angular.forEach(deviceXml, function(v, k) {
-                        if (genericType == v.id) {
-                            deviceType = v.generic;
-                            angular.forEach(v.specific, function(s, sk) {
-                                if (specificType == s._id) {
-                                    if (angular.isDefined(s.name.lang[v.langId].__text)) {
-                                        deviceType = s.name.lang[v.langId].__text;
-                                    }
-                                }
-                            });
-                            return;
-                        }
-                    });
-
-                    if (config.devices && $(config.devices).find('device[device=' + device + ']').attr('description'))
-                        return $(config.devices).find('device[device=' + device + ']').attr('description')
-                        + (options.withoutId ? '' : ' (' + device + ')' + suffix);
-                    else
-                        return $scope._t('_device') + ' ' + device + (options.nameOnly ? ''    : suffix);
-                } catch (e) {
-                    return $scope._t('_device') + ' ' + device;
-                }
-            };
-
             // used to minimize routing table by removing not interesting lines
             var skipPortableAndVirtual = true; 
             // Prepare devices and nodes 
             angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
                 if (nodeId == 255)
                     return;
-                $scope.nodes[nodeId] = {"label":device_name(nodeId)};
+                $scope.nodes[nodeId] = {"label":$filter('deviceName')(nodeId)};
             });
             // Gather associations
             angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
@@ -1464,12 +1446,12 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                 angular.forEach(associables.associations, function(association, index) {
                     var key=nodeId+".s-"+index;
                     $scope.keys.push(key);
-                    $scope.data[key] = {"label":device_name(nodeId) + " - AG" + association.name , "node": node, "association": association, "remaining": (association.max.value - association.nodes.value.length)};
+                    $scope.data[key] = {"label":$filter('deviceName')(nodeId) + " - AG" + association.name , "node": node, "association": association, "remaining": (association.max.value - association.nodes.value.length)};
                 });
                 angular.forEach(associables.multiChannelAssociations, function(association, index) {
                     var key=nodeId+".m-"+index;
                     $scope.keys.push(key);
-                    $scope.data[key] = {"label":device_name(nodeId) + " - MAG" + association.name , "node": node, "association": association, "remaining": (association.max.value - association.nodes.value.length)};
+                    $scope.data[key] = {"label":$filter('deviceName')(nodeId) + " - MAG" + association.name , "node": node, "association": association, "remaining": (association.max.value - association.nodes.value.length)};
                 });
             });
         });
@@ -1561,48 +1543,6 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
     $scope.load = function(lang) {
         DataFactory.all('0').query(function(ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
-            var device_name = function(device, options) {
-
-                options = $.extend({
-                    nameOnly : false,
-                    withoutId : false
-                }, options);
-
-                var suffix = '';
-
-                if (device == 255)
-                    return $scope
-                    ._t('all_nodes');
-                try {
-                    if (!ZWaveAPIData.devices[device])
-                        suffix = ' (' + $scope._t('undefined_device') + ')';
-
-                    var deviceXml = []; // TODO init device names from htdocs/config/devicenames.xml
-                    var deviceType = $scope._t('unknown_device_type') + ': ' + genericType;
-                    angular.forEach(deviceXml, function(v, k) {
-                        if (genericType == v.id) {
-                            deviceType = v.generic;
-                            angular.forEach(v.specific, function(s, sk) {
-                                if (specificType == s._id) {
-                                    if (angular.isDefined(s.name.lang[v.langId].__text)) {
-                                        deviceType = s.name.lang[v.langId].__text;
-                                    }
-                                }
-                            });
-                            return;
-                        }
-                    });
-
-                    if (config.devices && $(config.devices).find('device[device=' + device + ']').attr('description'))
-                        return $(config.devices).find('device[device=' + device + ']').attr('description')
-                        + (options.withoutId ? '' : ' (' + device + ')' + suffix);
-                    else
-                        return $scope._t('_device') + ' ' + device + (options.nameOnly ? ''    : suffix);
-                } catch (e) {
-                    return $scope._t('_device') + ' ' + device;
-                }
-            };
-
             // used to minimize routing table by removing not interesting lines
             var skipPortableAndVirtual = true; 
             // Prepare devices and nodes 
@@ -1613,7 +1553,7 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
                         && (node.data.isVirtual.value || node.data.basicType.value == 1))
                     return;
                 $scope.devices.push(nodeId);
-                $scope.nodes[nodeId] = {"label":device_name(nodeId), "node": node};
+                $scope.nodes[nodeId] = {"label":$filter('deviceName')(nodeId), "node": node};
             });
 
             // Loop throught devices and gather routesCount and cellState
@@ -1817,48 +1757,6 @@ appController.controller('ReorganizationController',  function($scope, $log, $fi
     $scope.load = function(lang) {
         DataFactory.all('0').query(function(ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
-            var device_name = function(device, options) {
-
-                options = $.extend({
-                    nameOnly : false,
-                    withoutId : false
-                }, options);
-
-                var suffix = '';
-
-                if (device == 255)
-                    return $scope
-                    ._t('all_nodes');
-                try {
-                    if (!ZWaveAPIData.devices[device])
-                        suffix = ' (' + $scope._t('undefined_device') + ')';
-
-                    var deviceXml = []; // TODO init device names from htdocs/config/devicenames.xml
-                    var deviceType = $scope._t('unknown_device_type') + ': ' + genericType;
-                    angular.forEach(deviceXml, function(v, k) {
-                        if (genericType == v.id) {
-                            deviceType = v.generic;
-                            angular.forEach(v.specific, function(s, sk) {
-                                if (specificType == s._id) {
-                                    if (angular.isDefined(s.name.lang[v.langId].__text)) {
-                                        deviceType = s.name.lang[v.langId].__text;
-                                    }
-                                }
-                            });
-                            return;
-                        }
-                    });
-
-                    if (config.devices && $(config.devices).find('device[device=' + device + ']').attr('description'))
-                        return $(config.devices).find('device[device=' + device + ']').attr('description')
-                        + (options.withoutId ? '' : ' (' + device + ')' + suffix);
-                    else
-                        return $scope._t('_device') + ' ' + device + (options.nameOnly ? ''    : suffix);
-                } catch (e) {
-                    return $scope._t('_device') + ' ' + device;
-                }
-            };
-
             // used to minimize routing table by removing not interesting lines
             var skipPortableAndVirtual = true; 
             // Prepare devices and nodes 
@@ -1869,7 +1767,7 @@ appController.controller('ReorganizationController',  function($scope, $log, $fi
                         && (node.data.isVirtual.value || node.data.basicType.value == 1))
                     return;
                 $scope.devices.push(nodeId);
-                $scope.nodes[nodeId] = {"label":device_name(nodeId), "node": node};
+                $scope.nodes[nodeId] = {"label":$filter('deviceName')(nodeId), "node": node};
             });
         });
     };

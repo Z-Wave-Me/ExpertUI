@@ -257,6 +257,59 @@ angApp.filter('associable', function() {
     };
 });
 
+
+/**
+ * Returns for a given nodeId the best possible device name.
+ * @param nodeId of which to get the device name.
+ * @param options optional options for device name resolving.
+ */
+angApp.filter('deviceName', function(langTransFactory) {
+    return function(nodeId, options) {
+        var _t = function(key) {
+            return langTransFactory.get(key); // TODO find , $scope.languages);
+        };
+
+        options = $.extend({
+            nameOnly : false,
+            withoutId : false
+        }, options);
+
+        var suffix = '';
+
+        if (nodeId == 255)
+            return $scope
+            ._t('all_nodes');
+        try {
+            if (!ZWaveAPIData.devices[nodeId])
+                suffix = ' (' + _t('undefined_device') + ')';
+
+            var deviceXml = []; // TODO init device names from htdocs/config/devicenames.xml
+            var deviceType = _t('unknown_device_type') + ': ' + genericType;
+            angular.forEach(deviceXml, function(v, k) {
+                if (genericType == v.id) {
+                    deviceType = v.generic;
+                    angular.forEach(v.specific, function(s, sk) {
+                        if (specificType == s._id) {
+                            if (angular.isDefined(s.name.lang[v.langId].__text)) {
+                                deviceType = s.name.lang[v.langId].__text;
+                            }
+                        }
+                    });
+                    return;
+                }
+            });
+
+            if (config.devices && $(config.devices).find('device[device=' + nodeId + ']').attr('description'))
+                return $(config.devices).find('device[device=' + nodeId + ']').attr('description')
+                + (options.withoutId ? '' : ' (' + nodeId + ')' + suffix);
+            else
+                return _t('_device') + ' ' + nodeId + (options.nameOnly ? ''    : suffix);
+        } catch (e) {
+            return _t('_device') + ' ' + nodeId;
+        }
+    };
+});
+
 /**
  * Returns <code>true</code> if an association (in Association or Multichannel Association
 class) form fromNode is set to toNodeId, <code>false</code> elsewise.
