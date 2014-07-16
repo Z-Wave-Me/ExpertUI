@@ -14,12 +14,46 @@
             <tr ng-repeat="key in keys">
                 <td>{{data[key].label}}</td>
                 <td><button class="btn btn-primary update" 
-                            ng-if="data[key].remaining > 0"
-                            data-ng-click="add()">+</button> <span ng-repeat="a in data[key].association.nodes.value"><span>{{nodes[a].label}} <span ng_if="data[key].association.nodesInstances.value.length > 0">(Instance {{data[key].association.nodesInstances.value[$index]}})</span> <button class="btn btn-primary update" 
-                            data-ng-click="remove(key, $index)">-</button> </span></span></td>
+                            data-toggle="modal" data-target="#modal_add" ng-disabled="data[key].remaining == 0">+</button> <span ng-repeat="a in data[key].association.nodes.value"><span>{{nodes[a].label}} <span ng_if="data[key].association.nodesInstances.value.length > 0">(Instance {{data[key].association.nodesInstances.value[$index]}})</span> <button class="btn btn-primary update" data-toggle="modal" data-target="#modal_remove">-</button> </span></span></td>
                 <td>{{data[key].remaining}}</td>
             </tr>
         </tbody>
     </table>
     </div>
+     <!-- Modal log -->
+    <div class="modal fade" id="modal_remove" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Sure?</h4>
+                </div>
+               <div class="modal-body">
+                    Remove association from ... to ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button class="btn btn-primary update" data-ng-click="remove()">Remove</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.Modal -->
+     <!-- Modal log -->
+    <div class="modal fade" id="modal_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Add New Association</h4>
+                </div>
+               <div class="modal-body">
+                    from ... to ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button class="btn btn-primary update" data-ng-click="add()" ng-disabled="false">Add</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.Modal -->
 </div>
