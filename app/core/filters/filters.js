@@ -24,17 +24,21 @@ angApp.filter('toTrusted', ['$sce', function($sce){
             return $sce.trustAsHtml(text);
         };
     }]);
-
-angApp.filter('getById', function() {
-  return function(input, id) {
-    var i=0, len=input.length;
-    for (; i<len; i++) {
-      if (+input[i].id == +id) {
-        return input[i];
-      }
-    }
-    return null;
-  };
+/**
+ * Display device name
+ */
+angApp.filter('getDeviceName', function() {
+    return function(deviceId,data) {
+        var name = 'Device ' + deviceId;
+       angular.forEach(data, function(v, k) {
+              if(v.id == deviceId){
+                name = v.name;
+                return;
+              }
+                
+            });
+        return name;
+    };
 });
 
 angApp.filter('getByProperty', function() {

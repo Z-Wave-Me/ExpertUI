@@ -2,17 +2,14 @@
 <div class="cfg-block" id="rename_cont">
     <h4>{{_t('device_rename_tooltip')}}</h4>
     <div>
-        <form name="form_rename" id="form_rename" class="form form-inline" role="form" novalidate>
+        <form name="form_rename" id="form_rename" class="form form-inline" ng-controller="ConfigStoreController" ng-submit="renameDevice('form_rename')" novalidate>
            <input name="device_name" id="device_name" type="text" class="form-control" value="" />
                 <button
                     type="submit"
                     class="btn btn-primary" 
                     id="btn_update"
                     >{{_t('btn_save')}}</button>
-          
-
-
-        </form>
+          </form>
     </div>
 </div>
 <!-- config_cont -->
@@ -28,25 +25,25 @@
     </div>
 </div>
 <!-- switchall_cont -->
-<div class="cfg-block" id="switchall_cont">
+<div class="cfg-block" id="switchall_cont" ng-if="switchAllCont">
     <h4>{{_t('switchall_list')}}</h4>
     <div>
     </div>
 </div>
 <!-- switchall_cont -->
-<div class="cfg-block" id="protection_cont">
+<div class="cfg-block" id="protection_cont" ng-if="protectionCont">
     <h4>{{_t('protection_list')}}</h4>
     <div>
     </div>
 </div>
 <!-- wakeup_cont -->
-<div class="cfg-block" id="wakeup_cont">
+<div class="cfg-block" id="wakeup_cont" ng-if="wakeupCont">
     <h4>{{_t('wakeup_list')}}</h4>
     <div>
     </div>
 </div>
 <!-- fwupdate_cont -->
-<div class="cfg-block" id="fwupdate_cont">
+<div class="cfg-block" id="fwupdate_cont" ng-if="fwupdateCont">
     <h4>{{_t('fwupdate_title')}}</h4>
     <div>
     </div>

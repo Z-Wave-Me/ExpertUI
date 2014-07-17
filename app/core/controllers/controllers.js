@@ -7,7 +7,7 @@
 var appController = angular.module('appController', []);
 
 // Base controller
-appController.controller('BaseController', function($scope, $cookies, $filter, cfg, langFactory, langTransFactory) {
+appController.controller('BaseController', function($scope, $cookies, $filter, cfg, langFactory, langTransFactory,deviceConfigFactory) {
     // Global config
     $scope.cfg = cfg;
 
@@ -45,6 +45,14 @@ appController.controller('BaseController', function($scope, $cookies, $filter, c
         $scope.predicate = field;
         $scope.reverse = !$scope.reverse;
     };
+    // Get device name
+    $scope.loadDeviceConfig = function() {
+        deviceConfigFactory.get().query(function(data) {
+            $scope.getDeviceNames = data;
+        });
+    };
+     $scope.loadDeviceConfig();
+    
 });
 
 // Test controller
@@ -1935,6 +1943,12 @@ appController.controller('ConfigStoreController', function($scope, DataFactory) 
     // Show modal dialog
     $scope.showModalInterview = function(target) {
         $(target).modal();
+    };
+    
+    // Show modal dialog
+    $scope.renameDevice = function(form) {
+        console.log('form');
+        DataFactory.putConfig('devices.json').query();
     };
 
 });
