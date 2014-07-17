@@ -2,50 +2,16 @@
 <div ng-controller="ReorganizationController">
     <div class="page-header"><h1>Reorganization</h1></div>
     <div class="table-responsive">
-    <table id="ReorganizationTable" class="table table-striped">
-        <thead>
-            <tr>
-                <th class="rtHeader">{{ _t('device_name')}}</th>
-                <th class="rtHeader">{{ _t('rt_header_node_id')}}</th>
-                <th class="rtHeader">{{ _t('rt_header_update_time')}}</th>
-                <th><button 
-                    class="btn btn-primary update" 
-                    data-ng-click="reorgAll()"
-                    data-action="reorgAll"  
-                    id="btn_reorg_all_1"
-                    ng-disabled="reorganizing"
-                    >{{ _t('sensors_update_all')}}
-                </button>&nbsp;<btn-spinner></btn-spinner></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="d in devices" class="line{{d}}">
-                <td>{{nodes[d].label}}</td>
-                <td>{{d}}</td>
-                <td><span id="reorg{{d}}" class="{{nodes[d].node.data.neighbours| getUpdated}}">{{nodes[d].node.data.neighbours.updateTime| getTime}}</span></td>
-                <td ng-if="nodes[d].node | updateable :d"><button class="btn btn-primary update"
-                    data-ng-click="reorg(d)" ng-disabled="reorganizing">{{ _t('update')}}</button></td>
-            </tr>
-        </tbody>
-    </table>
-    <button class="btn btn-primary" data-toggle="modal" data-target="#modal_log" ng-disabled="log.length == 0">Log</button>
-    </div>
-     <!-- Modal log -->
-    <div class="modal fade" id="modal_log" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Log</h4>
-                </div>
-                <div class="modal-body">
-                    <div ng-repeat="line in log track by $index">{{line}}</div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary update" data-ng-click="downloadLog()" ng-disabled="log == ''">Download</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
+        <input type="checkbox" checked="checked" /> mains powered<br/>
+        <input type="checkbox" checked="checked" /> battery powered<br/>
+        <button class="btn btn-primary update" 
+                data-ng-click="reorgAll()"
+                data-action="reorgAll"  
+                id="btn_reorg_all_1"
+                ng-disabled="reorganizing">{{ _t('sensors_update_all')}}</button>
+        <button class="btn btn-primary update" data-ng-click="downloadLog()" ng-disabled="log == ''">Download Log</button>
+        <div class="modal-body">
+           <div ng-repeat="line in log track by $index">{{line}}</div>
         </div>
-    </div><!-- /.Modal -->
+    </div>
 </div>

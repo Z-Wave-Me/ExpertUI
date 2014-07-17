@@ -1397,11 +1397,11 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
     $scope.keys = [];
     $scope.data = {};
     $scope.ZWaveAPIData;
-    $scope.updating = false;
     $scope.removeData = null;
     $scope.removeIndex = null;
     $scope.addData = null;
     $scope.addInstances = {};
+    $scope.assocTo = null;
 
     // Open remove assocation dialog
     $scope.openRemove = function(data, $index) {
@@ -1410,15 +1410,37 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
         $('#modal_remove').modal({});
     };
 
+    // Remove an assocation
+    $scope.remove = function() {
+        /*$scope.removeData
+        $scope.removeIndex*/
+        $('#modal_remove').modal('hide');
+    };
+
+    // Add an assocation
+    $scope.add = function() {
+        /*$scope.addData
+        $scope.assocTo*/
+        $('#modal_add').modal('hide');
+    };
+
     // Open add assocation dialog
     $scope.openAdd = function(data) {
         $scope.addData = data;
         $scope.addInstances = {};
         // Prepare devices and nodes 
         angular.forEach($scope.ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255)
+            if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
                 return;
-            $scope.addInstances[nodeId] = $filter('deviceName')(nodeId);
+            for (var instanceId in $scope.ZWaveAPIData.devices[nodeId].instances) {
+                var fromInstanceId = 0;
+                if ("instanceId" in $scope.addData) {
+                    fromInstanceId = $scope.addData.instanceId;
+                }
+                if (nodeId != $scope.addData.nodeId || fromInstanceId != instanceId) { // exclude self-assoc
+                    $scope.addInstances[nodeId + '.' + instanceId] = $filter('deviceName')(nodeId) + " - " + instanceId;
+                }
+            }
         });   
         $('#modal_add').modal({});
     };
@@ -1427,20 +1449,15 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
     $scope.load = function(lang) {
         DataFactory.all('0').query(function(ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
-            // used to minimize routing table by removing not interesting lines
-            var skipPortableAndVirtual = true; 
             // Prepare devices and nodes 
-            angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-                if (nodeId == 255)
+            angular.forEach($scope.ZWaveAPIData.devices, function(node, nodeId) {
+                if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
                     return;
                 $scope.nodes[nodeId] = {"label":$filter('deviceName')(nodeId)};
             });
             // Gather associations
-            angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-                if (nodeId == 255)
-                    return;
-                if (skipPortableAndVirtual
-                        && (node.data.isVirtual.value || node.data.basicType.value == 1))
+            angular.forEach($scope.ZWaveAPIData.devices, function(node, nodeId) {
+                if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
                     return;
                 var associables=$filter('associable')(node);
                 angular.forEach(associables.associations, function(association, index) {
@@ -1451,7 +1468,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                 angular.forEach(associables.multiChannelAssociations, function(association, index) {
                     var key=nodeId+".m-"+index;
                     $scope.keys.push(key);
-                    $scope.data[key] = {"label":$filter('deviceName')(nodeId) + " - MAG" + association.name , "node": node, "association": association, "remaining": (association.max.value - association.nodes.value.length)};
+                    $scope.data[key] = {"label":$filter('deviceName')(nodeId) + " - MAG" + association.name , "nodeId": nodeId, "instanceId": index, "node": node, "association": association, "remaining": (association.max.value - association.nodes.value.length)};
                 });
             });
         });
@@ -1509,8 +1526,18 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
     $scope.nodes = {};
     $scope.data = {};
     $scope.ZWaveAPIData;
-    $scope.updating = false;
+    $scope.updating = {};
     $scope.log = [];
+
+    $scope.appendLog = function(str, noNewline) {
+        if (noNewline == true) {
+          $scope.log[$scope.log.length - 1] +=str;
+        } else {
+          if ($scope.log.length > 0) 
+              $scope.log[$scope.log.length - 1] += "\n";
+          $scope.log.push($filter('getTime')(new Date().getTime() / 1000) + ": " + str);
+        }
+    };
 
     $scope.cellState = function(nodeId, nnodeId, routesCount) {
         var node = $scope.nodes[nodeId].node;
@@ -1539,18 +1566,146 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
         };
     };
 
+    $scope.processUpdateNodesNeighbours = function(processQueue, result) {
+        if (processQueue.length == 0) {
+            $scope.appendLog("Reorganisation completed:");
+            if ("mains_completed" in result) 
+                $scope.appendLog(result.mains_completed + " mains powered nodes found and reorganized");
+            if ("battery_completed" in result) 
+                $scope.appendLog(result.battery_completed + " battery powered nodes found and reorganized");
+            if ("mains_pending" in result) 
+                $scope.appendLog(result.mains_pending + " mains powered nodes still pending");
+            if ("battery_pending" in result) 
+                $scope.appendLog(result.battery_pending + " battery powered nodes still pending");
+            $('div.rtDiv').css({ "border-color": ""});
+            $.each(result.done, function (index, nodeId) {
+                $scope.updating[nodeId] = false;
+            });
+            // run overall routing-table update
+            /*DataFactory.store('controller.RequestNetworkUpdate()').query(function(response) {
+            $route.reload();
+        });*/
+            return;
+        }
+        var current=processQueue[0];
+        $scope.appendLog("reorg " + current.nodeId + " " + (current.retry > 0? current.retry + ". retry": "") + " ");
+
+        // process-states
+        if (!("timeout" in current)) {
+            current.timeout = (new Date()).getTime() + cfg.route_update_timeout;
+        }
+        $('div.line'+current.nodeId).css({ "border-color": "blue"});
+        DataFactory.store('devices[' + current.nodeId + '].RequestNodeNeighbourUpdate()').query(function(response) {
+            var pollForNodeNeighbourUpdate = function() {
+                DataFactory.all(current.since).query(function(updateZWaveAPIData) {
+                    $scope.appendLog(".", true);
+                    if ("devices."+current.nodeId+".data.neighbours" in updateZWaveAPIData) {
+                        var obj=updateZWaveAPIData["devices."+current.nodeId+".data.neighbours"]
+                        $('#update'+current.nodeId).attr('class', $filter('getUpdated')(obj));
+                        $('#update'+current.nodeId).html($filter('getTime')(obj.updateTime));
+                        if (current.since < obj.updateTime && obj.invalidateTime < obj.updateTime) {
+                            $scope.ZWaveAPIData.devices[current.nodeId].data.neighbours = obj;
+                            $scope.nodes[current.nodeId].node = $scope.ZWaveAPIData.devices[current.nodeId];
+                            // routes updated
+                            var routesCount = $filter('getRoutesCount')($scope.ZWaveAPIData, current.nodeId);        
+                            $.each($scope.ZWaveAPIData.devices, function (nnodeId, nnode) {
+                                if (!routesCount[nnodeId]) {
+                                    return;
+                                }
+                                var cellState=$scope.cellState(current.nodeId, nnodeId, routesCount);
+                                $('#cell'+current.nodeId+'-'+nnodeId).attr("class", cellState.clazz);
+                                $('#cell'+current.nodeId+'-'+nnodeId+" span.info").html(cellState.info);
+                                $('#cell'+current.nodeId+'-'+nnodeId).css({ "border-color": ""});
+                            });
+                            $('div.rtDiv').css({ "border-color": ""});
+                            $scope.appendLog(" done", true)
+                            if (!("done" in result)) {
+                                result.done = [];
+                            }
+                            result.done.push(current.nodeId);
+                            if (current.type == "battery") {
+                                if ("battery_completed" in result) {
+                                    result.battery_completed++;
+                                } else {
+                                    result.battery_completed = 1;
+                                }
+                            } else {
+                                if ("mains_completed" in result) {
+                                    result.mains_completed++;
+                                } else {
+                                    result.mains_completed = 1;
+                                }
+                            }
+                            // remove all further retries from processQueue
+                            for(var i = processQueue.length - 1; i >= 0; i--) {
+                                if (processQueue[i].nodeId  == current.nodeId) {
+                                    processQueue.splice(i, 1);
+                                }
+                            }
+                            $scope.processUpdateNodesNeighbours(processQueue, result);
+                            return;
+                        }
+                    } 
+                    if (current.timeout < (new Date()).getTime()) {
+                        // timeout waiting for an update-route occured, proceed
+                        $scope.appendLog(" timed out", true);
+                        if (!("done" in result)) {
+                            result.done = [];
+                        }
+                        result.done.push(current.nodeId);
+                        if (current.type == "battery") {
+                            if ("battery_pending" in result) {
+                                result.battery_pending++;
+                            } else {
+                                result.battery_pending = 1;
+                            }
+                        } else {
+                            if ("mains_pending" in result) {
+                                result.mains_pending++;
+                            } else {
+                                result.mains_pending = 1;
+                            }
+                        }
+                        $('div.rtDiv').css({ "border-color": ""});
+                        processQueue.shift();
+                        $scope.processUpdateNodesNeighbours(processQueue, result);
+                        return;
+                    }
+                    // routes not yet updated, poll again
+                    window.setTimeout(pollForNodeNeighbourUpdate, cfg.interval);
+                });
+            };
+            // first polling
+            pollForNodeNeighbourUpdate();
+        });
+    };
+
+     // update a route
+    $scope.update = function(nodeId) {
+        $scope.log = [];
+        // retry once
+        var processQueue=[];
+        if ($filter('updateable')($scope.nodes[nodeId].node, nodeId)) {
+            var hasBattery = 0x80 in $scope.nodes[nodeId].node.instances[0].commandClasses;
+            for (var retry = 0; retry < 1; retry++) {
+                processQueue.push({"nodeId": nodeId, "retry": retry, "type": (hasBattery?"battery":"mains"), "since": $scope.ZWaveAPIData.updateTime});
+                if (retry == 0) {
+                    $scope.appendLog("Reorg of " + (hasBattery?"battery":"mains") + " powered node: " + nodeId);
+                }
+            }
+            // avoid overall routing-table updates during update
+            $scope.updating[nodeId] = true;
+            $scope.processUpdateNodesNeighbours(processQueue, {});
+        }
+    };
+
     // Load data
     $scope.load = function(lang) {
         DataFactory.all('0').query(function(ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
-            // used to minimize routing table by removing not interesting lines
-            var skipPortableAndVirtual = true; 
             // Prepare devices and nodes 
             angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-                if (nodeId == 255)
-                    return;
-                if (skipPortableAndVirtual
-                        && (node.data.isVirtual.value || node.data.basicType.value == 1))
+                if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
                     return;
                 $scope.devices.push(nodeId);
                 $scope.nodes[nodeId] = {"label":$filter('deviceName')(nodeId), "node": node};
@@ -1558,18 +1713,12 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
 
             // Loop throught devices and gather routesCount and cellState
             angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-                if (nodeId == 255)
-                    return;
-                if (skipPortableAndVirtual
-                        && (node.data.isVirtual.value || node.data.basicType.value == 1))
+                if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
                     return;
                 var routesCount = $filter('getRoutesCount')(ZWaveAPIData, nodeId);
                 var line = [];
                 angular.forEach(ZWaveAPIData.devices, function(nnode, nnodeId) {
-                    if (nnodeId == 255)
-                        return;
-                    if (skipPortableAndVirtual
-                            && (nnode.data.isVirtual.value || nnode.data.basicType.value == 1))
+                    if (nnodeId == 255 || nnode.data.isVirtual.value || nnode.data.basicType.value == 1)
                         return;
                     line[nnodeId] = $scope.cellState(nodeId, nnodeId, routesCount);
                 });
@@ -1587,20 +1736,30 @@ appController.controller('ReorganizationController',  function($scope, $log, $fi
     $scope.devices = [];
     $scope.nodes = {};
     $scope.ZWaveAPIData;
-    $scope.reorganizing = false;
+    $scope.reorganizing = true;
     $scope.log = [];
+    
+    $scope.appendLog = function(str, noNewline) {
+        if (noNewline == true) {
+          $scope.log[$scope.log.length - 1] +=str;
+        } else {
+          if ($scope.log.length > 0) 
+              $scope.log[$scope.log.length - 1] += "\n";
+          $scope.log.push($filter('getTime')(new Date().getTime() / 1000) + ": " + str);
+        }
+    };
 
     $scope.processReorgNodesNeighbours = function(processQueue, result) {
         if (processQueue.length == 0) {
-            $scope.log.push("Reorganisation completed:\n");
+            $scope.appendLog("Reorganisation completed:");
             if ("mains_completed" in result) 
-                $scope.log.push(result.mains_completed + " mains powered nodes found and reorganized\n");
+                $scope.appendLog(result.mains_completed + " mains powered nodes found and reorganized");
             if ("battery_completed" in result) 
-                $scope.log.push(result.battery_completed + " battery powered nodes found and reorganized\n");
+                $scope.appendLog(result.battery_completed + " battery powered nodes found and reorganized");
             if ("mains_pending" in result) 
-                $scope.log.push(result.mains_pending + " mains powered nodes still pending\n");
+                $scope.appendLog(result.mains_pending + " mains powered nodes still pending");
             if ("battery_pending" in result) 
-                $scope.log.push(result.battery_pending + " battery powered nodes still pending\n");
+                $scope.appendLog(result.battery_pending + " battery powered nodes still pending");
             $('div.rtDiv').css({ "border-color": ""});
             $scope.reorganizing = false;
             // run overall routing-table update
@@ -1610,7 +1769,7 @@ appController.controller('ReorganizationController',  function($scope, $log, $fi
             return;
         }
         var current=processQueue[0];
-        $scope.log.push("reorg " + current.nodeId + " " + (current.retry > 0? current.retry + ". retry": "") + " ");
+        $scope.appendLog("reorg " + current.nodeId + " " + (current.retry > 0? current.retry + ". retry": "") + " ");
 
         // process-states
         if (!("timeout" in current)) {
@@ -1620,7 +1779,7 @@ appController.controller('ReorganizationController',  function($scope, $log, $fi
         DataFactory.store('devices[' + current.nodeId + '].RequestNodeNeighbourUpdate()').query(function(response) {
             var pollForNodeNeighbourUpdate = function() {
                 DataFactory.all(current.since).query(function(updateZWaveAPIData) {
-                    $scope.log[$scope.log.length - 1] +=".";
+                    $scope.appendLog(".", true);
                     if ("devices."+current.nodeId+".data.neighbours" in updateZWaveAPIData) {
                         var obj=updateZWaveAPIData["devices."+current.nodeId+".data.neighbours"]
                         $('#update'+current.nodeId).attr('class', $filter('getUpdated')(obj));
@@ -1636,7 +1795,7 @@ appController.controller('ReorganizationController',  function($scope, $log, $fi
                                 }
                             });
                             $('tr.line'+current.nodeId).css({ "outline": ""});
-                            $scope.log[$scope.log.length - 1] +=" done\n";
+                            $scope.appendLog(" done");
                             if (current.type == "battery") {
                                 if ("battery_completed" in result) {
                                     result.battery_completed++;
@@ -1662,7 +1821,7 @@ appController.controller('ReorganizationController',  function($scope, $log, $fi
                     } 
                     if (current.timeout < (new Date()).getTime()) {
                         // timeout waiting for an update-route occured, proceed
-                        $scope.log[$scope.log.length - 1] +=" timed out\n";
+                        $scope.appendLog(" timed out");
                         if (current.type == "battery") {
                             if ("battery_pending" in result) {
                                 result.battery_pending++;
@@ -1692,8 +1851,9 @@ appController.controller('ReorganizationController',  function($scope, $log, $fi
 
     // reorgAll routes
     $scope.reorgAll = function() {
+        $scope.reorganizing = true;
         $scope.log = [];
-        $scope.log.push("Reorganization started\n");
+        $scope.appendLog("Reorganization started");
         // retry each element up to 4 times
         var processQueue=[];
         var logInfo="";
@@ -1711,9 +1871,11 @@ appController.controller('ReorganizationController',  function($scope, $log, $fi
                 }
             });
             if (retry == 0) {
-                $scope.log.push("Reorg all mains powered nodes: " + logInfo + "\n");
+                $scope.appendLog("Reorg all mains powered nodes: " + logInfo);
                 logInfo="";
             }
+        }
+        for (var retry = 0; retry < 4; retry++) {
             // second RequestNodeNeighbourUpdate for battery devices
             $.each($scope.devices, function (index, nodeId) {
                 if ($filter('updateable')($scope.nodes[nodeId].node, nodeId, true)) {
@@ -1727,48 +1889,24 @@ appController.controller('ReorganizationController',  function($scope, $log, $fi
                 }
             });
             if (retry == 0) {
-                $scope.log.push("Reorg all battery powered nodes: " + logInfo + "\n");
+                $scope.appendLog("Reorg all battery powered nodes: " + logInfo);
             }
         }
-        $scope.reorganizing = true;
         $scope.processReorgNodesNeighbours(processQueue, {});
-    };
-
-    // reorg a route
-    $scope.reorg = function(nodeId) {
-        $scope.log = [];
-        // retry each element up to 4 times
-        var processQueue=[];
-        if ($filter('updateable')($scope.nodes[nodeId].node, nodeId)) {
-            var hasBattery = 0x80 in $scope.nodes[nodeId].node.instances[0].commandClasses;
-            for (var retry = 0; retry < 4; retry++) {
-                processQueue.push({"nodeId": nodeId, "retry": retry, "type": (hasBattery?"battery":"mains"), "since": $scope.ZWaveAPIData.updateTime});
-                if (retry == 0) {
-                    $scope.log.push("Reorg of " + (hasBattery?"battery":"mains") + " powered node: " + nodeId + "\n");
-                }
-            }
-            // avoid overall routing-table updates during update
-            $scope.reorganizing = true;
-            $scope.processReorgNodesNeighbours(processQueue, {});
-        }
     };
 
     // Load data
     $scope.load = function(lang) {
         DataFactory.all('0').query(function(ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
-            // used to minimize routing table by removing not interesting lines
-            var skipPortableAndVirtual = true; 
             // Prepare devices and nodes 
             angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-                if (nodeId == 255)
-                    return;
-                if (skipPortableAndVirtual
-                        && (node.data.isVirtual.value || node.data.basicType.value == 1))
+                if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
                     return;
                 $scope.devices.push(nodeId);
                 $scope.nodes[nodeId] = {"label":$filter('deviceName')(nodeId), "node": node};
             });
+            $scope.reorganizing = false;
         });
     };
 

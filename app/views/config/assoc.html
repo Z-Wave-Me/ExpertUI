@@ -8,6 +8,7 @@
                 <th>From</th>
                 <th>To</th>
                 <th>Remaining</th>
+                <th class="rtHeader">{{ _t('rt_header_update_time')}} <btn-spinner></btn-spinner></th>
             </tr>
         </thead>
         <tbody>
@@ -18,6 +19,7 @@
                     <span ng-repeat="a in data[key].association.nodes.value track by $index"><span>{{a|deviceName}} <span ng_if="data[key].association.nodesInstances.value.length > 0">(Instance {{data[key].association.nodesInstances.value[$index]}})</span> <button class="btn btn-primary update" 
                             data-ng-click="openRemove(data[key], $index)">-</button> </span></span></td>
                 <td>{{data[key].remaining}}</td>
+                <td><span id="update{{d}}" class="{{data[key].association.nodes| getUpdated}}">{{data[key].association.nodes.updateTime| getTime}}</span></td>
             </tr>
         </tbody>
     </table>
@@ -49,12 +51,14 @@
                     <h4 class="modal-title">Add New Association</h4>
                 </div>
                 <div class="modal-body">
-                    From {{addData.label}} to <select ng-options="k as v for (k,v) in addInstances"></select>
-         </select>
+                    From {{addData.label}} to 
+                    <select ng-model="assocTo" ng-options="k as v for (k,v) in addInstances">
+                        <option value="">&lt; Select a Device-Instance &gt;</option>
+                    </select>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button class="btn btn-primary update" data-ng-click="add()" ng-disabled="false">Add</button>
+                    <button class="btn btn-primary update" data-ng-click="add()" ng-disabled="assocTo == null">Add</button>
                 </div>
             </div>
         </div>
