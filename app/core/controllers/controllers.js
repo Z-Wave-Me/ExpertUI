@@ -1461,7 +1461,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                 });
             } else {
                 $scope.descriptionCont = descriptionCont(node, nodeId, null, ZWaveAPIData);
-                $scope.configCont = configCont(node);
+                $scope.configCont = configCont(node,null);
                 $scope.switchAllCont = switchAllCont(node);
                 $scope.protectionCont = protectionCont(node);
                 $scope.wakeupCont = wakeupCont(node);
@@ -1659,9 +1659,13 @@ appController.controller('ConfigurationController', function($scope, $routeParam
      * Config cont
      */
     function configCont(node, zddXml) {
-        if (!0x70 in node.instances[0].commandClasses) {
+         if (!0x70 in node.instances[0].commandClasses) {
             return null;
         }
+        if (!zddXml) {
+            return null;
+        }
+       
         if (!zddXml.ZWaveDevice.hasOwnProperty("configParams")) {
             return null;
         }

@@ -3,7 +3,7 @@
     <div class="page-header">
         <div class="row">
             <div class="col-md-6">
-                <h1>{{_t('nav_configuration')}} - {{3 | getDeviceName:getDeviceNames}}</h1>
+                <h1>{{_t('nav_configuration')}} - {{deviceId | getDeviceName:getDeviceNames}}</h1>
             </div>
             <div class="col-md-6">
                 <select name="devices" class="form-control" style="width: 260px;" ng-model="detailId" ng-change="goToDetail(detailId)" >
