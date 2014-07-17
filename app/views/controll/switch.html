@@ -55,14 +55,14 @@
                     >{{ _t('btn_all_on')}}</button>
             </div>
             </th>
-            <th style="width: 10%;">&nbsp;</th>
+            <th style="width: 20%;">&nbsp;</th>
             </tr>
 
             </thead>
             <tbody>
                 <tr ng-repeat="v in switches| orderBy:predicate:reverse" id="{{ v.rowId}}" ng-init="range.maxs = v.levelVal">
                     <td>{{ v.id}}</td>
-                    <td><switch-type-icon generic="{{ v.genericType}}" specific="{{ v.specificType}}"></switch-type-icon> {{ v.name}}</td>
+                    <td><switch-type-icon generic="{{ v.genericType}}" specific="{{ v.specificType}}"></switch-type-icon> {{ v.id| getDeviceName:getDeviceNames}}</td>
             <td class="row-level text-right">
                 <span style="color: {{ v.levelColor}};">{{ v.level}}</span> 
                 <i ng-if="v.levelStatus == 'on'" class="fa fa-check fa-lg" style="color: #3c763d;"></i>

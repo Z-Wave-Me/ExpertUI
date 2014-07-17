@@ -53,24 +53,15 @@ angApp.config(['$routeProvider',
                 when('/device/type', {
                     templateUrl: 'app/views/device/type.html'
                 }).
-                when('/device/firmware', {
-                    templateUrl: 'app/views/device/firmware.html'
+                when('/expert/firmware', {
+                    templateUrl: 'app/views/expert/firmware.html'
                 }).
                 when('/device/security', {
                     templateUrl: 'app/views/device/security.html'
                 }).
                 // Config
-                when('/config/assoc', {
-                    templateUrl: 'app/views/config/assoc.html'
-                }).
-                when('/config/wakeup', {
-                    templateUrl: 'app/views/config/wakeup.html'
-                }).
-                when('/config/protection', {
-                    templateUrl: 'app/views/config/protection.html'
-                }).
-                when('/config/configuration/:device_id?', {
-                    templateUrl: 'app/views/config/configuration.html'
+                when('/config/configuration/:nodeId?', {
+                    templateUrl: 'app/views/config/config.html'
                 }).
                 // Network
                 when('/network/controll', {

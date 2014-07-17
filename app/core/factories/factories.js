@@ -29,7 +29,7 @@ appFactory.factory('myHttpInterceptor', function($q, $window) {
             $('#respone_container').hide();
             return response;
         }, function(response) {
-            $('#respone_container').html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <i class="icon-ban-circle"></i> <strong>ERROR!</strong> NO data loaded</div>').show();
+            $('#respone_container').html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <i class="icon-ban-circle"></i> <strong>ERROR!</strong> Response error</div>').show();
             return $q.reject(response);
         });
     };
@@ -41,13 +41,18 @@ appFactory.factory('DataFactory', function($resource, cfg) {
         all: function(param) {
             return $resource(cfg.server_url + cfg.update_url + param, {}, {query: {
                     method: 'POST', 
-                    params: {user_field: cfg.user_field, pass_field: cfg.pass_field,ZBW_SESSID:  'ced27083bfaff559438d79a72949c1064262d312'},
+                    //params: {user_field: cfg.user_field, pass_field: cfg.pass_field,ZBW_SESSID:  'ced27083bfaff559438d79a72949c1064262d312'},
                     isArray: false
                 }});
         },
         store: function(param) {
             return $resource(cfg.server_url + cfg.store_url + param, {}, {query: {
                     method: 'POST', params: {}
+                }});
+        },
+        putConfig: function(param) {
+            return $resource(cfg.server_url + cfg.config_url + param, {}, {query: {
+                    method: 'PUT', headers_: { '': '' }, params: {}
                 }});
         }
     };
@@ -127,5 +132,19 @@ appFactory.factory('langTransFactory', function() {
         }
     };
 });
+
+// Get language dataas object
+appFactory.factory('deviceConfigFactory', function($resource, cfg) {
+    return {
+        get: function() {
+            return $resource('storage/devices.json', {}, {query: {
+                    method: 'GET',
+                    params: {},
+                    isArray: true
+                }});
+        }
+    };
+});
+
 
 

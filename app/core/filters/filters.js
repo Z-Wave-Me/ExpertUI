@@ -80,7 +80,35 @@ angApp.filter('toTrusted', ['$sce', function($sce){
         return $sce.trustAsHtml(text);
     };
 }]);
-//Convert unix timastamp to date
+/**
+ * Display device name
+ */
+angApp.filter('getDeviceName', function() {
+    return function(deviceId,data) {
+        var name = 'Device ' + deviceId;
+       angular.forEach(data, function(v, k) {
+              if(v.id == deviceId){
+                name = v.name;
+                return;
+              }
+                
+            });
+        return name;
+    };
+});
+
+angApp.filter('getByProperty', function() {
+    return function(propertyName, propertyValue, collection) {
+        var i=0, len=collection.length;
+        for (; i<len; i++) {
+            if (collection[i][propertyName] == +propertyValue) {
+                return collection[i];
+            }
+        }
+        return null;
+    };
+});
+// Convert unix timastamp to date
 angApp.filter('dateFromUnix', function() {
     return function(input) {
         var d = new Date(input * 1000);

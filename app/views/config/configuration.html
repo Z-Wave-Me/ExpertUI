@@ -1,14 +1,68 @@
-<!-- Configuration view -->
-<div ng-controller="ConfigurationController">
-    <div class="page-header"><h1>Configuration config</h1></div>
- <div class="row" id="row_commands">
-        <div ng-repeat="i in devices| orderBy:predicate:reverse" class="col-sm-4 col-md-1">
-            <div class="thumbnail">
-                <p class="thumbnail-title"><a href="#config/configuration/{{ i.id}}">#{{ i.id}} {{ i.name}}</a></p>
-                <a href="#config/configuration/{{ i.id}}"><img src="http://placehold.it/200x200" class="img-responsive img-thumbnail_" alt="Product title 2"></a>
-            </div>
+<!-- rename_cont -->
+<div class="cfg-block" id="rename_cont">
+    <h4>{{_t('device_rename_tooltip')}}</h4>
+    <div>
+        <form name="form_rename" id="form_rename" class="form form-inline" ng-controller="ConfigStoreController" ng-submit="renameDevice('form_rename')" novalidate>
+           <input name="device_name" id="device_name" type="text" class="form-control" value="" />
+                <button
+                    type="submit"
+                    class="btn btn-primary" 
+                    id="btn_update"
+                    >{{_t('btn_save')}}</button>
+          </form>
+    </div>
+</div>
+<!-- config_cont -->
+<div class="cfg-block" id="config_cont" ng-if="configCont">
+    <h4>{{_t('configurations_list')}}</h4>
+    <div class="cfg-block-content">
+        <div class="form-inline" ng-repeat="v in configCont">
+            <expert-command-input collection='v'></expert-command-input>
+            <!-- {{pk}} {{p}} 
+            {{c.data.values[pk]}}-->
+
         </div>
     </div>
-        <div>Device detail  {{ device_id }}</div>
- 
-</div><!-- /ng-controler -->
+</div>
+<!-- switchall_cont -->
+<div class="cfg-block" id="switchall_cont" ng-if="switchAllCont">
+    <h4>{{_t('switchall_list')}}</h4>
+    <div>
+    </div>
+</div>
+<!-- switchall_cont -->
+<div class="cfg-block" id="protection_cont" ng-if="protectionCont">
+    <h4>{{_t('protection_list')}}</h4>
+    <div>
+    </div>
+</div>
+<!-- wakeup_cont -->
+<div class="cfg-block" id="wakeup_cont" ng-if="wakeupCont">
+    <h4>{{_t('wakeup_list')}}</h4>
+    <div>
+    </div>
+</div>
+<!-- fwupdate_cont -->
+<div class="cfg-block" id="fwupdate_cont" ng-if="fwupdateCont">
+    <h4>{{_t('fwupdate_title')}}</h4>
+    <div>
+    </div>
+</div>
+<!-- impex_cont -->
+<div class="cfg-block" id="impex_cont">
+    <h4>{{_t('import_export_save_config_title')}}</h4>
+    <div>
+    </div>
+</div>
+<!-- aapply_cont -->
+<div class="cfg-block" id="apply_cont">
+    <h4>{{_t('apply_config_tooltip')}}</h4>
+    <div>
+    </div>
+</div>
+<!-- advanced_cont -->
+<div class="cfg-block" id="advanced_cont">
+    <h4>{{_t('advanced_xml_title')}}</h4>
+    <div>
+    </div>
+</div>

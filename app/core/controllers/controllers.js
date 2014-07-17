@@ -7,7 +7,7 @@
 var appController = angular.module('appController', []);
 
 // Base controller
-appController.controller('BaseController', function($scope, $cookies, $filter, cfg, langFactory, langTransFactory) {
+appController.controller('BaseController', function($scope, $cookies, $filter, cfg, langFactory, langTransFactory,deviceConfigFactory) {
     // Global config
     $scope.cfg = cfg;
 
@@ -45,6 +45,14 @@ appController.controller('BaseController', function($scope, $cookies, $filter, c
         $scope.predicate = field;
         $scope.reverse = !$scope.reverse;
     };
+    // Get device name
+    $scope.loadDeviceConfig = function() {
+        deviceConfigFactory.get().query(function(data) {
+            $scope.getDeviceNames = data;
+        });
+    };
+     $scope.loadDeviceConfig();
+    
 });
 
 // Test controller
@@ -57,36 +65,7 @@ appController.controller('TestController', function($scope, $routeParams, cfg, $
     };
     $timeout(countUp, 1000);
 
-    //This is the callback function
-    setData = function(data) {
-        $scope.dataSet = data;
-        console.log(data.DeviceClasses);
-        angular.forEach(data.DeviceClasses.Generic, function(val, key) {
-            var obj = {};
-            var langs = {
-                "en": "0",
-                "de": "1",
-                "ru": "2"
-            };
-            var langId = langs['en'];
-            obj['id'] = parseInt(val._id);
-            obj['title'] = val.name.lang[langId].__text;
-            console.log(obj);
-            //console.log(val.name.lang);
-//              //console.log(parseInt(val._id));
-//             //yourNumber.toString(16);
-//             if(parseInt(val._id) == 3){
-//                  console.log(val.name.lang[0].__text);
-//             }
 
-            //console.log(val.name.lang[2].__text);
-//             angular.forEach(val, function(v, k) {
-//
-//             });
-        });
-        //console.log($scope.dataSet);
-    };
-    XmlFactory.get(setData, 'storage/DeviceClasses.xml');
 
 
 });
@@ -860,12 +839,11 @@ appController.controller('LocksController', function($scope, $http, $log, $filte
     };
     $timeout(refresh, cfg.interval);
 
-    // Store data from on remote server
+    // Store data on remote server
     $scope.store = function(btn) {
         $(btn).attr('disabled', true);
         var url = $(btn).attr('data-store-url');
         DataFactory.store(url).query();
-        console.log(btn, url);
         $timeout(function() {
             $(btn).removeAttr('disabled');
         }, 1000);
@@ -1078,7 +1056,7 @@ appController.controller('StatusController', function($scope, $http, $log, $filt
         }, 1000);
     };
 
-    // Store all data on remote server
+    // Show modal window
     $scope.showModal = function(target, nodeId) {
         // Modal example http://plnkr.co/edit/D29YjKGbY63OSa1EeixT?p=preview
         // alert(id);
@@ -1477,37 +1455,592 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
     $scope.load($scope.lang);
 });
 
-// Wakeup controller
-appController.controller('WakeupController', function($scope, $http, $log) {
-    $http.get('storage/demo/wakeup.json').
-            success(function(data) {
-                $scope.data = data;
-            });
-});
-
-// Protection controller
-appController.controller('ProtectionController', function($scope, $http, $log) {
-    $http.get('storage/demo/protection.json').
-            success(function(data) {
-                $scope.data = data;
-            });
-});
-
 // Configuration controller
-appController.controller('ConfigurationController', function($scope, $http, $routeParams, $log) {
-    var device_id = parseInt($routeParams.device_id);
-    $scope.device_id = device_id;
-    $scope.message = '';
-    $http.get('storage/demo/configuration.json').
-            success(function(data) {
-                $scope.data = data;
-            });
-    $http.get('storage/demo/devices.json').
-            success(function(data) {
-                $scope.devices = data;
-            });
-    $log.info(device_id);
+appController.controller('ConfigurationController', function($scope, $routeParams, $http, $filter, $location, $cookies, DataFactory, XmlFactory, DataTestFactory) {
+    $scope.devices = [];
+    $scope.descriptionCont;
+    $scope.configCont;
+    $scope.switchAllCont;
+    $scope.protectionCont;
+    $scope.wakeupCont;
+    $scope.fwupdateCont;
+    $scope.interviewCommandsDevice;
+    $scope.interviewCommands;
+    $scope.assocCont;
+    $scope.deviceId = $routeParams.nodeId;
+    $scope.deviceName = '';
+    $scope.deviceImage = '';
+    $scope.reset = function() {
+        $scope.devices = angular.copy([]);
+    };
 
+    // Remember
+    $scope.detailId = (angular.isDefined($cookies.configuration_id) ? $cookies.configuration_id : 0);
+    // Redirect to detail page
+    $scope.redirectToDetail = function(detailId) {
+        if (detailId > 0) {
+            $location.path('/config/configuration/' + detailId);
+        }
+    };
+
+    // Load navigation
+    $scope.navigation = function() {
+        DataFactory.all('0').query(function(ZWaveAPIData) {
+            //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
+            var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
+
+            // Loop throught devices
+            angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+                if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+                    return;
+                }
+                var node = ZWaveAPIData.devices[nodeId];
+
+                if (nodeId == $routeParams.nodeId) {
+                    $scope.deviceName = node.data.name;
+                }
+                // Set object
+                var obj = {};
+                obj['id'] = nodeId;
+                obj['rowId'] = 'row_' + nodeId;
+                obj['name'] = node.data.name;
+                obj['slected'] = '';
+                if (nodeId == $routeParams.nodeId) {
+                    $scope.deviceName = node.data.name;
+                    obj['slected'] = 'selected';
+                }
+                $scope.devices.push(obj);
+            });
+        });
+    };
+    $scope.navigation();
+
+
+    // Load data
+    $scope.load = function(nodeId) {
+        DataFactory.all('0').query(function(ZWaveAPIData) {
+            //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
+            var node = ZWaveAPIData.devices[nodeId];
+            var zddXmlFile = node.data.ZDDXMLFile.value;
+            $scope.interviewCommands = interviewCommands(node);
+            $scope.interviewCommandsDevice = node.data;
+//            setXml = function(zddXml) {
+//                $scope.configData = {
+//                    "contDescription": contDescription(node, nodeId, zddXml, ZWaveAPIData)
+//                };
+//
+//            };
+//            XmlFactory.get(setXml, $scope.cfg.server_url + '/ZDDX/' + zddXmlFile);
+
+            // Load XML service
+            //$http.get($scope.cfg.server_url + '/ZDDX/' + zddXmlFile).then(function(response) {
+            if (zddXmlFile) {
+                $http.get($scope.cfg.zddx_url + zddXmlFile).then(function(response) {
+                    var x2js = new X2JS();
+                    var zddXml = x2js.xml_str2json(response.data);
+                    $scope.descriptionCont = descriptionCont(node, nodeId, zddXml, ZWaveAPIData);
+                    $scope.configCont = configCont(node, zddXml);
+                    $scope.switchAllCont = switchAllCont(node);
+                    $scope.protectionCont = protectionCont(node);
+                    $scope.wakeupCont = wakeupCont(node);
+                    $scope.fwupdateCont = fwupdateCont(node);
+                    $scope.assocCont = assocCont(node);
+                });
+            } else {
+                $scope.descriptionCont = descriptionCont(node, nodeId, null, ZWaveAPIData);
+                $scope.configCont = configCont(node,null);
+                $scope.switchAllCont = switchAllCont(node);
+                $scope.protectionCont = protectionCont(node);
+                $scope.wakeupCont = wakeupCont(node);
+                $scope.fwupdateCont = fwupdateCont(node);
+                $scope.assocCont = assocCont(node);
+            }
+            return;
+
+        });
+    };
+    // Load
+    if (parseInt($routeParams.nodeId, 10) > 0) {
+        $scope.load($routeParams.nodeId);
+
+    } else {
+        $scope.redirectToDetail($scope.detailId);
+    }
+
+
+    // Redirect to another device
+    $scope.goToDetail = function(detailId) {
+        $cookies.configuration_id = $routeParams.nodeId;
+        $location.path('/config/configuration/' + detailId);
+    };
+    /**
+     * Device description
+     */
+    function descriptionCont(node, nodeId, zddXml, ZWaveAPIData) {
+        // Set device data
+        var deviceImage = 'app/images/no_device_image.png';
+        var deviceDescription = '';
+        var productName = '';
+        var inclusionNote = '';
+        var brandName = node.data.vendorString.value;
+        var inclusionNote = '';
+        var wakeupNote = '';
+        var deviceDescriptionAppVersion = parseInt(node.data.applicationMajor.value, 10);
+        var deviceDescriptionAppSubVersion = parseInt(node.data.applicationMinor.value, 10);
+        if (isNaN(deviceDescriptionAppVersion))
+            deviceDescriptionAppVersion = '-';
+        if (isNaN(deviceDescriptionAppSubVersion))
+            deviceDescriptionAppSubVersion = '-';
+        var zwNodeName = '';
+        if (0x77 in node.instances[0].commandClasses) {
+            // NodeNaming
+            zwNodeName = node.instances[0].commandClasses[0x77].data.nodename.value;
+            if (zwNodeName != '') {
+                zwNodeName = ' (' + zwNodeName + ')';
+            }
+
+
+        }
+
+        // Has device a zddx XML file
+        if (zddXml) {
+            var lang = 'en';
+            var langs = {
+                "en": "1",
+                "de": "0",
+                "ru": "2"
+            };
+
+            if (angular.isDefined(langs[$scope.lang])) {
+                lang = $scope.lang;
+            }
+            var langId = langs[lang];
+            if (angular.isDefined(zddXml.ZWaveDevice.deviceDescription.description.lang[langId])) {
+                deviceDescription = zddXml.ZWaveDevice.deviceDescription.description.lang[langId].__text;
+            }
+            if ('productName' in zddXml.ZWaveDevice.deviceDescription) {
+                productName = zddXml.ZWaveDevice.deviceDescription.productName;
+            }
+            if (angular.isDefined(zddXml.ZWaveDevice.deviceDescription.inclusionNote.lang[langId])) {
+                inclusionNote = zddXml.ZWaveDevice.deviceDescription.inclusionNote.lang[langId].__text;
+            }
+
+            if ('brandName' in zddXml.ZWaveDevice.deviceDescription) {
+                brandName = zddXml.ZWaveDevice.deviceDescription.brandName;
+            }
+            if (angular.isDefined(zddXml.ZWaveDevice.deviceDescription.inclusionNote.lang[langId])) {
+                inclusionNote = zddXml.ZWaveDevice.deviceDescription.inclusionNote.lang[langId].__text;
+            }
+            if (angular.isDefined(zddXml.ZWaveDevice.deviceDescription.wakeupNote.lang[langId])) {
+                wakeupNote = zddXml.ZWaveDevice.deviceDescription.wakeupNote.lang[langId].__text;
+            }
+            if (angular.isDefined(zddXml.ZWaveDevice.resourceLinks)) {
+                deviceImage = zddXml.ZWaveDevice.resourceLinks.deviceImage._url;
+            }
+        }
+
+        // Set device image
+        $scope.deviceImage = deviceImage;
+
+        // OBJ
+        var obj = {};
+        obj["a"] = {"key": "device_node_name", "val": node.data.name + zwNodeName};
+        obj["b"] = {"key": "device_node_id", "val": nodeId};
+        obj["c"] = {"key": "device_node_type", "val": ''};
+        obj["d"] = {"key": "device_description_brand", "val": brandName};
+        obj["e"] = {"key": "device_description_device_type", "val": node.data.deviceTypeString.value};
+        obj["f"] = {"key": "device_description_product", "val": productName};
+        obj["g"] = {"key": "device_description_description", "val": deviceDescription};
+        obj["h"] = {"key": "device_description_inclusion_note", "val": inclusionNote};
+        obj["i"] = {"key": "device_description_wakeup_note", "val": wakeupNote};
+        obj["j"] = {"key": "device_description_interview", "val": interviewStage(ZWaveAPIData, nodeId)};
+        obj["k"] = {"key": "device_sleep_state", "val": deviceState(node)};
+        obj["l"] = {"key": "device_queue_length", "val": queueLength(ZWaveAPIData, node)};
+        obj["m"] = {"key": "device_description_app_version", "val": deviceDescriptionAppVersion + '.' + deviceDescriptionAppSubVersion};
+        obj["o"] = {"key": "device_description_sdk_version", "val": node.data.SDK.value};
+
+        //obj[99] = {"key": "device_description_resources", "val": ''};
+        return obj;
+
+    }
+    // Set interview stage
+    function interviewStage(ZWaveAPIData, id) {
+        var istages = [];
+        istages.push((ZWaveAPIData.devices[id].data.nodeInfoFrame.value && ZWaveAPIData.devices[id].data.nodeInfoFrame.value.length) ? '+' : '-');
+        istages.push('&nbsp;');
+        istages.push((0x86 in ZWaveAPIData.devices[id].instances[0].commandClasses) ? (ZWaveAPIData.devices[id].instances[0].commandClasses[0x86].data.interviewDone.value ? '+' : (ZWaveAPIData.devices[id].instances[0].commandClasses[0x86].data.interviewCounter.value > 0 ? '.' : '&oslash;')) : '+'); // Version
+        istages.push((0x72 in ZWaveAPIData.devices[id].instances[0].commandClasses) ? (ZWaveAPIData.devices[id].instances[0].commandClasses[0x72].data.interviewDone.value ? '+' : (ZWaveAPIData.devices[id].instances[0].commandClasses[0x72].data.interviewCounter.value > 0 ? '.' : '&oslash;')) : '+'); // ManufacturerSpecific
+        istages.push((0x60 in ZWaveAPIData.devices[id].instances[0].commandClasses) ? (ZWaveAPIData.devices[id].instances[0].commandClasses[0x60].data.interviewDone.value ? '+' : (ZWaveAPIData.devices[id].instances[0].commandClasses[0x60].data.interviewCounter.value > 0 ? '.' : '&oslash;')) : '+'); // MultiChannel
+        var moreCCs = false;
+        for (var i in ZWaveAPIData.devices[id].instances) {
+            istages.push('&nbsp;');
+            var instance = ZWaveAPIData.devices[id].instances[i];
+            for (var cc in instance.commandClasses) {
+                moreCCs = true;
+                if ((cc == 0x60 && i != 0) || ((cc == 0x86 || cc == 0x72 || cc == 0x60) && i == 0))
+                    continue; // skip MultiChannel announced inside a MultiChannel and previously handled CCs.
+                istages.push(instance.commandClasses[cc].data.interviewDone.value ? '+' : (instance.commandClasses[cc].data.interviewCounter.value > 0 ? '.' : '&oslash;'));
+            }
+        }
+        ;
+        if (!moreCCs) {
+            istages.push('.');
+        }
+
+        var descr;
+        if (istages.indexOf('&oslash;') == -1) {
+            if (istages.indexOf('.') == -1 && istages.indexOf('-') == -1)
+                descr = $scope._t('device_interview_stage_done');
+            else
+                descr = $scope._t('device_interview_stage_not_complete');
+        } else
+            descr = $scope._t('device_interview_stage_failed');
+
+        return descr + '<br />' + istages.join('');
+    }
+
+    // Set device state
+    function deviceState(node) {
+        var out = '';
+        if (!node.data.isListening.value && !node.data.sensor250.value && !node.data.sensor1000.value) {
+            out = (node.data.isAwake.value ? '<i class="fa fa-certificate fa-lg text-orange""></i> ' + $scope._t('device_is_active') : '<i class="fa fa-moon-o fa-lg text-primary"></i> ' + $scope._t('device_is_sleeping'));
+        } else {
+            out = (node.data.isFailed.value ? '<i class="fa fa-power-off fa-lg text-danger"></i> ' + $scope._t('device_is_dead') : '<i class="fa fa-check fa-lg text-success"></i> ' + $scope._t('device_is_operating'));
+        }
+        return out;
+    }
+
+    // Queue length
+    function queueLength(ZWaveAPIData, node) {
+        var out = $scope._t('nm_queue_count_jobs_disabled');
+        if (ZWaveAPIData.controller.data.countJobs.value) {
+            out = node.data.queueLength.value;
+        }
+        return out;
+    }
+
+    // Interview commands
+    function interviewCommands(node) {
+        var interviews = [];
+        for (var iId in node.instances) {
+            var cnt = 0;
+            for (var ccId in node.instances[iId].commandClasses) {
+                var obj = {};
+                obj['iId'] = iId;
+                obj['ccId'] = ccId;
+                obj['ccName'] = node.instances[iId].commandClasses[ccId].name;
+                obj['interviewDone'] = node.instances[iId].commandClasses[ccId].data.interviewDone.value;
+                obj['cmdData'] = node.instances[iId].commandClasses[ccId].data;
+                obj['cmdDataIn'] = node.instances[iId].data;
+                interviews.push(obj);
+                cnt++;
+
+            }
+            ;
+        }
+        ;
+        return interviews;
+    }
+
+    /**
+     * Config cont
+     */
+    function configCont(node, zddXml) {
+         if (!0x70 in node.instances[0].commandClasses) {
+            return null;
+        }
+        if (!zddXml) {
+            return null;
+        }
+       
+        if (!zddXml.ZWaveDevice.hasOwnProperty("configParams")) {
+            return null;
+        }
+        var config_cont = [];
+        var params = zddXml.ZWaveDevice.configParams['configParam'];
+        var lang = 'en';
+        var langs = {
+            "en": "1",
+            "de": "0"
+        };
+
+        if (angular.isDefined(langs[$scope.lang])) {
+            lang = $scope.lang;
+        }
+        var langId = langs[lang];
+        
+        // Loop throught params
+        angular.forEach(params, function(conf_html, i) {
+            have_conf_params = true;
+            var conf = conf_html;
+            var conf_num = conf['_number'];
+            var conf_name = $scope._t('configuration_parameter') + ' ' + conf_num;
+            if (angular.isDefined(conf.name.lang[langId])) {
+                conf_name = conf.name.lang[langId].__text;
+            }
+            var conf_description = '';
+            if (angular.isDefined(conf.description.lang[langId])) {
+                conf_description = conf.description.lang[langId].__text;
+            }
+            var conf_size = conf['_size'];
+            var conf_default_value = null;
+            var conf_type = conf['_type'];
+
+            // get default value from the XML
+            var conf_default = null;
+            if (conf['_default'] !== undefined) {
+                conf_default = parseInt(conf['_default'], 16);
+            }
+
+            // Switch
+            var conf_method_descr;
+            switch (conf_type) {
+                case 'rangemapped':
+                    var param_struct_arr = [];
+                    var conf_param_options = '';
+                    angular.forEach(conf['value'], function(value_html, i) {
+                        var value = value_html;
+                        var value_from = parseInt(value['_from'], 16);
+                        var value_to = parseInt(value['_to'], 16);
+                        var value_description = 'fdf';
+                        var value_description = '';
+                        if (angular.isDefined(value.description.lang[langId])) {
+                            value_description = value.description.lang[langId].__text;
+                        }
+                        var value_repr = value_from; // representative value for the range
+                        if (conf_default !== null)
+                            if (value_from <= conf_default && conf_default <= value_to) {
+                                conf_default_value = value_description;
+                                value_repr = conf_default;
+                            }
+                        param_struct_arr.push({
+                            label: value_description,
+                            type: {
+                                fix: {
+                                    value: value_repr
+                                }
+                            }
+                        });
+                    });
+                    conf_method_descr = {
+                        label: 'Nº ' + conf_num + ' - ' + conf_name,
+                        type: {
+                            enumof: param_struct_arr
+                        }
+                    };
+
+                    break;
+
+                case 'range':
+                    var param_struct_arr = [];
+                    angular.forEach(conf['value'], function(value_html, i) {
+                        var value = value_html;
+                        var value_from = parseInt(value['_from'], 16);
+                        var value_to = parseInt(value['_to'], 16);
+                        var value_description = 'fdf';
+                        var value_description = '';
+                        if (angular.isDefined(value.description.lang[langId])) {
+                            value_description = value.description.lang[langId].__text;
+                        }
+                        if (conf_default !== null)
+                            conf_default_value = conf_default;
+                        if (value_from != value_to)
+                            param_struct_arr.push({
+                                label: value_description,
+                                type: {
+                                    range: {
+                                        min: value_from,
+                                        max: value_to
+                                    }
+                                }
+                            });
+                        else // this is a fix value
+                            param_struct_arr.push({
+                                label: value_description,
+                                type: {
+                                    fix: {
+                                        value: value_from
+                                    }
+                                }
+                            });
+                    });
+                    if (param_struct_arr.length > 1)
+                        conf_method_descr = {
+                            label: 'Nº ' + conf_num + ' - ' + conf_name,
+                            type: {
+                                enumof: param_struct_arr
+                            }
+                        };
+                    else if (param_struct_arr.length == 1)
+                        conf_method_descr = param_struct_arr[0];
+                    break;
+
+                case 'bitset':
+                    var param_struct_arr = [];
+                    var conf_param_options = '';
+                    var conf_default_value_arr = new Object;
+                    if (conf_default !== null) {
+                        var bit = 0;
+                        do {
+                            if ((1 << bit) & conf_default)
+                                conf_default_value_arr[bit] = 'Bit ' + bit + ' set';
+                        } while ((1 << (bit++)) < conf_default);
+                    }
+                    ;
+
+                    angular.forEach(conf['value'], function(value_html, i) {
+                        var value = value_html;
+                        var value_from = parseInt(value['_from'], 16);
+                        var value_to = parseInt(value['_to'], 16);
+                        var value_description = 'fdf';
+                        var value_description = '';
+                        if (conf_default !== null) {
+                            if (value_from == value_to) {
+                                if ((1 << value_from) & conf_default)
+                                    conf_default_value_arr[value_from] = value_description;
+                            } else {
+                                conf_default_value_arr[value_from] = (conf_default >> value_from) & ((1 << (value_to - value_from + 1)) - 1)
+                                for (var bit = value_from + 1; bit <= value_to; bit++)
+                                    delete conf_default_value_arr[bit];
+                            }
+                        }
+                        ;
+                        if (value_from == value_to)
+                            param_struct_arr.push({
+                                label: value_description,
+                                type: {
+                                    bitcheck: {
+                                        bit: value_from
+                                    }
+                                }
+                            });
+                        else
+                            param_struct_arr.push({
+                                label: value_description,
+                                type: {
+                                    bitrange: {
+                                        bit_from: value_from,
+                                        bit_to: value_to
+                                    }
+                                }
+                            });
+                    });
+                    if (conf_default !== null) {
+                        conf_default_value = '';
+                        for (var ii in conf_default_value_arr)
+                            conf_default_value += conf_default_value_arr[ii] + ', ';
+                        if (conf_default_value.length)
+                            conf_default_value = conf_default_value.substr(0, conf_default_value.length - 2);
+                    }
+                    conf_method_descr = {
+                        label: 'Nº ' + conf_num + ' - ' + conf_name,
+                        type: {
+                            enumof: ''
+                        }
+                    };
+
+                    break;
+
+                //default:
+                    //conf_cont.append('<span>' + $.translate('unhandled_type_parameter') + ': ' + conf_type + '</span>');
+            }
+            ;
+            config_cont.push(conf_method_descr);
+
+        });
+
+        //console.log(config_cont);
+        return config_cont;
+    }
+
+    /**
+     * Switch all cont
+     */
+    function switchAllCont(node) {
+        var switchall_cont = null;
+        if (0x27 in node.instances[0].commandClasses) {
+            switchall_cont = true;
+        }
+        ;
+        return switchall_cont;
+    }
+
+    /**
+     * Protection cont
+     */
+    function protectionCont(node) {
+        var protection_cont = null;
+        if (0x75 in node.instances[0].commandClasses) {
+            protection_cont = true;
+        }
+        ;
+        return protection_cont;
+    }
+    /**
+     * Wakeup cont
+     */
+    function wakeupCont(node) {
+        var wakeup_cont = null;
+        if (0x84 in node.instances[0].commandClasses) {
+            wakeup_cont = true;
+        }
+        ;
+        return wakeup_cont;
+    }
+
+    /**
+     * Fwupdate cont
+     */
+    function fwupdateCont(node) {
+        var fwupdate_cont = null;
+        if (0x7a in node.instances[0].commandClasses) {
+            fwupdate_cont = true;
+        }
+        ;
+        return fwupdate_cont;
+    }
+
+    /**
+     * Assoc cont
+     */
+    function assocCont(node) {
+        var assoc_cont = null;
+        if (0x85 in node.instances[0].commandClasses) {
+            assoc_cont = true;
+        }
+        ;
+        return assoc_cont;
+    }
+
+});
+
+// Device config update controller
+appController.controller('ConfigStoreController', function($scope, DataFactory) {
+    // Store data on remote server
+    $scope.store = function(btn) {
+        //$(btn).attr('disabled', true);
+        var url = $scope.cfg.server_url + $scope.cfg.store_url + $(btn).attr('data-store-url');
+        DataFactory.store($(btn).attr('data-store-url')).query();
+//        if($(btn).attr('data-redirect')){
+//           $location.path('/config/configuration/' + $(btn).attr('data-redirect'));
+//        }
+
+
+//        $timeout(function() {
+//            $(btn).removeAttr('disabled');
+//        }, 1000);
+    };
+
+    // Show modal dialog
+    $scope.showModalInterview = function(target) {
+        $(target).modal();
+    };
+    
+    // Show modal dialog
+    $scope.renameDevice = function(form) {
+        console.log('form');
+        DataFactory.putConfig('devices.json').query();
+    };
 
 });
 
@@ -1973,7 +2506,7 @@ appController.controller('CommandsController', function($scope, $location, $cook
 });
 
 // Commands controller
-appController.controller('CommandsDetailController', function($scope, $routeParams, $filter, $location, $cookies, $timeout, DataFactory) {
+appController.controller('CommandsDetailController', function($scope, $routeParams, $filter, $location, $cookies, $timeout, DataFactory, DataTestFactory) {
     $scope.devices = [];
     $scope.ZWaveAPIData;
     $scope.commands = [];
@@ -1986,7 +2519,7 @@ appController.controller('CommandsDetailController', function($scope, $routePara
     // Load navigation
     $scope.navigation = function() {
         DataFactory.all('0').query(function(ZWaveAPIData) {
-            //DataTestFactory.all('all.json').query(function(data) {
+            //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
             var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
 
             // Loop throught devices
@@ -2018,8 +2551,9 @@ appController.controller('CommandsDetailController', function($scope, $routePara
     // Load data
     $scope.load = function() {
         DataFactory.all('0').query(function(ZWaveAPIData) {
+            //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
-            //DataTestFactory.all('all.json').query(function(data) {
+
             // Loop throught devices
             var ZWaveAPIData = ZWaveAPIData;
             var nodeId = $routeParams.nodeId;
@@ -2065,7 +2599,7 @@ appController.controller('CommandsDetailController', function($scope, $routePara
             cmd['values'] = repr_array(method_defaultValues(ZWaveAPIData, methods[method]));
 
             methodsArr.push(cmd);
-            //console.log(values);
+            //console.log(cmd['data']['params']);
         });
         return methodsArr;
     }
@@ -2086,7 +2620,35 @@ appController.controller('CommandsDetailController', function($scope, $routePara
         return devices;
     };
 
-// Show modal dialog
+    // Redirect to another device
+    $cookies.expert_commands_id = $routeParams.nodeId;
+    $scope.goToDetail = function(detailId) {
+        $location.path('/expert/commands/' + detailId);
+    };
+
+    // Store single data on remote server
+    $scope.submitForm = function(form, cmd) {
+        //var data = $('#' + form).serialize();
+        var data = $('#' + form).serializeArray();
+        var dataJoined = [];
+        angular.forEach(data, function(v, k) {
+            if (v.value !== '') {
+                dataJoined.push(v.value);
+            }
+
+        });
+        var request = cmd + '(' + dataJoined.join() + ')';
+        DataFactory.store(request).query();
+        console.log(request);
+        return;
+
+    };
+
+});
+
+// Command class modal window controller
+appController.controller('CommandModalController', function($scope, $filter) {
+    // Show modal dialog
     $scope.showModal = function(target, data) {
         // Modal example http://plnkr.co/edit/D29YjKGbY63OSa1EeixT?p=preview
         $(target).modal();
@@ -2106,34 +2668,16 @@ appController.controller('CommandsDetailController', function($scope, $routePara
                 angular.forEach(el, function(v, k) {
                     if (angular.isObject(v)) {
                         html += getCmdData(v, ' - ');
-                        console.log(v);
                     }
 
                 });
             }
         });
-        
+
         // Fill modal with data
         $(target).on('shown.bs.modal', function() {
             $(target + ' .modal-body').html(html);
         });
-    };
-
-
-    // Redirect to another device
-    $cookies.expert_commands_id = $routeParams.nodeId;
-    $scope.goToDetail = function(detailId) {
-        $location.path('/expert/commands/' + detailId);
-    };
-
-    // Store single data on remote server
-    $scope.store = function(btn) {
-        $(btn).attr('disabled', true);
-        DataFactory.store($(btn).attr('data-store-url')).query();
-
-        $timeout(function() {
-            $(btn).removeAttr('disabled');
-        }, 1000);
     };
 
 });

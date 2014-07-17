@@ -1,0 +1,18 @@
+<config>
+	
+	
+<coordinates latitude="0" longitude="0"/><devices>
+		<device device="1" description="RaZberry"/>
+	<device device="6" description="EVR_SM103"/><device device="3" description="DUW_0643"/><device device="5" description="FIB_FRG221"/><device device="7" description="ZME_0633"/><device device="9" description="EVR_AN157"/><device device="11" description="ZME_0631"/><device device="13" description="DAN_RA"/><device device="19" description="FORTREZ"/><device device="16" description="AEO_SES"/><device device="24" description="DUW_0531"/><device device="23" description="DAN_RK"/><device device="20" description="SEC_SRT321"/><device device="12" description="EVR_SP103"/><device device="17" description="MER_xxx"/><device device="18" description="EVR_SM103_1"/><device device="32" description="WIN_ITEMP"/><device device="35" description="ZME_0659"/><device device="33" description="TKB_DIM"/><device device="36" description="EVR_AN158"/><device device="37" description="VIS"/><device device="38" description="EVR_HSM02"></device></devices><areas>
+		<area id="1" name="Apartment" img="/config/maps/1.jpg">
+			<area id="2" name="Kitchen" coords="17,170,17,60,36,26,122,26,140,60,140,172"/>
+			<area id="3" name="Living room" coords="146,136,146,333,266,333,266,137"/>
+			<area id="4" name="Kids room" coords="276,139,390,139,390,293,277,293"/>
+			<area id="5" name="Bedroom" coords="277,497,277,298,390,298,423,345,390,407,390,497"/>
+			<area id="6" name="Bathroom" coords="17,207,17,267,79,267,79,206"/>
+			<area id="7" name="Restroom" coords="17,176,17,201,78,201,78,176"/>
+			<area id="8" name="Corridor" coords="81,173,81,332,138,332,138,206,119,206,119,171"/>
+			<area id="9" name="Cabinet" coords="153,126,153,57,210,57,266,127"/>
+			<area id="10" name="System zone"/>
+		</area>
+	</areas></config>
