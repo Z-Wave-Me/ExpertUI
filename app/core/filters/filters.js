@@ -24,6 +24,30 @@ angApp.filter('toTrusted', ['$sce', function($sce){
             return $sce.trustAsHtml(text);
         };
     }]);
+
+angApp.filter('getById', function() {
+  return function(input, id) {
+    var i=0, len=input.length;
+    for (; i<len; i++) {
+      if (+input[i].id == +id) {
+        return input[i];
+      }
+    }
+    return null;
+  };
+});
+
+angApp.filter('getByProperty', function() {
+    return function(propertyName, propertyValue, collection) {
+        var i=0, len=collection.length;
+        for (; i<len; i++) {
+            if (collection[i][propertyName] == +propertyValue) {
+                return collection[i];
+            }
+        }
+        return null;
+    };
+});
 // Convert unix timastamp to date
 angApp.filter('dateFromUnix', function() {
     return function(input) {

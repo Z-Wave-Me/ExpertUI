@@ -1,47 +1,70 @@
-<!-- config_cont -->
-<div class="configuration-block" id="config_cont" ng-if="configCont">
-    <h4>{{_t('configurations_list')}}</h4>
+<!-- rename_cont -->
+<div class="cfg-block" id="rename_cont">
+    <h4>{{_t('device_rename_tooltip')}}</h4>
     <div>
+        <form name="form_rename" id="form_rename" class="form form-inline" role="form" novalidate>
+           <input name="device_name" id="device_name" type="text" class="form-control" value="" />
+                <button
+                    type="submit"
+                    class="btn btn-primary" 
+                    id="btn_update"
+                    >{{_t('btn_save')}}</button>
+          
+
+
+        </form>
+    </div>
+</div>
+<!-- config_cont -->
+<div class="cfg-block" id="config_cont" ng-if="configCont">
+    <h4>{{_t('configurations_list')}}</h4>
+    <div class="cfg-block-content">
+        <div class="form-inline" ng-repeat="v in configCont">
+            <expert-command-input collection='v'></expert-command-input>
+            <!-- {{pk}} {{p}} 
+            {{c.data.values[pk]}}-->
+
+        </div>
     </div>
 </div>
 <!-- switchall_cont -->
-<div class="configuration-block" id="switchall_cont">
+<div class="cfg-block" id="switchall_cont">
     <h4>{{_t('switchall_list')}}</h4>
     <div>
     </div>
 </div>
 <!-- switchall_cont -->
-<div class="configuration-block" id="protection_cont">
+<div class="cfg-block" id="protection_cont">
     <h4>{{_t('protection_list')}}</h4>
     <div>
     </div>
 </div>
 <!-- wakeup_cont -->
-<div class="configuration-block" id="wakeup_cont">
+<div class="cfg-block" id="wakeup_cont">
     <h4>{{_t('wakeup_list')}}</h4>
     <div>
     </div>
 </div>
 <!-- fwupdate_cont -->
-<div class="configuration-block" id="fwupdate_cont">
+<div class="cfg-block" id="fwupdate_cont">
     <h4>{{_t('fwupdate_title')}}</h4>
     <div>
     </div>
 </div>
 <!-- impex_cont -->
-<div class="configuration-block" id="impex_cont">
+<div class="cfg-block" id="impex_cont">
     <h4>{{_t('import_export_save_config_title')}}</h4>
     <div>
     </div>
 </div>
 <!-- aapply_cont -->
-<div class="configuration-block" id="apply_cont">
+<div class="cfg-block" id="apply_cont">
     <h4>{{_t('apply_config_tooltip')}}</h4>
     <div>
     </div>
 </div>
 <!-- advanced_cont -->
-<div class="configuration-block" id="advanced_cont">
+<div class="cfg-block" id="advanced_cont">
     <h4>{{_t('advanced_xml_title')}}</h4>
     <div>
     </div>

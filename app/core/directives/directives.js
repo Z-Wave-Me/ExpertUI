@@ -175,10 +175,12 @@ angApp.directive('expertCommandInput', function() {
             getNodeDevices: '='
         },
         link: function(scope, element, attrs) {
+             
             var input = '';
             var label = scope.collection.label;
             var type = scope.collection.type;
-            if (label && type) {
+            //if (label && type) {
+            if (type) {
                 if ('range' in type) {
                     input = getText(label, attrs.value, type.range.min, type.range.max);
                 } else if ('node' in type) {
@@ -191,6 +193,7 @@ angApp.directive('expertCommandInput', function() {
             }
             scope.input = input;
         }
+       
     };
 });
 

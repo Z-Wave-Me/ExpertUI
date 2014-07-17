@@ -15,17 +15,17 @@
     </div>
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
-        <li class="active"><a href="" data-target="#device_interview" data-toggle="tab">{{_t('nav_device_interview')}}</a></li>
-        <li class="active_"><a href="" data-target="#device_configuration" data-toggle="tab">{{_t('nav_device_configuration')}}</a></li>
+        <li class="active_"><a href="" data-target="#device_interview" data-toggle="tab">{{_t('nav_device_interview')}}</a></li>
+        <li class="active"><a href="" data-target="#device_configuration" data-toggle="tab">{{_t('nav_device_configuration')}}</a></li>
         <li><a href="" data-target="#device_assoc" data-toggle="tab">{{_t('nav_device_assoc')}}</a></li>
     </ul>
 
     <!-- Tab panes -->
     <div class="tab-content">
         <!-- ConfigInterviewController -->
-        <div class="tab-pane active" id="device_interview" ng-include="'app/views/config/interview.html'"></div>
+        <div class="tab-pane active_" id="device_interview" ng-include="'app/views/config/interview.html'"></div>
         <!-- ConfigConfigurationController -->
-        <div class="tab-pane active_" id="device_configuration" ng-include="'app/views/config/configuration.html'"></div>
+        <div class="tab-pane active" id="device_configuration" ng-include="'app/views/config/configuration.html'"></div>
         <!-- ConfigAssocController -->
         <div class="tab-pane" id="device_assoc" ng-include="'app/views/config/assoc.html'"></div>
     </div>

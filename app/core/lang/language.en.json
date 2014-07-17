@@ -43,6 +43,7 @@
     "btn_checkall": "Check all",
     "btn_plus": "+",
     "btn_minus": "-",
+    "btn_save": "Save",
      "unknown_device_type": "Unknown device type",
     "---": "---",
     "syntax_error": "XML Syntax error: ",

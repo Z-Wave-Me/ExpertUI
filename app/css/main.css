@@ -151,6 +151,18 @@ h3 {
     margin-bottom: 10px;
 }
 
+/* Config CSS
+-------------------------------------------------- */
+.cfg-block {
+    margin: 0 0 20px 0;
+    padding: 0 0 20px 0;
+    border-bottom: solid 1px #9fd8ef;
+}
+
+.cfg-block h4{
+    color: #2A6496;
+}
+
 /*Images
 -------------------------------------------------- */
 .config-device-img{
