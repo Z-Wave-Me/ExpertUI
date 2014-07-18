@@ -43,8 +43,10 @@
     "btn_checkall": "Check all",
     "btn_plus": "+",
     "btn_minus": "-",
-    "btn_save": "Save",
+    "btn_save_name": "Save name",
      "unknown_device_type": "Unknown device type",
+       "command_class": " Command Class",
+    
     "---": "---",
     "syntax_error": "XML Syntax error: ",
     "area_new": "New Zone",

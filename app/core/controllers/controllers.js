@@ -7,7 +7,7 @@
 var appController = angular.module('appController', []);
 
 // Base controller
-appController.controller('BaseController', function($scope, $cookies, $filter, cfg, langFactory, langTransFactory,deviceConfigFactory) {
+appController.controller('BaseController', function($scope, $cookies, $filter, cfg, langFactory, langTransFactory, deviceConfigFactory) {
     // Global config
     $scope.cfg = cfg;
 
@@ -51,8 +51,8 @@ appController.controller('BaseController', function($scope, $cookies, $filter, c
             $scope.getDeviceNames = data;
         });
     };
-     $scope.loadDeviceConfig();
-    
+    $scope.loadDeviceConfig();
+
 });
 
 // Test controller
@@ -1461,7 +1461,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                 });
             } else {
                 $scope.descriptionCont = descriptionCont(node, nodeId, null, ZWaveAPIData);
-                $scope.configCont = configCont(node,null);
+                $scope.configCont = configCont(node, null);
                 $scope.switchAllCont = switchAllCont(node);
                 $scope.protectionCont = protectionCont(node);
                 $scope.wakeupCont = wakeupCont(node);
@@ -1514,7 +1514,19 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 
 
         }
-
+        // SDK
+        var sdk;
+        if (node.data.SDK.value == '') {
+            sdk = '(' + node.data.ZWProtocolMajor.value + '.' + node.data.ZWProtocolMinor.value + ')';
+        } else {
+            sdk = node.data.SDK.value;
+        }
+        
+        // Command class
+        var ccNames = [];
+        angular.forEach($scope.interviewCommands, function(v, k) {
+                ccNames.push(v.ccName);
+            });
         // Has device a zddx XML file
         if (zddXml) {
             var lang = 'en';
@@ -1554,10 +1566,10 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 
         // Set device image
         $scope.deviceImage = deviceImage;
-
+        //$filter('getDeviceName')(nodeId, null);
         // OBJ
         var obj = {};
-        obj["a"] = {"key": "device_node_name", "val": node.data.name + zwNodeName};
+        obj["a"] = {"key": "device_node_name", "val":  $filter('getDeviceName')(nodeId, $scope.getDeviceNames)};
         obj["b"] = {"key": "device_node_id", "val": nodeId};
         obj["c"] = {"key": "device_node_type", "val": ''};
         obj["d"] = {"key": "device_description_brand", "val": brandName};
@@ -1570,8 +1582,8 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         obj["k"] = {"key": "device_sleep_state", "val": deviceState(node)};
         obj["l"] = {"key": "device_queue_length", "val": queueLength(ZWaveAPIData, node)};
         obj["m"] = {"key": "device_description_app_version", "val": deviceDescriptionAppVersion + '.' + deviceDescriptionAppSubVersion};
-        obj["o"] = {"key": "device_description_sdk_version", "val": node.data.SDK.value};
-
+        obj["o"] = {"key": "device_description_sdk_version", "val": sdk};
+        obj["p"] = {"key": "command_class", "val": ccNames.join(', ')};
         //obj[99] = {"key": "device_description_resources", "val": ''};
         return obj;
 
@@ -1659,13 +1671,13 @@ appController.controller('ConfigurationController', function($scope, $routeParam
      * Config cont
      */
     function configCont(node, zddXml) {
-         if (!0x70 in node.instances[0].commandClasses) {
+        if (!0x70 in node.instances[0].commandClasses) {
             return null;
         }
         if (!zddXml) {
             return null;
         }
-       
+
         if (!zddXml.ZWaveDevice.hasOwnProperty("configParams")) {
             return null;
         }
@@ -1681,9 +1693,10 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             lang = $scope.lang;
         }
         var langId = langs[lang];
-        
+
         // Loop throught params
         angular.forEach(params, function(conf_html, i) {
+           
             have_conf_params = true;
             var conf = conf_html;
             var conf_num = conf['_number'];
@@ -1704,6 +1717,9 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             if (conf['_default'] !== undefined) {
                 conf_default = parseInt(conf['_default'], 16);
             }
+            
+            var time =  node.instances[0].commandClasses[0x70].data[conf_num].time;
+            console.log(time.updateTime);
 
             // Switch
             var conf_method_descr;
@@ -1739,7 +1755,8 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                         label: 'Nº ' + conf_num + ' - ' + conf_name,
                         type: {
                             enumof: param_struct_arr
-                        }
+                        },
+                         description: conf_description
                     };
 
                     break;
@@ -1782,7 +1799,8 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                             label: 'Nº ' + conf_num + ' - ' + conf_name,
                             type: {
                                 enumof: param_struct_arr
-                            }
+                            },
+                             description: conf_description
                         };
                     else if (param_struct_arr.length == 1)
                         conf_method_descr = param_struct_arr[0];
@@ -1848,21 +1866,23 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                     conf_method_descr = {
                         label: 'Nº ' + conf_num + ' - ' + conf_name,
                         type: {
-                            enumof: ''
-                        }
+                            bitset: param_struct_arr
+                        },
+                        description: conf_description
                     };
 
                     break;
 
-                //default:
+                    //default:
                     //conf_cont.append('<span>' + $.translate('unhandled_type_parameter') + ': ' + conf_type + '</span>');
             }
             ;
             config_cont.push(conf_method_descr);
+             
 
         });
 
-        //console.log(config_cont);
+        console.log(config_cont);
         return config_cont;
     }
 
@@ -1948,7 +1968,7 @@ appController.controller('ConfigStoreController', function($scope, DataFactory) 
     $scope.showModalInterview = function(target) {
         $(target).modal();
     };
-    
+
     // Show modal dialog
     $scope.renameDevice = function(form) {
         console.log('form');

@@ -8,7 +8,7 @@
                     type="submit"
                     class="btn btn-primary" 
                     id="btn_update"
-                    >{{_t('btn_save')}}</button>
+                    >{{_t('btn_save_name')}}</button>
           </form>
     </div>
 </div>
@@ -16,12 +16,13 @@
 <div class="cfg-block" id="config_cont" ng-if="configCont">
     <h4>{{_t('configurations_list')}}</h4>
     <div class="cfg-block-content">
-        <div class="form-inline" ng-repeat="v in configCont">
-            <expert-command-input collection='v'></expert-command-input>
-            <!-- {{pk}} {{p}} 
-            {{c.data.values[pk]}}-->
-
-        </div>
+        <div ng-repeat="v in configCont">
+            <div class="form-inline" >
+              <expert-command-input collection='v'></expert-command-input>
+            </div>
+            <em>{{v.description}}</em>
+         </div>
+        
     </div>
 </div>
 <!-- switchall_cont -->
