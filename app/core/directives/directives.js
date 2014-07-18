@@ -123,14 +123,14 @@ angApp.directive('expertCommandInput', function() {
     function getText(label, value, min, max) {
         var input = '';
         input += '<label>' + label + '</label> ';
-        input += '<input class="form-control" name="' + label + '" type="text" class="form-control" value="' + value + '" title=" min: ' + min + ', max: ' + max +'" />';
+        input += '<input class="form-control" name="' + label + '" type="text" class="form-control" value="' + value + '" title=" min: ' + min + ', max: ' + max + '" />';
         return input;
     }
     // Get node
     function getNode(label, devices, selected) {
         var input = '';
         input += '<label>' + label + '</label> ';
-        input += '<select name="select_'+ label +'" class="form-control">';
+        input += '<select name="select_' + label + '" class="form-control">';
         input += '<option value="1">RaZberry</option>';
         angular.forEach(devices, function(v, k) {
             input += '<option value="' + v.id + '">' + v.name + '</option>';
@@ -142,7 +142,7 @@ angApp.directive('expertCommandInput', function() {
     }
 
     // Get enumerators
-    function getEnum(label, enums, checked) {
+    function getEnum(label, enums, defaultValue) {
         var input = '';
         input += '<label>' + label + '</label><br />';
         var cnt = 1;
@@ -150,13 +150,15 @@ angApp.directive('expertCommandInput', function() {
             var title = v.label;
             var type = v.type;
             var checked = (cnt == 1 ? ' checked="checked"' : '');
-
             if ('fix' in type) {
-                input += '<input name="radio_'+ label + '" class="commands-data-chbx" type="radio" value="' + type.fix.value + '"' +  checked +' /> ' + title + '<br />';
+                if (defaultValue) {
+                    var checked = (type.fix.value == defaultValue ? ' checked="checked"' : '');
+                }
+                input += '<input name="radio_' + label + '" class="commands-data-chbx" type="radio" value="' + type.fix.value + '"' + checked + ' /> ' + title + '<br />';
             } else if ('range' in type) {
                 var min = type.range.min;
                 var max = type.range.max;
-                input += '<input name="radio_'+ label + '" class="commands-data-chbx" type="radio" value=""' +  checked +' /> ' + title + ' <input type="text" name="radio_'+ label + '_txt" class="form-control commands-data-txt-chbx" value="' + min + '" title=" min: ' + min + ', max: ' + max +'" disabled="true" /><br />';
+                input += '<input name="radio_' + label + '" class="commands-data-chbx" type="radio" value=""' + checked + ' /> ' + title + ' <input type="text" name="radio_' + label + '_txt" class="form-control commands-data-txt-chbx" value="' + min + '" title=" min: ' + min + ', max: ' + max + '" disabled="true" /><br />';
             } else {
                 input = '';
             }
@@ -172,28 +174,30 @@ angApp.directive('expertCommandInput', function() {
         scope: {
             collection: '=',
             devices: '=',
-            getNodeDevices: '='
+            getNodeDevices: '=',
+            values: '=',
+            defaultValue: '='
         },
         link: function(scope, element, attrs) {
-             
+
             var input = '';
             var label = scope.collection.label;
             var type = scope.collection.type;
             //if (label && type) {
             if (type) {
                 if ('range' in type) {
-                    input = getText(label, attrs.value, type.range.min, type.range.max);
+                    input = getText(label, scope.values, type.range.min, type.range.max);
                 } else if ('node' in type) {
                     input = getNode(label, scope.getNodeDevices(), 'null');
                 } else if ('enumof' in type) {
-                    input = getEnum(label, type, 'checked');
+                    input = getEnum(label, type, scope.defaultValue);
                 } else {
                     input = 'NO';
                 }
             }
             scope.input = input;
         }
-       
+
     };
 });
 
