@@ -1436,7 +1436,14 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
             var node = ZWaveAPIData.devices[nodeId];
-            var zddXmlFile = node.data.ZDDXMLFile.value;
+            if (!node) {
+                return;
+            }
+            var zddXmlFile = null;
+            if (angular.isDefined(node.data.ZDDXMLFile)) {
+                zddXmlFile = node.data.ZDDXMLFile.value;
+            }
+
             $scope.interviewCommands = interviewCommands(node);
             $scope.interviewCommandsDevice = node.data;
 //            setXml = function(zddXml) {
@@ -1457,7 +1464,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                     $scope.configCont = configCont(node, zddXml);
                     $scope.wakeupCont = wakeupCont(node, nodeId, ZWaveAPIData);
                     $scope.switchAllCont = switchAllCont(node, nodeId);
-                    $scope.protectionCont = protectionCont(node,nodeId);
+                    $scope.protectionCont = protectionCont(node, nodeId);
                     $scope.fwupdateCont = fwupdateCont(node);
                     $scope.assocCont = assocCont(node);
                 });
@@ -1466,7 +1473,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                 $scope.configCont = configCont(node, null);
                 $scope.wakeupCont = wakeupCont(node, nodeId, ZWaveAPIData);
                 $scope.switchAllCont = switchAllCont(node, nodeId);
-                $scope.protectionCont = protectionCont(node,nodeId);
+                $scope.protectionCont = protectionCont(node, nodeId);
                 $scope.fwupdateCont = fwupdateCont(node);
                 $scope.assocCont = assocCont(node);
             }
@@ -1711,18 +1718,34 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         var langId = langs[lang];
 
         // Loop throught params
+        var parCnt = 0;
         angular.forEach(params, function(conf_html, i) {
+
+            if (!angular.isObject(conf_html)) {
+                return;
+            }
 
             have_conf_params = true;
             var conf = conf_html;
             var conf_num = conf['_number'];
             var conf_name = $scope._t('configuration_parameter') + ' ' + conf_num;
-            if (angular.isDefined(conf.name.lang[langId])) {
-                conf_name = conf.name.lang[langId].__text;
+            if (angular.isDefined(conf.name)) {
+                if (angular.isDefined(conf.name.lang[langId])) {
+                    conf_name = conf.name.lang[langId].__text;
+                } else if (angular.isDefined(conf.name.lang)) {
+                    conf_name = conf.name.lang.__text;
+
+                }
             }
+
             var conf_description = '';
-            if (angular.isDefined(conf.description.lang[langId])) {
-                conf_description = conf.description.lang[langId].__text;
+            if (angular.isDefined(conf.description)) {
+                if (angular.isDefined(conf.description.lang[langId])) {
+                    conf_description = conf.description.lang[langId].__text;
+                } else if (angular.isDefined(conf.description)) {
+                    conf_description = conf.description.lang.__text;
+
+                }
             }
             var conf_size = conf['_size'];
             var conf_default_value = null;
@@ -1733,11 +1756,15 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             if (conf['_default'] !== undefined) {
                 conf_default = parseInt(conf['_default'], 16);
             }
+            var isUpdated = true;
+            var updateTime = '';
+            if (angular.isDefined(node.instances[0].commandClasses[0x70].data[conf_num])) {
+                var uTime = node.instances[0].commandClasses[0x70].data[conf_num].updateTime;
+                var iTime = node.instances[0].commandClasses[0x70].data[conf_num].invalidateTime;
+                var updateTime = $filter('isTodayFromUnix')(uTime);
+                var isUpdated = (uTime > iTime ? true : false);
+            }
 
-            var uTime = node.instances[0].commandClasses[0x70].data[conf_num].updateTime;
-            var iTime = node.instances[0].commandClasses[0x70].data[conf_num].invalidateTime;
-            var updateTime = $filter('isTodayFromUnix')(uTime);
-            var isUpdated = (uTime > iTime ? true : false);
 
             // Switch
             var conf_method_descr;
@@ -1795,40 +1822,57 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 
                 case 'range':
                     var param_struct_arr = [];
-                    angular.forEach(conf['value'], function(value_html, i) {
+                    var rangeParam = conf['value'];
+                    angular.forEach(rangeParam, function(value_html, ri) {
                         var value = value_html;
-                        var value_from = parseInt(value['_from'], 16);
-                        var value_to = parseInt(value['_to'], 16);
-                        var value_description = 'fdf';
+
+                        if (ri == 'description') {
+                            //console.log(ri);
+                            var value_from = parseInt(rangeParam['_from'], 16);
+                            var value_to = parseInt(rangeParam['_to'], 16);
+                            //console.log(rangeParam['description']);
+                        } else {
+                            var value_from = parseInt(value['_from'], 16);
+                            var value_to = parseInt(value['_to'], 16);
+                        }
+
                         var value_description = '';
 
                         if (angular.isDefined(value.description)) {
-                            value_description = value.description.lang[1].__text;
+                            //value_description = value.description.lang[1].__text;
                             if (angular.isDefined(value.description.lang[langId])) {
                                 value_description = value.description.lang[langId].__text;
+                            } else if (angular.isDefined(value.description.lang)) {
+                                value_description = value.description.lang.__text;
                             }
                         }
                         if (angular.isDefined(value.lang)) {
-                            value_description = value.lang[1].text;
-                            angular.forEach(value.lang, function(lv, lk) {
-                                if (lk == langId) {
-                                    value_description = lv.__text;
-                                }
-                            });
+
+                            if (angular.isDefined(value.lang['__text'])) {
+                                value_description = value.lang['__text'];
+                            } else if (angular.isDefined(value.lang[langId])) {
+                                value_description = value.lang[langId].__text;
+                            }
                         }
                         if (conf_default !== null)
                             conf_default_value = conf_default;
-                        if (value_from != value_to)
-                            param_struct_arr.push({
-                                label: value_description,
-                                type: {
-                                    range: {
-                                        min: value_from,
-                                        max: value_to
+                        if (value_from != value_to) {
+                            if (value_description != '') {
+                                var rangeVal = {
+                                    label: value_description,
+                                    type: {
+                                        range: {
+                                            min: value_from,
+                                            max: value_to
+                                        }
                                     }
-                                }
-                            });
+                                };
+
+                                param_struct_arr.push(rangeVal);
+                            }
+                        }
                         else // this is a fix value
+                        if (value_description != '') {
                             param_struct_arr.push({
                                 label: value_description,
                                 type: {
@@ -1837,6 +1881,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                                     }
                                 }
                             });
+                        }
                     });
                     if (param_struct_arr.length > 1)
                         conf_method_descr = {
@@ -1851,6 +1896,46 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                         };
                     else if (param_struct_arr.length == 1)
                         conf_method_descr = param_struct_arr[0];
+                    break;
+
+                case 'constant':
+                    var param_struct_arr = [];
+                    var conf_param_options = '';
+                    angular.forEach(conf['value'], function(value_html, i) {
+                        var value = value_html;
+                        var value_from = parseInt(value['_from'], 16);
+                        var value_to = parseInt(value['_to'], 16);
+                        var value_description = '';
+                        if (angular.isDefined(value.description)) {
+                            value_description = value.description.lang.__text;
+
+                        }
+                        var value_repr = value_from; // representative value for the range
+                        if (conf_default !== null)
+                            if (value_from <= conf_default && conf_default <= value_to) {
+                                conf_default_value = value_description;
+                                value_repr = conf_default;
+                            }
+                        param_struct_arr.push({
+                            label: value_description,
+                            type: {
+                                constant: {
+                                    value: value_repr
+                                }
+                            }
+                        });
+                    });
+                    conf_method_descr = {
+                        label: 'Nº ' + conf_num + ' - ' + conf_name,
+                        type: {
+                            constant: param_struct_arr
+                        },
+                        description: conf_description,
+                        updateTime: updateTime,
+                        isUpdated: isUpdated,
+                        defaultValue: conf_default_value
+                    };
+
                     break;
 
                 case 'bitset':
@@ -1923,12 +2008,13 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 
                     break;
 
-                    //default:
+                default:
+                    return;
                     //conf_cont.append('<span>' + $.translate('unhandled_type_parameter') + ': ' + conf_type + '</span>');
             }
             ;
             config_cont.push(conf_method_descr);
-
+            parCnt++;
 
         });
 
@@ -2010,7 +2096,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             var iTime = node.instances[0].commandClasses[0x27].data.mode.invalidateTime;
             var updateTime = $filter('isTodayFromUnix')(uTime);
             var isUpdated = (uTime > iTime ? true : false);
-            
+
             var gui_descr = getMethodSpec($scope.ZWaveAPIData, nodeId, 0, 0x27, 'Set');
             var switchall_conf_value;
             var switchall_conf_el;
@@ -2024,8 +2110,8 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                 'params': gui_descr,
                 'values': {0: switchall_conf_value},
                 updateTime: updateTime,
-                    isUpdated: isUpdated,
-                 defaultValue: switchall_conf_value
+                isUpdated: isUpdated,
+                defaultValue: switchall_conf_value
             };
         }
         ;
@@ -2035,35 +2121,35 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     /**
      * Protection cont
      */
-    function protectionCont(node,nodeId) {
+    function protectionCont(node, nodeId) {
         var protection_cont = false;
         if (0x75 in node.instances[0].commandClasses) {
-             var uTime = node.instances[0].commandClasses[0x75].data.state.updateTime;
+            var uTime = node.instances[0].commandClasses[0x75].data.state.updateTime;
             var iTime = node.instances[0].commandClasses[0x75].data.state.invalidateTime;
             var updateTime = $filter('isTodayFromUnix')(uTime);
             var isUpdated = (uTime > iTime ? true : false);
-            
-             var gui_descr = getMethodSpec($scope.ZWaveAPIData, nodeId, 0, 0x75, 'Set');
-            
+
+            var gui_descr = getMethodSpec($scope.ZWaveAPIData, nodeId, 0, 0x75, 'Set');
+
             var protection_version = node.instances[0].commandClasses[0x75].data.version.value;
-		var protection_config = null;
-		var protection_conf_value;
-		var protection_conf_rf_value;
-		var protection_conf_el;
-		if (protection_config) {
-			protection_conf_value = 0;
-			protection_conf_rf_value = 0;
-		} else {
-			protection_conf_value = 0; // by default protection is disabled
-			protection_conf_rf_value = 0; // by default protection is disabled
-		}
-                
-                protection_cont = {
+            var protection_config = null;
+            var protection_conf_value;
+            var protection_conf_rf_value;
+            var protection_conf_el;
+            if (protection_config) {
+                protection_conf_value = 0;
+                protection_conf_rf_value = 0;
+            } else {
+                protection_conf_value = 0; // by default protection is disabled
+                protection_conf_rf_value = 0; // by default protection is disabled
+            }
+
+            protection_cont = {
                 'params': gui_descr,
                 'values': {0: protection_conf_value},
                 updateTime: updateTime,
-                    isUpdated: isUpdated,
-                 defaultValue: protection_conf_value
+                isUpdated: isUpdated,
+                defaultValue: protection_conf_value
             };
         }
         ;
@@ -2317,7 +2403,7 @@ appController.controller('CommandsDetailController', function($scope, $routePara
             }
             ;
             var obj = {};
-             obj['name'] = $filter('getDeviceName')(v.id, $scope.getDeviceNames);
+            obj['name'] = $filter('getDeviceName')(v.id, $scope.getDeviceNames);
             obj['name'] = v.name;
             devices.push(obj);
         });

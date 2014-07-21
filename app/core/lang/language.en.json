@@ -37,6 +37,7 @@
      "th_sdk": "Version",
      "th_appversion": "App version",
      "btn_update": "Update",
+      "btn_update_from_device": "Update from Device",
     "btn_full": "Full",
     "btn_all_off": "All off",
     "btn_all_on": "All on",

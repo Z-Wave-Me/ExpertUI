@@ -143,28 +143,73 @@ angApp.directive('expertCommandInput', function() {
 
     // Get enumerators
     function getEnum(label, enums, defaultValue) {
+        
         var input = '';
+        if(!enums){
+            return;
+        }
         input += '<label>' + label + '</label><br />';
         var cnt = 1;
         angular.forEach(enums.enumof, function(v, k) {
             var title = v.label;
             var type = v.type;
+           
             var checked = (cnt == 1 ? ' checked="checked"' : '');
             if ('fix' in type) {
-                if (defaultValue) {
+                if (defaultValue && type.fix.value) {
                     var checked = (type.fix.value == defaultValue ? ' checked="checked"' : '');
                 }
                 input += '<input name="radio_' + label + '" class="commands-data-chbx" type="radio" value="' + type.fix.value + '"' + checked + ' /> ' + title + '<br />';
             } else if ('range' in type) {
                 var min = type.range.min;
                 var max = type.range.max;
-                input += '<input name="radio_' + label + '" class="commands-data-chbx" type="radio" value=""' + checked + ' /> ' + title + ' <input type="text" name="radio_' + label + '_txt" class="form-control commands-data-txt-chbx" value="' + min + '" title=" min: ' + min + ', max: ' + max + '" disabled="true" /><br />';
+                 var disabled = ' disabled="true"';
+                if (defaultValue && min) {
+                    var checked = (min == defaultValue ? ' checked="checked"' : '');
+                    disabled = '';
+                }
+                input += '<input name="radio_' + label + '" class="commands-data-chbx" type="radio" value=""' + checked + ' /> ' + title + ' <input type="text" name="radio_' + label + '_txt" class="form-control commands-data-txt-chbx" value="' + min + '" title=" min: ' + min + ', max: ' + max + '"'+ disabled + ' /><br />';
             } else {
                 input = '';
             }
             cnt++;
 
         });
+        return input;
+    }
+
+    // Get dropdown list
+    function getDropdown(label, enums, defaultValue) {
+        var input = '';
+        input += '<label>' + label + '</label><br />';
+        input += '<select name="select_' + label + '" class="form-control">';
+        var cnt = 1;
+        angular.forEach(enums.enumof, function(v, k) {
+             var title = v.label;
+            var type = v.type;
+            var value;
+            if ('fix' in type) {
+                value = type.fix.value;
+            } else if ('range' in type) {
+                value = type.range.min;
+            }
+
+            if (defaultValue) {
+                var selected = (type.fix.value == defaultValue ? ' selected' : '');
+            }
+            input += '<option value="' + value + '"' + selected + '> ' + title + '</option>';
+            cnt++;
+
+        });
+        input += '</select">';
+        return input;
+    }
+    
+     // Get constant 
+    function getConstant(label) {
+        var input = '';
+        input += '<label>' + label + '</label><br />';
+        input += '<em>Constant type</em>';
         return input;
     }
     return {
@@ -176,13 +221,22 @@ angApp.directive('expertCommandInput', function() {
             devices: '=',
             getNodeDevices: '=',
             values: '=',
+            isDropdown: '=',
             defaultValue: '='
         },
         link: function(scope, element, attrs) {
 
             var input = '';
+            if(!scope.collection){
+                return;
+            }
             var label = scope.collection.label;
             var type = scope.collection.type;
+            if (scope.isDropdown) {
+                input = getDropdown(label, type, scope.defaultValue);
+                scope.input = input;
+                return;
+            }
             //if (label && type) {
             if (type) {
                 if ('range' in type) {
@@ -191,11 +245,15 @@ angApp.directive('expertCommandInput', function() {
                     input = getNode(label, scope.getNodeDevices(), 'null');
                 } else if ('enumof' in type) {
                     input = getEnum(label, type, scope.defaultValue);
-                } else {
-                    input = 'NO';
+                } else if ('constant' in type) {
+                    input = getConstant(label);
+                }else {
+                    input = '';
                 }
+                scope.input = input;
+                return;
             }
-            scope.input = input;
+
         }
 
     };

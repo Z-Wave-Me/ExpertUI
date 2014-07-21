@@ -15,7 +15,8 @@ var config_data = {
     'update_url': '/ZWaveAPI/Data/', // Url for update (refresh data)
     'store_url': '/ZWaveAPI/Run/', // Url for store data
     'config_url': '/config/', // Url for store config data
-    'zddx_url': 'storage/zddx/', // Url for zddx xml files
+    //'zddx_url': 'storage/zddx/', // Url for zddx xml files
+    'zddx_url': 'http://192.168.10.167:8083/ZDDX/', // Url for zddx xml files
     'lang': 'en', // Default language
     'lang_dir': 'app/core/lang/', // Language directory
     'lang_list': ["en","de","fr","es","ru"], // List of languages
