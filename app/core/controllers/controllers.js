@@ -2308,11 +2308,100 @@ appController.controller('ConfigStoreController', function($scope, DataFactory) 
 });
 
 // Controll controller
-appController.controller('ControllController', function($scope, $http, $log) {
-    $http.get('storage/demo/controll.json').
-            success(function(data) {
-                $scope.data = data;
+appController.controller('ControllController', function($scope, $filter, $timeout, DataFactory, DataTestFactory) {
+    $scope.devices = [];
+    $scope.ZWaveAPIData;
+
+    // Load data
+    $scope.load = function() {
+        DataFactory.all('0').query(function(ZWaveAPIData) {
+            //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
+            var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
+
+            // Loop throught devices
+            angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+                if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+                    return;
+                }
+                // Set object
+                var obj = {};
+                obj['id'] = nodeId;
+                obj['name'] = node.data.name;
+
+                $scope.devices.push(obj);
             });
+        });
+    };
+    $scope.load();
+    
+     // Load data
+    $scope.failedNodes = function() {
+        DataFactory.all('0').query(function(ZWaveAPIData) {
+            //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
+            var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
+
+            // Loop throught devices
+            angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+                if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+                    return;
+                }
+                // Set object
+                var obj = {};
+                obj['id'] = nodeId;
+                obj['name'] = node.data.name;
+
+                $scope.devices.push(obj);
+            });
+        });
+    };
+    $scope.load();
+
+    /**
+     * Send request NIF from all devices
+     * 
+     * @returns {void}
+     */
+    $scope.requestNifAll = function(btn) {
+        $(btn).attr('disabled', true);
+        angular.forEach($scope.devices, function(v, k) {
+            var url = 'devices[' + v.id + '].RequestNodeInformation()';
+            DataFactory.store(url).query();
+        });
+        $timeout(function() {
+            $(btn).removeAttr('disabled');
+        }, 1000);
+        return;
+    };
+
+    /**
+     * Send Change controller request
+     * 
+     * @returns {void}
+     */
+    $scope.changeController = function(btn) {
+        $(btn).attr('disabled', true);
+        var url = 'controller.ControllerChange(1)';
+        DataFactory.store(url).query();
+        $timeout(function() {
+            $(btn).removeAttr('disabled');
+        }, 1000);
+        return;
+    };
+    
+    /**
+     * Send reboot chip request
+     * 
+     * @returns {void}
+     */
+    $scope.chipReboot = function(btn) {
+        $(btn).attr('disabled', true);
+        var url = 'SerialAPISoftReset()';
+        DataFactory.store(url).query();
+        $timeout(function() {
+            $(btn).removeAttr('disabled');
+        }, 1000);
+        return;
+    };
 });
 
 // Routing controller

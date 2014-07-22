@@ -1,0 +1,68 @@
+<!-- Controll view -->
+<div ng-controller="ControllController">
+    <div class="page-header"><h1>{{_t('nav_control')}}</h1></div>
+    <div class="row" id="row_controll">
+        <div class="col-md-6 col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">{{_t('nm_inex')}}</div>
+                <div class="panel-body">
+                    <div class="cfg-block">
+                        {{_t('nm_force_unsecure')}}
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary"><i class="fa fa-lock fa-lg"></i></button>
+                            <button type="button" class="btn btn-primary active"><i class="fa fa-unlock fa-lg"></i></button>
+                        </div>
+                    </div>
+                    <div>Controller is primary in the network. It is the only that can add and remove devices to/from the network.</div>
+                    <div class="well">
+                        <div>Per-device job counter is disabled</div>
+                        <div class="message-container">Ready to include. Press a button on the device to be (re-)included.</div>
+                    </div>
+                    <button class="btn btn-info btn-exincl">(Re)include device <span></span></button>
+                    <button class="btn btn-primary btn-exincl">Exclude device <span></span></button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">{{_t('nm_net_maintance')}}</div>
+                <div class="panel-body">
+                    <div>
+                        <button class="btn btn-primary">{{_t('nm_remove_failed')}}</button> [dropdown1] all nodes marked as failed<br />
+                        <button class="btn btn-primary">{{_t('Replace failed node')}}</button> [dropdown2] all battery operated devices<br />
+                        <button class="btn btn-primary">{{_t('nm_mark_battery_as_failed')}}</button> [dropdown3] dropdown 1 + dropdown 3<br />
+                    </div>
+                    <div>
+                        <button class="btn btn-primary"
+                                id="btn_change_controller"
+                                ng-click="changeController('#btn_change_controller')"
+                                >{{_t('nm_controller_change_start')}}</button>
+                        <button class="btn btn-primary">{{_t('nm_learn_mode_include')}}</button>
+                        <button class="btn btn-primary"
+                                id="btn_request_nif"
+                                ng-click="requestNifAll('#btn_request_nif')"
+                                >{{_t('nm_request_all_node_information')}}</button>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">{{_t('nm_backup_title')}}</div>
+                <div class="panel-body">
+                    <a class="btn btn-primary" href="{{cfg.server_url}}/ZWaveAPI/Backup">{{_t('nm_backup_download')}}</a>
+                    <button class="btn btn-primary">{{_t('nm_restore_backup_upload')}}</button>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">{{_t('nm_ctrl_maintance')}}</div>
+                <div class="panel-body">
+                    <button class="btn btn-primary"
+                            id="btn_chip_reboot"
+                                ng-click="chipReboot('#btn_chip_reboot')"
+                            >{{_t('nm_soft_reset_controller')}}</button>
+                    <button class="btn btn-primary">{{_t('nm_reset_controller')}}</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

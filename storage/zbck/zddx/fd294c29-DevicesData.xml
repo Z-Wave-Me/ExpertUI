@@ -1,0 +1,2013 @@
+<?xml version="1.0" encoding="utf-8"?>
+<devicesData>
+ <controller>
+  <data name="controller.data" invalidateTime="1405660640" updateTime="1405660641" type="NoneType" value="None">
+   <data name="nodeId" invalidateTime="1405660640" updateTime="1406032060" type="int" value="1"/>
+   <data name="homeId" invalidateTime="1405660640" updateTime="1406032060" type="int" value="-47625175"/>
+   <data name="SUCNodeId" invalidateTime="1405660640" updateTime="1406032060" type="int" value="0"/>
+   <data name="isPrimary" invalidateTime="1405660640" updateTime="1406032061" type="bool" value="true"/>
+   <data name="isInOthersNetwork" invalidateTime="1405660640" updateTime="1406032061" type="bool" value="false"/>
+   <data name="isRealPrimary" invalidateTime="1405660640" updateTime="1406032061" type="bool" value="true"/>
+   <data name="isSUC" invalidateTime="1405660640" updateTime="1406032061" type="bool" value="false"/>
+   <data name="SISPresent" invalidateTime="1405660640" updateTime="1406032061" type="bool" value="false"/>
+   <data name="libType" invalidateTime="1405660640" updateTime="1406032060" type="str" value="Static Controller"/>
+   <data name="SDK" invalidateTime="1405660640" updateTime="1406032060" type="str" value="4.54.01"/>
+   <data name="ZWlibMajor" invalidateTime="1405660640" updateTime="1406032060" type="int" value="3"/>
+   <data name="ZWlibMinor" invalidateTime="1405660640" updateTime="1406032060" type="int" value="42"/>
+   <data name="ZWVersion" invalidateTime="1405660640" updateTime="1406032060" type="int" value="5"/>
+   <data name="ZWaveChip" invalidateTime="1405660640" updateTime="1406032060" type="str" value="ZW0301"/>
+   <data name="APIVersion" invalidateTime="1405660640" updateTime="1405660641" type="str" value="04.02"/>
+   <data name="manufacturerId" invalidateTime="1405660640" updateTime="1405660641" type="int" value="327"/>
+   <data name="vendor" invalidateTime="1405660640" updateTime="1405660641" type="str" value="RaZberry by Z-Wave.Me"/>
+   <data name="manufacturerProductType" invalidateTime="1405660640" updateTime="1405660641" type="int" value="2"/>
+   <data name="manufacturerProductId" invalidateTime="1405660640" updateTime="1405660641" type="int" value="3"/>
+   <data name="capabilities" invalidateTime="1405660640" updateTime="1405660641" type="int[]" value="[ 2, 3, 4, 5, 6, 7, 8, 18, 19, 21, 32, 35, 36, 65, 66, 70, 71, 72, 73, 74, 75, 77, 80, 81, 83, 84, 85, 86, 87, 96, 97, 98, 99, 128, 210, 240, 241, 242, 243 ]"/>
+   <data name="controllerState" invalidateTime="1405660640" updateTime="1406037691" type="int" value="0"/>
+   <data name="nonManagmentJobs" invalidateTime="1405660640" updateTime="1405660641" type="int" value="0"/>
+   <data name="lastIncludedDevice" invalidateTime="1405660640" updateTime="1406037672" type="NoneType" value="None"/>
+   <data name="lastExcludedDevice" invalidateTime="1405660640" updateTime="1406037672" type="NoneType" value="None"/>
+   <data name="secureInclusion" invalidateTime="1405660640" updateTime="1405660641" type="bool" value="true"/>
+   <data name="oldSerialAPIAckTimeout10ms" invalidateTime="1405660640" updateTime="1406032060" type="int" value="10"/>
+   <data name="oldSerialAPIByteTimeout10ms" invalidateTime="1405660640" updateTime="1406032060" type="int" value="10"/>
+   <data name="curSerialAPIAckTimeout10ms" invalidateTime="1405660640" updateTime="1406032060" type="int" value="10"/>
+   <data name="curSerialAPIByteTimeout10ms" invalidateTime="1405660640" updateTime="1406032060" type="int" value="10"/>
+   <data name="libVersionId" invalidateTime="1405660640" updateTime="1405660641" type="int" value="1"/>
+   <data name="countJobs" invalidateTime="1405660640" updateTime="1405660641" type="bool" value="false"/>
+   <data name="memoryGetAddress" invalidateTime="1405660640" updateTime="1405660641" type="NoneType" value="None"/>
+   <data name="memoryGetData" invalidateTime="1405660640" updateTime="1405660641" type="NoneType" value="None"/>
+   <data name="functionClasses" invalidateTime="1405660640" updateTime="1405660641" type="int[]" value="[ 2, 3, 4, 5, 6, 7, 8, 18, 19, 21, 22, 32, 33, 34, 35, 36, 65, 66, 70, 71, 72, 73, 74, 75, 76, 77, 80, 81, 82, 83, 84, 85, 86, 87, 96, 97, 98, 99, 128, 210, 211, 242, 243 ]"/>
+   <data name="functionClassesNames" invalidateTime="1405660640" updateTime="1405660641" type="str[]" value="[ &quot;SerialAPIGetInitData&quot;, &quot;SerialAPIApplicationNodeInformation&quot;, &quot;ApplicationCommandHandler&quot;, &quot;GetControllerCapabilities&quot;, &quot;SerialAPISetTimeouts&quot;, &quot;GetSerialAPICapabilities&quot;, &quot;SerialAPISoftReset&quot;, &quot;SendNodeInformation&quot;, &quot;SendData&quot;, &quot;GetVersion&quot;, &quot;SendDataAbort&quot;, &quot;GetHomeId&quot;, &quot;MemoryGetByte&quot;, &quot;MemoryPutByte&quot;, &quot;MemoryGetBuffer&quot;, &quot;MemoryPutBuffer&quot;, &quot;GetNodeProtocolInformation&quot;, &quot;SetDefault&quot;, &quot;AssignReturnRoute&quot;, &quot;DeleteReturnRoute&quot;, &quot;RequestNodeNeighbourUpdate&quot;, &quot;ApplicationNodeUpdate&quot;, &quot;AddNodeToNetwork&quot;, &quot;RemoveNodeFromNetwork&quot;, &quot;CreateNewPrimary&quot;, &quot;ControllerChange&quot;, &quot;SetLearnMode&quot;, &quot;AssignSUCReturnRoute&quot;, &quot;EnableSUC&quot;, &quot;RequestNetworkUpdate&quot;, &quot;SetSUCNodeId&quot;, &quot;DeleteSUCReturnRoute&quot;, &quot;GetSUCNodeId&quot;, &quot;SendSUCNodeId&quot;, &quot;RequestNodeInformation&quot;, &quot;RemoveFailedNode&quot;, &quot;IsFailedNode&quot;, &quot;ReplaceFailedNode&quot;, &quot;GetRoutingTableLine&quot;, &quot;WatchDogStart&quot;, &quot;WatchDogStop&quot;, &quot;ZMEFreqChange&quot;, &quot;ZMERestore&quot; ]"/>
+   <data name="softwareRevisionVersion" invalidateTime="1405660640" updateTime="1405660641" type="str" value="v1.7.1"/>
+   <data name="softwareRevisionId" invalidateTime="1405660640" updateTime="1405660641" type="str" value="82f72a18d43c5398dbbd83953d41d6e318753086"/>
+   <data name="softwareRevisionDate" invalidateTime="1405660640" updateTime="1405660641" type="str" value="2014-06-18 12:48:40 +0400"/>
+  </data>
+ </controller>
+ <device id="1">
+  <data name="devices.1.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+   <data name="basicType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="2"/>
+   <data name="genericType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="2"/>
+   <data name="specificType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+   <data name="infoProtocolSpecific" invalidateTime="1406032059" updateTime="1406032060" type="int" value="9672192"/>
+   <data name="deviceTypeString" invalidateTime="1406032059" updateTime="1406032060" type="str" value="Static PC Controller"/>
+   <data name="isVirtual" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+   <data name="isListening" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+   <data name="isRouting" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+   <data name="isAwake" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+   <data name="optional" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+   <data name="isFailed" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+   <data name="beam" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+   <data name="sensor250" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+   <data name="sensor1000" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+   <data name="neighbours" invalidateTime="1406032059" updateTime="1406033810" type="binary" value="[ 02 03 04 ]"/>
+   <data name="manufacturerId" invalidateTime="1406032059" updateTime="1406032060" type="int" value="0"/>
+   <data name="vendorString" invalidateTime="1406032059" updateTime="1406032060" type="str" value=""/>
+   <data name="manufacturerProductType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="0"/>
+   <data name="manufacturerProductId" invalidateTime="1406032059" updateTime="1406032060" type="int" value="0"/>
+   <data name="ZWLib" invalidateTime="1406032059" updateTime="1406032060" type="int" value="0"/>
+   <data name="ZWProtocolMajor" invalidateTime="1406032059" updateTime="1406032060" type="int" value="0"/>
+   <data name="ZWProtocolMinor" invalidateTime="1406032059" updateTime="1406032060" type="int" value="0"/>
+   <data name="SDK" invalidateTime="1406032059" updateTime="1406032060" type="str" value=""/>
+   <data name="applicationMajor" invalidateTime="1406032059" updateTime="1406032060" type="int" value="0"/>
+   <data name="applicationMinor" invalidateTime="1406032059" updateTime="1406032060" type="int" value="0"/>
+   <data name="nodeInfoFrame" invalidateTime="1406032059" updateTime="1406032060" type="binary" value="[ 5e 72 60 81 8f 26 25 98 86 8a 2b 46 77 20 22 5b ]"/>
+   <data name="ZDDXMLFile" invalidateTime="1406032059" updateTime="1406032060" type="str" value=""/>
+   <data name="lastReceived" invalidateTime="1406032059" updateTime="1406032060" type="int" value="0"/>
+   <data name="keepAwake" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+   <data name="countSuccess" invalidateTime="1406032059" updateTime="1406032060" type="int" value="0"/>
+   <data name="countFailed" invalidateTime="1406032059" updateTime="1406032060" type="int" value="0"/>
+   <data name="queueLength" invalidateTime="1406032059" updateTime="1406032060" type="int" value="0"/>
+   <data name="networkKey" invalidateTime="1406032059" updateTime="1406032060" type="binary" value="[ cc fa c5 a1 2e ab 69 ce 7d 23 37 a1 28 4d ae 8e ]"/>
+   <data name="secureControllerId" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+  </data>
+  <instance id="0">
+   <data name="devices.1.instances.0.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+    <data name="dynamic" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+    <data name="genericType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="2"/>
+    <data name="specificType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+   </data>
+   <commandClass id="0020">
+    <data name="devices.1.instances.0.commandClasses.32.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0022">
+    <data name="devices.1.instances.0.commandClasses.34.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0025">
+    <data name="devices.1.instances.0.commandClasses.37.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0026">
+    <data name="devices.1.instances.0.commandClasses.38.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="mylevel" invalidateTime="1406032059" updateTime="1406032060" type="int" value="0"/>
+     <data name="startChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="stopChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="002b">
+    <data name="devices.1.instances.0.commandClasses.43.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="currentScene" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="dimmingDuration" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0046">
+    <data name="devices.1.instances.0.commandClasses.70.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="005b">
+    <data name="devices.1.instances.0.commandClasses.91.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="maxScenes" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="currentScene" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="keyAttribute" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="005e">
+    <data name="devices.1.instances.0.commandClasses.94.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="plusVersion" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="roleType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="nodeType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="installerIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="userIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0060">
+    <data name="devices.1.instances.0.commandClasses.96.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="3"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="endPoints" invalidateTime="1406032059" updateTime="1406032060" type="int" value="0"/>
+     <data name="dynamic" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="identical" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0072">
+    <data name="devices.1.instances.0.commandClasses.114.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="vendorId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="vendor" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="productId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="productType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0077">
+    <data name="devices.1.instances.0.commandClasses.119.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="nodename" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="location" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="myname" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="mylocation" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0081">
+    <data name="devices.1.instances.0.commandClasses.129.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0086">
+    <data name="devices.1.instances.0.commandClasses.134.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="ZWLib" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="ZWProtocolMajor" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="ZWProtocolMinor" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="SDK" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="applicationMajor" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="applicationMinor" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="hardwareVersion" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="firmwareCount" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="008a">
+    <data name="devices.1.instances.0.commandClasses.138.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="2"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="008f">
+    <data name="devices.1.instances.0.commandClasses.143.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0098">
+    <data name="devices.1.instances.0.commandClasses.152.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="scheme" invalidateTime="1406032059" updateTime="1406032060" type="int" value="0"/>
+     <data name="secureChannelEstablished" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="secureNodeInfoFrame" invalidateTime="1406032059" updateTime="1406032060" type="binary" value="[ ]"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+  </instance>
+  <instance id="1">
+   <data name="devices.1.instances.1.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+    <data name="dynamic" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+    <data name="genericType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="17"/>
+    <data name="specificType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+   </data>
+   <commandClass id="0020">
+    <data name="devices.1.instances.1.commandClasses.32.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0025">
+    <data name="devices.1.instances.1.commandClasses.37.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0026">
+    <data name="devices.1.instances.1.commandClasses.38.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="mylevel" invalidateTime="1406032059" updateTime="1406032060" type="int" value="0"/>
+     <data name="startChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="stopChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="002b">
+    <data name="devices.1.instances.1.commandClasses.43.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="currentScene" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="dimmingDuration" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="005e">
+    <data name="devices.1.instances.1.commandClasses.94.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="plusVersion" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="roleType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="nodeType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="installerIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="userIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+  </instance>
+  <instance id="2">
+   <data name="devices.1.instances.2.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+    <data name="dynamic" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+    <data name="genericType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="17"/>
+    <data name="specificType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+   </data>
+   <commandClass id="0020">
+    <data name="devices.1.instances.2.commandClasses.32.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0025">
+    <data name="devices.1.instances.2.commandClasses.37.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0026">
+    <data name="devices.1.instances.2.commandClasses.38.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="mylevel" invalidateTime="1406032059" updateTime="1406032060" type="int" value="0"/>
+     <data name="startChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="stopChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="002b">
+    <data name="devices.1.instances.2.commandClasses.43.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="currentScene" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="dimmingDuration" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="005e">
+    <data name="devices.1.instances.2.commandClasses.94.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="plusVersion" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="roleType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="nodeType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="installerIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="userIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+  </instance>
+  <instance id="3">
+   <data name="devices.1.instances.3.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+    <data name="dynamic" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+    <data name="genericType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="17"/>
+    <data name="specificType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+   </data>
+   <commandClass id="0020">
+    <data name="devices.1.instances.3.commandClasses.32.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0025">
+    <data name="devices.1.instances.3.commandClasses.37.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0026">
+    <data name="devices.1.instances.3.commandClasses.38.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="mylevel" invalidateTime="1406032059" updateTime="1406032060" type="int" value="0"/>
+     <data name="startChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="stopChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="002b">
+    <data name="devices.1.instances.3.commandClasses.43.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="currentScene" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="dimmingDuration" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="005e">
+    <data name="devices.1.instances.3.commandClasses.94.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="plusVersion" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="roleType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="nodeType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="installerIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="userIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+  </instance>
+  <instance id="4">
+   <data name="devices.1.instances.4.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+    <data name="dynamic" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+    <data name="genericType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="17"/>
+    <data name="specificType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+   </data>
+   <commandClass id="0020">
+    <data name="devices.1.instances.4.commandClasses.32.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0025">
+    <data name="devices.1.instances.4.commandClasses.37.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0026">
+    <data name="devices.1.instances.4.commandClasses.38.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="mylevel" invalidateTime="1406032059" updateTime="1406032060" type="int" value="0"/>
+     <data name="startChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="stopChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="002b">
+    <data name="devices.1.instances.4.commandClasses.43.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="currentScene" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="dimmingDuration" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="005e">
+    <data name="devices.1.instances.4.commandClasses.94.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="plusVersion" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="roleType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="nodeType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="installerIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="userIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+  </instance>
+  <instance id="5">
+   <data name="devices.1.instances.5.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+    <data name="dynamic" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+    <data name="genericType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="17"/>
+    <data name="specificType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+   </data>
+   <commandClass id="0020">
+    <data name="devices.1.instances.5.commandClasses.32.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0025">
+    <data name="devices.1.instances.5.commandClasses.37.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0026">
+    <data name="devices.1.instances.5.commandClasses.38.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="mylevel" invalidateTime="1406032059" updateTime="1406032060" type="int" value="0"/>
+     <data name="startChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="stopChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="002b">
+    <data name="devices.1.instances.5.commandClasses.43.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="currentScene" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="dimmingDuration" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="005e">
+    <data name="devices.1.instances.5.commandClasses.94.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="plusVersion" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="roleType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="nodeType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="installerIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="userIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+  </instance>
+  <instance id="6">
+   <data name="devices.1.instances.6.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+    <data name="dynamic" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+    <data name="genericType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="17"/>
+    <data name="specificType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+   </data>
+   <commandClass id="0020">
+    <data name="devices.1.instances.6.commandClasses.32.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0025">
+    <data name="devices.1.instances.6.commandClasses.37.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0026">
+    <data name="devices.1.instances.6.commandClasses.38.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="mylevel" invalidateTime="1406032059" updateTime="1406032060" type="int" value="0"/>
+     <data name="startChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="stopChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="002b">
+    <data name="devices.1.instances.6.commandClasses.43.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="currentScene" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="dimmingDuration" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="005e">
+    <data name="devices.1.instances.6.commandClasses.94.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="plusVersion" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="roleType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="nodeType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="installerIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="userIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+  </instance>
+  <instance id="7">
+   <data name="devices.1.instances.7.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+    <data name="dynamic" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+    <data name="genericType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="17"/>
+    <data name="specificType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+   </data>
+   <commandClass id="0020">
+    <data name="devices.1.instances.7.commandClasses.32.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0025">
+    <data name="devices.1.instances.7.commandClasses.37.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0026">
+    <data name="devices.1.instances.7.commandClasses.38.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="mylevel" invalidateTime="1406032059" updateTime="1406032060" type="int" value="0"/>
+     <data name="startChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="stopChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="002b">
+    <data name="devices.1.instances.7.commandClasses.43.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="currentScene" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="dimmingDuration" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="005e">
+    <data name="devices.1.instances.7.commandClasses.94.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="plusVersion" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="roleType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="nodeType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="installerIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="userIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+  </instance>
+  <instance id="8">
+   <data name="devices.1.instances.8.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+    <data name="dynamic" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+    <data name="genericType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="17"/>
+    <data name="specificType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+   </data>
+   <commandClass id="0020">
+    <data name="devices.1.instances.8.commandClasses.32.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0025">
+    <data name="devices.1.instances.8.commandClasses.37.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0026">
+    <data name="devices.1.instances.8.commandClasses.38.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="mylevel" invalidateTime="1406032059" updateTime="1406032060" type="int" value="0"/>
+     <data name="startChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="stopChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="002b">
+    <data name="devices.1.instances.8.commandClasses.43.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="currentScene" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="dimmingDuration" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="005e">
+    <data name="devices.1.instances.8.commandClasses.94.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="plusVersion" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="roleType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="nodeType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="installerIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="userIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+  </instance>
+  <instance id="9">
+   <data name="devices.1.instances.9.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+    <data name="dynamic" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+    <data name="genericType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="17"/>
+    <data name="specificType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+   </data>
+   <commandClass id="0020">
+    <data name="devices.1.instances.9.commandClasses.32.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0025">
+    <data name="devices.1.instances.9.commandClasses.37.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0026">
+    <data name="devices.1.instances.9.commandClasses.38.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="mylevel" invalidateTime="1406032059" updateTime="1406032060" type="int" value="0"/>
+     <data name="startChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="stopChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="002b">
+    <data name="devices.1.instances.9.commandClasses.43.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="currentScene" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="dimmingDuration" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="005e">
+    <data name="devices.1.instances.9.commandClasses.94.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="plusVersion" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="roleType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="nodeType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="installerIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="userIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+  </instance>
+  <instance id="10">
+   <data name="devices.1.instances.10.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+    <data name="dynamic" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+    <data name="genericType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="17"/>
+    <data name="specificType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+   </data>
+   <commandClass id="0020">
+    <data name="devices.1.instances.10.commandClasses.32.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0025">
+    <data name="devices.1.instances.10.commandClasses.37.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0026">
+    <data name="devices.1.instances.10.commandClasses.38.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="mylevel" invalidateTime="1406032059" updateTime="1406032060" type="int" value="0"/>
+     <data name="startChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="stopChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="002b">
+    <data name="devices.1.instances.10.commandClasses.43.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="currentScene" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="dimmingDuration" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="005e">
+    <data name="devices.1.instances.10.commandClasses.94.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="plusVersion" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="roleType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="nodeType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="installerIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="userIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+  </instance>
+  <instance id="11">
+   <data name="devices.1.instances.11.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+    <data name="dynamic" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+    <data name="genericType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="17"/>
+    <data name="specificType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+   </data>
+   <commandClass id="0020">
+    <data name="devices.1.instances.11.commandClasses.32.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0025">
+    <data name="devices.1.instances.11.commandClasses.37.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0026">
+    <data name="devices.1.instances.11.commandClasses.38.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="mylevel" invalidateTime="1406032059" updateTime="1406032060" type="int" value="0"/>
+     <data name="startChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="stopChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="002b">
+    <data name="devices.1.instances.11.commandClasses.43.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="currentScene" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="dimmingDuration" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="005e">
+    <data name="devices.1.instances.11.commandClasses.94.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="plusVersion" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="roleType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="nodeType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="installerIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="userIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+  </instance>
+  <instance id="12">
+   <data name="devices.1.instances.12.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+    <data name="dynamic" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+    <data name="genericType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="17"/>
+    <data name="specificType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+   </data>
+   <commandClass id="0020">
+    <data name="devices.1.instances.12.commandClasses.32.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0025">
+    <data name="devices.1.instances.12.commandClasses.37.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0026">
+    <data name="devices.1.instances.12.commandClasses.38.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="mylevel" invalidateTime="1406032059" updateTime="1406032060" type="int" value="0"/>
+     <data name="startChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="stopChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="002b">
+    <data name="devices.1.instances.12.commandClasses.43.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="currentScene" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="dimmingDuration" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="005e">
+    <data name="devices.1.instances.12.commandClasses.94.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="plusVersion" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="roleType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="nodeType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="installerIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="userIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+  </instance>
+  <instance id="13">
+   <data name="devices.1.instances.13.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+    <data name="dynamic" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+    <data name="genericType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="17"/>
+    <data name="specificType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+   </data>
+   <commandClass id="0020">
+    <data name="devices.1.instances.13.commandClasses.32.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0025">
+    <data name="devices.1.instances.13.commandClasses.37.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0026">
+    <data name="devices.1.instances.13.commandClasses.38.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="mylevel" invalidateTime="1406032059" updateTime="1406032060" type="int" value="0"/>
+     <data name="startChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="stopChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="002b">
+    <data name="devices.1.instances.13.commandClasses.43.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="currentScene" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="dimmingDuration" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="005e">
+    <data name="devices.1.instances.13.commandClasses.94.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="plusVersion" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="roleType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="nodeType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="installerIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="userIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+  </instance>
+  <instance id="14">
+   <data name="devices.1.instances.14.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+    <data name="dynamic" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+    <data name="genericType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="17"/>
+    <data name="specificType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+   </data>
+   <commandClass id="0020">
+    <data name="devices.1.instances.14.commandClasses.32.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0025">
+    <data name="devices.1.instances.14.commandClasses.37.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0026">
+    <data name="devices.1.instances.14.commandClasses.38.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="mylevel" invalidateTime="1406032059" updateTime="1406032060" type="int" value="0"/>
+     <data name="startChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="stopChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="002b">
+    <data name="devices.1.instances.14.commandClasses.43.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="currentScene" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="dimmingDuration" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="005e">
+    <data name="devices.1.instances.14.commandClasses.94.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="plusVersion" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="roleType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="nodeType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="installerIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="userIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+  </instance>
+  <instance id="15">
+   <data name="devices.1.instances.15.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+    <data name="dynamic" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+    <data name="genericType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="17"/>
+    <data name="specificType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+   </data>
+   <commandClass id="0020">
+    <data name="devices.1.instances.15.commandClasses.32.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0025">
+    <data name="devices.1.instances.15.commandClasses.37.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0026">
+    <data name="devices.1.instances.15.commandClasses.38.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="mylevel" invalidateTime="1406032059" updateTime="1406032060" type="int" value="0"/>
+     <data name="startChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="stopChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="002b">
+    <data name="devices.1.instances.15.commandClasses.43.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="currentScene" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="dimmingDuration" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="005e">
+    <data name="devices.1.instances.15.commandClasses.94.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="plusVersion" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="roleType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="nodeType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="installerIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="userIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+  </instance>
+  <instance id="16">
+   <data name="devices.1.instances.16.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+    <data name="dynamic" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+    <data name="genericType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="17"/>
+    <data name="specificType" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+   </data>
+   <commandClass id="0020">
+    <data name="devices.1.instances.16.commandClasses.32.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0025">
+    <data name="devices.1.instances.16.commandClasses.37.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0026">
+    <data name="devices.1.instances.16.commandClasses.38.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="level" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="mylevel" invalidateTime="1406032059" updateTime="1406032060" type="int" value="0"/>
+     <data name="startChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="stopChange" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="002b">
+    <data name="devices.1.instances.16.commandClasses.43.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="currentScene" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="dimmingDuration" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="005e">
+    <data name="devices.1.instances.16.commandClasses.94.data" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406032059" updateTime="1406032060" type="int" value="1"/>
+     <data name="security" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406032059" updateTime="1406032060" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406032059" updateTime="1406032060" type="int" value="10"/>
+     <data name="plusVersion" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="roleType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="nodeType" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="installerIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="userIcon" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcNodeId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+     <data name="srcInstanceId" invalidateTime="1406032059" updateTime="1406032060" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+  </instance>
+ </device>
+ <device id="2">
+  <data name="devices.2.data" invalidateTime="1406033546" updateTime="1406033547" type="NoneType" value="None">
+   <data name="basicType" invalidateTime="1406033546" updateTime="1406037423" type="int" value="4"/>
+   <data name="genericType" invalidateTime="1406033546" updateTime="1406037423" type="int" value="49"/>
+   <data name="specificType" invalidateTime="1406033546" updateTime="1406037423" type="int" value="1"/>
+   <data name="infoProtocolSpecific" invalidateTime="1406033546" updateTime="1406033548" type="int" value="5413888"/>
+   <data name="deviceTypeString" invalidateTime="1406033546" updateTime="1406037423" type="str" value="Simple Meter"/>
+   <data name="isVirtual" invalidateTime="1406033546" updateTime="1406033547" type="bool" value="false"/>
+   <data name="isListening" invalidateTime="1406033546" updateTime="1406033548" type="bool" value="false"/>
+   <data name="isRouting" invalidateTime="1406033546" updateTime="1406033548" type="bool" value="true"/>
+   <data name="isAwake" invalidateTime="1406033546" updateTime="1406037794" type="bool" value="false"/>
+   <data name="optional" invalidateTime="1406033546" updateTime="1406033548" type="bool" value="true"/>
+   <data name="isFailed" invalidateTime="1406033546" updateTime="1406033547" type="bool" value="false"/>
+   <data name="beam" invalidateTime="1406033546" updateTime="1406033547" type="bool" value="false"/>
+   <data name="sensor250" invalidateTime="1406033546" updateTime="1406033548" type="bool" value="false"/>
+   <data name="sensor1000" invalidateTime="1406033546" updateTime="1406033548" type="bool" value="false"/>
+   <data name="neighbours" invalidateTime="1406033546" updateTime="1406033811" type="binary" value="[ 01 ]"/>
+   <data name="manufacturerId" invalidateTime="1406033546" updateTime="1406033606" type="int" value="150"/>
+   <data name="vendorString" invalidateTime="1406033546" updateTime="1406033606" type="str" value=""/>
+   <data name="manufacturerProductType" invalidateTime="1406033546" updateTime="1406033606" type="int" value="1"/>
+   <data name="manufacturerProductId" invalidateTime="1406033546" updateTime="1406033606" type="int" value="1"/>
+   <data name="ZWLib" invalidateTime="1406033546" updateTime="1406033547" type="int" value="0"/>
+   <data name="ZWProtocolMajor" invalidateTime="1406033546" updateTime="1406033547" type="int" value="0"/>
+   <data name="ZWProtocolMinor" invalidateTime="1406033546" updateTime="1406033547" type="int" value="0"/>
+   <data name="SDK" invalidateTime="1406033546" updateTime="1406033547" type="str" value=""/>
+   <data name="applicationMajor" invalidateTime="1406033546" updateTime="1406033547" type="int" value="0"/>
+   <data name="applicationMinor" invalidateTime="1406033546" updateTime="1406033547" type="int" value="0"/>
+   <data name="nodeInfoFrame" invalidateTime="1406033546" updateTime="1406037423" type="binary" value="[ 20 80 84 7a 8b 32 56 70 72 91 86 3d ]"/>
+   <data name="ZDDXMLFile" invalidateTime="1406033546" updateTime="1406033547" type="str" value=""/>
+   <data name="lastReceived" invalidateTime="1406033546" updateTime="1406037793" type="int" value="0"/>
+   <data name="keepAwake" invalidateTime="1406033546" updateTime="1406033547" type="bool" value="false"/>
+   <data name="countSuccess" invalidateTime="1406033546" updateTime="1406033547" type="int" value="0"/>
+   <data name="countFailed" invalidateTime="1406033546" updateTime="1406033547" type="int" value="0"/>
+   <data name="queueLength" invalidateTime="1406033546" updateTime="1406033547" type="int" value="0"/>
+  </data>
+  <instance id="0">
+   <data name="devices.2.instances.0.data" invalidateTime="1406033546" updateTime="1406033547" type="NoneType" value="None">
+    <data name="dynamic" invalidateTime="1406033546" updateTime="1406033547" type="bool" value="false"/>
+    <data name="genericType" invalidateTime="1406033546" updateTime="1406033547" type="int" value="49"/>
+    <data name="specificType" invalidateTime="1406033546" updateTime="1406033547" type="int" value="1"/>
+   </data>
+   <commandClass id="0020">
+    <data name="devices.2.instances.0.commandClasses.32.data" invalidateTime="1406033604" updateTime="1406033547" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406033604" updateTime="1406033547" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406035937" updateTime="1406033547" type="int" value="1"/>
+     <data name="security" invalidateTime="1406033546" updateTime="1406033547" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406033546" updateTime="1406033604" type="bool" value="true"/>
+     <data name="interviewCounter" invalidateTime="1406033546" updateTime="1406033547" type="int" value="10"/>
+     <data name="level" invalidateTime="1406033603" updateTime="1406033604" type="int" value="1"/>
+    </data>
+   </commandClass>
+   <commandClass id="0032">
+    <data name="devices.2.instances.0.commandClasses.50.data" invalidateTime="1406033546" updateTime="1406033547" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406033546" updateTime="1406033547" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406035937" updateTime="1406033547" type="int" value="1"/>
+     <data name="security" invalidateTime="1406033546" updateTime="1406033547" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406033546" updateTime="1406033607" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406033546" updateTime="1406033607" type="int" value="9"/>
+     <data name="resettable" invalidateTime="1406033546" updateTime="1406033547" type="NoneType" value="None"/>
+     <data name="scalemask" invalidateTime="1406033546" updateTime="1406033547" type="NoneType" value="None"/>
+     <data name="0" invalidateTime="1406033614" updateTime="1406033606" type="NoneType" value="None">
+      <data name="sensorType" invalidateTime="1406033606" updateTime="1406033607" type="NoneType" value="None"/>
+      <data name="sensorTypeString" invalidateTime="1406033606" updateTime="1406033607" type="NoneType" value="None"/>
+      <data name="val" invalidateTime="1406033606" updateTime="1406033607" type="NoneType" value="None"/>
+      <data name="scale" invalidateTime="1406033606" updateTime="1406033607" type="NoneType" value="None"/>
+      <data name="scaleString" invalidateTime="1406033606" updateTime="1406033607" type="NoneType" value="None"/>
+     </data>
+    </data>
+   </commandClass>
+   <commandClass id="003d">
+    <data name="devices.2.instances.0.commandClasses.61.data" invalidateTime="1406033546" updateTime="1406033547" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406033546" updateTime="1406033547" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406035937" updateTime="1406033547" type="int" value="1"/>
+     <data name="security" invalidateTime="1406033546" updateTime="1406033547" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406033546" updateTime="1406033605" type="bool" value="true"/>
+     <data name="interviewCounter" invalidateTime="1406033546" updateTime="1406033547" type="int" value="10"/>
+     <data name="adminId" invalidateTime="1406033604" updateTime="1406033605" type="str" value="0"/>
+     <data name="Id" invalidateTime="1406033604" updateTime="1406033605" type="str" value="0"/>
+     <data name="rateType" invalidateTime="1406033604" updateTime="1406033605" type="int" value="1"/>
+     <data name="payMeter" invalidateTime="1406033604" updateTime="1406033605" type="int" value="1"/>
+     <data name="meterType" invalidateTime="1406033604" updateTime="1406033605" type="int" value="1"/>
+     <data name="meterTypeString" invalidateTime="1406033604" updateTime="1406033605" type="str" value="Single Electric "/>
+     <data name="dataSetMask" invalidateTime="1406033604" updateTime="1406033605" type="int" value="1"/>
+     <data name="dataSetHistoryMask" invalidateTime="1406033604" updateTime="1406033605" type="int" value="1"/>
+     <data name="maxHistory" invalidateTime="1406033604" updateTime="1406033605" type="int" value="8000"/>
+     <data name="statusMask" invalidateTime="1406033604" updateTime="1406033605" type="int" value="0"/>
+     <data name="status" invalidateTime="1406033546" updateTime="1406033547" type="NoneType" value="None"/>
+     <data name="maxEvents" invalidateTime="1406033604" updateTime="1406033605" type="int" value="0"/>
+    </data>
+   </commandClass>
+   <commandClass id="0056">
+    <data name="devices.2.instances.0.commandClasses.86.data" invalidateTime="1406033546" updateTime="1406033547" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406033546" updateTime="1406033547" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406035937" updateTime="1406033547" type="int" value="1"/>
+     <data name="security" invalidateTime="1406033546" updateTime="1406033547" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406033546" updateTime="1406033607" type="bool" value="true"/>
+     <data name="interviewCounter" invalidateTime="1406033546" updateTime="1406033607" type="int" value="9"/>
+    </data>
+   </commandClass>
+   <commandClass id="0070">
+    <data name="devices.2.instances.0.commandClasses.112.data" invalidateTime="1406033546" updateTime="1406033547" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406033546" updateTime="1406033547" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406035937" updateTime="1406033547" type="int" value="1"/>
+     <data name="security" invalidateTime="1406033546" updateTime="1406033547" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406033546" updateTime="1406033607" type="bool" value="true"/>
+     <data name="interviewCounter" invalidateTime="1406033546" updateTime="1406033607" type="int" value="9"/>
+     <data name="11" invalidateTime="1406033549" updateTime="1406033550" type="NoneType" value="None">
+      <data name="val" invalidateTime="1406033549" updateTime="1406033550" type="int" value="18000"/>
+      <data name="size" invalidateTime="1406033549" updateTime="1406033550" type="int" value="2"/>
+     </data>
+    </data>
+   </commandClass>
+   <commandClass id="0072">
+    <data name="devices.2.instances.0.commandClasses.114.data" invalidateTime="1406033606" updateTime="1406033547" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406033606" updateTime="1406033547" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406035937" updateTime="1406033547" type="int" value="1"/>
+     <data name="security" invalidateTime="1406033546" updateTime="1406033547" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406033546" updateTime="1406033606" type="bool" value="true"/>
+     <data name="interviewCounter" invalidateTime="1406033546" updateTime="1406033547" type="int" value="10"/>
+     <data name="vendorId" invalidateTime="1406033605" updateTime="1406033606" type="int" value="150"/>
+     <data name="vendor" invalidateTime="1406033605" updateTime="1406033606" type="str" value=""/>
+     <data name="productId" invalidateTime="1406033605" updateTime="1406033606" type="int" value="1"/>
+     <data name="productType" invalidateTime="1406033605" updateTime="1406033606" type="int" value="1"/>
+    </data>
+   </commandClass>
+   <commandClass id="007a">
+    <data name="devices.2.instances.0.commandClasses.122.data" invalidateTime="1406033547" updateTime="1406033548" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406033547" updateTime="1406033548" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406035937" updateTime="1406033547" type="int" value="1"/>
+     <data name="security" invalidateTime="1406033547" updateTime="1406033548" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406033547" updateTime="1406033606" type="bool" value="true"/>
+     <data name="interviewCounter" invalidateTime="1406033547" updateTime="1406033548" type="int" value="10"/>
+     <data name="manufacturerID" invalidateTime="1406033605" updateTime="1406033606" type="int" value="150"/>
+     <data name="firmwareID" invalidateTime="1406033605" updateTime="1406033606" type="int" value="665"/>
+     <data name="checksum" invalidateTime="1406033605" updateTime="1406033606" type="int" value="0"/>
+     <data name="upgradeable" invalidateTime="1406033605" updateTime="1406033606" type="bool" value="true"/>
+     <data name="fragmentSize" invalidateTime="1406033605" updateTime="1406033606" type="int" value="32"/>
+     <data name="firmwareCount" invalidateTime="1406033605" updateTime="1406033606" type="int" value="0"/>
+    </data>
+   </commandClass>
+   <commandClass id="0080">
+    <data name="devices.2.instances.0.commandClasses.128.data" invalidateTime="1406033607" updateTime="1406033548" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406033607" updateTime="1406033548" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406035937" updateTime="1406033547" type="int" value="1"/>
+     <data name="security" invalidateTime="1406033547" updateTime="1406033548" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406033547" updateTime="1406033607" type="bool" value="true"/>
+     <data name="interviewCounter" invalidateTime="1406033547" updateTime="1406033607" type="int" value="9"/>
+     <data name="lastChange" invalidateTime="1406033606" updateTime="1406033607" type="int" value="1406033607"/>
+     <data name="history" invalidateTime="1406033606" updateTime="1406033607" type="NoneType" value="None">
+      <data name="100" invalidateTime="1406033606" updateTime="1406033607" type="int" value="1406033607"/>
+     </data>
+     <data name="last" invalidateTime="1406033606" updateTime="1406033607" type="int" value="100"/>
+    </data>
+   </commandClass>
+   <commandClass id="0084">
+    <data name="devices.2.instances.0.commandClasses.132.data" invalidateTime="1406033607" updateTime="1406033608" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406033608" updateTime="1406033548" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406035937" updateTime="1406033547" type="int" value="1"/>
+     <data name="security" invalidateTime="1406033547" updateTime="1406033548" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406033547" updateTime="1406033608" type="bool" value="true"/>
+     <data name="interviewCounter" invalidateTime="1406033547" updateTime="1406033607" type="int" value="9"/>
+     <data name="interval" invalidateTime="1406033607" updateTime="1406033608" type="int" value="300"/>
+     <data name="nodeId" invalidateTime="1406033607" updateTime="1406033608" type="int" value="1"/>
+     <data name="min" invalidateTime="1406033608" updateTime="1406033548" type="NoneType" value="None"/>
+     <data name="max" invalidateTime="1406033608" updateTime="1406033548" type="NoneType" value="None"/>
+     <data name="default" invalidateTime="1406033608" updateTime="1406033548" type="NoneType" value="None"/>
+     <data name="step" invalidateTime="1406033608" updateTime="1406033548" type="NoneType" value="None"/>
+     <data name="lastWakeup" invalidateTime="1406033608" updateTime="1406037793" type="int" value="1406037793"/>
+     <data name="lastSleep" invalidateTime="1406033608" updateTime="1406037793" type="int" value="1406037793"/>
+    </data>
+   </commandClass>
+   <commandClass id="0086">
+    <data name="devices.2.instances.0.commandClasses.134.data" invalidateTime="1406033547" updateTime="1406033548" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406033547" updateTime="1406033548" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406035937" updateTime="1406033547" type="int" value="1"/>
+     <data name="security" invalidateTime="1406033547" updateTime="1406033548" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406033547" updateTime="1406035937" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406033547" updateTime="1406035937" type="int" value="0"/>
+     <data name="ZWLib" invalidateTime="1406033547" updateTime="1406033548" type="NoneType" value="None"/>
+     <data name="ZWProtocolMajor" invalidateTime="1406033547" updateTime="1406033548" type="NoneType" value="None"/>
+     <data name="ZWProtocolMinor" invalidateTime="1406033547" updateTime="1406033548" type="NoneType" value="None"/>
+     <data name="SDK" invalidateTime="1406033547" updateTime="1406033548" type="NoneType" value="None"/>
+     <data name="applicationMajor" invalidateTime="1406033547" updateTime="1406033548" type="NoneType" value="None"/>
+     <data name="applicationMinor" invalidateTime="1406033547" updateTime="1406033548" type="NoneType" value="None"/>
+     <data name="hardwareVersion" invalidateTime="1406033547" updateTime="1406033548" type="NoneType" value="None"/>
+     <data name="firmwareCount" invalidateTime="1406033547" updateTime="1406033548" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="008b">
+    <data name="devices.2.instances.0.commandClasses.139.data" invalidateTime="1406033547" updateTime="1406033548" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406033547" updateTime="1406033548" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406035937" updateTime="1406033547" type="int" value="1"/>
+     <data name="security" invalidateTime="1406033547" updateTime="1406033548" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406033547" updateTime="1406033608" type="bool" value="true"/>
+     <data name="interviewCounter" invalidateTime="1406033547" updateTime="1406033607" type="int" value="9"/>
+    </data>
+   </commandClass>
+  </instance>
+ </device>
+ <device id="3">
+  <data name="devices.3.data" invalidateTime="1406033672" updateTime="1406033673" type="NoneType" value="None">
+   <data name="basicType" invalidateTime="1406033672" updateTime="1406033674" type="int" value="4"/>
+   <data name="genericType" invalidateTime="1406033672" updateTime="1406033674" type="int" value="8"/>
+   <data name="specificType" invalidateTime="1406033672" updateTime="1406033674" type="int" value="4"/>
+   <data name="infoProtocolSpecific" invalidateTime="1406033672" updateTime="1406033674" type="int" value="5344256"/>
+   <data name="deviceTypeString" invalidateTime="1406033672" updateTime="1406033674" type="str" value="Thermostat"/>
+   <data name="isVirtual" invalidateTime="1406033672" updateTime="1406033673" type="bool" value="false"/>
+   <data name="isListening" invalidateTime="1406033672" updateTime="1406033674" type="bool" value="false"/>
+   <data name="isRouting" invalidateTime="1406033672" updateTime="1406033674" type="bool" value="true"/>
+   <data name="isAwake" invalidateTime="1406033672" updateTime="1406033674" type="bool" value="true"/>
+   <data name="optional" invalidateTime="1406033672" updateTime="1406033674" type="bool" value="true"/>
+   <data name="isFailed" invalidateTime="1406033672" updateTime="1406033673" type="bool" value="false"/>
+   <data name="beam" invalidateTime="1406033672" updateTime="1406033673" type="bool" value="false"/>
+   <data name="sensor250" invalidateTime="1406033672" updateTime="1406033674" type="bool" value="false"/>
+   <data name="sensor1000" invalidateTime="1406033672" updateTime="1406033674" type="bool" value="false"/>
+   <data name="neighbours" invalidateTime="1406033672" updateTime="1406033811" type="binary" value="[ 01 ]"/>
+   <data name="manufacturerId" invalidateTime="1406033672" updateTime="1406033676" type="int" value="2"/>
+   <data name="vendorString" invalidateTime="1406033672" updateTime="1406033676" type="str" value="Danfoss"/>
+   <data name="manufacturerProductType" invalidateTime="1406033672" updateTime="1406033676" type="int" value="32773"/>
+   <data name="manufacturerProductId" invalidateTime="1406033672" updateTime="1406033676" type="int" value="1"/>
+   <data name="ZWLib" invalidateTime="1406033672" updateTime="1406033675" type="int" value="6"/>
+   <data name="ZWProtocolMajor" invalidateTime="1406033672" updateTime="1406033675" type="int" value="2"/>
+   <data name="ZWProtocolMinor" invalidateTime="1406033672" updateTime="1406033675" type="int" value="67"/>
+   <data name="SDK" invalidateTime="1406033672" updateTime="1406033675" type="str" value="4.28"/>
+   <data name="applicationMajor" invalidateTime="1406033672" updateTime="1406033675" type="int" value="2"/>
+   <data name="applicationMinor" invalidateTime="1406033672" updateTime="1406033675" type="int" value="5"/>
+   <data name="nodeInfoFrame" invalidateTime="1406033672" updateTime="1406033673" type="binary" value="[ 80 46 81 91 72 8f 75 43 86 84 ef 46 81 91 8f ]"/>
+   <data name="ZDDXMLFile" invalidateTime="1406033672" updateTime="1406033673" type="str" value=""/>
+   <data name="lastReceived" invalidateTime="1406033672" updateTime="1406033678" type="int" value="0"/>
+   <data name="keepAwake" invalidateTime="1406033672" updateTime="1406033678" type="bool" value="false"/>
+   <data name="countSuccess" invalidateTime="1406033672" updateTime="1406033673" type="int" value="0"/>
+   <data name="countFailed" invalidateTime="1406033672" updateTime="1406033673" type="int" value="0"/>
+   <data name="queueLength" invalidateTime="1406033672" updateTime="1406033673" type="int" value="0"/>
+  </data>
+  <instance id="0">
+   <data name="devices.3.instances.0.data" invalidateTime="1406033672" updateTime="1406033673" type="NoneType" value="None">
+    <data name="dynamic" invalidateTime="1406033672" updateTime="1406033673" type="bool" value="false"/>
+    <data name="genericType" invalidateTime="1406033672" updateTime="1406033673" type="int" value="8"/>
+    <data name="specificType" invalidateTime="1406033672" updateTime="1406033673" type="int" value="4"/>
+   </data>
+   <commandClass id="0043">
+    <data name="devices.3.instances.0.commandClasses.67.data" invalidateTime="1406033672" updateTime="1406033673" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406033672" updateTime="1406033673" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406033673" updateTime="1406033674" type="int" value="2"/>
+     <data name="security" invalidateTime="1406033672" updateTime="1406033673" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406033672" updateTime="1406033677" type="bool" value="true"/>
+     <data name="interviewCounter" invalidateTime="1406033672" updateTime="1406033676" type="int" value="9"/>
+     <data name="modemask" invalidateTime="1406033672" updateTime="1406033677" type="int" value="2"/>
+     <data name="danfossBugFlag" invalidateTime="1406033672" updateTime="1406033677" type="bool" value="true"/>
+     <data name="1" invalidateTime="1406033676" updateTime="1406033677" type="NoneType" value="None">
+      <data name="val" invalidateTime="1406033676" updateTime="1406033677" type="float" value="15.000000"/>
+      <data name="scale" invalidateTime="1406033676" updateTime="1406033677" type="int" value="0"/>
+      <data name="scaleString" invalidateTime="1406033676" updateTime="1406033677" type="str" value="°C"/>
+      <data name="setVal" invalidateTime="1406033676" updateTime="1406033677" type="float" value="15.000000"/>
+      <data name="modeName" invalidateTime="1406033676" updateTime="1406033677" type="str" value="Heating"/>
+      <data name="deviceScale" invalidateTime="1406033676" updateTime="1406033677" type="int" value="0"/>
+      <data name="deviceScaleString" invalidateTime="1406033676" updateTime="1406033677" type="str" value="°C"/>
+      <data name="size" invalidateTime="1406033676" updateTime="1406033677" type="int" value="2"/>
+      <data name="precision" invalidateTime="1406033676" updateTime="1406033677" type="int" value="2"/>
+     </data>
+    </data>
+   </commandClass>
+   <commandClass id="0046">
+    <data name="devices.3.instances.0.commandClasses.70.data" invalidateTime="1406033672" updateTime="1406033673" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406033672" updateTime="1406033673" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406033673" updateTime="1406033674" type="int" value="1"/>
+     <data name="security" invalidateTime="1406033672" updateTime="1406033673" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406033672" updateTime="1406033676" type="bool" value="true"/>
+     <data name="interviewCounter" invalidateTime="1406033672" updateTime="1406033676" type="int" value="9"/>
+    </data>
+   </commandClass>
+   <commandClass id="0072">
+    <data name="devices.3.instances.0.commandClasses.114.data" invalidateTime="1406033675" updateTime="1406033673" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406033675" updateTime="1406033673" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406033675" updateTime="1406033674" type="int" value="1"/>
+     <data name="security" invalidateTime="1406033672" updateTime="1406033673" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406033672" updateTime="1406033676" type="bool" value="true"/>
+     <data name="interviewCounter" invalidateTime="1406033672" updateTime="1406033675" type="int" value="9"/>
+     <data name="vendorId" invalidateTime="1406033675" updateTime="1406033676" type="int" value="2"/>
+     <data name="vendor" invalidateTime="1406033675" updateTime="1406033676" type="str" value="Danfoss"/>
+     <data name="productId" invalidateTime="1406033675" updateTime="1406033676" type="int" value="1"/>
+     <data name="productType" invalidateTime="1406033675" updateTime="1406033676" type="int" value="32773"/>
+    </data>
+   </commandClass>
+   <commandClass id="0075">
+    <data name="devices.3.instances.0.commandClasses.117.data" invalidateTime="1406033676" updateTime="1406033673" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406033676" updateTime="1406033673" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406033676" updateTime="1406033674" type="int" value="2"/>
+     <data name="security" invalidateTime="1406033672" updateTime="1406033673" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406033672" updateTime="1406033677" type="bool" value="true"/>
+     <data name="interviewCounter" invalidateTime="1406033672" updateTime="1406033676" type="int" value="9"/>
+     <data name="state" invalidateTime="1406033676" updateTime="1406033677" type="int" value="0"/>
+     <data name="rfState" invalidateTime="1406033676" updateTime="1406033677" type="int" value="0"/>
+     <data name="exclusive" invalidateTime="1406033676" updateTime="1406033673" type="NoneType" value="None"/>
+     <data name="timeout" invalidateTime="1406033676" updateTime="1406033673" type="NoneType" value="None"/>
+     <data name="stateCap" invalidateTime="1406033676" updateTime="1406033677" type="int" value="5"/>
+     <data name="rfStateCap" invalidateTime="1406033676" updateTime="1406033677" type="int" value="0"/>
+     <data name="exclusiveCap" invalidateTime="1406033676" updateTime="1406033677" type="bool" value="false"/>
+     <data name="timeoutCap" invalidateTime="1406033676" updateTime="1406033677" type="bool" value="false"/>
+    </data>
+   </commandClass>
+   <commandClass id="0080">
+    <data name="devices.3.instances.0.commandClasses.128.data" invalidateTime="1406033676" updateTime="1406033673" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406033676" updateTime="1406033673" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406033676" updateTime="1406033674" type="int" value="1"/>
+     <data name="security" invalidateTime="1406033672" updateTime="1406033673" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406033672" updateTime="1406033677" type="bool" value="true"/>
+     <data name="interviewCounter" invalidateTime="1406033672" updateTime="1406033676" type="int" value="9"/>
+     <data name="lastChange" invalidateTime="1406033676" updateTime="1406033677" type="int" value="1406033677"/>
+     <data name="history" invalidateTime="1406033676" updateTime="1406033677" type="NoneType" value="None">
+      <data name="57" invalidateTime="1406033676" updateTime="1406033677" type="int" value="1406033677"/>
+     </data>
+     <data name="last" invalidateTime="1406033676" updateTime="1406033677" type="int" value="57"/>
+    </data>
+   </commandClass>
+   <commandClass id="0081">
+    <data name="devices.3.instances.0.commandClasses.129.data" invalidateTime="1406033672" updateTime="1406033673" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406033672" updateTime="1406033673" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406033673" updateTime="1406033674" type="int" value="1"/>
+     <data name="security" invalidateTime="1406033672" updateTime="1406033673" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406033672" updateTime="1406033677" type="bool" value="true"/>
+     <data name="interviewCounter" invalidateTime="1406033672" updateTime="1406033676" type="int" value="9"/>
+    </data>
+   </commandClass>
+   <commandClass id="0084">
+    <data name="devices.3.instances.0.commandClasses.132.data" invalidateTime="1406033677" updateTime="1406033678" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406033678" updateTime="1406033673" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406033678" updateTime="1406033674" type="int" value="2"/>
+     <data name="security" invalidateTime="1406033672" updateTime="1406033673" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406033672" updateTime="1406033677" type="bool" value="true"/>
+     <data name="interviewCounter" invalidateTime="1406033672" updateTime="1406033676" type="int" value="9"/>
+     <data name="interval" invalidateTime="1406033677" updateTime="1406033678" type="int" value="300"/>
+     <data name="nodeId" invalidateTime="1406033677" updateTime="1406033678" type="int" value="1"/>
+     <data name="min" invalidateTime="1406033678" updateTime="1406033676" type="int" value="60"/>
+     <data name="max" invalidateTime="1406033678" updateTime="1406033676" type="int" value="900"/>
+     <data name="default" invalidateTime="1406033678" updateTime="1406033676" type="int" value="300"/>
+     <data name="step" invalidateTime="1406033678" updateTime="1406033676" type="int" value="60"/>
+     <data name="lastWakeup" invalidateTime="1406033678" updateTime="1406033674" type="NoneType" value="None"/>
+     <data name="lastSleep" invalidateTime="1406033678" updateTime="1406033674" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0086">
+    <data name="devices.3.instances.0.commandClasses.134.data" invalidateTime="1406033674" updateTime="1406033675" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406033673" updateTime="1406033674" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406033674" updateTime="1406033675" type="int" value="1"/>
+     <data name="security" invalidateTime="1406033673" updateTime="1406033674" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406033673" updateTime="1406033675" type="bool" value="true"/>
+     <data name="interviewCounter" invalidateTime="1406033673" updateTime="1406033674" type="int" value="9"/>
+     <data name="ZWLib" invalidateTime="1406033674" updateTime="1406033675" type="int" value="6"/>
+     <data name="ZWProtocolMajor" invalidateTime="1406033674" updateTime="1406033675" type="int" value="2"/>
+     <data name="ZWProtocolMinor" invalidateTime="1406033674" updateTime="1406033675" type="int" value="67"/>
+     <data name="SDK" invalidateTime="1406033674" updateTime="1406033675" type="str" value="4.28"/>
+     <data name="applicationMajor" invalidateTime="1406033674" updateTime="1406033675" type="int" value="2"/>
+     <data name="applicationMinor" invalidateTime="1406033674" updateTime="1406033675" type="int" value="5"/>
+     <data name="hardwareVersion" invalidateTime="1406033674" updateTime="1406033675" type="NoneType" value="None"/>
+     <data name="firmwareCount" invalidateTime="1406033674" updateTime="1406033675" type="int" value="0"/>
+    </data>
+   </commandClass>
+   <commandClass id="008f">
+    <data name="devices.3.instances.0.commandClasses.143.data" invalidateTime="1406033673" updateTime="1406033674" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406033673" updateTime="1406033674" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406033674" updateTime="1406033675" type="int" value="1"/>
+     <data name="security" invalidateTime="1406033673" updateTime="1406033674" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406033673" updateTime="1406033676" type="bool" value="true"/>
+     <data name="interviewCounter" invalidateTime="1406033673" updateTime="1406033676" type="int" value="9"/>
+    </data>
+   </commandClass>
+  </instance>
+ </device>
+ <device id="4">
+  <data name="devices.4.data" invalidateTime="1406033808" updateTime="1406033809" type="NoneType" value="None">
+   <data name="basicType" invalidateTime="1406033808" updateTime="1406033810" type="int" value="4"/>
+   <data name="genericType" invalidateTime="1406033808" updateTime="1406033810" type="int" value="17"/>
+   <data name="specificType" invalidateTime="1406033808" updateTime="1406033810" type="int" value="1"/>
+   <data name="infoProtocolSpecific" invalidateTime="1406033808" updateTime="1406033810" type="int" value="13868032"/>
+   <data name="deviceTypeString" invalidateTime="1406033808" updateTime="1406033810" type="str" value="Routing Multilevel Switch"/>
+   <data name="isVirtual" invalidateTime="1406033808" updateTime="1406033809" type="bool" value="false"/>
+   <data name="isListening" invalidateTime="1406033808" updateTime="1406033810" type="bool" value="true"/>
+   <data name="isRouting" invalidateTime="1406033808" updateTime="1406033810" type="bool" value="true"/>
+   <data name="isAwake" invalidateTime="1406033808" updateTime="1406033984" type="bool" value="true"/>
+   <data name="optional" invalidateTime="1406033808" updateTime="1406033810" type="bool" value="true"/>
+   <data name="isFailed" invalidateTime="1406033808" updateTime="1406034004" type="bool" value="true"/>
+   <data name="beam" invalidateTime="1406033808" updateTime="1406033809" type="bool" value="false"/>
+   <data name="sensor250" invalidateTime="1406033808" updateTime="1406033810" type="bool" value="false"/>
+   <data name="sensor1000" invalidateTime="1406033808" updateTime="1406033810" type="bool" value="false"/>
+   <data name="neighbours" invalidateTime="1406033808" updateTime="1406033811" type="binary" value="[ 01 ]"/>
+   <data name="manufacturerId" invalidateTime="1406033808" updateTime="1406033813" type="int" value="280"/>
+   <data name="vendorString" invalidateTime="1406033808" updateTime="1406033813" type="str" value=""/>
+   <data name="manufacturerProductType" invalidateTime="1406033808" updateTime="1406033813" type="int" value="514"/>
+   <data name="manufacturerProductId" invalidateTime="1406033808" updateTime="1406033813" type="int" value="1553"/>
+   <data name="ZWLib" invalidateTime="1406033808" updateTime="1406033812" type="int" value="6"/>
+   <data name="ZWProtocolMajor" invalidateTime="1406033808" updateTime="1406033812" type="int" value="3"/>
+   <data name="ZWProtocolMinor" invalidateTime="1406033808" updateTime="1406033812" type="int" value="40"/>
+   <data name="SDK" invalidateTime="1406033808" updateTime="1406033812" type="str" value="4.54.00"/>
+   <data name="applicationMajor" invalidateTime="1406033808" updateTime="1406033812" type="int" value="1"/>
+   <data name="applicationMinor" invalidateTime="1406033808" updateTime="1406033812" type="int" value="12"/>
+   <data name="nodeInfoFrame" invalidateTime="1406033808" updateTime="1406033809" type="binary" value="[ 26 27 75 70 77 86 72 ]"/>
+   <data name="ZDDXMLFile" invalidateTime="1406033808" updateTime="1406033814" type="str" value="423-0118-0202-0611-06-03-28-01-0c.xml"/>
+   <data name="lastReceived" invalidateTime="1406033808" updateTime="1406033816" type="int" value="0"/>
+   <data name="keepAwake" invalidateTime="1406033808" updateTime="1406033809" type="bool" value="false"/>
+   <data name="countSuccess" invalidateTime="1406033808" updateTime="1406033809" type="int" value="0"/>
+   <data name="countFailed" invalidateTime="1406033808" updateTime="1406033809" type="int" value="0"/>
+   <data name="queueLength" invalidateTime="1406033808" updateTime="1406033809" type="int" value="0"/>
+  </data>
+  <instance id="0">
+   <data name="devices.4.instances.0.data" invalidateTime="1406033808" updateTime="1406033809" type="NoneType" value="None">
+    <data name="dynamic" invalidateTime="1406033808" updateTime="1406033809" type="bool" value="false"/>
+    <data name="genericType" invalidateTime="1406033808" updateTime="1406033809" type="int" value="17"/>
+    <data name="specificType" invalidateTime="1406033808" updateTime="1406033809" type="int" value="1"/>
+   </data>
+   <commandClass id="0026">
+    <data name="devices.4.instances.0.commandClasses.38.data" invalidateTime="1406033809" updateTime="1406033810" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406033809" updateTime="1406033810" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406033810" updateTime="1406033811" type="int" value="1"/>
+     <data name="security" invalidateTime="1406033809" updateTime="1406033810" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406033809" updateTime="1406033815" type="bool" value="true"/>
+     <data name="interviewCounter" invalidateTime="1406033809" updateTime="1406033815" type="int" value="9"/>
+     <data name="level" invalidateTime="1406033998" updateTime="1406033815" type="int" value="12"/>
+     <data name="mylevel" invalidateTime="1406033809" updateTime="1406033810" type="int" value="0"/>
+     <data name="startChange" invalidateTime="1406033809" updateTime="1406033810" type="NoneType" value="None"/>
+     <data name="stopChange" invalidateTime="1406033809" updateTime="1406033810" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0027">
+    <data name="devices.4.instances.0.commandClasses.39.data" invalidateTime="1406033809" updateTime="1406033810" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406033809" updateTime="1406033810" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406033810" updateTime="1406033811" type="int" value="1"/>
+     <data name="security" invalidateTime="1406033809" updateTime="1406033810" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406033809" updateTime="1406033815" type="bool" value="true"/>
+     <data name="interviewCounter" invalidateTime="1406033809" updateTime="1406033815" type="int" value="9"/>
+     <data name="mode" invalidateTime="1406033814" updateTime="1406033815" type="int" value="0"/>
+     <data name="onOff" invalidateTime="1406033809" updateTime="1406033810" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0070">
+    <data name="devices.4.instances.0.commandClasses.112.data" invalidateTime="1406033809" updateTime="1406033810" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406033809" updateTime="1406033810" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406033810" updateTime="1406033811" type="int" value="1"/>
+     <data name="security" invalidateTime="1406033809" updateTime="1406033810" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406033809" updateTime="1406033815" type="bool" value="true"/>
+     <data name="interviewCounter" invalidateTime="1406033809" updateTime="1406033815" type="int" value="9"/>
+     <data name="1" invalidateTime="1406033815" updateTime="1406033816" type="NoneType" value="None">
+      <data name="val" invalidateTime="1406033815" updateTime="1406033816" type="int" value="0"/>
+      <data name="size" invalidateTime="1406033815" updateTime="1406033816" type="int" value="1"/>
+     </data>
+    </data>
+   </commandClass>
+   <commandClass id="0072">
+    <data name="devices.4.instances.0.commandClasses.114.data" invalidateTime="1406033813" updateTime="1406033810" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406033813" updateTime="1406033810" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406033813" updateTime="1406033811" type="int" value="1"/>
+     <data name="security" invalidateTime="1406033809" updateTime="1406033810" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406033809" updateTime="1406033813" type="bool" value="true"/>
+     <data name="interviewCounter" invalidateTime="1406033809" updateTime="1406033813" type="int" value="9"/>
+     <data name="vendorId" invalidateTime="1406033812" updateTime="1406033813" type="int" value="280"/>
+     <data name="vendor" invalidateTime="1406033812" updateTime="1406033813" type="str" value=""/>
+     <data name="productId" invalidateTime="1406033812" updateTime="1406033813" type="int" value="1553"/>
+     <data name="productType" invalidateTime="1406033812" updateTime="1406033813" type="int" value="514"/>
+    </data>
+   </commandClass>
+   <commandClass id="0075">
+    <data name="devices.4.instances.0.commandClasses.117.data" invalidateTime="1406033809" updateTime="1406033810" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406033809" updateTime="1406033810" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406033810" updateTime="1406033811" type="int" value="1"/>
+     <data name="security" invalidateTime="1406033809" updateTime="1406033810" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406033809" updateTime="1406033816" type="bool" value="true"/>
+     <data name="interviewCounter" invalidateTime="1406033809" updateTime="1406033815" type="int" value="9"/>
+     <data name="state" invalidateTime="1406033815" updateTime="1406033816" type="int" value="0"/>
+     <data name="rfState" invalidateTime="1406033809" updateTime="1406033810" type="NoneType" value="None"/>
+     <data name="exclusive" invalidateTime="1406033809" updateTime="1406033810" type="NoneType" value="None"/>
+     <data name="timeout" invalidateTime="1406033809" updateTime="1406033810" type="NoneType" value="None"/>
+     <data name="stateCap" invalidateTime="1406033809" updateTime="1406033810" type="NoneType" value="None"/>
+     <data name="rfStateCap" invalidateTime="1406033809" updateTime="1406033810" type="NoneType" value="None"/>
+     <data name="exclusiveCap" invalidateTime="1406033809" updateTime="1406033810" type="NoneType" value="None"/>
+     <data name="timeoutCap" invalidateTime="1406033809" updateTime="1406033810" type="NoneType" value="None"/>
+    </data>
+   </commandClass>
+   <commandClass id="0077">
+    <data name="devices.4.instances.0.commandClasses.119.data" invalidateTime="1406033809" updateTime="1406033810" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406033809" updateTime="1406033810" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406033810" updateTime="1406033812" type="int" value="1"/>
+     <data name="security" invalidateTime="1406033809" updateTime="1406033810" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406033809" updateTime="1406033984" type="bool" value="false"/>
+     <data name="interviewCounter" invalidateTime="1406033809" updateTime="1406033984" type="int" value="4"/>
+     <data name="nodename" invalidateTime="1406033984" updateTime="1406033810" type="NoneType" value="None"/>
+     <data name="location" invalidateTime="1406033984" updateTime="1406033810" type="NoneType" value="None"/>
+     <data name="myname" invalidateTime="1406033809" updateTime="1406033984" type="str" value="Gateway"/>
+     <data name="mylocation" invalidateTime="1406033809" updateTime="1406033984" type="str" value=""/>
+    </data>
+   </commandClass>
+   <commandClass id="0086">
+    <data name="devices.4.instances.0.commandClasses.134.data" invalidateTime="1406033811" updateTime="1406033812" type="NoneType" value="None">
+     <data name="supported" invalidateTime="1406033809" updateTime="1406033810" type="bool" value="true"/>
+     <data name="version" invalidateTime="1406033810" updateTime="1406033812" type="int" value="1"/>
+     <data name="security" invalidateTime="1406033809" updateTime="1406033810" type="bool" value="false"/>
+     <data name="interviewDone" invalidateTime="1406033809" updateTime="1406033812" type="bool" value="true"/>
+     <data name="interviewCounter" invalidateTime="1406033809" updateTime="1406033810" type="int" value="9"/>
+     <data name="ZWLib" invalidateTime="1406033811" updateTime="1406033812" type="int" value="6"/>
+     <data name="ZWProtocolMajor" invalidateTime="1406033811" updateTime="1406033812" type="int" value="3"/>
+     <data name="ZWProtocolMinor" invalidateTime="1406033811" updateTime="1406033812" type="int" value="40"/>
+     <data name="SDK" invalidateTime="1406033811" updateTime="1406033812" type="str" value="4.54.00"/>
+     <data name="applicationMajor" invalidateTime="1406033811" updateTime="1406033812" type="int" value="1"/>
+     <data name="applicationMinor" invalidateTime="1406033811" updateTime="1406033812" type="int" value="12"/>
+     <data name="hardwareVersion" invalidateTime="1406033811" updateTime="1406033812" type="NoneType" value="None"/>
+     <data name="firmwareCount" invalidateTime="1406033811" updateTime="1406033812" type="int" value="0"/>
+    </data>
+   </commandClass>
+  </instance>
+ </device>
+</devicesData>

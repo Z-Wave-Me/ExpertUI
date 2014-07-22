@@ -64,8 +64,8 @@ angApp.config(['$routeProvider',
                     templateUrl: 'app/views/config/config.html'
                 }).
                 // Network
-                when('/network/controll', {
-                    templateUrl: 'app/views/network/controll.html'
+                when('/network/control', {
+                    templateUrl: 'app/views/network/control.html'
                 }).
                 when('/network/routing', {
                     templateUrl: 'app/views/network/routing.html'

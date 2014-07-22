@@ -51,7 +51,12 @@
      "unknown_device_type": "Unknown device type",
        "command_class": "Command Class",
        "zwave_role_type": "Z-Wave+ Role Type",
-   
+    "nm_inex": "Device Include/Exclude",
+    "nm_net_maintance": "Network Maintenance",
+     "nm_ctrl_maintance": "Controller Maintenance",
+      "nm_learn_mode_include": "Learn Mode",
+       "nm_force_unsecure": "Force unsecure inclusion",
+     
     "---": "---",
     "syntax_error": "XML Syntax error: ",
     "area_new": "New Zone",
