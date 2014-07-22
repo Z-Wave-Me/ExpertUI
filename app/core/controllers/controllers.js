@@ -1383,6 +1383,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     $scope.assocCont;
     $scope.deviceId = $routeParams.nodeId;
     $scope.deviceName = '';
+    $scope.showContent = true;
     $scope.deviceImage = '';
     $scope.reset = function() {
         $scope.devices = angular.copy([]);
@@ -1420,7 +1421,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                 obj['name'] = node.data.name;
                 obj['slected'] = '';
                 if (nodeId == $routeParams.nodeId) {
-                    $scope.deviceName = node.data.name;
+
                     obj['slected'] = 'selected';
                 }
                 $scope.devices.push(obj);
@@ -1437,6 +1438,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             $scope.ZWaveAPIData = ZWaveAPIData;
             var node = ZWaveAPIData.devices[nodeId];
             if (!node) {
+                $scope.showContent = false;
                 return;
             }
             var zddXmlFile = null;
@@ -1522,6 +1524,8 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         var brandName = node.data.vendorString.value;
         var inclusionNote = '';
         var wakeupNote = '';
+        var ZWavePlusInfo = '';
+        var ZWavePlusRoles = [];
         var deviceDescriptionAppVersion = parseInt(node.data.applicationMajor.value, 10);
         var deviceDescriptionAppSubVersion = parseInt(node.data.applicationMinor.value, 10);
         if (isNaN(deviceDescriptionAppVersion))
@@ -1551,6 +1555,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         angular.forEach($scope.interviewCommands, function(v, k) {
             ccNames.push(v.ccName);
         });
+
         // Has device a zddx XML file
         if (zddXml) {
             var lang = 'en';
@@ -1586,6 +1591,14 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             if (angular.isDefined(zddXml.ZWaveDevice.resourceLinks)) {
                 deviceImage = zddXml.ZWaveDevice.resourceLinks.deviceImage._url;
             }
+            /**
+             * TODO: finish ZWavePlusRoles
+             */
+            if (angular.isDefined(zddXml.ZWaveDevice.RoleTypes)) {
+                angular.forEach(zddXml.ZWaveDevice.RoleTypes, function(v, k) {
+                    ZWavePlusRoles.push(v);
+                });
+            }
         }
 
         // Set device image
@@ -1601,13 +1614,14 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         obj["f"] = {"key": "device_description_product", "val": productName};
         obj["g"] = {"key": "device_description_description", "val": deviceDescription};
         obj["h"] = {"key": "device_description_inclusion_note", "val": inclusionNote};
-        obj["i"] = {"key": "device_description_wakeup_note", "val": wakeupNote};
+        obj["i"] = {"key": "device_description_wakeup_note", "val": (wakeupNote ? wakeupNote : '')};
         obj["j"] = {"key": "device_description_interview", "val": interviewStage(ZWaveAPIData, nodeId)};
         obj["k"] = {"key": "device_sleep_state", "val": deviceState(node)};
-        obj["l"] = {"key": "device_queue_length", "val": queueLength(ZWaveAPIData, node)};
+        //obj["l"] = {"key": "device_queue_length", "val": queueLength(ZWaveAPIData, node)};
         obj["m"] = {"key": "device_description_app_version", "val": deviceDescriptionAppVersion + '.' + deviceDescriptionAppSubVersion};
         obj["o"] = {"key": "device_description_sdk_version", "val": sdk};
         obj["p"] = {"key": "command_class", "val": ccNames.join(', ')};
+        obj["q"] = {"key": "zwave_role_type", "val": ZWavePlusRoles.join(', ')};
         //obj[99] = {"key": "device_description_resources", "val": ''};
         return obj;
 
@@ -2078,7 +2092,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 
 
             } else {
-                $('#wakeup_cont .cfg-block-content').append('<span>' + $scope._t('config_ui_wakeup_no_min_max') + '</span>');
+                //$('#wakeup_cont .cfg-block-content').append('<span>' + $scope._t('config_ui_wakeup_no_min_max') + '</span>');
             }
         }
         ;
@@ -2204,10 +2218,91 @@ appController.controller('ConfigStoreController', function($scope, DataFactory) 
         $(target).modal();
     };
 
-    // Show modal dialog
+    /**
+     * Rename Device action
+     * 
+     * @param {object} form
+     * @returns {undefined}
+     */
     $scope.renameDevice = function(form) {
-        console.log('form');
+        //var data = $('#' + form).serialize();
+        var deviceId = $scope.deviceId;
+        var deviceName = $('#' + form + ' #device_name').val();
+
+        var out = renameDeviceBuild(deviceId, deviceName, $scope.getDeviceNames);
+        console.log(out);
         DataFactory.putConfig('devices.json').query();
+        return;
+    };
+
+    /**
+     * Build file for device names
+     * 
+     * @param {int} deviceId
+     * @param {string} deviceName
+     * @param {object} getDeviceNames
+     * @returns {String}
+     */
+    function renameDeviceBuild(deviceId, deviceName, getDeviceNames) {
+        var out = '[';
+        out += '{ "id": ' + deviceId + ',"name": "' + deviceName + '"},';
+        angular.forEach(getDeviceNames, function(v, k) {
+            if (v.id != deviceId) {
+                out += '{ "id": ' + v.id + ',"name": "' + v.name + '"},';
+            }
+
+        });
+        out += ']';
+        return out;
+    }
+    /**
+     * Update from device action
+     * 
+     * @param {object} form
+     * @returns {undefined}
+     */
+    $scope.updateFromDevice = function(form) {
+        console.log('Update from device action: ' + form);
+        return;
+
+        //var data = $('#' + form).serialize();
+        var data = $('#' + form).serializeArray();
+        var dataJoined = [];
+        angular.forEach(data, function(v, k) {
+            if (v.value !== '') {
+                dataJoined.push(v.value);
+            }
+
+        });
+        var request = cmd + '(' + dataJoined.join() + ')';
+        DataFactory.store(request).query();
+        console.log(request);
+        return;
+    };
+
+    /**
+     * Apply Config action
+     * 
+     * @param {object} form
+     * @returns {undefined}
+     */
+    $scope.applyConfig = function(form) {
+        console.log('Apply config action ' + form);
+        return;
+
+        //var data = $('#' + form).serialize();
+        var data = $('#' + form).serializeArray();
+        var dataJoined = [];
+        angular.forEach(data, function(v, k) {
+            if (v.value !== '') {
+                dataJoined.push(v.value);
+            }
+
+        });
+        var request = cmd + '(' + dataJoined.join() + ')';
+        DataFactory.store(request).query();
+        console.log(request);
+        return;
     };
 
 });

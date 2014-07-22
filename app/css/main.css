@@ -163,6 +163,21 @@ h3 {
     color: #2A6496;
 }
 
+.cfg-control-content{
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #e4f5fc;
+}
+.cfg-info{
+    margin: 10px 0 0 0;
+    padding: 10px 0 0 0;
+    border-top: solid 1px #fff;
+}
+#wakeup_cont .form-inline{
+    width: 360px;
+    float: left;
+}
+
 /*Images
 -------------------------------------------------- */
 .config-device-img{
