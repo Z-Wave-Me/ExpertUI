@@ -2308,53 +2308,125 @@ appController.controller('ConfigStoreController', function($scope, DataFactory) 
 });
 
 // Controll controller
-appController.controller('ControllController', function($scope, $filter, $timeout, DataFactory, DataTestFactory) {
+appController.controller('ControllController', function($scope, $filter, $route, $timeout, DataFactory,runCmdFactory) {
     $scope.devices = [];
-    $scope.ZWaveAPIData;
+    $scope.failedNodes = [];
+    $scope.replaceNodes = [];
+    $scope.failedBatteries = [];
+    $scope.controllerState;
+    $scope.secureInclusion;
 
-    // Load data
+    /**
+     * Load data
+     */
     $scope.load = function() {
         DataFactory.all('0').query(function(ZWaveAPIData) {
             //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
             var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
-
-            // Loop throught devices
+            $scope.controllerState = ZWaveAPIData.controller.data.controllerState.value;
+            $scope.secureInclusion = ZWaveAPIData.controller.data.secureInclusion.value;
+            
+             /**
+             * Loop throught devices
+             */
             angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
                 if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
                     return;
                 }
-                // Set object
-                var obj = {};
-                obj['id'] = nodeId;
-                obj['name'] = node.data.name;
-
-                $scope.devices.push(obj);
+                $scope.devices.push({"id":nodeId,"name":node.data.name});
+               
             });
-        });
+            /**
+             * Loop throught failed nodes
+             */
+            if (ZWaveAPIData.controller.data.isPrimary.value) {
+                angular.forEach(ZWaveAPIData.devices, function(dev, nodeId) {
+                    if (dev.data.isFailed.value) {
+                        $scope.failedNodes.push({"id":nodeId});
+                    }
+
+                });
+            } ;
+            
+            /**
+             * Loop throught replace nodes
+             */
+            if (ZWaveAPIData.controller.data.isPrimary.value) {
+                angular.forEach(ZWaveAPIData.devices, function(dev, nodeId) {
+                    if (dev.data.isFailed.value || (!dev.data.isListening.value && !dev.data.isFailed.value)) {
+                        $scope.replaceNodes.push({"id":nodeId});
+                    }
+
+                });
+            } ;
+            
+            /**
+             * Loop throught batteries
+             */
+            if (ZWaveAPIData.controller.data.isPrimary.value) {
+                angular.forEach(ZWaveAPIData.devices, function(dev, nodeId) {
+                    if (!dev.data.isListening.value && !dev.data.isFailed.value) {
+                        $scope.failedBatteries.push({"id":nodeId});
+                    }
+
+                });
+            } ;
+
+         });
     };
     $scope.load();
+
+    /**
+     * Show modal window
+     * 
+     * @returns {void}
+     */
+    $scope.showModal = function(target) {
+        $(target).modal();
+        return;
+    };
     
-     // Load data
-    $scope.failedNodes = function() {
-        DataFactory.all('0').query(function(ZWaveAPIData) {
-            //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
-            var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
-
-            // Loop throught devices
-            angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-                if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
-                    return;
-                }
-                // Set object
-                var obj = {};
-                obj['id'] = nodeId;
-                obj['name'] = node.data.name;
-
-                $scope.devices.push(obj);
-            });
-        });
+    
+    /**
+     * Run command
+     * 
+     * @returns {void}
+     */
+    $scope.runCmd = function(cmd,hideModal,reload) {
+        if (hideModal) {
+            $(hideModal).modal('hide');
+        }
+        if (reload) {
+            $timeout(function() {
+            $route.reload();
+            //location.reload();
+        }, 1000);
+        }
+        runCmdFactory.debug(cmd);
+        return;
     };
-    $scope.load();
+
+    /**
+     * Send request restore backup
+     * 
+     * @todo: Reload after success function
+     * 
+     * @returns {void}
+     */
+    $scope.restoreBackup = function(hide) {
+        //var url = 'controller.SetDefault()';
+        // http://192.168.10.167:8083/ZWaveAPI/Restore?restore_chip_info=0"
+        var url = 'Restore?restore_chip_info=0';
+        if (hide) {
+            $(hide).modal('hide');
+        }
+        DataFactory.store(url).query();
+        $timeout(function() {
+            $route.reload();
+            //location.reload();
+        }, 1000);
+        return;
+    };
 
     /**
      * Send request NIF from all devices
@@ -2362,44 +2434,10 @@ appController.controller('ControllController', function($scope, $filter, $timeou
      * @returns {void}
      */
     $scope.requestNifAll = function(btn) {
-        $(btn).attr('disabled', true);
         angular.forEach($scope.devices, function(v, k) {
             var url = 'devices[' + v.id + '].RequestNodeInformation()';
             DataFactory.store(url).query();
         });
-        $timeout(function() {
-            $(btn).removeAttr('disabled');
-        }, 1000);
-        return;
-    };
-
-    /**
-     * Send Change controller request
-     * 
-     * @returns {void}
-     */
-    $scope.changeController = function(btn) {
-        $(btn).attr('disabled', true);
-        var url = 'controller.ControllerChange(1)';
-        DataFactory.store(url).query();
-        $timeout(function() {
-            $(btn).removeAttr('disabled');
-        }, 1000);
-        return;
-    };
-    
-    /**
-     * Send reboot chip request
-     * 
-     * @returns {void}
-     */
-    $scope.chipReboot = function(btn) {
-        $(btn).attr('disabled', true);
-        var url = 'SerialAPISoftReset()';
-        DataFactory.store(url).query();
-        $timeout(function() {
-            $(btn).removeAttr('disabled');
-        }, 1000);
         return;
     };
 });
