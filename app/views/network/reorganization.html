@@ -2,8 +2,8 @@
 <div ng-controller="ReorganizationController">
     <div class="page-header"><h1>Reorganization</h1></div>
     <div class="table-responsive">
-        <input type="checkbox" checked="checked" /> mains powered<br/>
-        <input type="checkbox" checked="checked" /> battery powered<br/>
+        <input type="checkbox" ng-model="mainsPowered" /> mains powered<br/>
+        <input type="checkbox" ng-model="batteryPowered" /> battery powered<br/>
         <button class="btn btn-primary update" 
                 data-ng-click="reorgAll()"
                 data-action="reorgAll"  

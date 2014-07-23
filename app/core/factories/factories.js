@@ -54,6 +54,11 @@ appFactory.factory('DataFactory', function($resource, cfg) {
             return $resource(cfg.server_url + cfg.config_url + param, {}, {query: {
                     method: 'PUT', headers_: { '': '' }, params: {}
                 }});
+        },
+        putReorgLog: function(log) {
+            return $resource(cfg.server_url + cfg.reorg_log_url, {}, {query: {
+                    method: 'PUT', headers_: { '': '' }, params: {}, data : log
+                }});
         }
     };
 });

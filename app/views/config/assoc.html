@@ -13,10 +13,10 @@
         </thead>
         <tbody>
             <tr ng-repeat="key in keys">
-                <td>{{data[key].label}}</td>
+                <td>{{key| getDeviceName:getDeviceNames}}</td>
                 <td><button class="btn btn-primary update" 
                             data-toggle="modal" data-ng-click="openAdd(data[key])" data-target="#modal_add" ng-disabled="data[key].remaining == 0">+</button> 
-                    <span ng-repeat="a in data[key].association.nodes.value track by $index"><span>{{a|deviceName}} <span ng_if="data[key].association.nodesInstances.value.length > 0">(Instance {{data[key].association.nodesInstances.value[$index]}})</span> <button class="btn btn-primary update" 
+                    <span ng-repeat="a in data[key].association.nodes.value track by $index"><span>{{a| getDeviceName:getDeviceNames}} <span ng_if="data[key].association.nodesInstances.value.length > 0">(Instance {{data[key].association.nodesInstances.value[$index]}})</span> <button class="btn btn-primary update" 
                             data-ng-click="openRemove(data[key], $index)">-</button> </span></span></td>
                 <td>{{data[key].remaining}}</td>
                 <td><span id="update{{d}}" class="{{data[key].association.nodes| getUpdated}}">{{data[key].association.nodes.updateTime| getTime}}</span></td>
@@ -33,7 +33,7 @@
                     <h4 class="modal-title">Confirm Association Removal</h4>
                 </div>
                 <div class="modal-body">
-                    Remove association from {{removeData.label}} to {{removeData.association.nodes.value[removeIndex] | deviceName}}?
+                    Remove association from {{removeData.nodeId| getDeviceName:getDeviceNames}} to {{removeIndex| getDeviceName:getDeviceNames}}?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -51,7 +51,7 @@
                     <h4 class="modal-title">Add New Association</h4>
                 </div>
                 <div class="modal-body">
-                    From {{addData.label}} to 
+                    From {{addData.nodeId| getDeviceName:getDeviceNames}} to 
                     <select ng-model="assocTo" ng-options="k as v for (k,v) in addInstances">
                         <option value="">&lt; Select a Device-Instance &gt;</option>
                     </select>

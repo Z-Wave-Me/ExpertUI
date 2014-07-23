@@ -116,6 +116,49 @@ angApp.directive('switchAllIcon', function() {
     };
 });
 
+
+// Switch all icons
+//@todo: move to filters
+angApp.directive('routingTypeIcon', function() {
+    return {
+        restrict: "E",
+        replace: true,
+        template: '<img src="{{src}}" title="{{title}}" />',
+        link: function($scope, elem, attr) {
+            var src;
+            var title;
+            if (attr.nodeId !== null && $scope.ZWaveAPIData) {
+                var node = $scope.ZWaveAPIData.devices[attr.nodeId];
+
+                var isListening = node.data.isListening.value;
+                var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
+                var hasWakeup = 0x84 in node.instances[0].commandClasses;
+                var hasBattery = 0x80 in node.instances[0].commandClasses;
+                var isPortableRemoteControl = (node.data.deviceTypeString.value == "Portable Remote Controller");
+
+                if (isListening) { // mains powered
+                    src = 'app/images/icons/type_Mains-Powered.png';
+                    title = $scope._t('conf_apply_mains');
+                } else if (hasWakeup) {
+                    src = 'app/images/icons/type_Battery-Wakeup.png';
+                    title = $scope._t('battery_powered_device');
+                } else if (isFLiRS) {
+                    src = 'app/images/icons/type_FLIRS.png';
+                    title = $scope._t('FLiRS_device');
+                } else if (isPortableRemoteControl) {
+                    src = 'app/images/icons/type_Remote-Control.png';
+                    title = $scope._t('battery_operated_remote_control');
+                } else {
+                    src = 'app/images/icons/1x1.png';
+                    title = "";
+                }
+            }
+            $scope.src = src;
+            $scope.title = title;
+        }
+    };
+});
+
 /*** Fixes ***/
 // js holder fix
 angApp.directive('expertCommandInput', function() {
