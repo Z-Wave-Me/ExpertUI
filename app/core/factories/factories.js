@@ -36,7 +36,7 @@ appFactory.factory('myHttpInterceptor', function($q, $window) {
 });
 
 // Get a complete or updated JSON
-appFactory.factory('DataFactory', function($resource, cfg) {
+appFactory.factory('DataFactory', function($resource, $http, cfg) {
     return {
         all: function(param) {
             return $resource(cfg.server_url + cfg.update_url + param, {}, {query: {
@@ -56,9 +56,18 @@ appFactory.factory('DataFactory', function($resource, cfg) {
                 }});
         },
         putReorgLog: function(log) {
-            return $resource(cfg.server_url + cfg.reorg_log_url, {}, {query: {
-                    method: 'PUT', headers_: { '': '' }, params: {}, data : log
-                }});
+            return $.ajax({
+                    type: "PUT",
+                    dataType: "text",
+                    url: cfg.server_url + cfg.reorg_log_url,
+                    contentType: "text/plain",
+                    data: log
+                });
+        },
+        getReorgLog: function(callback) {
+            return $http({method: 'GET', url: cfg.server_url + cfg.reorg_log_url + '?at=' + (new Date ()).getTime()}).success(function(data, status, headers, config) {
+                    callback(data);
+                });
         }
     };
 });

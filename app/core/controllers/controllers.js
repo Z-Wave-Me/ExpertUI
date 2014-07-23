@@ -2541,7 +2541,7 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
               $scope.log[$scope.log.length - 1] += "\n";
           $scope.log.push($filter('getTime')(new Date().getTime() / 1000) + ": " + str);
         }
-        DataFactory.putReorgLog($scope.log);
+        DataFactory.putReorgLog($scope.log.join(""));
     };
 
     $scope.cellState = function(nodeId, nnodeId, routesCount) {
@@ -2734,7 +2734,7 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
 });
 
 // Reorganization controller
-appController.controller('ReorganizationController',  function($scope, $log, $filter, $route, $timeout, DataFactory, DataTestFactory, XmlFactory, cfg) {
+appController.controller('ReorganizationController',  function($scope, $log, $filter, $route, $interval, $timeout, DataFactory, DataTestFactory, XmlFactory, cfg) {
 
     $scope.mainsPowered = true;
     $scope.batteryPowered = false;
@@ -2743,6 +2743,7 @@ appController.controller('ReorganizationController',  function($scope, $log, $fi
     $scope.ZWaveAPIData;
     $scope.reorganizing = true;
     $scope.log = [];
+    $scope.logged = [];
     
     $scope.appendLog = function(str, noNewline) {
         if (noNewline == true) {
@@ -2752,12 +2753,31 @@ appController.controller('ReorganizationController',  function($scope, $log, $fi
               $scope.log[$scope.log.length - 1] += "\n";
           $scope.log.push($filter('getTime')(new Date().getTime() / 1000) + ": " + str);
         }
-        DataFactory.putReorgLog($scope.log);
+        DataFactory.putReorgLog($scope.log.join(""));
     };
 
     $scope.downloadLog = function() {
-        var hiddenElement = $('<a href="' + cfg.server_url + cfg.reorg_log_url + '" target="_blank" download="reorg.log"></a>').click();
+        var hiddenElement = $('<a id="hiddenElement" href="' + cfg.server_url + cfg.reorg_log_url + '?at=' + (new Date()).getTime() + '" target="_blank" download="reorg.log"></a>').appendTo($('body'));
+        hiddenElement.get(0).click();
+        hiddenElement.detach();
     };
+
+    var refreshLog = function() {
+        // Assign to scope within callback to avoid data flickering on screen
+        DataFactory.getReorgLog(function(log) {
+            $scope.logged = log.split("\n");
+        });
+    };
+
+    var promise = $interval(refreshLog, 1000);
+
+    // Cancel interval on page changes
+    $scope.$on('$destroy', function(){
+        if (angular.isDefined(promise)) {
+            $interval.cancel(promise);
+            promise = undefined;
+        }
+    });
 
     $scope.processReorgNodesNeighbours = function(processQueue, result) {
         if (processQueue.length == 0) {
