@@ -9,7 +9,7 @@
                 <th class="rtHeader">{{ _t('device_name')}}</th>
                 <th class="rtHeader">{{ _t('nav_type_info')}}</th>
                 <th ng-repeat="d in devices" style="text-align:center;">{{d}}</th>
-                <th class="rtHeader" style="text-align: center;">{{ _t('rt_header_update_time')}}</th>
+                <th class="rtHeader" style="text-align: right;">{{ _t('rt_header_update_time')}}</th>
                 <th class="rtHeader"><btn-spinner></btn-spinner></th>
             </tr>
         </thead>
@@ -19,8 +19,8 @@
                 <td>{{nodeId| getDeviceName:getDeviceNames}}</td>
                 <td><routing-type-icon node-id="{{ nodeId}}"></routing-type-icon></td>
                 <td ng-repeat="n in devices" class="rtCell"><div id="cell{{nodeId}}-{{n}}" class="{{data[nodeId][n].clazz}}"><span class="info">{{data[nodeId][n].info}}</span></div></td>
-                <td style="text-align: center;"><span id="update{{nodeId}}" class="{{nodes[nodeId].node.data.neighbours| getUpdated}}">{{nodes[nodeId].node.data.neighbours.updateTime| getTime}}</span></td>
-                <td ng-if="nodes[nodeId].node | updateable :nodeId"><button class="btn btn-primary update"
+                <td style="text-align: right;"><span id="update{{nodeId}}" class="{{nodes[nodeId].node.data.neighbours| getUpdated}}">{{nodes[nodeId].node.data.neighbours.updateTime| getTime}}</span></td>
+                <td ng-if="nodes[nodeId].node | updateable :nodeId">&nbsp; <button class="btn btn-primary update"
                     data-ng-click="update(nodeId)" ng-disabled="updating[nodeId]">{{ _t('update')}}</button></td>
             </tr>
         </tbody>
