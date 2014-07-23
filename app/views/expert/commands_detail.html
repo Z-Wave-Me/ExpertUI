@@ -33,7 +33,7 @@
                                     <div class="form-inline" ng-repeat="(pk,p) in c.data.params">
                                         <expert-command-input 
                                             collection='p' 
-                                            value="{{c.data.values[pk]}}"
+                                            values='c.data.values[pk]'
                                             devices='devices'
                                             get-node-devices='getNodeDevices'
                                             ></expert-command-input>

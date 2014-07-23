@@ -3,7 +3,10 @@
     <div class="page-header">
         <div class="row">
             <div class="col-md-6">
-                <h1>{{_t('nav_configuration')}} - {{deviceId | getDeviceName:getDeviceNames}}</h1>
+                <h1>
+                    <span ng-show="showContent">{{_t('h1_configuration_for')}}  {{deviceId | getDeviceName:getDeviceNames}} (#{{deviceId}})</span>
+                     <span ng-show="!showContent">{{_t('h1_configuration_no_device')}}</span>
+                </h1>
             </div>
             <div class="col-md-6">
                 <select name="devices" class="form-control" style="width: 260px;" ng-model="detailId" ng-change="goToDetail(detailId)" >
@@ -13,23 +16,27 @@
             </div>
         </div>
     </div>
+    <div ng-show="!showContent">
+         <div class="alert alert-info">{{_t('txt_config_select')}}</div>
+    </div>
+    <div ng-show="showContent">
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
-        <li class="active_"><a href="" data-target="#device_interview" data-toggle="tab">{{_t('nav_device_interview')}}</a></li>
-        <li class="active"><a href="" data-target="#device_configuration" data-toggle="tab">{{_t('nav_device_configuration')}}</a></li>
+        <li class="active"><a href="" data-target="#device_interview" data-toggle="tab">{{_t('nav_device_interview')}}</a></li>
+        <li class="active_"><a href="" data-target="#device_configuration" data-toggle="tab">{{_t('nav_device_configuration')}}</a></li>
         <li><a href="" data-target="#device_assoc" data-toggle="tab">{{_t('nav_device_assoc')}}</a></li>
     </ul>
 
     <!-- Tab panes -->
     <div class="tab-content">
         <!-- ConfigInterviewController -->
-        <div class="tab-pane active_" id="device_interview" ng-include="'app/views/config/interview.html'"></div>
+        <div class="tab-pane active" id="device_interview" ng-include="'app/views/config/interview.html'"></div>
         <!-- ConfigConfigurationController -->
-        <div class="tab-pane active" id="device_configuration" ng-include="'app/views/config/configuration.html'"></div>
+        <div class="tab-pane active_" id="device_configuration" ng-include="'app/views/config/configuration.html'"></div>
         <!-- ConfigAssocController -->
         <div class="tab-pane" id="device_assoc" ng-include="'app/views/config/assoc.html'"></div>
     </div>
-    
+    </div>
    
 
 </div><!-- /ng-controler -->

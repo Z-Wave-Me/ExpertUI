@@ -63,6 +63,23 @@ appFactory.factory('DataFactory', function($resource, cfg) {
     };
 });
 
+// Run commands factory
+appFactory.factory('runCmdFactory', function($resource, cfg) {
+    return {
+        run: function(param) {
+            var cmd = cfg.server_url + cfg.zwave_api_run_url + param;
+            return $resource(cmd, {}, {query: {
+                    method: 'POST', params: {}
+                }});
+        },
+        debug: function(param) {
+            var cmd = cfg.server_url + cfg.zwave_api_run_url + param;
+            console.log(cmd);
+            return;
+        }
+    };
+});
+
 // Get a complete JSON
 appFactory.factory('DataTestFactory', function($resource, cfg) {
     return {

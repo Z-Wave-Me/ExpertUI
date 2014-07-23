@@ -6,7 +6,7 @@
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <tbody>
-                            <tr ng-repeat="v in descriptionCont" ng-show="v.val != ''">
+                            <tr ng-repeat="v in descriptionCont" ng-show="v.val ||  v.val != '' ">
                                 <th>{{_t(v.key)}}</th>
                                 <td  ng-bind-html="v.val | toTrusted"></td>
                             </tr>

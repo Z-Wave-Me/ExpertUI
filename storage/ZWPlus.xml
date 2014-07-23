@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<RoleTypes>
+	<RoleType id='0'>Central Controller</RoleType>
+	<RoleType id='1'>Sub Controller</RoleType>
+	<RoleType id='2'>Portable Controller</RoleType>
+	<RoleType id='3'>Portable Reporting Controller</RoleType>
+	<RoleType id='4'>Portable Slave</RoleType>
+	<RoleType id='5'>Always On Slave</RoleType>
+	<RoleType id='6'>Reporting Sleeping Slave</RoleType>
+	<RoleType id='7'>Listening Sleeping Slave</RoleType>
+</RoleTypes>
+
+

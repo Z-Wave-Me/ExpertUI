@@ -163,6 +163,21 @@ h3 {
     color: #2A6496;
 }
 
+.cfg-control-content{
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #e4f5fc;
+}
+.cfg-info{
+    margin: 10px 0 0 0;
+    padding: 10px 0 0 0;
+    border-top: solid 1px #fff;
+}
+#wakeup_cont .form-inline{
+    width: 360px;
+    float: left;
+}
+
 /*Images
 -------------------------------------------------- */
 .config-device-img{
@@ -218,10 +233,25 @@ border-color:  #9fd8ef;
 
 /* Panel CSS
 -------------------------------------------------- */
+.panel {
+border: 1px solid #9fd8ef;
+-webkit-box-shadow: 0;
+box-shadow: 0;
+}
 .panel-default > .panel-heading {
 color: #333;
 background-color: #e4f5fc;
 border-color: #9fd8ef;
+}
+/* Well CSS
+-------------------------------------------------- */
+.well {
+
+background-color: #e4f5fc;
+border: 1px solid #9fd8ef;
+border-radius: 4px;
+-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
 }
 /* Form CSS
 -------------------------------------------------- */
