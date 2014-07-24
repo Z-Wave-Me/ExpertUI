@@ -2308,13 +2308,16 @@ appController.controller('ConfigStoreController', function($scope, DataFactory) 
 });
 
 // Controll controller
-appController.controller('ControllController', function($scope, $filter, $route, $timeout, DataFactory,runCmdFactory) {
+appController.controller('ControllController', function($scope, $filter, $route, $timeout, DataFactory, DataTestFactory) {
     $scope.devices = [];
     $scope.failedNodes = [];
     $scope.replaceNodes = [];
     $scope.failedBatteries = [];
-    $scope.controllerState;
+    $scope.controllerState = 0;
     $scope.secureInclusion;
+    $scope.lastExcludedDevice;
+    $scope.lastIncludedDevice;
+    $scope.isRealPrimary;
 
     /**
      * Load data
@@ -2325,16 +2328,17 @@ appController.controller('ControllController', function($scope, $filter, $route,
             var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
             $scope.controllerState = ZWaveAPIData.controller.data.controllerState.value;
             $scope.secureInclusion = ZWaveAPIData.controller.data.secureInclusion.value;
-            
-             /**
+            $scope.isRealPrimary = ZWaveAPIData.controller.data.isRealPrimary.value || ZWaveAPIData.devices.length <= 2 ? true: false;
+
+            /**
              * Loop throught devices
              */
             angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
                 if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
                     return;
                 }
-                $scope.devices.push({"id":nodeId,"name":node.data.name});
-               
+                $scope.devices.push({"id": nodeId, "name": node.data.name});
+
             });
             /**
              * Loop throught failed nodes
@@ -2342,39 +2346,68 @@ appController.controller('ControllController', function($scope, $filter, $route,
             if (ZWaveAPIData.controller.data.isPrimary.value) {
                 angular.forEach(ZWaveAPIData.devices, function(dev, nodeId) {
                     if (dev.data.isFailed.value) {
-                        $scope.failedNodes.push({"id":nodeId});
+                        $scope.failedNodes.push({"id": nodeId});
                     }
 
                 });
-            } ;
-            
+            }
+            ;
+
             /**
              * Loop throught replace nodes
              */
             if (ZWaveAPIData.controller.data.isPrimary.value) {
                 angular.forEach(ZWaveAPIData.devices, function(dev, nodeId) {
-                    if (dev.data.isFailed.value || (!dev.data.isListening.value && !dev.data.isFailed.value)) {
-                        $scope.replaceNodes.push({"id":nodeId});
+                    //if (dev.data.isFailed.value || (!dev.data.isListening.value && !dev.data.isFailed.value)) {
+                    if (dev.data.isFailed.value) {
+                        $scope.replaceNodes.push({"id": nodeId});
                     }
 
                 });
-            } ;
-            
+            }
+            ;
+
             /**
              * Loop throught batteries
              */
             if (ZWaveAPIData.controller.data.isPrimary.value) {
                 angular.forEach(ZWaveAPIData.devices, function(dev, nodeId) {
                     if (!dev.data.isListening.value && !dev.data.isFailed.value) {
-                        $scope.failedBatteries.push({"id":nodeId});
+                        $scope.failedBatteries.push({"id": nodeId});
                     }
 
                 });
-            } ;
+            }
+            ;
 
-         });
+        });
     };
     $scope.load();
+
+    // Refresh data
+    var refresh = function() {
+        DataFactory.all($filter('getTimestamp')).query(function(data) {
+            //DataTestFactory.all('control_refresh.json').query(function(data) {
+            if ('controller.data.controllerState' in data) {
+                $scope.controllerState = data['controller.data.controllerState'].value;
+            }
+            if ('controller.data.lastExcludedDevice' in data) {
+                $scope.lastExcludedDevice = data['controller.data.lastExcludedDevice'].value;
+            }
+
+            if ('controller.data.lastIncludedDevice' in data) {
+                $scope.lastIncludedDevice = data['controller.data.lastIncludedDevice'].value;
+
+            }
+            if ('controller.data.secureInclusion' in data) {
+                $scope.secureInclusion = data['controller.data.secureInclusion'].value;
+
+            }
+
+        });
+        $timeout(refresh, $scope.cfg.interval);
+    };
+    $timeout(refresh, $scope.cfg.interval);
 
     /**
      * Show modal window
@@ -2385,24 +2418,33 @@ appController.controller('ControllController', function($scope, $filter, $route,
         $(target).modal();
         return;
     };
-    
-    
+
+
     /**
      * Run command
      * 
      * @returns {void}
      */
-    $scope.runCmd = function(cmd,hideModal,reload) {
+    $scope.runCmd = function(cmd, hideModal, url) {
+        var folder = (url ? url : '/ZWaveAPI/Run/');
+        if (angular.isArray(cmd)) {
+            angular.forEach(cmd, function(v, k) {
+                 DataFactory.runCmd(folder + v).query();
+            });
+        } else {
+            //runCmdFactory.debug(cmd);
+            DataFactory.runCmd(folder + cmd).query();
+        }
         if (hideModal) {
             $(hideModal).modal('hide');
         }
-        if (reload) {
-            $timeout(function() {
-            $route.reload();
-            //location.reload();
-        }, 1000);
-        }
-        runCmdFactory.debug(cmd);
+//        if (reload) {
+//            $timeout(function() {
+//                $route.reload();
+//                //location.reload();
+//            }, 1000);
+//        }
+
         return;
     };
 
@@ -2413,18 +2455,12 @@ appController.controller('ControllController', function($scope, $filter, $route,
      * 
      * @returns {void}
      */
-    $scope.restoreBackup = function(hide) {
+    $scope.restoreBackup = function(cmd) {
         //var url = 'controller.SetDefault()';
         // http://192.168.10.167:8083/ZWaveAPI/Restore?restore_chip_info=0"
         var url = 'Restore?restore_chip_info=0';
-        if (hide) {
-            $(hide).modal('hide');
-        }
-        DataFactory.store(url).query();
-        $timeout(function() {
-            $route.reload();
-            //location.reload();
-        }, 1000);
+         DataFactory.runCmd('/ZWaveAPI/' + cmd).query();
+        
         return;
     };
 

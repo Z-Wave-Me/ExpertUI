@@ -54,15 +54,9 @@ appFactory.factory('DataFactory', function($resource, cfg) {
             return $resource(cfg.server_url + cfg.config_url + param, {}, {query: {
                     method: 'PUT', headers_: { '': '' }, params: {}
                 }});
-        }
-    };
-});
-
-// Run commands factory
-appFactory.factory('runCmdFactory', function($resource, cfg) {
-    return {
-        run: function(param) {
-            var cmd = cfg.server_url + cfg.zwave_api_run_url + param;
+        },
+        runCmd: function(param) {
+            var cmd = cfg.server_url + param;
             return $resource(cmd, {}, {query: {
                     method: 'POST', params: {}
                 }});
@@ -72,6 +66,7 @@ appFactory.factory('runCmdFactory', function($resource, cfg) {
             console.log(cmd);
             return;
         }
+        
     };
 });
 

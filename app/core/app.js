@@ -76,10 +76,11 @@ angApp.config(['$routeProvider',
                 when('/network/statistics', {
                     templateUrl: 'app/views/network/statistics.html'
                 }).
+                when('/network/controller', {
+                    templateUrl: 'app/views/network/controller.html'
+                }).        
                 // Expert
-                when('/expert/controller', {
-                    templateUrl: 'app/views/expert/controller.html'
-                }).
+                
                 when('/expert/commands', {
                     templateUrl: 'app/views/expert/commands.html'
                 }).
