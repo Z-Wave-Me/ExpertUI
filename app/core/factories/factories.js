@@ -68,15 +68,7 @@ appFactory.factory('DataFactory', function($resource, $http, cfg) {
             return $http({method: 'GET', url: cfg.server_url + cfg.reorg_log_url + '?at=' + (new Date ()).getTime()}).success(function(data, status, headers, config) {
                     callback(data);
                 });
-        }
-    };
-});
-
-// Run commands factory
-appFactory.factory('runCmdFactory', function($resource, cfg) {
-    return {
-        run: function(param) {
-            var cmd = cfg.server_url + cfg.zwave_api_run_url + param;
+        },
         runCmd: function(param) {
             return $resource(cmd, {}, {query: {
                     method: 'POST', params: {}
