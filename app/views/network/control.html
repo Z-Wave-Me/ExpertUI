@@ -1,5 +1,5 @@
 <!-- Controll view -->
-<div ng-controller="ControllController">
+<div ng-controller="ControllController" ng-show="showContent">
     <div class="page-header"><h1>{{_t('nav_control')}}</h1></div>
     <div class="row" id="row_controll">
         <div class="col-md-6 col-lg-6">
@@ -28,7 +28,7 @@
                         </div>
                     </div>
                     <p class="input-help">{{_t('nm_learn_mode_you_are_primary_no_sis')}}</p>
-                    <div class="alert nm-response"  ng-class="controllerState == 0 ? 'alert-info' : 'alert - danger'">{{_t('nm_controller_state_' + controllerState)}}</div>
+                    <div class="alert nm-response"  ng-class="controllerState == 0 ? 'alert-info' : 'alert-danger'">{{_t('nm_controller_state_' + controllerState)}}</div>
                     <!-- include -->
                     <button 
                         class="btn btn-info"
@@ -166,7 +166,7 @@
                         </div>
 
                         <!-- learn_start -->
-                        <div class="cfg-block form-inline" ng-show="isRealPrimary">
+                        <div class="cfg-block form-inline">
                             <p class="input-help">{{_t('nm_learn_mode_war')}}</p>
                             <div class="nm-response"  ng-class="controllerState == 0 ? 'text-info' : 'text - danger'" ng-show="[8, 9, 10, 11, 12].indexOf(controllerState) > -1">
                                 {{_t('nm_controller_state_' + controllerState)}}
@@ -174,6 +174,7 @@
                             <button 
                                 class="btn btn-primary"
                                 id="btn_learn_start"
+                                 ng-disabled="!isRealPrimary"
                                 ng-click="runCmd('controller.SetLearnMode(1)')"
                                 ng-show="[8, 9, 10, 11, 12].indexOf(controllerState) == -1"
                                 >{{_t('nm_learn_start')}}</button>

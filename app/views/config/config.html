@@ -1,5 +1,5 @@
 <!-- Configuration view -->
-<div ng-controller="ConfigurationController">
+<div ng-controller="ConfigurationController" ng-show="showContent">
     <div class="page-header">
         <div class="row">
             <div class="col-md-6">
@@ -16,25 +16,36 @@
             </div>
         </div>
     </div>
-    <div ng-show="!showContent">
+    <div ng-show="!showDevices">
          <div class="alert alert-info">{{_t('txt_config_select')}}</div>
     </div>
-    <div ng-show="showContent">
+    <div ng-show="showDevices">
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
-        <li class="active"><a href="" data-target="#device_interview" data-toggle="tab">{{_t('nav_device_interview')}}</a></li>
-        <li class="active_"><a href="" data-target="#device_configuration" data-toggle="tab">{{_t('nav_device_configuration')}}</a></li>
-        <li><a href="" data-target="#device_assoc" data-toggle="tab">{{_t('nav_device_assoc')}}</a></li>
+        <li ng-class="activeTab == 'interview' ? 'active' : ''">
+            <a href="" data-target="#device_interview" data-toggle="tab" ng-click="rememberTab('interview')">{{_t('nav_device_interview')}}</a>
+        </li>
+        <li ng-class="activeTab == 'configuration' ? 'active' : ''">
+            <a href="" data-target="#device_configuration" data-toggle="tab" ng-click="rememberTab('configuration')">{{_t('nav_device_configuration')}}</a>
+        </li>
+        <li ng-class="activeTab == 'assoc' ? 'active' : ''">
+            <a href="" data-target="#device_assoc" data-toggle="tab" ng-click="rememberTab('assoc')">{{_t('assoc')}}</a>
+        </li>
+        <li ng-class="activeTab == 'commands' ? 'active' : ''">
+            <a href="" data-target="#device_commands" data-toggle="tab" ng-click="rememberTab('commands')">{{_t('nav_expert_commands')}}</a>
+        </li>
     </ul>
 
     <!-- Tab panes -->
     <div class="tab-content">
         <!-- ConfigInterviewController -->
-        <div class="tab-pane active" id="device_interview" ng-include="'app/views/config/interview.html'"></div>
+        <div class="tab-pane" id="device_interview" ng-class="activeTab == 'interview' ? 'active' : ''" ng-include="'app/views/config/interview.html'"></div>
         <!-- ConfigConfigurationController -->
-        <div class="tab-pane active_" id="device_configuration" ng-include="'app/views/config/configuration.html'"></div>
+        <div class="tab-pane" id="device_configuration" ng-class="activeTab == 'configuration' ? 'active' : ''" ng-include="'app/views/config/configuration.html'"></div>
         <!-- ConfigAssocController -->
-        <div class="tab-pane" id="device_assoc" ng-include="'app/views/config/assoc.html'"></div>
+        <div class="tab-pane" id="device_assoc" ng-class="activeTab == 'assoc' ? 'active' : ''" ng-include="'app/views/config/assoc.html'"></div>
+        <!-- ExpertCommand -->
+        <div class="tab-pane" id="device_commands" ng-class="activeTab == 'commands' ? 'active' : ''" ng-include="'app/views/config/commands.html'"></div>
     </div>
     </div>
    
