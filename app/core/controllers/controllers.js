@@ -1380,33 +1380,34 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
     $scope.addInstances = {};
     $scope.assocTo = null;
 
-    $scope.updateAssoc = function() {
-        var pollForUpdate = function(since, updates) {
-            DataFactory.all(since).query(function(updateZWaveAPIData) {
-                var remaining = [];
-                var hasUpdates = false;
-                angular.forEach(updates, function(update, index) {
-                    if (!(update in updateZWaveAPIData)) {
-                        remaining.push(update);
-                    } else {
-                        hasUpdates = true;
-                    }
-                });
-                if (remaining.length == 0) {
-                    $scope.load($scope.lang);
+    var pollForUpdate = function(since, updates) {
+        DataFactory.all(since).query(function(updateZWaveAPIData) {
+            var remaining = [];
+            var hasUpdates = false;
+            angular.forEach(updates, function(update, index) {
+                if (!(update in updateZWaveAPIData)) {
+                    remaining.push(update);
                 } else {
-                    window.setTimeout(pollForUpdate, cfg.interval, since, remaining);
-                    if (hasUpdates)
-                        $scope.load($scope.lang);
+                    hasUpdates = true;
                 }
             });
-        };
-        var nodes = [];
+            if (remaining.length == 0) {
+                $scope.load($scope.lang);
+            } else {
+                window.setTimeout(pollForUpdate, cfg.interval, since, remaining);
+                if (hasUpdates)
+                    $scope.load($scope.lang);
+            }
+        });
+    };
+
+    $scope.updateAssoc = function() {
+        var updates = [];
         angular.forEach($scope.keys, function(key, index) {
-            nodes.push("devices." + $scope.deviceId + ".instances." + $scope.data[key].instance + ".commandClasses." + parseInt($scope.data[key].commandClass) + ".data." + $scope.data[key].association.name);
+            updates.push("devices." + $scope.deviceId + ".instances." + $scope.data[key].instance + ".commandClasses." + parseInt($scope.data[key].commandClass) + ".data." + $scope.data[key].association.name);
             DataFactory.runCmd('/ZWaveAPI/Run/devices[' + $scope.deviceId + '].instances[' + $scope.data[key].instance + '].commandClasses[' + $scope.data[key].commandClass + '].Get(' + $scope.data[key].association.name + ')').query();
         });
-        pollForUpdate($scope.ZWaveAPIData.updateTime, nodes);
+        pollForUpdate($scope.ZWaveAPIData.updateTime, updates);
     }
 
     // Open remove assocation dialog
@@ -1418,15 +1419,29 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
 
     // Remove an assocation
     $scope.remove = function() {
+        // TODO do from Apply-Button
         /*$scope.removeData
         $scope.removeIndex*/
+        var assocs = $scope.removeData.association.nodes.value;
+        assocs.splice($scope.removeIndex, 1);
+        assocs.unshift($scope.removeData.association.name);
+        var updates = [];
+        updates.push("devices." + $scope.deviceId + ".instances." + $scope.addData.instance + ".commandClasses." + parseInt($scope.addData.commandClass) + ".data." + $scope.addData.association.name);
+        DataFactory.runCmd('/ZWaveAPI/Run/devices[' + $scope.deviceId + '].instances[' + $scope.addData.instance + '].commandClasses[' + $scope.addData.commandClass + '].Set(' + assocs.join(',') + ')').query();
+        pollForUpdate($scope.ZWaveAPIData.updateTime, updates);
         $('#modal_remove').modal('hide');
     };
 
     // Add an assocation
     $scope.add = function() {
-        /*$scope.addData
-        $scope.assocTo*/
+        // TODO do from Apply-Button
+        var assocs = $scope.addData.association.nodes.value;
+        assocs.unshift($scope.addData.association.name);
+        assocs.push(parseInt($scope.assocTo));
+        var updates = [];
+        updates.push("devices." + $scope.deviceId + ".instances." + $scope.addData.instance + ".commandClasses." + parseInt($scope.addData.commandClass) + ".data." + $scope.addData.association.name);
+        DataFactory.runCmd('/ZWaveAPI/Run/devices[' + $scope.deviceId + '].instances[' + $scope.addData.instance + '].commandClasses[' + $scope.addData.commandClass + '].Set(' + assocs.join(',') + ')').query();
+        pollForUpdate($scope.ZWaveAPIData.updateTime, updates);
         $('#modal_add').modal('hide');
     };
 
