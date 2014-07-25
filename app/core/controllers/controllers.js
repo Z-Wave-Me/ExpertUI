@@ -1420,14 +1420,11 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
     // Remove an assocation
     $scope.remove = function() {
         // TODO do from Apply-Button
-        /*$scope.removeData
-        $scope.removeIndex*/
-        var assocs = $scope.removeData.association.nodes.value;
-        assocs.splice($scope.removeIndex, 1);
-        assocs.unshift($scope.removeData.association.name);
+        var assocTo = $scope.removeData.association.nodes.value[$scope.removeIndex];
+        var params = $scope.removeData.association.name + ',' + parseInt(assocTo);
         var updates = [];
-        updates.push("devices." + $scope.deviceId + ".instances." + $scope.addData.instance + ".commandClasses." + parseInt($scope.addData.commandClass) + ".data." + $scope.addData.association.name);
-        DataFactory.runCmd('/ZWaveAPI/Run/devices[' + $scope.deviceId + '].instances[' + $scope.addData.instance + '].commandClasses[' + $scope.addData.commandClass + '].Set(' + assocs.join(',') + ')').query();
+        updates.push("devices." + $scope.deviceId + ".instances." + $scope.removeData.instance + ".commandClasses." + parseInt($scope.removeData.commandClass) + ".data." + $scope.removeData.association.name);
+        DataFactory.runCmd('/ZWaveAPI/Run/devices[' + $scope.deviceId + '].instances[' + $scope.removeData.instance + '].commandClasses[' + $scope.removeData.commandClass + '].Remove(' + params + ')').query();
         pollForUpdate($scope.ZWaveAPIData.updateTime, updates);
         $('#modal_remove').modal('hide');
     };
@@ -1435,12 +1432,10 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
     // Add an assocation
     $scope.add = function() {
         // TODO do from Apply-Button
-        var assocs = $scope.addData.association.nodes.value;
-        assocs.unshift($scope.addData.association.name);
-        assocs.push(parseInt($scope.assocTo));
+        var params = $scope.addData.association.name + ',' + parseInt($scope.assocTo);
         var updates = [];
         updates.push("devices." + $scope.deviceId + ".instances." + $scope.addData.instance + ".commandClasses." + parseInt($scope.addData.commandClass) + ".data." + $scope.addData.association.name);
-        DataFactory.runCmd('/ZWaveAPI/Run/devices[' + $scope.deviceId + '].instances[' + $scope.addData.instance + '].commandClasses[' + $scope.addData.commandClass + '].Set(' + assocs.join(',') + ')').query();
+        DataFactory.runCmd('/ZWaveAPI/Run/devices[' + $scope.deviceId + '].instances[' + $scope.addData.instance + '].commandClasses[' + $scope.addData.commandClass + '].Set(' + params + ')').query();
         pollForUpdate($scope.ZWaveAPIData.updateTime, updates);
         $('#modal_add').modal('hide');
     };
