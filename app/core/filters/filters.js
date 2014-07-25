@@ -301,7 +301,7 @@ angApp.filter('associationExists', function() {
             
             if (0x85 in instance.commandClasses) {
                 for(var group = 0 ; group < instance.commandClasses[0x85].data.groups.value; group++) {
-                    var associations = instance.commandClasses[0x85].data[group + 1].nodes.value
+                    var associations = instance.commandClasses[0x85].data[group + 1].nodes.value;
                     if ($.inArray(parseInt(toNodeId), associations) != -1) {
                         exists = true;
                         return false;
@@ -310,10 +310,12 @@ angApp.filter('associationExists', function() {
             }
             if (0x8e in instance.commandClasses) {
                 for(var group = 0 ; group < instance.commandClasses[0x8e].data.groups.value; group++) {
-                    var associations = instance.commandClasses[0x8e].data[group + 1].nodes.value
-                    if ($.inArray(parseInt(toNodeId), associations) != -1) {
-                        exists = true;
-                        return false;
+                    var associations = instance.commandClasses[0x8e].data[group + 1].nodesInstances.value;
+                    for(var i = 0; i < associations.length; i+=2) {
+                        if (parseInt(toNodeId) == associations[i]) {
+                            exists = true;
+                            return false;
+                        }
                     }
                 }
             }

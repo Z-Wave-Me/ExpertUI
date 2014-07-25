@@ -1379,13 +1379,20 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
     $scope.addData = null;
     $scope.addInstances = {};
     $scope.assocTo = null;
+    $scope.applyQueue = [];
+    $scope.updates = [];
 
     var pollForUpdate = function(since, updates) {
+        var spinner = $('#AssociationTable .fa-spinner');
+        spinner.show();
         DataFactory.all(since).query(function(updateZWaveAPIData) {
             var remaining = [];
             var hasUpdates = false;
             angular.forEach(updates, function(update, index) {
                 if (!(update in updateZWaveAPIData)) {
+                    remaining.push(update);
+                } else if (updateZWaveAPIData[update].invalidateTime > updateZWaveAPIData[update].updateTime) {
+                    hasUpdates = true;
                     remaining.push(update);
                 } else {
                     hasUpdates = true;
@@ -1393,6 +1400,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
             });
             if (remaining.length == 0) {
                 $scope.load($scope.lang);
+                spinner.fadeOut();
             } else {
                 window.setTimeout(pollForUpdate, cfg.interval, since, remaining);
                 if (hasUpdates)
@@ -1402,10 +1410,12 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
     };
 
     $scope.updateAssoc = function() {
+        $scope.applyQueue = [];
+        $scope.updates = [];
         var updates = [];
         angular.forEach($scope.keys, function(key, index) {
-            updates.push("devices." + $scope.deviceId + ".instances." + $scope.data[key].instance + ".commandClasses." + parseInt($scope.data[key].commandClass) + ".data." + $scope.data[key].association.name);
-            DataFactory.runCmd('/ZWaveAPI/Run/devices[' + $scope.deviceId + '].instances[' + $scope.data[key].instance + '].commandClasses[' + $scope.data[key].commandClass + '].Get(' + $scope.data[key].association.name + ')').query();
+            updates.push("devices." + $scope.deviceId + ".instances." + $scope.data[key].instance + ".commandClasses." + parseInt($scope.data[key].commandClass) + ".data." + $scope.data[key].groupId);
+            DataFactory.runCmd('/ZWaveAPI/Run/devices[' + $scope.deviceId + '].instances[' + $scope.data[key].instance + '].commandClasses[' + $scope.data[key].commandClass + '].Get(' + $scope.data[key].groupId + ')').query();
         });
         pollForUpdate($scope.ZWaveAPIData.updateTime, updates);
     }
@@ -1419,24 +1429,34 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
 
     // Remove an assocation
     $scope.remove = function() {
-        // TODO do from Apply-Button
-        var assocTo = $scope.removeData.association.nodes.value[$scope.removeIndex];
-        var params = $scope.removeData.association.name + ',' + parseInt(assocTo);
-        var updates = [];
-        updates.push("devices." + $scope.deviceId + ".instances." + $scope.removeData.instance + ".commandClasses." + parseInt($scope.removeData.commandClass) + ".data." + $scope.removeData.association.name);
-        DataFactory.runCmd('/ZWaveAPI/Run/devices[' + $scope.deviceId + '].instances[' + $scope.removeData.instance + '].commandClasses[' + $scope.removeData.commandClass + '].Remove(' + params + ')').query();
-        pollForUpdate($scope.ZWaveAPIData.updateTime, updates);
+        var params = $scope.removeData.groupId + ',' + $scope.removeData.nodeIds[$scope.removeIndex];
+        if ($scope.removeData.type == 'm') {
+            params += ',' + $scope.removeData.instanceIds[$scope.removeIndex];
+        }
+        $scope.updates.push("devices." + $scope.deviceId + ".instances." + $scope.removeData.instance + ".commandClasses." + parseInt($scope.removeData.commandClass) + ".data." + $scope.removeData.groupId);
+        $scope.applyQueue.push('/ZWaveAPI/Run/devices[' + $scope.deviceId + '].instances[' + $scope.removeData.instance + '].commandClasses[' + $scope.removeData.commandClass + '].Remove(' + params + ')');
+
+        // cause view to hide element
+        $scope.removeData.nodeIds.splice($scope.removeIndex, 1);
+        if ($scope.removeData.type == 'm') {
+            $scope.removeData.instanceIds.splice($scope.removeIndex, 1);
+        }
+        $scope.removeData.persistent.splice($scope.removeIndex, 1);
         $('#modal_remove').modal('hide');
     };
 
     // Add an assocation
     $scope.add = function() {
-        // TODO do from Apply-Button
-        var params = $scope.addData.association.name + ',' + parseInt($scope.assocTo);
-        var updates = [];
-        updates.push("devices." + $scope.deviceId + ".instances." + $scope.addData.instance + ".commandClasses." + parseInt($scope.addData.commandClass) + ".data." + $scope.addData.association.name);
-        DataFactory.runCmd('/ZWaveAPI/Run/devices[' + $scope.deviceId + '].instances[' + $scope.addData.instance + '].commandClasses[' + $scope.addData.commandClass + '].Set(' + params + ')').query();
-        pollForUpdate($scope.ZWaveAPIData.updateTime, updates);
+        var params = $scope.assocTo;
+        $scope.updates.push("devices." + $scope.deviceId + ".instances." + $scope.addData.instance + ".commandClasses." + parseInt($scope.addData.commandClass) + ".data." + $scope.addData.groupId);
+        $scope.applyQueue.push('/ZWaveAPI/Run/devices[' + $scope.deviceId + '].instances[' + $scope.addData.instance + '].commandClasses[' + $scope.addData.commandClass + '].Set(' + params + ')');
+
+        // cause view to show element
+        var parts = $scope.assocTo.split(',');
+        $scope.addData.nodeIds.push(parseInt(parts[1]));
+        if ($scope.addData.type == 'm') 
+            $scope.addData.instanceIds.push(parseInt(parts[2]));
+        $scope.addData.persistent.push("notInZWave");
         $('#modal_add').modal('hide');
     };
 
@@ -1450,11 +1470,34 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                 return;
             for (var instanceId in $scope.ZWaveAPIData.devices[nodeId].instances) {
                 var fromInstanceId = 0;
-                if ("instanceId" in $scope.addData) {
+                if ($scope.addData.type == 'm') {
                     fromInstanceId = $scope.addData.instanceId;
                 }
+                var groupId = $scope.addData.groupId;
                 if (nodeId != $scope.addData.nodeId || fromInstanceId != instanceId) { // exclude self-assoc
-                    $scope.addInstances[nodeId + '.' + instanceId] = $filter('getDeviceName')(nodeId, $scope.getDeviceNames) + " - " + instanceId;
+                    var contained = false;
+                    if ($scope.addData.type == "s") {
+                        if ($.inArray(parseInt(nodeId), $scope.addData.nodeIds) != -1)
+                            contained = true;
+                    } else {
+                        for (var i = 0; i < $scope.addData.nodeIds.length; i++) {
+                            if ($scope.addData.nodeIds[i] == nodeId && $scope.addData.instanceIds[i] == instanceId) {
+                                contained = true;
+                                break;
+                            }
+                        }
+                    } 
+                    if (contained)
+                        continue;
+
+                    if ($scope.addData.type == 'm') {
+                        // MultiChannelAssociation with instanceId
+                        $scope.addInstances[groupId + ',' + nodeId + ',' + instanceId] = $filter('getDeviceName')(nodeId, $scope.getDeviceNames) + " - " + instanceId;
+                    } else {
+                        // simple Assocation
+                        $scope.addInstances[groupId + ',' + nodeId] = $filter('getDeviceName')(nodeId, $scope.getDeviceNames);
+                        break; // first instance is enough
+                    }
                 }
             }
         });   
@@ -1478,17 +1521,40 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
             angular.forEach(associables.associations, function(association, index) {
                 var key=nodeId+".s-"+index;
                 $scope.keys.push(key);
-                $scope.data[key] = {"label":$scope._t('association_group') + " " + association.data.name , "nodeId": nodeId, "node": node, "commandClass": "0x85", "instance": association.instance, "association": association.data, "remaining": (association.data.max.value - association.data.nodes.value.length)};
+                var persistent = [];
+                for(var i = 0; i < association.data.nodes.value.length; i++) {
+                    persistent.push("inZWave");
+                }
+                $scope.data[key] = {"type": "s", "label":$scope._t('association_group') + " " + association.data.name, "nodeId": nodeId, "node": node, "commandClass": "0x85", "instance": association.instance, "groupId": association.data.name, "nodeIds": association.data.nodes.value, "persistent":persistent, "update":association.data.nodes, "remaining": (association.data.max.value - association.data.nodes.value.length)};
             });
             angular.forEach(associables.multiChannelAssociations, function(association, index) {
                 var key=nodeId+".m-"+index;
                 $scope.keys.push(key);
-                $scope.data[key] = {"label":$scope._t('multi_association_group') + " " + association.data.name , "nodeId": nodeId, "instanceId": index, "node": node, "commandClass": "0x8e", "instance": association.instance, "association": association.data, "remaining": (association.data.max.value - association.data.nodes.value.length)};
+                var nodeIds = [];
+                var instanceIds = [];
+                var persistent = [];
+                for(var i = 0; i < association.data.nodesInstances.value.length; i+=2) {
+                    nodeIds.push(association.data.nodesInstances.value[i]);
+                    instanceIds.push(association.data.nodesInstances.value[i + 1]);
+                    persistent.push("inZWave");
+                }
+                $scope.data[key] = {"type": "m", "label":$scope._t('multi_association_group') + " " + association.data.name, "nodeId": nodeId, "instanceId": index, "node": node, "commandClass": "0x8e", "instance": association.instance, "groupId": association.data.name, "nodeIds": nodeIds, "instanceIds": instanceIds, "persistent":persistent, "update":association.data.nodesInstances, "remaining": (association.data.max.value - (association.data.nodesInstances.value.length / 2))};
             });
         });
     };
 
     $scope.load($scope.lang);
+
+    $scope.applyConfig = function() {
+        var spinner = $('#AssociationTable .fa-spinner');
+        spinner.show();
+        while($scope.applyQueue.length > 0) {
+            var exec=$scope.applyQueue.shift();
+            DataFactory.runCmd(exec).query();
+        }
+        pollForUpdate($scope.ZWaveAPIData.updateTime, $scope.updates);
+        $scope.updates = [];
+    }
 });
 
 // Configuration controller
@@ -2650,6 +2716,7 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
     };
 
     $scope.processUpdateNodesNeighbours = function(processQueue, result) {
+        var spinner = $('#RoutingTable .fa-spinner');
         if (processQueue.length == 0) {
             $scope.appendLog("Reorganisation completed:");
             if ("mains_completed" in result) 
@@ -2666,8 +2733,10 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
             $.each(result.done, function (index, nodeId) {
                 $scope.updating[nodeId] = false;
             });
+            spinner.fadeOut();
             return;
         }
+        spinner.show();
         var current=processQueue[0];
         $scope.appendLog("reorg " + current.nodeId + " " + (current.retry > 0? current.retry + ". retry": "") + " ");
 

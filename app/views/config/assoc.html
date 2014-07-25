@@ -8,7 +8,7 @@
             ng-click="updateAssoc()" 
             >{{_t('update_from_device')}}</button> 
     <div class="table-responsive">
-    <table class="table table-striped">
+    <table id="AssociationTable" class="table table-striped">
         <thead>
             <tr>
                 <th>From</th>
@@ -21,16 +21,15 @@
             <tr ng-repeat="key in keys">
                 <td>{{data[key].label}}</td>
                 <td><button class="btn btn-primary update" 
-                            data-toggle="modal" data-ng-click="openAdd(data[key])" data-target="#modal_add" ng-disabled="data[key].remaining == 0">+</button> 
-                    <span ng-repeat="a in data[key].association.nodes.value track by $index"><span>{{a| getDeviceName:getDeviceNames}} <span ng_if="data[key].association.nodesInstances.value.length > 0">(Instance {{data[key].association.nodesInstances.value[$index]}})</span> <button class="btn btn-primary update" 
-                            data-ng-click="openRemove(data[key], $index)">-</button> </span></span></td>
+                            data-toggle="modal" data-ng-click="openAdd(data[key])" data-target="#modal_add" ng-disabled="data[key].remaining == 0">+</button><br/> 
+                    <span ng-repeat="a in data[key].nodeIds track by $index"><button class="btn btn-primary update" data-ng-click="openRemove(data[key], $index)">-</button> <span class="{{data[key].persistent[$index]}}">{{a| getDeviceName:getDeviceNames}} <span ng_if="data[key].type == 'm'">(Instance {{data[key].instanceIds[$index]}})</span></span><br/></span></td>
                 <td>{{data[key].remaining}}</td>
-                <td><span id="update{{d}}" class="{{data[key].association.nodes| getUpdated}}">{{data[key].association.nodes.updateTime| getTime}}</span></td>
+                <td><span id="update{{d}}" class="{{data[key].update| getUpdated}}">{{data[key].update.updateTime| getTime}}</span></td>
             </tr>
         </tbody>
     </table>
     </div>
-     <!-- Modal log -->
+     <!-- Modal remove -->
     <div class="modal fade" id="modal_remove" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -39,7 +38,7 @@
                     <h4 class="modal-title">Confirm Association Removal</h4>
                 </div>
                 <div class="modal-body">
-                    Remove association from {{removeData.nodeId| getDeviceName:getDeviceNames}} to {{removeIndex| getDeviceName:getDeviceNames}}?
+                    Remove association from {{removeData.nodeId| getDeviceName:getDeviceNames}} to {{removeData.nodeIds[removeIndex]| getDeviceName:getDeviceNames}}?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -48,7 +47,7 @@
             </div>
         </div>
     </div><!-- /.Modal -->
-     <!-- Modal log -->
+     <!-- Modal add -->
     <div class="modal fade" id="modal_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -69,16 +68,14 @@
             </div>
         </div>
     </div><!-- /.Modal -->
-</div>
-<!-- aapply_cont -->
-<div class="cfg-block" id="apply_cont">
+
     <h4>{{_t('apply_config_tooltip')}}</h4>
-    <div ng-controller="ConfigStoreController">
-        <button 
-            type="button" 
-            class="btn btn-primary"
-            id="btn_apply_config"
-            ng-click="applyConfig('#btn_apply_config')" 
-            >{{_t('apply_config')}}</button> 
-    </div>
+    <button 
+        type="button" 
+        class="btn btn-primary"
+        id="btn_apply_config"
+        ng-click="applyConfig()"
+        ng-disabled="applyQueue.length == 0" 
+        >{{_t('apply_config')}}</button> 
 </div>
+
