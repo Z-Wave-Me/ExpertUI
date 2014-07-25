@@ -1,6 +1,12 @@
 <!-- Assoc view -->
 <div ng-controller="AssocController">
     <div class="page-header"><h1>Associations</h1></div>
+    <button 
+            type="button" 
+            class="btn btn-primary"
+            id="btn_update_from_device"
+            ng-click="updateAssoc()" 
+            >{{_t('update_from_device')}}</button> 
     <div class="table-responsive">
     <table class="table table-striped">
         <thead>
@@ -13,7 +19,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="key in keys">
-                <td>{{key| getDeviceName:getDeviceNames}}</td>
+                <td>{{data[key].label}}</td>
                 <td><button class="btn btn-primary update" 
                             data-toggle="modal" data-ng-click="openAdd(data[key])" data-target="#modal_add" ng-disabled="data[key].remaining == 0">+</button> 
                     <span ng-repeat="a in data[key].association.nodes.value track by $index"><span>{{a| getDeviceName:getDeviceNames}} <span ng_if="data[key].association.nodesInstances.value.length > 0">(Instance {{data[key].association.nodesInstances.value[$index]}})</span> <button class="btn btn-primary update" 
@@ -63,4 +69,16 @@
             </div>
         </div>
     </div><!-- /.Modal -->
+</div>
+<!-- aapply_cont -->
+<div class="cfg-block" id="apply_cont">
+    <h4>{{_t('apply_config_tooltip')}}</h4>
+    <div ng-controller="ConfigStoreController">
+        <button 
+            type="button" 
+            class="btn btn-primary"
+            id="btn_apply_config"
+            ng-click="applyConfig('#btn_apply_config')" 
+            >{{_t('apply_config')}}</button> 
+    </div>
 </div>

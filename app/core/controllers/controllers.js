@@ -1371,7 +1371,6 @@ appController.controller('SecurityController', function($scope, $http, $log) {
 // Assoc controller
 appController.controller('AssocController', function($scope, $log, $filter, $route, $timeout, DataFactory, DataTestFactory, XmlFactory, cfg) {
     
-    $scope.nodes = {};
     $scope.keys = [];
     $scope.data = {};
     $scope.ZWaveAPIData;
@@ -1380,6 +1379,35 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
     $scope.addData = null;
     $scope.addInstances = {};
     $scope.assocTo = null;
+
+    $scope.updateAssoc = function() {
+        var pollForUpdate = function(since, updates) {
+            DataFactory.all(since).query(function(updateZWaveAPIData) {
+                var remaining = [];
+                var hasUpdates = false;
+                angular.forEach(updates, function(update, index) {
+                    if (!(update in updateZWaveAPIData)) {
+                        remaining.push(update);
+                    } else {
+                        hasUpdates = true;
+                    }
+                });
+                if (remaining.length == 0) {
+                    $scope.load($scope.lang);
+                } else {
+                    window.setTimeout(pollForUpdate, cfg.interval, since, remaining);
+                    if (hasUpdates)
+                        $scope.load($scope.lang);
+                }
+            });
+        };
+        var nodes = [];
+        angular.forEach($scope.keys, function(key, index) {
+            nodes.push("devices." + $scope.deviceId + ".instances." + $scope.data[key].instance + ".commandClasses." + parseInt($scope.data[key].commandClass) + ".data." + $scope.data[key].association.name);
+            DataFactory.runCmd('/ZWaveAPI/Run/devices[' + $scope.deviceId + '].instances[' + $scope.data[key].instance + '].commandClasses[' + $scope.data[key].commandClass + '].Get(' + $scope.data[key].association.name + ')').query();
+        });
+        pollForUpdate($scope.ZWaveAPIData.updateTime, nodes);
+    }
 
     // Open remove assocation dialog
     $scope.openRemove = function(data, $index) {
@@ -1426,22 +1454,26 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
     // Load data
     $scope.load = function(lang) {
         DataFactory.all('0').query(function(ZWaveAPIData) {
+            $scope.keys = [];
+            $scope.data = {};
             $scope.ZWaveAPIData = ZWaveAPIData;
             // Gather associations
             var nodeId = $scope.deviceId;
             var node = $scope.ZWaveAPIData.devices[nodeId];
+            if (node == undefined)
+                return;
             if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
                 return;
             var associables=$filter('associable')(node);
             angular.forEach(associables.associations, function(association, index) {
                 var key=nodeId+".s-"+index;
                 $scope.keys.push(key);
-                $scope.data[key] = {"label":"AG" + association.name , "nodeId": nodeId, "node": node, "association": association, "remaining": (association.max.value - association.nodes.value.length)};
+                $scope.data[key] = {"label":$scope._t('association_group') + " " + association.data.name , "nodeId": nodeId, "node": node, "commandClass": "0x85", "instance": association.instance, "association": association.data, "remaining": (association.data.max.value - association.data.nodes.value.length)};
             });
             angular.forEach(associables.multiChannelAssociations, function(association, index) {
                 var key=nodeId+".m-"+index;
                 $scope.keys.push(key);
-                $scope.data[key] = {"label":"MAG" + association.name , "nodeId": nodeId, "instanceId": index, "node": node, "association": association, "remaining": (association.max.value - association.nodes.value.length)};
+                $scope.data[key] = {"label":$scope._t('multi_association_group') + " " + association.data.name , "nodeId": nodeId, "instanceId": index, "node": node, "commandClass": "0x8e", "instance": association.instance, "association": association.data, "remaining": (association.data.max.value - association.data.nodes.value.length)};
             });
         });
     };

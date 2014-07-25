@@ -272,12 +272,12 @@ angApp.filter('associable', function() {
             
             if (0x85 in instance.commandClasses) {
                 for(var group = 0 ; group < instance.commandClasses[0x85].data.groups.value; group++) {
-                    associations.push(instance.commandClasses[0x85].data[group + 1]);
+                    associations.push({"instance":index, "data":instance.commandClasses[0x85].data[group + 1]});
                 }
             }
             if (0x8e in instance.commandClasses) {
                 for(var group = 0 ; group < instance.commandClasses[0x8e].data.groups.value; group++) {
-                    multiChannelAssociations.push(instance.commandClasses[0x8e].data[group + 1]);
+                    multiChannelAssociations.push({"instance":index, "data":instance.commandClasses[0x8e].data[group + 1]});
                 }
             }
         });

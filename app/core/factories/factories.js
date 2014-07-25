@@ -70,6 +70,7 @@ appFactory.factory('DataFactory', function($resource, $http, cfg) {
                 });
         },
         runCmd: function(param) {
+            var cmd = cfg.server_url + param;
             return $resource(cmd, {}, {query: {
                     method: 'POST', params: {}
                 }});
