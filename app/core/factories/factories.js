@@ -159,4 +159,28 @@ appFactory.factory('deviceConfigFactory', function($resource, cfg) {
 });
 
 
+// Get language dataas object
+appFactory.factory('testFactory', function(DataTestFactory) {
+    var items = [];
+
+  var modify = {};
+  modify.loadItems = function(){
+      DataTestFactory.all('all.json').query(function(data) {
+          angular.forEach(data, function(v, k) {
+              items.push(v);
+                           
+                        });
+          
+      });
+  };
+  modify.addItem = function(item) {
+    items.push(item);
+    return 'added item';
+  };
+  modify.getItems = function() {
+    return items;
+  };
+  return modify; // returning this is very important
+});
+
 
