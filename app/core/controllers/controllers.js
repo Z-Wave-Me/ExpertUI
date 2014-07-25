@@ -58,7 +58,7 @@ appController.controller('BaseController', function($scope, $cookies, $filter, c
 });
 
 // Test controller
-appController.controller('TestController', function($scope, $routeParams, cfg, $http, $log, DataFactory, DataTestFactory, $timeout, XmlFactory,testFactory) {
+appController.controller('TestController', function($scope, $routeParams, cfg, $http, $log, DataFactory, DataTestFactory, $timeout, XmlFactory, testFactory) {
     $scope.timeInMs = 0;
     $scope.dataSet;
     var countUp = function() {
@@ -67,8 +67,8 @@ appController.controller('TestController', function($scope, $routeParams, cfg, $
     };
     $timeout(countUp, 1000);
 
-testFactory.loadItems();
-    console.log(testFactory.getItems() );
+    testFactory.loadItems();
+    console.log(testFactory.getItems());
 
 
 });
@@ -1401,11 +1401,11 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             $location.path('/config/configuration/' + detailId);
         }
     };
-    
-   $scope.rememberTab = function(tabId) {
+
+    $scope.rememberTab = function(tabId) {
         $cookies.tab_config = tabId;
     };
-     // Remember active tab
+    // Remember active tab
     $scope.activeTab = (angular.isDefined($cookies.tab_config) ? $cookies.tab_config : 'interview');
     // Load navigation
     $scope.navigation = function() {
@@ -1447,7 +1447,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             $scope.ZWaveAPIData = ZWaveAPIData;
             var node = ZWaveAPIData.devices[nodeId];
             if (!node) {
-               $scope.showDevices = false;
+                $scope.showDevices = false;
                 return;
             }
             $scope.showContent = true;
@@ -1858,7 +1858,8 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                         description: conf_description,
                         updateTime: updateTime,
                         isUpdated: isUpdated,
-                        defaultValue: conf_default_value
+                        defaultValue: conf_default_value,
+                        confNum: conf_num
                     };
 
                     break;
@@ -1935,7 +1936,8 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                             description: conf_description,
                             updateTime: updateTime,
                             isUpdated: isUpdated,
-                            defaultValue: conf_default_value
+                            defaultValue: conf_default_value,
+                            confNum: conf_num
                         };
                     else if (param_struct_arr.length == 1)
                         conf_method_descr = param_struct_arr[0];
@@ -1976,7 +1978,8 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                         description: conf_description,
                         updateTime: updateTime,
                         isUpdated: isUpdated,
-                        defaultValue: conf_default_value
+                        defaultValue: conf_default_value,
+                        confNum: conf_num
                     };
 
                     break;
@@ -2046,7 +2049,8 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                         description: conf_description,
                         updateTime: updateTime,
                         isUpdated: isUpdated,
-                        defaultValue: conf_default_value
+                        defaultValue: conf_default_value,
+                        confNum: conf_num
                     };
 
                     break;
@@ -2061,7 +2065,6 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 
         });
 
-        //console.log(config_cont);
         return config_cont;
     }
 
@@ -2116,7 +2119,8 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                     'values': {"0": wakeup_conf_value},
                     updateTime: updateTime,
                     isUpdated: isUpdated,
-                    defaultValue: wakeup_conf_value
+                    defaultValue: wakeup_conf_value,
+                    cmd: 'devices[' + nodeId + '].instances[0].commandClasses[0x84]'
                 };
 
 
@@ -2154,7 +2158,8 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                 'values': {0: switchall_conf_value},
                 updateTime: updateTime,
                 isUpdated: isUpdated,
-                defaultValue: switchall_conf_value
+                defaultValue: switchall_conf_value,
+                cmd: 'devices[' + nodeId + '].instances[0].commandClasses[0x27]'
             };
         }
         ;
@@ -2192,7 +2197,8 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                 'values': {0: protection_conf_value},
                 updateTime: updateTime,
                 isUpdated: isUpdated,
-                defaultValue: protection_conf_value
+                defaultValue: protection_conf_value,
+                cmd: 'devices[' + nodeId + '].instances[0].commandClasses[0x75]'
             };
         }
         ;
@@ -2342,11 +2348,7 @@ appController.controller('ConfigStoreController', function($scope, DataFactory) 
      * @param {object} form
      * @returns {undefined}
      */
-    $scope.applyConfig = function(form) {
-        console.log('Apply config action ' + form);
-        return;
-
-        //var data = $('#' + form).serialize();
+    $scope.submitApplyConfig = function(form, cmd) {
         var data = $('#' + form).serializeArray();
         var dataJoined = [];
         angular.forEach(data, function(v, k) {
@@ -2357,10 +2359,81 @@ appController.controller('ConfigStoreController', function($scope, DataFactory) 
         });
         var request = cmd + '(' + dataJoined.join() + ')';
         DataFactory.store(request).query();
-        console.log(request);
         return;
     };
-    
+
+    /**
+     * Apply Config action
+     * 
+     * @param {object} form
+     * @returns {undefined}
+     */
+    $scope.submitApplyConfigCfg = function(form, cmd) {
+        var sections = $('#' + form).find('.cfg-control-content');
+        var data = $('#' + form).serializeArray();
+        var dataValues = [];
+        var cnt = 1;
+        angular.forEach(data, function(v, k) {
+            if (v.value !== '') {
+                dataValues.push({"value": v.value, "name":v.name});
+                //dataValues.push(v.name);
+            }
+            
+        });
+        console.log(data);
+        console.log(dataValues);
+        
+        angular.forEach(dataValues, function(n, nk) {
+                    var num = n.name.replace( /^\D+/g, '');
+                     var value = n.value;
+                     var request = cmd + '(' + num + ',' + value + ')';
+                    console.log(request);
+                });
+        
+        return;
+        angular.forEach(angular.element('#' + form + ' .cfg-control-content'), function(v, k) {
+            var itemId = $(v).attr('id');
+            angular.forEach(angular.element('#' + itemId + ' input'), function(i, ik) {
+                var inputName = $(i).attr('name');
+                var inputValue = $(i).attr('value');
+                angular.forEach(dataValues, function(n, nk) {
+                    if(inputName == n.name && inputValue === n.value){
+                        console.log(inputName,inputValue);
+                    }
+                    
+                });
+                //console.log(dataValues['radio_Nº 1 - True Period']);
+                if (angular.isDefined(dataValues[inputName])) {
+                    console.log(inputName, inputValue);
+                }
+                console.log(inputName.replace( /^\D+/g, ''), inputValue);
+
+            });
+            //var a = angular.element(value);
+            // a.addClass('ss');
+            //console.log(itemId);
+        });
+//        angular.forEach(sections, function(v, k) {
+//            console.log(v);
+//
+//        });
+        //var data = $('#' + form).serializeArray();
+        //console.log(data);
+        return;
+        var data = $('#' + form).serializeArray();
+        var dataJoined = [];
+        angular.forEach(data, function(v, k) {
+            if (v.value !== '') {
+                dataJoined.push(v.value);
+            }
+
+        });
+        var request = cmd + '(' + dataJoined.join() + ')';
+        console.log(request);
+        //DataFactory.store(request).query();
+        return;
+    };
+
     /**
      * Submit expert commands form
      * 
@@ -2397,7 +2470,7 @@ appController.controller('ControllController', function($scope, $filter, $route,
     $scope.lastExcludedDevice;
     $scope.lastIncludedDevice;
     $scope.isRealPrimary;
-    
+
     /**
      * Load data
      */
@@ -2408,7 +2481,7 @@ appController.controller('ControllController', function($scope, $filter, $route,
             var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
             $scope.controllerState = ZWaveAPIData.controller.data.controllerState.value;
             $scope.secureInclusion = ZWaveAPIData.controller.data.secureInclusion.value;
-            $scope.isRealPrimary = !ZWaveAPIData.controller.data.isRealPrimary.value || ZWaveAPIData.devices.length <= 2 ? true: false;
+            $scope.isRealPrimary = !ZWaveAPIData.controller.data.isRealPrimary.value || ZWaveAPIData.devices.length <= 2 ? true : false;
             /**
              * Loop throught devices
              */
@@ -2486,7 +2559,7 @@ appController.controller('ControllController', function($scope, $filter, $route,
         var folder = (url ? url : '/ZWaveAPI/Run/');
         if (angular.isArray(cmd)) {
             angular.forEach(cmd, function(v, k) {
-                 DataFactory.runCmd(folder + v).query();
+                DataFactory.runCmd(folder + v).query();
             });
         } else {
             //runCmdFactory.debug(cmd);
@@ -2516,8 +2589,8 @@ appController.controller('ControllController', function($scope, $filter, $route,
         //var url = 'controller.SetDefault()';
         // http://192.168.10.167:8083/ZWaveAPI/Restore?restore_chip_info=0"
         var url = 'Restore?restore_chip_info=0';
-         DataFactory.runCmd('/ZWaveAPI/' + cmd).query();
-        
+        DataFactory.runCmd('/ZWaveAPI/' + cmd).query();
+
         return;
     };
 
