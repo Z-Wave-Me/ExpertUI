@@ -1496,7 +1496,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
 
                     if ($scope.addData.type == 'm') {
                         // MultiChannelAssociation with instanceId
-                        var label = $filter('getDeviceName')(nodeId, $scope.getDeviceNames) + " - " + instanceId;
+                        var label = instanceId;
                         if ($scope.zdd[nodeId] && ("assocGroup" in $scope.zdd[nodeId]) && ((parseInt(instanceId) - 1) in $scope.zdd[nodeId].assocGroup)) {
                             label = $scope.zdd[nodeId].assocGroup[parseInt(instanceId) - 1].description.lang[1].__text;
                             // find best matching lang, default english
@@ -1511,7 +1511,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                                 }
                             });
                         }
-                        $scope.addInstances[groupId + ',' + nodeId + ',' + instanceId] = label;
+                        $scope.addInstances[groupId + ',' + nodeId + ',' + instanceId] = $filter('getDeviceName')(nodeId, $scope.getDeviceNames) + " - " + label;
                     } else {
                         // simple Assocation
                         $scope.addInstances[groupId + ',' + nodeId] = $filter('getDeviceName')(nodeId, $scope.getDeviceNames);
