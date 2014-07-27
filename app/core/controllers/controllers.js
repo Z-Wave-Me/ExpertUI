@@ -1497,10 +1497,9 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                     if ($scope.addData.type == 'm') {
                         // MultiChannelAssociation with instanceId
                         var label = instanceId;
-                        if ($scope.zdd[nodeId] && ("assocGroup" in $scope.zdd[nodeId]) && ((parseInt(instanceId) - 1) in $scope.zdd[nodeId].assocGroup)) {
-                            label = $scope.zdd[nodeId].assocGroup[parseInt(instanceId) - 1].description.lang[1].__text;
+                        if ($scope.zdd[nodeId] && ("assocGroup" in $scope.zdd[nodeId]) && (parseInt(instanceId) in $scope.zdd[nodeId].assocGroup)) {
                             // find best matching lang, default english
-                            var langs = $scope.zdd[nodeId].assocGroup[parseInt(instanceId) - 1].description.lang;
+                            var langs = $scope.zdd[nodeId].assocGroup[parseInt(instanceId)].description.lang;
                             angular.forEach(langs, function(lang, index) {
                                 if (("__text" in lang) && (lang["_xml:lang"] == $scope.lang)) {
                                     label = lang.__text;
