@@ -1372,7 +1372,7 @@ appController.controller('SecurityController', function($scope, $http, $log) {
 });
 
 // Assoc controller
-appController.controller('AssocController', function($scope, $log, $filter, $route, $timeout, DataFactory, DataTestFactory, XmlFactory, cfg) {
+appController.controller('AssocController', function($scope, $log, $filter, $route, $timeout, $http,  DataFactory, DataTestFactory, XmlFactory, cfg) {
     
     $scope.keys = [];
     $scope.data = {};
@@ -1384,6 +1384,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
     $scope.assocTo = null;
     $scope.applyQueue = [];
     $scope.updates = [];
+    $scope.zdd = {};
 
     var pollForUpdate = function(since, updates) {
         var spinner = $('#AssociationTable .fa-spinner');
@@ -1495,7 +1496,8 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
 
                     if ($scope.addData.type == 'm') {
                         // MultiChannelAssociation with instanceId
-                        $scope.addInstances[groupId + ',' + nodeId + ',' + instanceId] = $filter('getDeviceName')(nodeId, $scope.getDeviceNames) + " - " + instanceId;
+                        var label = $filter('getDeviceName')(nodeId, $scope.getDeviceNames) + " - " + instanceId;
+                        $scope.addInstances[groupId + ',' + nodeId + ',' + instanceId] = label;
                     } else {
                         // simple Assocation
                         $scope.addInstances[groupId + ',' + nodeId] = $filter('getDeviceName')(nodeId, $scope.getDeviceNames);
@@ -1507,42 +1509,79 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
         $('#modal_add').modal({});
     };
 
+    // Load ZDDXML
+    $scope.loadZDD = function(nodeId) {
+        if (nodeId in $scope.zdd) 
+            return; // zdd already loaded for nodeId
+        var node = $scope.ZWaveAPIData.devices[nodeId];
+        if (node == undefined)
+            return;
+        var zddXmlFile = null;
+        if (angular.isDefined(node.data.ZDDXMLFile)) {
+            zddXmlFile = node.data.ZDDXMLFile.value;
+        }
+        if (!(zddXmlFile))
+            return; // not available
+        $http.get($scope.cfg.zddx_url + zddXmlFile).then(function(response) {
+            var x2js = new X2JS();
+            var zddXml = x2js.xml_str2json(response.data);
+            if (("ZWaveDevice" in zddXml) && ("assocGroups" in zddXml.ZWaveDevice)) {
+                $scope.zdd[nodeId] = zddXml.ZWaveDevice.assocGroups;
+                if (nodeId == $scope.deviceId) 
+                    $scope.updateData(nodeId);
+            } else {
+                $scope.zdd[nodeId] = undefined;
+            }
+        });
+    };
+
+    $scope.updateData = function(nodeId) {
+        $scope.keys = [];
+        $scope.data = {};
+        var node = $scope.ZWaveAPIData.devices[nodeId];
+        if (node == undefined)
+            return;
+        if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
+            return;
+        var associables=$filter('associable')(node);
+        angular.forEach(associables.associations, function(association, index) {
+            var key=nodeId+".s-"+index;
+            $scope.keys.push(key);
+            var persistent = [];
+            for(var i = 0; i < association.data.nodes.value.length; i++) {
+                persistent.push("inZWave");
+            }
+            var label = $scope._t('association_group') + " " + association.data.name;
+            if ($scope.zdd[nodeId] && ("assocGroup" in $scope.zdd[nodeId]) && ((parseInt(association.data.name) - 1) in $scope.zdd[nodeId].assocGroup)) {
+                // TODO find best matching lang, using english here
+                label = $scope.zdd[nodeId].assocGroup[parseInt(association.data.name) - 1].description.lang[1].__text;
+            }
+            $scope.data[key] = {"type": "s", "label": label, "nodeId": nodeId, "node": node, "commandClass": "0x85", "instance": association.instance, "groupId": association.data.name, "nodeIds": association.data.nodes.value, "persistent":persistent, "update":association.data.nodes, "remaining": (association.data.max.value - association.data.nodes.value.length)};
+        });
+        angular.forEach(associables.multiChannelAssociations, function(association, index) {
+            var key=nodeId+".m-"+index;
+            $scope.keys.push(key);
+            var nodeIds = [];
+            var instanceIds = [];
+            var persistent = [];
+            for(var i = 0; i < association.data.nodesInstances.value.length; i+=2) {
+                nodeIds.push(association.data.nodesInstances.value[i]);
+                instanceIds.push(association.data.nodesInstances.value[i + 1]);
+                persistent.push("inZWave");
+            }
+            var label = $scope._t('multi_association_group') + " " + association.data.name;
+            $scope.data[key] = {"type": "m", "label": label, "nodeId": nodeId, "instanceId": index, "node": node, "commandClass": "0x8e", "instance": association.instance, "groupId": association.data.name, "nodeIds": nodeIds, "instanceIds": instanceIds, "persistent":persistent, "update":association.data.nodesInstances, "remaining": (association.data.max.value - (association.data.nodesInstances.value.length / 2))};
+        });
+    };
+
     // Load data
     $scope.load = function(lang) {
         DataFactory.all('0').query(function(ZWaveAPIData) {
-            $scope.keys = [];
-            $scope.data = {};
             $scope.ZWaveAPIData = ZWaveAPIData;
             // Gather associations
             var nodeId = $scope.deviceId;
-            var node = $scope.ZWaveAPIData.devices[nodeId];
-            if (node == undefined)
-                return;
-            if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
-                return;
-            var associables=$filter('associable')(node);
-            angular.forEach(associables.associations, function(association, index) {
-                var key=nodeId+".s-"+index;
-                $scope.keys.push(key);
-                var persistent = [];
-                for(var i = 0; i < association.data.nodes.value.length; i++) {
-                    persistent.push("inZWave");
-                }
-                $scope.data[key] = {"type": "s", "label":$scope._t('association_group') + " " + association.data.name, "nodeId": nodeId, "node": node, "commandClass": "0x85", "instance": association.instance, "groupId": association.data.name, "nodeIds": association.data.nodes.value, "persistent":persistent, "update":association.data.nodes, "remaining": (association.data.max.value - association.data.nodes.value.length)};
-            });
-            angular.forEach(associables.multiChannelAssociations, function(association, index) {
-                var key=nodeId+".m-"+index;
-                $scope.keys.push(key);
-                var nodeIds = [];
-                var instanceIds = [];
-                var persistent = [];
-                for(var i = 0; i < association.data.nodesInstances.value.length; i+=2) {
-                    nodeIds.push(association.data.nodesInstances.value[i]);
-                    instanceIds.push(association.data.nodesInstances.value[i + 1]);
-                    persistent.push("inZWave");
-                }
-                $scope.data[key] = {"type": "m", "label":$scope._t('multi_association_group') + " " + association.data.name, "nodeId": nodeId, "instanceId": index, "node": node, "commandClass": "0x8e", "instance": association.instance, "groupId": association.data.name, "nodeIds": nodeIds, "instanceIds": instanceIds, "persistent":persistent, "update":association.data.nodesInstances, "remaining": (association.data.max.value - (association.data.nodesInstances.value.length / 2))};
-            });
+            $scope.loadZDD(nodeId);
+            $scope.updateData(nodeId);
         });
     };
 
