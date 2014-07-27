@@ -2966,7 +2966,7 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
                                 $('#cell'+current.nodeId+'-'+nnodeId).css({ "border-color": ""});
                             });
                             $('div.rtDiv').css({ "border-color": ""});
-                            $scope.appendLog(" " + $scope._t('reorg_done'), true)
+                            $scope.appendLog(" " + $scope._t('reorg_done'), true);
                             if (!("done" in result)) {
                                 result.done = [];
                             }
@@ -3169,7 +3169,7 @@ appController.controller('ReorganizationController',  function($scope, $log, $fi
                                 }
                             });
                             $('tr.line'+current.nodeId).css({ "outline": ""});
-                            $scope.appendLog(" " + $scope._t('reorg_done'));
+                            $scope.appendLog(" " + $scope._t('reorg_done'), true);
                             if (current.type == "battery") {
                                 if ("battery_completed" in result) {
                                     result.battery_completed++;
@@ -3195,7 +3195,7 @@ appController.controller('ReorganizationController',  function($scope, $log, $fi
                     } 
                     if (current.timeout < (new Date()).getTime()) {
                         // timeout waiting for an update-route occured, proceed
-                        $scope.appendLog(" " + $scope._t('reorg_timeout'));
+                        $scope.appendLog(" " + $scope._t('reorg_timeout'), true);
                         if (current.type == "battery") {
                             if ("battery_pending" in result) {
                                 result.battery_pending++;
