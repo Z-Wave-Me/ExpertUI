@@ -2916,17 +2916,17 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
     $scope.processUpdateNodesNeighbours = function(processQueue, result) {
         var spinner = $('#RoutingTable .fa-spinner');
         if (processQueue.length == 0) {
-            $scope.appendLog("Reorganisation completed:");
+            $scope.appendLog($scope._t('reorg_completed') + ":");
             if ("mains_completed" in result) 
-                $scope.appendLog(result.mains_completed + " mains powered nodes found and reorganized");
+                $scope.appendLog(result.mains_completed + " " + $scope._t('reorg_mains_powered_done'));
             if ("battery_completed" in result) 
-                $scope.appendLog(result.battery_completed + " battery powered nodes found and reorganized");
+                $scope.appendLog(result.battery_completed + " " + $scope._t('reorg_battery_powered_done'));
             if ("mains_pending" in result) 
-                $scope.appendLog(result.mains_pending + " mains powered nodes still pending");
+                $scope.appendLog(result.mains_pending + " " + $scope._t('reorg_mains_powered_pending'));
             if ("battery_pending" in result) 
-                $scope.appendLog(result.battery_pending + " battery powered nodes still pending");
+                $scope.appendLog(result.battery_pending + " " + $scope._t('reorg_battery_powered_pending'));
             if ($.isEmptyObject(result))
-                $scope.appendLog("nothing to reorganize");
+                $scope.appendLog($scope._t('reorg_nothing'));
             $('div.rtDiv').css({ "border-color": ""});
             $.each(result.done, function (index, nodeId) {
                 $scope.updating[nodeId] = false;
@@ -2936,7 +2936,7 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
         }
         spinner.show();
         var current=processQueue[0];
-        $scope.appendLog("reorg " + current.nodeId + " " + (current.retry > 0? current.retry + ". retry": "") + " ");
+        $scope.appendLog($scope._t('reorg_reorg') + " " + current.nodeId + " " + (current.retry > 0? current.retry + ". " + $scope._t('reorg_retry'): "") + " ");
 
         // process-states
         if (!("timeout" in current)) {
@@ -2966,7 +2966,7 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
                                 $('#cell'+current.nodeId+'-'+nnodeId).css({ "border-color": ""});
                             });
                             $('div.rtDiv').css({ "border-color": ""});
-                            $scope.appendLog(" done", true)
+                            $scope.appendLog(" " + $scope._t('reorg_done'), true)
                             if (!("done" in result)) {
                                 result.done = [];
                             }
@@ -2996,7 +2996,7 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
                     } 
                     if (current.timeout < (new Date()).getTime()) {
                         // timeout waiting for an update-route occured, proceed
-                        $scope.appendLog(" timed out", true);
+                        $scope.appendLog(" " + $scope._t('reorg_timeout'), true);
                         if (!("done" in result)) {
                             result.done = [];
                         }
@@ -3038,7 +3038,7 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
             for (var retry = 0; retry < 1; retry++) {
                 processQueue.push({"nodeId": nodeId, "retry": retry, "type": (hasBattery?"battery":"mains"), "since": $scope.ZWaveAPIData.updateTime});
                 if (retry == 0) {
-                    $scope.appendLog("Reorg of " + (hasBattery?"battery":"mains") + " powered node: " + nodeId);
+                    $scope.appendLog($scope._t('reorg_node_' + (hasBattery?"battery":"mains")) + ": " + nodeId);
                 }
             }
             // avoid overall routing-table updates during update
@@ -3126,23 +3126,24 @@ appController.controller('ReorganizationController',  function($scope, $log, $fi
 
     $scope.processReorgNodesNeighbours = function(processQueue, result) {
         if (processQueue.length == 0) {
-            $scope.appendLog("Reorganisation completed:");
+            $scope.appendLog($scope._t('reorg_completed') + ":");
             if ("mains_completed" in result) 
-                $scope.appendLog(result.mains_completed + " mains powered nodes found and reorganized");
+                $scope.appendLog(result.mains_completed + " " + $scope._t('reorg_mains_powered_done'));
             if ("battery_completed" in result) 
-                $scope.appendLog(result.battery_completed + " battery powered nodes found and reorganized");
+                $scope.appendLog(result.battery_completed + " " + $scope._t('reorg_battery_powered_done'));
             if ("mains_pending" in result) 
-                $scope.appendLog(result.mains_pending + " mains powered nodes still pending");
+                $scope.appendLog(result.mains_pending + " " + $scope._t('reorg_mains_powered_pending'));
             if ("battery_pending" in result) 
-                $scope.appendLog(result.battery_pending + " battery powered nodes still pending");
+                $scope.appendLog(result.battery_pending + " " + $scope._t('reorg_battery_powered_pending'));
             if ($.isEmptyObject(result))
-                $scope.appendLog("nothing to reorganize");
+                $scope.appendLog($scope._t('reorg_nothing'));
             $('div.rtDiv').css({ "border-color": ""});
             $scope.reorganizing = false;
             return;
         }
         var current=processQueue[0];
-        $scope.appendLog("reorg " + current.nodeId + " " + (current.retry > 0? current.retry + ". retry": "") + " ");
+        $scope.appendLog($scope._t('reorg_reorg') + " " + current.nodeId + " " + (current.retry > 0? current.retry + ". " + $scope._t('reorg_retry'): "") + " ");
+
 
         // process-states
         if (!("timeout" in current)) {
@@ -3168,7 +3169,7 @@ appController.controller('ReorganizationController',  function($scope, $log, $fi
                                 }
                             });
                             $('tr.line'+current.nodeId).css({ "outline": ""});
-                            $scope.appendLog(" done");
+                            $scope.appendLog(" " + $scope._t('reorg_done'));
                             if (current.type == "battery") {
                                 if ("battery_completed" in result) {
                                     result.battery_completed++;
@@ -3194,7 +3195,7 @@ appController.controller('ReorganizationController',  function($scope, $log, $fi
                     } 
                     if (current.timeout < (new Date()).getTime()) {
                         // timeout waiting for an update-route occured, proceed
-                        $scope.appendLog(" timed out");
+                        $scope.appendLog(" " + $scope._t('reorg_timeout'));
                         if (current.type == "battery") {
                             if ("battery_pending" in result) {
                                 result.battery_pending++;
@@ -3226,7 +3227,7 @@ appController.controller('ReorganizationController',  function($scope, $log, $fi
     $scope.reorgAll = function() {
         $scope.reorganizing = true;
         $scope.log = [];
-        $scope.appendLog("Reorganization started");
+        $scope.appendLog($scope._t('reorg_started'));
         // retry each element up to 4 times
         var processQueue=[];
         var logInfo="";
@@ -3245,7 +3246,7 @@ appController.controller('ReorganizationController',  function($scope, $log, $fi
                     }
                 });
                 if (retry == 0) {
-                    $scope.appendLog("Reorg all mains powered nodes: " + logInfo);
+                    $scope.appendLog($scope._t('reorg_all_mains') + ": " + logInfo);
                     logInfo="";
                 }
             }
@@ -3265,7 +3266,7 @@ appController.controller('ReorganizationController',  function($scope, $log, $fi
                     }
                 });
                 if (retry == 0) {
-                    $scope.appendLog("Reorg all battery powered nodes: " + logInfo);
+                    $scope.appendLog($scope._t('reorg_all_battery') + ": " + logInfo);
                 }
             }
         }
