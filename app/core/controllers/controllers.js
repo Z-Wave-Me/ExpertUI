@@ -1372,7 +1372,7 @@ appController.controller('SecurityController', function($scope, $http, $log) {
 });
 
 // Assoc controller
-appController.controller('AssocController', function($scope, $log, $filter, $route, $timeout, $http,  DataFactory, DataTestFactory, XmlFactory, cfg) {
+appController.controller('AssocController', function($scope, $log, $filter, $route, $timeout, $http, DataFactory, DataTestFactory, XmlFactory, cfg) {
     
     $scope.keys = [];
     $scope.data = {};
@@ -1497,6 +1497,20 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                     if ($scope.addData.type == 'm') {
                         // MultiChannelAssociation with instanceId
                         var label = $filter('getDeviceName')(nodeId, $scope.getDeviceNames) + " - " + instanceId;
+                        if ($scope.zdd[nodeId] && ("assocGroup" in $scope.zdd[nodeId]) && ((parseInt(instanceId) - 1) in $scope.zdd[nodeId].assocGroup)) {
+                            label = $scope.zdd[nodeId].assocGroup[parseInt(instanceId) - 1].description.lang[1].__text;
+                            // find best matching lang, default english
+                            var langs = $scope.zdd[nodeId].assocGroup[parseInt(instanceId) - 1].description.lang;
+                            angular.forEach(langs, function(lang, index) {
+                                if (("__text" in lang) && (lang["_xml:lang"] == $scope.lang)) {
+                                    label = lang.__text;
+                                    return false;
+                                } 
+                                if (("__text" in lang) && (lang["_xml:lang"] == "en")) {
+                                    label = lang.__text;
+                                }
+                            });
+                        }
                         $scope.addInstances[groupId + ',' + nodeId + ',' + instanceId] = label;
                     } else {
                         // simple Assocation
@@ -1553,8 +1567,17 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
             }
             var label = $scope._t('association_group') + " " + association.data.name;
             if ($scope.zdd[nodeId] && ("assocGroup" in $scope.zdd[nodeId]) && ((parseInt(association.data.name) - 1) in $scope.zdd[nodeId].assocGroup)) {
-                // TODO find best matching lang, using english here
-                label = $scope.zdd[nodeId].assocGroup[parseInt(association.data.name) - 1].description.lang[1].__text;
+                // find best matching lang, default english
+                var langs = $scope.zdd[nodeId].assocGroup[parseInt(association.data.name) - 1].description.lang;
+                angular.forEach(langs, function(lang, index) {
+                    if (("__text" in lang) && (lang["_xml:lang"] == $scope.lang)) {
+                        label = lang.__text;
+                        return false;
+                    } 
+                    if (("__text" in lang) && (lang["_xml:lang"] == "en")) {
+                        label = lang.__text;
+                    }
+                });
             }
             $scope.data[key] = {"type": "s", "label": label, "nodeId": nodeId, "node": node, "commandClass": "0x85", "instance": association.instance, "groupId": association.data.name, "nodeIds": association.data.nodes.value, "persistent":persistent, "update":association.data.nodes, "remaining": (association.data.max.value - association.data.nodes.value.length)};
         });
@@ -1570,6 +1593,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                 persistent.push("inZWave");
             }
             var label = $scope._t('multi_association_group') + " " + association.data.name;
+            // TODO resolve zddxml-assocGroup label name when available in zddxml
             $scope.data[key] = {"type": "m", "label": label, "nodeId": nodeId, "instanceId": index, "node": node, "commandClass": "0x8e", "instance": association.instance, "groupId": association.data.name, "nodeIds": nodeIds, "instanceIds": instanceIds, "persistent":persistent, "update":association.data.nodesInstances, "remaining": (association.data.max.value - (association.data.nodesInstances.value.length / 2))};
         });
     };
@@ -1580,8 +1604,13 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
             $scope.ZWaveAPIData = ZWaveAPIData;
             // Gather associations
             var nodeId = $scope.deviceId;
-            $scope.loadZDD(nodeId);
             $scope.updateData(nodeId);
+            // load initial zdd data (cached)
+            angular.forEach($scope.ZWaveAPIData.devices, function(node, nodeId) {
+                if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
+                    return;
+                $scope.loadZDD(nodeId);
+            });
         });
     };
 
