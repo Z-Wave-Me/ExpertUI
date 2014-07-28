@@ -22,7 +22,7 @@
             class="form" 
             role="form"
             ng-controller="ConfigStoreController"
-            ng-submit="submitApplyConfigCfg(formName, wakeupCont.cmd + '.Set')" 
+            ng-submit="submitApplyConfigCfg(formName, 'devices[' + deviceId + '].instances[0].commandClasses[0x70].Set',configCont)" 
             novalidate>
             <button
                 type="submit"
@@ -38,6 +38,7 @@
                 <div class="form-inline">
                     <expert-command-input 
                         collection='v'
+                        div_id='$index'
                         default_value='v.defaultValue'
                         ></expert-command-input>
                 </div>
