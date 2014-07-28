@@ -1374,7 +1374,7 @@ appController.controller('SecurityController', function($scope, $http, $log) {
 // Configuration controller
 appController.controller('ConfigurationController', function($scope, $routeParams, $http, $filter, $location, $cookies, DataFactory, XmlFactory, DataTestFactory) {
     $scope.devices = [];
-    $scope.showDevices = true;
+    $scope.showDevices = false;
     $scope.ZWaveAPIData;
     $scope.descriptionCont;
     $scope.configCont;
@@ -1412,12 +1412,13 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         DataFactory.all('0').query(function(ZWaveAPIData) {
             //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
             var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
-
+            
             // Loop throught devices
             angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
                 if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
                     return;
                 }
+                 $scope.showContent = true;
                 var node = ZWaveAPIData.devices[nodeId];
 
                 if (nodeId == $routeParams.nodeId) {
@@ -1445,12 +1446,12 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         DataFactory.all('0').query(function(ZWaveAPIData) {
             //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
+            console.log(nodeId);
             var node = ZWaveAPIData.devices[nodeId];
             if (!node) {
-                $scope.showDevices = false;
-                return;
+               return;
             }
-            $scope.showContent = true;
+            $scope.showDevices = true;
             var zddXmlFile = null;
             if (angular.isDefined(node.data.ZDDXMLFile)) {
                 zddXmlFile = node.data.ZDDXMLFile.value;
@@ -1473,7 +1474,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                     var x2js = new X2JS();
                     var zddXml = x2js.xml_str2json(response.data);
                     $scope.descriptionCont = descriptionCont(node, nodeId, zddXml, ZWaveAPIData);
-                    $scope.configCont = configCont(node, zddXml);
+                    $scope.configCont = configCont(node, nodeId, zddXml);
                     $scope.wakeupCont = wakeupCont(node, nodeId, ZWaveAPIData);
                     $scope.switchAllCont = switchAllCont(node, nodeId);
                     $scope.protectionCont = protectionCont(node, nodeId);
@@ -1482,7 +1483,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                 });
             } else {
                 $scope.descriptionCont = descriptionCont(node, nodeId, null, ZWaveAPIData);
-                $scope.configCont = configCont(node, null);
+                $scope.configCont = configCont(node, nodeId, null);
                 $scope.wakeupCont = wakeupCont(node, nodeId, ZWaveAPIData);
                 $scope.switchAllCont = switchAllCont(node, nodeId);
                 $scope.protectionCont = protectionCont(node, nodeId);
@@ -1736,7 +1737,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     /**
      * Config cont
      */
-    function configCont(node, zddXml) {
+    function configCont(node, nodeId, zddXml) {
         if (!0x70 in node.instances[0].commandClasses) {
             return null;
         }
@@ -1771,6 +1772,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             have_conf_params = true;
             var conf = conf_html;
             var conf_num = conf['_number'];
+            var conf_size = conf['_size'];
             var conf_name = $scope._t('configuration_parameter') + ' ' + conf_num;
             if (angular.isDefined(conf.name)) {
                 if (angular.isDefined(conf.name.lang[langId])) {
@@ -1851,15 +1853,18 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                         });
                     });
                     conf_method_descr = {
+                        nodeId: nodeId,
                         label: 'Nº ' + conf_num + ' - ' + conf_name,
                         type: {
                             enumof: param_struct_arr
                         },
+                        name: 'input_' + nodeId + '_' + conf_num,
                         description: conf_description,
                         updateTime: updateTime,
                         isUpdated: isUpdated,
                         defaultValue: conf_default_value,
-                        confNum: conf_num
+                        confNum: conf_num,
+                        confSize: conf_size
                     };
 
                     break;
@@ -1929,15 +1934,18 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                     });
                     if (param_struct_arr.length > 1)
                         conf_method_descr = {
+                            nodeId: nodeId,
                             label: 'Nº ' + conf_num + ' - ' + conf_name,
                             type: {
                                 enumof: param_struct_arr
                             },
+                            name: 'input_' + nodeId + '_' + conf_num,
                             description: conf_description,
                             updateTime: updateTime,
                             isUpdated: isUpdated,
                             defaultValue: conf_default_value,
-                            confNum: conf_num
+                            confNum: conf_num,
+                            confSize: conf_size
                         };
                     else if (param_struct_arr.length == 1)
                         conf_method_descr = param_struct_arr[0];
@@ -1971,15 +1979,18 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                         });
                     });
                     conf_method_descr = {
+                        nodeId: nodeId,
                         label: 'Nº ' + conf_num + ' - ' + conf_name,
                         type: {
                             constant: param_struct_arr
                         },
+                        name: 'input_' + nodeId + '_' + conf_num,
                         description: conf_description,
                         updateTime: updateTime,
                         isUpdated: isUpdated,
                         defaultValue: conf_default_value,
-                        confNum: conf_num
+                        confNum: conf_num,
+                        confSize: conf_size
                     };
 
                     break;
@@ -2017,6 +2028,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                         if (value_from == value_to)
                             param_struct_arr.push({
                                 label: value_description,
+                                name: 'input_' + nodeId + '_' + conf_num,
                                 type: {
                                     bitcheck: {
                                         bit: value_from
@@ -2026,6 +2038,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                         else
                             param_struct_arr.push({
                                 label: value_description,
+                                name: 'input_' + nodeId + '_' + conf_num,
                                 type: {
                                     bitrange: {
                                         bit_from: value_from,
@@ -2042,15 +2055,18 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                             conf_default_value = conf_default_value.substr(0, conf_default_value.length - 2);
                     }
                     conf_method_descr = {
+                        nodeId: nodeId,
                         label: 'Nº ' + conf_num + ' - ' + conf_name,
                         type: {
                             bitset: param_struct_arr
                         },
+                        name: 'input_' + nodeId + '_' + conf_num,
                         description: conf_description,
                         updateTime: updateTime,
                         isUpdated: isUpdated,
                         defaultValue: conf_default_value,
-                        confNum: conf_num
+                        confNum: conf_num,
+                        confSize: conf_size
                     };
 
                     break;
@@ -2064,7 +2080,6 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             parCnt++;
 
         });
-
         return config_cont;
     }
 
@@ -2368,28 +2383,41 @@ appController.controller('ConfigStoreController', function($scope, DataFactory) 
      * @param {object} form
      * @returns {undefined}
      */
-    $scope.submitApplyConfigCfg = function(form, cmd) {
+    $scope.submitApplyConfigCfg = function(form, cmd, cfg) {
         var sections = $('#' + form).find('.cfg-control-content');
         var data = $('#' + form).serializeArray();
         var dataValues = [];
-        var cnt = 1;
+
         angular.forEach(data, function(v, k) {
             if (v.value !== '') {
-                dataValues.push({"value": v.value, "name":v.name});
+                dataValues.push({"value": v.value, "name": v.name});
                 //dataValues.push(v.name);
             }
-            
+
         });
-        console.log(data);
-        console.log(dataValues);
-        
+        //console.log(cfg);
         angular.forEach(dataValues, function(n, nk) {
-                    var num = n.name.replace( /^\D+/g, '');
-                     var value = n.value;
-                     var request = cmd + '(' + num + ',' + value + ')';
-                    console.log(request);
-                });
-        
+            var lastNum = n.name.match(/\d+$/);
+            if (!lastNum) {
+                return;
+            }
+            var num = lastNum[0];
+            var confSize = 0;
+            //var lastNum = n.name.match(/\d+$/);
+            var value = n.value;
+            angular.forEach(cfg, function(cv, ck) {
+            if (cv.confNum == num) {
+                confSize = cv.confSize;
+                //dataValues.push(v.name);
+            }
+
+        });
+            
+            var request = cmd + '(' + num[0] + ',' + value + ',' + confSize +')';
+            console.log(request);
+            //DataFactory.store(request).query();
+        });
+
         return;
         angular.forEach(angular.element('#' + form + ' .cfg-control-content'), function(v, k) {
             var itemId = $(v).attr('id');
@@ -2397,16 +2425,16 @@ appController.controller('ConfigStoreController', function($scope, DataFactory) 
                 var inputName = $(i).attr('name');
                 var inputValue = $(i).attr('value');
                 angular.forEach(dataValues, function(n, nk) {
-                    if(inputName == n.name && inputValue === n.value){
-                        console.log(inputName,inputValue);
+                    if (inputName == n.name && inputValue === n.value) {
+                        console.log(inputName, inputValue);
                     }
-                    
+
                 });
                 //console.log(dataValues['radio_Nº 1 - True Period']);
                 if (angular.isDefined(dataValues[inputName])) {
                     console.log(inputName, inputValue);
                 }
-                console.log(inputName.replace( /^\D+/g, ''), inputValue);
+                console.log(inputName.replace(/^\D+/g, ''), inputValue);
 
             });
             //var a = angular.element(value);

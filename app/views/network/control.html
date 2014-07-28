@@ -103,7 +103,7 @@
                 <div class="panel-body">
                     <div>
                         <!-- remove_failed_node -->
-                        <div class="cfg-block form-inline" ng-show="failedNodes.length > 0">
+                        <div class="cfg-block form-inline">
                             <p class="input-help">{{_t('nm_remove_node_war')}}</p>
                             <button 
                                 class="btn btn-primary" 
@@ -118,7 +118,7 @@
                         </div>
 
                         <!-- replace_failed_node -->
-                        <div class="cfg-block form-inline"  ng-show="replaceNodes.length > 0">
+                        <div class="cfg-block form-inline">
                             <p class="input-help">{{_t('nm_replace_node_war')}}</p>
                             <button 
                                 class="btn btn-primary"
@@ -133,7 +133,7 @@
                         </div>
 
                         <!-- mark_battery_failed -->
-                        <div class="cfg-block form-inline" ng-show="failedBatteries.length > 0">
+                        <div class="cfg-block form-inline">
                             <p class="input-help">{{_t('nm_mark_node_war')}}</p>
                             <button 
                                 class="btn btn-primary" 
@@ -168,7 +168,7 @@
                         <!-- learn_start -->
                         <div class="cfg-block form-inline">
                             <p class="input-help">{{_t('nm_learn_mode_war')}}</p>
-                            <div class="nm-response"  ng-class="controllerState == 0 ? 'text-info' : 'text - danger'" ng-show="[8, 9, 10, 11, 12].indexOf(controllerState) > -1">
+                            <div class="nm-response"  ng-class="controllerState == 0 ? 'text-info' : 'text-danger'" ng-show="[8, 9, 10, 11, 12].indexOf(controllerState) > -1">
                                 {{_t('nm_controller_state_' + controllerState)}}
                             </div>
                             <button 
