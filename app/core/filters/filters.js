@@ -31,6 +31,19 @@ angApp.filter('toTrusted', ['$sce', function($sce){
 /**
  * Display device name
  */
+angApp.filter('deviceName', function() {
+    return function(deviceId,device) {
+        var name = 'Device ' + '_' + deviceId;
+        if(device.data.givenName.value != ''){
+             name = device.data.givenName.value;
+        }
+        return name;
+    };
+});
+
+/**
+ * Display device name
+ */
 angApp.filter('getDeviceName', function() {
     return function(deviceId,data) {
         var name = 'Device ' + deviceId;
