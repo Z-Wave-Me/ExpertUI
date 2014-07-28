@@ -137,7 +137,7 @@ appController.controller('SwitchController', function($scope, $http, $log, $filt
                     obj['hasSwitchAll'] = hasSwitchAll;
                     obj['switchAllValue'] = switchAllValue;
                     obj['rowId'] = 'switch_' + nodeId + '_' + cnt;
-                    obj['name'] = node.data.name;
+                    obj['name'] = $filter('deviceName')(nodeId,node);
                     obj['updateTime'] = instance.commandClasses[ccId].data.level.updateTime;
                     obj['invalidateTime'] = instance.commandClasses[ccId].data.level.invalidateTime;
                     obj['urlToStore'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Get()';
@@ -339,7 +339,7 @@ appController.controller('SensorsController', function($scope, $log, $filter, $t
                             obj['cmd'] = sensorBinary.data.name + '.' + val.name;
                             obj['cmdId'] = '48';
                             obj['rowId'] = sensorBinary.name + '_' + val.name + '_' + k;
-                            obj['name'] = device.data.name;
+                            obj['name'] = $filter('deviceName')(k,device);
                             obj['type'] = sensorBinary.name;
                             obj['purpose'] = val.sensorTypeString.value;
                             obj['level'] = (val.level.value ? $scope._t('sensor_triggered') : $scope._t('sensor_idle'));
@@ -371,7 +371,7 @@ appController.controller('SensorsController', function($scope, $log, $filter, $t
                             obj['cmd'] = sensorMultilevel.data.name + '.' + val.name;
                             obj['cmdId'] = '49';
                             obj['rowId'] = sensorMultilevel.name + '_' + val.name + '_' + k;
-                            obj['name'] = device.data.name;
+                            obj['name'] = $filter('deviceName')(k,device);
                             obj['type'] = sensorMultilevel.name;
                             obj['purpose'] = val.sensorTypeString.value;
                             obj['level'] = val.val.value;
@@ -406,7 +406,7 @@ appController.controller('SensorsController', function($scope, $log, $filter, $t
                             obj['cmd'] = meters.data.name + '.' + meter.name;
                             obj['cmdId'] = '50';
                             obj['rowId'] = meters.name + '_' + meter.name + '_' + k;
-                            obj['name'] = device.data.name;
+                            obj['name'] = $filter('deviceName')(k,device);
                             obj['type'] = meters.name;
                             obj['purpose'] = meter.sensorTypeString.value;
                             obj['level'] = meter.val.value;
@@ -548,7 +548,7 @@ appController.controller('MetersController', function($scope, $log, $filter, $ti
                             obj['cmd'] = meters.data.name + '.' + meter.name;
                             obj['cmdId'] = '50';
                             obj['rowId'] = meters.name + '_' + meter.name + '_' + k;
-                            obj['name'] = device.data.name;
+                            obj['name'] = $filter('deviceName')(k,device);
                             obj['type'] = meters.name;
                             obj['purpose'] = meter.sensorTypeString.value;
                             obj['level'] = meter.val.value;
@@ -678,7 +678,7 @@ appController.controller('ThermostatController', function($scope, $http, $log, $
                     obj['cmd'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.' + curThermMode;
                     obj['ccId'] = ccId;
                     obj['rowId'] = 'row_' + nodeId + '_' + cnt;
-                    obj['name'] = node.data.name;
+                    obj['name'] = $filter('deviceName')(nodeId,node);
                     obj['level'] = instance.commandClasses[ccId].data[curThermMode].setVal.value;
                     obj['updateTime'] = instance.commandClasses[ccId].data[curThermMode].updateTime;
                     obj['invalidateTime'] = instance.commandClasses[ccId].data[curThermMode].invalidateTime;
@@ -801,7 +801,7 @@ appController.controller('LocksController', function($scope, $http, $log, $filte
                     obj['cmd'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.mode';
                     obj['ccId'] = doorLockCCId;
                     obj['rowId'] = 'row_' + nodeId + '_' + cnt;
-                    obj['name'] = node.data.name;
+                    obj['name'] = $filter('deviceName')(nodeId,node);
                     obj['level'] = mode;
                     obj['updateTime'] = instance.commandClasses[ccId].data.mode.updateTime;
                     obj['invalidateTime'] = instance.commandClasses[ccId].data.mode.invalidateTime;
@@ -937,7 +937,7 @@ appController.controller('StatusController', function($scope, $http, $log, $filt
         obj['cmd'] = bindPath.split(',');
         obj['genericType'] = genericType;
         obj['specificType'] = specificType;
-        obj['name'] = node.data.name;
+        obj['name'] = $filter('deviceName')(nodeId,node);
         obj['sleeping'] = sleeping_cont;
         obj['awake'] = awake_cont;
         obj['updateTime'] = operating_cont;
@@ -1153,7 +1153,7 @@ appController.controller('BatteryController', function($scope, $log, $filter, $t
                 obj['id'] = nodeId;
                 obj['cmd'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].data.last';
                 obj['rowId'] = 'row_' + nodeId;
-                obj['name'] = node.data.name;
+                obj['name'] = $filter('deviceName')(nodeId,node);
                 obj['level'] = battery_charge;
                 obj['updateTime'] = battery_updateTime;
                 obj['urlToStore'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Get()';
@@ -1314,7 +1314,7 @@ appController.controller('TypeController', function($scope, $log, $filter, $time
                 var obj = {};
                 obj['id'] = nodeId;
                 obj['rowId'] = 'row_' + nodeId;
-                obj['name'] = node.data.name;
+                obj['name'] = $filter('deviceName')(nodeId,node);
                 obj['security'] = security;
                 obj['ZWavePlusInfo'] = ZWavePlusInfo;
                 obj['sdk'] = sdk;
@@ -1668,13 +1668,13 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         DataFactory.all('0').query(function(ZWaveAPIData) {
             //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
             var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
-            
+
             // Loop throught devices
             angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
                 if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
                     return;
                 }
-                 $scope.showContent = true;
+                $scope.showContent = true;
                 var node = ZWaveAPIData.devices[nodeId];
 
                 if (nodeId == $routeParams.nodeId) {
@@ -1684,7 +1684,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                 var obj = {};
                 obj['id'] = nodeId;
                 obj['rowId'] = 'row_' + nodeId;
-                obj['name'] = node.data.name;
+                obj['name'] = $filter('deviceName')(nodeId,node);
                 obj['slected'] = '';
                 if (nodeId == $routeParams.nodeId) {
 
@@ -1702,12 +1702,12 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         DataFactory.all('0').query(function(ZWaveAPIData) {
             //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
-            console.log(nodeId);
             var node = ZWaveAPIData.devices[nodeId];
             if (!node) {
-               return;
+                return;
             }
             $scope.showDevices = true;
+             $scope.deviceName = $filter('deviceName')(nodeId,node);
             var zddXmlFile = null;
             if (angular.isDefined(node.data.ZDDXMLFile)) {
                 zddXmlFile = node.data.ZDDXMLFile.value;
@@ -1793,7 +1793,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             ;
             var obj = {};
             obj['id'] = v.id;
-            obj['name'] = $filter('getDeviceName')(v.id, $scope.getDeviceNames);
+            obj['name'] = v.name;
             devices.push(obj);
         });
         return devices;
@@ -1892,7 +1892,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         //$filter('getDeviceName')(nodeId, null);
         // OBJ
         var obj = {};
-        obj["a"] = {"key": "device_node_name", "val": $filter('getDeviceName')(nodeId, $scope.getDeviceNames)};
+        obj["a"] = {"key": "device_node_name", "val":$filter('deviceName')(nodeId,node)};
         obj["b"] = {"key": "device_node_id", "val": nodeId};
         obj["c"] = {"key": "device_node_type", "val": ''};
         obj["d"] = {"key": "device_description_brand", "val": brandName};
@@ -2561,11 +2561,14 @@ appController.controller('ConfigStoreController', function($scope, DataFactory) 
         //var data = $('#' + form).serialize();
         var deviceId = $scope.deviceId;
         var deviceName = $('#' + form + ' #device_name').val();
-
-        var out = renameDeviceBuild(deviceId, deviceName, $scope.getDeviceNames);
-        console.log(out);
-        DataFactory.putConfig('devices.json').query();
+        var request =  'cmdToUpdateDevice('+deviceName+')';
+        console.log(request);
+        DataFactory.store(request).query();
         return;
+//        var out = renameDeviceBuild(deviceId, deviceName, $scope.getDeviceNames);
+//       
+//        DataFactory.putConfig('devices.json').query();
+//        return;
     };
 
     /**
@@ -2662,14 +2665,14 @@ appController.controller('ConfigStoreController', function($scope, DataFactory) 
             //var lastNum = n.name.match(/\d+$/);
             var value = n.value;
             angular.forEach(cfg, function(cv, ck) {
-            if (cv.confNum == num) {
-                confSize = cv.confSize;
-                //dataValues.push(v.name);
-            }
+                if (cv.confNum == num) {
+                    confSize = cv.confSize;
+                    //dataValues.push(v.name);
+                }
 
-        });
-            
-            var request = cmd + '(' + num[0] + ',' + value + ',' + confSize +')';
+            });
+
+            var request = cmd + '(' + num[0] + ',' + value + ',' + confSize + ')';
             console.log(request);
             //DataFactory.store(request).query();
         });
@@ -2744,7 +2747,7 @@ appController.controller('ConfigStoreController', function($scope, DataFactory) 
 });
 
 // Controll controller
-appController.controller('ControllController', function($scope, $filter, $route, $timeout, DataFactory, DataTestFactory) {
+appController.controller('ControllController', function($scope, $filter, $route, $timeout, DataFactory, DataTestFactory, XmlFactory) {
     $scope.devices = [];
     $scope.failedNodes = [];
     $scope.replaceNodes = [];
@@ -2754,6 +2757,37 @@ appController.controller('ControllController', function($scope, $filter, $route,
     $scope.lastExcludedDevice;
     $scope.lastIncludedDevice;
     $scope.isRealPrimary;
+    $scope.lastIncludedDevice = null;
+    $scope.lastExcludedDevice = null;
+
+    $scope.dataXml = [];
+
+    //Load xml data
+    setXml = function(data) {
+        var lang = 'en';
+        angular.forEach(data.DeviceClasses.Generic, function(val, key) {
+            var obj = {};
+            var langs = {
+                "en": "0",
+                "de": "1",
+                "ru": "2"
+            };
+
+            if (angular.isDefined(langs[$scope.lang])) {
+                lang = $scope.lang;
+            }
+            var langId = 0;
+
+            obj['id'] = parseInt(val._id);
+            obj['generic'] = val.name.lang[langId].__text;
+            obj['specific'] = val.Specific;
+            obj['langId'] = langId;
+            $scope.dataXml.push(obj);
+
+        });
+
+    };
+    
 
     /**
      * Load data
@@ -2801,7 +2835,7 @@ appController.controller('ControllController', function($scope, $filter, $route,
     // Refresh data
     var refresh = function() {
         DataFactory.all($filter('getTimestamp')).query(function(data) {
-            //DataTestFactory.all('control_refresh.json').query(function(data) {
+            //DataTestFactory.all('refresh_net.json').query(function(data) {
             if ('controller.data.controllerState' in data) {
                 $scope.controllerState = data['controller.data.controllerState'].value;
             }
@@ -2817,6 +2851,55 @@ appController.controller('ControllController', function($scope, $filter, $route,
                 $scope.secureInclusion = data['controller.data.secureInclusion'].value;
 
             }
+            if ('controller.data.lastIncludedDevice' in data) {
+                var deviceIncId = data['controller.data.lastIncludedDevice'].value;
+                //device .data.givenNAME:uPDATE
+                XmlFactory.get(setXml, $scope.cfg.server_url + '/translations/DeviceClasses.xml');
+                if (deviceIncId != null) {
+                    
+                    var givenName = 'Device' + '_' + deviceIncId;
+                    var node = data.devices[deviceIncId];
+                    // Device type
+                    var deviceXml = $scope.dataXml;
+                    if (angular.isDefined(data.devices[deviceIncId])) {
+                        var genericType = node.data.genericType.value;
+                        var specificType = node.data.specificType.value;
+                        angular.forEach(deviceXml, function(v, k) {
+                            if (genericType == v.id) {
+                                var deviceType = v.generic;
+                                angular.forEach(v.specific, function(s, sk) {
+                                    if (specificType == s._id) {
+                                        if (angular.isDefined(s.name.lang[v.langId].__text)) {
+                                            deviceType = s.name.lang[v.langId].__text;
+                                        }
+                                    }
+                                });
+                                givenName = deviceType + '_' + deviceIncId;
+                                return;
+                            }
+                        });
+                    }
+                    var updateTime = $filter('isTodayFromUnix')(data['controller.data.lastIncludedDevice'].updateTime);
+                    
+                    //Run CMD
+                    // TODO: set cmd
+                    var cmd = 'devices[' + deviceIncId + '].data.givenName=' + givenName;
+                     //DataFactory.store(cmd).query();
+                    $scope.lastIncludedDevice = $scope._t('nm_last_included_device') + '  (' + updateTime + ')  <a href="#config/configuration/' + deviceIncId + '"><strong>' + givenName + '</strong></a>';
+                }
+
+
+            }
+            //$scope.lastIncludedDevice = '<a href="#config/configuration/3"><strong>Given_name</strong></a>';
+            if ('controller.data.lastExcludedDevice' in data) {
+                var deviceExcId = data['controller.data.lastExcludedDevice'].value;
+                if (deviceExcId != null) {
+                    var updateTime = $filter('isTodayFromUnix')(data['controller.data.lastExcludedDevice'].updateTime);
+                    var txt = $scope._t('nm_last_excluded_device') + ' ' + (deviceExcId != 0 ? deviceExcId : $scope._t('nm_last_excluded_device_from_foreign_network'));
+                    $scope.lastExcludedDevice = txt + ' (' + updateTime + ')';
+                }
+            }
+
 
         });
         $timeout(refresh, $scope.cfg.interval);
@@ -3366,7 +3449,7 @@ appController.controller('CommandsController', function($scope, $location, $cook
                 var obj = {};
                 obj['id'] = nodeId;
                 obj['rowId'] = 'row_' + nodeId;
-                obj['name'] = node.data.name;
+                obj['name'] = $filter('deviceName')(nodeId,node);
                 $scope.devices.push(obj);
             });
         });
@@ -3408,7 +3491,7 @@ appController.controller('CommandsDetailController', function($scope, $routePara
                 var obj = {};
                 obj['id'] = nodeId;
                 obj['rowId'] = 'row_' + nodeId;
-                obj['name'] = node.data.name;
+                obj['name'] = $filter('deviceName')(nodeId,node);
                 obj['slected'] = '';
                 if (nodeId == $routeParams.nodeId) {
                     $scope.deviceName = node.data.name;
@@ -3485,8 +3568,7 @@ appController.controller('CommandsDetailController', function($scope, $routePara
             }
             ;
             var obj = {};
-            obj['name'] = $filter('getDeviceName')(v.id, $scope.getDeviceNames);
-            obj['name'] = v.name;
+             obj['name'] = v.name;
             devices.push(obj);
         });
         return devices;

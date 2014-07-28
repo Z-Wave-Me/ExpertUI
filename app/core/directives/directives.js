@@ -11,7 +11,6 @@ angApp.directive('sortBy', function() {
         link: function(scope, element, attr) {
             // this is link function
             var col_name = scope.$eval(attr.col_name);
-            console.log(col_name);
         }
     };
 });
