@@ -20,7 +20,11 @@ angApp.filter('stripTags', function() {
  * Display HTML tags in scope
  */
 angApp.filter('toTrusted', ['$sce', function($sce){
+       
         return function(text) {
+             if(text == null){
+            return '';
+        }
             return $sce.trustAsHtml(text);
         };
     }]);
