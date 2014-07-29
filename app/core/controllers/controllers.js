@@ -2364,10 +2364,10 @@ appController.controller('ConfigStoreController', function($scope, DataFactory) 
     $scope.renameDevice = function(form) {
         //var data = $('#' + form).serialize();
         var deviceId = $scope.deviceId;
-        var deviceName = $('#' + form + ' #device_name').val();
-        var request = 'cmdToUpdateDevice(' + deviceName + ')';
-        console.log(request);
-        DataFactory.store(request).query();
+        var givenName = $('#' + form + ' #device_name').val();
+        var cmd = 'devices[' + deviceId + '].data.givenName.Update(' + givenName + ')';
+        console.log(cmd);
+        DataFactory.store(cmd).query();
         return;
 //        var out = renameDeviceBuild(deviceId, deviceName, $scope.getDeviceNames);
 //       
@@ -2757,7 +2757,7 @@ appController.controller('ControllController', function($scope, $filter, $route,
 
                     //Run CMD
                     // TODO: set cmd
-                    var cmd = 'devices[' + deviceIncId + '].data.givenName=' + givenName;
+                    var cmd = 'devices[' + deviceIncId + '].data.givenName.Update(' + givenName + ')';
                     //DataFactory.store(cmd).query();
                     $scope.lastIncludedDevice = $scope._t('nm_last_included_device') + '  (' + updateTime + ')  <a href="#config/configuration/' + deviceIncId + '"><strong>' + givenName + '</strong></a>';
                 }

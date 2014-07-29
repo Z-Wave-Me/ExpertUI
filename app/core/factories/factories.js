@@ -29,7 +29,7 @@ appFactory.factory('myHttpInterceptor', function($q, $window) {
             $('#respone_container').hide();
             return response;
         }, function(response) {
-            $('#respone_container').html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <i class="icon-ban-circle"></i> <strong>ERROR!</strong> Response error</div>').show();
+            //$('#respone_container').html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <i class="icon-ban-circle"></i> <strong>ERROR!</strong> Response error</div>').show();
             return $q.reject(response);
         });
     };
