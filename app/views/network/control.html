@@ -118,7 +118,6 @@
                                 <option ng-repeat="v in failedNodes" value="{{v.id}}">{{v.id}}</option>
                             </select>
                         </div>
-
                         <!-- replace_failed_node -->
                         <div class="cfg-block form-inline">
                             <p class="input-help">{{_t('nm_replace_node_war')}}</p>
@@ -126,7 +125,7 @@
                                 class="btn btn-primary"
                                 id="btn_replace_failed_node"
                                 ng-disabled="!modelReplaceNode"
-                                ng-click="runCmd('ReplaceFailedNode(' + modelReplaceNode + ')')"
+                                ng-click="runCmd(['ReplaceFailedNode(' + modelReplaceNode + ')','controller.AddNodeToNetwork(1)'])"
                                 >{{_t('nm_replace_node')}}</button>
                             <select name="replace_failed_node" class="form-control" ng-model="modelReplaceNode">
                                 <option value="">---</option>
@@ -251,7 +250,9 @@
                             ng-true-value="1" 
                             ng-false-value="0" 
                             ng-model="modelRestoreChipInfo" /> {{_t('restore_backup_chip')}}
+                        <form method="POST" action="" enctype="multipart/form-data" id="restore_backup"> 
                         <input type="file" name="config_backup" />
+                        </form>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -288,7 +289,7 @@
                         class="btn btn-danger" 
                         id="btn_reset_controller"
                         ng-show="goFailedNode"
-                        ng-click="runCmd(['devices[' + modelNodeFailed + '].RemoveFailedNode()', 'controller.AddNodeToNetwork(1)'], '#modal_failed_node')"
+                        ng-click="runCmd('devices[' + modelNodeFailed + '].RemoveFailedNode()', '#modal_failed_node')"
                         ><i class="fa fa-exclamation-triangle"></i> {{_t('nm_remove_failed')}}</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>

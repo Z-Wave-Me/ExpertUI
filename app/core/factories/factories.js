@@ -35,6 +35,11 @@ appFactory.factory('myHttpInterceptor', function($q, $window) {
     };
 });
 
+// Caching the river...
+appFactory.factory('myCache', function($cacheFactory) {
+ return $cacheFactory('myData');
+});
+
 // Get a complete or updated JSON
 appFactory.factory('DataFactory', function($resource, cfg) {
     return {
