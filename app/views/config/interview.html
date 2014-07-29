@@ -8,7 +8,7 @@
                         <tbody>
                             <tr ng-repeat="v in descriptionCont" ng-show="v.val ||  v.val != '' ">
                                 <th>{{_t(v.key)}}</th>
-                                <td  ng-bind-html="v.val | toTrusted"></td>
+                                <td  id="{{v.key}}" ng-bind-html="v.val | toTrusted"></td>
                             </tr>
 
                         </tbody>

@@ -729,7 +729,10 @@ appController.controller('ThermostatController', function($scope, $http, $log, $
                         return;
                     }
                     var ccId = 0x43;
-                    var curThermMode = 1;
+                    //var curThermMode = 1;
+                     var curThermMode = getCurrentThermostatMode(instance);
+                     console.log(instance.commandClasses[ccId].data[1]);
+                   console.log( getCurrentThermostatMode(instance));
 
                     // Set object
                     var obj = {};
@@ -781,6 +784,23 @@ appController.controller('ThermostatController', function($scope, $http, $log, $
         $timeout(refresh, cfg.interval);
     };
     $timeout(refresh, cfg.interval);
+    
+    // used to pick up thermstat mode
+function getCurrentThermostatMode(_instance) {
+	var hasThermostatMode = 0x40 in _instance.commandClasses;
+	
+	var _curThermMode;
+	if (hasThermostatMode) {
+		_curThermMode = _instance.commandClasses[0x40].data.mode.value;
+		if (isNaN(parseInt(_curThermMode, 10)))
+			_curThermMode = null; // Mode not retrieved yet
+	} else {
+		// we pick up first available mode, since not ThermostatMode is supported to change modes
+		_curThermMode = null;
+		angular.forEach(_instance.commandClasses[0x43].data, function(name,k) { if (!isNaN(parseInt(name, 10))) { _curThermMode = parseInt(name, 10); return false; } });
+	};
+        return _curThermMode;
+};
 
     // Change temperature on click
     $scope.tempChange = function(cmd, index, type) {
@@ -2368,6 +2388,9 @@ appController.controller('ConfigStoreController', function($scope, DataFactory) 
         var givenName = $('#' + form + ' #device_name').val();
         var cmd = 'devices[' + deviceId + '].data.givenName.value=\''+ givenName + '\'';
         DataFactory.store(cmd).query();
+        $('#config_device_name').html(givenName);
+        $('#device_node_name').html(givenName);
+       
         return;
     };
 
