@@ -7,7 +7,7 @@
 var appController = angular.module('appController', []);
 
 // Base controller
-appController.controller('BaseController', function($scope, $cookies, $filter, cfg, langFactory, langTransFactory, deviceConfigFactory, myCache, DataFactory,XmlFactory) {
+appController.controller('BaseController', function($scope, $cookies, $filter, cfg, langFactory, langTransFactory, deviceConfigFactory, myCache, DataFactory, XmlFactory) {
     // Show page content
     $scope.showContent = false;
     // Global config
@@ -55,20 +55,21 @@ appController.controller('BaseController', function($scope, $cookies, $filter, c
     };
     $scope.loadDeviceConfig();
 
-    //var cache = myCache.get('myData');
-    var data = {"id": 1};
-    myCache.put('myData', data);
-
-
+    
     // Cache ZWaveAPIData
-    DataFactory.all('0').query(function(ZWaveAPIData) {
-        //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
-        myCache.put('ZWaveAPIData', ZWaveAPIData);
+    var cachedAPIData = myCache.get('ZWaveAPIData');
+    if (cachedAPIData) {
+       $scope.globalAPIData = cachedAPIData;
+    }else{
+         DataFactory.all('0').query(function(ZWaveAPIData) {
+            myCache.put('ZWaveAPIData', ZWaveAPIData);
+             $scope.globalAPIData = cachedAPIData;
+        });
+    }
 
-    });
-     // Cache xml
-      //Load xml data
-      $scope.dataDeviceClassesXml = [];
+    // Cache xml
+    //Load xml data
+    $scope.dataDeviceClassesXml = [];
     $scope.setXml = function(data) {
         var dataXml = [];
         var lang = 'en';
@@ -89,9 +90,9 @@ appController.controller('BaseController', function($scope, $cookies, $filter, c
             obj['generic'] = val.name.lang[langId].__text;
             obj['specific'] = val.Specific;
             obj['langId'] = langId;
-             dataXml.push(obj);
+            dataXml.push(obj);
             $scope.dataDeviceClassesXml.push(obj);
-            
+
 
         });
         myCache.put('deviceClasses', dataXml);
@@ -1482,7 +1483,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                 var node = ZWaveAPIData.devices[nodeId];
 
                 if (nodeId == $routeParams.nodeId) {
-                    $scope.deviceName = node.data.name;
+                    $scope.deviceName = $filter('deviceName')(nodeId, node);
                 }
                 // Set object
                 var obj = {};
@@ -2365,14 +2366,9 @@ appController.controller('ConfigStoreController', function($scope, DataFactory) 
         //var data = $('#' + form).serialize();
         var deviceId = $scope.deviceId;
         var givenName = $('#' + form + ' #device_name').val();
-        var cmd = 'devices[' + deviceId + '].data.givenName.Update(' + givenName + ')';
-        console.log(cmd);
+        var cmd = 'devices[' + deviceId + '].data.givenName.value=\''+ givenName + '\'';
         DataFactory.store(cmd).query();
         return;
-//        var out = renameDeviceBuild(deviceId, deviceName, $scope.getDeviceNames);
-//       
-//        DataFactory.putConfig('devices.json').query();
-//        return;
     };
 
     /**
@@ -2597,11 +2593,9 @@ appController.controller('ControllController', function($scope, $filter, $route,
 
     /**
      * Load data
-     * todo: remove it
+     * 
      */
     $scope.loadData = function(ZWaveAPIData) {
-        //DataFactory.all('0').query(function(ZWaveAPIData) {
-        //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
         $scope.showContent = true;
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         $scope.controllerState = ZWaveAPIData.controller.data.controllerState.value;
@@ -2635,7 +2629,7 @@ appController.controller('ControllController', function($scope, $filter, $route,
         }
         ;
 
-        //});
+        
     };
 
     // Chaching data  
@@ -2645,26 +2639,27 @@ appController.controller('ControllController', function($scope, $filter, $route,
         console.log('Cached ZWaveAPIData');
     } else {
         DataFactory.all('0').query(function(ZWaveAPIData) {
-             myCache.put('ZWaveAPIData', ZWaveAPIData);
+            myCache.put('ZWaveAPIData', ZWaveAPIData);
             $scope.loadData(ZWaveAPIData);
         });
         console.log('NO CACHED ZWaveAPIData');
     }
-    
+
     // Chaching  xml data  
     var cachedDeviceClasses = myCache.get('deviceClasses');
     if (cachedDeviceClasses) {
-         $scope.deviceXml = cachedDeviceClasses;
+        $scope.deviceXml = cachedDeviceClasses;
         console.log('Cached XML');
     } else {
         XmlFactory.get($scope.setXml, $scope.cfg.server_url + '/translations/DeviceClasses.xml');
         $scope.deviceXml = $scope.dataDeviceClassesXml;
-         myCache.put('deviceClasses', $scope.dataDeviceClassesXml);
+        myCache.put('deviceClasses', $scope.dataDeviceClassesXml);
         console.log('NO CACHED XML');
     }
 
     /**
      * Load data
+     * todo: remove it
      */
     $scope.load = function() {
         DataFactory.all('0').query(function(ZWaveAPIData) {
@@ -2734,7 +2729,7 @@ appController.controller('ControllController', function($scope, $filter, $route,
                     var givenName = 'Device' + '_' + deviceIncId;
                     var node = data.devices[deviceIncId];
                     // Device type
-                    var deviceXml =  $scope.deviceXml;
+                    var deviceXml = $scope.deviceXml;
                     if (angular.isDefined(data.devices[deviceIncId])) {
                         var genericType = node.data.genericType.value;
                         var specificType = node.data.specificType.value;
@@ -2756,9 +2751,8 @@ appController.controller('ControllController', function($scope, $filter, $route,
                     var updateTime = $filter('isTodayFromUnix')(data['controller.data.lastIncludedDevice'].updateTime);
 
                     //Run CMD
-                    // TODO: set cmd
-                    var cmd = 'devices[' + deviceIncId + '].data.givenName.Update(' + givenName + ')';
-                    //DataFactory.store(cmd).query();
+                    var cmd = 'devices[' + deviceIncId + '].data.givenName.value=\''+ givenName + '\'';
+                    DataFactory.store(cmd).query();
                     $scope.lastIncludedDevice = $scope._t('nm_last_included_device') + '  (' + updateTime + ')  <a href="#config/configuration/' + deviceIncId + '"><strong>' + givenName + '</strong></a>';
                 }
 
@@ -2769,7 +2763,12 @@ appController.controller('ControllController', function($scope, $filter, $route,
                 var deviceExcId = data['controller.data.lastExcludedDevice'].value;
                 if (deviceExcId != null) {
                     var updateTime = $filter('isTodayFromUnix')(data['controller.data.lastExcludedDevice'].updateTime);
-                    var txt = $scope._t('nm_last_excluded_device') + ' ' + (deviceExcId != 0 ? deviceExcId : $scope._t('nm_last_excluded_device_from_foreign_network'));
+                    //var txt = $scope._t('nm_last_excluded_device') + ' ' + (deviceExcId != 0 ? deviceExcId : $scope._t('nm_last_excluded_device_from_foreign_network'));
+                    if(deviceExcId != 0){
+                         var txt = 'Device # ' + deviceExcId +  'excluded from network';
+                    }else{
+                         var txt =  'Device excluded ' + $scope._t('nm_last_excluded_device_from_foreign_network');
+                    }
                     $scope.lastExcludedDevice = txt + ' (' + updateTime + ')';
                 }
             }

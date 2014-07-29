@@ -11,12 +11,12 @@ var config_data = {
     'user_field': 'USERXXXX',
     'pass_field': 'PSWDXXXX',
     'interval': 3000, // Set interval in miliseconds to refresh data
-    'server_url': 'http://192.168.10.167:8083', // Remote JSON
+    'server_url': 'http://zwave.dyndns.org:8083', // Remote JSON
     'update_url': '/ZWaveAPI/Data/', // Url for update (refresh data)
     'store_url': '/ZWaveAPI/Run/', // Url for store data
     'config_url': '/config/', // Url for store config data
     //'zddx_url': 'storage/zddx/', // Url for zddx xml files
-    'zddx_url': 'http://192.168.10.167:8083/ZDDX/', // Url for zddx xml files
+    'zddx_url': 'http://zwave.dyndns.org:8083/ZDDX/', // Url for zddx xml files
     'lang': 'en', // Default language
     'lang_dir': 'app/core/lang/', // Language directory
     'lang_list': ["en","de","fr","es","ru"], // List of languages

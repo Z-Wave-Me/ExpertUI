@@ -139,7 +139,7 @@
                             <button 
                                 class="btn btn-primary" 
                                 ng-disabled="!modelBatteryFailed"
-                                ng-click="runCmd('devices[' + modelBatteryFailed + '].SendNoOperation()')"
+                                ng-click="runCmd(['devices[' + modelBatteryFailed + '].SendNoOperation()','devices[' + modelBatteryFailed + '].WakeupQueue()','IsFailedNode(' + modelBatteryFailed + ')'])"
                                 >{{_t('nm_mark_battery_as_failed')}}</button>
                             <select name="mark_battery_failed" class="form-control" ng-model="modelBatteryFailed">
                                 <option value="">---</option>
