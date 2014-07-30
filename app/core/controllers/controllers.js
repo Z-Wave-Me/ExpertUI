@@ -136,8 +136,97 @@ appController.controller('TestController', function($scope, $routeParams, cfg, $
 
 
 // Home controller
-appController.controller('HomeController', function($scope) {
-    $scope.data = 'The HomeController content comes here';
+appController.controller('HomeController', function($scope, DataFactory, myCache) {
+   $scope.ZWaveAPIData;
+   $scope.countDevices; 
+   $scope.batteryDevices; 
+    /**
+     * Load data
+     * 
+     */
+    $scope.loadData = function(ZWaveAPIData) {
+       $scope.countDevices = countDevices(ZWaveAPIData);
+       $scope.batteryDevices = batteryDevices(ZWaveAPIData)
+       console.log($scope.batteryDevices);
+    };
+
+    // Chaching data  
+    var cachedAPIData = myCache.get('ZWaveAPIData');
+    if (cachedAPIData) {
+        //$scope.ZWaveAPIData = cachedAPIData;
+         console.log('Cache');
+       $scope.loadData(cachedAPIData);
+    } else {
+        DataFactory.all('0').query(function(ZWaveAPIData) {
+            myCache.put('ZWaveAPIData', ZWaveAPIData);
+             //$scope.ZWaveAPIData = ZWaveAPIData;
+            $scope.loadData(ZWaveAPIData);
+            console.log('NO Cache');
+        });
+    }
+    /**
+     * Count devices
+     */
+    function countDevices(ZWaveAPIData){
+        var controllerId = ZWaveAPIData.controller.data.nodeId.value;
+        var cnt = 0;
+        // Loop throught devices
+            angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+                if (nodeId == 255 || nodeId == controllerId || node.data.isVirtual.value) {
+                    return;
+                }
+                cnt++;
+            });
+        return cnt;
+    };
+    
+     /**
+     * batteryDevices
+     */
+    function batteryDevices(ZWaveAPIData){
+        var controllerId = ZWaveAPIData.controller.data.nodeId.value;
+        var cnt = 0;
+        // Loop throught devices
+            angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+                if (nodeId == 255 || nodeId == controllerId || node.data.isVirtual.value) {
+                    return;
+                }
+                var hasBattery = 0x80 in node.instances[0].commandClasses;
+                var instanceId = 0;
+                var ccId = 0x80;
+                if (!hasBattery) {
+                    return;
+                }
+                var node = ZWaveAPIData.devices[nodeId];
+                var battery_charge = parseInt(node.instances[0].commandClasses[0x80].data.last.value);
+                cnt++;
+            });
+        return cnt;
+    };
+    
+     /**
+     * batteryDevices
+     */
+    function flirsDevices(ZWaveAPIData){
+        var controllerId = ZWaveAPIData.controller.data.nodeId.value;
+        var cnt = 0;
+        // Loop throught devices
+            angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+                if (nodeId == 255 || nodeId == controllerId || node.data.isVirtual.value) {
+                    return;
+                }
+                var hasBattery = 0x80 in node.instances[0].commandClasses;
+                var instanceId = 0;
+                var ccId = 0x80;
+                if (!hasBattery) {
+                    return;
+                }
+                var node = ZWaveAPIData.devices[nodeId];
+                var battery_charge = parseInt(node.instances[0].commandClasses[0x80].data.last.value);
+                cnt++;
+            });
+        return cnt;
+    };
 
 });
 
