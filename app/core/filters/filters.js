@@ -7,9 +7,7 @@
  * Convert unix timastamp to date
  */
 angApp.filter('getTimestamp', function() {
-    return function() {
-        return Math.round(+new Date() / 1000);
-    };
+    return Math.round(+new Date() / 1000);
 });
 
 /**
