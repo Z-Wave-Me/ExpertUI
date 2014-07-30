@@ -155,7 +155,6 @@ appController.controller('HomeController', function($scope, $filter, DataFactory
         batteryDevices(ZWaveAPIData);
         $scope.mainsDevices = mainsDevices(ZWaveAPIData);
         notInterviewDevices(ZWaveAPIData);
-        console.log($scope.lowBatteryDevices);
     };
 
     // Chaching data  
@@ -273,13 +272,8 @@ appController.controller('HomeController', function($scope, $filter, DataFactory
                         $scope.notInterviewDevices.push(obj);
                         return;
                     }
-                    console.log(isDone);
                 }
             }
-            //$scope.notInterviewDevices.push(obj);
-//            if(battery_charge <= 20){
-//                $scope.notInterviewDevices.push(obj);
-//            }
             cnt++;
         });
         return cnt;
