@@ -41,7 +41,7 @@ appFactory.factory('myCache', function($cacheFactory) {
 });
 
 // Get a complete or updated JSON
-appFactory.factory('DataFactory', function($resource, cfg) {
+appFactory.factory('DataFactory', function($resource, $http, cfg) {
     return {
         all: function(param) {
             return $resource(cfg.server_url + cfg.update_url + param, {}, {query: {
@@ -59,6 +59,20 @@ appFactory.factory('DataFactory', function($resource, cfg) {
             return $resource(cfg.server_url + cfg.config_url + param, {}, {query: {
                     method: 'PUT', headers_: { '': '' }, params: {}
                 }});
+        },
+        putReorgLog: function(log) {
+            return $.ajax({
+                    type: "PUT",
+                    dataType: "text",
+                    url: cfg.server_url + cfg.reorg_log_url,
+                    contentType: "text/plain",
+                    data: log
+                });
+        },
+        getReorgLog: function(callback) {
+            return $http({method: 'GET', url: cfg.server_url + cfg.reorg_log_url + '?at=' + (new Date ()).getTime()}).success(function(data, status, headers, config) {
+                    callback(data);
+                });
         },
         runCmd: function(param) {
             var cmd = cfg.server_url + param;

@@ -1,20 +1,27 @@
 <!-- Routing view -->
 <div ng-controller="RoutingController">
-    <div class="page-header"><h1>Routing</h1></div>
+    <div class="page-header"><h1>{{ _t('tab_routing_table_title')}}</h1></div>
     <div class="table-responsive">
-    <table class="table table-striped">
+    <table id="RoutingTable" class="table table-striped">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>&nbsp;</th>
+                <th class="rtHeader">{{ _t('rt_header_node_id')}}</th>
+                <th class="rtHeader">{{ _t('device_name')}}</th>
+                <th class="rtHeader">{{ _t('nav_type_info')}}</th>
+                <th ng-repeat="d in devices" style="text-align:center;">{{d}}</th>
+                <th class="rtHeader" style="text-align: right;">{{ _t('rt_header_update_time')}}</th>
+                <th class="rtHeader"><btn-spinner></btn-spinner></th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="i in data">
-                <td>{{ i.id }}</td>
-                <td>{{ i.name }}</td>
-                <td><button class="btn btn-primary">Update</button></td>
+            <tr ng-repeat="nodeId in devices">
+                <td>{{nodeId}}</td>
+                <td>{{nodeId| getDeviceName:getDeviceNames}}</td>
+                <td><routing-type-icon node-id="{{ nodeId}}"></routing-type-icon></td>
+                <td ng-repeat="n in devices" class="rtCell"><div id="cell{{nodeId}}-{{n}}" class="{{data[nodeId][n].clazz}}"><span class="info">{{data[nodeId][n].info}}</span></div></td>
+                <td style="text-align: right;"><span id="update{{nodeId}}" class="{{nodes[nodeId].node.data.neighbours| getUpdated}}">{{nodes[nodeId].node.data.neighbours.updateTime| getTime}}</span></td>
+                <td ng-if="nodes[nodeId].node | updateable :nodeId">&nbsp; <button class="btn btn-primary update"
+                    data-ng-click="update(nodeId)" ng-disabled="updating[nodeId]">{{ _t('update')}}</button></td>
             </tr>
         </tbody>
     </table>

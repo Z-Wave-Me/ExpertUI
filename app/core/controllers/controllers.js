@@ -1599,6 +1599,262 @@ appController.controller('SecurityController', function($scope, $http, $log) {
             });
 });
 
+// Assoc controller
+appController.controller('AssocController', function($scope, $log, $filter, $route, $timeout, $http, DataFactory, DataTestFactory, XmlFactory, cfg) {
+    
+    $scope.keys = [];
+    $scope.data = {};
+    $scope.ZWaveAPIData;
+    $scope.removeData = null;
+    $scope.removeIndex = null;
+    $scope.addData = null;
+    $scope.addInstances = {};
+    $scope.assocTo = null;
+    $scope.applyQueue = [];
+    $scope.updates = [];
+    $scope.zdd = {};
+
+    var pollForUpdate = function(since, updates) {
+        var spinner = $('#AssociationTable .fa-spinner');
+        spinner.show();
+        DataFactory.all(since).query(function(updateZWaveAPIData) {
+            var remaining = [];
+            var hasUpdates = false;
+            angular.forEach(updates, function(update, index) {
+                if (!(update in updateZWaveAPIData)) {
+                    remaining.push(update);
+                } else if (updateZWaveAPIData[update].invalidateTime > updateZWaveAPIData[update].updateTime) {
+                    hasUpdates = true;
+                    remaining.push(update);
+                } else {
+                    hasUpdates = true;
+                }
+            });
+            if (remaining.length == 0) {
+                $scope.load($scope.lang);
+                spinner.fadeOut();
+            } else {
+                window.setTimeout(pollForUpdate, cfg.interval, since, remaining);
+                if (hasUpdates)
+                    $scope.load($scope.lang);
+            }
+        });
+    };
+
+    $scope.updateAssoc = function() {
+        $scope.applyQueue = [];
+        $scope.updates = [];
+        var updates = [];
+        angular.forEach($scope.keys, function(key, index) {
+            updates.push("devices." + $scope.deviceId + ".instances." + $scope.data[key].instance + ".commandClasses." + parseInt($scope.data[key].commandClass) + ".data." + $scope.data[key].groupId);
+            DataFactory.runCmd('/ZWaveAPI/Run/devices[' + $scope.deviceId + '].instances[' + $scope.data[key].instance + '].commandClasses[' + $scope.data[key].commandClass + '].Get(' + $scope.data[key].groupId + ')').query();
+        });
+        pollForUpdate($scope.ZWaveAPIData.updateTime, updates);
+    }
+
+    // Open remove assocation dialog
+    $scope.openRemove = function(data, $index) {
+        $scope.removeData = data;
+        $scope.removeIndex = $index;
+        $('#modal_remove').modal({});
+    };
+
+    // Remove an assocation
+    $scope.remove = function() {
+        var params = $scope.removeData.groupId + ',' + $scope.removeData.nodeIds[$scope.removeIndex];
+        if ($scope.removeData.type == 'm') {
+            params += ',' + $scope.removeData.instanceIds[$scope.removeIndex];
+        }
+        $scope.updates.push("devices." + $scope.deviceId + ".instances." + $scope.removeData.instance + ".commandClasses." + parseInt($scope.removeData.commandClass) + ".data." + $scope.removeData.groupId);
+        $scope.applyQueue.push('/ZWaveAPI/Run/devices[' + $scope.deviceId + '].instances[' + $scope.removeData.instance + '].commandClasses[' + $scope.removeData.commandClass + '].Remove(' + params + ')');
+
+        // cause view to hide element
+        $scope.removeData.nodeIds.splice($scope.removeIndex, 1);
+        if ($scope.removeData.type == 'm') {
+            $scope.removeData.instanceIds.splice($scope.removeIndex, 1);
+        }
+        $scope.removeData.persistent.splice($scope.removeIndex, 1);
+        $('#modal_remove').modal('hide');
+    };
+
+    // Add an assocation
+    $scope.add = function() {
+        var params = $scope.assocTo;
+        $scope.updates.push("devices." + $scope.deviceId + ".instances." + $scope.addData.instance + ".commandClasses." + parseInt($scope.addData.commandClass) + ".data." + $scope.addData.groupId);
+        $scope.applyQueue.push('/ZWaveAPI/Run/devices[' + $scope.deviceId + '].instances[' + $scope.addData.instance + '].commandClasses[' + $scope.addData.commandClass + '].Set(' + params + ')');
+
+        // cause view to show element
+        var parts = $scope.assocTo.split(',');
+        $scope.addData.nodeIds.push(parseInt(parts[1]));
+        if ($scope.addData.type == 'm') 
+            $scope.addData.instanceIds.push(parseInt(parts[2]));
+        $scope.addData.persistent.push("notInZWave");
+        $('#modal_add').modal('hide');
+    };
+
+    // Open add assocation dialog
+    $scope.openAdd = function(data) {
+        $scope.addData = data;
+        $scope.addInstances = {};
+        // Prepare devices and nodes 
+        angular.forEach($scope.ZWaveAPIData.devices, function(node, nodeId) {
+            if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
+                return;
+            for (var instanceId in $scope.ZWaveAPIData.devices[nodeId].instances) {
+                var fromInstanceId = 0;
+                if ($scope.addData.type == 'm') {
+                    fromInstanceId = $scope.addData.instanceId;
+                }
+                var groupId = $scope.addData.groupId;
+                if (nodeId != $scope.addData.nodeId || fromInstanceId != instanceId) { // exclude self-assoc
+                    var contained = false;
+                    if ($scope.addData.type == "s") {
+                        if ($.inArray(parseInt(nodeId), $scope.addData.nodeIds) != -1)
+                            contained = true;
+                    } else {
+                        for (var i = 0; i < $scope.addData.nodeIds.length; i++) {
+                            if ($scope.addData.nodeIds[i] == nodeId && $scope.addData.instanceIds[i] == instanceId) {
+                                contained = true;
+                                break;
+                            }
+                        }
+                    } 
+                    if (contained)
+                        continue;
+
+                    if ($scope.addData.type == 'm') {
+                        // MultiChannelAssociation with instanceId
+                        var label = instanceId;
+                        if ($scope.zdd[nodeId] && ("assocGroup" in $scope.zdd[nodeId]) && (parseInt(instanceId) in $scope.zdd[nodeId].assocGroup)) {
+                            // find best matching lang, default english
+                            var langs = $scope.zdd[nodeId].assocGroup[parseInt(instanceId)].description.lang;
+                            angular.forEach(langs, function(lang, index) {
+                                if (("__text" in lang) && (lang["_xml:lang"] == $scope.lang)) {
+                                    label = lang.__text;
+                                    return false;
+                                } 
+                                if (("__text" in lang) && (lang["_xml:lang"] == "en")) {
+                                    label = lang.__text;
+                                }
+                            });
+                        }
+                        $scope.addInstances[groupId + ',' + nodeId + ',' + instanceId] = $filter('getDeviceName')(nodeId, $scope.getDeviceNames) + " - " + label;
+                    } else {
+                        // simple Assocation
+                        $scope.addInstances[groupId + ',' + nodeId] = $filter('getDeviceName')(nodeId, $scope.getDeviceNames);
+                        break; // first instance is enough
+                    }
+                }
+            }
+        });   
+        $('#modal_add').modal({});
+    };
+
+    // Load ZDDXML
+    $scope.loadZDD = function(nodeId) {
+        if (nodeId in $scope.zdd) 
+            return; // zdd already loaded for nodeId
+        var node = $scope.ZWaveAPIData.devices[nodeId];
+        if (node == undefined)
+            return;
+        var zddXmlFile = null;
+        if (angular.isDefined(node.data.ZDDXMLFile)) {
+            zddXmlFile = node.data.ZDDXMLFile.value;
+        }
+        if (!(zddXmlFile))
+            return; // not available
+        $http.get($scope.cfg.zddx_url + zddXmlFile).then(function(response) {
+            var x2js = new X2JS();
+            var zddXml = x2js.xml_str2json(response.data);
+            if (("ZWaveDevice" in zddXml) && ("assocGroups" in zddXml.ZWaveDevice)) {
+                $scope.zdd[nodeId] = zddXml.ZWaveDevice.assocGroups;
+                if (nodeId == $scope.deviceId) 
+                    $scope.updateData(nodeId);
+            } else {
+                $scope.zdd[nodeId] = undefined;
+            }
+        });
+    };
+
+    $scope.updateData = function(nodeId) {
+        $scope.keys = [];
+        $scope.data = {};
+        var node = $scope.ZWaveAPIData.devices[nodeId];
+        if (node == undefined)
+            return;
+        if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
+            return;
+        var associables=$filter('associable')(node);
+        angular.forEach(associables.associations, function(association, index) {
+            var key=nodeId+".s-"+index;
+            $scope.keys.push(key);
+            var persistent = [];
+            for(var i = 0; i < association.data.nodes.value.length; i++) {
+                persistent.push("inZWave");
+            }
+            var label = $scope._t('association_group') + " " + association.data.name;
+            if ($scope.zdd[nodeId] && ("assocGroup" in $scope.zdd[nodeId]) && ((parseInt(association.data.name) - 1) in $scope.zdd[nodeId].assocGroup)) {
+                // find best matching lang, default english
+                var langs = $scope.zdd[nodeId].assocGroup[parseInt(association.data.name) - 1].description.lang;
+                angular.forEach(langs, function(lang, index) {
+                    if (("__text" in lang) && (lang["_xml:lang"] == $scope.lang)) {
+                        label = lang.__text;
+                        return false;
+                    } 
+                    if (("__text" in lang) && (lang["_xml:lang"] == "en")) {
+                        label = lang.__text;
+                    }
+                });
+            }
+            $scope.data[key] = {"type": "s", "label": label, "nodeId": nodeId, "node": node, "commandClass": "0x85", "instance": association.instance, "groupId": association.data.name, "nodeIds": association.data.nodes.value, "persistent":persistent, "update":association.data.nodes, "remaining": (association.data.max.value - association.data.nodes.value.length)};
+        });
+        angular.forEach(associables.multiChannelAssociations, function(association, index) {
+            var key=nodeId+".m-"+index;
+            $scope.keys.push(key);
+            var nodeIds = [];
+            var instanceIds = [];
+            var persistent = [];
+            for(var i = 0; i < association.data.nodesInstances.value.length; i+=2) {
+                nodeIds.push(association.data.nodesInstances.value[i]);
+                instanceIds.push(association.data.nodesInstances.value[i + 1]);
+                persistent.push("inZWave");
+            }
+            var label = $scope._t('multi_association_group') + " " + association.data.name;
+            // TODO resolve zddxml-assocGroup label name when available in zddxml
+            $scope.data[key] = {"type": "m", "label": label, "nodeId": nodeId, "instanceId": index, "node": node, "commandClass": "0x8e", "instance": association.instance, "groupId": association.data.name, "nodeIds": nodeIds, "instanceIds": instanceIds, "persistent":persistent, "update":association.data.nodesInstances, "remaining": (association.data.max.value - (association.data.nodesInstances.value.length / 2))};
+        });
+    };
+
+    // Load data
+    $scope.load = function(lang) {
+        DataFactory.all('0').query(function(ZWaveAPIData) {
+            $scope.ZWaveAPIData = ZWaveAPIData;
+            // Gather associations
+            var nodeId = $scope.deviceId;
+            $scope.updateData(nodeId);
+            // load initial zdd data (cached)
+            angular.forEach($scope.ZWaveAPIData.devices, function(node, nodeId) {
+                if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
+                    return;
+                $scope.loadZDD(nodeId);
+            });
+        });
+    };
+
+    $scope.load($scope.lang);
+
+    $scope.applyConfig = function() {
+        var spinner = $('#AssociationTable .fa-spinner');
+        spinner.show();
+        while($scope.applyQueue.length > 0) {
+            var exec=$scope.applyQueue.shift();
+            DataFactory.runCmd(exec).query();
+        }
+        pollForUpdate($scope.ZWaveAPIData.updateTime, $scope.updates);
+        $scope.updates = [];
+    }
+});
+
 // Configuration controller
 appController.controller('ConfigurationController', function($scope, $routeParams, $http, $filter, $location, $cookies, DataFactory, XmlFactory, DataTestFactory) {
     $scope.devices = [];
@@ -2963,19 +3219,429 @@ appController.controller('ControllController', function($scope, $filter, $route,
 });
 
 // Routing controller
-appController.controller('RoutingController', function($scope, $http, $log) {
-    $http.get('storage/demo/routing.json').
-            success(function(data) {
-                $scope.data = data;
+appController.controller('RoutingController', function($scope, $log, $filter, $route, $timeout, DataFactory, DataTestFactory, XmlFactory, cfg) {
+
+    $scope.devices = [];
+    $scope.nodes = {};
+    $scope.data = {};
+    $scope.ZWaveAPIData;
+    $scope.updating = {};
+    $scope.log = [];
+
+    $scope.appendLog = function(str, noNewline) {
+        if (noNewline == true) {
+          $scope.log[$scope.log.length - 1] +=str;
+        } else {
+          if ($scope.log.length > 0) 
+              $scope.log[$scope.log.length - 1] += "\n";
+          $scope.log.push($filter('getTime')(new Date().getTime() / 1000) + ": " + str);
+        }
+        DataFactory.putReorgLog($scope.log.join(""));
+    };
+
+    $scope.cellState = function(nodeId, nnodeId, routesCount) {
+        var node = $scope.nodes[nodeId].node;
+        var nnode = $scope.nodes[nnodeId].node;
+        var info = ($filter('associationExists')(node, nnodeId)? '*':'');
+        var clazz = 'rtDiv line' + nodeId + ' ';
+        if (nodeId == nnodeId
+                || node.data.isVirtual.value
+                || nnode.data.isVirtual.value
+                || node.data.basicType.value == 1
+                || nnode.data.basicType.value == 1) {
+            clazz = 'rtDiv rtUnavailable';
+        } else if ($.inArray(parseInt(nnodeId, 10), node.data.neighbours.value) != -1)
+            clazz += 'rtDirect';
+        else if (routesCount[nnodeId]
+        && routesCount[nnodeId][1] > 1)
+            clazz += 'rtRouted';
+        else if (routesCount[nnodeId]
+        && routesCount[nnodeId][1] == 1)
+            clazz += 'rtBadlyRouted';
+        else
+            clazz += 'rtNotLinked';
+        return {
+            info : info,
+            clazz : clazz
+        };
+    };
+
+    $scope.processUpdateNodesNeighbours = function(processQueue, result) {
+        var spinner = $('#RoutingTable .fa-spinner');
+        if (processQueue.length == 0) {
+            $scope.appendLog($scope._t('reorg_completed') + ":");
+            if ("mains_completed" in result) 
+                $scope.appendLog(result.mains_completed + " " + $scope._t('reorg_mains_powered_done'));
+            if ("battery_completed" in result) 
+                $scope.appendLog(result.battery_completed + " " + $scope._t('reorg_battery_powered_done'));
+            if ("mains_pending" in result) 
+                $scope.appendLog(result.mains_pending + " " + $scope._t('reorg_mains_powered_pending'));
+            if ("battery_pending" in result) 
+                $scope.appendLog(result.battery_pending + " " + $scope._t('reorg_battery_powered_pending'));
+            if ($.isEmptyObject(result))
+                $scope.appendLog($scope._t('reorg_nothing'));
+            $('div.rtDiv').css({ "border-color": ""});
+            $.each(result.done, function (index, nodeId) {
+                $scope.updating[nodeId] = false;
             });
+            spinner.fadeOut();
+            return;
+        }
+        spinner.show();
+        var current=processQueue[0];
+        $scope.appendLog($scope._t('reorg_reorg') + " " + current.nodeId + " " + (current.retry > 0? current.retry + ". " + $scope._t('reorg_retry'): "") + " ");
+
+        // process-states
+        if (!("timeout" in current)) {
+            current.timeout = (new Date()).getTime() + cfg.route_update_timeout;
+        }
+        $('div.line'+current.nodeId).css({ "border-color": "blue"});
+        DataFactory.store('devices[' + current.nodeId + '].RequestNodeNeighbourUpdate()').query(function(response) {
+            var pollForNodeNeighbourUpdate = function() {
+                DataFactory.all(current.since).query(function(updateZWaveAPIData) {
+                    $scope.appendLog(".", true);
+                    if ("devices."+current.nodeId+".data.neighbours" in updateZWaveAPIData) {
+                        var obj=updateZWaveAPIData["devices."+current.nodeId+".data.neighbours"]
+                        $('#update'+current.nodeId).attr('class', $filter('getUpdated')(obj));
+                        $('#update'+current.nodeId).html($filter('getTime')(obj.updateTime));
+                        if (current.since < obj.updateTime && obj.invalidateTime < obj.updateTime) {
+                            $scope.ZWaveAPIData.devices[current.nodeId].data.neighbours = obj;
+                            $scope.nodes[current.nodeId].node = $scope.ZWaveAPIData.devices[current.nodeId];
+                            // routes updated
+                            var routesCount = $filter('getRoutesCount')($scope.ZWaveAPIData, current.nodeId);        
+                            $.each($scope.ZWaveAPIData.devices, function (nnodeId, nnode) {
+                                if (!routesCount[nnodeId]) {
+                                    return;
+                                }
+                                var cellState=$scope.cellState(current.nodeId, nnodeId, routesCount);
+                                $('#cell'+current.nodeId+'-'+nnodeId).attr("class", cellState.clazz);
+                                $('#cell'+current.nodeId+'-'+nnodeId+" span.info").html(cellState.info);
+                                $('#cell'+current.nodeId+'-'+nnodeId).css({ "border-color": ""});
+                            });
+                            $('div.rtDiv').css({ "border-color": ""});
+                            $scope.appendLog(" " + $scope._t('reorg_done'), true);
+                            if (!("done" in result)) {
+                                result.done = [];
+                            }
+                            result.done.push(current.nodeId);
+                            if (current.type == "battery") {
+                                if ("battery_completed" in result) {
+                                    result.battery_completed++;
+                                } else {
+                                    result.battery_completed = 1;
+                                }
+                            } else {
+                                if ("mains_completed" in result) {
+                                    result.mains_completed++;
+                                } else {
+                                    result.mains_completed = 1;
+                                }
+                            }
+                            // remove all further retries from processQueue
+                            for(var i = processQueue.length - 1; i >= 0; i--) {
+                                if (processQueue[i].nodeId  == current.nodeId) {
+                                    processQueue.splice(i, 1);
+                                }
+                            }
+                            $scope.processUpdateNodesNeighbours(processQueue, result);
+                            return;
+                        }
+                    } 
+                    if (current.timeout < (new Date()).getTime()) {
+                        // timeout waiting for an update-route occured, proceed
+                        $scope.appendLog(" " + $scope._t('reorg_timeout'), true);
+                        if (!("done" in result)) {
+                            result.done = [];
+                        }
+                        result.done.push(current.nodeId);
+                        if (current.type == "battery") {
+                            if ("battery_pending" in result) {
+                                result.battery_pending++;
+                            } else {
+                                result.battery_pending = 1;
+                            }
+                        } else {
+                            if ("mains_pending" in result) {
+                                result.mains_pending++;
+                            } else {
+                                result.mains_pending = 1;
+                            }
+                        }
+                        $('div.rtDiv').css({ "border-color": ""});
+                        processQueue.shift();
+                        $scope.processUpdateNodesNeighbours(processQueue, result);
+                        return;
+                    }
+                    // routes not yet updated, poll again
+                    window.setTimeout(pollForNodeNeighbourUpdate, cfg.interval);
+                });
+            };
+            // first polling
+            pollForNodeNeighbourUpdate();
+        });
+    };
+
+     // update a route
+    $scope.update = function(nodeId) {
+        $scope.log = [];
+        // retry once
+        var processQueue=[];
+        if ($filter('updateable')($scope.nodes[nodeId].node, nodeId)) {
+            var hasBattery = 0x80 in $scope.nodes[nodeId].node.instances[0].commandClasses;
+            for (var retry = 0; retry < 1; retry++) {
+                processQueue.push({"nodeId": nodeId, "retry": retry, "type": (hasBattery?"battery":"mains"), "since": $scope.ZWaveAPIData.updateTime});
+                if (retry == 0) {
+                    $scope.appendLog($scope._t('reorg_node_' + (hasBattery?"battery":"mains")) + ": " + nodeId);
+                }
+            }
+            // avoid overall routing-table updates during update
+            $scope.updating[nodeId] = true;
+            $scope.processUpdateNodesNeighbours(processQueue, {});
+        }
+    };
+
+    // Load data
+    $scope.load = function(lang) {
+        DataFactory.all('0').query(function(ZWaveAPIData) {
+            $scope.ZWaveAPIData = ZWaveAPIData;
+            // Prepare devices and nodes 
+            angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+                if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
+                    return;
+                $scope.devices.push(nodeId);
+                $scope.nodes[nodeId] = {"label":$filter('getDeviceName')(nodeId, $scope.getDeviceNames), "node": node};
+            });
+
+            // Loop throught devices and gather routesCount and cellState
+            angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+                if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
+                    return;
+                var routesCount = $filter('getRoutesCount')(ZWaveAPIData, nodeId);
+                var line = [];
+                angular.forEach(ZWaveAPIData.devices, function(nnode, nnodeId) {
+                    if (nnodeId == 255 || nnode.data.isVirtual.value || nnode.data.basicType.value == 1)
+                        return;
+                    line[nnodeId] = $scope.cellState(nodeId, nnodeId, routesCount);
+                });
+                $scope.data[nodeId] = line;
+            });
+        });
+    };
+
+    $scope.load($scope.lang);
 });
 
 // Reorganization controller
-appController.controller('ReorganizationController', function($scope, $http, $log) {
-    $http.get('storage/demo/reorganization.json').
-            success(function(data) {
-                $scope.data = data;
+appController.controller('ReorganizationController',  function($scope, $log, $filter, $route, $interval, $timeout, DataFactory, DataTestFactory, XmlFactory, cfg) {
+
+    $scope.mainsPowered = true;
+    $scope.batteryPowered = false;
+    $scope.devices = [];
+    $scope.nodes = {};
+    $scope.ZWaveAPIData;
+    $scope.reorganizing = true;
+    $scope.log = [];
+    $scope.logged = [];
+    
+    $scope.appendLog = function(str, noNewline) {
+        if (noNewline == true) {
+          $scope.log[$scope.log.length - 1] +=str;
+        } else {
+          if ($scope.log.length > 0) 
+              $scope.log[$scope.log.length - 1] += "\n";
+          $scope.log.push($filter('getTime')(new Date().getTime() / 1000) + ": " + str);
+        }
+        DataFactory.putReorgLog($scope.log.join(""));
+    };
+
+    $scope.downloadLog = function() {
+        var hiddenElement = $('<a id="hiddenElement" href="' + cfg.server_url + cfg.reorg_log_url + '?at=' + (new Date()).getTime() + '" target="_blank" download="reorg.log"></a>').appendTo($('body'));
+        hiddenElement.get(0).click();
+        hiddenElement.detach();
+    };
+
+    var refreshLog = function() {
+        // Assign to scope within callback to avoid data flickering on screen
+        DataFactory.getReorgLog(function(log) {
+            $scope.logged = log.split("\n");
+        });
+    };
+
+    var promise = $interval(refreshLog, 1000);
+
+    // Cancel interval on page changes
+    $scope.$on('$destroy', function(){
+        if (angular.isDefined(promise)) {
+            $interval.cancel(promise);
+            promise = undefined;
+        }
+    });
+
+    $scope.processReorgNodesNeighbours = function(processQueue, result) {
+        if (processQueue.length == 0) {
+            $scope.appendLog($scope._t('reorg_completed') + ":");
+            if ("mains_completed" in result) 
+                $scope.appendLog(result.mains_completed + " " + $scope._t('reorg_mains_powered_done'));
+            if ("battery_completed" in result) 
+                $scope.appendLog(result.battery_completed + " " + $scope._t('reorg_battery_powered_done'));
+            if ("mains_pending" in result) 
+                $scope.appendLog(result.mains_pending + " " + $scope._t('reorg_mains_powered_pending'));
+            if ("battery_pending" in result) 
+                $scope.appendLog(result.battery_pending + " " + $scope._t('reorg_battery_powered_pending'));
+            if ($.isEmptyObject(result))
+                $scope.appendLog($scope._t('reorg_nothing'));
+            $('div.rtDiv').css({ "border-color": ""});
+            $scope.reorganizing = false;
+            return;
+        }
+        var current=processQueue[0];
+        $scope.appendLog($scope._t('reorg_reorg') + " " + current.nodeId + " " + (current.retry > 0? current.retry + ". " + $scope._t('reorg_retry'): "") + " ");
+
+
+        // process-states
+        if (!("timeout" in current)) {
+            current.timeout = (new Date()).getTime() + cfg.route_update_timeout;
+        }
+        $('tr.line'+current.nodeId).css({ "outline": "thin solid blue"});
+        DataFactory.store('devices[' + current.nodeId + '].RequestNodeNeighbourUpdate()').query(function(response) {
+            var pollForNodeNeighbourUpdate = function() {
+                DataFactory.all(current.since).query(function(updateZWaveAPIData) {
+                    $scope.appendLog(".", true);
+                    if ("devices."+current.nodeId+".data.neighbours" in updateZWaveAPIData) {
+                        var obj=updateZWaveAPIData["devices."+current.nodeId+".data.neighbours"]
+                        $('#update'+current.nodeId).attr('class', $filter('getUpdated')(obj));
+                        $('#update'+current.nodeId).html($filter('getTime')(obj.updateTime));
+                        if (current.since < obj.updateTime && obj.invalidateTime < obj.updateTime) {
+                            $scope.ZWaveAPIData.devices[current.nodeId].data.neighbours = obj;
+                            $scope.nodes[current.nodeId].node = $scope.ZWaveAPIData.devices[current.nodeId];
+                            // routes updated
+                            var routesCount = $filter('getRoutesCount')($scope.ZWaveAPIData, current.nodeId);        
+                            $.each($scope.ZWaveAPIData.devices, function (nnodeId, nnode) {
+                                if (!routesCount[nnodeId]) {
+                                    return;
+                                }
+                            });
+                            $('tr.line'+current.nodeId).css({ "outline": ""});
+                            $scope.appendLog(" " + $scope._t('reorg_done'), true);
+                            if (current.type == "battery") {
+                                if ("battery_completed" in result) {
+                                    result.battery_completed++;
+                                } else {
+                                    result.battery_completed = 1;
+                                }
+                            } else {
+                                if ("mains_completed" in result) {
+                                    result.mains_completed++;
+                                } else {
+                                    result.mains_completed = 1;
+                                }
+                            }
+                            // remove all further retries from processQueue
+                            for(var i = processQueue.length - 1; i >= 0; i--) {
+                                if (processQueue[i].nodeId  == current.nodeId) {
+                                    processQueue.splice(i, 1);
+                                }
+                            }
+                            $scope.processReorgNodesNeighbours(processQueue, result);
+                            return;
+                        }
+                    } 
+                    if (current.timeout < (new Date()).getTime()) {
+                        // timeout waiting for an update-route occured, proceed
+                        $scope.appendLog(" " + $scope._t('reorg_timeout'), true);
+                        if (current.type == "battery") {
+                            if ("battery_pending" in result) {
+                                result.battery_pending++;
+                            } else {
+                                result.battery_pending = 1;
+                            }
+                        } else {
+                            if ("mains_pending" in result) {
+                                result.mains_pending++;
+                            } else {
+                                result.mains_pending = 1;
+                            }
+                        }
+                        $('tr.line'+current.nodeId).css({ "outline": ""});
+                        processQueue.shift();
+                        $scope.processReorgNodesNeighbours(processQueue, result);
+                        return;
+                    }
+                    // routes not yet updated, poll again
+                    window.setTimeout(pollForNodeNeighbourUpdate, cfg.interval);
+                });
+            };
+            // first polling
+            pollForNodeNeighbourUpdate();
+        });
+    };
+
+    // reorgAll routes
+    $scope.reorgAll = function() {
+        $scope.reorganizing = true;
+        $scope.log = [];
+        $scope.appendLog($scope._t('reorg_started'));
+        // retry each element up to 4 times
+        var processQueue=[];
+        var logInfo="";
+        if ($scope.mainsPowered) {
+            for (var retry = 0; retry < 4; retry++) {
+                // first RequestNodeNeighbourUpdate for non-battery devices
+                $.each($scope.devices, function (index, nodeId) {
+                    if ($filter('updateable')($scope.nodes[nodeId].node, nodeId, false)) {
+                        processQueue.push({"nodeId": nodeId, "retry": retry, "type": "mains", "since": $scope.ZWaveAPIData.updateTime});
+                        if (retry == 0) {
+                            if (logInfo != "") {
+                                logInfo+=", ";
+                            }
+                            logInfo+=nodeId;
+                        }
+                    }
+                });
+                if (retry == 0) {
+                    $scope.appendLog($scope._t('reorg_all_mains') + ": " + logInfo);
+                    logInfo="";
+                }
+            }
+        }
+        if ($scope.batteryPowered) {
+            for (var retry = 0; retry < 4; retry++) {
+                // second RequestNodeNeighbourUpdate for battery devices
+                $.each($scope.devices, function (index, nodeId) {
+                    if ($filter('updateable')($scope.nodes[nodeId].node, nodeId, true)) {
+                        processQueue.push({"nodeId": nodeId, "retry": retry, "type": "battery", "since": $scope.ZWaveAPIData.updateTime});
+                        if (retry == 0) {
+                            if (logInfo != "") {
+                                logInfo+=", ";
+                            }
+                            logInfo+=nodeId;
+                        }
+                    }
+                });
+                if (retry == 0) {
+                    $scope.appendLog($scope._t('reorg_all_battery') + ": " + logInfo);
+                }
+            }
+        }
+        $scope.processReorgNodesNeighbours(processQueue, {});
+    };
+
+    // Load data
+    $scope.load = function(lang) {
+        DataFactory.all('0').query(function(ZWaveAPIData) {
+            $scope.ZWaveAPIData = ZWaveAPIData;
+            // Prepare devices and nodes 
+            angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+                if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
+                    return;
+                $scope.devices.push(nodeId);
+                $scope.nodes[nodeId] = {"label":$filter('getDeviceName')(nodeId, $scope.getDeviceNames), "node": node};
             });
+            $scope.reorganizing = false;
+        });
+    };
+
+    $scope.load($scope.lang);
 });
 
 // Statistics controller

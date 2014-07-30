@@ -1,0 +1,81 @@
+<!-- Assoc view -->
+<div ng-controller="AssocController">
+    <div class="page-header"><h1>{{ _t('associations_list')}}</h1></div>
+    <button 
+            type="button" 
+            class="btn btn-primary"
+            id="btn_update_from_device"
+            ng-click="updateAssoc()" 
+            >{{_t('update_from_device')}}</button> 
+    <div class="table-responsive">
+    <table id="AssociationTable" class="table table-striped">
+        <thead>
+            <tr>
+                <th>{{ _t('fro')}}</th>
+                <th>{{ _t('to_locate')}}</th>
+                <th>{{ _t('assoc_remaining')}}</th>
+                <th class="rtHeader">{{ _t('rt_header_update_time')}} <btn-spinner></btn-spinner></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="key in keys">
+                <td>{{data[key].label}}</td>
+                <td><button class="btn btn-primary update" 
+                            data-toggle="modal" data-ng-click="openAdd(data[key])" data-target="#modal_add" ng-disabled="data[key].remaining == 0">+</button><br/> 
+                    <span ng-repeat="a in data[key].nodeIds track by $index"><button class="btn btn-primary update" data-ng-click="openRemove(data[key], $index)">-</button> <span class="{{data[key].persistent[$index]}}">{{a| getDeviceName:getDeviceNames}} <span ng_if="data[key].type == 'm'">(Instance {{data[key].instanceIds[$index]}})</span></span><br/></span></td>
+                <td>{{data[key].remaining}}</td>
+                <td><span id="update{{d}}" class="{{data[key].update| getUpdated}}">{{data[key].update.updateTime| getTime}}</span></td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+     <!-- Modal remove -->
+    <div class="modal fade" id="modal_remove" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{ _t('assoc_confirm_remove')}}</h4>
+                </div>
+                <div class="modal-body">
+                    {{ _t('assoc_remove_from')}} {{removeData.nodeId| getDeviceName:getDeviceNames}} {{ _t('to_locate')}} {{removeData.nodeIds[removeIndex]| getDeviceName:getDeviceNames}}?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ _t('dialog_abort')}}</button>
+                    <button class="btn btn-primary update" data-ng-click="remove()">{{ _t('dialog_remove')}}</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.Modal -->
+     <!-- Modal add -->
+    <div class="modal fade" id="modal_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{ _t('assoc_add_title')}}</h4>
+                </div>
+                <div class="modal-body">
+                    {{ _t('fro')}} {{addData.nodeId| getDeviceName:getDeviceNames}} {{ _t('to_locate')}} 
+                    <select ng-model="assocTo" ng-options="k as v for (k,v) in addInstances">
+                        <option value="">&lt; {{ _t('assoc_select_to')}} &gt;</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ _t('dialog_abort')}}</button>
+                    <button class="btn btn-primary update" data-ng-click="add()" ng-disabled="assocTo == null">{{ _t('dialog_add')}}</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.Modal -->
+
+    <h4>{{_t('apply_config_tooltip')}}</h4>
+    <button 
+        type="button" 
+        class="btn btn-primary"
+        id="btn_apply_config"
+        ng-click="applyConfig()"
+        ng-disabled="applyQueue.length == 0" 
+        >{{_t('apply_config')}}</button> 
+</div>
+

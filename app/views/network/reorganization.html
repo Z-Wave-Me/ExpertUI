@@ -1,22 +1,17 @@
 <!-- Reorganization view -->
 <div ng-controller="ReorganizationController">
-    <div class="page-header"><h1>Reorganization</h1></div>
+    <div class="page-header"><h1>{{ _t('reorg_title')}}</h1></div>
     <div class="table-responsive">
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>&nbsp;</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="i in data">
-                <td>{{ i.id }}</td>
-                <td>{{ i.name }}</td>
-                <td><button class="btn btn-primary">Update</button></td>
-            </tr>
-        </tbody>
-    </table>
+        <input id="mainsPowered" type="checkbox" ng-model="mainsPowered" /> <label for="mainsPowered">{{ _t('reorg_mains_powered')}}</label><br/>
+        <input id="batteryPowered" type="checkbox" ng-model="batteryPowered" /> <label for="batteryPowered">{{ _t('reorg_battery_powered')}}</label><br/>
+        <button class="btn btn-primary update" 
+                data-ng-click="reorgAll()"
+                data-action="reorgAll"  
+                id="btn_reorg_all_1"
+                ng-disabled="reorganizing">{{ _t('sensors_update_all')}}</button>
+        <button class="btn btn-primary update" data-ng-click="downloadLog()" ng-disabled="logged == ''">{{ _t('reorg_download_log')}}</button>
+        <div class="modal-body">
+           <div ng-repeat="line in logged track by $index">{{line}}</div>
+        </div>
     </div>
 </div>
