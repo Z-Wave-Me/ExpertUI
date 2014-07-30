@@ -55,15 +55,15 @@ appController.controller('BaseController', function($scope, $cookies, $filter, c
     };
     $scope.loadDeviceConfig();
 
-    
+
     // Cache ZWaveAPIData
     var cachedAPIData = myCache.get('ZWaveAPIData');
     if (cachedAPIData) {
-       $scope.globalAPIData = cachedAPIData;
-    }else{
-         DataFactory.all('0').query(function(ZWaveAPIData) {
+        $scope.globalAPIData = cachedAPIData;
+    } else {
+        DataFactory.all('0').query(function(ZWaveAPIData) {
             myCache.put('ZWaveAPIData', ZWaveAPIData);
-             $scope.globalAPIData = cachedAPIData;
+            $scope.globalAPIData = cachedAPIData;
         });
     }
 
@@ -730,9 +730,9 @@ appController.controller('ThermostatController', function($scope, $http, $log, $
                     }
                     var ccId = 0x43;
                     //var curThermMode = 1;
-                     var curThermMode = getCurrentThermostatMode(instance);
-                     console.log(instance.commandClasses[ccId].data[1]);
-                   console.log( getCurrentThermostatMode(instance));
+                    var curThermMode = getCurrentThermostatMode(instance);
+                    console.log(instance.commandClasses[ccId].data[1]);
+                    console.log(getCurrentThermostatMode(instance));
 
                     // Set object
                     var obj = {};
@@ -784,23 +784,30 @@ appController.controller('ThermostatController', function($scope, $http, $log, $
         $timeout(refresh, cfg.interval);
     };
     $timeout(refresh, cfg.interval);
-    
+
     // used to pick up thermstat mode
-function getCurrentThermostatMode(_instance) {
-	var hasThermostatMode = 0x40 in _instance.commandClasses;
-	
-	var _curThermMode;
-	if (hasThermostatMode) {
-		_curThermMode = _instance.commandClasses[0x40].data.mode.value;
-		if (isNaN(parseInt(_curThermMode, 10)))
-			_curThermMode = null; // Mode not retrieved yet
-	} else {
-		// we pick up first available mode, since not ThermostatMode is supported to change modes
-		_curThermMode = null;
-		angular.forEach(_instance.commandClasses[0x43].data, function(name,k) { if (!isNaN(parseInt(name, 10))) { _curThermMode = parseInt(name, 10); return false; } });
-	};
+    function getCurrentThermostatMode(_instance) {
+        var hasThermostatMode = 0x40 in _instance.commandClasses;
+
+        var _curThermMode;
+        if (hasThermostatMode) {
+            _curThermMode = _instance.commandClasses[0x40].data.mode.value;
+            if (isNaN(parseInt(_curThermMode, 10)))
+                _curThermMode = null; // Mode not retrieved yet
+        } else {
+            // we pick up first available mode, since not ThermostatMode is supported to change modes
+            _curThermMode = null;
+            angular.forEach(_instance.commandClasses[0x43].data, function(name, k) {
+                if (!isNaN(parseInt(name, 10))) {
+                    _curThermMode = parseInt(name, 10);
+                    return false;
+                }
+            });
+        }
+        ;
         return _curThermMode;
-};
+    }
+    ;
 
     // Change temperature on click
     $scope.tempChange = function(cmd, index, type) {
@@ -2383,59 +2390,41 @@ appController.controller('ConfigStoreController', function($scope, DataFactory) 
      * @returns {undefined}
      */
     $scope.renameDevice = function(form) {
-        //var data = $('#' + form).serialize();
         var deviceId = $scope.deviceId;
         var givenName = $('#' + form + ' #device_name').val();
-        var cmd = 'devices[' + deviceId + '].data.givenName.value=\''+ givenName + '\'';
+        var cmd = 'devices[' + deviceId + '].data.givenName.value=\'' + givenName + '\'';
         DataFactory.store(cmd).query();
         $('#config_device_name').html(givenName);
         $('#device_node_name').html(givenName);
-       
+
+        return;
+    };
+    /**
+     * Update from device action
+     * 
+     * @param {string} cmd
+     * @returns {undefined}
+     */
+    $scope.updateFromDevice = function(cmd) {
+        DataFactory.store(cmd).query();
         return;
     };
 
     /**
-     * Build file for device names
+     * Update from device - configuration section
      * 
-     * @param {int} deviceId
-     * @param {string} deviceName
-     * @param {object} getDeviceNames
-     * @returns {String}
-     */
-    function renameDeviceBuild(deviceId, deviceName, getDeviceNames) {
-        var out = '[';
-        out += '{ "id": ' + deviceId + ',"name": "' + deviceName + '"},';
-        angular.forEach(getDeviceNames, function(v, k) {
-            if (v.id != deviceId) {
-                out += '{ "id": ' + v.id + ',"name": "' + v.name + '"},';
-            }
-
-        });
-        out += ']';
-        return out;
-    }
-    /**
-     * Update from device action
-     * 
-     * @param {object} form
+     * @param {string} cmd
+     * @param {obj} cfg
      * @returns {undefined}
      */
-    $scope.updateFromDevice = function(form) {
-        console.log('Update from device action: ' + form);
-        return;
-
-        //var data = $('#' + form).serialize();
-        var data = $('#' + form).serializeArray();
-        var dataJoined = [];
-        angular.forEach(data, function(v, k) {
-            if (v.value !== '') {
-                dataJoined.push(v.value);
+    $scope.updateFromDeviceCfg = function(cmd, cfg) {
+         angular.forEach(cfg, function(v, k) {
+            if (v.confNum) {
+                var request = cmd + '(' + v.confNum + ')';
+                 DataFactory.store(request).query();
             }
-
         });
-        var request = cmd + '(' + dataJoined.join() + ')';
-        DataFactory.store(request).query();
-        console.log(request);
+
         return;
     };
 
@@ -2652,7 +2641,7 @@ appController.controller('ControllController', function($scope, $filter, $route,
         }
         ;
 
-        
+
     };
 
     // Chaching data  
@@ -2774,7 +2763,7 @@ appController.controller('ControllController', function($scope, $filter, $route,
                     var updateTime = $filter('isTodayFromUnix')(data['controller.data.lastIncludedDevice'].updateTime);
 
                     //Run CMD
-                    var cmd = 'devices[' + deviceIncId + '].data.givenName.value=\''+ givenName + '\'';
+                    var cmd = 'devices[' + deviceIncId + '].data.givenName.value=\'' + givenName + '\'';
                     DataFactory.store(cmd).query();
                     $scope.lastIncludedDevice = $scope._t('nm_last_included_device') + '  (' + updateTime + ')  <a href="#config/configuration/' + deviceIncId + '"><strong>' + givenName + '</strong></a>';
                 }
@@ -2787,10 +2776,10 @@ appController.controller('ControllController', function($scope, $filter, $route,
                 if (deviceExcId != null) {
                     var updateTime = $filter('isTodayFromUnix')(data['controller.data.lastExcludedDevice'].updateTime);
                     //var txt = $scope._t('nm_last_excluded_device') + ' ' + (deviceExcId != 0 ? deviceExcId : $scope._t('nm_last_excluded_device_from_foreign_network'));
-                    if(deviceExcId != 0){
-                         var txt = 'Device # ' + deviceExcId +  'excluded from network';
-                    }else{
-                         var txt =  'Device excluded ' + $scope._t('nm_last_excluded_device_from_foreign_network');
+                    if (deviceExcId != 0) {
+                        var txt = 'Device # ' + deviceExcId + 'excluded from network';
+                    } else {
+                        var txt = 'Device excluded ' + $scope._t('nm_last_excluded_device_from_foreign_network');
                     }
                     $scope.lastExcludedDevice = txt + ' (' + updateTime + ')';
                 }
