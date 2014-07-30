@@ -16,16 +16,22 @@
             <h3><i class="fa fa-info-circle"></i> Network Information </h3>
             <ul class="list-group">
                 <li class="list-group-item"><strong>{{countDevices}}</strong> Devices present</li>
-                <li class="list-group-item"><strong>{{}}</strong> devices are mains powered (only mains devices) </li>
+                <li class="list-group-item"><strong class="red">{{mainsDevices}}</strong> devices are mains powered (only mains devices) </li>
                 <li class="list-group-item"><strong>{{batteryDevices}}</strong> devices are battery operated ( wakeup plus remote controls) </li>
-                <li class="list-group-item"><strong>{{}}</strong> devices are FLIRS </li>
+                <li class="list-group-item"><strong>{{flirsDevices}}</strong> devices are FLIRS </li>
             </ul>
             
             <h3><i class="fa fa-plus-square"></i> Network Health</h3>
             <ul class="list-group">
-                <li class="list-group-item">Device Thermostat_6 has low battery</li>
-                <li class="list-group-item">DEVICE XXX_11 interview is not complete</li>
-                <li class="list-group-item">Device XXX is failed</li>
+                <li class="list-group-item">
+                    <p class="text-danger" ng-repeat="v in lowBatteryDevices">Device {{v.name}} has low battery ({{v.battery_charge}}%)</p>
+                </li>
+                <li class="list-group-item">
+                    <p class="text-danger" ng-repeat="v in notInterviewDevices">Device {{v.name}} interview is not complete</p>
+                </li>
+                <li class="list-group-item">
+                    <p class="text-danger" ng-repeat="v in failedDevices">Device {{v.name}} is failed</p>
+                </li>
             </ul>
       
 
