@@ -57,15 +57,15 @@ appController.controller('BaseController', function($scope, $cookies, $filter, c
 
 
     // Cache ZWaveAPIData
-    var cachedAPIData = myCache.get('ZWaveAPIData');
-    if (cachedAPIData) {
-        $scope.globalAPIData = cachedAPIData;
-    } else {
-        DataFactory.all('0').query(function(ZWaveAPIData) {
-            myCache.put('ZWaveAPIData', ZWaveAPIData);
-            $scope.globalAPIData = cachedAPIData;
-        });
-    }
+//    var cachedAPIData = myCache.get('ZWaveAPIData');
+//    if (cachedAPIData) {
+//        $scope.globalAPIData = cachedAPIData;
+//    } else {
+//        DataFactory.all('0').query(function(ZWaveAPIData) {
+//            myCache.put('ZWaveAPIData', ZWaveAPIData);
+//            $scope.globalAPIData = cachedAPIData;
+//        });
+//    }
 
     // Cache xml
     //Load xml data
@@ -2489,48 +2489,8 @@ appController.controller('ConfigStoreController', function($scope, DataFactory) 
             //DataFactory.store(request).query();
         });
 
-        return;
-        angular.forEach(angular.element('#' + form + ' .cfg-control-content'), function(v, k) {
-            var itemId = $(v).attr('id');
-            angular.forEach(angular.element('#' + itemId + ' input'), function(i, ik) {
-                var inputName = $(i).attr('name');
-                var inputValue = $(i).attr('value');
-                angular.forEach(dataValues, function(n, nk) {
-                    if (inputName == n.name && inputValue === n.value) {
-                        console.log(inputName, inputValue);
-                    }
-
-                });
-                //console.log(dataValues['radio_Nº 1 - True Period']);
-                if (angular.isDefined(dataValues[inputName])) {
-                    console.log(inputName, inputValue);
-                }
-                console.log(inputName.replace(/^\D+/g, ''), inputValue);
-
-            });
-            //var a = angular.element(value);
-            // a.addClass('ss');
-            //console.log(itemId);
-        });
-//        angular.forEach(sections, function(v, k) {
-//            console.log(v);
-//
-//        });
-        //var data = $('#' + form).serializeArray();
-        //console.log(data);
-        return;
-        var data = $('#' + form).serializeArray();
-        var dataJoined = [];
-        angular.forEach(data, function(v, k) {
-            if (v.value !== '') {
-                dataJoined.push(v.value);
-            }
-
-        });
-        var request = cmd + '(' + dataJoined.join() + ')';
-        console.log(request);
-        //DataFactory.store(request).query();
-        return;
+       return;
+        
     };
 
     /**
@@ -2887,11 +2847,95 @@ appController.controller('StatisticsController', function($scope, $http, $log) {
 });
 
 // Controller controller
-appController.controller('ControllerController', function($scope, $http, $log) {
-    $http.get('storage/demo/controller.json').
-            success(function(data) {
-                $scope.data = data;
-            });
+appController.controller('ControllerController', function($scope, DataFactory, myCache) {
+   $scope.funcList;
+   $scope.ZWaveAPIData;
+   $scope.info = {};
+    
+    /**
+     * Load data
+     * 
+     */
+    $scope.loadData = function(ZWaveAPIData) {
+        $scope.ZWaveAPIData = ZWaveAPIData;
+//        if (path == 'controller.data.nonManagmentJobs')
+//		return; // we don't want to redraw this page on each (de)queued packet
+            
+        var homeId = ZWaveAPIData.controller.data.homeId.value;
+	var nodeId = ZWaveAPIData.controller.data.nodeId.value;
+
+	var canAdd = ZWaveAPIData.controller.data.isPrimary.value;
+	var isRealPrimary = ZWaveAPIData.controller.data.isRealPrimary.value;
+	var haveSIS = ZWaveAPIData.controller.data.SISPresent.value;
+	//var isSUC = ZWaveAPIData.controller.data.isSUC.value;
+	var SUCNodeID = ZWaveAPIData.controller.data.SUCNodeId.value;
+
+	var vendor = ZWaveAPIData.controller.data.vendor.value;
+	var ZWChip = ZWaveAPIData.controller.data.ZWaveChip.value;
+	var productId = ZWaveAPIData.controller.data.manufacturerProductId.value;
+	var productType = ZWaveAPIData.controller.data.manufacturerProductType.value;
+
+	var sdk = ZWaveAPIData.controller.data.SDK.value;
+	var libType = ZWaveAPIData.controller.data.libType.value;
+	var api = ZWaveAPIData.controller.data.APIVersion.value;
+	
+	var revId = ZWaveAPIData.controller.data.softwareRevisionId.value;
+	var revVer = ZWaveAPIData.controller.data.softwareRevisionVersion.value;
+	var revDate = ZWaveAPIData.controller.data.softwareRevisionDate.value;
+        
+        var obj = {};
+        $scope.info['ctrl_info_nodeid_value'] = nodeId;
+	$scope.info['ctrl_info_homeid_value'] = '0x' + ('00000000' + (homeId + (homeId < 0 ? 0x100000000 : 0)).toString(16)).slice(-8);
+	$scope.info['ctrl_info_primary_value'] = canAdd?'yes':'no';
+	$scope.info['ctrl_info_real_primary_value'] = isRealPrimary?'yes':'no';
+	$scope.info['ctrl_info_suc_sis_value'] = (SUCNodeID != 0)?(SUCNodeID.toString() + ' (' + (haveSIS?'SIS':'SUC') + ')'):$scope._t('nm_suc_not_present');
+
+	$scope.info['ctrl_info_hw_vendor_value'] = vendor;
+	$scope.info['ctrl_info_hw_product_value'] = productType.toString() + " / " + productId.toString();
+	$scope.info['ctrl_info_hw_chip_value'] = ZWChip;
+
+	$scope.info['ctrl_info_sw_lib_value'] = libType;
+	$scope.info['ctrl_info_sw_sdk_value'] = sdk;
+	$scope.info['ctrl_info_sw_api_value'] = api;
+
+	$scope.info['ctrl_info_sw_rev_ver_value'] = revVer;
+	$scope.info['ctrl_info_sw_rev_id_value'] = revId;
+	$scope.info['ctrl_info_sw_rev_date_value'] = revDate;
+        
+        /**
+         * Function list
+         */
+        var funcList = '';
+	var _fc = array_unique(ZWaveAPIData.controller.data.capabilities.value.concat(ZWaveAPIData.controller.data.functionClasses.value));
+	_fc.sort(function(a,b) { return a - b });
+	angular.forEach(_fc, function ( func,index) {
+		var fcIndex = ZWaveAPIData.controller.data.functionClasses.value.indexOf(func);
+		var capIndex = ZWaveAPIData.controller.data.capabilities.value.indexOf(func);
+		var fcName = (fcIndex != -1) ? ZWaveAPIData.controller.data.functionClassesNames.value[fcIndex] : 'Not implemented';
+		funcList += '<span style="color: ' + ((capIndex != -1) ? ((fcIndex != -1) ? '' : 'gray') : 'red') + '">' + fcName + ' (0x' + ('00' + func.toString(16)).slice(-2) + ')</span>, ';
+	});
+        $scope.funcList = funcList;
+
+    };
+
+    // Chaching data  
+    var cachedAPIData = myCache.get('ZWaveAPIData');
+    if (cachedAPIData) {
+        $scope.loadData(cachedAPIData);
+    } else {
+        DataFactory.all('0').query(function(ZWaveAPIData) {
+            myCache.put('ZWaveAPIData', ZWaveAPIData);
+            $scope.loadData(ZWaveAPIData);
+        });
+    }
+    /**
+     * 
+     * Run cmd
+     */
+    $scope.runCmd = function(cmd){
+        DataFactory.store(cmd).query();
+    };
+
 });
 
 // Commands controller

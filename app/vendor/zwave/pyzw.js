@@ -88,3 +88,18 @@ function repr_array(arr) {
 
 	return repr;
 };
+
+/*
+	Array unique
+*/
+function array_unique(arr) {
+	var newArray = new Array();
+
+	label:for (var i=0; i<arr.length;i++ ) {  
+		for (var j=0; j<newArray.length;j++ )
+			if (newArray[j] == arr[i]) 
+				continue label;
+		newArray[newArray.length] = arr[i];
+	}
+	return newArray;
+};

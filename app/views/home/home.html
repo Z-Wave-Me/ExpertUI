@@ -1,5 +1,34 @@
 <!-- Home view -->
 <div ng-controller="HomeController">
-    <div class="page-header"><h1>{{ _t('nav_home') }}</h1></div>
-    <div>{{ data}}</div>
+    <!-- <div class="page-header"><h1>{{ _t('nav_home')}}</h1></div> -->
+    <div class="row home-page">
+        <div class="col-sm-6 home-page-image">
+            <img class="product-logo" src="app/images/zplus.jpg" alt="Z-Wave"/>
+            <div class="product-description">
+            <p>This is a complete Z-Wave Plus certifies Static Z-Wave Controller. The software was certified in August 2014 by the Z-Wave Alliance under the Cert-No. XXXXXXXX. The certification includes the Z-Way backendvice data base  
+                and this Z-Wave specific users front end. The software supports all certified Z-Wave devices in the market, namely those listed in the device data base  <a href="http://pepper1.net/zwavedb/">http://pepper1.net/zwavedb/</a>. It uses device meta information provided by this data base. If no device meta information such as image, SKU name etc is given, the device is not listed in this data base yet. However its still possible to use all functions of the device. Please refer to the device manual for configuration and usage information.
+            </p>
+            <p>You can download the full users manual of this software from <a href="http://razberry.zwave.me">http://razberry.zwave.me</a></p>
+            </div>
+        </div>
+        <div class="col-sm-6 product-data-list pull-right">
+         
+            <h3 class="ng-binding"><i class="fa fa-info-circle"></i> Network Information </h3>
+            <ul class="list-group">
+                <li class="list-group-item">XX Devices present </li>
+                <li class="list-group-item">XX devices are mains powered (only mains devices) </li>
+                <li class="list-group-item">XX devices are battery operated ( wakeup plus remote controls) </li>
+                <li class="list-group-item">XX devices are FLIRS </li>
+            </ul>
+            
+            <h3 class="ng-binding"><i class="fa fa-plus-square"></i> Network Health</h3>
+            <ul class="list-group">
+                <li class="list-group-item">Device Thermostat_6 has low battery</li>
+                <li class="list-group-item">DEVICE XXX_11 interview is not complete</li>
+                <li class="list-group-item">Device XXX is failed</li>
+            </ul>
+      
+
+        </div>
+    </div>
 </div>
