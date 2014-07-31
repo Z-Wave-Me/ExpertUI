@@ -8,7 +8,7 @@
                 data-ng-click="reorgAll()"
                 data-action="reorgAll"  
                 id="btn_reorg_all_1"
-                ng-disabled="reorganizing">{{ _t('sensors_update_all')}}</button>
+                ng-disabled="reorganizing">{{ _t('reorg_start')}}</button>
         <button class="btn btn-primary update" data-ng-click="downloadLog()" ng-disabled="logged == ''">{{ _t('reorg_download_log')}}</button>
         <div class="modal-body">
            <div ng-repeat="line in logged track by $index">{{line}}</div>

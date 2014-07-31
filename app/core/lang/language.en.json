@@ -653,6 +653,7 @@
     "reorg_node_mains": "Reorg of mains powered node",
     "reorg_node_battery": "Reorg of battery powered node",
     "reorg_started": "Reorganization started",
+    "reorg_start": "Start Reorg",
     "reorg_all_mains": "Reorg all mains powered nodes",
     "reorg_all_battery": "Reorg all battery powered nodes",
     "assoc_remaining": "Remaining",
