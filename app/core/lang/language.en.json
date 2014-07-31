@@ -67,6 +67,7 @@
     "nm_nif_all_war": "This functions run over all existing nodes and asked for a NIF. You can also call a NIF for each individual device using the [configuration tab]",
     "nm_chip_reboot_war": "This button resets the serial communication between the controller software and the Z-Wave transceiver firmware. Its save to use",
     "nm_chip_reset_war": "This resets the whole network and deletes all reference s to existing devices. Handle with extreme care.",
+    "nm_mark_node_war_modal": "The controller will check if the node is awake and then mark it as failed. This process will take about 30 seconds. You can then remove the node if needed using the \"Remove Failed Node\" function",
      
     "---": "---",
     "syntax_error": "XML Syntax error: ",

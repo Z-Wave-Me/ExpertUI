@@ -123,6 +123,10 @@ h3 {
 border: 1px solid #9fd8ef;
 }
 
+.tooltip-inner {
+  background-color: #1f355e;
+}
+
 /* Page CSS
 -------------------------------------------------- */
 .page-header {

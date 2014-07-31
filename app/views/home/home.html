@@ -16,21 +16,21 @@
             <h3><i class="fa fa-info-circle"></i> Network Information </h3>
             <ul class="list-group">
                 <li class="list-group-item"><strong>{{countDevices}}</strong> Devices present</li>
-                <li class="list-group-item"><strong class="red">{{mainsDevices}}</strong> devices are mains powered (only mains devices) </li>
-                <li class="list-group-item"><strong>{{batteryDevices}}</strong> devices are battery operated ( wakeup plus remote controls) </li>
+                <li class="list-group-item"><strong>{{mainsDevices}}</strong> devices are mains powered</li>
+                <li class="list-group-item"><strong>{{batteryDevices}}</strong> devices are battery operated</li>
                 <li class="list-group-item"><strong>{{flirsDevices}}</strong> devices are FLIRS </li>
             </ul>
             
             <h3><i class="fa fa-plus-square"></i> Network Health</h3>
             <ul class="list-group">
                 <li class="list-group-item">
-                    <p class="text-danger" ng-repeat="v in lowBatteryDevices">Device {{v.name}} has low battery ({{v.battery_charge}}%)</p>
+                    <p class="text-danger" ng-repeat="v in lowBatteryDevices">Device {{v.name}} (#{{v.id}}) has low battery ({{v.battery_charge}}%)</p>
                 </li>
                 <li class="list-group-item">
-                    <p class="text-danger" ng-repeat="v in notInterviewDevices">Device {{v.name}} interview is not complete</p>
+                    <p class="text-danger" ng-repeat="v in notInterviewDevices">Device {{v.name}} (#{{v.id}}) interview is not complete</p>
                 </li>
                 <li class="list-group-item">
-                    <p class="text-danger" ng-repeat="v in failedDevices">Device {{v.name}} is failed</p>
+                    <p class="text-danger" ng-repeat="v in failedDevices">Device {{v.name}} (#{{v.id}}) is failed</p>
                 </li>
             </ul>
       
