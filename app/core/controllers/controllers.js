@@ -1610,10 +1610,13 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
     $scope.data = {};
     $scope.ZWaveAPIData;
     $scope.removeData = null;
-    $scope.removeIndex = null;
     $scope.addData = null;
+    $scope.addNodes = {};
     $scope.addInstances = {};
-    $scope.assocTo = null;
+    $scope.removeNodes = {};
+    $scope.removeInstances = {};
+    $scope.assocToNode = null;
+    $scope.assocToInstance = null;
     $scope.applyQueue = [];
     $scope.updates = [];
     $scope.zdd = {};
@@ -1657,41 +1660,71 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
     }
 
     // Open remove assocation dialog
-    $scope.openRemove = function(data, $index) {
+    $scope.openRemove = function(data) {
         $scope.removeData = data;
-        $scope.removeIndex = $index;
+        $scope.removeNodes = {};
+        $scope.removeInstances = {};
+        angular.forEach($scope.removeData.nodeIds, function(nodeId, index) {
+            if ($scope.removeData.type == 'm') {
+                var instanceId = parseInt($scope.removeData.instanceIds[index]) - 1;
+                // MultiChannelAssociation with instanceId
+                $scope.removeNodes[nodeId] = $filter('getDeviceName')(nodeId, $scope.getDeviceNames);
+                if (!(nodeId in $scope.removeInstances))
+                    $scope.removeInstances[nodeId] = {};
+                $scope.removeInstances[nodeId][instanceId] = instanceId + 1;
+            } else {
+                // simple Assocation
+                $scope.removeNodes[nodeId] = $filter('getDeviceName')(nodeId, $scope.getDeviceNames);
+            }
+        });
         $('#modal_remove').modal({});
     };
 
     // Remove an assocation
     $scope.remove = function() {
-        var params = $scope.removeData.groupId + ',' + $scope.removeData.nodeIds[$scope.removeIndex];
+        var params = $scope.removeData.groupId + ',' + $scope.assocToNode;
         if ($scope.removeData.type == 'm') {
-            params += ',' + $scope.removeData.instanceIds[$scope.removeIndex];
+            params += ',' + (parseInt($scope.assocToInstance) + 1);
         }
         $scope.updates.push("devices." + $scope.deviceId + ".instances." + $scope.removeData.instance + ".commandClasses." + parseInt($scope.removeData.commandClass) + ".data." + $scope.removeData.groupId);
         $scope.applyQueue.push('/ZWaveAPI/Run/devices[' + $scope.deviceId + '].instances[' + $scope.removeData.instance + '].commandClasses[' + $scope.removeData.commandClass + '].Remove(' + params + ')');
 
         // cause view to hide element
-        $scope.removeData.nodeIds.splice($scope.removeIndex, 1);
-        if ($scope.removeData.type == 'm') {
-            $scope.removeData.instanceIds.splice($scope.removeIndex, 1);
+        var removeIndex = -1;
+        for(var i = 0; i < $scope.removeData.nodeIds.length; i++) {
+            if ($scope.removeData.nodeIds[i] == $scope.assocToNode) {
+                if ($scope.removeData.type == 'm') {
+                    if ($scope.removeData.instanceIds[i] == (parseInt($scope.assocToInstance) + 1)) {
+                        removeIndex = i;
+                        break;
+                    }
+                } else {
+                    removeIndex = i;
+                    break;
+                }
+            }
         }
-        $scope.removeData.persistent.splice($scope.removeIndex, 1);
+        $scope.removeData.nodeIds.splice(removeIndex, 1);
+        if ($scope.removeData.type == 'm') {
+            $scope.removeData.instanceIds.splice(removeIndex, 1);
+        }
+        $scope.removeData.persistent.splice(removeIndex, 1);
         $('#modal_remove').modal('hide');
     };
 
     // Add an assocation
     $scope.add = function() {
-        var params = $scope.assocTo;
+        var params = $scope.addData.groupId + ',' + $scope.assocToNode;
+        if ($scope.addData.type == 'm') {
+            params += ',' + (parseInt($scope.assocToInstance) + 1);
+        }
         $scope.updates.push("devices." + $scope.deviceId + ".instances." + $scope.addData.instance + ".commandClasses." + parseInt($scope.addData.commandClass) + ".data." + $scope.addData.groupId);
         $scope.applyQueue.push('/ZWaveAPI/Run/devices[' + $scope.deviceId + '].instances[' + $scope.addData.instance + '].commandClasses[' + $scope.addData.commandClass + '].Set(' + params + ')');
 
         // cause view to show element
-        var parts = $scope.assocTo.split(',');
-        $scope.addData.nodeIds.push(parseInt(parts[1]));
+        $scope.addData.nodeIds.push(parseInt($scope.assocToNode));
         if ($scope.addData.type == 'm')
-            $scope.addData.instanceIds.push(parseInt(parts[2]));
+            $scope.addData.instanceIds.push(parseInt($scope.assocToInstance) + 1);
         $scope.addData.persistent.push("notInZWave");
         $('#modal_add').modal('hide');
     };
@@ -1699,6 +1732,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
     // Open add assocation dialog
     $scope.openAdd = function(data) {
         $scope.addData = data;
+        $scope.addNodes = {};
         $scope.addInstances = {};
         // Prepare devices and nodes 
         angular.forEach($scope.ZWaveAPIData.devices, function(node, nodeId) {
@@ -1717,7 +1751,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                             contained = true;
                     } else {
                         for (var i = 0; i < $scope.addData.nodeIds.length; i++) {
-                            if ($scope.addData.nodeIds[i] == nodeId && $scope.addData.instanceIds[i] == instanceId) {
+                            if ($scope.addData.nodeIds[i] == nodeId && $scope.addData.instanceIds[i] == parseInt(instanceId) + 1) {
                                 contained = true;
                                 break;
                             }
@@ -1728,24 +1762,13 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
 
                     if ($scope.addData.type == 'm') {
                         // MultiChannelAssociation with instanceId
-                        var label = instanceId;
-                        if ($scope.zdd[nodeId] && ("assocGroup" in $scope.zdd[nodeId]) && (parseInt(instanceId) in $scope.zdd[nodeId].assocGroup)) {
-                            // find best matching lang, default english
-                            var langs = $scope.zdd[nodeId].assocGroup[parseInt(instanceId)].description.lang;
-                            angular.forEach(langs, function(lang, index) {
-                                if (("__text" in lang) && (lang["_xml:lang"] == $scope.lang)) {
-                                    label = lang.__text;
-                                    return false;
-                                }
-                                if (("__text" in lang) && (lang["_xml:lang"] == "en")) {
-                                    label = lang.__text;
-                                }
-                            });
-                        }
-                        $scope.addInstances[groupId + ',' + nodeId + ',' + instanceId] = $filter('getDeviceName')(nodeId, $scope.getDeviceNames) + " - " + label;
+                        $scope.addNodes[nodeId] = $filter('getDeviceName')(nodeId, $scope.getDeviceNames);
+                        if (!(nodeId in $scope.addInstances))
+                            $scope.addInstances[nodeId] = {};
+                        $scope.addInstances[nodeId][instanceId] = parseInt(instanceId) + 1;
                     } else {
                         // simple Assocation
-                        $scope.addInstances[groupId + ',' + nodeId] = $filter('getDeviceName')(nodeId, $scope.getDeviceNames);
+                        $scope.addNodes[nodeId] = $filter('getDeviceName')(nodeId, $scope.getDeviceNames);
                         break; // first instance is enough
                     }
                 }
@@ -1810,7 +1833,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                     }
                 });
             }
-            $scope.data[key] = {"type": "s", "label": label, "nodeId": nodeId, "node": node, "commandClass": "0x85", "instance": association.instance, "groupId": association.data.name, "nodeIds": association.data.nodes.value, "persistent": persistent, "update": association.data.nodes, "remaining": (association.data.max.value - association.data.nodes.value.length)};
+            $scope.data[key] = {"type": "s", "label": label, "nodeId": nodeId, "node": node, "commandClass": "0x85", "instance": association.instance, "groupId": association.data.name, "nodeIds": association.data.nodes.value, "persistent": persistent, "update": association.data.nodes, "max": association.data.max.value, "remaining": (association.data.max.value - association.data.nodes.value.length)};
         });
         angular.forEach(associables.multiChannelAssociations, function(association, index) {
             var key = nodeId + ".m-" + index;
@@ -1825,7 +1848,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
             }
             var label = $scope._t('multi_association_group') + " " + association.data.name;
             // TODO resolve zddxml-assocGroup label name when available in zddxml
-            $scope.data[key] = {"type": "m", "label": label, "nodeId": nodeId, "instanceId": index, "node": node, "commandClass": "0x8e", "instance": association.instance, "groupId": association.data.name, "nodeIds": nodeIds, "instanceIds": instanceIds, "persistent": persistent, "update": association.data.nodesInstances, "remaining": (association.data.max.value - (association.data.nodesInstances.value.length / 2))};
+            $scope.data[key] = {"type": "m", "label": label, "nodeId": nodeId, "instanceId": index, "node": node, "commandClass": "0x8e", "instance": association.instance, "groupId": association.data.name, "nodeIds": nodeIds, "instanceIds": instanceIds, "persistent": persistent, "update": association.data.nodesInstances, "max": association.data.max.value, "remaining": (association.data.max.value - (association.data.nodesInstances.value.length / 2))};
         });
     };
 
