@@ -87,3 +87,15 @@
         current: '{{bool()}}'
     }
 ]
+
+// Timming
+[
+    '{{repeat(15)}}',
+    {
+        id: '{{index()}}',
+        type: '{{surname()}}',
+        total: '{{integer(50, 100)}}',
+        ok: '{{integer(1, 100)}}',
+        packets: '1 4 1 1 5 7 8 155 233 8 9 7'
+    }
+]
