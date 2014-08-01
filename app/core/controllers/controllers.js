@@ -138,15 +138,25 @@ appController.controller('HomeController', function($scope, $filter, $timeout, D
     $scope.mainsDevices;
     $scope.notInterviewDevices = [];
     $scope.notes = [];
+    $scope.notesData = '';
 
     // Notes
+    // OLD version
     $scope.loadNotes = function() {
         DataFactory.getNotes(function(notesData) {
             var data = notesData.replace(/^\s+|\s+$/g, '');
             $scope.notes = data.split('###');
         });
     };
-    $scope.loadNotes();
+    //$scope.loadNotes();
+    
+    // Notes - new version
+    $scope.loadNotesData = function() {
+        DataFactory.getNotes(function(notesData) {
+            $scope.notesData = notesData;
+        });
+    };
+    $scope.loadNotesData();
 
     /**
      * Load data
@@ -286,7 +296,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, D
     }
     ;
     /**
-     * Save notes
+     * Save notes - OLD version
      */
     $scope.saveNote = function(form, btn) {
         var input = $('#' + form + ' #note').val();
@@ -305,7 +315,25 @@ appController.controller('HomeController', function($scope, $filter, $timeout, D
         DataFactory.putNotes(notes);
         $('#' + form + ' #note').val('');
         var url = $(btn).attr('data-store-url');
-        DataFactory.store(url).query();
+        $timeout(function() {
+            $(btn).removeAttr('disabled');
+        }, 2000);
+        return;
+
+
+    };
+    
+     /**
+     * Save notes
+     */
+    $scope.saveNotes = function(form, btn) {
+        var input = $('#' + form + ' #note').val();
+        if (!input || input == '') {
+            return;
+        }
+        $(btn).attr('disabled', true);
+        DataFactory.putNotes(input);
+        
         $timeout(function() {
             $(btn).removeAttr('disabled');
         }, 2000);
@@ -1093,6 +1121,11 @@ appController.controller('LocksController', function($scope, $http, $log, $filte
                     $('#' + v.rowId + ' .row-time').html(updateTime).removeClass('is-updated-false');
                     $('#' + v.rowId + ' .row-level').html(level);
                     $('#' + v.rowId + ' .btn-group-lock button').removeClass('active');
+                    if(active == '255'){
+                        $('#' + v.rowId + ' .btn-lock').addClass('active');
+                    }else{
+                         $('#' + v.rowId + ' .btn-unlock').addClass('active');
+                    }
                     $('#update_time_tick').html($filter('getCurrentTime'));
 
                     $log.info('Updating:' + v.rowId + ' | At: ' + updateTime + ' | with: ' + level);//REM

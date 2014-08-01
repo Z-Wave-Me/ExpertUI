@@ -13,8 +13,8 @@
 
             <div>
                 <h3>Notes</h3>
-                <form name="form_rename" id="form_notes" ng-model="form_notes" class="form" ng-submit="saveNote('form_notes', '#btn_save_note')" novalidate>
-                    <textarea id="note" name="note" class="form-control" ng-model="note"></textarea><br />
+                <form name="form_rename" id="form_notes" ng-model="form_notes" class="form" ng-submit="saveNotes('form_notes', '#btn_save_note')" novalidate>
+                    <textarea id="note" name="note" class="form-control" rows="20">{{notesData}}</textarea><br />
 
                     <button type="submit" class="btn btn-primary"  id="btn_save_note">Save</button>
                 </form>
@@ -46,7 +46,7 @@
 
         </div>
     </div>
-    <div class="row home-notes-list">
+    <div class="row home-notes-list" style="display: none;">
         <div class="col-sm-6 product-data-list">
             <h3><i class="fa fa-info-circle"></i> List of notes</h3>
             <ul class="list-group">
