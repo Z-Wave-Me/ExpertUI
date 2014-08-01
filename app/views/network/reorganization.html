@@ -10,8 +10,6 @@
                 id="btn_reorg_all_1"
                 ng-disabled="reorganizing">{{ _t('reorg_start')}}</button>
         <button class="btn btn-primary update" data-ng-click="downloadLog()" ng-disabled="logged == ''">{{ _t('reorg_download_log')}}</button>
-        <div class="modal-body">
-           <div ng-repeat="line in logged track by $index">{{line}}</div>
-        </div>
+        <textarea ng-model="logged" ng-readonly="true" style="width:100%; height: 300px;"></textarea>
     </div>
 </div>

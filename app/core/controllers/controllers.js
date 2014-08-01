@@ -3271,18 +3271,6 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
     $scope.data = {};
     $scope.ZWaveAPIData;
     $scope.updating = {};
-    $scope.log = [];
-
-    $scope.appendLog = function(str, noNewline) {
-        if (noNewline == true) {
-            $scope.log[$scope.log.length - 1] += str;
-        } else {
-            if ($scope.log.length > 0)
-                $scope.log[$scope.log.length - 1] += "\n";
-            $scope.log.push($filter('getTime')(new Date().getTime() / 1000) + ": " + str);
-        }
-        DataFactory.putReorgLog($scope.log.join(""));
-    };
 
     $scope.cellState = function(nodeId, nnodeId, routesCount) {
         var node = $scope.nodes[nodeId].node;
@@ -3314,17 +3302,6 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
     $scope.processUpdateNodesNeighbours = function(processQueue, result) {
         var spinner = $('#RoutingTable .fa-spinner');
         if (processQueue.length == 0) {
-            $scope.appendLog($scope._t('reorg_completed') + ":");
-            if ("mains_completed" in result)
-                $scope.appendLog(result.mains_completed + " " + $scope._t('reorg_mains_powered_done'));
-            if ("battery_completed" in result)
-                $scope.appendLog(result.battery_completed + " " + $scope._t('reorg_battery_powered_done'));
-            if ("mains_pending" in result)
-                $scope.appendLog(result.mains_pending + " " + $scope._t('reorg_mains_powered_pending'));
-            if ("battery_pending" in result)
-                $scope.appendLog(result.battery_pending + " " + $scope._t('reorg_battery_powered_pending'));
-            if ($.isEmptyObject(result))
-                $scope.appendLog($scope._t('reorg_nothing'));
             $('div.rtDiv').css({"border-color": ""});
             $.each(result.done, function(index, nodeId) {
                 $scope.updating[nodeId] = false;
@@ -3334,7 +3311,6 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
         }
         spinner.show();
         var current = processQueue[0];
-        $scope.appendLog($scope._t('reorg_reorg') + " " + current.nodeId + " " + (current.retry > 0 ? current.retry + ". " + $scope._t('reorg_retry') : "") + " ");
 
         // process-states
         if (!("timeout" in current)) {
@@ -3344,7 +3320,6 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
         DataFactory.store('devices[' + current.nodeId + '].RequestNodeNeighbourUpdate()').query(function(response) {
             var pollForNodeNeighbourUpdate = function() {
                 DataFactory.all(current.since).query(function(updateZWaveAPIData) {
-                    $scope.appendLog(".", true);
                     if ("devices." + current.nodeId + ".data.neighbours" in updateZWaveAPIData) {
                         var obj = updateZWaveAPIData["devices." + current.nodeId + ".data.neighbours"]
                         $('#update' + current.nodeId).attr('class', $filter('getUpdated')(obj));
@@ -3364,7 +3339,6 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
                                 $('#cell' + current.nodeId + '-' + nnodeId).css({"border-color": ""});
                             });
                             $('div.rtDiv').css({"border-color": ""});
-                            $scope.appendLog(" " + $scope._t('reorg_done'), true);
                             if (!("done" in result)) {
                                 result.done = [];
                             }
@@ -3394,7 +3368,6 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
                     }
                     if (current.timeout < (new Date()).getTime()) {
                         // timeout waiting for an update-route occured, proceed
-                        $scope.appendLog(" " + $scope._t('reorg_timeout'), true);
                         if (!("done" in result)) {
                             result.done = [];
                         }
@@ -3435,9 +3408,6 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
             var hasBattery = 0x80 in $scope.nodes[nodeId].node.instances[0].commandClasses;
             for (var retry = 0; retry < 1; retry++) {
                 processQueue.push({"nodeId": nodeId, "retry": retry, "type": (hasBattery ? "battery" : "mains"), "since": $scope.ZWaveAPIData.updateTime});
-                if (retry == 0) {
-                    $scope.appendLog($scope._t('reorg_node_' + (hasBattery ? "battery" : "mains")) + ": " + nodeId);
-                }
             }
             // avoid overall routing-table updates during update
             $scope.updating[nodeId] = true;
@@ -3486,7 +3456,7 @@ appController.controller('ReorganizationController', function($scope, $log, $fil
     $scope.ZWaveAPIData;
     $scope.reorganizing = true;
     $scope.log = [];
-    $scope.logged = [];
+    $scope.logged = "";
 
     $scope.appendLog = function(str, noNewline) {
         if (noNewline == true) {
@@ -3508,7 +3478,7 @@ appController.controller('ReorganizationController', function($scope, $log, $fil
     var refreshLog = function() {
         // Assign to scope within callback to avoid data flickering on screen
         DataFactory.getReorgLog(function(log) {
-            $scope.logged = log.split("\n");
+            $scope.logged = log;
         });
     };
 
@@ -3614,10 +3584,48 @@ appController.controller('ReorganizationController', function($scope, $log, $fil
                     }
                     // routes not yet updated, poll again
                     window.setTimeout(pollForNodeNeighbourUpdate, cfg.interval);
+                }, function(error) {
+                    // error handler
+                    $scope.appendLog(error, true);
+                    if (current.type == "battery") {
+                        if ("battery_pending" in result) {
+                            result.battery_pending++;
+                        } else {
+                            result.battery_pending = 1;
+                        }
+                    } else {
+                        if ("mains_pending" in result) {
+                            result.mains_pending++;
+                        } else {
+                            result.mains_pending = 1;
+                        }
+                    }
+                    $('tr.line' + current.nodeId).css({"outline": ""});
+                    processQueue.shift();
+                    $scope.processReorgNodesNeighbours(processQueue, result);
                 });
             };
             // first polling
             pollForNodeNeighbourUpdate();
+        }, function(error) {
+            // error handler
+            $scope.appendLog(error, true);
+            if (current.type == "battery") {
+                if ("battery_pending" in result) {
+                    result.battery_pending++;
+                } else {
+                    result.battery_pending = 1;
+                }
+            } else {
+                if ("mains_pending" in result) {
+                    result.mains_pending++;
+                } else {
+                    result.mains_pending = 1;
+                }
+            }
+            $('tr.line' + current.nodeId).css({"outline": ""});
+            processQueue.shift();
+            $scope.processReorgNodesNeighbours(processQueue, result);
         });
     };
 
