@@ -141,7 +141,7 @@ angApp.filter('dateFromUnix', function() {
 
 //Get current date time
 angApp.filter('getCurrentDate', function() {
-    return function() {
+   
         var d = new Date();
         var day = d.getDate();
         var mon = d.getMonth() + 1; //Months are zero based
@@ -151,7 +151,7 @@ angApp.filter('getCurrentDate', function() {
         var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
         var time = day + '.' + mon + '.' + year + ' ' + hrs + ':' + min + ':' + sec;
         return time;
-    };
+   
 });
 
 //Get current time

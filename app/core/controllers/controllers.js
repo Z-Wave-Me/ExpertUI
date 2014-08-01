@@ -112,31 +112,23 @@ appController.controller('TestController', function($scope, $routeParams, cfg, $
     };
     $timeout(countUp, 1000);
 
-//    testFactory.loadItems();
-//    console.log(testFactory.getItems());
-//$scope.cache = $cacheFactory('cacheId');
-    var cache = myCache.get('ZWaveAPIData');
-    if (cache) {
-        $scope.cacheVar = cache;
-        angular.forEach(cache.devices, function(dev, nodeId) {
-
-            console.log(nodeId);
-        });
-        console.log('Cached');
-    } else {
-        var data = {"id": 1};
-        $scope.cacheVar = data;
-
-        myCache.put('myData', data);
-        console.log('UNNNNNNNNNCached');
-    }
-    console.log($scope.cacheVar);
+$scope.uploadFile = function(files) {
+        var fd = new FormData();
+        //Take the first selected file
+        fd.append("config_backup", files[0]);
+        var uploadUrl = 'http://zwave.dyndns.org:8083/ZWaveAPI/Restore?restore_chip_info=1';
+        $http.post(uploadUrl, fd, {
+        withCredentials: true,
+                headers: {'Content-Type': undefined },
+                transformRequest: angular.identity
+        }).success(console.log('success')).error(console.log('error'));
+    };
 
 });
 
 
 // Home controller
-appController.controller('HomeController', function($scope, $filter, DataFactory, myCache) {
+appController.controller('HomeController', function($scope, $filter, $timeout, DataFactory, myCache) {
     $scope.ZWaveAPIData;
     $scope.countDevices;
     $scope.failedDevices = [];
@@ -145,6 +137,16 @@ appController.controller('HomeController', function($scope, $filter, DataFactory
     $scope.flirsDevices;
     $scope.mainsDevices;
     $scope.notInterviewDevices = [];
+    $scope.notes = [];
+
+    // Notes
+    $scope.loadNotes = function() {
+        DataFactory.getNotes(function(notesData) {
+            var data = notesData.replace(/^\s+|\s+$/g, '');
+            $scope.notes = data.split('###');
+        });
+    };
+    $scope.loadNotes();
 
     /**
      * Load data
@@ -283,6 +285,34 @@ appController.controller('HomeController', function($scope, $filter, DataFactory
         return cnt;
     }
     ;
+    /**
+     * Save notes
+     */
+    $scope.saveNote = function(form, btn) {
+        var input = $('#' + form + ' #note').val();
+        if (!input || input == '') {
+            return;
+        }
+        $(btn).attr('disabled', true);
+        var note = $filter('getCurrentDate') + ' | ' + input;
+        var notes = '';
+        $scope.notes.push(note);
+        angular.forEach($scope.notes, function(val) {
+            if (val != '') {
+                notes += val + "\n" + '###' + "\n";
+            }
+        });
+        DataFactory.putNotes(notes);
+        $('#' + form + ' #note').val('');
+        var url = $(btn).attr('data-store-url');
+        DataFactory.store(url).query();
+        $timeout(function() {
+            $(btn).removeAttr('disabled');
+        }, 2000);
+        return;
+
+
+    };
 });
 
 // Switch controller
@@ -1057,10 +1087,12 @@ appController.controller('LocksController', function($scope, $http, $log, $filte
                 // Check for updated data
                 if (v.cmd in data) {
                     var obj = data[v.cmd];
+                    var active = obj.value;
                     var level = $filter('lockStatus')(obj.value);
                     var updateTime = $filter('isTodayFromUnix')(obj.updateTime);
                     $('#' + v.rowId + ' .row-time').html(updateTime).removeClass('is-updated-false');
                     $('#' + v.rowId + ' .row-level').html(level);
+                    $('#' + v.rowId + ' .btn-group-lock button').removeClass('active');
                     $('#update_time_tick').html($filter('getCurrentTime'));
 
                     $log.info('Updating:' + v.rowId + ' | At: ' + updateTime + ' | with: ' + level);//REM
@@ -1857,15 +1889,15 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
         pollForUpdate($scope.ZWaveAPIData.updateTime, $scope.updates);
         $scope.updates = [];
     };
-    
+
     /**
      * Show modal window
      * 
      * @returns {void}
      */
-    $scope.showModalAssoc = function(target,param) {
+    $scope.showModalAssoc = function(target, param) {
         $(target).modal();
-         $(target + ' .modal-title').html(param.title);
+        $(target + ' .modal-title').html(param.title);
         return;
     };
 });
@@ -2930,7 +2962,7 @@ appController.controller('ConfigStoreController', function($scope, DataFactory) 
 });
 
 // Controll controller
-appController.controller('ControllController', function($scope, $filter, $route, $timeout, DataFactory, DataTestFactory, XmlFactory, myCache) {
+appController.controller('ControllController', function($scope, $filter, $route, $timeout, $http,DataFactory, DataTestFactory, XmlFactory, myCache) {
     $scope.devices = [];
     $scope.failedNodes = [];
     $scope.replaceNodes = [];
@@ -3182,12 +3214,12 @@ appController.controller('ControllController', function($scope, $filter, $route,
         var folder = (url ? url : '/ZWaveAPI/Run/');
         if (angular.isArray(cmd)) {
             angular.forEach(cmd, function(v, k) {
-                //DataFactory.runCmd(folder + v).query();
-                DataFactory.debug(folder + v);
+                DataFactory.runCmd(folder + v).query();
+                //DataFactory.debug(folder + v);
             });
         } else {
-            //DataFactory.runCmd(folder + cmd).query();
-            DataFactory.debug(folder + cmd);
+            DataFactory.runCmd(folder + cmd).query();
+            //DataFactory.debug(folder + cmd);
         }
         if (action) {
             switch (action.name) {
@@ -3224,6 +3256,18 @@ appController.controller('ControllController', function($scope, $filter, $route,
         DataFactory.runCmd('/ZWaveAPI/' + cmd).query();
 
         return;
+    };
+
+    $scope.uploadFile = function(files) {
+        var fd = new FormData();
+        //Take the first selected file
+        fd.append("config_backup", files[0]);
+        var uploadUrl = 'http://zwave.dyndns.org:8083/ZWaveAPI/Restore?restore_chip_info=1';
+        $http.post(uploadUrl, fd, {
+        withCredentials: true,
+                headers: {'Content-Type': undefined },
+                transformRequest: angular.identity
+        }).success(console.log('success')).error(console.log('error'));
     };
 
     /**

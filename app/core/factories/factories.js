@@ -80,6 +80,24 @@ appFactory.factory('DataFactory', function($resource, $http, cfg) {
                     method: 'POST', params: {}
                 }});
         },
+        putNotes: function(log) {
+            return $.ajax({
+                    type: "PUT",
+                    dataType: "text",
+                    url: cfg.server_url + cfg.notes_url,
+                    contentType: "text/plain",
+                    data: log
+                });
+        },
+        getNotes: function(callback) {
+            return $http({
+                method: 'GET', 
+                url: cfg.server_url + cfg.notes_url
+                //url: 'storage/notes.log'
+            }).success(function(data, status, headers, config) {
+                    callback(data);
+                });
+        },
         debug: function(param) {
             var cmd = cfg.server_url + cfg.zwave_api_run_url + param;
             console.log(cmd);
@@ -176,7 +194,6 @@ appFactory.factory('deviceConfigFactory', function($resource, cfg) {
         }
     };
 });
-
 
 // Get language dataas object
 appFactory.factory('testFactory', function(DataTestFactory) {

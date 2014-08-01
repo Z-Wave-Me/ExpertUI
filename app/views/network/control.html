@@ -251,7 +251,8 @@
                             ng-false-value="0" 
                             ng-model="modelRestoreChipInfo" /> {{_t('restore_backup_chip')}}
                         <form method="POST" action="" enctype="multipart/form-data" id="restore_backup"> 
-                        <input type="file" name="config_backup" />
+                        <!-- <input type="file" name="config_backup" /> -->
+                        <input type="file" name="config_backup" onchange="angular.element(this).scope().uploadFile(this.files)"/>
                         </form>
                     </div>
                 </div>

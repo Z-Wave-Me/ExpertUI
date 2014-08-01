@@ -3,5 +3,10 @@
     <div class="page-header"><h1>Test</h1></div>
      <span>Sec counter: {{timeInMs}}</span>
      
+     <form method="POST" action="" enctype="multipart/form-data" id="restore_backup"> 
+                        <!-- <input type="file" name="config_backup" /> -->
+                        <input type="file" name="config_backup" onchange="angular.element(this).scope().uploadFile(this.files)"/>
+                        </form>
+     
    
 </div>
