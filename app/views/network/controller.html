@@ -30,15 +30,25 @@
         </table>
     </div>
     <div class="well well-sm">
+        <!-- ctrl_info_data  -->
         <button class="btn btn-primary" 
                 ng-controller="CommandModalController" 
                 ng-click="showModal('#modal_controller', ZWaveAPIData.controller.data)"
                 >{{_t('ctrl_info_data')}}</button>
+
+        <!-- ctrl_info_device_data  -->
         <button class="btn btn-primary" 
                 ng-controller="CommandModalController" 
                 ng-click="showModal('#modal_controller', ZWaveAPIData.devices[ZWaveAPIData.controller.data.nodeId.value].data)"
                 >{{_t('ctrl_info_device_data')}}</button>
-        <button class="btn btn-primary" data-toggle="modal" data-target="#modal_debugging">{{_t('nm_inspect_queue_title')}}</button>
+
+        <!-- nm_inspect_queue_title  -->
+        <button 
+            class="btn btn-primary" 
+            ng-click="inspectQueue('#modal_queue', true)"
+            >{{_t('nm_inspect_queue_title')}}</button>
+
+        <!-- nm_send_node_information  -->
         <button class="btn btn-primary"
                 ng-click="runCmd('controller.SendNodeInformation()')"
                 >{{_t('nm_send_node_information')}}</button>
@@ -68,18 +78,34 @@
     </div><!-- /.Modal -->
 
     <!-- Modal debugging -->
-    <div class="modal fade" id="modal_debugging" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade modal_wide" id="modal_queue" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Inspect queue</h4>
+                    <h4 class="modal-title">{{_t('nm_inspect_queue_title')}}</h4>
                 </div>
                 <div class="modal-body">
-                    Content comes here
+                    <div class="table-responsive">
+                    <table id="inspect_queue_table" class="table-striped">
+                        <thead>
+                            <tr>
+                                <th>n</th><th>U</th><th>W</th><th>S</th><th>E</th><th>D</th>
+                                <th>Ack</th><th>Resp</th><th>Cbk</th><th>Timeout</th>
+                                <th>NodeId</th><th>Description</th><th>Progress</th><th>Buffer</th>
+                            </tr> 
+                        </thead>
+                        <tbody id="inspect_queue_table_body"></tbody>
+                    </table> 
+                        <div>
+                    <div id="inspect_queue_len"></div><br />
+                    <div><strong>{{_t('inspect_queue_legend_title')}}</strong>
+                     <p ng-bind-html="_t('inspect_queue_legend_help') | toTrusted"></p>
+                     </div>
+                    
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"  ng-click="inspectQueue('#modal_queue', false)">Close</button>
                 </div>
             </div>
         </div>

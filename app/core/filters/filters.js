@@ -169,6 +169,9 @@ angApp.filter('getCurrentTime', function() {
 //Check for today
 angApp.filter('isTodayFromUnix', function() {
     return function(input) {
+        if(isNaN(input)){
+            return '?';
+        }
         var d = new Date(input * 1000);
         var day = d.getDate();
         var mon = d.getMonth() + 1; //Months are zero based

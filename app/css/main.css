@@ -249,6 +249,17 @@ border-top: 1px solid #9fd8ef;
     background-color: #e4f5fc;
 }
 
+#inspect_queue_table{
+    font-size: 12px;
+    width: 100%;
+}
+
+/* Modals
+-------------------------------------------------- */
+#modal_queue .modal-dialog {
+  width: 60%;
+}
+
 /* Tabs
 -------------------------------------------------- */
 .nav-tabs {

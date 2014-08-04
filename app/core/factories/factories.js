@@ -50,6 +50,12 @@ appFactory.factory('DataFactory', function($resource, $http, cfg) {
                     isArray: false
                 }});
         },
+        queue: function() {
+            return $resource(cfg.server_url + cfg.queue_url, {}, {query: {
+                    method: 'POST', 
+                    isArray: true
+                }});
+        },
         store: function(param) {
             return $resource(cfg.server_url + cfg.store_url + param, {}, {query: {
                     method: 'POST', params: {}
