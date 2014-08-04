@@ -104,6 +104,14 @@ appFactory.factory('DataFactory', function($resource, $http, cfg) {
                     callback(data);
                 });
         },
+        updateFirmware: function(url) {
+            return $.ajax({
+                    type: "GET",
+                    dataType: "text",
+                    url: url,
+                    contentType: "application/octet-stream"
+                });
+        },
         debug: function(param) {
             var cmd = cfg.server_url + cfg.zwave_api_run_url + param;
             console.log(cmd);

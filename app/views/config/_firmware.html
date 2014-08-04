@@ -1,0 +1,32 @@
+<!-- Firmware view -->
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th><a href="" ng-click="predicate = 'id';
+                    reverse = !reverse">#</a></th>
+                <th><a href="" ng-click="predicate = 'name';
+                    reverse = !reverse">Name</a></th>
+                <th><a href="" ng-click="predicate = 'version';
+                    reverse = !reverse">Version</a></th>
+                <th><a href="" ng-click="predicate = 'current';
+                    reverse = !reverse">Staus</a></th>
+                <th>Firmware</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="v in firmware | orderBy:predicate:reverse" class="current-{{ v.current}}">
+                <td>{{ v.id}}</td>
+                <td>{{ v.name}}</td>
+                <td>{{ v.app_version}}</td>
+                <td ng-switch on="v.current">
+                    <i ng-switch-when="true" class="fa fa-check fa-lg" style="color: green;"></i>
+                    <i ng-switch-default class="fa fa-exclamation fa-lg" style="color: red;"></i>
+                </td>
+                <td><select class="form-control"><option>Version 1</option><option>Version 2</option><option>Version 3</option></select></td>
+                <td><button class="btn btn-primary">Update</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

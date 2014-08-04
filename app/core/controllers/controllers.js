@@ -1684,13 +1684,6 @@ appController.controller('TypeController', function($scope, $log, $filter, $time
     };
 });
 
-// Firmware controller
-appController.controller('FirmwareController', function($scope, $routeParams, $log, FirmwareFactory) {
-    $log.info('FirmwareController - starting up!');
-    $scope.data = FirmwareFactory.all.query();
-    $log.info($scope.data);
-});
-
 // Security controller
 appController.controller('SecurityController', function($scope, $http, $log) {
     $http.get('storage/demo/security.json').
@@ -1984,6 +1977,8 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     $scope.deviceName = '';
     $scope.deviceImage = '';
     $scope.commands = [];
+    $scope.firmware = [];
+    $scope.firmwareData = {};
     $scope.reset = function() {
         $scope.devices = angular.copy([]);
     };
@@ -2028,6 +2023,9 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                 if (nodeId == $routeParams.nodeId) {
 
                     obj['slected'] = 'selected';
+                }
+                if (0x7a in node.instances[0].commandClasses) {
+                    $scope.firmware.push(obj);
                 }
                 $scope.devices.push(obj);
             });
@@ -3020,6 +3018,26 @@ appController.controller('ConfigStoreController', function($scope, DataFactory) 
         var request = cmd + '(' + dataJoined.join() + ')';
         DataFactory.store(request).query();
         return;
+
+    };
+    
+    /**
+     * updateFirmware
+     */
+    $scope.updateFirmware = function(form, btn) {
+        console.log(form);
+        var fw_url = $('#' + form + ' #fw_url').val();
+        var fw_target = $('#' + form + ' #fw_target').val();
+        if (fw_url == '' || fw_target == '') {
+            return;
+        }
+        
+        console.log(fw_url);
+        return;
+        DataFactory.putNotes(input);
+
+        return;
+
 
     };
 
