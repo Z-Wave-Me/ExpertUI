@@ -49,7 +49,7 @@
                     <td class="row-awake" ng-bind-html="v.awake | toTrusted"></td>
                     <td class="row-time" ng-bind-html="v.updateTime | toTrusted"></td>
                     <td class="row-interview">
-                        <a href="" ng-show="v.interview" ng-click="showModal('#modal_controller',v.id)" title="{{v.interview}}"><i class="fa fa-question-circle fa-lg text-info"></i></a>
+                         <a href="" ng-show="v.interview" ng-click="showModalInterview('#modal_interview', $index,v.id,v.name)" title="{{v.interview}}"><i class="fa fa-question-circle fa-lg text-info"></i></a>
                     </td>
                     <td class="row-ping">
                         <button
@@ -64,6 +64,67 @@
             </tbody>
         </table>
     </div>
+    
+    <!-- Modal interview -->
+<div class="modal fade" id="modal_interview" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">{{_t('interview_results_dialog_title')}}</h4>
+            </div>
+            <div class="modal-body">
+                <p>{{_t('interview_results_title')}} <a href="" ng-controller="CommandModalController" ng-click="showModal('#modal_command', interviewCommandsDevice[deviceInfo.index])">{{deviceInfo.name}} (#{{deviceInfo.id}})</a></p>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Instance</th>
+                                <th>CommandClass</th>
+                                <th>Result</th>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="v in interviewCommands[deviceInfo.index]" id="{{ v.ccId}}">
+                                <td><a ng-show="$index == 0" href="" ng-controller="CommandModalController" ng-click="showModal('#modal_command', v.cmdDataIn)">{{v.iId}}</a></td>
+                                <td><a href="" ng-controller="CommandModalController" ng-click="showModal('#modal_command',v.cmdData)">{{v.ccName}}</a></td>
+                                <td>
+                                    <p ng-if="v.interviewDone">Done</p>
+                                    <button
+                                        ng-controller="ConfigStoreController"
+                                        ng-if="!v.interviewDone"
+                                        data-store-url="devices[{{deviceInfo.id}}].instances[{{v.iId}}].commandClasses[{{v.ccId}}].Interview()"
+                                         data-ng-click="store('#btn_force_interview_' + v.ccId)" 
+                                        class="btn btn-primary" 
+                                        id="btn_force_interview_{{v.ccId}}"
+                                        >{{_t('config_ui_force_interview')}}</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div><!-- /.Modal -->
+
+<!-- Modal command -->
+    <div class="modal fade" id="modal_command" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{_t('commandClass')}}</h4>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.Modal -->
     
     <!-- Modal controller -->
     <div class="modal fade" id="modal_controller" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
