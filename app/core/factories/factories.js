@@ -14,9 +14,9 @@ appFactory.config(function($httpProvider) {
     //$httpProvider.defaults.headers.common['Access-Control-Allow-Headers'] = 'accept, origin, content-type, cookie'; 
     //$httpProvider.defaults.headers.common['X-Requested-With'] = ''; 
     //$httpProvider.defaults.headers.common['Cookie'] = 'ZBW_IFLANG=eng; ZBW_SESSID=ced27083bfaff559438d79a72949c1064262d312'; 
-    
+
     $httpProvider.responseInterceptors.push('myHttpInterceptor');
-    
+
     var spinnerFunction = function spinnerFunction(data, headersGetter) {
         $(".main_spinner__").show();
         return data;
@@ -35,9 +35,153 @@ appFactory.factory('myHttpInterceptor', function($q, $window) {
     };
 });
 
-// Caching the river...
+/**
+ * Caching the river...
+ */
 appFactory.factory('myCache', function($cacheFactory) {
- return $cacheFactory('myData');
+    return $cacheFactory('myData');
+});
+/**
+ * Data service
+ * @todo: Replace all data handler with this service
+ * @todo: Complete error handling
+ */
+appFactory.factory('dataService', function($http, $q, myCache, cfg) {
+    var apiData;
+    /**
+     * Public functions
+     */
+    return({
+        getZwaveData: getZwaveData,
+        refreshZwaveData: refreshZwaveData,
+        runCmd: runCmd,
+        getNotes: getNotes,
+        putNotes: putNotes
+    });
+
+    /**
+     * Gets all of the data in the remote collection.
+     */
+    function getZwaveData(callback) {
+        if (apiData) {
+            console.log('CACHED');
+            return callback(apiData);
+        }
+        else {
+            console.log('NOOOOT CACHED');
+            var request = $http({
+                method: "POST",
+                url: cfg.server_url + cfg.update_url + "0"
+            });
+            request.success(function(data) {
+                apiData = data;
+                return callback(data);
+            }).error(function() {
+                handleError();
+
+            });
+        }
+    }
+
+    /**
+     * Gets updated data of the data in the remote collection.
+     */
+    function refreshZwaveData(callback,timestamp) {
+        var request = $http({
+            method: "POST",
+            url: cfg.server_url + cfg.update_url + timestamp
+        });
+        request.success(function(data) {
+            return callback(data);
+        }).error(function() {
+            handleError();
+
+        });
+    }
+     /**
+     * Run api cmd
+     */
+    function runCmd(param) {
+        var request = $http({
+            method: 'POST',
+            url: cfg.server_url + cfg.store_url + param
+        });
+        request.success(function(data) {
+           handleSuccess(data);
+        }).error(function() {
+            handleError();
+
+        });
+
+    }
+
+    /**
+     * Gets notes from remote text file
+     */
+    function getNotes(callback) {
+        var request = $http({
+            method: 'GET',
+            url: cfg.server_url + cfg.notes_url
+        });
+        request.success(function(data) {
+            return callback(data);
+        }).error(function() {
+            handleError();
+
+        });
+
+    }
+
+    /**
+     * Put notes in remote text file
+     */
+    function putNotes(notes) {
+        var request = $http({
+            method: "PUT",
+            dataType: "text",
+            url: cfg.server_url + cfg.notes_url,
+            data: notes,
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        request.success(function(data) {
+            handleSuccess(data);
+        }).error(function(error) {
+            handleError();
+
+        });
+    }
+
+    /**
+     * 
+     * Handle errors
+     */
+    function handleError(error) {
+        console.log('Error');
+        //$('html').html('');
+        return;
+        // The API response from the server should be returned in a
+        // nomralized format. However, if the request was not handled by the
+        // server (or what not handles properly - ex. server error), then we
+        // may have to normalize it on our end, as best we can.
+        if (!angular.isObject(response.data) || !response.data.message) {
+            return($q.reject("An unknown error occurred."));
+
+        }
+        // Otherwise, use expected error message.
+        return($q.reject(response.data.message));
+
+    }
+
+    /**
+     * Handle success response
+     */
+    function handleSuccess(response) {
+        console.log('Success');
+        return;
+
+    }
 });
 
 // Get a complete or updated JSON
@@ -45,14 +189,14 @@ appFactory.factory('DataFactory', function($resource, $http, cfg) {
     return {
         all: function(param) {
             return $resource(cfg.server_url + cfg.update_url + param, {}, {query: {
-                    method: 'POST', 
+                    method: 'POST',
                     //params: {user_field: cfg.user_field, pass_field: cfg.pass_field,ZBW_SESSID:  'ced27083bfaff559438d79a72949c1064262d312'},
                     isArray: false
                 }});
         },
         queue: function() {
             return $resource(cfg.server_url + cfg.queue_url, {}, {query: {
-                    method: 'POST', 
+                    method: 'POST',
                     isArray: true
                 }});
         },
@@ -63,22 +207,22 @@ appFactory.factory('DataFactory', function($resource, $http, cfg) {
         },
         putConfig: function(param) {
             return $resource(cfg.server_url + cfg.config_url + param, {}, {query: {
-                    method: 'PUT', headers_: { '': '' }, params: {}
+                    method: 'PUT', headers_: {'': ''}, params: {}
                 }});
         },
         putReorgLog: function(log) {
             return $.ajax({
-                    type: "PUT",
-                    dataType: "text",
-                    url: cfg.server_url + cfg.reorg_log_url,
-                    contentType: "text/plain",
-                    data: log
-                });
+                type: "PUT",
+                dataType: "text",
+                url: cfg.server_url + cfg.reorg_log_url,
+                contentType: "text/plain",
+                data: log
+            });
         },
         getReorgLog: function(callback) {
-            return $http({method: 'GET', url: cfg.server_url + cfg.reorg_log_url + '?at=' + (new Date ()).getTime()}).success(function(data, status, headers, config) {
-                    callback(data);
-                });
+            return $http({method: 'GET', url: cfg.server_url + cfg.reorg_log_url + '?at=' + (new Date()).getTime()}).success(function(data, status, headers, config) {
+                callback(data);
+            });
         },
         runCmd: function(param) {
             var cmd = cfg.server_url + param;
@@ -86,38 +230,38 @@ appFactory.factory('DataFactory', function($resource, $http, cfg) {
                     method: 'POST', params: {}
                 }});
         },
-        putNotes: function(log) {
+        putNotes: function(notes) {
             return $.ajax({
-                    type: "PUT",
-                    dataType: "text",
-                    url: cfg.server_url + cfg.notes_url,
-                    contentType: "text/plain",
-                    data: log
-                });
+                type: "PUT",
+                dataType: "text",
+                url: cfg.server_url + cfg.notes_url,
+                contentType: "text/plain",
+                data: notes
+            });
         },
         getNotes: function(callback) {
             return $http({
-                method: 'GET', 
+                method: 'GET',
                 url: cfg.server_url + cfg.notes_url
-                //url: 'storage/notes.log'
+                        //url: 'storage/notes.log'
             }).success(function(data, status, headers, config) {
-                    callback(data);
-                });
+                callback(data);
+            });
         },
         updateFirmware: function(url) {
             return $.ajax({
-                    type: "GET",
-                    dataType: "text",
-                    url: url,
-                    contentType: "application/octet-stream"
-                });
+                type: "GET",
+                dataType: "text",
+                url: url,
+                contentType: "application/octet-stream"
+            });
         },
         debug: function(param) {
             var cmd = cfg.server_url + cfg.zwave_api_run_url + param;
             console.log(cmd);
             return;
         }
-        
+
     };
 });
 
@@ -148,25 +292,25 @@ appFactory.factory('FirmwareFactory', function($resource) {
     };
 });
 // JSON from XML
-appFactory.factory('XmlFactory', ['$http',function($http){
-       return {
-           get: function(callback,xmlSource){
-                $http.get(xmlSource, {transformResponse:function(data) {
-                      // convert the data to JSON and provide
-                      // it to the success function below
+appFactory.factory('XmlFactory', ['$http', function($http) {
+        return {
+            get: function(callback, xmlSource) {
+                $http.get(xmlSource, {transformResponse: function(data) {
+                        // convert the data to JSON and provide
+                        // it to the success function below
                         var x2js = new X2JS();
-                        var json = x2js.xml_str2json( data );
+                        var json = x2js.xml_str2json(data);
                         return json;
-                        }
                     }
+                }
                 ).
-                success(function(data, status) {
-                    // send the converted data back
-                    // to the callback function
-                    callback(data);
-                });
-           }
-       };
+                        success(function(data, status) {
+                            // send the converted data back
+                            // to the callback function
+                            callback(data);
+                        });
+            }
+        };
     }]);
 
 // Get language dataas object
@@ -185,10 +329,10 @@ appFactory.factory('langFactory', function($resource, cfg) {
 // Translation factory - get language line by key
 appFactory.factory('langTransFactory', function() {
     return {
-        get: function(key,languages) {
+        get: function(key, languages) {
             if (angular.isObject(languages)) {
                 if (angular.isDefined(languages[key])) {
-                    return languages[key] !=='' ? languages[key] : key;
+                    return languages[key] !== '' ? languages[key] : key;
                 }
             }
             return key;

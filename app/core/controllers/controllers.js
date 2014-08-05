@@ -103,7 +103,7 @@ appController.controller('BaseController', function($scope, $cookies, $filter, c
 });
 
 // Test controller
-appController.controller('TestController', function($scope, cfg, $http, $timeout, $cacheFactory, myCache) {
+appController.controller('TestController', function($scope, cfg, $http, $timeout, dataService, myCache) {
     $scope.timeInMs = 0;
     $scope.dataSet;
     var countUp = function() {
@@ -111,6 +111,14 @@ appController.controller('TestController', function($scope, cfg, $http, $timeout
         $timeout(countUp, 1000);
     };
     $timeout(countUp, 1000);
+
+    $scope.loadData = function() {
+
+        dataService.getZwaveData(function(ZWaveAPIData) {
+
+        });
+    };
+    $scope.loadData();
 
 
     $scope.uploadFile = function(files) {
@@ -129,7 +137,7 @@ appController.controller('TestController', function($scope, cfg, $http, $timeout
 
 
 // Home controller
-appController.controller('HomeController', function($scope, $filter, $timeout, DataFactory, myCache, cfg) {
+appController.controller('HomeController', function($scope, $filter, $timeout, dataService, cfg) {
     $scope.ZWaveAPIData;
     $scope.countDevices;
     $scope.failedDevices = [];
@@ -140,21 +148,14 @@ appController.controller('HomeController', function($scope, $filter, $timeout, D
     $scope.notInterviewDevices = [];
     $scope.notes = [];
     $scope.notesData = '';
+    $scope.updateTime = $filter('getTimestamp');
 
-    // Notes
-    // OLD version
-//    $scope.loadNotes = function() {
-//        DataFactory.getNotes(function(notesData) {
-//            var data = notesData.replace(/^\s+|\s+$/g, '');
-//            $scope.notes = data.split('###');
-//        });
-//    };
-    //$scope.loadNotes();
-
-    // Notes - new version
+    /**
+     * Notes
+     */
     $scope.loadNotesData = function() {
-        DataFactory.getNotes(function(notesData) {
-            $scope.notesData = notesData;
+        dataService.getNotes(function(data) {
+            $scope.notesData = data;
         });
     };
     $scope.loadNotesData();
@@ -163,26 +164,16 @@ appController.controller('HomeController', function($scope, $filter, $timeout, D
      * Load data
      * 
      */
-    $scope.loadData = function(ZWaveAPIData) {
-        countDevices(ZWaveAPIData);
-        batteryDevices(ZWaveAPIData);
-        $scope.mainsDevices = mainsDevices(ZWaveAPIData);
-        $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
-        notInterviewDevices(ZWaveAPIData);
-    };
-
-    // Chaching data  
-    var cachedAPIData = myCache.get('ZWaveAPIData');
-    if (cachedAPIData) {
-        console.log('Cache');
-        $scope.loadData(cachedAPIData);
-    } else {
-        DataFactory.all('0').query(function(ZWaveAPIData) {
-            myCache.put('ZWaveAPIData', ZWaveAPIData);
-            $scope.loadData(ZWaveAPIData);
-            console.log('NO Cache');
+    $scope.loadData = function() {
+        dataService.getZwaveData(function(ZWaveAPIData) {
+            countDevices(ZWaveAPIData);
+            batteryDevices(ZWaveAPIData);
+            $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
+            notInterviewDevices(ZWaveAPIData);
         });
-    }
+    };
+    $scope.loadData();
+
     /**
      * Count devices
      */
@@ -216,23 +207,6 @@ appController.controller('HomeController', function($scope, $filter, $timeout, D
         });
         $scope.flirsDevices = cntFlirs;
         $scope.countDevices = cnt;
-    }
-    ;
-
-    /**
-     * Count devices
-     */
-    function mainsDevices(ZWaveAPIData) {
-        var controllerId = ZWaveAPIData.controller.data.nodeId.value;
-        var cnt = 0;
-        // Loop throught devices
-//            angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-//                if (nodeId == 255 || nodeId == controllerId || node.data.isVirtual.value) {
-//                    return;
-//                }
-//                cnt++;
-//            });
-        return cnt;
     }
     ;
 
@@ -299,41 +273,16 @@ appController.controller('HomeController', function($scope, $filter, $timeout, D
 
     // Refresh data
     var refresh = function() {
-        DataFactory.all($filter('getTimestamp')).query(function(data) {
-            if (angular.isDefined(data.updateTime)) {
-                $('#update_time_tick').html($filter('getCurrentTime')(data.updateTime));
+        dataService.refreshZwaveData(function(ZWaveAPIData) {
+            if (angular.isDefined(ZWaveAPIData.updateTime)) {
+                var updateTime = ZWaveAPIData.updateTime;
+                $scope.updateTime = updateTime;
+                $('#update_time_tick').html($filter('getCurrentTime')(updateTime));
             }
-        });
+        }, $scope.updateTime);
         $timeout(refresh, cfg.interval);
     };
     $timeout(refresh, cfg.interval);
-    /**
-     * Save notes - OLD version
-     */
-//    $scope.saveNote = function(form, btn) {
-//        var input = $('#' + form + ' #note').val();
-//        if (!input || input == '') {
-//            return;
-//        }
-//        $(btn).attr('disabled', true);
-//        var note = $filter('getCurrentDate') + ' | ' + input;
-//        var notes = '';
-//        $scope.notes.push(note);
-//        angular.forEach($scope.notes, function(val) {
-//            if (val != '') {
-//                notes += val + "\n" + '###' + "\n";
-//            }
-//        });
-//        DataFactory.putNotes(notes);
-//        $('#' + form + ' #note').val('');
-//        var url = $(btn).attr('data-store-url');
-//        $timeout(function() {
-//            $(btn).removeAttr('disabled');
-//        }, 2000);
-//        return;
-//
-//
-//    };
 
     /**
      * Save notes
@@ -344,7 +293,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, D
             return;
         }
         $(btn).attr('disabled', true);
-        DataFactory.putNotes(input);
+        dataService.putNotes(input);
 
         $timeout(function() {
             $(btn).removeAttr('disabled');
@@ -356,12 +305,13 @@ appController.controller('HomeController', function($scope, $filter, $timeout, D
 });
 
 // Switch controller
-appController.controller('SwitchController', function($scope, $http, $log, $filter, $timeout, DataFactory, DataTestFactory, cfg) {
+appController.controller('SwitchController', function($scope, $log, $filter, $timeout, dataService, DataTestFactory, cfg) {
     $scope.switches = [];
     $scope.rangeSlider = [];
+    $scope.updateTime = $filter('getTimestamp');
     // Load data
     $scope.load = function(lang) {
-        DataFactory.all('0').query(function(ZWaveAPIData) {
+        dataService.getZwaveData(function(ZWaveAPIData) {
             var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
             // Loop throught devices
             angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
@@ -401,7 +351,7 @@ appController.controller('SwitchController', function($scope, $http, $log, $filt
 
                     // Set object
                     var obj = {};
-                    var level = $scope.updateLevel(instance.commandClasses[ccId].data.level, ccId);
+                    var level = updateLevel(instance.commandClasses[ccId].data.level, ccId);
 
                     obj['id'] = nodeId;
                     obj['cmd'] = instance.commandClasses[ccId].data.name + '.level';
@@ -439,17 +389,19 @@ appController.controller('SwitchController', function($scope, $http, $log, $filt
 
     // Refresh data
     var refresh = function() {
-        DataFactory.all($filter('getTimestamp')).query(function(data) {
+        dataService.refreshZwaveData(function(data) {
             //DataTestFactory.all('refresh_switches.json').query(function(data) {
             if (angular.isDefined(data.updateTime)) {
-                $('#update_time_tick').html($filter('getCurrentTime')(data.updateTime));
+                var updateTime = data.updateTime;
+                $scope.updateTime = updateTime;
+                $('#update_time_tick').html($filter('getCurrentTime')(updateTime));
             }
             angular.forEach($scope.switches, function(v, k) {
                 // Check for updated data
                 if (v.cmd in data) {
                     $log.warn(v.cmd + ':' + v.id);//REM
                     var obj = data[v.cmd];
-                    var level = $scope.updateLevel(obj, v.ccId);
+                    var level = updateLevel(obj, v.ccId);
                     var updateTime = $filter('isTodayFromUnix')(obj.updateTime);
                     var level_html = '<span style="color: ' + level.level_color + ';">' + level.level_cont + '</span> ';
                     if (level.level_status === 'on') {
@@ -466,7 +418,7 @@ appController.controller('SwitchController', function($scope, $http, $log, $filt
                 }
             });
             //$log.debug('-----------');//REM
-        });
+        }, $scope.updateTime);
         $timeout(refresh, cfg.interval);
     };
     $timeout(refresh, cfg.interval);
@@ -475,7 +427,8 @@ appController.controller('SwitchController', function($scope, $http, $log, $filt
     $scope.store = function(btn) {
         $(btn).attr('disabled', true);
         var url = $(btn).attr('data-store-url');
-        DataFactory.store(url).query();
+        //DataFactory.runCmd(url).query();
+        dataService.runCmd(url);
         $timeout(function() {
             $(btn).removeAttr('disabled');
         }, 1000);
@@ -488,7 +441,8 @@ appController.controller('SwitchController', function($scope, $http, $log, $filt
         $(btn).attr('disabled', true);
         $(btn).next(spinner).show();
         angular.forEach($scope.switches, function(v, k) {
-            DataFactory.store(v.urlToStore).query();
+            //DataFactory.store(v.urlToStore).query();
+            dataService.runCmd(v.urlToStore);
         });
         $timeout(function() {
             $(btn).next(spinner).fadeOut();
@@ -504,7 +458,8 @@ appController.controller('SwitchController', function($scope, $http, $log, $filt
         angular.forEach($scope.switches, function(v, k) {
             url = 'devices[' + v['id'] + '].instances[0].commandClasses[0x27].' + action_url;
             if (v.hasSwitchAll) {
-                DataFactory.store(url).query();
+                //DataFactory.store(url).query();
+                dataService.runCmd(url);
             }
         });
         $timeout(function() {
@@ -515,11 +470,12 @@ appController.controller('SwitchController', function($scope, $http, $log, $filt
     $scope.sliderChange = function(cmd, index) {
         var val = $scope.rangeSlider[index];
         var url = cmd + '.Set(' + val + ')';
-        DataFactory.store(url).query();
+        //DataFactory.store(url).query();
+        dataService.runCmd(url);
     };
 
     // Update level
-    $scope.updateLevel = function(obj, ccId) {
+    function updateLevel(obj, ccId) {
         var level_cont;
         var level_color;
         var level_status = 'off';
@@ -557,13 +513,6 @@ appController.controller('SwitchController', function($scope, $http, $log, $filt
         ;
         return {"level_cont": level_cont, "level_color": level_color, "level_status": level_status, "level_val": level_val};
     };
-    /**
-     * @todo Remove
-     */
-//    $http.get('storage/demo/switch.json').
-//            success(function(data) {
-//                $scope.data = data;
-//            });
 });
 
 // Dimmer controller
@@ -3020,7 +2969,7 @@ appController.controller('ConfigStoreController', function($scope, DataFactory) 
         return;
 
     };
-    
+
     /**
      * updateFirmware
      */
@@ -3031,7 +2980,7 @@ appController.controller('ConfigStoreController', function($scope, DataFactory) 
         if (fw_url == '' || fw_target == '') {
             return;
         }
-        
+
         console.log(fw_url);
         return;
         DataFactory.putNotes(input);
@@ -3980,7 +3929,7 @@ appController.controller('ControllerController', function($scope, $timeout, cfg,
             trs = '<tr><td colspan="12"><i>' + $scope._t('inspect_queue_empty') + '</i></td></tr>';
         }
         $('#inspect_queue_len').html('Queue length: ' + data.length);
-	$('#inspect_queue_table_body').html(trs);
+        $('#inspect_queue_table_body').html(trs);
         return trs;
 
     }
