@@ -103,7 +103,7 @@ appController.controller('BaseController', function($scope, $cookies, $filter, c
 });
 
 // Test controller
-appController.controller('TestController', function($scope, cfg, $http, $timeout, dataService, myCache) {
+appController.controller('TestController', function($scope, cfg, $http, $timeout,$upload, dataService, myCache) {
     $scope.timeInMs = 0;
     $scope.dataSet;
     var countUp = function() {
@@ -119,6 +119,25 @@ appController.controller('TestController', function($scope, cfg, $http, $timeout
         });
     };
     $scope.loadData();
+    
+    $scope.onFileSelect = function($files,chip) {
+    //$files: an array of files selected, each file has name, size, and type.
+    for (var i = 0; i < $files.length; i++) {
+      var $file = $files[i];
+      $upload.upload({
+        url: 'upload.php',
+        fileFormDataName: 'config_backup',
+         url: ' http://zwave.dyndns.org:8083/ZWaveAPI/Restore?restore_chip_info=' + chip,
+       
+        file: $file
+      }).progress(function(evt) {
+        console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+      }).success(function(data, status, headers, config) {
+        // file is uploaded successfully
+        console.log(data);
+      }); 
+    }
+  };
 
 
     $scope.uploadFile = function(files) {
