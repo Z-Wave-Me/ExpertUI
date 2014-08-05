@@ -3,7 +3,14 @@
     <div class="page-header"><h1>Test</h1></div>
     <span>Sec counter: {{timeInMs}}</span>
     
-    <input type="file" ng-file-select="onFileSelect($files,0)" multiple>
+    <button 
+        ng-file-select="onFileSelect($files,1)" 
+        data-multiple="true"
+        onclick="this.value = null" 
+       class="btn btn-danger" 
+        ><i class="fa fa-exclamation-triangle"></i> {{_t('nm_restore_backup_upload')}}<input type="file" ng-file-select="onFileSelect($files,1)" data-multiple="true" title="select file" onclick="this.value = null" class="upload-button" multiple="multiple" style="top: 0px; bottom: 0px; left: 0px; right: 0px; width: 100%; opacity: 0; position: absolute;"></button>
+    
+    <!-- <input type="file" ng-file-select="onFileSelect($files,0)" multiple>-->
 
      <!-- <form method="POST" action="" enctype="multipart/form-data" id="restore_backup"> 
         <input type="file" name="config_backup" /> 

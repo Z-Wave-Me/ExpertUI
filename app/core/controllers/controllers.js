@@ -103,7 +103,7 @@ appController.controller('BaseController', function($scope, $cookies, $filter, c
 });
 
 // Test controller
-appController.controller('TestController', function($scope, cfg, $http, $timeout,$upload, dataService, myCache) {
+appController.controller('TestController', function($scope, cfg, $http, $timeout, $upload, dataService, myCache) {
     $scope.timeInMs = 0;
     $scope.dataSet;
     var countUp = function() {
@@ -119,25 +119,24 @@ appController.controller('TestController', function($scope, cfg, $http, $timeout
         });
     };
     $scope.loadData();
-    
-    $scope.onFileSelect = function($files,chip) {
-    //$files: an array of files selected, each file has name, size, and type.
-    for (var i = 0; i < $files.length; i++) {
-      var $file = $files[i];
-      $upload.upload({
-        url: 'upload.php',
-        fileFormDataName: 'config_backup',
-         url: ' http://zwave.dyndns.org:8083/ZWaveAPI/Restore?restore_chip_info=' + chip,
-       
-        file: $file
-      }).progress(function(evt) {
-        console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
-      }).success(function(data, status, headers, config) {
-        // file is uploaded successfully
-        console.log(data);
-      }); 
-    }
-  };
+
+    $scope.onFileSelect = function($files, chip) {
+        //$files: an array of files selected, each file has name, size, and type.
+        for (var i = 0; i < $files.length; i++) {
+            var $file = $files[i];
+            $upload.upload({
+                url: 'upload.php?restore_chip_info=' + chip,
+                //url: 'http://zwave.dyndns.org:8083/ZWaveAPI/Restore?restore_chip_info=' + chip,
+                fileFormDataName: 'config_backup',
+                file: $file
+            }).progress(function(evt) {
+                console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+            }).success(function(data, status, headers, config) {
+                // file is uploaded successfully
+                console.log(data);
+            });
+        }
+    };
 
 
     $scope.uploadFile = function(files) {
@@ -2826,7 +2825,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 });
 
 // Device config update controller
-appController.controller('ConfigStoreController', function($scope,dataService, DataFactory) {
+appController.controller('ConfigStoreController', function($scope, dataService, DataFactory) {
     // Store data on remote server
     $scope.store = function(btn) {
         //$(btn).attr('disabled', true);
@@ -3021,7 +3020,7 @@ appController.controller('ConfigStoreController', function($scope,dataService, D
 });
 
 // Controll controller
-appController.controller('ControllController', function($scope, $filter, $route, $timeout, $http, DataFactory, DataTestFactory, XmlFactory, myCache) {
+appController.controller('ControllController', function($scope, $filter, $route, $timeout, $http,$upload,cfg, DataFactory, DataTestFactory, XmlFactory, myCache) {
     $scope.devices = [];
     $scope.failedNodes = [];
     $scope.replaceNodes = [];
@@ -3322,25 +3321,25 @@ appController.controller('ControllController', function($scope, $filter, $route,
      * 
      * @returns {void}
      */
-    $scope.restoreBackup = function(cmd) {
-        //var url = 'controller.SetDefault()';
-        // http://192.168.10.167:8083/ZWaveAPI/Restore?restore_chip_info=0"
-        var url = 'Restore?restore_chip_info=0';
-        DataFactory.runCmd('/ZWaveAPI/' + cmd).query();
-
-        return;
-    };
-
-    $scope.uploadFile = function(files) {
-        var fd = new FormData();
-        //Take the first selected file
-        fd.append("config_backup", files[0]);
-        var uploadUrl = 'http://zwave.dyndns.org:8083/ZWaveAPI/Restore?restore_chip_info=1';
-        $http.post(uploadUrl, fd, {
-            withCredentials: true,
-            headers: {'Content-Type': undefined},
-            transformRequest: angular.identity
-        }).success(console.log('success')).error(console.log('error'));
+    $scope.restoreBackup = function($files, chip) {
+         chip = (!chip ? 0 : chip);
+         //var url = 'upload.php?restore_chip_info=' + chip;
+        var url = cfg.server_url + cfg.restore_url + '?restore_chip_info=' + chip;
+       //$files: an array of files selected, each file has name, size, and type.
+      console.log(url);
+        for (var i = 0; i < $files.length; i++) {
+            var $file = $files[i];
+            $upload.upload({
+                url: url,
+                fileFormDataName: 'config_backup',
+                file: $file
+            }).progress(function(evt) {
+                console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+            }).success(function(data, status, headers, config) {
+                // file is uploaded successfully
+                console.log(data);
+            });
+        }
     };
 
     /**
