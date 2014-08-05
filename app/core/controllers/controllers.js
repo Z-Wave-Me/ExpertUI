@@ -120,7 +120,7 @@ appController.controller('TestController', function($scope, cfg, $http, $timeout
     };
     $scope.loadData();
 
-    $scope.onFileSelect = function($files, chip) {
+    $scope.onFileSelect = function($files, chip, show, hide) {
         //$files: an array of files selected, each file has name, size, and type.
         for (var i = 0; i < $files.length; i++) {
             var $file = $files[i];
@@ -130,6 +130,8 @@ appController.controller('TestController', function($scope, cfg, $http, $timeout
                 fileFormDataName: 'config_backup',
                 file: $file
             }).progress(function(evt) {
+                $(show).show();
+                $(hide).hide();
                 console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
             }).success(function(data, status, headers, config) {
                 // file is uploaded successfully
@@ -3020,7 +3022,7 @@ appController.controller('ConfigStoreController', function($scope, dataService, 
 });
 
 // Controll controller
-appController.controller('ControllController', function($scope, $filter, $route, $timeout, $http,$upload,cfg, DataFactory, DataTestFactory, XmlFactory, myCache) {
+appController.controller('ControllController', function($scope, $filter, $route, $timeout, $http, $upload, cfg, DataFactory, DataTestFactory, XmlFactory, myCache) {
     $scope.devices = [];
     $scope.failedNodes = [];
     $scope.replaceNodes = [];
@@ -3316,17 +3318,15 @@ appController.controller('ControllController', function($scope, $filter, $route,
 
     /**
      * Send request restore backup
-     * 
-     * @todo: Reload after success function
-     * 
      * @returns {void}
      */
-    $scope.restoreBackup = function($files, chip) {
-         chip = (!chip ? 0 : chip);
-         //var url = 'upload.php?restore_chip_info=' + chip;
+    $scope.restoreBackup = function($files, chip, show, hide) {
+        chip = (!chip ? 0 : chip);
+        //var url = 'upload.php?restore_chip_info=' + chip;
         var url = cfg.server_url + cfg.restore_url + '?restore_chip_info=' + chip;
-       //$files: an array of files selected, each file has name, size, and type.
-      console.log(url);
+        //$files: an array of files selected, each file has name, size, and type.
+        $(show).show();
+        $(hide).hide();
         for (var i = 0; i < $files.length; i++) {
             var $file = $files[i];
             $upload.upload({
@@ -3340,6 +3340,23 @@ appController.controller('ControllController', function($scope, $filter, $route,
                 console.log(data);
             });
         }
+    };
+    
+    /**
+     * Close restore modal window
+     * 
+     * @returns {void}
+     */
+    $scope.closeBackup = function(modal) {
+        $('#btn_upload').show();
+        $('.btn-spinner').hide();
+        $("#restore_confirm").attr('checked', false); 
+         $("#restore_chip_info").attr('checked', false);
+         $scope.goRestore = false;
+         $(modal).modal('hide'); 
+         // $route.reload();
+         //window.location.reload();
+        
     };
 
     /**

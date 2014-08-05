@@ -240,12 +240,13 @@
                 </div>
                 <div class="modal-body">
                     <div class="alert alert-warning">
-                        <input type="checkbox" name="restore_confirm" value="1" ng-click="goRestore = !goRestore" /> <span ng-bind-html="_t('are_you_sure_restore') | toTrusted"></span>
+                        <input type="checkbox" name="restore_confirm" value="1" id="restore_confirm" ng-click="goRestore = !goRestore" /> <span ng-bind-html="_t('are_you_sure_restore') | toTrusted"></span>
                     </div>
                     <div ng-show="goRestore">
                         <input 
                             type="checkbox" 
-                            name="restore_chip_info" 
+                            name="restore_chip_info"
+                            id="restore_chip_info" 
                             value="1" 
                             ng-true-value="1" 
                             ng-false-value="0" 
@@ -254,13 +255,16 @@
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <button class="btn btn-success btn-spinner"><i class="fa fa-spinner fa-spin"></i> {{_t('restore_wait')}}</button>
                      <button 
-                            ng-file-select="restoreBackup($files,modelRestoreChipInfo)" 
+                         ng-show="goRestore"
+                            ng-file-select="restoreBackup($files,modelRestoreChipInfo,'.btn-spinner','#btn_upload')" 
                             data-multiple="true"
                             onclick="this.value = null" 
+                            id="btn_upload"
                             class="btn btn-danger" 
-                            ><i class="fa fa-exclamation-triangle"></i> {{_t('nm_restore_backup_upload')}}<input type="file" ng-file-select="restoreBackup($files,modelRestoreChipInfo)" data-multiple="true" title="select file" onclick="this.value = null" class="upload-button" multiple="multiple" style="top: 0px; bottom: 0px; left: 0px; right: 0px; width: 100%; opacity: 0; position: absolute;"></button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            ><i class="fa fa-exclamation-triangle"></i> {{_t('nm_restore_backup_upload')}}<input type="file" ng-file-select="restoreBackup($files,modelRestoreChipInfo,'.btn-spinner','#btn_upload')" data-multiple="true" title="select file" onclick="this.value = null" class="upload-button" multiple="multiple" style="top: 0px; bottom: 0px; left: 0px; right: 0px; width: 100%; opacity: 0; position: absolute;"></button>
+                    <button type="button" class="btn btn-default" ng-click="closeBackup('#modal_restore_backup')" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
