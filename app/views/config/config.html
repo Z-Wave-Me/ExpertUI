@@ -34,9 +34,6 @@
         <li ng-class="activeTab == 'commands' ? 'active' : ''">
             <a href="" data-target="#device_commands" data-toggle="tab" ng-click="rememberTab('commands')">{{_t('nav_expert_commands')}}</a>
         </li>
-        <li ng-class="activeTab == 'firmware' ? 'active' : ''">
-            <a href="" data-target="#device_firmware" data-toggle="tab" ng-click="rememberTab('firmware')">{{_t('nav_firmware_update')}}</a>
-        </li>
     </ul>
 
     <!-- Tab panes -->
@@ -49,8 +46,6 @@
         <div class="tab-pane" id="device_assoc" ng-class="activeTab == 'assoc' ? 'active' : ''" ng-include="'app/views/config/assoc.html'"></div>
         <!-- ExpertCommand -->
         <div class="tab-pane" id="device_commands" ng-class="activeTab == 'commands' ? 'active' : ''" ng-include="'app/views/config/commands.html'"></div>
-         <!--Firmware -->
-        <div class="tab-pane" id="device_firmware" ng-class="activeTab == 'firmware' ? 'active' : ''" ng-include="'app/views/config/firmware.html'"></div>
     </div>
     </div>
    

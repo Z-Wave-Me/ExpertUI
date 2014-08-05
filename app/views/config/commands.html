@@ -1,5 +1,13 @@
 <!-- Commands view -->
 <div class="table-responsive">
+    <div class="commands-data-control" ng-controller="ConfigStoreController" ng-show="fwupdateCont">
+        <form name="form_firmware" id="form_firmware" class="form form-inline" ng-submit="updateFirmware(deviceId)" novalidate>
+            <label>{{_t('nav_firmware_update')}}:</label>
+            <input id="fw_url" type="text" value="" class="form-control" ng-model="formFirmware.fw_url" placeholder="URL" title="please use format http:// ...... " data-toggle="tooltip" data-position="top" tooltip />
+            <input id="fw_target" type="text" value="" class="form-control" ng-model="formFirmware.fw_target" placeholder="Target" title="For Z-Wave Target is 0" data-toggle="tooltip" data-position="top" tooltip />
+            <button type="submit" class="btn btn-primary"  id="btn_save_note">{{ _t('update')}}</button>
+        </form>
+    </div>
     <table class="table">
         <thead>
             <tr>
@@ -53,15 +61,15 @@
 <!-- Modal debugging -->
 <div class="modal fade" id="modal_expert_commands" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">{{_t('commandClass')}}</h4>
-                </div>
-                <div class="modal-body"></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">{{_t('commandClass')}}</h4>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
+    </div>
 </div><!-- /.Modal -->

@@ -512,7 +512,8 @@ appController.controller('SwitchController', function($scope, $log, $filter, $ti
         }
         ;
         return {"level_cont": level_cont, "level_color": level_color, "level_status": level_status, "level_val": level_val};
-    };
+    }
+    ;
 });
 
 // Dimmer controller
@@ -1909,7 +1910,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
 });
 
 // Configuration controller
-appController.controller('ConfigurationController', function($scope, $routeParams, $http, $filter, $location, $cookies, DataFactory, XmlFactory, DataTestFactory) {
+appController.controller('ConfigurationController', function($scope, $routeParams, $http, $filter, $location, $cookies, dataService, DataFactory, XmlFactory, DataTestFactory) {
     $scope.devices = [];
     $scope.showDevices = false;
     $scope.ZWaveAPIData;
@@ -1926,8 +1927,10 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     $scope.deviceName = '';
     $scope.deviceImage = '';
     $scope.commands = [];
-    $scope.firmware = [];
-    $scope.firmwareData = {};
+    $scope.formFirmware = {
+        fw_url: "",
+        fw_target: ""
+    };
     $scope.reset = function() {
         $scope.devices = angular.copy([]);
     };
@@ -1947,46 +1950,43 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     // Remember active tab
     $scope.activeTab = (angular.isDefined($cookies.tab_config) ? $cookies.tab_config : 'interview');
     // Load navigation
-    $scope.navigation = function() {
-        DataFactory.all('0').query(function(ZWaveAPIData) {
-            //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
-            var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
+    function navigation(ZWaveAPIData) {
+        //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
+        var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
 
-            // Loop throught devices
-            angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-                if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
-                    return;
-                }
-                $scope.showContent = true;
-                var node = ZWaveAPIData.devices[nodeId];
+        // Loop throught devices
+        angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+            if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+                return;
+            }
+            $scope.showContent = true;
+            var node = ZWaveAPIData.devices[nodeId];
 
-                if (nodeId == $routeParams.nodeId) {
-                    $scope.deviceName = $filter('deviceName')(nodeId, node);
-                }
-                // Set object
-                var obj = {};
-                obj['id'] = nodeId;
-                obj['rowId'] = 'row_' + nodeId;
-                obj['name'] = $filter('deviceName')(nodeId, node);
-                obj['slected'] = '';
-                if (nodeId == $routeParams.nodeId) {
+            if (nodeId == $routeParams.nodeId) {
+                $scope.deviceName = $filter('deviceName')(nodeId, node);
+            }
+            // Set object
+            var obj = {};
+            obj['id'] = nodeId;
+            obj['rowId'] = 'row_' + nodeId;
+            obj['name'] = $filter('deviceName')(nodeId, node);
+            obj['slected'] = '';
+            if (nodeId == $routeParams.nodeId) {
 
-                    obj['slected'] = 'selected';
-                }
-                if (0x7a in node.instances[0].commandClasses) {
-                    $scope.firmware.push(obj);
-                }
-                $scope.devices.push(obj);
-            });
+                obj['slected'] = 'selected';
+            }
+            $scope.devices.push(obj);
         });
-    };
-    $scope.navigation();
+    }
+    ;
 
 
     // Load data
     $scope.load = function(nodeId) {
-        DataFactory.all('0').query(function(ZWaveAPIData) {
+        dataService.getZwaveData(function(ZWaveAPIData) {
             //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
+            // Get data for navigation
+            navigation(ZWaveAPIData);
             $scope.ZWaveAPIData = ZWaveAPIData;
             var node = ZWaveAPIData.devices[nodeId];
             if (!node) {
@@ -2001,16 +2001,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 
             $scope.interviewCommands = interviewCommands(node);
             $scope.interviewCommandsDevice = node.data;
-//            setXml = function(zddXml) {
-//                $scope.configData = {
-//                    "contDescription": contDescription(node, nodeId, zddXml, ZWaveAPIData)
-//                };
-//
-//            };
-//            XmlFactory.get(setXml, $scope.cfg.server_url + '/ZDDX/' + zddXmlFile);
 
-            // Load XML service
-            //$http.get($scope.cfg.server_url + '/ZDDX/' + zddXmlFile).then(function(response) {
             if (zddXmlFile) {
                 $http.get($scope.cfg.zddx_url + zddXmlFile).then(function(response) {
                     var x2js = new X2JS();
@@ -2766,7 +2757,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
      * Fwupdate cont
      */
     function fwupdateCont(node) {
-        var fwupdate_cont = null;
+        var fwupdate_cont = false;
         if (0x7a in node.instances[0].commandClasses) {
             fwupdate_cont = true;
         }
@@ -2816,7 +2807,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 });
 
 // Device config update controller
-appController.controller('ConfigStoreController', function($scope, DataFactory) {
+appController.controller('ConfigStoreController', function($scope,dataService, DataFactory) {
     // Store data on remote server
     $scope.store = function(btn) {
         //$(btn).attr('disabled', true);
@@ -2971,19 +2962,37 @@ appController.controller('ConfigStoreController', function($scope, DataFactory) 
     };
 
     /**
-     * updateFirmware
+     * update Firmware
      */
-    $scope.updateFirmware = function(form, btn) {
-        console.log(form);
-        var fw_url = $('#' + form + ' #fw_url').val();
-        var fw_target = $('#' + form + ' #fw_target').val();
+    $scope.updateFirmware = function(nodeId) {
+        var input = $scope.formFirmware;
+        var fw_url = input.fw_url;
+        var fw_target = input.fw_target;
         if (fw_url == '' || fw_target == '') {
             return;
         }
-
-        console.log(fw_url);
-        return;
-        DataFactory.putNotes(input);
+        var runJs = 'console.log("Downloading FW... Start");' +
+                'devId=' + nodeId + ';' +
+                'http.request({' +
+                'url: "' + fw_url + '",' +
+                'contentType: "application/octet-stream",' +
+                'async: true,' +
+                'success: function(res) {' +
+                'console.log("Downloading FW... Done");' +
+                'zway.devices[devId].FirmwareUpdate.Perform(zway.devices[devId].FirmwareUpdate.data.manufacturerID.value, zway.devices[devId].FirmwareUpdate.data.firmwareID.value, 0, res.data);' +
+                '},' +
+                'complete: function(res) {' +
+                'console.logJS("Downloading FW...COMPLETE");' +
+                '},' +
+                'error: function(res) {' +
+                'console.logJS("Downloading FW... FAILED:", res.statusText);' +
+                '}' +
+                '});';
+        //console.log(runJs);
+        // Reset the form once values have been consumed.
+        //$scope.formFirmware.fw_url = "";
+        //$scope.formFirmware.fw_target = "";
+        dataService.runJs(runJs);
 
         return;
 

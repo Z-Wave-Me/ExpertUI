@@ -55,6 +55,7 @@ appFactory.factory('dataService', function($http, $q, myCache, cfg) {
         getZwaveData: getZwaveData,
         refreshZwaveData: refreshZwaveData,
         runCmd: runCmd,
+         runJs: runJs,
         getNotes: getNotes,
         putNotes: putNotes
     });
@@ -105,6 +106,24 @@ appFactory.factory('dataService', function($http, $q, myCache, cfg) {
         var request = $http({
             method: 'POST',
             url: cfg.server_url + cfg.store_url + param
+        });
+        request.success(function(data) {
+           handleSuccess(data);
+        }).error(function() {
+            handleError();
+
+        });
+
+    }
+    
+    /**
+     * Run JavaScript cmd
+     */
+    function runJs(param) {
+        var request = $http({
+            method: 'POST',
+            dataType: "json",
+            url: cfg.server_url + cfg.runjs_url + param
         });
         request.success(function(data) {
            handleSuccess(data);

@@ -17,7 +17,8 @@ var config_data = {
     'server_url': 'http://zwave.dyndns.org:8083', // Remote JSON
     'update_url': '/ZWaveAPI/Data/', // Url for update (refresh data)
     'store_url': '/ZWaveAPI/Run/', // Url for store data
-     'queue_url': '/ZWaveAPI/InspectQueue', // Url for inspect queue
+     'queue_url': '/ZWaveAPI/InspectQueue', // Url for inspect queue/JS/Run/
+     'runjs_url': '/JS/Run/', // Url for running JS
     'config_url': '/config/', // Url for store config data
     'reorg_log_url': '/config/reorg.log', // Url for store reorg log data
     'zddx_url': 'http://zwave.dyndns.org:8083/ZDDX/', // Url for zddx xml files
