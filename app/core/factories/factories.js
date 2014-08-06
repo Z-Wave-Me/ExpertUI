@@ -46,10 +46,11 @@ appFactory.factory('myCache', function($cacheFactory) {
  * @todo: Replace all data handler with this service
  * @todo: Complete error handling
  */
-appFactory.factory('dataService', function($http, $q, $interval,$filter, myCache, cfg) {
+appFactory.factory('dataService', function($http, $q, $interval, $filter, myCache, cfg) {
     var apiData;
     var apiDataInterval;
-     var deviceClasses;
+    var deviceClasses;
+    var queueDataInterval;
     /**
      * Public functions
      */
@@ -60,6 +61,8 @@ appFactory.factory('dataService', function($http, $q, $interval,$filter, myCache
         cancelZwaveDataInterval: cancelZwaveDataInterval,
         runCmd: runCmd,
         getDeviceClasses: getDeviceClasses,
+        updateQueueData: updateQueueData,
+        cancelQueueDataInterval: cancelQueueDataInterval,
         runJs: runJs,
         getNotes: getNotes,
         putNotes: putNotes
@@ -114,7 +117,7 @@ appFactory.factory('dataService', function($http, $q, $interval,$filter, myCache
         var time = Math.round(+new Date() / 1000);
         var refresh = function() {
             var request = $http({
-                method: "get",
+                method: "POST",
                 //url: "storage/updated.json"
                 url: cfg.server_url + cfg.update_url + time
             });
@@ -129,14 +132,14 @@ appFactory.factory('dataService', function($http, $q, $interval,$filter, myCache
         };
         apiDataInterval = $interval(refresh, cfg.interval);
     }
-    
+
     /**
      * Cancel data interval
      */
     function cancelZwaveDataInterval() {
         if (angular.isDefined(apiDataInterval)) {
             $interval.cancel(apiDataInterval);
-           apiDataInterval = undefined;
+            apiDataInterval = undefined;
         }
         return;
     }
@@ -144,7 +147,7 @@ appFactory.factory('dataService', function($http, $q, $interval,$filter, myCache
     /**
      * Run api cmd
      */
-    function runCmd(param,request) {
+    function runCmd(param, request) {
         var url = (request ? cfg.server_url + request : cfg.server_url + cfg.store_url + param);
         var request = $http({
             method: 'POST',
@@ -180,6 +183,36 @@ appFactory.factory('dataService', function($http, $q, $interval,$filter, myCache
 
             });
         }
+    }
+    
+    /**
+     * Gets updated data in the remote collection.
+     */
+    function  updateQueueData(callback) {
+        var refresh = function() {
+            var request = $http({
+                method: "POST",
+                url: cfg.server_url + cfg.queue_url
+            });
+            request.success(function(data) {
+                return callback(data);
+            }).error(function() {
+                handleError();
+
+            });
+        };
+        queueDataInterval = $interval(refresh, cfg.queue_interval);
+    }
+
+    /**
+     * Cancel data interval
+     */
+    function cancelQueueDataInterval() {
+        if (angular.isDefined(queueDataInterval)) {
+            $interval.cancel(queueDataInterval);
+            queueDataInterval = undefined;
+        }
+        return;
     }
 
     /**
