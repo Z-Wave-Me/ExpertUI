@@ -46,16 +46,21 @@ appFactory.factory('myCache', function($cacheFactory) {
  * @todo: Replace all data handler with this service
  * @todo: Complete error handling
  */
-appFactory.factory('dataService', function($http, $q, myCache, cfg) {
+appFactory.factory('dataService', function($http, $q, $interval,$filter, myCache, cfg) {
     var apiData;
+    var apiDataInterval;
+     var deviceClasses;
     /**
      * Public functions
      */
     return({
         getZwaveData: getZwaveData,
         refreshZwaveData: refreshZwaveData,
+        updateZwaveData: updateZwaveData,
+        cancelZwaveDataInterval: cancelZwaveDataInterval,
         runCmd: runCmd,
-         runJs: runJs,
+        getDeviceClasses: getDeviceClasses,
+        runJs: runJs,
         getNotes: getNotes,
         putNotes: putNotes
     });
@@ -86,8 +91,10 @@ appFactory.factory('dataService', function($http, $q, myCache, cfg) {
 
     /**
      * Gets updated data of the data in the remote collection.
+     * 
+     * @todo: remove - replaced with updateZwaveData
      */
-    function refreshZwaveData(callback,timestamp) {
+    function refreshZwaveData(callback, timestamp) {
         var request = $http({
             method: "POST",
             url: cfg.server_url + cfg.update_url + timestamp
@@ -99,7 +106,42 @@ appFactory.factory('dataService', function($http, $q, myCache, cfg) {
 
         });
     }
-     /**
+
+    /**
+     * Gets updated data in the remote collection.
+     */
+    function  updateZwaveData(callback) {
+        var time = Math.round(+new Date() / 1000);
+        var refresh = function() {
+            var request = $http({
+                method: "get",
+                //url: "storage/demo/updated.json"
+                url: cfg.server_url + cfg.update_url + time
+            });
+            request.success(function(data) {
+                time = data.updateTime;
+                $('#update_time_tick').html($filter('getCurrentTime')(time));
+                return callback(data);
+            }).error(function() {
+                handleError();
+
+            });
+        };
+        apiDataInterval = $interval(refresh, cfg.interval);
+    }
+    
+    /**
+     * Cancel data interval
+     */
+    function cancelZwaveDataInterval() {
+        if (angular.isDefined(apiDataInterval)) {
+            $interval.cancel(apiDataInterval);
+           apiDataInterval = undefined;
+        }
+        return;
+    }
+
+    /**
      * Run api cmd
      */
     function runCmd(param) {
@@ -108,14 +150,37 @@ appFactory.factory('dataService', function($http, $q, myCache, cfg) {
             url: cfg.server_url + cfg.store_url + param
         });
         request.success(function(data) {
-           handleSuccess(data);
+            handleSuccess(data);
         }).error(function() {
             handleError();
 
         });
 
     }
-    
+    /**
+     * Get device classes from XML file
+     */
+    function getDeviceClasses(callback) {
+        if (deviceClasses) {
+            return callback(deviceClasses);
+        }
+        else {
+            var request = $http({
+                method: "get",
+                url: cfg.server_url + cfg.device_classes_url
+            });
+            request.success(function(data) {
+                var x2js = new X2JS();
+                var json = x2js.xml_str2json(data);
+                deviceClasses = json;
+                return callback(deviceClasses);
+            }).error(function() {
+                handleError();
+
+            });
+        }
+    }
+
     /**
      * Run JavaScript cmd
      */
@@ -126,7 +191,7 @@ appFactory.factory('dataService', function($http, $q, myCache, cfg) {
             url: cfg.server_url + cfg.runjs_url + param
         });
         request.success(function(data) {
-           handleSuccess(data);
+            handleSuccess(data);
         }).error(function() {
             handleError();
 

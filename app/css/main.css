@@ -336,7 +336,7 @@ box-shadow:         0px 0px 6px 0px rgba(50, 50, 50, 0.43);
 
     border: 1px solid #9fd8ef;
 }
-.btn-spinner{
+.btn-spinner-hidden{
     display: none;
 }
 /* Footer

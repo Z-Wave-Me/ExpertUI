@@ -20,6 +20,7 @@ var config_data = {
         'restore_url': '/ZWaveAPI/Restore', // Url to restore backup
         'queue_url': '/ZWaveAPI/InspectQueue', // Url for inspect queue/JS/Run/
         'runjs_url': '/JS/Run/', // Url for running JS
+        'device_classes_url': '/translations/DeviceClasses.xml', // Url to Device Classes
         'config_url': '/config/', // Url for store config data
         'reorg_log_url': '/config/reorg.log', // Url for store reorg log data
         'zddx_url': 'http://zwave.dyndns.org:8083/ZDDX/', // Url for zddx xml files
