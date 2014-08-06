@@ -770,7 +770,7 @@ appController.controller('MetersController', function($scope, $log, $filter, $ti
                             var obj = {};
                             obj['id'] = k;
                             obj['cmd'] = meters.data.name + '.' + meter.name;
-                            obj['cmdId'] = '50';
+                            obj['cmdId'] = 0x30;
                             obj['rowId'] = meters.name + '_' + meter.name + '_' + k;
                             obj['name'] = $filter('deviceName')(k, device);
                             obj['type'] = meters.name;
@@ -810,11 +810,16 @@ appController.controller('MetersController', function($scope, $log, $filter, $ti
                     var updateTime;
                     var levelExt;
                     if (v.cmdId == 0x30) {
-                        levelExt = (obj.level.value ? $scope._t('sensor_triggered') : $scope._t('sensor_idle'));
-                        updateTime = $filter('isTodayFromUnix')(obj.level.updateTime);
+                        //levelExt = (obj.scaleString.value ? $scope._t('sensor_triggered') : $scope._t('sensor_idle'));
+                        updateTime = $filter('isTodayFromUnix')(obj.updateTime);
+                        //meter.invalidateTime;
+                        level = obj.val.value;
                         // Set updated row
                         $('#' + v.rowId + ' .row-level').html(level);
-                        $('#' + v.rowId + ' .row-time').html(updateTime).removeClass('is-updated-false');
+                        $('#' + v.rowId + ' .row-time').html(updateTime);
+                        if(obj.updateTime > obj.invalidateTime){
+                            $('#' + v.rowId + ' .row-time').removeClass('is-updated-false');
+                        }
                         //$log.info('Updating:' + v.rowId + ' | At: ' + updateTime + ' | with: ' + level);//REM
                     } else {
                         //$log.warn(v.cmd + ': Nothing to update');//REM
