@@ -28,7 +28,7 @@
                         </div>
                     </div>
                     <p class="input-help">{{_t('nm_learn_mode_you_are_primary_no_sis')}}</p>
-                    <div class="alert nm-response"  ng-class="controllerState == 0 ? 'alert-info' : 'alert-danger'">{{_t('nm_controller_state_' + controllerState)}}</div>
+                    <div class="alert nm-response"  ng-class="controllerState == 0 ? 'alert-info' : 'alert - danger'">{{_t('nm_controller_state_' + controllerState)}}</div>
                     <div class="alert alert-success" ng-show="lastIncludedDevice != null"><p ng-bind-html="lastIncludedDevice | toTrusted"></p></div>
                     <div class="alert alert-success" ng-show="lastExcludedDevice != null"><p ng-bind-html="lastExcludedDevice | toTrusted"></p></div>
                     <!-- include -->
@@ -110,7 +110,7 @@
                             <button 
                                 class="btn btn-primary" 
                                 id="btn_remove_failed_mode"
-                                ng-click="showModal('#modal_failed_node')"
+                                ng-click="showModal('#modal_failed_node', modelNodeFailed)"
                                 ng-disabled="!modelNodeFailed"
                                 >{{_t('nm_remove_failed')}}</button> 
                             <select name="remove_failed_node" id="remove_failed_node" class="form-control" ng-model="modelNodeFailed">
@@ -125,7 +125,7 @@
                                 class="btn btn-primary"
                                 id="btn_replace_failed_node"
                                 ng-disabled="!modelReplaceNode"
-                                ng-click="runCmd(['ReplaceFailedNode(' + modelReplaceNode + ')','controller.AddNodeToNetwork(1)'],null,null,{'name': 'remove_option','id': '#replace_failed_node','value': modelReplaceNode})"
+                                ng-click="runCmd(['ReplaceFailedNode(' + modelReplaceNode + ')', 'controller.AddNodeToNetwork(1)'], null, null, {'name': 'remove_option', 'id': '#replace_failed_node', 'value': modelReplaceNode})"
                                 >{{_t('nm_replace_node')}}</button>
                             <select name="replace_failed_node" id="replace_failed_node" class="form-control" ng-model="modelReplaceNode">
                                 <option value="">---</option>
@@ -169,13 +169,13 @@
                         <!-- learn_start -->
                         <div class="cfg-block form-inline">
                             <p class="input-help">{{_t('nm_learn_mode_war')}}</p>
-                            <div class="nm-response"  ng-class="controllerState == 0 ? 'text-info' : 'text-danger'" ng-show="[8, 9, 10, 11, 12].indexOf(controllerState) > -1">
+                            <div class="nm-response"  ng-class="controllerState == 0 ? 'text-info' : 'text - danger'" ng-show="[8, 9, 10, 11, 12].indexOf(controllerState) > -1">
                                 {{_t('nm_controller_state_' + controllerState)}}
                             </div>
                             <button 
                                 class="btn btn-primary"
                                 id="btn_learn_start"
-                                 ng-disabled="!isRealPrimary"
+                                ng-disabled="!isRealPrimary"
                                 ng-click="runCmd('controller.SetLearnMode(1)')"
                                 ng-show="[8, 9, 10, 11, 12].indexOf(controllerState) == -1"
                                 >{{_t('nm_learn_start')}}</button>
@@ -240,35 +240,36 @@
                 </div>
                 <div class="modal-body">
                     <div class="alert alert-warning">
-                        <input type="checkbox" name="restore_confirm" value="1" ng-click="goRestore = !goRestore" /> <span ng-bind-html="_t('are_you_sure_restore') | toTrusted"></span>
+                        <input type="checkbox" name="restore_confirm" value="1" id="restore_confirm" ng-click="goRestore = !goRestore" /> <span ng-bind-html="_t('are_you_sure_restore') | toTrusted"></span>
                     </div>
                     <div ng-show="goRestore">
                         <input 
                             type="checkbox" 
-                            name="restore_chip_info" 
+                            name="restore_chip_info"
+                            id="restore_chip_info" 
                             value="1" 
                             ng-true-value="1" 
                             ng-false-value="0" 
                             ng-model="modelRestoreChipInfo" /> {{_t('restore_backup_chip')}}
-                        <form method="POST" action="" enctype="multipart/form-data" id="restore_backup"> 
-                        <input type="file" name="config_backup" />
-                        </form>
+                       
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button 
-                        type="button" 
-                        class="btn btn-danger" 
-                        id="btn_reset_controller"
-                        ng-show="goRestore"
-                        ng-click="restoreBackup('Restore?restore_chip_info=' + modelRestoreChipInfo)"
-                        ><i class="fa fa-exclamation-triangle"></i> {{_t('nm_restore_backup_upload')}}</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button class="btn btn-success btn-spinner-hidden"><i class="fa fa-spinner fa-spin"></i> {{_t('restore_wait')}}</button>
+                     <button 
+                         ng-show="goRestore"
+                            ng-file-select="restoreBackup($files,modelRestoreChipInfo,'.btn-spinner-hidden','#btn_upload')" 
+                            data-multiple="true"
+                            onclick="this.value = null" 
+                            id="btn_upload"
+                            class="btn btn-danger" 
+                            ><i class="fa fa-exclamation-triangle"></i> {{_t('nm_restore_backup_upload')}}<input type="file" ng-file-select="restoreBackup($files,modelRestoreChipInfo,'.btn-spinner-hidden','#btn_upload')" data-multiple="true" title="select file" onclick="this.value = null" class="upload-button" multiple="multiple" style="top: 0px; bottom: 0px; left: 0px; right: 0px; width: 100%; opacity: 0; position: absolute;"></button>
+                    <button type="button" class="btn btn-default" ng-click="closeBackup('#modal_restore_backup')" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div><!-- /.Modal -->
-    
+
     <!-- Modal failed battery node -->
     <div class="modal fade" id="modal_battery_node" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
         <div class="modal-dialog">
@@ -276,16 +277,16 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">{{_t('nm_mark_battery_as_failed') + ' #' + modelBatteryFailed}}</h4>
-                    
+
                 </div>
                 <div class="modal-body">
-                   {{_t('nm_mark_node_war_modal')}}
+                    {{_t('nm_mark_node_war_modal')}}
                 </div>
                 <div class="modal-footer">
                     <button 
                         type="button" 
                         class="btn btn-primary" 
-                        ng-click="runCmd(['devices[' + modelBatteryFailed + '].SendNoOperation()', 'devices[' + modelBatteryFailed + '].WakeupQueue()','IsFailedNode(' + modelBatteryFailed + ')'],'#modal_battery_node',null,{'name': 'remove_option','id': '#mark_battery_failed','value': modelBatteryFailed})"
+                        ng-click="runCmd(['devices[' + modelBatteryFailed + '].SendNoOperation()', 'devices[' + modelBatteryFailed + '].WakeupQueue()', 'IsFailedNode(' + modelBatteryFailed + ')'], '#modal_battery_node', null, {'name': 'remove_option', 'id': '#mark_battery_failed', 'value': modelBatteryFailed})"
                         >{{_t('nm_mark_battery_as_failed')}}</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
@@ -303,10 +304,10 @@
                 </div>
                 <div class="modal-body">
                     <div class="alert alert-warning">
-                        <input type="checkbox" name="remove_node_confirm" value="1" ng-click="goFailedNode = !goFailedNode" /> <span ng-bind-html="_t('are_you_sure_remove_node') | toTrusted"></span>
+                        <input type="checkbox" name="remove_node_confirm" value="1" ng-click="goFailedNode = !goFailedNode" /> <span ng-bind-html="_t('are_you_sure_remove_node') | toTrusted"></span> <strong>{{deviceInfo.name}}</strong>
                     </div>
-                     <div class="alert alert-warning" ng-show="goFailedInfo">
-                       The controller will delete the node from the network without any further action, This process may take up to a minute
+                    <div class="alert alert-warning" ng-show="goFailedInfo">
+                        The controller will delete the node from the network without any further action, This process may take up to a minute
                     </div>
 
                 </div>
@@ -316,7 +317,8 @@
                         class="btn btn-danger" 
                         id="btn_reset_controller"
                         ng-show="goFailedNode"
-                        ng-click="runCmd('devices[' + modelNodeFailed + '].RemoveFailedNode()', null,null,{'name': 'remove_option','id': '#remove_failed_node','value': modelNodeFailed})"
+                        ng-click="runCmd('devices[' + modelNodeFailed + '].RemoveFailedNode()', null, null, {'name': 'remove_option', 'id': '#remove_failed_node', 'value': modelNodeFailed});
+                                    goFailedInfo = !goFailedInfo"
                         ><i class="fa fa-exclamation-triangle"></i> {{_t('nm_remove_failed')}}</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>

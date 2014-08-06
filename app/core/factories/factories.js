@@ -14,9 +14,9 @@ appFactory.config(function($httpProvider) {
     //$httpProvider.defaults.headers.common['Access-Control-Allow-Headers'] = 'accept, origin, content-type, cookie'; 
     //$httpProvider.defaults.headers.common['X-Requested-With'] = ''; 
     //$httpProvider.defaults.headers.common['Cookie'] = 'ZBW_IFLANG=eng; ZBW_SESSID=ced27083bfaff559438d79a72949c1064262d312'; 
-    
+
     $httpProvider.responseInterceptors.push('myHttpInterceptor');
-    
+
     var spinnerFunction = function spinnerFunction(data, headersGetter) {
         $(".main_spinner__").show();
         return data;
@@ -35,9 +35,271 @@ appFactory.factory('myHttpInterceptor', function($q, $window) {
     };
 });
 
-// Caching the river...
+/**
+ * Caching the river...
+ */
 appFactory.factory('myCache', function($cacheFactory) {
- return $cacheFactory('myData');
+    return $cacheFactory('myData');
+});
+/**
+ * Data service
+ * @todo: Replace all data handler with this service
+ * @todo: Complete error handling
+ */
+appFactory.factory('dataService', function($http, $q, $interval, $filter, myCache, cfg) {
+    var apiData;
+    var apiDataInterval;
+    var deviceClasses;
+    var queueDataInterval;
+    /**
+     * Public functions
+     */
+    return({
+        getZwaveData: getZwaveData,
+        refreshZwaveData: refreshZwaveData,
+        updateZwaveData: updateZwaveData,
+        cancelZwaveDataInterval: cancelZwaveDataInterval,
+        runCmd: runCmd,
+        getDeviceClasses: getDeviceClasses,
+        updateQueueData: updateQueueData,
+        cancelQueueDataInterval: cancelQueueDataInterval,
+        runJs: runJs,
+        getNotes: getNotes,
+        putNotes: putNotes
+    });
+
+    /**
+     * Gets all of the data in the remote collection.
+     */
+    function getZwaveData(callback) {
+        if (apiData) {
+            console.log('CACHED');
+            return callback(apiData);
+        }
+        else {
+            console.log('NOOOOT CACHED');
+            var request = $http({
+                method: "POST",
+                url: cfg.server_url + cfg.update_url + "0"
+            });
+            request.success(function(data) {
+                apiData = data;
+                return callback(data);
+            }).error(function() {
+                handleError();
+
+            });
+        }
+    }
+
+    /**
+     * Gets updated data of the data in the remote collection.
+     * 
+     * @todo: remove - replaced with updateZwaveData
+     */
+    function refreshZwaveData(callback, timestamp) {
+        var request = $http({
+            method: "POST",
+            url: cfg.server_url + cfg.update_url + timestamp
+        });
+        request.success(function(data) {
+            return callback(data);
+        }).error(function() {
+            handleError();
+
+        });
+    }
+
+    /**
+     * Gets updated data in the remote collection.
+     */
+    function  updateZwaveData(callback) {
+        var time = Math.round(+new Date() / 1000);
+        var refresh = function() {
+            var request = $http({
+                method: "POST",
+                //url: "storage/updated.json"
+                url: cfg.server_url + cfg.update_url + time
+            });
+            request.success(function(data) {
+                time = data.updateTime;
+                $('#update_time_tick').html($filter('getCurrentTime')(time));
+                return callback(data);
+            }).error(function() {
+                handleError();
+
+            });
+        };
+        apiDataInterval = $interval(refresh, cfg.interval);
+    }
+
+    /**
+     * Cancel data interval
+     */
+    function cancelZwaveDataInterval() {
+        if (angular.isDefined(apiDataInterval)) {
+            $interval.cancel(apiDataInterval);
+            apiDataInterval = undefined;
+        }
+        return;
+    }
+
+    /**
+     * Run api cmd
+     */
+    function runCmd(param, request) {
+        var url = (request ? cfg.server_url + request : cfg.server_url + cfg.store_url + param);
+        var request = $http({
+            method: 'POST',
+            url: url
+        });
+        request.success(function(data) {
+            handleSuccess(data);
+        }).error(function() {
+            handleError();
+
+        });
+
+    }
+    /**
+     * Get device classes from XML file
+     */
+    function getDeviceClasses(callback) {
+        if (deviceClasses) {
+            return callback(deviceClasses);
+        }
+        else {
+            var request = $http({
+                method: "get",
+                url: cfg.server_url + cfg.device_classes_url
+            });
+            request.success(function(data) {
+                var x2js = new X2JS();
+                var json = x2js.xml_str2json(data);
+                deviceClasses = json;
+                return callback(deviceClasses);
+            }).error(function() {
+                handleError();
+
+            });
+        }
+    }
+    
+    /**
+     * Gets updated data in the remote collection.
+     */
+    function  updateQueueData(callback) {
+        var refresh = function() {
+            var request = $http({
+                method: "POST",
+                url: cfg.server_url + cfg.queue_url
+            });
+            request.success(function(data) {
+                return callback(data);
+            }).error(function() {
+                handleError();
+
+            });
+        };
+        queueDataInterval = $interval(refresh, cfg.queue_interval);
+    }
+
+    /**
+     * Cancel data interval
+     */
+    function cancelQueueDataInterval() {
+        if (angular.isDefined(queueDataInterval)) {
+            $interval.cancel(queueDataInterval);
+            queueDataInterval = undefined;
+        }
+        return;
+    }
+
+    /**
+     * Run JavaScript cmd
+     */
+    function runJs(param) {
+        var request = $http({
+            method: 'POST',
+            dataType: "json",
+            url: cfg.server_url + cfg.runjs_url + param
+        });
+        request.success(function(data) {
+            handleSuccess(data);
+        }).error(function() {
+            handleError();
+
+        });
+
+    }
+
+    /**
+     * Gets notes from remote text file
+     */
+    function getNotes(callback) {
+        var request = $http({
+            method: 'GET',
+            url: cfg.server_url + cfg.notes_url
+        });
+        request.success(function(data) {
+            return callback(data);
+        }).error(function() {
+            handleError();
+
+        });
+
+    }
+
+    /**
+     * Put notes in remote text file
+     */
+    function putNotes(notes) {
+        var request = $http({
+            method: "PUT",
+            dataType: "text",
+            url: cfg.server_url + cfg.notes_url,
+            data: notes,
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        request.success(function(data) {
+            handleSuccess(data);
+        }).error(function(error) {
+            handleError();
+
+        });
+    }
+
+    /**
+     * 
+     * Handle errors
+     */
+    function handleError(error) {
+        console.log('Error');
+        //$('html').html('');
+        return;
+        // The API response from the server should be returned in a
+        // nomralized format. However, if the request was not handled by the
+        // server (or what not handles properly - ex. server error), then we
+        // may have to normalize it on our end, as best we can.
+        if (!angular.isObject(response.data) || !response.data.message) {
+            return($q.reject("An unknown error occurred."));
+
+        }
+        // Otherwise, use expected error message.
+        return($q.reject(response.data.message));
+
+    }
+
+    /**
+     * Handle success response
+     */
+    function handleSuccess(response) {
+        console.log('Success');
+        return;
+
+    }
 });
 
 // Get a complete or updated JSON
@@ -45,9 +307,15 @@ appFactory.factory('DataFactory', function($resource, $http, cfg) {
     return {
         all: function(param) {
             return $resource(cfg.server_url + cfg.update_url + param, {}, {query: {
-                    method: 'POST', 
+                    method: 'POST',
                     //params: {user_field: cfg.user_field, pass_field: cfg.pass_field,ZBW_SESSID:  'ced27083bfaff559438d79a72949c1064262d312'},
                     isArray: false
+                }});
+        },
+        queue: function() {
+            return $resource(cfg.server_url + cfg.queue_url, {}, {query: {
+                    method: 'POST',
+                    isArray: true
                 }});
         },
         store: function(param) {
@@ -57,22 +325,22 @@ appFactory.factory('DataFactory', function($resource, $http, cfg) {
         },
         putConfig: function(param) {
             return $resource(cfg.server_url + cfg.config_url + param, {}, {query: {
-                    method: 'PUT', headers_: { '': '' }, params: {}
+                    method: 'PUT', headers_: {'': ''}, params: {}
                 }});
         },
         putReorgLog: function(log) {
             return $.ajax({
-                    type: "PUT",
-                    dataType: "text",
-                    url: cfg.server_url + cfg.reorg_log_url,
-                    contentType: "text/plain",
-                    data: log
-                });
+                type: "PUT",
+                dataType: "text",
+                url: cfg.server_url + cfg.reorg_log_url,
+                contentType: "text/plain",
+                data: log
+            });
         },
         getReorgLog: function(callback) {
-            return $http({method: 'GET', url: cfg.server_url + cfg.reorg_log_url + '?at=' + (new Date ()).getTime()}).success(function(data, status, headers, config) {
-                    callback(data);
-                });
+            return $http({method: 'GET', url: cfg.server_url + cfg.reorg_log_url + '?at=' + (new Date()).getTime()}).success(function(data, status, headers, config) {
+                callback(data);
+            });
         },
         runCmd: function(param) {
             var cmd = cfg.server_url + param;
@@ -80,12 +348,38 @@ appFactory.factory('DataFactory', function($resource, $http, cfg) {
                     method: 'POST', params: {}
                 }});
         },
+        putNotes: function(notes) {
+            return $.ajax({
+                type: "PUT",
+                dataType: "text",
+                url: cfg.server_url + cfg.notes_url,
+                contentType: "text/plain",
+                data: notes
+            });
+        },
+        getNotes: function(callback) {
+            return $http({
+                method: 'GET',
+                url: cfg.server_url + cfg.notes_url
+                        //url: 'storage/notes.log'
+            }).success(function(data, status, headers, config) {
+                callback(data);
+            });
+        },
+        updateFirmware: function(url) {
+            return $.ajax({
+                type: "GET",
+                dataType: "text",
+                url: url,
+                contentType: "application/octet-stream"
+            });
+        },
         debug: function(param) {
             var cmd = cfg.server_url + cfg.zwave_api_run_url + param;
             console.log(cmd);
             return;
         }
-        
+
     };
 });
 
@@ -116,25 +410,25 @@ appFactory.factory('FirmwareFactory', function($resource) {
     };
 });
 // JSON from XML
-appFactory.factory('XmlFactory', ['$http',function($http){
-       return {
-           get: function(callback,xmlSource){
-                $http.get(xmlSource, {transformResponse:function(data) {
-                      // convert the data to JSON and provide
-                      // it to the success function below
+appFactory.factory('XmlFactory', ['$http', function($http) {
+        return {
+            get: function(callback, xmlSource) {
+                $http.get(xmlSource, {transformResponse: function(data) {
+                        // convert the data to JSON and provide
+                        // it to the success function below
                         var x2js = new X2JS();
-                        var json = x2js.xml_str2json( data );
+                        var json = x2js.xml_str2json(data);
                         return json;
-                        }
                     }
+                }
                 ).
-                success(function(data, status) {
-                    // send the converted data back
-                    // to the callback function
-                    callback(data);
-                });
-           }
-       };
+                        success(function(data, status) {
+                            // send the converted data back
+                            // to the callback function
+                            callback(data);
+                        });
+            }
+        };
     }]);
 
 // Get language dataas object
@@ -153,10 +447,10 @@ appFactory.factory('langFactory', function($resource, cfg) {
 // Translation factory - get language line by key
 appFactory.factory('langTransFactory', function() {
     return {
-        get: function(key,languages) {
+        get: function(key, languages) {
             if (angular.isObject(languages)) {
                 if (angular.isDefined(languages[key])) {
-                    return languages[key] !=='' ? languages[key] : key;
+                    return languages[key] !== '' ? languages[key] : key;
                 }
             }
             return key;
@@ -175,31 +469,6 @@ appFactory.factory('deviceConfigFactory', function($resource, cfg) {
                 }});
         }
     };
-});
-
-
-// Get language dataas object
-appFactory.factory('testFactory', function(DataTestFactory) {
-    var items = [];
-
-  var modify = {};
-  modify.loadItems = function(){
-      DataTestFactory.all('all.json').query(function(data) {
-          angular.forEach(data, function(v, k) {
-              items.push(v);
-                           
-                        });
-          
-      });
-  };
-  modify.addItem = function(item) {
-    items.push(item);
-    return 'added item';
-  };
-  modify.getItems = function() {
-    return items;
-  };
-  return modify; // returning this is very important
 });
 
 

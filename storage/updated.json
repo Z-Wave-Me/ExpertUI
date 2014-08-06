@@ -1,0 +1,171 @@
+{
+    "devices.2.data.isAwake": {
+      "name": "isAwake",
+      "value": true,
+      "type": "bool",
+      "invalidateTime": 1406211835,
+      "updateTime": 1407328742
+    },
+    "devices.2.data.lastSend": {
+      "name": "lastSend",
+      "value": 7070386,
+      "type": "int",
+      "invalidateTime": 1407248240,
+      "updateTime": 1407328742
+    },
+    "devices.2.data.lastNonceGet": {
+      "name": "lastNonceGet",
+      "value": 7069386,
+      "type": "int",
+      "invalidateTime": 1407248240,
+      "updateTime": 1407328742
+    },
+    "devices.2.data.lastReceived": {
+      "name": "lastReceived",
+      "value": 0,
+      "type": "int",
+      "invalidateTime": 1406211835,
+      "updateTime": 1407328742
+    },
+    "devices.5.data.lastSend": {
+      "name": "lastSend",
+      "value": 7071204,
+      "type": "int",
+      "invalidateTime": 1407248240,
+      "updateTime": 1407328740
+    },
+    "devices.5.data.failureCount": {
+      "name": "failureCount",
+      "value": 2,
+      "type": "int",
+      "invalidateTime": 1407248240,
+      "updateTime": 1407328740
+    },
+    "devices.5.instances.0.commandClasses.50.data.0": {
+      "name": "0",
+      "value": null,
+      "type": "NoneType",
+      "sensorType": {
+        "name": "sensorType",
+        "value": 1,
+        "type": "int",
+        "invalidateTime": 1406796288,
+        "updateTime": 1406796289
+      },
+      "sensorTypeString": {
+        "name": "sensorTypeString",
+        "value": "Electric ",
+        "type": "str",
+        "invalidateTime": 1406796288,
+        "updateTime": 1406796289
+      },
+      "val": {
+        "name": "val",
+        "value": 0,
+        "type": "float",
+        "invalidateTime": 1406796288,
+        "updateTime": 1407328600
+      },
+      "scale": {
+        "name": "scale",
+        "value": 0,
+        "type": "int",
+        "invalidateTime": 1406796288,
+        "updateTime": 1406796289
+      },
+      "scaleString": {
+        "name": "scaleString",
+        "value": "kWh",
+        "type": "str",
+        "invalidateTime": 1406796288,
+        "updateTime": 1406796289
+      },
+      "ratetype": {
+        "name": "ratetype",
+        "value": 1,
+        "type": "int",
+        "invalidateTime": 1406796288,
+        "updateTime": 1407328600
+      },
+      "delta": {
+        "name": "delta",
+        "value": 35,
+        "type": "int",
+        "invalidateTime": 1406796288,
+        "updateTime": 1407328600
+      },
+      "previous": {
+        "name": "previous",
+        "value": 0,
+        "type": "float",
+        "invalidateTime": 1406796288,
+        "updateTime": 1407328600
+      },
+      "invalidateTime": 1407328740,
+      "updateTime": 1407328600
+    },
+    "devices.5.instances.0.commandClasses.50.data.2": {
+      "name": "2",
+      "value": null,
+      "type": "NoneType",
+      "sensorType": {
+        "name": "sensorType",
+        "value": 1,
+        "type": "int",
+        "invalidateTime": 1406796288,
+        "updateTime": 1406796289
+      },
+      "sensorTypeString": {
+        "name": "sensorTypeString",
+        "value": "Electric ",
+        "type": "str",
+        "invalidateTime": 1406796288,
+        "updateTime": 1406796289
+      },
+      "val": {
+        "name": "val",
+        "value": 0,
+        "type": "float",
+        "invalidateTime": 1406796288,
+        "updateTime": 1407328600
+      },
+      "scale": {
+        "name": "scale",
+        "value": 2,
+        "type": "int",
+        "invalidateTime": 1406796288,
+        "updateTime": 1406796289
+      },
+      "scaleString": {
+        "name": "scaleString",
+        "value": "W",
+        "type": "str",
+        "invalidateTime": 1406796288,
+        "updateTime": 1406796289
+      },
+      "ratetype": {
+        "name": "ratetype",
+        "value": 1,
+        "type": "int",
+        "invalidateTime": 1406796288,
+        "updateTime": 1407328600
+      },
+      "delta": {
+        "name": "delta",
+        "value": 35,
+        "type": "int",
+        "invalidateTime": 1406796288,
+        "updateTime": 1407328600
+      },
+      "previous": {
+        "name": "previous",
+        "value": 0,
+        "type": "float",
+        "invalidateTime": 1406796288,
+        "updateTime": 1407328600
+      },
+      "invalidateTime": 1407328740,
+      "updateTime": 1407328600
+    },
+  "updateTime": 1407328751
+}

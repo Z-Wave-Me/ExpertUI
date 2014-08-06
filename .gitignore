@@ -1,3 +1,5 @@
 #.gitignore
 /_project/*
 /nbproject/*
+/upload/*
+upload.php

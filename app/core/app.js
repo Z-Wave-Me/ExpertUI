@@ -9,7 +9,8 @@ var angApp = angular.module('angApp', [
     'ngCookies',
     'appController',
     'appFactory',
-    'appConfig'
+    'appConfig',
+    'angularFileUpload'
 ]);
 
 //Define Routing for app
