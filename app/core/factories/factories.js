@@ -144,10 +144,11 @@ appFactory.factory('dataService', function($http, $q, $interval,$filter, myCache
     /**
      * Run api cmd
      */
-    function runCmd(param) {
+    function runCmd(param,request) {
+        var url = (request ? cfg.server_url + request : cfg.server_url + cfg.store_url + param);
         var request = $http({
             method: 'POST',
-            url: cfg.server_url + cfg.store_url + param
+            url: url
         });
         request.success(function(data) {
             handleSuccess(data);
