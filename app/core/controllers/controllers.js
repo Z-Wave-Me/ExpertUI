@@ -1565,12 +1565,15 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                 }
             });
             if (remaining.length == 0) {
+                dataService.purgeCache();
                 $scope.load($scope.lang);
                 spinner.fadeOut();
             } else {
                 window.setTimeout(pollForUpdate, cfg.interval, since, remaining);
-                if (hasUpdates)
+                if (hasUpdates) {
+                    dataService.purgeCache();
                     $scope.load($scope.lang);
+                }
             }
         });
     };
@@ -1580,7 +1583,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
         var updates = [];
         angular.forEach($scope.keys, function(key, index) {
             updates.push("devices." + $scope.deviceId + ".instances." + $scope.data[key].instance + ".commandClasses." + parseInt($scope.data[key].commandClass) + ".data." + $scope.data[key].groupId);
-            dataService.runCmd('/ZWaveAPI/Run/devices[' + $scope.deviceId + '].instances[' + $scope.data[key].instance + '].commandClasses[' + $scope.data[key].commandClass + '].Get(' + $scope.data[key].groupId + ')').query();
+            dataService.runCmd('devices[' + $scope.deviceId + '].instances[' + $scope.data[key].instance + '].commandClasses[' + $scope.data[key].commandClass + '].Get(' + $scope.data[key].groupId + ')');
         });
         pollForUpdate($scope.ZWaveAPIData.updateTime, updates);
     }
@@ -1612,7 +1615,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
             params += ',' + (parseInt($scope.assocToInstance) + 1);
         }
         $scope.updates.push("devices." + $scope.deviceId + ".instances." + $scope.removeData.instance + ".commandClasses." + parseInt($scope.removeData.commandClass) + ".data." + $scope.removeData.groupId);
-        $scope.applyQueue.push('/ZWaveAPI/Run/devices[' + $scope.deviceId + '].instances[' + $scope.removeData.instance + '].commandClasses[' + $scope.removeData.commandClass + '].Remove(' + params + ')');
+        $scope.applyQueue.push('devices[' + $scope.deviceId + '].instances[' + $scope.removeData.instance + '].commandClasses[' + $scope.removeData.commandClass + '].Remove(' + params + ')');
         // cause view to hide element
         var removeIndex = -1;
         for(var i = 0; i < $scope.removeData.nodeIds.length; i++) {
@@ -1642,7 +1645,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
             params += ',' + (parseInt($scope.assocToInstance) + 1);
         }
         $scope.updates.push("devices." + $scope.deviceId + ".instances." + $scope.addData.instance + ".commandClasses." + parseInt($scope.addData.commandClass) + ".data." + $scope.addData.groupId);
-        $scope.applyQueue.push('/ZWaveAPI/Run/devices[' + $scope.deviceId + '].instances[' + $scope.addData.instance + '].commandClasses[' + $scope.addData.commandClass + '].Set(' + params + ')');
+        $scope.applyQueue.push('devices[' + $scope.deviceId + '].instances[' + $scope.addData.instance + '].commandClasses[' + $scope.addData.commandClass + '].Set(' + params + ')');
         // cause view to show element
         $scope.addData.nodeIds.push(parseInt($scope.assocToNode));
         if ($scope.addData.type == 'm')
@@ -1729,18 +1732,15 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
             return;
         if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
             return;
-        var associables = $filter('associable')(node);
-        angular.forEach(associables.associations, function(association, index) {
-            var key = nodeId + ".s-" + index;
-            $scope.keys.push(key);
-            var persistent = [];
-            for (var i = 0; i < association.data.nodes.value.length; i++) {
-                persistent.push("inZWave");
+        $.each(node.instances, function (index, instance) {
+            if (!("commandClasses" in instance)) {
+                return;
             }
-            var label = $scope._t('association_group') + " " + association.data.name;
-            if ($scope.zdd[nodeId] && ("assocGroup" in $scope.zdd[nodeId]) && ((parseInt(association.data.name) - 1) in $scope.zdd[nodeId].assocGroup)) {
+            
+            var label = $scope._t('association_group') + " " + index;
+            if ($scope.zdd[nodeId] && ("assocGroup" in $scope.zdd[nodeId]) && ((index) in $scope.zdd[nodeId].assocGroup)) {
                 // find best matching lang, default english
-                var langs = $scope.zdd[nodeId].assocGroup[parseInt(association.data.name) - 1].description.lang;
+                var langs = $scope.zdd[nodeId].assocGroup[index].description.lang;
                 angular.forEach(langs, function(lang, index) {
                     if (("__text" in lang) && (lang["_xml:lang"] == $scope.lang)) {
                         label = lang.__text;
@@ -1751,22 +1751,37 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                     }
                 });
             }
-            $scope.data[key] = {"type": "s", "label": label, "nodeId": nodeId, "node": node, "commandClass": "0x85", "instance": association.instance, "groupId": association.data.name, "nodeIds": association.data.nodes.value, "persistent": persistent, "update": association.data.nodes, "max": association.data.max.value, "remaining": (association.data.max.value - association.data.nodes.value.length)};
-        });
-        angular.forEach(associables.multiChannelAssociations, function(association, index) {
-            var key = nodeId + ".m-" + index;
-            $scope.keys.push(key);
-            var nodeIds = [];
-            var instanceIds = [];
-            var persistent = [];
-            for (var i = 0; i < association.data.nodesInstances.value.length; i += 2) {
-                nodeIds.push(association.data.nodesInstances.value[i]);
-                instanceIds.push(association.data.nodesInstances.value[i + 1]);
-                persistent.push("inZWave");
+            if (0x85 in instance.commandClasses) {
+                for(var group = 0 ; group < instance.commandClasses[0x85].data.groups.value; group++) {
+                    var key = nodeId + "." + index + "." + group;
+                    var data = instance.commandClasses[0x85].data[group + 1];
+                    if ($.inArray(key, $scope.keys) == -1)
+                        $scope.keys.push(key);
+                    var persistent = [];
+                    for (var i = 0; i < data.nodes.value.length; i++) {
+                        persistent.push("inZWave");
+                    }
+                    $scope.data[key] = {"type": "s", "label": label, "nodeId": nodeId, "node": node, "commandClass": "0x85", "instance": index, "groupId": data.name, "nodeIds": data.nodes.value, "persistent": persistent, "update": data.nodes, "max": data.max.value, "remaining": (data.max.value - data.nodes.value.length)};
+                }
             }
-            var label = $scope._t('multi_association_group') + " " + association.data.name;
-            // TODO resolve zddxml-assocGroup label name when available in zddxml
-            $scope.data[key] = {"type": "m", "label": label, "nodeId": nodeId, "instanceId": index, "node": node, "commandClass": "0x8e", "instance": association.instance, "groupId": association.data.name, "nodeIds": nodeIds, "instanceIds": instanceIds, "persistent": persistent, "update": association.data.nodesInstances, "max": association.data.max.value, "remaining": (association.data.max.value - (association.data.nodesInstances.value.length / 2))};
+            if (0x8e in instance.commandClasses) {
+                for(var group = 0 ; group < instance.commandClasses[0x8e].data.groups.value; group++) {
+                    var key = nodeId + "." + index + "." + group;
+                    var data = instance.commandClasses[0x8e].data[group + 1];
+                    if ($.inArray(key, $scope.keys) == -1)
+                        $scope.keys.push(key);
+                    var nodeIds = [];
+                    var instanceIds = [];
+                    var persistent = [];
+                    for (var i = 0; i < data.nodesInstances.value.length; i += 2) {
+                        nodeIds.push(data.nodesInstances.value[i]);
+                        instanceIds.push(data.nodesInstances.value[i + 1]);
+                        persistent.push("inZWave");
+                    }
+                    // TODO resolve zddxml-assocGroup label name when available in zddxml
+                    $scope.data[key] = {"type": "m", "label": label, "nodeId": nodeId, "instanceId": index, "node": node, "commandClass": "0x8e", "instance": index, "groupId": data.name, "nodeIds": nodeIds, "instanceIds": instanceIds, "persistent": persistent, "update": data.nodesInstances, "max": data.max.value, "remaining": (data.max.value - (data.nodesInstances.value.length / 2))};
+                }
+            }
         });
     };
     // Load data
@@ -1790,7 +1805,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
         spinner.show();
         while ($scope.applyQueue.length > 0) {
             var exec = $scope.applyQueue.shift();
-            dataService.runCmd(exec).query();
+            dataService.runCmd(exec);
         }
         pollForUpdate($scope.ZWaveAPIData.updateTime, $scope.updates);
         $scope.updates = [];
@@ -3241,7 +3256,7 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
     };
     // update a route
     $scope.update = function(nodeId) {
-        $scope.log = [];
+        dataService.purgeCache();
         // retry once
         var processQueue = [];
         if ($filter('updateable')($scope.nodes[nodeId].node, nodeId)) {

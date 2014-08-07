@@ -69,7 +69,8 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
         getNotes: getNotes,
         putNotes: putNotes,
         getReorgLog: getReorgLog,
-        putReorgLog: putReorgLog
+        putReorgLog: putReorgLog,
+        purgeCache: purgeCache
     });
 
     /**
@@ -336,6 +337,13 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
             contentType: "text/plain",
             data: log
         });
+    }
+
+    /**
+     * Clear the cached ZWaveData.
+     */
+    function purgeCache() {
+        apiData = undefined;
     }
 
     /**

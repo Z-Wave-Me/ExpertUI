@@ -262,7 +262,6 @@
     "config_ui_save": "Save",
     "tab_config_ui_title": "Devices configuration",
     "association_group": "Group",
-    "multi_association_group": "MultiGroup",
     "configuration_parameter": "Parameter",
     "param_default_value_undefined": "Default value is unknown",
     "unhandled_type_parameter": "Configuration parameter type is not handled in the interface",
