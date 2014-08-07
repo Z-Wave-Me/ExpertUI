@@ -168,9 +168,12 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
     }
 
     /**
-     * Gets updated data in the remote collection.
+     * Load Queue data
      */
     function getQueueData(callback) {
+        if (typeof (callback) != 'function') {
+            return;
+        };
         var request = $http({
             method: "POST",
             url: cfg.server_url + cfg.queue_url
@@ -184,23 +187,16 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
     }
 
     /**
-     * Gets updated data in the remote collection.
+     * Load and update Queue data
      */
     function updateQueueData(callback) {
-        if (typeof (callback) != 'function') {
-            console.log('no callback');
-            return;
-        }
-        ;
         var refresh = function() {
             getQueueData(callback);
         };
         queueDataInterval = $interval(refresh, cfg.queue_interval);
     }
-
-
     /**
-     * Cancel data interval
+     * Cancel Queue interval
      */
     function cancelQueueDataInterval() {
         if (angular.isDefined(queueDataInterval)) {

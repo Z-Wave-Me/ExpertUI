@@ -3566,7 +3566,7 @@ appController.controller('ControllerController', function($scope, $timeout, cfg,
     
     // Cancel interval on page destroy
     $scope.$on('$destroy', function() {
-        $scope.cancelQueue();
+         dataService.cancelQueueDataInterval();
     });
     /**
      *
@@ -3581,7 +3581,7 @@ appController.controller('ControllerController', function($scope, $timeout, cfg,
     $scope.inspectQueue = function(target, cancel) {
         $(target).modal();
         if(cancel){
-            $scope.cancelQueue();
+            dataService.cancelQueueDataInterval();
             return;
         }
         // Load queue
@@ -3589,29 +3589,12 @@ appController.controller('ControllerController', function($scope, $timeout, cfg,
              getQueueUpdate(data);
         });
         // Refresh queue
-         dataService.updateQueueData(null);
-//        var refresh = function() {
-//            DataFactory.queue().query(function(data) {
-//                getQueueUpdate(data);
-//            });
-//            $timeout(refresh, cfg.queue_interval);
-//        };
-//        $timeout(refresh, cfg.queue_interval);
-        
-        // Refresh data
+         dataService.updateQueueData(function(data) {
+             getQueueUpdate(data);
+        });
         return;
 
 
-    };
-    
-     $scope.refreshQueue = function() {
-        dataService.updateQueueData(function(data) {
-             getQueueUpdate(data);
-        });
-    };
-    
-    $scope.cancelQueue = function() {
-       dataService.cancelQueueDataInterval();
     };
 
     /// --- Private functions --- ///
