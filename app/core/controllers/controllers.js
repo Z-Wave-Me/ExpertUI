@@ -3293,15 +3293,16 @@ appController.controller('ReorganizationController', function($scope, $log, $fil
     $scope.reorganizing = true;
     $scope.log = [];
     $scope.logged = "";
-    $scope.appendLog = function(str, noNewline) {
-        if (noNewline == true) {
-            $scope.log[$scope.log.length - 1] += str;
+    $scope.appendLog = function(str, line) {
+        if (line !== undefined) {
+            $scope.log[line] += str;
         } else {
             if ($scope.log.length > 0)
                 $scope.log[$scope.log.length - 1] += "\n";
             $scope.log.push($filter('getTime')(new Date().getTime() / 1000) + ": " + str);
         }
         DataFactory.putReorgLog($scope.log.join(""));
+        return $scope.log.length - 1;
     };
     $scope.downloadLog = function() {
         var hiddenElement = $('<a id="hiddenElement" href="' + cfg.server_url + cfg.reorg_log_url + '?at=' + (new Date()).getTime() + '" target="_blank" download="reorg.log"></a>').appendTo($('body'));
@@ -3322,34 +3323,15 @@ appController.controller('ReorganizationController', function($scope, $log, $fil
             promise = undefined;
         }
     });
-    $scope.processReorgNodesNeighbours = function(processQueue, result) {
-        if (processQueue.length == 0) {
-            $scope.appendLog($scope._t('reorg_completed') + ":");
-            if ("mains_completed" in result)
-                $scope.appendLog(result.mains_completed + " " + $scope._t('reorg_mains_powered_done'));
-            if ("battery_completed" in result)
-                $scope.appendLog(result.battery_completed + " " + $scope._t('reorg_battery_powered_done'));
-            if ("mains_pending" in result)
-                $scope.appendLog(result.mains_pending + " " + $scope._t('reorg_mains_powered_pending'));
-            if ("battery_pending" in result)
-                $scope.appendLog(result.battery_pending + " " + $scope._t('reorg_battery_powered_pending'));
-            if ($.isEmptyObject(result))
-                $scope.appendLog($scope._t('reorg_nothing'));
-            $('div.rtDiv').css({"border-color": ""});
-            $scope.reorganizing = false;
+    $scope.reorgNodesNeighbours = function(current, result, doNext) {
+        if (("complete" in current) && current.complete) {
+            doNext();
             return;
         }
-        var current = processQueue[0];
-        $scope.appendLog($scope._t('reorg_reorg') + " " + current.nodeId + " " + (current.retry > 0 ? current.retry + ". " + $scope._t('reorg_retry') : "") + " ");
-        // process-states
-        if (!("timeout" in current)) {
-            current.timeout = (new Date()).getTime() + cfg.route_update_timeout;
-        }
-        $('tr.line' + current.nodeId).css({"outline": "thin solid blue"});
         DataFactory.store('devices[' + current.nodeId + '].RequestNodeNeighbourUpdate()').query(function(response) {
             var pollForNodeNeighbourUpdate = function() {
                 DataFactory.all(current.since).query(function(updateZWaveAPIData) {
-                    $scope.appendLog(".", true);
+                    $scope.appendLog(".", current.line);
                     if ("devices." + current.nodeId + ".data.neighbours" in updateZWaveAPIData) {
                         var obj = updateZWaveAPIData["devices." + current.nodeId + ".data.neighbours"]
                         $('#update' + current.nodeId).attr('class', $filter('getUpdated')(obj));
@@ -3364,8 +3346,7 @@ appController.controller('ReorganizationController', function($scope, $log, $fil
                                     return;
                                 }
                             });
-                            $('tr.line' + current.nodeId).css({"outline": ""});
-                            $scope.appendLog(" " + $scope._t('reorg_done'), true);
+                            $scope.appendLog(" " + $scope._t('reorg_done'), current.line);
                             if (current.type == "battery") {
                                 if ("battery_completed" in result) {
                                     result.battery_completed++;
@@ -3379,19 +3360,20 @@ appController.controller('ReorganizationController', function($scope, $log, $fil
                                     result.mains_completed = 1;
                                 }
                             }
-                            // remove all further retries from processQueue
-                            for (var i = processQueue.length - 1; i >= 0; i--) {
+                            // mark all retries in processQueue as complete
+                            for (var i = 0; i < processQueue.length; i) {
                                 if (processQueue[i].nodeId == current.nodeId) {
-                                    processQueue.splice(i, 1);
+                                    processQueue[i].complete = true;
                                 }
                             }
-                            $scope.processReorgNodesNeighbours(processQueue, result);
+                            current.complete = true;
+                            doNext();
                             return;
                         }
                     }
                     if (current.timeout < (new Date()).getTime()) {
                         // timeout waiting for an update-route occured, proceed
-                        $scope.appendLog(" " + $scope._t('reorg_timeout'), true);
+                        $scope.appendLog(" " + $scope._t('reorg_timeout'), current.line);
                         if (current.type == "battery") {
                             if ("battery_pending" in result) {
                                 result.battery_pending++;
@@ -3405,16 +3387,15 @@ appController.controller('ReorganizationController', function($scope, $log, $fil
                                 result.mains_pending = 1;
                             }
                         }
-                        $('tr.line' + current.nodeId).css({"outline": ""});
-                        processQueue.shift();
-                        $scope.processReorgNodesNeighbours(processQueue, result);
+                        current.complete = true;
+                        doNext();
                         return;
                     }
                     // routes not yet updated, poll again
                     window.setTimeout(pollForNodeNeighbourUpdate, cfg.interval);
                 }, function(error) {
                     // error handler
-                    $scope.appendLog(error, true);
+                    $scope.appendLog(error, current.line);
                     if (current.type == "battery") {
                         if ("battery_pending" in result) {
                             result.battery_pending++;
@@ -3428,16 +3409,15 @@ appController.controller('ReorganizationController', function($scope, $log, $fil
                             result.mains_pending = 1;
                         }
                     }
-                    $('tr.line' + current.nodeId).css({"outline": ""});
-                    processQueue.shift();
-                    $scope.processReorgNodesNeighbours(processQueue, result);
+                    current.complete = true;
+                    doNext();
                 });
             };
             // first polling
             pollForNodeNeighbourUpdate();
         }, function(error) {
             // error handler
-            $scope.appendLog(error, true);
+            $scope.appendLog(error, current.line);
             if (current.type == "battery") {
                 if ("battery_pending" in result) {
                     result.battery_pending++;
@@ -3451,10 +3431,47 @@ appController.controller('ReorganizationController', function($scope, $log, $fil
                     result.mains_pending = 1;
                 }
             }
-            $('tr.line' + current.nodeId).css({"outline": ""});
-            processQueue.shift();
-            $scope.processReorgNodesNeighbours(processQueue, result);
+            current.complete = true;
+            doNext();
         });
+    };
+    $scope.processReorgNodesNeighbours = function(processQueue, result, pos) {
+        if (main && processQueue.length >= pos) {
+            if ($scope.reorganizing) {
+                $scope.appendLog($scope._t('reorg_completed') + ":");
+                if ("mains_completed" in result)
+                    $scope.appendLog(result.mains_completed + " " + $scope._t('reorg_mains_powered_done'));
+                if ("battery_completed" in result)
+                    $scope.appendLog(result.battery_completed + " " + $scope._t('reorg_battery_powered_done'));
+                if ("mains_pending" in result)
+                    $scope.appendLog(result.mains_pending + " " + $scope._t('reorg_mains_powered_pending'));
+                if ("battery_pending" in result)
+                    $scope.appendLog(result.battery_pending + " " + $scope._t('reorg_battery_powered_pending'));
+                if ($.isEmptyObject(result))
+                    $scope.appendLog($scope._t('reorg_nothing'));
+                $scope.reorganizing = false;
+            }
+            return;
+        }
+        var current = processQueue[pos];
+        current.posInQueue = pos;
+        current.line = $scope.appendLog($scope._t('reorg_reorg') + " " + current.nodeId + " " + (current.retry > 0 ? current.retry + ". " + $scope._t('reorg_retry') : "") + " ");
+        // process-states
+        if (!("timeout" in current)) {
+            current.timeout = (new Date()).getTime() + cfg.route_update_timeout;
+        }
+        if (current.type == "battery") {
+            // batteries are processed parallel, forking
+            $scope.reorgNodesNeighbours(current, result, function() {});
+            pos++;
+            $scope.processReorgNodesNeighbours(processQueue, result, pos);
+        } else {
+            // main powereds are processed sequential
+            $scope.reorgNodesNeighbours(current, result, function() {
+                pos++;
+                $scope.processReorgNodesNeighbours(processQueue, result, pos);
+            });
+        }
     };
     // reorgAll routes
     $scope.reorgAll = function() {
@@ -3503,7 +3520,7 @@ appController.controller('ReorganizationController', function($scope, $log, $fil
                 }
             }
         }
-        $scope.processReorgNodesNeighbours(processQueue, {});
+        $scope.processReorgNodesNeighbours(processQueue, {}, 0);
     };
     // Load data
     $scope.load = function(lang) {
