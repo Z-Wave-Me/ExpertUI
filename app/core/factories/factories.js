@@ -122,11 +122,12 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
 
     /**
      * Gets updated data in the remote collection since a specific time.
-     * @param time the time (in seconds) to update from.
+     * @param since the time (in seconds) to update from.
      * @param callback called in case of successful data reception.
      * @param errorCallback called in case of error.
      */
-    function updateZwaveDataSince(time, callback, errorCallback) {
+    function updateZwaveDataSince(since, callback, errorCallback) {
+        var time = since;
         var refresh = function() {
             var request = $http({
                 method: "POST",
@@ -179,7 +180,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
     /**
      * Run store api cmd
      */
-    function store(param, request, success, error) {
+    function store(param, success, error) {
         var url = cfg.server_url + cfg.store_url + param;
         var request = $http({
             method: 'POST',
