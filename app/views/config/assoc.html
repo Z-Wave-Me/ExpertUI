@@ -43,8 +43,8 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">{{ _t('assoc_confirm_remove')}}</h4>
                 </div>
-                <div class="modal-body">
-                    <div class="modal-body form-inline">
+                <div class="modal-body" style="white-space: normal;">
+                    <div class="form-inline">
                         {{ _t('assoc_remove_from')}} {{removeData.nodeId| getDeviceName:getDeviceNames}} {{ _t('to_locate')}} <br/>
                         <div class="form-group">
                             <select ng-model="assocToNode" class="form-control" style="width: 150px;" ng-options="k as v for (k,v) in removeNodes">
@@ -73,8 +73,8 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">{{ _t('assoc_add_title')}}</h4>
                 </div>
-                <div class="modal-body">
-                    <div class="modal-body form-inline">
+                <div class="modal-body" style="white-space: normal;">
+                    <div class="form-inline">
                         {{ _t('fro')}} {{addData.nodeId| getDeviceName:getDeviceNames}} {{ _t('to_locate')}} <br/>
                         <div class="form-group">
                             <select ng-model="assocToNode" class="form-control" style="width: 150px;" ng-options="k as v for (k,v) in addNodes">
