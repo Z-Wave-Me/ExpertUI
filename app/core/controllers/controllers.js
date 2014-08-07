@@ -1994,7 +1994,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         fw_url: "",
         fw_target: ""
     };
-     $scope.reset = function() {
+    $scope.reset = function() {
         $scope.devices = angular.copy([]);
     };
     // Remember device id
@@ -2033,9 +2033,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     } else {
         $scope.redirectToDetail($scope.detailId);
     }
-    
-    
-    // Cancel interval on page destroy
+     // Cancel interval on page destroy
     $scope.$on('$destroy', function() {
         dataService.cancelZwaveDataInterval();
     });
@@ -2095,8 +2093,10 @@ appController.controller('ConfigurationController', function($scope, $routeParam
      * Set zwave data
      */
     function setData(ZWaveAPIData, nodeId) {
-        var xmlCache = [];
         var node = ZWaveAPIData.devices[nodeId];
+        if (!node) {
+            return;
+        }
         $scope.showDevices = true;
         $scope.deviceName = $filter('deviceName')(nodeId, node);
         var zddXmlFile = null;
