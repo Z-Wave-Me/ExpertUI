@@ -1532,7 +1532,7 @@ appController.controller('TypeController', function($scope, $filter, dataService
     /// --- Private functions --- ///
 });
 // Assoc controller
-appController.controller('AssocController', function($scope, $log, $filter, $route, $timeout, $http, DataFactory, DataTestFactory, XmlFactory, cfg) {
+appController.controller('AssocController', function($scope, $log, $filter, $route, $timeout, $http, dataService, cfg) {
 
     $scope.keys = [];
     $scope.data = {};
@@ -1551,7 +1551,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
     var pollForUpdate = function(since, updates) {
         var spinner = $('#AssociationTable .fa-spinner');
         spinner.show();
-        DataFactory.all(since).query(function(updateZWaveAPIData) {
+        dataService.updateZwaveDataSince(since, function(updateZWaveAPIData) {
             var remaining = [];
             var hasUpdates = false;
             angular.forEach(updates, function(update, index) {
@@ -1580,7 +1580,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
         var updates = [];
         angular.forEach($scope.keys, function(key, index) {
             updates.push("devices." + $scope.deviceId + ".instances." + $scope.data[key].instance + ".commandClasses." + parseInt($scope.data[key].commandClass) + ".data." + $scope.data[key].groupId);
-            DataFactory.runCmd('/ZWaveAPI/Run/devices[' + $scope.deviceId + '].instances[' + $scope.data[key].instance + '].commandClasses[' + $scope.data[key].commandClass + '].Get(' + $scope.data[key].groupId + ')').query();
+            dataService.runCmd('/ZWaveAPI/Run/devices[' + $scope.deviceId + '].instances[' + $scope.data[key].instance + '].commandClasses[' + $scope.data[key].commandClass + '].Get(' + $scope.data[key].groupId + ')').query();
         });
         pollForUpdate($scope.ZWaveAPIData.updateTime, updates);
     }
@@ -1771,7 +1771,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
     };
     // Load data
     $scope.load = function(lang) {
-        DataFactory.all('0').query(function(ZWaveAPIData) {
+        dataService.getZwaveData(function(ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
             // Gather associations
             var nodeId = $scope.deviceId;
@@ -1790,7 +1790,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
         spinner.show();
         while ($scope.applyQueue.length > 0) {
             var exec = $scope.applyQueue.shift();
-            DataFactory.runCmd(exec).query();
+            dataService.runCmd(exec).query();
         }
         pollForUpdate($scope.ZWaveAPIData.updateTime, $scope.updates);
         $scope.updates = [];
@@ -3108,7 +3108,7 @@ appController.controller('ControllController', function($scope, $filter, $upload
     /// --- Private functions --- ///
 });
 // Routing controller
-appController.controller('RoutingController', function($scope, $log, $filter, $route, $timeout, DataFactory, DataTestFactory, XmlFactory, cfg) {
+appController.controller('RoutingController', function($scope, $log, $filter, $route, $timeout, dataService, cfg) {
 
     $scope.devices = [];
     $scope.nodes = {};
@@ -3158,9 +3158,9 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
             current.timeout = (new Date()).getTime() + cfg.route_update_timeout;
         }
         $('div.line' + current.nodeId).css({"border-color": "blue"});
-        DataFactory.store('devices[' + current.nodeId + '].RequestNodeNeighbourUpdate()').query(function(response) {
+        dataService.store('devices[' + current.nodeId + '].RequestNodeNeighbourUpdate()', function(response) {
             var pollForNodeNeighbourUpdate = function() {
-                DataFactory.all(current.since).query(function(updateZWaveAPIData) {
+                dataService.updateZwaveDataSince(current.since, function(updateZWaveAPIData) {
                     if ("devices." + current.nodeId + ".data.neighbours" in updateZWaveAPIData) {
                         var obj = updateZWaveAPIData["devices." + current.nodeId + ".data.neighbours"]
                         $('#update' + current.nodeId).attr('class', $filter('getUpdated')(obj));
@@ -3256,7 +3256,7 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
     };
     // Load data
     $scope.load = function(lang) {
-        DataFactory.all('0').query(function(ZWaveAPIData) {
+        dataService.getZwaveData(function(ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
             // Prepare devices and nodes
             angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
@@ -3283,7 +3283,7 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
     $scope.load($scope.lang);
 });
 // Reorganization controller
-appController.controller('ReorganizationController', function($scope, $log, $filter, $route, $interval, $timeout, DataFactory, DataTestFactory, XmlFactory, cfg) {
+appController.controller('ReorganizationController', function($scope, $log, $filter, $route, $interval, $timeout, dataService, cfg) {
 
     $scope.mainsPowered = true;
     $scope.batteryPowered = false;
@@ -3301,7 +3301,7 @@ appController.controller('ReorganizationController', function($scope, $log, $fil
                 $scope.log[$scope.log.length - 1] += "\n";
             $scope.log.push($filter('getTime')(new Date().getTime() / 1000) + ": " + str);
         }
-        DataFactory.putReorgLog($scope.log.join(""));
+        dataService.putReorgLog($scope.log.join(""));
         return $scope.log.length - 1;
     };
     $scope.downloadLog = function() {
@@ -3311,7 +3311,7 @@ appController.controller('ReorganizationController', function($scope, $log, $fil
     };
     var refreshLog = function() {
         // Assign to scope within callback to avoid data flickering on screen
-        DataFactory.getReorgLog(function(log) {
+        dataService.getReorgLog(function(log) {
             $scope.logged = log;
         });
     };
@@ -3328,9 +3328,9 @@ appController.controller('ReorganizationController', function($scope, $log, $fil
             doNext();
             return;
         }
-        DataFactory.store('devices[' + current.nodeId + '].RequestNodeNeighbourUpdate()').query(function(response) {
+        dataService.store('devices[' + current.nodeId + '].RequestNodeNeighbourUpdate()', function(response) {
             var pollForNodeNeighbourUpdate = function() {
-                DataFactory.all(current.since).query(function(updateZWaveAPIData) {
+                dataService.updateZwaveDataSince(current.since, function(updateZWaveAPIData) {
                     $scope.appendLog(".", current.line);
                     if ("devices." + current.nodeId + ".data.neighbours" in updateZWaveAPIData) {
                         var obj = updateZWaveAPIData["devices." + current.nodeId + ".data.neighbours"]
@@ -3436,7 +3436,7 @@ appController.controller('ReorganizationController', function($scope, $log, $fil
         });
     };
     $scope.processReorgNodesNeighbours = function(processQueue, result, pos) {
-        if (main && processQueue.length >= pos) {
+        if (processQueue.length >= pos) {
             if ($scope.reorganizing) {
                 $scope.appendLog($scope._t('reorg_completed') + ":");
                 if ("mains_completed" in result)
@@ -3524,7 +3524,7 @@ appController.controller('ReorganizationController', function($scope, $log, $fil
     };
     // Load data
     $scope.load = function(lang) {
-        DataFactory.all('0').query(function(ZWaveAPIData) {
+        dataService.getZwaveData(function(ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
             // Prepare devices and nodes
             angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
