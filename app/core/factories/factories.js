@@ -56,11 +56,11 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
      */
     return({
         getZwaveData: getZwaveData,
-        refreshZwaveData: refreshZwaveData,
         updateZwaveData: updateZwaveData,
         cancelZwaveDataInterval: cancelZwaveDataInterval,
         runCmd: runCmd,
         getDeviceClasses: getDeviceClasses,
+        getQueueData: getQueueData,
         updateQueueData: updateQueueData,
         cancelQueueDataInterval: cancelQueueDataInterval,
         runJs: runJs,
@@ -90,24 +90,6 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
 
             });
         }
-    }
-
-    /**
-     * Gets updated data of the data in the remote collection.
-     * 
-     * @todo: remove - replaced with updateZwaveData
-     */
-    function refreshZwaveData(callback, timestamp) {
-        var request = $http({
-            method: "POST",
-            url: cfg.server_url + cfg.update_url + timestamp
-        });
-        request.success(function(data) {
-            return callback(data);
-        }).error(function() {
-            handleError();
-
-        });
     }
 
     /**
@@ -184,28 +166,37 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
             });
         }
     }
-    
-    /**
-     * Gets updated data in the remote collection.
-     */
-    function  updateQueueData(callback) {
-        var refresh = function() {
-            var request = $http({
-                method: "POST",
-                url: cfg.server_url + cfg.queue_url
-            });
-            request.success(function(data) {
-                return callback(data);
-            }).error(function() {
-                handleError();
 
-            });
+    /**
+     * Load Queue data
+     */
+    function getQueueData(callback) {
+        if (typeof (callback) != 'function') {
+            return;
         };
-        queueDataInterval = $interval(refresh, cfg.queue_interval);
+        var request = $http({
+            method: "POST",
+            url: cfg.server_url + cfg.queue_url
+        });
+        request.success(function(data) {
+            return callback(data);
+        }).error(function() {
+            handleError();
+
+        });
     }
 
     /**
-     * Cancel data interval
+     * Load and update Queue data
+     */
+    function updateQueueData(callback) {
+        var refresh = function() {
+            getQueueData(callback);
+        };
+        queueDataInterval = $interval(refresh, cfg.queue_interval);
+    }
+    /**
+     * Cancel Queue interval
      */
     function cancelQueueDataInterval() {
         if (angular.isDefined(queueDataInterval)) {

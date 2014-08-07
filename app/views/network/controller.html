@@ -45,7 +45,7 @@
         <!-- nm_inspect_queue_title  -->
         <button 
             class="btn btn-primary" 
-            ng-click="inspectQueue('#modal_queue', true)"
+            ng-click="inspectQueue('#modal_queue')"
             >{{_t('nm_inspect_queue_title')}}</button>
 
         <!-- nm_send_node_information  -->
@@ -105,7 +105,7 @@
                     
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal"  ng-click="closeQueue()">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"  ng-click="inspectQueue('#modal_queue',true)">Close</button>
                 </div>
             </div>
         </div>

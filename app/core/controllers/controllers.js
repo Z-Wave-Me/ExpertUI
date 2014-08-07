@@ -3615,8 +3615,7 @@ appController.controller('ControllerController', function($scope, $timeout, cfg,
     
     // Cancel interval on page destroy
     $scope.$on('$destroy', function() {
-        //dataService.cancelZwaveDataInterval();
-        dataService.cancelQueueDataInterval();
+         dataService.cancelQueueDataInterval();
     });
     /**
      *
@@ -3628,36 +3627,23 @@ appController.controller('ControllerController', function($scope, $timeout, cfg,
     /**
      * Inspect Queue
      */
-    $scope.inspectQueue = function(target, run) {
+    $scope.inspectQueue = function(target, cancel) {
         $(target).modal();
-        // Run queue
-//        DataFactory.queue().query(function(data) {
-//            getQueueUpdate(data);
-//        });
-        // Refresh queue
-        $scope.refreshQueue();
-//        var refresh = function() {
-//            DataFactory.queue().query(function(data) {
-//                getQueueUpdate(data);
-//            });
-//            $timeout(refresh, cfg.queue_interval);
-//        };
-//        $timeout(refresh, cfg.queue_interval);
-        
-        // Refresh data
-   
-
-
-    };
-    
-     $scope.refreshQueue = function() {
-        dataService.updateQueueData(function(data) {
+        if(cancel){
+            dataService.cancelQueueDataInterval();
+            return;
+        }
+        // Load queue
+         dataService.getQueueData(function(data) {
              getQueueUpdate(data);
         });
-    };
-    
-    $scope.closeQueue = function() {
-       dataService.cancelQueueDataInterval();
+        // Refresh queue
+         dataService.updateQueueData(function(data) {
+             getQueueUpdate(data);
+        });
+        return;
+
+
     };
 
     /// --- Private functions --- ///
