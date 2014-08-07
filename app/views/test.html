@@ -2,8 +2,9 @@
 <div data-ng-controller="TestController">
     <div class="page-header"><h1>Test</h1></div>
     <span>Sec counter: {{timeInMs}}</span>
+    <div ng-repeat="v in devices">#{{v.id}}. {{v.name}} : {{v.time}}</div>
     
-    <button class="btn btn-success btn-spinner"><i class="fa fa-spinner fa-spin"></i> {{_t('restore_wait')}}</button>
+    <button class="btn btn-success btn-spinner-hidden"><i class="fa fa-spinner fa-spin"></i> {{_t('restore_wait')}}</button>
     
     <button 
         ng-file-select="onFileSelect($files,1,'.btn-spinner','#btn_upload')" 

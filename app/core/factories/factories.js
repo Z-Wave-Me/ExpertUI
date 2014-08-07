@@ -58,6 +58,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
         getZwaveData: getZwaveData,
         updateZwaveData: updateZwaveData,
         updateZwaveDataSince: updateZwaveDataSince,
+        joinedZwaveData: joinedZwaveData,
         cancelZwaveDataInterval: cancelZwaveDataInterval,
         runCmd: runCmd,
         store: store,
@@ -130,7 +131,6 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
         var time = since;
         var request = $http({
             method: "POST",
-            //url: "storage/updated.json"
             url: cfg.server_url + cfg.update_url + time
         });
         request.success(function(data) {
@@ -142,6 +142,43 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
             if (errorCallback !== undefined) 
                 errorCallback(error);
         });
+    }
+
+    /**
+     * Get updated data and join with ZwaveData
+     */
+    function  joinedZwaveData(callback) {
+        var time = Math.round(+new Date() / 1000);
+        var result = {};
+        var refresh = function() {
+            //console.log(apiData);
+            var request = $http({
+                method: "POST",
+                //url: "storage/updated.json"
+                url: cfg.server_url + cfg.update_url + time
+            });
+            request.success(function(data) {
+                time = data.updateTime;
+                $('#update_time_tick').html($filter('getCurrentTime')(time));
+                angular.forEach(data, function(obj, path) {
+                    var pobj = apiData;
+                    var pe_arr = path.split('.');
+                    for (var pe in pe_arr.slice(0, -1)) {
+                        pobj = pobj[pe_arr[pe]];
+                    }
+                    pobj[pe_arr.slice(-1)] = obj;
+                });
+                result = {
+                    "joined": apiData,
+                     "update": data
+                };
+                return callback(result);
+            }).error(function() {
+                handleError();
+
+            });
+        };
+        apiDataInterval = $interval(refresh, cfg.interval);
     }
 
 
@@ -225,7 +262,8 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
     function getQueueData(callback) {
         if (typeof (callback) != 'function') {
             return;
-        };
+        }
+        ;
         var request = $http({
             method: "POST",
             url: cfg.server_url + cfg.queue_url
