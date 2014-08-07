@@ -121,30 +121,27 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
     }
 
     /**
-     * Gets updated data in the remote collection since a specific time.
+     * Gets one update of data in the remote collection since a specific time.
      * @param since the time (in seconds) to update from.
      * @param callback called in case of successful data reception.
      * @param errorCallback called in case of error.
      */
     function updateZwaveDataSince(since, callback, errorCallback) {
         var time = since;
-        var refresh = function() {
-            var request = $http({
-                method: "POST",
-                //url: "storage/updated.json"
-                url: cfg.server_url + cfg.update_url + time
-            });
-            request.success(function(data) {
-                time = data.updateTime;
-                $('#update_time_tick').html($filter('getCurrentTime')(time));
-                return callback(data);
-            }).error(function(error) {
-                handleError();
-                if (errorCallback !== undefined) 
-                    errorCallback(error);
-            });
-        };
-        apiDataInterval = $interval(refresh, cfg.interval);
+        var request = $http({
+            method: "POST",
+            //url: "storage/updated.json"
+            url: cfg.server_url + cfg.update_url + time
+        });
+        request.success(function(data) {
+            time = data.updateTime;
+            $('#update_time_tick').html($filter('getCurrentTime')(time));
+            return callback(data);
+        }).error(function(error) {
+            handleError();
+            if (errorCallback !== undefined) 
+                errorCallback(error);
+        });
     }
 
 

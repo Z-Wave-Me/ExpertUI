@@ -3259,7 +3259,7 @@ appController.controller('ReorganizationController', function($scope, $log, $fil
     $scope.devices = [];
     $scope.nodes = {};
     $scope.ZWaveAPIData;
-    $scope.processQueue = {};
+    $scope.processQueue = [];
     $scope.reorganizing = true;
     $scope.log = [];
     $scope.logged = "";
@@ -3297,7 +3297,7 @@ appController.controller('ReorganizationController', function($scope, $log, $fil
             return;
         }
         dataService.store('devices[' + current.nodeId + '].RequestNodeNeighbourUpdate()', function(response) {
-            var pollForNodeNeighbourUpdate = function() {
+            var pollForNodeNeighbourUpdate = function(current) {
                 dataService.updateZwaveDataSince(current.since, function(updateZWaveAPIData) {
                     $scope.appendLog(".", current.line);
                     if ("devices." + current.nodeId + ".data.neighbours" in updateZWaveAPIData) {
@@ -3358,7 +3358,7 @@ appController.controller('ReorganizationController', function($scope, $log, $fil
                         return;
                     }
                     // routes not yet updated, poll again
-                    window.setTimeout(pollForNodeNeighbourUpdate, cfg.interval);
+                    window.setTimeout(pollForNodeNeighbourUpdate, cfg.interval, current);
                 }, function(error) {
                     // error handler
                     $scope.appendLog(error, current.line);
@@ -3380,7 +3380,7 @@ appController.controller('ReorganizationController', function($scope, $log, $fil
                 });
             };
             // first polling
-            pollForNodeNeighbourUpdate();
+            pollForNodeNeighbourUpdate(current);
         }, function(error) {
             // error handler
             $scope.appendLog(error, current.line);
@@ -3420,8 +3420,10 @@ appController.controller('ReorganizationController', function($scope, $log, $fil
             return;
         }
         var current = $scope.processQueue[pos];
-        current.posInQueue = pos;
-        current.line = $scope.appendLog($scope._t('reorg_reorg') + " " + current.nodeId + " " + (current.retry > 0 ? current.retry + ". " + $scope._t('reorg_retry') : "") + " ");
+        if (!("line" in current)) {
+            current.posInQueue = pos;
+            current.line = $scope.appendLog($scope._t('reorg_reorg') + " " + current.nodeId + " " + (current.retry > 0 ? current.retry + ". " + $scope._t('reorg_retry') : "") + " ");
+        }
         // process-states
         if (!("timeout" in current)) {
             current.timeout = (new Date()).getTime() + cfg.route_update_timeout;
