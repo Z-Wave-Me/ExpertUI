@@ -7,7 +7,7 @@
 var appController = angular.module('appController', []);
 
 // Base controller
-appController.controller('BaseController', function($scope, $cookies, $filter, cfg, langFactory, langTransFactory, deviceConfigFactory, myCache, DataFactory, XmlFactory) {
+appController.controller('BaseController', function($scope, $cookies, $filter, cfg, langFactory, langTransFactory) {
     // Show page content
     $scope.showContent = false;
     // Global config
@@ -48,12 +48,12 @@ appController.controller('BaseController', function($scope, $cookies, $filter, c
         $scope.reverse = !$scope.reverse;
     };
     // Get device name
-    $scope.loadDeviceConfig = function() {
-        deviceConfigFactory.get().query(function(data) {
-            $scope.getDeviceNames = data;
-        });
-    };
-    $scope.loadDeviceConfig();
+//    $scope.loadDeviceConfig = function() {
+//        deviceConfigFactory.get().query(function(data) {
+//            $scope.getDeviceNames = data;
+//        });
+//    };
+//    $scope.loadDeviceConfig();
 });
 
 // Test controller
