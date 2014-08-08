@@ -57,6 +57,8 @@
     "btn_save_name": "Save name",
     "btn_secure": "Secure",
     "btn_unsecure": "Unsecure",
+    "btn_different_device": "Select a different device",
+    
      "yes": "YES",
       "no": "NO",
      "unknown_device_type": "Unknown device type",

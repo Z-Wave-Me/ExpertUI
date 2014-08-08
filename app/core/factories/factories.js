@@ -112,7 +112,6 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
         var refresh = function() {
             var request = $http({
                 method: "POST",
-                //url: "storage/updated.json"
                 url: cfg.server_url + cfg.update_url + time
             });
             request.success(function(data) {
