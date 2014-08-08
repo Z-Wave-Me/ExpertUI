@@ -3,18 +3,19 @@
     <div class="page-header">
         <div class="row">
             <div class="col-md-12">
-                <h1 class="btn-group">
-                    <span ng-show="showContent">{{_t('h1_configuration_for')}}  <span id="config_device_name">{{deviceName}}</span> (#{{deviceId}})</span>
-                    <span ng-show="!showContent">{{_t('h1_configuration_no_device')}}</span>
-                </h1>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        {{_t('btn_different_device')}} <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li ng-repeat="v in devices| orderBy:predicate:reverse" ng-class="(v.id==deviceId) ? 'active' : ''"><a href="#config/configuration/{{v.id}}">{{v.name}}</a></li>
-                    </ul>
+                <div ng-show="showContent">
+                    <h1 class="btn-group">{{_t('h1_configuration_for')}}</h1>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle dropdown-config" data-toggle="dropdown">
+                            <span id="config_device_name">{{deviceName}}</span> (#{{deviceId}}) <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-repeat="v in devices| orderBy:predicate:reverse" ng-show="v.id != deviceId"><a href="#config/configuration/{{v.id}}">{{v.name}}</a></li>
+                        </ul>
+                    </div>
                 </div>
+                <h1 ng-show="!showContent">{{_t('h1_configuration_no_device')}}</h1>
+
             </div>
             <!-- <div class="col-md-6">
                 <select name="devices" class="form-control" style="width: 260px;" ng-model="detailId" ng-change="goToDetail(detailId)" >
