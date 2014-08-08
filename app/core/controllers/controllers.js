@@ -2056,7 +2056,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             setData(ZWaveAPIData, nodeId);
             $scope.ZWaveAPIData = ZWaveAPIData;
             dataService.joinedZwaveData(function(data) {
-                $scope.reset();
+                //$scope.reset();
                 setData(data.joined);
                 //setNavigation(data.joined);
                 setData(data.joined, nodeId);
