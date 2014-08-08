@@ -453,12 +453,6 @@ box-shadow:         0px 0px 6px 0px rgba(50, 50, 50, 0.43);
     padding: 0px 6px;
 }
 
-#AssociationTable button {
-    padding: 0px 6px;
-    width: 21px;
-    margin-top: 1px;
-}
-
 /* device present in config file but not present in Z-Wave assoc group */
 .notInZWave {
 	color: #955;

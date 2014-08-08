@@ -157,7 +157,7 @@ angApp.directive('routingTypeIcon', function() {
                     src = 'app/images/icons/type_Battery-Wakeup.png';
                     title = $scope._t('battery_powered_device');
                 } else if (isFLiRS) {
-                    src = 'app/images/icons/type_FLIRS.png';
+                    src = 'app/images/icons/type_FLIRS2.png';
                     title = $scope._t('FLiRS_device');
                 } else if (isPortableRemoteControl) {
                     src = 'app/images/icons/type_Remote-Control.png';

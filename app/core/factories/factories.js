@@ -57,16 +57,21 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
     return({
         getZwaveData: getZwaveData,
         updateZwaveData: updateZwaveData,
+        updateZwaveDataSince: updateZwaveDataSince,
         joinedZwaveData: joinedZwaveData,
         cancelZwaveDataInterval: cancelZwaveDataInterval,
         runCmd: runCmd,
+        store: store,
         getDeviceClasses: getDeviceClasses,
         getQueueData: getQueueData,
         updateQueueData: updateQueueData,
         cancelQueueDataInterval: cancelQueueDataInterval,
         runJs: runJs,
         getNotes: getNotes,
-        putNotes: putNotes
+        putNotes: putNotes,
+        getReorgLog: getReorgLog,
+        putReorgLog: putReorgLog,
+        purgeCache: purgeCache
     });
 
     /**
@@ -114,6 +119,29 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
             });
         };
         apiDataInterval = $interval(refresh, cfg.interval);
+    }
+
+    /**
+     * Gets one update of data in the remote collection since a specific time.
+     * @param since the time (in seconds) to update from.
+     * @param callback called in case of successful data reception.
+     * @param errorCallback called in case of error.
+     */
+    function updateZwaveDataSince(since, callback, errorCallback) {
+        var time = since;
+        var request = $http({
+            method: "POST",
+            url: cfg.server_url + cfg.update_url + time
+        });
+        request.success(function(data) {
+            time = data.updateTime;
+            $('#update_time_tick').html($filter('getCurrentTime')(time));
+            return callback(data);
+        }).error(function(error) {
+            handleError();
+            if (errorCallback !== undefined) 
+                errorCallback(error);
+        });
     }
 
     /**
@@ -182,6 +210,28 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
         });
 
     }
+
+    /**
+     * Run store api cmd
+     */
+    function store(param, success, error) {
+        var url = cfg.server_url + cfg.store_url + param;
+        var request = $http({
+            method: 'POST',
+            url: url
+        });
+        request.success(function(data) {
+            handleSuccess(data);
+            if (success) 
+                success();
+        }).error(function(err) {
+            handleError();
+            if (error)
+                error(err);
+        });
+
+    }
+
     /**
      * Get device classes from XML file
      */
@@ -300,6 +350,36 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
             handleError();
 
         });
+    }
+
+
+    /**
+     * Gets reorg log from remote text file
+     */
+    function getReorgLog(callback) {
+        return $http({method: 'GET', url: cfg.server_url + cfg.reorg_log_url + '?at=' + (new Date()).getTime()}).success(function(data, status, headers, config) {
+            callback(data);
+        });
+    }
+
+    /**
+     * Put reorg log in remote text file
+     */
+    function putReorgLog(log) {
+        return $.ajax({
+            type: "PUT",
+            dataType: "text",
+            url: cfg.server_url + cfg.reorg_log_url,
+            contentType: "text/plain",
+            data: log
+        });
+    }
+
+    /**
+     * Clear the cached ZWaveData.
+     */
+    function purgeCache() {
+        apiData = undefined;
     }
 
     /**
