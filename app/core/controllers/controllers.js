@@ -1973,7 +1973,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
     };
 });
 // Configuration controller
-appController.controller('ConfigurationController', function($scope, $routeParams, $http, $filter, $location, $cookies, dataService) {
+appController.controller('ConfigurationController', function($scope, $routeParams, $http, $filter, $location, $cookies, dataService,myCache) {
     $scope.devices = [];
     $scope.showDevices = false;
     $scope.ZWaveAPIData;
@@ -2107,25 +2107,21 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         $scope.interviewCommands = interviewCommands(node);
         $scope.interviewCommandsDevice = node.data;
         if (zddXmlFile) {
-            $http.get($scope.cfg.zddx_url + zddXmlFile).then(function(response) {
+            var cachedZddXml = myCache.get(zddXmlFile);
+            // Uncached file
+            if(!cachedZddXml){
+               $http.get($scope.cfg.zddx_url + zddXmlFile).then(function(response) {
                 var x2js = new X2JS();
                 var zddXml = x2js.xml_str2json(response.data);
-                $scope.descriptionCont = descriptionCont(node, nodeId, zddXml, ZWaveAPIData);
-                $scope.configCont = configCont(node, nodeId, zddXml);
-                $scope.wakeupCont = wakeupCont(node, nodeId, ZWaveAPIData);
-                $scope.switchAllCont = switchAllCont(node, nodeId);
-                $scope.protectionCont = protectionCont(node, nodeId);
-                $scope.fwupdateCont = fwupdateCont(node);
-                $scope.assocCont = assocCont(node);
-            });
+                myCache.put(zddXmlFile,zddXml);
+                setCont(node, nodeId, zddXml, ZWaveAPIData);
+            }); 
+            }else{
+                 setCont(node, nodeId, cachedZddXml, ZWaveAPIData);
+            }
+            
         } else {
-            $scope.descriptionCont = descriptionCont(node, nodeId, null, ZWaveAPIData);
-            $scope.configCont = configCont(node, nodeId, null);
-            $scope.wakeupCont = wakeupCont(node, nodeId, ZWaveAPIData);
-            $scope.switchAllCont = switchAllCont(node, nodeId);
-            $scope.protectionCont = protectionCont(node, nodeId);
-            $scope.fwupdateCont = fwupdateCont(node);
-            $scope.assocCont = assocCont(node);
+            setCont(node, nodeId, null, ZWaveAPIData);
         }
         /**
          * Expert commands
@@ -2146,6 +2142,18 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             });
         });
         return;
+    }
+    /**
+     * Set all conts
+     */
+    function setCont(node, nodeId, zddXml, ZWaveAPIData){
+        $scope.descriptionCont = descriptionCont(node, nodeId, zddXml, ZWaveAPIData);
+                $scope.configCont = configCont(node, nodeId, zddXml);
+                $scope.wakeupCont = wakeupCont(node, nodeId, ZWaveAPIData);
+                $scope.switchAllCont = switchAllCont(node, nodeId);
+                $scope.protectionCont = protectionCont(node, nodeId);
+                $scope.fwupdateCont = fwupdateCont(node);
+                $scope.assocCont = assocCont(node);
     }
     /**
      * Device description
