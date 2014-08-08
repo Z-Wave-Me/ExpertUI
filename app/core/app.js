@@ -32,7 +32,7 @@ angApp.config(['$routeProvider',
                 when('/control/dimmer', {
                     templateUrl: 'app/views/controll/dimmer.html'
                 }).
-                when('/controll/sensors', {
+                when('/control/sensors', {
                     templateUrl: 'app/views/controll/sensors.html'
                 }).
                 when('/control/meters', {

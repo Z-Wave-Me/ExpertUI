@@ -35,7 +35,12 @@
                             <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
-                   <th><button class="btn btn-success" data-ng-click="storeAll('all_1')" id="btn_update_all_1">{{ _t('switches_update_all')}}</button>&nbsp;<btn-spinner /></th>
+                   <th>
+                       <button class="btn btn-success" 
+                               data-ng-click="storeAll('all_1');goSpinAll = !goSpinAll" 
+                               id="btn_update_all_1"
+                               >
+                           {{ _t('switches_update_all')}} <i class="fa fa-spinner fa-spin" ng-show="goSpinAll"></i></button></th>
             </tr>
         </thead>
         <tbody>
@@ -48,21 +53,20 @@
                     <td class="row-time is-updated-{{v.isUpdated}}">{{ v.updateTime | isTodayFromUnix }}</td>
                     <td>
                         <button 
-                            data-ng-click="store('#btn_update_' + v.rowId)" 
+                            data-ng-click="store('#btn_update_' + v.rowId);goSpinU = !goSpinU" 
                             data-action="update" 
                             data-store-url="{{ v.urlToStore}}" 
                             class="btn btn-primary btn-spinner" 
-                            id="btn_update_{{ v.rowId}}">{{ _t('update')}}
+                            id="btn_update_{{ v.rowId}}">{{ _t('update')}} <i class="fa fa-spinner fa-spin" ng-show="goSpinU"></i> 
                         </button>
                          <button 
                             ng-if="v.urlToReset"
-                            data-ng-click="store('#btn_reset_' + v.rowId)"
+                            data-ng-click="store('#btn_reset_' + v.rowId);goSpinR = !goSpinR"
                             data-action="reset" 
                             data-store-url="{{ v.urlToReset}}" 
                             class="btn btn-primary btn-spinner" 
-                            id="btn_reset_{{ v.rowId}}">{{ _t('reset')}}
+                            id="btn_reset_{{ v.rowId}}">{{ _t('reset')}} <i class="fa fa-spinner fa-spin" ng-show="goSpinR"></i> 
                         </button>
-                        &nbsp;<btn-spinner />
                    </td>
             </tr>
         </tbody>
