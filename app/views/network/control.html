@@ -16,7 +16,7 @@
                                 ng-click="runCmd('controller.data.secureInclusion=true');
                                             secureInclusion = true"
                                 ng-class="secureInclusion ? 'active' : 'inactive'"
-                                ><i class="fa fa-lock"></i></button>
+                                ><i class="fa fa-lock"></i> {{_t('btn_secure')}}</button>
                             <button 
                                 type="button" 
                                 class="btn btn-primary"
@@ -24,7 +24,7 @@
                                 ng-class="!secureInclusion ? 'active' : 'inactive'"
                                 ng-click="runCmd('controller.data.secureInclusion=false');
                                             secureInclusion = false"
-                                ><i class="fa fa-unlock"></i></button>
+                                ><i class="fa fa-unlock"></i> {{_t('btn_unsecure')}}</button>
                         </div>
                     </div>
                     <p class="input-help">{{_t('nm_learn_mode_you_are_primary_no_sis')}}</p>
@@ -107,44 +107,47 @@
                         <!-- remove_failed_node -->
                         <div class="cfg-block form-inline">
                             <p class="input-help">{{_t('nm_remove_node_war')}}</p>
+                             <select name="remove_failed_node" id="remove_failed_node" class="form-control" ng-model="modelNodeFailed">
+                                <option value="">---</option>
+                                <option ng-repeat="v in failedNodes" value="{{v.id}}">{{v.id}}</option>
+                            </select>
                             <button 
                                 class="btn btn-primary" 
                                 id="btn_remove_failed_mode"
                                 ng-click="showModal('#modal_failed_node', modelNodeFailed)"
                                 ng-disabled="!modelNodeFailed"
                                 >{{_t('nm_remove_failed')}}</button> 
-                            <select name="remove_failed_node" id="remove_failed_node" class="form-control" ng-model="modelNodeFailed">
-                                <option value="">---</option>
-                                <option ng-repeat="v in failedNodes" value="{{v.id}}">{{v.id}}</option>
-                            </select>
+                           
                         </div>
                         <!-- replace_failed_node -->
                         <div class="cfg-block form-inline">
                             <p class="input-help">{{_t('nm_replace_node_war')}}</p>
+                            <select name="replace_failed_node" id="replace_failed_node" class="form-control" ng-model="modelReplaceNode">
+                                <option value="">---</option>
+                                <option ng-repeat="v in replaceNodes" value="{{v.id}}">{{v.id}}</option>
+                            </select>
                             <button 
                                 class="btn btn-primary"
                                 id="btn_replace_failed_node"
                                 ng-disabled="!modelReplaceNode"
                                 ng-click="runCmd(['ReplaceFailedNode(' + modelReplaceNode + ')', 'controller.AddNodeToNetwork(1)'], null, null, {'name': 'remove_option', 'id': '#replace_failed_node', 'value': modelReplaceNode})"
                                 >{{_t('nm_replace_node')}}</button>
-                            <select name="replace_failed_node" id="replace_failed_node" class="form-control" ng-model="modelReplaceNode">
-                                <option value="">---</option>
-                                <option ng-repeat="v in replaceNodes" value="{{v.id}}">{{v.id}}</option>
-                            </select>
+                            
                         </div>
 
                         <!-- mark_battery_failed -->
                         <div class="cfg-block form-inline">
                             <p class="input-help">{{_t('nm_mark_node_war')}}</p>
+                            <select name="mark_battery_failed" id="mark_battery_failed" class="form-control" ng-model="modelBatteryFailed">
+                                <option value="">---</option>
+                                <option ng-repeat="v in failedBatteries" value="{{v.id}}">{{v.id}}</option>
+                            </select>
                             <button 
                                 class="btn btn-primary" 
                                 ng-disabled="!modelBatteryFailed"
                                 ng-click="showModal('#modal_battery_node')"
                                 >{{_t('nm_mark_battery_as_failed')}}</button>
-                            <select name="mark_battery_failed" id="mark_battery_failed" class="form-control" ng-model="modelBatteryFailed">
-                                <option value="">---</option>
-                                <option ng-repeat="v in failedBatteries" value="{{v.id}}">{{v.id}}</option>
-                            </select>
+                            
                         </div>
                     </div>
                     <div>

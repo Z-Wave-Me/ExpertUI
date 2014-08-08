@@ -47,13 +47,6 @@ appController.controller('BaseController', function($scope, $cookies, $filter, c
         $scope.predicate = field;
         $scope.reverse = !$scope.reverse;
     };
-    // Get device name
-//    $scope.loadDeviceConfig = function() {
-//        deviceConfigFactory.get().query(function(data) {
-//            $scope.getDeviceNames = data;
-//        });
-//    };
-//    $scope.loadDeviceConfig();
 });
 
 // Test controller
@@ -101,7 +94,6 @@ appController.controller('TestController', function($scope, $filter, $timeout, $
     $scope.loadData();
 
     function setData(ZWaveAPIData) {
-        //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
@@ -619,7 +611,6 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
      * Set zwave data
      */
     function setData(ZWaveAPIData) {
-        //DataTestFactory.all('all.json').query(function(data) {
         $scope.updateTime = ZWaveAPIData.updateTime;
         $scope.controllerId = ZWaveAPIData.controller.data.nodeId.value;
 
@@ -1706,7 +1697,7 @@ appController.controller('TypeController', function($scope, $filter, dataService
             obj['name'] = $filter('deviceName')(nodeId, node);
             obj['security'] = security;
             obj['ZWavePlusInfo'] = ZWavePlusInfo;
-            obj['sdk'] = sdk;
+            obj['sdk'] = (sdk == '0.0' ? '?' : sdk);
             obj['fromSdk'] = fromSdk;
             obj['appVersion'] = appVersion;
             obj['type'] = deviceType;
@@ -3303,8 +3294,7 @@ appController.controller('ControllController', function($scope, $filter, $upload
         }
         if ('controller.data.lastIncludedDevice' in data) {
             var deviceIncId = data['controller.data.lastIncludedDevice'].value;
-            //device .data.givenNAME:uPDATE
-            //XmlFactory.get(setXml, $scope.cfg.server_url + '/translations/DeviceClasses.xml');
+            
             if (deviceIncId != null) {
 
                 var givenName = 'Device' + '_' + deviceIncId;
@@ -3924,7 +3914,6 @@ appController.controller('CommandsController', function($scope, $location, $cook
     // Load data
     $scope.navigation = function() {
         DataFactory.all('0').query(function(ZWaveAPIData) {
-            //DataTestFactory.all('all.json').query(function(data) {
             var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
             // Loop throught devices
             angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
@@ -3948,7 +3937,7 @@ appController.controller('CommandsController', function($scope, $location, $cook
     };
 });
 // Commands controller
-appController.controller('CommandsDetailController', function($scope, $routeParams, $filter, $location, $cookies, $timeout, DataFactory, DataTestFactory) {
+appController.controller('CommandsDetailController', function($scope, $routeParams, $filter, $location, $cookies, $timeout, DataFactory) {
     $scope.devices = [];
     $scope.ZWaveAPIData;
     $scope.commands = [];
@@ -3960,7 +3949,6 @@ appController.controller('CommandsDetailController', function($scope, $routePara
     // Load navigation
     $scope.navigation = function() {
         DataFactory.all('0').query(function(ZWaveAPIData) {
-            //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
             var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
             // Loop throught devices
             angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
@@ -3989,7 +3977,6 @@ appController.controller('CommandsDetailController', function($scope, $routePara
     // Load data
     $scope.load = function() {
         DataFactory.all('0').query(function(ZWaveAPIData) {
-            //DataTestFactory.all('all.json').query(function(ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
             // Loop throught devices
             var ZWaveAPIData = ZWaveAPIData;

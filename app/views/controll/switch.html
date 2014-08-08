@@ -65,8 +65,8 @@
                     <td><switch-type-icon generic="{{ v.genericType}}" specific="{{ v.specificType}}"></switch-type-icon> {{ v.name}}</td>
             <td class="row-level text-right">
                 <span style="color: {{ v.levelColor}};">{{ v.level}}</span> 
-                <i ng-if="v.levelStatus == 'on'" class="fa fa-check fa-lg" style="color: #3c763d;"></i>
-                <i ng-if="v.levelStatus == 'off'" class="fa fa-exclamation fa-lg" style="color: #a94442;"></i>
+                <i ng-if="v.levelStatus == 'on'" class="fa fa-check fa-lg text-success"></i>
+                <i ng-if="v.levelStatus == 'off'" class="fa text-danger"></i>
             </td>
             <td class="row-time is-updated-{{v.isUpdated}}">{{ v.updateTime | isTodayFromUnix }}</td>
             <td>

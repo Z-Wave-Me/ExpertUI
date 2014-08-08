@@ -136,6 +136,33 @@ border: 1px solid #9fd8ef;
 }
 
 .container {}
+/* Response
+-------------------------------------------------- */
+#respone_container {
+    display: none;
+   
+}
+#respone_container_inner {
+    //display: none;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+}
+.page-load-spinner{
+     z-index: 1000;
+   text-align: center;
+   position: absolute;
+   left: 50%;
+    margin-left: -75px;
+   width: 150px;
+}
+
+.response-message{
+    z-index: 1000;
+   text-align: center;
+   position: absolute;
+   width: 100%;
+}
 
 /* Homepage
 -------------------------------------------------- */

@@ -53,7 +53,7 @@
                                 ng-class="{active: v.level=='255'}"
                                 data-ng-click="store('#btn_lock_' + v.rowId)" 
                                 data-store-url="{{ v.urlToStore}}.Set(255)" 
-                                ><i class="fa fa-lock fa-lg"></i></button>
+                                ><i class="fa fa-lock fa-lg"></i> {{_t('btn_close')}}</button>
                             <button 
                                 type="button" 
                                 class="btn btn-primary btn-unlock"
@@ -61,7 +61,7 @@
                                 ng-class="{active: v.level=='0'}"
                                 data-ng-click="store('#btn_unlock_' + v.rowId)" 
                                 data-store-url="{{ v.urlToStore}}.Set(0)" 
-                                ><i class="fa fa-unlock fa-lg"></i></button>
+                                ><i class="fa fa-unlock fa-lg"></i> {{_t('btn_open')}}</button>
                         </div>
                         
                     </td>

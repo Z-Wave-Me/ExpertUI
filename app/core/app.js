@@ -26,22 +26,22 @@ angApp.config(['$routeProvider',
                     templateUrl: 'app/views/test.html'
                 }).
                 // Controll
-                when('/controll/switch', {
+                when('/control/switch', {
                     templateUrl: 'app/views/controll/switch.html'
                 }).
-                when('/controll/dimmer', {
+                when('/control/dimmer', {
                     templateUrl: 'app/views/controll/dimmer.html'
                 }).
                 when('/controll/sensors', {
                     templateUrl: 'app/views/controll/sensors.html'
                 }).
-                when('/controll/meters', {
+                when('/control/meters', {
                     templateUrl: 'app/views/controll/meters.html'
                 }).
-                when('/controll/thermostat', {
+                when('/control/thermostat', {
                     templateUrl: 'app/views/controll/thermostat.html'
                 }).
-                when('/controll/locks', {
+                when('/control/locks', {
                     templateUrl: 'app/views/controll/locks.html'
                 }).
                 // Device
