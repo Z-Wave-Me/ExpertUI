@@ -391,10 +391,11 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
      * 
      * Handle errors
      */
-    function handleError(error) {
+    function handleError(error,message) {
+        var msg = (message ? message : 'Error handling data from server');
          $('#main_content').hide();
         $('#respone_container').show();
-        $('#respone_container_inner').html('<div class="alert alert-danger alert-dismissable response-message"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <i class="icon-ban-circle"></i> <strong>ERROR!</strong> Response error</div>');
+        $('#respone_container_inner').html('<div class="alert alert-danger alert-dismissable response-message"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <i class="icon-ban-circle"></i> ' + msg +'</div>');
         console.log('Error');
         //$('html').html('');
         return;
