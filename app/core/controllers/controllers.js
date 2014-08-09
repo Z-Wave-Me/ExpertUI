@@ -138,7 +138,7 @@ appController.controller('TestController', function($scope, $filter, $timeout, $
             var $file = $files[i];
             $upload.upload({
                 url: 'upload.php?restore_chip_info=' + chip,
-                //url: 'http://zwave.dyndns.org:8083/ZWaveAPI/Restore?restore_chip_info=' + chip,
+                //url: '/ZWaveAPI/Restore?restore_chip_info=' + chip,
                 fileFormDataName: 'config_backup',
                 file: $file
             }).progress(function(evt) {
