@@ -88,6 +88,9 @@ angApp.filter('toTrusted', ['$sce', function($sce){
  */
 angApp.filter('deviceName', function() {
     return function(deviceId,device) {
+        if (device === undefined) {
+            return deviceId;
+        }
         var name = 'Device ' + '_' + deviceId;
         if(device.data.givenName.value != ''){
              name = device.data.givenName.value;
