@@ -2,52 +2,61 @@
 <div ng-controller="ConfigurationController" ng-show="showContent">
     <div class="page-header">
         <div class="row">
-            <div class="col-md-6">
-                <h1>
-                    <span ng-show="showContent">{{_t('h1_configuration_for')}}  <span id="config_device_name">{{deviceName}}</span> (#{{deviceId}})</span>
-                     <span ng-show="!showContent">{{_t('h1_configuration_no_device')}}</span>
-                </h1>
+            <div class="col-md-12">
+                <div ng-show="showContent">
+                    <h1 class="btn-group">{{_t('h1_configuration_for')}}</h1>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle dropdown-config" data-toggle="dropdown">
+                            <span id="config_device_name">{{deviceName}}</span> (#{{deviceId}}) <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-repeat="v in devices| orderBy:predicate:reverse" ng-show="v.id != deviceId"><a href="#config/configuration/{{v.id}}">{{v.name}}</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <h1 ng-show="!showContent">{{_t('h1_configuration_no_device')}}</h1>
+
             </div>
-            <div class="col-md-6">
+            <!-- <div class="col-md-6">
                 <select name="devices" class="form-control" style="width: 260px;" ng-model="detailId" ng-change="goToDetail(detailId)" >
                     <option value="">---</option>
                     <option ng-repeat="v in devices| orderBy:predicate:reverse" value="{{v.id}}" selected="{{v.selected}}">{{v.name}}</option>
                 </select>
-            </div>
+            </div> -->
         </div>
     </div>
     <div ng-show="!showDevices">
-         <div class="alert alert-info">{{_t('txt_config_select')}}</div>
+        <div class="alert alert-info">{{_t('txt_config_select')}}</div>
     </div>
     <div ng-show="showDevices">
-    <!-- Nav tabs -->
-    <ul class="nav nav-tabs" role="tablist">
-        <li ng-class="activeTab == 'interview' ? 'active' : ''">
-            <a href="" data-target="#device_interview" data-toggle="tab" ng-click="rememberTab('interview')">{{_t('nav_device_interview')}}</a>
-        </li>
-        <li ng-class="activeTab == 'configuration' ? 'active' : ''">
-            <a href="" data-target="#device_configuration" data-toggle="tab" ng-click="rememberTab('configuration')">{{_t('nav_device_configuration')}}</a>
-        </li>
-        <li ng-class="activeTab == 'assoc' ? 'active' : ''">
-            <a href="" data-target="#device_assoc" data-toggle="tab" ng-click="rememberTab('assoc')">{{_t('nav_device_assoc')}}</a>
-        </li>
-        <li ng-class="activeTab == 'commands' ? 'active' : ''">
-            <a href="" data-target="#device_commands" data-toggle="tab" ng-click="rememberTab('commands')">{{_t('nav_expert_commands')}}</a>
-        </li>
-    </ul>
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li ng-class="activeTab == 'interview' ? 'active' : ''">
+                <a href="" data-target="#device_interview" data-toggle="tab" ng-click="rememberTab('interview')">{{_t('nav_device_interview')}}</a>
+            </li>
+            <li ng-class="activeTab == 'configuration' ? 'active' : ''">
+                <a href="" data-target="#device_configuration" data-toggle="tab" ng-click="rememberTab('configuration')">{{_t('nav_device_configuration')}}</a>
+            </li>
+            <li ng-class="activeTab == 'assoc' ? 'active' : ''">
+                <a href="" data-target="#device_assoc" data-toggle="tab" ng-click="rememberTab('assoc')">{{_t('nav_device_assoc')}}</a>
+            </li>
+            <li ng-class="activeTab == 'commands' ? 'active' : ''">
+                <a href="" data-target="#device_commands" data-toggle="tab" ng-click="rememberTab('commands')">{{_t('nav_expert_commands')}}</a>
+            </li>
+        </ul>
 
-    <!-- Tab panes -->
-    <div class="tab-content">
-        <!-- ConfigInterviewController -->
-        <div class="tab-pane" id="device_interview" ng-class="activeTab == 'interview' ? 'active' : ''" ng-include="'app/views/config/interview.html'"></div>
-        <!-- ConfigConfigurationController -->
-        <div class="tab-pane" id="device_configuration" ng-class="activeTab == 'configuration' ? 'active' : ''" ng-include="'app/views/config/configuration.html'"></div>
-        <!-- ConfigAssocController -->
-        <div class="tab-pane" id="device_assoc" ng-class="activeTab == 'assoc' ? 'active' : ''" ng-include="'app/views/config/assoc.html'"></div>
-        <!-- ExpertCommand -->
-        <div class="tab-pane" id="device_commands" ng-class="activeTab == 'commands' ? 'active' : ''" ng-include="'app/views/config/commands.html'"></div>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <!-- ConfigInterviewController -->
+            <div class="tab-pane" id="device_interview" ng-class="activeTab == 'interview' ? 'active' : ''" ng-include="'app/views/config/interview.html'"></div>
+            <!-- ConfigConfigurationController -->
+            <div class="tab-pane" id="device_configuration" ng-class="activeTab == 'configuration' ? 'active' : ''" ng-include="'app/views/config/configuration.html'"></div>
+            <!-- ConfigAssocController -->
+            <div class="tab-pane" id="device_assoc" ng-class="activeTab == 'assoc' ? 'active' : ''" ng-include="'app/views/config/assoc.html'"></div>
+            <!-- ExpertCommand -->
+            <div class="tab-pane" id="device_commands" ng-class="activeTab == 'commands' ? 'active' : ''" ng-include="'app/views/config/commands.html'"></div>
+        </div>
     </div>
-    </div>
-   
+
 
 </div><!-- /ng-controler -->

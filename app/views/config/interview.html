@@ -1,3 +1,18 @@
+<!-- rename_cont -->
+<div class="cfg-block" id="rename_cont">
+    <h4><a href="" ng-click="goRename = !goRename">{{_t('device_rename_tooltip')}} <i class="fa fa-pencil"></i> </a></h4>
+    <div ng-show="goRename">
+        <form name="form_rename" id="form_rename" ng-model="form_rename" class="form form-inline" ng-controller="ConfigStoreController" ng-submit="renameDevice('form_rename')" novalidate>
+            <input name="device_name" id="device_name" type="text" class="form-control" value="{{deviceName}}" />
+            <button
+                type="submit"
+                class="btn btn-primary" 
+                id="btn_update"
+                >{{_t('btn_save_name')}}</button>
+        </form>
+    </div>
+</div>
+
 <div class="cfg-block">
     <!-- <h4><a href="" ng-click="goDescription = !goDescription"><i class="fa fa-caret-down"></i> {{_t('device_description_title')}}</a></h4>  -->
     <div ng-hide="goDescription">
@@ -7,7 +22,7 @@
                     <table class="table table-striped">
                         <tbody>
                             <tr ng-repeat="v in descriptionCont" ng-show="v.val ||  v.val != '' ">
-                                <th>{{_t(v.key)}}</th>
+                                <th style="width: 30%;">{{_t(v.key)}}</th>
                                 <td  id="{{v.key}}" ng-bind-html="v.val | toTrusted"></td>
                             </tr>
 

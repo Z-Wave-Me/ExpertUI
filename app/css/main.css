@@ -81,6 +81,9 @@ h1 {
     color: #2A6496;
     /*    color: #083B84;*/
 }
+h1.btn-group{
+    margin: 0 20px 0 0;
+}
 
 h3 {
     font-size: 20px;
@@ -120,11 +123,20 @@ h3 {
     cursor:help;
 }
 .list-group-item {
-border: 1px solid #9fd8ef;
+    border: 1px solid #9fd8ef;
 }
 
 .tooltip-inner {
-  background-color: #1f355e;
+    background-color: #1f355e;
+}
+
+.dropdown-menu {
+    border-color: #9fd8ef;
+}
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+color: #262626;
+text-decoration: none;
+background-color: #e4f5fc;
 }
 
 /* Page CSS
@@ -136,6 +148,33 @@ border: 1px solid #9fd8ef;
 }
 
 .container {}
+/* Response
+-------------------------------------------------- */
+#respone_container {
+    display: none;
+
+}
+#respone_container_inner {
+    //display: none;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+}
+.page-load-spinner{
+    z-index: 1000;
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    margin-left: -75px;
+    width: 150px;
+}
+
+.response-message{
+    z-index: 1000;
+    text-align: center;
+    position: absolute;
+    width: 100%;
+}
 
 /* Homepage
 -------------------------------------------------- */
@@ -143,10 +182,10 @@ border: 1px solid #9fd8ef;
     max-width: 200px;
 }
 .product-description {
-line-height: 1.6em;
-margin: 30px 0 0 0;
-padding: 20px 0 0 0;
-border-top: 1px solid #9fd8ef;
+    line-height: 1.6em;
+    margin: 30px 0 0 0;
+    padding: 20px 0 0 0;
+    border-top: 1px solid #9fd8ef;
 }
 .product-data-list{
     background-color: #e4f5fc;
@@ -258,16 +297,16 @@ border-top: 1px solid #9fd8ef;
 -------------------------------------------------- */
 .modal-body{
     white-space: -moz-pre-wrap; /* Mozilla */
-white-space: -hp-pre-wrap; /* HP printers */
-white-space: -o-pre-wrap; /* Opera 7 */
-white-space: -pre-wrap; /* Opera 4-6 */
-white-space: pre-wrap; /* CSS 2.1 */
-white-space: pre-line; /* CSS 3 (and 2.1 as well, actually) */
-word-wrap: break-word; /* IE */
-word-break: break-all;
+    white-space: -hp-pre-wrap; /* HP printers */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: pre-wrap; /* CSS 2.1 */
+    white-space: pre-line; /* CSS 3 (and 2.1 as well, actually) */
+    word-wrap: break-word; /* IE */
+    word-break: break-all;
 }
 #modal_queue .modal-dialog {
-  width: 60%;
+    width: 60%;
 }
 
 /* Tabs
@@ -310,8 +349,8 @@ word-break: break-all;
 .panel-highlighted{
     border: 4px solid #7ec8e5;
     -webkit-box-shadow: 0px 0px 6px 0px rgba(50, 50, 50, 0.43);
--moz-box-shadow:    0px 0px 6px 0px rgba(50, 50, 50, 0.43);
-box-shadow:         0px 0px 6px 0px rgba(50, 50, 50, 0.43);
+    -moz-box-shadow:    0px 0px 6px 0px rgba(50, 50, 50, 0.43);
+    box-shadow:         0px 0px 6px 0px rgba(50, 50, 50, 0.43);
 }
 .panel-default > .panel-heading {
     color: #2A6496;
@@ -339,6 +378,22 @@ box-shadow:         0px 0px 6px 0px rgba(50, 50, 50, 0.43);
 .btn-spinner-hidden{
     display: none;
 }
+
+.btn-default, .btn-default.active, .open .dropdown-toggle.btn-default {
+    border-color: #9fd8ef;
+}
+.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open .dropdown-toggle.btn-default {
+    color: #2A6496;
+    background-color: #e4f5fc;
+    border-color: #9fd8ef;
+}
+
+.dropdown-config{
+     font-size: 16px;
+    /*    text-shadow: 3px 1px 2px rgba(150, 150, 150, 1);*/
+    color: #2A6496;
+}
+
 /* Footer
 -------------------------------------------------- */
 #footer {
@@ -455,12 +510,12 @@ box-shadow:         0px 0px 6px 0px rgba(50, 50, 50, 0.43);
 
 /* device present in config file but not present in Z-Wave assoc group */
 .notInZWave {
-	color: #955;
+    color: #955;
 }
 
 /* device present in config file and in Z-Wave assoc group */
 .inZWave {
-	color: #000;
+    color: #000;
 }
 
 

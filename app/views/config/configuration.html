@@ -1,17 +1,4 @@
-<!-- rename_cont -->
-<div class="cfg-block" id="rename_cont">
-    <h4>{{_t('device_rename_tooltip')}}</h4>
-    <div>
-        <form name="form_rename" id="form_rename" ng-model="form_rename" class="form form-inline" ng-controller="ConfigStoreController" ng-submit="renameDevice('form_rename')" novalidate>
-            <input name="device_name" id="device_name" type="text" class="form-control" value="{{deviceName}}" />
-            <button
-                type="submit"
-                class="btn btn-primary" 
-                id="btn_update"
-                >{{_t('btn_save_name')}}</button>
-        </form>
-    </div>
-</div>
+
 <!-- config_cont -->
 <div class="cfg-block" id="config_cont" ng-if="configCont">
     <h4>{{_t('configurations_list')}}</h4>
