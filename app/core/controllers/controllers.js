@@ -320,7 +320,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
 });
 
 // Switch controller
-appController.controller('SwitchController', function($scope, $log, $filter, $timeout, dataService, cfg) {
+appController.controller('SwitchController', function($scope, $log, $filter, dataService, cfg) {
     $scope.switches = [];
     $scope.rangeSlider = [];
     $scope.updateTime = $filter('getTimestamp');
@@ -350,46 +350,27 @@ appController.controller('SwitchController', function($scope, $log, $filter, $ti
 
     // Store data from on remote server
     $scope.store = function(btn) {
-        $(btn).attr('disabled', true);
         var url = $(btn).attr('data-store-url');
-        //DataFactory.runCmd(url).query();
         dataService.runCmd(url);
-        $timeout(function() {
-            $(btn).removeAttr('disabled');
-        }, 1000);
     };
 
     // Store all data on remote server
     $scope.storeAll = function(id) {
-        var btn = '#btn_update_' + id;
-        var spinner = '.fa-spinner';
-        $(btn).attr('disabled', true);
-        $(btn).next(spinner).show();
         angular.forEach($scope.switches, function(v, k) {
-            //DataFactory.store(v.urlToStore).query();
             dataService.runCmd(v.urlToStore);
         });
-        $timeout(function() {
-            $(btn).next(spinner).fadeOut();
-            $(btn).removeAttr('disabled');
-        }, 1000);
     };
 
     // Store data with switch all
     $scope.storeSwitchAll = function(btn) {
-        $(btn).attr('disabled', true);
         var action_url = $(btn).attr('data-store-url');
-        var url;
-        angular.forEach($scope.switches, function(v, k) {
-            url = 'devices[' + v['id'] + '].instances[0].commandClasses[0x27].' + action_url;
+         angular.forEach($scope.switches, function(v, k) {
+            var url = 'devices[' + v['id'] + '].instances[0].commandClasses[0x27].' + action_url;
             if (v.hasSwitchAll) {
-                //DataFactory.store(url).query();
                 dataService.runCmd(url);
             }
         });
-        $timeout(function() {
-            $(btn).removeAttr('disabled');
-        }, 1000);
+        ;
     };
 
     $scope.sliderChange = function(cmd, index) {
@@ -463,13 +444,18 @@ appController.controller('SwitchController', function($scope, $log, $filter, $ti
                 obj['level'] = level.level_cont;
                 obj['levelColor'] = level.level_color;
                 obj['levelStatus'] = level.level_status;
+                obj['levelMax'] = level.level_max;
                 obj['levelVal'] = level.level_val;
-                obj['urlToOff'] = 'devices[' + nodeId + '].instances[0].commandClasses[' + ccId + '].Set(0)';
-                obj['urlToOn'] = 'devices[' + nodeId + '].instances[0].commandClasses[' + ccId + '].Set(255)';
-                obj['urlToFull'] = 'devices[' + nodeId + '].instances[0].commandClasses[' + ccId + '].Set(99)';
-                obj['urlToSlide'] = 'devices[' + nodeId + '].instances[0].commandClasses[' + ccId + ']';
+                obj['urlToOff'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Set(0)';
+                obj['urlToOn'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Set(255)';
+                obj['urlToFull'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Set(99)';
+                obj['urlToSlide'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']';
                 $scope.switches.push(obj);
                 $scope.rangeSlider.push(obj['range_' + nodeId] = level.level_val);
+                // $scope.rangeSlider.push(obj['range_' + nodeId] = level.level_val > 0 ? level.level_val : level.level_max);
+//                if(nodeId == 7){
+//                    console.log(instance.commandClasses[ccId].data.level);
+//                }
                 cnt++;
             });
         });
@@ -513,6 +499,7 @@ appController.controller('SwitchController', function($scope, $log, $filter, $ti
         var level_color;
         var level_status = 'off';
         var level_val = 0;
+        var level_max = 99;
 
         //var level = obj.value;
         var level = (angular.isDefined(obj.value) ? obj.value : null);
@@ -533,6 +520,10 @@ appController.controller('SwitchController', function($scope, $log, $filter, $ti
                 level_status = 'on';
                 level_cont = $scope._t('switched_on');
                 level_color = '#3c763d';
+//                if(level > 99){
+//                    level_max = 255;
+//                }
+                //level_val = level;
                 level_val = (level < 100 ? level : 99);
             } else {
                 level_cont = level.toString() + ((ccId == 0x26) ? '%' : '');
@@ -540,11 +531,12 @@ appController.controller('SwitchController', function($scope, $log, $filter, $ti
                 var lvlc_g = ('00' + parseInt(0x7F + 0x50 * level / 99).toString(16)).slice(-2);
                 level_color = '#' + lvlc_r + lvlc_g + '00';
                 level_status = 'on';
+                // level_val = level;
                 level_val = (level < 100 ? level : 99);
             }
         }
         ;
-        return {"level_cont": level_cont, "level_color": level_color, "level_status": level_status, "level_val": level_val};
+        return {"level_cont": level_cont, "level_color": level_color, "level_status": level_status, "level_val": level_val,"level_max": level_max};
     }
     ;
 });
@@ -552,7 +544,7 @@ appController.controller('SwitchController', function($scope, $log, $filter, $ti
 /**
  * Sensors controller
  */
-appController.controller('SensorsController', function($scope, $filter, $timeout, dataService) {
+appController.controller('SensorsController', function($scope, $filter, dataService) {
     $scope.sensors = [];
     $scope.reset = function() {
         $scope.sensors = angular.copy([]);
@@ -579,31 +571,15 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
     // Store data from on remote server
     $scope.store = function(id) {
         var btn = '#btn_update_' + id;
-        var spinner = '.fa-spinner';
-        $(btn).attr('disabled', true);
-        $(btn).next(spinner).show();
-        //DataFactory.store($(btn).attr('data-store-url')).query();
         dataService.runCmd($(btn).attr('data-store-url'));
-        $timeout(function() {
-            $(btn).next(spinner).fadeOut();
-            $(btn).removeAttr('disabled');
-        }, 1000);
     };
 
     // Store all data on remote server
     $scope.storeAll = function(id) {
         var btn = '#btn_update_' + id;
-        var spinner = '.fa-spinner';
-        $(btn).attr('disabled', true);
-        $(btn).next(spinner).show();
         angular.forEach($scope.sensors, function(v, k) {
-            //DataFactory.store(v.urlToStore).query();
             dataService.runCmd(v.urlToStore);
         });
-        $timeout(function() {
-            $(btn).next(spinner).fadeOut();
-            $(btn).removeAttr('disabled');
-        }, 1000);
     };
 
     /// --- Private functions --- ///
@@ -766,7 +742,7 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
 /**
  * Meters controller
  */
-appController.controller('MetersController', function($scope, $filter, $timeout, dataService) {
+appController.controller('MetersController', function($scope, $filter, dataService) {
     $scope.meters = [];
     $scope.reset = function() {
         $scope.meters = angular.copy([]);
@@ -1080,7 +1056,7 @@ appController.controller('ThermostatController', function($scope, $log, $filter,
     ;
 });
 // Locks controller
-appController.controller('LocksController', function($scope, $filter, $timeout, dataService) {
+appController.controller('LocksController', function($scope, $filter, dataService) {
     $scope.locks = [];
     $scope.reset = function() {
         $scope.locks = angular.copy([]);
@@ -1104,12 +1080,9 @@ appController.controller('LocksController', function($scope, $filter, $timeout, 
     });
     // Store data on remote server
     $scope.store = function(btn) {
-        $(btn).attr('disabled', true);
         var url = $(btn).attr('data-store-url');
         dataService.runCmd(url);
-        $timeout(function() {
-            $(btn).removeAttr('disabled');
-        }, 1000);
+        return;
     };
     /// --- Private functions --- ///
 
@@ -1194,7 +1167,7 @@ appController.controller('LocksController', function($scope, $filter, $timeout, 
 });
 
 // Status controller
-appController.controller('StatusController', function($scope, $filter, $timeout, dataService) {
+appController.controller('StatusController', function($scope, $filter, dataService) {
     $scope.statuses = [];
     $scope.interviewCommandsDevice = [];
     $scope.interviewCommands = [];
@@ -1226,24 +1199,16 @@ appController.controller('StatusController', function($scope, $filter, $timeout,
     });
     // Store data from on remote server
     $scope.store = function(btn) {
-        $(btn).attr('disabled', true);
         var url = $(btn).attr('data-store-url');
         dataService.runCmd(url);
-        $timeout(function() {
-            $(btn).removeAttr('disabled');
-        }, 1000);
     };
     // Store all data on remote server
     $scope.storeAll = function(btn) {
-        $(btn).attr('disabled', true);
         angular.forEach($scope.statuses, function(v, k) {
             if (v.urlToStore) {
                 dataService.runCmd(v.urlToStore);
             }
         });
-        $timeout(function() {
-            $(btn).removeAttr('disabled');
-        }, 1000);
     };
     $scope.showModalInterview = function(target, index, id, name) {
         $scope.deviceInfo = {
@@ -1491,21 +1456,14 @@ appController.controller('BatteryController', function($scope, $filter, $timeout
     });
     // Store single data on remote server
     $scope.store = function(btn) {
-        $(btn).attr('disabled', true);
-        dataService.runCmd($(btn).attr('data-store-url'));
-        $timeout(function() {
-            $(btn).removeAttr('disabled');
-        }, 1000);
+        var url = $(btn).attr('data-store-url');
+        dataService.runCmd(url);
     };
     // Store all data on remote server
     $scope.storeAll = function(btn) {
-        $(btn).attr('disabled', true);
         angular.forEach($scope.battery, function(v, k) {
             dataService.runCmd(v.urlToStore);
         });
-        $timeout(function() {
-            $(btn).removeAttr('disabled');
-        }, 1000);
     };
 
     /// --- Private functions --- ///
@@ -4079,7 +4037,7 @@ appController.controller('CommandModalController', function($scope, $filter) {
                 html += getCmdData(el, '');
                 angular.forEach(el, function(v, k) {
                     if (angular.isObject(v)) {
-                        html += getCmdData(v, ' - ');
+                        html += getCmdData(v, '&nbsp;&nbsp;&nbsp;');
                     }
 
                 });

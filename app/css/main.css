@@ -375,7 +375,7 @@ background-color: #e4f5fc;
 
     border: 1px solid #9fd8ef;
 }
-.btn-spinner-hidden{
+.btn-spinner-hidden,.btn .fa-spin{
     display: none;
 }
 
