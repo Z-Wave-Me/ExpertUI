@@ -7,7 +7,7 @@
                     <h1 class="btn-group">{{_t('h1_configuration_for')}}</h1>
                     <div class="btn-group">
                         <button type="button" class="btn btn-default dropdown-toggle dropdown-config" data-toggle="dropdown">
-                            <span id="config_device_name">{{deviceName}}</span> <span ng-show="showDevices">(#{{deviceId}})</span> <span class="caret"></span>
+                            <span id="config_device_name">{{deviceName}}</span> <span ng-show="deviceId > 0">(#{{deviceId}})</span> <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
                             <li ng-repeat="v in devices| orderBy:predicate:reverse" ng-show="v.id != deviceId"><a href="#config/configuration/{{v.id}}">{{v.name}}</a></li>

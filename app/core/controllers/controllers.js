@@ -2057,8 +2057,10 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     // Load
     if (parseInt($routeParams.nodeId, 10) > 0) {
         $scope.load($routeParams.nodeId);
+         $cookies.configuration_id = $routeParams.nodeId;
     } else {
          $scope.load($scope.detailId);
+          $cookies.configuration_id = $scope.detailId;
         //$scope.redirectToDetail($scope.detailId);
     }
     // Cancel interval on page destroy
