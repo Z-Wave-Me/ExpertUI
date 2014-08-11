@@ -2358,7 +2358,6 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         // Loop throught params
         var parCnt = 0;
         angular.forEach(params, function(conf_html, i) {
-
             if (!angular.isObject(conf_html)) {
                 return;
             }
@@ -2408,6 +2407,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                 case 'rangemapped':
                     var param_struct_arr = [];
                     var conf_param_options = '';
+                    
                     angular.forEach(conf['value'], function(value_html, i) {
                         var value = value_html;
                         var value_from = parseInt(value['_from'], 16);
@@ -2461,13 +2461,15 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                 case 'range':
                     var param_struct_arr = [];
                     var rangeParam = conf['value'];
+                    //console.log(rangeParam);
                     angular.forEach(rangeParam, function(value_html, ri) {
+                        //console.log(ri);
                         var value = value_html;
                         if (ri == 'description') {
                             //console.log(ri);
                             var value_from = parseInt(rangeParam['_from'], 16);
                             var value_to = parseInt(rangeParam['_to'], 16);
-                            //console.log(rangeParam['description']);
+                            
                         } else {
                             var value_from = parseInt(value['_from'], 16);
                             var value_to = parseInt(value['_to'], 16);
@@ -2525,6 +2527,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                             type: {
                                 enumof: param_struct_arr
                             },
+                            hideRadio: false,
                             name: 'input_' + nodeId + '_' + conf_num,
                             description: conf_description,
                             updateTime: updateTime,
@@ -2533,8 +2536,24 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                             confNum: conf_num,
                             confSize: conf_size
                         };
-                    else if (param_struct_arr.length == 1)
-                        conf_method_descr = param_struct_arr[0];
+                    else if (param_struct_arr.length == 1){
+                       
+                        conf_method_descr = {
+                            nodeId: nodeId,
+                            label: 'Nº ' + conf_num + ' - ' + conf_name,
+                            type: {
+                                enumof: param_struct_arr
+                            },
+                            name: 'input_' + nodeId + '_' + conf_num,
+                            hideRadio: true,
+                            description: conf_description,
+                            updateTime: updateTime,
+                            isUpdated: isUpdated,
+                            defaultValue: conf_default_value,
+                            confNum: conf_num,
+                            confSize: conf_size
+                        };
+                    }
                     break;
                 case 'constant':
                     var param_struct_arr = [];

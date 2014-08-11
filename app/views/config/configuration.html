@@ -30,8 +30,8 @@
                 </div>
                 <p class="cfg-info">
                     <span class="is-updated-{{v.isUpdated}}">{{_t('updated')}}: {{v.updateTime}}</span>
-                    <span ng-if="v.defaultValue"> | {{_t('default_value_is')}}: {{v.defaultValue}}</span>
-                    <span ng-if="!v.defaultValue"> | {{_t('param_default_value_undefined')}}</span>
+                    <span ng-if="v.defaultValue > -1"> | {{_t('default_value_is')}}: {{v.defaultValue}}</span>
+                    <span ng-if="v.defaultValue === ''"> | {{_t('param_default_value_undefined')}}</span>
                     <span ng-if="v.description">  | 
                         <a href="" ng-click="goInfo = !goInfo"><i class="fa fa-info-circle fa-lg"></i></a> 
                         <em ng-show="goInfo">{{v.description}}</em>

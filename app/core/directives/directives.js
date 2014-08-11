@@ -201,8 +201,7 @@ angApp.directive('expertCommandInput', function() {
     }
 
     // Get enumerators
-    function getEnum(label, enums, defaultValue,name) {
-        
+    function getEnum(label, enums, defaultValue,name,hideRadio) {
         var input = '';
         if(!enums){
             return;
@@ -228,7 +227,17 @@ angApp.directive('expertCommandInput', function() {
                     var checked = (min == defaultValue ? ' checked="checked"' : '');
                     disabled = '';
                 }
-                input += '<input name="radio_' + inName + '" class="commands-data-chbx" type="radio" value=""' + checked + ' /> ' + title + ' <input type="text" name="radio_' + inName + '_txt" class="form-control commands-data-txt-chbx" value="' + min + '" title=" min: ' + min + ', max: ' + max + '"'+ disabled + ' /><br />';
+                if(hideRadio){
+                    disabled = '';
+                }
+//                input += '<input name="radio_' + inName + '" class="commands-data-chbx" type="radio" value=""' + checked + ' /> ' + title + ' <input type="text" name="radio_' + inName + '_txt" class="form-control commands-data-txt-chbx" value="' + min + '" title=" min: ' + min + ', max: ' + max + '"'+ disabled + ' /><br />'; 
+                if(!hideRadio){
+                    input += '<input name="radio_' + inName + '" class="commands-data-chbx" type="radio" value=""' + checked + ' /> ' + title + ' <input type="text" name="radio_' + inName + '_txt" class="form-control commands-data-txt-chbx" value="' + min + '" title=" min: ' + min + ', max: ' + max + '"'+ disabled + ' /><br />'; 
+                }else{
+                      input += '<input type="text" name="radio_' + inName + '_txt" class="form-control" value="' + min + '" title=" min: ' + min + ', max: ' + max + '" /><br />'; 
+                }
+                
+                
             } else {
                 input = '';
             }
@@ -295,6 +304,7 @@ angApp.directive('expertCommandInput', function() {
             var label = scope.collection.label;
             var type = scope.collection.type;
             var name = scope.collection.name;
+             var hideRadio = scope.collection.hideRadio;
             if (scope.isDropdown) {
                 input = getDropdown(label, type, scope.defaultValue);
                 scope.input = input;
@@ -307,7 +317,7 @@ angApp.directive('expertCommandInput', function() {
                 } else if ('node' in type) {
                     input = getNode(label, scope.getNodeDevices(), 'null',name);
                 } else if ('enumof' in type) {
-                    input = getEnum(label, type, scope.defaultValue,name);
+                    input = getEnum(label, type, scope.defaultValue,name,hideRadio);
                 } else if ('constant' in type) {
                     input = getConstant(label);
                 }else {
