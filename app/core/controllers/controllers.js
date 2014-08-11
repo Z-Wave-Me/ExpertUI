@@ -1696,7 +1696,7 @@ appController.controller('TypeController', function($scope, $filter, dataService
 
 });
 // Assoc controller
-appController.controller('AssocController', function($scope, $log, $filter, $route, $timeout, $http, dataService, cfg) {
+appController.controller('AssocController', function($scope, $log, $filter, $route, $timeout, $http, dataService, myCache, cfg) {
 
     $scope.keys = [];
     $scope.data = {};
@@ -1761,13 +1761,13 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
             if ($scope.removeData.type == 'm') {
                 var instanceId = parseInt($scope.removeData.instanceIds[index]) - 1;
                 // MultiChannelAssociation with instanceId
-                $scope.removeNodes[nodeId] = $filter('getDeviceName')(nodeId, $scope.getDeviceNames);
+                $scope.removeNodes[nodeId] = $filter('deviceName')(nodeId, $scope.ZWaveAPIData.devices[nodeId]);
                 if (!(nodeId in $scope.removeInstances))
                     $scope.removeInstances[nodeId] = {};
                 $scope.removeInstances[nodeId][instanceId] = instanceId + 1;
             } else {
                 // simple Assocation
-                $scope.removeNodes[nodeId] = $filter('getDeviceName')(nodeId, $scope.getDeviceNames);
+                $scope.removeNodes[nodeId] = $filter('deviceName')(nodeId, $scope.ZWaveAPIData.devices[nodeId]);
             }
         });
         $('#modal_remove').modal({});
@@ -1849,13 +1849,13 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                         continue;
                     if ($scope.addData.type == 'm') {
                         // MultiChannelAssociation with instanceId
-                        $scope.addNodes[nodeId] = $filter('getDeviceName')(nodeId, $scope.getDeviceNames);
+                        $scope.addNodes[nodeId] = $filter('deviceName')(nodeId, node);
                         if (!(nodeId in $scope.addInstances))
                             $scope.addInstances[nodeId] = {};
                         $scope.addInstances[nodeId][instanceId] = parseInt(instanceId) + 1;
                     } else {
                         // simple Assocation
-                        $scope.addNodes[nodeId] = $filter('getDeviceName')(nodeId, $scope.getDeviceNames);
+                        $scope.addNodes[nodeId] = $filter('deviceName')(nodeId, node);
                         break; // first instance is enough
                     }
                 }
@@ -1876,9 +1876,23 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
         }
         if (!(zddXmlFile))
             return; // not available
-        $http.get($scope.cfg.zddx_url + zddXmlFile).then(function(response) {
-            var x2js = new X2JS();
-            var zddXml = x2js.xml_str2json(response.data);
+
+        var cachedZddXml = myCache.get(zddXmlFile);
+        if(!cachedZddXml){
+            $http.get($scope.cfg.zddx_url + zddXmlFile).then(function(response) {
+                var x2js = new X2JS();
+                var zddXml = x2js.xml_str2json(response.data);
+                myCache.put(zddXmlFile,zddXml);
+                if (("ZWaveDevice" in zddXml) && ("assocGroups" in zddXml.ZWaveDevice)) {
+                    $scope.zdd[nodeId] = zddXml.ZWaveDevice.assocGroups;
+                    if (nodeId == $scope.deviceId)
+                        $scope.updateData(nodeId);
+                } else {
+                    $scope.zdd[nodeId] = undefined;
+                }
+            });
+        }else{
+            var zddXml = cachedZddXml;
             if (("ZWaveDevice" in zddXml) && ("assocGroups" in zddXml.ZWaveDevice)) {
                 $scope.zdd[nodeId] = zddXml.ZWaveDevice.assocGroups;
                 if (nodeId == $scope.deviceId)
@@ -1886,7 +1900,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
             } else {
                 $scope.zdd[nodeId] = undefined;
             }
-        });
+        } 
     };
     $scope.updateData = function(nodeId) {
         $scope.keys = [];
@@ -1942,7 +1956,6 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                         instanceIds.push(data.nodesInstances.value[i + 1]);
                         persistent.push("inZWave");
                     }
-                    // TODO resolve zddxml-assocGroup label name when available in zddxml
                     $scope.data[key] = {"type": "m", "label": label, "nodeId": nodeId, "instanceId": index, "node": node, "commandClass": "0x8e", "instance": index, "groupId": data.name, "nodeIds": nodeIds, "instanceIds": instanceIds, "persistent": persistent, "update": data.nodesInstances, "max": data.max.value, "remaining": (data.max.value - (data.nodesInstances.value.length / 2))};
                 }
             }
@@ -3440,7 +3453,7 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
                 if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
                     return;
                 $scope.devices.push(nodeId);
-                $scope.nodes[nodeId] = {"label": $filter('getDeviceName')(nodeId, $scope.getDeviceNames), "node": node};
+                $scope.nodes[nodeId] = {"label": $filter('deviceName')(nodeId, node), "node": node};
             });
             // Loop throught devices and gather routesCount and cellState
             angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
@@ -3723,7 +3736,7 @@ appController.controller('ReorganizationController', function($scope, $log, $fil
                 if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
                     return;
                 $scope.devices.push(nodeId);
-                $scope.nodes[nodeId] = {"label": $filter('getDeviceName')(nodeId, $scope.getDeviceNames), "node": node};
+                $scope.nodes[nodeId] = {"label": $filter('deviceName')(nodeId, node), "node": node};
             });
             $scope.reorganizing = false;
         });

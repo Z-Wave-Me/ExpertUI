@@ -20,7 +20,7 @@
                     </td>
                     <td class="association-info"> 
                         <span ng-repeat="a in data[key].nodeIds track by $index">
-                            <a class="btn btn-info btn-lg" title="{{a| getDeviceName:getDeviceNames}} {{data[key].instanceIds[$index]}}" data-toggle="tooltip" data-position="top" tooltip>#{{a}}<span ng_if="data[key].type == 'm'">.{{data[key].instanceIds[$index]}}</span></a> 
+                            <a class="btn btn-info btn-lg" title="{{a| deviceName:data[key].node}} {{data[key].instanceIds[$index]}}" data-toggle="tooltip" data-position="top" tooltip>#{{a}}<span ng_if="data[key].type == 'm'">.{{data[key].instanceIds[$index]}}</span></a> 
                             <br ng_if="$index % 5 == 4"/>
                         </span>
                     </td>
@@ -45,7 +45,7 @@
                 </div>
                 <div class="modal-body" style="white-space: normal;">
                     <div class="form-inline">
-                        {{ _t('assoc_remove_from')}} {{removeData.nodeId| getDeviceName:getDeviceNames}} {{ _t('to_locate')}} <br/>
+                        {{ _t('assoc_remove_from')}} {{removeData.nodeId| deviceName:removeData.node}} {{ _t('to_locate')}} <br/>
                         <div class="form-group">
                             <select ng-model="assocToNode" class="form-control" style="width: 150px;" ng-options="k as v for (k,v) in removeNodes">
                                 <option value="">&lt; {{ _t('assoc_select_to_node')}} &gt;</option>
@@ -75,7 +75,7 @@
                 </div>
                 <div class="modal-body" style="white-space: normal;">
                     <div class="form-inline">
-                        {{ _t('fro')}} {{addData.nodeId| getDeviceName:getDeviceNames}} {{ _t('to_locate')}} <br/>
+                        {{ _t('fro')}} {{addData.nodeId| deviceName:addData.node}} {{ _t('to_locate')}} <br/>
                         <div class="form-group">
                             <select ng-model="assocToNode" class="form-control" style="width: 150px;" ng-options="k as v for (k,v) in addNodes">
                                 <option value="">&lt; {{ _t('assoc_select_to_node')}} &gt;</option>

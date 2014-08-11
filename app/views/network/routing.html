@@ -16,7 +16,7 @@
         <tbody>
             <tr ng-repeat="nodeId in devices">
                 <td>{{nodeId}}</td>
-                <td>{{nodeId| getDeviceName:getDeviceNames}}</td>
+                <td>{{nodeId| deviceName:nodes[nodeId].node}}</td>
                 <td><routing-type-icon node-id="{{ nodeId}}"></routing-type-icon></td>
                 <td ng-repeat="n in devices" class="rtCell"><div id="cell{{nodeId}}-{{n}}" class="{{data[nodeId][n].clazz}}"><span class="info">{{data[nodeId][n].info}}</span></div></td>
                 <td style="text-align: right;"><span id="update{{nodeId}}" class="{{nodes[nodeId].node.data.neighbours| getUpdated}}">{{nodes[nodeId].node.data.neighbours.updateTime| getTime}}</span></td>
