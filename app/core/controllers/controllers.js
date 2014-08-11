@@ -24,9 +24,9 @@ appController.controller('BaseController', function($scope, $cookies, $filter, c
     };
     // Load language files
     $scope.loadLang = function(lang) {
-        // Is lang in language list?
+       // Is lang in language list?
         var lang_file = (cfg.lang_list.indexOf(lang) > -1 ? lang : cfg.lang);
-        langFactory.get(lang_file).query(function(data) {
+         langFactory.get(lang_file).query(function(data) {
             $scope.languages = data;
             return;
         });
@@ -35,6 +35,7 @@ appController.controller('BaseController', function($scope, $cookies, $filter, c
     $scope._t = function(key) {
         return langTransFactory.get(key, $scope.languages);
     };
+    
     // Watch for lang change
     $scope.$watch('lang', function() {
         $('.current-lang').html($scope.lang);
@@ -1999,7 +2000,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     $scope.interviewCommands;
     $scope.assocCont;
     $scope.deviceId = $routeParams.nodeId;
-    $scope.deviceName = '';
+    $scope.deviceName = $scope._t('h1_configuration_no_device');
     $scope.deviceImage = '';
     $scope.commands = [];
     $scope.formFirmware = {
@@ -2039,11 +2040,13 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 
         });
     };
+    
     // Load
     if (parseInt($routeParams.nodeId, 10) > 0) {
         $scope.load($routeParams.nodeId);
     } else {
-        $scope.redirectToDetail($scope.detailId);
+         $scope.load($scope.detailId);
+        //$scope.redirectToDetail($scope.detailId);
     }
     // Cancel interval on page destroy
     $scope.$on('$destroy', function() {
@@ -2082,7 +2085,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
                 return;
             }
-            $scope.showContent = true;
+            
             var node = ZWaveAPIData.devices[nodeId];
             if (nodeId == $routeParams.nodeId) {
                 $scope.deviceName = $filter('deviceName')(nodeId, node);
@@ -2162,8 +2165,8 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         $scope.descriptionCont = descriptionCont(node, nodeId, zddXml, ZWaveAPIData);
         $scope.configCont = configCont(node, nodeId, zddXml);
         $scope.wakeupCont = wakeupCont(node, nodeId, ZWaveAPIData);
-        $scope.switchAllCont = switchAllCont(node, nodeId);
-        $scope.protectionCont = protectionCont(node, nodeId);
+        $scope.switchAllCont = switchAllCont(node, nodeId,ZWaveAPIData);
+        $scope.protectionCont = protectionCont(node, nodeId,ZWaveAPIData);
         $scope.fwupdateCont = fwupdateCont(node);
         $scope.assocCont = assocCont(node);
     }
@@ -2688,7 +2691,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     /**
      * Wakeup cont
      */
-    function wakeupCont(node, nodeId) {
+    function wakeupCont(node, nodeId,ZWaveAPIData) {
         var wakeup_cont = false;
         if (0x84 in node.instances[0].commandClasses) {
             var wakeup_zwave_min = (node.instances[0].commandClasses[0x84].data.version.value == 1) ? 0 : node.instances[0].commandClasses[0x84].data.min.value;
@@ -2702,7 +2705,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             var isUpdated = (uTime > iTime ? true : false);
             if (wakeup_zwave_min !== '' && wakeup_zwave_max !== '') {
                 //var methods = getMethodSpec(ZWaveAPIData, nodeId, instanceId, ccId, null);
-                var gui_descr = getMethodSpec($scope.ZWaveAPIData, nodeId, 0, 0x84, 'Set');
+                var gui_descr = getMethodSpec(ZWaveAPIData, nodeId, 0, 0x84, 'Set');
                 gui_descr[0].type.range.min = parseInt(wakeup_zwave_min, 10);
                 gui_descr[0].type.range.max = parseInt(wakeup_zwave_max, 10);
                 var wakeup_config = null;
@@ -2724,7 +2727,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                     } else {
                         // values in device are missing. Use defaults
                         wakeup_conf_value = parseInt(wakeup_zwave_default_value, 10);
-                        wakeup_conf_nodeId = parseInt($scope.ZWaveAPIData.controller.data.nodeId.value, 10);
+                        wakeup_conf_nodeId = parseInt(ZWaveAPIData.controller.data.nodeId.value, 10);
                     }
                     ;
                 }
@@ -2749,14 +2752,14 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     /**
      * Switch all cont
      */
-    function switchAllCont(node, nodeId) {
+    function switchAllCont(node, nodeId,ZWaveAPIData) {
         var switchall_cont = false;
         if (0x27 in node.instances[0].commandClasses) {
             var uTime = node.instances[0].commandClasses[0x27].data.mode.updateTime;
             var iTime = node.instances[0].commandClasses[0x27].data.mode.invalidateTime;
             var updateTime = $filter('isTodayFromUnix')(uTime);
             var isUpdated = (uTime > iTime ? true : false);
-            var gui_descr = getMethodSpec($scope.ZWaveAPIData, nodeId, 0, 0x27, 'Set');
+            var gui_descr = getMethodSpec(ZWaveAPIData, nodeId, 0, 0x27, 'Set');
             var switchall_conf_value;
             var switchall_conf_el;
             var switchall_config = null;
@@ -2781,14 +2784,14 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     /**
      * Protection cont
      */
-    function protectionCont(node, nodeId) {
+    function protectionCont(node, nodeId,ZWaveAPIData) {
         var protection_cont = false;
         if (0x75 in node.instances[0].commandClasses) {
             var uTime = node.instances[0].commandClasses[0x75].data.state.updateTime;
             var iTime = node.instances[0].commandClasses[0x75].data.state.invalidateTime;
             var updateTime = $filter('isTodayFromUnix')(uTime);
             var isUpdated = (uTime > iTime ? true : false);
-            var gui_descr = getMethodSpec($scope.ZWaveAPIData, nodeId, 0, 0x75, 'Set');
+            var gui_descr = getMethodSpec(ZWaveAPIData, nodeId, 0, 0x75, 'Set');
             var protection_version = node.instances[0].commandClasses[0x75].data.version.value;
             var protection_config = null;
             var protection_conf_value;
