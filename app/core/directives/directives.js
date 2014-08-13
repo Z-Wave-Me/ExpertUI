@@ -223,6 +223,7 @@ angApp.directive('expertCommandInput', function() {
                 var min = type.range.min;
                 var max = type.range.max;
                  var disabled = ' disabled="true"';
+                 var setVal = (defaultValue ? defaultValue : min);
                 if (defaultValue && min) {
                     var checked = (min == defaultValue ? ' checked="checked"' : '');
                     disabled = '';
@@ -232,9 +233,9 @@ angApp.directive('expertCommandInput', function() {
                 }
 //                input += '<input name="radio_' + inName + '" class="commands-data-chbx" type="radio" value=""' + checked + ' /> ' + title + ' <input type="text" name="radio_' + inName + '_txt" class="form-control commands-data-txt-chbx" value="' + min + '" title=" min: ' + min + ', max: ' + max + '"'+ disabled + ' /><br />'; 
                 if(!hideRadio){
-                    input += '<input name="radio_' + inName + '" class="commands-data-chbx" type="radio" value=""' + checked + ' /> ' + title + ' <input type="text" name="radio_' + inName + '_txt" class="form-control commands-data-txt-chbx" value="' + min + '" title=" min: ' + min + ', max: ' + max + '"'+ disabled + ' /><br />'; 
+                    input += '<input name="radio_' + inName + '" class="commands-data-chbx" type="radio" value=""' + checked + ' /> ' + title + ' <input type="text" name="radio_txt_' + inName + '" class="form-control commands-data-txt-chbx" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '"'+ disabled + ' /><br />'; 
                 }else{
-                      input += '<input type="text" name="radio_' + inName + '_txt" class="form-control" value="' + min + '" title=" min: ' + min + ', max: ' + max + '" /><br />'; 
+                      input += '<input type="text" name="radio_txt_' + inName + '" class="form-control" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '" /><br />'; 
                 }
                 
                 
