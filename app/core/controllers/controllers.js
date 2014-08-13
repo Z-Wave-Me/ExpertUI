@@ -1861,6 +1861,29 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
         } 
     };
     $scope.updateData = function(nodeId) {
+        var findLabel = function(nodeId, index) {
+            var label = $scope._t('association_group') + " " + index;
+            if ($scope.zdd[nodeId] && ("assocGroup" in $scope.zdd[nodeId]) && ((index) in $scope.zdd[nodeId].assocGroup)) {
+                // find best matching lang, default english
+                var langs = $scope.zdd[nodeId].assocGroup[index].description.lang;
+                if ($.isArray(langs)) {
+                    angular.forEach(langs, function(lang, index) {
+                        if (("__text" in lang) && (lang["_xml:lang"] == $scope.lang)) {
+                            label = lang.__text;
+                            return false;
+                        }
+                        if (("__text" in lang) && (lang["_xml:lang"] == "en")) {
+                            label = lang.__text;
+                        }
+                    });
+                } else {
+                    if (("__text" in langs)) {
+                        label = langs.__text;
+                    }
+                }
+            }
+            return label;
+        };
         $scope.keys = [];
         $scope.data = {};
         var node = $scope.ZWaveAPIData.devices[nodeId];
@@ -1873,20 +1896,6 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                 return;
             }
 
-            var label = $scope._t('association_group') + " " + index;
-            if ($scope.zdd[nodeId] && ("assocGroup" in $scope.zdd[nodeId]) && ((index) in $scope.zdd[nodeId].assocGroup)) {
-                // find best matching lang, default english
-                var langs = $scope.zdd[nodeId].assocGroup[index].description.lang;
-                angular.forEach(langs, function(lang, index) {
-                    if (("__text" in lang) && (lang["_xml:lang"] == $scope.lang)) {
-                        label = lang.__text;
-                        return false;
-                    }
-                    if (("__text" in lang) && (lang["_xml:lang"] == "en")) {
-                        label = lang.__text;
-                    }
-                });
-            }
             if (0x85 in instance.commandClasses) {
                 for (var group = 0; group < instance.commandClasses[0x85].data.groups.value; group++) {
                     var key = nodeId + "." + index + "." + group;
@@ -1897,7 +1906,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                     for (var i = 0; i < data.nodes.value.length; i++) {
                         persistent.push("inZWave");
                     }
-                    $scope.data[key] = {"type": "s", "label": label, "nodeId": nodeId, "node": node, "commandClass": "0x85", "instance": index, "groupId": data.name, "nodeIds": data.nodes.value, "persistent": persistent, "update": data.nodes, "max": data.max.value, "remaining": (data.max.value - data.nodes.value.length)};
+                    $scope.data[key] = {"type": "s", "label": findLabel(nodeId, group), "nodeId": nodeId, "node": node, "commandClass": "0x85", "instance": index, "groupId": data.name, "nodeIds": data.nodes.value, "persistent": persistent, "update": data.nodes, "max": data.max.value, "remaining": (data.max.value - data.nodes.value.length)};
                 }
             }
             if (0x8e in instance.commandClasses) {
@@ -1914,7 +1923,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                         instanceIds.push(data.nodesInstances.value[i + 1]);
                         persistent.push("inZWave");
                     }
-                    $scope.data[key] = {"type": "m", "label": label, "nodeId": nodeId, "instanceId": index, "node": node, "commandClass": "0x8e", "instance": index, "groupId": data.name, "nodeIds": nodeIds, "instanceIds": instanceIds, "persistent": persistent, "update": data.nodesInstances, "max": data.max.value, "remaining": (data.max.value - (data.nodesInstances.value.length / 2))};
+                    $scope.data[key] = {"type": "m", "label": findLabel(nodeId, group), "nodeId": nodeId, "instanceId": index, "node": node, "commandClass": "0x8e", "instance": index, "groupId": data.name, "nodeIds": nodeIds, "instanceIds": instanceIds, "persistent": persistent, "update": data.nodesInstances, "max": data.max.value, "remaining": (data.max.value - (data.nodesInstances.value.length / 2))};
                 }
             }
         });
