@@ -33,26 +33,26 @@
                     </th>
                     <th>
                         <button 
-                            class="btn btn-primary" 
+                            class="btn btn-primary spin-true" 
                             data-ng-click="storeAll('all_1')" 
                             id="btn_update_all_1"
-                            >{{ _t('switches_update_all')}}
-                        </button>&nbsp;<btn-spinner></btn-spinner>
+                            >{{ _t('switches_update_all')}} <i class="fa fa-spinner fa-spin"></i>
+                        </button>
             </th>
             <th>
             <div class="btn-group">
                 <button 
-                    class="btn btn-info"
+                    class="btn btn-info spin-true"
                     data-store-url="SetOff()" 
                     data-ng-click="storeSwitchAll('#btn_all_of')"
                     id="btn_all_of"
-                    >{{ _t('btn_all_off')}}</button>
+                    >{{ _t('btn_all_off')}}  <i class="fa fa-spinner fa-spin"></i></button>
                 <button 
-                    class="btn btn-primary"
+                    class="btn btn-primary spin-true"
                     data-store-url="SetOn()" 
                     data-ng-click="storeSwitchAll('#btn_all_on')"
                     id="btn_all_on"
-                    >{{ _t('btn_all_on')}}</button>
+                    >{{ _t('btn_all_on')}} <i class="fa fa-spinner fa-spin"></i></button>
             </div>
             </th>
             <th style="width: 20%;">&nbsp;</th>
@@ -65,8 +65,8 @@
                     <td><switch-type-icon generic="{{ v.genericType}}" specific="{{ v.specificType}}"></switch-type-icon> {{ v.name}}</td>
             <td class="row-level text-right">
                 <span style="color: {{ v.levelColor}};">{{ v.level}}</span> 
-                <i ng-if="v.levelStatus == 'on'" class="fa fa-check fa-lg" style="color: #3c763d;"></i>
-                <i ng-if="v.levelStatus == 'off'" class="fa fa-exclamation fa-lg" style="color: #a94442;"></i>
+                <i ng-if="v.levelStatus == 'on'" class="fa fa-check fa-lg text-success"></i>
+                <i ng-if="v.levelStatus == 'off'" class="fa text-danger"></i>
             </td>
             <td class="row-time is-updated-{{v.isUpdated}}">{{ v.updateTime | isTodayFromUnix }}</td>
             <td>
@@ -76,10 +76,9 @@
                 <button 
                     data-ng-click="store('#btn_update_'+ v.rowId)" 
                     data-store-url="{{ v.urlToStore}}" 
-                    class="btn btn-primary btn-spinner" 
+                    class="btn btn-primary spin-true" 
                     id="btn_update_{{ v.rowId}}"
-                    >{{ _t('update')}}</button>
-                &nbsp;<btn-spinner></btn-spinner>
+                    >{{ _t('update')}} <i class="fa fa-spinner fa-spin"></i> </button>
             </td>
             <td ng-switch on="v.deviceType">
                 <div ng-switch-when="multilevel">
@@ -126,7 +125,7 @@
                 <div ng-switch-default>&nbsp;</div>
             </td>
             <td ng-switch on="v.deviceType">
-                <div  ng-switch-when="multilevel" id="range_slider_{{$index}}" class="app-range-slider" range-slider min="0" max="99" model-max="rangeSlider[$index]" pin-handle="min" on-handle-up="sliderChange(v.urlToSlide,$index)"></div>
+                <div  ng-switch-when="multilevel" id="range_slider_{{$index}}" class="app-range-slider" range-slider min="0" max="v.levelMax" model-max="rangeSlider[$index]" pin-handle="min" on-handle-up="sliderChange(v.urlToSlide,$index)"></div>
                 <div ng-switch-default>&nbsp;</div>
             </td>
             </tr>

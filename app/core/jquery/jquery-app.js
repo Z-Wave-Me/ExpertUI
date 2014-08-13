@@ -7,11 +7,14 @@
 $(function() {
      /*** Expert commands **/
     // Set/Remove disabled on next text input
-    $(document).on('click', '.commands-data-chbx', function() {
-        $('.commands-data-txt-chbx').attr('disabled',true);
-       $(this).next('input.commands-data-txt-chbx').attr('disabled',false);
-       //$(this).attr('checked') ? alert('Checked') : alert('Unchecked');
-        return;
+    $(document).on('click', '.form_commands .commands-data-chbx,#form_config .commands-data-chbx', function() {
+       $(this).parent('.form-group').find('.commands-data-txt-chbx').attr('disabled',true);
+        $(this).next('input.commands-data-txt-chbx').attr('disabled',false);return;
+    });
+    
+     /*** Spinner **/
+    $(document).on('click', '.spin-true', function() {
+       $(this).find('.fa-spin').show();
     });
     /*** Lock **/
     // Change status for lock buttons

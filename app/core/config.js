@@ -26,6 +26,7 @@ var config_data = {
         'zddx_url': '/ZDDX/', // Url for zddx xml files
         'notes_url': '/config/notes.log', // Url for store notes data
         'lang_dir': 'app/core/lang/', // Language directory
+        'lang': 'en', // Default language
         'lang_list': ["en", "de", "fr", "es", "ru"], // List of languages
         'thermostat_range': {// Min and max thermostat range
             "min": "0",

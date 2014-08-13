@@ -26,7 +26,7 @@ appFactory.config(function($httpProvider) {
 appFactory.factory('myHttpInterceptor', function($q, $window) {
     return function(promise) {
         return promise.then(function(response) {
-            $('#respone_container').hide();
+            //$('#respone_container').hide();
             return response;
         }, function(response) {
             //$('#respone_container').html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <i class="icon-ban-circle"></i> <strong>ERROR!</strong> Response error</div>').show();
@@ -78,20 +78,26 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
      * Gets all of the data in the remote collection.
      */
     function getZwaveData(callback) {
+        var time = Math.round(+new Date() / 1000);
         if (apiData) {
             console.log('CACHED');
             return callback(apiData);
         }
         else {
+            
+            pageLoader();
             console.log('NOOOOT CACHED');
             var request = $http({
                 method: "POST",
-                url: cfg.server_url + cfg.update_url + "0"
+                url: cfg.server_url +  cfg.update_url + "0"
             });
             request.success(function(data) {
+                $('#update_time_tick').html($filter('getCurrentTime')(time));
                 apiData = data;
+                pageLoader(true);
                 return callback(data);
             }).error(function() {
+                pageLoader(true);
                 handleError();
 
             });
@@ -106,7 +112,6 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
         var refresh = function() {
             var request = $http({
                 method: "POST",
-                //url: "storage/updated.json"
                 url: cfg.server_url + cfg.update_url + time
             });
             request.success(function(data) {
@@ -139,7 +144,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
             return callback(data);
         }).error(function(error) {
             handleError();
-            if (errorCallback !== undefined) 
+            if (errorCallback !== undefined)
                 errorCallback(error);
         });
     }
@@ -170,7 +175,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
                 });
                 result = {
                     "joined": apiData,
-                     "update": data
+                    "update": data
                 };
                 return callback(result);
             }).error(function() {
@@ -203,8 +208,10 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
             url: url
         });
         request.success(function(data) {
+            $('button .fa-spin').fadeOut(1000);
             handleSuccess(data);
         }).error(function() {
+            $('button .fa-spin').fadeOut(1000);
             handleError();
 
         });
@@ -222,7 +229,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
         });
         request.success(function(data) {
             handleSuccess(data);
-            if (success) 
+            if (success)
                 success();
         }).error(function(err) {
             handleError();
@@ -386,7 +393,11 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
      * 
      * Handle errors
      */
-    function handleError(error) {
+    function handleError(error,message) {
+        var msg = (message ? message : 'Error handling data from server');
+         $('#main_content').hide();
+        $('#respone_container').show();
+        $('#respone_container_inner').html('<div class="alert alert-danger alert-dismissable response-message"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <i class="icon-ban-circle"></i> ' + msg +'</div>');
         console.log('Error');
         //$('html').html('');
         return;
@@ -408,6 +419,22 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
      */
     function handleSuccess(response) {
         console.log('Success');
+        return;
+
+    }
+
+    /**
+     * Show / Hide page loader
+     */
+    function pageLoader(hide) {
+        if (hide) {
+            $('#respone_container').hide();
+            $('#main_content').show();
+            return;
+        }
+        $('#main_content').hide();
+        $('#respone_container').show();
+        $('#respone_container_inner').html('<div class="alert alert-warning page-load-spinner"><i class="fa fa-spinner fa-lg fa-spin"></i><br /> Loading data....</div>');
         return;
 
     }
@@ -494,54 +521,6 @@ appFactory.factory('DataFactory', function($resource, $http, cfg) {
     };
 });
 
-// Get a complete JSON
-appFactory.factory('DataTestFactory', function($resource, cfg) {
-    return {
-        all: function(param) {
-            return $resource('storage/demo/' + param, {}, {query: {method: 'GET', params: {}, isArray: false}});
-        }
-    };
-});
-
-// Get a complete JSON
-appFactory.factory('DataUpdateFactory', function($resource, cfg) {
-    return {
-        all: function(param) {
-            return $resource(cfg.server_url + cfg.store_url + param, {}, {query: {method: 'POST', params: {}}});
-        }
-    };
-});
-
-// Get a devices JSON
-appFactory.factory('FirmwareFactory', function($resource) {
-    return {
-        all: $resource('storage/demo/devices.json', {}, {
-            query: {method: 'GET', params: {}, isArray: true}
-        })
-    };
-});
-// JSON from XML
-appFactory.factory('XmlFactory', ['$http', function($http) {
-        return {
-            get: function(callback, xmlSource) {
-                $http.get(xmlSource, {transformResponse: function(data) {
-                        // convert the data to JSON and provide
-                        // it to the success function below
-                        var x2js = new X2JS();
-                        var json = x2js.xml_str2json(data);
-                        return json;
-                    }
-                }
-                ).
-                        success(function(data, status) {
-                            // send the converted data back
-                            // to the callback function
-                            callback(data);
-                        });
-            }
-        };
-    }]);
-
 // Get language dataas object
 appFactory.factory('langFactory', function($resource, cfg) {
     return {
@@ -565,19 +544,6 @@ appFactory.factory('langTransFactory', function() {
                 }
             }
             return key;
-        }
-    };
-});
-
-// Get language dataas object
-appFactory.factory('deviceConfigFactory', function($resource, cfg) {
-    return {
-        get: function() {
-            return $resource('storage/devices.json', {}, {query: {
-                    method: 'GET',
-                    params: {},
-                    isArray: true
-                }});
         }
     };
 });

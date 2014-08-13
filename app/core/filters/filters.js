@@ -89,6 +89,9 @@ angApp.filter('toTrusted', ['$sce', function($sce){
 angApp.filter('deviceName', function() {
     return function(deviceId,device) {
         var name = 'Device ' + '_' + deviceId;
+        if (device === undefined) {
+            return name;
+        }
         if(device.data.givenName.value != ''){
              name = device.data.givenName.value;
         }
@@ -388,7 +391,8 @@ angApp.filter('getRoutesCount', function($filter) {
  */
 angApp.filter('securityIcon', function() {
     return function(input) {
-        var icon = 'fa fa-minus';
+        //var icon = 'fa fa-minus';
+        var icon = '&nbsp';
         if(input === false){
             icon = 'fa fa-check fa-lg text-danger';
         }
@@ -404,7 +408,8 @@ angApp.filter('securityIcon', function() {
  */
 angApp.filter('zWavePlusIcon', function() {
     return function(input) {
-        var icon = 'fa fa-minus';
+        //var icon = 'fa fa-minus';
+        var icon = '&nbsp';
         if(input === true){
             icon = 'fa fa-plus fa-lg text-success';
         }
