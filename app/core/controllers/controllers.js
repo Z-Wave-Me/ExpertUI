@@ -1862,7 +1862,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
     };
     $scope.updateData = function(nodeId) {
         var findLabel = function(nodeId, index) {
-            var label = $scope._t('association_group') + " " + index;
+            var label = $scope._t('association_group') + " " + (index + 1);
             if ($scope.zdd[nodeId] && ("assocGroup" in $scope.zdd[nodeId]) && ((index) in $scope.zdd[nodeId].assocGroup)) {
                 // find best matching lang, default english
                 var langs = $scope.zdd[nodeId].assocGroup[index].description.lang;
