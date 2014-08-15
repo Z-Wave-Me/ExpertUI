@@ -1766,7 +1766,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
         if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
             return;
         var index = $scope.removeData.instance;
-        var group = parseint($scope.removeData.groupId);
+        var group = parseInt($scope.removeData.groupId);
         if ($scope.assocToInstance == null) {
                 $scope.updates.push("devices." + nodeId + ".instances." + index + ".commandClasses." + (0x85) + ".data." + group);
                 dataService.runCmd('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x85].Remove(' + params + ')');
@@ -1978,7 +1978,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                                 persistent.push("inZWave");
                                 tooltips.push($filter('deviceName')(targetNodeId, $scope.ZWaveAPIData.devices[targetNodeId]));
                             } else {
-                                persistent.push("notInZWave");
+                                persistent.push("dissapeared");
                                 tooltips.push($scope._t('device_disappeared'));
                             }
                         }
