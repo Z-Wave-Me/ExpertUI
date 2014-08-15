@@ -2720,6 +2720,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                         confNum: conf_num,
                         confSize: conf_size
                     };
+                    //console.log(param_struct_arr);
                     break;
                 case 'bitset':
                     var param_struct_arr = [];
@@ -3212,14 +3213,12 @@ appController.controller('ControllController', function($scope, $filter, $upload
      */
     $scope.load = function() {
         dataService.getZwaveData(function(ZWaveAPIData) {
-            dataService.getZwaveData(function(ZWaveAPIData) {
                 setData(ZWaveAPIData);
                 dataService.joinedZwaveData(function(data) {
                     $scope.reset();
                     setData(data.joined);
                     refresh(data.update);
                 });
-            });
         });
     };
     $scope.load();
