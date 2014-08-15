@@ -20,7 +20,7 @@
                     </td>
                     <td class="association-info"> 
                         <span ng-repeat="a in data[key].nodeIds track by $index">
-                            <a class="btn btn-info btn-lg" title="{{a| deviceName:data[key].node}} {{data[key].instanceIds[$index]}}" data-toggle="tooltip" data-position="top" tooltip>#{{a}}<span ng_if="data[key].type == 'm'">.{{data[key].instanceIds[$index]}}</span></a> 
+                            <a class="btn btn-info btn-lg" title="{{data[key].tooltips[$index]}}" data-toggle="tooltip" data-position="top" tooltip>#{{a}}<span ng_if="data[key].instanceIds[$index] != null">.{{data[key].instanceIds[$index]}}</span></a> 
                             <br ng_if="$index % 5 == 4"/>
                         </span>
                     </td>
@@ -51,7 +51,7 @@
                                 <option value="">&lt; {{ _t('assoc_select_to_node')}} &gt;</option>
                             </select>
                         </div>
-                        <div class="form-group" ng-show="removeData.type == 'm'">
+                        <div class="form-group" ng-show="removeInstances[assocToNode] != undefined">
                             <select ng-model="assocToInstance" class="form-control" style="width: 150px;" ng-options="k as v for (k,v) in removeInstances[assocToNode]">
                                 <option value="">&lt; {{ _t('assoc_select_to_instance')}} &gt;</option>
                             </select>
@@ -81,7 +81,7 @@
                                 <option value="">&lt; {{ _t('assoc_select_to_node')}} &gt;</option>
                             </select>
                         </div>
-                        <div class="form-group" ng-show="addData.type == 'm'">
+                        <div class="form-group" ng-show="addInstances[assocToNode] != undefined">
                             <select ng-model="assocToInstance" class="form-control" style="width: 150px;" ng-options="k as v for (k,v) in addInstances[assocToNode]">
                                 <option value="">&lt; {{ _t('assoc_select_to_instance')}} &gt;</option>
                             </select>
@@ -90,7 +90,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">{{ _t('dialog_abort')}}</button>
-                    <button class="btn btn-primary update" data-ng-click="add()" ng-disabled="assocToNode == null || (addData.type == 'm' && assocToInstance == null)">{{ _t('dialog_add')}}</button>
+                    <button class="btn btn-primary update" data-ng-click="add()" ng-disabled="assocToNode == null || ((addInstances[assocToNode] != undefined) && assocToInstance == null)">{{ _t('dialog_add')}}</button>
                 </div>
             </div>
         </div>

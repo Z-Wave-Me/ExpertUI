@@ -57,6 +57,8 @@ angApp.filter('getTime', function($filter) {
  */
 angApp.filter('getUpdated', function() {
     return function(data) {
+        if (data === undefined)
+            return '';
         return ((data.updateTime > data.invalidateTime) ?'':'red');
     };
 });
