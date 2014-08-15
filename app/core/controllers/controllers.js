@@ -1683,6 +1683,9 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                 dataService.purgeCache();
                 $scope.load($scope.lang);
                 spinner.fadeOut();
+            } else if (since + cfg.route_update_timeout/1000 < (new Date()).getTime()/1000) {
+                console.log("update timed out");
+                spinner.fadeOut();
             } else {
                 window.setTimeout(pollForUpdate, cfg.interval, since, remaining);
                 if (hasUpdates) {
@@ -1759,10 +1762,10 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
         if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
             return;
         var index = $scope.removeData.instance;
-        var group = parseint($scope.removeData.groupId);
+        var group = parseInt($scope.removeData.groupId);
         if ($scope.assocToInstance == null) {
                 $scope.updates.push("devices." + nodeId + ".instances." + index + ".commandClasses." + (0x85) + ".data." + group);
-                dataService.runCmd('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x85].Remove(' + params + ')');
+                $scope.applyQueue.push('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x85].Remove(' + params + ')');
         } else {
                 $scope.updates.push("devices." + nodeId + ".instances." + index + ".commandClasses." + (0x8e) + ".data." + group);
                 $scope.applyQueue.push('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x8e].Remove(' + params + ')');
@@ -1804,7 +1807,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
         var group = parseInt($scope.addData.groupId);
         if ($scope.assocToInstance == null) {
                 $scope.updates.push("devices." + nodeId + ".instances." + index + ".commandClasses." + (0x85) + ".data." + group);
-                dataService.runCmd('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x85].Set(' + params + ')');
+                $scope.applyQueue.push('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x85].Set(' + params + ')');
         } else {
                 $scope.updates.push("devices." + nodeId + ".instances." + index + ".commandClasses." + (0x8e) + ".data." + group);
                 $scope.applyQueue.push('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x8e].Set(' + params + ')');
@@ -1847,7 +1850,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                     if (contained)
                         continue;
                     if (0 in node.instances) {
-                        if (0x8e in node.instances[0].commandClasses) {
+                        if ((0x8e in $scope.addData.node.instances[0].commandClasses) && (0x8e in node.instances[0].commandClasses)) {
                             // MultiChannelAssociation with instanceId
                             $scope.addNodes[nodeId] = $filter('deviceName')(nodeId, node);
                             if (!(nodeId in $scope.addInstances))
@@ -1971,7 +1974,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                                 persistent.push("inZWave");
                                 tooltips.push($filter('deviceName')(targetNodeId, $scope.ZWaveAPIData.devices[targetNodeId]));
                             } else {
-                                persistent.push("notInZWave");
+                                persistent.push("dissapeared");
                                 tooltips.push($scope._t('device_disappeared'));
                             }
                         }
@@ -2000,7 +2003,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
     };
     // Load data
     $scope.load = function(lang) {
-        dataService.getZwaveData(function(ZWaveAPIData) {
+        dataService.getZwaveDataQuietly(function(ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
             // Gather associations
             var nodeId = $scope.deviceId;

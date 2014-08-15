@@ -508,6 +508,11 @@ background-color: #e4f5fc;
     padding: 0px 6px;
 }
 
+/* device not present in config file and not present in Z-Wave assoc group */
+.dissapeared {
+    color: #911;
+}
+
 /* device present in config file but not present in Z-Wave assoc group */
 .notInZWave {
     color: #955;
