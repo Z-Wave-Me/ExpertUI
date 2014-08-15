@@ -78,17 +78,6 @@ appController.controller('TestController', function($scope, $filter, $timeout, $
                 $scope.from = "Update";
                 $scope.ZWaveAPIData = ZWaveAPIData;
                 setData(ZWaveAPIData);
-//                angular.forEach(data, function (obj,path) {
-//                     
-//			var pobj = ZWaveAPIData;
-//			var pe_arr = path.split('.');
-//			for (var pe in pe_arr.slice(0, -1)){
-//                            pobj = pobj[pe_arr[pe]];
-//                        }
-//			pobj[pe_arr.slice(-1)] = obj;
-//			 //console.log(pobj);
-//			//$.triggerPath.update(path);
-//		});
             });
         });
     };
@@ -161,6 +150,12 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
     $scope.notes = [];
     $scope.notesData = '';
     $scope.updateTime = $filter('getTimestamp');
+    
+    $scope.reset = function() {
+        $scope.failedDevices = angular.copy([]);
+        $scope.lowBatteryDevices = angular.copy([]);
+        $scope.notInterviewDevices = angular.copy([]);
+    };
 
 
     /**
@@ -183,18 +178,16 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
             batteryDevices(ZWaveAPIData);
             $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
             notInterviewDevices(ZWaveAPIData);
+            dataService.joinedZwaveData(function(data) {
+                $scope.reset();
+                countDevices(data.joined);
+                batteryDevices(data.joined);
+                $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
+                notInterviewDevices(data.joined);
+            });
         });
     };
     $scope.loadData();
-
-    // Refresh data
-    $scope.refresh = function() {
-        dataService.updateZwaveData(function(data) {
-            console.log(data);
-
-        });
-    };
-    $scope.refresh
 
     // Cancel interval on page destroy
     $scope.$on('$destroy', function() {
@@ -2392,15 +2385,15 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             if (conf['_default'] !== undefined) {
                 conf_default = parseInt(conf['_default'], 16);
             }
-           
+
             // get value from the Z-Wave data
             var config_zwave_value = null;
-            if (node.instances[0].commandClasses[0x70].data[conf_num] != null && node.instances[0].commandClasses[0x70].data[conf_num].val.value !== ""){
-                 config_zwave_value = node.instances[0].commandClasses[0x70].data[conf_num].val.value;
-                 conf_default = config_zwave_value;
-                 
+            if (node.instances[0].commandClasses[0x70].data[conf_num] != null && node.instances[0].commandClasses[0x70].data[conf_num].val.value !== "") {
+                config_zwave_value = node.instances[0].commandClasses[0x70].data[conf_num].val.value;
+                conf_default = config_zwave_value;
+
             }
-           
+
             var isUpdated = true;
             var updateTime = '';
             if (angular.isDefined(node.instances[0].commandClasses[0x70].data[conf_num])) {
@@ -2502,11 +2495,11 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                                 value_description = value.lang[langId].__text;
                             }
                         }
-                        
+
                         if (conf_default !== null)
                             conf_default_value = conf_default;
-                        
-                         
+
+
                         if (value_from != value_to) {
                             if (value_description != '') {
                                 var rangeVal = {
@@ -2533,7 +2526,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                             });
                         }
                     });
-                   
+
                     if (param_struct_arr.length > 1)
                         conf_method_descr = {
                             nodeId: nodeId,
@@ -2568,7 +2561,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                             confSize: conf_size
                         };
                     }
-                     
+
                     break;
                 case 'constant':
                     var param_struct_arr = [];
@@ -2692,7 +2685,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             config_cont.push(conf_method_descr);
             parCnt++;
         });
-        
+
         return config_cont;
     }
 
@@ -2904,7 +2897,7 @@ appController.controller('ConfigStoreController', function($scope, dataService) 
         var deviceId = $scope.deviceId;
         var givenName = $('#' + form + ' #device_name').val();
         var cmd = 'devices[' + deviceId + '].data.givenName.value=\'' + givenName + '\'';
-         dataService.runCmd(cmd);
+        dataService.runCmd(cmd);
         $('#config_device_name').html(givenName);
         $('#device_node_name').html(givenName);
         return;
@@ -2930,7 +2923,7 @@ appController.controller('ConfigStoreController', function($scope, dataService) 
         angular.forEach(cfg, function(v, k) {
             if (v.confNum) {
                 var request = cmd + '(' + v.confNum + ')';
-                 dataService.runCmd(request);
+                dataService.runCmd(request);
             }
         });
         return;
@@ -2951,7 +2944,7 @@ appController.controller('ConfigStoreController', function($scope, dataService) 
 
         });
         var request = cmd + '(' + dataJoined.join() + ')';
-         dataService.runCmd(request);
+        dataService.runCmd(request);
         return;
     };
     /**
@@ -2971,7 +2964,7 @@ appController.controller('ConfigStoreController', function($scope, dataService) 
             }
 
         });
-        
+
         //console.log(cfg);
         angular.forEach(dataValues, function(n, nk) {
             var lastNum = n.name.match(/\d+$/);
@@ -3012,7 +3005,7 @@ appController.controller('ConfigStoreController', function($scope, dataService) 
 
         });
         var request = cmd + '(' + dataJoined.join() + ')';
-         dataService.runCmd(request);
+        dataService.runCmd(request);
         return;
     };
     /**
