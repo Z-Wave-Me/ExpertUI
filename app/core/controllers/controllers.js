@@ -2053,6 +2053,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     $scope.deviceName = $scope._t('h1_configuration_no_device');
     $scope.deviceImage = '';
     $scope.commands = [];
+    $scope.refresh = false;
     $scope.formFirmware = {
         fw_url: "",
         fw_target: ""
@@ -2060,6 +2061,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     $scope.reset = function() {
         $scope.devices = angular.copy([]);
     };
+    
     // Remember device id
     $scope.detailId = (angular.isDefined($cookies.configuration_id) ? $cookies.configuration_id : 0);
     // Redirect to detail page
@@ -2068,42 +2070,71 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             $location.path('/config/configuration/' + detailId);
         }
     };
+    
+     // Remember active tab
     $scope.rememberTab = function(tabId) {
+        if(tabId == 'interview'){
+             $scope.refresh = true; 
+        }else{
+           $scope.refresh = false; 
+           
+        }
         $cookies.tab_config = tabId;
     };
-    // Remember active tab
-    $scope.activeTab = (angular.isDefined($cookies.tab_config) ? $cookies.tab_config : 'interview');
+    // Get active tab
+    $scope.getActiveTab = function() {
+        var activeTab = (angular.isDefined($cookies.tab_config) ? $cookies.tab_config : 'interview');
+//        if(activeTab == 'interview'){
+//             $scope.refresh = true; 
+//        }else{
+//            $scope.refresh = false; 
+//        }
+        $scope.activeTab = activeTab;
+    };
+    $scope.getActiveTab();
+   
 
     // Load data
-    $scope.load = function(nodeId) {
+    $scope.load = function(nodeId, refresh) {
         dataService.getZwaveData(function(ZWaveAPIData) {
             $scope.deviceId = nodeId;
             setNavigation(ZWaveAPIData);
             setData(ZWaveAPIData, nodeId);
             $scope.ZWaveAPIData = ZWaveAPIData;
-            dataService.joinedZwaveData(function(data) {
+            if(refresh){
+                dataService.joinedZwaveData(function(data) {
                 //$scope.reset();
                 setData(data.joined);
                 //setNavigation(data.joined);
                 setData(data.joined, nodeId);
                 $scope.ZWaveAPIData = ZWaveAPIData;
             });
-
+            }
         });
     };
 
     // Load
     if (parseInt($routeParams.nodeId, 10) > 0) {
-        $scope.load($routeParams.nodeId);
+        $scope.load($routeParams.nodeId,$scope.refresh);
         $cookies.configuration_id = $routeParams.nodeId;
     } else {
-        $scope.load($scope.detailId);
+        $scope.load($scope.detailId,$scope.refresh);
         $cookies.configuration_id = $scope.detailId;
         //$scope.redirectToDetail($scope.detailId);
     }
+    
+    // Watch for refresh change
+    $scope.$watch('refresh', function() {
+       if($scope.refresh){
+            $scope.load($scope.deviceId,true);
+       }else{
+            dataService.cancelZwaveDataInterval();
+       }
+        
+    });
     // Cancel interval on page destroy
     $scope.$on('$destroy', function() {
-        dataService.cancelZwaveDataInterval();
+       dataService.cancelZwaveDataInterval();
     });
 
     // Redirect to another device
