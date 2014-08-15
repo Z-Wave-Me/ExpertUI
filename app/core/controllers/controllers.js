@@ -1959,13 +1959,16 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                     var key = nodeId + "." + index + "." + group;
                     if ($.inArray(key, $scope.keys) == -1)
                         $scope.keys.push(key);
+                    var data;
+                    var timeArray; // object to get updateTime from
                     var nodeIds = [];
                     var instanceIds = [];
                     var persistent = [];
                     var tooltips = [];
                     var type = null;
                     if ((0x85 in instance.commandClasses) && (group < instance.commandClasses[0x85].data.groups.value)) {
-                        var data = instance.commandClasses[0x85].data[group + 1];
+                        data = instance.commandClasses[0x85].data[group + 1];
+                        timeArray = data.nodes;
                         for (var i = 0; i < data.nodes.value.length; i++) {
                             var targetNodeId = data.nodes.value[i];
                             nodeIds.push(targetNodeId);
@@ -1981,7 +1984,8 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                         }
                     }
                     if ((0x8e in instance.commandClasses) && (group < instance.commandClasses[0x8e].data.groups.value)) {
-                        var data = instance.commandClasses[0x8e].data[group + 1];
+                        data = instance.commandClasses[0x8e].data[group + 1];
+                        timeArray = data.nodesInstances;
                         for (var i = 0; i < data.nodesInstances.value.length; i += 2) {
                             var targetNodeId = data.nodesInstances.value[i];
                             nodeIds.push(targetNodeId);
@@ -1996,7 +2000,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                             }
                         }
                     }
-                    $scope.data[key] = {"label": findLabel(nodeId, group), "tooltips": tooltips, "nodeId": nodeId, "instanceId": index, "node": node, "instance": index, "groupId": data.name, "nodeIds": nodeIds, "instanceIds": instanceIds, "persistent": persistent, "update": data.nodesInstances, "max": data.max.value, "remaining": (data.max.value - nodeIds.length)};
+                    $scope.data[key] = {"label": findLabel(nodeId, group), "tooltips": tooltips, "nodeId": nodeId, "instanceId": index, "node": node, "instance": index, "groupId": (group + 1), "nodeIds": nodeIds, "instanceIds": instanceIds, "persistent": persistent, "update": timeArray, "max": data.max.value, "remaining": (data.max.value - nodeIds.length)};
                 }
             }
         });
