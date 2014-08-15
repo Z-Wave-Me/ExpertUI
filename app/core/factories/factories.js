@@ -163,8 +163,10 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
                 url: cfg.server_url + cfg.update_url + time
             });
             request.success(function(data) {
-                time = data.updateTime;
                 $('#update_time_tick').html($filter('getCurrentTime')(time));
+                if (apiData === undefined)
+                    return;
+                time = data.updateTime;
                 angular.forEach(data, function(obj, path) {
                     var pobj = apiData;
                     var pe_arr = path.split('.');
