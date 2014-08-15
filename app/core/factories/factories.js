@@ -56,6 +56,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
      */
     return({
         getZwaveData: getZwaveData,
+        getZwaveDataQuietly: getZwaveDataQuietly,
         updateZwaveData: updateZwaveData,
         updateZwaveDataSince: updateZwaveDataSince,
         joinedZwaveData: joinedZwaveData,
@@ -98,6 +99,33 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
                 return callback(data);
             }).error(function() {
                 pageLoader(true);
+                handleError();
+
+            });
+        }
+    }
+
+    /**
+     * Gets all of the data in the remote collection without a "Loading data..." notification.
+     */
+    function getZwaveDataQuietly(callback) {
+        var time = Math.round(+new Date() / 1000);
+        if (apiData) {
+            console.log('CACHED');
+            return callback(apiData);
+        }
+        else {
+            
+            console.log('NOOOOT CACHED');
+            var request = $http({
+                method: "POST",
+                url: cfg.server_url +  cfg.update_url + "0"
+            });
+            request.success(function(data) {
+                $('#update_time_tick').html($filter('getCurrentTime')(time));
+                apiData = data;
+                return callback(data);
+            }).error(function() {
                 handleError();
 
             });

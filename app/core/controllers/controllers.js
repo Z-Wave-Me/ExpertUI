@@ -1683,6 +1683,9 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                 dataService.purgeCache();
                 $scope.load($scope.lang);
                 spinner.fadeOut();
+            } else if (since + cfg.route_update_timeout/1000 < (new Date()).getTime()/1000) {
+                console.log("update timed out");
+                spinner.fadeOut();
             } else {
                 window.setTimeout(pollForUpdate, cfg.interval, since, remaining);
                 if (hasUpdates) {
@@ -2000,7 +2003,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
     };
     // Load data
     $scope.load = function(lang) {
-        dataService.getZwaveData(function(ZWaveAPIData) {
+        dataService.getZwaveDataQuietly(function(ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
             // Gather associations
             var nodeId = $scope.deviceId;
