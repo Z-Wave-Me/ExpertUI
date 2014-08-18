@@ -41,6 +41,8 @@
     "th_type": "Type",
     "th_total": "Total",
     "th_ok": "Ok",
+    "th_battery_type": "Battery type",
+    "th_battery_count": "Num of  batteries",
     "th_lastpackets": "Last packets (in 10 ms units)",
     "th_sdk": "SDK",
     "th_appversion": "App version",
