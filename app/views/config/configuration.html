@@ -11,13 +11,13 @@
             ng-submit="submitApplyConfigCfg(formName, 'devices[' + deviceId + '].instances[0].commandClasses[0x70].Set',configCont)" 
             novalidate>
             <a
-                 class="btn btn-primary"
+                 class="btn btn-primary spin-true"
                 ng-click="updateFromDeviceCfg('devices[' + deviceId + '].instances[0].commandClasses[0x70].Get',configCont)" 
-                >{{_t('btn_update_from_device')}}</a>
+                >{{_t('btn_update_from_device')}} <i class="fa fa-spinner fa-spin"></i></a>
             <button 
                 type="submit" 
-                class="btn btn-info" 
-                >{{_t('apply_config')}}</button> 
+                class="btn btn-info spin-true" 
+                >{{_t('apply_config')}} <i class="fa fa-spinner fa-spin"></i></button> 
             <div class="cfg-control-content" id="cfg_control_{{v.confNum}}" ng-repeat="v in configCont">
                 <div class="form-inline">
                     <expert-command-input 
@@ -52,13 +52,13 @@
             ng-submit="submitApplyConfig(formName, wakeupCont.cmd + '.Set')" 
             novalidate>
             <button
-                 class="btn btn-primary"
+                 class="btn btn-primary spin-true"
                 ng-click="updateFromDevice(wakeupCont.cmd + '.Get()')"
-                >{{_t('btn_update_from_device')}}</button>
+                >{{_t('btn_update_from_device')}} <i class="fa fa-spinner fa-spin"></i></button>
             <button 
                 type="submit" 
-                class="btn btn-info" 
-                >{{_t('apply_config')}}</button> 
+                class="btn btn-info spin-true" 
+                >{{_t('apply_config')}} <i class="fa fa-spinner fa-spin"></i></button> 
             <div class="clearfix"></div>
             <div class="cfg-control-content">
                 <div ng-repeat="v in wakeupCont.params">
@@ -92,13 +92,13 @@
             ng-submit="submitApplyConfig(formName, switchAllCont.cmd + '.Set')" 
             novalidate>
             <a
-                class="btn btn-primary"
+                class="btn btn-primary spin-true"
                 ng-click="updateFromDevice(switchAllCont.cmd + '.Get()')"
-                >{{_t('btn_update_from_device')}}</a>
+                >{{_t('btn_update_from_device')}} <i class="fa fa-spinner fa-spin"></i></a>
             <button 
                 type="submit" 
-                class="btn btn-info" 
-                >{{_t('apply_config')}}</button> 
+                class="btn btn-info spin-true" 
+                >{{_t('apply_config')}} <i class="fa fa-spinner fa-spin"></i></button> 
             <div class="cfg-control-content" ng-repeat="v in switchAllCont.params">
                 <div class="form-inline" >
                     <expert-command-input 
@@ -127,13 +127,13 @@
             ng-submit="submitApplyConfig(formName, protectionCont.cmd + '.Set')" 
             novalidate>
             <a
-                class="btn btn-primary"
+                class="btn btn-primary spin-true"
                 ng-click="updateFromDevice(protectionCont.cmd + '.Get()')"
-                >{{_t('btn_update_from_device')}}</a>
+                >{{_t('btn_update_from_device')}} <i class="fa fa-spinner fa-spin"></i></a>
             <button 
                 type="submit" 
-                class="btn btn-info"
-                >{{_t('apply_config')}}</button> 
+                class="btn btn-info spin-true"
+                >{{_t('apply_config')}} <i class="fa fa-spinner fa-spin"></i></button> 
             <div class="cfg-control-content" ng-repeat="v in protectionCont.params">
                 <div class="form-inline" >
                     <expert-command-input 

@@ -238,10 +238,10 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
             url: url
         });
         request.success(function(data) {
-            $('button .fa-spin').fadeOut(1000);
+            $('button .fa-spin,a .fa-spin').fadeOut(1000);
             handleSuccess(data);
         }).error(function() {
-            $('button .fa-spin').fadeOut(1000);
+            $('button .fa-spin,a .fa-spin').fadeOut(1000);
             handleError();
 
         });

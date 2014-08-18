@@ -7,7 +7,7 @@
 var appController = angular.module('appController', []);
 
 // Base controller
-appController.controller('BaseController', function($scope, $cookies, $filter, cfg, langFactory, langTransFactory) {
+appController.controller('BaseController', function($scope, $cookies, $filter, $location,cfg, langFactory, langTransFactory) {
     // Show page content
     $scope.showContent = false;
     // Global config
@@ -47,6 +47,12 @@ appController.controller('BaseController', function($scope, $cookies, $filter, c
     $scope.orderBy = function(field) {
         $scope.predicate = field;
         $scope.reverse = !$scope.reverse;
+    };
+    // Get body ID
+    $scope.getBodyId = function() {
+        var path = $location.path();
+         var lastSegment = path.split('/').pop();
+       return lastSegment;
     };
 });
 
@@ -136,6 +142,10 @@ appController.controller('TestController', function($scope, $filter, $timeout, $
 
 });
 
+// Statistics controller
+appController.controller('HelpController', function($scope) {
+    
+});
 
 // Home controller
 appController.controller('HomeController', function($scope, $filter, $timeout, $interval, dataService, cfg) {
@@ -150,7 +160,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
     $scope.notes = [];
     $scope.notesData = '';
     $scope.updateTime = $filter('getTimestamp');
-    
+
     $scope.reset = function() {
         $scope.failedDevices = angular.copy([]);
         $scope.lowBatteryDevices = angular.copy([]);
@@ -174,16 +184,18 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
      */
     $scope.loadData = function() {
         dataService.getZwaveData(function(ZWaveAPIData) {
+            notInterviewDevices(ZWaveAPIData);
             countDevices(ZWaveAPIData);
             batteryDevices(ZWaveAPIData);
             $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
-            notInterviewDevices(ZWaveAPIData);
+            
             dataService.joinedZwaveData(function(data) {
                 $scope.reset();
+                 notInterviewDevices(data.joined);
                 countDevices(data.joined);
                 batteryDevices(data.joined);
                 $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
-                notInterviewDevices(data.joined);
+               
             });
         });
     };
@@ -224,6 +236,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
         var cntFlirs = 0;
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+           
             if (nodeId == 255 || nodeId == controllerId || node.data.isVirtual.value) {
                 return;
             }
@@ -263,9 +276,19 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
             }
             var hasBattery = 0x80 in node.instances[0].commandClasses;
             var instanceId = 0;
+            var interviewDone = false;
             var ccId = 0x80;
             if (!hasBattery) {
                 return;
+            }
+            // Is interview done
+            for (var iId in ZWaveAPIData.devices[nodeId].instances) {
+                for (var ccId in ZWaveAPIData.devices[nodeId].instances[iId].commandClasses) {
+                    var isDone = ZWaveAPIData.devices[nodeId].instances[iId].commandClasses[ccId].data.interviewDone.value;
+                    if (isDone != false) {
+                        interviewDone = true;
+                    }
+                }
             }
             var node = ZWaveAPIData.devices[nodeId];
             var battery_charge = parseInt(node.instances[0].commandClasses[0x80].data.last.value);
@@ -273,7 +296,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
             obj['name'] = $filter('deviceName')(nodeId, node);
             obj['id'] = nodeId;
             obj['battery_charge'] = battery_charge;
-            if (battery_charge <= 20) {
+            if (battery_charge <= 20 && interviewDone) {
                 $scope.lowBatteryDevices.push(obj);
             }
             cnt++;
@@ -1683,7 +1706,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                 dataService.purgeCache();
                 $scope.load($scope.lang);
                 spinner.fadeOut();
-            } else if (since + cfg.route_update_timeout/1000 < (new Date()).getTime()/1000) {
+            } else if (since + cfg.route_update_timeout / 1000 < (new Date()).getTime() / 1000) {
                 console.log("update timed out");
                 spinner.fadeOut();
             } else {
@@ -1764,11 +1787,11 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
         var index = $scope.removeData.instance;
         var group = parseInt($scope.removeData.groupId);
         if ($scope.assocToInstance == null) {
-                $scope.updates.push("devices." + nodeId + ".instances." + index + ".commandClasses." + (0x85) + ".data." + group);
-                $scope.applyQueue.push('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x85].Remove(' + params + ')');
+            $scope.updates.push("devices." + nodeId + ".instances." + index + ".commandClasses." + (0x85) + ".data." + group);
+            $scope.applyQueue.push('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x85].Remove(' + params + ')');
         } else {
-                $scope.updates.push("devices." + nodeId + ".instances." + index + ".commandClasses." + (0x8e) + ".data." + group);
-                $scope.applyQueue.push('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x8e].Remove(' + params + ')');
+            $scope.updates.push("devices." + nodeId + ".instances." + index + ".commandClasses." + (0x8e) + ".data." + group);
+            $scope.applyQueue.push('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x8e].Remove(' + params + ')');
         }
         // cause view to hide element
         var removeIndex = -1;
@@ -1806,17 +1829,17 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
         var index = $scope.addData.instance;
         var group = parseInt($scope.addData.groupId);
         if ($scope.assocToInstance == null) {
-                $scope.updates.push("devices." + nodeId + ".instances." + index + ".commandClasses." + (0x85) + ".data." + group);
-                $scope.applyQueue.push('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x85].Set(' + params + ')');
+            $scope.updates.push("devices." + nodeId + ".instances." + index + ".commandClasses." + (0x85) + ".data." + group);
+            $scope.applyQueue.push('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x85].Set(' + params + ')');
         } else {
-                $scope.updates.push("devices." + nodeId + ".instances." + index + ".commandClasses." + (0x8e) + ".data." + group);
-                $scope.applyQueue.push('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x8e].Set(' + params + ')');
+            $scope.updates.push("devices." + nodeId + ".instances." + index + ".commandClasses." + (0x8e) + ".data." + group);
+            $scope.applyQueue.push('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x8e].Set(' + params + ')');
         }
         // cause view to show element
         $scope.addData.nodeIds.push(parseInt($scope.assocToNode));
         if ($scope.assocToInstance != null)
             $scope.addData.instanceIds.push(parseInt($scope.assocToInstance) + 1);
-        else 
+        else
             $scope.addData.instanceIds.push(null);
         $scope.addData.persistent.push("notInZWave");
         if ($scope.assocToInstance != null)
@@ -2064,7 +2087,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     $scope.reset = function() {
         $scope.devices = angular.copy([]);
     };
-    
+
     // Remember device id
     $scope.detailId = (angular.isDefined($cookies.configuration_id) ? $cookies.configuration_id : 0);
     // Redirect to detail page
@@ -2073,14 +2096,14 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             $location.path('/config/configuration/' + detailId);
         }
     };
-    
-     // Remember active tab
+
+    // Remember active tab
     $scope.rememberTab = function(tabId) {
-        if(tabId == 'interview'){
-             $scope.refresh = true; 
-        }else{
-           $scope.refresh = false; 
-           
+        if (tabId == 'interview') {
+            $scope.refresh = true;
+        } else {
+            $scope.refresh = false;
+
         }
         $cookies.tab_config = tabId;
     };
@@ -2095,7 +2118,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         $scope.activeTab = activeTab;
     };
     $scope.getActiveTab();
-   
+
 
     // Load data
     $scope.load = function(nodeId, refresh) {
@@ -2104,40 +2127,40 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             setNavigation(ZWaveAPIData);
             setData(ZWaveAPIData, nodeId);
             $scope.ZWaveAPIData = ZWaveAPIData;
-            if(refresh){
+            if (refresh) {
                 dataService.joinedZwaveData(function(data) {
-                //$scope.reset();
-                setData(data.joined);
-                //setNavigation(data.joined);
-                setData(data.joined, nodeId);
-                $scope.ZWaveAPIData = ZWaveAPIData;
-            });
+                    //$scope.reset();
+                    setData(data.joined);
+                    //setNavigation(data.joined);
+                    setData(data.joined, nodeId);
+                    $scope.ZWaveAPIData = ZWaveAPIData;
+                });
             }
         });
     };
 
     // Load
     if (parseInt($routeParams.nodeId, 10) > 0) {
-        $scope.load($routeParams.nodeId,$scope.refresh);
+        $scope.load($routeParams.nodeId, $scope.refresh);
         $cookies.configuration_id = $routeParams.nodeId;
     } else {
-        $scope.load($scope.detailId,$scope.refresh);
+        $scope.load($scope.detailId, $scope.refresh);
         $cookies.configuration_id = $scope.detailId;
         //$scope.redirectToDetail($scope.detailId);
     }
-    
+
     // Watch for refresh change
     $scope.$watch('refresh', function() {
-       if($scope.refresh){
-            $scope.load($scope.deviceId,true);
-       }else{
+        if ($scope.refresh) {
+            $scope.load($scope.deviceId, true);
+        } else {
             dataService.cancelZwaveDataInterval();
-       }
-        
+        }
+
     });
     // Cancel interval on page destroy
     $scope.$on('$destroy', function() {
-       dataService.cancelZwaveDataInterval();
+        dataService.cancelZwaveDataInterval();
     });
 
     // Redirect to another device
@@ -2159,7 +2182,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         });
         return devices;
     };
-    
+
     /**
      * Apply Config action
      *
@@ -2198,10 +2221,10 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             var request = cmd + '(' + num + ',' + value + ',' + confSize + ')';
             dataService.runCmd(request);
         });
-        $scope.refresh = true; 
+        $scope.refresh = true;
         return;
     };
-    
+
     /**
      * Apply Config action
      *
@@ -2219,10 +2242,10 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         });
         var request = cmd + '(' + dataJoined.join() + ')';
         dataService.runCmd(request);
-        $scope.refresh = true; 
+        $scope.refresh = true;
         return;
     };
-    
+
     /**
      * Update from device action
      *
@@ -2231,7 +2254,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
      */
     $scope.updateFromDevice = function(cmd) {
         dataService.runCmd(cmd);
-        $scope.refresh = true; 
+        $scope.refresh = true;
         return;
     };
     /**
@@ -2248,7 +2271,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                 dataService.runCmd(request);
             }
         });
-        $scope.refresh = true; 
+        $scope.refresh = true;
         return;
     };
 
@@ -2574,7 +2597,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             var conf_size = conf['_size'];
             var conf_name = $scope._t('configuration_parameter') + ' ' + conf_num;
             if (angular.isDefined(conf.name)) {
-                
+
                 if (angular.isDefined(conf.name.lang[langId])) {
                     conf_name = conf.name.lang[langId].__text;
                 } else if (angular.isDefined(conf.name.lang)) {
@@ -2589,7 +2612,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                     conf_description = conf.description.lang.__text;
                 }
             }
-             
+
             var conf_size = conf['_size'];
             var conf_default_value = null;
             var conf_type = conf['_type'];
@@ -2615,7 +2638,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                 var updateTime = $filter('isTodayFromUnix')(uTime);
                 var isUpdated = (uTime > iTime ? true : false);
             }
-            
+
             // Switch
             var conf_method_descr;
             switch (conf_type) {
@@ -2674,12 +2697,12 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                     };
                     break;
                 case 'range':
-                    
+
                     var param_struct_arr = [];
                     var rangeParam = conf['value'];
                     //console.log(rangeParam, conf_num);
-                    
-                    if(!rangeParam){
+
+                    if (!rangeParam) {
                         conf_method_descr = {
                             nodeId: nodeId,
                             label: 'Nº ' + conf_num + ' - ' + conf_name,
@@ -2694,12 +2717,12 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                             confNum: conf_num,
                             confSize: conf_size
                         };
-                       break;
+                        break;
                     }
                     angular.forEach(rangeParam, function(value_html, ri) {
                         //console.log(ri);
                         var value = value_html;
-                         
+
                         if (ri == 'description') {
                             //console.log(ri);
                             var value_from = parseInt(rangeParam['_from'], 16);
@@ -2731,7 +2754,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                         if (conf_default !== null)
                             conf_default_value = conf_default;
 
-                            
+
                         if (value_from != value_to) {
                             if (value_description != '') {
                                 var rangeVal = {
@@ -2836,7 +2859,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                         confNum: conf_num,
                         confSize: conf_size
                     };
-                   
+
                     break;
                 case 'bitset':
                     var param_struct_arr = [];
@@ -3136,7 +3159,7 @@ appController.controller('ConfigStoreController', function($scope, dataService) 
         $('#device_node_name').html(givenName);
         return;
     };
-    
+
     /**
      * Submit expert commands form
      *
@@ -3245,12 +3268,12 @@ appController.controller('ControllController', function($scope, $filter, $upload
      */
     $scope.load = function() {
         dataService.getZwaveData(function(ZWaveAPIData) {
-                setData(ZWaveAPIData);
-                dataService.joinedZwaveData(function(data) {
-                    $scope.reset();
-                    setData(data.joined);
-                    refresh(data.update);
-                });
+            setData(ZWaveAPIData);
+            dataService.joinedZwaveData(function(data) {
+                $scope.reset();
+                setData(data.joined);
+                refresh(data.update);
+            });
         });
     };
     $scope.load();
@@ -3887,7 +3910,7 @@ appController.controller('StatisticsController', function($scope, $http, $log) {
             });
 });
 // Controller controller
-appController.controller('ControllerController', function($scope, $timeout, cfg, DataFactory, dataService) {
+appController.controller('ControllerController', function($scope, $window, dataService) {
     $scope.funcList;
     $scope.ZWaveAPIData;
     $scope.info = {};
@@ -3986,6 +4009,77 @@ appController.controller('ControllerController', function($scope, $timeout, cfg,
 
 
     };
+
+    $scope.openQueue = function() {
+        $window.open('#network/queue', 'MyWindow', "width=1200, height=400");
+    };
+
+    /// --- Private functions --- ///
+
+
+    // Get Queue updates
+    function getQueueUpdate(data) {
+        var trs = '';
+        angular.forEach(data, function(job, jobIndex) {
+            var buff = '';
+            for (var b in job[5]) {
+                buff += job[5][b].toString(16) + ' ';
+            }
+            ;
+            var progress;
+            if (job[4] === null) {
+                progress = '';
+            } else if (typeof (job[4]) == 'string') {
+                progress = job[4].replace(/\n/g, '<br/>')
+            } else {
+                job[4].join('<br />');
+            }
+
+            trs +=
+                    '<tr>' +
+                    '<td>' + job[1][0] + '</td>' +
+                    '<td>' + (job[1][11] ? "U" : " ") + '</td>' +
+                    '<td>' + (job[1][1] ? "W" : " ") + '</td>' +
+                    '<td>' + (job[1][2] ? "S" : " ") + '</td>' +
+                    '<td>' + (job[1][3] ? "E" : " ") + '</td>' +
+                    '<td>' + (job[1][4] ? "D" : " ") + '</td>' +
+                    '<td>' + (job[1][5] ? (job[1][6] ? "+" : "-") : " ") + '</td>' +
+                    '<td>' + (job[1][7] ? (job[1][8] ? "+" : "-") : " ") + '</td>' +
+                    '<td>' + (job[1][9] ? (job[1][10] ? "+" : "-") : " ") + '</td>' +
+                    '<td>' + parseFloat(job[0]).toFixed(2) + '</td>' +
+                    '<td>' + job[2] + '</td>' +
+                    '<td class="alignleft">' + job[3] + '</td>' +
+                    '<td class="alignleft">' + progress + '</td>' +
+                    '<td class="alignleft">' + buff + '</td>' +
+                    '</tr>\n';
+        });
+        if (trs == '') {
+            trs = '<tr><td colspan="12"><i>' + $scope._t('inspect_queue_empty') + '</i></td></tr>';
+        }
+        $('#inspect_queue_len').html('Queue length: ' + data.length);
+        $('#inspect_queue_table_body').html(trs);
+        return trs;
+    }
+    ;
+});
+// Commands controller
+appController.controller('QueueController', function($scope, dataService) {
+    /**
+     * Inspect Queue
+     */
+    $scope.inspectQueue = function() {
+        // Load queue
+        dataService.getQueueData(function(data) {
+            getQueueUpdate(data);
+        });
+        // Refresh queue
+        dataService.updateQueueData(function(data) {
+            getQueueUpdate(data);
+        });
+        return;
+    };
+
+    $scope.inspectQueue();
 
     /// --- Private functions --- ///
 
@@ -4202,15 +4296,20 @@ appController.controller('CommandModalController', function($scope, $filter) {
         $(target).modal();
         // Formated output
         var getCmdData = function(data, space) {
+            if (data.name == undefined) {
+                return '';
+            }
             var html = '<div class="data-element">' + space + data.name + ': <span class="' + ((data.updateTime > data.invalidateTime) ? 'green' : 'red') + '">' + ((typeof (data.value) !== 'undefined' && data.value != null) ? data.value.toString() : 'None') + '</span>' + ' (<span class="' + ((data.updateTime > data.invalidateTime) ? '' : 'red') + '">' + $filter('isTodayFromUnix')(data.updateTime) + '</span>)</div>';
             return html;
         };
         // Get data
         var html = getCmdData(data, '');
         angular.forEach(data, function(el, key) {
+
             if (key != 'name' && key != 'type' && key != 'updateTime' && key != 'invalidateTime' && key != 'value' && // these are internal values
                     key != 'capabilitiesNames') { // these make the dialog monstrious
                 html += getCmdData(el, '');
+
                 angular.forEach(el, function(v, k) {
                     if (angular.isObject(v)) {
                         html += getCmdData(v, '&nbsp;&nbsp;&nbsp;');

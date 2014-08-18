@@ -304,7 +304,7 @@
     "nm_inspect_queue_title": "Inspect queue",
     "inspect_queue_len": "Queue len",
     "inspect_queue_legend_title": "Legend",
-    "inspect_queue_legend_help": "n = Send count<br />W = Wait wakeup<br />S = Wait security<br />E = Encapsulated<br />D = Done<br />U = Urgent",
+    "inspect_queue_legend_help": "n = Send count, W = Wait wakeup, S = Wait security, E = Encapsulated, D = Done, U = Urgent",
     "inspect_queue_empty": "queue is empty",
     "log_level_CRITICAL": "Silent logging",
     "log_level_ERROR": "Normal logging",

@@ -68,6 +68,10 @@ li.lang-switch_ a{
     text-transform: uppercase;
 }
 
+#page_queue .navbar, #page_queue #footer{
+    display: none;
+}
+
 
 /* Typo
 -------------------------------------------------- */
@@ -397,7 +401,7 @@ background-color: #e4f5fc;
 /* Footer
 -------------------------------------------------- */
 #footer {
-    border-top: solid 2px #6BA2C8;
+/*    border-top: solid 2px #6BA2C8;*/
     font-size: 12px;
     position: absolute;
     bottom: 0;

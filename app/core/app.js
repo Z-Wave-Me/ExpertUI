@@ -25,6 +25,10 @@ angApp.config(['$routeProvider',
                 when('/test', {
                     templateUrl: 'app/views/test.html'
                 }).
+                        // Help
+                when('/help', {
+                    templateUrl: 'app/views/help/help.html'
+                }).
                 // Controll
                 when('/control/switch', {
                     templateUrl: 'app/views/controll/switch.html'
@@ -79,15 +83,10 @@ angApp.config(['$routeProvider',
                 }).
                 when('/network/controller', {
                     templateUrl: 'app/views/network/controller.html'
+                }).
+                 when('/network/queue', {
+                    templateUrl: 'app/views/network/queue.html'
                 }).        
-                // Expert
-                
-                when('/expert/commands', {
-                    templateUrl: 'app/views/expert/commands.html'
-                }).
-                when('/expert/commands/:nodeId', {
-                    templateUrl: 'app/views/expert/commands_detail.html'
-                }).
                 otherwise({
                     redirectTo: '/'
                 });
