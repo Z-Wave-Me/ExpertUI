@@ -1459,10 +1459,10 @@ appController.controller('BatteryController', function($scope, $filter, $http, d
     $scope.load = function() {
         dataService.getZwaveData(function(ZWaveAPIData) {
             setData(ZWaveAPIData);
-//            dataService.joinedZwaveData(function(data) {
-//                $scope.reset();
-//                setData(data.joined);
-//            });
+            dataService.joinedZwaveData(function(data) {
+                $scope.reset();
+                setData(data.joined);
+            });
         });
     };
     $scope.load($scope.lang);
