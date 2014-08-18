@@ -2159,6 +2159,98 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         });
         return devices;
     };
+    
+    /**
+     * Apply Config action
+     *
+     * @param {object} form
+     * @returns {undefined}
+     */
+    $scope.submitApplyConfigCfg = function(form, cmd, cfg) {
+        var sections = $('#' + form).find('.cfg-control-content');
+        var data = $('#' + form).serializeArray();
+        var dataValues = [];
+        angular.forEach(data, function(v, k) {
+            if (v.value !== '') {
+                dataValues.push({"value": v.value, "name": v.name});
+                //dataValues.push(v.name);
+            }
+
+        });
+
+        //console.log(cfg);
+        angular.forEach(dataValues, function(n, nk) {
+            var lastNum = n.name.match(/\d+$/);
+            if (!lastNum) {
+                return;
+            }
+            var num = lastNum[0];
+            var confSize = 0;
+            //var lastNum = n.name.match(/\d+$/);
+            var value = n.value;
+            angular.forEach(cfg, function(cv, ck) {
+                if (cv.confNum == num) {
+                    confSize = cv.confSize;
+                    //dataValues.push(v.name);
+                }
+
+            });
+            var request = cmd + '(' + num + ',' + value + ',' + confSize + ')';
+            dataService.runCmd(request);
+        });
+        $scope.refresh = true; 
+        return;
+    };
+    
+    /**
+     * Apply Config action
+     *
+     * @param {object} form
+     * @returns {undefined}
+     */
+    $scope.submitApplyConfig = function(form, cmd) {
+        var data = $('#' + form).serializeArray();
+        var dataJoined = [];
+        angular.forEach(data, function(v, k) {
+            if (v.value !== '') {
+                dataJoined.push(v.value);
+            }
+
+        });
+        var request = cmd + '(' + dataJoined.join() + ')';
+        dataService.runCmd(request);
+        $scope.refresh = true; 
+        return;
+    };
+    
+    /**
+     * Update from device action
+     *
+     * @param {string} cmd
+     * @returns {undefined}
+     */
+    $scope.updateFromDevice = function(cmd) {
+        dataService.runCmd(cmd);
+        $scope.refresh = true; 
+        return;
+    };
+    /**
+     * Update from device - configuration section
+     *
+     * @param {string} cmd
+     * @param {obj} cfg
+     * @returns {undefined}
+     */
+    $scope.updateFromDeviceCfg = function(cmd, cfg) {
+        angular.forEach(cfg, function(v, k) {
+            if (v.confNum) {
+                var request = cmd + '(' + v.confNum + ')';
+                dataService.runCmd(request);
+            }
+        });
+        $scope.refresh = true; 
+        return;
+    };
 
     /// --- Private functions --- ///
 
@@ -2482,13 +2574,13 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             var conf_size = conf['_size'];
             var conf_name = $scope._t('configuration_parameter') + ' ' + conf_num;
             if (angular.isDefined(conf.name)) {
+                
                 if (angular.isDefined(conf.name.lang[langId])) {
                     conf_name = conf.name.lang[langId].__text;
                 } else if (angular.isDefined(conf.name.lang)) {
                     conf_name = conf.name.lang.__text;
                 }
             }
-
             var conf_description = '';
             if (angular.isDefined(conf.description)) {
                 if (angular.isDefined(conf.description.lang[langId])) {
@@ -2497,6 +2589,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                     conf_description = conf.description.lang.__text;
                 }
             }
+             
             var conf_size = conf['_size'];
             var conf_default_value = null;
             var conf_type = conf['_type'];
@@ -2522,8 +2615,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                 var updateTime = $filter('isTodayFromUnix')(uTime);
                 var isUpdated = (uTime > iTime ? true : false);
             }
-
-
+            
             // Switch
             var conf_method_descr;
             switch (conf_type) {
@@ -2582,12 +2674,32 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                     };
                     break;
                 case 'range':
+                    
                     var param_struct_arr = [];
                     var rangeParam = conf['value'];
-                    //console.log(rangeParam);
+                    //console.log(rangeParam, conf_num);
+                    
+                    if(!rangeParam){
+                        conf_method_descr = {
+                            nodeId: nodeId,
+                            label: 'Nº ' + conf_num + ' - ' + conf_name,
+                            type: {
+                                noval: null
+                            },
+                            name: 'input_' + nodeId + '_' + conf_num,
+                            description: conf_description,
+                            updateTime: updateTime,
+                            isUpdated: isUpdated,
+                            defaultValue: null,
+                            confNum: conf_num,
+                            confSize: conf_size
+                        };
+                       break;
+                    }
                     angular.forEach(rangeParam, function(value_html, ri) {
                         //console.log(ri);
                         var value = value_html;
+                         
                         if (ri == 'description') {
                             //console.log(ri);
                             var value_from = parseInt(rangeParam['_from'], 16);
@@ -2619,7 +2731,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                         if (conf_default !== null)
                             conf_default_value = conf_default;
 
-
+                            
                         if (value_from != value_to) {
                             if (value_description != '') {
                                 var rangeVal = {
@@ -2686,6 +2798,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                 case 'constant':
                     var param_struct_arr = [];
                     var conf_param_options = '';
+                    // console.log(conf['value'],conf_num);
                     angular.forEach(conf['value'], function(value_html, i) {
                         var value = value_html;
                         var value_from = parseInt(value['_from'], 16);
@@ -2723,7 +2836,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                         confNum: conf_num,
                         confSize: conf_size
                     };
-                    //console.log(param_struct_arr);
+                   
                     break;
                 case 'bitset':
                     var param_struct_arr = [];
@@ -3023,91 +3136,7 @@ appController.controller('ConfigStoreController', function($scope, dataService) 
         $('#device_node_name').html(givenName);
         return;
     };
-    /**
-     * Update from device action
-     *
-     * @param {string} cmd
-     * @returns {undefined}
-     */
-    $scope.updateFromDevice = function(cmd) {
-        dataService.runCmd(cmd);
-        return;
-    };
-    /**
-     * Update from device - configuration section
-     *
-     * @param {string} cmd
-     * @param {obj} cfg
-     * @returns {undefined}
-     */
-    $scope.updateFromDeviceCfg = function(cmd, cfg) {
-        angular.forEach(cfg, function(v, k) {
-            if (v.confNum) {
-                var request = cmd + '(' + v.confNum + ')';
-                dataService.runCmd(request);
-            }
-        });
-        return;
-    };
-    /**
-     * Apply Config action
-     *
-     * @param {object} form
-     * @returns {undefined}
-     */
-    $scope.submitApplyConfig = function(form, cmd) {
-        var data = $('#' + form).serializeArray();
-        var dataJoined = [];
-        angular.forEach(data, function(v, k) {
-            if (v.value !== '') {
-                dataJoined.push(v.value);
-            }
-
-        });
-        var request = cmd + '(' + dataJoined.join() + ')';
-        dataService.runCmd(request);
-        return;
-    };
-    /**
-     * Apply Config action
-     *
-     * @param {object} form
-     * @returns {undefined}
-     */
-    $scope.submitApplyConfigCfg = function(form, cmd, cfg) {
-        var sections = $('#' + form).find('.cfg-control-content');
-        var data = $('#' + form).serializeArray();
-        var dataValues = [];
-        angular.forEach(data, function(v, k) {
-            if (v.value !== '') {
-                dataValues.push({"value": v.value, "name": v.name});
-                //dataValues.push(v.name);
-            }
-
-        });
-
-        //console.log(cfg);
-        angular.forEach(dataValues, function(n, nk) {
-            var lastNum = n.name.match(/\d+$/);
-            if (!lastNum) {
-                return;
-            }
-            var num = lastNum[0];
-            var confSize = 0;
-            //var lastNum = n.name.match(/\d+$/);
-            var value = n.value;
-            angular.forEach(cfg, function(cv, ck) {
-                if (cv.confNum == num) {
-                    confSize = cv.confSize;
-                    //dataValues.push(v.name);
-                }
-
-            });
-            var request = cmd + '(' + num + ',' + value + ',' + confSize + ')';
-            dataService.runCmd(request);
-        });
-        return;
-    };
+    
     /**
      * Submit expert commands form
      *

@@ -254,9 +254,9 @@ angApp.directive('expertCommandInput', function() {
             if ('fix' in type) {
                 if (defaultValue) {
                     if (isNaN(parseInt(defaultValue, 10))) {
-                        var checked = (v.label == defaultValue ? ' checked="checked"' : '');
+                        checked = (v.label == defaultValue ? ' checked="checked"' : '');
                     } else {
-                        var checked = '';
+                        checked = '';
                     }
                 }
                 input += '<input name="radio_' + inName + '" class="commands-data-chbx" type="radio" value="' + type.fix.value + '"' + checked + ' /> ' + title + '<br />';
@@ -267,14 +267,17 @@ angApp.directive('expertCommandInput', function() {
                 var setVal = (defaultValue ? defaultValue : min);
                 if (defaultValue) {
                     if (defaultValue >= min && defaultValue <= max) {
-                        var checked = ' checked="checked"';
+                        checked = ' checked="checked"';
                         disabled = '';
                     }
 
+                }else{
+                    checked = '';
                 }
                 if (hideRadio) {
                     disabled = '';
                 }
+              
 //                input += '<input name="radio_' + inName + '" class="commands-data-chbx" type="radio" value=""' + checked + ' /> ' + title + ' <input type="text" name="radio_' + inName + '_txt" class="form-control commands-data-txt-chbx" value="' + min + '" title=" min: ' + min + ', max: ' + max + '"'+ disabled + ' /><br />'; 
                 if (!hideRadio) {
                     input += '<input name="radio_' + inName + '" class="commands-data-chbx" type="radio" value=""' + checked + ' /> ' + title + ' <input type="text" name="radio_txt_' + inName + '" class="form-control commands-data-txt-chbx" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '"' + disabled + ' /><br />';
@@ -339,6 +342,13 @@ angApp.directive('expertCommandInput', function() {
         input += '<em>Constant type</em>';
         return input;
     }
+    
+    // Get default
+    function getDefault(label) {
+        var input = '';
+        input += '<label>' + label + '</label><br />';
+        return input;
+    }
     return {
         restrict: "E",
         replace: true,
@@ -378,7 +388,7 @@ angApp.directive('expertCommandInput', function() {
                 } else if ('constant' in type) {
                     input = getConstant(label, type, scope.defaultValue, name);
                 } else {
-                    input = '';
+                    input = getDefault(label);
                 }
                 scope.input = input;
                 return;
