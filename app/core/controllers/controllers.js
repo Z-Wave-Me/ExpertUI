@@ -1845,7 +1845,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
         var node = $scope.ZWaveAPIData.devices[nodeId];
         if (node == undefined)
             return;
-        if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
+        if (nodeId == 255 || node.data.isVirtual.value)
             return;
         $.each(node.instances, function(index, instance) {
             if (!("commandClasses" in instance)) {
@@ -1866,7 +1866,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
             }
 
         });
-        pollForUpdate($scope.ZWaveAPIData.updateTime, updates);
+        pollForUpdate(Math.floor((new Date()).getTime() / 1000), updates);
     }
 
     // Open remove assocation dialog
@@ -1901,7 +1901,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
         var node = $scope.ZWaveAPIData.devices[nodeId];
         if (node == undefined)
             return;
-        if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
+        if (nodeId == 255 || node.data.isVirtual.value)
             return;
         var index = $scope.removeData.instance;
         var group = parseInt($scope.removeData.groupId);
@@ -1943,7 +1943,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
         var node = $scope.ZWaveAPIData.devices[nodeId];
         if (node == undefined)
             return;
-        if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
+        if (nodeId == 255 || node.data.isVirtual.value)
             return;
         var index = $scope.addData.instance;
         var group = parseInt($scope.addData.groupId);
@@ -1976,7 +1976,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
         $scope.assocToInstance = null;
         // Prepare devices and nodes
         angular.forEach($scope.ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
+            if (nodeId == 255 || node.data.isVirtual.value)
                 return;
             for (var instanceId in $scope.ZWaveAPIData.devices[nodeId].instances) {
                 var fromInstanceId = $scope.addData.instanceId;
@@ -2077,7 +2077,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
         var node = $scope.ZWaveAPIData.devices[nodeId];
         if (node == undefined)
             return;
-        if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
+        if (nodeId == 255 || node.data.isVirtual.value)
             return;
         $.each(node.instances, function(index, instance) {
             if (!("commandClasses" in instance)) {
@@ -2152,7 +2152,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
             $scope.updateData(nodeId);
             // load initial zdd data (cached)
             angular.forEach($scope.ZWaveAPIData.devices, function(node, nodeId) {
-                if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
+                if (nodeId == 255 || node.data.isVirtual.value)
                     return;
                 $scope.loadZDD(nodeId);
             });
@@ -2166,8 +2166,17 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
             var exec = $scope.applyQueue.shift();
             dataService.runCmd(exec);
         }
-        pollForUpdate($scope.ZWaveAPIData.updateTime, $scope.updates);
+        pollForUpdate(Math.floor((new Date()).getTime() / 1000), $scope.updates);
         $scope.updates = [];
+
+        var nodeId = $scope.deviceId;
+        var node = $scope.ZWaveAPIData.devices[nodeId];
+        var isListening = node.data.isListening.value;
+        var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
+        var hasWakeup = 0x84 in node.instances[0].commandClasses;
+        var hasBattery = 0x80 in node.instances[0].commandClasses;
+        if (!isListening && !isFLiRS && hasBattery)
+            alert($scope._t('conf_apply_battery'));
     };
     /**
      * Show modal window
