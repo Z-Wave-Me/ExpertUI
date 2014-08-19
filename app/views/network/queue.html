@@ -1,6 +1,9 @@
 <!-- Queue view -->
 <div ng-controller="QueueController">
     <div class="page-header"><h1>{{_t('nm_inspect_queue_title')}}</h1></div>
+    <div><strong>{{_t('inspect_queue_legend_title')}}</strong>
+                <p ng-bind-html="_t('inspect_queue_legend_help') | toTrusted"></p>
+            </div>
     <div class="table-responsive">
         <table id="inspect_queue_table" class="table-striped">
             <thead>
@@ -14,10 +17,6 @@
         </table> 
         <div>
             <div id="inspect_queue_len"></div><br />
-            <div><strong>{{_t('inspect_queue_legend_title')}}</strong>
-                <p ng-bind-html="_t('inspect_queue_legend_help') | toTrusted"></p>
-            </div>
-
         </div>
     </div>
 

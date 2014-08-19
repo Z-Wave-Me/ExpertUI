@@ -24,8 +24,15 @@
                             <tr ng-repeat="v in descriptionCont" ng-show="v.val || v.val != ''">
                                 <th style="width: 30%;">{{_t(v.key)}}</th>
                                 <td  id="{{v.key}}">
-                                    <span ng-bind-html="v.val | toTrusted"></span> 
-                                    <span ng-show="v.key == 'device_node_name_'">
+                                    <div ng-switch on="v.key">
+                                        <div ng-switch-when="command_class" ng-controller="CommandModalController">
+                                            <span ng-repeat="cc in interviewCommands"><a href="" ng-click="showModal('#modal_command', cc.cmdData)">{{cc.ccName}}</a>, </span>
+                                           
+                                        </div>
+                                    <p ng-switch-default ng-bind-html="v.val | toTrusted"></p>
+                                    </div>
+                                    
+                                     <!-- <span ng-show="v.key == 'device_node_name_'">
                                         <a href="" ng-click="goRename_ = !goRename_">{{_t('device_rename_tooltip')}} <i class="fa fa-pencil"></i> </a>
                                     </span>
                                     <div ng-show="goRename_">
@@ -37,8 +44,7 @@
                                                 id="btn_update"
                                                 >{{_t('btn_save_name')}}</button>
                                         </form>
-                                    </div>
-
+                                    </div>-->
                                 </td>
                             </tr>
 
