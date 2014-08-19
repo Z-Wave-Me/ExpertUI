@@ -40,13 +40,13 @@
                 <li class="list-group-item">
                     <p ng-repeat="v in notInterviewDevices">
                         <!--<a class="text-danger" href="#device/status">Device {{v.name}} (#{{v.id}}) interview is not complete</a>-->
-                        <a class="text-danger" href="#help">Device {{v.name}} (#{{v.id}}) interview is not complete</a>
+                        <a class="text-danger" href="#help/{{v.id}}">Device {{v.name}} (#{{v.id}}) interview is not complete</a>
                     </p>
                 </li>
                 <li class="list-group-item">
                     <p ng-repeat="v in failedDevices">
                         <!--<a class="text-danger" href="#config/configuration/{{v.id}}">Device {{v.name}} (#{{v.id}}) is failed</a>-->
-                        <a class="text-danger" href="#help">Device {{v.name}} (#{{v.id}}) is failed</a>
+                        <a class="text-danger" href="#help/{{v.id}}">Device {{v.name}} (#{{v.id}}) is failed</a>
                     </p>
                 </li>
             </ul>

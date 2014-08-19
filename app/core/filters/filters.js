@@ -178,8 +178,9 @@ angApp.filter('isTodayFromUnix', function() {
             return '?';
         }
         var d = new Date(input * 1000);
-        var day = d.getDate();
+        var day = (d.getDate() < 10 ? '0' + d.getDate() : d.getDate());
         var mon = d.getMonth() + 1; //Months are zero based
+        mon = ( mon < 10 ? '0' +  mon :  mon);
         var year = d.getFullYear();
         var hrs = (d.getHours() < 10 ? '0' + d.getHours() : d.getHours());
         var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());

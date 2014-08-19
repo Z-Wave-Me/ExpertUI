@@ -26,7 +26,7 @@ angApp.config(['$routeProvider',
                     templateUrl: 'app/views/test.html'
                 }).
                         // Help
-                when('/help', {
+                when('/help/:nodeId?', {
                     templateUrl: 'app/views/help/help.html'
                 }).
                 // Controll
