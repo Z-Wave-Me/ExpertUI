@@ -2258,15 +2258,15 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             setNavigation(ZWaveAPIData);
             setData(ZWaveAPIData, nodeId);
             $scope.ZWaveAPIData = ZWaveAPIData;
-            if (refresh) {
+            //if (refresh) {
                 dataService.joinedZwaveData(function(data) {
                     $scope.reset();
-                    setData(data.joined);
-                    //setNavigation(data.joined);
+                    //setData(data.joined);
+                    setNavigation(data.joined);
                     setData(data.joined, nodeId);
                     $scope.ZWaveAPIData = ZWaveAPIData;
                 });
-            }
+            //}
         });
     };
 
