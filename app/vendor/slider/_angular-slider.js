@@ -100,8 +100,8 @@
                            '<div class="ngrs-handle ngrs-handle-max"><i></i></div>',
                            '<div class="ngrs-join"></div>',
                          '</div>',
-                         '<div class="ngrs-value ngrs-value-min" ng-show="showValues">{{min}}</div>',
-                         '<div class="ngrs-value ngrs-value-max" ng-show="showValues">{{max}}</div>',
+                         '<div class="ngrs-value ngrs-value-min" ng-show="showValues">{{filteredModelMin}}</div>',
+                         '<div class="ngrs-value ngrs-value-max" ng-show="showValues">{{filteredModelMax}}</div>',
                        '</div>'].join(''),
             scope: {
                 disabled: '=?',

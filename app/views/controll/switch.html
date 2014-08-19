@@ -61,7 +61,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="v in switches| orderBy:predicate:reverse" id="{{ v.rowId}}" ng-init="range.maxs = v.levelVal">
-                    <td>{{ v.id}}</td>
+                    <td>{{ v.id}}<span ng-show="v.iId != 0">.{{v.iId}}</span></td>
                     <td><switch-type-icon generic="{{ v.genericType}}" specific="{{ v.specificType}}"></switch-type-icon> {{ v.name}}</td>
             <td class="row-level text-right">
                 <strong style="color: {{ v.levelColor}};">{{ v.level}}</strong> 

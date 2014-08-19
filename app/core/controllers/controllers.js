@@ -444,6 +444,7 @@ appController.controller('SwitchController', function($scope, $log, $filter, dat
 
                 obj['id'] = nodeId;
                 obj['cmd'] = instance.commandClasses[ccId].data.name + '.level';
+                obj['iId'] = instanceId;
                 obj['ccId'] = ccId;
                 obj['deviceType'] = deviceType;
                 obj['genericType'] = genericType;
