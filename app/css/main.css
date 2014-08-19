@@ -68,6 +68,10 @@ li.lang-switch_ a{
     text-transform: uppercase;
 }
 
+#page_queue .navbar, #page_queue #footer{
+    display: none;
+}
+
 
 /* Typo
 -------------------------------------------------- */
@@ -295,7 +299,10 @@ background-color: #e4f5fc;
 
 /* Modals
 -------------------------------------------------- */
-.modal-body{
+.modal-body_{
+    
+}
+.cc-data-element{
     white-space: -moz-pre-wrap; /* Mozilla */
     white-space: -hp-pre-wrap; /* HP printers */
     white-space: -o-pre-wrap; /* Opera 7 */
@@ -397,7 +404,7 @@ background-color: #e4f5fc;
 /* Footer
 -------------------------------------------------- */
 #footer {
-    border-top: solid 2px #6BA2C8;
+/*    border-top: solid 2px #6BA2C8;*/
     font-size: 12px;
     position: absolute;
     bottom: 0;
@@ -508,6 +515,11 @@ background-color: #e4f5fc;
     padding: 0px 6px;
 }
 
+/* device not present in config file and not present in Z-Wave assoc group */
+.dissapeared {
+    color: #911;
+}
+
 /* device present in config file but not present in Z-Wave assoc group */
 .notInZWave {
     color: #955;
@@ -518,4 +530,8 @@ background-color: #e4f5fc;
     color: #000;
 }
 
+.assocAdd {
+    background-color: #911 !important;
+    border-color: #955 !important;
+}
 

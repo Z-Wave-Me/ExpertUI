@@ -1,8 +1,9 @@
 <!-- Test view -->
 <div data-ng-controller="TestController">
     <div class="page-header"><h1>Test</h1></div>
+   
     <span>Sec counter: {{timeInMs}}</span>
-    <div ng-repeat="v in devices">#{{v.id}}. {{v.name}} : {{v.time}}</div>
+   
     
     <button class="btn btn-success btn-spinner-hidden"><i class="fa fa-spinner fa-spin"></i> {{_t('restore_wait')}}</button>
     
@@ -21,5 +22,5 @@
         <input type="file" name="config_backup" onchange="angular.element(this).scope().uploadFile(this.files)"/>
     </form>-->
 
-
+ <div draggable style="border: 1px solid aqua; background-color: aqua; width: 600px;"><div ng-repeat="v in devices">#{{v.id}}. {{v.name}} : {{v.time}}</div></div>
 </div>

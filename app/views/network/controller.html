@@ -43,10 +43,12 @@
                 >{{_t('ctrl_info_device_data')}}</button>
 
         <!-- nm_inspect_queue_title  -->
-        <button 
+        <!-- <button 
             class="btn btn-primary" 
             ng-click="inspectQueue('#modal_queue')"
-            >{{_t('nm_inspect_queue_title')}}</button>
+            >{{_t('nm_inspect_queue_title')}}</button> -->
+         <!-- <a href="#network/queue" class="btn btn-primary" target="_blank">{{_t('nm_inspect_queue_title')}}</a>  -->
+         <a href="" class="btn btn-primary" ng-click="openQueue()">{{_t('nm_inspect_queue_title')}}</a>
 
         <!-- nm_send_node_information  -->
         <button class="btn btn-primary"

@@ -20,14 +20,14 @@
                     </td>
                     <td class="association-info"> 
                         <span ng-repeat="a in data[key].nodeIds track by $index">
-                            <a class="btn btn-info btn-lg" title="{{a| deviceName:data[key].node}} {{data[key].instanceIds[$index]}}" data-toggle="tooltip" data-position="top" tooltip>#{{a}}<span ng_if="data[key].type == 'm'">.{{data[key].instanceIds[$index]}}</span></a> 
+                            <a class="btn btn-info btn-lg {{data[key].persistent[$index]}}" title="{{data[key].tooltips[$index]}}" data-toggle="tooltip" data-position="top" tooltip>#{{a}}<span ng_if="data[key].instanceIds[$index] != null">.{{data[key].instanceIds[$index]}}</span></a> 
                             <br ng_if="$index % 5 == 4"/>
                         </span>
                     </td>
-                    <td  class="association-action"> 
+                    <td  class="association-action" style="text-align: right;"> 
                         <button type="button" class="btn btn-primary btn-lg" 
-                                data-toggle="modal" data-ng-click="openAdd(data[key])" data-target="#modal_add" ng-disabled="data[key].max <= data[key].nodeIds.length">+</button>
-                        <button type="button" class="btn btn-primary btn-lg" data-ng-click="openRemove(data[key])" ng-disabled="data[key].nodeIds.length == 0">-</button>
+                                data-toggle="modal" data-ng-click="openAdd(data[key])" data-target="#modal_add" ng-disabled="data[key].max <= data[key].nodeIds.length"><span style="display: inline-block;width:12px;">+</span></button>
+                        <button type="button" class="btn btn-primary btn-lg" data-ng-click="openRemove(data[key])" ng-disabled="data[key].nodeIds.length == 0"><span style="display: inline-block;width:12px;">-</span></button>
                     </td>
                 </tr>
             </tbody>
@@ -47,12 +47,12 @@
                     <div class="form-inline">
                         {{ _t('assoc_remove_from')}} {{removeData.nodeId| deviceName:removeData.node}} {{ _t('to_locate')}} <br/>
                         <div class="form-group">
-                            <select ng-model="assocToNode" class="form-control" style="width: 150px;" ng-options="k as v for (k,v) in removeNodes">
+                            <select ng-model="assocToNode" class="form-control" ng-options="k as v for (k,v) in removeNodes">
                                 <option value="">&lt; {{ _t('assoc_select_to_node')}} &gt;</option>
                             </select>
                         </div>
-                        <div class="form-group" ng-show="removeData.type == 'm'">
-                            <select ng-model="assocToInstance" class="form-control" style="width: 150px;" ng-options="k as v for (k,v) in removeInstances[assocToNode]">
+                        <div class="form-group" ng-show="removeInstances[assocToNode] != undefined">
+                            <select ng-model="assocToInstance" class="form-control" ng-options="k as v for (k,v) in removeInstances[assocToNode]">
                                 <option value="">&lt; {{ _t('assoc_select_to_instance')}} &gt;</option>
                             </select>
                         </div>
@@ -60,7 +60,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">{{ _t('dialog_abort')}}</button>
-                    <button class="btn btn-primary update" data-ng-click="remove()">{{ _t('dialog_remove')}}</button>
+                    <button class="btn btn-primary update" data-ng-click="remove()" ng-disabled="assocToNode == null || ((removeInstances[assocToNode] != undefined) && assocToInstance == null)">{{ _t('dialog_remove')}}</button>
                 </div>
             </div>
         </div>
@@ -77,12 +77,12 @@
                     <div class="form-inline">
                         {{ _t('fro')}} {{addData.nodeId| deviceName:addData.node}} {{ _t('to_locate')}} <br/>
                         <div class="form-group">
-                            <select ng-model="assocToNode" class="form-control" style="width: 150px;" ng-options="k as v for (k,v) in addNodes">
+                            <select ng-model="assocToNode" class="form-control" ng-options="k as v for (k,v) in addNodes">
                                 <option value="">&lt; {{ _t('assoc_select_to_node')}} &gt;</option>
                             </select>
                         </div>
-                        <div class="form-group" ng-show="addData.type == 'm'">
-                            <select ng-model="assocToInstance" class="form-control" style="width: 150px;" ng-options="k as v for (k,v) in addInstances[assocToNode]">
+                        <div class="form-group" ng-show="addInstances[assocToNode] != undefined">
+                            <select ng-model="assocToInstance" class="form-control" ng-options="k as v for (k,v) in addInstances[assocToNode]">
                                 <option value="">&lt; {{ _t('assoc_select_to_instance')}} &gt;</option>
                             </select>
                         </div>
@@ -90,13 +90,12 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">{{ _t('dialog_abort')}}</button>
-                    <button class="btn btn-primary update" data-ng-click="add()" ng-disabled="assocToNode == null || (addData.type == 'm' && assocToInstance == null)">{{ _t('dialog_add')}}</button>
+                    <button class="btn btn-primary update assocAdd" data-ng-click="add()" ng-disabled="assocToNode == null || ((addInstances[assocToNode] != undefined) && assocToInstance == null)">{{ _t('dialog_add')}}</button>
                 </div>
             </div>
         </div>
     </div><!-- /.Modal -->
 
-    <h4>{{_t('apply_config_tooltip')}}</h4>
     <button 
         type="button" 
         class="btn btn-primary"

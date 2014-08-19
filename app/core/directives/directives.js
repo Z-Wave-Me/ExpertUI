@@ -23,20 +23,55 @@ angApp.directive('btnSpinner', function() {
     };
 });
 
-angApp.directive('tooltip', function(){
+angApp.directive('tooltip', function() {
     return {
         restrict: 'A',
-        link: function(scope, element, attrs){
-            $(element).hover(function(){
+        link: function(scope, element, attrs) {
+            $(element).hover(function() {
                 // on mouseenter
                 $(element).tooltip('show');
-            }, function(){
+            }, function() {
                 // on mouseleave
                 $(element).tooltip('hide');
             });
         }
     };
 });
+
+angApp.directive('draggable', ['$document', function($document) {
+        return {
+            restrict: 'A',
+            link: function(scope, elm, attrs) {
+                var startX, startY, initialMouseX, initialMouseY;
+                elm.css({position: 'absolute'});
+
+                elm.bind('mousedown', function($event) {
+                    startX = elm.prop('offsetLeft');
+                    startY = elm.prop('offsetTop');
+                    initialMouseX = $event.clientX;
+                    initialMouseY = $event.clientY;
+                    $document.bind('mousemove', mousemove);
+                    $document.bind('mouseup', mouseup);
+                    return false;
+                });
+
+                function mousemove($event) {
+                    var dx = $event.clientX - initialMouseX;
+                    var dy = $event.clientY - initialMouseY;
+                    elm.css({
+                        top: startY + dy + 'px',
+                        left: startX + dx + 'px'
+                    });
+                    return false;
+                }
+
+                function mouseup() {
+                    $document.unbind('mousemove', mousemove);
+                    $document.unbind('mouseup', mouseup);
+                }
+            }
+        };
+    }]);
 
 /**
  *  Switches directives
@@ -177,15 +212,15 @@ angApp.directive('routingTypeIcon', function() {
 // js holder fix
 angApp.directive('expertCommandInput', function() {
     // Get text input
-    function getText(label, value, min, max,name) {
+    function getText(label, value, min, max, name) {
         var input = '';
-         var inName = (name ? name : label);
+        var inName = (name ? name : label);
         input += '<label>' + label + '</label> ';
         input += '<input class="form-control" name="' + inName + '" type="text" class="form-control" value="' + value + '" title=" min: ' + min + ', max: ' + max + '" />';
         return input;
     }
     // Get node
-    function getNode(label, devices, selected,name) {
+    function getNode(label, devices, selected, name) {
         var input = '';
         var inName = (name ? name : label);
         input += '<label>' + label + '</label> ';
@@ -201,9 +236,9 @@ angApp.directive('expertCommandInput', function() {
     }
 
     // Get enumerators
-    function getEnum(label, enums, defaultValue,name,hideRadio) {
+    function getEnum(label, enums, defaultValue, name, hideRadio) {
         var input = '';
-        if(!enums){
+        if (!enums) {
             return;
         }
         var inName = (name ? name : label);
@@ -212,33 +247,45 @@ angApp.directive('expertCommandInput', function() {
         angular.forEach(enums.enumof, function(v, k) {
             var title = v.label;
             var type = v.type;
-           
+
+
             var checked = (cnt == 1 ? ' checked="checked"' : '');
+
             if ('fix' in type) {
-                if (defaultValue && type.fix.value) {
-                    var checked = (type.fix.value == defaultValue ? ' checked="checked"' : '');
+                if (defaultValue) {
+                    if (isNaN(parseInt(defaultValue, 10))) {
+                        checked = (v.label == defaultValue ? ' checked="checked"' : '');
+                    } else {
+                        checked = '';
+                    }
                 }
                 input += '<input name="radio_' + inName + '" class="commands-data-chbx" type="radio" value="' + type.fix.value + '"' + checked + ' /> ' + title + '<br />';
             } else if ('range' in type) {
                 var min = type.range.min;
                 var max = type.range.max;
-                 var disabled = ' disabled="true"';
-                 var setVal = (defaultValue ? defaultValue : min);
-                if (defaultValue && min) {
-                    var checked = (min == defaultValue ? ' checked="checked"' : '');
-                    disabled = '';
-                }
-                if(hideRadio){
-                    disabled = '';
-                }
-//                input += '<input name="radio_' + inName + '" class="commands-data-chbx" type="radio" value=""' + checked + ' /> ' + title + ' <input type="text" name="radio_' + inName + '_txt" class="form-control commands-data-txt-chbx" value="' + min + '" title=" min: ' + min + ', max: ' + max + '"'+ disabled + ' /><br />'; 
-                if(!hideRadio){
-                    input += '<input name="radio_' + inName + '" class="commands-data-chbx" type="radio" value=""' + checked + ' /> ' + title + ' <input type="text" name="radio_txt_' + inName + '" class="form-control commands-data-txt-chbx" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '"'+ disabled + ' /><br />'; 
+                var disabled = ' disabled="true"';
+                var setVal = (defaultValue ? defaultValue : min);
+                if (defaultValue) {
+                    if (defaultValue >= min && defaultValue <= max) {
+                        checked = ' checked="checked"';
+                        disabled = '';
+                    }
+
                 }else{
-                      input += '<input type="text" name="radio_txt_' + inName + '" class="form-control" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '" /><br />'; 
+                    checked = '';
                 }
-                
-                
+                if (hideRadio) {
+                    disabled = '';
+                }
+              
+//                input += '<input name="radio_' + inName + '" class="commands-data-chbx" type="radio" value=""' + checked + ' /> ' + title + ' <input type="text" name="radio_' + inName + '_txt" class="form-control commands-data-txt-chbx" value="' + min + '" title=" min: ' + min + ', max: ' + max + '"'+ disabled + ' /><br />'; 
+                if (!hideRadio) {
+                    input += '<input name="radio_' + inName + '" class="commands-data-chbx" type="radio" value=""' + checked + ' /> ' + title + ' <input type="text" name="radio_txt_' + inName + '" class="form-control commands-data-txt-chbx" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '"' + disabled + ' /><br />';
+                } else {
+                    input += '<input type="text" name="radio_txt_' + inName + '" class="form-control" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '" /><br />';
+                }
+
+
             } else {
                 input = '';
             }
@@ -249,14 +296,14 @@ angApp.directive('expertCommandInput', function() {
     }
 
     // Get dropdown list
-    function getDropdown(label, enums, defaultValue,name) {
+    function getDropdown(label, enums, defaultValue, name) {
         var input = '';
-         var inName = (name ? name : label);
+        var inName = (name ? name : label);
         input += '<label>' + label + '</label><br />';
         input += '<select name="select_' + inName + '" class="form-control">';
         var cnt = 1;
         angular.forEach(enums.enumof, function(v, k) {
-             var title = v.label;
+            var title = v.label;
             var type = v.type;
             var value;
             if ('fix' in type) {
@@ -275,12 +322,31 @@ angApp.directive('expertCommandInput', function() {
         input += '</select">';
         return input;
     }
+
+    // Get constant 
+    function getConstant(label, type, defaultValue, name) {
+        var input = '';
+        var inName = (name ? name : label);
+        input += '<label>' + label + '</label><br />';
+        if (type.constant.length > 0) {
+            input += '<select name="select_' + inName + '" class="form-control">';
+            angular.forEach(type.constant, function(v, k) {
+
+                input += '<option value="' + v.type.constant.value + '"> ' + v.label + '</option>';
+            });
+           
+
+            input += '</select">';
+        }
+         //console.log(type,defaultValue);
+        input += '<em>Constant type</em>';
+        return input;
+    }
     
-     // Get constant 
-    function getConstant(label) {
+    // Get default
+    function getDefault(label) {
         var input = '';
         input += '<label>' + label + '</label><br />';
-        input += '<em>Constant type</em>';
         return input;
     }
     return {
@@ -299,13 +365,13 @@ angApp.directive('expertCommandInput', function() {
         link: function(scope, element, attrs) {
 
             var input = '';
-            if(!scope.collection){
+            if (!scope.collection) {
                 return;
             }
             var label = scope.collection.label;
             var type = scope.collection.type;
             var name = scope.collection.name;
-             var hideRadio = scope.collection.hideRadio;
+            var hideRadio = scope.collection.hideRadio;
             if (scope.isDropdown) {
                 input = getDropdown(label, type, scope.defaultValue);
                 scope.input = input;
@@ -314,15 +380,15 @@ angApp.directive('expertCommandInput', function() {
             //if (label && type) {
             if (type) {
                 if ('range' in type) {
-                    input = getText(label, scope.values, type.range.min, type.range.max,name);
+                    input = getText(label, scope.values, type.range.min, type.range.max, name);
                 } else if ('node' in type) {
-                    input = getNode(label, scope.getNodeDevices(), 'null',name);
+                    input = getNode(label, scope.getNodeDevices(), 'null', name);
                 } else if ('enumof' in type) {
-                    input = getEnum(label, type, scope.defaultValue,name,hideRadio);
+                    input = getEnum(label, type, scope.defaultValue, name, hideRadio);
                 } else if ('constant' in type) {
-                    input = getConstant(label);
-                }else {
-                    input = '';
+                    input = getConstant(label, type, scope.defaultValue, name);
+                } else {
+                    input = getDefault(label);
                 }
                 scope.input = input;
                 return;

@@ -21,9 +21,31 @@
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <tbody>
-                            <tr ng-repeat="v in descriptionCont" ng-show="v.val ||  v.val != '' ">
+                            <tr ng-repeat="v in descriptionCont" ng-show="v.val || v.val != ''">
                                 <th style="width: 30%;">{{_t(v.key)}}</th>
-                                <td  id="{{v.key}}" ng-bind-html="v.val | toTrusted"></td>
+                                <td  id="{{v.key}}">
+                                    <div ng-switch on="v.key">
+                                        <div ng-switch-when="command_class" ng-controller="CommandModalController">
+                                            <span ng-repeat="cc in interviewCommands"><a href="" ng-click="showModal('#modal_command', cc.cmdData)">{{cc.ccName}}</a>, </span>
+                                           
+                                        </div>
+                                    <p ng-switch-default ng-bind-html="v.val | toTrusted"></p>
+                                    </div>
+                                    
+                                     <!-- <span ng-show="v.key == 'device_node_name_'">
+                                        <a href="" ng-click="goRename_ = !goRename_">{{_t('device_rename_tooltip')}} <i class="fa fa-pencil"></i> </a>
+                                    </span>
+                                    <div ng-show="goRename_">
+                                        <form name="form_rename_{{$index}}" id="form_rename" ng-show="goRename_" ng-model="form_rename" class="form form-inline" ng-controller="ConfigStoreController" ng-submit="renameDevice($index)" novalidate>
+                                            <input name="device_name_{{$index}}" id="device_name_{{$index}}" type="text" class="form-control" value="" />
+                                            <button
+                                                type="submit"
+                                                class="btn btn-primary" 
+                                                id="btn_update"
+                                                >{{_t('btn_save_name')}}</button>
+                                        </form>
+                                    </div>-->
+                                </td>
                             </tr>
 
                         </tbody>
@@ -83,14 +105,14 @@
                         <tbody>
                             <tr ng-repeat="v in interviewCommands" id="{{ v.ccId}}">
                                 <td><a ng-show="$index == 0" href="" ng-controller="CommandModalController" ng-click="showModal('#modal_command', v.cmdDataIn)">{{v.iId}}</a></td>
-                                <td><a href="" ng-controller="CommandModalController" ng-click="showModal('#modal_command',v.cmdData)">{{v.ccName}}</a></td>
+                                <td><a href="" ng-controller="CommandModalController" ng-click="showModal('#modal_command', v.cmdData)">{{v.ccName}}</a></td>
                                 <td>
                                     <p ng-if="v.interviewDone">Done</p>
                                     <button
                                         ng-controller="ConfigStoreController"
                                         ng-if="!v.interviewDone"
                                         data-store-url="devices[{{deviceId}}].instances[{{v.iId}}].commandClasses[{{v.ccId}}].Interview()"
-                                         data-ng-click="store('#btn_force_interview_' + v.ccId)" 
+                                        data-ng-click="store('#btn_force_interview_' + v.ccId)" 
                                         class="btn btn-primary" 
                                         id="btn_force_interview_{{v.ccId}}"
                                         >{{_t('config_ui_force_interview')}}</button>
@@ -108,18 +130,18 @@
 </div><!-- /.Modal -->
 
 
- <!-- Modal command -->
-    <div class="modal fade" id="modal_command" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">{{_t('commandClass')}}</h4>
-                </div>
-                <div class="modal-body"></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
+<!-- Modal command -->
+<div class="modal fade" id="modal_command" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">{{_t('commandClass')}}</h4>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
-    </div><!-- /.Modal -->
+    </div>
+</div><!-- /.Modal -->
