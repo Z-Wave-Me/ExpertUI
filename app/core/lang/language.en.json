@@ -558,6 +558,7 @@
     "conf_apply_mains": "The device is mains powered. New configurations would be applied immediately",
     "conf_apply_wakeup": "The device is battery powered. New configurations would be applied after manual or next scheduled wakeup at ",
     "conf_apply_remote": "The device is a remote. New configurations would be applied after manual wakeup",
+    "conf_apply_battery": "Please wakeup the device to apply the changes in the device",
     "ctrl_info_sw_rev_title": "Z-Way Version",
     "ctrl_info_sw_rev_ver_title": "Revision Version:",
     "ctrl_info_sw_rev_id_title": "Revision ID:",
