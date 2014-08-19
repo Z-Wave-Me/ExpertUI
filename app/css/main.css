@@ -299,7 +299,10 @@ background-color: #e4f5fc;
 
 /* Modals
 -------------------------------------------------- */
-.modal-body{
+.modal-body_{
+    
+}
+.cc-data-element{
     white-space: -moz-pre-wrap; /* Mozilla */
     white-space: -hp-pre-wrap; /* HP printers */
     white-space: -o-pre-wrap; /* Opera 7 */

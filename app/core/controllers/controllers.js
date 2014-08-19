@@ -1419,7 +1419,7 @@ appController.controller('StatusController', function($scope, $filter, dataServi
     }
     // Get operating HTML
     function operatingCont(isFailed, lastCommunication) {
-        var operating_cont = (isFailed ? ('<i class="fa fa-power-off fa-lg text-danger" title="' + $scope._t('device_is_dead') + '"></i>') : ('<i class="fa fa-check fa-lg text-success" title="' + $scope._t('device_is_operating') + '"></i>')) + ' <span title="' + $scope._t('last_communication') + '" class="not_important">' + $filter('isTodayFromUnix')(lastCommunication) + '</span>';
+        var operating_cont = (isFailed ? ('<i class="fa fa-check fa-lg text-danger" title="' + $scope._t('device_is_dead') + '"></i>') : ('<i class="fa fa-check fa-lg text-success" title="' + $scope._t('device_is_operating') + '"></i>')) + ' <span title="' + $scope._t('last_communication') + '" class="not_important">' + $filter('isTodayFromUnix')(lastCommunication) + '</span>';
         return operating_cont;
     }
 
@@ -2208,12 +2208,14 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     $scope.deviceImage = '';
     $scope.commands = [];
     $scope.refresh = false;
+    $scope.hasBattery = false;
     $scope.formFirmware = {
         fw_url: "",
         fw_target: ""
     };
     $scope.reset = function() {
         $scope.devices = angular.copy([]);
+        $scope.commands = angular.copy([]);
     };
 
     // Remember device id
@@ -2257,7 +2259,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             $scope.ZWaveAPIData = ZWaveAPIData;
             if (refresh) {
                 dataService.joinedZwaveData(function(data) {
-                    //$scope.reset();
+                    $scope.reset();
                     setData(data.joined);
                     //setNavigation(data.joined);
                     setData(data.joined, nodeId);
@@ -2317,7 +2319,10 @@ appController.controller('ConfigurationController', function($scope, $routeParam
      * @param {object} form
      * @returns {undefined}
      */
-    $scope.submitApplyConfigCfg = function(form, cmd, cfg) {
+    $scope.submitApplyConfigCfg = function(form, cmd, cfg,hasBattery) {
+        if(hasBattery){
+            alert($scope._t('conf_apply_battery'));
+        }
         var sections = $('#' + form).find('.cfg-control-content');
         var data = $('#' + form).serializeArray();
         var dataValues = [];
@@ -2359,7 +2364,11 @@ appController.controller('ConfigurationController', function($scope, $routeParam
      * @param {object} form
      * @returns {undefined}
      */
-    $scope.submitApplyConfig = function(form, cmd) {
+    $scope.submitApplyConfig = function(form, cmd,hasBattery) {
+         if(hasBattery){
+            alert($scope._t('conf_apply_battery'));
+        }
+        console.log(hasBattery);
         var data = $('#' + form).serializeArray();
         var dataJoined = [];
         angular.forEach(data, function(v, k) {
@@ -2393,7 +2402,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
      * @returns {undefined}
      */
     $scope.updateFromDeviceCfg = function(cmd, cfg) {
-        angular.forEach(cfg, function(v, k) {
+       angular.forEach(cfg, function(v, k) {
             if (v.confNum) {
                 var request = cmd + '(' + v.confNum + ')';
                 dataService.runCmd(request);
@@ -2444,6 +2453,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         }
         $scope.showDevices = true;
         $scope.deviceName = $filter('deviceName')(nodeId, node);
+        $scope.hasBattery = 0x80 in node.instances[0].commandClasses;
         var zddXmlFile = null;
         if (angular.isDefined(node.data.ZDDXMLFile)) {
             zddXmlFile = node.data.ZDDXMLFile.value;
@@ -2606,7 +2616,8 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         //obj["l"] = {"key": "device_queue_length", "val": queueLength(ZWaveAPIData, node)};
         obj["m"] = {"key": "device_description_app_version", "val": deviceDescriptionAppVersion + '.' + deviceDescriptionAppSubVersion};
         obj["o"] = {"key": "device_description_sdk_version", "val": sdk};
-        obj["p"] = {"key": "command_class", "val": ccNames.join(', ')};
+        //obj["p"] = {"key": "command_class", "val": ccNames.join(', ')};
+         obj["p"] = {"key": "command_class", "val": ccNames};
         obj["q"] = {"key": "zwave_role_type", "val": ZWavePlusRoles.join(', ')};
         //obj[99] = {"key": "device_description_resources", "val": ''};
         return obj;
@@ -2652,7 +2663,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         if (!node.data.isListening.value && !node.data.sensor250.value && !node.data.sensor1000.value) {
             out = (node.data.isAwake.value ? '<i class="fa fa-certificate fa-lg text-orange""></i> ' + $scope._t('device_is_active') : '<i class="fa fa-moon-o fa-lg text-primary"></i> ' + $scope._t('device_is_sleeping'));
         } else {
-            out = (node.data.isFailed.value ? '<i class="fa fa-power-off fa-lg text-danger"></i> ' + $scope._t('device_is_dead') : '<i class="fa fa-check fa-lg text-success"></i> ' + $scope._t('device_is_operating'));
+            out = (node.data.isFailed.value ? '<i class="fa fa-check fa-lg text-danger"></i> ' + $scope._t('device_is_dead') : '<i class="fa fa-check fa-lg text-success"></i> ' + $scope._t('device_is_operating'));
         }
         return out;
     }
@@ -4427,7 +4438,7 @@ appController.controller('CommandModalController', function($scope, $filter) {
             if (data.name == undefined) {
                 return '';
             }
-            var html = '<div class="data-element">' + space + data.name + ': <span class="' + ((data.updateTime > data.invalidateTime) ? 'green' : 'red') + '">' + ((typeof (data.value) !== 'undefined' && data.value != null) ? data.value.toString() : 'None') + '</span>' + ' (<span class="' + ((data.updateTime > data.invalidateTime) ? '' : 'red') + '">' + $filter('isTodayFromUnix')(data.updateTime) + '</span>)</div>';
+            var html = '<div class="cc-data-element">' + space + data.name + ': <span class="' + ((data.updateTime > data.invalidateTime) ? 'green' : 'red') + '">' + ((typeof (data.value) !== 'undefined' && data.value != null) ? data.value.toString() : 'None') + '</span>' + ' (<span class="' + ((data.updateTime > data.invalidateTime) ? '' : 'red') + '">' + $filter('isTodayFromUnix')(data.updateTime) + '</span>)</div>';
             return html;
         };
         // Get data

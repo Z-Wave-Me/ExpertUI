@@ -1,5 +1,6 @@
 
 <!-- config_cont -->
+Battery: {{hasBattery}}
 <div class="cfg-block" id="config_cont" ng-if="configCont">
     <h4>{{_t('configurations_list')}}</h4>
     <div class="cfg-block-content" ng-init="formName = 'form_config'">
@@ -8,7 +9,7 @@
             id="{{formName}}"
             class="form" 
             role="form"
-            ng-submit="submitApplyConfigCfg(formName, 'devices[' + deviceId + '].instances[0].commandClasses[0x70].Set',configCont)" 
+            ng-submit="submitApplyConfigCfg(formName, 'devices[' + deviceId + '].instances[0].commandClasses[0x70].Set',configCont,hasBattery)" 
             novalidate>
             <a
                  class="btn btn-primary spin-true"
@@ -49,7 +50,7 @@
             id="{{formName}}"
             class="form" 
             role="form"
-            ng-submit="submitApplyConfig(formName, wakeupCont.cmd + '.Set')" 
+            ng-submit="submitApplyConfig(formName, wakeupCont.cmd + '.Set',hasBattery)" 
             novalidate>
             <button
                  class="btn btn-primary spin-true"
@@ -89,7 +90,7 @@
             id="{{formName}}"
             class="form" 
             role="form"
-            ng-submit="submitApplyConfig(formName, switchAllCont.cmd + '.Set')" 
+            ng-submit="submitApplyConfig(formName, switchAllCont.cmd + '.Set',hasBattery)" 
             novalidate>
             <a
                 class="btn btn-primary spin-true"
@@ -124,7 +125,7 @@
             id="{{formName}}"
             class="form" 
             role="form"
-            ng-submit="submitApplyConfig(formName, protectionCont.cmd + '.Set')" 
+            ng-submit="submitApplyConfig(formName, protectionCont.cmd + '.Set',hasBattery)" 
             novalidate>
             <a
                 class="btn btn-primary spin-true"

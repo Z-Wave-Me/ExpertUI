@@ -20,11 +20,7 @@
                             <span ng-show="predicate == 'batteryType'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
-                    <th>
-                        <a href="" ng-click="orderBy('batteryCount')">{{ _t('th_battery_count')}}
-                            <span ng-show="predicate == 'batteryCount'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                        </a>
-                    </th>
+                    
                     <th class="text-right">
                         <a href="" ng-click="orderBy('level')">{{ _t('th_level')}}
                             <span ng-show="predicate == 'level'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
@@ -46,8 +42,7 @@
              <tr ng-repeat="v in battery | orderBy:predicate:reverse" id="{{ v.rowId}}">
                 <td>{{ v.id }}</td>
                 <td>{{ v.name }}</td>
-                <td>{{ v.batteryType }}</td>
-                <td>{{ v.batteryCount }}</td>
+                <td>{{ v.batteryCount }}<span ng-show="v.batteryCount">*</span>{{ v.batteryType }}</td>
                  <td class="row-level text-right">
                      &nbsp;{{ v.level }}%
                      <i class="{{ v.level | batteryIcon }}"></i>
