@@ -64,6 +64,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
         runCmd: runCmd,
         store: store,
         getDeviceClasses: getDeviceClasses,
+        getSelectZDDX:  getSelectZDDX,
         getQueueData: getQueueData,
         updateQueueData: updateQueueData,
         cancelQueueDataInterval: cancelQueueDataInterval,
@@ -91,6 +92,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
             var request = $http({
                 method: "POST",
                 url: cfg.server_url +  cfg.update_url + "0"
+                //url: 'storage/all_cp.json'
             });
             request.success(function(data) {
                 $('#update_time_tick').html($filter('getCurrentTime')(time));
@@ -292,6 +294,30 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
             });
         }
     }
+    
+    /**
+     * Get zddx device selection
+     */
+    function getSelectZDDX(nodeId,callback) {
+        if (deviceClasses) {
+            return callback(deviceClasses);
+        }
+        else {
+            var request = $http({
+                method: "POST",
+                url: cfg.server_url + '/ZWaveAPI/Run/devices[' + nodeId + '].GuessXML()'
+            });
+            request.success(function(data) {
+                 return callback(data);
+            }).error(function() {
+                console.log('Error: getSelectZDDX');
+               // handleError();
+
+            });
+        }
+    }
+    
+   
 
     /**
      * Load Queue data

@@ -1,6 +1,15 @@
 <!-- Controller info view -->
 <div ng-controller="ControllerController">
-    <div class="page-header"><h1>{{_t('nav_controller_info')}}</h1></div>
+    <div class="page-header">
+        <div class="row">
+            <div class="col-md-6">
+        <h1>{{_t('nav_controller_info')}}</h1>
+         </div>
+            <div class="col-md-6">
+        <a href="" class="btn btn-primary  pull-right" ng-click="openQueue()">{{_t('nm_inspect_queue_title')}}</a>
+         </div>
+        </div>
+    </div>
     <div class="table-responsive">
         <table class="table table-condensed">
             <tbody>
