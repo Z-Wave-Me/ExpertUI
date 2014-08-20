@@ -130,7 +130,7 @@
                                 class="btn btn-primary"
                                 id="btn_replace_failed_node"
                                 ng-disabled="!modelReplaceNode"
-                                ng-click="runCmd(['ReplaceFailedNode(' + modelReplaceNode + ')', 'controller.AddNodeToNetwork(1)'], null, null, {'name': 'remove_option', 'id': '#replace_failed_node', 'value': modelReplaceNode})"
+                                ng-click="runCmd('ReplaceFailedNode(' + modelReplaceNode + ')', null, null, {'name': 'remove_option', 'id': '#replace_failed_node', 'value': modelReplaceNode})"
                                 >{{_t('nm_replace_node')}}</button>
                             
                         </div>
