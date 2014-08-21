@@ -45,7 +45,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="v in sensors| orderBy:predicate:reverse" id="{{ v.rowId}}">
-                    <td>{{ v.id}}<span ng-show="v.iId != 1000">.{{v.iId}}</span></td>
+                    <td>{{ v.id}}<span ng-show="v.iId != 0">.{{v.iId}}</span></td>
                     <td ng-switch on="v.type">
                         <i ng-switch-when="SensorBinary" class="fa fa-eye fa-lg"></i>
                         <i ng-switch-when="Meter" class="fa fa-lightbulb-o fa-lg"></i> 

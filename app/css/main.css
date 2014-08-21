@@ -262,6 +262,21 @@ background-color: #e4f5fc;
     float: left;
 }
 
+#device_select_image_container{
+    margin: 20px;
+}
+
+#device_select_image{
+    margin: 0 auto;
+    text-align: center;
+}
+
+
+#device_select_image img{
+    margin: 0 auto;
+    max-width: 200px;
+}
+
 /* Network controll
 -------------------------------------------------- */
 

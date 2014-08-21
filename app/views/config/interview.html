@@ -161,23 +161,33 @@
             </div>
             <div class="modal-body">
                 <p ng-bind-html="_t('select_zddx_help') | toTrusted"></p>
+               
                 <div>
                     <select 
                         name="select_zddx_help" 
                         id="select_zddx_help" 
                         class="form-control" 
-                        ng-change="changeDeviceSelect('#select_zddx_help')" 
+                        ng-change="changeDeviceSelect('#select_zddx_help','#device_select_image')" 
                         ng-model="modelSelectZddx">
                         <option value="">---</option>
-                        <option ng-repeat="v in deviceZddx" value="{{v.fileName}}" data-image="{{v.deviceImage}}">{{v.productName}}</option>
+                        <option 
+                            ng-init="selectCfg = {
+                                'name':((v.brandName == '' || v.productName == '')?('Unnamed ZDDX: ' + v.fileName):(v.brandName + ' ' + v.productName)),
+                                'selected':(deviceZddxFile == v.fileName ? ' selected' : '')
+                            }"
+                            ng-repeat="v in deviceZddx"
+                            value="{{v.fileName}}" 
+                            data-image="{{v.deviceImage}}"
+                            {{selectCfg.selected}}>{{selectCfg.name}}</option>
                     </select>
-                    <div>
-                        {{deviceSelectImage}}
+                    <div id="device_select_image_container">
+                    <div id="device_select_image">
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">{{_t('select')}}</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="runCmdDeviceSelect(deviceId,modelSelectZddx)">{{_t('select')}}</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">{{_t('cancel')}}</button>
             </div>
         </div>

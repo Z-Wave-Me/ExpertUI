@@ -436,26 +436,29 @@ appController.controller('SwitchController', function($scope, $log, $filter, dat
 
                 var genericType = ZWaveAPIData.devices[nodeId].data.genericType.value;
                 var specificType = ZWaveAPIData.devices[nodeId].data.specificType.value;
-
+                var genspecType = genericType + '/' + specificType;
 
                 // Set object
                 var obj = {};
-
+                
+                // Motor devices
                 var btnOn = $scope._t('switched_on');
                 var btnOff = $scope._t('switched_off');
                 var btnFull = $scope._t('btn_full');
                 var hasMotor = false;
-                if (genericType == 9) {
+                var motorDevices = ['17/3','17/5','17/6','17/7','9/0',' 9/1'];
+                if (motorDevices.indexOf(genspecType) !== -1) {
                     btnOn = $scope._t('btn_switched_up');
                     btnOff = $scope._t('btn_switched_down');
                     hasMotor = true;
                 }
+                //console.log(nodeId + '.' + instanceId + ': ' + genspecType + ' motor: ' + hasMotor);
                 var multiChannel = false;
                 if (0x60 in instance.commandClasses) {
                     multiChannel = true;
                 }
                 var level = updateLevel(instance.commandClasses[ccId].data.level, ccId,btnOn,btnOff);
-
+                
                 obj['id'] = nodeId;
                 obj['cmd'] = instance.commandClasses[ccId].data.name + '.level';
                 obj['iId'] = instanceId;
@@ -816,13 +819,12 @@ appController.controller('MetersController', function($scope, $filter, dataServi
     });
 
     // Store data from meter on remote server
-    $scope.store = function(btn) {
+    $scope.store = function(cmd,action) {
         // Is clicked on RESET?
-        var action = $(btn).attr('data-action');
         if (action === 'reset' && !window.confirm($scope._t('are_you_sure_reset_meter'))) {
             return;
         }
-        dataService.runCmd($(btn).attr('data-store-url'));
+        dataService.runCmd(cmd);
     };
 
     // Store all data from sensors on remote server
@@ -869,6 +871,7 @@ appController.controller('MetersController', function($scope, $filter, dataServi
                         }
                         var obj = {};
                         obj['id'] = k;
+                         obj['iId'] = instanceId;
                         obj['cmd'] = meters.data.name + '.' + meter.name;
                         obj['cmdId'] = 0x30;
                         obj['rowId'] = meters.name + '_' + meter.name + '_' + k;
@@ -880,12 +883,12 @@ appController.controller('MetersController', function($scope, $filter, dataServi
                         obj['invalidateTime'] = meter.invalidateTime;
                         obj['updateTime'] = meter.updateTime;
                         obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
-                        obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[0].commandClasses[50].Get()';
+                        obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[' + instanceId + '].commandClasses[50].Get()';
                         if (ZWaveAPIData.devices[obj['id']].instances[instanceId].commandClasses[0x32].data.version.value < 2
                                 || !ZWaveAPIData.devices[obj['id']].instances[instanceId].commandClasses[0x32].data.resettable.value) {
                             obj['urlToReset'] = null;
                         } else {
-                            obj['urlToReset'] = 'devices[' + obj['id'] + '].instances[0].commandClasses[50].Reset()';
+                            obj['urlToReset'] = 'devices[' + obj['id'] + '].instances[' + instanceId + '].commandClasses[50].Reset()';
                         }
 
                         $scope.meters.push(obj);
@@ -1756,11 +1759,13 @@ appController.controller('TypeController', function($scope, $filter, dataService
             var basicType = node.data.basicType.value;
             var genericType = node.data.genericType.value;
             var specificType = node.data.specificType.value;
+            var major = node.data.ZWProtocolMajor.value;
+             var minor = node.data.ZWProtocolMinor.value;
             var fromSdk = true;
             var sdk;
             // SDK
             if (node.data.SDK.value == '') {
-                sdk = node.data.ZWProtocolMajor.value + '.' + node.data.ZWProtocolMinor.value;
+                sdk = major + '.' + minor;
                 fromSdk = false;
             } else {
                 sdk = node.data.SDK.value;
@@ -1776,6 +1781,10 @@ appController.controller('TypeController', function($scope, $filter, dataService
                     return;
                 }
             });
+            // MWI and EF
+            var mwief = getEXFrame(major,minor);
+            
+            // Zwave plus
             var ZWavePlusInfo = false;
             angular.forEach(ccIds, function(v, k) {
                 var cmd = node.instances[instanceId].commandClasses[v];
@@ -1806,6 +1815,7 @@ appController.controller('TypeController', function($scope, $filter, dataService
             obj['rowId'] = 'row_' + nodeId;
             obj['name'] = $filter('deviceName')(nodeId, node);
             obj['security'] = security;
+             obj['mwief'] = mwief;
             obj['ZWavePlusInfo'] = ZWavePlusInfo;
             obj['sdk'] = (sdk == '0.0' ? '?' : sdk);
             obj['fromSdk'] = fromSdk;
@@ -1818,7 +1828,20 @@ appController.controller('TypeController', function($scope, $filter, dataService
             $scope.devices.push(obj);
         });
     }
-
+    
+    /**
+     * Get EXF frame
+     */
+    function getEXFrame($major,$minor){
+        if ($major==1) return 0;
+        if ($major==2) {
+                if ($minor >=96) return 1;
+                if ($minor == 74) return 1;
+                return 0;
+                }
+        if ($major==3) return 1;
+        return 0;
+        }
 
 });
 // Assoc controller
@@ -2242,6 +2265,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     $scope.deviceSelectImage = '';
     $scope.commands = [];
      $scope.deviceZddx = [];
+     $scope.deviceZddxFile;
     $scope.refresh = false;
     $scope.hasBattery = false;
     $scope.formFirmware = {
@@ -2351,9 +2375,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     // Show modal device select dialog
     $scope.showModalDeviceSelect = function(target,nodeId) {
         dataService.getSelectZDDX(nodeId,function(data) {
-            console.log(data);
-             $scope.deviceZddx = data;
-            
+            $scope.deviceZddx = data;
         });
          //$scope.deviceZddx.push({'id':25});
         $(target).modal();
@@ -2361,11 +2383,22 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     };
     
     // Change device select
-    $scope.changeDeviceSelect = function(selector) {
-        var image = $(selector).find(':selected').data('image');
-        $scope.deviceSelectImage = image;
-       console.log(image);
-       
+    $scope.changeDeviceSelect = function(selector,target) {
+        var imageFile = $(selector).find(':selected').data('image');
+        var image;
+        if(imageFile == undefined){
+            image = $scope._t('no_device_image');
+        }else{
+            image = '<img src="' + imageFile + '" />';
+        }
+        $(target).html(image);
+      };
+      
+      // Update device zddx file
+    $scope.runCmdDeviceSelect = function(nodeId,file) {
+        var cmd = 'devices['+ nodeId + '].LoadXMLFile("' + file + '")';
+        dataService.runCmd(cmd);
+        console.log(cmd);
     };
 
     /**
@@ -2528,6 +2561,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         var zddXmlFile = null;
         if (angular.isDefined(node.data.ZDDXMLFile)) {
             zddXmlFile = node.data.ZDDXMLFile.value;
+             $scope.deviceZddxFile = node.data.ZDDXMLFile.value;
         }
 
         $scope.interviewCommands = interviewCommands(node);
