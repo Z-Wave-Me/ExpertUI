@@ -1,5 +1,5 @@
 <!-- Statistics view -->
-<div ng-controller="StatisticsController">
+<div ng-controller="TimingController">
     <div class="page-header"><h1>{{_t('nav_timing_info')}}</h1></div>
     <div class="table-responsive">
         <table class="table table-striped">
@@ -10,34 +10,46 @@
                             <span ng-show="predicate == 'id'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
+                    
+                     <th>
+                        <a href="" ng-click="orderBy('name')">{{ _t('device_name')}}
+                            <span ng-show="predicate == 'name'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    
                     <th>
                          <a href="" ng-click="orderBy('type')">{{_t('th_type')}}  
                             <span ng-show="predicate == 'type'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
                     <th>
-                         <a href="" ng-click="orderBy('total')">{{_t('th_total')}}  
-                            <span ng-show="predicate == 'total'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                         <a href="" ng-click="orderBy('totalPackets')">{{_t('th_total')}}  
+                            <span ng-show="predicate == 'totalPackets'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
                      <th>
-                         <a href="" ng-click="orderBy('ok')">{{_t('th_ok')}}  
-                            <span ng-show="predicate == 'ok'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                         <a href="" ng-click="orderBy('okPackets')">{{_t('th_ok')}}  
+                            <span ng-show="predicate == 'okPackets'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
                     <th>{{_t('th_lastpackets')}}</th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="v in data| orderBy:predicate:reverse">
+                <tr ng-repeat="v in devices | orderBy:predicate:reverse">
                     <td>{{ v.id}}</td>
+                    <td><!-- <switch-type-icon generic="{{ v.genericType}}" specific="{{ v.specificType}}"></switch-type-icon> -->{{ v.name }}</td>
                     <td>{{ v.type}}</td>
-                    <td>{{ v.total}}</td>
-                    <td>{{ v.ok}}%</td>
-                    <td>{{ v.packets}}</td>
+                    <td>{{ v.totalPackets}}</td>
+                    <td>{{ v.okPackets}}%</td>
+                    <td>{{ v.lastPackets_}} <p ng-bind-html="v.lastPackets | toTrusted"></p></td>
                 </tr>
             </tbody>
         </table>
-        <button type="button" class="btn btn-primary">{{_t('reset')}}</button>
+        <button 
+            type="button" 
+            class="btn btn-primary"
+            ng-click="resetTiming('What is cmd for reset?')"
+            >{{_t('reset')}}</button>
     </div>
 </div>

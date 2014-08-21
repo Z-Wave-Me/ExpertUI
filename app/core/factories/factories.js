@@ -65,6 +65,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
         store: store,
         getDeviceClasses: getDeviceClasses,
         getSelectZDDX:  getSelectZDDX,
+        getTiming:  getTiming,
         getQueueData: getQueueData,
         updateQueueData: updateQueueData,
         cancelQueueDataInterval: cancelQueueDataInterval,
@@ -317,7 +318,30 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
         }
     }
     
-   
+     /**
+     * Get timing (statistics) data
+     */
+    function  getTiming(callback) {
+        if (deviceClasses) {
+            return callback(deviceClasses);
+        }
+        else {
+            var request = $http({
+                method: "POST",
+                //url: 'storage/timing.json'
+                url: cfg.server_url + '/JS/Run/communicationStatistics.get()'
+            });
+            request.success(function(data) {
+                 return callback(data);
+            }).error(function() {
+                console.log('Error: communicationStatistics');
+               // handleError();
+
+            });
+        }
+    }
+    
+  
 
     /**
      * Load Queue data
