@@ -2280,7 +2280,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         $scope.devices = angular.copy([]);
         $scope.commands = angular.copy([]);
     };
-    
+
     // Remember device id
     $scope.detailId = (angular.isDefined($cookies.configuration_id) ? $cookies.configuration_id : 0);
     // Redirect to detail page
@@ -2303,10 +2303,10 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     // Get active tab
     $scope.getActiveTab = function() {
         var activeTab = (angular.isDefined($cookies.tab_config) ? $cookies.tab_config : 'interview');
-        if(activeTab == 'interview'){
-             $scope.refresh = true; 
-        }else{
-            $scope.refresh = false; 
+        if (activeTab == 'interview') {
+            $scope.refresh = true;
+        } else {
+            $scope.refresh = false;
         }
         $scope.activeTab = activeTab;
     };
@@ -2320,7 +2320,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             setNavigation(ZWaveAPIData);
             setData(ZWaveAPIData, nodeId);
             $scope.ZWaveAPIData = ZWaveAPIData;
-             dataService.cancelZwaveDataInterval();
+            dataService.cancelZwaveDataInterval();
             if (refresh) {
                 dataService.joinedZwaveData(function(data) {
                     $scope.reset();
@@ -3467,7 +3467,7 @@ appController.controller('ConfigStoreController', function($scope, dataService) 
     };
 });
 // Controll controller
-appController.controller('ControllController', function($scope, $filter, $upload, cfg, dataService) {
+appController.controller('ControllController', function($scope, $filter, $timeout,$upload, cfg, dataService) {
     $scope.devices = [];
     $scope.failedNodes = [];
     $scope.replaceNodes = [];
@@ -3796,7 +3796,14 @@ appController.controller('ControllController', function($scope, $filter, $upload
          * Replace node Run CMD if controllerState = 19
          */
         if ($scope.controllerState == 19) {
-            dataService.runCmd('controller.AddNodeToNetwork(1)');
+            var timeOut;
+            console.log('Wait for 5 sec');
+            timeOut = $timeout(function() {
+                console.log('Run after 5 sec: controller.AddNodeToNetwork(1) ');
+                dataService.runCmd('controller.AddNodeToNetwork(1)');
+            }, 5000);
+
+
         }
     }
     ;
@@ -4224,19 +4231,19 @@ appController.controller('TimingController', function($scope, $filter, dataServi
 //    };
 
     //$scope.load();
-    
+
     // Load timing data
     $scope.loadTiming = function() {
         dataService.getTiming(function(data) {
             dataService.getZwaveData(function(ZWaveAPIData) {
-            setData(data,ZWaveAPIData);
+                setData(data, ZWaveAPIData);
 //            dataService.joinedZwaveData(function(data) {
 //                $scope.reset();
 //                //$scope.loadTiming();
 //                setData(data,data.joined);
 //            });
-        });
-        $scope.timing = data;
+            });
+            $scope.timing = data;
         });
     };
     $scope.loadTiming();
@@ -4257,7 +4264,7 @@ appController.controller('TimingController', function($scope, $filter, dataServi
     /**
      * Set zwave data
      */
-    function setData(data,ZWaveAPIData) {
+    function setData(data, ZWaveAPIData) {
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
@@ -4288,7 +4295,7 @@ appController.controller('TimingController', function($scope, $filter, dataServi
                 type = 'Remote';
 
             }
-            
+
             // Packets
             var timingItems = data[nodeId];
             if (angular.isDefined(timingItems)) {
@@ -4342,22 +4349,22 @@ appController.controller('TimingController', function($scope, $filter, dataServi
     function getLastPackets(data) {
         var packets = '&nbsp;';
         var deliveryTime = 0;
-         var color;
-         var cnt = 0;
+        var color;
+        var cnt = 0;
         angular.forEach(data, function(v, k) {
-            if(cnt > 20){
-             return;
-         }
+            if (cnt > 20) {
+                return;
+            }
             deliveryTime = parseInt(v.deliveryTime);
-            if(!v.delivered){
+            if (!v.delivered) {
                 color = 'red';
-            }else{
+            } else {
                 color = (deliveryTime > 100 ? 'black' : 'green');
             }
             packets += '<span class="' + color + '">' + deliveryTime + '</span> ';
             cnt++;
         });
-         return packets;
+        return packets;
 
     }
 });

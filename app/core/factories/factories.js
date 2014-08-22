@@ -245,7 +245,8 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
             handleSuccess(data);
         }).error(function() {
             $('button .fa-spin,a .fa-spin').fadeOut(1000);
-           handleCmdError();
+            console.log('Response error');
+           //handleCmdError();
 
         });
 
@@ -412,7 +413,8 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
         request.success(function(data) {
             return callback(data);
         }).error(function() {
-            handleError();
+            //handleError();
+            console.log('Notes error');
 
         });
 
