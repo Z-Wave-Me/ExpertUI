@@ -3812,7 +3812,14 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
     $scope.cellState = function(nodeId, nnodeId, routesCount) {
         var node = $scope.nodes[nodeId].node;
         var nnode = $scope.nodes[nnodeId].node;
-        var info = ($filter('associationExists')(node, nnodeId) ? '*' : '');
+        var tooltip = nodeId + ' - ' + nnodeId;
+        var info;
+        if ($filter('associationExists')(node, nnodeId)) {
+            info = '*';
+            tooltip += ' (' + $scope._t('rt_associated') + ')';
+        } else {
+            info = '';
+        }
         var clazz = 'rtDiv line' + nodeId + ' ';
         if (nodeId == nnodeId
                 || node.data.isVirtual.value
@@ -3832,7 +3839,8 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
             clazz += 'rtNotLinked';
         return {
             info: info,
-            clazz: clazz
+            clazz: clazz,
+            tooltip: tooltip
         };
     };
     $scope.processUpdateNodesNeighbours = function(current) {
@@ -3860,17 +3868,7 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
                         if (current.since < obj.updateTime && obj.invalidateTime < obj.updateTime) {
                             $scope.ZWaveAPIData.devices[current.nodeId].data.neighbours = obj;
                             $scope.nodes[current.nodeId].node = $scope.ZWaveAPIData.devices[current.nodeId];
-                            // routes updated
-                            var routesCount = $filter('getRoutesCount')($scope.ZWaveAPIData, current.nodeId);
-                            $.each($scope.ZWaveAPIData.devices, function(nnodeId, nnode) {
-                                if (!routesCount[nnodeId]) {
-                                    return;
-                                }
-                                var cellState = $scope.cellState(current.nodeId, nnodeId, routesCount);
-                                $('#cell' + current.nodeId + '-' + nnodeId).attr("class", cellState.clazz);
-                                $('#cell' + current.nodeId + '-' + nnodeId + " span.info").html(cellState.info);
-                                $('#cell' + current.nodeId + '-' + nnodeId).css({"border-color": ""});
-                            });
+                            $scope.updateData(current.nodeId);
                             done();
                             return;
                         }
@@ -3900,6 +3898,19 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
             $scope.processUpdateNodesNeighbours(current, {});
         }
     };
+    $scope.updateData = function(nodeId) {
+        var node = $scope.ZWaveAPIData.devices[nodeId];
+        if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
+            return;
+        var routesCount = $filter('getRoutesCount')($scope.ZWaveAPIData, nodeId);
+        var line = [];
+        angular.forEach($scope.ZWaveAPIData.devices, function(nnode, nnodeId) {
+            if (nnodeId == 255 || nnode.data.isVirtual.value || nnode.data.basicType.value == 1)
+                return;
+            line[nnodeId] = $scope.cellState(nodeId, nnodeId, routesCount);
+        });
+        $scope.data[nodeId] = line;
+    };
     // Load data
     $scope.load = function(lang) {
         dataService.getZwaveData(function(ZWaveAPIData) {
@@ -3913,16 +3924,7 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
             });
             // Loop throught devices and gather routesCount and cellState
             angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-                if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
-                    return;
-                var routesCount = $filter('getRoutesCount')(ZWaveAPIData, nodeId);
-                var line = [];
-                angular.forEach(ZWaveAPIData.devices, function(nnode, nnodeId) {
-                    if (nnodeId == 255 || nnode.data.isVirtual.value || nnode.data.basicType.value == 1)
-                        return;
-                    line[nnodeId] = $scope.cellState(nodeId, nnodeId, routesCount);
-                });
-                $scope.data[nodeId] = line;
+                $scope.updateData(nodeId);
             });
         });
     };
