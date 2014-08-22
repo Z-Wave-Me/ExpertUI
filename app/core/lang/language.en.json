@@ -245,6 +245,7 @@
     "rt_update_nodes_neightbours_tooltip": "Update network routing table. This requests all devices to check for their neighbours and report this information to update routing tables. It is recommented to repeat this process once again after full complete of first run (after you woke up all devices). This process takes a lot of time!",
     "rt_header_node_id": "Id",
     "rt_header_update_time": "Last update",
+    "rt_associated": "associated",
     "device_name": "Devices",
     "device_rename": "Rename device",
     "device_remove": "Remove device from map",
