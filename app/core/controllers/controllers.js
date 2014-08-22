@@ -2280,7 +2280,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         $scope.devices = angular.copy([]);
         $scope.commands = angular.copy([]);
     };
-
+    
     // Remember device id
     $scope.detailId = (angular.isDefined($cookies.configuration_id) ? $cookies.configuration_id : 0);
     // Redirect to detail page
@@ -2303,11 +2303,11 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     // Get active tab
     $scope.getActiveTab = function() {
         var activeTab = (angular.isDefined($cookies.tab_config) ? $cookies.tab_config : 'interview');
-//        if(activeTab == 'interview'){
-//             $scope.refresh = true; 
-//        }else{
-//            $scope.refresh = false; 
-//        }
+        if(activeTab == 'interview'){
+             $scope.refresh = true; 
+        }else{
+            $scope.refresh = false; 
+        }
         $scope.activeTab = activeTab;
     };
     $scope.getActiveTab();
@@ -2320,6 +2320,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             setNavigation(ZWaveAPIData);
             setData(ZWaveAPIData, nodeId);
             $scope.ZWaveAPIData = ZWaveAPIData;
+             dataService.cancelZwaveDataInterval();
             if (refresh) {
                 dataService.joinedZwaveData(function(data) {
                     $scope.reset();
@@ -4208,28 +4209,37 @@ appController.controller('TimingController', function($scope, $filter, dataServi
     };
 
 
+
+    // Load data
+//    $scope.load = function() {
+//        dataService.getZwaveData(function(ZWaveAPIData) {
+//            console.log($scope.timing);
+//            setData(ZWaveAPIData);
+//            dataService.joinedZwaveData(function(data) {
+//                $scope.reset();
+//                //$scope.loadTiming();
+//                setData(data.joined);
+//            });
+//        });
+//    };
+
+    //$scope.load();
+    
     // Load timing data
     $scope.loadTiming = function() {
         dataService.getTiming(function(data) {
-            $scope.timing = data;
+            dataService.getZwaveData(function(ZWaveAPIData) {
+            setData(data,ZWaveAPIData);
+//            dataService.joinedZwaveData(function(data) {
+//                $scope.reset();
+//                //$scope.loadTiming();
+//                setData(data,data.joined);
+//            });
+        });
+        $scope.timing = data;
         });
     };
     $scope.loadTiming();
-
-    // Load data
-    $scope.load = function() {
-        dataService.getZwaveData(function(ZWaveAPIData) {
-            setData(ZWaveAPIData);
-            dataService.joinedZwaveData(function(data) {
-                $scope.reset();
-                //$scope.loadTiming();
-                setData(data.joined);
-            });
-        });
-    };
-
-    $scope.load();
-
     // Cancel interval on page destroy
     $scope.$on('$destroy', function() {
         dataService.cancelZwaveDataInterval();
@@ -4247,7 +4257,7 @@ appController.controller('TimingController', function($scope, $filter, dataServi
     /**
      * Set zwave data
      */
-    function setData(ZWaveAPIData) {
+    function setData(data,ZWaveAPIData) {
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
@@ -4280,7 +4290,7 @@ appController.controller('TimingController', function($scope, $filter, dataServi
             }
             
             // Packets
-            var timingItems = $scope.timing[nodeId];
+            var timingItems = data[nodeId];
             if (angular.isDefined(timingItems)) {
                 totalPackets = timingItems.length;
                 okPackets = getOkPackets(timingItems);
