@@ -245,7 +245,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
             handleSuccess(data);
         }).error(function() {
             $('button .fa-spin,a .fa-spin').fadeOut(1000);
-            handleError();
+           handleCmdError();
 
         });
 
@@ -491,6 +491,18 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
         }
         // Otherwise, use expected error message.
         return($q.reject(response.data.message));
+
+    }
+    
+    /**
+     * 
+     * Handle cmd errors
+     */
+    function handleCmdError(error,message) {
+        var msg = (message ? message : 'Error handling data from server');
+        $('#respone_container').show();
+        $('#respone_container_inner').html('<div class="alert alert-danger alert-dismissable response-message"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <i class="icon-ban-circle"></i> ' + msg +'</div>');
+        console.log('Error');
 
     }
 

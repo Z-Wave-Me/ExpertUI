@@ -3731,7 +3731,7 @@ appController.controller('ControllController', function($scope, $filter, $upload
         if ('controller.data.controllerState' in data) {
             $scope.controllerState = data['controller.data.controllerState'].value;
         }
-        //console.log($scope.controllerState);
+        console.log('Controller state: ' + $scope.controllerState);
         if ('controller.data.lastExcludedDevice' in data) {
             $scope.lastExcludedDevice = data['controller.data.lastExcludedDevice'].value;
         }
@@ -3796,7 +3796,7 @@ appController.controller('ControllController', function($scope, $filter, $upload
          * Replace node Run CMD if controllerState = 19
          */
         if ($scope.controllerState == 19) {
-            dataService.runCmd('/ZWaveAPI/Run/controller.AddNodeToNetwork(1)');
+            dataService.runCmd('controller.AddNodeToNetwork(1)');
         }
     }
     ;
