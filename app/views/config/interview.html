@@ -103,9 +103,9 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Instance</th>
-                                <th>CommandClass</th>
-                                <th>Result</th>
+                                <th>{{_t('th_instance')}}</th>
+                <th>{{_t('th_command_class')}}</th>
+                <th>{{_t('th_result')}}</th>
                         </thead>
                         <tbody>
                             <tr ng-repeat="v in interviewCommands" id="{{ v.ccId}}">
@@ -128,7 +128,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{_t('btn_cancel')}}</button>
             </div>
         </div>
     </div>
@@ -141,11 +141,11 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">{{_t('commandClass')}}</h4>
+                <h4 class="modal-title">{{_t('th_command_class')}}</h4>
             </div>
             <div class="modal-body"></div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{_t('btn_cancel')}}</button>
             </div>
         </div>
     </div>
@@ -161,8 +161,7 @@
             </div>
             <div class="modal-body">
                 <p ng-bind-html="_t('select_zddx_help') | toTrusted"></p>
-               
-                <div>
+               <div>
                     <select 
                         name="select_zddx_help" 
                         id="select_zddx_help" 
@@ -187,8 +186,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="runCmdDeviceSelect(deviceId,modelSelectZddx)">{{_t('select')}}</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">{{_t('cancel')}}</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="runCmdDeviceSelect(deviceId,modelSelectZddx)">{{_t('btn_select')}}</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{_t('btn_cancel')}}</button>
             </div>
         </div>
     </div>

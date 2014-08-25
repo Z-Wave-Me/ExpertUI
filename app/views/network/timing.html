@@ -39,7 +39,7 @@
                 <tr ng-repeat="v in devices | orderBy:predicate:reverse">
                     <td>{{ v.id}}</td>
                     <td><!-- <switch-type-icon generic="{{ v.genericType}}" specific="{{ v.specificType}}"></switch-type-icon> -->{{ v.name }}</td>
-                    <td>{{ v.type}}</td>
+                    <td>{{ _t(v.type)}}</td>
                     <td>{{ v.totalPackets}}</td>
                     <td>{{ v.okPackets}}%</td>
                     <td>{{ v.lastPackets_}} <p ng-bind-html="v.lastPackets | toTrusted"></p></td>

@@ -3747,7 +3747,7 @@ appController.controller('ControllController', function($scope, $filter, $timeou
 
             if (deviceIncId != null) {
 
-                var givenName = 'Device' + '_' + deviceIncId;
+                var givenName = 'Device_' + deviceIncId;
                 var node = data.devices[deviceIncId];
                 // Device type
                 var deviceXml = $scope.deviceClasses;
@@ -3785,9 +3785,9 @@ appController.controller('ControllController', function($scope, $filter, $timeou
                 var updateTime = $filter('isTodayFromUnix')(data['controller.data.lastExcludedDevice'].updateTime);
                 //var txt = $scope._t('nm_last_excluded_device') + ' ' + (deviceExcId != 0 ? deviceExcId : $scope._t('nm_last_excluded_device_from_foreign_network'));
                 if (deviceExcId != 0) {
-                    var txt = 'Device # ' + deviceExcId + 'excluded from network';
+                    var txt = $scope._t('txt_device') + ' # ' + deviceExcId + ' ' + $scope._t('nm_excluded_from_network');
                 } else {
-                    var txt = 'Device excluded ' + $scope._t('nm_last_excluded_device_from_foreign_network');
+                    var txt = $scope._t('nm_last_excluded_device_from_foreign_network');
                 }
                 $scope.lastExcludedDevice = txt + ' (' + updateTime + ')';
             }
@@ -4288,13 +4288,13 @@ appController.controller('TimingController', function($scope, $filter, dataServi
 
             // Device type
             if (isListening) {
-                type = 'Mains';
+                type = 'type_mains';
             } else if (!isListening && hasWakeup) {
-                type = 'Battery/Wakeup';
+                type = 'type_battery_wakup';
             } else if (!isListening && isFLiRS) {
-                type = 'Flirs';
+                type = 'type_flirs';
             } else {
-                type = 'Remote';
+                type = 'type_remote';
 
             }
 
@@ -4584,7 +4584,7 @@ appController.controller('QueueController', function($scope, dataService) {
         if (trs == '') {
             trs = '<tr><td colspan="12"><i>' + $scope._t('inspect_queue_empty') + '</i></td></tr>';
         }
-        $('#inspect_queue_len').html('Queue length: ' + data.length);
+        $('#inspect_queue_len').html($scope._t('txt_queue_length') + ': ' + data.length);
         $('#inspect_queue_table_body').html(trs);
         return trs;
     }

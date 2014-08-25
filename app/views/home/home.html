@@ -1,66 +1,49 @@
 <!-- Home view -->
 <div ng-controller="HomeController">
-    <!-- <div class="page-header"><h1>{{ _t('nav_home')}}</h1></div> -->
     <div class="row home-page">
         <div class="col-sm-6 home-page-image">
             <img class="product-logo" src="app/images/zplus.jpg" alt="Z-Wave" width="90" />
-            <div class="product-description">
-                <p>This is a complete Static Z-Wave Plus Controller certified in August 2014 by the Z-Wave Alliance under the Cert-No. XXXXXXXX. The certification includes the Z-WAVE stack plus this User Interface. </p>
-                 <p>The software supports all certified Z-Wave devices in the market, namely those listed in the device data base <a href="http://pepper1.net/zwavedb/">http://pepper1.net/zwavedb/</a>. It uses device meta information provided by this data base. If no device meta information such as image, SKU name etc is given, the device is not listed in this data base yet. However it Is still possible to use all functions of the device. Please refer to the device manual for configuration and usage information.</p>
-                  <p>You can download the full users manual of this software from <a href="http://razberry.zwave.me">http://razberry.zwave.me</a></p>
-            </div>
+            <div class="product-description" ng-bind-html="_t('txt_homepage_promo')| toTrusted"></div>
 
             <div>
-                <h3>Notes</h3>
+                <h3>{{_t('txt_notes')}}</h3>
                 <form name="form_rename" id="form_notes" ng-model="form_notes" class="form" ng-submit="saveNotes('form_notes', '#btn_save_note')" novalidate>
                     <textarea id="note" name="note" class="form-control" rows="20">{{notesData}}</textarea><br />
 
-                    <button type="submit" class="btn btn-primary"  id="btn_save_note">Save</button>
+                    <button type="submit" class="btn btn-primary"  id="btn_save_note">{{_t('btn_save')}}</button>
                 </form>
             </div>
         </div>
         <div class="col-sm-6 product-data-list pull-right">
 
-            <h3><i class="fa fa-info-circle"></i> Network Information </h3>
+            <h3><i class="fa fa-info-circle"></i> {{_t('txt_network_info')}}</h3>
             <ul class="list-group">
-                <li class="list-group-item"><strong>{{countDevices}}</strong> Devices present</li>
-                <li class="list-group-item"><strong>{{mainsDevices}}</strong> devices are mains powered</li>
-                <li class="list-group-item"><strong>{{batteryDevices}}</strong> devices are battery operated</li>
-                <li class="list-group-item"><strong>{{flirsDevices}}</strong> devices are FLIRS </li>
+                <li class="list-group-item"><strong>{{countDevices}}</strong> {{_t('txt_devices_present')}}</li>
+                <li class="list-group-item"><strong>{{mainsDevices}}</strong> {{_t('txt_devices_mains')}}</li>
+                <li class="list-group-item"><strong>{{batteryDevices}}</strong> {{_t('txt_devices_battery')}}</li>
+                <li class="list-group-item"><strong>{{flirsDevices}}</strong> {{_t('txt_devices_flirs')}}</li>
             </ul>
 
-            <h3><i class="fa fa-plus-square"></i> Network Health</h3>
+            <h3><i class="fa fa-plus-square"></i> {{_t('txt_net_health')}}</h3>
             <ul class="list-group">
                 <li class="list-group-item">
                     <p ng-repeat="v in lowBatteryDevices">
-                      <a class="text-danger" href="#device/battery">Device {{v.name}} (#{{v.id}}) has low battery ({{v.battery_charge}}%)</a>
-                        <!-- <a class="text-danger" href="#help">Device {{v.name}} (#{{v.id}}) has low battery ({{v.battery_charge}}%)</a>-->
+                      <a class="text-danger" href="#device/battery">{{_t('txt_device')}} {{v.name}} (#{{v.id}}) {{_t('txt_low_battery')}} ({{v.battery_charge}}%)</a>
                     </p>
                 </li>
                 <li class="list-group-item">
                     <p ng-repeat="v in notInterviewDevices">
-                        <!--<a class="text-danger" href="#device/status">Device {{v.name}} (#{{v.id}}) interview is not complete</a>-->
-                        <a class="text-danger" href="#help/{{v.id}}">Device {{v.name}} (#{{v.id}}) interview is not complete</a>
+                        <a class="text-danger" href="#help/{{v.id}}">{{_t('txt_device')}} {{v.name}} (#{{v.id}}) {{_t('txt_interview_not')}}</a>
                     </p>
                 </li>
                 <li class="list-group-item">
                     <p ng-repeat="v in failedDevices">
-                        <!--<a class="text-danger" href="#config/configuration/{{v.id}}">Device {{v.name}} (#{{v.id}}) is failed</a>-->
-                        <a class="text-danger" href="#help/{{v.id}}">Device {{v.name}} (#{{v.id}}) is failed</a>
+                        <a class="text-danger" href="#help/{{v.id}}">{{_t('txt_device')}} {{v.name}} (#{{v.id}}) {{_t('txt_failed')}}</a>
                     </p>
                 </li>
             </ul>
 
 
         </div>
-    </div>
-    <div class="row home-notes-list" style="display: none;">
-        <div class="col-sm-6 product-data-list">
-            <h3><i class="fa fa-info-circle"></i> List of notes</h3>
-            <ul class="list-group">
-                <li class="list-group-item" ng-repeat="note in notes" ng-show="note != ''">{{note}}</li>
-            </ul>
-        </div>
-
     </div>
   </div>
