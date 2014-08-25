@@ -92,8 +92,8 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
             console.log('NOOOOT CACHED');
             var request = $http({
                 method: "POST",
-                url: cfg.server_url +  cfg.update_url + "0"
-                //url: 'storage/all_cp.json'
+                //url: cfg.server_url +  cfg.update_url + "0"
+                url: 'storage/all_cp.json'
             });
             request.success(function(data) {
                 $('#update_time_tick').html($filter('getCurrentTime')(time));
