@@ -1783,6 +1783,9 @@ appController.controller('TypeController', function($scope, $filter, dataService
             });
             // MWI and EF
             var mwief = getEXFrame(major, minor);
+            
+            // DDR
+            var ddr = node.data.ZDDXMLFile;
 
             // Zwave plus
             var ZWavePlusInfo = false;
@@ -1816,6 +1819,7 @@ appController.controller('TypeController', function($scope, $filter, dataService
             obj['name'] = $filter('deviceName')(nodeId, node);
             obj['security'] = security;
             obj['mwief'] = mwief;
+            obj['ddr'] = ddr;
             obj['ZWavePlusInfo'] = ZWavePlusInfo;
             obj['sdk'] = (sdk == '0.0' ? '?' : sdk);
             obj['fromSdk'] = fromSdk;
