@@ -20,6 +20,11 @@
                             <span ng-show="predicate == 'security'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
+                    <th>
+                        <a href="" ng-click="orderBy('mwief')" title="{{ _t('th_mwief_tip')}}" tooltip>{{ _t('th_mwief')}}
+                            <span ng-show="predicate == 'mwief'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
                      <th>
                         <a href="" ng-click="orderBy('ZWavePlusInfo')">{{ _t('th_zwaveplus')}}
                             <span ng-show="predicate == 'zWavePlus'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
@@ -47,6 +52,7 @@
                     <td>{{ v.id }}</td>
                     <td><switch-type-icon generic="{{ v.genericType}}" specific="{{ v.specificType}}"></switch-type-icon> {{ v.name }}</td>
                     <td><i class="{{ v.security | securityIcon }}"></i></td>
+                     <td><i class="{{v.mwief | mwiefIcon}}"></i></td>
                     <td><i class="{{ v.ZWavePlusInfo | zWavePlusIcon}}"></i></td>
                     <td>
                         <span ng-show="v.fromSdk">{{ v.sdk }}</span>

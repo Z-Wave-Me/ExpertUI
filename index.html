@@ -23,7 +23,6 @@
   <script src="app/vendor/angular/angular-1.2.14/angular-cookies.js"></script>
   <!-- Bootstrap js -->
   <script src="app/vendor/bootstrap/bootstrap.js"></script>
-  <script src="app/vendor/bootstrap/bootstrap-slider.js"></script>
    <!-- XML js -->
   <script src="app/vendor/xml/xml2json.js"></script>
   <!-- Z-Wave uld ExpertUI -->
@@ -96,7 +95,7 @@
                         <li class="dropdown">
                             <a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe fa-lg"></i> <span class="current-lang"></span> <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li ng-repeat="v in lang_list" class="lang-switch"><a href="" ng-click="changeLang(v)"><img src="app/images/{{ v }}.png" alt="{{ v }}"/> {{ v }}</a></li>
+                                <li ng-repeat="v in lang_list" class="lang-switch"><a href="" ng-click="changeLang(v)"><!--<img src="app/images/{{v}}.png" alt="{{ v }}"/>--> {{ v }}</a></li>
                             </ul>
                         </li>
                         <li class="divider-vertical remove-margin"></li>
@@ -113,9 +112,7 @@
 
         <div id="footer">
             <div class="container-fluid">
-                 <p class="text-muted">
-                    &COPY; 2014 by Z-Wave.Me
-                </p>
+                      <p class="text-muted" ng-bind-html="_t('footer_text') | toTrusted"></p>
             </div>
         </div>
 

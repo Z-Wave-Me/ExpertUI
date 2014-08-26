@@ -45,7 +45,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="v in meters| orderBy:predicate:reverse" id="{{ v.rowId}}">
-                    <td>{{ v.id}}</td>
+                    <td>{{ v.id}}<span ng-show="v.iId != 0">.{{v.iId}}</span></td>
                      <td><i class="fa fa-lightbulb-o fa-lg"></i> {{ v.name }}</td>
                     <td>{{ v.purpose}}</td>
                     <td class="row-level text-right">{{ v.level}}</td>
@@ -53,7 +53,7 @@
                     <td class="row-time is-updated-{{v.isUpdated}}">{{ v.updateTime | isTodayFromUnix }}</td>
                     <td>
                         <button 
-                            data-ng-click="store('#btn_update_' + v.rowId)" 
+                            data-ng-click="store(v.urlToStore,'update')" 
                             data-action="update" 
                             data-store-url="{{ v.urlToStore}}" 
                             class="btn btn-primary spin-true" 
@@ -61,9 +61,8 @@
                         </button>
                          <button 
                             ng-if="v.urlToReset"
-                            data-ng-click="store('#btn_reset_' + v.rowId)"
+                            data-ng-click="store(v.urlToReset,'reset')"
                             data-action="reset" 
-                            data-store-url="{{ v.urlToReset}}" 
                             class="btn btn-primary spin-true" 
                             id="btn_reset_{{ v.rowId}}">{{ _t('reset')}} <i class="fa fa-spinner fa-spin"></i> 
                         </button>

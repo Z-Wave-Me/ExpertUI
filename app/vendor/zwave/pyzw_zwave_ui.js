@@ -83,6 +83,210 @@ function renderMethodSpec(ccId, data) {
 				]
 			};
 	
+
+
+		// PowerLevel
+		case 0x73:
+			return {
+				"Get": [],
+				"TestNodeGet": [],
+
+
+
+				"TestNodeSet": [
+					{
+						"label": "Node ID",
+						"type": {
+							"range": {
+								"min": 0,
+								"max": 232
+							}
+						}
+					},
+
+					{			
+						"label": "PowerLevel",
+						"type": {
+							"enumof": [
+								{
+									"label": "-9dbm ", "type":{
+										"fix": 	{
+											"value": 9
+										}
+									}
+								},
+								{
+									"label": "-8dbm ", "type":{
+										"fix": 	{
+											"value": 8
+										}
+									}
+								},
+								{
+									"label": "-7dbm ", "type":{
+										"fix": 	{
+											"value": 7
+										}
+									}
+								},
+								{
+									"label": "-6dbm ", "type":{
+										"fix": 	{
+											"value": 6
+										}
+									}
+								},
+								{
+									"label": "-5dbm ", "type":{
+										"fix": 	{
+											"value": 5
+										}
+									}
+								},
+								{
+									"label": "-4dbm ", "type":{
+										"fix": 	{
+											"value": 4
+										}
+									}
+								},
+								{
+									"label": "-3dbm ", "type":{
+										"fix": 	{
+											"value": 3
+										}
+									}
+								},
+								{
+									"label": "-2dbm ", "type":{
+										"fix": 	{
+											"value": 2
+										}
+									}
+								},
+								{
+									"label": "-1dbm ", "type":{
+										"fix": 	{
+											"value": 1
+										}
+									}
+								},
+								{
+									"label": "Normal ", "type":{
+										"fix": 	{
+											"value": 0
+										}
+									}
+								}
+							]
+						}				
+					},
+					{				
+						"label": "Number of pakets",
+						"type": {
+							"range": {
+								"min": 0,
+								"max": 1000
+							}
+						}					
+					
+					}
+				],
+
+
+				
+				"Set":[
+					{
+						"label": "PowerLevel",
+						"type": {
+							"enumof": [
+								{
+									"label": "-9dbm ", "type":{
+										"fix": 	{
+											"value": 9
+										}
+									}
+								},
+								{
+									"label": "-8dbm ", "type":{
+										"fix": 	{
+											"value": 8
+										}
+									}
+								},
+								{
+									"label": "-7dbm ", "type":{
+										"fix": 	{
+											"value": 7
+										}
+									}
+								},
+								{
+									"label": "-6dbm ", "type":{
+										"fix": 	{
+											"value": 6
+										}
+									}
+								},
+								{
+									"label": "-5dbm ", "type":{
+										"fix": 	{
+											"value": 5
+										}
+									}
+								},
+								{
+									"label": "-4dbm ", "type":{
+										"fix": 	{
+											"value": 4
+										}
+									}
+								},
+								{
+									"label": "-3dbm ", "type":{
+										"fix": 	{
+											"value": 3
+										}
+									}
+								},
+								{
+									"label": "-2dbm ", "type":{
+										"fix": 	{
+											"value": 2
+										}
+									}
+								},
+								{
+									"label": "-1dbm ", "type":{
+										"fix": 	{
+											"value": 1
+										}
+									}
+								},
+								{
+									"label": "Normal ", "type":{
+										"fix": 	{
+											"value": 0
+										}
+									}
+								}
+							]
+						}
+					},
+					{
+						"label": "Timeout (s)",
+						"type": {
+							"range": {
+								"min": 0,
+								"max": 255
+							}
+						}
+					}
+				]
+			};
+
+
+	
 		//SwitchColor.c	 0x33	
 		case 0x33:
 			return {

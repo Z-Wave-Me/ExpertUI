@@ -27,24 +27,24 @@
                                     <div ng-switch on="v.key">
                                         <div ng-switch-when="command_class" ng-controller="CommandModalController">
                                             <span ng-repeat="cc in interviewCommands"><a href="" ng-click="showModal('#modal_command', cc.cmdData)">{{cc.ccName}}</a>, </span>
-                                           
+
                                         </div>
-                                    <p ng-switch-default ng-bind-html="v.val | toTrusted"></p>
+                                        <p ng-switch-default ng-bind-html="v.val | toTrusted"></p>
                                     </div>
-                                    
-                                     <!-- <span ng-show="v.key == 'device_node_name_'">
-                                        <a href="" ng-click="goRename_ = !goRename_">{{_t('device_rename_tooltip')}} <i class="fa fa-pencil"></i> </a>
-                                    </span>
-                                    <div ng-show="goRename_">
-                                        <form name="form_rename_{{$index}}" id="form_rename" ng-show="goRename_" ng-model="form_rename" class="form form-inline" ng-controller="ConfigStoreController" ng-submit="renameDevice($index)" novalidate>
-                                            <input name="device_name_{{$index}}" id="device_name_{{$index}}" type="text" class="form-control" value="" />
-                                            <button
-                                                type="submit"
-                                                class="btn btn-primary" 
-                                                id="btn_update"
-                                                >{{_t('btn_save_name')}}</button>
-                                        </form>
-                                    </div>-->
+
+                                    <!-- <span ng-show="v.key == 'device_node_name_'">
+                                       <a href="" ng-click="goRename_ = !goRename_">{{_t('device_rename_tooltip')}} <i class="fa fa-pencil"></i> </a>
+                                   </span>
+                                   <div ng-show="goRename_">
+                                       <form name="form_rename_{{$index}}" id="form_rename" ng-show="goRename_" ng-model="form_rename" class="form form-inline" ng-controller="ConfigStoreController" ng-submit="renameDevice($index)" novalidate>
+                                           <input name="device_name_{{$index}}" id="device_name_{{$index}}" type="text" class="form-control" value="" />
+                                           <button
+                                               type="submit"
+                                               class="btn btn-primary" 
+                                               id="btn_update"
+                                               >{{_t('btn_save_name')}}</button>
+                                       </form>
+                                   </div>-->
                                 </td>
                             </tr>
 
@@ -81,6 +81,11 @@
             class="btn btn-primary btn-spinner" 
             id="btn_request_nif"
             >{{_t('config_ui_show_interview_results')}}</button>
+        <button
+            data-ng-click="showModalDeviceSelect('#modal_device_select', deviceId)"
+            class="btn btn-primary" 
+            id="btn_show_description"
+            >{{_t('config_ui_select_xml')}}</button>
     </div>
 </div>
 
@@ -141,6 +146,49 @@
             <div class="modal-body"></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div><!-- /.Modal -->
+
+<!-- Modal description -->
+<div class="modal fade" id="modal_device_select" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">{{_t('config_ui_select_xml')}}</h4>
+            </div>
+            <div class="modal-body">
+                <p ng-bind-html="_t('select_zddx_help') | toTrusted"></p>
+               
+                <div>
+                    <select 
+                        name="select_zddx_help" 
+                        id="select_zddx_help" 
+                        class="form-control" 
+                        ng-change="changeDeviceSelect('#select_zddx_help','#device_select_image')" 
+                        ng-model="modelSelectZddx">
+                        <option value="">---</option>
+                        <option 
+                            ng-init="selectCfg = {
+                                'name':((v.brandName == '' || v.productName == '')?('Unnamed ZDDX: ' + v.fileName):(v.brandName + ' ' + v.productName)),
+                                'selected':(deviceZddxFile == v.fileName ? ' selected' : '')
+                            }"
+                            ng-repeat="v in deviceZddx"
+                            value="{{v.fileName}}" 
+                            data-image="{{v.deviceImage}}"
+                            {{selectCfg.selected}}>{{selectCfg.name}}</option>
+                    </select>
+                    <div id="device_select_image_container">
+                    <div id="device_select_image">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="runCmdDeviceSelect(deviceId,modelSelectZddx)">{{_t('select')}}</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{_t('cancel')}}</button>
             </div>
         </div>
     </div>

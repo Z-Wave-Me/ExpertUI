@@ -1,6 +1,10 @@
 <!-- Controller info view -->
 <div ng-controller="ControllerController">
     <div class="page-header"><h1>{{_t('nav_controller_info')}}</h1></div>
+    <div class="well well-sm">
+        <a href="" class="btn btn-primary" ng-click="openQueue()"><i class="fa fa-search"></i> {{_t('nm_inspect_queue_title')}}</a> <em>{{_t('txt_inspect_queue')}}</em>
+            
+         </div>
     <div class="table-responsive">
         <table class="table table-condensed">
             <tbody>
@@ -48,7 +52,6 @@
             ng-click="inspectQueue('#modal_queue')"
             >{{_t('nm_inspect_queue_title')}}</button> -->
          <!-- <a href="#network/queue" class="btn btn-primary" target="_blank">{{_t('nm_inspect_queue_title')}}</a>  -->
-         <a href="" class="btn btn-primary" ng-click="openQueue()">{{_t('nm_inspect_queue_title')}}</a>
 
         <!-- nm_send_node_information  -->
         <button class="btn btn-primary"

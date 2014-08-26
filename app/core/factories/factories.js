@@ -64,6 +64,8 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
         runCmd: runCmd,
         store: store,
         getDeviceClasses: getDeviceClasses,
+        getSelectZDDX:  getSelectZDDX,
+        getTiming:  getTiming,
         getQueueData: getQueueData,
         updateQueueData: updateQueueData,
         cancelQueueDataInterval: cancelQueueDataInterval,
@@ -91,6 +93,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
             var request = $http({
                 method: "POST",
                 url: cfg.server_url +  cfg.update_url + "0"
+                //url: 'storage/all_cp.json'
             });
             request.success(function(data) {
                 $('#update_time_tick').html($filter('getCurrentTime')(time));
@@ -242,7 +245,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
             handleSuccess(data);
         }).error(function() {
             $('button .fa-spin,a .fa-spin').fadeOut(1000);
-            handleError();
+           handleCmdError();
 
         });
 
@@ -292,6 +295,53 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
             });
         }
     }
+    
+    /**
+     * Get zddx device selection
+     */
+    function getSelectZDDX(nodeId,callback) {
+        if (deviceClasses) {
+            return callback(deviceClasses);
+        }
+        else {
+            var request = $http({
+                method: "POST",
+                url: cfg.server_url + '/ZWaveAPI/Run/devices[' + nodeId + '].GuessXML()'
+            });
+            request.success(function(data) {
+                 return callback(data);
+            }).error(function() {
+                console.log('Error: getSelectZDDX');
+               // handleError();
+
+            });
+        }
+    }
+    
+     /**
+     * Get timing (statistics) data
+     */
+    function  getTiming(callback) {
+        if (deviceClasses) {
+            return callback(deviceClasses);
+        }
+        else {
+            var request = $http({
+                method: "POST",
+                //url: 'storage/timing.json'
+                url: cfg.server_url + '/JS/Run/communicationStatistics.get()'
+            });
+            request.success(function(data) {
+                 return callback(data);
+            }).error(function() {
+                console.log('Error: communicationStatistics');
+               // handleError();
+
+            });
+        }
+    }
+    
+  
 
     /**
      * Load Queue data
@@ -441,6 +491,18 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
         }
         // Otherwise, use expected error message.
         return($q.reject(response.data.message));
+
+    }
+    
+    /**
+     * 
+     * Handle cmd errors
+     */
+    function handleCmdError(error,message) {
+        var msg = (message ? message : 'Error handling data from server');
+        $('#respone_container').show();
+        $('#respone_container_inner').html('<div class="alert alert-danger alert-dismissable response-message"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <i class="icon-ban-circle"></i> ' + msg +'</div>');
+        console.log('Error');
 
     }
 
