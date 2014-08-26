@@ -1,0 +1,65 @@
+<!-- Battery view -->
+<div ng-controller="BatteryController">
+    <div class="page-header"><h1>{{_t('nav_battery')}}</h1></div>
+    <div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>
+                        <a href="" ng-click="orderBy('id')">#  
+                            <span ng-show="predicate == 'id'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="" ng-click="orderBy('name')">{{ _t('device_name')}}
+                            <span ng-show="predicate == 'name'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                   <th>
+                        <a href="" ng-click="orderBy('batteryType')">{{ _t('th_battery_type')}}
+                            <span ng-show="predicate == 'batteryType'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    
+                    <th class="text-right">
+                        <a href="" ng-click="orderBy('level')">{{ _t('th_level')}}
+                            <span ng-show="predicate == 'level'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="" ng-click="orderBy('updateTime')">{{ _t('datetime')}}
+                            <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th>
+                        <button class="btn btn-success spin-true" data-ng-click="storeAll('#btn_update_all_1')" id="btn_update_all_1">
+                            {{ _t('switches_update_all')}} <i class="fa fa-spinner fa-spin"></i>
+                        </button>
+                    </th>
+            </tr>
+        </thead>
+        <tbody>
+             <tr ng-repeat="v in battery | orderBy:predicate:reverse" id="{{ v.rowId}}">
+                <td>{{ v.id }}</td>
+                <td>{{ v.name }}</td>
+                <td>{{ v.batteryCount }}<span ng-show="v.batteryCount">*</span>{{ v.batteryType }}</td>
+                 <td class="row-level text-right">
+                     &nbsp;{{ v.level }}%
+                     <i class="{{ v.level | batteryIcon }}"></i>
+                      
+                 </td>
+                  <td class="row-time is-updated-{{v.isUpdated}}">{{ v.updateTime | isTodayFromUnix }}</td>
+                  <td>
+                      <button 
+                            data-ng-click="store('#btn_update_' + v.rowId)" 
+                            data-action="update" 
+                            data-store-url="{{ v.urlToStore}}" 
+                            class="btn btn-primary spin-true" 
+                            id="btn_update_{{ v.rowId}}">{{ _t('update')}} <i class="fa fa-spinner fa-spin"></i>
+                        </button>
+                  </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+</div>
