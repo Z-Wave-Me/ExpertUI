@@ -348,16 +348,25 @@ appController.controller('SwitchController', function($scope, $log, $filter, dat
     $scope.load = function() {
         dataService.getZwaveData(function(ZWaveAPIData) {
             setData(ZWaveAPIData);
-            dataService.joinedZwaveData(function(data) {
-                $scope.reset();
-                setData(data.joined);
-            });
+//            dataService.joinedZwaveData(function(data) {
+//                $scope.reset();
+//                setData(data.joined);
+//            });
         });
     };
 
 
     // Load data
     $scope.load();
+    
+    // Refresh data
+    $scope.refresh = function() {
+        dataService.joinedZwaveData(function(data) {
+                $scope.reset();
+                setData(data.joined);
+            });
+    };
+    $scope.refresh();
 
     // Cancel interval on page destroy
     $scope.$on('$destroy', function() {
@@ -393,6 +402,12 @@ appController.controller('SwitchController', function($scope, $log, $filter, dat
         var val = $scope.rangeSlider[index];
         var url = cmd + '.Set(' + val + ')';
         dataService.runCmd(url);
+        $scope.refresh();
+    };
+    
+    // Cancel data update interval
+    $scope.cancelInterval = function() {
+        dataService.cancelZwaveDataInterval();
     };
 
     /// --- Private functions --- ///
@@ -501,37 +516,6 @@ appController.controller('SwitchController', function($scope, $log, $filter, dat
         });
     }
     ;
-
-    /**
-     * @todo REMOVE
-     */
-    $scope.refresh = function() {
-        dataService.updateZwaveData(function(data) {
-            angular.forEach($scope.switches, function(v, k) {
-                // Check for updated data
-                if (v.cmd in data) {
-                    $log.warn(v.cmd + ':' + v.id);//REM
-                    var obj = data[v.cmd];
-                    var level = updateLevel(obj, v.ccId);
-                    var updateTime = $filter('isTodayFromUnix')(obj.updateTime);
-                    var level_html = '<span style="color: ' + level.level_color + ';">' + level.level_cont + '</span> ';
-                    if (level.level_status === 'on') {
-                        level_html += ' <i class="fa fa-check fa-lg" style="color: #3c763d;"></i>';
-                    } else {
-                        level_html += ' <i class="fa fa-exclamation fa-lg" style="color: #a94442;"></i>';
-                    }
-                    $('#' + v.rowId + ' .row-time').html(updateTime).removeClass('is-updated-false');
-                    $('#' + v.rowId + ' .row-level').html(level_html);
-
-                    //$log.info('Updating:' + v.rowId + ' | At: ' + updateTime + ' | with: ' + level);//REM
-                } else {
-                    //$log.warn(v.cmd + ': Nothing to update --- ' + $scope.lang);//REM
-                }
-            });
-            //$log.debug('-----------');//REM
-        });
-    };
-    //$scope.refresh();
 
     // Update level
     function updateLevel(obj, ccId, btnOn, btnOff) {

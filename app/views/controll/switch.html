@@ -125,7 +125,16 @@
                 <div ng-switch-default>&nbsp;</div>
             </td>
             <td ng-switch on="v.deviceType">
-                <div  ng-switch-when="multilevel" id="range_slider_{{$index}}" class="app-range-slider" range-slider min="0" max="v.levelMax" model-max="rangeSlider[$index]" pin-handle="min" on-handle-up="sliderChange(v.urlToSlide,$index)"></div>
+                <div ng-switch-when="multilevel" 
+                     id="range_slider_{{$index}}" 
+                     class="app-range-slider" 
+                     range-slider 
+                     min="0" 
+                     max="v.levelMax" 
+                     model-max="rangeSlider[$index]" 
+                     pin-handle="min" 
+                     on-handle-down="cancelInterval()"
+                     on-handle-up="sliderChange(v.urlToSlide,$index)"></div>
                 <div ng-switch-default>&nbsp;</div>
             </td>
             </tr>
