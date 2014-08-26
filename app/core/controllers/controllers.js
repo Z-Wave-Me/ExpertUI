@@ -942,14 +942,24 @@ appController.controller('ThermostatController', function($scope, $log, $filter,
     $scope.load = function() {
         dataService.getZwaveData(function(ZWaveAPIData) {
             setData(ZWaveAPIData);
-            dataService.joinedZwaveData(function(data) {
-                $scope.reset();
-                setData(data.joined);
-            });
+             //$scope.refresh();
+//            dataService.joinedZwaveData(function(data) {
+//                $scope.reset();
+//                setData(data.joined);
+//            });
         });
     };
     // Load data
     $scope.load($scope.lang);
+    
+    // Refresh data
+    $scope.refresh = function() {
+        dataService.joinedZwaveData(function(data) {
+                $scope.reset();
+                setData(data.joined);
+            });
+    };
+    $scope.refresh();
 
     // Cancel interval on page destroy
     $scope.$on('$destroy', function() {
@@ -989,6 +999,12 @@ appController.controller('ThermostatController', function($scope, $log, $filter,
         console.log(url);
         //DataFactory.store(url).query();
         dataService.runCmd(url);
+        $scope.refresh();
+    };
+    
+    // Cancel data update interval
+    $scope.cancelInterval = function() {
+        dataService.cancelZwaveDataInterval();
     };
     /// --- Private functions --- ///
 
@@ -1075,29 +1091,7 @@ appController.controller('ThermostatController', function($scope, $log, $filter,
         });
     }
 
-    /**
-     * @todo REMOVE
-     */
-    $scope.refresh = function() {
-        dataService.updateZwaveData(function(data) {
-            angular.forEach($scope.thermostats, function(v, k) {
-                // Check for updated data
-                if (v.cmd in data) {
-                    $log.warn(v.cmd + ':' + v.id); //REM
-                    var obj = data[v.cmd];
-                    var level = obj.setVal.value;
-                    var updateTime = $filter('isTodayFromUnix')(obj.updateTime);
-                    $('#' + v.rowId + ' .row-time').html(updateTime).removeClass('is-updated-false');
-                    $('#' + v.rowId + ' .row-level .level-val').html(level);
-                    $log.info('Updating:' + v.rowId + ' | At: ' + updateTime + ' | with: ' + level);//REM
-                } else {
-                    //$log.warn(v.cmd + ': Nothing to update --- ');//REM
-                }
-            });
-            //$log.debug('-----------');//REM
-        });
-    };
-    //$scope.refresh();
+   
 
     // used to pick up thermstat mode
     function getCurrentThermostatMode(_instance) {
