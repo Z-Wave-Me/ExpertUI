@@ -30,6 +30,11 @@
                             <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
+                     <th>
+                        <a href="" ng-click="orderBy('ddr')" title="{{ _t('th_ddr_tip')}}" tooltip>{{ _t('th_ddr')}}
+                            <span ng-show="predicate == 'ddr'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
                     <th>&nbsp;</th>
 
                     <th>
@@ -48,6 +53,7 @@
                     <td class="row-sleeping" ng-bind-html="v.sleeping | toTrusted"></td>
                     <td class="row-awake" ng-bind-html="v.awake | toTrusted"></td>
                     <td class="row-time" ng-bind-html="v.updateTime | toTrusted"></td>
+                    <td><i class="{{v.ddr | checkedIcon}}"></i></td>
                     <td class="row-interview">
                          <a href="" ng-show="v.interview" ng-click="showModalInterview('#modal_interview', $index,v.id,v.name)" title="{{v.interview}}"><i class="fa fa-question-circle fa-lg text-info"></i></a>
                     </td>

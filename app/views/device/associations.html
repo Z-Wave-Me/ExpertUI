@@ -17,16 +17,16 @@
                     </th>
                    <th>{{ _t('th_assoc_group_name')}}</th>
                    <th style="width: 20%;">
-                        <button 
-                            class="btn btn-success" 
+                   <button 
+                            class="btn btn-primary" 
                             ng-show="!hideLifeline"
-                            data-ng-click="hideLifeline = !hideLifeline;doSomething()"
+                            data-ng-click="hideLifeline = !hideLifeline;lifeline(true)"
                             >{{ _t('btn_show_lifeline')}}
                         </button>
                         <button 
                             class="btn btn-info" 
                             ng-show="hideLifeline"
-                            data-ng-click="hideLifeline = false;doSomething()"
+                            data-ng-click="hideLifeline = false;lifeline(false)"
                             >{{ _t('btn_hide_lifeline')}}
                         </button>
                     </th>
@@ -39,7 +39,7 @@
                 <td>
                     <div ng-repeat="g in v.assocGroup">
                         <p><strong>{{g.name}}</strong><br />
-                         <span class="badge badge-assoc" ng-repeat="d in g.devices">{{d}}</span>
+                         <button class="btn btn-default" ng-repeat="d in g.devices">{{d}}</button>
                          </p>
                     </div>
                 </td>

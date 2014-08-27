@@ -1328,8 +1328,16 @@ appController.controller('StatusController', function($scope, $filter, dataServi
                     if (!ZWaveAPIData.devices[nodeId].instances[iId].commandClasses[ccId].data.interviewDone.value) {
                         interview_cont = _interview_cont;
                     }
-        } else
+        } else {
             interview_cont = _interview_cont;
+        }
+
+        // DDR
+        var ddr = false;
+        if (angular.isDefined(node.data.ZDDXMLFile)) {
+            ddr = node.data.ZDDXMLFile.value;
+        }
+
         var obj = {};
         obj['id'] = nodeId;
         obj['rowId'] = 'row_' + nodeId;
@@ -1340,6 +1348,7 @@ appController.controller('StatusController', function($scope, $filter, dataServi
         obj['sleeping'] = sleeping_cont;
         obj['awake'] = awake_cont;
         obj['updateTime'] = operating_cont;
+        obj['ddr'] = ddr;
         obj['interview'] = interview_cont;
         obj['urlToStore'] = (isListening || isFLiRS ? 'devices[' + nodeId + '].SendNoOperation()' : false);
         obj['interview'] = interview_cont;
@@ -1851,6 +1860,7 @@ appController.controller('TypeController', function($scope, $filter, dataService
 appController.controller('AssociationsController', function($scope, $filter, $http, myCache, dataService) {
     $scope.devices = [];
     $scope.ZWaveAPIData = [];
+    $scope.showLifeline = false;
     $scope.zdd;
     $scope.reset = function() {
         $scope.devices = angular.copy([]);
@@ -1871,137 +1881,7 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
             setData(data.joined);
         });
     };
-    //$scope.refresh();
-
-    $scope.updateAssoc = function() {
-        $scope.applyQueue = [];
-        $scope.updates = [];
-
-        var updates = [];
-        var nodeId = $scope.deviceId;
-        var node = $scope.ZWaveAPIData.devices[nodeId];
-        if (node == undefined)
-            return;
-        if (nodeId == 255 || node.data.isVirtual.value)
-            return;
-        $.each(node.instances, function(index, instance) {
-            if (!("commandClasses" in instance)) {
-                return;
-            }
-            if (0x85 in instance.commandClasses) {
-                for (var group = 0; group < instance.commandClasses[0x85].data.groups.value; group++) {
-                    updates.push("devices." + nodeId + ".instances." + index + ".commandClasses." + (0x85) + ".data." + (group + 1));
-                    dataService.runCmd('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x85].Get(' + (group + 1) + ')');
-                }
-            }
-            if (0x8e in instance.commandClasses) {
-                for (var group = 0; group < instance.commandClasses[0x8e].data.groups.value; group++) {
-                    updates.push("devices." + nodeId + ".instances." + index + ".commandClasses." + (0x8e) + ".data." + (group + 1));
-                    dataService.runCmd('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x8e].Get(' + (group + 1) + ')');
-
-                }
-            }
-
-        });
-        pollForUpdate(Math.floor((new Date()).getTime() / 1000), updates);
-    };
-
-    $scope.updateData = function(nodeId) {
-        var findLabel = function(nodeId, index) {
-            var label = $scope._t('association_group') + " " + (index + 1);
-            if ($scope.zdd[nodeId] && ("assocGroup" in $scope.zdd[nodeId]) && ((index) in $scope.zdd[nodeId].assocGroup)) {
-                // find best matching lang, default english
-                var langs = $scope.zdd[nodeId].assocGroup[index].description.lang;
-                if ($.isArray(langs)) {
-                    angular.forEach(langs, function(lang, index) {
-                        if (("__text" in lang) && (lang["_xml:lang"] == $scope.lang)) {
-                            label = lang.__text;
-                            return false;
-                        }
-                        if (("__text" in lang) && (lang["_xml:lang"] == "en")) {
-                            label = lang.__text;
-                        }
-                    });
-                } else {
-                    if (("__text" in langs)) {
-                        label = langs.__text;
-                    }
-                }
-            }
-            return label;
-        };
-        $scope.keys = [];
-        $scope.data = {};
-        var node = $scope.ZWaveAPIData.devices[nodeId];
-        if (node == undefined)
-            return;
-        if (nodeId == 255 || node.data.isVirtual.value)
-            return;
-        $.each(node.instances, function(index, instance) {
-            if (!("commandClasses" in instance)) {
-                return;
-            }
-
-            if ((0x85 in instance.commandClasses) || (0x8e in instance.commandClasses)) {
-                var groups = 0;
-                if (0x85 in instance.commandClasses) {
-                    groups = instance.commandClasses[0x85].data.groups.value;
-                }
-                if (0x8e in instance.commandClasses) {
-                    if (instance.commandClasses[0x8e].data.groups.value > groups)
-                        groups = instance.commandClasses[0x8e].data.groups.value;
-                }
-                for (var group = 0; group < groups; group++) {
-                    var key = nodeId + "." + index + "." + group;
-                    if ($.inArray(key, $scope.keys) == -1)
-                        $scope.keys.push(key);
-                    var data;
-                    var timeArray; // object to get updateTime from
-                    var nodeIds = [];
-                    var instanceIds = [];
-                    var persistent = [];
-                    var tooltips = [];
-                    var type = null;
-                    if ((0x85 in instance.commandClasses) && (group < instance.commandClasses[0x85].data.groups.value)) {
-                        data = instance.commandClasses[0x85].data[group + 1];
-                        timeArray = data.nodes;
-                        for (var i = 0; i < data.nodes.value.length; i++) {
-                            var targetNodeId = data.nodes.value[i];
-                            nodeIds.push(targetNodeId);
-                            var targetInstanceId = null;
-                            instanceIds.push(targetInstanceId);
-                            if (targetNodeId in $scope.ZWaveAPIData.devices) {
-                                persistent.push("inZWave");
-                                tooltips.push($filter('deviceName')(targetNodeId, $scope.ZWaveAPIData.devices[targetNodeId]));
-                            } else {
-                                persistent.push("dissapeared");
-                                tooltips.push($scope._t('device_disappeared'));
-                            }
-                        }
-                    }
-                    if ((0x8e in instance.commandClasses) && (group < instance.commandClasses[0x8e].data.groups.value)) {
-                        data = instance.commandClasses[0x8e].data[group + 1];
-                        timeArray = data.nodesInstances;
-                        for (var i = 0; i < data.nodesInstances.value.length; i += 2) {
-                            var targetNodeId = data.nodesInstances.value[i];
-                            nodeIds.push(targetNodeId);
-                            var targetInstanceId = data.nodesInstances.value[i + 1];
-                            instanceIds.push(targetInstanceId);
-                            if (targetNodeId in $scope.ZWaveAPIData.devices) {
-                                persistent.push("inZWave");
-                                tooltips.push($scope._t('instance') + " " + targetInstanceId + " " + $scope._t('of') + " " + $filter('deviceName')(targetNodeId, $scope.ZWaveAPIData.devices[targetNodeId]));
-                            } else {
-                                persistent.push("notInZWave");
-                                tooltips.push($scope._t('device_disappeared'));
-                            }
-                        }
-                    }
-                    $scope.data[key] = {"label": findLabel(nodeId, group), "tooltips": tooltips, "nodeId": nodeId, "instanceId": index, "node": node, "instance": index, "groupId": (group + 1), "nodeIds": nodeIds, "instanceIds": instanceIds, "persistent": persistent, "update": timeArray, "max": data.max.value, "remaining": (data.max.value - nodeIds.length)};
-                }
-            }
-        });
-    };
-
+    $scope.refresh();
 
 
     // Cancel interval on page destroy
@@ -2009,10 +1889,10 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
         dataService.cancelZwaveDataInterval();
     });
     // Store data on remote server
-    $scope.store = function(btn) {
-        var url = $(btn).attr('data-store-url');
-        dataService.runCmd(url);
-        return;
+    $scope.lifeline = function(status) {
+        $scope.reset();
+        $scope.showLifeline = status;
+        $scope.load($scope.lang);
     };
     /// --- Private functions --- ///
 
@@ -2032,10 +1912,56 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
                 zddXmlFile = node.data.ZDDXMLFile.value;
             }
             var zdd;
-            if (zddXmlFile) {
-                $http.get($scope.cfg.zddx_url + zddXmlFile).then(function(response) {
-                    var x2js = new X2JS();
-                    var zddXml = x2js.xml_str2json(response.data);
+            if (zddXmlFile && zddXmlFile !== 'undefined') {
+
+                var cachedZddXml = myCache.get(zddXmlFile);
+                if (!cachedZddXml) {
+                    $http.get($scope.cfg.zddx_url + zddXmlFile).then(function(response) {
+                        var x2js = new X2JS();
+                        var zddXml = x2js.xml_str2json(response.data);
+                        myCache.put(zddXmlFile, zddXml);
+                        var assocGroup = [];
+                        if (("ZWaveDevice" in zddXml) && ("assocGroups" in zddXml.ZWaveDevice)) {
+                            //getGroupLabel(nodeId, 0);
+                            zdd = zddXml.ZWaveDevice.assocGroups;
+                            angular.forEach(zddXml.ZWaveDevice.assocGroups, function(v, k) {
+                                if (angular.isArray(v)) {
+                                    angular.forEach(v, function(val, key) {
+                                        var deviceArray = $.unique(getAssocDevices(node, ZWaveAPIData, controllerNodeId));
+                                        var assoc = {
+                                            'name': getGroupLabel(val, 0),
+                                            'devices': deviceArray
+                                        };
+                                        if (assoc.devices.length > 0) {
+                                            assocGroup.push(assoc);
+                                        }
+
+                                    });
+                                } else {
+                                    var deviceArray = $.unique(getAssocDevices(node, ZWaveAPIData, controllerNodeId));
+                                    var assoc = {
+                                        'name': getGroupLabel(v, 0),
+                                        'devices': deviceArray
+                                    };
+                                    if (assoc.devices.length > 0) {
+                                        assocGroup.push(assoc);
+                                    }
+
+                                }
+                                //debugger;
+                            });
+                            // Push object
+                            $scope.devices.push({
+                                'id': nodeId,
+                                'rowId': 'row_' + nodeId + '_' + cnt,
+                                'name': $filter('deviceName')(nodeId, node),
+                                'assocGroup': assocGroup
+                            });
+                        }
+
+                    });
+                } else {
+                    var zddXml = cachedZddXml;
                     var assocGroup = [];
                     if (("ZWaveDevice" in zddXml) && ("assocGroups" in zddXml.ZWaveDevice)) {
                         //getGroupLabel(nodeId, 0);
@@ -2043,52 +1969,60 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
                         angular.forEach(zddXml.ZWaveDevice.assocGroups, function(v, k) {
                             if (angular.isArray(v)) {
                                 angular.forEach(v, function(val, key) {
-                                    var deviceArray = $.unique(getDevices(node,ZWaveAPIData));
-                                    assocGroup.push({
+                                    var deviceArray = $.unique(getAssocDevices(node, ZWaveAPIData, controllerNodeId));
+                                    var assoc = {
                                         'name': getGroupLabel(val, 0),
                                         'devices': deviceArray
-                                    });
+                                    };
+                                    if (assoc.devices.length > 0) {
+                                        assocGroup.push(assoc);
+                                    }
+
                                 });
                             } else {
-                                  var deviceArray = $.unique(getDevices(node,ZWaveAPIData));
-                                assocGroup.push({
+                                var deviceArray = $.unique(getAssocDevices(node, ZWaveAPIData, controllerNodeId));
+                                var assoc = {
                                     'name': getGroupLabel(v, 0),
                                     'devices': deviceArray
-                                });
+                                };
+                                if (assoc.devices.length > 0) {
+                                    assocGroup.push(assoc);
+                                }
+
                             }
+                            //debugger;
+                        });
+                        // Push object
+                        $scope.devices.push({
+                            'id': nodeId,
+                            'rowId': 'row_' + nodeId + '_' + cnt,
+                            'name': $filter('deviceName')(nodeId, node),
+                            'assocGroup': assocGroup
                         });
                     }
-                    // Push object
-                    $scope.devices.push({
-                        'id': nodeId,
-                        'rowId': 'row_' + nodeId + '_' + cnt,
-                        'name': $filter('deviceName')(nodeId, node),
-                        'assocGroup': assocGroup
-                    });
-                });
+                }
 
 
-            } else {
-                // Push object
-                $scope.devices.push({
-                    'id': nodeId,
-                    'rowId': 'row_' + nodeId + '_' + cnt,
-                    'name': $filter('deviceName')(nodeId, node),
-                    'assocGroup': []
-                });
-            }
+
+            } /**else {
+             // Push object
+             $scope.devices.push({
+             'id': nodeId,
+             'rowId': 'row_' + nodeId + '_' + cnt,
+             'name': $filter('deviceName')(nodeId, node),
+             'assocGroup': []
+             });
+             }**/
 
 
             cnt++;
         });
     }
- /**
-  * Get group name
-  */
+    /**
+     * Get group name
+     */
     function getGroupLabel(assocGroups, index) {
         var label = $scope._t('association_group') + " " + (index + 1);
-        //console.log(assocGroups);
-        //return;
         // find best matching lang, default english
         var langs = assocGroups.description.lang;
         if ($.isArray(langs)) {
@@ -2110,9 +2044,11 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
         return label;
     }
     ;
-
-    function getDevices(node,ZWaveAPIData) {
-         var devices = [];
+    /**
+     * Get assoc devices
+     */
+    function getAssocDevices(node, ZWaveAPIData, controllerNodeId) {
+        var devices = [];
         // Loop throught instances
         angular.forEach(node.instances, function(instance, instanceId) {
             if (instanceId == 0 && node.instances.length > 1) {
@@ -2121,32 +2057,32 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
             if (!('commandClasses' in instance)) {
                 return;
             }
-           if ((0x85 in instance.commandClasses) || (0x8e in instance.commandClasses)) {
+            if ((0x85 in instance.commandClasses) || (0x8e in instance.commandClasses)) {
                 var groups = 0;
                 if (0x85 in instance.commandClasses) {
                     groups = instance.commandClasses[0x85].data.groups.value;
-                    console.log(instance.commandClasses[0x85].data.groups);
+                    //console.log(instance.commandClasses[0x85].data.groups);
                 }
                 if (0x8e in instance.commandClasses) {
-                    if (instance.commandClasses[0x8e].data.groups.value > groups){
+                    if (instance.commandClasses[0x8e].data.groups.value > groups) {
                         groups = instance.commandClasses[0x8e].data.groups.value;
-                        console.log(instance.commandClasses[0x8e].data.groups);
+                        //console.log(instance.commandClasses[0x8e].data.groups);
                     }
                 }
                 var cnt = 0;
-               
+
                 for (var group = 0; group < groups; group++) {
                     cnt++;
                     //var key = nodeId + "." + index + "." + group;
                     //if ($.inArray(key, $scope.keys) == -1)
-                        //$scope.keys.push(key);
+                    //$scope.keys.push(key);
                     var data;
                     var timeArray; // object to get updateTime from
                     var nodeIds = [];
                     var instanceIds = [];
                     //var persistent = [];
                     var tooltips = [];
-                   // var type = null;
+                    // var type = null;
                     if ((0x85 in instance.commandClasses) && (group < instance.commandClasses[0x85].data.groups.value)) {
                         data = instance.commandClasses[0x85].data[group + 1];
                         for (var i = 0; i < data.nodes.value.length; i++) {
@@ -2155,8 +2091,14 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
                             var targetInstanceId = null;
                             instanceIds.push(targetInstanceId);
                             if (targetNodeId in ZWaveAPIData.devices) {
-                                 tooltips.push($filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId]));
-                                 devices.push('(#' +targetNodeId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId]));
+                                tooltips.push($filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId]));
+                                if ($scope.showLifeline) {
+                                    devices.push('(#' + targetNodeId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId]));
+                                } else {
+                                    if (controllerNodeId != targetNodeId) {
+                                        devices.push('(#' + targetNodeId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId]));
+                                    }
+                                }
                             }
                         }
                     }
@@ -2170,11 +2112,19 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
                             instanceIds.push(targetInstanceId);
                             if (targetNodeId in ZWaveAPIData.devices) {
                                 tooltips.push($scope._t('instance') + " " + targetInstanceId + " " + $scope._t('of') + " " + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId]));
-                               devices.push('(#' + targetNodeId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId]));
+                                if ($scope.showLifeline) {
+                                    devices.push('(#' + targetNodeId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId]));
+                                } else {
+                                    if (controllerNodeId != targetNodeId) {
+                                        devices.push('(#' + targetNodeId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId]));
+                                    }
+                                }
+
+
                             }
                         }
                     }
-                    
+
                     //$scope.data[key] = {"label": findLabel(nodeId, group), "tooltips": tooltips, "nodeId": nodeId, "instanceId": index, "node": node, "instance": index, "groupId": (group + 1), "nodeIds": nodeIds, "instanceIds": instanceIds, "persistent": persistent, "update": timeArray, "max": data.max.value, "remaining": (data.max.value - nodeIds.length)};
                     //devices[cnt] = {'list': tooltips};
                 }
@@ -2912,17 +2862,17 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 
         $scope.interviewCommands = interviewCommands(node);
         $scope.interviewCommandsDevice = node.data;
-         
+
         if (zddXmlFile) {
             var cachedZddXml = myCache.get(zddXmlFile);
             // Uncached file
             if (!cachedZddXml) {
-               $http.get($scope.cfg.zddx_url + zddXmlFile).then(function(response) {
-                   var x2js = new X2JS();
+                $http.get($scope.cfg.zddx_url + zddXmlFile).then(function(response) {
+                    var x2js = new X2JS();
                     var zddXml = x2js.xml_str2json(response.data);
                     myCache.put(zddXmlFile, zddXml);
                     setCont(node, nodeId, zddXml, ZWaveAPIData);
-                   
+
                 });
             } else {
                 setCont(node, nodeId, cachedZddXml, ZWaveAPIData);
@@ -4706,7 +4656,8 @@ appController.controller('TimingController', function($scope, $filter, dataServi
             } else {
                 color = (deliveryTime > 100 ? 'black' : 'green');
             }
-            packets += '<span class="' + color + '">' + deliveryTime + '</span> ';
+            var displayTime = deliveryTime / 10;
+            packets += '<span class="' + color + ' timing-packet">' + displayTime.toFixed() + '</span> ';
             cnt++;
         });
         return packets;

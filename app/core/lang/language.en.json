@@ -267,5 +267,6 @@
     "are_you_sure_restore": "Are your sure ot overwrite the network configuration. Have you created a backup ?",
     "restore_backup_chip ": "Overwrite Network Topology in Transceiver",        
     "ie_last_element": "just to remember, that IE do not like trailing comma (,) at the end the list of associative array elements",
-    "switch_point_temp": "Temperature"
+    "switch_point_temp": "Temperature",
+    "device_is_not_fully_interviewed": "Device interview is not complete"
 }
