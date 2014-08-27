@@ -283,6 +283,13 @@ background-color: #e4f5fc;
 .nm-response.alert-danger{
     font-weight: bold;
 }
+/* Device assoc
+-------------------------------------------------- */
+
+.badge-assoc{
+   margin: 0 5px 5px 0;
+   padding: 5px;
+}
 
 /*Images
 -------------------------------------------------- */

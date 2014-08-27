@@ -58,8 +58,11 @@ angApp.config(['$routeProvider',
                 when('/device/type', {
                     templateUrl: 'app/views/device/type.html'
                 }).
-                when('/expert/firmware', {
-                    templateUrl: 'app/views/expert/firmware.html'
+                when('/device/type', {
+                    templateUrl: 'app/views/device/type.html'
+                }).
+                when('/device/associations', {
+                    templateUrl: 'app/views/device/associations.html'
                 }).
                 when('/device/security', {
                     templateUrl: 'app/views/device/security.html'
