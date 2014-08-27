@@ -11,6 +11,7 @@ body {
 
 /* Navigation
 -------------------------------------------------- */
+
 .navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {
     margin-left: 0;
 }
@@ -18,7 +19,7 @@ body {
     margin: 0;
     height: 35px;
     padding: 5px 0 0 0;
-    margin-right: 40px;
+    margin-right: 20px;
 }
 .navbar, .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
     border:  0;
@@ -323,6 +324,9 @@ background-color: #e4f5fc;
 #inspect_queue_table{
     font-size: 12px;
     width: 100%;
+}
+.th-slider{
+    min-width: 100px;
 }
 
 /* Modals
