@@ -2862,8 +2862,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 
         $scope.interviewCommands = interviewCommands(node);
         $scope.interviewCommandsDevice = node.data;
-
-        if (zddXmlFile) {
+        if (zddXmlFile && zddXmlFile !== 'undefined') {
             var cachedZddXml = myCache.get(zddXmlFile);
             // Uncached file
             if (!cachedZddXml) {
@@ -2872,6 +2871,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                     var zddXml = x2js.xml_str2json(response.data);
                     myCache.put(zddXmlFile, zddXml);
                     setCont(node, nodeId, zddXml, ZWaveAPIData);
+                  
 
                 });
             } else {
@@ -3166,15 +3166,19 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 
             // get value from the Z-Wave data
             var config_zwave_value = null;
-            if (node.instances[0].commandClasses[0x70].data[conf_num] != null && node.instances[0].commandClasses[0x70].data[conf_num].val.value !== "") {
+          
+           if(angular.isDefined(node.instances[0].commandClasses[0x70])){
+               if (node.instances[0].commandClasses[0x70].data[conf_num] != null && node.instances[0].commandClasses[0x70].data[conf_num].val.value !== "") {
                 config_zwave_value = node.instances[0].commandClasses[0x70].data[conf_num].val.value;
                 conf_default = config_zwave_value;
 
             }
-
+            
+           }
+            
             var isUpdated = true;
             var updateTime = '';
-            if (angular.isDefined(node.instances[0].commandClasses[0x70].data[conf_num])) {
+            if (angular.isDefined(node.instances[0].commandClasses[0x70])) {
                 var uTime = node.instances[0].commandClasses[0x70].data[conf_num].updateTime;
                 var iTime = node.instances[0].commandClasses[0x70].data[conf_num].invalidateTime;
                 var updateTime = $filter('isTodayFromUnix')(uTime);
