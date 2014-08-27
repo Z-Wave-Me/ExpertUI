@@ -14,7 +14,7 @@ var config_data = {
         'interval': 3000, // Set interval in miliseconds to refresh data
         'queue_interval': 3000, // Set interval in miliseconds to refresh queue data
         'route_update_timeout': 15000, // Maximum time in miliseconds to wait for an update-route
-        'server_url': 'http://zwave.dyndns.org:8083', // Remote JSON
+        'server_url': '', // Remote JSON
         'update_url': '/ZWaveAPI/Data/', // Url for update (refresh data)
         'store_url': '/ZWaveAPI/Run/', // Url for store data
         'restore_url': '/ZWaveAPI/Restore', // Url to restore backup
@@ -23,8 +23,8 @@ var config_data = {
         'device_classes_url': '/translations/DeviceClasses.xml', // Url to Device Classes
         'config_url': '/config/', // Url for store config data
         'reorg_log_url': '/config/reorg.log', // Url for store reorg log data
-        'zddx_url': 'http://zwave.dyndns.org:8083/ZDDX/', // Url for zddx xml files
-        'zddx_create_url': 'http://zwave.dyndns.org:8083/ZAutomation/CreateZDDX/', // Create zddx file
+        'zddx_url': '/ZDDX/', // Url for zddx xml files
+        'zddx_create_url': '/ZAutomation/CreateZDDX/', // Create zddx file
         'notes_url': '/config/notes.log', // Url for store notes data
         'lang_dir': 'app/core/lang/', // Language directory
         'lang': 'en', // Default language
