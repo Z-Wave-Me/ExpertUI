@@ -4602,7 +4602,7 @@ appController.controller('TimingController', function($scope, $filter, dataServi
                 okPackets = getOkPackets(timingItems);
                 lastPackets = getLastPackets(timingItems);
             }
-
+           
             // Set object
             var obj = {};
             obj['id'] = nodeId;
