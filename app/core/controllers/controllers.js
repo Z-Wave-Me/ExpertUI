@@ -9,7 +9,7 @@ var appController = angular.module('appController', []);
 // Base controller
 appController.controller('BaseController', function($scope, $cookies, $filter, $location, cfg, langFactory, langTransFactory) {
     // Is mobile
-    $scope.isMobile = false;
+    $scope.isMobile = true;
     
     // Show page content
     $scope.showContent = false;
@@ -926,7 +926,7 @@ appController.controller('MetersController', function($scope, $filter, dataServi
 });
 
 // Thermostat controller
-appController.controller('ThermostatController', function($scope, $log, $filter, DataFactory, dataService) {
+appController.controller('ThermostatController', function($scope, $filter, dataService) {
     $scope.thermostats = [];
     $scope.rangeSlider = [];
     $scope.reset = function() {
@@ -974,7 +974,6 @@ appController.controller('ThermostatController', function($scope, $log, $filter,
         $scope.rangeSlider[index] = count;
         var url = cmd + '.Set(1,' + count + ')';
         console.log('Sending value: ' + $scope.rangeSlider[index]);
-        //DataFactory.store(url).query();
         dataService.runCmd(url);
     };
     // Change temperature after slider handle
@@ -991,7 +990,6 @@ appController.controller('ThermostatController', function($scope, $log, $filter,
         $scope.rangeSlider[index] = count;
         var url = cmd + '.Set(1,' + count + ')';
         console.log(url);
-        //DataFactory.store(url).query();
         dataService.runCmd(url);
         $scope.refresh();
     };
@@ -3983,7 +3981,6 @@ appController.controller('ControllController', function($scope, $filter, $timeou
     $scope.requestNifAll = function(btn) {
         angular.forEach($scope.devices, function(v, k) {
             var url = 'devices[' + v.id + '].RequestNodeInformation()';
-            //DataFactory.store(url).query();
             dataService.runCmd(url);
         });
         return;
