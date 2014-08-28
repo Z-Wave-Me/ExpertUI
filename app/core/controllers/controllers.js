@@ -9,7 +9,7 @@ var appController = angular.module('appController', []);
 // Base controller
 appController.controller('BaseController', function($scope, $cookies, $filter, $location, cfg, langFactory, langTransFactory) {
     // Is mobile
-    $scope.isMobile = true;
+    $scope.isMobile = false;
     
     // Show page content
     $scope.showContent = false;
