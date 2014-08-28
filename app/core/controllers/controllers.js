@@ -2490,7 +2490,8 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                             instanceIds.push(targetInstanceId);
                             if (targetNodeId in $scope.ZWaveAPIData.devices) {
                                 persistent.push("inZWave");
-                                tooltips.push($scope._t('instance') + " " + targetInstanceId + " " + $scope._t('of') + " " + $filter('deviceName')(targetNodeId, $scope.ZWaveAPIData.devices[targetNodeId]));
+                                //tooltips.push($scope._t('instance') + " " + targetInstanceId + " " + $scope._t('of') + " " + $filter('deviceName')(targetNodeId, $scope.ZWaveAPIData.devices[targetNodeId]));
+                                tooltips.push($filter('deviceName')(targetNodeId, $scope.ZWaveAPIData.devices[targetNodeId]));
                             } else {
                                 persistent.push("notInZWave");
                                 tooltips.push($scope._t('device_disappeared'));

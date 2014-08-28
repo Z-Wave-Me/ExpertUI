@@ -102,7 +102,8 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
                 return callback(data);
             }).error(function() {
                 pageLoader(true);
-                handleError();
+                handleError(false,true,true);
+               
 
             });
         }
@@ -129,7 +130,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
                 apiData = data;
                 return callback(data);
             }).error(function() {
-                handleError();
+                handleError(false,true,true);
 
             });
         }
@@ -323,11 +324,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
      * Get timing (statistics) data
      */
     function  getTiming(callback) {
-        if (deviceClasses) {
-            return callback(deviceClasses);
-        }
-        else {
-            var request = $http({
+        var request = $http({
                 method: "POST",
                 //url: 'storage/timing.json'
                 url: cfg.server_url + '/JS/Run/communicationStatistics.get()'
@@ -336,10 +333,9 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
                  return callback(data);
             }).error(function() {
                 console.log('Error: communicationStatistics');
-               // handleError();
+               handleError(false,true);
 
             });
-        }
     }
     
   
@@ -475,24 +471,18 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
      * 
      * Handle errors
      */
-    function handleError(error,message) {
+    function handleError(message,showResponse,hideContent) {
         var msg = (message ? message : 'Error handling data from server');
-         $('#main_content').hide();
-        $('#respone_container').show();
+        if(showResponse){
+            $('#respone_container').show();
         $('#respone_container_inner').html('<div class="alert alert-danger alert-dismissable response-message"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <i class="icon-ban-circle"></i> ' + msg +'</div>');
-        console.log('Error');
-        //$('html').html('');
-        return;
-        // The API response from the server should be returned in a
-        // nomralized format. However, if the request was not handled by the
-        // server (or what not handles properly - ex. server error), then we
-        // may have to normalize it on our end, as best we can.
-        if (!angular.isObject(response.data) || !response.data.message) {
-            return($q.reject("An unknown error occurred."));
-
+        } 
+        
+        if(hideContent){
+           $('#main_content').hide(); 
         }
-        // Otherwise, use expected error message.
-        return($q.reject(response.data.message));
+        
+        console.log('Error');
 
     }
     
@@ -500,7 +490,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
      * 
      * Handle cmd errors
      */
-    function handleCmdError(error,message) {
+    function handleCmdError(message) {
         var msg = (message ? message : 'Error handling data from server');
         $('#respone_container').show();
         $('#respone_container_inner').html('<div class="alert alert-danger alert-dismissable response-message"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <i class="icon-ban-circle"></i> ' + msg +'</div>');
@@ -526,7 +516,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
             $('#main_content').show();
             return;
         }
-        $('#main_content').hide();
+        //$('#main_content').hide();
         $('#respone_container').show();
         $('#respone_container_inner').html('<div class="alert alert-warning page-load-spinner"><i class="fa fa-spinner fa-lg fa-spin"></i><br /> Loading data....</div>');
         return;

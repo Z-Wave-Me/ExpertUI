@@ -20,8 +20,8 @@
                     </td>
                     <td class="association-info"> 
                         <span ng-repeat="a in data[key].nodeIds track by $index">
-                            <a class="btn btn-info {{data[key].persistent[$index]}}" title="{{data[key].tooltips[$index]}}">(#{{a}}) {{data[key].tooltips[$index]}}<span ng_if="data[key].instanceIds[$index] != null">.{{data[key].instanceIds[$index]}}</span></a> 
-                            <br ng_if="$index % 5 == 4"/>
+                            <a class="btn btn-info {{data[key].persistent[$index]}} btn-assoc" title="{{data[key].tooltips[$index]}}">(#{{a}}<span ng_if="data[key].instanceIds[$index] != null">.{{data[key].instanceIds[$index]}}</span>) {{data[key].tooltips[$index]}}</a> 
+                            <!--<br ng_if="$index % 5 == 4"/> -->
                         </span>
                     </td>
                     <td  class="association-action" style="text-align: right; width: 20%;"> 
