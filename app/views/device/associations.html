@@ -37,6 +37,7 @@
                 <td>{{ v.id }}</td>
                 <td>{{ v.name }}</td>
                 <td>
+                    
                     <div ng-repeat="g in v.assocGroup">
                         <p><strong>{{g.name}}</strong><br />
                          <button class="btn btn-default" ng-repeat="d in g.devices">{{d}}</button>

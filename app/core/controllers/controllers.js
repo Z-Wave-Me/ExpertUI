@@ -10,7 +10,7 @@ var appController = angular.module('appController', []);
 appController.controller('BaseController', function($scope, $cookies, $filter, $location, cfg, langFactory, langTransFactory) {
     // Is mobile
     $scope.isMobile = false;
-    
+
     // Show page content
     $scope.showContent = false;
     // Global config
@@ -57,13 +57,13 @@ appController.controller('BaseController', function($scope, $cookies, $filter, $
         var lastSegment = path.split('/').pop();
         return lastSegment;
     };
-    
-    $scope.mobileCheck = function (a){
-        if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))){
+
+    $scope.mobileCheck = function(a) {
+        if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) {
             $scope.isMobile = true;
         }
     };
-     $scope.mobileCheck(navigator.userAgent||navigator.vendor||window.opera);
+    $scope.mobileCheck(navigator.userAgent || navigator.vendor || window.opera);
 });
 
 // Test controller
@@ -1889,7 +1889,7 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
             setData(data.joined);
         });
     };
-    $scope.refresh();
+    //$scope.refresh();
 
 
     // Cancel interval on page destroy
@@ -1930,40 +1930,13 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
                         myCache.put(zddXmlFile, zddXml);
                         var assocGroup = [];
                         if (("ZWaveDevice" in zddXml) && ("assocGroups" in zddXml.ZWaveDevice)) {
-                            //getGroupLabel(nodeId, 0);
                             zdd = zddXml.ZWaveDevice.assocGroups;
-                            angular.forEach(zddXml.ZWaveDevice.assocGroups, function(v, k) {
-                                if (angular.isArray(v)) {
-                                    angular.forEach(v, function(val, key) {
-                                        var deviceArray = $.unique(getAssocDevices(node, ZWaveAPIData, controllerNodeId));
-                                        var assoc = {
-                                            'name': getGroupLabel(val, 0),
-                                            'devices': deviceArray
-                                        };
-                                        if (assoc.devices.length > 0) {
-                                            assocGroup.push(assoc);
-                                        }
-
-                                    });
-                                } else {
-                                    var deviceArray = $.unique(getAssocDevices(node, ZWaveAPIData, controllerNodeId));
-                                    var assoc = {
-                                        'name': getGroupLabel(v, 0),
-                                        'devices': deviceArray
-                                    };
-                                    if (assoc.devices.length > 0) {
-                                        assocGroup.push(assoc);
-                                    }
-
-                                }
-                                //debugger;
-                            });
-                            // Push object
-                            $scope.devices.push({
+                            var assocDevices = getAssocDevices(node, ZWaveAPIData, zdd, controllerNodeId);
+                             $scope.devices.push({
                                 'id': nodeId,
                                 'rowId': 'row_' + nodeId + '_' + cnt,
                                 'name': $filter('deviceName')(nodeId, node),
-                                'assocGroup': assocGroup
+                                'assocGroup': assocDevices
                             });
                         }
 
@@ -1972,55 +1945,17 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
                     var zddXml = cachedZddXml;
                     var assocGroup = [];
                     if (("ZWaveDevice" in zddXml) && ("assocGroups" in zddXml.ZWaveDevice)) {
-                        //getGroupLabel(nodeId, 0);
                         zdd = zddXml.ZWaveDevice.assocGroups;
-                        angular.forEach(zddXml.ZWaveDevice.assocGroups, function(v, k) {
-                            if (angular.isArray(v)) {
-                                angular.forEach(v, function(val, key) {
-                                    var deviceArray = $.unique(getAssocDevices(node, ZWaveAPIData, controllerNodeId));
-                                    var assoc = {
-                                        'name': getGroupLabel(val, 0),
-                                        'devices': deviceArray
-                                    };
-                                    if (assoc.devices.length > 0) {
-                                        assocGroup.push(assoc);
-                                    }
-
-                                });
-                            } else {
-                                var deviceArray = $.unique(getAssocDevices(node, ZWaveAPIData, controllerNodeId));
-                                var assoc = {
-                                    'name': getGroupLabel(v, 0),
-                                    'devices': deviceArray
-                                };
-                                if (assoc.devices.length > 0) {
-                                    assocGroup.push(assoc);
-                                }
-
-                            }
-                            //debugger;
-                        });
-                        // Push object
-                        $scope.devices.push({
-                            'id': nodeId,
-                            'rowId': 'row_' + nodeId + '_' + cnt,
-                            'name': $filter('deviceName')(nodeId, node),
-                            'assocGroup': assocGroup
-                        });
+                            var assocDevices = getAssocDevices(node, ZWaveAPIData, zdd, controllerNodeId);
+                             $scope.devices.push({
+                                'id': nodeId,
+                                'rowId': 'row_' + nodeId + '_' + cnt,
+                                'name': $filter('deviceName')(nodeId, node),
+                                'assocGroup': assocDevices
+                            });
                     }
                 }
-
-
-
-            } /**else {
-             // Push object
-             $scope.devices.push({
-             'id': nodeId,
-             'rowId': 'row_' + nodeId + '_' + cnt,
-             'name': $filter('deviceName')(nodeId, node),
-             'assocGroup': []
-             });
-             }**/
+            }
 
 
             cnt++;
@@ -2031,7 +1966,6 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
      */
     function getGroupLabel(assocGroups, index) {
         var label = $scope._t('association_group') + " " + (index + 1);
-        // find best matching lang, default english
         var langs = assocGroups.description.lang;
         if ($.isArray(langs)) {
             angular.forEach(langs, function(lang, index) {
@@ -2055,94 +1989,89 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
     /**
      * Get assoc devices
      */
-    function getAssocDevices(node, ZWaveAPIData, controllerNodeId) {
-        var devices = [];
-        // Loop throught instances
-        angular.forEach(node.instances, function(instance, instanceId) {
-            if (instanceId == 0 && node.instances.length > 1) {
-                return;
-            }
-            if (!('commandClasses' in instance)) {
-                return;
-            }
-            if ((0x85 in instance.commandClasses) || (0x8e in instance.commandClasses)) {
-                var groups = 0;
-                if (0x85 in instance.commandClasses) {
-                    groups = instance.commandClasses[0x85].data.groups.value;
-                    //console.log(instance.commandClasses[0x85].data.groups);
+    function getAssocDevices(node, ZWaveAPIData, zdd, controllerNodeId) {
+        var assocGroups = [];
+        var assocDevices = [];
+        var assoc = [];
+        var data;
+        if (0x85 in node.instances[0].commandClasses) {
+            var cc = node.instances[0].commandClasses[0x85].data;
+            if (cc.groups.value >= 1) {
+                for (var grp_num = 1; grp_num <= parseInt(cc.groups.value, 10); grp_num++) {
+                    var groupArr = [];
+                    var groupDev = [];
+                    if (assocGroups.indexOf(grp_num) == -1) {
+                        assocGroups.push(grp_num);
+                    }
+
+                    data = cc[grp_num];
+                    for (var i = 0; i < data.nodes.value.length; i++) {
+                        var targetNodeId = data.nodes.value[i];
+                        var device = {'id': targetNodeId,'name': '(#' + targetNodeId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId])};
+                        assocDevices.push({'group': grp_num, 'device': device});
+                    }
+
                 }
-                if (0x8e in instance.commandClasses) {
-                    if (instance.commandClasses[0x8e].data.groups.value > groups) {
-                        groups = instance.commandClasses[0x8e].data.groups.value;
-                        //console.log(instance.commandClasses[0x8e].data.groups);
+            }
+        }
+
+        if (0x8e in node.instances[0].commandClasses) {
+            var cc = node.instances[0].commandClasses[0x8e].data;
+            if (cc.groups.value >= 1) {
+                for (var grp_num = 1; grp_num <= parseInt(cc.groups.value, 10); grp_num++) {
+                    var groupDev = [];
+                    if (assocGroups.indexOf(grp_num) == -1) {
+                        assocGroups.push(grp_num);
+                    }
+                    data = cc[grp_num];
+
+                    for (var i = 0; i < data.nodesInstances.value.length; i += 2) {
+                        var targetNodeId = data.nodesInstances.value[i];
+                        var targetInstanceId = data.nodesInstances.value[i + 1];
+                        var instanceId = (targetInstanceId > 0  ? '.' + targetInstanceId : '')
+                        var device = {'id': targetNodeId,'name': '(#' + targetNodeId + instanceId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId])};
+                        assocDevices.push({'group': grp_num, 'device': device});
                     }
                 }
-                var cnt = 0;
+            }
+        }
 
-                for (var group = 0; group < groups; group++) {
-                    cnt++;
-                    //var key = nodeId + "." + index + "." + group;
-                    //if ($.inArray(key, $scope.keys) == -1)
-                    //$scope.keys.push(key);
-                    var data;
-                    var timeArray; // object to get updateTime from
-                    var nodeIds = [];
-                    var instanceIds = [];
-                    //var persistent = [];
-                    var tooltips = [];
-                    // var type = null;
-                    if ((0x85 in instance.commandClasses) && (group < instance.commandClasses[0x85].data.groups.value)) {
-                        data = instance.commandClasses[0x85].data[group + 1];
-                        for (var i = 0; i < data.nodes.value.length; i++) {
-                            var targetNodeId = data.nodes.value[i];
-                            nodeIds.push(targetNodeId);
-                            var targetInstanceId = null;
-                            instanceIds.push(targetInstanceId);
-                            if (targetNodeId in ZWaveAPIData.devices) {
-                                tooltips.push($filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId]));
-                                if ($scope.showLifeline) {
-                                    devices.push('(#' + targetNodeId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId]));
-                                } else {
-                                    if (controllerNodeId != targetNodeId) {
-                                        devices.push('(#' + targetNodeId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId]));
-                                    }
-                                }
-                            }
+        angular.forEach(assocGroups, function(v, k) {
+            var dev = [];
+            var name;
+           
+            angular.forEach(zdd, function(zddval, zddkey) {
+                if (angular.isArray(zddval)) {
+                    angular.forEach(zddval, function(val, key) {
+                        if (val._number == v)
+                    name = getGroupLabel(val, v);
+                    });
+                } else {
+                    if (zddval._number == v)
+                    name = getGroupLabel(zddval, v);
+
+                }
+            });
+            angular.forEach(assocDevices, function(d, key, nodeId) {
+                if (d['group'] == v) {
+                    if ($scope.showLifeline) {
+                         dev.push(d.device.name);
+                    }else{
+                        if (controllerNodeId != d.device.id) {
+                             dev.push(d.device.name);
                         }
                     }
-                    if ((0x8e in instance.commandClasses) && (group < instance.commandClasses[0x8e].data.groups.value)) {
-                        data = instance.commandClasses[0x8e].data[group + 1];
-                        timeArray = data.nodesInstances;
-                        for (var i = 0; i < data.nodesInstances.value.length; i += 2) {
-                            var targetNodeId = data.nodesInstances.value[i];
-                            nodeIds.push(targetNodeId);
-                            var targetInstanceId = data.nodesInstances.value[i + 1];
-                            instanceIds.push(targetInstanceId);
-                            if (targetNodeId in ZWaveAPIData.devices) {
-                                tooltips.push($scope._t('instance') + " " + targetInstanceId + " " + $scope._t('of') + " " + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId]));
-                                if ($scope.showLifeline) {
-                                    devices.push('(#' + targetNodeId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId]));
-                                } else {
-                                    if (controllerNodeId != targetNodeId) {
-                                        devices.push('(#' + targetNodeId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId]));
-                                    }
-                                }
-
-
-                            }
-                        }
-                    }
-
-                    //$scope.data[key] = {"label": findLabel(nodeId, group), "tooltips": tooltips, "nodeId": nodeId, "instanceId": index, "node": node, "instance": index, "groupId": (group + 1), "nodeIds": nodeIds, "instanceIds": instanceIds, "persistent": persistent, "update": timeArray, "max": data.max.value, "remaining": (data.max.value - nodeIds.length)};
-                    //devices[cnt] = {'list': tooltips};
                 }
-            }
 
-        });
-        //console.log(devices);
-        return devices;
+            });
+            if(dev.length > 0){
+                assoc.push({'name': name, 'devices': dev});
+            }
+         });
+
+        return assoc;
     }
-    ;
+
 
 });
 // Assoc controller
@@ -2880,7 +2809,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                     var zddXml = x2js.xml_str2json(response.data);
                     myCache.put(zddXmlFile, zddXml);
                     setCont(node, nodeId, zddXml, ZWaveAPIData);
-                  
+
 
                 });
             } else {
@@ -3175,16 +3104,16 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 
             // get value from the Z-Wave data
             var config_zwave_value = null;
-          
-           if(angular.isDefined(node.instances[0].commandClasses[0x70])){
-               if (node.instances[0].commandClasses[0x70].data[conf_num] != null && node.instances[0].commandClasses[0x70].data[conf_num].val.value !== "") {
-                config_zwave_value = node.instances[0].commandClasses[0x70].data[conf_num].val.value;
-                conf_default = config_zwave_value;
+
+            if (angular.isDefined(node.instances[0].commandClasses[0x70])) {
+                if (node.instances[0].commandClasses[0x70].data[conf_num] != null && node.instances[0].commandClasses[0x70].data[conf_num].val.value !== "") {
+                    config_zwave_value = node.instances[0].commandClasses[0x70].data[conf_num].val.value;
+                    conf_default = config_zwave_value;
+
+                }
 
             }
-            
-           }
-            
+
             var isUpdated = true;
             var updateTime = '';
             if (angular.isDefined(node.instances[0].commandClasses[0x70])) {
@@ -4601,7 +4530,7 @@ appController.controller('TimingController', function($scope, $filter, dataServi
             } else {
                 type = 'type_remote';
 
-            } 
+            }
 
             // Packets
             var timingItems = data[nodeId];
@@ -4610,7 +4539,7 @@ appController.controller('TimingController', function($scope, $filter, dataServi
                 okPackets = getOkPackets(timingItems);
                 lastPackets = getLastPackets(timingItems);
             }
-           
+
             // Set object
             var obj = {};
             obj['id'] = nodeId;

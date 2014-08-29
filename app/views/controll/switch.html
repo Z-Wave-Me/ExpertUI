@@ -40,7 +40,7 @@
                         </button>
                     </th>
                     <th>
-            <div class="btn-group">
+            <div class="btn-group" style="min-width: 150px !important;">
                 <button 
                     class="btn btn-info spin-true"
                     data-store-url="SetOff()" 
@@ -81,7 +81,7 @@
             </td>
             <td data-title="" ng-switch on="v.deviceType">
                 <div ng-switch-when="multilevel">
-                    <div class="btn-group">
+                    <div class="btn-group"  style="min-width: 110px !important;">
                         <button 
                             data-ng-click="store('#btn_off_' + v.rowId)" 
                             data-store-url="{{ v.urlToOff}}" 

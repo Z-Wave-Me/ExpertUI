@@ -1,6 +1,7 @@
 {
     "--- missing":"---",
-    "restore_backup_chip": "Also restore network topology information (please read the user manual first!)",
+   "are_you_sure_remove_node": "Are you sure to want like to delete device",
+    "inspect_queue_empty": "queue is empty",
     "---":"--- missing",
     "rt_header_update_time":"Updated",
     "th_ddr":"DDR",
@@ -270,5 +271,6 @@
     "restore_backup_chip ": "Overwrite Network Topology in Transceiver",        
     "ie_last_element": "just to remember, that IE do not like trailing comma (,) at the end the list of associative array elements",
     "switch_point_temp": "Temperature",
-    "device_is_not_fully_interviewed": "Device interview is not complete"
+    "device_is_not_fully_interviewed": "Device interview is not complete",
+    "restore_backup_chip": "Also restore network topology information (please read the user manual first!)"
 }
