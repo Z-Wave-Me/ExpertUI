@@ -73,7 +73,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
                 return callback(data);
             }).error(function() {
                 pageLoader(true);
-                handleError(false,true,true);
+                handleError(false,true,false);
                
 
             });
