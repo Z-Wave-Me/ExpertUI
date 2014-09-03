@@ -30,6 +30,11 @@
                             <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
+                     <th>
+                        <a href="" ng-click="orderBy('ddr')" title="{{ _t('th_ddr_tip')}}" tooltip>{{ _t('th_ddr')}}
+                            <span ng-show="predicate == 'ddr'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
                     <th>&nbsp;</th>
 
                     <th>
@@ -48,6 +53,7 @@
                     <td class="row-sleeping" ng-bind-html="v.sleeping | toTrusted"></td>
                     <td class="row-awake" ng-bind-html="v.awake | toTrusted"></td>
                     <td class="row-time" ng-bind-html="v.updateTime | toTrusted"></td>
+                    <td><i class="{{v.ddr | checkedIcon}}"></i></td>
                     <td class="row-interview">
                          <a href="" ng-show="v.interview" ng-click="showModalInterview('#modal_interview', $index,v.id,v.name)" title="{{v.interview}}"><i class="fa fa-question-circle fa-lg text-info"></i></a>
                     </td>
@@ -79,9 +85,9 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Instance</th>
-                                <th>CommandClass</th>
-                                <th>Result</th>
+                                <th>{{_t('th_instance')}}</th>
+                <th>{{_t('th_command_class')}}</th>
+                <th>{{_t('th_result')}}</th>
                         </thead>
                         <tbody>
                             <tr ng-repeat="v in interviewCommands[deviceInfo.index]" id="{{ v.ccId}}">
@@ -104,7 +110,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{_t('btn_cancel')}}</button>
             </div>
         </div>
     </div>
@@ -116,11 +122,11 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">{{_t('commandClass')}}</h4>
+                    <h4 class="modal-title">{{_t('th_command_class')}}</h4>
                 </div>
                 <div class="modal-body"></div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{_t('btn_cancel')}}</button>
                 </div>
             </div>
         </div>
@@ -136,7 +142,7 @@
                 </div>
                 <div class="modal-body"></div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{_t('btn_cancel')}}</button>
                 </div>
             </div>
         </div>

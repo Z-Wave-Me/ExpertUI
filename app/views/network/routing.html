@@ -19,7 +19,7 @@
                 <td>{{nodeId| deviceName:nodes[nodeId].node}}</td>
                 <td><routing-type-icon node-id="{{ nodeId}}"></routing-type-icon></td>
                 <td ng-repeat="n in devices" class="rtCell"><div id="cell{{nodeId}}-{{n}}" class="{{data[nodeId][n].clazz}}" title="{{data[nodeId][n].tooltip}}" data-toggle="tooltip" data-position="top" tooltip><span class="info">{{data[nodeId][n].info}}</span></div></td>
-                <td style="text-align: right;"><span id="update{{nodeId}}" class="{{nodes[nodeId].node.data.neighbours| getUpdated}}">{{nodes[nodeId].node.data.neighbours.updateTime| getTime}}</span></td>
+                <td style="text-align: right;"><span id="update{{nodeId}}" class="{{nodes[nodeId].node.data.neighbours| getUpdated}}">{{nodes[nodeId].node.data.neighbours.updateTime| isTodayFromUnix}}</span></td>
                 <td ng-if="nodes[nodeId].node | updateable :nodeId">&nbsp; <button class="btn btn-primary update"
                     data-ng-click="update(nodeId)" ng-disabled="updating[nodeId]">{{ _t('update')}}</button></td>
             </tr>

@@ -423,6 +423,23 @@ angApp.filter('mwiefIcon', function() {
     };
 });
 
+/*
+ * Set mwief icon
+ */
+angApp.filter('checkedIcon', function() { 
+    return function(input) {
+        //var icon = 'fa fa-minus';
+        var icon = '&nbsp';
+//        if(input === false){
+//            icon = 'fa fa-check fa-lg text-danger';
+//        }
+        if(input){
+            icon = 'fa fa-check fa-lg text-success';
+        }
+        return  icon;
+    };
+});
+
 /**
  * Set zWavePlus icon
  */

@@ -5,12 +5,14 @@
   <title>Z-Wave</title>
   <!-- Bootstrap css -->
   <link media="screen" type="text/css" rel="stylesheet" href="app/css/bootstrap/bootstrap.css">
-   <link media="screen" type="text/css" rel="stylesheet" href="app/css/bootstrap/bootstrap-slider.css">
   <!-- Z-Wave css -->
   <link media="screen" type="text/css" rel="stylesheet" href="app/css/main.css">
   <!-- Font awesome css -->
   <link media="screen" type="text/css" rel="stylesheet" href="app/css/font-awesome-4.1.0/css/font-awesome.min.css">
+   <!-- Vendor css -->
   <link media="screen" type="text/css" rel="stylesheet" href="app/css/angular-slider.css">
+   <!-- Responsive css -->
+  <link media="screen" type="text/css" rel="stylesheet" href="app/css/main-responsive.css">
    <!-- jQuery js -->
   <script src="app/vendor/jquery/jquery-1.11.1.js"></script>
    <!-- Upload js -->
@@ -38,7 +40,7 @@
   <script src="app/core/jquery/jquery-app.js"></script>
   <script src="app/vendor/slider/angular-slider.js"></script>
 </head>
- <body ng-app="angApp" ng-controller="BaseController" id="page_{{getBodyId()}}">
+ <body ng-app="angApp" ng-controller="BaseController" id="page_{{getBodyId()}}" class="is-mobile-{{isMobile}}">
     <div class="navbar navbar-inverse navbar-fixed-top___" role="navigation">
             <div class="container">
                 <div class="navbar-header">
@@ -49,11 +51,12 @@
                         <span class="icon-bar"></span>
                     </button>
                      <a class="navbar-brand" href="#">
-                         <img src="app/images/z-wave-logo-white.png" class="header-logo" alt="Z-Wave" height="40" />
+                         <!--<img src="app/images/z-wave-logo-white.png" class="header-logo" alt="Z-Wave" height="40" />-->
                     </a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav" id="main_nav">
+                         <li><a href="#" class="navigation-selector"><i class="fa fa-home fa-lg"></i></a></li>
                          <li class="divider-vertical remove-margin"></li>
                         <li class="dropdown">
                             <a href="" class="dropdown-toggle" data-toggle="dropdown">{{ _t('nav_control') }} <b class="caret"></b></a>
@@ -73,6 +76,7 @@
                                 <li><a href="#device/status" class="navigation-selector">{{ _t('nav_status') }}</a></li>
                                 <li><a href="#device/battery" class="navigation-selector">{{ _t('nav_battery') }}</a></li>
                                 <li><a href="#device/type" class="navigation-selector">{{ _t('nav_type_info') }}</a></li>
+                                <li><a href="#device/associations" class="navigation-selector">{{ _t('nav_associations') }}</a></li>
                                 <!--  <li><a href="#device/security" class="navigation-selector">{{ _t('nav_security_status') }}</a></li>-->
                             </ul>
                         </li>
@@ -89,8 +93,6 @@
                                 <li><a href="#network/controller" class="navigation-selector">{{ _t('nav_controller_info') }}</a></li>
                             </ul>
                         </li>
-                         <li class="divider-vertical remove-margin"></li>
-                         <li><a href="#home" class="navigation-selector"><i class="fa fa-home fa-lg"></i></a></li>
                         <li class="divider-vertical remove-margin"></li>
                         <li class="dropdown">
                             <a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe fa-lg"></i> <span class="current-lang"></span> <b class="caret"></b></a>

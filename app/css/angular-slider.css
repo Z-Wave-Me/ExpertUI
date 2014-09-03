@@ -64,6 +64,7 @@
   -o-transition: border linear 0.2s, box-shadow linear 0.2s;
   transition: border linear 0.2s, box-shadow linear 0.2s;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  min-width: 100px;
   /*------------------------------------*\
       RUNNER
   \*------------------------------------*/

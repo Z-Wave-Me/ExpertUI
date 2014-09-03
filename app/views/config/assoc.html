@@ -20,14 +20,13 @@
                     </td>
                     <td class="association-info"> 
                         <span ng-repeat="a in data[key].nodeIds track by $index">
-                            <a class="btn btn-info btn-lg {{data[key].persistent[$index]}}" title="{{data[key].tooltips[$index]}}" data-toggle="tooltip" data-position="top" tooltip>#{{a}}<span ng_if="data[key].instanceIds[$index] != null">.{{data[key].instanceIds[$index]}}</span></a> 
-                            <br ng_if="$index % 5 == 4"/>
+                            <a class="btn btn-info {{data[key].persistent[$index]}} btn-assoc" title="{{data[key].tooltips[$index]}}">(#{{a}}<span ng_if="data[key].instanceIds[$index] != null">.{{data[key].instanceIds[$index]}}</span>) {{data[key].tooltips[$index]}}</a> 
+                            <!--<br ng_if="$index % 5 == 4"/> -->
                         </span>
                     </td>
-                    <td  class="association-action" style="text-align: right;"> 
-                        <button type="button" class="btn btn-primary btn-lg" 
-                                data-toggle="modal" data-ng-click="openAdd(data[key])" data-target="#modal_add" ng-disabled="data[key].max <= data[key].nodeIds.length"><span style="display: inline-block;width:12px;">+</span></button>
-                        <button type="button" class="btn btn-primary btn-lg" data-ng-click="openRemove(data[key])" ng-disabled="data[key].nodeIds.length == 0"><span style="display: inline-block;width:12px;">-</span></button>
+                    <td  class="association-action" style="text-align: right; width: 20%;"> 
+                        <button type="button" class="btn btn-primary" 
+                                data-toggle="modal" data-ng-click="openAdd(data[key])" data-target="#modal_add" ng-disabled="data[key].max <= data[key].nodeIds.length"><span style="display: inline-block;width:12px;">+</span></button><button type="button" class="btn btn-primary" data-ng-click="openRemove(data[key])" ng-disabled="data[key].nodeIds.length == 0"><span style="display: inline-block;width:12px;">-</span></button>
                     </td>
                 </tr>
             </tbody>

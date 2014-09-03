@@ -1,10 +1,10 @@
 <!-- Switch view -->
 <div ng-controller="SwitchController">
-    <div class="page-header"><h1>Switch</h1></div>
-  
-    <div class="table-responsive">
+    <div class="page-header"><h1>{{_t('nav_switch')}}</h1></div>
+
+    <div id="table_mobile">
         <table class="table table-striped table-hover">
-            <thead>
+            <thead class="cf">
                 <tr>
                     <th>
                         <a href="" ng-click="orderBy('id')">#  
@@ -27,7 +27,7 @@
                         </a>
                     </th>
                     <th>
-                         <a href="" ng-click="orderBy('switchAllValue')">{{ _t('th_switchall')}}
+                        <a href="" ng-click="orderBy('switchAllValue')">{{ _t('th_switchall')}}
                             <span ng-show="predicate == 'switchAllValue'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
@@ -38,9 +38,9 @@
                             id="btn_update_all_1"
                             >{{ _t('switches_update_all')}} <i class="fa fa-spinner fa-spin"></i>
                         </button>
-            </th>
-            <th>
-            <div class="btn-group">
+                    </th>
+                    <th>
+            <div class="btn-group" style="min-width: 150px !important;">
                 <button 
                     class="btn btn-info spin-true"
                     data-store-url="SetOff()" 
@@ -55,33 +55,33 @@
                     >{{ _t('btn_all_on')}} <i class="fa fa-spinner fa-spin"></i></button>
             </div>
             </th>
-            <th style="width: 20%;">&nbsp;</th>
+            <th class="th-slider">&nbsp;</th>
             </tr>
 
             </thead>
             <tbody>
                 <tr ng-repeat="v in switches| orderBy:predicate:reverse" id="{{ v.rowId}}" ng-show="!v.multiChannel" ng-init="range.maxs = v.levelVal">
-                    <td>{{ v.id}}<span ng-show="v.iId != 0">.{{v.iId}}</span></td>
-                    <td><switch-type-icon generic="{{ v.genericType}}" specific="{{ v.specificType}}"></switch-type-icon> {{ v.name}}</td>
-            <td class="row-level text-right">
+                    <td data-title="#">{{ v.id}}<span ng-show="v.iId != 0">.{{v.iId}}</span></td>
+                    <td data-title="{{ _t('device_name')}}"><switch-type-icon generic="{{ v.genericType}}" specific="{{ v.specificType}}"></switch-type-icon> {{ v.name}}</td>
+            <td data-title="{{ _t('th_level')}}" class="row-level text-right">
                 <strong style="color: {{ v.levelColor}};">{{ v.level}}</strong> 
-                
+
             </td>
-            <td class="row-time is-updated-{{v.isUpdated}}">{{ v.updateTime | isTodayFromUnix }}</td>
-            <td>
-            <switch-all-icon hasall="{{ v.switchAllValue}}" ng-if="v.switchAllValue !== null"></switch-all-icon>
+            <td data-title="{{ _t('datetime')}}"><span class="row-time is-updated-{{v.isUpdated}}">{{ v.updateTime | isTodayFromUnix }}</span></td>
+            <td data-title="{{ _t('th_switchall')}}">
+            <switch-all-icon hasall="{{ v.switchAllValue}}" ng-if="v.switchAllValue !== null"></switch-all-icon>&nbsp;
             </td>
-            <td>
+            <td data-title="">
                 <button 
-                    data-ng-click="store('#btn_update_'+ v.rowId)" 
+                    data-ng-click="store('#btn_update_' + v.rowId)" 
                     data-store-url="{{ v.urlToStore}}" 
                     class="btn btn-primary spin-true" 
                     id="btn_update_{{ v.rowId}}"
                     >{{ _t('update')}} <i class="fa fa-spinner fa-spin"></i> </button>
             </td>
-            <td ng-switch on="v.deviceType">
+            <td data-title="" ng-switch on="v.deviceType">
                 <div ng-switch-when="multilevel">
-                    <div class="btn-group">
+                    <div class="btn-group"  style="min-width: 110px !important;">
                         <button 
                             data-ng-click="store('#btn_off_' + v.rowId)" 
                             data-store-url="{{ v.urlToOff}}" 
@@ -94,18 +94,18 @@
                             class="btn btn-primary btn-spinner" 
                             id="btn_on_{{ v.rowId}}"
                             >{{v.btnOn}}</button>
-                        
-                       
+
+
                     </div>
-                    
-                          <button 
-                              ng-show="!v.hasMotor"
+
+                    <button 
+                        ng-show="!v.hasMotor"
                         data-ng-click="store('#btn_full_' + v.rowId)" 
                         data-store-url="{{ v.urlToFull}}" 
                         class="btn btn-info btn-spinner" 
                         id="btn_full_{{ v.rowId}}"
                         >{{v.btnFull}}</button>
-                    
+
                 </div>
                 <div class="btn-group" ng-switch-when="binary">
                     <button 
@@ -124,8 +124,17 @@
                 </div>
                 <div ng-switch-default>&nbsp;</div>
             </td>
-            <td ng-switch on="v.deviceType">
-                <div  ng-switch-when="multilevel" id="range_slider_{{$index}}" class="app-range-slider" range-slider min="0" max="v.levelMax" model-max="rangeSlider[$index]" pin-handle="min" on-handle-up="sliderChange(v.urlToSlide,$index)"></div>
+            <td data-title="" ng-switch on="v.deviceType">
+                <div ng-switch-when="multilevel" 
+                     id="range_slider_{{$index}}" 
+                     class="app-range-slider" 
+                     range-slider 
+                     min="0" 
+                     max="v.levelMax" 
+                     model-max="rangeSlider[$index]" 
+                     pin-handle="min" 
+                     on-handle-down="cancelInterval()"
+                     on-handle-up="sliderChange(v.urlToSlide,$index)"></div>
                 <div ng-switch-default>&nbsp;</div>
             </td>
             </tr>

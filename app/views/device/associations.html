@@ -1,0 +1,54 @@
+<!-- Battery view -->
+<div ng-controller="AssociationsController">
+    <div class="page-header"><h1>{{_t('nav_associations')}}</h1></div>
+   <div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>
+                        <a href="" ng-click="orderBy('id')">#  
+                            <span ng-show="predicate == 'id'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th style="width: 20%;">
+                        <a href="" ng-click="orderBy('name')">{{ _t('device_name')}}
+                            <span ng-show="predicate == 'name'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                   <th>{{ _t('th_assoc_group_name')}}</th>
+                   <th style="width: 20%;">
+                   <button 
+                            class="btn btn-primary" 
+                            ng-show="!hideLifeline"
+                            data-ng-click="hideLifeline = !hideLifeline;lifeline(true)"
+                            >{{ _t('btn_show_lifeline')}}
+                        </button>
+                        <button 
+                            class="btn btn-info" 
+                            ng-show="hideLifeline"
+                            data-ng-click="hideLifeline = false;lifeline(false)"
+                            >{{ _t('btn_hide_lifeline')}}
+                        </button>
+                    </th>
+            </tr>
+        </thead>
+        <tbody>
+             <tr ng-repeat="v in devices | orderBy:predicate:reverse" id="{{ v.rowId}}" ng-show="v.assocGroup">
+                <td>{{ v.id }}</td>
+                <td>{{ v.name }}</td>
+                <td>
+                    
+                    <div ng-repeat="g in v.assocGroup">
+                        <p><strong>{{g.name}}</strong><br />
+                         <button class="btn btn-default" ng-repeat="d in g.devices">{{d}}</button>
+                         </p>
+                    </div>
+                </td>
+                 <td>
+                      <a class="btn btn-primary" href="#config/configuration/{{v.id}}">{{ _t('btn_change')}}</a>
+                  </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+</div>

@@ -1,0 +1,266 @@
+/*==================================================
+=            Bootstrap 3 Media Queries             =
+==================================================*/
+
+/*==========  Detected mobile devices  ==========*/
+
+@media (max-width: 2000px) {
+    .is-mobile-true .container{
+        width: 100%;
+    }
+
+    .is-mobile-true .navbar-header {
+        float: none;
+    }
+    .is-mobile-true .navbar-left,.navbar-right {
+        float: none !important;
+    }
+   .is-mobile-true .navbar-toggle {
+        display: block;
+    }
+    /*    .navbar-collapse {
+            border-top: 1px solid transparent;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+        .navbar-fixed-top {
+                    top: 0;
+                    border-width: 0 0 1px;
+            }*/
+
+    .is-mobile-true .navbar-collapse {
+        max-height: 340px;
+        padding-right: 15px;
+        padding-left: 15px;
+        overflow-x: visible;
+        -webkit-overflow-scrolling: touch;
+        border-top: 1px solid transparent;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, .1);
+    }
+    .is-mobile-true .navbar-collapse.collapse {
+        display: none!important;
+    }
+    .is-mobile-true .navbar-nav {
+        float: none!important;
+        margin-top: 7.5px;
+    }
+    .is-mobile-true .navbar-nav>li {
+        float: none;
+    }
+    /*    .navbar-nav>li>a {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }*/
+    .is-mobile-true .navbar-collapse.in {
+        overflow-y: auto !important;
+    }
+    .is-mobile-true .collapse.in{
+        display:block !important;
+    }
+    .is-mobile-true .navbar .divider-vertical{
+        display: none;
+    }
+
+    .is-mobile-true .navbar-nav .open .dropdown-menu {
+        position: static;
+        float: none;
+        width: auto;
+        margin-top: 0;
+        background-color: transparent;
+        border: 0;
+        box-shadow: none;
+    }
+
+    .is-mobile-true .navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
+        color: #999;
+    }
+    
+/*    .collapse.in .dropdown{
+       margin: 0 !important;
+       padding: 0 !important;
+    }*/
+
+ .is-mobile-true .pull-right,.is-mobile-true .pull-left{
+        float: none !important;
+    }
+    
+    /** Tables **/
+     /* Force table to not be like tables anymore */
+	.is-mobile-true #table_mobile table, 
+	.is-mobile-true #table_mobile thead, 
+	.is-mobile-true #table_mobile tbody, 
+	.is-mobile-true #table_mobile th, 
+	.is-mobile-true #table_mobile td, 
+	.is-mobile-true #table_mobile tr { 
+		display: block; 
+	}
+ 
+	/* Hide table headers (but not display: none;, for accessibility) */
+	.is-mobile-true #table_mobile thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+ 
+	.is-mobile-true #table_mobile tr { border: 1px solid #9fd8ef; }
+ 
+	.is-mobile-true #table_mobile td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #9fd8ef; 
+		position: relative;
+		padding-left: 50%; 
+		white-space: normal;
+		text-align:left;
+	}
+ 
+	.is-mobile-true #table_mobile td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+		text-align:left;
+		font-weight: bold;
+	}
+ 
+	/*
+	Label the data
+	*/
+	.is-mobile-true #table_mobile td:before { content: attr(data-title); }
+}
+
+.is-mobile-true .col-sm-6,.is-mobile-true .col-md-6,.is-mobile-true .col-lg-6{
+    width: 100% !important;
+    float: none;
+}
+
+@media only screen and (max-width: 800px) {
+	
+	
+}
+
+
+
+/*==========  Mobile First Method  ==========*/
+
+/* Custom, iPhone Retina */ 
+@media only screen and (min-width : 320px) {
+
+}
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (min-width : 480px) {
+
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+ 
+}
+
+
+
+/*==========  Non-Mobile First Method  ==========*/
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px) {
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px) {
+    .container{
+        width: 100%;
+    }
+    .navbar .divider-vertical{
+        display: none;
+    }
+    .pull-right,.pull-left{
+        float: none !important;
+    }
+    
+    /* Force table to not be like tables anymore */
+	#table_mobile table, 
+	#table_mobile thead, 
+	#table_mobile tbody, 
+	#table_mobile th, 
+	#table_mobile td, 
+	#table_mobile tr { 
+		display: block; 
+	}
+ 
+	/* Hide table headers (but not display: none;, for accessibility) */
+	#table_mobile thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+ 
+	#table_mobile tr { border: 1px solid #9fd8ef; }
+ 
+	#table_mobile td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #9fd8ef; 
+		position: relative;
+		padding-left: 50%; 
+		white-space: normal;
+		text-align:left;
+	}
+ 
+	#table_mobile td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+		text-align:left;
+		font-weight: bold;
+	}
+ 
+	/*
+	Label the data
+	*/
+	#table_mobile td:before { content: attr(data-title); }
+}
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (max-width : 480px) {
+
+}
+
+/* Custom, iPhone Retina */ 
+@media only screen and (max-width : 320px) {
+
+}
+
+/* Custom, iPhone Retina */ 
+@media only screen and (max-width : 320px) {
+
+}
+
+@media only screen and (min-width: 768px) and (max-width : 992px) {
+ .hide-navi-text{
+        display: none !important;
+    }
+}

@@ -256,7 +256,7 @@
                         ng-show="goReset"
                         ng-click="runCmd('controller.SetDefault()', '#modal_reset_controller',null,{'name': 'reset_controller'})"
                         ><i class="fa fa-exclamation-triangle"></i> {{_t('nm_reset_controller')}}</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closeResetController('#modal_reset_controller')">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closeResetController('#modal_reset_controller')">{{_t('btn_cancel')}}</button>
                 </div>
             </div>
         </div>
@@ -296,7 +296,7 @@
                             id="btn_upload"
                             class="btn btn-danger" 
                             ><i class="fa fa-exclamation-triangle"></i> {{_t('nm_restore_backup_upload')}}<input type="file" ng-file-select="restoreBackup($files,modelRestoreChipInfo,'.btn-spinner-hidden','#btn_upload')" data-multiple="true" title="select file" onclick="this.value = null" class="upload-button" multiple="multiple" style="top: 0px; bottom: 0px; left: 0px; right: 0px; width: 100%; opacity: 0; position: absolute;"></button>
-                    <button type="button" class="btn btn-default" ng-click="closeBackup('#modal_restore_backup')" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" ng-click="closeBackup('#modal_restore_backup')" data-dismiss="modal">{{_t('btn_cancel')}}</button>
                 </div>
             </div>
         </div>
@@ -320,7 +320,7 @@
                         class="btn btn-primary" 
                         ng-click="runCmd(['devices[' + modelBatteryFailed + '].SendNoOperation()', 'devices[' + modelBatteryFailed + '].WakeupQueue()', 'IsFailedNode(' + modelBatteryFailed + ')'], '#modal_battery_node', null, {'name': 'remove_option', 'id': '#mark_battery_failed', 'value': modelBatteryFailed})"
                         >{{_t('nm_mark_battery_as_failed')}}</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{_t('btn_cancel')}}</button>
                 </div>
             </div>
         </div>
@@ -337,11 +337,8 @@
                 <div class="modal-body">
                     <div class="alert alert-warning">
                         <input type="checkbox" name="remove_node_confirm" value="1" ng-click="goFailedNode = !goFailedNode" /> <span ng-bind-html="_t('are_you_sure_remove_node') | toTrusted"></span> <strong>{{deviceInfo.name}}</strong>
+                         <p>{{_t('txt_controller_delete_node')}}</p>
                     </div>
-                    <div class="alert alert-warning" ng-show="goFailedInfo">
-                        The controller will delete the node from the network without any further action, This process may take up to a minute
-                    </div>
-
                 </div>
                 <div class="modal-footer">
                     <button 
@@ -349,10 +346,10 @@
                         class="btn btn-danger" 
                         id="btn_reset_controller"
                         ng-show="goFailedNode"
-                        ng-click="runCmd('devices[' + modelNodeFailed + '].RemoveFailedNode()', null, null, {'name': 'remove_option', 'id': '#remove_failed_node', 'value': modelNodeFailed});
+                        ng-click="runCmd('devices[' + modelNodeFailed + '].RemoveFailedNode()', '#modal_failed_node', null, {'name': 'remove_option', 'id': '#remove_failed_node', 'value': modelNodeFailed});
                                     goFailedInfo = !goFailedInfo"
                         ><i class="fa fa-exclamation-triangle"></i> {{_t('nm_remove_failed')}}</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{_t('btn_cancel')}}</button>
                 </div>
             </div>
         </div>

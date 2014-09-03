@@ -6,35 +6,6 @@
 /*** Factories ***/
 var appFactory = angular.module('appFactory', ['ngResource']);
 
-appFactory.config(function($httpProvider) {
-    //$httpProvider.defaults.withCredentials = true;
-// $httpProvider.defaults.headers.common['Access-Control-Allow-Headers'] = 'accept, origin, content-type, cookie'; 
-//    $httpProvider.defaults.headers.common['Access-Control-Allow-Credential'] = 'true'; 
-//    $httpProvider.defaults.headers.common['Access-Control-Allow-Headers'] = 'accept, origin, content-type, cookie'; 
-    //$httpProvider.defaults.headers.common['Access-Control-Allow-Headers'] = 'accept, origin, content-type, cookie'; 
-    //$httpProvider.defaults.headers.common['X-Requested-With'] = ''; 
-    //$httpProvider.defaults.headers.common['Cookie'] = 'ZBW_IFLANG=eng; ZBW_SESSID=ced27083bfaff559438d79a72949c1064262d312'; 
-
-    $httpProvider.responseInterceptors.push('myHttpInterceptor');
-
-    var spinnerFunction = function spinnerFunction(data, headersGetter) {
-        $(".main_spinner__").show();
-        return data;
-    };
-    $httpProvider.defaults.transformRequest.push(spinnerFunction);
-});
-appFactory.factory('myHttpInterceptor', function($q, $window) {
-    return function(promise) {
-        return promise.then(function(response) {
-            //$('#respone_container').hide();
-            return response;
-        }, function(response) {
-            //$('#respone_container').html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <i class="icon-ban-circle"></i> <strong>ERROR!</strong> Response error</div>').show();
-            return $q.reject(response);
-        });
-    };
-});
-
 /**
  * Caching the river...
  */
@@ -102,7 +73,8 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
                 return callback(data);
             }).error(function() {
                 pageLoader(true);
-                handleError();
+                handleError(false,true,false);
+               
 
             });
         }
@@ -129,7 +101,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
                 apiData = data;
                 return callback(data);
             }).error(function() {
-                handleError();
+                handleError(false,true,true);
 
             });
         }
@@ -245,7 +217,8 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
             handleSuccess(data);
         }).error(function() {
             $('button .fa-spin,a .fa-spin').fadeOut(1000);
-           handleCmdError();
+            console.log('Response error');
+           //handleCmdError();
 
         });
 
@@ -322,11 +295,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
      * Get timing (statistics) data
      */
     function  getTiming(callback) {
-        if (deviceClasses) {
-            return callback(deviceClasses);
-        }
-        else {
-            var request = $http({
+        var request = $http({
                 method: "POST",
                 //url: 'storage/timing.json'
                 url: cfg.server_url + '/JS/Run/communicationStatistics.get()'
@@ -335,10 +304,9 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
                  return callback(data);
             }).error(function() {
                 console.log('Error: communicationStatistics');
-               // handleError();
+               handleError(false,true);
 
             });
-        }
     }
     
   
@@ -412,7 +380,8 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
         request.success(function(data) {
             return callback(data);
         }).error(function() {
-            handleError();
+            //handleError();
+            console.log('Notes error');
 
         });
 
@@ -473,24 +442,18 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
      * 
      * Handle errors
      */
-    function handleError(error,message) {
+    function handleError(message,showResponse,hideContent) {
         var msg = (message ? message : 'Error handling data from server');
-         $('#main_content').hide();
-        $('#respone_container').show();
+        if(showResponse){
+            $('#respone_container').show();
         $('#respone_container_inner').html('<div class="alert alert-danger alert-dismissable response-message"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <i class="icon-ban-circle"></i> ' + msg +'</div>');
-        console.log('Error');
-        //$('html').html('');
-        return;
-        // The API response from the server should be returned in a
-        // nomralized format. However, if the request was not handled by the
-        // server (or what not handles properly - ex. server error), then we
-        // may have to normalize it on our end, as best we can.
-        if (!angular.isObject(response.data) || !response.data.message) {
-            return($q.reject("An unknown error occurred."));
-
+        } 
+        
+        if(hideContent){
+           $('#main_content').hide(); 
         }
-        // Otherwise, use expected error message.
-        return($q.reject(response.data.message));
+        
+        console.log('Error');
 
     }
     
@@ -498,7 +461,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
      * 
      * Handle cmd errors
      */
-    function handleCmdError(error,message) {
+    function handleCmdError(message) {
         var msg = (message ? message : 'Error handling data from server');
         $('#respone_container').show();
         $('#respone_container_inner').html('<div class="alert alert-danger alert-dismissable response-message"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <i class="icon-ban-circle"></i> ' + msg +'</div>');
@@ -524,93 +487,12 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
             $('#main_content').show();
             return;
         }
-        $('#main_content').hide();
+        //$('#main_content').hide();
         $('#respone_container').show();
         $('#respone_container_inner').html('<div class="alert alert-warning page-load-spinner"><i class="fa fa-spinner fa-lg fa-spin"></i><br /> Loading data....</div>');
         return;
 
     }
-});
-
-// Get a complete or updated JSON
-appFactory.factory('DataFactory', function($resource, $http, cfg) {
-    return {
-        all: function(param) {
-            return $resource(cfg.server_url + cfg.update_url + param, {}, {query: {
-                    method: 'POST',
-                    //params: {user_field: cfg.user_field, pass_field: cfg.pass_field,ZBW_SESSID:  'ced27083bfaff559438d79a72949c1064262d312'},
-                    isArray: false
-                }});
-        },
-        queue: function() {
-            return $resource(cfg.server_url + cfg.queue_url, {}, {query: {
-                    method: 'POST',
-                    isArray: true
-                }});
-        },
-        store: function(param) {
-            return $resource(cfg.server_url + cfg.store_url + param, {}, {query: {
-                    method: 'POST', params: {}
-                }});
-        },
-        putConfig: function(param) {
-            return $resource(cfg.server_url + cfg.config_url + param, {}, {query: {
-                    method: 'PUT', headers_: {'': ''}, params: {}
-                }});
-        },
-        putReorgLog: function(log) {
-            return $.ajax({
-                type: "PUT",
-                dataType: "text",
-                url: cfg.server_url + cfg.reorg_log_url,
-                contentType: "text/plain",
-                data: log
-            });
-        },
-        getReorgLog: function(callback) {
-            return $http({method: 'GET', url: cfg.server_url + cfg.reorg_log_url + '?at=' + (new Date()).getTime()}).success(function(data, status, headers, config) {
-                callback(data);
-            });
-        },
-        runCmd: function(param) {
-            var cmd = cfg.server_url + param;
-            return $resource(cmd, {}, {query: {
-                    method: 'POST', params: {}
-                }});
-        },
-        putNotes: function(notes) {
-            return $.ajax({
-                type: "PUT",
-                dataType: "text",
-                url: cfg.server_url + cfg.notes_url,
-                contentType: "text/plain",
-                data: notes
-            });
-        },
-        getNotes: function(callback) {
-            return $http({
-                method: 'GET',
-                url: cfg.server_url + cfg.notes_url
-                        //url: 'storage/notes.log'
-            }).success(function(data, status, headers, config) {
-                callback(data);
-            });
-        },
-        updateFirmware: function(url) {
-            return $.ajax({
-                type: "GET",
-                dataType: "text",
-                url: url,
-                contentType: "application/octet-stream"
-            });
-        },
-        debug: function(param) {
-            var cmd = cfg.server_url + cfg.zwave_api_run_url + param;
-            console.log(cmd);
-            return;
-        }
-
-    };
 });
 
 // Get language dataas object
