@@ -4586,11 +4586,7 @@ appController.controller('TimingController', function($scope, $filter, dataServi
         var packets = '&nbsp;';
         var deliveryTime = 0;
         var color;
-        var cnt = 0;
-        angular.forEach(data, function(v, k) {
-            if (cnt > 20) {
-                return;
-            }
+        angular.forEach(data.slice(-20), function(v, k) {
             deliveryTime = parseInt(v.deliveryTime);
             if (!v.delivered) {
                 color = 'red';
@@ -4599,7 +4595,6 @@ appController.controller('TimingController', function($scope, $filter, dataServi
             }
             var displayTime = deliveryTime / 10;
             packets += '<span class="' + color + ' timing-packet">' + displayTime.toFixed() + '</span> ';
-            cnt++;
         });
         return packets;
 
