@@ -2,5 +2,5 @@
 /_project/*
 /nbproject/*
 /upload/*
-#/app/core/config.js
+/app/core/config.js
 upload.php

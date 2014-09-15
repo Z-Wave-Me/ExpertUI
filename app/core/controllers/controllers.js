@@ -74,9 +74,9 @@ appController.controller('BaseController', function($scope, $cookies, $filter, $
      * Set custom IP
      */
     $scope.setIP = function(ip) {
-        cfg.server_url = ip;
-
-        $http.get(ip).success(function(data, status, headers, config) {
+       $http.get(ip).success(function(data, status, headers, config) {
+           $scope.customIP.message = false;
+            cfg.server_url = ip;
             $route.reload();
         }).error(function(data, status, headers, config) {
             $scope.customIP.message = $scope._t('error_handling_data') + ': ' + ip;
