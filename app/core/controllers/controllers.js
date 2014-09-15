@@ -7,7 +7,12 @@
 var appController = angular.module('appController', []);
 
 // Base controller
-appController.controller('BaseController', function($scope, $cookies, $filter, $location, cfg, langFactory, langTransFactory) {
+appController.controller('BaseController', function($scope, $cookies, $filter, $location, $http, $route, cfg, langFactory, langTransFactory) {
+    // Custom IP
+    $scope.customIP = {
+        'url': cfg.server_url,
+        'message': false
+    };
     // Is mobile
     $scope.isMobile = false;
 
@@ -64,6 +69,19 @@ appController.controller('BaseController', function($scope, $cookies, $filter, $
         }
     };
     $scope.mobileCheck(navigator.userAgent || navigator.vendor || window.opera);
+
+    /**
+     * Set custom IP
+     */
+    $scope.setIP = function(ip) {
+        cfg.server_url = ip;
+
+        $http.get(ip).success(function(data, status, headers, config) {
+            $route.reload();
+        }).error(function(data, status, headers, config) {
+            $scope.customIP.message = $scope._t('error_handling_data') + ': ' + ip;
+        });
+    };
 });
 
 // Test controller
@@ -1571,7 +1589,7 @@ appController.controller('BatteryController', function($scope, $filter, $http, d
             if (zddXmlFile) {
                 var cachedZddXml = myCache.get(zddXmlFile);
                 if (!cachedZddXml) {
-                    $http.get($scope.cfg.zddx_url + zddXmlFile).then(function(response) {
+                    $http.get($scope.cfg.server_url + $scope.cfg.zddx_url + zddXmlFile).then(function(response) {
                         var x2js = new X2JS();
                         var zddXml = x2js.xml_str2json(response.data);
                         myCache.put(zddXmlFile, zddXml);
@@ -1628,7 +1646,7 @@ appController.controller('BatteryController', function($scope, $filter, $http, d
 
         var cachedZddXml = myCache.get(zddXmlFile);
         if (!cachedZddXml) {
-            $http.get($scope.cfg.zddx_url + zddXmlFile).then(function(response) {
+            $http.get($scope.cfg.server_url + $scope.cfg.zddx_url + zddXmlFile).then(function(response) {
                 var x2js = new X2JS();
                 var zddXml = x2js.xml_str2json(response.data);
                 myCache.put(zddXmlFile, zddXml);
@@ -1669,7 +1687,7 @@ appController.controller('BatteryController', function($scope, $filter, $http, d
         }
         var cachedZddXml = myCache.get(zddXmlFile);
         if (!cachedZddXml) {
-            $http.get($scope.cfg.zddx_url + zddXmlFile).then(function(response) {
+            $http.get($scope.cfg.server_url + $scope.cfg.zddx_url + zddXmlFile).then(function(response) {
                 var x2js = new X2JS();
                 var zddXml = x2js.xml_str2json(response.data);
                 myCache.put(zddXmlFile, zddXml);
@@ -1924,7 +1942,7 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
 
                 var cachedZddXml = myCache.get(zddXmlFile);
                 if (!cachedZddXml) {
-                    $http.get($scope.cfg.zddx_url + zddXmlFile).then(function(response) {
+                    $http.get($scope.cfg.server_url + $scope.cfg.zddx_url + zddXmlFile).then(function(response) {
                         var x2js = new X2JS();
                         var zddXml = x2js.xml_str2json(response.data);
                         myCache.put(zddXmlFile, zddXml);
@@ -1932,7 +1950,7 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
                         if (("ZWaveDevice" in zddXml) && ("assocGroups" in zddXml.ZWaveDevice)) {
                             zdd = zddXml.ZWaveDevice.assocGroups;
                             var assocDevices = getAssocDevices(node, ZWaveAPIData, zdd, controllerNodeId);
-                             $scope.devices.push({
+                            $scope.devices.push({
                                 'id': nodeId,
                                 'rowId': 'row_' + nodeId + '_' + cnt,
                                 'name': $filter('deviceName')(nodeId, node),
@@ -1946,13 +1964,13 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
                     var assocGroup = [];
                     if (("ZWaveDevice" in zddXml) && ("assocGroups" in zddXml.ZWaveDevice)) {
                         zdd = zddXml.ZWaveDevice.assocGroups;
-                            var assocDevices = getAssocDevices(node, ZWaveAPIData, zdd, controllerNodeId);
-                             $scope.devices.push({
-                                'id': nodeId,
-                                'rowId': 'row_' + nodeId + '_' + cnt,
-                                'name': $filter('deviceName')(nodeId, node),
-                                'assocGroup': assocDevices
-                            });
+                        var assocDevices = getAssocDevices(node, ZWaveAPIData, zdd, controllerNodeId);
+                        $scope.devices.push({
+                            'id': nodeId,
+                            'rowId': 'row_' + nodeId + '_' + cnt,
+                            'name': $filter('deviceName')(nodeId, node),
+                            'assocGroup': assocDevices
+                        });
                     }
                 }
             }
@@ -2007,7 +2025,7 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
                     data = cc[grp_num];
                     for (var i = 0; i < data.nodes.value.length; i++) {
                         var targetNodeId = data.nodes.value[i];
-                        var device = {'id': targetNodeId,'name': '(#' + targetNodeId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId])};
+                        var device = {'id': targetNodeId, 'name': '(#' + targetNodeId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId])};
                         assocDevices.push({'group': grp_num, 'device': device});
                     }
 
@@ -2028,8 +2046,8 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
                     for (var i = 0; i < data.nodesInstances.value.length; i += 2) {
                         var targetNodeId = data.nodesInstances.value[i];
                         var targetInstanceId = data.nodesInstances.value[i + 1];
-                        var instanceId = (targetInstanceId > 0  ? '.' + targetInstanceId : '')
-                        var device = {'id': targetNodeId,'name': '(#' + targetNodeId + instanceId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId])};
+                        var instanceId = (targetInstanceId > 0 ? '.' + targetInstanceId : '')
+                        var device = {'id': targetNodeId, 'name': '(#' + targetNodeId + instanceId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId])};
                         assocDevices.push({'group': grp_num, 'device': device});
                     }
                 }
@@ -2039,35 +2057,35 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
         angular.forEach(assocGroups, function(v, k) {
             var dev = [];
             var name;
-           
+
             angular.forEach(zdd, function(zddval, zddkey) {
                 if (angular.isArray(zddval)) {
                     angular.forEach(zddval, function(val, key) {
                         if (val._number == v)
-                    name = getGroupLabel(val, v);
+                            name = getGroupLabel(val, v);
                     });
                 } else {
                     if (zddval._number == v)
-                    name = getGroupLabel(zddval, v);
+                        name = getGroupLabel(zddval, v);
 
                 }
             });
             angular.forEach(assocDevices, function(d, key, nodeId) {
                 if (d['group'] == v) {
                     if ($scope.showLifeline) {
-                         dev.push(d.device.name);
-                    }else{
+                        dev.push(d.device.name);
+                    } else {
                         if (controllerNodeId != d.device.id) {
-                             dev.push(d.device.name);
+                            dev.push(d.device.name);
                         }
                     }
                 }
 
             });
-            if(dev.length > 0){
+            if (dev.length > 0) {
                 assoc.push({'name': name, 'devices': dev});
             }
-         });
+        });
 
         return assoc;
     }
@@ -2311,7 +2329,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
 
         var cachedZddXml = myCache.get(zddXmlFile);
         if (!cachedZddXml) {
-            $http.get($scope.cfg.zddx_url + zddXmlFile).then(function(response) {
+            $http.get($scope.cfg.server_url + $scope.cfg.zddx_url + zddXmlFile).then(function(response) {
                 var x2js = new X2JS();
                 var zddXml = x2js.xml_str2json(response.data);
                 myCache.put(zddXmlFile, zddXml);
@@ -2804,7 +2822,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             var cachedZddXml = myCache.get(zddXmlFile);
             // Uncached file
             if (!cachedZddXml) {
-                $http.get($scope.cfg.zddx_url + zddXmlFile).then(function(response) {
+                $http.get($scope.cfg.server_url + $scope.cfg.zddx_url + zddXmlFile).then(function(response) {
                     var x2js = new X2JS();
                     var zddXml = x2js.xml_str2json(response.data);
                     myCache.put(zddXmlFile, zddXml);
