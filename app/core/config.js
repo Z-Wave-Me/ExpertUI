@@ -14,7 +14,7 @@ var config_data = {
         'interval': 3000, // Set interval in miliseconds to refresh data
         'queue_interval': 3000, // Set interval in miliseconds to refresh queue data
         'route_update_timeout': 15000, // Maximum time in miliseconds to wait for an update-route
-        'server_url': 'http://zwave.dyndns.org:8083', // Remote JSON
+        'server_url': '', // Remote JSON
         'update_url': '/ZWaveAPI/Data/', // Url for update (refresh data)
         'store_url': '/ZWaveAPI/Run/', // Url for store data
         'restore_url': '/ZWaveAPI/Restore', // Url to restore backup
