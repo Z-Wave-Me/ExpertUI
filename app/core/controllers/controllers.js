@@ -4827,29 +4827,23 @@ appController.controller('CommandModalController', function($scope, $filter) {
         // Modal example http://plnkr.co/edit/D29YjKGbY63OSa1EeixT?p=preview
         $(target).modal();
         // Formated output
-        var getCmdData = function(data, space) {
-            if (data.name == undefined) {
+        var getCmdData = function(data, name, space) {
+            if (name == undefined) {
                 return '';
             }
-            var html = '<div class="cc-data-element">' + space + data.name + ': <span class="' + ((data.updateTime > data.invalidateTime) ? 'green' : 'red') + '">' + ((typeof (data.value) !== 'undefined' && data.value != null) ? data.value.toString() : 'None') + '</span>' + ' (<span class="' + ((data.updateTime > data.invalidateTime) ? '' : 'red') + '">' + $filter('isTodayFromUnix')(data.updateTime) + '</span>)</div>';
+            var html = '<div class="cc-data-element">' + space + name + ': <span class="' + ((data.updateTime > data.invalidateTime) ? 'green' : 'red') + '">' + ((typeof (data.value) !== 'undefined' && data.value != null) ? data.value.toString() : 'None') + '</span>' + ' (<span class="' + ((data.updateTime > data.invalidateTime) ? '' : 'red') + '">' + $filter('isTodayFromUnix')(data.updateTime) + '</span>)</div>';
+            angular.forEach(data, function(el, key) {
+
+                if (key != 'type' && key != 'updateTime' && key != 'invalidateTime' && key != 'value' && // these are internal values
+                        key != 'capabilitiesNames') { // these make the dialog monstrious
+                    html += getCmdData(el, key, space + '&nbsp;&nbsp;&nbsp;&nbsp;');
+                }
+            });
             return html;
         };
         // Get data
-        var html = getCmdData(data, '');
-        angular.forEach(data, function(el, key) {
+        var html = getCmdData(data, '/', '');
 
-            if (key != 'name' && key != 'type' && key != 'updateTime' && key != 'invalidateTime' && key != 'value' && // these are internal values
-                    key != 'capabilitiesNames') { // these make the dialog monstrious
-                html += getCmdData(el, '');
-
-                angular.forEach(el, function(v, k) {
-                    if (angular.isObject(v)) {
-                        html += getCmdData(v, '&nbsp;&nbsp;&nbsp;');
-                    }
-
-                });
-            }
-        });
         // Fill modal with data
         $(target).on('shown.bs.modal', function() {
             $(target + ' .modal-body').html(html);
