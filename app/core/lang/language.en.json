@@ -118,7 +118,7 @@
     "yes": "YES",
     "no": "NO",
     "no_device_image": "No device image",
-    "footer_text": "&COPY; 2014 by Z-Wave.me",
+    "footer_text": "&COPY; 2014 by Z-Wave.Me",
     "unknown_device_type": "Unknown device type",
     "txt_inspect_queue": "The inspect queue will open a second window to allow monitoring the commands sent out by this controller.",
     "command_class": "Command Class",
