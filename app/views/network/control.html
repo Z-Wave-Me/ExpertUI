@@ -102,6 +102,19 @@
                             data-ng-click="showModal('#modal_reset_controller')"
                             >{{_t('nm_reset_controller')}}</button>
                     </div>
+                    <!-- freq_change -->
+                    <div class="cfg-block form-inline">
+                        <button 
+                            class="btn btn-primary"
+                            id="btn_nm_freq_change_eu"
+                            ng-click="runCmd('ZMEFreqChange(0)')"
+                            >EU</button>
+                        <button 
+                            class="btn btn-primary"
+                            id="btn_nm_freq_change_eu"
+                            ng-click="runCmd('ZMEFreqChange(1)')"
+                            >RU</button>
+                    </div>
                 </div>
             </div>
         </div>
