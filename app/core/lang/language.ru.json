@@ -747,7 +747,7 @@
 	"rt_headerupdate_time": "Время",
 	"th_appversion": "Версия приложения",
 	"th_assoc_group_name":"Имя группы ассоциации",
-	"th_awake": "Не спящие",
+	"th_awake": "Не спит",
 	"th_battery_count": "Количество батареек",
 	"th_battery_type": "Тип батареек",
 	"th_buffer": "Буфер",
