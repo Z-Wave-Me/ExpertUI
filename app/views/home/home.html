@@ -2,8 +2,8 @@
 <div ng-controller="HomeController">
     <div class="form-inline form-home-ip" ng-show="cfg.custom_ip">
         <div class="form-home-ip-in product-data-list">
-            <input name="custom_ip" id="custom_ip" type="text" class="form-control" ng-model="customIP.url" value="{{customIP.url}}" placeholder="Add Server URL" />
-            <button type="button" class="btn btn-primary" id="btn_add_ip" ng-click="setIP(customIP.url)">Add Server URL</button>
+            <input name="custom_ip" id="custom_ip" type="text" class="form-control" ng-model="customIP.url" value="{{customIP.url}}" placeholder="Server Name or IP, e.g. 192.168.1.1" />
+            <button type="button" class="btn btn-primary" id="btn_add_ip" ng-click="setIP(customIP.url)">Connect</button>
             <div class="text-danger" ng-show="customIP.message">{{customIP.message}}</div>
         </div>
     </div>

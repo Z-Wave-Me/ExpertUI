@@ -1,8 +1,8 @@
 <!-- Thermostat view -->
 <div ng-controller="ThermostatController">
     <div class="page-header"><h1>{{_t('nav_thermostat')}}</h1></div>
-    <div id="no-more-tables">
-        <table class="table table-striped">
+    <div id="table_mobile">
+        <table class="table table-striped table-hover">
             <thead>
                 <tr>
                     <th>
@@ -31,12 +31,12 @@
             </thead>
             <tbody>
                 <tr ng-repeat="v in thermostats| orderBy:predicate:reverse" id="{{ v.rowId}}">
-                    <td>{{ v.id}}</td>
-                    <td><i class="fa fa-sort-amount-asc fa-lg"></i> {{ v.name}}</td>
-                    <td class="row-level">
+                    <td data-title="#">{{ v.id}}</td>
+                    <td data-title="{{ _t('device_name')}}"><i class="fa fa-sort-amount-asc fa-lg"></i> {{ v.name}}</td>
+                    <td data-title="{{ _t('switch_point_temp')}}" class="row-level">
                         <span class="level-val" ng-show="v.level != null">{{ v.level}}</span>&nbsp;<span  ng-show="v.hasExt">&deg;C</span>
                     </td>
-                    <td class="row-time">
+                    <td data-title="{{ _t('datetime')}}" class="row-time">
                         <span class="is-updated-{{v.isUpdated}}" ng-show="v.level != null">{{ v.updateTime | isTodayFromUnix }}</span>
                     </td>
                     <td> 

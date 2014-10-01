@@ -183,6 +183,9 @@ background-color: #e4f5fc;
 
 /* Homepage
 -------------------------------------------------- */
+#page_.custom-ip-true #respone_container .alert-danger{
+    display: none !important;
+}
 .form-home-ip-in {
     //display: none;
     margin: 10px auto;

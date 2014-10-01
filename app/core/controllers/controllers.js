@@ -73,6 +73,14 @@ appController.controller('BaseController', function($scope, $cookies, $filter, $
         }
     };
     $scope.mobileCheck(navigator.userAgent || navigator.vendor || window.opera);
+    
+    /**
+     * Hide collapsed navi after click on mobile devices
+     */
+    $("#main_navbar .navigation-selector").click(function(event) {
+       // check if window is small enough so dropdown is created
+        $("#nav_collapse").removeClass("in").addClass("collapse");
+    });
 
     /**
      * Set custom IP

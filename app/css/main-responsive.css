@@ -15,7 +15,7 @@
     .is-mobile-true .navbar-left,.navbar-right {
         float: none !important;
     }
-   .is-mobile-true .navbar-toggle {
+    .is-mobile-true .navbar-toggle {
         display: block;
     }
     /*    .navbar-collapse {
@@ -73,63 +73,70 @@
     .is-mobile-true .navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
         color: #999;
     }
-    
-/*    .collapse.in .dropdown{
-       margin: 0 !important;
-       padding: 0 !important;
-    }*/
 
- .is-mobile-true .pull-right,.is-mobile-true .pull-left{
+    /*    .collapse.in .dropdown{
+           margin: 0 !important;
+           padding: 0 !important;
+        }*/
+    #page_.is-mobile-true.custom-ip-true .home-page-image{
+        display: none !important;
+    }
+
+    .is-mobile-true .pull-right,.is-mobile-true .pull-left{
         float: none !important;
     }
-    
+
     /** Tables **/
-     /* Force table to not be like tables anymore */
-	.is-mobile-true #table_mobile table, 
-	.is-mobile-true #table_mobile thead, 
-	.is-mobile-true #table_mobile tbody, 
-	.is-mobile-true #table_mobile th, 
-	.is-mobile-true #table_mobile td, 
-	.is-mobile-true #table_mobile tr { 
-		display: block; 
-	}
- 
-	/* Hide table headers (but not display: none;, for accessibility) */
-	.is-mobile-true #table_mobile thead tr { 
-		position: absolute;
-		top: -9999px;
-		left: -9999px;
-	}
- 
-	.is-mobile-true #table_mobile tr { border: 1px solid #9fd8ef; }
- 
-	.is-mobile-true #table_mobile td { 
-		/* Behave  like a "row" */
-		border: none;
-		border-bottom: 1px solid #9fd8ef; 
-		position: relative;
-		padding-left: 50%; 
-		white-space: normal;
-		text-align:left;
-	}
- 
-	.is-mobile-true #table_mobile td:before { 
-		/* Now like a table header */
-		position: absolute;
-		/* Top/left values mimic padding */
-		top: 6px;
-		left: 6px;
-		width: 45%; 
-		padding-right: 10px; 
-		white-space: nowrap;
-		text-align:left;
-		font-weight: bold;
-	}
- 
-	/*
-	Label the data
-	*/
-	.is-mobile-true #table_mobile td:before { content: attr(data-title); }
+    /* Force table to not be like tables anymore */
+    .is-mobile-true #table_mobile table, 
+    .is-mobile-true #table_mobile thead, 
+    .is-mobile-true #table_mobile tbody, 
+    .is-mobile-true #table_mobile th, 
+    .is-mobile-true #table_mobile td, 
+    .is-mobile-true #table_mobile tr { 
+        display: block; 
+    }
+
+    /* Hide table headers (but not display: none;, for accessibility) */
+    .is-mobile-true #table_mobile thead tr th{ 
+        /*		position: absolute;
+                        top: -9999px;
+                        left: -9999px;*/
+        display: none;
+    }
+    .is-mobile-true #table_mobile thead tr th.mobile-show{ 
+        display: block !important;
+    }
+
+    .is-mobile-true #table_mobile tr { border: 1px solid #9fd8ef; }
+
+    .is-mobile-true #table_mobile td { 
+        /* Behave  like a "row" */
+        border: none;
+        border-bottom: 1px solid #9fd8ef; 
+        position: relative;
+        padding-left: 50%; 
+        white-space: normal;
+        text-align:left;
+    }
+
+    .is-mobile-true #table_mobile td:before { 
+        /* Now like a table header */
+        position: absolute;
+        /* Top/left values mimic padding */
+        top: 6px;
+        left: 6px;
+        width: 45%; 
+        padding-right: 10px; 
+        white-space: nowrap;
+        text-align:left;
+        font-weight: bold;
+    }
+
+    /*
+    Label the data
+    */
+    .is-mobile-true #table_mobile td:before { content: attr(data-title); }
 }
 
 .is-mobile-true .col-sm-6,.is-mobile-true .col-md-6,.is-mobile-true .col-lg-6{
@@ -138,8 +145,8 @@
 }
 
 @media only screen and (max-width: 800px) {
-	
-	
+
+
 }
 
 
@@ -168,7 +175,7 @@
 
 /* Large Devices, Wide Screens */
 @media only screen and (min-width : 1200px) {
- 
+
 }
 
 
@@ -195,53 +202,57 @@
     .pull-right,.pull-left{
         float: none !important;
     }
-    
+
     /* Force table to not be like tables anymore */
-	#table_mobile table, 
-	#table_mobile thead, 
-	#table_mobile tbody, 
-	#table_mobile th, 
-	#table_mobile td, 
-	#table_mobile tr { 
-		display: block; 
-	}
- 
-	/* Hide table headers (but not display: none;, for accessibility) */
-	#table_mobile thead tr { 
-		position: absolute;
-		top: -9999px;
-		left: -9999px;
-	}
- 
-	#table_mobile tr { border: 1px solid #9fd8ef; }
- 
-	#table_mobile td { 
-		/* Behave  like a "row" */
-		border: none;
-		border-bottom: 1px solid #9fd8ef; 
-		position: relative;
-		padding-left: 50%; 
-		white-space: normal;
-		text-align:left;
-	}
- 
-	#table_mobile td:before { 
-		/* Now like a table header */
-		position: absolute;
-		/* Top/left values mimic padding */
-		top: 6px;
-		left: 6px;
-		width: 45%; 
-		padding-right: 10px; 
-		white-space: nowrap;
-		text-align:left;
-		font-weight: bold;
-	}
- 
-	/*
-	Label the data
-	*/
-	#table_mobile td:before { content: attr(data-title); }
+    #table_mobile table, 
+    #table_mobile thead, 
+    #table_mobile tbody, 
+    #table_mobile th, 
+    #table_mobile td, 
+    #table_mobile tr { 
+        display: block; 
+    }
+
+    /* Hide table headers (but not display: none;, for accessibility) */
+    #table_mobile thead tr { 
+        /*        position: absolute;
+                top: -9999px;
+                left: -9999px;*/
+        display: none;
+    }
+    #table_mobile thead tr th.mobile-show{ 
+        display: block !important;
+    }
+
+    #table_mobile tr { border: 1px solid #9fd8ef; }
+
+    #table_mobile td { 
+        /* Behave  like a "row" */
+        border: none;
+        border-bottom: 1px solid #9fd8ef; 
+        position: relative;
+        padding-left: 50%; 
+        white-space: normal;
+        text-align:left;
+    }
+
+    #table_mobile td:before { 
+        /* Now like a table header */
+        position: absolute;
+        /* Top/left values mimic padding */
+        top: 6px;
+        left: 6px;
+        width: 45%; 
+        padding-right: 10px; 
+        white-space: nowrap;
+        text-align:left;
+        font-weight: bold;
+    }
+
+    /*
+    Label the data
+    */
+    #table_mobile td:before { content: attr(data-title); }
 }
 
 /* Extra Small Devices, Phones */ 
@@ -260,7 +271,7 @@
 }
 
 @media only screen and (min-width: 768px) and (max-width : 992px) {
- .hide-navi-text{
+    .hide-navi-text{
         display: none !important;
     }
 }

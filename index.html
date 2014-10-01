@@ -40,8 +40,8 @@
   <script src="app/core/jquery/jquery-app.js"></script>
   <script src="app/vendor/slider/angular-slider.js"></script>
 </head>
- <body ng-app="angApp" ng-controller="BaseController" id="page_{{getBodyId()}}" class="is-mobile-{{isMobile}}">
-    <div class="navbar navbar-inverse navbar-fixed-top___" role="navigation">
+ <body ng-app="angApp" ng-controller="BaseController" id="page_{{getBodyId()}}" class="is-mobile-{{isMobile}} custom-ip-{{cfg.custom_ip}}">
+    <div id="main_navbar" class="navbar navbar-inverse navbar-fixed-top___" role="navigation">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -54,7 +54,7 @@
                          <!--<img src="app/images/z-wave-logo-white.png" class="header-logo" alt="Z-Wave" height="40" />-->
                     </a>
                 </div>
-                <div class="navbar-collapse collapse">
+                <div id="nav_collapse" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav" id="main_nav">
                          <li><a href="#" class="navigation-selector"><i class="fa fa-home fa-lg"></i></a></li>
                          <li class="divider-vertical remove-margin"></li>
@@ -97,7 +97,7 @@
                         <li class="dropdown">
                             <a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe fa-lg"></i> <span class="current-lang"></span> <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li ng-repeat="v in lang_list" class="lang-switch"><a href="" ng-click="changeLang(v)"><!--<img src="app/images/{{v}}.png" alt="{{ v }}"/>--> {{ v }}</a></li>
+                                <li ng-repeat="v in lang_list" class="lang-switch"><a href="" class="navigation-selector" ng-click="changeLang(v)"><!--<img src="app/images/{{v}}.png" alt="{{ v }}"/>--> {{ v }}</a></li>
                             </ul>
                         </li>
                         <li class="divider-vertical remove-margin"></li>
