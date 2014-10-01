@@ -9,6 +9,7 @@ var config_data = {
     'cfg': {
         'app_name': 'Z-Wave',
         'app_version': '0.1',
+        'custom_ip': false,
         'user_field': 'USERXXXX',
         'pass_field': 'PSWDXXXX',
         'interval': 3000, // Set interval in miliseconds to refresh data

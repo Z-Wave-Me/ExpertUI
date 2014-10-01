@@ -7,12 +7,16 @@
 var appController = angular.module('appController', []);
 
 // Base controller
-appController.controller('BaseController', function($scope, $cookies, $filter, $location, $http, $route, cfg, dataService,langFactory, langTransFactory) {
+appController.controller('BaseController', function($scope, $cookies, $filter, $location, $http, $route, cfg, dataService, langFactory, langTransFactory) {
     // Custom IP
     $scope.customIP = {
         'url': cfg.server_url,
         'message': false
     };
+    $scope.showHome = true;
+    if(cfg.custom_ip === true){
+        $scope.showHome = false;
+    }
     // Is mobile
     $scope.isMobile = false;
 
@@ -74,19 +78,14 @@ appController.controller('BaseController', function($scope, $cookies, $filter, $
      * Set custom IP
      */
     $scope.setIP = function(ip) {
-        cfg.server_url = 'http://' + ip + ':8083';
         dataService.purgeCache();
-        dataService.getZwaveData(function(ZWaveAPIData) {
-        });
-//       $http.get(ip).success(function(data, status, headers, config) {
-//           $scope.customIP.message = false;
-//            //cfg.server_url = ip;
-//            cfg.server_url = 'http://' + ip + ':8083';
-//            $route.reload();
-//        }).error(function(data, status, headers, config) {
-//            $scope.customIP.message = $scope._t('error_handling_data') + ': ' + ip;
+        cfg.server_url = 'http://' + ip + ':8083';
+        $scope.showHome = true;
+        $route.reload();
+//        dataService.getZwaveData(function(ZWaveAPIData) {
 //        });
     };
+
 });
 
 // Test controller

@@ -17,7 +17,7 @@ appFactory.factory('myCache', function($cacheFactory) {
  * @todo: Replace all data handler with this service
  * @todo: Complete error handling
  */
-appFactory.factory('dataService', function($http, $q, $interval, $filter, myCache, cfg) {
+appFactory.factory('dataService', function($http, $q, $interval, $filter, $location, myCache, cfg) {
     var apiData;
     var apiDataInterval;
     var deviceClasses;
@@ -35,8 +35,8 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
         runCmd: runCmd,
         store: store,
         getDeviceClasses: getDeviceClasses,
-        getSelectZDDX:  getSelectZDDX,
-        getTiming:  getTiming,
+        getSelectZDDX: getSelectZDDX,
+        getTiming: getTiming,
         getQueueData: getQueueData,
         updateQueueData: updateQueueData,
         cancelQueueDataInterval: cancelQueueDataInterval,
@@ -47,24 +47,37 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
         putReorgLog: putReorgLog,
         purgeCache: purgeCache
     });
+    /**
+     * Get IP
+     */
+    function getAppIp() {
+        if (cfg.custom_ip) {
+            var ip = cfg.server_url;
+            if (!ip || ip == '') {
+                $location.path('/');
+            }
+        }
+
+    }
 
     /**
      * Gets all of the data in the remote collection.
      */
     function getZwaveData(callback) {
+        getAppIp();
         var time = Math.round(+new Date() / 1000);
         if (apiData) {
             console.log('CACHED');
             return callback(apiData);
         }
         else {
-            
+
             pageLoader();
             console.log('NOOOOT CACHED');
             var request = $http({
                 method: "POST",
-                url: cfg.server_url +  cfg.update_url + "0"
-                //url: 'storage/all_cp.json'
+                url: cfg.server_url + cfg.update_url + "0"
+                        //url: 'storage/all_cp.json'
             });
             request.success(function(data) {
                 $('#update_time_tick').html($filter('getCurrentTime')(time));
@@ -73,8 +86,8 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
                 return callback(data);
             }).error(function() {
                 pageLoader(true);
-                handleError(false,true,false);
-               
+                handleError(false, true, false);
+
 
             });
         }
@@ -90,18 +103,18 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
             return callback(apiData);
         }
         else {
-            
+
             console.log('NOOOOT CACHED');
             var request = $http({
                 method: "POST",
-                url: cfg.server_url +  cfg.update_url + "0"
+                url: cfg.server_url + cfg.update_url + "0"
             });
             request.success(function(data) {
                 $('#update_time_tick').html($filter('getCurrentTime')(time));
                 apiData = data;
                 return callback(data);
             }).error(function() {
-                handleError(false,true,true);
+                handleError(false, true, true);
 
             });
         }
@@ -218,7 +231,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
         }).error(function() {
             $('button .fa-spin,a .fa-spin').fadeOut(1000);
             console.log('Response error');
-           //handleCmdError();
+            //handleCmdError();
 
         });
 
@@ -268,11 +281,11 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
             });
         }
     }
-    
+
     /**
      * Get zddx device selection
      */
-    function getSelectZDDX(nodeId,callback) {
+    function getSelectZDDX(nodeId, callback) {
         if (deviceClasses) {
             return callback(deviceClasses);
         }
@@ -282,34 +295,35 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
                 url: cfg.server_url + '/ZWaveAPI/Run/devices[' + nodeId + '].GuessXML()'
             });
             request.success(function(data) {
-                 return callback(data);
+                return callback(data);
             }).error(function() {
                 console.log('Error: getSelectZDDX');
-               // handleError();
+                // handleError();
 
             });
         }
     }
-    
-     /**
+
+    /**
      * Get timing (statistics) data
      */
     function  getTiming(callback) {
+        getAppIp();
         var request = $http({
-                method: "POST",
-                //url: 'storage/timing.json'
-                url: cfg.server_url + '/JS/Run/communicationStatistics.get()'
-            });
-            request.success(function(data) {
-                 return callback(data);
-            }).error(function() {
-                console.log('Error: communicationStatistics');
-               handleError(false,true);
+            method: "POST",
+            //url: 'storage/timing.json'
+            url: cfg.server_url + '/JS/Run/communicationStatistics.get()'
+        });
+        request.success(function(data) {
+            return callback(data);
+        }).error(function() {
+            console.log('Error: communicationStatistics');
+            handleError(false, true);
 
-            });
+        });
     }
-    
-  
+
+
 
     /**
      * Load Queue data
@@ -442,21 +456,21 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
      * 
      * Handle errors
      */
-    function handleError(message,showResponse,hideContent) {
+    function handleError(message, showResponse, hideContent) {
         var msg = (message ? message : 'Error handling data from server');
-        if(showResponse){
+        if (showResponse) {
             $('#respone_container').show();
-        $('#respone_container_inner').html('<div class="alert alert-danger alert-dismissable response-message"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <i class="icon-ban-circle"></i> ' + msg +'</div>');
-        } 
-        
-        if(hideContent){
-           $('#main_content').hide(); 
+            $('#respone_container_inner').html('<div class="alert alert-danger alert-dismissable response-message"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <i class="icon-ban-circle"></i> ' + msg + '</div>');
         }
-        
+
+        if (hideContent) {
+            $('#main_content').hide();
+        }
+
         console.log('Error');
 
     }
-    
+
     /**
      * 
      * Handle cmd errors
@@ -464,7 +478,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, myCach
     function handleCmdError(message) {
         var msg = (message ? message : 'Error handling data from server');
         $('#respone_container').show();
-        $('#respone_container_inner').html('<div class="alert alert-danger alert-dismissable response-message"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <i class="icon-ban-circle"></i> ' + msg +'</div>');
+        $('#respone_container_inner').html('<div class="alert alert-danger alert-dismissable response-message"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <i class="icon-ban-circle"></i> ' + msg + '</div>');
         console.log('Error');
 
     }

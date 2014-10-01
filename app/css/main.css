@@ -163,7 +163,7 @@ background-color: #e4f5fc;
     //display: none;
     margin: 0 auto;
     text-align: center;
-    position: relative;
+    /*position: relative;*/
 }
 .page-load-spinner{
     z-index: 1000;
@@ -177,12 +177,19 @@ background-color: #e4f5fc;
 .response-message{
     z-index: 1000;
     text-align: center;
-    position: absolute;
+   /* position: absolute;*/
     width: 100%;
 }
 
 /* Homepage
 -------------------------------------------------- */
+.form-home-ip-in {
+    //display: none;
+    margin: 10px auto;
+    text-align: center;
+    padding: 10px;
+    /*position: relative;*/
+}
 .product-logo{
     max-width: 200px;
 }

@@ -1,16 +1,19 @@
 <!-- Home view -->
 <div ng-controller="HomeController">
-    <div class="row home-page">
+    <div class="form-inline form-home-ip" ng-show="cfg.custom_ip">
+        <div class="form-home-ip-in product-data-list">
+            <input name="custom_ip" id="custom_ip" type="text" class="form-control" ng-model="customIP.url" value="{{customIP.url}}" placeholder="Add IP" />
+            <button type="button" class="btn btn-primary" id="btn_add_ip" ng-click="setIP(customIP.url)">Add IP</button>
+            <div class="text-danger" ng-show="customIP.message">{{customIP.message}}</div>
+        </div>
+    </div>
+    <div class="row home-page" ng-show="showHome">
         <div class="col-sm-6 home-page-image">
             <img class="product-logo" src="app/images/zplus.jpg" alt="Z-Wave" width="90" />
             <p></p>
-             <div class="form-inline">
-                <input name="custom_ip" id="custom_ip" type="text" class="form-control" ng-model="customIP.url" value="{{customIP.url}}" placeholder="Add IP" />
-                <button type="button" class="btn btn-primary" id="btn_add_ip" ng-click="setIP(customIP.url)">Add IP</button>
-                <div class="text-danger" ng-show="customIP.message">{{customIP.message}}</div>
-            </div>
-            <div class="product-description" ng-bind-html="_t('txt_homepage_promo')| toTrusted"></div>
-           
+
+            <div class="product-description" ng-bind-html="_t('txt_homepage_promo') | toTrusted"></div>
+
 
             <div>
                 <h3>{{_t('txt_notes')}}</h3>
@@ -35,7 +38,7 @@
             <ul class="list-group">
                 <li class="list-group-item">
                     <p ng-repeat="v in lowBatteryDevices">
-                      <a class="text-danger" href="#device/battery">{{_t('txt_device')}} {{v.name}} (#{{v.id}}) {{_t('txt_low_battery')}} ({{v.battery_charge}}%)</a>
+                        <a class="text-danger" href="#device/battery">{{_t('txt_device')}} {{v.name}} (#{{v.id}}) {{_t('txt_low_battery')}} ({{v.battery_charge}}%)</a>
                     </p>
                 </li>
                 <li class="list-group-item">
@@ -53,4 +56,4 @@
 
         </div>
     </div>
-  </div>
+</div>
