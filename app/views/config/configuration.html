@@ -1,6 +1,7 @@
-
+ <div class="alert alert-warning" ng-show="noZddx == true"><i class="fa fa-exclamation-triangle"></i> {{_t('no_zddx_file')}}</div>
 <!-- config_cont -->
 <div class="cfg-block" id="config_cont" ng-if="configCont">
+   
     <h4>{{_t('configurations_list')}}</h4>
     <div class="cfg-block-content" ng-init="formName = 'form_config'">
         <form 

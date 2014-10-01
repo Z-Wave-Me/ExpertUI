@@ -2815,7 +2815,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         $scope.deviceName = $filter('deviceName')(nodeId, node);
         $scope.hasBattery = 0x80 in node.instances[0].commandClasses;
         var zddXmlFile = null;
-        if (angular.isDefined(node.data.ZDDXMLFile)) {
+       if (angular.isDefined(node.data.ZDDXMLFile)) {
             zddXmlFile = node.data.ZDDXMLFile.value;
             $scope.deviceZddxFile = node.data.ZDDXMLFile.value;
         }
@@ -2839,6 +2839,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             }
 
         } else {
+            
             setCont(node, nodeId, null, ZWaveAPIData);
         }
         /**
@@ -2865,6 +2866,9 @@ appController.controller('ConfigurationController', function($scope, $routeParam
      * Set all conts
      */
     function setCont(node, nodeId, zddXml, ZWaveAPIData) {
+        if(!zddXml){
+            $scope.noZddx = true;
+        }
         $scope.descriptionCont = descriptionCont(node, nodeId, zddXml, ZWaveAPIData);
         $scope.configCont = configCont(node, nodeId, zddXml);
         $scope.wakeupCont = wakeupCont(node, nodeId, ZWaveAPIData);

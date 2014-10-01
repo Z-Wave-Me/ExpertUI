@@ -1,9 +1,11 @@
 {
     "--- missing":"---",
+    "no_zddx_file": "No configuration file",
    "are_you_sure_remove_node": "Are you sure to want like to delete device",
     "inspect_queue_empty": "queue is empty",
     "error_handling_data":"Error handling data from",
     "---":"--- missing",
+    "nm_last_included_device":"Last included Device:",
     "rt_header_update_time":"Updated",
     "th_ddr":"DDR",
     "th_ddr_tip": "Device Description Record",
