@@ -1,7 +1,7 @@
 <!-- Status view -->
 <div ng-controller="StatusController">
     <div class="page-header"><h1>{{_t('nav_status')}}</h1></div>
-    <div class="table-responsive">
+    <div id="table_mobile">
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
@@ -37,7 +37,7 @@
                     </th>
                     <th>&nbsp;</th>
 
-                    <th>
+                    <th class="mobile-show">
                         <button 
                             class="btn btn-success spin-true" 
                             data-ng-click="storeAll('#btn_update_all_1')" 
@@ -48,14 +48,14 @@
             </thead>
             <tbody>
                 <tr ng-repeat="v in statuses| orderBy:predicate:reverse" id="{{ v.rowId}}">
-                    <td>{{ v.id}}</td>
-                    <td><switch-type-icon generic="{{ v.genericType}}" specific="{{ v.specificType}}"></switch-type-icon> {{ v.name}}</td>
-                    <td class="row-sleeping" ng-bind-html="v.sleeping | toTrusted"></td>
-                    <td class="row-awake" ng-bind-html="v.awake | toTrusted"></td>
-                    <td class="row-time" ng-bind-html="v.updateTime | toTrusted"></td>
-                    <td><i class="{{v.ddr | checkedIcon}}"></i></td>
+                    <td data-title="#">{{ v.id}} </td>
+                    <td data-title="{{ _t('device_name')}}"><switch-type-icon generic="{{ v.genericType}}" specific="{{ v.specificType}}"></switch-type-icon> {{ v.name}}</td>
+        <td data-title="{{ _t('th_sleeping')}}" class="row-sleeping"><span ng-bind-html="v.sleeping | toTrusted"></span> &nbsp;</td>
+                    <td data-title="{{ _t('th_awake')}}" class="row-awake"><span ng-bind-html="v.awake | toTrusted"></span> &nbsp;</td>
+                    <td data-title="{{ _t('datetime')}}" class="row-time"><span ng-bind-html="v.updateTime | toTrusted"></span> &nbsp;</td>
+                    <td data-title="{{ _t('th_ddr')}}"><i class="{{v.ddr | checkedIcon}}"></i> &nbsp;</td>
                     <td class="row-interview">
-                         <a href="" ng-show="v.interview" ng-click="showModalInterview('#modal_interview', $index,v.id,v.name)" title="{{v.interview}}"><i class="fa fa-question-circle fa-lg text-info"></i></a>
+                         <a href="" ng-show="v.interview" ng-click="showModalInterview('#modal_interview', $index,v.id,v.name)" title="{{v.interview}}"><i class="fa fa-question-circle fa-lg text-info"></i></a> &nbsp;
                     </td>
                     <td class="row-ping">
                         <button
