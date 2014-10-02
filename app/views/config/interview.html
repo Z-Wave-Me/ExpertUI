@@ -18,7 +18,7 @@
     <div ng-hide="goDescription">
         <div class="row">
             <div class="col-md-8">
-                <div class="table-responsive">
+                <div class="table-responsive_">
                     <table class="table table-striped">
                         <tbody>
                             <tr ng-repeat="v in descriptionCont" ng-show="v.val || v.val != ''">
@@ -105,7 +105,7 @@
             </div>
             <div class="modal-body">
                 <p>{{_t('interview_results_title')}} <a href="" ng-controller="CommandModalController" ng-click="showModal('#modal_command', interviewCommandsDevice)">{{deviceName}}</a></p>
-                <div class="table-responsive">
+                 <div id="table_mobile_modal_1">
                     <table class="table">
                         <thead>
                             <tr>
@@ -115,9 +115,9 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="v in interviewCommands" id="{{ v.ccId}}">
-                                <td><a ng-show="$index == 0" href="" ng-controller="CommandModalController" ng-click="showModal('#modal_command', v.cmdDataIn)">{{v.iId}}</a></td>
-                                <td><a href="" ng-controller="CommandModalController" ng-click="showModal('#modal_command', v.cmdData)">{{v.ccName}}</a></td>
-                                <td>
+                                <td data-title="{{_t('th_instance')}}" ng-class="($index == 0 ? 'no-class' : 'mobile-hide')"><a ng-show="$index == 0" href="" ng-controller="CommandModalController" ng-click="showModal('#modal_command', v.cmdDataIn)">{{v.iId}}</a> &nbsp;</td>
+                                <td data-title="{{_t('th_command_class')}}"><a href="" ng-controller="CommandModalController" ng-click="showModal('#modal_command', v.cmdData)">{{v.ccName}}</a> &nbsp;</td>
+                                <td data-title="{{_t('th_result')}}">
                                     <p ng-if="v.interviewDone">Done</p>
                                     <button
                                         ng-controller="ConfigStoreController"
@@ -126,7 +126,7 @@
                                         data-ng-click="store('#btn_force_interview_' + v.ccId)" 
                                         class="btn btn-primary" 
                                         id="btn_force_interview_{{v.ccId}}"
-                                        >{{_t('config_ui_force_interview')}}</button>
+                                        >{{_t('config_ui_force_interview')}}</button> &nbsp;
                                 </td>
                             </tr>
                         </tbody>

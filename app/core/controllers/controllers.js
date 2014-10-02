@@ -4560,6 +4560,7 @@ appController.controller('TimingController', function($scope, $filter, dataServi
 
             // Packets
             var timingItems = data[nodeId];
+           
             if (angular.isDefined(timingItems)) {
                 totalPackets = timingItems.length;
                 okPackets = getOkPackets(timingItems);

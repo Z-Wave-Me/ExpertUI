@@ -269,7 +269,7 @@ background-color: #e4f5fc;
     border-top: solid 1px #fff;
 }
 #wakeup_cont .form-inline{
-    width: 360px;
+/*    max-width: 300px;*/
     float: left;
 }
 

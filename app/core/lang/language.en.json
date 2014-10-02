@@ -80,7 +80,7 @@
     "nav_expert_commands": "Expert commands",
     "h1_sensor": "Sensor data",
     "h1_configuration_for": "Configuration for",
-    "h1_configuration_no_device": "No device slected",
+    "h1_configuration_no_device": "No device selected",
     "txt_config_select": "Choose Device to configure on dropdown list above",
     "th_level": "Level",
     "th_scale": "Scale",
