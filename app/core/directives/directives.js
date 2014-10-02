@@ -37,6 +37,19 @@ angApp.directive('tooltip', function() {
         }
     };
 });
+/**
+ * Hide collapsed navi after click on mobile devices
+ */
+angApp.directive('collapseNavbar', function() {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            $(element).click(function() {
+                $("#nav_collapse").removeClass("in").addClass("collapse");
+            });
+        }
+    };
+});
 
 angApp.directive('draggable', ['$document', function($document) {
         return {
@@ -271,13 +284,13 @@ angApp.directive('expertCommandInput', function() {
                         disabled = '';
                     }
 
-                }else{
+                } else {
                     checked = '';
                 }
                 if (hideRadio) {
                     disabled = '';
                 }
-              
+
 //                input += '<input name="radio_' + inName + '" class="commands-data-chbx" type="radio" value=""' + checked + ' /> ' + title + ' <input type="text" name="radio_' + inName + '_txt" class="form-control commands-data-txt-chbx" value="' + min + '" title=" min: ' + min + ', max: ' + max + '"'+ disabled + ' /><br />'; 
                 if (!hideRadio) {
                     input += '<input name="radio_' + inName + '" class="commands-data-chbx" type="radio" value=""' + checked + ' /> ' + title + ' <input type="text" name="radio_txt_' + inName + '" class="form-control commands-data-txt-chbx" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '"' + disabled + ' /><br />';
@@ -334,15 +347,15 @@ angApp.directive('expertCommandInput', function() {
 
                 input += '<option value="' + v.type.constant.value + '"> ' + v.label + '</option>';
             });
-           
+
 
             input += '</select">';
         }
-         //console.log(type,defaultValue);
+        //console.log(type,defaultValue);
         input += '<em>Constant type</em>';
         return input;
     }
-    
+
     // Get default
     function getDefault(label) {
         var input = '';

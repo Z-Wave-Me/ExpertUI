@@ -214,7 +214,7 @@
     }
 
     /* Hide table headers (but not display: none;, for accessibility) */
-    #table_mobile thead tr { 
+    #table_mobile thead tr th{ 
         /*        position: absolute;
                 top: -9999px;
                 left: -9999px;*/
