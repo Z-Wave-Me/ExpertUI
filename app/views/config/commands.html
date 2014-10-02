@@ -1,6 +1,5 @@
 <!-- Commands view -->
-<div class="table-responsive">
-    <div class="commands-data-control" ng-controller="ConfigStoreController" ng-show="fwupdateCont">
+<div class="commands-data-control" ng-controller="ConfigStoreController" ng-show="fwupdateCont">
         <form name="form_firmware" id="form_firmware" class="form form-inline" ng-submit="updateFirmware(deviceId)" novalidate>
             <label>{{_t('nav_firmware_update')}}:</label>
             <input id="fw_url" type="text" value="" class="form-control" ng-model="formFirmware.fw_url" placeholder="URL" title="please use format http:// ...... " data-toggle="tooltip" data-position="top" tooltip />
@@ -8,6 +7,7 @@
             <button type="submit" class="btn btn-primary"  id="btn_save_note">{{ _t('update')}}</button>
         </form>
     </div>
+<div id="table_mobile">
     <table class="table">
         <thead>
             <tr>
@@ -18,9 +18,9 @@
         </thead>
         <tbody>
             <tr ng-repeat="(k,v) in commands | orderBy:predicate:reverse" id="{{ v.nodeId}}">
-                <td><a ng-show="$index == 0" href="" ng-controller="CommandModalController" ng-click="showModal('#modal_expert_commands', v.cmdDataIn)">{{v.instanceId}}</a></td>
-                <td><a class="btn btn-info" href="" ng-controller="CommandModalController" ng-click="showModal('#modal_expert_commands', v.cmdData)">{{v.commandClass}}</a></td>
-                <td>
+                <td data-title="{{_t('th_instance')}}" ng-class="($index == 0 ? 'no-class' : 'mobile-hide')"><a ng-show="$index == 0" href="" ng-controller="CommandModalController" ng-click="showModal('#modal_expert_commands', v.cmdDataIn)">{{v.instanceId}}</a> &nbsp;</td>
+                <td data-title="{{_t('th_command_class')}}"><a class="btn btn-info" href="" ng-controller="CommandModalController" ng-click="showModal('#modal_expert_commands', v.cmdData)">{{v.commandClass}}</a> &nbsp;</td>
+                <td data-title="{{_t('th_command_param')}}">
                     <div class="commands-data" ng-repeat="c in v.command| orderBy:predicate:reverse" ng-init="formName = 'form_' + v.commandClass + '_' + c.data.method + '_' + $index">
                         <form 
                             name="{{formName}}" 
@@ -52,6 +52,7 @@
 
                         </form>
                     </div>
+                    &nbsp;
                 </td>
             </tr>
         </tbody>

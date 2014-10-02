@@ -105,14 +105,14 @@
         /*		position: absolute;
                         top: -9999px;
                         left: -9999px;*/
-         border: 0;
+        border: 0;
         display: none;
     }
-   
+
     .is-mobile-true #table_mobile thead tr th.mobile-show,  .is-mobile-true  #table_mobile_modal_1 thead tr th.mobile-show{ 
         display: block !important;
     }
- 
+
     .is-mobile-true #table_mobile tr,  .is-mobile-true #table_mobile_modal_1 tr { border: 1px solid #9fd8ef; }
 
     .is-mobile-true #table_mobile td, .is-mobile-true #table_mobile_modal_1 td { 
@@ -141,8 +141,41 @@
     /*
     Label the data
     */
-    
+
     .is-mobile-true #table_mobile td:before,.is-mobile-true #table_mobile_modal_1 td:before { content: attr(data-title); }
+
+    /** Tabs */
+    .is-mobile-true .tab-content {
+        padding: 0;
+        margin: 0;
+        border: 0;
+    }
+    .is-mobile-true .nav-tabs {
+        border-bottom: 0;
+
+    }
+    .is-mobile-true .nav-tabs > li > a {
+        margin-right:0;
+        border: 0;
+        border-radius:0;
+    }
+
+   .is-mobile-true .nav > li > a {
+        position: relative;
+        display: block;
+        padding: 7px;
+    }
+
+    .is-mobile-true .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+        border: 0;
+        background-color: transparent;
+    }
+
+    .is-mobile-true .nav > li > a:hover, .nav > li > a:focus {
+        background-color: transparent;
+        border: 0 !important;
+
+    }
 }
 
 .is-mobile-true .col-sm-6,.is-mobile-true .col-md-6,.is-mobile-true .col-lg-6{
@@ -208,7 +241,7 @@
     .pull-right,.pull-left{
         float: none !important;
     }
-    
+
     .mobile-hide{
         display: none !important;
     }
@@ -264,6 +297,42 @@
     Label the data
     */
     #table_mobile td:before,#table_mobile_modal_1 td:before { content: attr(data-title); }
+
+    /** Tabs */
+    .is-mobile-true #table_mobile td:before,.is-mobile-true #table_mobile_modal_1 td:before { content: attr(data-title); }
+
+    /** Tabs */
+    .tab-content {
+        padding: 0;
+        margin: 0;
+        border: 0;
+    }
+    .nav-tabs {
+        border-bottom: 0;
+
+    }
+    .nav-tabs > li > a {
+        margin-right:0;
+        border: 0;
+        border-radius:0;
+    }
+
+  .nav > li > a {
+        position: relative;
+        display: block;
+        padding: 7px;
+    }
+
+    .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+        border: 0;
+        background-color: transparent;
+    }
+
+   .nav > li > a:hover, .nav > li > a:focus {
+        background-color: transparent;
+        border: 0 !important;
+
+    }
 }
 
 /* Extra Small Devices, Phones */ 
