@@ -2542,6 +2542,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     // Remember active tab
     $scope.rememberTab = function(tabId) {
         if (tabId == 'interview') {
+            $scope.devices = angular.copy([]);
             $scope.refresh = true;
         } else {
             $scope.refresh = false;
@@ -2553,6 +2554,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     $scope.getActiveTab = function() {
         var activeTab = (angular.isDefined($cookies.tab_config) ? $cookies.tab_config : 'interview');
         if (activeTab == 'interview') {
+            $scope.devices = angular.copy([]);
             $scope.refresh = true;
         } else {
             $scope.refresh = false;
@@ -2564,7 +2566,8 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 
     // Load data
     $scope.load = function(nodeId, refresh) {
-        dataService.getZwaveData(function(ZWaveAPIData) {
+       dataService.getZwaveData(function(ZWaveAPIData) {
+            $scope.devices = angular.copy([]);
             $scope.deviceId = nodeId;
             setNavigation(ZWaveAPIData);
             setData(ZWaveAPIData, nodeId);
@@ -2787,7 +2790,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 
             var node = ZWaveAPIData.devices[nodeId];
             if (nodeId == $routeParams.nodeId) {
-                $scope.deviceName = $filter('deviceName')(nodeId, node);
+                $scope.deviceName = $filter('deviceName')(nodeId, node) + '(#' + nodeId + ')';
             }
             // Set object
             var obj = {};
@@ -2812,7 +2815,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             return;
         }
         $scope.showDevices = true;
-        $scope.deviceName = $filter('deviceName')(nodeId, node);
+        $scope.deviceName =  $filter('deviceName')(nodeId, node) + ' (#' + nodeId + ')';
         $scope.hasBattery = 0x80 in node.instances[0].commandClasses;
         var zddXmlFile = null;
        if (angular.isDefined(node.data.ZDDXMLFile)) {

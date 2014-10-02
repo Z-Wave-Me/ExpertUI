@@ -462,7 +462,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
             $('#respone_container').show();
             $('#respone_container_inner').html('<div class="alert alert-danger alert-dismissable response-message"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <i class="icon-ban-circle"></i> ' + msg + '</div>');
         }
-
+        $('.error-hide').hide();
         if (hideContent) {
             $('#main_content').hide();
         }
@@ -499,6 +499,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         if (hide) {
             $('#respone_container').hide();
             $('#main_content').show();
+             $('.error-hide').show();
             return;
         }
         //$('#main_content').hide();
