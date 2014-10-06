@@ -199,7 +199,7 @@
     "nm_include_start": "Start Inclusion",
     "nm_include_stop": "Stop Inclusion",
     "nm_exclude_start": "Start Exclusion",
-    "nm_exclude_stop": "Stop Ecklusion",
+    "nm_exclude_stop": "Stop Exclusion",
     "nm_learn_start": "Start Learn Mode",
     "nm_learn_stop": "Stop Learn Mode",
     "nm_inspect_queue_title": "View Job Queue",

@@ -30,7 +30,7 @@
                         </div>
                     </div>
                     <p class="input-help">{{_t('nm_learn_mode_you_are_primary_no_sis')}}</p>
-                    <div class="alert nm-response"  ng-class="controllerState == 0 ? 'alert-info' : 'alert - danger'">{{_t('nm_controller_state_' + controllerState)}}</div>
+                    <div class="alert nm-response"  ng-class="controllerState == 0 ? 'alert-info' : 'alert-danger'">{{_t('nm_controller_state_' + controllerState)}}</div>
                     <div class="alert alert-success" ng-show="lastIncludedDevice != null"><p ng-bind-html="lastIncludedDevice | toTrusted"></p></div>
                     <div class="alert alert-success" ng-show="lastExcludedDevice != null"><p ng-bind-html="lastExcludedDevice | toTrusted"></p></div>
                     <!-- include -->
