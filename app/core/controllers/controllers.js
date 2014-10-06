@@ -14,7 +14,7 @@ appController.controller('BaseController', function($scope, $cookies, $filter, $
         'message': false
     };
     $scope.showHome = true;
-    if(cfg.custom_ip === true){
+    if (cfg.custom_ip === true) {
         $scope.showHome = false;
     }
     // Is mobile
@@ -2566,7 +2566,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 
     // Load data
     $scope.load = function(nodeId, refresh) {
-       dataService.getZwaveData(function(ZWaveAPIData) {
+        dataService.getZwaveData(function(ZWaveAPIData) {
             $scope.devices = angular.copy([]);
             $scope.deviceId = nodeId;
             setNavigation(ZWaveAPIData);
@@ -2790,7 +2790,8 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 
             var node = ZWaveAPIData.devices[nodeId];
             if (nodeId == $routeParams.nodeId) {
-                $scope.deviceName = $filter('deviceName')(nodeId, node) + '(#' + nodeId + ')';
+                $scope.deviceName = $filter('deviceName')(nodeId, node);
+                $scope.deviceNameId = $filter('deviceName')(nodeId, node) + '(#' + nodeId + ')';
             }
             // Set object
             var obj = {};
@@ -2815,10 +2816,11 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             return;
         }
         $scope.showDevices = true;
-        $scope.deviceName =  $filter('deviceName')(nodeId, node) + ' (#' + nodeId + ')';
+        $scope.deviceName = $filter('deviceName')(nodeId, node);
+        $scope.deviceNameId = $filter('deviceName')(nodeId, node) + ' (#' + nodeId + ')';
         $scope.hasBattery = 0x80 in node.instances[0].commandClasses;
         var zddXmlFile = null;
-       if (angular.isDefined(node.data.ZDDXMLFile)) {
+        if (angular.isDefined(node.data.ZDDXMLFile)) {
             zddXmlFile = node.data.ZDDXMLFile.value;
             $scope.deviceZddxFile = node.data.ZDDXMLFile.value;
         }
@@ -2842,7 +2844,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             }
 
         } else {
-            
+
             setCont(node, nodeId, null, ZWaveAPIData);
         }
         /**
@@ -2869,7 +2871,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
      * Set all conts
      */
     function setCont(node, nodeId, zddXml, ZWaveAPIData) {
-        if(!zddXml){
+        if (!zddXml) {
             $scope.noZddx = true;
         }
         $scope.descriptionCont = descriptionCont(node, nodeId, zddXml, ZWaveAPIData);
@@ -3731,7 +3733,7 @@ appController.controller('ConfigStoreController', function($scope, dataService) 
     };
 });
 // Controll controller
-appController.controller('ControllController', function($scope, $filter, $timeout, $upload, cfg, dataService) {
+appController.controller('ControllController', function($scope, $filter, $timeout, $route,$upload, cfg, dataService) {
     $scope.devices = [];
     $scope.failedNodes = [];
     $scope.replaceNodes = [];
@@ -3743,6 +3745,7 @@ appController.controller('ControllController', function($scope, $filter, $timeou
     $scope.isRealPrimary;
     $scope.lastIncludedDevice = null;
     $scope.lastExcludedDevice = null;
+    $scope.restoreBackupStatus = 0;
     $scope.deviceInfo = {
         "id": null,
         "name": null
@@ -3856,12 +3859,6 @@ appController.controller('ControllController', function($scope, $filter, $timeou
         if (hideModal) {
             $(hideModal).modal('hide');
         }
-//        if (reload) {
-//            $timeout(function() {
-//                $route.reload();
-//                //location.reload();
-//            }, 1000);
-//        }
 
         return;
     };
@@ -3883,11 +3880,22 @@ appController.controller('ControllController', function($scope, $filter, $timeou
                 fileFormDataName: 'config_backup',
                 file: $file
             }).progress(function(evt) {
-                console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+                $scope.restoreBackupStatus = 1;
+                //console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
             }).success(function(data, status, headers, config) {
+                if (data && data.replace(/(<([^>]+)>)/ig, "") !== "null") {//Error
+                     $scope.restoreBackupStatus = 3;
+                } else {// Success
+                     $scope.restoreBackupStatus = 2;
+                }
+               
                 // file is uploaded successfully
-                console.log(data);
+                //console.log(data, status);
+            }).error(function(data, status) {
+                 $scope.restoreBackupStatus = 3;
+                 //console.log(data, status);
             });
+           
         }
     };
 
@@ -3926,7 +3934,9 @@ appController.controller('ControllController', function($scope, $filter, $timeou
         $("#restore_confirm").attr('checked', false);
         $("#restore_chip_info").attr('checked', false);
         $scope.goRestore = false;
+        $scope.restoreBackupStatus = 0;
         $(modal).modal('hide');
+        
         // $route.reload();
         //window.location.reload();
 
@@ -3955,6 +3965,7 @@ appController.controller('ControllController', function($scope, $filter, $timeou
         $scope.controllerState = ZWaveAPIData.controller.data.controllerState.value;
         $scope.secureInclusion = ZWaveAPIData.controller.data.secureInclusion.value;
         $scope.isRealPrimary = !ZWaveAPIData.controller.data.isRealPrimary.value || ZWaveAPIData.devices.length <= 2 ? true : false;
+        $scope.learnMode = (ZWaveAPIData.controller.data.isRealPrimary.value && ZWaveAPIData.devices.length >= 2) ? false : true;
         /**
          * Loop throught devices
          */
@@ -3995,7 +4006,8 @@ appController.controller('ControllController', function($scope, $filter, $timeou
             $scope.controllerState = data['controller.data.controllerState'].value;
         }
         console.log('Controller state: ' + $scope.controllerState);
-         console.log('Learn mode: ' + $scope.isRealPrimary);
+        console.log('Learn mode: ' + $scope.isRealPrimary);
+        // console.log('Learn mode 2: ' + $scope.learnMode);
         if ('controller.data.lastExcludedDevice' in data) {
             $scope.lastExcludedDevice = data['controller.data.lastExcludedDevice'].value;
         }
@@ -4564,7 +4576,7 @@ appController.controller('TimingController', function($scope, $filter, dataServi
 
             // Packets
             var timingItems = data[nodeId];
-           
+
             if (angular.isDefined(timingItems)) {
                 totalPackets = timingItems.length;
                 okPackets = getOkPackets(timingItems);
