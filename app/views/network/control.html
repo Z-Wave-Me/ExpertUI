@@ -215,11 +215,11 @@
                             <p class="input-help">{{_t('nm_learn_mode_war')}}</p>
                             <div class="nm-response"  ng-class="controllerState == 0 ? 'text-info' : 'text - danger'" ng-show="[8, 9, 10, 11, 12].indexOf(controllerState) > -1">
                                 {{_t('nm_controller_state_' + controllerState)}}
-                            </div>
+                           </div>
                             <button 
                                 class="btn btn-primary"
                                 id="btn_learn_start"
-                                ng-disabled="!isRealPrimary"
+                                ng-disabled="isRealPrimary == false"
                                 ng-click="runCmd('controller.SetLearnMode(1)')"
                                 ng-show="[8, 9, 10, 11, 12].indexOf(controllerState) == -1"
                                 >{{_t('nm_learn_start')}}</button>

@@ -4,6 +4,7 @@
    "are_you_sure_remove_node": "Are you sure to want like to delete device",
     "inspect_queue_empty": "queue is empty",
     "error_handling_data":"Error handling data from",
+    "device_interview_stage_not_complete ":"Device interview stage is not complete",
     "---":"--- missing",
     "nm_last_included_device":"Last included Device:",
     "rt_header_update_time":"Updated",

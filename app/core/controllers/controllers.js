@@ -3995,6 +3995,7 @@ appController.controller('ControllController', function($scope, $filter, $timeou
             $scope.controllerState = data['controller.data.controllerState'].value;
         }
         console.log('Controller state: ' + $scope.controllerState);
+         console.log('Learn mode: ' + $scope.isRealPrimary);
         if ('controller.data.lastExcludedDevice' in data) {
             $scope.lastExcludedDevice = data['controller.data.lastExcludedDevice'].value;
         }
