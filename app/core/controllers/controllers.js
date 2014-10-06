@@ -3147,7 +3147,8 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 
             var isUpdated = true;
             var updateTime = '';
-            if (angular.isDefined(node.instances[0].commandClasses[0x70])) {
+            if (angular.isDefined(node.instances[0].commandClasses[0x70])
+                    && angular.isDefined( node.instances[0].commandClasses[0x70].data[conf_num])) {
                 var uTime = node.instances[0].commandClasses[0x70].data[conf_num].updateTime;
                 var iTime = node.instances[0].commandClasses[0x70].data[conf_num].invalidateTime;
                 var updateTime = $filter('isTodayFromUnix')(uTime);
