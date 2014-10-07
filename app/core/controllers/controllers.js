@@ -3963,10 +3963,16 @@ appController.controller('ControllController', function($scope, $filter, $timeou
     function setData(ZWaveAPIData, refresh) {
         $scope.showContent = true;
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
+        var isPrimary = ZWaveAPIData.controller.data.isRealPrimary.value;
+         var hasDevices = Object.keys(ZWaveAPIData.devices).length;
         $scope.controllerState = ZWaveAPIData.controller.data.controllerState.value;
         $scope.secureInclusion = ZWaveAPIData.controller.data.secureInclusion.value;
-        $scope.isRealPrimary = !ZWaveAPIData.controller.data.isRealPrimary.value || ZWaveAPIData.devices.length <= 2 ? true : false;
-        $scope.learnMode = (ZWaveAPIData.controller.data.isRealPrimary.value && ZWaveAPIData.devices.length >= 2) ? false : true;
+        //$scope.isRealPrimary = !ZWaveAPIData.controller.data.isRealPrimary.value || ZWaveAPIData.devices.length <= 2 ? true : false;
+        //$scope.isRealPrimary = (ZWaveAPIData.controller.data.isRealPrimary.value && ZWaveAPIData.devices.length >= 2) ? false : true;
+        $scope.isRealPrimary = !isPrimary || hasDevices <= 2 ? true : false;
+        console.log('Controller is Primary: ' + ZWaveAPIData.controller.data.isRealPrimary.value);
+        console.log('and there are other devices: ' + hasDevices + ' - ' + (hasDevices >= 2 ? 'true' : 'false'));
+        console.log('Learn mode: ' + $scope.isRealPrimary);
         /**
          * Loop throught devices
          */
@@ -4007,7 +4013,7 @@ appController.controller('ControllController', function($scope, $filter, $timeou
             $scope.controllerState = data['controller.data.controllerState'].value;
         }
         console.log('Controller state: ' + $scope.controllerState);
-        console.log('Learn mode: ' + $scope.isRealPrimary);
+        
         // console.log('Learn mode 2: ' + $scope.learnMode);
         if ('controller.data.lastExcludedDevice' in data) {
             $scope.lastExcludedDevice = data['controller.data.lastExcludedDevice'].value;

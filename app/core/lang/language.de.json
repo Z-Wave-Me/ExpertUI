@@ -1,4 +1,9 @@
 {
+     "no_zddx_file": "Keine Gerätebeschreibung", 
+   "are_you_sure_remove_node": "Wollen Sie das Gerät wirklich entgültig entfernen ?",
+    "inspect_queue_empty": "Warteschlange ist leer.",
+    "error_handling_data":"Fehler bei der Datenkommunikation",
+    "device_interview_stage_not_complete ":"Geräte-Interview ist nicht beendet", 
     "restore_wait": "Wiederherstellung von Daten. Bitte warten Sie ...",
     "restore_done_reload_ui": "Wiederherstellung abgeschlossen! Bitte laden Sie die Seite",
     "restore_backup_failed": "Laden und Aktivieren des Backups ist fehlgeschlagen",

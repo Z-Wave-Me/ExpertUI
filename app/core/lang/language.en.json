@@ -1,11 +1,11 @@
 {
     "--- missing":"---",
+     "---":"--- missing",
     "no_zddx_file": "No configuration file",
    "are_you_sure_remove_node": "Are you sure to want like to delete device",
     "inspect_queue_empty": "queue is empty",
     "error_handling_data":"Error handling data from",
     "device_interview_stage_not_complete":"Device interview stage is not complete",
-    "---":"--- missing",
     "restore_wait": "Restoring data. Please wait...",
     "restore_done_reload_ui": "Recovery completed! Please reload the page",
     "restore_backup_failed": "Upload or restore of backup has failed",
