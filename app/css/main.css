@@ -144,6 +144,10 @@ text-decoration: none;
 background-color: #e4f5fc;
 }
 
+.custom-ip-message{
+    display: none;
+}
+
 /* Page CSS
 -------------------------------------------------- */
 .page-header {
@@ -186,6 +190,7 @@ background-color: #e4f5fc;
 #page_.custom-ip-true #respone_container .alert-danger{
     display: none !important;
 }
+
 .form-home-ip-in {
     //display: none;
     margin: 10px auto;

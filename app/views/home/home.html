@@ -1,13 +1,15 @@
 <!-- Home view -->
 <div ng-controller="HomeController">
     <div class="form-inline form-home-ip" ng-show="cfg.custom_ip">
+        
         <div class="form-home-ip-in product-data-list">
             <input name="custom_ip" id="custom_ip" type="text" class="form-control" ng-model="customIP.url" value="{{customIP.url}}" placeholder="Server Name or IP, e.g. 192.168.1.1" />
             <button type="button" class="btn btn-primary" id="btn_add_ip" ng-click="setIP(customIP.url)">Connect</button>
-            <div class="text-danger" ng-show="customIP.message">{{customIP.message}}</div>
+            <div class="text-danger custom-ip-message custom-ip-error">Error handling data from server {{cfg.server_url}}</div>
+             <div class="text-success custom-ip-message custom-ip-success">Connected to: {{cfg.server_url}}</div>
         </div>
     </div>
-    <div class="row home-page" ng-show="showHome">
+    <div class="row home-page_" ng-show="ZWaveAPIData">
         <div class="col-sm-6 home-page-image">
             <img class="product-logo" src="app/images/zplus.jpg" alt="Z-Wave" width="90" />
             <p></p>
@@ -24,7 +26,7 @@
                 </form>
             </div>
         </div>
-        <div class="col-sm-6 product-data-list pull-right error-hide">
+        <div class="col-sm-6 product-data-list pull-right">
 
             <h3><i class="fa fa-info-circle"></i> {{_t('txt_network_info')}}</h3>
             <ul class="list-group">
