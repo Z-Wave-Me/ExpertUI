@@ -25,7 +25,7 @@ var config_data = {
         'config_url': '/config/', // Url for store config data
         'reorg_log_url': '/config/reorg.log', // Url for store reorg log data
         'zddx_url': '/ZDDX/', // Url for zddx xml files
-        'zddx_create_url': '/ZAutomation/CreateZDDX/', // Create zddx file
+        'zddx_create_url': '/ZWaveAPI/CreateZDDX/', // Create zddx file
         'notes_url': '/config/notes.log', // Url for store notes data
         'lang_dir': 'app/core/lang/', // Language directory
         'lang': 'en', // Default language

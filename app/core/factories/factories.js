@@ -312,12 +312,12 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         var request = $http({
             method: "POST",
             //url: 'storage/timing.json'
-            url: cfg.server_url + '/JS/Run/communicationStatistics.get()'
+            url: cfg.server_url + '/ZWaveAPI/CommunicationStatistics'
         });
         request.success(function(data) {
             return callback(data);
         }).error(function() {
-            console.log('Error: communicationStatistics');
+            console.log('Error: CommunicationStatistics');
             handleError(false, true);
 
         });
