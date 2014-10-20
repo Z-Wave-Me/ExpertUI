@@ -9,6 +9,7 @@ var angApp = angular.module('angApp', [
     'ngCookies',
     'appController',
     'appFactory',
+    'appService',
     'appConfig',
     'angularFileUpload'
 ]);

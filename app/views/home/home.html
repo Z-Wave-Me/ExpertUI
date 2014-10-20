@@ -54,7 +54,11 @@
                     </p>
                 </li>
             </ul>
-
+            <h3><i class="fa fa-info-circle"></i> {{_t('device_reset_locally')}}</h3>
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="v in localyResetDevices">{{v.name}} (#{{v.id}})</li>
+                <li class="list-group-item" ng-show="localyResetDevices.length < 1">{{_t('no_device_reset_locally')}}</li>
+            </ul>
 
         </div>
     </div>

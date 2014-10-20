@@ -171,7 +171,7 @@ appController.controller('HelpController', function($scope, $routeParams) {
 });
 
 // Home controller
-appController.controller('HomeController', function($scope, $filter, $timeout, $route, $interval, dataService, cfg) {
+appController.controller('HomeController', function($scope, $filter, $timeout, $route, dataService,deviceService, cfg) {
     $scope.ZWaveAPIData;
     $scope.countDevices;
     $scope.failedDevices = [];
@@ -179,6 +179,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
     $scope.lowBatteryDevices = [];
     $scope.flirsDevices;
     $scope.mainsDevices;
+     $scope.localyResetDevices = [];
     $scope.notInterviewDevices = [];
     $scope.notes = [];
     $scope.notesData = '';
@@ -188,6 +189,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
         $scope.failedDevices = angular.copy([]);
         $scope.lowBatteryDevices = angular.copy([]);
         $scope.notInterviewDevices = angular.copy([]);
+         $scope.localyResetDevices = angular.copy([]);
     };
 
 
@@ -297,32 +299,32 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
      * Count devices
      */
     function countDevices(ZWaveAPIData) {
-        var controllerId = ZWaveAPIData.controller.data.nodeId.value;
         var cnt = 0;
-        var cntBattery = 0;
         var cntFlirs = 0;
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
 
-            if (nodeId == 255 || nodeId == controllerId || node.data.isVirtual.value) {
+            if (deviceService.notDevice(ZWaveAPIData,node, nodeId)) {
                 return;
             }
-            // Count flirs
-            var isListening = node.data.isListening.value;
-            var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
+            var isFLiRS = deviceService.isFLiRS(node);
+            var isLocalyReset = deviceService.isLocalyReset(node);
+            var isFailed = deviceService.isFailed(node);
+            
             if (isFLiRS) {
                 cntFlirs++;
             }
-
-            // Failed
-            var isFailed = node.data.isFailed.value;
+            
             var obj = {};
             obj['name'] = $filter('deviceName')(nodeId, node);
             obj['id'] = nodeId;
             if (isFailed) {
                 $scope.failedDevices.push(obj);
             }
-
+            if (isLocalyReset) {
+                 $scope.localyResetDevices.push(obj);
+            }
+           
             cnt++;
         });
         $scope.flirsDevices = cntFlirs;
@@ -2534,7 +2536,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
     };
 });
 // Configuration controller
-appController.controller('ConfigurationController', function($scope, $routeParams, $http, $filter, $location, $cookies, $timeout, dataService, myCache) {
+appController.controller('ConfigurationController', function($scope, $routeParams, $http, $filter, $location, $cookies, $timeout, dataService,deviceService, myCache) {
     $scope.devices = [];
     $scope.showDevices = false;
     $scope.ZWaveAPIData;
@@ -2754,7 +2756,6 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         if (hasBattery) {
             alert($scope._t('conf_apply_battery'));
         }
-        console.log(hasBattery);
         var data = $('#' + form).serializeArray();
         var dataJoined = [];
         angular.forEach(data, function(v, k) {
@@ -2927,7 +2928,6 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         var productName = '';
         var inclusionNote = '';
         var brandName = node.data.vendorString.value;
-        var inclusionNote = '';
         var wakeupNote = '';
         var ZWavePlusInfo = '';
         var ZWavePlusRoles = [];
@@ -2985,9 +2985,6 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             if ('brandName' in zddXml.ZWaveDevice.deviceDescription) {
                 brandName = zddXml.ZWaveDevice.deviceDescription.brandName;
             }
-            if (angular.isDefined(zddXml.ZWaveDevice.deviceDescription.inclusionNote.lang[langId])) {
-                inclusionNote = zddXml.ZWaveDevice.deviceDescription.inclusionNote.lang[langId].__text;
-            }
             if (angular.isDefined(zddXml.ZWaveDevice.deviceDescription.wakeupNote.lang[langId])) {
                 wakeupNote = zddXml.ZWaveDevice.deviceDescription.wakeupNote.lang[langId].__text;
             }
@@ -3026,6 +3023,10 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         //obj["p"] = {"key": "command_class", "val": ccNames.join(', ')};
         obj["p"] = {"key": "command_class", "val": ccNames};
         obj["q"] = {"key": "zwave_role_type", "val": ZWavePlusRoles.join(', ')};
+        if(deviceService.isLocalyReset(node)){
+             obj["r"] = {"key": "device_reset_locally", "val": '<i class="' + $filter('checkedIcon')(true) +'"></i>'};
+        }
+       
         //obj[99] = {"key": "device_description_resources", "val": ''};
         return obj;
     }
