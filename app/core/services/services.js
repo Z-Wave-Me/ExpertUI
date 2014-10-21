@@ -7,7 +7,7 @@ var appService = angular.module('appService', []);
 /**
  * Device service
  */
-appService.service('deviceService', function() {
+appService.service('deviceService', function($filter) {
     /// --- Public functions --- ///
 
     /**

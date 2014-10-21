@@ -3,6 +3,23 @@
  * @author Martin Vach
  * @author Martin Hartnagel
  */
+
+/**
+ * Check if JSON keys/nodes exist
+ */
+angApp.filter('hasNode', function() {
+    return function(obj, path) {
+        path = path.split('.');
+        var p = obj || {};
+        for (var i in path) {
+            if (p === null || typeof p[path[i]] === 'undefined') {
+                return null;
+            }
+            p = p[path[i]];
+        }
+        return p;
+    };
+});
 /**
  * Convert unix timastamp to date
  */
