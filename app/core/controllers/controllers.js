@@ -401,10 +401,9 @@ appController.controller('SwitchController', function($scope, $log, $filter, dat
     $scope.load = function() {
         dataService.getZwaveData(function(ZWaveAPIData) {
             setData(ZWaveAPIData);
-//            dataService.joinedZwaveData(function(data) {
-//                $scope.reset();
-//                setData(data.joined);
-//            });
+            dataService.joinedZwaveData(function(data) {
+                refreshData(data);
+            });
         });
     };
 
@@ -569,6 +568,42 @@ appController.controller('SwitchController', function($scope, $log, $filter, dat
         });
     }
     ;
+    
+     /**
+     * Refresh zwave data
+     */
+    function refreshData(data) {
+        angular.forEach($scope.switches, function(v, k) {
+            console.log(v);
+            // Check for updated data
+            if (v.cmdToUpdate in data.update) {
+                var obj = data.update[v.cmdToUpdate];
+                var level = '';
+                var updateTime = 0;
+                var invalidateTime = 0;
+                var levelExt;
+                if (v.cmdId == 0x30) {
+                    levelExt = (obj.level.value ? $scope._t('sensor_triggered') : $scope._t('sensor_idle'));
+                    updateTime = obj.level.updateTime;
+                    invalidateTime = obj.level.invalidateTime;
+                } else {
+                    level = obj.val.value;
+                    levelExt = obj.scaleString.value;
+                    updateTime = obj.val.updateTime;
+                    invalidateTime = obj.val.invalidateTime;
+                }
+
+                // Update row
+                $('#' + v.rowId + ' .row-level').html(level);
+                $('#' + v.rowId + ' .row-time').html($filter('isTodayFromUnix')(updateTime));
+                if (updateTime > invalidateTime) {
+                    $('#' + v.rowId + ' .row-time').removeClass('is-updated-false');
+                }
+
+                //console.log('Updating:' + v.rowId + ' | At: ' + updateTime + ' | with: ' + level);//REM
+            }
+        });
+    }
 
     // Update level
     function updateLevel(obj, ccId, btnOn, btnOff) {
@@ -633,8 +668,7 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
         dataService.getZwaveData(function(ZWaveAPIData) {
             setData(ZWaveAPIData);
             dataService.joinedZwaveData(function(data) {
-                $scope.reset();
-                setData(data.joined);
+                refreshData(data);
             });
         });
     };
@@ -706,6 +740,7 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                         obj['updateTime'] = val.updateTime;
                         obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
                         obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[' + instanceId + '].commandClasses[48].Get()';
+                        obj['cmdToUpdate'] = 'devices.' + obj['id'] + '.instances.' + instanceId + '.commandClasses.48.data.' + sensor_type;
                         // Push to sensors
                         $scope.sensors.push(obj);
                         cnt++;
@@ -741,6 +776,7 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                         obj['updateTime'] = val.updateTime;
                         obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
                         obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[' + instanceId + '].commandClasses[49].Get()';
+                        obj['cmdToUpdate'] = 'devices.' + obj['id'] + '.instances.' + instanceId + '.commandClasses.49.data.' + sensor_type;
                         // Push to sensors
                         $scope.sensors.push(obj);
                         cnt++;
@@ -780,6 +816,7 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                         obj['updateTime'] = meter.updateTime;
                         obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
                         obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[' + instanceId + '].commandClasses[50].Get()';
+                        obj['cmdToUpdate'] = 'devices.' + obj['id'] + '.instances.' + instanceId + '.commandClasses.50.data.' + sensor_type;
                         $scope.sensors.push(obj);
                         cnt++;
                     });
@@ -789,43 +826,40 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
 
         });
     }
-
-
     /**
-     * @todo REMOVE
+     * Refresh zwave data
      */
-    $scope.refresh = function() {
-        dataService.updateZwaveData(function(data) {
-            angular.forEach($scope.sensors, function(v, k) {
-                // Check for updated data
-                if (v.cmd in data) {
-                    var obj = data[v.cmd];
-                    var level = '';
-                    var updateTime;
-                    // var date = $filter('isTodayFromUnix')(data.updateTime);
-                    var levelExt;
-                    if (v.cmdId == 0x30) {
-                        levelExt = (obj.level.value ? $scope._t('sensor_triggered') : $scope._t('sensor_idle'));
-                        updateTime = $filter('isTodayFromUnix')(obj.level.updateTime);
-                    } else {
-                        level = obj.val.value;
-                        levelExt = obj.scaleString.value;
-                        updateTime = $filter('isTodayFromUnix')(obj.val.updateTime);
-                    }
-
-                    // Set updated row
-                    $('#' + v.rowId + ' .row-level').html(level);
-                    $('#' + v.rowId + ' .row-time').html(updateTime).removeClass('is-updated-false');
-
-                    //$log.info('Updating:' + v.rowId + ' | At: ' + updateTime + ' | with: ' + level);//REM
+    function refreshData(data) {
+        angular.forEach($scope.sensors, function(v, k) {
+            // Check for updated data
+            if (v.cmdToUpdate in data.update) {
+                var obj = data.update[v.cmdToUpdate];
+                var level = '';
+                var updateTime = 0;
+                var invalidateTime = 0;
+                var levelExt;
+                if (v.cmdId == 0x30) {
+                    levelExt = (obj.level.value ? $scope._t('sensor_triggered') : $scope._t('sensor_idle'));
+                    updateTime = obj.level.updateTime;
+                    invalidateTime = obj.level.invalidateTime;
                 } else {
-                    //$log.warn(v.cmd + ': Nothing to update --- ' + $scope.lang);//REM
+                    level = obj.val.value;
+                    levelExt = obj.scaleString.value;
+                    updateTime = obj.val.updateTime;
+                    invalidateTime = obj.val.invalidateTime;
                 }
-            });
-            //$log.debug('-----------');//REM
+
+                // Update row
+                $('#' + v.rowId + ' .row-level').html(level);
+                $('#' + v.rowId + ' .row-time').html($filter('isTodayFromUnix')(updateTime));
+                if (updateTime > invalidateTime) {
+                    $('#' + v.rowId + ' .row-time').removeClass('is-updated-false');
+                }
+
+                //console.log('Updating:' + v.rowId + ' | At: ' + updateTime + ' | with: ' + level);//REM
+            }
         });
-    };
-    //$scope.refresh();
+    }
 });
 
 /**
@@ -837,13 +871,23 @@ appController.controller('MetersController', function($scope, $filter, dataServi
         $scope.meters = angular.copy([]);
     };
 
-    // Load data
-    $scope.load = function() {
+    // @todo remove
+    $scope.load___ = function() {
         dataService.getZwaveData(function(ZWaveAPIData) {
             setData(ZWaveAPIData);
             dataService.joinedZwaveData(function(data) {
                 $scope.reset();
                 setData(data.joined);
+            });
+        });
+    };
+
+    // Load data
+    $scope.load = function() {
+        dataService.getZwaveData(function(ZWaveAPIData) {
+            setData(ZWaveAPIData);
+            dataService.joinedZwaveData(function(data) {
+                refreshData(data);
             });
         });
     };
@@ -896,11 +940,11 @@ appController.controller('MetersController', function($scope, $filter, dataServi
                 if (angular.isObject(meters)) {
                     angular.forEach(meters.data, function(meter, key) {
                         realEMeterScales = [0, 1, 3, 8, 9];// Not in [0, 1, 3, 8, 9] !== -1
-                        var sensor_type = parseInt(key, 10);
-                        if (isNaN(sensor_type)) {
+                        var scaleId = parseInt(key, 10);
+                        if (isNaN(scaleId)) {
                             return;
                         }
-                        if (meter.sensorType.value == 1 && realEMeterScales.indexOf(sensor_type) === -1) {
+                        if (meter.sensorType.value == 1 && realEMeterScales.indexOf(scaleId) === -1) {
                             return; // filter only for eMeters
                         }
                         if (meter.sensorType.value > 1) {
@@ -909,7 +953,7 @@ appController.controller('MetersController', function($scope, $filter, dataServi
                         var obj = {};
                         obj['id'] = k;
                         obj['iId'] = instanceId;
-                        obj['cmd'] = meters.data.name + '.' + meter.name;
+                        obj['cmd'] = meters.name + '.' + meter.name;
                         obj['cmdId'] = 0x30;
                         obj['rowId'] = meters.name + '_' + meter.name + '_' + k;
                         obj['name'] = $filter('deviceName')(k, device);
@@ -921,6 +965,7 @@ appController.controller('MetersController', function($scope, $filter, dataServi
                         obj['updateTime'] = meter.updateTime;
                         obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
                         obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[' + instanceId + '].commandClasses[50].Get()';
+                        obj['cmdToUpdate'] = 'devices.' + k + '.instances.' + instanceId + '.commandClasses.' + 0x32 + '.data.' + scaleId;
                         if (ZWaveAPIData.devices[obj['id']].instances[instanceId].commandClasses[0x32].data.version.value < 2
                                 || !ZWaveAPIData.devices[obj['id']].instances[instanceId].commandClasses[0x32].data.resettable.value) {
                             obj['urlToReset'] = null;
@@ -935,37 +980,24 @@ appController.controller('MetersController', function($scope, $filter, dataServi
             });
         });
     }
-    /**
-     * @todo remove
-     */
-    $scope.refresh = function() {
-        dataService.updateZwaveData(function(data) {
-            angular.forEach($scope.meters, function(v, k) {
-                // Check for updated data
-                if (v.cmd in data) {
-                    var obj = data[v.cmd];
-                    var level = '';
-                    var updateTime;
-                    var levelExt;
-                    if (v.cmdId == 0x30) {
-                        //levelExt = (obj.scaleString.value ? $scope._t('sensor_triggered') : $scope._t('sensor_idle'));
-                        updateTime = $filter('isTodayFromUnix')(obj.updateTime);
-                        level = obj.val.value;
-                        // Set updated row
-                        $('#' + v.rowId + ' .row-level').html(level);
-                        $('#' + v.rowId + ' .row-time').html(updateTime);
-                        if (obj.updateTime > obj.invalidateTime) {
-                            $('#' + v.rowId + ' .row-time').removeClass('is-updated-false');
-                        }
-                        //$log.info('Updating:' + v.rowId + ' | At: ' + updateTime + ' | with: ' + level);//REM
-                    } else {
-                        //$log.warn(v.cmd + ': Nothing to update');//REM
-                    }
-                }
-            });
 
+    /**
+     * Refresh zwave data
+     */
+    function refreshData(data) {
+        angular.forEach($scope.meters, function(v, k) {
+            var obj = data.update[v.cmdToUpdate];
+            if (v.cmdToUpdate in data.update) {
+                var level = obj.val.value;
+                var updateTime = $filter('isTodayFromUnix')(obj.updateTime);
+                $('#' + v.rowId + ' .row-level').html(level);
+                $('#' + v.rowId + ' .row-time').html(updateTime);
+                if (obj.updateTime > obj.invalidateTime) {
+                    $('#' + v.rowId + ' .row-time').removeClass('is-updated-false');
+                }
+            }
         });
-    };
+    }
 });
 
 // Thermostat controller
@@ -979,24 +1011,13 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
     $scope.load = function() {
         dataService.getZwaveData(function(ZWaveAPIData) {
             setData(ZWaveAPIData);
-            //$scope.refresh();
-//            dataService.joinedZwaveData(function(data) {
-//                $scope.reset();
-//                setData(data.joined);
-//            });
+            dataService.joinedZwaveData(function(data) {
+                refreshData(data);
+            });
         });
     };
     // Load data
-    $scope.load($scope.lang);
-
-    // Refresh data
-    $scope.refresh = function() {
-        dataService.joinedZwaveData(function(data) {
-            $scope.reset();
-            setData(data.joined);
-        });
-    };
-    $scope.refresh();
+    $scope.load();
 
     // Cancel interval on page destroy
     $scope.$on('$destroy', function() {
@@ -1034,12 +1055,6 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
         var url = cmd + '.Set(1,' + count + ')';
         console.log(url);
         dataService.runCmd(url);
-        $scope.refresh();
-    };
-
-    // Cancel data update interval
-    $scope.cancelInterval = function() {
-        dataService.cancelZwaveDataInterval();
     };
     /// --- Private functions --- ///
 
@@ -1072,6 +1087,7 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
                 var changeTemperature = false;
                 var updateTime;
                 var invalidateTime;
+                var modeType = null;
 
                 var hasThermostatMode = 0x40 in instance.commandClasses;
                 var hasThermostatSetpoint = 0x43 in instance.commandClasses;
@@ -1088,6 +1104,7 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
                     if (curThermMode in instance.commandClasses[0x40].data) {
                         updateTime = instance.commandClasses[0x40].data.mode.updateTime;
                         invalidateTime = instance.commandClasses[0x40].data.mode.invalidateTime;
+                        modeType = 'hasThermostatMode';
 
                     }
                 } else if (hasThermostatSetpoint) {
@@ -1098,6 +1115,7 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
                         invalidateTime = instance.commandClasses[0x43].data[curThermMode].invalidateTime;
                         changeTemperature = true;
                         hasExt = true;
+                        modeType = 'hasThermostatSetpoint';
                     }
 
                 }
@@ -1118,6 +1136,8 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
                 obj['invalidateTime'] = invalidateTime;
                 obj['isUpdated'] = (updateTime > invalidateTime ? true : false);
                 obj['urlToStore'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']';
+                obj['cmdToUpdate'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.' + curThermMode;
+                obj['modeType'] = modeType;
                 $scope.thermostats.push(obj);
                 $scope.rangeSlider.push(obj['range_' + nodeId] = obj['level']);
                 //console.log(obj);
@@ -1126,7 +1146,36 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
         });
     }
 
+    /**
+     * Refresh zwave data
+     */
+    function refreshData(data) {
+        angular.forEach($scope.thermostats, function(v, k) {
+            if (!v.modeType) {
+                return;
+            }
+            var obj = data.update[v.cmdToUpdate];
+            var level = null;
+            var updateTime;
+            var invalidateTime;
+            if (v.cmdToUpdate in data.update) {
+                if (v.modeType == 'hasThermostatMode') {
+                    updateTime = obj.mode.updateTime;
+                    invalidateTime = obj.mode.invalidateTime;
+                } else if (v.modeType == 'hasThermostatSetpoint') {
+                    updateTime = obj.updateTime;
+                    invalidateTime = obj.invalidateTime;
+                    level = obj.setVal.value;
+                }
 
+                $('#' + v.rowId + ' .row-level .level-val').html(level);
+                $('#' + v.rowId + ' .row-time').html($filter('isTodayFromUnix')(updateTime));
+                if (updateTime > invalidateTime) {
+                    $('#' + v.rowId + ' .row-time').removeClass('is-updated-false');
+                }
+            }
+        });
+    }
 
     // used to pick up thermstat mode
     function getCurrentThermostatMode(_instance) {
@@ -1162,8 +1211,7 @@ appController.controller('LocksController', function($scope, $filter, dataServic
         dataService.getZwaveData(function(ZWaveAPIData) {
             setData(ZWaveAPIData);
             dataService.joinedZwaveData(function(data) {
-                $scope.reset();
-                setData(data.joined);
+                refreshData(data);
             });
         });
     };
@@ -1226,6 +1274,7 @@ appController.controller('LocksController', function($scope, $filter, dataServic
                 obj['invalidateTime'] = instance.commandClasses[ccId].data.mode.invalidateTime;
                 obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
                 obj['urlToStore'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']';
+                obj['cmdToUpdate'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.mode';
                 $scope.locks.push(obj);
                 cnt++;
             });
@@ -1233,33 +1282,27 @@ appController.controller('LocksController', function($scope, $filter, dataServic
     }
 
     /**
-     * @todo REMOVE
+     * Refresh zwave data
      */
-    $scope.refresh = function() {
-        dataService.updateZwaveData(function(data) {
-            angular.forEach($scope.locks, function(v, k) {
-                // Check for updated data
-                if (v.cmd in data) {
-                    var obj = data[v.cmd];
-                    var active = obj.value;
-                    var level = $filter('lockStatus')(obj.value);
-                    var updateTime = $filter('isTodayFromUnix')(obj.updateTime);
-                    $('#' + v.rowId + ' .row-time').html(updateTime).removeClass('is-updated-false');
-                    $('#' + v.rowId + ' .row-level').html(level);
-                    $('#' + v.rowId + ' .btn-group-lock button').removeClass('active');
-                    if (active == '255') {
-                        $('#' + v.rowId + ' .btn-lock').addClass('active');
-                    } else {
-                        $('#' + v.rowId + ' .btn-unlock').addClass('active');
-                    }
-                    //$log.info('Updating:' + v.rowId + ' | At: ' + updateTime + ' | with: ' + level);//REM
+    function refreshData(data) {
+        angular.forEach($scope.locks, function(v, k) {
+
+            if (v.cmdToUpdate in data.update) {
+                var obj = data.update[v.cmdToUpdate];
+                var active = obj.value;
+                var level = $filter('lockStatus')(obj.value);
+                var updateTime = $filter('isTodayFromUnix')(obj.updateTime);
+                $('#' + v.rowId + ' .row-time').html(updateTime).removeClass('is-updated-false');
+                $('#' + v.rowId + ' .row-level').html(level);
+                $('#' + v.rowId + ' .btn-group-lock button').removeClass('active');
+                if (active == '255') {
+                    $('#' + v.rowId + ' .btn-lock').addClass('active');
                 } else {
-                    //$log.warn(v.cmd + ': Nothing to update --- ');//REM
+                    $('#' + v.rowId + ' .btn-unlock').addClass('active');
                 }
-            });
+            }
         });
-    };
-    //$scope.refresh();
+    }
 });
 // Status controller
 appController.controller('StatusController', function($scope, $filter, dataService) {
