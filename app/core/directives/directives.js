@@ -221,13 +221,11 @@ angApp.directive('routingTypeIcon', function() {
     };
 });
 
-/*** Fixes ***/
-// js holder fix
-angApp.directive('expertCommandInput', function() {
+angApp.directive('expertCommandInput', function($filter) {
     // Get text input
     function getText(label, value, min, max, name) {
         var input = '';
-        var inName = (name ? name : label);
+         var inName =  $filter('stringToSlug')(name ? name : label);
         input += '<label>' + label + '</label> ';
         input += '<input class="form-control" name="' + inName + '" type="text" class="form-control" value="' + value + '" title=" min: ' + min + ', max: ' + max + '" />';
         return input;
@@ -235,7 +233,7 @@ angApp.directive('expertCommandInput', function() {
     // Get node
     function getNode(label, devices, selected, name) {
         var input = '';
-        var inName = (name ? name : label);
+         var inName =  $filter('stringToSlug')(name ? name : label);
         input += '<label>' + label + '</label> ';
         input += '<select name="select_' + inName + '" class="form-control">';
         input += '<option value="1">RaZberry</option>';
@@ -254,7 +252,7 @@ angApp.directive('expertCommandInput', function() {
         if (!enums) {
             return;
         }
-        var inName = (name ? name : label);
+         var inName =  $filter('stringToSlug')(name ? name : label);
         input += '<label>' + label + '</label><br />';
         var cnt = 1;
         angular.forEach(enums.enumof, function(v, k) {
@@ -311,7 +309,7 @@ angApp.directive('expertCommandInput', function() {
     // Get dropdown list
     function getDropdown(label, enums, defaultValue, name) {
         var input = '';
-        var inName = (name ? name : label);
+         var inName =  $filter('stringToSlug')(name ? name : label);
         input += '<label>' + label + '</label><br />';
         input += '<select name="select_' + inName + '" class="form-control">';
         var cnt = 1;
@@ -339,7 +337,7 @@ angApp.directive('expertCommandInput', function() {
     // Get constant 
     function getConstant(label, type, defaultValue, name) {
         var input = '';
-        var inName = (name ? name : label);
+         var inName =  $filter('stringToSlug')(name ? name : label);
         input += '<label>' + label + '</label><br />';
         if (type.constant.length > 0) {
             input += '<select name="select_' + inName + '" class="form-control">';
@@ -355,13 +353,23 @@ angApp.directive('expertCommandInput', function() {
         input += '<em>Constant type</em>';
         return input;
     }
+    // Get string
+    function getString(label, value, name) {
+        var input = '';
+        var inName =  $filter('stringToSlug')(name ? name : label);
+        input += '<label>' + label + '</label> ';
+        input += '<input class="form-control" name="' + inName + '" type="text" class="form-control" value="' + value + '" />';
+        return input;
+    }
 
     // Get default
     function getDefault(label) {
+
         var input = '';
         input += '<label>' + label + '</label><br />';
         return input;
     }
+    
     return {
         restrict: "E",
         replace: true,
@@ -390,6 +398,7 @@ angApp.directive('expertCommandInput', function() {
                 scope.input = input;
                 return;
             }
+
             //if (label && type) {
             if (type) {
                 if ('range' in type) {
@@ -400,6 +409,8 @@ angApp.directive('expertCommandInput', function() {
                     input = getEnum(label, type, scope.defaultValue, name, hideRadio);
                 } else if ('constant' in type) {
                     input = getConstant(label, type, scope.defaultValue, name);
+                } else if ('string' in type) {
+                    input = getString(label, scope.values, name);
                 } else {
                     input = getDefault(label);
                 }
