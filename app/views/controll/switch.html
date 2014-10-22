@@ -63,8 +63,8 @@
                 <tr ng-repeat="v in switches| orderBy:predicate:reverse" id="{{ v.rowId}}" ng-show="!v.multiChannel" ng-init="range.maxs = v.levelVal">
                     <td data-title="#">{{ v.id}}<span ng-show="v.iId != 0">.{{v.iId}}</span></td>
                     <td data-title="{{ _t('device_name')}}"><switch-type-icon generic="{{ v.genericType}}" specific="{{ v.specificType}}"></switch-type-icon> {{ v.name}}</td>
-            <td data-title="{{ _t('th_level')}}" class="row-level text-right">
-                <strong style="color: {{ v.levelColor}};">{{ v.level}}</strong> 
+            <td data-title="{{ _t('th_level')}}">
+                <strong class="row-level text-right" style="color: {{ v.levelColor}};">{{ v.level}}</strong> 
 
             </td>
             <td data-title="{{ _t('datetime')}}"><span class="row-time is-updated-{{v.isUpdated}}">{{ v.updateTime | isTodayFromUnix }}</span></td>
@@ -133,7 +133,6 @@
                      max="v.levelMax" 
                      model-max="rangeSlider[$index]" 
                      pin-handle="min" 
-                     on-handle-down="cancelInterval()"
                      on-handle-up="sliderChange(v.urlToSlide,$index)"></div>
                 <div ng-switch-default>&nbsp;</div>
             </td>

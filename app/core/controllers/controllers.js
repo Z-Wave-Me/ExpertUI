@@ -389,7 +389,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
 });
 
 // Switch controller
-appController.controller('SwitchController', function($scope, $log, $filter, dataService, cfg) {
+appController.controller('SwitchController', function($scope, $filter, dataService, cfg) {
     $scope.switches = [];
     $scope.rangeSlider = [];
     $scope.updateTime = $filter('getTimestamp');
@@ -418,7 +418,7 @@ appController.controller('SwitchController', function($scope, $log, $filter, dat
             setData(data.joined);
         });
     };
-    $scope.refresh();
+    //$scope.refresh();
 
     // Cancel interval on page destroy
     $scope.$on('$destroy', function() {
@@ -454,12 +454,6 @@ appController.controller('SwitchController', function($scope, $log, $filter, dat
         var val = $scope.rangeSlider[index];
         var url = cmd + '.Set(' + val + ')';
         dataService.runCmd(url);
-        $scope.refresh();
-    };
-
-    // Cancel data update interval
-    $scope.cancelInterval = function() {
-        dataService.cancelZwaveDataInterval();
     };
 
     /// --- Private functions --- ///
@@ -556,50 +550,36 @@ appController.controller('SwitchController', function($scope, $log, $filter, dat
                 obj['btnOn'] = btnOn;
                 obj['btnOff'] = btnOff;
                 obj['btnFull'] = btnFull;
+                obj['cmdToUpdate'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.'+ ccId +'.data.level';
+               
 
                 $scope.switches.push(obj);
                 $scope.rangeSlider.push(obj['range_' + nodeId] = level.level_val);
-                // $scope.rangeSlider.push(obj['range_' + nodeId] = level.level_val > 0 ? level.level_val : level.level_max);
-//                if(nodeId == 7){
-//                    console.log(instance.commandClasses[ccId].data.level);
-//                }
                 cnt++;
             });
         });
     }
     ;
     
-     /**
+    /**
      * Refresh zwave data
      */
     function refreshData(data) {
         angular.forEach($scope.switches, function(v, k) {
-            console.log(v);
-            // Check for updated data
+            //console.log(v.cmdToUpdate);
+            //return;
+            var obj = data.update[v.cmdToUpdate];
             if (v.cmdToUpdate in data.update) {
-                var obj = data.update[v.cmdToUpdate];
-                var level = '';
-                var updateTime = 0;
-                var invalidateTime = 0;
-                var levelExt;
-                if (v.cmdId == 0x30) {
-                    levelExt = (obj.level.value ? $scope._t('sensor_triggered') : $scope._t('sensor_idle'));
-                    updateTime = obj.level.updateTime;
-                    invalidateTime = obj.level.invalidateTime;
-                } else {
-                    level = obj.val.value;
-                    levelExt = obj.scaleString.value;
-                    updateTime = obj.val.updateTime;
-                    invalidateTime = obj.val.invalidateTime;
-                }
-
-                // Update row
-                $('#' + v.rowId + ' .row-level').html(level);
-                $('#' + v.rowId + ' .row-time').html($filter('isTodayFromUnix')(updateTime));
+                var level = updateLevel(obj, v.ccId, v.btnOn, v.btnOff);
+                var updateTime = obj.updateTime;
+                var invalidateTime = obj.invalidateTime;
+                var formatTime = $filter('isTodayFromUnix')(updateTime);
+                $('#' + v.rowId + ' .row-level').html(level.level_cont).css({color: level.level_color});
+                $('#' + v.rowId + ' .row-time').html(formatTime);
                 if (updateTime > invalidateTime) {
                     $('#' + v.rowId + ' .row-time').removeClass('is-updated-false');
                 }
-
+                $("#the_item_id").css({backgroundColor: "#333", color: "#FFF"});
                 //console.log('Updating:' + v.rowId + ' | At: ' + updateTime + ' | with: ' + level);//REM
             }
         });
@@ -869,17 +849,6 @@ appController.controller('MetersController', function($scope, $filter, dataServi
     $scope.meters = [];
     $scope.reset = function() {
         $scope.meters = angular.copy([]);
-    };
-
-    // @todo remove
-    $scope.load___ = function() {
-        dataService.getZwaveData(function(ZWaveAPIData) {
-            setData(ZWaveAPIData);
-            dataService.joinedZwaveData(function(data) {
-                $scope.reset();
-                setData(data.joined);
-            });
-        });
     };
 
     // Load data
