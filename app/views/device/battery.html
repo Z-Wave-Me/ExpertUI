@@ -43,8 +43,8 @@
                 <td data-title="#">{{ v.id }}</td>
                 <td data-title="{{ _t('device_name')}}">{{ v.name }}</td>
                 <td data-title="{{ _t('th_battery_type')}}">{{ v.batteryCount }}<span ng-show="v.batteryCount">*</span>{{ v.batteryType }} &nbsp;</td>
-                 <td data-title="{{ _t('th_level')}}" class="row-level text-right">
-                     &nbsp;{{ v.level }}%
+                 <td data-title="{{ _t('th_level')}}" class="text-right">
+                     &nbsp;<span class="row-level">{{ v.level }}</span>%
                      <i class="{{ v.level | batteryIcon }}"></i>
                       
                  </td>

@@ -1560,8 +1560,9 @@ appController.controller('BatteryController', function($scope, $filter, $http, d
         dataService.getZwaveData(function(ZWaveAPIData) {
             setData(ZWaveAPIData);
             dataService.joinedZwaveData(function(data) {
-                $scope.reset();
-                setData(data.joined);
+                refreshData(data);
+//                $scope.reset();
+//                setData(data.joined);
             });
         });
     };
@@ -1616,6 +1617,7 @@ appController.controller('BatteryController', function($scope, $filter, $http, d
             obj['level'] = battery_charge;
             obj['updateTime'] = battery_updateTime;
             obj['urlToStore'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Get()';
+            obj['cmdToUpdate'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data';
             obj['batteryCount'] = null;
             obj['batteryType'] = null;
 
@@ -1645,6 +1647,26 @@ appController.controller('BatteryController', function($scope, $filter, $http, d
             $scope.battery.push(obj);
         });
     }
+
+    /**
+     * Refresh zwave data
+     */
+    function refreshData(data) {
+        
+        angular.forEach($scope.battery, function(v, k) {
+            var obj = data.update[v.cmdToUpdate];
+            if (obj) {
+                var level = parseInt(obj.last.value);
+                var updateTime = obj.last.updateTime;
+                //var invalidateTime;
+                var formatTime = $filter('isTodayFromUnix')(updateTime);
+                $('#' + v.rowId + ' .row-level').html(level);
+                $('#' + v.rowId + ' .row-time').html(formatTime);
+                 //console.log('Updating:' + v.rowId + ' | At: ' + formatTime + ' | with: ' + level);//REM
+            }
+        });
+    }
+
 
     /**
      * @todo REMOVE
@@ -2022,7 +2044,7 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
     function getGroupLabel(assocGroups, index, instance) {
         // Set default assoc group name
         var label = $scope._t('association_group') + " " + (index + 1);
-        
+
         // Attempt to get assoc group name from the zdd file
         var langs = $filter('hasNode')(assocGroups, 'description.lang');
         if (langs) {
@@ -2042,7 +2064,7 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
                 }
             }
         } else {
-             // Attempt to get assoc group name from the command class
+            // Attempt to get assoc group name from the command class
             angular.forEach(instance[0].commandClasses, function(v, k) {
                 if (v.name == 'AssociationGroupInformation') {
                     label = $filter('hasNode')(v, 'data.1.groupName.value');
