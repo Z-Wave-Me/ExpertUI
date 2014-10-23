@@ -550,8 +550,8 @@ appController.controller('SwitchController', function($scope, $filter, dataServi
                 obj['btnOn'] = btnOn;
                 obj['btnOff'] = btnOff;
                 obj['btnFull'] = btnFull;
-                obj['cmdToUpdate'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.'+ ccId +'.data.level';
-               
+                obj['cmdToUpdate'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.level';
+
 
                 $scope.switches.push(obj);
                 $scope.rangeSlider.push(obj['range_' + nodeId] = level.level_val);
@@ -560,7 +560,7 @@ appController.controller('SwitchController', function($scope, $filter, dataServi
         });
     }
     ;
-    
+
     /**
      * Refresh zwave data
      */
@@ -2019,23 +2019,36 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
     /**
      * Get group name
      */
-    function getGroupLabel(assocGroups, index) {
+    function getGroupLabel(assocGroups, index, instance) {
+        // Set default assoc group name
         var label = $scope._t('association_group') + " " + (index + 1);
-        var langs = assocGroups.description.lang;
-        if ($.isArray(langs)) {
-            angular.forEach(langs, function(lang, index) {
-                if (("__text" in lang) && (lang["_xml:lang"] == $scope.lang)) {
-                    label = lang.__text;
-                    return false;
+        
+        // Attempt to get assoc group name from the zdd file
+        var langs = $filter('hasNode')(assocGroups, 'description.lang');
+        if (langs) {
+            if ($.isArray(langs)) {
+                angular.forEach(langs, function(lang, index) {
+                    if (("__text" in lang) && (lang["_xml:lang"] == $scope.lang)) {
+                        label = lang.__text;
+                        return false;
+                    }
+                    if (("__text" in lang) && (lang["_xml:lang"] == "en")) {
+                        label = lang.__text;
+                    }
+                });
+            } else {
+                if (("__text" in langs)) {
+                    label = langs.__text;
                 }
-                if (("__text" in lang) && (lang["_xml:lang"] == "en")) {
-                    label = lang.__text;
-                }
-            });
-        } else {
-            if (("__text" in langs)) {
-                label = langs.__text;
             }
+        } else {
+             // Attempt to get assoc group name from the command class
+            angular.forEach(instance[0].commandClasses, function(v, k) {
+                if (v.name == 'AssociationGroupInformation') {
+                    label = $filter('hasNode')(v, 'data.1.groupName.value');
+                }
+
+            });
         }
 
         return label;
@@ -2092,6 +2105,7 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
         }
 
         angular.forEach(assocGroups, function(v, k) {
+
             var dev = [];
             var name;
 
@@ -2099,11 +2113,11 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
                 if (angular.isArray(zddval)) {
                     angular.forEach(zddval, function(val, key) {
                         if (val._number == v)
-                            name = getGroupLabel(val, v);
+                            name = getGroupLabel(val, v, node.instances);
                     });
                 } else {
                     if (zddval._number == v)
-                        name = getGroupLabel(zddval, v);
+                        name = getGroupLabel(zddval, v, node.instances);
 
                 }
             });
@@ -2390,8 +2404,11 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
         }
     };
     $scope.updateData = function(nodeId) {
-        var findLabel = function(nodeId, index) {
+        var findLabel = function(nodeId, index, instance) {
+            // Set default assoc group name
             var label = $scope._t('association_group') + " " + (index + 1);
+
+            // Attempt to get assoc group name from the zdd file
             if ($scope.zdd[nodeId] && ("assocGroup" in $scope.zdd[nodeId]) && ((index) in $scope.zdd[nodeId].assocGroup)) {
                 // find best matching lang, default english
                 var langs = $scope.zdd[nodeId].assocGroup[index].description.lang;
@@ -2410,6 +2427,14 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                         label = langs.__text;
                     }
                 }
+            } else {
+                // Attempt to get assoc group name from the command class
+                angular.forEach(instance.commandClasses, function(v, k) {
+                    if (v.name == 'AssociationGroupInformation') {
+                        label = $filter('hasNode')(v, 'data.1.groupName.value');
+                    }
+
+                });
             }
             return label;
         };
@@ -2424,7 +2449,6 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
             if (!("commandClasses" in instance)) {
                 return;
             }
-
             if ((0x85 in instance.commandClasses) || (0x8e in instance.commandClasses)) {
                 var groups = 0;
                 if (0x85 in instance.commandClasses) {
@@ -2480,7 +2504,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                             }
                         }
                     }
-                    $scope.data[key] = {"label": findLabel(nodeId, group), "tooltips": tooltips, "nodeId": nodeId, "instanceId": index, "node": node, "instance": index, "groupId": (group + 1), "nodeIds": nodeIds, "instanceIds": instanceIds, "persistent": persistent, "update": timeArray, "max": data.max.value, "remaining": (data.max.value - nodeIds.length)};
+                    $scope.data[key] = {"label": findLabel(nodeId, group, instance), "tooltips": tooltips, "nodeId": nodeId, "instanceId": index, "node": node, "instance": index, "groupId": (group + 1), "nodeIds": nodeIds, "instanceIds": instanceIds, "persistent": persistent, "update": timeArray, "max": data.max.value, "remaining": (data.max.value - nodeIds.length)};
                 }
             }
         });
