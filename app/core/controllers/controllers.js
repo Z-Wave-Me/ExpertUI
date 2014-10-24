@@ -1136,12 +1136,13 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
                     invalidateTime = obj.invalidateTime;
                     level = obj.setVal.value;
                 }
-
+                var formatTime = $filter('isTodayFromUnix')(updateTime);
                 $('#' + v.rowId + ' .row-level .level-val').html(level);
-                $('#' + v.rowId + ' .row-time').html($filter('isTodayFromUnix')(updateTime));
+                $('#' + v.rowId + ' .row-time').html(formatTime);
                 if (updateTime > invalidateTime) {
                     $('#' + v.rowId + ' .row-time').removeClass('is-updated-false');
                 }
+                console.log('Updating:' + v.rowId + ' | At: ' + formatTime + ' | with: ' + level);//REM
             }
         });
     }
@@ -1291,8 +1292,9 @@ appController.controller('StatusController', function($scope, $filter, dataServi
         dataService.getZwaveData(function(ZWaveAPIData) {
             setData(ZWaveAPIData);
             dataService.joinedZwaveData(function(data) {
-                $scope.reset();
-                setData(data.joined);
+//                $scope.reset();
+//                setData(data.joined);
+                refreshData(data.update);
             });
         });
     };
@@ -1425,13 +1427,10 @@ appController.controller('StatusController', function($scope, $filter, dataServi
         $scope.statuses.push(obj);
     }
     ;
-
-    /**
-     *@todo REMOVE
-     */
+    
     // Refresh data
-    $scope.refresh = function() {
-        dataService.updateZwaveData(function(data) {
+   function refreshData(data) {
+      
             angular.forEach($scope.statuses, function(v, k) {
                 angular.forEach(v.cmd, function(ccId, key) {
                     if (ccId in data) {
@@ -1472,6 +1471,7 @@ appController.controller('StatusController', function($scope, $filter, dataServi
                                     var sleepingSince = data[lastSleepCmd].value;
                                     var sleeping_cont = sleepingCont(v.isListening, v.hasWakeup, v.isFLiRS, sleepingSince, lastWakeup, v.interval);
                                     $('#' + v.rowId + ' .row-sleeping').html(sleeping_cont);
+                                   
                                 }
                                 break;
                             case lastSleepCmd:
@@ -1479,13 +1479,13 @@ appController.controller('StatusController', function($scope, $filter, dataServi
                                 break;
                         }
                         ;
+                        //$('#' + v.rowId + ' .row-time').html(node);
                     }
 
                 });
-            });
+           
         });
     };
-    //$scope.refresh();
 
     // Interview commands
     function interviewCommands(node) {
@@ -1667,28 +1667,6 @@ appController.controller('BatteryController', function($scope, $filter, $http, d
         });
     }
 
-
-    /**
-     * @todo REMOVE
-     */
-    // Refresh data
-    $scope.refresh = function() {
-        dataService.updateZwaveData(function(data) {
-            angular.forEach($scope.battery, function(v, k) {
-                // Check for updated data
-                if (v.cmd in data) {
-                    var obj = data[v.cmd];
-                    var level = obj.value;
-                    var updateTime = $filter('isTodayFromUnix')(obj.updateTime);
-                    var levelIcon = $filter('batteryIcon')(level);
-                    $('#' + v.rowId + ' .row-level').html(level + '% <i class="' + levelIcon + '"></i>');
-                    $('#' + v.rowId + ' .row-time').html(updateTime).removeClass('is-updated-false');
-                }
-            });
-        });
-    };
-    //$scope.refresh();
-
     // Load ZDDXML
     $scope.loadZDD_ = function(nodeId) {
         if (nodeId in $scope.zdd)
@@ -1817,6 +1795,7 @@ appController.controller('TypeController', function($scope, $filter, dataService
             dataService.joinedZwaveData(function(data) {
                 $scope.reset();
                 setData(data.joined);
+                dataService.cancelZwaveDataInterval();
             });
         });
     };
@@ -1964,9 +1943,10 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
         dataService.joinedZwaveData(function(data) {
             $scope.reset();
             setData(data.joined);
+            dataService.cancelZwaveDataInterval();
         });
     };
-    //$scope.refresh();
+    $scope.refresh();
 
 
     // Cancel interval on page destroy
@@ -3712,8 +3692,8 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             cmd['params'] = methods[method];
             cmd['values'] = repr_array(method_defaultValues(ZWaveAPIData, methods[method]));
             methodsArr.push(cmd);
-            //console.log(cmd['data']);
         });
+        //console.log(methodsArr);
         return methodsArr;
     }
     ;
