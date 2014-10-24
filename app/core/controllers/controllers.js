@@ -3132,7 +3132,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
      * Config cont
      */
     function configCont(node, nodeId, zddXml) {
-        if (!0x70 in node.instances[0].commandClasses) {
+       if (!0x70 in node.instances[0].commandClasses) {
             return null;
         }
         if (!zddXml) {
@@ -3156,6 +3156,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         // Loop throught params
         var parCnt = 0;
         angular.forEach(params, function(conf_html, i) {
+             console.log(conf_html);
             if (!angular.isObject(conf_html)) {
                 return;
             }
@@ -4127,7 +4128,6 @@ appController.controller('ControllController', function($scope, $filter, $timeou
 
 
         }
-        //$scope.lastIncludedDevice = '<a href="#config/configuration/3"><strong>Given_name</strong></a>';
         if ('controller.data.lastExcludedDevice' in data) {
             var deviceExcId = data['controller.data.lastExcludedDevice'].value;
             if (deviceExcId != null) {
