@@ -36,7 +36,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="v in devices | orderBy:predicate:reverse">
+                <tr ng-repeat="v in devices | orderBy:predicate:reverse" id="{{ v.rowId}}">
                     <td data-title="{{_t('th_node')}}">{{ v.id}}</td>
                     <td data-title="{{ _t('device_name')}}"><!-- <switch-type-icon generic="{{ v.genericType}}" specific="{{ v.specificType}}"></switch-type-icon> -->{{ v.name }}</td>
                     <td data-title="{{_t('th_type')}}">{{ _t(v.type)}}</td>
@@ -45,11 +45,6 @@
                    <td data-title="{{_t('th_lastpackets')}}">{{ v.lastPackets_}} <p ng-bind-html="v.lastPackets | toTrusted"></p> &nbsp;</td>
                 </tr>
             </tbody>
-        </table> 
-       <!-- <button 
-            type="button" 
-            class="btn btn-primary"
-            ng-click="resetTiming('What is cmd for reset?')"
-            >{{_t('reset')}}</button> -->
+        </table>
     </div>
 </div>

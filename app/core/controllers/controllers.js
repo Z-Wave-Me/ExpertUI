@@ -3854,8 +3854,10 @@ appController.controller('ControllController', function($scope, $filter, $timeou
         dataService.getZwaveData(function(ZWaveAPIData) {
             setData(ZWaveAPIData, true);
             dataService.joinedZwaveData(function(data) {
-                $scope.reset($scope.refresh);
-                setData(data.joined, $scope.refresh);
+                //$scope.reset($scope.refresh);
+                //setData(data.joined, $scope.refresh);
+                $scope.reset(false);
+                setData(data.joined, false);
                 refresh(data.update);
             });
         });
@@ -4142,16 +4144,16 @@ appController.controller('ControllController', function($scope, $filter, $timeou
         /**
          * Replace node Run CMD if controllerState = 19
          */
-        if ($scope.controllerState == 19) {
-            var timeOut;
-            console.log('Wait for 5 sec');
-            timeOut = $timeout(function() {
-                console.log('Run after 5 sec: controller.AddNodeToNetwork(1) ');
-                dataService.runCmd('controller.AddNodeToNetwork(1)');
-            }, 5000);
-
-
-        }
+//        if ($scope.controllerState == 19) {
+//            var timeOut;
+//            console.log('Wait for 5 sec');
+//            timeOut = $timeout(function() {
+//                console.log('Run after 5 sec: controller.AddNodeToNetwork(1) ');
+//                dataService.runCmd('controller.AddNodeToNetwork(1)');
+//            }, 5000);
+//
+//
+//        }
     }
     ;
 });
