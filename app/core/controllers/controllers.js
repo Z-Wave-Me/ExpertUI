@@ -3236,6 +3236,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             // Switch
             var conf_method_descr;
             switch (conf_type) {
+                case 'constant':
                 case 'rangemapped':
                     var param_struct_arr = [];
                     var conf_param_options = '';
@@ -3244,7 +3245,6 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                         var value = value_html;
                         var value_from = parseInt(value['_from'], 16);
                         var value_to = parseInt(value['_to'], 16);
-                        var value_description = 'fdf';
                         var value_description = '';
                         if (angular.isDefined(value.description)) {
                             value_description = value.description.lang[1].__text;
@@ -3410,49 +3410,6 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                             confSize: conf_size
                         };
                     }
-
-                    break;
-                case 'constant':
-                    var param_struct_arr = [];
-                    var conf_param_options = '';
-                    // console.log(conf['value'],conf_num);
-                    angular.forEach(conf['value'], function(value_html, i) {
-                        var value = value_html;
-                        var value_from = parseInt(value['_from'], 16);
-                        var value_to = parseInt(value['_to'], 16);
-                        var value_description = '';
-                        if (angular.isDefined(value.description)) {
-                            value_description = value.description.lang.__text;
-                        }
-                        var value_repr = value_from; // representative value for the range
-                        if (conf_default !== null)
-                            if (value_from <= conf_default && conf_default <= value_to) {
-                                conf_default_value = value_description;
-                                value_repr = conf_default;
-                            }
-                        param_struct_arr.push({
-                            label: value_description,
-                            type: {
-                                constant: {
-                                    value: value_repr
-                                }
-                            }
-                        });
-                    });
-                    conf_method_descr = {
-                        nodeId: nodeId,
-                        label: 'Nº ' + conf_num + ' - ' + conf_name,
-                        type: {
-                            constant: param_struct_arr
-                        },
-                        name: 'input_' + nodeId + '_' + conf_num,
-                        description: conf_description,
-                        updateTime: updateTime,
-                        isUpdated: isUpdated,
-                        defaultValue: conf_default_value,
-                        confNum: conf_num,
-                        confSize: conf_size
-                    };
 
                     break;
                 case 'bitset':
