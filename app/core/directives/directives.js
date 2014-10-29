@@ -261,16 +261,19 @@ angApp.directive('expertCommandInput', function($filter) {
 
 
             var checked = (cnt == 1 ? ' checked="checked"' : '');
+            var isCurrent = (cnt == 1 ? ' commads-is-current' : '');
 
             if ('fix' in type) {
                 if (defaultValue) {
                     if (isNaN(parseInt(defaultValue, 10))) {
                         checked = (v.label == defaultValue ? ' checked="checked"' : '');
+                        isCurrent = (v.label == defaultValue ? ' commads-is-current' : '');
                     } else {
                         checked = '';
+                         isCurrent = '';
                     }
                 }
-                input += '<input name="radio_' + inName + '" class="commands-data-chbx" type="radio" value="' + type.fix.value + '"' + checked + ' /> ' + title + '<br />';
+                input += '<input name="radio_' + inName + '" class="commands-data-chbx" type="radio" value="' + type.fix.value + '"' + checked + ' /> <span class="commands-label'+ isCurrent +'">' + title + '</span><br />';
             } else if ('range' in type) {
                 var min = type.range.min;
                 var max = type.range.max;
@@ -280,10 +283,12 @@ angApp.directive('expertCommandInput', function($filter) {
                     if (defaultValue >= min && defaultValue <= max) {
                         checked = ' checked="checked"';
                         disabled = '';
+                        isCurrent = ' commads-is-current';
                     }
 
                 } else {
                     checked = '';
+                    isCurrent = '';
                 }
                 if (hideRadio) {
                     disabled = '';
@@ -291,7 +296,7 @@ angApp.directive('expertCommandInput', function($filter) {
 
 //                input += '<input name="radio_' + inName + '" class="commands-data-chbx" type="radio" value=""' + checked + ' /> ' + title + ' <input type="text" name="radio_' + inName + '_txt" class="form-control commands-data-txt-chbx" value="' + min + '" title=" min: ' + min + ', max: ' + max + '"'+ disabled + ' /><br />'; 
                 if (!hideRadio) {
-                    input += '<input name="radio_' + inName + '" class="commands-data-chbx" type="radio" value=""' + checked + ' /> ' + title + ' <input type="text" name="radio_txt_' + inName + '" class="form-control commands-data-txt-chbx" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '"' + disabled + ' /><br />';
+                    input += '<input name="radio_' + inName + '" class="commands-data-chbx" type="radio" value=""' + checked + ' /> <span class="commands-label'+ isCurrent +'">' + title + '</span> <input type="text" name="radio_txt_' + inName + '" class="form-control commands-data-txt-chbx" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '"' + disabled + ' /><br />';
                 } else {
                     input += '<input type="text" name="radio_txt_' + inName + '" class="form-control" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '" /><br />';
                 }
@@ -381,6 +386,7 @@ angApp.directive('expertCommandInput', function($filter) {
             values: '=',
             isDropdown: '=',
             defaultValue: '=',
+            showDefaultValue: '=',
             divId: '='
         },
         link: function(scope, element, attrs) {
@@ -400,6 +406,7 @@ angApp.directive('expertCommandInput', function($filter) {
             }
 
             //if (label && type) {
+            //console.log( scope.showDefaultValue)
             if (type) {
                 if ('range' in type) {
                     input = getText(label, scope.values, type.range.min, type.range.max, name);

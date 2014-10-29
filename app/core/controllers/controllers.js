@@ -2432,8 +2432,9 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
             } else {
                 // Attempt to get assoc group name from the command class
                 angular.forEach(instance.commandClasses, function(v, k) {
+                    console.log(v.data[index]);
                     if (v.name == 'AssociationGroupInformation') {
-                        label = $filter('hasNode')(v, 'data.1.groupName.value');
+                        label = $filter('hasNode')(v, 'data.' + (index + 1) + '.groupName.value');
                     }
 
                 });
@@ -3156,7 +3157,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         // Loop throught params
         var parCnt = 0;
         angular.forEach(params, function(conf_html, i) {
-             console.log(conf_html);
+             //console.log(zddXml);
             if (!angular.isObject(conf_html)) {
                 return;
             }
@@ -3186,10 +3187,12 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             var conf_size = conf['_size'];
             var conf_default_value = null;
             var conf_type = conf['_type'];
+            var showDefaultValue = null;
             // get default value from the XML
             var conf_default = null;
             if (conf['_default'] !== undefined) {
                 conf_default = parseInt(conf['_default'], 16);
+                showDefaultValue = conf_default;
             }
 
             // get value from the Z-Wave data
@@ -3267,6 +3270,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                         updateTime: updateTime,
                         isUpdated: isUpdated,
                         defaultValue: conf_default_value,
+                        showDefaultValue: showDefaultValue,
                         confNum: conf_num,
                         confSize: conf_size
                     };
@@ -3289,6 +3293,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                             updateTime: updateTime,
                             isUpdated: isUpdated,
                             defaultValue: null,
+                            showDefaultValue: showDefaultValue,
                             confNum: conf_num,
                             confSize: conf_size
                         };
@@ -3370,6 +3375,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                             updateTime: updateTime,
                             isUpdated: isUpdated,
                             defaultValue: conf_default_value,
+                            showDefaultValue: showDefaultValue,
                             confNum: conf_num,
                             confSize: conf_size
                         };
@@ -3387,6 +3393,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                             updateTime: updateTime,
                             isUpdated: isUpdated,
                             defaultValue: conf_default_value,
+                            showDefaultValue: showDefaultValue,
                             confNum: conf_num,
                             confSize: conf_size
                         };
@@ -3431,6 +3438,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                         updateTime: updateTime,
                         isUpdated: isUpdated,
                         defaultValue: conf_default_value,
+                        showDefaultValue: showDefaultValue,
                         confNum: conf_num,
                         confSize: conf_size
                     };
@@ -3505,6 +3513,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                         updateTime: updateTime,
                         isUpdated: isUpdated,
                         defaultValue: conf_default_value,
+                        showDefaultValue: showDefaultValue,
                         confNum: conf_num,
                         confSize: conf_size
                     };

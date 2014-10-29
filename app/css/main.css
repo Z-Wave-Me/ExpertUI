@@ -268,10 +268,13 @@ background-color: #e4f5fc;
     margin: 10px 0;
     background-color: #e4f5fc;
 }
-.cfg-info{
+.cfg-info{ 
     margin: 10px 0 0 0;
     padding: 10px 0 0 0;
     border-top: solid 1px #fff;
+}
+.commads-is-current{
+   text-decoration: underline;
 }
 #wakeup_cont .form-inline{
 /*    max-width: 300px;*/
