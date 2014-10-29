@@ -3235,6 +3235,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             // Switch
             var conf_method_descr;
             switch (conf_type) {
+                case 'constant':
                 case 'rangemapped':
                     var param_struct_arr = [];
                     var conf_param_options = '';
@@ -3243,7 +3244,6 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                         var value = value_html;
                         var value_from = parseInt(value['_from'], 16);
                         var value_to = parseInt(value['_to'], 16);
-                        var value_description = 'fdf';
                         var value_description = '';
                         if (angular.isDefined(value.description)) {
                             value_description = value.description.lang[1].__text;
