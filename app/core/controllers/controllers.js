@@ -1427,65 +1427,66 @@ appController.controller('StatusController', function($scope, $filter, dataServi
         $scope.statuses.push(obj);
     }
     ;
-    
-    // Refresh data
-   function refreshData(data) {
-      
-            angular.forEach($scope.statuses, function(v, k) {
-                angular.forEach(v.cmd, function(ccId, key) {
-                    if (ccId in data) {
-                        var node = 'devices.' + v.id;
-                        var isAwakeCmd = node + '.data.isAwake';
-                        var isFailedCmd = node + '.data.isFailed';
-                        var lastReceiveCmd = node + '.data.lastReceived';
-                        var lastSendCmd = node + '.data.lastSend';
-                        var lastWakeupCmd = node + '.instances.0.commandClasses.132.data.lastWakeup';
-                        var lastSleepCmd = node + '.instances.0.commandClasses.132.data.lastSleep';
-                        var lastCommunication = v.lastCommunication;
-                        switch (ccId) {
-                            case isAwakeCmd:
-                                var isAwake = data[isAwakeCmd].value;
-                                var awake_cont = awakeCont(isAwake, v.isListening, v.isFLiRS);
-                                $('#' + v.rowId + ' .row-awake').html(awake_cont);
-                                break;
-                            case isFailedCmd:
-                                var isFailed = data[isFailedCmd].value;
-                                var operating_cont = operatingCont(isFailed, lastCommunication);
-                                $('#' + v.rowId + ' .row-time').html(operating_cont);
-                                break;
-                            case lastReceiveCmd:
-                                var lastReceive = data[lastReceiveCmd].updateTime;
-                                lastCommunication = (lastReceive > lastCommunication) ? lastReceive : lastCommunication;
-                                var operating_cont_rec = operatingCont(false, lastCommunication);
-                                $('#' + v.rowId + ' .row-time').html(operating_cont_rec);
-                                break;
-                            case lastSendCmd:
-                                var lastSend = data[lastSendCmd].updateTime;
-                                lastCommunication = (lastSend > lastCommunication) ? lastSend : lastCommunication;
-                                var operating_cont_send = operatingCont(false, lastCommunication);
-                                $('#' + v.rowId + ' .row-time').html(operating_cont_send);
-                                break;
-                            case lastWakeupCmd:
-                                var lastWakeup = data[lastWakeupCmd].value;
-                                if (angular.isDefined(data[lastSleepCmd])) {
-                                    var sleepingSince = data[lastSleepCmd].value;
-                                    var sleeping_cont = sleepingCont(v.isListening, v.hasWakeup, v.isFLiRS, sleepingSince, lastWakeup, v.interval);
-                                    $('#' + v.rowId + ' .row-sleeping').html(sleeping_cont);
-                                   
-                                }
-                                break;
-                            case lastSleepCmd:
-                                //console.log(lastSleepCmd);
-                                break;
-                        }
-                        ;
-                        //$('#' + v.rowId + ' .row-time').html(node);
-                    }
 
-                });
-           
+    // Refresh data
+    function refreshData(data) {
+
+        angular.forEach($scope.statuses, function(v, k) {
+            angular.forEach(v.cmd, function(ccId, key) {
+                if (ccId in data) {
+                    var node = 'devices.' + v.id;
+                    var isAwakeCmd = node + '.data.isAwake';
+                    var isFailedCmd = node + '.data.isFailed';
+                    var lastReceiveCmd = node + '.data.lastReceived';
+                    var lastSendCmd = node + '.data.lastSend';
+                    var lastWakeupCmd = node + '.instances.0.commandClasses.132.data.lastWakeup';
+                    var lastSleepCmd = node + '.instances.0.commandClasses.132.data.lastSleep';
+                    var lastCommunication = v.lastCommunication;
+                    switch (ccId) {
+                        case isAwakeCmd:
+                            var isAwake = data[isAwakeCmd].value;
+                            var awake_cont = awakeCont(isAwake, v.isListening, v.isFLiRS);
+                            $('#' + v.rowId + ' .row-awake').html(awake_cont);
+                            break;
+                        case isFailedCmd:
+                            var isFailed = data[isFailedCmd].value;
+                            var operating_cont = operatingCont(isFailed, lastCommunication);
+                            $('#' + v.rowId + ' .row-time').html(operating_cont);
+                            break;
+                        case lastReceiveCmd:
+                            var lastReceive = data[lastReceiveCmd].updateTime;
+                            lastCommunication = (lastReceive > lastCommunication) ? lastReceive : lastCommunication;
+                            var operating_cont_rec = operatingCont(false, lastCommunication);
+                            $('#' + v.rowId + ' .row-time').html(operating_cont_rec);
+                            break;
+                        case lastSendCmd:
+                            var lastSend = data[lastSendCmd].updateTime;
+                            lastCommunication = (lastSend > lastCommunication) ? lastSend : lastCommunication;
+                            var operating_cont_send = operatingCont(false, lastCommunication);
+                            $('#' + v.rowId + ' .row-time').html(operating_cont_send);
+                            break;
+                        case lastWakeupCmd:
+                            var lastWakeup = data[lastWakeupCmd].value;
+                            if (angular.isDefined(data[lastSleepCmd])) {
+                                var sleepingSince = data[lastSleepCmd].value;
+                                var sleeping_cont = sleepingCont(v.isListening, v.hasWakeup, v.isFLiRS, sleepingSince, lastWakeup, v.interval);
+                                $('#' + v.rowId + ' .row-sleeping').html(sleeping_cont);
+
+                            }
+                            break;
+                        case lastSleepCmd:
+                            //console.log(lastSleepCmd);
+                            break;
+                    }
+                    ;
+                    //$('#' + v.rowId + ' .row-time').html(node);
+                }
+
+            });
+
         });
-    };
+    }
+    ;
 
     // Interview commands
     function interviewCommands(node) {
@@ -1652,7 +1653,7 @@ appController.controller('BatteryController', function($scope, $filter, $http, d
      * Refresh zwave data
      */
     function refreshData(data) {
-        
+
         angular.forEach($scope.battery, function(v, k) {
             var obj = data.update[v.cmdToUpdate];
             if (obj) {
@@ -1662,7 +1663,7 @@ appController.controller('BatteryController', function($scope, $filter, $http, d
                 var formatTime = $filter('isTodayFromUnix')(updateTime);
                 $('#' + v.rowId + ' .row-level').html(level);
                 $('#' + v.rowId + ' .row-time').html(formatTime);
-                 //console.log('Updating:' + v.rowId + ' | At: ' + formatTime + ' | with: ' + level);//REM
+                //console.log('Updating:' + v.rowId + ' | At: ' + formatTime + ' | with: ' + level);//REM
             }
         });
     }
@@ -1946,7 +1947,7 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
             dataService.cancelZwaveDataInterval();
         });
     };
-    $scope.refresh();
+    //$scope.refresh();
 
 
     // Cancel interval on page destroy
@@ -1978,7 +1979,6 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
             }
             var zdd;
             if (zddXmlFile && zddXmlFile !== 'undefined') {
-
                 var cachedZddXml = myCache.get(zddXmlFile);
                 if (!cachedZddXml) {
                     $http.get($scope.cfg.server_url + $scope.cfg.zddx_url + zddXmlFile).then(function(response) {
@@ -2012,6 +2012,15 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
                         });
                     }
                 }
+            } else {
+                zdd = null;
+                var assocDevices = getAssocDevices(node, ZWaveAPIData, zdd, controllerNodeId);
+                $scope.devices.push({
+                    'id': nodeId,
+                    'rowId': 'row_' + nodeId + '_' + cnt,
+                    'name': $filter('deviceName')(nodeId, node),
+                    'assocGroup': assocDevices
+                });
             }
 
 
@@ -2047,12 +2056,12 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
             // Attempt to get assoc group name from the command class
             angular.forEach(instance[0].commandClasses, function(v, k) {
                 if (v.name == 'AssociationGroupInformation') {
-                    label = $filter('hasNode')(v, 'data.1.groupName.value');
+                    label = $filter('hasNode')(v, 'data.' + (index + 1)+'.groupName.value');
                 }
 
             });
         }
-
+       
         return label;
     }
     ;
@@ -2110,20 +2119,26 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
 
             var dev = [];
             var name;
+            
+            if (zdd) {
+               angular.forEach(zdd, function(zddval, zddkey) {
+                    if (angular.isArray(zddval)) {
+                        angular.forEach(zddval, function(val, key) {
+                            if (val._number == v)
+                                name = getGroupLabel(val, v, node.instances);
+                        });
+                    } else {
+                        if (zddval._number == v)
+                            name = getGroupLabel(zddval, v, node.instances);
 
-            angular.forEach(zdd, function(zddval, zddkey) {
-                if (angular.isArray(zddval)) {
-                    angular.forEach(zddval, function(val, key) {
-                        if (val._number == v)
-                            name = getGroupLabel(val, v, node.instances);
-                    });
-                } else {
-                    if (zddval._number == v)
-                        name = getGroupLabel(zddval, v, node.instances);
-
-                }
-            });
+                    }
+                });
+            }else{
+                name = getGroupLabel([], v - 1, node.instances);
+            }
+             
             angular.forEach(assocDevices, function(d, key, nodeId) {
+                //console.log(d)
                 if (d['group'] == v) {
                     if ($scope.showLifeline) {
                         dev.push(d.device.name);
@@ -2135,11 +2150,12 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
                 }
 
             });
+            
             if (dev.length > 0) {
                 assoc.push({'name': name, 'devices': dev});
             }
         });
-
+        
         return assoc;
     }
 
@@ -2432,7 +2448,6 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
             } else {
                 // Attempt to get assoc group name from the command class
                 angular.forEach(instance.commandClasses, function(v, k) {
-                    console.log(v.data[index]);
                     if (v.name == 'AssociationGroupInformation') {
                         label = $filter('hasNode')(v, 'data.' + (index + 1) + '.groupName.value');
                     }
@@ -3133,7 +3148,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
      * Config cont
      */
     function configCont(node, nodeId, zddXml) {
-       if (!0x70 in node.instances[0].commandClasses) {
+        if (!0x70 in node.instances[0].commandClasses) {
             return null;
         }
         if (!zddXml) {
@@ -3157,7 +3172,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         // Loop throught params
         var parCnt = 0;
         angular.forEach(params, function(conf_html, i) {
-             //console.log(zddXml);
+            //console.log(zddXml);
             if (!angular.isObject(conf_html)) {
                 return;
             }

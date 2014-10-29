@@ -4,6 +4,7 @@
     "device_disappeared": "device disappeared",
     "device_reset_locally": "Device reset locally",
     "no_device_reset_locally": "No device reset locally",
+    "nav_active_associations": "Active associations",
     "---":"--- missing",
     "no_zddx_file": "No configuration file",
    "are_you_sure_remove_node": "Are you sure to want like to delete device",
