@@ -2711,7 +2711,6 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         dataService.getSelectZDDX(nodeId, function(data) {
             $scope.deviceZddx = data;
         });
-        //$scope.deviceZddx.push({'id':25});
         $(target).modal();
 
     };
