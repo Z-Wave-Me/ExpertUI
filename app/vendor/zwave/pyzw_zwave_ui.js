@@ -38,53 +38,6 @@ function renderAllMethodSpec(ZWaveAPIData) {
 function renderMethodSpec(ccId, data) {
 	switch (ccId) {
 
-		// FirmwareUpdateMD
-		case 0x7A:
-			return {
-				"Get": [],
-				"RequestUpdate": [
-					{
-						"label": "Path to File",
-						"type": {
-							"string": {
-							
-//function() {
-//	console.log("Downloading FW... Start");
-//	devId=nodeId;
-//	http.request({
-//		url: "'+$('#fw_url').val()+'",
-//		contentType: "application/octet-stream",
-//		async: true,  
-//		success: function(res) {
-//			console.log("Downloading FW... Done");
-//			zway.devices[devId].FirmwareUpdate.Perform(zway.devices[devId].FirmwareUpdate.data.manufacturerID.value, zway.devices[devId].FirmwareUpdate.data.firmwareID.value, 0, res.data);
-//			},
-//		complete: function(res) {
-//			console.logJS("Downloading FW...COMPLETE");
-//			},				     		
-//		error: function(res) {
-//			console.logJS("Downloading FW... FAILED:", res.statusText);
-//			}   		
-//		}); 		
-//	}							
-							
-							}
-						}
-					},
-					{
-						"label": "FirmwareId",
-						"type": {
-							"range": {
-								"min": 0,
-								"max": 65535
-							}
-						}
-					}
-				]
-			};
-	
-
-
 		// PowerLevel
 		case 0x73:
 			return {
