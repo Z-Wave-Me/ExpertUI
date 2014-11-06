@@ -3742,32 +3742,12 @@ appController.controller('ConfigStoreController', function($scope, dataService) 
     $scope.updateFirmware = function(nodeId) {
         var input = $scope.formFirmware;
         var fw_url = input.fw_url;
+        var fw_file = input.fw_file;
         var fw_target = input.fw_target;
-        if (fw_url == '' || fw_target == '') {
+        if ((fw_url == '' && fw_file == '') || fw_target == '') {
             return;
         }
-        var runJs = 'console.log("Downloading FW... Start");' +
-                'devId=' + nodeId + ';' +
-                'http.request({' +
-                'url: "' + fw_url + '",' +
-                'contentType: "application/octet-stream",' +
-                'async: true,' +
-                'success: function(res) {' +
-                'console.log("Downloading FW... Done");' +
-                'zway.devices[devId].FirmwareUpdate.Perform(zway.devices[devId].FirmwareUpdate.data.manufacturerID.value, zway.devices[devId].FirmwareUpdate.data.firmwareID.value, 0, res.data);' +
-                '},' +
-                'complete: function(res) {' +
-                'console.logJS("Downloading FW...COMPLETE");' +
-                '},' +
-                'error: function(res) {' +
-                'console.logJS("Downloading FW... FAILED:", res.statusText);' +
-                '}' +
-                '});';
-        //console.log(runJs);
-        // Reset the form once values have been consumed.
-        //$scope.formFirmware.fw_url = "";
-        //$scope.formFirmware.fw_target = "";
-        dataService.runJs(runJs);
+        dataService.fwUpdate(nodeId, fw_target, fw_url, fw_file);
         return;
     };
 });

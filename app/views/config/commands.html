@@ -1,12 +1,4 @@
 <!-- Commands view -->
-<div class="commands-data-control" ng-controller="ConfigStoreController" ng-show="fwupdateCont">
-        <form name="form_firmware" id="form_firmware" class="form form-inline" ng-submit="updateFirmware(deviceId)" novalidate>
-            <label>{{_t('nav_firmware_update')}}:</label>
-            <input id="fw_url" type="text" value="" class="form-control" ng-model="formFirmware.fw_url" placeholder="URL" title="please use format http:// ...... " data-toggle="tooltip" data-position="top" tooltip />
-            <input id="fw_target" type="text" value="" class="form-control" ng-model="formFirmware.fw_target" placeholder="Target" title="For Z-Wave Target is 0" data-toggle="tooltip" data-position="top" tooltip />
-            <button type="submit" class="btn btn-primary"  id="btn_save_note">{{ _t('update')}}</button>
-        </form>
-    </div>
 <div id="table_mobile">
     <table class="table">
         <thead>

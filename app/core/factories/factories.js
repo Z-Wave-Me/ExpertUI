@@ -41,6 +41,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         updateQueueData: updateQueueData,
         cancelQueueDataInterval: cancelQueueDataInterval,
         runJs: runJs,
+        fwUpdate: fwUpdate,
         getNotes: getNotes,
         putNotes: putNotes,
         getReorgLog: getReorgLog,
@@ -373,6 +374,30 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
             method: 'POST',
             dataType: "json",
             url: cfg.server_url + cfg.runjs_url + param
+        });
+        request.success(function(data) {
+            handleSuccess(data);
+        }).error(function() {
+            handleError();
+
+        });
+
+    }
+
+    /**
+     * Run Firmware Update
+     */
+    function fwUpdate(nodeId, target, url, file) {
+        console.log(this);
+        
+        var data;
+        if (FormData) {
+            data = new FormData($(''))
+        }
+        
+        var request = $http({
+            method: 'POST',
+            url: cfg.server_url + cfg.fw_update_url + '/' + nodeId
         });
         request.success(function(data) {
             handleSuccess(data);
