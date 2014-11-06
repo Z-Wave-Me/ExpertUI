@@ -2253,13 +2253,13 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
             if ($scope.removeData.instanceIds[index] != null) {
                 var instanceId = parseInt($scope.removeData.instanceIds[index]) - 1;
                 // MultiChannelAssociation with instanceId
-                $scope.removeNodes[nodeId] = $filter('deviceName')(nodeId, $scope.ZWaveAPIData.devices[nodeId]) + ' (#'+ nodeId + ')';
+                $scope.removeNodes[nodeId] = '(#'+ nodeId + ') ' + $filter('deviceName')(nodeId, $scope.ZWaveAPIData.devices[nodeId]) ;
                 if (!(nodeId in $scope.removeInstances))
                     $scope.removeInstances[nodeId] = {};
                 $scope.removeInstances[nodeId][instanceId] = instanceId + 1;
             } else {
                 // simple Assocation
-                $scope.removeNodes[nodeId] = $filter('deviceName')(nodeId, $scope.ZWaveAPIData.devices[nodeId]) + ' (#'+ nodeId + ')';
+                $scope.removeNodes[nodeId] = '(#'+ nodeId + ') ' + $filter('deviceName')(nodeId, $scope.ZWaveAPIData.devices[nodeId]);
             }
         });
         $('#modal_remove').modal({});
@@ -2367,13 +2367,13 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                     if (0 in node.instances) {
                         if ((0x8e in $scope.addData.node.instances[0].commandClasses) && (0x8e in node.instances[0].commandClasses)) {
                             // MultiChannelAssociation with instanceId
-                            $scope.addNodes[nodeId] = $filter('deviceName')(nodeId, node) + ' (#'+ nodeId + ')';
+                            $scope.addNodes[nodeId] = '(#'+ nodeId + ') ' + $filter('deviceName')(nodeId, node);
                             if (!(nodeId in $scope.addInstances))
                                 $scope.addInstances[nodeId] = {};
                             $scope.addInstances[nodeId][instanceId] = parseInt(instanceId) + 1;
                         } else {
                             // simple Assocation
-                            $scope.addNodes[nodeId] = $filter('deviceName')(nodeId, node) + ' (#'+ nodeId + ')';
+                            $scope.addNodes[nodeId] = '(#'+ nodeId + ') ' + $filter('deviceName')(nodeId, node) + ' (#'+ nodeId + ')';
                             break; // first instance is enough
                         }
                     }
