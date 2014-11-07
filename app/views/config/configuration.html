@@ -29,9 +29,12 @@
                         ></expert-command-input>
                 </div>
                 <p class="cfg-info">
+                    
                     <span class="is-updated-{{v.isUpdated}}">{{_t('updated')}}: {{v.updateTime}}</span>
-                    <span ng-if="v.defaultValue > -1"> | {{_t('default_value_is')}}: {{v.defaultValue}}</span>
-                    <span ng-if="v.defaultValue === ''"> | {{_t('param_default_value_undefined')}}</span>
+                    
+                    <span> | {{_t('default_value_is')}}: <config-default-value  collection='v' show_default_value='v.showDefaultValue' default_value='v.defaultValue'></config-default-value></span>
+                    <!-- <span ng-if="v.showDefaultValue > -1"> | {{_t('default_value_is')}}: {{v.showDefaultValue}}</span>
+                    <span ng-if="v.defaultValue === ''"> | {{_t('param_default_value_undefined')}}</span>-->
                     <span ng-if="v.description">  | 
                         <a href="" ng-click="goInfo = !goInfo"><i class="fa fa-info-circle fa-lg"></i></a> 
                         <em ng-show="goInfo">{{v.description}}</em>
