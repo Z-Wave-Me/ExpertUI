@@ -3245,7 +3245,9 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                         var value_to = parseInt(value['_to'], 16);
                         var value_description = '';
                         if (angular.isDefined(value.description)) {
-                            value_description = value.description.lang[1].__text;
+                            //value_description = value.description.lang[1].__text;
+                             value_description = $filter('hasNode')(value, 'description.lang[1].__text');
+                            
                             if (angular.isDefined(value.description.lang[langId])) {
                                 value_description = value.description.lang[langId].__text;
                             }
