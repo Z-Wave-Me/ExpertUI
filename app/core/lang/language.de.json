@@ -1,4 +1,5 @@
 {
+    "device_is_active": "Gerät ist wach",
     "no_zddx_file": "Keine Gerätebeschreibung", 
    "are_you_sure_remove_node": "Wollen Sie das Gerät wirklich endgültig entfernen?",
     "inspect_queue_empty": "Warteschlange ist leer.",

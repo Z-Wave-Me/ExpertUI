@@ -2056,12 +2056,12 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
             // Attempt to get assoc group name from the command class
             angular.forEach(instance[0].commandClasses, function(v, k) {
                 if (v.name == 'AssociationGroupInformation') {
-                    label = $filter('hasNode')(v, 'data.' + (index + 1)+'.groupName.value');
+                    label = $filter('hasNode')(v, 'data.' + (index + 1) + '.groupName.value');
                 }
 
             });
         }
-       
+
         return label;
     }
     ;
@@ -2119,9 +2119,9 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
 
             var dev = [];
             var name;
-            
+
             if (zdd) {
-               angular.forEach(zdd, function(zddval, zddkey) {
+                angular.forEach(zdd, function(zddval, zddkey) {
                     if (angular.isArray(zddval)) {
                         angular.forEach(zddval, function(val, key) {
                             if (val._number == v)
@@ -2133,10 +2133,10 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
 
                     }
                 });
-            }else{
+            } else {
                 name = getGroupLabel([], v - 1, node.instances);
             }
-             
+
             angular.forEach(assocDevices, function(d, key, nodeId) {
                 //console.log(d)
                 if (d['group'] == v) {
@@ -2150,12 +2150,12 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
                 }
 
             });
-            
+
             if (dev.length > 0) {
                 assoc.push({'name': name, 'devices': dev});
             }
         });
-        
+
         return assoc;
     }
 
@@ -2253,13 +2253,13 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
             if ($scope.removeData.instanceIds[index] != null) {
                 var instanceId = parseInt($scope.removeData.instanceIds[index]) - 1;
                 // MultiChannelAssociation with instanceId
-                $scope.removeNodes[nodeId] = '(#'+ nodeId + ') ' + $filter('deviceName')(nodeId, $scope.ZWaveAPIData.devices[nodeId]) ;
+                $scope.removeNodes[nodeId] = '(#' + nodeId + ') ' + $filter('deviceName')(nodeId, $scope.ZWaveAPIData.devices[nodeId]);
                 if (!(nodeId in $scope.removeInstances))
                     $scope.removeInstances[nodeId] = {};
                 $scope.removeInstances[nodeId][instanceId] = instanceId + 1;
             } else {
                 // simple Assocation
-                $scope.removeNodes[nodeId] = '(#'+ nodeId + ') ' + $filter('deviceName')(nodeId, $scope.ZWaveAPIData.devices[nodeId]);
+                $scope.removeNodes[nodeId] = '(#' + nodeId + ') ' + $filter('deviceName')(nodeId, $scope.ZWaveAPIData.devices[nodeId]);
             }
         });
         $('#modal_remove').modal({});
@@ -2367,13 +2367,13 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                     if (0 in node.instances) {
                         if ((0x8e in $scope.addData.node.instances[0].commandClasses) && (0x8e in node.instances[0].commandClasses)) {
                             // MultiChannelAssociation with instanceId
-                            $scope.addNodes[nodeId] = '(#'+ nodeId + ') ' + $filter('deviceName')(nodeId, node);
+                            $scope.addNodes[nodeId] = '(#' + nodeId + ') ' + $filter('deviceName')(nodeId, node);
                             if (!(nodeId in $scope.addInstances))
                                 $scope.addInstances[nodeId] = {};
                             $scope.addInstances[nodeId][instanceId] = parseInt(instanceId) + 1;
                         } else {
                             // simple Assocation
-                            $scope.addNodes[nodeId] = '(#'+ nodeId + ') ' + $filter('deviceName')(nodeId, node) + ' (#'+ nodeId + ')';
+                            $scope.addNodes[nodeId] = '(#' + nodeId + ') ' + $filter('deviceName')(nodeId, node);
                             break; // first instance is enough
                         }
                     }
@@ -2574,7 +2574,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
     };
 });
 // Configuration controller
-appController.controller('ConfigurationController', function($scope, $routeParams, $http, $filter, $location, $cookies, $timeout, dataService, deviceService, myCache) {
+appController.controller('ConfigurationController', function($scope, $routeParams, $route,$window,$http, $filter, $location, $cookies, $timeout, dataService, deviceService, myCache) {
     $scope.devices = [];
     $scope.showDevices = false;
     $scope.ZWaveAPIData;
@@ -2651,9 +2651,8 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             if (refresh) {
                 dataService.joinedZwaveData(function(data) {
                     $scope.reset();
-                    //setData(data.joined);
                     setNavigation(data.joined);
-                    setData(data.joined, nodeId);
+                    setData(data.joined, nodeId, true);
                     $scope.ZWaveAPIData = ZWaveAPIData;
                 });
             }
@@ -2731,6 +2730,8 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     $scope.runCmdDeviceSelect = function(nodeId, file) {
         var cmd = 'devices[' + nodeId + '].LoadXMLFile("' + file + '")';
         dataService.runCmd(cmd);
+        $window.location.reload();
+        //$location.path('/config/configuration/' + nodeId);
         console.log(cmd);
     };
 
@@ -2883,7 +2884,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     /**
      * Set zwave data
      */
-    function setData(ZWaveAPIData, nodeId) {
+    function setData(ZWaveAPIData, nodeId, refresh) {
         var node = ZWaveAPIData.devices[nodeId];
         if (!node) {
             return;
@@ -2908,17 +2909,17 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                     var x2js = new X2JS();
                     var zddXml = x2js.xml_str2json(response.data);
                     myCache.put(zddXmlFile, zddXml);
-                    setCont(node, nodeId, zddXml, ZWaveAPIData);
+                    setCont(node, nodeId, zddXml, ZWaveAPIData, refresh);
 
 
                 });
             } else {
-                setCont(node, nodeId, cachedZddXml, ZWaveAPIData);
+                setCont(node, nodeId, cachedZddXml, ZWaveAPIData, refresh);
             }
 
         } else {
 
-            setCont(node, nodeId, null, ZWaveAPIData);
+            setCont(node, nodeId, null, ZWaveAPIData, refresh);
         }
         /**
          * Expert commands
@@ -2943,11 +2944,17 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     /**
      * Set all conts
      */
-    function setCont(node, nodeId, zddXml, ZWaveAPIData) {
+    function setCont(node, nodeId, zddXml, ZWaveAPIData, refresh) {
         if (!zddXml) {
             $scope.noZddx = true;
         }
-        $scope.descriptionCont = descriptionCont(node, nodeId, zddXml, ZWaveAPIData);
+        // TODO: replace all with refresh function
+        if (refresh == true) {
+            refreshDescriptionCont(node, nodeId, zddXml, ZWaveAPIData);
+        } else {
+            $scope.descriptionCont = descriptionCont(node, nodeId, zddXml, ZWaveAPIData, refresh);
+        }
+
         $scope.configCont = configCont(node, nodeId, zddXml);
         $scope.wakeupCont = wakeupCont(node, nodeId, ZWaveAPIData);
         $scope.switchAllCont = switchAllCont(node, nodeId, ZWaveAPIData);
@@ -2958,7 +2965,8 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     /**
      * Device description
      */
-    function descriptionCont(node, nodeId, zddXml, ZWaveAPIData) {
+    function descriptionCont(node, nodeId, zddXml, ZWaveAPIData, refresh) {
+
         // Set device data
         var deviceImage = 'app/images/no_device_image.png';
         var deviceDescription = '';
@@ -3066,6 +3074,13 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 
         //obj[99] = {"key": "device_description_resources", "val": ''};
         return obj;
+    }
+    /**
+     * Refresh description cont
+     */
+    function refreshDescriptionCont(node, nodeId, zddXml, ZWaveAPIData) {
+       $('#device_sleep_state .config-interview-val').html(deviceState(node));
+        $('#device_description_interview .config-interview-val').html(interviewStage(ZWaveAPIData, nodeId));
     }
     // Set interview stage
     function interviewStage(ZWaveAPIData, id) {
@@ -3246,8 +3261,8 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                         var value_description = '';
                         if (angular.isDefined(value.description)) {
                             //value_description = value.description.lang[1].__text;
-                             value_description = $filter('hasNode')(value, 'description.lang[1].__text');
-                            
+                            value_description = $filter('hasNode')(value, 'description.lang[1].__text');
+
                             if (angular.isDefined(value.description.lang[langId])) {
                                 value_description = value.description.lang[langId].__text;
                             }
@@ -3684,17 +3699,8 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 appController.controller('ConfigStoreController', function($scope, dataService) {
     // Store data on remote server
     $scope.store = function(btn) {
-        //$(btn).attr('disabled', true);
         var url = $scope.cfg.server_url + $scope.cfg.store_url + $(btn).attr('data-store-url');
         dataService.runCmd($(btn).attr('data-store-url'));
-//        if($(btn).attr('data-redirect')){
-//           $location.path('/config/configuration/' + $(btn).attr('data-redirect'));
-//        }
-
-
-//        $timeout(function() {
-//            $(btn).removeAttr('disabled');
-//        }, 1000);
     };
     // Show modal dialog
     $scope.showModalInterview = function(target) {
@@ -3765,10 +3771,6 @@ appController.controller('ConfigStoreController', function($scope, dataService) 
                 'console.logJS("Downloading FW... FAILED:", res.statusText);' +
                 '}' +
                 '});';
-        //console.log(runJs);
-        // Reset the form once values have been consumed.
-        //$scope.formFirmware.fw_url = "";
-        //$scope.formFirmware.fw_target = "";
         dataService.runJs(runJs);
         return;
     };

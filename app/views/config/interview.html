@@ -12,7 +12,6 @@
         </form>
     </div>
 </div>
-
 <div class="cfg-block">
     <!-- <h4><a href="" ng-click="goDescription = !goDescription"><i class="fa fa-caret-down"></i> {{_t('device_description_title')}}</a></h4>  -->
     <div ng-hide="goDescription">
@@ -29,22 +28,8 @@
                                             <span ng-repeat="cc in interviewCommands"><a href="" ng-click="showModal('#modal_command', cc.cmdData)">{{cc.ccName}}</a>, </span>
 
                                         </div>
-                                        <p ng-switch-default ng-bind-html="v.val | toTrusted"></p>
+                                        <p class="config-interview-val" ng-switch-default ng-bind-html="v.val | toTrusted"></p>
                                     </div>
-
-                                    <!-- <span ng-show="v.key == 'device_node_name_'">
-                                       <a href="" ng-click="goRename_ = !goRename_">{{_t('device_rename_tooltip')}} <i class="fa fa-pencil"></i> </a>
-                                   </span>
-                                   <div ng-show="goRename_">
-                                       <form name="form_rename_{{$index}}" id="form_rename" ng-show="goRename_" ng-model="form_rename" class="form form-inline" ng-controller="ConfigStoreController" ng-submit="renameDevice($index)" novalidate>
-                                           <input name="device_name_{{$index}}" id="device_name_{{$index}}" type="text" class="form-control" value="" />
-                                           <button
-                                               type="submit"
-                                               class="btn btn-primary" 
-                                               id="btn_update"
-                                               >{{_t('btn_save_name')}}</button>
-                                       </form>
-                                   </div>-->
                                 </td>
                             </tr>
 
@@ -166,8 +151,10 @@
                 <h4 class="modal-title">{{_t('config_ui_select_xml')}}</h4>
             </div>
             <div class="modal-body">
-                <p ng-bind-html="_t('select_zddx_help') | toTrusted"></p>
-               <div>
+               
+                <div class="alert alert-warning" ng-hide="deviceZddx.length > 0">Can't select device description</div>
+               <div ng-show="deviceZddx.length > 0">
+                    <p ng-bind-html="_t('select_zddx_help') | toTrusted"></p>
                     <select 
                         name="select_zddx_help" 
                         id="select_zddx_help" 
@@ -192,7 +179,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="runCmdDeviceSelect(deviceId,modelSelectZddx)">{{_t('btn_select')}}</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="runCmdDeviceSelect(deviceId,modelSelectZddx,'#modal_device_select')">{{_t('btn_select')}}</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">{{_t('btn_cancel')}}</button>
             </div>
         </div>
