@@ -4124,19 +4124,6 @@ appController.controller('ControllController', function($scope, $filter, $timeou
                 $scope.lastExcludedDevice = txt + ' (' + updateTime + ')';
             }
         }
-        /**
-         * Replace node Run CMD if controllerState = 19
-         */
-//        if ($scope.controllerState == 19) {
-//            var timeOut;
-//            console.log('Wait for 5 sec');
-//            timeOut = $timeout(function() {
-//                console.log('Run after 5 sec: controller.AddNodeToNetwork(1) ');
-//                dataService.runCmd('controller.AddNodeToNetwork(1)');
-//            }, 5000);
-//
-//
-//        }
     }
     ;
 });

@@ -45,7 +45,7 @@
                         class="btn btn-info"
                         id="btn_nm_include_start"
                         title="{{_t('nm_include_start_tooltip')}}"
-                        ng-disabled="[5, 6, 7].indexOf(controllerState) > -1"
+                        ng-disabled="[5, 6, 7, 20].indexOf(controllerState) > -1"
                         ng-show="[1, 2, 3, 4].indexOf(controllerState) == -1"
                         ng-click="runCmd('controller.AddNodeToNetwork(1)')"
                         >{{_t('nm_include_start')}}</button>
@@ -61,7 +61,7 @@
                         class="btn btn-primary"
                         id="nm_exclude_start"
                         title="{{_t('nm_exclude_start_tooltip')}}"
-                        ng-disabled="[1, 2, 3, 4].indexOf(controllerState) > -1"
+                        ng-disabled="[1, 2, 3, 4, 20].indexOf(controllerState) > -1"
                         ng-show="[5, 6, 7].indexOf(controllerState) == -1"
                         ng-click="runCmd('controller.RemoveNodeFromNetwork(1)')"
                         >{{_t('nm_exclude_start')}}</button>
@@ -82,7 +82,7 @@
                     <a class="btn btn-primary" href="{{cfg.server_url}}/ZWaveAPI/Backup">{{_t('nm_backup_download')}}</a>
                     <button 
                         class="btn btn-primary"
-                        ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controllerState) > -1"
+                        ng-disabled="[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controllerState) > -1"
                         data-ng-click="showModal('#modal_restore_backup')"
                         >{{_t('nm_restore_backup_upload')}}</button>
                 </div>
@@ -96,7 +96,7 @@
                         <p class="input-help">{{_t('nm_chip_reboot_war')}}</p>
                         <button class="btn btn-primary"
                                 id="btn_chip_reboot"
-                                ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controllerState) > -1"
+                                ng-disabled="[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controllerState) > -1"
                                 ng-click="runCmd('SerialAPISoftReset()')"
                                 >{{_t('nm_soft_reset_controller')}}</button>
                     </div>
@@ -105,7 +105,7 @@
                         <p class="input-help">{{_t('nm_chip_reset_war')}}</p>
                         <button 
                             class="btn btn-primary"
-                            ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controllerState) > -1"
+                            ng-disabled="[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controllerState) > -1"
                             data-ng-click="showModal('#modal_reset_controller')"
                             >{{_t('nm_reset_controller')}}</button>
                     </div>
@@ -138,7 +138,7 @@
                                 name="remove_failed_node" 
                                 id="remove_failed_node" 
                                 class="form-control" 
-                                ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controllerState) > -1"
+                                ng-disabled="[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controllerState) > -1"
                                 ng-change="changeSelectNode(modelNodeFailed)" 
                                 ng-model="modelNodeFailed">
                                 <option value="">---</option>
@@ -161,7 +161,7 @@
                                 name="replace_failed_node" 
                                 id="replace_failed_node" 
                                 class="form-control" 
-                                ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controllerState) > -1"
+                                ng-disabled="[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controllerState) > -1"
                                 ng-change="changeSelectNode(modelReplaceNode)" 
                                 ng-model="modelReplaceNode">
                                 <option value="">---</option>
@@ -183,7 +183,7 @@
                                 name="mark_battery_failed" 
                                 id="mark_battery_failed" 
                                 class="form-control" 
-                                ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controllerState) > -1"
+                                ng-disabled="[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controllerState) > -1"
                                 ng-change="changeSelectNode(modelBatteryFailed)" 
                                 ng-model="modelBatteryFailed">
                                 <option value="">---</option>
@@ -206,7 +206,7 @@
                             </div>
                             <button class="btn btn-primary"
                                     id="btn_controller_change_start"
-                                    ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controllerState) > -1 || isPrimary == false"
+                                    ng-disabled="[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controllerState) > -1 || isPrimary == false"
                                     ng-show="[13, 14, 15, 16].indexOf(controllerState) == -1"
                                     ng-click="runCmd('controller.ControllerChange(1)')"
                                     >{{_t('nm_controller_change_start')}}</button>
@@ -226,7 +226,7 @@
                             <button 
                                 class="btn btn-primary"
                                 id="btn_learn_start"
-                                ng-disabled="isRealPrimary == false"
+                                ng-disabled="[20].indexOf(controllerState) > -1 && isRealPrimary == false"
                                 ng-click="runCmd('controller.SetLearnMode(1)')"
                                 ng-show="[8, 9, 10, 11, 12].indexOf(controllerState) == -1"
                                 >{{_t('nm_learn_start')}}</button>
@@ -243,7 +243,7 @@
                             <p class="input-help">{{_t('nm_nif_all_war')}}</p>
                             <button class="btn btn-primary"
                                     id="btn_request_nif"
-                                    ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controllerState) > -1"
+                                    ng-disabled="[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controllerState) > -1"
                                     ng-click="requestNifAll('#btn_request_nif')"
                                     >{{_t('nm_request_all_node_information')}}</button>
                         </div>
