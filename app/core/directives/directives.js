@@ -474,12 +474,13 @@ angApp.directive('configDefaultValue', function() {
 
     // Get enumerators
     function getEnum(enums, defaultValue,showDefaultValue) {
-        var input = '';
+        console.log(enums)
+        var input = showDefaultValue;
         if (!enums) {
             return;
         }
         angular.forEach(enums.enumof, function(v, k) {
-            var title = v.label;
+            var title = v.label ? v.label : showDefaultValue;
             var type = v.type;
 
             if ('fix' in type) {
