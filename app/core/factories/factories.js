@@ -388,7 +388,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
      * Run Firmware Update
      */
     function fwUpdate(nodeId, data) {
-        var uploadUrl = cfg.server_url + cfg.fw_update_url + '/' + nodeId
+        var uploadUrl = cfg.server_url + cfg.fw_update_url + '/' + nodeId;
         var fd = new FormData();
         fd.append('file', data.file);
         fd.append('url', data.url);
