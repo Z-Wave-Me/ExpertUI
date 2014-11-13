@@ -3680,19 +3680,11 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 });
 // Device config update controller
 appController.controller('ConfigStoreController', function($scope, dataService) {
+    $scope.formFirmware = {};
     // Store data on remote server
     $scope.store = function(btn) {
-        //$(btn).attr('disabled', true);
         var url = $scope.cfg.server_url + $scope.cfg.store_url + $(btn).attr('data-store-url');
         dataService.runCmd($(btn).attr('data-store-url'));
-//        if($(btn).attr('data-redirect')){
-//           $location.path('/config/configuration/' + $(btn).attr('data-redirect'));
-//        }
-
-
-//        $timeout(function() {
-//            $(btn).removeAttr('disabled');
-//        }, 1000);
     };
     // Show modal dialog
     $scope.showModalInterview = function(target) {
@@ -3741,13 +3733,15 @@ appController.controller('ConfigStoreController', function($scope, dataService) 
      */
     $scope.updateFirmware = function(nodeId) {
         var input = $scope.formFirmware;
-        var fw_url = input.fw_url;
-        var fw_file = input.fw_file;
-        var fw_target = input.fw_target;
-        if ((fw_url == '' && fw_file == '') || fw_target == '') {
+         if ((input.url == '' && input.file == '') || input.targetId == '') {
             return;
         }
-        dataService.fwUpdate(nodeId, fw_target, fw_url, fw_file);
+        var data = {
+            'url': input.url,
+            'file': input.file,
+            'targetId': input.targetId
+        };
+        dataService.fwUpdate(nodeId, data);
         return;
     };
 });
