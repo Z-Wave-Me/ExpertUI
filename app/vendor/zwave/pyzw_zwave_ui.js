@@ -5854,48 +5854,95 @@ function renderMethodSpec(ccId, data) {
 			
 		// Alarm
 		case 0x71:
-			return {
-				"GetV2": [
-					{
-						"label": "Type",
-						"type": {
-							"enumof": [
-								]
-						}
-					}
-				],
-				"SetV2": [
-					{
-						"label": "Type",
-						"type": {
-							"enumof": []
-						}
-					}
-				],
+			var ret = {
 				"Get": [
 					{
 						"label": "Type",
 						"type": {
-							"range": {
-								"min": 0,
-								"max": 100
-							}
-						}
-					}
-				],
-				"Set": [
-					{
-						"label": "Type",
-						"type": {
-							"range": {
-								"min": 0,
-								"max": 100
-							}
+							"enumof": (
+									function() {
+										try {
+											var arr = [];
+											var key;
+											for (key in data) {
+												var ikey = parseInt(key);
+												if (!isNaN(ikey))
+													arr.push({
+														"label": data[ikey].typeString.value,
+														"type": {
+															"fix": 	{
+																"value": ikey
+															}
+														}
+													});
+											};
+											return arr;
+										} catch(err) {}
+										return [];
+									}
+								)()
 						}
 					}
 				]
 			};
 			
+			if (data.version.value > 1) {
+				ret["Set"] = [
+					{
+						"label": "Type",
+						"type": {
+							"enumof": (
+									function() {
+										try {
+											var arr = [];
+											var key;
+											for (key in data) {
+												var ikey = parseInt(key);
+												if (!isNaN(ikey))
+													arr.push({
+														"label": data[ikey].typeString.value,
+														"type": {
+															"fix": 	{
+																"value": ikey
+															}
+														}
+													});
+											};
+											return arr;
+										} catch(err) {}
+										return [];
+									}
+								)()
+						}
+					},
+					{
+						"label": "Status",
+						"type": {
+							"enumof": [
+								{
+									"label": "Disable",
+									"type": {
+										"fix": 	{
+											"value": 0
+										}
+									}
+								},
+								{
+									"label": "Enable",
+									"type": {
+										"fix": 	{
+											"value": 255
+										}
+									}
+								}
+							]
+						}
+					}
+				];
+			}
+			
+			return ret;
+		
 		// AlarmSensor
 		case 0x9c:
 			return {
@@ -6119,6 +6166,14 @@ function renderMethodSpec(ccId, data) {
 						"type": {
 							"enumof": [
 								{
+									"label": "auto detect",
+									"type": {
+										"fix": 	{
+											"value": 0
+										}
+									}
+								},
+								{
 									"label": "1 byte",
 									"type": {
 										"fix": 	{
@@ -6249,7 +6304,31 @@ function renderMethodSpec(ccId, data) {
 		// MeterTableMonitor
 		case 0x3d:
 			return {
-				"GetStatusData": [
+				"StatusDateGet": [
+					{
+						"label": "Index",
+						"type": {
+							"enumof": [
+								{
+									"label": "For all entries",
+									"type": {
+										"fix": 	{
+											"value": 0
+										}
+									}
+								},
+								{
+									"label": "",
+									"type": {
+										"range": 	{
+											"min": 1,
+											"max": 255
+										}
+									}
+								}
+							]
+						}
+					},
 					{
 						"label": "Start (UNIX stamp)",
 						"type": {
@@ -6269,27 +6348,66 @@ function renderMethodSpec(ccId, data) {
 						}
 					}
 				],
-				"GetHistoricalData": [
+				"StatusDepthGet": [
 					{
-						"label": "Start (UNIX stamp)",
+						"label": "Index",
 						"type": {
-							"range": {
-								"min": 0,
-								"max": 100000000
-							}
-						}
-					},
-					{
-						"label": "Stop (UNIX stamp)",
-						"type": {
-							"range": {
-								"min": 0,
-								"max": 100000000
-							}
+							"enumof": [
+								{
+									"label": "Current only",
+									"type": {
+										"fix": 	{
+											"value": 0
+										}
+									}
+								},
+								{
+									"label": "For all entries",
+									"type": {
+										"fix": 	{
+											"value": 255
+										}
+									}
+								},
+								{
+									"label": "",
+									"type": {
+										"range": 	{
+											"min": 1,
+											"max": 255
+										}
+									}
+								}
+							]
 						}
 					}
 				],
-				"GetCurrentData": []
+				"CurrentDataGet": [
+					{
+						"label": "Index",
+						"type": {
+							"enumof": [
+								{
+									"label": "For all supported",
+									"type": {
+										"fix": 	{
+											"value": 0
+										}
+									}
+								},
+								{
+									"label": "",
+									"type": {
+										"range": 	{
+											"min": 1,
+											"max": 255
+										}
+									}
+								}
+							]
+						}
+					}
+				]
 			};
 
 		// Indicator			
@@ -6323,6 +6441,8 @@ function renderMethodSpec(ccId, data) {
 				]
 			};
 
+		/*
+		This UI requires special handling of form, so it is handled in a special tab in the UI
 		// FirmwareUpdateMD
 		case 0x7A:
 			return {
@@ -6346,7 +6466,8 @@ function renderMethodSpec(ccId, data) {
 					}
 				]
 			};
-
+		*/
+		
 		// DoorLockLogging
 		case 0x4c:
 			return {
