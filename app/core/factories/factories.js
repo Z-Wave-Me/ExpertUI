@@ -387,17 +387,20 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
     /**
      * Run Firmware Update
      */
-    function fwUpdate(nodeId, target, url, file) {
-        console.log(this);
+    function fwUpdate(nodeId, data) {
+        console.log(data);
         
-        var data;
-        if (FormData) {
-            data = new FormData($(''))
-        }
+//        var data;
+//        if (FormData) {
+//            data = new FormData($(''))
+//        }
         
         var request = $http({
             method: 'POST',
-            url: cfg.server_url + cfg.fw_update_url + '/' + nodeId
+            url: cfg.server_url + cfg.fw_update_url + '/' + nodeId,
+            //url: 'upload.php',
+            data    :  $.param(data), // pass in data as strings
+            headers : { 'Content-Type': 'application/x-www-form-urlencoded' } 
         });
         request.success(function(data) {
             handleSuccess(data);
@@ -571,4 +574,18 @@ appFactory.factory('langTransFactory', function() {
     };
 });
 
+appFactory.service('fileUpload', ['$http', function ($http) {
+    this.uploadFileToUrl = function(file, uploadUrl){
+        var fd = new FormData();
+        fd.append('file', file);
+        $http.post(uploadUrl, fd, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        })
+        .success(function(){
+        })
+        .error(function(){
+        });
+    }
+}]);
 

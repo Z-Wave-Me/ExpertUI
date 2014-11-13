@@ -3696,7 +3696,8 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     ;
 });
 // Device config update controller
-appController.controller('ConfigStoreController', function($scope, dataService) {
+appController.controller('ConfigStoreController', function($scope, dataService,fileUpload) {
+    $scope.formFirmware = {};
     // Store data on remote server
     $scope.store = function(btn) {
         var url = $scope.cfg.server_url + $scope.cfg.store_url + $(btn).attr('data-store-url');
@@ -3748,14 +3749,23 @@ appController.controller('ConfigStoreController', function($scope, dataService) 
      * update Firmware
      */
     $scope.updateFirmware = function(nodeId) {
+        // File upload test
+        var file = $scope.myFile;
+        var uploadUrl = $scope.cfg.server_url + $scope.cfg.fw_update_url+ '/' + nodeId;
+        fileUpload.uploadFileToUrl(file, uploadUrl);
+        return;
+        // END: File upload test
+        
         var input = $scope.formFirmware;
-        var fw_url = input.fw_url;
-        var fw_file = input.fw_file;
-        var fw_target = input.fw_target;
-        if ((fw_url == '' && fw_file == '') || fw_target == '') {
+         if ((input.url == '' && input.file == '') || input.targetId == '') {
             return;
         }
-        dataService.fwUpdate(nodeId, fw_target, fw_url, fw_file);
+        var data = {
+            'url': input.url,
+            'file': input.file,
+            'targetId': input.targetId
+        };
+        dataService.fwUpdate(nodeId, data);
         return;
     };
 });
