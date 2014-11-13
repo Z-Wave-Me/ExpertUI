@@ -3679,7 +3679,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     ;
 });
 // Device config update controller
-appController.controller('ConfigStoreController', function($scope, dataService) {
+appController.controller('ConfigStoreController', function($scope, dataService,fileUpload) {
     $scope.formFirmware = {};
     // Store data on remote server
     $scope.store = function(btn) {
@@ -3732,6 +3732,13 @@ appController.controller('ConfigStoreController', function($scope, dataService) 
      * update Firmware
      */
     $scope.updateFirmware = function(nodeId) {
+        // File upload test
+        var file = $scope.myFile;
+        var uploadUrl = $scope.cfg.server_url + $scope.cfg.fw_update_url+ '/' + nodeId;
+        fileUpload.uploadFileToUrl(file, uploadUrl);
+        return;
+        // END: File upload test
+        
         var input = $scope.formFirmware;
          if ((input.url == '' && input.file == '') || input.targetId == '') {
             return;
