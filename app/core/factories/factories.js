@@ -388,25 +388,18 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
      * Run Firmware Update
      */
     function fwUpdate(nodeId, data) {
-        console.log(data);
-        
-//        var data;
-//        if (FormData) {
-//            data = new FormData($(''))
-//        }
-        
-        var request = $http({
-            method: 'POST',
-            url: cfg.server_url + cfg.fw_update_url + '/' + nodeId,
-            //url: 'upload.php',
-            data    :  $.param(data), // pass in data as strings
-            headers : { 'Content-Type': 'application/x-www-form-urlencoded' } 
-        });
-        request.success(function(data) {
+        var uploadUrl = cfg.server_url + cfg.fw_update_url + '/' + nodeId
+        var fd = new FormData();
+        fd.append('file', data.file);
+        fd.append('url', data.url);
+        fd.append('targetId', data.targetId);
+        $http.post(uploadUrl, fd, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        }).success(function() {
             handleSuccess(data);
         }).error(function() {
             handleError();
-
         });
 
     }
@@ -486,16 +479,16 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
      */
     function handleError(message, showResponse, hideContent) {
         // Custom IP show/hide
-         $('.custom-ip-error').show();
-         $('.custom-ip-success').hide();
-         
+        $('.custom-ip-error').show();
+        $('.custom-ip-success').hide();
+
         var msg = (message ? message : 'Error handling data from server');
         if (showResponse) {
             $('#respone_container').show();
             $('#respone_container_inner').html('<div class="alert alert-danger alert-dismissable response-message"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <i class="icon-ban-circle"></i> ' + msg + '</div>');
         }
         $('.error-hide').hide();
-       
+
         if (hideContent) {
             $('#main_content').hide();
         }
@@ -530,9 +523,9 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
      */
     function pageLoader(hide) {
         // Custom IP show/hide
-         $('.custom-ip-error').hide();
-         $('.custom-ip-success').show();
-         
+        $('.custom-ip-error').hide();
+        $('.custom-ip-success').show();
+
         if (hide) {
             $('#respone_container').hide();
             $('#main_content').show();
@@ -573,19 +566,4 @@ appFactory.factory('langTransFactory', function() {
         }
     };
 });
-
-appFactory.service('fileUpload', ['$http', function ($http) {
-    this.uploadFileToUrl = function(file, uploadUrl){
-        var fd = new FormData();
-        fd.append('file', file);
-        $http.post(uploadUrl, fd, {
-            transformRequest: angular.identity,
-            headers: {'Content-Type': undefined}
-        })
-        .success(function(){
-        })
-        .error(function(){
-        });
-    }
-}]);
 
