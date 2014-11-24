@@ -564,5 +564,8 @@
 	"language_select": "Idioma",
 	"language_select_reload_interface": "Por favor, actualice la página para aplicar los cambios",
 
+	"device_disappeared": "Device removed from network",
+	"rt_associated": "Direct association",
+
 	"ie_last_element": "Solo para recordar, que IE no le gusta la coma (,) al final de la lista de elementos de matriz asociativa"
 }

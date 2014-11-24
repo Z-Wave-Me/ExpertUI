@@ -278,5 +278,9 @@
     "restore_backup_chip": "Überschreibe Netzwerkinformation im Z-Wave Transceiver",        
     "switch_point_temp": "Temperatur",
     "device_is_not_fully_interviewed": "Geräte-Interview ist nicht komplett",
+
+    "device_disappeared": "Device removed from network",
+    "rt_associated": "Direct association",
+
     "ie_last_element": "just to remember, that IE do not like trailing comma (,) at the end the list of associative array elements"
 }
