@@ -1,13 +1,11 @@
 {
     "--- missing":"---",
     "assoc_remove_from": "Remove association from",
-    "device_disappeared": "device disappeared",
     "device_reset_locally": "Device reset locally",
     "no_device_reset_locally": "No device reset locally",
     "nav_active_associations": "Active associations",
     "assoc_select_to_instance": "Select a Instance",
     "device_is_dead": "Device seems to be dead",
-    "---":"--- missing",
     "device_is_active": "Device is currently awake",
     "no_zddx_file": "No configuration file",
    "are_you_sure_remove_node": "Are you sure to want like to delete device",
@@ -123,7 +121,6 @@
     "btn_save_name": "Save name",
     "btn_open": "Open",
     "btn_close": "Close",
-    "btn_save_name": "Save name",
     "btn_secure": "Secure",
     "btn_unsecure": "Unsecure",
     "btn_different_device": "Select a different device",
@@ -285,12 +282,11 @@
     "default_value_is": "Default value is",
     "conf_apply_battery": "Battery device must be woken up to activate changed settings",
     "are_you_sure_restore": "Are your sure ot overwrite the network configuration. Have you created a backup ?",
-    "restore_backup_chip": "Overwrite Network Topology in Transceiver",        
     "switch_point_temp": "Temperature",
     "device_is_not_fully_interviewed": "Device interview is not complete",
     "restore_backup_chip": "Also restore network topology information (please read the user manual first!)",
     "device_disappeared": "Device removed from network",
     "rt_associated": "Direct association",
 
-    "ie_last_element": "just to remember, that IE do not like trailing comma (,) at the end the list of associative array elements",
+    "ie_last_element": "just to remember, that IE do not like trailing comma (,) at the end the list of associative array elements"
 }
