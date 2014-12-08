@@ -45,18 +45,24 @@
                 </li>
                 <li class="list-group-item">
                     <p ng-repeat="v in notInterviewDevices">
-                        <a class="text-danger" href="#help/{{v.id}}">{{_t('txt_device')}} {{v.name}} (#{{v.id}}) {{_t('txt_interview_not')}}</a>
+                        <a class="text-danger" href="#help/{{v.id}}"> (#{{v.id}}) {{v.name}} {{_t('txt_interview_not')}}</a>
+                    </p>
+                </li>
+                <li class="list-group-item" ng-show="assocRemovedDevices.length > 1">
+                    <p ng-repeat="v in assocRemovedDevices">
+                        <a class="text-danger" href="#config/configuration/{{v.id}}">(#{{v.id}}) {{v.name}} associated device removed</a><br />
+                        <span ng-repeat="a in v.assoc">{{a.name}}, </span>
                     </p>
                 </li>
                 <li class="list-group-item">
                     <p ng-repeat="v in failedDevices">
-                        <a class="text-danger" href="#help/{{v.id}}">{{_t('txt_device')}} {{v.name}} (#{{v.id}}) {{_t('txt_failed')}}</a>
+                        <a class="text-danger" href="#help/{{v.id}}">(#{{v.id}}) {{v.name}} {{_t('txt_failed')}}</a>
                     </p>
                 </li>
             </ul>
             <h3><i class="fa fa-info-circle"></i> {{_t('device_reset_locally')}}</h3>
             <ul class="list-group">
-                <li class="list-group-item" ng-repeat="v in localyResetDevices">{{v.name}} (#{{v.id}})</li>
+                <li class="list-group-item" ng-repeat="v in localyResetDevices"> (#{{v.id}}) {{v.name}}</li>
                 <li class="list-group-item" ng-show="localyResetDevices.length < 1">{{_t('no_device_reset_locally')}}</li>
             </ul>
 

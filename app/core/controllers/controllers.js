@@ -165,6 +165,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
     $scope.mainsDevices;
     $scope.localyResetDevices = [];
     $scope.notInterviewDevices = [];
+     $scope.assocRemovedDevices = [];
     $scope.notes = [];
     $scope.notesData = '';
     $scope.updateTime = $filter('getTimestamp');
@@ -174,6 +175,8 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
         $scope.lowBatteryDevices = angular.copy([]);
         $scope.notInterviewDevices = angular.copy([]);
         $scope.localyResetDevices = angular.copy([]);
+        $scope.assocRemovedDevices = angular.copy([]);
+       
     };
 
 
@@ -195,18 +198,21 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
         dataService.getZwaveData(function(ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
             notInterviewDevices(ZWaveAPIData);
+            notInterviewDevices(ZWaveAPIData);
             countDevices(ZWaveAPIData);
+            assocRemovedDevices(ZWaveAPIData);
             batteryDevices(ZWaveAPIData);
             $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
-
-            dataService.joinedZwaveData(function(data) {
-                $scope.reset();
-                notInterviewDevices(data.joined);
-                countDevices(data.joined);
-                batteryDevices(data.joined);
-                $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
-
-            });
+            console.log($scope.assocRemovedDevices)
+//            dataService.joinedZwaveData(function(data) {
+//                $scope.reset();
+//                notInterviewDevices(data.joined);
+//                countDevices(data.joined);
+//                assocRemovedDevices(data.joined);
+//                batteryDevices(data.joined);
+//                $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
+//
+//            });
         });
     };
     if (!cfg.custom_ip) {
@@ -386,6 +392,79 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
         return cnt;
     }
     ;
+    /**
+     * assocRemovedDevices
+     */
+    function assocRemovedDevices(ZWaveAPIData) {
+        var controllerId = ZWaveAPIData.controller.data.nodeId.value;
+        var cnt = 0;
+        // Loop throught devices
+        angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+            if (nodeId == 255 || nodeId == controllerId || node.data.isVirtual.value) {
+                return;
+            }
+            var removedDevices = assocGedRemovedDevices(node, ZWaveAPIData);
+            if(removedDevices.length > 0){
+       
+            var obj = {};
+            obj['name'] = $filter('deviceName')(nodeId, node);
+            obj['id'] = nodeId;
+            obj['assoc'] = removedDevices;
+            $scope.assocRemovedDevices.push(obj);
+            cnt++;
+             }
+        });
+        return cnt;
+    }
+    ;
+    
+    /**
+     * assocGedRemovedDevices
+     */
+    function assocGedRemovedDevices(node, ZWaveAPIData) {
+        var assocDevices = [];
+        var data;
+        if (0x85 in node.instances[0].commandClasses) {
+            var cc = node.instances[0].commandClasses[0x85].data;
+            if (cc.groups.value >= 1) {
+                for (var grp_num = 1; grp_num <= parseInt(cc.groups.value, 10); grp_num++) {
+                    data = cc[grp_num];
+                    for (var i = 0; i < data.nodes.value.length; i++) {
+                        var targetNodeId = data.nodes.value[i];
+                        if (!(targetNodeId in ZWaveAPIData.devices)) {
+                            assocDevices.push({'id': targetNodeId, 'name': '(#' + targetNodeId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId])});
+                        }
+                    }
+
+                }
+            }
+        }
+
+        if (0x8e in node.instances[0].commandClasses) {
+            var cc = node.instances[0].commandClasses[0x8e].data;
+            if (cc.groups.value >= 1) {
+                for (var grp_num = 1; grp_num <= parseInt(cc.groups.value, 10); grp_num++) {
+                    
+                    data = cc[grp_num];
+
+                    for (var i = 0; i < data.nodesInstances.value.length; i += 2) {
+                        var targetNodeId = data.nodesInstances.value[i];
+                        var targetInstanceId = data.nodesInstances.value[i + 1];
+                        var instanceId = (targetInstanceId > 0 ? '.' + targetInstanceId : '');
+                        if (!(targetNodeId in ZWaveAPIData.devices)) {
+                            assocDevices.push({'id': targetNodeId, 'name': '(#' + targetNodeId + instanceId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId])});
+                        }
+                        
+                    }
+                }
+            }
+        }
+        if(assocDevices.length > 0){
+             //console.log(assocDevices)
+        }
+       
+        return assocDevices;
+    };
 });
 
 // Switch controller
