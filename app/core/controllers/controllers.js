@@ -428,7 +428,7 @@ appController.controller('SwitchController', function($scope, $filter, dataServi
     // Store data from on remote server
     $scope.store = function(btn) {
         var url = $(btn).attr('data-store-url');
-        dataService.runCmd(url,false,$scope._t('error_handling_data'));
+        dataService.runCmd(url, false, $scope._t('error_handling_data'));
     };
 
     // Store all data on remote server
@@ -453,7 +453,7 @@ appController.controller('SwitchController', function($scope, $filter, dataServi
     $scope.sliderChange = function(cmd, index) {
         var val = $scope.rangeSlider[index];
         var url = cmd + '.Set(' + val + ')';
-        dataService.runCmd(url,false,$scope._t('error_handling_data'));
+        dataService.runCmd(url, false, $scope._t('error_handling_data'));
     };
 
     /// --- Private functions --- ///
@@ -662,7 +662,7 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
 
     // Store data from on remote server
     $scope.store = function(cmd) {
-        dataService.runCmd(cmd,false,$scope._t('error_handling_data'));
+        dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
     };
 
     // Store all data on remote server
@@ -874,7 +874,7 @@ appController.controller('MetersController', function($scope, $filter, dataServi
         if (action === 'reset' && !window.confirm($scope._t('are_you_sure_reset_meter'))) {
             return;
         }
-        dataService.runCmd(cmd, false,$scope._t('error_handling_data'));
+        dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
     };
 
     // Store all data from sensors on remote server
@@ -1069,7 +1069,6 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
                 //console.log( nodeId + ': ' + curThermMode);
                 if (hasThermostatMode) {
                     ccId = 0x40;
-                    //level = (curThermMode in instance.commandClasses[0x40].data) ? instance.commandClasses[0x40].data[curThermMode].modeName.value : "???";
                     if (curThermMode in instance.commandClasses[0x40].data) {
                         updateTime = instance.commandClasses[0x40].data.mode.updateTime;
                         invalidateTime = instance.commandClasses[0x40].data.mode.invalidateTime;
@@ -1088,7 +1087,9 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
                     }
 
                 }
-                //curThermMode = getCurrentThermostatMode(instance);
+                //console.log(instance.commandClasses[0x43]);
+                //
+//curThermMode = getCurrentThermostatMode(instance);
 
                 // Set object
                 var obj = {};
@@ -1195,7 +1196,7 @@ appController.controller('LocksController', function($scope, $filter, dataServic
     // Store data on remote server
     $scope.store = function(btn) {
         var url = $(btn).attr('data-store-url');
-        dataService.runCmd(url,false, $scope._t('error_handling_data'));
+        dataService.runCmd(url, false, $scope._t('error_handling_data'));
         return;
     };
     /// --- Private functions --- ///
@@ -1309,7 +1310,7 @@ appController.controller('StatusController', function($scope, $filter, dataServi
     // Store data from on remote server
     $scope.store = function(btn) {
         var url = $(btn).attr('data-store-url');
-        dataService.runCmd(url,false, $scope._t('error_handling_data'));
+        dataService.runCmd(url, false, $scope._t('error_handling_data'));
     };
     // Store all data on remote server
     $scope.storeAll = function(btn) {
@@ -2227,13 +2228,13 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
             if (0x85 in instance.commandClasses) {
                 for (var group = 0; group < instance.commandClasses[0x85].data.groups.value; group++) {
                     updates.push("devices." + nodeId + ".instances." + index + ".commandClasses." + (0x85) + ".data." + (group + 1));
-                    dataService.runCmd('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x85].Get(' + (group + 1) + ')',false, $scope._t('error_handling_data'));
+                    dataService.runCmd('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x85].Get(' + (group + 1) + ')', false, $scope._t('error_handling_data'));
                 }
             }
             if (0x8e in instance.commandClasses) {
                 for (var group = 0; group < instance.commandClasses[0x8e].data.groups.value; group++) {
                     updates.push("devices." + nodeId + ".instances." + index + ".commandClasses." + (0x8e) + ".data." + (group + 1));
-                    dataService.runCmd('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x8e].Get(' + (group + 1) + ')',false,$scope._t('error_handling_data'));
+                    dataService.runCmd('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x8e].Get(' + (group + 1) + ')', false, $scope._t('error_handling_data'));
 
                 }
             }
@@ -2574,7 +2575,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
     };
 });
 // Configuration controller
-appController.controller('ConfigurationController', function($scope, $routeParams, $route,$window,$http, $filter, $location, $cookies, $timeout, dataService, deviceService, myCache) {
+appController.controller('ConfigurationController', function($scope, $routeParams, $route, $window, $http, $filter, $location, $cookies, $timeout, dataService, deviceService, myCache) {
     $scope.devices = [];
     $scope.showDevices = false;
     $scope.ZWaveAPIData;
@@ -2729,7 +2730,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     // Update device zddx file
     $scope.runCmdDeviceSelect = function(nodeId, file) {
         var cmd = 'devices[' + nodeId + '].LoadXMLFile("' + file + '")';
-        dataService.runCmd(cmd,false,$scope._t('error_handling_data'));
+        dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
         $window.location.reload();
         //$location.path('/config/configuration/' + nodeId);
         console.log(cmd);
@@ -2774,7 +2775,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 
             });
             var request = cmd + '(' + num + ',' + value + ',' + confSize + ')';
-            dataService.runCmd(request, false,$scope._t('error_handling_data'));
+            dataService.runCmd(request, false, $scope._t('error_handling_data'));
         });
         $scope.refresh = true;
         var timeOut;
@@ -2803,7 +2804,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 
         });
         var request = cmd + '(' + dataJoined.join() + ')';
-        dataService.runCmd(request,false,$scope._t('error_handling_data'));
+        dataService.runCmd(request, false, $scope._t('error_handling_data'));
         $scope.refresh = true;
         var timeOut;
         timeOut = $timeout(function() {
@@ -2819,7 +2820,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
      * @returns {undefined}
      */
     $scope.updateFromDevice = function(cmd) {
-        dataService.runCmd(cmd,false,$scope._t('error_handling_data'));
+        dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
         $scope.refresh = true;
         var timeOut;
         timeOut = $timeout(function() {
@@ -2968,6 +2969,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     function descriptionCont(node, nodeId, zddXml, ZWaveAPIData, refresh) {
 
         // Set device data
+        var isPrimary = ZWaveAPIData.controller.data.isPrimary.value;
         var deviceImage = 'app/images/no_device_image.png';
         var deviceDescription = '';
         var productName = '';
@@ -2976,6 +2978,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         var wakeupNote = '';
         var ZWavePlusInfo = '';
         var ZWavePlusRoles = [];
+        var securityInterview = '';
         var deviceDescriptionAppVersion = parseInt(node.data.applicationMajor.value, 10);
         var deviceDescriptionAppSubVersion = parseInt(node.data.applicationMinor.value, 10);
         if (isNaN(deviceDescriptionAppVersion))
@@ -2992,7 +2995,11 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 
 
         }
-        // SDK
+        // Security interview
+        if (0x98 in node.instances[0].commandClasses) {
+            securityInterview = node.instances[0].commandClasses[0x98].data.securityAbandoned.value;
+        }
+
         var sdk;
         if (node.data.SDK.value == '') {
             sdk = '(' + node.data.ZWProtocolMajor.value + '.' + node.data.ZWProtocolMinor.value + ')';
@@ -3071,7 +3078,10 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         if (deviceService.isLocalyReset(node)) {
             obj["r"] = {"key": "device_reset_locally", "val": '<i class="' + $filter('checkedIcon')(true) + '"></i>'};
         }
-
+        if (typeof securityInterview === 'boolean') {
+            obj["s"] = {"key": "device_security_interview", "val": '<i class="' + $filter('checkedIcon')(securityInterview) + '"></i>'};
+        }
+        // SDK
         //obj[99] = {"key": "device_description_resources", "val": ''};
         return obj;
     }
@@ -3079,7 +3089,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
      * Refresh description cont
      */
     function refreshDescriptionCont(node, nodeId, zddXml, ZWaveAPIData) {
-       $('#device_sleep_state .config-interview-val').html(deviceState(node));
+        $('#device_sleep_state .config-interview-val').html(deviceState(node));
         $('#device_description_interview .config-interview-val').html(interviewStage(ZWaveAPIData, nodeId));
     }
     // Set interview stage
@@ -3701,7 +3711,7 @@ appController.controller('ConfigStoreController', function($scope, dataService) 
     // Store data on remote server
     $scope.store = function(btn) {
         var url = $scope.cfg.server_url + $scope.cfg.store_url + $(btn).attr('data-store-url');
-        dataService.runCmd($(btn).attr('data-store-url'),false,$scope._t('error_handling_data'));
+        dataService.runCmd($(btn).attr('data-store-url'), false, $scope._t('error_handling_data'));
     };
     // Show modal dialog
     $scope.showModalInterview = function(target) {
@@ -3718,7 +3728,7 @@ appController.controller('ConfigStoreController', function($scope, dataService) 
         var deviceId = $scope.deviceId;
         var givenName = $('#' + form + ' #device_name').val();
         var cmd = 'devices[' + deviceId + '].data.givenName.value=\'' + givenName + '\'';
-        dataService.runCmd(cmd,false,$scope._t('error_handling_data'));
+        dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
         $('#config_device_name').html(givenName);
         $('#device_node_name').html(givenName);
         return;
@@ -3742,14 +3752,14 @@ appController.controller('ConfigStoreController', function($scope, dataService) 
 
         });
         var request = cmd + '(' + dataJoined.join() + ')';
-        dataService.runCmd(request,false,$scope._t('error_handling_data'));
+        dataService.runCmd(request, false, $scope._t('error_handling_data'));
         return;
     };
     /**
      * update Firmware
      */
     $scope.updateFirmware = function(nodeId) {
-         if (($scope.formFirmware.url == '' && $scope.myFile == '') || $scope.formFirmware.targetId == '') {
+        if (($scope.formFirmware.url == '' && $scope.myFile == '') || $scope.formFirmware.targetId == '') {
             return;
         }
         // File upload test
@@ -3758,8 +3768,8 @@ appController.controller('ConfigStoreController', function($scope, dataService) 
             'file': $scope.myFile,
             'targetId': $scope.formFirmware.targetId
         };
-         dataService.fwUpdate(nodeId, data);
-         return;
+        dataService.fwUpdate(nodeId, data);
+        return;
     };
 });
 // Controll controller
@@ -3872,7 +3882,7 @@ appController.controller('ControllController', function($scope, $filter, $timeou
 
             });
         } else {
-            dataService.runCmd(null, folder + cmd,$scope._t('error_handling_data'));
+            dataService.runCmd(null, folder + cmd, $scope._t('error_handling_data'));
             //console.log(folder + cmd);
         }
         if (action) {
@@ -3981,7 +3991,7 @@ appController.controller('ControllController', function($scope, $filter, $timeou
     $scope.requestNifAll = function(btn) {
         angular.forEach($scope.devices, function(v, k) {
             var url = 'devices[' + v.id + '].RequestNodeInformation()';
-            dataService.runCmd(url,false,$scope._t('error_handling_data'));
+            dataService.runCmd(url, false, $scope._t('error_handling_data'));
         });
         return;
     };
@@ -4092,7 +4102,7 @@ appController.controller('ControllController', function($scope, $filter, $timeou
                 var updateTime = $filter('isTodayFromUnix')(data['controller.data.lastIncludedDevice'].updateTime);
                 //Run CMD
                 var cmd = 'devices[' + deviceIncId + '].data.givenName.value=\'' + givenName + '\'';
-                dataService.runCmd(cmd, false,$scope._t('error_handling_data'));
+                dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
                 $scope.lastIncludedDevice = $scope._t('nm_last_included_device') + '  (' + updateTime + ')  <a href="#config/configuration/' + deviceIncId + '"><strong>' + givenName + '</strong></a>';
             }
 
@@ -4750,7 +4760,7 @@ appController.controller('ControllerController', function($scope, $window, dataS
      * Run cmd
      */
     $scope.runCmd = function(cmd) {
-        dataService.runCmd(cmd,false,$scope._t('error_handling_data'));
+        dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
     };
     /**
      * Inspect Queue

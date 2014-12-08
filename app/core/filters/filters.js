@@ -475,6 +475,8 @@ angApp.filter('checkedIcon', function() {
 //        }
         if(input){
             icon = 'fa fa-check fa-lg text-success';
+        }else{
+             icon = 'fa fa-ban fa-lg text-danger';
         }
         return  icon;
     };
