@@ -4,4 +4,4 @@
 /upload/*
 upload.php
 /test/*
-#/app/core/config.js
+/app/core/config.js
