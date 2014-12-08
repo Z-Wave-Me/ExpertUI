@@ -147,6 +147,11 @@ background-color: #e4f5fc;
 .custom-ip-message{
     display: none;
 }
+/* Modal
+-------------------------------------------------- */
+.modal-body {
+padding: 10px 10px 0 10px;
+}
 
 /* Page CSS
 -------------------------------------------------- */
@@ -328,6 +333,9 @@ background-color: #e4f5fc;
 
 /* Tables
 -------------------------------------------------- */
+.table{
+    margin-bottom: 0;
+}
 .table > thead > tr > th {
     border-bottom: 2px solid #9fd8ef;
 }
