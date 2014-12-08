@@ -4132,10 +4132,10 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
     $scope.data = {};
     $scope.ZWaveAPIData;
     $scope.updating = {};
-    $scope.cellState = function(nodeId, nnodeId, routesCount) {
+    $scope.cellState = function(nodeId, nnodeId, routesCount,nodeName,nnodeName) {
         var node = $scope.nodes[nodeId].node;
         var nnode = $scope.nodes[nnodeId].node;
-        var tooltip = nodeId + ' - ' + nnodeId;
+        var tooltip = nodeId + ': ' + nodeName + ' - ' + nnodeId + ': ' + nnodeName + ' ';
         var info;
         if ($filter('associationExists')(node, nnodeId)) {
             info = '*';
@@ -4221,16 +4221,20 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
             $scope.processUpdateNodesNeighbours(current, {});
         }
     };
-    $scope.updateData = function(nodeId) {
+    $scope.updateData = function(nodeId,nodeName) {
         var node = $scope.ZWaveAPIData.devices[nodeId];
         if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
             return;
         var routesCount = $filter('getRoutesCount')($scope.ZWaveAPIData, nodeId);
         var line = [];
+        var nnodeName;
         angular.forEach($scope.ZWaveAPIData.devices, function(nnode, nnodeId) {
-            if (nnodeId == 255 || nnode.data.isVirtual.value || nnode.data.basicType.value == 1)
-                return;
-            line[nnodeId] = $scope.cellState(nodeId, nnodeId, routesCount);
+            if (nnodeId == 255 || nnode.data.isVirtual.value || nnode.data.basicType.value == 1){
+               return; 
+            }
+            nnodeName = $filter('deviceName')(nnodeId, nnode);
+            //console.log(nodeId + ' ' + nodeName + ' - ' + nnodeId + ' ' + nnodeName)    
+            line[nnodeId] = $scope.cellState(nodeId, nnodeId, routesCount,nodeName,nnodeName);
         });
         $scope.data[nodeId] = line;
     };
@@ -4247,7 +4251,7 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
             });
             // Loop throught devices and gather routesCount and cellState
             angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-                $scope.updateData(nodeId);
+                $scope.updateData(nodeId,$filter('deviceName')(nodeId, node));
             });
         });
     };

@@ -103,7 +103,7 @@
                                 <td data-title="{{_t('th_instance')}}" ng-class="($index == 0 ? 'no-class' : 'mobile-hide')"><a ng-show="$index == 0" href="" ng-controller="CommandModalController" ng-click="showModal('#modal_command', v.cmdDataIn)">{{v.iId}}</a> &nbsp;</td>
                                 <td data-title="{{_t('th_command_class')}}"><a href="" ng-controller="CommandModalController" ng-click="showModal('#modal_command', v.cmdData)">{{v.ccName}}</a> &nbsp;</td>
                                 <td data-title="{{_t('th_result')}}">
-                                    <p ng-if="v.interviewDone">Done</p>
+                                    <span ng-if="v.interviewDone">Done</span>
                                     <button
                                         ng-controller="ConfigStoreController"
                                         ng-if="!v.interviewDone"
