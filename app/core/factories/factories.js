@@ -17,7 +17,7 @@ appFactory.factory('myCache', function($cacheFactory) {
  * @todo: Replace all data handler with this service
  * @todo: Complete error handling
  */
-appFactory.factory('dataService', function($http, $q, $interval, $filter, $location, myCache, cfg) {
+appFactory.factory('dataService', function($http, $q, $interval, $filter, $location, $window,myCache, cfg) {
     var apiData;
     var apiDataInterval;
     var deviceClasses;
@@ -220,7 +220,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
     /**
      * Run api cmd
      */
-    function runCmd(param, request) {
+    function runCmd(param, request,error) {
         var url = (request ? cfg.server_url + request : cfg.server_url + cfg.store_url + param);
         var request = $http({
             method: 'POST',
@@ -231,8 +231,9 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
             handleSuccess(data);
         }).error(function() {
             $('button .fa-spin,a .fa-spin').fadeOut(1000);
-            console.log('Response error');
-            //handleCmdError();
+            if(error){
+              $window.alert(error  + '\n' + url);  
+            }
 
         });
 
