@@ -7,7 +7,7 @@
 var appController = angular.module('appController', []);
 
 // Base controller
-appController.controller('BaseController', function($scope, $cookies, $filter, $location, $http, $route, cfg, dataService, langFactory, langTransFactory) {
+appController.controller('BaseController', function($scope, $cookies, $filter, $location, cfg, dataService, langTransFactory, myCache) {
     // Custom IP
     $scope.customIP = {
         'url': cfg.server_url,
@@ -38,11 +38,13 @@ appController.controller('BaseController', function($scope, $cookies, $filter, $
     // Load language files
     $scope.loadLang = function(lang) {
         // Is lang in language list?
-        var lang_file = (cfg.lang_list.indexOf(lang) > -1 ? lang : cfg.lang);
-        langFactory.get(lang_file).query(function(data) {
+        var lang = (cfg.lang_list.indexOf(lang) > -1 ? lang : cfg.lang);
+        dataService.getLanguageFile(function(data) {
+            $cookies.langFile = {'ab': 25};
             $scope.languages = data;
-            return;
-        });
+        }, lang);
+
+
     };
     // Get language lines
     $scope._t = function(key) {
@@ -203,7 +205,6 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
             assocRemovedDevices(ZWaveAPIData);
             batteryDevices(ZWaveAPIData);
             $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
-            console.log($scope.assocRemovedDevices)
             dataService.joinedZwaveData(function(data) {
                 $scope.reset();
                 notInterviewDevices(data.joined);
@@ -3857,7 +3858,7 @@ appController.controller('ControllController', function($scope, $filter, $timeou
     $scope.failedBatteries = [];
     $scope.modelSucSicNode = 1;
     $scope.sucNodes = [];
-     $scope.disableSUCRequest = true;
+    $scope.disableSUCRequest = true;
     $scope.controllerState = 0;
     $scope.secureInclusion;
     $scope.lastExcludedDevice;
@@ -4095,10 +4096,10 @@ appController.controller('ControllController', function($scope, $filter, $timeou
         $scope.startLearnMode = !isRealPrimary || hasDevices < 2 ? true : false;
         $scope.isPrimary = isPrimary;
         $scope.isSIS = isSIS;
-        if(hasSUC && hasSUC != controllerNodeId){
+        if (hasSUC && hasSUC != controllerNodeId) {
             $scope.disableSUCRequest = false;
         }
-        
+
         console.log('Controller isPrimary: ' + isPrimary);
         console.log('Controller isSIS: ' + isSIS);
         console.log('and there are other devices: ' + hasDevices + ' - ' + (hasDevices > 1 ? 'true' : 'false'));
@@ -4210,7 +4211,7 @@ appController.controller('ControllController', function($scope, $filter, $timeou
     ;
 });
 // Routing controller
-appController.controller('RoutingController', function($scope, $filter,dataService, cfg) {
+appController.controller('RoutingController', function($scope, $filter, dataService, cfg) {
 
     $scope.devices = [];
     $scope.nodes = {};

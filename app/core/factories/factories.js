@@ -46,7 +46,8 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         putNotes: putNotes,
         getReorgLog: getReorgLog,
         putReorgLog: putReorgLog,
-        purgeCache: purgeCache
+        purgeCache: purgeCache,
+        getLanguageFile: getLanguageFile
     });
     /**
      * Get IP
@@ -473,6 +474,28 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
     function purgeCache() {
         apiData = undefined;
     }
+    
+    /**
+     * Load longuage file
+     */
+    function getLanguageFile(callback,lang) {
+        var langFile = 'language.' + lang + '.json';
+        var cached = myCache.get(langFile);
+        if (cached) {
+           return callback(cached);
+        }
+        var request = {
+            method: "get",
+            url: cfg.lang_dir + langFile
+        };
+        return $http(request).success(function(data) {
+                myCache.put(langFile, data);
+                return callback(data);
+            }).error(function() {
+                handleError(false,true);
+
+            });
+    }
 
     /**
      * 
@@ -541,18 +564,6 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
     }
 });
 
-// Get language dataas object
-appFactory.factory('langFactory', function($resource, cfg) {
-    return {
-        get: function(lang) {
-            return $resource(cfg.lang_dir + 'language.' + lang + '.json', {}, {query: {
-                    method: 'GET',
-                    params: {},
-                    isArray: false
-                }});
-        }
-    };
-});
 
 // Translation factory - get language line by key
 appFactory.factory('langTransFactory', function() {
