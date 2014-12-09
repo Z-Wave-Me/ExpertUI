@@ -41,7 +41,7 @@
         <tbody>
              <tr ng-repeat="v in battery | orderBy:predicate:reverse" id="{{ v.rowId}}">
                 <td data-title="#">{{ v.id }}</td>
-                <td data-title="{{ _t('device_name')}}">{{ v.name }}</td>
+                <td data-title="{{ _t('device_name')}}"> <a href="#config/configuration/{{v.id}}">{{ v.name}}</a></td>
                 <td data-title="{{ _t('th_battery_type')}}">{{ v.batteryCount }}<span ng-show="v.batteryCount">*</span>{{ v.batteryType }} &nbsp;</td>
                  <td data-title="{{ _t('th_level')}}" class="text-right">
                      &nbsp;<span class="row-level">{{ v.level }}</span>%

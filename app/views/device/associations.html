@@ -37,7 +37,7 @@
             <tbody>
                 <tr ng-repeat="v in devices| orderBy:predicate:reverse" id="{{ v.rowId}}" ng-show="v.assocGroup">
                     <td data-title="#">{{ v.id}}</td>
-                    <td data-title="{{ _t('device_name')}}">{{ v.name}}</td>
+                    <td data-title="{{ _t('device_name')}}"><a href="#config/configuration/{{v.id}}">{{ v.name}}</a></td>
                     <td data-title="{{ _t('th_assoc_group_name')}}">
 
                         <div ng-repeat="g in v.assocGroup">

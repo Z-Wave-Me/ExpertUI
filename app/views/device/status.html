@@ -49,7 +49,9 @@
             <tbody>
                 <tr ng-repeat="v in statuses| orderBy:predicate:reverse" id="{{ v.rowId}}">
                     <td data-title="#">{{ v.id}} </td>
-                    <td data-title="{{ _t('device_name')}}"><switch-type-icon generic="{{ v.genericType}}" specific="{{ v.specificType}}"></switch-type-icon> {{ v.name}}</td>
+                    <td data-title="{{ _t('device_name')}}"><switch-type-icon generic="{{ v.genericType}}" specific="{{ v.specificType}}"></switch-type-icon> 
+            <a href="#config/configuration/{{v.id}}">{{ v.name}}</a>
+        </td>
         <td data-title="{{ _t('th_sleeping')}}" class="row-sleeping"><span ng-bind-html="v.sleeping | toTrusted"></span> &nbsp;</td>
                     <td data-title="{{ _t('th_awake')}}" class="row-awake"><span ng-bind-html="v.awake | toTrusted"></span> &nbsp;</td>
                     <td data-title="{{ _t('datetime')}}" class="row-time"><span ng-bind-html="v.updateTime | toTrusted"></span> &nbsp;</td>
