@@ -165,7 +165,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
     $scope.mainsDevices;
     $scope.localyResetDevices = [];
     $scope.notInterviewDevices = [];
-     $scope.assocRemovedDevices = [];
+    $scope.assocRemovedDevices = [];
     $scope.notes = [];
     $scope.notesData = '';
     $scope.updateTime = $filter('getTimestamp');
@@ -176,7 +176,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
         $scope.notInterviewDevices = angular.copy([]);
         $scope.localyResetDevices = angular.copy([]);
         $scope.assocRemovedDevices = angular.copy([]);
-       
+
     };
 
 
@@ -404,20 +404,20 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
                 return;
             }
             var removedDevices = assocGedRemovedDevices(node, ZWaveAPIData);
-            if(removedDevices.length > 0){
-       
-            var obj = {};
-            obj['name'] = $filter('deviceName')(nodeId, node);
-            obj['id'] = nodeId;
-            obj['assoc'] = removedDevices;
-            $scope.assocRemovedDevices.push(obj);
-            cnt++;
-             }
+            if (removedDevices.length > 0) {
+
+                var obj = {};
+                obj['name'] = $filter('deviceName')(nodeId, node);
+                obj['id'] = nodeId;
+                obj['assoc'] = removedDevices;
+                $scope.assocRemovedDevices.push(obj);
+                cnt++;
+            }
         });
         return cnt;
     }
     ;
-    
+
     /**
      * assocGedRemovedDevices
      */
@@ -444,7 +444,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
             var cc = node.instances[0].commandClasses[0x8e].data;
             if (cc.groups.value >= 1) {
                 for (var grp_num = 1; grp_num <= parseInt(cc.groups.value, 10); grp_num++) {
-                    
+
                     data = cc[grp_num];
 
                     for (var i = 0; i < data.nodesInstances.value.length; i += 2) {
@@ -454,17 +454,18 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
                         if (!(targetNodeId in ZWaveAPIData.devices)) {
                             assocDevices.push({'id': targetNodeId, 'name': '(#' + targetNodeId + instanceId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId])});
                         }
-                        
+
                     }
                 }
             }
         }
-        if(assocDevices.length > 0){
-             //console.log(assocDevices)
+        if (assocDevices.length > 0) {
+            //console.log(assocDevices)
         }
-       
+
         return assocDevices;
-    };
+    }
+    ;
 });
 
 // Switch controller
@@ -3854,6 +3855,9 @@ appController.controller('ControllController', function($scope, $filter, $timeou
     $scope.failedNodes = [];
     $scope.replaceNodes = [];
     $scope.failedBatteries = [];
+    $scope.modelSucSicNode = 1;
+    $scope.sucNodes = [];
+     $scope.disableSUCRequest = true;
     $scope.controllerState = 0;
     $scope.secureInclusion;
     $scope.lastExcludedDevice;
@@ -4084,6 +4088,7 @@ appController.controller('ControllController', function($scope, $filter, $timeou
         var isPrimary = ZWaveAPIData.controller.data.isPrimary.value;
         var isRealPrimary = ZWaveAPIData.controller.data.isRealPrimary.value;
         var isSIS = ZWaveAPIData.controller.data.SISPresent.value;
+        var hasSUC = ZWaveAPIData.controller.data.SUCNodeId.value;
         var hasDevices = Object.keys(ZWaveAPIData.devices).length;
         $scope.controllerState = ZWaveAPIData.controller.data.controllerState.value;
         $scope.secureInclusion = ZWaveAPIData.controller.data.secureInclusion.value;
@@ -4092,6 +4097,10 @@ appController.controller('ControllController', function($scope, $filter, $timeou
         $scope.isRealPrimary = !isRealPrimary || hasDevices < 2 ? true : false;
         $scope.isPrimary = isPrimary;
         $scope.isSIS = isSIS;
+        if(hasSUC && hasSUC != controllerNodeId){
+            $scope.disableSUCRequest = false;
+        }
+        
         console.log('Controller isPrimary: ' + isPrimary);
         console.log('Controller isSIS: ' + isSIS);
         console.log('and there are other devices: ' + hasDevices + ' - ' + (hasDevices > 1 ? 'true' : 'false'));
@@ -4104,6 +4113,9 @@ appController.controller('ControllController', function($scope, $filter, $timeou
                 return;
             }
             $scope.devices.push({"id": nodeId, "name": $filter('deviceName')(nodeId, node)});
+            if (node.data.basicType.value == 2) {
+                $scope.sucNodes.push({"id": nodeId, "name": $filter('deviceName')(nodeId, node)});
+            }
         });
         /**
          * Loop throught failed nodes
@@ -4119,7 +4131,6 @@ appController.controller('ControllController', function($scope, $filter, $timeou
                     if (!node.data.isListening.value && !node.data.isFailed.value) {
                         $scope.failedBatteries.push({"id": nodeId, "name": $filter('deviceName')(nodeId, node)});
                     }
-
                 });
             }
             ;
@@ -4208,7 +4219,7 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
     $scope.data = {};
     $scope.ZWaveAPIData;
     $scope.updating = {};
-    $scope.cellState = function(nodeId, nnodeId, routesCount,nodeName,nnodeName) {
+    $scope.cellState = function(nodeId, nnodeId, routesCount, nodeName, nnodeName) {
         var node = $scope.nodes[nodeId].node;
         var nnode = $scope.nodes[nnodeId].node;
         var tooltip = nodeId + ': ' + nodeName + ' - ' + nnodeId + ': ' + nnodeName + ' ';
@@ -4297,7 +4308,7 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
             $scope.processUpdateNodesNeighbours(current, {});
         }
     };
-    $scope.updateData = function(nodeId,nodeName) {
+    $scope.updateData = function(nodeId, nodeName) {
         var node = $scope.ZWaveAPIData.devices[nodeId];
         if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
             return;
@@ -4305,12 +4316,12 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
         var line = [];
         var nnodeName;
         angular.forEach($scope.ZWaveAPIData.devices, function(nnode, nnodeId) {
-            if (nnodeId == 255 || nnode.data.isVirtual.value || nnode.data.basicType.value == 1){
-               return; 
+            if (nnodeId == 255 || nnode.data.isVirtual.value || nnode.data.basicType.value == 1) {
+                return;
             }
             nnodeName = $filter('deviceName')(nnodeId, nnode);
             //console.log(nodeId + ' ' + nodeName + ' - ' + nnodeId + ' ' + nnodeName)    
-            line[nnodeId] = $scope.cellState(nodeId, nnodeId, routesCount,nodeName,nnodeName);
+            line[nnodeId] = $scope.cellState(nodeId, nnodeId, routesCount, nodeName, nnodeName);
         });
         $scope.data[nodeId] = line;
     };
@@ -4327,7 +4338,7 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
             });
             // Loop throught devices and gather routesCount and cellState
             angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-                $scope.updateData(nodeId,$filter('deviceName')(nodeId, node));
+                $scope.updateData(nodeId, $filter('deviceName')(nodeId, node));
             });
         });
     };
