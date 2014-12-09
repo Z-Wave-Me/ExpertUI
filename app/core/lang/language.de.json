@@ -1,5 +1,8 @@
 {
+    "device_reset_locally": "Device reset locally",
+    "no_device_reset_locally": "No device reset locally",
     "device_security_interview": "Sicherheitsinterview",
+    "txt_assoc_removed": "assoziiertes gerät entfernt",
     "device_is_active": "Gerät ist wach",
     "no_zddx_file": "Keine Gerätebeschreibung", 
    "are_you_sure_remove_node": "Wollen Sie das Gerät wirklich endgültig entfernen?",

@@ -204,15 +204,15 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
             batteryDevices(ZWaveAPIData);
             $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
             console.log($scope.assocRemovedDevices)
-//            dataService.joinedZwaveData(function(data) {
-//                $scope.reset();
-//                notInterviewDevices(data.joined);
-//                countDevices(data.joined);
-//                assocRemovedDevices(data.joined);
-//                batteryDevices(data.joined);
-//                $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
-//
-//            });
+            dataService.joinedZwaveData(function(data) {
+                $scope.reset();
+                notInterviewDevices(data.joined);
+                countDevices(data.joined);
+                assocRemovedDevices(data.joined);
+                batteryDevices(data.joined);
+                $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
+
+            });
         });
     };
     if (!cfg.custom_ip) {
@@ -3134,7 +3134,6 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 
         // Set device image
         $scope.deviceImage = deviceImage;
-        //$filter('getDeviceName')(nodeId, null);
         // OBJ
         var obj = {};
         obj["a"] = {"key": "device_node_id", "val": nodeId};
@@ -3158,10 +3157,8 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             obj["r"] = {"key": "device_reset_locally", "val": '<i class="' + $filter('checkedIcon')(true) + '"></i>'};
         }
         if (typeof securityInterview === 'boolean') {
-            obj["s"] = {"key": "device_security_interview", "val": '<i class="' + $filter('checkedIcon')(securityInterview) + '"></i>'};
+            obj["s"] = {"key": "device_security_interview", "val": '<i class="' + $filter('checkedIcon')(securityInterview === true ? false : true) + '"></i>'};
         }
-        // SDK
-        //obj[99] = {"key": "device_description_resources", "val": ''};
         return obj;
     }
     /**

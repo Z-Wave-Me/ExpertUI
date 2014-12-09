@@ -1,6 +1,7 @@
 {
     "--- missing":"---",
     "device_security_interview": "Security interview",
+    "txt_assoc_removed": "removed associated devices",
     "--- /missing":"---",
     "assoc_remove_from": "Remove association from",
     "device_reset_locally": "Device reset locally",
