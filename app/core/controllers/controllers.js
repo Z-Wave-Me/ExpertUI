@@ -4210,7 +4210,7 @@ appController.controller('ControllController', function($scope, $filter, $timeou
     ;
 });
 // Routing controller
-appController.controller('RoutingController', function($scope, $log, $filter, $route, $timeout, dataService, cfg) {
+appController.controller('RoutingController', function($scope, $filter,dataService, cfg) {
 
     $scope.devices = [];
     $scope.nodes = {};
@@ -4272,7 +4272,7 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
                     if ("devices." + current.nodeId + ".data.neighbours" in updateZWaveAPIData) {
                         var obj = updateZWaveAPIData["devices." + current.nodeId + ".data.neighbours"]
                         $('#update' + current.nodeId).attr('class', $filter('getUpdated')(obj));
-                        $('#update' + current.nodeId).html($filter('getTime')(obj.updateTime));
+                        $('#update' + current.nodeId).html($filter('isTodayFromUnix')(obj.updateTime));
                         if (current.since < obj.updateTime && obj.invalidateTime < obj.updateTime) {
                             $scope.ZWaveAPIData.devices[current.nodeId].data.neighbours = obj;
                             $scope.nodes[current.nodeId].node = $scope.ZWaveAPIData.devices[current.nodeId];
@@ -4324,7 +4324,7 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
         $scope.data[nodeId] = line;
     };
     // Load data
-    $scope.load = function(lang) {
+    $scope.load = function() {
         dataService.getZwaveData(function(ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
             // Prepare devices and nodes
@@ -4340,7 +4340,7 @@ appController.controller('RoutingController', function($scope, $log, $filter, $r
             });
         });
     };
-    $scope.load($scope.lang);
+    $scope.load();
 });
 // Reorganization controller
 appController.controller('ReorganizationController', function($scope, $log, $filter, $route, $interval, $timeout, dataService, cfg) {
