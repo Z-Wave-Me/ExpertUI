@@ -7,7 +7,7 @@
 var appController = angular.module('appController', []);
 
 // Base controller
-appController.controller('BaseController', function($scope, $cookies, $filter, $location, cfg, dataService, langTransFactory, myCache) {
+appController.controller('BaseController', function($scope, $cookies, $filter, $location, cfg, dataService, deviceService,myCache) {
     // Custom IP
     $scope.customIP = {
         'url': cfg.server_url,
@@ -48,7 +48,7 @@ appController.controller('BaseController', function($scope, $cookies, $filter, $
     };
     // Get language lines
     $scope._t = function(key) {
-        return langTransFactory.get(key, $scope.languages);
+        return deviceService.getLangLine(key, $scope.languages);
     };
 
     // Watch for lang change

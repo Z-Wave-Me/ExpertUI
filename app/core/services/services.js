@@ -11,10 +11,22 @@ appService.service('deviceService', function($filter) {
     /// --- Public functions --- ///
 
     /**
+     * Get language line by key
+     */
+    this.getLangLine = function(key, languages) {
+        if (angular.isObject(languages)) {
+            if (angular.isDefined(languages[key])) {
+                return languages[key] !== '' ? languages[key] : key;
+            }
+        }
+        return key;
+    };
+
+    /**
      * Check if is not device
      */
-    this.notDevice = function(ZWaveAPIData,node, nodeId) {
-        if (nodeId == 255 || nodeId ==  ZWaveAPIData.controller.data.nodeId.value || node.data.isVirtual.value) {
+    this.notDevice = function(ZWaveAPIData, node, nodeId) {
+        if (nodeId == 255 || nodeId == ZWaveAPIData.controller.data.nodeId.value || node.data.isVirtual.value) {
             return true;
         }
         return false;

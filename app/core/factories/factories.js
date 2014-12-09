@@ -565,17 +565,3 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
 });
 
 
-// Translation factory - get language line by key
-appFactory.factory('langTransFactory', function() {
-    return {
-        get: function(key, languages) {
-            if (angular.isObject(languages)) {
-                if (angular.isDefined(languages[key])) {
-                    return languages[key] !== '' ? languages[key] : key;
-                }
-            }
-            return key;
-        }
-    };
-});
-
