@@ -3862,7 +3862,7 @@ appController.controller('ControllController', function($scope, $filter, $timeou
     $scope.secureInclusion;
     $scope.lastExcludedDevice;
     $scope.lastIncludedDevice;
-    $scope.isRealPrimary;
+    $scope.startLearnMode;
     $scope.lastIncludedDevice = null;
     $scope.lastExcludedDevice = null;
     $scope.restoreBackupStatus = 0;
@@ -4092,9 +4092,7 @@ appController.controller('ControllController', function($scope, $filter, $timeou
         var hasDevices = Object.keys(ZWaveAPIData.devices).length;
         $scope.controllerState = ZWaveAPIData.controller.data.controllerState.value;
         $scope.secureInclusion = ZWaveAPIData.controller.data.secureInclusion.value;
-        //$scope.isRealPrimary = !ZWaveAPIData.controller.data.isRealPrimary.value || ZWaveAPIData.devices.length <= 2 ? true : false;
-        //$scope.isRealPrimary = (ZWaveAPIData.controller.data.isRealPrimary.value && ZWaveAPIData.devices.length >= 2) ? false : true;
-        $scope.isRealPrimary = !isRealPrimary || hasDevices < 2 ? true : false;
+        $scope.startLearnMode = !isRealPrimary || hasDevices < 2 ? true : false;
         $scope.isPrimary = isPrimary;
         $scope.isSIS = isSIS;
         if(hasSUC && hasSUC != controllerNodeId){
@@ -4104,7 +4102,7 @@ appController.controller('ControllController', function($scope, $filter, $timeou
         console.log('Controller isPrimary: ' + isPrimary);
         console.log('Controller isSIS: ' + isSIS);
         console.log('and there are other devices: ' + hasDevices + ' - ' + (hasDevices > 1 ? 'true' : 'false'));
-        console.log('Learn mode: ' + $scope.isRealPrimary);
+        console.log('Learn mode: ' + $scope.startLearnMode);
         /**
          * Loop throught devices
          */
