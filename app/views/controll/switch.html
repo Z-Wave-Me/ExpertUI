@@ -60,8 +60,8 @@
 
             </thead>
             <tbody>
-                <tr ng-repeat="v in switches| orderBy:predicate:reverse" id="{{ v.rowId}}" ng-show="!v.multiChannel" ng-init="range.maxs = v.levelVal">
-                    <td data-title="#">{{ v.id}}<span ng-show="v.iId != 0">.{{v.iId}}</span></td>
+                <tr ng-repeat="v in switches| orderBy:predicate:reverse" id="{{ v.rowId}}" ng-show_="!v.multiChannel" ng-init="range.maxs = v.levelVal">
+                    <td data-title="#">{{ v.id}}<span ng-show="v.multiChannel || v.iId > 0">.{{v.iId}}</span></td>
                     <td data-title="{{ _t('device_name')}}"><switch-type-icon generic="{{ v.genericType}}" specific="{{ v.specificType}}"></switch-type-icon> {{ v.name}}</td>
             <td data-title="{{ _t('th_level')}}">
                 <strong class="row-level text-right" style="color: {{ v.levelColor}};">{{ v.level}}</strong> 
