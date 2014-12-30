@@ -476,7 +476,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
     }
     
     /**
-     * Load longuage file
+     * Load language file
      */
     function getLanguageFile(callback,lang) {
         var langFile = 'language.' + lang + '.json';

@@ -474,7 +474,7 @@ angApp.directive('configDefaultValue', function() {
 
     // Get enumerators
     function getEnum(enums, defaultValue,showDefaultValue) {
-        console.log(enums)
+        //console.log(enums)
         var input = showDefaultValue;
         if (!enums) {
             return;

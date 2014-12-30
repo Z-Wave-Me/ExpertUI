@@ -7,7 +7,7 @@
 var appController = angular.module('appController', []);
 
 // Base controller
-appController.controller('BaseController', function($scope, $cookies, $filter, $location, cfg, dataService, deviceService,myCache) {
+appController.controller('BaseController', function($scope, $cookies, $filter, $location, cfg, dataService, deviceService, myCache) {
     // Custom IP
     $scope.customIP = {
         'url': cfg.server_url,
@@ -3283,24 +3283,24 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             var conf = conf_html;
             var conf_num = conf['_number'];
             var conf_size = conf['_size'];
-            var conf_name = $scope._t('configuration_parameter') + ' ' + conf_num;
-            if (angular.isDefined(conf.name)) {
-
-                if (angular.isDefined(conf.name.lang[langId])) {
-                    conf_name = conf.name.lang[langId].__text;
-                } else if (angular.isDefined(conf.name.lang)) {
-                    conf_name = conf.name.lang.__text;
-                }
-            }
-            var conf_description = '';
-            if (angular.isDefined(conf.description)) {
-                if (angular.isDefined(conf.description.lang[langId])) {
-                    conf_description = conf.description.lang[langId].__text;
-                } else if (angular.isDefined(conf.description)) {
-                    conf_description = conf.description.lang.__text;
-                }
-            }
-
+            var conf_name = deviceService.configGetZddxLang($filter('hasNode')(conf, 'name.lang'),$scope.lang) || $scope._t('configuration_parameter') + ' ' + conf_num;
+            var conf_description = deviceService.configGetZddxLang($filter('hasNode')(conf, 'description.lang'),$scope.lang);
+// TODO: remove            if (angular.isDefined(conf.name)) {
+//
+//                if (angular.isDefined(conf.name.lang[langId])) {
+//                    conf_name = conf.name.lang[langId].__text;
+//                } else if (angular.isDefined(conf.name.lang)) {
+//                    conf_name = conf.name.lang.__text;
+//                }
+//            }
+//            var conf_description = '';
+//            if (angular.isDefined(conf.description)) {
+//                if (angular.isDefined(conf.description.lang[langId])) {
+//                    conf_description = conf.description.lang[langId].__text;
+//                } else if (angular.isDefined(conf.description)) {
+//                    conf_description = conf.description.lang.__text;
+//                }
+//            }
             var conf_size = conf['_size'];
             var conf_default_value = null;
             var conf_type = conf['_type'];
@@ -3346,23 +3346,26 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                         var value = value_html;
                         var value_from = parseInt(value['_from'], 16);
                         var value_to = parseInt(value['_to'], 16);
-                        var value_description = '';
-                        if (angular.isDefined(value.description)) {
-                            //value_description = value.description.lang[1].__text;
-                            value_description = $filter('hasNode')(value, 'description.lang[1].__text');
-
-                            if (angular.isDefined(value.description.lang[langId])) {
-                                value_description = value.description.lang[langId].__text;
-                            }
-                        }
-                        if (angular.isDefined(value.lang)) {
-                            value_description = value.lang[1].text;
-                            angular.forEach(value.lang, function(lv, lk) {
-                                if (lk == langId) {
-                                    value_description = lv.__text;
-                                }
-                            });
-                        }
+                        var value_description = deviceService.configGetZddxLang($filter('hasNode')(value, 'description.lang'),$scope.lang);
+                        
+                        
+// TODO: remove
+//                        if (angular.isDefined(value.description)) {
+//                            //value_description = value.description.lang[1].__text;
+//                            value_description = $filter('hasNode')(value, 'description.lang[1].__text');
+//
+//                            if (angular.isDefined(value.description.lang[langId])) {
+//                                value_description = value.description.lang[langId].__text;
+//                            }
+//                        }
+//                        if (angular.isDefined(value.lang)) {
+//                            value_description = value.lang[1].text;
+//                            angular.forEach(value.lang, function(lv, lk) {
+//                                if (lk == langId) {
+//                                    value_description = lv.__text;
+//                                }
+//                            });
+//                        }
                         var value_repr = value_from; // representative value for the range
                         if (conf_default !== null)
                             if (value_from <= conf_default && conf_default <= value_to) {
@@ -3393,6 +3396,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                         confNum: conf_num,
                         confSize: conf_size
                     };
+
                     break;
                 case 'range':
 

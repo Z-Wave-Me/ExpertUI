@@ -60,6 +60,13 @@ appService.service('deviceService', function($filter) {
         return isLocalyReset(node);
     };
 
+    /**
+     * Get language from zddx
+     */
+    this.configGetZddxLang = function(node, lang) {
+        return configGetZddxLang(node, lang);
+    };
+
 
     /// --- Private functions --- ///
     /**
@@ -73,5 +80,32 @@ appService.service('deviceService', function($filter) {
             }
         }
         return isLocalyReset;
+    }
+
+    /**
+     *  Get language from zddx
+     */
+    function configGetZddxLang(langs, currLang) {
+       var label = null;
+       if (!langs) {
+            return label;
+        }
+        
+       if (angular.isArray(langs)) {
+            angular.forEach(langs, function(lang, index) {
+                if (("__text" in lang) && (lang["_xml:lang"] == currLang)) {
+                    label = lang.__text;
+                    return false;
+                }
+                if (("__text" in lang) && (lang["_xml:lang"] == "en")) {
+                    label = lang.__text;
+                }
+            });
+        } else {
+            if (("__text" in langs)) {
+                label = langs.__text;
+            }
+        }
+        return label;
     }
 });
