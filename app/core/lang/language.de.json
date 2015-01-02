@@ -1,4 +1,5 @@
 {
+    "thermostat_mode_change": "Moduswechesl",
     "nm_get_suc_nodeid": "Ermittle Gerätenummer des SUC",
     "ctrl_info_suc_sis_title": "SUC/SIS im Netzwerk:",
 	"nm_start_suc_on_node": "am Gerät",

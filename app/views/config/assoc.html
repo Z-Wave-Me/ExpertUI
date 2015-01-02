@@ -46,12 +46,16 @@
                     <div class="form-inline">
                         {{ _t('assoc_remove_from')}} {{removeData.nodeId| deviceName:removeData.node}} {{ _t('to_locate')}} <br/>
                         <div class="form-group">
-                            <select ng-model="assocToNode" class="form-control" ng-options="k as v for (k,v) in removeNodes">
+                             <select ng-init="assocToNode = 0" ng-model="assocToNode" class="form-control" ng-options="k as v for (k,v) in removeNodes">
                                 <option value="">&lt; {{ _t('assoc_select_to_node')}} &gt;</option>
                             </select>
+                            <!--<select ng-model="assocToNode" class="form-control">
+                                <option value="">&lt; {{ _t('assoc_select_to_instance')}} &gt;</option>
+                                <option ng-repeat="(k,v) in removeNodes" value="{{k}}">{{v}}</option>
+                            </select>-->
                         </div>
                         <div class="form-group" ng-show="removeInstances[assocToNode] != undefined">
-                            <select ng-model="assocToInstance" class="form-control" ng-options="k as v for (k,v) in removeInstances[assocToNode]">
+                            <select ng-init="assocToInstance = ''" ng-model="assocToInstance" class="form-control" ng-options="k as v for (k,v) in removeInstances[assocToNode]">
                                 <option value="">&lt; {{ _t('assoc_select_to_instance')}} &gt;</option>
                             </select>
                         </div>

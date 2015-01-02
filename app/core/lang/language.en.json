@@ -11,6 +11,7 @@
     "nm_stop_suc_sis": "Disable SUC/SIS",
     "nm_start_suc_on_node": "on node",
     "--- ":"---",
+    "thermostat_mode_change": "Change mode",
     "assoc_remove_from": "Remove association from",
     "device_reset_locally": "Device reset locally",
     "no_device_reset_locally": "No device reset locally",
