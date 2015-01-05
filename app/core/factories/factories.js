@@ -74,7 +74,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         }
         else {
 
-            pageLoader();
+            //pageLoader();
             console.log('NOOOOT CACHED');
             var request = $http({
                 method: "POST",

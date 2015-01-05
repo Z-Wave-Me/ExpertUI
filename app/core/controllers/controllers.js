@@ -2859,9 +2859,13 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     $scope.runCmdDeviceSelect = function(nodeId, file) {
         var cmd = 'devices[' + nodeId + '].LoadXMLFile("' + file + '")';
         dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
-        $window.location.reload();
+        dataService.purgeCache();
+        $scope.load(nodeId, false);
+        $scope.load(nodeId, true);
+        //$scope.refresh = true;
+        //$window.location.reload();
         //$location.path('/config/configuration/' + nodeId);
-        console.log(cmd);
+        console.log($scope.refresh);
     };
 
     /**
