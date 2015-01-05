@@ -1,0 +1,26 @@
+<!-- Dimmer view -->
+<div ng-controller="DimmerController">
+    <div class="page-header"><h1>Dimmer</h1></div>
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <strong>Content is not defined.</strong> 
+    </div>
+    <div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="i in data">
+                <td>{{ i.id }}</td>
+                <td>{{ i.name }}</td>
+                <td><button class="btn btn-primary">Update</button></td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+</div>

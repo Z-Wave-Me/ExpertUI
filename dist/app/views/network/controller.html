@@ -1,0 +1,119 @@
+<!-- Controller info view -->
+<div ng-controller="ControllerController">
+    <div class="page-header"><h1>{{_t('nav_controller_info')}}</h1></div>
+    <div class="well well-sm">
+        <a href="#network/queue" target="_blank" class="btn btn-primary" _ngs-click="openQueue()"><i class="fa fa-search"></i> {{_t('nm_inspect_queue_title')}}</a> <em>{{_t('txt_inspect_queue')}}</em>
+            
+         </div>
+    <div class="table-responsive">
+        <table class="table table-condensed">
+            <tbody>
+                <tr><td colspan="2"><h3>{{_t('ctrl_info_role_title')}}</h3></td></tr>
+                <tr><td id="ctrl_info_nodeid_title">{{_t('ctrl_info_nodeid_title')}}</td><td id="ctrl_info_nodeid_value">{{info.ctrl_info_nodeid_value}}</td></tr>				
+                <tr><td id="ctrl_info_homeid_title">{{_t('ctrl_info_homeid_title')}}</td><td id="ctrl_info_homeid_value">{{info.ctrl_info_homeid_value}}</td></tr>
+                <tr><td id="ctrl_info_primary_title">{{_t('ctrl_info_primary_title')}}</td><td id="ctrl_info_primary_value">{{info.ctrl_info_primary_value}}</td></tr>	
+                <tr><td id="ctrl_info_real_primary_title">{{_t('ctrl_info_real_primary_title')}}</td><td id="ctrl_info_real_primary_value">{{info.ctrl_info_real_primary_value}}</td></tr>					
+                <tr><td id="ctrl_info_suc_sis_title">{{_t('ctrl_info_suc_sis_title')}}</td><td id="ctrl_info_suc_sis_value">{{info.ctrl_info_suc_sis_value}}</td></tr>
+
+                <tr><td colspan="2"><h3>{{_t('ctrl_info_hw_title')}}</h3></td></tr>
+                <tr><td id="ctrl_info_hw_vendor_title">{{_t('ctrl_info_hw_vendor_title')}}</td><td id="ctrl_info_hw_vendor_value">{{info.ctrl_info_hw_vendor_value}}</td></tr>				
+                <tr><td id="ctrl_info_hw_product_title">{{_t('ctrl_info_hw_product_title')}}</td><td id="ctrl_info_hw_product_value">{{info.ctrl_info_hw_product_value}}</td></tr>			
+                <tr><td id="ctrl_info_hw_chip_title">{{_t('ctrl_info_hw_chip_title')}}</td><td id="ctrl_info_hw_chip_value">{{info.ctrl_info_hw_chip_value}}</td></tr>
+
+                <tr><td colspan="2"><h3>{{_t('ctrl_info_sw_title')}}</h3></td></tr>
+                <tr><td id="ctrl_info_sw_lib_title">{{_t('ctrl_info_sw_lib_title')}}</td><td id="ctrl_info_sw_lib_value">{{info.ctrl_info_sw_lib_value}}</td></tr>				
+                <tr><td id="ctrl_info_sw_sdk_title">{{_t('ctrl_info_sw_sdk_title')}}</td><td id="ctrl_info_sw_sdk_value">{{info.ctrl_info_sw_sdk_value}}</td></tr>			
+                <tr><td id="ctrl_info_sw_api_title">{{_t('ctrl_info_sw_api_title')}}</td><td id="ctrl_info_sw_api_value">{{info.ctrl_info_sw_api_value}}</td></tr>
+
+                <tr><td colspan="2"><h3>{{_t('ctrl_info_sw_rev_title')}}</h3></td></tr>
+                <tr><td id="ctrl_info_sw_rev_ver_title">{{_t('ctrl_info_sw_rev_ver_title')}}</td><td id="ctrl_info_sw_rev_ver_value">{{info.ctrl_info_sw_rev_ver_value}}</td></tr>			
+                <tr><td id="ctrl_info_sw_rev_id_title">{{_t('ctrl_info_sw_rev_id_title')}}</td><td id="ctrl_info_sw_rev_id_value">{{info.ctrl_info_sw_rev_id_value}}</td></tr>			
+                <tr><td id="ctrl_info_sw_rev_date_title">{{_t('ctrl_info_sw_rev_date_title')}}</td><td id="ctrl_info_sw_rev_date_value">{{info.ctrl_info_sw_rev_date_value}}</td></tr>
+
+            </tbody>
+        </table>
+    </div>
+    <div class="well well-sm">
+        <!-- ctrl_info_data  -->
+        <button class="btn btn-primary" 
+                ng-controller="CommandModalController" 
+                ng-click="showModal('#modal_controller', ZWaveAPIData.controller.data)"
+                >{{_t('ctrl_info_data')}}</button>
+
+        <!-- ctrl_info_device_data  -->
+        <button class="btn btn-primary" 
+                ng-controller="CommandModalController" 
+                ng-click="showModal('#modal_controller', ZWaveAPIData.devices[ZWaveAPIData.controller.data.nodeId.value].data)"
+                >{{_t('ctrl_info_device_data')}}</button>
+
+        <!-- nm_inspect_queue_title  -->
+        <!-- <button 
+            class="btn btn-primary" 
+            ng-click="inspectQueue('#modal_queue')"
+            >{{_t('nm_inspect_queue_title')}}</button> -->
+         <!-- <a href="#network/queue" class="btn btn-primary" target="_blank">{{_t('nm_inspect_queue_title')}}</a>  -->
+
+        <!-- nm_send_node_information  -->
+        <button class="btn btn-primary"
+                ng-click="runCmd('controller.SendNodeInformation()')"
+                >{{_t('nm_send_node_information')}}</button>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{_t('ctrl_info_func_list_title')}}</h3>
+        </div>
+        <div class="panel-body" ng-bind-html="funcList | toTrusted"></div>
+    </div> 
+
+    <!-- Modal command -->
+    <div class="modal fade" id="modal_controller" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{_t('th_command_class')}}</h4>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{_t('btn_cancel')}}</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.Modal -->
+
+    <!-- Modal debugging -->
+    <div class="modal fade modal_wide" id="modal_queue" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{_t('nm_inspect_queue_title')}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                    <table id="inspect_queue_table" class="table-striped">
+                        <thead>
+                            <tr>
+                                <th>n</th><th>U</th><th>W</th><th>S</th><th>E</th><th>D</th>
+                                <th>Ack</th><th>Resp</th><th>Cbk</th><th>Timeout</th>
+                                <th>NodeId</th><th>Description</th><th>Progress</th><th>Buffer</th>
+                            </tr> 
+                        </thead>
+                        <tbody id="inspect_queue_table_body"></tbody>
+                    </table> 
+                        <div>
+                    <div id="inspect_queue_len"></div><br />
+                    <div><strong>{{_t('inspect_queue_legend_title')}}</strong>
+                     <p ng-bind-html="_t('inspect_queue_legend_help') | toTrusted"></p>
+                     </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"  ng-click="inspectQueue('#modal_queue',true)">{{_t('btn_cancel')}}</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.Modal -->
+
+</div><!-- /ng-controler -->

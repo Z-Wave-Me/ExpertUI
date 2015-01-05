@@ -1,0 +1,30 @@
+<!-- Queue view -->
+
+<div ng-controller="QueueController">
+    <div class="page-header"><h1>{{_t('nm_inspect_queue_title')}}</h1></div>
+    <div><strong>{{_t('inspect_queue_legend_title')}}</strong>
+        <p ng-bind-html="_t('inspect_queue_legend_help') | toTrusted"></p>
+    </div>
+    <div class="table-responsive">
+        <table id="inspect_queue_table" class="table-striped">
+            <thead>
+                <tr>
+                    <th>n</th><th>U</th><th>W</th><th>S</th><th>E</th><th>D</th>
+                    <th>Ack</th><th>Resp</th><th>Cbk</th><th>{{_t('th_timeout')}}</th>
+                    <th>{{_t('th_nodeid')}}</th><th>{{_t('th_description')}}</th><th>{{_t('th_progress')}}</th><th>{{_t('th_buffer')}}</th>
+                </tr> 
+            </thead>
+            <tbody id="inspect_queue_table_body"></tbody>
+        </table> 
+        <div>
+            <div id="inspect_queue_len"></div><br />
+        </div>
+    </div>
+    <script>
+                function closeWindow() {
+                    window.open('', '_parent', '');
+                    window.close();
+                }
+    </script> 
+    <a class="btn btn-primary" href="javascript:closeWindow();">{{_t('btn_close')}}</a>
+</div><!-- /ng-controler -->

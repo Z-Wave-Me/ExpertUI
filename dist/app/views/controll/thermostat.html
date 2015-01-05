@@ -1,0 +1,80 @@
+<!-- Thermostat view -->
+<div ng-controller="ThermostatController">
+    <div class="page-header"><h1>{{_t('nav_thermostat')}}</h1></div>
+    <div id="table_mobile">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        <a href="" ng-click="orderBy('id')">#  
+                            <span ng-show="predicate == 'id'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="" ng-click="orderBy('name')">{{ _t('device_name')}}
+                            <span ng-show="predicate == 'name'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="" ng-click="orderBy('temp')">{{ _t('switch_point_temp')}}
+                            <span ng-show="predicate == 'temp'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="" ng-click="orderBy('updateTime')">{{ _t('datetime')}}
+                            <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th>&nbsp;</th>
+                    <th class="th-slider">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="v in thermostats| orderBy:predicate:reverse" id="{{ v.rowId}}">
+                    <td data-title="#">{{ v.id}}</td>
+                    <td data-title="{{ _t('device_name')}}"><i class="fa fa-sort-amount-asc fa-lg"></i> {{ v.name}}</td>
+                    <td data-title="{{ _t('switch_point_temp')}}" class="row-level">
+                        <span class="level-val" ng-show="v.level != null">{{ v.level}}</span>&nbsp;<span  ng-show="v.hasExt">&deg;C</span>
+                    </td>
+                    <td data-title="{{ _t('datetime')}}" class="row-time">
+                        <span class="is-updated-{{v.isUpdated}}" ng-show="v.level != null">{{ v.updateTime | isTodayFromUnix }}</span>
+                    </td>
+                    <td> 
+                        <!-- <span ng-bind="rangeSlider[$index]"></span>  -->
+                        <div class="btn-group" ng-show="v.changeTemperature">
+                            <button 
+                                class="btn btn-info spinner-selector_"
+                                ng-click="tempChange(v.urlToStore, $index, '-')"
+                                data-spinner-scale="1" 
+                                data-spinner-max="{{cfg.thermostat_range.max}}" 
+                                data-spinner-min="{{cfg.thermostat_range.min}}">{{_t.('btn_minus')}}</button>
+                            <button 
+                                class="btn btn-primary spinner-selector_"
+                                ng-click="tempChange(v.urlToStore, $index, '+')"
+                                data-spinner-scale="1" 
+                                data-spinner-max="{{cfg.thermostat_range.max}}" 
+                                data-spinner-min="{{cfg.thermostat_range.min}}">{{_t.('btn_plus')}}</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-show="v.changeTemperature">
+                            <div id="range_slider_{{$index}}" 
+                                 class="app-range-slider" 
+                                 range-slider 
+                                 min='cfg.thermostat_range.min' 
+                                 max='cfg.thermostat_range.max'  
+                                 model-max="rangeSlider[$index]" 
+                                 pin-handle="min" 
+                                 on-handle-up="sliderChange(v.urlToStore,$index)">
+                            </div>
+                        </div>
+                        <div ng-show="!v.changeTemperature">
+                            <button class="btn btn-info"
+                                ng-click="changeMode(v.urlToStore,v.curThermMode)">{{_t.('thermostat_mode_change')}}</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

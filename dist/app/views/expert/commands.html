@@ -1,0 +1,16 @@
+<!-- Commands view -->
+<div ng-controller="CommandsController">
+    <div class="page-header"><h1>{{_t('nav_expert_commands')}}</h1></div>
+    <select name="devices" class="form-control" style="width: 260px;" ng-model="detailId" ng-change="goToDetail(detailId)">
+        <option  ng-repeat="v in devices| orderBy:predicate:reverse" value="{{v.id}}">{{v.name}}</option>
+    </select>
+    <hr />
+    <div class="row" id="row_commands">
+        <div ng-repeat="v in devices| orderBy:predicate:reverse" class="col-sm-4 col-md-1">
+            <div class="thumbnail">
+                <p class="thumbnail-title"><a href="#expert/commands/{{ v.id}}">#{{ v.id}} {{ v.name}}</a></p>
+                <a href="#expert/commands/{{ v.id}}"><img src="app/images/device_placeholder.png" class="img-responsive img-thumbnail_" alt="Product title 2"></a>
+            </div>
+        </div>
+    </div>
+</div>

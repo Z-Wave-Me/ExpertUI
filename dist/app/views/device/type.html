@@ -1,0 +1,72 @@
+<!-- Type view -->
+<div ng-controller="TypeController">
+    <div class="page-header"><h1>{{_t('nav_type_info')}}</h1></div>
+    <div id="table_mobile">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        <a href="" ng-click="orderBy('id')">#  
+                            <span ng-show="predicate == 'id'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="" ng-click="orderBy('name')">{{ _t('device_name')}}
+                            <span ng-show="predicate == 'name'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="" ng-click="orderBy('security')">{{ _t('th_security')}}
+                            <span ng-show="predicate == 'security'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="" ng-click="orderBy('mwief')" title="{{ _t('th_mwief_tip')}}" tooltip>{{ _t('th_mwief')}}
+                            <span ng-show="predicate == 'mwief'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+
+                    <th>
+                        <a href="" ng-click="orderBy('ZWavePlusInfo')">{{ _t('th_zwaveplus')}}
+                            <span ng-show="predicate == 'zWavePlus'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="" ng-click="orderBy('sdk')">{{ _t('th_sdk')}}
+                            <span ng-show="predicate == 'sdk'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="" ng-click="orderBy('appVersion')">{{ _t('th_appversion')}}
+                            <span ng-show="predicate == 'appVersion'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="" ng-click="orderBy('type')">{{ _t('device_description_device_type')}}
+                            <span ng-show="predicate == 'type'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="v in devices| orderBy:predicate:reverse" id="{{ v.rowId}}">
+                    <td data-title="#">{{ v.id}}</td>
+                    <td data-title="{{ _t('device_name')}}">
+            <switch-type-icon generic="{{ v.genericType}}" specific="{{ v.specificType}}"></switch-type-icon> <a href="#config/configuration/{{v.id}}">{{ v.name}}</a>
+            </td>
+            <td data-title="{{ _t('th_security')}}"><i class="{{ v.security | securityIcon }}"></i>&nbsp;</td>
+            <td data-title="{{ _t('th_mwief')}}"><i class="{{v.mwief| mwiefIcon}}"></i>&nbsp;</td>
+            <td data-title="{{ _t('th_zwaveplus')}}"><i class="{{ v.ZWavePlusInfo | zWavePlusIcon}}"></i>&nbsp;</td>
+            <td data-title="{{ _t('th_sdk')}}">
+                <span ng-show="v.fromSdk">{{ v.sdk}}</span>
+                <span ng-show="!v.fromSdk">({{ v.sdk}})</span>
+
+
+            </td>
+            <td data-title="{{ _t('th_appversion')}}">{{ v.appVersion}}&nbsp;</td>
+            <td data-title="{{ _t('device_description_device_type')}}">{{ v.deviceType}} &nbsp;<!-- | <em>Gen: {{ v.genericType}}, Spec: {{ v.specificType}}</em> --></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

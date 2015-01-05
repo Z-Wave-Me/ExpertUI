@@ -1,0 +1,78 @@
+<!-- Commands view -->
+<div ng-controller="CommandsDetailController">
+
+    <div class="page-header">
+        <div class="row">
+            <div class="col-md-6">
+                <h1>{{_t('nav_expert_commands')}} - {{deviceName}}</h1>
+            </div>
+            <div class="col-md-6">
+                <select name="devices" class="form-control" style="width: 260px;" ng-model="detailId" ng-change="goToDetail(detailId)" >
+                    <option ng-repeat="v in devices| orderBy:predicate:reverse" value="{{v.id}}" selected="{{v.slected}}">{{v.name}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Instance</th>
+                    <th>CommandClass</th>
+                    <th>Command / Parameter</th>
+
+            </thead>
+            <tbody>
+                <tr ng-repeat="(k,v) in commands | orderBy:predicate:reverse" id="{{ v.nodeId}}">
+                    <td><a ng-show="$index == 0" href="" ng-controller="CommandModalController" ng-click="showModal('#modal_command', v.cmdDataIn)">{{v.instanceId}}</a></td>
+                    <td><a class="btn btn-info" href="" ng-controller="CommandModalController" ng-click="showModal('#modal_command', v.cmdData)">{{v.commandClass}}</a></td>
+                    <td>
+                        <div class="commands-data" ng-repeat="c in v.command| orderBy:predicate:reverse" ng-init="formName = 'form_' + v.commandClass + '_' + c.data.method + '_' + $index">
+                            <form name="{{formName}}" id="{{formName}}" ng-submit="submitForm(formName, v.cmd + '.' + c.data.method)" class="form" role="form" novalidate>
+                                <div class="commands-data-control">
+                                    <div class="form-inline" ng-repeat="(pk,p) in c.data.params">
+                                        <expert-command-input 
+                                            collection='p' 
+                                            values='c.data.values[pk]'
+                                            devices='devices'
+                                            get-node-devices='getNodeDevices'
+                                            ></expert-command-input>
+                                        <!-- {{pk}} {{p}} 
+                                        {{c.data.values[pk]}}-->
+
+                                    </div>
+                                    <button
+                                        type="submit"
+                                        class="btn btn-primary" 
+                                        id="btn_update_{{ v.rowId}}"
+                                        >{{c.data.method}}</button>
+                                </div>
+
+
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal debugging -->
+    <div class="modal fade" id="modal_command" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{_t('commandClass')}}</h4>
+                </div>
+                <div class="modal-body">
+                    Content comes here
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{_t('btn_cancel')}}</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.Modal -->
+
+</div>
