@@ -7,7 +7,7 @@
 var appController = angular.module('appController', []);
 
 // Base controller
-appController.controller('BaseController', function($scope, $cookies, $filter, $location, cfg, dataService, deviceService, myCache) {
+appController.controller('BaseController', function($scope, $cookies, $filter, $location, $window,cfg, dataService, deviceService, myCache) {
     // Custom IP
     $scope.customIP = {
         'url': cfg.server_url,
@@ -32,6 +32,7 @@ appController.controller('BaseController', function($scope, $cookies, $filter, $
     $scope.lang = (angular.isDefined($cookies.lang) ? $cookies.lang : cfg.lang);
     $('.current-lang').html($scope.lang);
     $scope.changeLang = function(lang) {
+        $window.alert($scope._t('language_select_reload_interface'));
         $cookies.lang = lang;
         $scope.lang = lang;
     };
