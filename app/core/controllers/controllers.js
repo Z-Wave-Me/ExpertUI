@@ -1093,6 +1093,7 @@ appController.controller('MetersController', function($scope, $filter, dataServi
 appController.controller('ThermostatController', function($scope, $filter, dataService) {
     $scope.thermostats = [];
     $scope.rangeSlider = [];
+    $scope.mChangeMode = [];
     $scope.reset = function() {
         $scope.thermostats = angular.copy([]);
     };
@@ -1146,8 +1147,11 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
         dataService.runCmd(url, false, $scope._t('error_handling_data'));
     };
     // Change mode
-     $scope.changeMode = function(cmd) {
-          var url = cmd + '.Set(1)';
+     $scope.changeMode = function(cmd,mode) {
+         if(!mode){
+             return;
+         }
+          var url = cmd + '.Set('+ mode + ')';
          dataService.runCmd(url);
     };
    
@@ -1176,33 +1180,46 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
                 }
 
                 var ccId;
-                var curThermMode = 1;
+                var curThermMode = getCurrentThermostatMode(instance);
                 var level = null;
                 var hasExt = false;
                 var changeTemperature = false;
                 var updateTime;
                 var invalidateTime;
                 var modeType = null;
+                var modeList = {};
 
                 var hasThermostatMode = 0x40 in instance.commandClasses;
                 var hasThermostatSetpoint = 0x43 in instance.commandClasses;
+                var isThermostatMode = false;
+                 var isThermostatSetpoint = false;
                 var hasThermostatSetback = 0x47 in instance.commandClasses;
                 var hasClimateControlSchedule = 0x46 in instance.commandClasses;
+                var curThermModeName = ''; 
 
                 if (!hasThermostatSetpoint && !hasThermostatMode) { // to include more Thermostat* CCs
                     return; // we don't want devices without ThermostatSetpoint AND ThermostatMode CCs
                 }
                 //console.log( nodeId + ': ' + curThermMode);
                 if (hasThermostatMode) {
-                    ccId = 0x40;
+                    ccId = 0x43;
+                } 
+                else if (hasThermostatSetpoint) {
+                    ccId = 0x43;
+
+                }
+                if (hasThermostatMode) {
+                    curThermModeName = (curThermMode in instance.commandClasses[0x40].data) ? instance.commandClasses[0x40].data[curThermMode].modeName.value : "???";
+                    modeList = getModeList(instance.commandClasses[0x40].data);
                     if (curThermMode in instance.commandClasses[0x40].data) {
                         updateTime = instance.commandClasses[0x40].data.mode.updateTime;
                         invalidateTime = instance.commandClasses[0x40].data.mode.invalidateTime;
                         modeType = 'hasThermostatMode';
+                        isThermostatMode = true;
 
                     }
-                } else if (hasThermostatSetpoint) {
-                    ccId = 0x43;
+                } 
+                if (hasThermostatSetpoint) {
                     if (angular.isDefined(instance.commandClasses[0x43].data[curThermMode])) {
                         level = instance.commandClasses[0x43].data[curThermMode].setVal.value;
                         updateTime = instance.commandClasses[0x43].data[curThermMode].updateTime;
@@ -1210,12 +1227,10 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
                         changeTemperature = true;
                         hasExt = true;
                         modeType = 'hasThermostatSetpoint';
+                        isThermostatSetpoint = true;
                     }
 
                 }
-                //console.log(instance.commandClasses[0x43]);
-                //
-//curThermMode = getCurrentThermostatMode(instance);
 
                 // Set object
                 var obj = {};
@@ -1234,8 +1249,10 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
                 obj['isUpdated'] = (updateTime > invalidateTime ? true : false);
                 obj['urlToStore'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']';
                 obj['cmdToUpdate'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.' + curThermMode;
-                obj['cmdToMode'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Set(' + curThermMode + ')';
                 obj['modeType'] = modeType;
+                obj['isThermostatMode'] = isThermostatMode;
+                 obj['isThermostatSetpoint'] = isThermostatSetpoint;
+                 obj['modeList'] = modeList;
                 $scope.thermostats.push(obj);
                 $scope.rangeSlider.push(obj['range_' + nodeId] = obj['level']);
                 //console.log(obj);
@@ -1256,11 +1273,14 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
             var level = null;
             var updateTime;
             var invalidateTime;
+            if(!angular.isObject(data.update)){
+                return;
+            }
             if (v.cmdToUpdate in data.update) {
                 if (v.modeType == 'hasThermostatMode') {
                     updateTime = obj.mode.updateTime;
                     invalidateTime = obj.mode.invalidateTime;
-                } else if (v.modeType == 'hasThermostatSetpoint') {
+                } if (v.modeType == 'hasThermostatSetpoint') {
                     updateTime = obj.updateTime;
                     invalidateTime = obj.invalidateTime;
                     level = obj.setVal.value;
@@ -1279,23 +1299,41 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
     // used to pick up thermstat mode
     function getCurrentThermostatMode(_instance) {
         var hasThermostatMode = 0x40 in _instance.commandClasses;
-        var _curThermMode;
+        
+        var _curThermMode = 1;
         if (hasThermostatMode) {
             _curThermMode = _instance.commandClasses[0x40].data.mode.value;
             if (isNaN(parseInt(_curThermMode, 10)))
                 _curThermMode = null; // Mode not retrieved yet
-        } else {
-            // we pick up first available mode, since not ThermostatMode is supported to change modes
-            _curThermMode = null;
-            angular.forEach(_instance.commandClasses[0x43].data, function(name, k) {
-                if (!isNaN(parseInt(name, 10))) {
-                    _curThermMode = parseInt(name, 10);
-                    return false;
-                }
-            });
-        }
-        ;
+        } 
+//        else {
+//            // we pick up first available mode, since not ThermostatMode is supported to change modes
+//            _curThermMode = null;
+//            angular.forEach(_instance.commandClasses[0x43].data, function(name, k) {
+//                if (!isNaN(parseInt(name, 10))) {
+//                    _curThermMode = parseInt(name, 10);
+//                    return false;
+//                }
+//            });
+//        }
+//        ;
         return _curThermMode;
+    }
+    ;
+    // used to pick up thermstat mode
+    function getModeList(data){
+        var list = []
+       angular.forEach(data, function(v, k) {
+            if (!k || isNaN(parseInt(k, 10))){
+                return;
+            }
+             var obj = {};
+             obj['key'] = k;
+            obj['val'] = $filter('hasNode')(v,'modeName.value');
+            list.push(obj);
+         });
+        
+        return list;
     }
     ;
 });

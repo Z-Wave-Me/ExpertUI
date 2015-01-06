@@ -172,6 +172,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
      */
     function  joinedZwaveData(callback) {
         var time = Math.round(+new Date() / 1000);
+       
         var result = {};
         var refresh = function() {
             //console.log(apiData);
@@ -182,10 +183,13 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
             });
             request.success(function(data) {
                 $('#update_time_tick').html($filter('getCurrentTime')(time));
-                if (apiData === undefined)
+                if (!apiData|| !data)
                     return;
                 time = data.updateTime;
                 angular.forEach(data, function(obj, path) {
+                   if(!angular.isString(path)){
+                       return;
+                   }
                     var pobj = apiData;
                     var pe_arr = path.split('.');
                     for (var pe in pe_arr.slice(0, -1)) {

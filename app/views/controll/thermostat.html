@@ -25,6 +25,7 @@
                             <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
+                     <th>&nbsp;</th>
                     <th>&nbsp;</th>
                     <th class="th-slider">&nbsp;</th>
                 </tr>
@@ -39,9 +40,18 @@
                     <td data-title="{{ _t('datetime')}}" class="row-time">
                         <span class="is-updated-{{v.isUpdated}}" ng-show="v.level != null">{{ v.updateTime | isTodayFromUnix }}</span>
                     </td>
+                    <td>
+                        
+                        <div class="form-inline" ng-show="v.isThermostatMode">
+                            <select class="form-control" ng-model="mChangeMode[v.id]" ng-change="changeMode(v.urlToStore,mChangeMode[v.id])">
+                                <option value="">--- {{_t.('thermostat_mode_change')}} ---</option>
+                                <option ng-repeat="m in v.modeList" value="{{m.key}}" ng-selected="m.key == v.curThermMode">{{m.val}}</option>
+                                  </select>
+                        </div>
+                    </td>
                     <td> 
                         <!-- <span ng-bind="rangeSlider[$index]"></span>  -->
-                        <div class="btn-group" ng-show="v.changeTemperature">
+                        <div class="btn-group" ng-show="v.isThermostatSetpoint">
                             <button 
                                 class="btn btn-info spinner-selector_"
                                 ng-click="tempChange(v.urlToStore, $index, '-')"
@@ -57,7 +67,7 @@
                         </div>
                     </td>
                     <td>
-                        <div ng-show="v.changeTemperature">
+                        <div ng-show="v.isThermostatSetpoint">
                             <div id="range_slider_{{$index}}" 
                                  class="app-range-slider" 
                                  range-slider 
@@ -67,10 +77,6 @@
                                  pin-handle="min" 
                                  on-handle-up="sliderChange(v.urlToStore,$index)">
                             </div>
-                        </div>
-                        <div ng-show="!v.changeTemperature">
-                            <button class="btn btn-info"
-                                ng-click="changeMode(v.urlToStore,v.curThermMode)">{{_t.('thermostat_mode_change')}}</button>
                         </div>
                     </td>
                 </tr>
