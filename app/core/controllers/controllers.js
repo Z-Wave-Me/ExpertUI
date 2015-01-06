@@ -771,21 +771,22 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
             }
             // Loop throught instances
             angular.forEach(device.instances, function(instance, instanceId) {
-
+               
                 if (instanceId == 0 && device.instances.length > 1) {
                     return;
                 }
                 // Look for SensorBinary - Loop throught 0x30 commandClasses
                 var sensorBinary = instance.commandClasses[0x30];
-
+               
                 if (angular.isObject(sensorBinary)) {
-                    var cnt = 0;
+                     var cnt = 0;
                     angular.forEach(sensorBinary.data, function(val, key) {
                         // Not a sensor type
                         var sensor_type = parseInt(key, 10);
                         if (isNaN(sensor_type)) {
                             return;
                         }
+                        
                         // Set object
                         var obj = {};
                         obj['id'] = k;
@@ -1202,7 +1203,7 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
                 }
                 //console.log( nodeId + ': ' + curThermMode);
                 if (hasThermostatMode) {
-                    ccId = 0x43;
+                    ccId = 0x40;
                 } 
                 else if (hasThermostatSetpoint) {
                     ccId = 0x43;
@@ -2048,6 +2049,7 @@ appController.controller('TypeController', function($scope, $filter, dataService
                     return;
                 }
             });
+            console.log(node.data.vendorString)
             // Set object
             var obj = {};
             obj['id'] = nodeId;
@@ -3425,6 +3427,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 
             // Switch
             var conf_method_descr;
+            console.log(conf_type)
             switch (conf_type) {
                 case 'constant':
                 case 'rangemapped':
