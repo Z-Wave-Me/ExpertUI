@@ -36,6 +36,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         store: store,
         getDeviceClasses: getDeviceClasses,
         getSelectZDDX: getSelectZDDX,
+        getZddXml: getZddXml,
         getTiming: getTiming,
         getQueueData: getQueueData,
         updateQueueData: updateQueueData,
@@ -306,6 +307,31 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
             }).error(function() {
                 console.log('Error: getSelectZDDX');
                 // handleError();
+
+            });
+        }
+    }
+    
+     /**
+     * Get ZddXml file
+     */
+    function getZddXml(file,callback) {
+        var cachedZddXml = myCache.get(file);
+        if (cachedZddXml) {
+            return callback(cachedZddXml);
+        }
+        else {
+            var request = $http({
+                method: "get",
+                url: cfg.server_url + cfg.zddx_url + file
+            });
+            request.success(function(data) {
+                var x2js = new X2JS();
+                var json = x2js.xml_str2json(data);
+                 myCache.put(file, json);
+                return callback(json);
+            }).error(function() {
+                handleError();
 
             });
         }

@@ -37,6 +37,16 @@
                         </a>
                     </th>
                     <th>
+                        <a href="" ng-click="orderBy('vendorName')">{{ _t('th_vendor')}}
+                            <span ng-show="predicate == 'vendorName'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="" ng-click="orderBy('productName')">{{ _t('th_product')}}
+                            <span ng-show="predicate == 'productName'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th>
                         <a href="" ng-click="orderBy('appVersion')">{{ _t('th_appversion')}}
                             <span ng-show="predicate == 'appVersion'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
@@ -63,6 +73,8 @@
 
 
             </td>
+            <td data-title="{{ _t('th_vendor')}}">{{ v.vendorName}}&nbsp;</td>
+             <td data-title="{{ _t('th_product')}}">{{ v.productName}}&nbsp;</td>
             <td data-title="{{ _t('th_appversion')}}">{{ v.appVersion}}&nbsp;</td>
             <td data-title="{{ _t('device_description_device_type')}}">{{ v.deviceType}} &nbsp;<!-- | <em>Gen: {{ v.genericType}}, Spec: {{ v.specificType}}</em> --></td>
             </tr>

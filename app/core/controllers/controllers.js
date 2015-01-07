@@ -7,7 +7,7 @@
 var appController = angular.module('appController', []);
 
 // Base controller
-appController.controller('BaseController', function($scope, $cookies, $filter, $location, $window,cfg, dataService, deviceService, myCache) {
+appController.controller('BaseController', function($scope, $cookies, $filter, $location, $window, cfg, dataService, deviceService, myCache) {
     // Custom IP
     $scope.customIP = {
         'url': cfg.server_url,
@@ -771,22 +771,22 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
             }
             // Loop throught instances
             angular.forEach(device.instances, function(instance, instanceId) {
-               
+
                 if (instanceId == 0 && device.instances.length > 1) {
                     return;
                 }
                 // Look for SensorBinary - Loop throught 0x30 commandClasses
                 var sensorBinary = instance.commandClasses[0x30];
-               
+
                 if (angular.isObject(sensorBinary)) {
-                     var cnt = 0;
+                    var cnt = 0;
                     angular.forEach(sensorBinary.data, function(val, key) {
                         // Not a sensor type
                         var sensor_type = parseInt(key, 10);
                         if (isNaN(sensor_type)) {
                             return;
                         }
-                        
+
                         // Set object
                         var obj = {};
                         obj['id'] = k;
@@ -884,10 +884,10 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                         cnt++;
                     });
                 }
-                
-                 var alarmSensor = instance.commandClasses[0x9c];
-                 if (angular.isObject(alarmSensor)) {
-                     //return;
+
+                var alarmSensor = instance.commandClasses[0x9c];
+                if (angular.isObject(alarmSensor)) {
+                    //return;
                     var cnt = 0;
                     angular.forEach(alarmSensor.data, function(val, key) {
                         // Not a sensor type
@@ -938,7 +938,7 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                     levelExt = (obj.value ? $scope._t('sensor_triggered') : $scope._t('sensor_idle'));
                     updateTime = obj.level.updateTime;
                     invalidateTime = obj.level.invalidateTime;
-                } else if(v.cmdId == 0x9c){
+                } else if (v.cmdId == 0x9c) {
                     levelExt = (obj.level.value ? $scope._t('sensor_triggered') : $scope._t('sensor_idle'));
                     updateTime = obj.val.updateTime;
                     invalidateTime = obj.val.invalidateTime;
@@ -1148,14 +1148,14 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
         dataService.runCmd(url, false, $scope._t('error_handling_data'));
     };
     // Change mode
-     $scope.changeMode = function(cmd,mode) {
-         if(!mode){
-             return;
-         }
-          var url = cmd + '.Set('+ mode + ')';
-         dataService.runCmd(url);
+    $scope.changeMode = function(cmd, mode) {
+        if (!mode) {
+            return;
+        }
+        var url = cmd + '.Set(' + mode + ')';
+        dataService.runCmd(url);
     };
-   
+
     /// --- Private functions --- ///
 
     /**
@@ -1193,10 +1193,10 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
                 var hasThermostatMode = 0x40 in instance.commandClasses;
                 var hasThermostatSetpoint = 0x43 in instance.commandClasses;
                 var isThermostatMode = false;
-                 var isThermostatSetpoint = false;
+                var isThermostatSetpoint = false;
                 var hasThermostatSetback = 0x47 in instance.commandClasses;
                 var hasClimateControlSchedule = 0x46 in instance.commandClasses;
-                var curThermModeName = ''; 
+                var curThermModeName = '';
 
                 if (!hasThermostatSetpoint && !hasThermostatMode) { // to include more Thermostat* CCs
                     return; // we don't want devices without ThermostatSetpoint AND ThermostatMode CCs
@@ -1204,7 +1204,7 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
                 //console.log( nodeId + ': ' + curThermMode);
                 if (hasThermostatMode) {
                     ccId = 0x40;
-                } 
+                }
                 else if (hasThermostatSetpoint) {
                     ccId = 0x43;
 
@@ -1219,7 +1219,7 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
                         isThermostatMode = true;
 
                     }
-                } 
+                }
                 if (hasThermostatSetpoint) {
                     if (angular.isDefined(instance.commandClasses[0x43].data[curThermMode])) {
                         level = instance.commandClasses[0x43].data[curThermMode].setVal.value;
@@ -1241,7 +1241,7 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
                 obj['ccId'] = ccId;
                 obj['rowId'] = 'row_' + nodeId + '_' + cnt;
                 obj['name'] = $filter('deviceName')(nodeId, node);
-                 obj['curThermMode'] = curThermMode;
+                obj['curThermMode'] = curThermMode;
                 obj['changeTemperature'] = changeTemperature;
                 obj['level'] = level;
                 obj['hasExt'] = hasExt;
@@ -1252,8 +1252,8 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
                 obj['cmdToUpdate'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.' + curThermMode;
                 obj['modeType'] = modeType;
                 obj['isThermostatMode'] = isThermostatMode;
-                 obj['isThermostatSetpoint'] = isThermostatSetpoint;
-                 obj['modeList'] = modeList;
+                obj['isThermostatSetpoint'] = isThermostatSetpoint;
+                obj['modeList'] = modeList;
                 $scope.thermostats.push(obj);
                 $scope.rangeSlider.push(obj['range_' + nodeId] = obj['level']);
                 //console.log(obj);
@@ -1274,14 +1274,15 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
             var level = null;
             var updateTime;
             var invalidateTime;
-            if(!angular.isObject(data.update)){
+            if (!angular.isObject(data.update)) {
                 return;
             }
             if (v.cmdToUpdate in data.update) {
                 if (v.modeType == 'hasThermostatMode') {
                     updateTime = obj.mode.updateTime;
                     invalidateTime = obj.mode.invalidateTime;
-                } if (v.modeType == 'hasThermostatSetpoint') {
+                }
+                if (v.modeType == 'hasThermostatSetpoint') {
                     updateTime = obj.updateTime;
                     invalidateTime = obj.invalidateTime;
                     level = obj.setVal.value;
@@ -1300,13 +1301,13 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
     // used to pick up thermstat mode
     function getCurrentThermostatMode(_instance) {
         var hasThermostatMode = 0x40 in _instance.commandClasses;
-        
+
         var _curThermMode = 1;
         if (hasThermostatMode) {
             _curThermMode = _instance.commandClasses[0x40].data.mode.value;
             if (isNaN(parseInt(_curThermMode, 10)))
                 _curThermMode = null; // Mode not retrieved yet
-        } 
+        }
 //        else {
 //            // we pick up first available mode, since not ThermostatMode is supported to change modes
 //            _curThermMode = null;
@@ -1322,18 +1323,18 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
     }
     ;
     // used to pick up thermstat mode
-    function getModeList(data){
+    function getModeList(data) {
         var list = []
-       angular.forEach(data, function(v, k) {
-            if (!k || isNaN(parseInt(k, 10))){
+        angular.forEach(data, function(v, k) {
+            if (!k || isNaN(parseInt(k, 10))) {
                 return;
             }
-             var obj = {};
-             obj['key'] = k;
-            obj['val'] = $filter('hasNode')(v,'modeName.value');
+            var obj = {};
+            obj['key'] = k;
+            obj['val'] = $filter('hasNode')(v, 'modeName.value');
             list.push(obj);
-         });
-        
+        });
+
         return list;
     }
     ;
@@ -1995,6 +1996,9 @@ appController.controller('TypeController', function($scope, $filter, dataService
             var specificType = node.data.specificType.value;
             var major = node.data.ZWProtocolMajor.value;
             var minor = node.data.ZWProtocolMinor.value;
+            var vendorName = node.data.vendorString.value;
+            var zddXmlFile = $filter('hasNode')(node, 'data.ZDDXMLFile.value');
+            var productName = null;
             var fromSdk = true;
             var sdk;
             // SDK
@@ -2049,7 +2053,15 @@ appController.controller('TypeController', function($scope, $filter, dataService
                     return;
                 }
             });
-            console.log(node.data.vendorString)
+
+            // Product name from zddx file 
+            if (zddXmlFile) {
+                dataService.getZddXml(zddXmlFile,function(zddxml) {
+                   //productName = $filter('hasNode')(zddxml, 'ZWaveDevice.deviceDescription.productName');
+                    productName = zddxml.ZWaveDevice.deviceDescription.productName;
+                });
+
+            }
             // Set object
             var obj = {};
             obj['id'] = nodeId;
@@ -2067,6 +2079,8 @@ appController.controller('TypeController', function($scope, $filter, dataService
             obj['basicType'] = basicType;
             obj['genericType'] = genericType;
             obj['specificType'] = specificType;
+            obj['vendorName'] = vendorName;
+            obj['productName'] = productName;
             $scope.devices.push(obj);
         });
     }
@@ -2434,7 +2448,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                 cnt++;
             }
         });
-        $scope.removeNodesLength =  cnt;
+        $scope.removeNodesLength = cnt;
         $('#modal_remove').modal({});
     };
     // Remove an assocation
@@ -3378,8 +3392,8 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             var conf = conf_html;
             var conf_num = conf['_number'];
             var conf_size = conf['_size'];
-            var conf_name = deviceService.configGetZddxLang($filter('hasNode')(conf, 'name.lang'),$scope.lang) || $scope._t('configuration_parameter') + ' ' + conf_num;
-            var conf_description = deviceService.configGetZddxLang($filter('hasNode')(conf, 'description.lang'),$scope.lang);
+            var conf_name = deviceService.configGetZddxLang($filter('hasNode')(conf, 'name.lang'), $scope.lang) || $scope._t('configuration_parameter') + ' ' + conf_num;
+            var conf_description = deviceService.configGetZddxLang($filter('hasNode')(conf, 'description.lang'), $scope.lang);
 // TODO: remove            if (angular.isDefined(conf.name)) {
 //
 //                if (angular.isDefined(conf.name.lang[langId])) {
@@ -3441,9 +3455,9 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                         var value = value_html;
                         var value_from = parseInt(value['_from'], 16);
                         var value_to = parseInt(value['_to'], 16);
-                        var value_description = deviceService.configGetZddxLang($filter('hasNode')(value, 'description.lang'),$scope.lang);
-                        
-                        
+                        var value_description = deviceService.configGetZddxLang($filter('hasNode')(value, 'description.lang'), $scope.lang);
+
+
 // TODO: remove
 //                        if (angular.isDefined(value.description)) {
 //                            //value_description = value.description.lang[1].__text;
@@ -3548,7 +3562,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 //                                value_description = value.lang[langId].__text;
 //                            }
 //                        }
-                       var value_description = deviceService.configGetZddxLang($filter('hasNode')(value, 'description.lang'),$scope.lang);
+                        var value_description = deviceService.configGetZddxLang($filter('hasNode')(value, 'description.lang'), $scope.lang);
 
                         if (conf_default !== null)
                             conf_default_value = conf_default;
