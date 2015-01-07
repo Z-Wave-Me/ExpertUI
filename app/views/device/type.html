@@ -11,48 +11,57 @@
                         </a>
                     </th>
                     <th>
-                        <a href="" ng-click="orderBy('name')">{{ _t('device_name')}}
+                        <a href="" ng-click="orderBy('name')">
+                            <span  ng-bind="_t('device_name')"></span> 
                             <span ng-show="predicate == 'name'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
                     <th>
-                        <a href="" ng-click="orderBy('security')">{{ _t('th_security')}}
+                        <a href="" ng-click="orderBy('security')">
+                            <span  ng-bind="_t('th_security')"></span> 
                             <span ng-show="predicate == 'security'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
                     <th>
-                        <a href="" ng-click="orderBy('mwief')" title="{{ _t('th_mwief_tip')}}" tooltip>{{ _t('th_mwief')}}
+                        <a href="" ng-click="orderBy('mwief')" title="{{ _t('th_mwief_tip')}}" tooltip>
+                            <span  ng-bind="_t('th_mwief')"></span> 
                             <span ng-show="predicate == 'mwief'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
 
                     <th>
-                        <a href="" ng-click="orderBy('ZWavePlusInfo')">{{ _t('th_zwaveplus')}}
+                        <a href="" ng-click="orderBy('ZWavePlusInfo')">
+                            <span  ng-bind="_t('th_zwaveplus')"></span> 
                             <span ng-show="predicate == 'zWavePlus'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
                     <th>
-                        <a href="" ng-click="orderBy('sdk')">{{ _t('th_sdk')}}
+                        <a href="" ng-click="orderBy('sdk')">
+                            <span  ng-bind="_t('th_sdk')"></span> 
                             <span ng-show="predicate == 'sdk'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
                     <th>
-                        <a href="" ng-click="orderBy('vendorName')">{{ _t('th_vendor')}}
+                        <a href="" ng-click="orderBy('vendorName')">
+                            <span  ng-bind="_t('th_vendor')"></span> 
                             <span ng-show="predicate == 'vendorName'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
                     <th>
-                        <a href="" ng-click="orderBy('productName')">{{ _t('th_product')}}
+                        <a href="" ng-click="orderBy('productName')">
+                            <span  ng-bind="_t('th_product')"></span>
                             <span ng-show="predicate == 'productName'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
                     <th>
-                        <a href="" ng-click="orderBy('appVersion')">{{ _t('th_appversion')}}
+                        <a href="" ng-click="orderBy('appVersion')">
+                            <span  ng-bind="_t('th_appversion')"></span>
                             <span ng-show="predicate == 'appVersion'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
                     <th>
-                        <a href="" ng-click="orderBy('type')">{{ _t('device_description_device_type')}}
+                        <a href="" ng-click="orderBy('type')">
+                            <span  ng-bind="_t('device_description_device_type')"></span>
                             <span ng-show="predicate == 'type'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
@@ -60,23 +69,24 @@
             </thead>
             <tbody>
                 <tr ng-repeat="v in devices| orderBy:predicate:reverse" id="{{ v.rowId}}">
-                    <td data-title="#">{{ v.id}}</td>
+                    <td data-title="#" ng-bind="v.id"></td>
                     <td data-title="{{ _t('device_name')}}">
-            <switch-type-icon generic="{{ v.genericType}}" specific="{{ v.specificType}}"></switch-type-icon> <a href="#config/configuration/{{v.id}}">{{ v.name}}</a>
+            <switch-type-icon generic="{{ v.genericType}}" specific="{{ v.specificType}}"></switch-type-icon> 
+             <a href="#config/configuration/{{v.id}}" ng-bind="v.name"></a>
             </td>
             <td data-title="{{ _t('th_security')}}"><i class="{{ v.security | securityIcon }}"></i>&nbsp;</td>
             <td data-title="{{ _t('th_mwief')}}"><i class="{{v.mwief| mwiefIcon}}"></i>&nbsp;</td>
             <td data-title="{{ _t('th_zwaveplus')}}"><i class="{{ v.ZWavePlusInfo | zWavePlusIcon}}"></i>&nbsp;</td>
             <td data-title="{{ _t('th_sdk')}}">
-                <span ng-show="v.fromSdk">{{ v.sdk}}</span>
-                <span ng-show="!v.fromSdk">({{ v.sdk}})</span>
+                <span ng-show="v.fromSdk" ng-bind="v.sdk"></span>
+                <span ng-show="!v.fromSdk">(<em ng-bind="v.sdk"></em>)</span>
 
 
             </td>
-            <td data-title="{{ _t('th_vendor')}}">{{ v.vendorName}}&nbsp;</td>
-             <td data-title="{{ _t('th_product')}}">{{ v.productName}}&nbsp;</td>
-            <td data-title="{{ _t('th_appversion')}}">{{ v.appVersion}}&nbsp;</td>
-            <td data-title="{{ _t('device_description_device_type')}}">{{ v.deviceType}} &nbsp;<!-- | <em>Gen: {{ v.genericType}}, Spec: {{ v.specificType}}</em> --></td>
+            <td data-title="{{ _t('th_vendor')}}"><span ng-bind="v.vendorName"></span>&nbsp;</td>
+            <td data-title="{{ _t('th_product')}}"><span ng-bind="v.productName"></span>&nbsp;</td>
+            <td data-title="{{ _t('th_appversion')}}"><span ng-bind="v.appVersion"></span>&nbsp;</td>
+            <td data-title="{{ _t('device_description_device_type')}}"><span ng-bind="v.deviceType"></span>&nbsp;</td>
             </tr>
             </tbody>
         </table>

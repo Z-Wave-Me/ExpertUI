@@ -10,6 +10,8 @@
     "nm_start_sis": "Assign SIS",
     "nm_stop_suc_sis": "Disable SUC/SIS",
     "nm_start_suc_on_node": "on node",
+    "th_vendor": "Vendor",
+    "th_product": "Product",
     "--- ":"---",
     "language_select_reload_interface": "Please reload the page to apply changes",
     "thermostat_mode_change": "Change mode",

@@ -1927,7 +1927,7 @@ appController.controller('BatteryController', function($scope, $filter, $http, d
     }
 });
 // Type controller
-appController.controller('TypeController', function($scope, $filter, dataService) {
+appController.controller('TypeController', function($scope, $filter, dataService,deviceService) {
     $scope.devices = [];
     $scope.reset = function() {
         $scope.devices = angular.copy([]);
@@ -1949,14 +1949,15 @@ appController.controller('TypeController', function($scope, $filter, dataService
                 }
                 var langId = langs[lang];
                 obj['id'] = parseInt(val._id);
-                obj['generic'] = val.name.lang[langId].__text;
+                //obj['generic'] = val.name.lang[langId].__text;
+                obj['generic'] = deviceService.configGetZddxLang(val.name.lang, $scope.lang);
                 obj['specific'] = val.Specific;
                 obj['langId'] = langId;
                 $scope.deviceClasses.push(obj);
             });
         });
     };
-    $scope.loadDeviceClasses();
+    
 
     // Load data
     $scope.load = function() {
@@ -1969,7 +1970,11 @@ appController.controller('TypeController', function($scope, $filter, dataService
             });
         });
     };
-    $scope.load();
+    $scope.$watch('lang', function() {
+        $scope.loadDeviceClasses();
+        $scope.load();
+    });
+   
 
     // Cancel interval on page destroy
     $scope.$on('$destroy', function() {
@@ -2045,9 +2050,10 @@ appController.controller('TypeController', function($scope, $filter, dataService
                     deviceType = v.generic;
                     angular.forEach(v.specific, function(s, sk) {
                         if (specificType == s._id) {
-                            if (angular.isDefined(s.name.lang[v.langId].__text)) {
-                                deviceType = s.name.lang[v.langId].__text;
-                            }
+                            deviceType = deviceService.configGetZddxLang(s.name.lang, $scope.lang);
+//                            if (angular.isDefined(s.name.lang[v.langId].__text)) {
+//                                deviceType = s.name.lang[v.langId].__text;
+//                            }
                         }
                     });
                     return;
@@ -2056,6 +2062,7 @@ appController.controller('TypeController', function($scope, $filter, dataService
 
             // Product name from zddx file 
             if (zddXmlFile) {
+               
                 dataService.getZddXml(zddXmlFile,function(zddxml) {
                    //productName = $filter('hasNode')(zddxml, 'ZWaveDevice.deviceDescription.productName');
                     productName = zddxml.ZWaveDevice.deviceDescription.productName;
