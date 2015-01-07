@@ -45,7 +45,7 @@ module.exports = function(grunt) {
                      'app/vendor/zwave/pyzw_zwave_ui.js',
                     // APP
                     'app/core/app.js',
-                    'app/core/config.js',
+                    //'app/core/config.js',
                     'app/core/directives/directives.js',
                     'app/core/filters/filters.js',
                     'app/core/factories/factories.js',
@@ -68,7 +68,7 @@ module.exports = function(grunt) {
                             'app/core/lang/**'
                         ], dest: 'dist/'
                     },
-                     {expand:true,src: ['app/config.js'], dest: 'dist/app/js/',flatten: true}
+                     {expand:true,src: ['app/core/config.js'], dest: 'dist/app/core/',flatten: true}
                     /*{src: ['storage/img/**'], dest: 'dist/'},
                     {src: ['storage/demo/**'], dest: 'dist/'},
                     {src: ['storage/data/**'], dest: 'dist/'}*/

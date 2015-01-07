@@ -2416,8 +2416,9 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
         $scope.removeData = data;
         $scope.removeNodes = {};
         $scope.removeInstances = {};
-        $scope.assocToNode = null;
+        $scope.assocToNode = '';
         $scope.assocToInstance = null;
+        var cnt = 0;
         angular.forEach($scope.removeData.nodeIds, function(nodeId, index) {
             if ($scope.removeData.instanceIds[index] != null) {
                 var instanceId = parseInt($scope.removeData.instanceIds[index]) - 1;
@@ -2426,11 +2427,14 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                 if (!(nodeId in $scope.removeInstances))
                     $scope.removeInstances[nodeId] = {};
                 $scope.removeInstances[nodeId][instanceId] = instanceId + 1;
+                cnt++;
             } else {
                 // simple Assocation
                 $scope.removeNodes[nodeId] = '(#' + nodeId + ') ' + $filter('deviceName')(nodeId, $scope.ZWaveAPIData.devices[nodeId]);
+                cnt++;
             }
         });
+        $scope.removeNodesLength =  cnt;
         $('#modal_remove').modal({});
     };
     // Remove an assocation
@@ -3427,7 +3431,6 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 
             // Switch
             var conf_method_descr;
-            console.log(conf_type)
             switch (conf_type) {
                 case 'constant':
                 case 'rangemapped':

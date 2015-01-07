@@ -96,4 +96,10 @@ angApp.config(['$routeProvider',
                 });
     }]);
 
-
+/**
+ * App configuration
+ */
+var config_module = angular.module('appConfig', []);
+angular.forEach(config_data, function(key, value) {
+    config_module.constant(value, key);
+});
