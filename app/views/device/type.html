@@ -84,7 +84,7 @@
 
             </td>
             <td data-title="{{ _t('th_vendor')}}"><span ng-bind="v.vendorName"></span>&nbsp;</td>
-            <td data-title="{{ _t('th_product')}}"><span ng-bind="v.productName"></span>&nbsp;</td>
+            <td data-title="{{ _t('th_product')}}"><span ng-bind="productNames[v.id]"></span>&nbsp;</td>
             <td data-title="{{ _t('th_appversion')}}"><span ng-bind="v.appVersion"></span>&nbsp;</td>
             <td data-title="{{ _t('device_description_device_type')}}"><span ng-bind="v.deviceType"></span>&nbsp;</td>
             </tr>

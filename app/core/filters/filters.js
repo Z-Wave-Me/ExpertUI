@@ -44,6 +44,31 @@ angApp.filter('stringToSlug', function() {
     };
 });
 /**
+ * Get object length
+ */
+angApp.filter('getObjectLength', function() {
+    return function(obj) {
+        if(angular.isObject(obj)){
+           return Object.keys(obj).length; 
+        }
+        return 0;
+        
+    };
+});
+
+/**
+ * Get object length
+ */
+angApp.filter('getFirstObjectKey', function() {
+    return function(obj) {
+        if(angular.isObject(obj)){
+           return Object.keys(obj)[0];
+        }
+        return {};
+        
+    };
+});
+/**
  * Convert unix timastamp to date
  */
 angApp.filter('getTimestamp', function() {

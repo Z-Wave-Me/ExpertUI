@@ -1927,12 +1927,13 @@ appController.controller('BatteryController', function($scope, $filter, $http, d
     }
 });
 // Type controller
-appController.controller('TypeController', function($scope, $filter, dataService,deviceService) {
+appController.controller('TypeController', function($scope, $filter, dataService, deviceService) {
     $scope.devices = [];
     $scope.reset = function() {
         $scope.devices = angular.copy([]);
     };
     $scope.deviceClasses = [];
+    $scope.productNames = [];
     // Load  device classes xml data
     $scope.loadDeviceClasses = function() {
         dataService.getDeviceClasses(function(data) {
@@ -1957,24 +1958,24 @@ appController.controller('TypeController', function($scope, $filter, dataService
             });
         });
     };
-    
+
 
     // Load data
     $scope.load = function() {
         dataService.getZwaveData(function(ZWaveAPIData) {
             setData(ZWaveAPIData);
-            dataService.joinedZwaveData(function(data) {
-                $scope.reset();
-                setData(data.joined);
-                dataService.cancelZwaveDataInterval();
-            });
+//            dataService.joinedZwaveData(function(data) {
+//                $scope.reset();
+//                setData(data.joined);
+//                dataService.cancelZwaveDataInterval();
+//            });
         });
     };
     $scope.$watch('lang', function() {
         $scope.loadDeviceClasses();
         $scope.load();
     });
-   
+
 
     // Cancel interval on page destroy
     $scope.$on('$destroy', function() {
@@ -2062,10 +2063,10 @@ appController.controller('TypeController', function($scope, $filter, dataService
 
             // Product name from zddx file 
             if (zddXmlFile) {
-               
-                dataService.getZddXml(zddXmlFile,function(zddxml) {
-                   //productName = $filter('hasNode')(zddxml, 'ZWaveDevice.deviceDescription.productName');
-                    productName = zddxml.ZWaveDevice.deviceDescription.productName;
+                dataService.getZddXml(zddXmlFile, function(zddxml) {
+                    //productName = $filter('hasNode')(zddxml, 'ZWaveDevice.deviceDescription.productName');
+                    // productName = zddxml.ZWaveDevice.deviceDescription.productName;
+                    $scope.productNames[nodeId] = zddxml.ZWaveDevice.deviceDescription.productName;
                 });
 
             }
@@ -2363,8 +2364,8 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
     $scope.addInstances = {};
     $scope.removeNodes = {};
     $scope.removeInstances = {};
-    $scope.assocToNode = null;
-    $scope.assocToInstance = null;
+    $scope.assocToNode = '';
+    $scope.assocToInstance = '';
     $scope.applyQueue = [];
     $scope.updates = [];
     $scope.zdd = {};
@@ -2430,16 +2431,26 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
 
         });
         pollForUpdate(Math.floor((new Date()).getTime() / 1000), updates);
-    }
+    };
+    $scope.initAssocToInstance = function(value) {
+        console.log(value)
+        $scope.assocToInstance = value;
+    };
 
     // Open remove assocation dialog
     $scope.openRemove = function(data) {
         $scope.removeData = data;
         $scope.removeNodes = {};
         $scope.removeInstances = {};
-        $scope.assocToNode = '';
-        $scope.assocToInstance = null;
+        //$scope.assocToNode = '';
+        //$scope.assocToInstance = '';
+        $scope.removeNodesLength = $scope.removeData.nodeIds;
+        $scope.removeInstancesLength = [];
         var cnt = 0;
+
+        if ($scope.removeNodesLength.length == 1) {
+            $scope.assocToNode = $scope.removeNodesLength[0];
+        }
         angular.forEach($scope.removeData.nodeIds, function(nodeId, index) {
             if ($scope.removeData.instanceIds[index] != null) {
                 var instanceId = parseInt($scope.removeData.instanceIds[index]) - 1;
@@ -2448,15 +2459,25 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                 if (!(nodeId in $scope.removeInstances))
                     $scope.removeInstances[nodeId] = {};
                 $scope.removeInstances[nodeId][instanceId] = instanceId + 1;
-                cnt++;
+
+
+
             } else {
                 // simple Assocation
                 $scope.removeNodes[nodeId] = '(#' + nodeId + ') ' + $filter('deviceName')(nodeId, $scope.ZWaveAPIData.devices[nodeId]);
-                cnt++;
+
             }
         });
-        $scope.removeNodesLength = cnt;
+        console.log($scope.assocToNode)
+
         $('#modal_remove').modal({});
+    };
+    /**
+     * Close modal remove
+     */
+    $scope.closeRemove = function() {
+        $scope.assocToNode = '';
+        $scope.assocToInstance = '';
     };
     // Remove an assocation
     $scope.remove = function() {
