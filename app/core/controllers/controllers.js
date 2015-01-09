@@ -3473,6 +3473,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 
             // Switch
             var conf_method_descr;
+            console.log(conf_name + ' --- ' + conf_type)
             switch (conf_type) {
                 case 'constant':
                 case 'rangemapped':
@@ -3483,7 +3484,15 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                         var value = value_html;
                         var value_from = parseInt(value['_from'], 16);
                         var value_to = parseInt(value['_to'], 16);
-                        var value_description = deviceService.configGetZddxLang($filter('hasNode')(value, 'description.lang'), $scope.lang);
+                        //var value_description = deviceService.configGetZddxLang($filter('hasNode')(value, 'description.lang'), $scope.lang);
+                         var value_description = null;
+                         if (angular.isDefined(value.description)) {
+                              value_description = deviceService.configGetZddxLang($filter('hasNode')(value, 'description.lang'), $scope.lang);
+                         }
+                         if (angular.isDefined(value.lang)) {
+                             value_description = deviceService.configGetZddxLang($filter('hasNode')(value, 'lang'), $scope.lang);
+                             
+                         }
 
 
 // TODO: remove
@@ -3572,6 +3581,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                             var value_from = parseInt(value['_from'], 16);
                             var value_to = parseInt(value['_to'], 16);
                         }
+                        var value_description = '';
 
 //                        var value_description = '';
 //                        if (angular.isDefined(value.description)) {
@@ -3590,7 +3600,13 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 //                                value_description = value.lang[langId].__text;
 //                            }
 //                        }
-                        var value_description = deviceService.configGetZddxLang($filter('hasNode')(value, 'description.lang'), $scope.lang);
+                        if (angular.isDefined(value.description)) {
+                             value_description = deviceService.configGetZddxLang($filter('hasNode')(value, 'description.lang'), $scope.lang);
+                        }
+                        if (angular.isDefined(value.lang)) {
+                            value_description = deviceService.configGetZddxLang($filter('hasNode')(value, 'lang'), $scope.lang);
+                        }
+                        //var value_description = deviceService.configGetZddxLang($filter('hasNode')(value, 'lang'), $scope.lang);
 
                         if (conf_default !== null)
                             conf_default_value = conf_default;

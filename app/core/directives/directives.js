@@ -406,7 +406,7 @@ angApp.directive('expertCommandInput', function($filter) {
             }
 
             //if (label && type) {
-            //console.log( scope.showDefaultValue)
+            console.log(type)
             if (type) {
                 if ('range' in type) {
                     input = getText(label, scope.values, type.range.min, type.range.max, name);
