@@ -3473,7 +3473,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 
             // Switch
             var conf_method_descr;
-            console.log(conf_name + ' --- ' + conf_type)
+            //console.log(conf_name + ' --- ' + conf_type)
             switch (conf_type) {
                 case 'constant':
                 case 'rangemapped':

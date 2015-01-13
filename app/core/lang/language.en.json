@@ -13,6 +13,7 @@
     "th_vendor": "Vendor",
     "th_product": "Product",
     "--- ":"---",
+    "nm_frequency_title":"Operating frequency Change",
     "language_select_reload_interface": "Please reload the page to apply changes",
     "thermostat_mode_change": "Change mode",
     "assoc_remove_from": "Remove association from",

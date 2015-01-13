@@ -8814,7 +8814,6 @@ angApp.directive('expertCommandInput', function($filter) {
             }
 
             //if (label && type) {
-            console.log(type)
             if (type) {
                 if ('range' in type) {
                     input = getText(label, scope.values, type.range.min, type.range.max, name);
@@ -13647,7 +13646,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 
             // Switch
             var conf_method_descr;
-            console.log(conf_name + ' --- ' + conf_type)
+            //console.log(conf_name + ' --- ' + conf_type)
             switch (conf_type) {
                 case 'constant':
                 case 'rangemapped':
