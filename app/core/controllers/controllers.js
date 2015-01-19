@@ -1067,6 +1067,30 @@ appController.controller('MetersController', function($scope, $filter, dataServi
                     });
                 }
 
+                // Look for MeterPulse - Loop throught 0x35 commandClasses
+                var meterPulse = instance.commandClasses[0x35];
+                if (angular.isObject(meterPulse)) {
+                    var obj = {};
+                    obj['id'] = k;
+                    obj['iId'] = instanceId;
+                    obj['cmd'] = meterPulse.name;
+                    obj['cmdId'] = 0x35;
+                    obj['rowId'] = meterPulse.name + '_' + k;
+                    obj['name'] = $filter('deviceName')(k, device);
+                    obj['type'] = meterPulse.name;
+                    obj['purpose'] = "Counter";
+                    obj['level'] = meterPulse.data.val.value;
+                    obj['levelExt'] = (meterPulse.data.val.value > 1) ? "pulses" : "pulse";
+                    obj['invalidateTime'] = meterPulse.data.invalidateTime;
+                    obj['updateTime'] = meterPulse.data.updateTime;
+                    obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
+                    obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[' + instanceId + '].commandClasses[53].Get()';
+                    obj['cmdToUpdate'] = 'devices.' + k + '.instances.' + instanceId + '.commandClasses.' + 0x35 + '.data.val';
+                    obj['urlToReset'] = null;
+
+                    $scope.meters.push(obj);
+                }
+
             });
         });
     }
@@ -1078,7 +1102,7 @@ appController.controller('MetersController', function($scope, $filter, dataServi
         angular.forEach($scope.meters, function(v, k) {
             var obj = data.update[v.cmdToUpdate];
             if (v.cmdToUpdate in data.update) {
-                var level = obj.val.value;
+                var level = ('val' in obj) ? obj.val.value : obj.value;
                 var updateTime = $filter('isTodayFromUnix')(obj.updateTime);
                 $('#' + v.rowId + ' .row-level').html(level);
                 $('#' + v.rowId + ' .row-time').html(updateTime);
@@ -5181,4 +5205,3 @@ appController.controller('CommandModalController', function($scope, $filter) {
         });
     };
 });
-
