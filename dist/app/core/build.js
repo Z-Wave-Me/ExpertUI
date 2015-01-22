@@ -1828,104 +1828,64 @@ function renderMethodSpec(ccId, data) {
 
 
 	
-		//SwitchColor.c	 0x33	
+		//SwitchColor
 		case 0x33:
 			return {
 				"Get": [
-						{
+				       {
 						"label": "Color Capability",
 						"type": {
-							"enumof": [
-								{
-									"label": "Warm White",
-									"type": {
-										"fix": 	{
-											"value": 0
-										}
+							"enumof": (
+									function() {
+										try {
+											var arr = [];
+											var key;
+											for (key in data) {
+												var ikey = parseInt(key);
+												if (!isNaN(ikey))
+													arr.push({
+														"label": data[ikey].capabilityString.value,
+														"type": {
+															"fix": 	{
+																"value": ikey
+															}
+														}
+													});
+											};
+											return arr;
+										} catch(err) {}
+										return [];
 									}
-								},
-								{
-									"label": "Cold White",
-									"type": {
-										"fix": 	{
-											"value": 1
-										}
-									}
-								},								
-								{
-									"label": "Red",
-									"type": {
-										"fix": 	{
-											"value": 2
-										}
-									}
-								},								
-								{
-									"label": "Green",
-									"type": {
-										"fix": 	{
-											"value": 3
-										}
-									}
-								},								
-								{
-									"label": "Blue",
-									"type": {
-										"fix": 	{
-											"value": 4
-										}
-									}
-								}								
-							]
+								)()
 						}
-					}				
+					}
 				],
 				"Set": [
-					{
+				       {
 						"label": "Color Capability",
 						"type": {
-							"enumof": [
-								{
-									"label": "Warm White",
-									"type": {
-										"fix": 	{
-											"value": 0
-										}
+							"enumof": (
+									function() {
+										try {
+											var arr = [];
+											var key;
+											for (key in data) {
+												var ikey = parseInt(key);
+												if (!isNaN(ikey))
+													arr.push({
+														"label": data[ikey].capabilityString.value,
+														"type": {
+															"fix": 	{
+																"value": ikey
+															}
+														}
+													});
+											};
+											return arr;
+										} catch(err) {}
+										return [];
 									}
-								},
-								{
-									"label": "Cold White",
-									"type": {
-										"fix": 	{
-											"value": 1
-										}
-									}
-								},								
-								{
-									"label": "Red",
-									"type": {
-										"fix": 	{
-											"value": 2
-										}
-									}
-								},								
-								{
-									"label": "Green",
-									"type": {
-										"fix": 	{
-											"value": 3
-										}
-									}
-								},								
-								{
-									"label": "Blue",
-									"type": {
-										"fix": 	{
-											"value": 4
-										}
-									}
-								}								
-							]
+								)()
 						}
 					},
 					{
@@ -1936,103 +1896,34 @@ function renderMethodSpec(ccId, data) {
 								"max": 	255
 							}
 						}
-					}					
+					}
 				],
-			"StopStateChange": [
-						{
+				"StartStateChange": [
+					{
 						"label": "Color Capability",
 						"type": {
-							"enumof": [
-								{
-									"label": "Warm White",
-									"type": {
-										"fix": 	{
-											"value": 0
-										}
+							"enumof": (
+									function() {
+										try {
+											var arr = [];
+											var key;
+											for (key in data) {
+												var ikey = parseInt(key);
+												if (!isNaN(ikey))
+													arr.push({
+														"label": data[ikey].capabilityString.value,
+														"type": {
+															"fix": 	{
+																"value": ikey
+															}
+														}
+													});
+											};
+											return arr;
+										} catch(err) {}
+										return [];
 									}
-								},
-								{
-									"label": "Cold White",
-									"type": {
-										"fix": 	{
-											"value": 1
-										}
-									}
-								},								
-								{
-									"label": "Red",
-									"type": {
-										"fix": 	{
-											"value": 2
-										}
-									}
-								},								
-								{
-									"label": "Green",
-									"type": {
-										"fix": 	{
-											"value": 3
-										}
-									}
-								},								
-								{
-									"label": "Blue",
-									"type": {
-										"fix": 	{
-											"value": 4
-										}
-									}
-								}								
-							]
-						}
-					}								
-				],
-			"StartStateChange": [
-						{
-						"label": "Color Capability",
-						"type": {
-							"enumof": [
-								{
-									"label": "Warm White",
-									"type": {
-										"fix": 	{
-											"value": 0
-										}
-									}
-								},
-								{
-									"label": "Cold White",
-									"type": {
-										"fix": 	{
-											"value": 1
-										}
-									}
-								},								
-								{
-									"label": "Red",
-									"type": {
-										"fix": 	{
-											"value": 2
-										}
-									}
-								},								
-								{
-									"label": "Green",
-									"type": {
-										"fix": 	{
-											"value": 3
-										}
-									}
-								},								
-								{
-									"label": "Blue",
-									"type": {
-										"fix": 	{
-											"value": 4
-										}
-									}
-								}								
-							]
+								)()
 						}
 					},
 					{
@@ -2058,17 +1949,38 @@ function renderMethodSpec(ccId, data) {
 							]
 						}
 					},													
-				]														
+				],
+				"StopStateChange": [
+					{
+						"label": "Color Capability",
+						"type": {
+							"enumof": (
+									function() {
+										try {
+											var arr = [];
+											var key;
+											for (key in data) {
+												var ikey = parseInt(key);
+												if (!isNaN(ikey))
+													arr.push({
+														"label": data[ikey].capabilityString.value,
+														"type": {
+															"fix": 	{
+																"value": ikey
+															}
+														}
+													});
+											};
+											return arr;
+										} catch(err) {}
+										return [];
+									}
+								)()
+						}
+					}								
+				]
 			};
  
-
-
-
-		
-// StateSetMultiple(ZWBYTE count, const ZWBYTE* capabilityIds, const ZWBYTE* states, ZWBYTE duration);
-// StartLevelChange(ZWBYTE capabilityId, ZWBYTE dir, ZWBOOL ignoreStartLevel, ZWBYTE startLevel );
-// StopStateChange(ZWBYTE capabilityId );
-		
 
 		// Schedule (incomplete)
 		case 0x53:

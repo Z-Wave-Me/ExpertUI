@@ -798,6 +798,8 @@
 	"zwave_role_type": "Тип роли Z-Wave Plus",
 	"device_disappeared": "Устройство уже не в сети",
 	"rt_associated": "Имеется прямая ассоциация",
+	"nm_frequency_title": "Рабочая частота",
+	"nav_active_associations": "Установленные ассоциации",
 
 	"ie_last_element": "just to remember, that IE do not like trailing comma (,) at the end the list of associative array elements"
 }

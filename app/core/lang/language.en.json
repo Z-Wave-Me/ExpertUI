@@ -185,6 +185,7 @@
     "nm_controller_state_17": "Canceling.",
     "nm_controller_state_18": "Replace Failed Node process started.",
     "nm_controller_state_19": "Replace Failed Node ready to include replacement device.",
+    "nm_controller_state_20": "Controller Reset to Default.",
     "nm_controller_sis_or_primary": "The controller is ready to include and exclude devices from the network.",
     "nm_controller_not_sis_or_primary": "The controller is only a secondary controller in the network and can not include/exclude devices.",
     "---": "---",
