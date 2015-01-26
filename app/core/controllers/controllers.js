@@ -2921,10 +2921,10 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     };
 
     // Show modal device select dialog
-    $scope.showModalDeviceSelect = function(target, nodeId) {
+    $scope.showModalDeviceSelect = function(target, nodeId,alert) {
         dataService.getSelectZDDX(nodeId, function(data) {
             $scope.deviceZddx = data;
-        });
+        },alert);
         $(target).modal();
 
     };

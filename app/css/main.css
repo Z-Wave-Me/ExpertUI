@@ -147,6 +147,12 @@ background-color: #e4f5fc;
 .custom-ip-message{
     display: none;
 }
+
+/* Global
+-------------------------------------------------- */
+.allert-hidden {
+   display: none !important;
+}
 /* Modal
 -------------------------------------------------- */
 .modal-body {
