@@ -2960,7 +2960,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
      * @param {object} form
      * @returns {undefined}
      */
-    $scope.submitApplyConfigCfg = function(form, cmd, cfg, hasBattery) {
+    $scope.submitApplyConfigCfg = function(form, cmd, cfg, hasBattery,section) {
         if (hasBattery) {
             alert($scope._t('conf_apply_battery'));
         }
@@ -2974,22 +2974,25 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             }
 
         });
-
-        //console.log(cfg);
         angular.forEach(dataValues, function(n, nk) {
             var lastNum = n.name.match(/\d+$/);
             if (!lastNum) {
                 return;
             }
             var num = lastNum[0];
+            if(section && num != section){
+                return;
+            }
             var confSize = 0;
             //var lastNum = n.name.match(/\d+$/);
             var value = n.value;
+            
             angular.forEach(cfg, function(cv, ck) {
+                
                 if (cv.confNum == num) {
                     confSize = cv.confSize;
-                    //dataValues.push(v.name);
                 }
+               
 
             });
             var request = cmd + '(' + num + ',' + value + ',' + confSize + ')';

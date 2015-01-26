@@ -40,6 +40,12 @@
                         <em ng-show="goInfo">{{v.description}}</em>
                     </span>
                 </p>
+                <button 
+                    type="button" 
+                    class="btn btn-info spin-true"
+                    ng-click="submitApplyConfigCfg(formName, 'devices[' + deviceId + '].instances[0].commandClasses[0x70].Set',configCont,hasBattery,v.confNum)"
+                    >{{_t('apply_config_into_device')}} <i class="fa fa-spinner fa-spin"></i></button> 
+                
 
             </div>
         </form>

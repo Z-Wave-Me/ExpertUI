@@ -1,4 +1,5 @@
 {
+   "apply_config_into_device": "Speichern",
     "nav_active_associations":"Assoziationsmanagement",
     "nm_frequency_title":"Änderung der Z-Wave Frequenz",
     "language_select_reload_interface": "Bitte laden Sie die Seite, um die Änderungen zu übernehmen",
