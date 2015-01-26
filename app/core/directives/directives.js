@@ -448,6 +448,7 @@ angApp.directive('configDefaultValue', function() {
             var type = scope.collection.type;
             var name = scope.collection.name;
             var hideRadio = scope.collection.hideRadio;
+            
             if (type) {
                 if ('range' in type) {
                     //input = getText(label, scope.values, type.range.min, type.range.max, name);
@@ -455,6 +456,7 @@ angApp.directive('configDefaultValue', function() {
                     //input = getNode(label, scope.getNodeDevices(), 'null', name);
                 } else if ('enumof' in type) {
                     input = getEnum(type, scope.defaultValue,scope.showDefaultValue);
+                   
                 } else if ('constant' in type) {
                     //input = getConstant(label, type, scope.defaultValue, name);
                 } else if ('string' in type) {
@@ -463,6 +465,7 @@ angApp.directive('configDefaultValue', function() {
                     input = scope.showDefaultValue;
                 }
                 scope.input = input;
+                
                 return;
             }
 
@@ -479,15 +482,16 @@ angApp.directive('configDefaultValue', function() {
             return;
         }
         angular.forEach(enums.enumof, function(v, k) {
+          
             var title = v.label ? v.label : showDefaultValue;
             var type = v.type;
-
+             // debugger; 
             if ('fix' in type) {
                 if (type.fix.value == showDefaultValue) {
                     input = title;
                     return;
                 }
-
+ 
             } else if ('range' in type) {
                 var min = type.range.min;
                 var max = type.range.max;
@@ -499,6 +503,7 @@ angApp.directive('configDefaultValue', function() {
             }
 
         });
+        
         return input;
     }
 });

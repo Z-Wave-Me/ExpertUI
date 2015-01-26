@@ -32,7 +32,7 @@
                     
                     <span class="is-updated-{{v.isUpdated}}">{{_t('updated')}}: {{v.updateTime}}</span>
                     
-                    <span> | {{_t('default_value_is')}}: <config-default-value  collection='v' show_default_value='v.showDefaultValue' default_value='v.defaultValue'></config-default-value></span>
+                    <span> | {{_t('default_value_is')}}: <config-default-value collection='v' show_default_value='v.showDefaultValue' default_value='v.defaultValue'></config-default-value></span>
                     <!-- <span ng-if="v.showDefaultValue > -1"> | {{_t('default_value_is')}}: {{v.showDefaultValue}}</span>
                     <span ng-if="v.defaultValue === ''"> | {{_t('param_default_value_undefined')}}</span>-->
                     <span ng-if="v.description">  | 
@@ -86,6 +86,7 @@
                 <div class="clearfix"></div>
                 <p class="cfg-info">
                     <span class="is-updated-{{wakeupCont.isUpdated}}">{{_t('updated')}}: {{wakeupCont.updateTime}} </span>
+                     <span> | {{_t('default_value_is')}}: <config-default-value  collection='v' show_default_value='wakeupCont.showDefaultValue' default_value='wakeupCont.defaultValue'></config-default-value></span>
                 </p>
             </div>
         </form>
@@ -121,6 +122,7 @@
                 </div>
                 <p class="cfg-info">
                     <span class="is-updated-{{switchAllCont.isUpdated}}">{{_t('updated')}}: {{switchAllCont.updateTime}} </span>
+                     <span> | {{_t('default_value_is')}}: <config-default-value  collection='v' show_default_value='switchAllCont.showDefaultValue' default_value='switchAllCont.defaultValue'></config-default-value></span>
                 </p>
             </div>
         </form>
@@ -156,6 +158,7 @@
                 </div>
                 <p class="cfg-info">
                     <span class="is-updated-{{protectionCont.isUpdated}}">{{_t('updated')}}: {{protectionCont.updateTime}} </span>
+                     <span> | {{_t('default_value_is')}}: <config-default-value  collection='v' show_default_value='protectionCont.showDefaultValue' default_value='protectionCont.defaultValue'></config-default-value></span>
                 </p>
             </div>
         </form>      

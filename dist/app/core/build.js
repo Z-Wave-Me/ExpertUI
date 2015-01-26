@@ -8768,6 +8768,7 @@ angApp.directive('configDefaultValue', function() {
             var type = scope.collection.type;
             var name = scope.collection.name;
             var hideRadio = scope.collection.hideRadio;
+            
             if (type) {
                 if ('range' in type) {
                     //input = getText(label, scope.values, type.range.min, type.range.max, name);
@@ -8775,6 +8776,7 @@ angApp.directive('configDefaultValue', function() {
                     //input = getNode(label, scope.getNodeDevices(), 'null', name);
                 } else if ('enumof' in type) {
                     input = getEnum(type, scope.defaultValue,scope.showDefaultValue);
+                   
                 } else if ('constant' in type) {
                     //input = getConstant(label, type, scope.defaultValue, name);
                 } else if ('string' in type) {
@@ -8783,6 +8785,7 @@ angApp.directive('configDefaultValue', function() {
                     input = scope.showDefaultValue;
                 }
                 scope.input = input;
+                
                 return;
             }
 
@@ -8799,15 +8802,16 @@ angApp.directive('configDefaultValue', function() {
             return;
         }
         angular.forEach(enums.enumof, function(v, k) {
+          
             var title = v.label ? v.label : showDefaultValue;
             var type = v.type;
-
+             // debugger; 
             if ('fix' in type) {
                 if (type.fix.value == showDefaultValue) {
                     input = title;
                     return;
                 }
-
+ 
             } else if ('range' in type) {
                 var min = type.range.min;
                 var max = type.range.max;
@@ -8819,6 +8823,7 @@ angApp.directive('configDefaultValue', function() {
             }
 
         });
+        
         return input;
     }
 });
@@ -10844,36 +10849,36 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
         $scope.controllerId = ZWaveAPIData.controller.data.nodeId.value;
 
         // Loop throught devices
+         var cnt = 0;
         angular.forEach(ZWaveAPIData.devices, function(device, k) {
             if (k == 255 || k == $scope.controllerId || device.data.isVirtual.value) {
                 return false;
             }
             // Loop throught instances
+           
             angular.forEach(device.instances, function(instance, instanceId) {
-
-                if (instanceId == 0 && device.instances.length > 1) {
+                 if (instanceId == 0 && device.instances.length > 1) {
                     return;
                 }
                 // Look for SensorBinary - Loop throught 0x30 commandClasses
                 var sensorBinary = instance.commandClasses[0x30];
 
                 if (angular.isObject(sensorBinary)) {
-                    var cnt = 0;
                     angular.forEach(sensorBinary.data, function(val, key) {
                         // Not a sensor type
                         var sensor_type = parseInt(key, 10);
                         if (isNaN(sensor_type)) {
                             return;
                         }
-
+                        var devName  = $filter('deviceName')(k, device);
                         // Set object
                         var obj = {};
                         obj['id'] = k;
                         obj['iId'] = instanceId;
                         obj['cmd'] = sensorBinary.data.name + '.' + val.name;
                         obj['cmdId'] = '48';
-                        obj['rowId'] = sensorBinary.name + '_' + val.name + '_' + k + '_' + cnt;
-                        obj['name'] = $filter('deviceName')(k, device);
+                        obj['rowId'] = sensorBinary.name + '_' + k + '_' + sensor_type;
+                        obj['name'] = devName;
                         obj['type'] = sensorBinary.name;
                         obj['purpose'] = val.sensorTypeString.value;
                         obj['level'] = (val.level.value ? $scope._t('sensor_triggered') : $scope._t('sensor_idle'));
@@ -10885,7 +10890,6 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                         obj['cmdToUpdate'] = 'devices.' + obj['id'] + '.instances.' + instanceId + '.commandClasses.48.data.' + sensor_type;
                         // Push to sensors
                         $scope.sensors.push(obj);
-                        cnt++;
                     });
                 }
 
@@ -10893,7 +10897,6 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                 // Look for SensorMultilevel - Loop throught 0x31 commandClasses
                 var sensorMultilevel = instance.commandClasses[0x31];
                 if (angular.isObject(sensorMultilevel)) {
-                    var cnt = 0;
                     angular.forEach(sensorMultilevel.data, function(val, key) {
                         // Not a sensor type
                         var sensor_type = parseInt(key, 10);
@@ -10902,14 +10905,15 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                         }
 
                         obj = instance.commandClasses[0x31];
+                        var devName  = $filter('deviceName')(k, device);
                         // Check for commandClasses data
                         var obj = {};
                         obj['id'] = k;
                         obj['iId'] = instanceId;
                         obj['cmd'] = sensorMultilevel.data.name + '.' + val.name;
                         obj['cmdId'] = '49';
-                        obj['rowId'] = sensorMultilevel.name + '_' + val.name + '_' + k + '_' + cnt;
-                        obj['name'] = $filter('deviceName')(k, device);
+                        obj['rowId'] = sensorMultilevel.name + '_' + k + '_' + sensor_type;
+                        obj['name'] = devName;
                         obj['type'] = sensorMultilevel.name;
                         obj['purpose'] = val.sensorTypeString.value;
                         obj['level'] = val.val.value;
@@ -10921,13 +10925,11 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                         obj['cmdToUpdate'] = 'devices.' + obj['id'] + '.instances.' + instanceId + '.commandClasses.49.data.' + sensor_type;
                         // Push to sensors
                         $scope.sensors.push(obj);
-                        cnt++;
                     });
                 }
 
                 // Look for Meter - Loop throught 0x32 commandClasses
                 var meters = instance.commandClasses[0x32];
-                var cnt = 0;
                 if (angular.isObject(meters)) {
                     angular.forEach(meters.data, function(meter, key) {
                         realEMeterScales = [0, 1, 3, 8, 9];// Not in [0, 1, 3, 8, 9] !== -1
@@ -10942,14 +10944,15 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                         if (meter.sensorType.value > 1) {
                             return; //  gas and water have real meter scales
                         }
+                        var devName  = $filter('deviceName')(k, device);
                         var obj = {};
 
                         obj['id'] = k;
                         obj['iId'] = instanceId;
                         obj['cmd'] = meters.data.name + '.' + meter.name;
                         obj['cmdId'] = '50';
-                        obj['rowId'] = meters.name + '_' + meter.name + '_' + k + '_' + cnt;
-                        obj['name'] = $filter('deviceName')(k, device);
+                        obj['rowId'] = meters.name + '_' + k + '_' + sensor_type;
+                        obj['name'] = devName;
                         obj['type'] = meters.name;
                         obj['purpose'] = meter.sensorTypeString.value;
                         obj['level'] = meter.val.value;
@@ -10960,28 +10963,27 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                         obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[' + instanceId + '].commandClasses[50].Get()';
                         obj['cmdToUpdate'] = 'devices.' + obj['id'] + '.instances.' + instanceId + '.commandClasses.50.data.' + sensor_type;
                         $scope.sensors.push(obj);
-                        cnt++;
                     });
                 }
 
                 var alarmSensor = instance.commandClasses[0x9c];
                 if (angular.isObject(alarmSensor)) {
                     //return;
-                    var cnt = 0;
                     angular.forEach(alarmSensor.data, function(val, key) {
                         // Not a sensor type
                         var sensor_type = parseInt(key, 10);
                         if (isNaN(sensor_type)) {
                             return;
                         }
+                         var devName  = $filter('deviceName')(k, device);
                         // Set object
                         var obj = {};
                         obj['id'] = k;
                         obj['iId'] = instanceId;
                         obj['cmd'] = alarmSensor.data.name + '.' + val.name;
                         obj['cmdId'] = '0x9c';
-                        obj['rowId'] = alarmSensor.name + '_' + val.name + '_' + k + '_' + cnt;
-                        obj['name'] = $filter('deviceName')(k, device);
+                        obj['rowId'] = alarmSensor.name + '_' + k + '_' + sensor_type;
+                        obj['name'] = devName;
                         obj['type'] = alarmSensor.name;
                         obj['purpose'] = val.typeString.value;
                         obj['level'] = (val.value ? $scope._t('sensor_triggered') : $scope._t('sensor_idle'));
@@ -10993,12 +10995,11 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                         obj['cmdToUpdate'] = 'devices.' + obj['id'] + '.instances.' + instanceId + '.commandClasses.0x9c.data.' + sensor_type;
                         // Push to sensors
                         $scope.sensors.push(obj);
-                        cnt++;
                     });
                 }
 
             });
-
+           
         });
     }
     /**
@@ -11036,7 +11037,7 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                     $('#' + v.rowId + ' .row-time').removeClass('is-updated-false');
                 }
 
-                //console.log('Updating:' + v.rowId + ' | At: ' + updateTime + ' | with: ' + level);//REM
+               // console.log('Updating:' + v.rowId + ' | At: ' + updateTime + ' | with: ' + level);//REM
             }
         });
     }
@@ -13895,6 +13896,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                     updateTime: updateTime,
                     isUpdated: isUpdated,
                     defaultValue: wakeup_conf_value,
+                    showDefaultValue: wakeup_conf_value,
                     cmd: 'devices[' + nodeId + '].instances[0].commandClasses[0x84]'
                 };
             } else {
@@ -13931,8 +13933,10 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                 updateTime: updateTime,
                 isUpdated: isUpdated,
                 defaultValue: switchall_conf_value,
+                showDefaultValue: switchall_conf_value, 
                 cmd: 'devices[' + nodeId + '].instances[0].commandClasses[0x27]'
             };
+           
         }
         ;
         return switchall_cont;
@@ -13968,6 +13972,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                 updateTime: updateTime,
                 isUpdated: isUpdated,
                 defaultValue: protection_conf_value,
+                showDefaultValue:  protection_conf_value, 
                 cmd: 'devices[' + nodeId + '].instances[0].commandClasses[0x75]'
             };
         }
