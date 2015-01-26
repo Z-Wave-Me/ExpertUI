@@ -67,7 +67,7 @@
             id="btn_request_nif"
             >{{_t('config_ui_show_interview_results')}}</button>
         <button
-            data-ng-click="showModalDeviceSelect('#modal_device_select', deviceId)"
+            data-ng-click="showModalDeviceSelect('#modal_device_select', deviceId,'#modal_device_select .allert-hidden')"
             class="btn btn-primary" 
             id="btn_show_description"
             >{{_t('config_ui_select_xml')}}</button>
@@ -152,9 +152,9 @@
             </div>
             <div class="modal-body">
                
-                <div class="alert alert-warning" ng-hide="deviceZddx.length > 0">Can't select device description</div>
+                <div class="alert alert-warning allert-hidden">Can't select device description</div>
                <div ng-show="deviceZddx.length > 0">
-                    <p ng-bind-html="_t('select_zddx_help') | toTrusted"></p>
+                    <i class="fa fa-spinner fa-spin"></i><p ng-bind-html="_t('select_zddx_help') | toTrusted"></p>
                     <select 
                         name="select_zddx_help" 
                         id="select_zddx_help" 

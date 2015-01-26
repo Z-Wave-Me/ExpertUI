@@ -9392,7 +9392,7 @@ appFactory.factory('myCache', function($cacheFactory) {
  * @todo: Replace all data handler with this service
  * @todo: Complete error handling
  */
-appFactory.factory('dataService', function($http, $q, $interval, $filter, $location, $window,myCache, cfg) {
+appFactory.factory('dataService', function($http, $q, $interval, $filter, $location, $window, myCache, cfg) {
     var apiData;
     var apiDataInterval;
     var deviceClasses;
@@ -9548,7 +9548,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
      */
     function  joinedZwaveData(callback) {
         var time = Math.round(+new Date() / 1000);
-       
+
         var result = {};
         var refresh = function() {
             //console.log(apiData);
@@ -9559,13 +9559,13 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
             });
             request.success(function(data) {
                 $('#update_time_tick').html($filter('getCurrentTime')(time));
-                if (!apiData|| !data)
+                if (!apiData || !data)
                     return;
                 time = data.updateTime;
                 angular.forEach(data, function(obj, path) {
-                   if(!angular.isString(path)){
-                       return;
-                   }
+                    if (!angular.isString(path)) {
+                        return;
+                    }
                     var pobj = apiData;
                     var pe_arr = path.split('.');
                     for (var pe in pe_arr.slice(0, -1)) {
@@ -9601,7 +9601,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
     /**
      * Run api cmd
      */
-    function runCmd(param, request,error) {
+    function runCmd(param, request, error) {
         var url = (request ? cfg.server_url + request : cfg.server_url + cfg.store_url + param);
         var request = $http({
             method: 'POST',
@@ -9612,8 +9612,8 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
             handleSuccess(data);
         }).error(function() {
             $('button .fa-spin,a .fa-spin').fadeOut(1000);
-            if(error){
-              $window.alert(error  + '\n' + url);  
+            if (error) {
+                $window.alert(error + '\n' + url);
             }
 
         });
@@ -9668,29 +9668,23 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
     /**
      * Get zddx device selection
      */
-    function getSelectZDDX(nodeId, callback) {
-        if (deviceClasses) {
-            return callback(deviceClasses);
-        }
-        else {
-            var request = $http({
-                method: "POST",
-                url: cfg.server_url + '/ZWaveAPI/Run/devices[' + nodeId + '].GuessXML()'
-            });
-            request.success(function(data) {
-                return callback(data);
-            }).error(function() {
-                console.log('Error: getSelectZDDX');
-                // handleError();
+    function getSelectZDDX(nodeId, callback,alert) {
+        var request = $http({
+            method: "POST",
+            url: cfg.server_url + '/ZWaveAPI/Run/devices[' + nodeId + '].GuessXML()'
+        });
+        request.success(function(data) {
+           return callback(data);
+        }).error(function() {
+             $(alert).removeClass('allert-hidden');
 
-            });
-        }
+        });
     }
-    
-     /**
+
+    /**
      * Get ZddXml file
      */
-    function getZddXml(file,callback) {
+    function getZddXml(file, callback) {
         var cachedZddXml = myCache.get(file);
         if (cachedZddXml) {
             return callback(cachedZddXml);
@@ -9703,7 +9697,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
             request.success(function(data) {
                 var x2js = new X2JS();
                 var json = x2js.xml_str2json(data);
-                 myCache.put(file, json);
+                myCache.put(file, json);
                 return callback(json);
             }).error(function() {
                 handleError();
@@ -9879,27 +9873,27 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
     function purgeCache() {
         apiData = undefined;
     }
-    
+
     /**
      * Load language file
      */
-    function getLanguageFile(callback,lang) {
+    function getLanguageFile(callback, lang) {
         var langFile = 'language.' + lang + '.json';
         var cached = myCache.get(langFile);
         if (cached) {
-           return callback(cached);
+            return callback(cached);
         }
         var request = {
             method: "get",
             url: cfg.lang_dir + langFile
         };
         return $http(request).success(function(data) {
-                myCache.put(langFile, data);
-                return callback(data);
-            }).error(function() {
-                handleError(false,true);
+            myCache.put(langFile, data);
+            return callback(data);
+        }).error(function() {
+            handleError(false, true);
 
-            });
+        });
     }
 
     /**
@@ -12942,7 +12936,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     // Load data
     $scope.load = function(nodeId, refresh) {
         dataService.getZwaveData(function(ZWaveAPIData) {
-            $scope.devices = angular.copy([]);
+            $scope.reset();
             $scope.deviceId = nodeId;
             setNavigation(ZWaveAPIData);
             setData(ZWaveAPIData, nodeId);
@@ -13006,10 +13000,10 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     };
 
     // Show modal device select dialog
-    $scope.showModalDeviceSelect = function(target, nodeId) {
+    $scope.showModalDeviceSelect = function(target, nodeId,alert) {
         dataService.getSelectZDDX(nodeId, function(data) {
             $scope.deviceZddx = data;
-        });
+        },alert);
         $(target).modal();
 
     };
