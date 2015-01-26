@@ -459,7 +459,7 @@
 	"import_export_save_config_title": "Действия с настройками",
 	"device_description_title": "Описание устройства",
 	"geek_new_config": "Новый элемент конфигурации",
-	"device_rename_tooltip": "Изменить отображаемое имя устройства",
+	"device_rename_tooltip": "Переименовать",
 	"config_ui_configure_save_configuration": "Экспортировать настройки данного устройства в виде XML",
 	"pyzw_title": "Умный дом Z-Wave.Me",
 	"update_from_device": "Запросить текущие значения у устройства",
