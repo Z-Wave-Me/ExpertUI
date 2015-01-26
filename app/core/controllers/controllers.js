@@ -2857,7 +2857,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     // Load data
     $scope.load = function(nodeId, refresh) {
         dataService.getZwaveData(function(ZWaveAPIData) {
-            $scope.devices = angular.copy([]);
+            $scope.reset();
             $scope.deviceId = nodeId;
             setNavigation(ZWaveAPIData);
             setData(ZWaveAPIData, nodeId);
