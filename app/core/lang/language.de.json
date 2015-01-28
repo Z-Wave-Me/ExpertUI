@@ -184,7 +184,7 @@
     "nm_controller_state_17": "Abbrechen",
     "nm_controller_state_18": "Prozess zum Ersetzen eines defekten Gerätes gestartet.",
     "nm_controller_state_19": "Controller ist bereit zum Inkludieren eines neuen Gerätes.", 
-    "nm_controller_state_20": "Controller in Ausliferungszustand zurückgesetzt.",
+    "nm_controller_state_20": "Controller in Auslieferungszustand zurückgesetzt.",
     "ctrl_info_nodeid_title": "Geräte-Id:",
     "ctrl_info_homeid_title": "Netzwerk-Id:",
     "ctrl_info_primary_title": "Primärcontroller:",

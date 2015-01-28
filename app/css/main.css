@@ -317,6 +317,19 @@ padding: 10px 10px 0 10px;
 .nm-response.alert-danger{
     font-weight: bold;
 }
+
+/*  Network controller
+-------------------------------------------------- */
+.table-controller table{
+    margin-bottom: 20px;
+}
+.table-controller h3{
+   font-size: 100%;
+   font-weight: bold;
+}
+.controller-th{
+  width: 15%;
+}
 /* Device assoc
 -------------------------------------------------- */
 .badge-assoc{
