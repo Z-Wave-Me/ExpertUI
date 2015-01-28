@@ -168,9 +168,9 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         //$location.path('/config/configuration/' + nodeId);
         console.log($scope.refresh);
     };
-    
-    
-     /**
+
+
+    /**
      * Apply Config action
      *
      * @param {object} form
@@ -200,38 +200,41 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             var confSize = 0;
             //var lastNum = n.name.match(/\d+$/);
             var value = n.value;
-
+            
             angular.forEach(cfg, function(cv, ck) {
+                if(!cv){
+                    return;
+                }
                 if (cv.confNum == num) {
                     confSize = cv.confSize;
                 }
 
 
             });
-            if(num > 0){
+            if (num > 0) {
                 parameter = '[' + num + ',' + value + ',' + confSize + ']';
-            }else{
+            } else {
                 parameter = '[' + value + ']';
             }
-            
+
             obj['id'] = cmd['id'];
-             obj['instance'] = cmd['instance'];
-             obj['commandclass'] = cmd['commandclass'];
-             obj['command'] = cmd['command'];
-             obj['parameter'] = parameter;
-             xmlData.push(obj);
-           // dataService.runCmd(request, false, $scope._t('error_handling_data'));
+            obj['instance'] = cmd['instance'];
+            obj['commandclass'] = cmd['commandclass'];
+            obj['command'] = cmd['command'];
+            obj['parameter'] = parameter;
+            xmlData.push(obj);
+            // dataService.runCmd(request, false, $scope._t('error_handling_data'));
         });
         //console.log(xmlData)
         //return;
-        
+
         dataService.getCfgXml(function(cfgXml) {
-             var xmlFile = deviceService.buildCfgXml(xmlData,cfgXml, cmd['id'],cmd['commandclass']);
-         dataService.putCfgXml(xmlFile); 
+            var xmlFile = deviceService.buildCfgXml(xmlData, cfgXml, cmd['id'], cmd['commandclass']);
+            dataService.putCfgXml(xmlFile);
         });
-        
-        
-         //debugger;
+
+
+        //debugger;
         $scope.refresh = true;
         var timeOut;
         timeOut = $timeout(function() {
@@ -466,9 +469,9 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 
         dataService.getCfgXml(function(cfgXml) {
             $scope.configCont = configCont(node, nodeId, zddXml, cfgXml);
-            $scope.wakeupCont = wakeupCont(node, nodeId, ZWaveAPIData,cfgXml);
-            $scope.switchAllCont = switchAllCont(node, nodeId, ZWaveAPIData,cfgXml);
-            $scope.protectionCont = protectionCont(node, nodeId, ZWaveAPIData,cfgXml);
+            $scope.wakeupCont = wakeupCont(node, nodeId, ZWaveAPIData, cfgXml);
+            $scope.switchAllCont = switchAllCont(node, nodeId, ZWaveAPIData, cfgXml);
+            $scope.protectionCont = protectionCont(node, nodeId, ZWaveAPIData, cfgXml);
         });
 
 
@@ -1082,14 +1085,14 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     /**
      * Wakeup cont
      */
-    function wakeupCont(node, nodeId, ZWaveAPIData,cfgXml) {
+    function wakeupCont(node, nodeId, ZWaveAPIData, cfgXml) {
         var wakeup_cont = false;
         if (0x84 in node.instances[0].commandClasses) {
             var cfgFile = deviceService.getCfgXmlParam(cfgXml, nodeId, '0', '84', 'Set');
             var wakeup_zwave_min = (node.instances[0].commandClasses[0x84].data.version.value == 1) ? 0 : node.instances[0].commandClasses[0x84].data.min.value;
             var wakeup_zwave_max = (node.instances[0].commandClasses[0x84].data.version.value == 1) ? 0xFFFFFF : node.instances[0].commandClasses[0x84].data.max.value;
             var wakeup_zwave_value = node.instances[0].commandClasses[0x84].data.interval.value;
-            var conf_default_value = (node.instances[0].commandClasses[0x84].data.version.value == 1) ? 86400 : node.instances[0].commandClasses[0x84].data['default'].value; // default is a special keyword in JavaScript
+            var wakeup_zwave_default_value = (node.instances[0].commandClasses[0x84].data.version.value == 1) ? 86400 : node.instances[0].commandClasses[0x84].data['default'].value; // default is a special keyword in JavaScript
             var wakeup_zwave_nodeId = node.instances[0].commandClasses[0x84].data.nodeId.value;
             var uTime = node.instances[0].commandClasses[0x84].data.updateTime;
             var iTime = node.instances[0].commandClasses[0x84].data.invalidateTime;
@@ -1097,16 +1100,18 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             var isUpdated = (uTime > iTime ? true : false);
             if (wakeup_zwave_min !== '' && wakeup_zwave_max !== '') {
                 //var methods = getMethodSpec(ZWaveAPIData, nodeId, instanceId, ccId, null);
-                 var gui_descr = getMethodSpec(ZWaveAPIData, nodeId, 0, 0x84, 'Set');
+                var gui_descr = getMethodSpec(ZWaveAPIData, nodeId, 0, 0x84, 'Set');
                 gui_descr[0].type.range.min = parseInt(wakeup_zwave_min, 10);
                 gui_descr[0].type.range.max = parseInt(wakeup_zwave_max, 10);
-                 var wakeup_conf_value;
+                var wakeup_conf_value;
 //                var wakeup_config = null;
 //                var wakeup_conf_el;
 //               var wakeup_conf_nodeId;
                 //if (wakeup_config.size() == 1) {
-               if (cfgFile !== undefined) {
+                var wakeup_conf_node_value = 0;
+                if (cfgFile !== undefined) {
                     wakeup_conf_value = cfgFile[0] || null;
+                    wakeup_conf_node_value = cfgFile[1] || 0;
                 } else {
                     if (wakeup_zwave_value != "" && wakeup_zwave_value != 0 && wakeup_zwave_nodeId != "") {
                         // not defined in config: adopt devices values
@@ -1114,7 +1119,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                         //wakeup_conf_nodeId = parseInt(wakeup_zwave_nodeId, 10);
                     } else {
                         // values in device are missing. Use defaults
-                        wakeup_conf_value = parseInt(conf_default_value, 10);
+                        wakeup_conf_value = parseInt(wakeup_zwave_default_value, 10);
                         //wakeup_conf_nodeId = parseInt(ZWaveAPIData.controller.data.nodeId.value, 10);
                     }
                     ;
@@ -1126,11 +1131,12 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                     name: 'wakeup_' + nodeId + '_' + 0,
                     updateTime: updateTime,
                     isUpdated: isUpdated,
-                    defaultValue: conf_default_value,
-                    showDefaultValue: conf_default_value,
-                     configCconfigValue: wakeup_conf_value,
-                     confNum: 0,
-                        confSize: 0,
+                    defaultValue: wakeup_zwave_default_value,
+                    showDefaultValue: wakeup_zwave_default_value,
+                    configCconfigValue: wakeup_conf_value,
+                    configCconfigNodeValue: wakeup_conf_node_value,
+                    confNum: 0,
+                    confSize: 0,
                     cmd: 'devices[' + nodeId + '].instances[0].commandClasses[0x84]'
                 };
             } else {
@@ -1173,7 +1179,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                 showDefaultValue: conf_default_value,
                 configCconfigValue: switchall_conf_value,
                 confNum: 0,
-                        confSize: 0,
+                confSize: 0,
                 cmd: 'devices[' + nodeId + '].instances[0].commandClasses[0x27]'
             };
 
@@ -1185,7 +1191,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     /**
      * Protection cont
      */
-    function protectionCont(node, nodeId, ZWaveAPIData,cfgXml) {
+    function protectionCont(node, nodeId, ZWaveAPIData, cfgXml) {
         var protection_cont = false;
         if (0x75 in node.instances[0].commandClasses) {
             var cfgFile = deviceService.getCfgXmlParam(cfgXml, nodeId, '0', '75', 'Set');
@@ -1201,9 +1207,9 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             //var protection_conf_rf_value;
             // get default value from the config XML
             if (cfgFile !== undefined) {
-                 protection_conf_value = cfgFile[0];
+                protection_conf_value = cfgFile[0];
             } else {
-                 protection_conf_value = 0;// by default switch all off group only
+                protection_conf_value = 0;// by default switch all off group only
             }
 
             protection_cont = {
@@ -1216,7 +1222,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                 showDefaultValue: conf_default_value,
                 configCconfigValue: protection_conf_value,
                 confNum: 0,
-                        confSize: 0,
+                confSize: 0,
                 cmd: 'devices[' + nodeId + '].instances[0].commandClasses[0x75]'
             };
         }

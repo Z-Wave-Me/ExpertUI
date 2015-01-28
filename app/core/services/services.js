@@ -135,13 +135,17 @@ appService.service('deviceService', function($filter) {
         angular.forEach(cfg, function(v, k) {
             //if (v['_id'] == nodeId && v['_instance'] == instance && v['_commandClass'] == commandClass && v['_command'] == command) {
             if (v['_id'] == nodeId && v['_instance'] == instance && v['_commandclass'] == commandClass && v['_command'] == command) {
+//                if(!angular.isArray(v['_parameter'])){
+//                    return;
+//                }
                 var array = JSON.parse(v['_parameter']);
                 if (array.length > 2) {
                     collection[array[0]] = array[1];
                 }
-                /*else if (array.length == 2){
-                 collection[array[0]] = array[1];
-                 }*/
+                else if (array.length == 2){
+                 collection = array;
+                 
+                 }
                 else {
                     collection[0] = array[0];
                     return;
@@ -159,7 +163,22 @@ appService.service('deviceService', function($filter) {
      */
     function buildCfgXml(data, cfgXml, id, commandclass) {
         var hasCfgXml = false;
-        var xmlData = data;
+       var formData = [];
+        if(commandclass == '84'){
+            var par1 = JSON.parse(data[0]['parameter']);
+            var par2 = JSON.parse(data[1]['parameter']);
+            var wakeData = {
+                'id':id,
+                'instance':data[0]['instance'],
+                'commandclass':commandclass,
+                'command':data[0]['command'],
+                'parameter':'[' + par1 + ',' + par2  + ']'
+             };
+              formData.push(wakeData);
+        }else{
+            formData = data;  
+        }
+        var xmlData = formData; 
         if (angular.isObject(cfgXml) && $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration')) {
             hasCfgXml = cfgXml.config.devices.deviceconfiguration;
             angular.forEach(hasCfgXml, function(v, k) {

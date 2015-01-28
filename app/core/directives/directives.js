@@ -231,14 +231,16 @@ angApp.directive('expertCommandInput', function($filter) {
         return input;
     }
     // Get node
-    function getNode(label, devices, selected, name) {
+    function getNode(label, devices, currValue, name) {
         var input = '';
         var inName = $filter('stringToSlug')(name ? name : label);
+        
         input += '<label>' + label + '</label> ';
         input += '<select name="select_' + inName + '" class="form-control">';
         input += '<option value="1">RaZberry</option>';
         angular.forEach(devices, function(v, k) {
-            input += '<option value="' + v.id + '">' + v.name + '</option>';
+            var selected = (v.id == currValue ? ' selected' : '');
+            input += '<option value="' + v.id + '"' + selected + '>' + v.name + '</option>';
         });
 
         input += '</select>';
@@ -383,6 +385,14 @@ angApp.directive('expertCommandInput', function($filter) {
         input += '<input class="form-control" name="' + inName + '" type="text" class="form-control" value="' + value + '" />';
         return input;
     }
+    
+    // Get bitset
+    function getBitset(label, enums, defaultValue, name, hideRadio,currValue) {
+        
+        var input = 'Bitset';
+        
+        return input;
+    }
 
     // Get default
     function getDefault(label) {
@@ -405,6 +415,7 @@ angApp.directive('expertCommandInput', function($filter) {
             defaultValue: '=',
             showDefaultValue: '=',
             currValue: '=',
+            currNodeValue: '=',
             name: '=',
             divId: '='
         },
@@ -423,15 +434,16 @@ angApp.directive('expertCommandInput', function($filter) {
                 scope.input = input;
                 return;
             }
-           
             //if (label && type) {
             if (type) {
                 if ('range' in type) {
                     input = getText(label, scope.values, type.range.min, type.range.max, name);
                 } else if ('node' in type) {
-                    input = getNode(label, scope.getNodeDevices(), 'null', name);
+                    input = getNode(label, scope.getNodeDevices(), scope.currNodeValue, name);
                 } else if ('enumof' in type) {
                     input = getEnum(label, type, scope.defaultValue, name, hideRadio,scope.currValue);
+                } else if ('bitset' in type) {
+                    input = getBitset(label, type, scope.defaultValue, name, hideRadio,scope.currValue);
                 } else if ('constant' in type) {
                     input = getConstant(label, type, scope.defaultValue, name,scope.currValue);
                 } else if ('string' in type) {
@@ -459,6 +471,7 @@ angApp.directive('configDefaultValue', function() {
             showDefaultValue: '='
         },
         link: function(scope, element, attrs) {
+            scope.input = scope.showDefaultValue;
             var input = '';
             if (!scope.collection) {
                 return;
