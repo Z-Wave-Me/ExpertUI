@@ -1,4 +1,5 @@
 {
+   "nm_restore_pick_up": "Datei Upload",
    "apply_config_into_device": "Speichern",
     "nav_active_associations":"Assoziationsmanagement",
     "nm_frequency_title":"Änderung der Z-Wave Frequenz",

@@ -12,6 +12,7 @@
     "nm_start_suc_on_node": "on node",
     "th_vendor": "Vendor",
     "th_product": "Product",
+    "nm_restore_pick_up": "Pick up the file",
     "--- ":"---",
     "apply_config_into_device": "Save this parameter",
     "nm_frequency_title":"Operating frequency Change",
