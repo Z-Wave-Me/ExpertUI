@@ -67,6 +67,19 @@ appService.service('deviceService', function($filter) {
         return configGetZddxLang(node, lang);
     };
 
+    /**
+     * Get xml config param
+     */
+    this.getCfgXmlParam = function(cfgXml, nodeId, instance, commandClass, command) {
+        return getCfgXmlParam(cfgXml, nodeId, instance, commandClass, command);
+    };
+
+    /**
+     *Build config XML file
+     */
+    this.buildCfgXml = function(data, cfgXml, id, commandclass) {
+        return buildCfgXml(data, cfgXml, id, commandclass);
+    };
 
     /// --- Private functions --- ///
     /**
@@ -86,12 +99,12 @@ appService.service('deviceService', function($filter) {
      *  Get language from zddx
      */
     function configGetZddxLang(langs, currLang) {
-       var label = null;
-       if (!langs) {
+        var label = null;
+        if (!langs) {
             return label;
         }
-        
-       if (angular.isArray(langs)) {
+
+        if (angular.isArray(langs)) {
             angular.forEach(langs, function(lang, index) {
                 if (("__text" in lang) && (lang["_xml:lang"] == currLang)) {
                     label = lang.__text;
@@ -107,5 +120,69 @@ appService.service('deviceService', function($filter) {
             }
         }
         return label;
+    }
+
+    /**
+     * Get xml config param
+     */
+    function getCfgXmlParam(cfgXml, nodeId, instance, commandClass, command) {
+        var cfg = $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration');
+        if (!cfg) {
+            return [];
+        }
+        // Get data for given device by id
+        var collection = [];
+        angular.forEach(cfg, function(v, k) {
+            //if (v['_id'] == nodeId && v['_instance'] == instance && v['_commandClass'] == commandClass && v['_command'] == command) {
+            if (v['_id'] == nodeId && v['_instance'] == instance && v['_commandclass'] == commandClass && v['_command'] == command) {
+                var array = JSON.parse(v['_parameter']);
+                if (array.length > 2) {
+                    collection[array[0]] = array[1];
+                }
+                /*else if (array.length == 2){
+                 collection[array[0]] = array[1];
+                 }*/
+                else {
+                    collection[0] = array[0];
+                    return;
+                }
+            }
+
+        });
+        //console.log(collection)
+        return collection;
+
+    }
+
+    /**
+     *Build config XML file
+     */
+    function buildCfgXml(data, cfgXml, id, commandclass) {
+        var hasCfgXml = false;
+        var xmlData = data;
+        if (angular.isObject(cfgXml) && $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration')) {
+            hasCfgXml = cfgXml.config.devices.deviceconfiguration;
+            angular.forEach(hasCfgXml, function(v, k) {
+                var obj = {};
+                if (v['_id'] == id && v['_commandclass'] == commandclass) {
+                    return;
+                 }
+                    obj['id'] = v['_id'];
+                    obj['instance'] = v['_instance'];
+                    obj['commandclass'] = v['_commandclass'];
+                    obj['command'] = v['_command'];
+                    obj['parameter'] = v['_parameter'];
+                    xmlData.push(obj);
+              
+            });
+        }
+        
+        var xml = '<config><devices>' + "\n";
+        angular.forEach(xmlData, function(v, k) {
+           xml += '<deviceconfiguration id="' + v.id + '" instance="' + v.instance + '" commandclass="' + v.commandclass + '" command="' + v.command + '" parameter="' + v.parameter + '"/>' + "\n";
+        });
+        xml += '</devices></config>' + "\n";
+        return xml;
+
     }
 });

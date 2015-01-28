@@ -247,7 +247,8 @@ angApp.directive('expertCommandInput', function($filter) {
     }
 
     // Get enumerators
-    function getEnum(label, enums, defaultValue, name, hideRadio,showDefaultValue) {
+    function getEnum(label, enums, defaultValue, name, hideRadio,currValue) {
+        
         var input = '';
         if (!enums) {
             return;
@@ -255,41 +256,56 @@ angApp.directive('expertCommandInput', function($filter) {
         var inName = $filter('stringToSlug')(name ? name : label);
         input += '<label>' + label + '</label><br />';
         var cnt = 1;
+        var value = (currValue !== undefined ? currValue : defaultValue);
         angular.forEach(enums.enumof, function(v, k) {
             var title = v.label;
             var type = v.type;
-
-
+            var enumVal =  $filter('hasNode')(v, 'type.fix.value');
             var checked = (cnt == 1 ? ' checked="checked"' : '');
             var isCurrent = (cnt == 1 ? ' commads-is-current' : '');
 
             if ('fix' in type) {
                 if (defaultValue) {
                     if (isNaN(parseInt(defaultValue, 10))) {
-                        checked = (v.label == defaultValue ? ' checked="checked"' : '');
                         isCurrent = (v.label == defaultValue ? ' commads-is-current' : '');
                     } else {
-                        checked = '';
-                        isCurrent = '';
+                         isCurrent = '';
                     }
+                }
+                
+                if (value) {
+                    checked = (enumVal == value ? ' checked="checked"' : '');
+//                    if (isNaN(parseInt(value, 10))) {
+//                        checked = (v.label == value ? ' checked="checked"' : '');
+//                    } else {
+//                        checked = '';
+//                    }
                 }
                 input += '<input name="radio_' + inName + '" class="commands-data-chbx" type="radio" value="' + type.fix.value + '"' + checked + ' /> <span class="commands-label' + isCurrent + '">' + title + '</span><br />';
             } else if ('range' in type) {
                 var min = type.range.min;
                 var max = type.range.max;
                 var disabled = ' disabled="true"';
-                var setVal = (defaultValue ? defaultValue : min);
+                var setVal = (value ? value : min);
                 if (defaultValue) {
                     if (defaultValue >= min && defaultValue <= max) {
-                        checked = ' checked="checked"';
                         disabled = '';
                         isCurrent = ' commads-is-current';
                     }
 
                 } else {
-                    checked = '';
                     isCurrent = '';
                 }
+                if (value) {
+                    if (value >= min && value <= max) {
+                        checked = ' checked="checked"';
+                        disabled = '';
+                    }
+
+                } else {
+                    checked = '';
+                }
+                
                 if (hideRadio) {
                     disabled = '';
                 }
@@ -312,8 +328,9 @@ angApp.directive('expertCommandInput', function($filter) {
     }
 
     // Get dropdown list
-    function getDropdown(label, enums, defaultValue, name) {
+    function getDropdown(label, enums, defaultValue, name,currValue) {
         var input = '';
+        var cValue = (currValue !== undefined ? currValue : defaultValue);
         var inName = $filter('stringToSlug')(name ? name : label);
         input += '<label>' + label + '</label><br />';
         input += '<select name="select_' + inName + '" class="form-control">';
@@ -328,8 +345,8 @@ angApp.directive('expertCommandInput', function($filter) {
                 value = type.range.min;
             }
 
-            if (defaultValue) {
-                var selected = (type.fix.value == defaultValue ? ' selected' : '');
+            if (value) {
+                var selected = (type.fix.value == cValue ? ' selected' : '');
             }
             input += '<option value="' + value + '"' + selected + '> ' + title + '</option>';
             cnt++;
@@ -340,7 +357,7 @@ angApp.directive('expertCommandInput', function($filter) {
     }
 
     // Get constant 
-    function getConstant(label, type, defaultValue, name) {
+    function getConstant(label, type, defaultValue, name,currValue) {
         var input = '';
         var inName = $filter('stringToSlug')(name ? name : label);
         input += '<label>' + label + '</label><br />';
@@ -387,6 +404,8 @@ angApp.directive('expertCommandInput', function($filter) {
             isDropdown: '=',
             defaultValue: '=',
             showDefaultValue: '=',
+            currValue: '=',
+            name: '=',
             divId: '='
         },
         link: function(scope, element, attrs) {
@@ -397,14 +416,14 @@ angApp.directive('expertCommandInput', function($filter) {
             }
             var label = scope.collection.label;
             var type = scope.collection.type;
-            var name = scope.collection.name;
+            var name = (scope.collection.name || scope.name);
             var hideRadio = scope.collection.hideRadio;
             if (scope.isDropdown) {
-                input = getDropdown(label, type, scope.defaultValue);
+                input = getDropdown(label, type, scope.defaultValue, name,scope.currValue);
                 scope.input = input;
                 return;
             }
-
+           
             //if (label && type) {
             if (type) {
                 if ('range' in type) {
@@ -412,11 +431,11 @@ angApp.directive('expertCommandInput', function($filter) {
                 } else if ('node' in type) {
                     input = getNode(label, scope.getNodeDevices(), 'null', name);
                 } else if ('enumof' in type) {
-                    input = getEnum(label, type, scope.defaultValue, name, hideRadio,scope.showDefaultValue);
+                    input = getEnum(label, type, scope.defaultValue, name, hideRadio,scope.currValue);
                 } else if ('constant' in type) {
-                    input = getConstant(label, type, scope.defaultValue, name);
+                    input = getConstant(label, type, scope.defaultValue, name,scope.currValue);
                 } else if ('string' in type) {
-                    input = getString(label, scope.values, name);
+                    input = getString(label, scope.values, name,scope.currValue);
                 } else {
                     input = getDefault(label);
                 }

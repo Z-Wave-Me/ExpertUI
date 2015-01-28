@@ -37,6 +37,8 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         getDeviceClasses: getDeviceClasses,
         getSelectZDDX: getSelectZDDX,
         getZddXml: getZddXml,
+        getCfgXml: getCfgXml,
+        putCfgXml: putCfgXml,
         getTiming: getTiming,
         getQueueData: getQueueData,
         updateQueueData: updateQueueData,
@@ -293,15 +295,15 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
     /**
      * Get zddx device selection
      */
-    function getSelectZDDX(nodeId, callback,alert) {
+    function getSelectZDDX(nodeId, callback, alert) {
         var request = $http({
             method: "POST",
             url: cfg.server_url + '/ZWaveAPI/Run/devices[' + nodeId + '].GuessXML()'
         });
         request.success(function(data) {
-           return callback(data);
+            return callback(data);
         }).error(function() {
-             $(alert).removeClass('allert-hidden');
+            $(alert).removeClass('allert-hidden');
 
         });
     }
@@ -329,6 +331,46 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
 
             });
         }
+    }
+
+    /**
+     * Get config XML file
+     */
+    function getCfgXml(callback) {
+        var request = $http({
+            method: "get",
+            url: cfg.server_url + '/config/Configuration.xml' 
+        });
+        request.success(function(data) {
+            var x2js = new X2JS();
+            var json = x2js.xml_str2json(data);
+            return callback(json);
+        }).error(function() {
+            return callback(null);
+
+        });
+    }
+    
+    /**
+     * Put config XML file
+     */
+    function putCfgXml(data) {
+        var request = $http({
+            method: "PUT",
+            //dataType: "text", 
+            url: cfg.server_url + '/config/Configuration.xml', 
+            data: data,
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+        });
+        request.success(function(data) {
+            handleSuccess(data);
+        }).error(function(error) {
+             $('button .fa-spin,a .fa-spin').fadeOut(1000);
+            handleError();
+
+        });
     }
 
     /**

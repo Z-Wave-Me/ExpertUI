@@ -9,7 +9,7 @@
             id="{{formName}}"
             class="form" 
             role="form"
-            ng-submit="submitApplyConfigCfg(formName, 'devices[' + deviceId + '].instances[0].commandClasses[0x70].Set',configCont,hasBattery)" 
+            ng-submit="submitApplyConfigCfg(formName,{'id': deviceId,'instance': '0','commandclass': '70','command': 'Set'},configCont,hasBattery)" 
             novalidate>
             <a
                  class="btn btn-primary spin-true"
@@ -21,11 +21,12 @@
                 >{{_t('apply_config')}} <i class="fa fa-spinner fa-spin"></i></button> 
             <div class="cfg-control-content" id="cfg_control_{{v.confNum}}" ng-repeat="v in configCont">
                 <div class="form-inline">
-                    <expert-command-input 
+                    <expert-command-input
                         collection='v'
                         div_id='$index'
                         default_value='v.defaultValue'
                         show_default_value='v.showDefaultValue'
+                        curr_value='v.configCconfigValue'
                         ></expert-command-input>
                 </div>
                 <p class="cfg-info">
@@ -43,7 +44,7 @@
                 <button 
                     type="button" 
                     class="btn btn-info spin-true"
-                    ng-click="submitApplyConfigCfg(formName, 'devices[' + deviceId + '].instances[0].commandClasses[0x70].Set',configCont,hasBattery,v.confNum)"
+                    ng-click="submitApplyConfigCfg(formName, {'id': deviceId,'instance': '0','commandclass': '70','command': 'Set'},configCont,hasBattery)"
                     >{{_t('apply_config_into_device')}} <i class="fa fa-spinner fa-spin"></i></button> 
                 
 
@@ -60,7 +61,7 @@
             id="{{formName}}"
             class="form" 
             role="form"
-            ng-submit="submitApplyConfig(formName, wakeupCont.cmd + '.Set',hasBattery)" 
+            ng-submit="submitApplyConfigCfg(formName,{'id': deviceId,'instance': '0','commandclass': '84','command': 'Set'},wakeupCont,hasBattery)" 
             novalidate>
             <button
                  class="btn btn-primary spin-true"
@@ -79,6 +80,8 @@
                             values='wakeupCont.values[0]'
                             devices='devices'
                             get-node-devices='getNodeDevices'
+                            curr_value='wakeupCont.configCconfigValue'
+                             name='wakeupCont.name'
                             ></expert-command-input>
                     </div>
 
@@ -101,7 +104,7 @@
             id="{{formName}}"
             class="form" 
             role="form"
-            ng-submit="submitApplyConfig(formName, switchAllCont.cmd + '.Set',hasBattery)" 
+            ng-submit="submitApplyConfigCfg(formName,{'id': deviceId,'instance': '0','commandclass': '27','command': 'Set'},switchAllCont,hasBattery)" 
             novalidate>
             <a
                 class="btn btn-primary spin-true"
@@ -117,6 +120,8 @@
                         collection='v'
                         values='switchAllCont.values[0]'
                         default_value='switchAllCont.defaultValue'
+                        curr_value='switchAllCont.configCconfigValue'
+                        name='switchAllCont.name'
                         is_dropdown='1'
                         ></expert-command-input>
                 </div>
@@ -137,7 +142,7 @@
             id="{{formName}}"
             class="form" 
             role="form"
-            ng-submit="submitApplyConfig(formName, protectionCont.cmd + '.Set',hasBattery)" 
+            ng-submit="submitApplyConfigCfg(formName,{'id': deviceId,'instance': '0','commandclass': '75','command': 'Set'},protectionCont,hasBattery)" 
             novalidate>
             <a
                 class="btn btn-primary spin-true"
@@ -153,6 +158,8 @@
                         collection='v'
                         values='protectionCont.values[0]'
                         default_value='protectionCont.defaultValue'
+                         curr_value='protectionCont.configCconfigValue'
+                          name='protectionCont.name'
                         is_dropdown='1'
                         ></expert-command-input>
                 </div>
