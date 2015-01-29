@@ -81,7 +81,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">{{ _t('assoc_add_title')}}</h4>
                 </div>
-                <div class="modal-body" style="white-space: normal;">
+                <div class="modal-body" style="white-space: normal;"> 
                     <div class="form-inline">
                         {{ _t('fro')}} {{addData.nodeId| deviceName:addData.node}} {{ _t('to_locate')}} <br/>
                         <div class="form-group">
@@ -90,7 +90,7 @@
                             </select>-->
                         <select ng-model="assocToNode" class="form-control">
                                 <option value=""  ng-selected="true">&lt; {{ _t('assoc_select_to_node')}} &gt;</option>
-                                <option ng-repeat="v in addNodesSort | orderBy:'val':true" value="{{v.key}}">{{v.val}}</option>
+                                <option ng-repeat="v in allDevices | orderBy:'val':false" value="{{v.key}}">{{v.val}}</option>
                             </select>
                         </div>
                         <div class="form-group" ng-show="addInstances[assocToNode] != undefined">
