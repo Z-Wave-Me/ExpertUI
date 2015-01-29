@@ -160,7 +160,7 @@
         border-radius:0;
     }
 
-   .is-mobile-true .nav > li > a {
+    .is-mobile-true .nav > li > a {
         position: relative;
         display: block;
         padding: 7px;
@@ -292,7 +292,9 @@
         text-align:left;
         font-weight: bold;
     }
-
+    .table-responsive{
+        border: 0;
+    }
     /*
     Label the data
     */
@@ -317,7 +319,7 @@
         border-radius:0;
     }
 
-  .nav > li > a {
+    .nav > li > a {
         position: relative;
         display: block;
         padding: 7px;
@@ -328,11 +330,19 @@
         background-color: transparent;
     }
 
-   .nav > li > a:hover, .nav > li > a:focus {
+    .nav > li > a:hover, .nav > li > a:focus {
         background-color: transparent;
         border: 0 !important;
 
     }
+
+    /*  Network controller
+-------------------------------------------------- */
+    .table-controller table{
+        margin-bottom: 20px !important;
+    }
+
+
 }
 
 /* Extra Small Devices, Phones */ 
