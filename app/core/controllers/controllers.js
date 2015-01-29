@@ -2561,6 +2561,7 @@ appController.controller('AssocController', function($scope, $filter, $http, dat
     };
     // Open add assocation dialog
     $scope.openAdd = function(data) {
+        $scope.allDevices = [];
         $scope.addData = data;
         $scope.addNodes = {};
         $scope.addNodesSort = {};
@@ -2570,8 +2571,13 @@ appController.controller('AssocController', function($scope, $filter, $http, dat
         $scope.assocToInstance = null;
         // Prepare devices and nodes
         angular.forEach($scope.ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255 || node.data.isVirtual.value)
+            if (nodeId == 255 || node.data.isVirtual.value){
                 return;
+            }
+            $scope.allDevices.push({
+                                'key': nodeId,
+                                'val': $filter('deviceName')(nodeId, node) + ' (#' + nodeId + ')'
+                            });   
             for (var instanceId in $scope.ZWaveAPIData.devices[nodeId].instances) {
                 var fromInstanceId = $scope.addData.instanceId;
                 var groupId = $scope.addData.groupId;
@@ -3968,6 +3974,46 @@ appController.controller('CommandModalController', function($scope, $filter) {
         };
         // Get data
         var html = getCmdData(data, '/', '');
+
+        // Fill modal with data
+        $(target).on('shown.bs.modal', function() {
+            $(target + ' .modal-body').html(html);
+        });
+    };
+});
+
+// Command class modal window controller
+appController.controller('InterviewCommandController', function($scope, $filter,dataService) {
+    // Show modal dialog
+    $scope.showModal = function(target, interviewCommands,ccName) {
+        var interviewData = {};
+        var updateTime;
+        $(target).modal();
+        angular.forEach(interviewCommands, function(v, k) {
+            if(v.ccName == ccName){
+                interviewData = v.cmdData;
+                updateTime = v.updateTime;
+                return;
+            }
+        });
+        // Formated output
+        var getCmdData = function(data, name, space) {
+            if (name == undefined) {
+                return '';
+            }
+            var html = '<div class="cc-data-element">' + space + name + ': <span class="' + ((data.updateTime > data.invalidateTime) ? 'green' : 'red') + '">' + ((typeof (data.value) !== 'undefined' && data.value != null) ? data.value.toString() : 'None') + '</span>' + ' (<span class="' + ((data.updateTime > data.invalidateTime) ? '' : 'red') + '">' + $filter('isTodayFromUnix')(data.updateTime) + '</span>)</div>';
+            angular.forEach(data, function(el, key) {
+
+                if (key != 'type' && key != 'updateTime' && key != 'invalidateTime' && key != 'value' && // these are internal values
+                        key != 'capabilitiesNames') { // these make the dialog monstrious
+                    html += getCmdData(el, key, space + '&nbsp;&nbsp;&nbsp;&nbsp;');
+                }
+            });
+            return html;
+        };
+        // Get data
+        var html = getCmdData(interviewData, '/', '');
+        html += '<p class="help-block"><em>' + $filter('dateFromUnix')(updateTime )+ '<em></p>'; 
 
         // Fill modal with data
         $(target).on('shown.bs.modal', function() {

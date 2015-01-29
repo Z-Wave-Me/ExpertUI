@@ -411,7 +411,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             $scope.deviceZddxFile = node.data.ZDDXMLFile.value;
         }
 
-        $scope.interviewCommands = interviewCommands(node);
+        $scope.interviewCommands = interviewCommands(node,ZWaveAPIData.updateTime);
         $scope.interviewCommandsDevice = node.data;
         if (zddXmlFile && zddXmlFile !== 'undefined') {
             var cachedZddXml = myCache.get(zddXmlFile);
@@ -660,7 +660,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     }
 
     // Interview commands
-    function interviewCommands(node) {
+    function interviewCommands(node,updateTime) {
         var interviews = [];
         for (var iId in node.instances) {
             var cnt = 0;
@@ -672,6 +672,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                 obj['interviewDone'] = node.instances[iId].commandClasses[ccId].data.interviewDone.value;
                 obj['cmdData'] = node.instances[iId].commandClasses[ccId].data;
                 obj['cmdDataIn'] = node.instances[iId].data;
+                 obj['updateTime'] = updateTime;
                 interviews.push(obj);
                 cnt++;
             }
@@ -1139,6 +1140,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                     confSize: 0,
                     cmd: 'devices[' + nodeId + '].instances[0].commandClasses[0x84]'
                 };
+                console.log(gui_descr)
             } else {
                 //$('#wakeup_cont .cfg-block-content').append('<span>' + $scope._t('config_ui_wakeup_no_min_max') + '</span>');
             }
