@@ -264,6 +264,9 @@ padding: 10px 10px 0 10px;
 
 /* Config CSS
 -------------------------------------------------- */
+.table-cfg-interview th{
+    width: 25%;
+}
 .cfg-block {
     margin: 0 0 20px 0;
     padding: 0 0 20px 0;
@@ -376,6 +379,11 @@ padding: 10px 10px 0 10px;
 }
 .th-slider{
     min-width: 100px;
+}
+
+.table-condensed td p{
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 /* Modals

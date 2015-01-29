@@ -18,10 +18,10 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="table-responsive_">
-                    <table class="table table-striped">
+                    <table class="table table-striped table-condensed table-cfg-interview">
                         <tbody>
                             <tr ng-repeat="v in descriptionCont" ng-show="v.val || v.val != ''">
-                                <th style="width: 30%;">{{_t(v.key)}}</th>
+                                <th>{{_t(v.key)}}</th>
                                 <td  id="{{v.key}}">
                                     <div ng-switch on="v.key">
                                         <div ng-switch-when="command_class" ng-controller="CommandModalController">
@@ -91,7 +91,7 @@
             <div class="modal-body">
                 <p>{{_t('interview_results_title')}} <a href="" ng-controller="CommandModalController" ng-click="showModal('#modal_command', interviewCommandsDevice)">{{deviceName}}</a></p>
                  <div id="table_mobile_modal_1">
-                    <table class="table">
+                    <table class="table table-condensed">
                         <thead>
                             <tr>
                                 <th>{{_t('th_instance')}}</th>

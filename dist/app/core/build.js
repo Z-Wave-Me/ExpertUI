@@ -12214,11 +12214,11 @@ appController.controller('TypeController', function($scope, $filter, dataService
     $scope.load = function() {
         dataService.getZwaveData(function(ZWaveAPIData) {
             setData(ZWaveAPIData);
-//            dataService.joinedZwaveData(function(data) {
-//                $scope.reset();
-//                setData(data.joined);
-//                dataService.cancelZwaveDataInterval();
-//            });
+            dataService.joinedZwaveData(function(data) {
+                $scope.reset();
+                setData(data.joined);
+                dataService.cancelZwaveDataInterval();
+            });
         });
     };
     $scope.$watch('lang', function() {
