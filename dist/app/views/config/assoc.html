@@ -50,7 +50,7 @@
                             </select>-->
                             <select ng-model="assocToNode" class="form-control">
                                  <option value="">&lt; {{ _t('assoc_select_to_node')}} &gt;</option>
-                                <option ng-repeat="(k,v) in removeNodes" value="{{k}}" ng-selected="k == assocToNode">{{v}}</option>
+                                <option ng-repeat="v in removeNodesSort | orderBy:'val'" value="{{v.key}}" ng-selected="v.key == assocToNode">{{v.val}}</option>
                             </select>
                         </div>
                         <div class="form-group" ng-show="removeInstances[assocToNode] != undefined">
@@ -58,6 +58,7 @@
                              <!--<select ng-model="assocToInstance" ng-init="assocToInstance = 1" class="form-control" ng-options="k as v for (k,v) in removeInstances[assocToNode]">
                                 <option value="">&lt; {{ _t('assoc_select_to_instance')}} &gt;</option>
                             </select>-->
+                            
                             <select ng-model="assocToInstance" class="form-control">
                                  <option value="" ng-hide_="(removeInstances[assocToNode] | getObjectLength) == 1">&lt; {{ _t('assoc_select_to_instance')}} &gt;</option>
                                 <option ng-repeat="(k,v) in removeInstances[assocToNode]" value="{{k}}" ng-init="assocToInstance = (removeInstances[assocToNode] | getObjectLength) == 1 ? (removeInstances[assocToNode] | getFirstObjectKey) : ''" ng-selected="k == assocToInstance">{{v}}</option>
@@ -84,21 +85,25 @@
                     <div class="form-inline">
                         {{ _t('fro')}} {{addData.nodeId| deviceName:addData.node}} {{ _t('to_locate')}} <br/>
                         <div class="form-group">
-                            <select ng-model="assocToNode" class="form-control" ng-options="k as v for (k,v) in addNodes">
+                             <!--<select ng-model="assocToNode" class="form-control" ng-options="k as v for (k,v) in addNodes">
                                 <option value="">&lt; {{ _t('assoc_select_to_node')}} &gt;</option>
+                            </select>-->
+                        <select ng-model="assocToNode" class="form-control">
+                                <option value=""  ng-selected="true">&lt; {{ _t('assoc_select_to_node')}} &gt;</option>
+                                <option ng-repeat="v in addNodesSort | orderBy:'val':true" value="{{v.key}}">{{v.val}}</option>
                             </select>
                         </div>
                         <div class="form-group" ng-show="addInstances[assocToNode] != undefined">
                             <select ng-model="assocToInstance" class="form-control" ng-options="k as v for (k,v) in addInstances[assocToNode]">
                                 <option value="">&lt; {{ _t('assoc_select_to_instance')}} &gt;</option>
                             </select>
-                        </div>
+                        </div> 
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">{{ _t('dialog_abort')}}</button>
                     <button class="btn btn-primary update assocAdd" data-ng-click="add()" ng-disabled="assocToNode == null || ((addInstances[assocToNode] != undefined) && assocToInstance == null)">{{ _t('dialog_add')}}</button>
-                </div>
+                </div> 
             </div>
         </div>
     </div><!-- /.Modal -->

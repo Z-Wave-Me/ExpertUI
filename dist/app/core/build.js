@@ -11019,15 +11019,15 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
         $scope.controllerId = ZWaveAPIData.controller.data.nodeId.value;
 
         // Loop throught devices
-         var cnt = 0;
+        var cnt = 0;
         angular.forEach(ZWaveAPIData.devices, function(device, k) {
             if (k == 255 || k == $scope.controllerId || device.data.isVirtual.value) {
                 return false;
             }
             // Loop throught instances
-           
+
             angular.forEach(device.instances, function(instance, instanceId) {
-                 if (instanceId == 0 && device.instances.length > 1) {
+                if (instanceId == 0 && device.instances.length > 1) {
                     return;
                 }
                 // Look for SensorBinary - Loop throught 0x30 commandClasses
@@ -11040,7 +11040,7 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                         if (isNaN(sensor_type)) {
                             return;
                         }
-                        var devName  = $filter('deviceName')(k, device);
+                        var devName = $filter('deviceName')(k, device);
                         // Set object
                         var obj = {};
                         obj['id'] = k;
@@ -11075,7 +11075,7 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                         }
 
                         obj = instance.commandClasses[0x31];
-                        var devName  = $filter('deviceName')(k, device);
+                        var devName = $filter('deviceName')(k, device);
                         // Check for commandClasses data
                         var obj = {};
                         obj['id'] = k;
@@ -11114,7 +11114,7 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                         if (meter.sensorType.value > 1) {
                             return; //  gas and water have real meter scales
                         }
-                        var devName  = $filter('deviceName')(k, device);
+                        var devName = $filter('deviceName')(k, device);
                         var obj = {};
 
                         obj['id'] = k;
@@ -11145,7 +11145,7 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                         if (isNaN(sensor_type)) {
                             return;
                         }
-                         var devName  = $filter('deviceName')(k, device);
+                        var devName = $filter('deviceName')(k, device);
                         // Set object
                         var obj = {};
                         obj['id'] = k;
@@ -11169,7 +11169,7 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                 }
 
             });
-           
+
         });
     }
     /**
@@ -11207,7 +11207,7 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                     $('#' + v.rowId + ' .row-time').removeClass('is-updated-false');
                 }
 
-               // console.log('Updating:' + v.rowId + ' | At: ' + updateTime + ' | with: ' + level);//REM
+                // console.log('Updating:' + v.rowId + ' | At: ' + updateTime + ' | with: ' + level);//REM
             }
         });
     }
@@ -12603,7 +12603,7 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
 
 });
 // Assoc controller
-appController.controller('AssocController', function($scope, $log, $filter, $route, $timeout, $http, dataService, myCache, cfg) {
+appController.controller('AssocController', function($scope, $filter, $http, dataService, myCache, cfg) {
 
     $scope.keys = [];
     $scope.data = {};
@@ -12613,6 +12613,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
     $scope.addNodes = {};
     $scope.addInstances = {};
     $scope.removeNodes = {};
+    $scope.removeNodesSort = {};
     $scope.removeInstances = {};
     $scope.assocToNode = '';
     $scope.assocToInstance = '';
@@ -12691,6 +12692,7 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
     $scope.openRemove = function(data) {
         $scope.removeData = data;
         $scope.removeNodes = {};
+        $scope.removeNodesSort = {}
         $scope.removeInstances = {};
         //$scope.assocToNode = '';
         //$scope.assocToInstance = '';
@@ -12706,6 +12708,10 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                 var instanceId = parseInt($scope.removeData.instanceIds[index]) - 1;
                 // MultiChannelAssociation with instanceId
                 $scope.removeNodes[nodeId] = '(#' + nodeId + ') ' + $filter('deviceName')(nodeId, $scope.ZWaveAPIData.devices[nodeId]);
+                $scope.removeNodesSort[nodeId] = {
+                    'key': nodeId,
+                    'val': $filter('deviceName')(nodeId, $scope.ZWaveAPIData.devices[nodeId]) + ' (#' + nodeId + ')'
+                };
                 if (!(nodeId in $scope.removeInstances))
                     $scope.removeInstances[nodeId] = {};
                 $scope.removeInstances[nodeId][instanceId] = instanceId + 1;
@@ -12715,11 +12721,13 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
             } else {
                 // simple Assocation
                 $scope.removeNodes[nodeId] = '(#' + nodeId + ') ' + $filter('deviceName')(nodeId, $scope.ZWaveAPIData.devices[nodeId]);
+                $scope.removeNodesSort[nodeId] = {
+                    'key': nodeId,
+                    'val': $filter('deviceName')(nodeId, $scope.ZWaveAPIData.devices[nodeId]) + ' (#' + nodeId + ')'
+                };
 
             }
         });
-        console.log($scope.assocToNode)
-
         $('#modal_remove').modal({});
     };
     /**
@@ -12809,7 +12817,9 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
     $scope.openAdd = function(data) {
         $scope.addData = data;
         $scope.addNodes = {};
+        $scope.addNodesSort = {};
         $scope.addInstances = {};
+        $scope.assocToNode = '';
         $scope.assocToNode = null;
         $scope.assocToInstance = null;
         // Prepare devices and nodes
@@ -12833,12 +12843,20 @@ appController.controller('AssocController', function($scope, $log, $filter, $rou
                         if ((0x8e in $scope.addData.node.instances[0].commandClasses) && (0x8e in node.instances[0].commandClasses)) {
                             // MultiChannelAssociation with instanceId
                             $scope.addNodes[nodeId] = '(#' + nodeId + ') ' + $filter('deviceName')(nodeId, node);
+                            $scope.addNodesSort[nodeId] = {
+                                'key': nodeId,
+                                'val': $filter('deviceName')(nodeId, node) + ' (#' + nodeId + ')'
+                            };
                             if (!(nodeId in $scope.addInstances))
                                 $scope.addInstances[nodeId] = {};
                             $scope.addInstances[nodeId][instanceId] = parseInt(instanceId) + 1;
                         } else {
                             // simple Assocation
                             $scope.addNodes[nodeId] = '(#' + nodeId + ') ' + $filter('deviceName')(nodeId, node);
+                            $scope.addNodesSort[nodeId] = {
+                                'key': nodeId,
+                                'val': $filter('deviceName')(nodeId, node) + ' (#' + nodeId + ')'
+                            };
                             break; // first instance is enough
                         }
                     }
