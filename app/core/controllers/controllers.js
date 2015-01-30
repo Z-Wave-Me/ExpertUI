@@ -2486,9 +2486,11 @@ appController.controller('AssocController', function($scope, $filter, $http, dat
     // Remove an assocation
     $scope.remove = function() {
         var params = $scope.removeData.groupId + ',' + $scope.assocToNode;
-        if ($scope.assocToInstance != null) {
+       
+        if ($scope.assocToInstance) {
             params += ',' + (parseInt($scope.assocToInstance) + 1);
         }
+        
         var nodeId = $scope.deviceId;
         var node = $scope.ZWaveAPIData.devices[nodeId];
         if (node == undefined)
@@ -2783,6 +2785,7 @@ appController.controller('AssocController', function($scope, $filter, $http, dat
         spinner.show();
         while ($scope.applyQueue.length > 0) {
             var exec = $scope.applyQueue.shift();
+            console.log(exec)
             dataService.runCmd(exec, false, $scope._t('error_handling_data'));
         }
         pollForUpdate(Math.floor((new Date()).getTime() / 1000), $scope.updates);

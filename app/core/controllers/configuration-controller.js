@@ -200,9 +200,9 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             var confSize = 0;
             //var lastNum = n.name.match(/\d+$/);
             var value = n.value;
-            
+
             angular.forEach(cfg, function(cv, ck) {
-                if(!cv){
+                if (!cv) {
                     return;
                 }
                 if (cv.confNum == num) {
@@ -240,7 +240,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         timeOut = $timeout(function() {
             $('button .fa-spin,a .fa-spin').fadeOut(1000);
             $scope.refresh = false;
-        }, 7000);
+        }, 10000);
         return;
     };
 
@@ -268,7 +268,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 //        }, 10000);
 //        return;
 //    };
-    
+
     /**
      * Submit expert commands form
      *
@@ -288,12 +288,12 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         });
         var request = cmd + '(' + dataJoined.join() + ')';
         dataService.runCmd(request, false, $scope._t('error_handling_data'));
-         $scope.refresh = true;
+        $scope.refresh = true;
         var timeOut;
         timeOut = $timeout(function() {
             $('button .fa-spin,a .fa-spin').fadeOut(1000);
             $scope.refresh = false;
-        }, 7000);
+        }, 10000);
         return;
     };
 
@@ -384,7 +384,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
             $scope.deviceZddxFile = node.data.ZDDXMLFile.value;
         }
 
-        $scope.interviewCommands = interviewCommands(node,ZWaveAPIData.updateTime);
+        $scope.interviewCommands = interviewCommands(node, ZWaveAPIData.updateTime);
         $scope.interviewCommandsDevice = node.data;
         if (zddXmlFile && zddXmlFile !== 'undefined') {
             var cachedZddXml = myCache.get(zddXmlFile);
@@ -416,7 +416,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                 obj['nodeId'] = nodeId;
                 obj['rowId'] = 'row_' + nodeId + '_' + ccId;
                 obj['instanceId'] = instanceId;
-                 obj['ccId'] = ccId;
+                obj['ccId'] = ccId;
                 obj['cmd'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']';
                 obj['cmdData'] = ZWaveAPIData.devices[nodeId].instances[instanceId].commandClasses[ccId].data;
                 obj['cmdDataIn'] = ZWaveAPIData.devices[nodeId].instances[instanceId].data;
@@ -634,7 +634,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
     }
 
     // Interview commands
-    function interviewCommands(node,updateTime) {
+    function interviewCommands(node, updateTime) {
         var interviews = [];
         for (var iId in node.instances) {
             var cnt = 0;
@@ -646,11 +646,13 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                 obj['interviewDone'] = node.instances[iId].commandClasses[ccId].data.interviewDone.value;
                 obj['cmdData'] = node.instances[iId].commandClasses[ccId].data;
                 obj['cmdDataIn'] = node.instances[iId].data;
-                 obj['updateTime'] = updateTime;
+                obj['updateTime'] = updateTime;
                 interviews.push(obj);
                 cnt++;
-            } ;
-        };
+            }
+            ;
+        }
+        ;
         return interviews;
     }
     /**
@@ -1254,8 +1256,9 @@ appController.controller('ConfigurationController', function($scope, $routeParam
 });
 
 // Device config update controller
-appController.controller('ConfigStoreController', function($scope, dataService) {
+appController.controller('ConfigStoreController', function($scope, $filter,dataService) {
     $scope.formFirmware = {};
+    $scope.firmwareProgress = 0;
     // Store data on remote server
     $scope.store = function(btn) {
         var url = $scope.cfg.server_url + $scope.cfg.store_url + $(btn).attr('data-store-url');
@@ -1305,17 +1308,41 @@ appController.controller('ConfigStoreController', function($scope, dataService) 
     };
     /**
      * update Firmware
+     * todo: complete this function
      */
     $scope.updateFirmware = function(nodeId) {
-        if (($scope.formFirmware.url == '' && $scope.myFile == '') || $scope.formFirmware.targetId == '') {
+        if (!$scope.formFirmware.url && !$scope.formFirmware.targetId) {
             return;
         }
+       // $('.fa-spin').show();
+
         // File upload test
         var data = {
             'url': $scope.formFirmware.url,
             'file': $scope.myFile,
             'targetId': $scope.formFirmware.targetId
         };
+
+//        dataService.joinedZwaveData(function(data) {
+//            $scope.firmwareProgress++;
+//            console.log($filter('hasNode')(data.update,'FirmwareUpdate.data.fragmentTransmitted.value'));
+//            
+////                refresh(data.update);
+//        });
+        
+        // Watch for progress change
+        $scope.$watch('firmwareProgress', function() {
+            if ($scope.firmwareProgress >= 100) {
+                $('.fa-spin').fadeOut();
+                dataService.cancelZwaveDataInterval();
+            }
+
+        });
+        // Cancel interval on page destroy
+        $scope.$on('$destroy', function() {
+            dataService.cancelZwaveDataInterval();
+        });
+
         dataService.fwUpdate(nodeId, data);
         return;
     };
