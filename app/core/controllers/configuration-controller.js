@@ -443,6 +443,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                 obj['nodeId'] = nodeId;
                 obj['rowId'] = 'row_' + nodeId + '_' + ccId;
                 obj['instanceId'] = instanceId;
+                 obj['ccId'] = ccId;
                 obj['cmd'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']';
                 obj['cmdData'] = ZWaveAPIData.devices[nodeId].instances[instanceId].commandClasses[ccId].data;
                 obj['cmdDataIn'] = ZWaveAPIData.devices[nodeId].instances[instanceId].data;
@@ -675,10 +676,8 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                  obj['updateTime'] = updateTime;
                 interviews.push(obj);
                 cnt++;
-            }
-            ;
-        }
-        ;
+            } ;
+        };
         return interviews;
     }
     /**

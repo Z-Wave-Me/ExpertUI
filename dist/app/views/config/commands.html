@@ -10,8 +10,8 @@
         </thead>
         <tbody>
             <tr ng-repeat="(k,v) in commands | orderBy:predicate:reverse" id="{{ v.nodeId}}">
-                <td data-title="{{_t('th_instance')}}" ng-class="($index == 0 ? 'no-class' : 'mobile-hide')"><a href="" ng-controller="CommandModalController" ng-click="showModal('#modal_expert_commands', v.cmdDataIn)">{{v.instanceId}}</a> &nbsp;</td>
-                <td data-title="{{_t('th_command_class')}}"><a class="btn btn-info" href="" ng-controller="CommandModalController" ng-click="showModal('#modal_expert_commands', v.cmdData)">{{v.commandClass}}</a> &nbsp;</td>
+                <td data-title="{{_t('th_instance')}}" ng-class="($index == 0 ? 'no-class' : 'mobile-hide')"><a href="" ng-controller="InterviewCommandController" ng-click="showModal('#modal_expert_commands', interviewCommands, v.ccId,'cmdDataIn')">{{v.instanceId}}</a> &nbsp;</td>
+                <td data-title="{{_t('th_command_class')}}"><a class="btn btn-info" href="" ng-controller="InterviewCommandController" ng-click="showModal('#modal_expert_commands', interviewCommands,v.ccId,'cmdData')">{{v.commandClass}}</a> &nbsp;</td>
                 <td data-title="{{_t('th_command_param')}}">
                     <div class="commands-data" ng-repeat="c in v.command| orderBy:predicate:reverse" ng-init="formName = 'form_' + v.commandClass + '_' + c.data.method + '_' + $index">
                         <form 

@@ -48,22 +48,15 @@
     <div class="well well-sm">
         <!-- ctrl_info_data  -->
         <button class="btn btn-primary" 
-                ng-controller="CommandModalController" 
+                ng-controller="InterviewCommandController" 
                 ng-click="showModal('#modal_controller', ZWaveAPIData.controller.data)"
-                >{{_t('ctrl_info_data')}}</button>
+                >{{_t('ctrl_info_data')}}</button> 
 
         <!-- ctrl_info_device_data  -->
         <button class="btn btn-primary" 
-                ng-controller="CommandModalController" 
+                ng-controller="InterviewCommandController" 
                 ng-click="showModal('#modal_controller', ZWaveAPIData.devices[ZWaveAPIData.controller.data.nodeId.value].data)"
                 >{{_t('ctrl_info_device_data')}}</button>
-
-        <!-- nm_inspect_queue_title  -->
-        <!-- <button 
-            class="btn btn-primary" 
-            ng-click="inspectQueue('#modal_queue')"
-            >{{_t('nm_inspect_queue_title')}}</button> -->
-         <!-- <a href="#network/queue" class="btn btn-primary" target="_blank">{{_t('nm_inspect_queue_title')}}</a>  -->
 
         <!-- nm_send_node_information  -->
         <button class="btn btn-primary"
