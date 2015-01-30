@@ -240,72 +240,44 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         timeOut = $timeout(function() {
             $('button .fa-spin,a .fa-spin').fadeOut(1000);
             $scope.refresh = false;
-        }, 5000);
+        }, 7000);
         return;
     };
 
     /**
-     * Apply Config action
-     *
-     * @param {object} form
-     * @returns {undefined}
+     * Deprecated
      */
-    $scope.submitApplyConfigCfg______ = function(form, cmd, cfg, hasBattery, section) {
-        if (hasBattery) {
-            alert($scope._t('conf_apply_battery'));
-        }
-        var sections = $('#' + form).find('.cfg-control-content');
-        var data = $('#' + form).serializeArray();
-        var dataValues = [];
-        angular.forEach(data, function(v, k) {
-            if (v.value !== '') {
-                dataValues.push({"value": v.value, "name": v.name});
-                //dataValues.push(v.name);
-            }
-
-        });
-        angular.forEach(dataValues, function(n, nk) {
-            var lastNum = n.name.match(/\d+$/);
-            if (!lastNum) {
-                return;
-            }
-            var num = lastNum[0];
-            if (section && num != section) {
-                return;
-            }
-            var confSize = 0;
-            //var lastNum = n.name.match(/\d+$/);
-            var value = n.value;
-
-            angular.forEach(cfg, function(cv, ck) {
-
-                if (cv.confNum == num) {
-                    confSize = cv.confSize;
-                }
-
-
-            });
-            var request = cmd + '(' + num + ',' + value + ',' + confSize + ')';
-            dataService.runCmd(request, false, $scope._t('error_handling_data'));
-        });
-        $scope.refresh = true;
-        var timeOut;
-        timeOut = $timeout(function() {
-            $scope.refresh = false;
-        }, 10000);
-        return;
-    };
-
+//    $scope.submitApplyConfig = function(form, cmd, hasBattery) {
+//        if (hasBattery) {
+//            alert($scope._t('conf_apply_battery'));
+//        }
+//        var data = $('#' + form).serializeArray();
+//        var dataJoined = [];
+//        angular.forEach(data, function(v, k) {
+//            if (v.value !== '') {
+//                dataJoined.push(v.value);
+//            }
+//
+//        });
+//        var request = cmd + '(' + dataJoined.join() + ')';
+//        dataService.runCmd(request, false, $scope._t('error_handling_data'));
+//        $scope.refresh = true;
+//        var timeOut;
+//        timeOut = $timeout(function() {
+//            $scope.refresh = false;
+//        }, 10000);
+//        return;
+//    };
+    
     /**
-     * Apply Config action
+     * Submit expert commands form
      *
-     * @param {object} form
+     * @param {obj} form
+     * @param {obj} cmd
      * @returns {undefined}
      */
-    $scope.submitApplyConfig = function(form, cmd, hasBattery) {
-        if (hasBattery) {
-            alert($scope._t('conf_apply_battery'));
-        }
+    $scope.submitExpertCommndsForm = function(form, cmd) {
+        //var data = $('#' + form).serialize();
         var data = $('#' + form).serializeArray();
         var dataJoined = [];
         angular.forEach(data, function(v, k) {
@@ -316,11 +288,12 @@ appController.controller('ConfigurationController', function($scope, $routeParam
         });
         var request = cmd + '(' + dataJoined.join() + ')';
         dataService.runCmd(request, false, $scope._t('error_handling_data'));
-        $scope.refresh = true;
+         $scope.refresh = true;
         var timeOut;
         timeOut = $timeout(function() {
+            $('button .fa-spin,a .fa-spin').fadeOut(1000);
             $scope.refresh = false;
-        }, 10000);
+        }, 7000);
         return;
     };
 
