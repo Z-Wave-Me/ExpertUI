@@ -68,6 +68,27 @@ appService.service('deviceService', function($filter) {
     };
 
     /**
+     * Get config navigation devices
+     */
+    this.configGetNav = function(ZWaveAPIData) {
+        return configGetNav(ZWaveAPIData);
+    };
+    
+     /**
+     *  Get expert commands
+     */
+    this.configGetCommands = function(methods, ZWaveAPIData) {
+        return configGetCommands(methods, ZWaveAPIData);
+    };
+    
+    /**
+     *  Get interviewC ommands
+     */
+    this.configGetInterviewCommands = function(node, updateTime) {
+        return configGetInterviewCommands(node, updateTime);
+    };
+
+    /**
      * Get xml config param
      */
     this.getCfgXmlParam = function(cfgXml, nodeId, instance, commandClass, command) {
@@ -122,6 +143,75 @@ appService.service('deviceService', function($filter) {
         return label;
     }
 
+
+    /**
+     *  Get config navigation devices
+     */
+    function configGetNav(ZWaveAPIData) {
+        var devices = [];
+        var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
+        // Loop throught devices
+        angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+            if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+                return;
+            }
+            var node = ZWaveAPIData.devices[nodeId];
+            // Set object
+            var obj = {};
+            obj['id'] = nodeId;
+            obj['name'] = $filter('deviceName')(nodeId, node);
+            devices.push(obj);
+        });
+        return devices;
+    }
+    
+     /**
+     *  Get expert commands
+     */
+    function configGetCommands(methods, ZWaveAPIData) {
+      var methodsArr = [];
+        angular.forEach(methods, function(params, method) {
+            //str.split(',');
+            var cmd = {};
+            var values = repr_array(method_defaultValues(ZWaveAPIData, methods[method]));
+            cmd['data'] = {
+                'method': method,
+                'params': methods[method],
+                'values': method_defaultValues(ZWaveAPIData, methods[method])
+            };
+            cmd['method'] = method;
+            cmd['params'] = methods[method];
+            cmd['values'] = repr_array(method_defaultValues(ZWaveAPIData, methods[method]));
+            methodsArr.push(cmd);
+        });
+        return methodsArr;
+    }
+    
+    /**
+     *  Get interview Commands
+     */
+    function configGetInterviewCommands(node, updateTime) {
+      var interviews = [];
+        for (var iId in node.instances) {
+            var cnt = 0;
+            for (var ccId in node.instances[iId].commandClasses) {
+                var obj = {};
+                obj['iId'] = iId;
+                obj['ccId'] = ccId;
+                obj['ccName'] = node.instances[iId].commandClasses[ccId].name;
+                obj['interviewDone'] = node.instances[iId].commandClasses[ccId].data.interviewDone.value;
+                obj['cmdData'] = node.instances[iId].commandClasses[ccId].data;
+                obj['cmdDataIn'] = node.instances[iId].data;
+                obj['updateTime'] = updateTime;
+                interviews.push(obj);
+                cnt++;
+            }
+            ;
+        }
+        ;
+        return interviews;
+    }
+
     /**
      * Get xml config param
      */
@@ -142,10 +232,10 @@ appService.service('deviceService', function($filter) {
                 if (array.length > 2) {
                     collection[array[0]] = array[1];
                 }
-                else if (array.length == 2){
-                 collection = array;
-                 
-                 }
+                else if (array.length == 2) {
+                    collection = array;
+
+                }
                 else {
                     collection[0] = array[0];
                     return;
@@ -163,42 +253,42 @@ appService.service('deviceService', function($filter) {
      */
     function buildCfgXml(data, cfgXml, id, commandclass) {
         var hasCfgXml = false;
-       var formData = [];
-        if(commandclass == '84'){
+        var formData = [];
+        if (commandclass == '84') {
             var par1 = JSON.parse(data[0]['parameter']);
             var par2 = JSON.parse(data[1]['parameter']);
             var wakeData = {
-                'id':id,
-                'instance':data[0]['instance'],
-                'commandclass':commandclass,
-                'command':data[0]['command'],
-                'parameter':'[' + par1 + ',' + par2  + ']'
-             };
-              formData.push(wakeData);
-        }else{
-            formData = data;  
+                'id': id,
+                'instance': data[0]['instance'],
+                'commandclass': commandclass,
+                'command': data[0]['command'],
+                'parameter': '[' + par1 + ',' + par2 + ']'
+            };
+            formData.push(wakeData);
+        } else {
+            formData = data;
         }
-        var xmlData = formData; 
+        var xmlData = formData;
         if (angular.isObject(cfgXml) && $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration')) {
             hasCfgXml = cfgXml.config.devices.deviceconfiguration;
             angular.forEach(hasCfgXml, function(v, k) {
                 var obj = {};
                 if (v['_id'] == id && v['_commandclass'] == commandclass) {
                     return;
-                 }
-                    obj['id'] = v['_id'];
-                    obj['instance'] = v['_instance'];
-                    obj['commandclass'] = v['_commandclass'];
-                    obj['command'] = v['_command'];
-                    obj['parameter'] = v['_parameter'];
-                    xmlData.push(obj);
-              
+                }
+                obj['id'] = v['_id'];
+                obj['instance'] = v['_instance'];
+                obj['commandclass'] = v['_commandclass'];
+                obj['command'] = v['_command'];
+                obj['parameter'] = v['_parameter'];
+                xmlData.push(obj);
+
             });
         }
-        
+
         var xml = '<config><devices>' + "\n";
         angular.forEach(xmlData, function(v, k) {
-           xml += '<deviceconfiguration id="' + v.id + '" instance="' + v.instance + '" commandclass="' + v.commandclass + '" command="' + v.command + '" parameter="' + v.parameter + '"/>' + "\n";
+            xml += '<deviceconfiguration id="' + v.id + '" instance="' + v.instance + '" commandclass="' + v.commandclass + '" command="' + v.command + '" parameter="' + v.parameter + '"/>' + "\n";
         });
         xml += '</devices></config>' + "\n";
         return xml;
