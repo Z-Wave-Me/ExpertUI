@@ -73,19 +73,19 @@ angApp.config(['$routeProvider',
                     templateUrl: 'app/views/config/config.html'
                 }).
                  // New Configuration
-                when('/configuration/interview/:nodeId', {
+                when('/configuration/interview/:nodeId?', {
                     templateUrl: 'app/views/configuration/interview.html'
                 }).
-                when('/configuration/configuration/:nodeId', {
+                when('/configuration/configuration/:nodeId?', {
                     templateUrl: 'app/views/configuration/configuration.html'
                 }).
-                when('/configuration/association/:nodeId', {
+                when('/configuration/association/:nodeId?', {
                     templateUrl: 'app/views/configuration/association.html'
                 }).
-                when('/configuration/commands/:nodeId', {
+                when('/configuration/commands/:nodeId?', {
                     templateUrl: 'app/views/configuration/commands.html'
                 }).
-                 when('/configuration/firmware/:nodeId', {
+                 when('/configuration/firmware/:nodeId?', {
                     templateUrl: 'app/views/configuration/firmware.html'
                 }).
                 // Network
