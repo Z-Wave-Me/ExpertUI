@@ -3,6 +3,8 @@
 <div class="cfg-block" id="config_cont" ng-if="configCont">
    
     <h4>{{_t('configurations_list')}}</h4>
+    <div class="text-danger" ng-repeat="v in configCont" ng-if="v.configCconfigValue != v.configZwaveValue">{{v.label}}: {{_t('value_changed_to')}} <strong config-value-title collection='v' show_value='v.configCconfigValue'></strong> {{_t('value_not_stored_indevice')}}</div>
+    <p>&nbsp;</p>
     <div class="cfg-block-content" ng-init="formName = 'form_config'">
         <form 
             name="{{formName}}" 

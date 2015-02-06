@@ -9049,6 +9049,47 @@ angApp.filter('getFirstObjectKey', function() {
         
     };
 });
+
+/**
+ * Get only unique values
+ */
+angApp.filter('unique', function() {
+    return function(items, filterOn) {
+
+        if (filterOn === false) {
+            return items;
+        }
+
+        if ((filterOn || angular.isUndefined(filterOn)) && angular.isArray(items)) {
+            var hashCheck = {}, newItems = [];
+
+            var extractValueToCompare = function(item) {
+                if (angular.isObject(item) && angular.isString(filterOn)) {
+                    return item[filterOn];
+                } else {
+                    return item;
+                }
+            };
+
+            angular.forEach(items, function(item) {
+                var valueToCheck, isDuplicate = false;
+
+                for (var i = 0; i < newItems.length; i++) {
+                    if (angular.equals(extractValueToCompare(newItems[i]), extractValueToCompare(item))) {
+                        isDuplicate = true;
+                        break;
+                    }
+                }
+                if (!isDuplicate) {
+                    newItems.push(item);
+                }
+
+            });
+            items = newItems;
+        }
+        return items;
+    };
+});
 /**
  * Convert unix timastamp to date
  */
@@ -11031,7 +11072,7 @@ appService.service('deviceService', function($filter) {
 var appController = angular.module('appController', []);
 
 // Base controller
-appController.controller('BaseController', function($scope, $cookies, $filter, $location, $window, cfg, dataService, deviceService, myCache) {
+appController.controller('BaseController', function($scope, $cookies, $filter, $location, $anchorScroll,$window, cfg, dataService, deviceService, myCache) {
     // Custom IP
     $scope.customIP = {
         'url': cfg.server_url,
@@ -11102,7 +11143,10 @@ appController.controller('BaseController', function($scope, $cookies, $filter, $
     };
     $scope.mobileCheck(navigator.userAgent || navigator.vendor || window.opera);
 
-
+    $scope.scrollTo = function(id) {
+     $location.hash(id);
+     $anchorScroll();
+  };
 
 });
 
@@ -11193,6 +11237,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
     $scope.localyResetDevices = [];
     $scope.notInterviewDevices = [];
     $scope.assocRemovedDevices = [];
+    $scope.notConfigDevices = [];
     $scope.notes = [];
     $scope.notesData = '';
     $scope.updateTime = $filter('getTimestamp');
@@ -11203,6 +11248,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
         $scope.notInterviewDevices = angular.copy([]);
         $scope.localyResetDevices = angular.copy([]);
         $scope.assocRemovedDevices = angular.copy([]);
+        $scope.notConfigDevices = angular.copy([]);
 
     };
 
@@ -11228,6 +11274,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
             notInterviewDevices(ZWaveAPIData);
             countDevices(ZWaveAPIData);
             assocRemovedDevices(ZWaveAPIData);
+            notConfigDevices(ZWaveAPIData);
             batteryDevices(ZWaveAPIData);
             $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
             dataService.joinedZwaveData(function(data) {
@@ -11235,6 +11282,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
                 notInterviewDevices(data.joined);
                 countDevices(data.joined);
                 assocRemovedDevices(data.joined);
+                //notConfigDevices(ZWaveAPIData);
                 batteryDevices(data.joined);
                 $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
 
@@ -11416,6 +11464,40 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
             cnt++;
         });
         return cnt;
+    }
+    ;
+
+    /**
+     * notInterviewDevices
+     */
+    function notConfigDevices(ZWaveAPIData) {
+        var controllerId = ZWaveAPIData.controller.data.nodeId.value;
+        var cnt = 0;
+        var cnt = 0;
+        // Loop throught devices
+        dataService.getCfgXml(function(cfgXml) {
+            angular.forEach(cfgXml.config.devices.deviceconfiguration, function(cfg, cfgId) {
+                var node = ZWaveAPIData.devices[cfg['_id']];
+                var array = JSON.parse(cfg['_parameter']);
+                var cfgNum = 0;
+                var cfgVal;
+                var devVal;
+                if (array.length > 2) {
+                    cfgNum = array[0];
+                    cfgVal = array[1];
+                    devVal = node.instances[0].commandClasses[0x70].data[cfgNum].val.value;
+                    if (cfgVal != devVal) {
+                        var obj = {};
+                        obj['name'] = $filter('deviceName')(cfg['_id'], node);
+                        obj['id'] = cfg['_id'];
+                        $scope.notConfigDevices.push(obj);
+                    }
+
+                }
+                //console.log(cfg)
+                //console.log(ZWaveAPIData.devices[cfg['_id']].instances[0].commandClasses[0x70].data)
+            });
+        });
     }
     ;
     /**
@@ -13510,11 +13592,11 @@ appController.controller('AssocController', function($scope, $filter, $http, dat
     // Remove an assocation
     $scope.remove = function() {
         var params = $scope.removeData.groupId + ',' + $scope.assocToNode;
-       
+
         if ($scope.assocToInstance) {
             params += ',' + (parseInt($scope.assocToInstance) + 1);
         }
-        
+
         var nodeId = $scope.deviceId;
         var node = $scope.ZWaveAPIData.devices[nodeId];
         if (node == undefined)
@@ -13597,13 +13679,13 @@ appController.controller('AssocController', function($scope, $filter, $http, dat
         $scope.assocToInstance = null;
         // Prepare devices and nodes
         angular.forEach($scope.ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255 || node.data.isVirtual.value){
+            if (nodeId == 255 || node.data.isVirtual.value) {
                 return;
             }
             $scope.allDevices.push({
-                                'key': nodeId,
-                                'val': $filter('deviceName')(nodeId, node) + ' (#' + nodeId + ')'
-                            });   
+                'key': nodeId,
+                'val': $filter('deviceName')(nodeId, node) + ' (#' + nodeId + ')'
+            });
             for (var instanceId in $scope.ZWaveAPIData.devices[nodeId].instances) {
                 var fromInstanceId = $scope.addData.instanceId;
                 var groupId = $scope.addData.groupId;
@@ -14981,22 +15063,22 @@ appController.controller('QueueController', function($scope, dataService) {
 // Command class modal window controller
 appController.controller('InterviewCommandController', function($scope, $filter) {
     // Show modal dialog
-    $scope.showModal = function(target, interviewCommands,ccId,type) {
+    $scope.showModal = function(target, interviewCommands, ccId, type) {
         var interviewData = {};
         var updateTime;
         $(target).modal();
-        if(type){
+        if (type) {
             angular.forEach(interviewCommands, function(v, k) {
-            if(v.ccId == ccId){
-                interviewData = v[type]; 
-                updateTime = v.updateTime;
-                return;
-            }
-        });
-        }else{
+                if (v.ccId == ccId) {
+                    interviewData = v[type];
+                    updateTime = v.updateTime;
+                    return;
+                }
+            });
+        } else {
             interviewData = interviewCommands;
         }
-        
+
         // Formated output
         var getCmdData = function(data, name, space) {
             if (name == undefined) {
@@ -15015,9 +15097,9 @@ appController.controller('InterviewCommandController', function($scope, $filter)
         // Get data
         var html = getCmdData(interviewData, '/', '');
         /*if(updateTime){
-            html += '<p class="help-block"><em>' + $filter('dateFromUnix')(updateTime )+ '<em></p>'; 
-        }*/
-        
+         html += '<p class="help-block"><em>' + $filter('dateFromUnix')(updateTime )+ '<em></p>'; 
+         }*/
+
 
         // Fill modal with data
         $(target).on('shown.bs.modal', function() {
