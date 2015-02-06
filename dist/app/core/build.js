@@ -8876,6 +8876,82 @@ angApp.directive('configDefaultValue', function() {
     }
 });
 
+angApp.directive('configValueTitle', function() {
+    return {
+        restrict: "A",
+        //replace: true,
+        template: '<span title="{{showValue}}">{{input}}</span>',
+        scope: {
+            collection: '=',
+            showValue: '='
+        },
+        link: function(scope, element, attrs) {
+            scope.input = scope.showValue;
+            var input = '';
+            if (!scope.collection) {
+                return;
+            }
+            var type = scope.collection.type;
+            
+            if (type) {
+                if ('range' in type) {
+                    //input = getText(label, scope.values, type.range.min, type.range.max, name);
+                } else if ('node' in type) {
+                    //input = getNode(label, scope.getNodeDevices(), 'null', name);
+                } else if ('enumof' in type) {
+                    input = getEnum(type, scope.showValue);
+                   
+                } else if ('constant' in type) {
+                    //input = getConstant(label, type, scope.defaultValue, name);
+                } else if ('string' in type) {
+                    //input = getString(label, scope.values, name);
+                } else {
+                    input = scope.showValue;
+                }
+                scope.input = input;
+                
+                return;
+            }
+
+
+        }
+
+    };
+
+    // Get enumerators
+    function getEnum(enums, showValue) {
+        //console.log(enums)
+        var input = showValue;
+        if (!enums) {
+            return;
+        }
+        angular.forEach(enums.enumof, function(v, k) {
+          
+            var title = v.label ? v.label : showValue;
+            var type = v.type;
+             // debugger; 
+            if ('fix' in type) {
+                if (type.fix.value == showValue) {
+                    input = title;
+                    return;
+                }
+ 
+            } else if ('range' in type) {
+                var min = type.range.min;
+                var max = type.range.max;
+                var setVal = (showValue ? showValue : min);
+                if (setVal == showValue) {
+                    input = showValue;
+                    return;
+                }
+            }
+
+        });
+        
+        return input;
+    }
+});
+
 angApp.directive('fileModel', ['$parse', function ($parse) {
     return {
         restrict: 'A',
@@ -10381,6 +10457,7 @@ appService.service('deviceService', function($filter) {
         if (!0x70 in node.instances[0].commandClasses) {
             return null;
         }
+        console.log(node.instances[0].commandClasses[0x70].data)
         if (!zddXml) {
             return null;
         }
@@ -10510,6 +10587,7 @@ appService.service('deviceService', function($filter) {
                         defaultValue: conf_default_value,
                         showDefaultValue: showDefaultValue,
                         configCconfigValue: config_config_value,
+                        configZwaveValue:  config_zwave_value,
                         confNum: conf_num,
                         confSize: conf_size
                     };
@@ -10535,6 +10613,7 @@ appService.service('deviceService', function($filter) {
                             defaultValue: null,
                             showDefaultValue: showDefaultValue,
                             configCconfigValue: config_config_value,
+                            configZwaveValue:  config_zwave_value,
                             confNum: conf_num,
                             confSize: conf_size
                         };
@@ -10608,6 +10687,7 @@ appService.service('deviceService', function($filter) {
                             defaultValue: conf_default_value,
                             showDefaultValue: showDefaultValue,
                             configCconfigValue: config_config_value,
+                            configZwaveValue:  config_zwave_value,
                             confNum: conf_num,
                             confSize: conf_size
                         };
@@ -10627,6 +10707,7 @@ appService.service('deviceService', function($filter) {
                             defaultValue: conf_default_value,
                             showDefaultValue: showDefaultValue,
                             configCconfigValue: config_config_value,
+                            configZwaveValue:  config_zwave_value,
                             confNum: conf_num,
                             confSize: conf_size
                         };
@@ -10704,6 +10785,7 @@ appService.service('deviceService', function($filter) {
                         defaultValue: conf_default_value,
                         showDefaultValue: showDefaultValue,
                         configCconfigValue: config_config_value,
+                        configZwaveValue:  config_zwave_value,
                         confNum: conf_num,
                         confSize: conf_size
                     };
@@ -15808,6 +15890,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                         defaultValue: conf_default_value,
                         showDefaultValue: showDefaultValue,
                         configCconfigValue: config_config_value,
+                        configZwaveValue:  config_zwave_value,
                         confNum: conf_num,
                         confSize: conf_size
                     };
@@ -15833,6 +15916,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                             defaultValue: null,
                             showDefaultValue: showDefaultValue,
                             configCconfigValue: config_config_value,
+                            configZwaveValue:  config_zwave_value,
                             confNum: conf_num,
                             confSize: conf_size
                         };
@@ -15924,6 +16008,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                             defaultValue: conf_default_value,
                             showDefaultValue: showDefaultValue,
                             configCconfigValue: config_config_value,
+                            configZwaveValue:  config_zwave_value,
                             confNum: conf_num,
                             confSize: conf_size
                         };
@@ -15943,6 +16028,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                             defaultValue: conf_default_value,
                             showDefaultValue: showDefaultValue,
                             configCconfigValue: config_config_value,
+                            configZwaveValue:  config_zwave_value,
                             confNum: conf_num,
                             confSize: conf_size
                         };
@@ -16020,6 +16106,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                         defaultValue: conf_default_value,
                         showDefaultValue: showDefaultValue,
                         configCconfigValue: config_config_value,
+                        configZwaveValue:  config_zwave_value,
                         confNum: conf_num,
                         confSize: conf_size
                     };

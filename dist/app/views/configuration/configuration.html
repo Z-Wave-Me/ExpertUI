@@ -26,7 +26,9 @@
                         type="submit" 
                         class="btn btn-info spin-true" 
                         >{{_t('apply_config')}} <i class="fa fa-spinner fa-spin"></i></button> 
+                        <div class="text-danger text-alert"><i class="fa fa-exclamation-triangle"></i> Device changed configuration but some values are not written. Please wait for device to wake up.</div>
                     <div class="cfg-control-content" id="cfg_control_{{v.confNum}}" ng-repeat="v in configCont">
+                        
                         <div class="form-inline">
                             <expert-command-input
                                 collection='v'
@@ -36,6 +38,7 @@
                                 curr_value='v.configCconfigValue'
                                 ></expert-command-input>
                         </div>
+                        <div class="text-danger text-alert" ng-if="v.configCconfigValue != v.configZwaveValue" title="Val: {{v.configCconfigValue}} | Device: {{v.configZwaveValue}}"><i class="fa fa-exclamation-triangle"></i> {{_t('value_changed_to')}} <strong config-value-title collection='v' show_value='v.configCconfigValue'></strong> {{_t('value_not_stored_indevice')}}</div> 
                         <p class="cfg-info">
 
                             <span class="is-updated-{{v.isUpdated}}">{{_t('updated')}}: {{v.updateTime}}</span>

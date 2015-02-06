@@ -319,6 +319,7 @@ appService.service('deviceService', function($filter) {
         if (!0x70 in node.instances[0].commandClasses) {
             return null;
         }
+        console.log(node.instances[0].commandClasses[0x70].data)
         if (!zddXml) {
             return null;
         }
@@ -448,6 +449,7 @@ appService.service('deviceService', function($filter) {
                         defaultValue: conf_default_value,
                         showDefaultValue: showDefaultValue,
                         configCconfigValue: config_config_value,
+                        configZwaveValue:  config_zwave_value,
                         confNum: conf_num,
                         confSize: conf_size
                     };
@@ -473,6 +475,7 @@ appService.service('deviceService', function($filter) {
                             defaultValue: null,
                             showDefaultValue: showDefaultValue,
                             configCconfigValue: config_config_value,
+                            configZwaveValue:  config_zwave_value,
                             confNum: conf_num,
                             confSize: conf_size
                         };
@@ -546,6 +549,7 @@ appService.service('deviceService', function($filter) {
                             defaultValue: conf_default_value,
                             showDefaultValue: showDefaultValue,
                             configCconfigValue: config_config_value,
+                            configZwaveValue:  config_zwave_value,
                             confNum: conf_num,
                             confSize: conf_size
                         };
@@ -565,6 +569,7 @@ appService.service('deviceService', function($filter) {
                             defaultValue: conf_default_value,
                             showDefaultValue: showDefaultValue,
                             configCconfigValue: config_config_value,
+                            configZwaveValue:  config_zwave_value,
                             confNum: conf_num,
                             confSize: conf_size
                         };
@@ -642,6 +647,7 @@ appService.service('deviceService', function($filter) {
                         defaultValue: conf_default_value,
                         showDefaultValue: showDefaultValue,
                         configCconfigValue: config_config_value,
+                        configZwaveValue:  config_zwave_value,
                         confNum: conf_num,
                         confSize: conf_size
                     };

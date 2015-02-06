@@ -153,6 +153,9 @@ background-color: #e4f5fc;
 .allert-hidden {
    display: none !important;
 }
+.text-alert {
+   margin: 10px 0;
+}
 /* Modal
 -------------------------------------------------- */
 .modal-body {
