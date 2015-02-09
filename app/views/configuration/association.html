@@ -3,7 +3,7 @@
     <!-- Config navigation -->
     <div ng-include="'app/views/configuration/header.html'"></div>
 
-    <div class="tab-content" ng-show="deviceId > 0">
+    <div class="tab-content" ng-show_="deviceId > 0">
         <div class="page-header"><h1>{{ _t('associations_list')}}</h1></div>
         <button 
             type="button" 
@@ -14,7 +14,7 @@
         <br/><br/>
         <!-- ////////////////////////////////////////////////////////////////////////////////////// -->
         <!-- Assoc design -->
-        <div class="table-responsive">
+        <div class="table-responsive"> 
             <table class="table table-striped table-condensed">
                 <tbody>
                     <tr ng-repeat="key in keys">
@@ -54,7 +54,7 @@
                                 </select>-->
                                 <select ng-model="assocToNode" class="form-control">
                                     <option value="">&lt; {{ _t('assoc_select_to_node')}} &gt;</option>
-                                    <option ng-repeat="v in removeNodesSort| orderBy:'val'" value="{{v.key}}" ng-selected="v.key == assocToNode">{{v.val}}</option>
+                                    <option ng-repeat="v in removeNodesSort| orderBy:'key'" value="{{v.key}}" ng-selected="v.key == assocToNode">{{v.val}}</option>
                                 </select>
                             </div>
                             <div class="form-group" ng-show="removeInstances[assocToNode] != undefined">
@@ -94,7 +94,7 @@
                                </select>-->
                                 <select ng-model="assocToNode" class="form-control">
                                     <option value=""  ng-selected="true">&lt; {{ _t('assoc_select_to_node')}} &gt;</option>
-                                    <option ng-repeat="v in allDevices| orderBy:'val':false" value="{{v.key}}">{{v.val}}</option>
+                                    <option ng-repeat="v in addDevices" value="{{v.key}}">{{v.val}}</option>
                                 </select>
                             </div>
                             <div class="form-group" ng-show="addInstances[assocToNode] != undefined">
