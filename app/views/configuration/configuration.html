@@ -10,6 +10,9 @@
         <div class="cfg-block" id="config_cont" ng-if="configCont">
 
             <h4>{{_t('configurations_list')}}</h4>
+            <div class="alert-list">
+        <p class="text-danger text-alert-list" ng-repeat="v in configCont" ng-if="v.configCconfigValue != v.configZwaveValue">{{v.label}}: {{_t('value_changed_to')}} <strong config-value-title collection='v' show_value='v.configCconfigValue'></strong> {{_t('value_not_stored_indevice')}}</p>
+    </div>
             <div class="cfg-block-content" ng-init="formName = 'form_config'">
                 <form 
                     name="{{formName}}" 
@@ -50,11 +53,11 @@
                                 <em ng-show="goInfo">{{v.description}}</em>
                             </span>
                         </p>
-                        <button 
+                        <!--<button 
                             type="button" 
                             class="btn btn-info spin-true"
                             ng-click="submitApplyConfigCfg(formName, {'id': deviceId, 'instance': '0', 'commandclass': '70', 'command': 'Set'}, configCont, hasBattery)"
-                            >{{_t('apply_config_into_device')}} <i class="fa fa-spinner fa-spin"></i></button> 
+                            >{{_t('apply_config_into_device')}} <i class="fa fa-spinner fa-spin"></i></button>--> 
 
 
                     </div>

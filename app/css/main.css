@@ -153,8 +153,17 @@ background-color: #e4f5fc;
 .allert-hidden {
    display: none !important;
 }
+
+.alert-list {
+     margin: 8px 0;
+}
+
+.text-alert,.text-alert-list {
+   font-size: 85%;
+   margin: 0 0 0 7px;
+}
 .text-alert {
-   margin: 10px 0;
+   margin: 7px 0;
 }
 /* Modal
 -------------------------------------------------- */
