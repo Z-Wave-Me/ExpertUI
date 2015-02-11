@@ -405,7 +405,7 @@ angApp.directive('expertCommandInput', function($filter) {
     return {
         restrict: "E",
         replace: true,
-        template: '<div class="form-group" id="form_group_" ng-bind-html="input | toTrusted"></div>',
+        template: '<div class="form-group" ng-bind-html="input | toTrusted"></div>',
         scope: {
             collection: '=',
             devices: '=',

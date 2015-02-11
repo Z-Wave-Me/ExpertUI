@@ -8741,7 +8741,7 @@ angApp.directive('expertCommandInput', function($filter) {
     return {
         restrict: "E",
         replace: true,
-        template: '<div class="form-group" id="form_group_" ng-bind-html="input | toTrusted"></div>',
+        template: '<div class="form-group" ng-bind-html="input | toTrusted"></div>',
         scope: {
             collection: '=',
             devices: '=',
@@ -11153,69 +11153,82 @@ appController.controller('BaseController', function($scope, $cookies, $filter, $
 // Test controller
 appController.controller('TestController', function($scope, $filter, $timeout, $upload, dataService) {
     $scope.timeInMs = 0;
-    $scope.dataSet;
-    $scope.devices = [];
-    $scope.ZWaveAPIData = [];
-    $scope.reset = function() {
-        $scope.devices = angular.copy([]);
-    };
-    $scope.from = "ZWaveAPIData";
     var countUp = function() {
         $scope.timeInMs += 1;
         $timeout(countUp, 1000);
     };
     $timeout(countUp, 1000);
-
-    $scope.loadData = function() {
-
+    
+    $scope.uzbUpgrade = [];
+    
+    /**
+     * Load data
+     *
+     */
+    $scope.load = function() {
         dataService.getZwaveData(function(ZWaveAPIData) {
-            $scope.ZWaveAPIData = ZWaveAPIData;
             setData(ZWaveAPIData);
-//            dataService.joinedZwaveData(function(data) {
-//                console.log(data.joined);
-//                //console.log(ZWaveAPIData.updateTime);
-//                $scope.reset();
-//                $scope.from = "Update";
-//                $scope.ZWaveAPIData = ZWaveAPIData;
-//                setData(ZWaveAPIData);
-//            });
+            
         });
     };
-    $scope.loadData();
-
+    $scope.load();
+    
+    // Store data on remote server
+    $scope.store = function(btn,url) {
+        alert('Run HTTP request: ' + url);
+        $(btn).removeClass('spin-true');
+        console.log(url)
+        //dataService.runCmd(url, false, $scope._t('error_handling_data'));
+        return;
+    };
+    
+     /// --- Private functions --- ///
+    
+     /**
+     * Set zwave data
+     */
     function setData(ZWaveAPIData) {
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
+        var ccId = 114;
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
             if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
                 return;
             }
-            //var abc = jPath(ZWaveAPIData, 'updateTime');
-            //console.log(hasNode(node, 'data.isListening.value'));
-            console.log($filter('hasNode')(node, 'data.isListening.value'));
-            // Set object
-            var obj = {};
-            obj['id'] = nodeId;
-            obj['name'] = $filter('deviceName')(nodeId, node);
-            obj['time'] = ZWaveAPIData.updateTime;
-            $scope.devices.push(obj);
+
+            // Loop throught instances
+            var cnt = 1;
+            angular.forEach(node.instances, function(instance, instanceId) {
+                if (instanceId == 0 && node.instances.length > 1) {
+                    return;
+                }
+                // we don't want devices without manufacturerSpecific CC
+                if (!(ccId in instance.commandClasses)) {
+                    return;
+                }
+
+                // Uzb
+                var vendorId = instance.commandClasses[ccId].data.vendorId.value;
+                if(vendorId != 0x0115){
+                   return;
+                }
+                 console.log(nodeId + ': ' + vendorId);
+                 
+                // Set object
+                var obj = {};
+                //var level = $scope.updateLevel(instance.commandClasses[ccId].data.level, ccId);
+
+                obj['id'] = nodeId;
+                obj['cmd'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.mode';
+                obj['ccId'] = ccId;
+                obj['rowId'] = 'row_' + nodeId + '_' + cnt;
+                obj['name'] = $filter('deviceName')(nodeId, node);
+                $scope.uzbUpgrade.push(obj);
+                cnt++;
+            });
         });
     }
-    ;
-
-    // Refresh data
-    $scope.refresh = function(ZWaveAPIData) {
-        console.log(ZWaveAPIData);
-        dataService.updateZwaveData(function(data) {
-
-        });
-    };
-    //$scope.refresh($scope.ZWaveAPIData);
-
-    // Cancel interval on page destroy
-    $scope.$on('$destroy', function() {
-        dataService.cancelZwaveDataInterval();
-    });
+    
 
 
 });
