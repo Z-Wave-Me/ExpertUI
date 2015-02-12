@@ -5,21 +5,24 @@
         <table class="table table-condensed">
             
             <tbody>
-                <tr ng-repeat="v in uzbUpgrade | orderBy:predicate:reverse" id="{{ v.rowId}}">
-                    <td data-title="{{ _t('device_name')}}">(#{{ v.id}}) {{v.name}}</td>
+                <tr ng-repeat="v in uzbUpgrade | orderBy:predicate:reverse" id="row_{{v.id}}">
+                    <td data-title="{{ _t('device_name')}}">(#{{v.id}}) {{v.name}}</td>
+                    <td data-title="Released">{{v.released}}</td>
                     <td>
                         <button 
-                            data-ng-click="store('#btn_boot_' + v.rowId, 'http://zwave.dyndns.org:8083/ZWaveAPI/Run/urlToUpgradeBootloader/urlToFile')" 
+                            data-ng-click="store('#btn_boot_' + v.id, 'http://zwave.dyndns.org:8083/ZWaveAPI/Run/urlToUpgradeBootloader?fileURL=' + v.fileURL)" 
                             data-action="#update" 
                             data-store-url="{{v.urlToStore}}" 
                             class="btn btn-primary spin-true" 
-                            id="btn_boot_{{v.rowId}}">Upgrade bootloader <i class="fa fa-spinner fa-spin"></i> 
+                            id="btn_boot_{{v.rowId}}"
+                            ng-show="v.type=='bootloader'">Upgrade bootloader <i class="fa fa-spinner fa-spin"></i> 
                         </button>
                         <button 
-                            data-ng-click="store('btn_firmware_' + v.rowId, 'http://zwave.dyndns.org:8083/ZWaveAPI/Run/urlToUpgradeFirmware/urlToFile')"
+                            data-ng-click="store('#btn_firmware_' + v.id, 'http://zwave.dyndns.org:8083/ZWaveAPI/Run/urlToUpgradeFirmware?fileURL=' + v.fileURL)"
                             data-action="reset" 
                             class="btn btn-info spin-true" 
-                            id="btn_firmware_{{v.rowId}}">Upgrade firmware <i class="fa fa-spinner fa-spin"></i> 
+                            id="btn_firmware_{{v.id}}"
+                            ng-show="v.type=='firmware'">Upgrade firmware <i class="fa fa-spinner fa-spin"></i> 
                         </button>
                     </td>
                 </tr>

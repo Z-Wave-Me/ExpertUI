@@ -27,8 +27,8 @@ var config_data = {
         'zddx_url': '/ZDDX/', // Url for zddx xml files
         'zddx_create_url': '/ZWaveAPI/CreateZDDX/', // Create zddx file
         'notes_url': '/config/notes.log', // Url for store notes data
-        'uzb_url': 'storage/uzb.json', // Url for store uzb data
-        //'uzb_url': 'http://zwave.eu/uzb/uzb.php', // Url for store uzb data
+        //'uzb_url': 'storage/uzb.json', // Url for store uzb data
+        'uzb_url': 'http://zwave.eu/uzb/uzb.php', // Url for store uzb data
         'lang_dir': 'app/core/lang/', // Language directory
         'lang': 'en', // Default language
         'lang_list': ["en", "de", "fr", "es", "ru"], // List of languages

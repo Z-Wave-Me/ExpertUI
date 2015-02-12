@@ -9927,14 +9927,14 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
              method: "get",
             url: cfg.uzb_url,
             headers: {
-                "Accept": "*/*"
+                "Accept": "application/json",
+                "Content-Type": "application/json"
             }
-        });
+        }); 
         request.success(function(data) {
-            console.log(data)
             return callback(data);
         }).error(function(error) {
-             return callback(null);
+             return callback(null); 
         });
     }
     
@@ -11190,14 +11190,14 @@ appController.controller('TestController', function($scope, $filter, $timeout, $
      */
     $scope.load = function() {
         dataService.getZwaveData(function(ZWaveAPIData) {
-            setData(ZWaveAPIData);
+            dataService.getUzb(function(uzbData) {
+                setData(ZWaveAPIData,uzbData);
+                $scope.uzbFromUrl = uzbData;
+            });
+
 
         });
-        dataService.getUzb(function(data) {
-            
-                $scope.uzbFromUrl = data;
 
-            });
     };
     $scope.load();
 
@@ -11205,7 +11205,6 @@ appController.controller('TestController', function($scope, $filter, $timeout, $
     $scope.store = function(btn, url) {
         alert('Run HTTP request: ' + url);
         $(btn).removeClass('spin-true');
-        console.log(url)
         //dataService.runCmd(url, false, $scope._t('error_handling_data'));
         return;
     };
@@ -11215,7 +11214,7 @@ appController.controller('TestController', function($scope, $filter, $timeout, $
     /**
      * Set zwave data
      */
-    function setData(ZWaveAPIData) {
+    function setData(ZWaveAPIData,uzbData) {
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         var ccId = 114;
         // Loop throught devices
@@ -11240,19 +11239,23 @@ appController.controller('TestController', function($scope, $filter, $timeout, $
                 if (vendorId != 0x0115) {
                     return;
                 }
-                console.log(nodeId + ': ' + vendorId);
-
+                var appVersionMajor = node.data.applicationMajor.value;
+                 var appVersionMinor = node.data.applicationMinor.value;
+                console.log('nodeId: ' + nodeId + ' | vendorId: ' + vendorId + ' | appVersionMajor: ' + appVersionMajor + ' | appVersionMinor: ' + appVersionMinor);
+                
+                var uzb = uzbData[0];
                 // Set object
-                var obj = {};
-                //var level = $scope.updateLevel(instance.commandClasses[ccId].data.level, ccId);
-
-                obj['id'] = nodeId;
-                obj['cmd'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.mode';
-                obj['ccId'] = ccId;
-                obj['rowId'] = 'row_' + nodeId + '_' + cnt;
-                obj['name'] = $filter('deviceName')(nodeId, node);
+                var obj = {
+                   id:nodeId,
+                name: $filter('deviceName')(nodeId, node),
+                appVersionMajor: appVersionMajor,
+                appVersionMinor: appVersionMinor,
+                fileURL: uzb.fileURL,
+                type: uzb.type,
+                released: uzb.released,
+                 comment: uzb.comment
+                };
                 $scope.uzbUpgrade.push(obj);
-                cnt++;
             });
         });
     }

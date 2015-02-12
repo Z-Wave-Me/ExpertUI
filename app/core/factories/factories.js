@@ -382,14 +382,14 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
              method: "get",
             url: cfg.uzb_url,
             headers: {
-                "Accept": "*/*"
+                "Accept": "application/json",
+                "Content-Type": "application/json"
             }
-        });
+        }); 
         request.success(function(data) {
-            console.log(data)
             return callback(data);
         }).error(function(error) {
-             return callback(null);
+             return callback(null); 
         });
     }
     
