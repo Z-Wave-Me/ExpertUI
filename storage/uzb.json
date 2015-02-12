@@ -1,0 +1,24 @@
+[
+    {
+        "id": 1,
+        "baseId": "base_id_1",
+         "type": "bootloader",
+         "vendorId": "Vendor_id_1",
+         "appVersionMajor": 1,
+         "appVersionMinor": 1,
+         "fileURL": "http://www.zwave.eu/uzb/bootloader_UZB_uid_05_02.bin",
+         "released": "2014-01-01 22:00:00",
+         "comment": "Release notes etc"
+    },
+    {
+        "id": 2,
+        "baseId": "base_id_2",
+         "type": "firmware",
+         "vendorId": "Vendor_id_2",
+         "appVersionMajor": 1,
+         "appVersionMinor": 1,
+         "fileURL": "http://www.zwave.eu/uzb/firmware_UZB_uid_05_01.bin",
+         "released": "2014-01-12 22:00:00",
+         "comment": "Release notes etc"
+    }
+]

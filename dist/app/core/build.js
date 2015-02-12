@@ -9584,6 +9584,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         getZddXml: getZddXml,
         getCfgXml: getCfgXml,
         putCfgXml: putCfgXml,
+        getUzb: getUzb,
         getTiming: getTiming,
         getQueueData: getQueueData,
         updateQueueData: updateQueueData,
@@ -9917,6 +9918,27 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
 
         });
     }
+    
+    /**
+     *Get Uzb
+     */
+    function getUzb(callback) {
+        var request = $http({
+             method: "get",
+            url: cfg.uzb_url,
+            headers: {
+                "Accept": "*/*"
+            }
+        });
+        request.success(function(data) {
+            console.log(data)
+            return callback(data);
+        }).error(function(error) {
+             return callback(null);
+        });
+    }
+    
+    
 
     /**
      * Get timing (statistics) data
@@ -11072,7 +11094,7 @@ appService.service('deviceService', function($filter) {
 var appController = angular.module('appController', []);
 
 // Base controller
-appController.controller('BaseController', function($scope, $cookies, $filter, $location, $anchorScroll,$window, cfg, dataService, deviceService, myCache) {
+appController.controller('BaseController', function($scope, $cookies, $filter, $location, $anchorScroll, $window, cfg, dataService, deviceService, myCache) {
     // Custom IP
     $scope.customIP = {
         'url': cfg.server_url,
@@ -11144,9 +11166,9 @@ appController.controller('BaseController', function($scope, $cookies, $filter, $
     $scope.mobileCheck(navigator.userAgent || navigator.vendor || window.opera);
 
     $scope.scrollTo = function(id) {
-     $location.hash(id);
-     $anchorScroll();
-  };
+        $location.hash(id);
+        $anchorScroll();
+    };
 
 });
 
@@ -11158,9 +11180,10 @@ appController.controller('TestController', function($scope, $filter, $timeout, $
         $timeout(countUp, 1000);
     };
     $timeout(countUp, 1000);
-    
+
     $scope.uzbUpgrade = [];
-    
+    $scope.uzbFromUrl = [];
+
     /**
      * Load data
      *
@@ -11168,23 +11191,28 @@ appController.controller('TestController', function($scope, $filter, $timeout, $
     $scope.load = function() {
         dataService.getZwaveData(function(ZWaveAPIData) {
             setData(ZWaveAPIData);
-            
+
         });
+        dataService.getUzb(function(data) {
+            
+                $scope.uzbFromUrl = data;
+
+            });
     };
     $scope.load();
-    
+
     // Store data on remote server
-    $scope.store = function(btn,url) {
+    $scope.store = function(btn, url) {
         alert('Run HTTP request: ' + url);
         $(btn).removeClass('spin-true');
         console.log(url)
         //dataService.runCmd(url, false, $scope._t('error_handling_data'));
         return;
     };
-    
-     /// --- Private functions --- ///
-    
-     /**
+
+    /// --- Private functions --- ///
+
+    /**
      * Set zwave data
      */
     function setData(ZWaveAPIData) {
@@ -11209,11 +11237,11 @@ appController.controller('TestController', function($scope, $filter, $timeout, $
 
                 // Uzb
                 var vendorId = instance.commandClasses[ccId].data.vendorId.value;
-                if(vendorId != 0x0115){
-                   return;
+                if (vendorId != 0x0115) {
+                    return;
                 }
-                 console.log(nodeId + ': ' + vendorId);
-                 
+                console.log(nodeId + ': ' + vendorId);
+
                 // Set object
                 var obj = {};
                 //var level = $scope.updateLevel(instance.commandClasses[ccId].data.level, ccId);
@@ -11228,7 +11256,7 @@ appController.controller('TestController', function($scope, $filter, $timeout, $
             });
         });
     }
-    
+
 
 
 });
