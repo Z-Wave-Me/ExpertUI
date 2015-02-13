@@ -525,6 +525,7 @@ appController.controller('ConfigAssociationController', function($scope, $filter
     $scope.applyQueue = [];
     $scope.updates = [];
     $scope.xmlUpdates = [];
+    $scope.cfgXml = [];
     $scope.zdd = {};
 
 
@@ -554,7 +555,7 @@ appController.controller('ConfigAssociationController', function($scope, $filter
             });
             if (remaining.length == 0) {
                 dataService.purgeCache();
-                $scope.load($scope.lang);
+                $scope.loadAssoc($scope.lang);
                 spinner.fadeOut();
             } else if (since + cfg.route_update_timeout / 1000 < (new Date()).getTime() / 1000) {
                 console.log("update timed out");
@@ -563,7 +564,7 @@ appController.controller('ConfigAssociationController', function($scope, $filter
                 window.setTimeout(pollForUpdate, cfg.interval, since, remaining);
                 if (hasUpdates) {
                     dataService.purgeCache();
-                    $scope.load($scope.lang);
+                    $scope.loadAssoc($scope.lang);
                 }
             }
         });
@@ -700,8 +701,10 @@ appController.controller('ConfigAssociationController', function($scope, $filter
     // Add an assocation
     $scope.add = function() {
         var params = $scope.addData.groupId + ',' + $scope.assocToNode;
+        var parameter = $scope.assocToNode;
         if ($scope.assocToInstance != null) {
             params += ',' + (parseInt($scope.assocToInstance) + 1);
+            parameter += ',' + (parseInt($scope.assocToInstance) + 1);
         }
         var nodeId = $scope.deviceId;
         var node = $scope.ZWaveAPIData.devices[nodeId];
@@ -711,20 +714,25 @@ appController.controller('ConfigAssociationController', function($scope, $filter
             return;
         var index = $scope.addData.instance;
         var group = parseInt($scope.addData.groupId);
-        //Xml updates
-        if(!angular.isDefined($scope.xmlUpdates[group])){
-            $scope.xmlUpdates[group] = [$scope.assocToNode];
-        }else{
-            $scope.xmlUpdates[group].push($scope.assocToNode);
-        }
-        console.log($scope.xmlUpdates)
+        var cc = 133;
+        
         if ($scope.assocToInstance == null) {
             $scope.updates.push("devices." + nodeId + ".instances." + index + ".commandClasses." + (0x85) + ".data." + group);
             $scope.applyQueue.push('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x85].Set(' + params + ')');
         } else {
             $scope.updates.push("devices." + nodeId + ".instances." + index + ".commandClasses." + (0x8e) + ".data." + group);
             $scope.applyQueue.push('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x8e].Set(' + params + ')');
+            cc = 142;
         }
+        $scope.xmlUpdates.push({
+            'id': nodeId,
+            'instance': index,
+            'commandclass': cc,
+            'parameter': parameter,
+            'command': 'Set',
+            'group': group
+        });
+        console.log($scope.xmlUpdates);
         // cause view to show element
         $scope.addData.nodeIds.push(parseInt($scope.assocToNode));
         if ($scope.assocToInstance != null)
@@ -750,30 +758,33 @@ appController.controller('ConfigAssociationController', function($scope, $filter
         $scope.assocToInstance = null;
         // Prepare devices and nodes
         angular.forEach($scope.ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255 || node.data.isVirtual.value  || nodeId == $scope.deviceId) {
+            if (nodeId == 255 || node.data.isVirtual.value || nodeId == $scope.deviceId) {
                 return;
             }
-            
-//            if (!(133 in node.instances[0].commandClasses) || !(142 in node.instances[0].commandClasses)) {
-//                console.log(nodeId + ' NO ASSOCIATION');
-//                return;
-//                
-//            }
 
-            if ($scope.hasMca && !(142 in node.instances[0].commandClasses)) { 
-                console.log(nodeId + ' Has NO MCA (142)'); 
+            if ($scope.hasMca && !(142 in node.instances[0].commandClasses)) {
+                //console.log(nodeId + ' Has NO MCA (142)'); 
                 //return;
-                
+
             }
-            if(!$scope.hasMca && 142 in node.instances[0].commandClasses){
-                console.log(nodeId + ' Has NO ASSOC (133)');
+            if (!$scope.hasMca && 142 in node.instances[0].commandClasses) {
+                //console.log(nodeId + ' Has NO ASSOC (133)');
                 //return;
             }
+            var mc = '---';
+             angular.forEach(node.instances, function(instance, instanceId) {
+                if (0x60 in instance.commandClasses) {
+                    mc = '92';
+                }
+            });
+            console.log(0x60 in node.instances[0].commandClasses)
+            console.log(nodeId + ' MCA: ' + (142 in node.instances[0].commandClasses ? '142' : '---') + ' MC: ' + (0x60 in node.instances[0].commandClasses ? '0x60' : '---'));
 
             $scope.addDevices.push({
                 'key': nodeId,
                 'val': '(#' + nodeId + ') ' + $filter('deviceName')(nodeId, node)
             });
+           
 
             for (var instanceId in $scope.ZWaveAPIData.devices[nodeId].instances) {
                 var fromInstanceId = $scope.addData.instanceId;
@@ -784,7 +795,7 @@ appController.controller('ConfigAssociationController', function($scope, $filter
                         if ($scope.addData.nodeIds[i] == nodeId && ($scope.addData.instanceIds[i] == null || $scope.addData.instanceIds[i] == parseInt(instanceId) + 1)) {
                             contained = true;
                             break;
-                        } 
+                        }
                     }
                     if (contained)
                         continue;
@@ -818,6 +829,9 @@ appController.controller('ConfigAssociationController', function($scope, $filter
     // Load data
     $scope.loadAssoc = function(currNodeId) {
         //dataService.getZwaveDataQuietly(function(ZWaveAPIData) {
+        dataService.getCfgXml(function(cfgXml) {
+            $scope.cfgXml = cfgXml;
+        });
         dataService.getZwaveData(function(ZWaveAPIData) {
             var currNode = ZWaveAPIData.devices[currNodeId];
             if (!currNode) {
@@ -827,7 +841,7 @@ appController.controller('ConfigAssociationController', function($scope, $filter
             if (142 in currNode.instances[0].commandClasses) {
                 $scope.hasMca = true
             }
-             console.log(currNodeId + ' Current Device Has MCA: ' + $scope.hasMca)
+            console.log(currNodeId + ' Current Device Has MCA: ' + $scope.hasMca)
 
             $scope.ZWaveAPIData = ZWaveAPIData;
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
@@ -851,11 +865,11 @@ appController.controller('ConfigAssociationController', function($scope, $filter
     $scope.applyConfig = function() {
         var spinner = $('#AssociationTable .fa-spinner');
         spinner.show();
-//         angular.forEach($scope.applyQueue, function(v,k) {
-//                var array = v.split('.');
-//                console.log(array)
-//            });
-//            return;
+        
+        dataService.getCfgXml(function(cfgXml) {
+            var xmlFile = deviceService.buildCfgXmlAssoc($scope.xmlUpdates, cfgXml);
+            //dataService.putCfgXml(xmlFile);
+        });
         while ($scope.applyQueue.length > 0) {
             var exec = $scope.applyQueue.shift();
             console.log(exec)

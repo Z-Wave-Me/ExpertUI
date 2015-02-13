@@ -10269,64 +10269,64 @@ appService.service('deviceService', function($filter) {
     this.configGetNav = function(ZWaveAPIData) {
         return configGetNav(ZWaveAPIData);
     };
-    
-     /**
+
+    /**
      *  Get expert commands
      */
     this.configGetCommands = function(methods, ZWaveAPIData) {
         return configGetCommands(methods, ZWaveAPIData);
     };
-    
+
     /**
      *  Get interview ommands
      */
     this.configGetInterviewCommands = function(node, updateTime) {
         return configGetInterviewCommands(node, updateTime);
     };
-    
+
     /**
      *  Get interview stage
      */
-    this.configInterviewStage = function(ZWaveAPIData, id,languages) {
-        return configInterviewStage(ZWaveAPIData, id,languages);
+    this.configInterviewStage = function(ZWaveAPIData, id, languages) {
+        return configInterviewStage(ZWaveAPIData, id, languages);
     };
-    
+
     /**
      *  Set device state
      */
-    this.configDeviceState = function(node,languages) {
-        return configDeviceState(node,languages);
+    this.configDeviceState = function(node, languages) {
+        return configDeviceState(node, languages);
     };
-    
-    
-     /**
+
+
+    /**
      * Config cont
      */
-    this.configConfigCont = function(node, nodeId, zddXml, cfgXml, lang,languages) {
-        return configConfigCont(node, nodeId, zddXml, cfgXml, lang,languages);
+    this.configConfigCont = function(node, nodeId, zddXml, cfgXml, lang, languages) {
+        return configConfigCont(node, nodeId, zddXml, cfgXml, lang, languages);
     };
-    
+
     /**
      *  Switch all cont
      */
-     this.configSwitchAllCont = function(node, nodeId, ZWaveAPIData, cfgXml) {
+    this.configSwitchAllCont = function(node, nodeId, ZWaveAPIData, cfgXml) {
         return configSwitchAllCont(node, nodeId, ZWaveAPIData, cfgXml);
     };
-    
+
     /**
      * Protection cont
      */
     this.configProtectionCont = function(node, nodeId, ZWaveAPIData, cfgXml) {
         return configProtectionCont(node, nodeId, ZWaveAPIData, cfgXml);
     };
-    
+
     /**
      * Wakeup cont
      */
     this.configWakeupCont = function(node, nodeId, ZWaveAPIData, cfgXml) {
         return configWakeupCont(node, nodeId, ZWaveAPIData, cfgXml);
     };
-    
+
     /**
      * Get xml config param
      */
@@ -10340,9 +10340,15 @@ appService.service('deviceService', function($filter) {
     this.buildCfgXml = function(data, cfgXml, id, commandclass) {
         return buildCfgXml(data, cfgXml, id, commandclass);
     };
+    /**
+     *Build config XML file
+     */
+    this.buildCfgXmlAssoc = function(data, cfgXml) {
+        return buildCfgXmlAssoc(data, cfgXml);
+    };
 
     /// --- Private functions --- ///
-     /**
+    /**
      * Get language line by key
      */
     function getLangLine(key, languages) {
@@ -10352,8 +10358,9 @@ appService.service('deviceService', function($filter) {
             }
         }
         return key;
-    };
-    
+    }
+    ;
+
     /**
      * isLocalyReset
      */
@@ -10415,12 +10422,12 @@ appService.service('deviceService', function($filter) {
         });
         return devices;
     }
-    
-     /**
+
+    /**
      *  Get expert commands
      */
     function configGetCommands(methods, ZWaveAPIData) {
-      var methodsArr = [];
+        var methodsArr = [];
         angular.forEach(methods, function(params, method) {
             //str.split(',');
             var cmd = {};
@@ -10437,12 +10444,12 @@ appService.service('deviceService', function($filter) {
         });
         return methodsArr;
     }
-    
+
     /**
      *  Get interview Commands
      */
     function configGetInterviewCommands(node, updateTime) {
-      var interviews = [];
+        var interviews = [];
         for (var iId in node.instances) {
             var cnt = 0;
             for (var ccId in node.instances[iId].commandClasses) {
@@ -10462,12 +10469,12 @@ appService.service('deviceService', function($filter) {
         ;
         return interviews;
     }
-    
+
     /**
      *  Get interview stage
      */
-    function configInterviewStage(ZWaveAPIData, id,languages) {
-      var istages = [];
+    function configInterviewStage(ZWaveAPIData, id, languages) {
+        var istages = [];
         istages.push((ZWaveAPIData.devices[id].data.nodeInfoFrame.value && ZWaveAPIData.devices[id].data.nodeInfoFrame.value.length) ? '+' : '-');
         istages.push('&nbsp;');
         istages.push((0x86 in ZWaveAPIData.devices[id].instances[0].commandClasses) ? (ZWaveAPIData.devices[id].instances[0].commandClasses[0x86].data.interviewDone.value ? '+' : (ZWaveAPIData.devices[id].instances[0].commandClasses[0x86].data.interviewCounter.value > 0 ? '.' : '&oslash;')) : '+'); // Version
@@ -10499,24 +10506,24 @@ appService.service('deviceService', function($filter) {
             descr = getLangLine('device_interview_stage_failed', languages);
         return descr + '<br />' + istages.join('');
     }
-    
-     /**
+
+    /**
      *  Set device state
      */
-    function configDeviceState(node,languages){
-         var out = '';
+    function configDeviceState(node, languages) {
+        var out = '';
         if (!node.data.isListening.value && !node.data.sensor250.value && !node.data.sensor1000.value) {
-            out = (node.data.isAwake.value ? '<i class="fa fa-certificate fa-lg text-orange""></i> ' +  getLangLine('device_is_active',languages) : '<i class="fa fa-moon-o fa-lg text-primary"></i> ' +  getLangLine('device_is_sleeping',languages));
+            out = (node.data.isAwake.value ? '<i class="fa fa-certificate fa-lg text-orange""></i> ' + getLangLine('device_is_active', languages) : '<i class="fa fa-moon-o fa-lg text-primary"></i> ' + getLangLine('device_is_sleeping', languages));
         } else {
-            out = (node.data.isFailed.value ? '<i class="fa fa-check fa-lg text-danger"></i> ' +  getLangLine('device_is_dead',languages) : '<i class="fa fa-check fa-lg text-success"></i> ' +  getLangLine('device_is_operating',languages));
+            out = (node.data.isFailed.value ? '<i class="fa fa-check fa-lg text-danger"></i> ' + getLangLine('device_is_dead', languages) : '<i class="fa fa-check fa-lg text-success"></i> ' + getLangLine('device_is_operating', languages));
         }
         return out;
     }
-    
-     /**
+
+    /**
      * Config cont
      */
-    function configConfigCont(node, nodeId, zddXml, cfgXml, lang,languages) {
+    function configConfigCont(node, nodeId, zddXml, cfgXml, lang, languages) {
         if (!0x70 in node.instances[0].commandClasses) {
             return null;
         }
@@ -10553,7 +10560,7 @@ appService.service('deviceService', function($filter) {
             var conf_num = conf['_number'];
             //console.log(cfgFile[conf_num])
             var conf_size = conf['_size'];
-            var conf_name = configGetZddxLang($filter('hasNode')(conf, 'name.lang'),lang) || getLangLine('configuration_parameter',languages) + ' ' + conf_num;
+            var conf_name = configGetZddxLang($filter('hasNode')(conf, 'name.lang'), lang) || getLangLine('configuration_parameter', languages) + ' ' + conf_num;
             var conf_description = configGetZddxLang($filter('hasNode')(conf, 'description.lang'), lang);
             var conf_size = conf['_size'];
             var conf_default_value = null;
@@ -10650,7 +10657,7 @@ appService.service('deviceService', function($filter) {
                         defaultValue: conf_default_value,
                         showDefaultValue: showDefaultValue,
                         configCconfigValue: config_config_value,
-                        configZwaveValue:  config_zwave_value,
+                        configZwaveValue: config_zwave_value,
                         confNum: conf_num,
                         confSize: conf_size
                     };
@@ -10676,7 +10683,7 @@ appService.service('deviceService', function($filter) {
                             defaultValue: null,
                             showDefaultValue: showDefaultValue,
                             configCconfigValue: config_config_value,
-                            configZwaveValue:  config_zwave_value,
+                            configZwaveValue: config_zwave_value,
                             confNum: conf_num,
                             confSize: conf_size
                         };
@@ -10750,7 +10757,7 @@ appService.service('deviceService', function($filter) {
                             defaultValue: conf_default_value,
                             showDefaultValue: showDefaultValue,
                             configCconfigValue: config_config_value,
-                            configZwaveValue:  config_zwave_value,
+                            configZwaveValue: config_zwave_value,
                             confNum: conf_num,
                             confSize: conf_size
                         };
@@ -10770,7 +10777,7 @@ appService.service('deviceService', function($filter) {
                             defaultValue: conf_default_value,
                             showDefaultValue: showDefaultValue,
                             configCconfigValue: config_config_value,
-                            configZwaveValue:  config_zwave_value,
+                            configZwaveValue: config_zwave_value,
                             confNum: conf_num,
                             confSize: conf_size
                         };
@@ -10848,7 +10855,7 @@ appService.service('deviceService', function($filter) {
                         defaultValue: conf_default_value,
                         showDefaultValue: showDefaultValue,
                         configCconfigValue: config_config_value,
-                        configZwaveValue:  config_zwave_value,
+                        configZwaveValue: config_zwave_value,
                         confNum: conf_num,
                         confSize: conf_size
                     };
@@ -10865,7 +10872,7 @@ appService.service('deviceService', function($filter) {
         //console.log(config_cont);
         return config_cont;
     }
-    
+
     /**
      * Switch all cont
      */
@@ -10903,7 +10910,7 @@ appService.service('deviceService', function($filter) {
         ;
         return switchall_cont;
     }
-    
+
     /**
      * Protection cont
      */
@@ -10943,7 +10950,7 @@ appService.service('deviceService', function($filter) {
         ;
         return protection_cont;
     }
-    
+
     /**
      * Wakeup cont
      */
@@ -11042,6 +11049,7 @@ appService.service('deviceService', function($filter) {
      */
     function buildCfgXml(data, cfgXml, id, commandclass) {
         var hasCfgXml = false;
+         var assocCc = [133, 142];
         var formData = [];
         if (commandclass == '84') {
             var par1 = JSON.parse(data[0]['parameter']);
@@ -11070,14 +11078,70 @@ appService.service('deviceService', function($filter) {
                 obj['commandclass'] = v['_commandclass'];
                 obj['command'] = v['_command'];
                 obj['parameter'] = v['_parameter'];
+                 obj['group'] = v['_group'];
                 xmlData.push(obj);
 
             });
         }
+        var ret = buildCfgXmlFile(xmlData);
+        return ret;
 
-        var xml = '<config><devices>' + "\n";
+    }
+
+    /**
+     *Build config XML file
+     */
+    function buildCfgXmlAssoc(data, cfgXml) {
+        var xmlData = [];
+        var removeFromXml = {
+            'id': [],
+            'group': [],
+            'parameter': [],
+        }
+        angular.forEach(data, function(v, k) {
+            var obj = {};
+            obj['id'] = v['id'];
+            obj['instance'] = v['instance'];
+            obj['commandclass'] = parseInt(v['commandclass'], 10);
+            obj['command'] = v['command'];
+            obj['parameter'] = '[' + v['parameter'] + ']';
+            obj['group'] = v['group'];
+            xmlData.push(obj);
+
+        });
+        var hasCfgXml = $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration');
+        if (hasCfgXml) {
+            angular.forEach(hasCfgXml, function(v, k) {
+                var obj = {};
+                obj['id'] = v['_id'];
+                obj['instance'] = v['_instance'];
+                obj['commandclass'] = parseInt(v['_commandclass'], 10);
+                obj['command'] = v['_command'];
+                obj['parameter'] = v['_parameter'];
+                obj['group'] = v['_group'];
+                xmlData.push(obj);
+
+            });
+        }
+        var ret = buildCfgXmlFile(xmlData);
+        return ret; 
+    }
+    
+    /**
+     * Build cfg XML file
+     */
+    function buildCfgXmlFile(xmlData) {
+        var assocCc = [133, 142];
+       var xml = '<config><devices>' + "\n";
+
         angular.forEach(xmlData, function(v, k) {
-            xml += '<deviceconfiguration id="' + v.id + '" instance="' + v.instance + '" commandclass="' + v.commandclass + '" command="' + v.command + '" parameter="' + v.parameter + '"/>' + "\n";
+            if (assocCc.indexOf( parseInt(v.commandclass,10)) > -1) {
+                xml += '<deviceconfiguration id="' + v.id + '" instance="' + v.instance + '" commandclass="' + v.commandclass + '" command="' + v.command + '" group="' + v.group + '" parameter="' + v.parameter + '"/>' + "\n";
+               
+            } else {
+                xml += '<deviceconfiguration id="' + v.id + '" instance="' + v.instance + '" commandclass="' + v.commandclass + '" command="' + v.command + '" parameter="' + v.parameter + '"/>' + "\n";
+            }
+
         });
         xml += '</devices></config>' + "\n";
         return xml;
@@ -17028,6 +17092,7 @@ appController.controller('ConfigAssociationController', function($scope, $filter
     $scope.applyQueue = [];
     $scope.updates = [];
     $scope.xmlUpdates = [];
+    $scope.cfgXml = [];
     $scope.zdd = {};
 
 
@@ -17057,7 +17122,7 @@ appController.controller('ConfigAssociationController', function($scope, $filter
             });
             if (remaining.length == 0) {
                 dataService.purgeCache();
-                $scope.load($scope.lang);
+                $scope.loadAssoc($scope.lang);
                 spinner.fadeOut();
             } else if (since + cfg.route_update_timeout / 1000 < (new Date()).getTime() / 1000) {
                 console.log("update timed out");
@@ -17066,7 +17131,7 @@ appController.controller('ConfigAssociationController', function($scope, $filter
                 window.setTimeout(pollForUpdate, cfg.interval, since, remaining);
                 if (hasUpdates) {
                     dataService.purgeCache();
-                    $scope.load($scope.lang);
+                    $scope.loadAssoc($scope.lang);
                 }
             }
         });
@@ -17203,8 +17268,10 @@ appController.controller('ConfigAssociationController', function($scope, $filter
     // Add an assocation
     $scope.add = function() {
         var params = $scope.addData.groupId + ',' + $scope.assocToNode;
+        var parameter = $scope.assocToNode;
         if ($scope.assocToInstance != null) {
             params += ',' + (parseInt($scope.assocToInstance) + 1);
+            parameter += ',' + (parseInt($scope.assocToInstance) + 1);
         }
         var nodeId = $scope.deviceId;
         var node = $scope.ZWaveAPIData.devices[nodeId];
@@ -17214,20 +17281,25 @@ appController.controller('ConfigAssociationController', function($scope, $filter
             return;
         var index = $scope.addData.instance;
         var group = parseInt($scope.addData.groupId);
-        //Xml updates
-        if(!angular.isDefined($scope.xmlUpdates[group])){
-            $scope.xmlUpdates[group] = [$scope.assocToNode];
-        }else{
-            $scope.xmlUpdates[group].push($scope.assocToNode);
-        }
-        console.log($scope.xmlUpdates)
+        var cc = 133;
+        
         if ($scope.assocToInstance == null) {
             $scope.updates.push("devices." + nodeId + ".instances." + index + ".commandClasses." + (0x85) + ".data." + group);
             $scope.applyQueue.push('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x85].Set(' + params + ')');
         } else {
             $scope.updates.push("devices." + nodeId + ".instances." + index + ".commandClasses." + (0x8e) + ".data." + group);
             $scope.applyQueue.push('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x8e].Set(' + params + ')');
+            cc = 142;
         }
+        $scope.xmlUpdates.push({
+            'id': nodeId,
+            'instance': index,
+            'commandclass': cc,
+            'parameter': parameter,
+            'command': 'Set',
+            'group': group
+        });
+        console.log($scope.xmlUpdates);
         // cause view to show element
         $scope.addData.nodeIds.push(parseInt($scope.assocToNode));
         if ($scope.assocToInstance != null)
@@ -17253,30 +17325,33 @@ appController.controller('ConfigAssociationController', function($scope, $filter
         $scope.assocToInstance = null;
         // Prepare devices and nodes
         angular.forEach($scope.ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255 || node.data.isVirtual.value  || nodeId == $scope.deviceId) {
+            if (nodeId == 255 || node.data.isVirtual.value || nodeId == $scope.deviceId) {
                 return;
             }
-            
-//            if (!(133 in node.instances[0].commandClasses) || !(142 in node.instances[0].commandClasses)) {
-//                console.log(nodeId + ' NO ASSOCIATION');
-//                return;
-//                
-//            }
 
-            if ($scope.hasMca && !(142 in node.instances[0].commandClasses)) { 
-                console.log(nodeId + ' Has NO MCA (142)'); 
+            if ($scope.hasMca && !(142 in node.instances[0].commandClasses)) {
+                //console.log(nodeId + ' Has NO MCA (142)'); 
                 //return;
-                
+
             }
-            if(!$scope.hasMca && 142 in node.instances[0].commandClasses){
-                console.log(nodeId + ' Has NO ASSOC (133)');
+            if (!$scope.hasMca && 142 in node.instances[0].commandClasses) {
+                //console.log(nodeId + ' Has NO ASSOC (133)');
                 //return;
             }
+            var mc = '---';
+             angular.forEach(node.instances, function(instance, instanceId) {
+                if (0x60 in instance.commandClasses) {
+                    mc = '92';
+                }
+            });
+            console.log(0x60 in node.instances[0].commandClasses)
+            console.log(nodeId + ' MCA: ' + (142 in node.instances[0].commandClasses ? '142' : '---') + ' MC: ' + (0x60 in node.instances[0].commandClasses ? '0x60' : '---'));
 
             $scope.addDevices.push({
                 'key': nodeId,
                 'val': '(#' + nodeId + ') ' + $filter('deviceName')(nodeId, node)
             });
+           
 
             for (var instanceId in $scope.ZWaveAPIData.devices[nodeId].instances) {
                 var fromInstanceId = $scope.addData.instanceId;
@@ -17287,7 +17362,7 @@ appController.controller('ConfigAssociationController', function($scope, $filter
                         if ($scope.addData.nodeIds[i] == nodeId && ($scope.addData.instanceIds[i] == null || $scope.addData.instanceIds[i] == parseInt(instanceId) + 1)) {
                             contained = true;
                             break;
-                        } 
+                        }
                     }
                     if (contained)
                         continue;
@@ -17321,6 +17396,9 @@ appController.controller('ConfigAssociationController', function($scope, $filter
     // Load data
     $scope.loadAssoc = function(currNodeId) {
         //dataService.getZwaveDataQuietly(function(ZWaveAPIData) {
+        dataService.getCfgXml(function(cfgXml) {
+            $scope.cfgXml = cfgXml;
+        });
         dataService.getZwaveData(function(ZWaveAPIData) {
             var currNode = ZWaveAPIData.devices[currNodeId];
             if (!currNode) {
@@ -17330,7 +17408,7 @@ appController.controller('ConfigAssociationController', function($scope, $filter
             if (142 in currNode.instances[0].commandClasses) {
                 $scope.hasMca = true
             }
-             console.log(currNodeId + ' Current Device Has MCA: ' + $scope.hasMca)
+            console.log(currNodeId + ' Current Device Has MCA: ' + $scope.hasMca)
 
             $scope.ZWaveAPIData = ZWaveAPIData;
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
@@ -17354,11 +17432,11 @@ appController.controller('ConfigAssociationController', function($scope, $filter
     $scope.applyConfig = function() {
         var spinner = $('#AssociationTable .fa-spinner');
         spinner.show();
-//         angular.forEach($scope.applyQueue, function(v,k) {
-//                var array = v.split('.');
-//                console.log(array)
-//            });
-//            return;
+        
+        dataService.getCfgXml(function(cfgXml) {
+            var xmlFile = deviceService.buildCfgXmlAssoc($scope.xmlUpdates, cfgXml);
+            //dataService.putCfgXml(xmlFile);
+        });
         while ($scope.applyQueue.length > 0) {
             var exec = $scope.applyQueue.shift();
             console.log(exec)
