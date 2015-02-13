@@ -524,6 +524,7 @@ appController.controller('ConfigAssociationController', function($scope, $filter
     $scope.assocToInstance = '';
     $scope.applyQueue = [];
     $scope.updates = [];
+    $scope.xmlUpdates = [];
     $scope.zdd = {};
 
 
@@ -710,6 +711,13 @@ appController.controller('ConfigAssociationController', function($scope, $filter
             return;
         var index = $scope.addData.instance;
         var group = parseInt($scope.addData.groupId);
+        //Xml updates
+        if(!angular.isDefined($scope.xmlUpdates[group])){
+            $scope.xmlUpdates[group] = [$scope.assocToNode];
+        }else{
+            $scope.xmlUpdates[group].push($scope.assocToNode);
+        }
+        console.log($scope.xmlUpdates)
         if ($scope.assocToInstance == null) {
             $scope.updates.push("devices." + nodeId + ".instances." + index + ".commandClasses." + (0x85) + ".data." + group);
             $scope.applyQueue.push('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x85].Set(' + params + ')');
@@ -843,6 +851,11 @@ appController.controller('ConfigAssociationController', function($scope, $filter
     $scope.applyConfig = function() {
         var spinner = $('#AssociationTable .fa-spinner');
         spinner.show();
+//         angular.forEach($scope.applyQueue, function(v,k) {
+//                var array = v.split('.');
+//                console.log(array)
+//            });
+//            return;
         while ($scope.applyQueue.length > 0) {
             var exec = $scope.applyQueue.shift();
             console.log(exec)

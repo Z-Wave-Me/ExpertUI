@@ -377,10 +377,10 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
     /**
      *Get Uzb
      */
-    function getUzb(callback) {
+    function getUzb(params,callback) {
         var request = $http({
              method: "get",
-            url: cfg.uzb_url,
+            url: cfg.uzb_url + params,
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json"

@@ -103,12 +103,24 @@ appController.controller('TestController', function($scope, $filter, $timeout, $
      */
     $scope.load = function() {
         dataService.getZwaveData(function(ZWaveAPIData) {
-            dataService.getUzb(function(uzbData) {
-                setData(ZWaveAPIData,uzbData);
-                $scope.uzbFromUrl = uzbData;
+            //var controller = ZWaveAPIData.controller.data;
+            var vendorId = parseInt(ZWaveAPIData.controller.data.manufacturerId.value,10);
+            //0x0115 = 277, 0x0147 = 327
+            var allowedVendors = [277,327];
+            if (allowedVendors.indexOf(vendorId) === -1){
+                return;
+            }
+            
+            var appVersion = ZWaveAPIData.controller.data.APIVersion.value.split('.');
+            var appVersionMajor = parseInt(appVersion[0], 10);
+            var appVersionMinor = parseInt(appVersion[1], 10);
+            var urlParams = '?vendorId=' + vendorId + '&appVersionMajor=' + appVersionMajor + '&appVersionMinor=' + appVersionMinor
+            // debugger;
+            dataService.getUzb(urlParams, function(uzbData) {
+                if (uzbData.data.length > 0) {
+                    $scope.uzbUpgrade = uzbData.data[0];
+                }
             });
-
-
         });
 
     };
@@ -121,59 +133,6 @@ appController.controller('TestController', function($scope, $filter, $timeout, $
         //dataService.runCmd(url, false, $scope._t('error_handling_data'));
         return;
     };
-
-    /// --- Private functions --- ///
-
-    /**
-     * Set zwave data
-     */
-    function setData(ZWaveAPIData,uzbData) {
-        var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
-        var ccId = 114;
-        // Loop throught devices
-        angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
-                return;
-            }
-
-            // Loop throught instances
-            var cnt = 1;
-            angular.forEach(node.instances, function(instance, instanceId) {
-                if (instanceId == 0 && node.instances.length > 1) {
-                    return;
-                }
-                // we don't want devices without manufacturerSpecific CC
-                if (!(ccId in instance.commandClasses)) {
-                    return;
-                }
-
-                // Uzb
-                var vendorId = instance.commandClasses[ccId].data.vendorId.value;
-                if (vendorId != 0x0115) {
-                    return;
-                }
-                var appVersionMajor = node.data.applicationMajor.value;
-                 var appVersionMinor = node.data.applicationMinor.value;
-                console.log('nodeId: ' + nodeId + ' | vendorId: ' + vendorId + ' | appVersionMajor: ' + appVersionMajor + ' | appVersionMinor: ' + appVersionMinor);
-                
-                var uzb = uzbData[0];
-                // Set object
-                var obj = {
-                   id:nodeId,
-                name: $filter('deviceName')(nodeId, node),
-                appVersionMajor: appVersionMajor,
-                appVersionMinor: appVersionMinor,
-                fileURL: uzb.fileURL,
-                type: uzb.type,
-                released: uzb.released,
-                 comment: uzb.comment
-                };
-                $scope.uzbUpgrade.push(obj);
-            });
-        });
-    }
-
-
 
 });
 
