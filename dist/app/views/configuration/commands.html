@@ -1,0 +1,73 @@
+<!-- Commands view -->
+<div ng-controller="ConfigCommandsController">
+    <!-- Config navigation -->
+    <div ng-include="'app/views/configuration/header.html'"></div>
+
+    <div id="table_mobile" class="tab-content" ng-show="deviceId > 0">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{{_t('th_instance')}}</th>
+                    <th>{{_t('th_command_class')}}</th>
+                    <th>{{_t('th_command_param')}}</th>
+
+            </thead>
+            <tbody>
+                <tr ng-repeat="(k,v) in commands | orderBy:predicate:reverse" id="{{ v.nodeId}}">
+                    <td data-title="{{_t('th_instance')}}" ng-class="($index == 0 ? 'no-class' : 'mobile-hide')"><a href="" ng-controller="InterviewCommandController" ng-click="showModal('#modal_expert_commands', interviewCommands, v.ccId, 'cmdDataIn')">{{v.instanceId}}</a> &nbsp;</td>
+                    <td data-title="{{_t('th_command_class')}}"><a class="btn btn-info" href="" ng-controller="InterviewCommandController" ng-click="showModal('#modal_expert_commands', interviewCommands, v.ccId, 'cmdData')">{{v.commandClass}}</a> &nbsp;</td>
+                    <td data-title="{{_t('th_command_param')}}">
+                        <div class="commands-data" ng-repeat="c in v.command| orderBy:predicate:reverse" ng-init="formName = 'form_' + v.commandClass + '_' + c.data.method + '_' + $index">
+                            <form 
+                                name="{{formName}}" 
+                                id="{{formName}}"
+                                class="form form_commands" 
+                                role="form"
+                                ng-controller_="ConfigStoreController"
+                                ng-submit="submitExpertCommndsForm(formName, v.cmd + '.' + c.data.method)" 
+                                novalidate>
+                                <div class="commands-data-control">
+                                    <div class="form-inline" ng-repeat="(pk,p) in c.data.params">
+                                        <expert-command-input 
+                                            collection='p' 
+                                            values='c.data.values[pk]'
+                                            devices='devices'
+                                            get-node-devices='getNodeDevices'
+                                            ></expert-command-input>
+                                        <!-- {{pk}} {{p}} 
+                                        {{c.data.values[pk]}}-->
+
+                                    </div>
+                                    <button
+                                        type="submit"
+                                        class="btn btn-primary" 
+                                        id="btn_update_{{ v.rowId}}"
+                                        >{{c.data.method}}</button>
+                                </div>
+
+
+                            </form>
+                        </div>
+                        &nbsp;
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal debugging -->
+    <div class="modal fade" id="modal_expert_commands" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{_t('commandClass')}}</h4>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{_t('btn_cancel')}}</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.Modal -->
+</div><!-- /ng-controler -->

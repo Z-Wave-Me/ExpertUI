@@ -1,0 +1,24 @@
+<div class="page-header form-inline">
+    <label>{{_t('h1_configuration_for')}}</label> 
+    <select name="devices" class="form-control" ng-model="deviceId" ng-change="changeDevice(deviceId)">
+        <option value="" ng-selected="v.id != deviceId">--- {{_t('h1_configuration_no_device')}} ---</option>
+        <option ng-repeat="v in devices| orderBy:predicate:reverse" value="{{v.id}}" ng-selected="v.id == deviceId">{{v.name}}</option>
+    </select>
+</div>
+<ul class="nav nav-tabs" role="tablist" ng-show="deviceId > 0">
+    <li ng-class="activeTab == 'interview' ? 'active' : ''">
+        <a href="#configuration/interview/{{deviceId}}">{{_t('nav_device_interview')}}</a>
+    </li>
+    <li ng-class="activeTab == 'configuration' ? 'active' : ''">
+         <a href="#configuration/configuration/{{deviceId}}">{{_t('nav_device_configuration')}}</a>
+    </li>
+    <li ng-class="activeTab == 'association' ? 'active' : ''">
+         <a href="#configuration/association/{{deviceId}}">{{_t('nav_device_assoc')}}</a>
+    </li>
+    <li ng-class="activeTab == 'commands' ? 'active' : ''">
+        <a href="#configuration/commands/{{deviceId}}">{{_t('nav_expert_commands')}}</a>
+    </li>
+    <li ng-class="activeTab == 'firmware' ? 'active' : ''">
+        <a href="#configuration/firmware/{{deviceId}}">{{_t('nav_firmware_update')}}</a>
+    </li>
+</ul>

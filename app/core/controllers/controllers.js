@@ -7,7 +7,7 @@
 var appController = angular.module('appController', []);
 
 // Base controller
-appController.controller('BaseController', function($scope, $cookies, $filter, $location, $window, cfg, dataService, deviceService, myCache) {
+appController.controller('BaseController', function($scope, $cookies, $filter, $location, $anchorScroll, $window, cfg, dataService, deviceService, myCache) {
     // Custom IP
     $scope.customIP = {
         'url': cfg.server_url,
@@ -78,77 +78,61 @@ appController.controller('BaseController', function($scope, $cookies, $filter, $
     };
     $scope.mobileCheck(navigator.userAgent || navigator.vendor || window.opera);
 
-
+    $scope.scrollTo = function(id) {
+        $location.hash(id);
+        $anchorScroll();
+    };
 
 });
 
 // Test controller
 appController.controller('TestController', function($scope, $filter, $timeout, $upload, dataService) {
     $scope.timeInMs = 0;
-    $scope.dataSet;
-    $scope.devices = [];
-    $scope.ZWaveAPIData = [];
-    $scope.reset = function() {
-        $scope.devices = angular.copy([]);
-    };
-    $scope.from = "ZWaveAPIData";
     var countUp = function() {
         $scope.timeInMs += 1;
         $timeout(countUp, 1000);
     };
     $timeout(countUp, 1000);
 
-    $scope.loadData = function() {
+    $scope.uzbUpgrade = [];
+    $scope.uzbFromUrl = [];
 
+    /**
+     * Load data
+     *
+     */
+    $scope.load = function() {
         dataService.getZwaveData(function(ZWaveAPIData) {
-            $scope.ZWaveAPIData = ZWaveAPIData;
-            setData(ZWaveAPIData);
-//            dataService.joinedZwaveData(function(data) {
-//                console.log(data.joined);
-//                //console.log(ZWaveAPIData.updateTime);
-//                $scope.reset();
-//                $scope.from = "Update";
-//                $scope.ZWaveAPIData = ZWaveAPIData;
-//                setData(ZWaveAPIData);
-//            });
-        });
-    };
-    $scope.loadData();
-
-    function setData(ZWaveAPIData) {
-        var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
-        // Loop throught devices
-        angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+            //var controller = ZWaveAPIData.controller.data;
+            var vendorId = parseInt(ZWaveAPIData.controller.data.manufacturerId.value,10);
+            //0x0115 = 277, 0x0147 = 327
+            var allowedVendors = [277,327];
+            if (allowedVendors.indexOf(vendorId) === -1){
                 return;
             }
-            //var abc = jPath(ZWaveAPIData, 'updateTime');
-            //console.log(hasNode(node, 'data.isListening.value'));
-            console.log($filter('hasNode')(node, 'data.isListening.value'));
-            // Set object
-            var obj = {};
-            obj['id'] = nodeId;
-            obj['name'] = $filter('deviceName')(nodeId, node);
-            obj['time'] = ZWaveAPIData.updateTime;
-            $scope.devices.push(obj);
+            
+            var appVersion = ZWaveAPIData.controller.data.APIVersion.value.split('.');
+            var appVersionMajor = parseInt(appVersion[0], 10);
+            var appVersionMinor = parseInt(appVersion[1], 10);
+            var urlParams = '?vendorId=' + vendorId + '&appVersionMajor=' + appVersionMajor + '&appVersionMinor=' + appVersionMinor
+            // debugger;
+            dataService.getUzb(urlParams, function(uzbData) {
+                if (uzbData.data.length > 0) {
+                    $scope.uzbUpgrade = uzbData.data[0];
+                }
+            });
         });
-    }
-    ;
 
-    // Refresh data
-    $scope.refresh = function(ZWaveAPIData) {
-        console.log(ZWaveAPIData);
-        dataService.updateZwaveData(function(data) {
-
-        });
     };
-    //$scope.refresh($scope.ZWaveAPIData);
+    $scope.load();
 
-    // Cancel interval on page destroy
-    $scope.$on('$destroy', function() {
-        dataService.cancelZwaveDataInterval();
-    });
-
+    // Store data on remote server
+    $scope.store = function(btn, url) {
+        alert('Run HTTP request: ' + url);
+        $(btn).removeClass('spin-true');
+        //dataService.runCmd(url, false, $scope._t('error_handling_data'));
+        return;
+    };
 
 });
 
@@ -169,6 +153,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
     $scope.localyResetDevices = [];
     $scope.notInterviewDevices = [];
     $scope.assocRemovedDevices = [];
+    $scope.notConfigDevices = [];
     $scope.notes = [];
     $scope.notesData = '';
     $scope.updateTime = $filter('getTimestamp');
@@ -179,6 +164,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
         $scope.notInterviewDevices = angular.copy([]);
         $scope.localyResetDevices = angular.copy([]);
         $scope.assocRemovedDevices = angular.copy([]);
+        $scope.notConfigDevices = angular.copy([]);
 
     };
 
@@ -204,6 +190,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
             notInterviewDevices(ZWaveAPIData);
             countDevices(ZWaveAPIData);
             assocRemovedDevices(ZWaveAPIData);
+            notConfigDevices(ZWaveAPIData);
             batteryDevices(ZWaveAPIData);
             $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
             dataService.joinedZwaveData(function(data) {
@@ -211,6 +198,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
                 notInterviewDevices(data.joined);
                 countDevices(data.joined);
                 assocRemovedDevices(data.joined);
+                //notConfigDevices(ZWaveAPIData);
                 batteryDevices(data.joined);
                 $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
 
@@ -392,6 +380,40 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
             cnt++;
         });
         return cnt;
+    }
+    ;
+
+    /**
+     * notInterviewDevices
+     */
+    function notConfigDevices(ZWaveAPIData) {
+        var controllerId = ZWaveAPIData.controller.data.nodeId.value;
+        var cnt = 0;
+        var cnt = 0;
+        // Loop throught devices
+        dataService.getCfgXml(function(cfgXml) {
+            angular.forEach(cfgXml.config.devices.deviceconfiguration, function(cfg, cfgId) {
+                var node = ZWaveAPIData.devices[cfg['_id']];
+                var array = JSON.parse(cfg['_parameter']);
+                var cfgNum = 0;
+                var cfgVal;
+                var devVal;
+                if (array.length > 2) {
+                    cfgNum = array[0];
+                    cfgVal = array[1];
+                    devVal = node.instances[0].commandClasses[0x70].data[cfgNum].val.value;
+                    if (cfgVal != devVal) {
+                        var obj = {};
+                        obj['name'] = $filter('deviceName')(cfg['_id'], node);
+                        obj['id'] = cfg['_id'];
+                        $scope.notConfigDevices.push(obj);
+                    }
+
+                }
+                //console.log(cfg)
+                //console.log(ZWaveAPIData.devices[cfg['_id']].instances[0].commandClasses[0x70].data)
+            });
+        });
     }
     ;
     /**
@@ -2486,11 +2508,11 @@ appController.controller('AssocController', function($scope, $filter, $http, dat
     // Remove an assocation
     $scope.remove = function() {
         var params = $scope.removeData.groupId + ',' + $scope.assocToNode;
-       
+
         if ($scope.assocToInstance) {
             params += ',' + (parseInt($scope.assocToInstance) + 1);
         }
-        
+
         var nodeId = $scope.deviceId;
         var node = $scope.ZWaveAPIData.devices[nodeId];
         if (node == undefined)
@@ -2573,13 +2595,13 @@ appController.controller('AssocController', function($scope, $filter, $http, dat
         $scope.assocToInstance = null;
         // Prepare devices and nodes
         angular.forEach($scope.ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255 || node.data.isVirtual.value){
+            if (nodeId == 255 || node.data.isVirtual.value) {
                 return;
             }
             $scope.allDevices.push({
-                                'key': nodeId,
-                                'val': $filter('deviceName')(nodeId, node) + ' (#' + nodeId + ')'
-                            });   
+                'key': nodeId,
+                'val': $filter('deviceName')(nodeId, node) + ' (#' + nodeId + ')'
+            });
             for (var instanceId in $scope.ZWaveAPIData.devices[nodeId].instances) {
                 var fromInstanceId = $scope.addData.instanceId;
                 var groupId = $scope.addData.groupId;
@@ -3957,22 +3979,22 @@ appController.controller('QueueController', function($scope, dataService) {
 // Command class modal window controller
 appController.controller('InterviewCommandController', function($scope, $filter) {
     // Show modal dialog
-    $scope.showModal = function(target, interviewCommands,ccId,type) {
+    $scope.showModal = function(target, interviewCommands, ccId, type) {
         var interviewData = {};
         var updateTime;
         $(target).modal();
-        if(type){
+        if (type) {
             angular.forEach(interviewCommands, function(v, k) {
-            if(v.ccId == ccId){
-                interviewData = v[type]; 
-                updateTime = v.updateTime;
-                return;
-            }
-        });
-        }else{
+                if (v.ccId == ccId) {
+                    interviewData = v[type];
+                    updateTime = v.updateTime;
+                    return;
+                }
+            });
+        } else {
             interviewData = interviewCommands;
         }
-        
+
         // Formated output
         var getCmdData = function(data, name, space) {
             if (name == undefined) {
@@ -3991,9 +4013,9 @@ appController.controller('InterviewCommandController', function($scope, $filter)
         // Get data
         var html = getCmdData(interviewData, '/', '');
         /*if(updateTime){
-            html += '<p class="help-block"><em>' + $filter('dateFromUnix')(updateTime )+ '<em></p>'; 
-        }*/
-        
+         html += '<p class="help-block"><em>' + $filter('dateFromUnix')(updateTime )+ '<em></p>'; 
+         }*/
+
 
         // Fill modal with data
         $(target).on('shown.bs.modal', function() {

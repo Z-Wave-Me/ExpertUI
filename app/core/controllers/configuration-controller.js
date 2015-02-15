@@ -828,6 +828,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                         defaultValue: conf_default_value,
                         showDefaultValue: showDefaultValue,
                         configCconfigValue: config_config_value,
+                        configZwaveValue:  config_zwave_value,
                         confNum: conf_num,
                         confSize: conf_size
                     };
@@ -853,6 +854,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                             defaultValue: null,
                             showDefaultValue: showDefaultValue,
                             configCconfigValue: config_config_value,
+                            configZwaveValue:  config_zwave_value,
                             confNum: conf_num,
                             confSize: conf_size
                         };
@@ -944,6 +946,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                             defaultValue: conf_default_value,
                             showDefaultValue: showDefaultValue,
                             configCconfigValue: config_config_value,
+                            configZwaveValue:  config_zwave_value,
                             confNum: conf_num,
                             confSize: conf_size
                         };
@@ -963,6 +966,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                             defaultValue: conf_default_value,
                             showDefaultValue: showDefaultValue,
                             configCconfigValue: config_config_value,
+                            configZwaveValue:  config_zwave_value,
                             confNum: conf_num,
                             confSize: conf_size
                         };
@@ -1040,6 +1044,7 @@ appController.controller('ConfigurationController', function($scope, $routeParam
                         defaultValue: conf_default_value,
                         showDefaultValue: showDefaultValue,
                         configCconfigValue: config_config_value,
+                        configZwaveValue:  config_zwave_value,
                         confNum: conf_num,
                         confSize: conf_size
                     };

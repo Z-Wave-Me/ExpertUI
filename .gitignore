@@ -4,6 +4,6 @@
 /upload/*
 upload.php
 /test/*
-/app/core/config.js
+#/app/core/config.js
 /node_modules/*
 npm-debug.log

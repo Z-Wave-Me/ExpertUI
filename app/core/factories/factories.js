@@ -39,6 +39,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         getZddXml: getZddXml,
         getCfgXml: getCfgXml,
         putCfgXml: putCfgXml,
+        getUzb: getUzb,
         getTiming: getTiming,
         getQueueData: getQueueData,
         updateQueueData: updateQueueData,
@@ -372,6 +373,27 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
 
         });
     }
+    
+    /**
+     *Get Uzb
+     */
+    function getUzb(params,callback) {
+        var request = $http({
+             method: "get",
+            url: cfg.uzb_url + params,
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            }
+        }); 
+        request.success(function(data) {
+            return callback(data);
+        }).error(function(error) {
+             return callback(null); 
+        });
+    }
+    
+    
 
     /**
      * Get timing (statistics) data

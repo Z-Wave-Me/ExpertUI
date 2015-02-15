@@ -68,6 +68,47 @@ angApp.filter('getFirstObjectKey', function() {
         
     };
 });
+
+/**
+ * Get only unique values
+ */
+angApp.filter('unique', function() {
+    return function(items, filterOn) {
+
+        if (filterOn === false) {
+            return items;
+        }
+
+        if ((filterOn || angular.isUndefined(filterOn)) && angular.isArray(items)) {
+            var hashCheck = {}, newItems = [];
+
+            var extractValueToCompare = function(item) {
+                if (angular.isObject(item) && angular.isString(filterOn)) {
+                    return item[filterOn];
+                } else {
+                    return item;
+                }
+            };
+
+            angular.forEach(items, function(item) {
+                var valueToCheck, isDuplicate = false;
+
+                for (var i = 0; i < newItems.length; i++) {
+                    if (angular.equals(extractValueToCompare(newItems[i]), extractValueToCompare(item))) {
+                        isDuplicate = true;
+                        break;
+                    }
+                }
+                if (!isDuplicate) {
+                    newItems.push(item);
+                }
+
+            });
+            items = newItems;
+        }
+        return items;
+    };
+});
 /**
  * Convert unix timastamp to date
  */
@@ -155,7 +196,7 @@ angApp.filter('toTrusted', ['$sce', function($sce){
  */
 angApp.filter('deviceName', function() {
     return function(deviceId,device) {
-        var name = 'Device ' + '_' + deviceId;
+        var name = (deviceId == 1 ? 'RaZberry' : 'Device ' + '_' + deviceId);
         if (device === undefined) {
             return name;
         }

@@ -40,7 +40,7 @@
             <ul class="list-group">
                 <li class="list-group-item">
                     <p ng-repeat="v in lowBatteryDevices">
-                        <a class="text-danger" href="#device/battery">{{_t('txt_device')}} {{v.name}} (#{{v.id}}) {{_t('txt_low_battery')}} ({{v.battery_charge}}%)</a>
+                        <a class="text-danger" href="#device/battery">(#{{v.id}}) {{v.name}} {{_t('txt_low_battery')}} ({{v.battery_charge}}%)</a>
                     </p>
                 </li>
                 <li class="list-group-item">
@@ -57,6 +57,11 @@
                 <li class="list-group-item">
                     <p ng-repeat="v in failedDevices">
                         <a class="text-danger" href="#help/{{v.id}}">(#{{v.id}}) {{v.name}} {{_t('txt_failed')}}</a>
+                    </p>
+                </li>
+                <li class="list-group-item">
+                    <p ng-repeat="v in notConfigDevices | unique:id">
+                        <a class="text-danger" href="#config/configuration/{{v.id}}">(#{{v.id}}) {{v.name}} {{_t('device_changed_configuration')}}</a> 
                     </p>
                 </li>
             </ul>

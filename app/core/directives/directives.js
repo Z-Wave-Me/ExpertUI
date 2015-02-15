@@ -405,7 +405,7 @@ angApp.directive('expertCommandInput', function($filter) {
     return {
         restrict: "E",
         replace: true,
-        template: '<div class="form-group" id="form_group_" ng-bind-html="input | toTrusted"></div>',
+        template: '<div class="form-group" ng-bind-html="input | toTrusted"></div>',
         scope: {
             collection: '=',
             devices: '=',
@@ -530,6 +530,82 @@ angApp.directive('configDefaultValue', function() {
                 var setVal = (defaultValue ? defaultValue : min);
                 if (setVal == showDefaultValue) {
                     input = showDefaultValue;
+                    return;
+                }
+            }
+
+        });
+        
+        return input;
+    }
+});
+
+angApp.directive('configValueTitle', function() {
+    return {
+        restrict: "A",
+        //replace: true,
+        template: '<span title="{{showValue}}">{{input}}</span>',
+        scope: {
+            collection: '=',
+            showValue: '='
+        },
+        link: function(scope, element, attrs) {
+            scope.input = scope.showValue;
+            var input = '';
+            if (!scope.collection) {
+                return;
+            }
+            var type = scope.collection.type;
+            
+            if (type) {
+                if ('range' in type) {
+                    //input = getText(label, scope.values, type.range.min, type.range.max, name);
+                } else if ('node' in type) {
+                    //input = getNode(label, scope.getNodeDevices(), 'null', name);
+                } else if ('enumof' in type) {
+                    input = getEnum(type, scope.showValue);
+                   
+                } else if ('constant' in type) {
+                    //input = getConstant(label, type, scope.defaultValue, name);
+                } else if ('string' in type) {
+                    //input = getString(label, scope.values, name);
+                } else {
+                    input = scope.showValue;
+                }
+                scope.input = input;
+                
+                return;
+            }
+
+
+        }
+
+    };
+
+    // Get enumerators
+    function getEnum(enums, showValue) {
+        //console.log(enums)
+        var input = showValue;
+        if (!enums) {
+            return;
+        }
+        angular.forEach(enums.enumof, function(v, k) {
+          
+            var title = v.label ? v.label : showValue;
+            var type = v.type;
+             // debugger; 
+            if ('fix' in type) {
+                if (type.fix.value == showValue) {
+                    input = title;
+                    return;
+                }
+ 
+            } else if ('range' in type) {
+                var min = type.range.min;
+                var max = type.range.max;
+                var setVal = (showValue ? showValue : min);
+                if (setVal == showValue) {
+                    input = showValue;
                     return;
                 }
             }
