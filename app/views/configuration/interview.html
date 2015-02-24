@@ -109,7 +109,7 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="v in interviewCommands" id="{{ v.ccId}}">
-                                    <td data-title="{{_t('th_instance')}}" ng-class="($index == 0 ? 'no-class' : 'mobile - hide')"><a href="" ng-controller="InterviewCommandController" ng-click="showModal('#modal_command', interviewCommands, v.ccId, 'cmdDataIn')">{{v.iId}}</a> &nbsp;</td> 
+                                    <td data-title="{{_t('th_instance')}}" ng-class="($index == 0 ? 'no-class' : 'mobile-hide')"><a href="" ng-controller="InterviewCommandController" ng-click="showModal('#modal_command', interviewCommands, v.ccId, 'cmdDataIn')">{{v.iId}}</a> &nbsp;</td> 
                                     <td data-title="{{_t('th_command_class')}}"><a href="" ng-controller="InterviewCommandController" ng-click="showModal('#modal_command', interviewCommands, v.ccId, 'cmdData')">{{v.ccName}}</a> &nbsp;</td>
                                     <td data-title="{{_t('th_result')}}">
                                         <span ng-if="v.interviewDone"><i class="fa fa-check text-success"></i></span>

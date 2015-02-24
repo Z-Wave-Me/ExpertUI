@@ -98,7 +98,7 @@
                                 <td data-title="{{_t('th_result')}}">
                                     <span ng-if="v.interviewDone"><i class="fa fa-check text-success"></i></span>
                                     <button
-                                        ng-controller="ConfigStoreController"
+                                        ng-controller="ConfigInterviewController"  
                                         ng-if="!v.interviewDone"
                                         data-store-url="devices[{{deviceInfo.id}}].instances[{{v.iId}}].commandClasses[{{v.ccId}}].Interview()"
                                          data-ng-click="store('#btn_force_interview_' + v.ccId)" 
