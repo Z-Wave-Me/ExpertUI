@@ -51,6 +51,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         getReorgLog: getReorgLog,
         putReorgLog: putReorgLog,
         purgeCache: purgeCache,
+        getLicense: getLicense,
         getLanguageFile: getLanguageFile
     });
     /**
@@ -529,6 +530,28 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
             handleSuccess(data);
         }).error(function(error) {
             handleError();
+
+        });
+    }
+    
+    /**
+     * Get license key
+     */
+    function getLicense(data,callback,error) {
+        var request = $http({
+            method: "POST",
+            url: cfg.license_url,
+            data: $.param(data),
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+        });
+        request.success(function(data) {
+            return callback(data);
+        }).error(function() {
+            if (error) {
+                $window.alert(error + '\n' + cfg.license_url);
+            }
 
         });
     }

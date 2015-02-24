@@ -326,7 +326,6 @@ appService.service('deviceService', function($filter) {
         if (!0x70 in node.instances[0].commandClasses) {
             return null;
         }
-        console.log(node.instances[0].commandClasses[0x70].data)
         if (!zddXml) {
             return null;
         }

@@ -37,7 +37,7 @@
             <tbody>
                 <tr ng-repeat="v in devices| orderBy:predicate:reverse" id="{{ v.rowId}}" ng-show="v.assocGroup">
                     <td data-title="#">{{ v.id}}</td>
-                    <td data-title="{{ _t('device_name')}}"><a href="#config/configuration/{{v.id}}">{{ v.name}}</a></td>
+                    <td data-title="{{ _t('device_name')}}"><a href="#configuration/interview/{{v.id}}">{{ v.name}}</a></td>
                     <td data-title="{{ _t('th_assoc_group_name')}}">
 
                         <div ng-repeat="g in v.assocGroup">
@@ -47,7 +47,7 @@
                         </div>
                     </td>
                     <td>
-                        <a class="btn btn-primary" href="#config/configuration/{{v.id}}">{{ _t('btn_change')}}</a>&nbsp;
+                        <a class="btn btn-primary" href="#configuration/interview/{{v.id}}">{{ _t('btn_change')}}</a>&nbsp;
                     </td>
                 </tr>
             </tbody>

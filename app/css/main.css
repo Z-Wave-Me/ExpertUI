@@ -150,7 +150,7 @@ background-color: #e4f5fc;
 
 /* Global
 -------------------------------------------------- */
-.allert-hidden {
+.is-hidden,.alert-hidden,.alert- {
    display: none !important;
 }
 

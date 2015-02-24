@@ -51,7 +51,7 @@ module.exports = function(grunt) {
                     'app/core/factories/factories.js',
                     'app/core/services/services.js',
                     'app/core/controllers/controllers.js',
-                    'app/core/controllers/configuration-controller.js',
+                    //'app/core/controllers/configuration-controller.js',
                     'app/core/controllers/configuration.js',
                     'app/core/jquery/jquery-app.js',
                     'app/vendor/slider/angular-slider.js',

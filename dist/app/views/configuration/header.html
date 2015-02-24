@@ -2,7 +2,7 @@
     <label>{{_t('h1_configuration_for')}}</label> 
     <select name="devices" class="form-control" ng-model="deviceId" ng-change="changeDevice(deviceId)">
         <option value="" ng-selected="v.id != deviceId">--- {{_t('h1_configuration_no_device')}} ---</option>
-        <option ng-repeat="v in devices| orderBy:predicate:reverse" value="{{v.id}}" ng-selected="v.id == deviceId">{{v.name}}</option>
+        <option ng-repeat="v in devices| orderBy:predicate:reverse" value="{{v.id}}" ng-selected="v.id == deviceId">(#{{v.id}}) {{v.name}}</option>
     </select>
 </div>
 <ul class="nav nav-tabs" role="tablist" ng-show="deviceId > 0">

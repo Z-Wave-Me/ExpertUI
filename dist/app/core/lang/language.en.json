@@ -16,6 +16,10 @@
     "value_changed_to": "Value was changed to",
     "value_not_stored_indevice": "but not stored in device yet.",
      "device_changed_configuration": "Device changed configuration but some values are not written. Wait for device to wake up.",
+     "error_no_licence_key":"No licence key found",
+     "error_server_500":"Server error",
+     "success_licence_key":"Licence key successfully found",
+     
     "--- ":"---",
     "apply_config_into_device": "Save this parameter",
     "nm_frequency_title":"Operating frequency Change",

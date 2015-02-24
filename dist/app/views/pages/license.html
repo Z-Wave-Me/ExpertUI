@@ -1,0 +1,23 @@
+<!-- License view -->
+<div ng-controller="LicenseController">
+    <div class="page-header"><h1>License</h1></div>
+    <p>
+        Curabitur eu pharetra felis. In hac habitasse platea dictumst. Duis id erat non eros laoreet vestibulum. Duis aliquam cursus enim eu congue. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In id fringilla dui.
+    </p>
+    <div class="alert alert-{{alert.type}}">
+        {{alert.message}}
+    </div>
+        
+    <div class="form-inline">
+       <input
+           class="form-control spin-true" 
+           type="text" 
+           name="scratch_id"
+           id="scratch_id" 
+           value="" 
+           placeholder="Please insert your license key" 
+           ng-model="formData.scratch_id" />
+       <button class="btn btn-primary" ng-click="getLicense(formData)">Check <i class="fa fa-spinner fa-spin"></i></button>
+           
+     </div> 
+  </div>

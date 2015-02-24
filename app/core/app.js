@@ -26,6 +26,10 @@ angApp.config(['$routeProvider',
                 when('/test', {
                     templateUrl: 'app/views/test.html'
                 }).
+                 // License
+                when('/license', {
+                    templateUrl: 'app/views/pages/license.html'
+                }).
                         // Help
                 when('/help/:nodeId?', {
                     templateUrl: 'app/views/help/help.html'
@@ -69,8 +73,8 @@ angApp.config(['$routeProvider',
                     templateUrl: 'app/views/device/security.html'
                 }).
                 // Config
-                when('/config/configuration/:nodeId?', {
-                    templateUrl: 'app/views/config/config.html'
+                 when('/config/configuration/:nodeId?', {
+                     templateUrl: 'app/views/configuration/redirect.html'
                 }).
                  // New Configuration
                 when('/configuration/interview/:nodeId?', {

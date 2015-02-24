@@ -77,7 +77,7 @@ appController.controller('BaseController', function($scope, $cookies, $filter, $
         }
     };
     $scope.mobileCheck(navigator.userAgent || navigator.vendor || window.opera);
-
+    
     $scope.scrollTo = function(id) {
         $location.hash(id);
         $anchorScroll();
@@ -104,13 +104,13 @@ appController.controller('TestController', function($scope, $filter, $timeout, $
     $scope.load = function() {
         dataService.getZwaveData(function(ZWaveAPIData) {
             //var controller = ZWaveAPIData.controller.data;
-            var vendorId = parseInt(ZWaveAPIData.controller.data.manufacturerId.value,10);
+            var vendorId = parseInt(ZWaveAPIData.controller.data.manufacturerId.value, 10);
             //0x0115 = 277, 0x0147 = 327
-            var allowedVendors = [277,327];
-            if (allowedVendors.indexOf(vendorId) === -1){
+            var allowedVendors = [277, 327];
+            if (allowedVendors.indexOf(vendorId) === -1) {
                 return;
             }
-            
+
             var appVersion = ZWaveAPIData.controller.data.APIVersion.value.split('.');
             var appVersionMajor = parseInt(appVersion[0], 10);
             var appVersionMinor = parseInt(appVersion[1], 10);
@@ -394,6 +394,9 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
         dataService.getCfgXml(function(cfgXml) {
             angular.forEach(cfgXml.config.devices.deviceconfiguration, function(cfg, cfgId) {
                 var node = ZWaveAPIData.devices[cfg['_id']];
+                if (!node) {
+                    return;
+                }
                 var array = JSON.parse(cfg['_parameter']);
                 var cfgNum = 0;
                 var cfgVal;
@@ -401,17 +404,18 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
                 if (array.length > 2) {
                     cfgNum = array[0];
                     cfgVal = array[1];
-                    devVal = node.instances[0].commandClasses[0x70].data[cfgNum].val.value;
-                    if (cfgVal != devVal) {
-                        var obj = {};
-                        obj['name'] = $filter('deviceName')(cfg['_id'], node);
-                        obj['id'] = cfg['_id'];
-                        $scope.notConfigDevices.push(obj);
+                    if (node.instances[0].commandClasses[0x70].val) {
+                        devVal = node.instances[0].commandClasses[0x70].data[cfgNum].val.value;
+                        if (cfgVal != devVal) {
+                            var obj = {};
+                            obj['name'] = $filter('deviceName')(cfg['_id'], node);
+                            obj['id'] = cfg['_id'];
+                            $scope.notConfigDevices.push(obj);
+                        }
                     }
 
+
                 }
-                //console.log(cfg)
-                //console.log(ZWaveAPIData.devices[cfg['_id']].instances[0].commandClasses[0x70].data)
             });
         });
     }
@@ -3172,7 +3176,7 @@ appController.controller('ControllController', function($scope, $filter, $upload
                 //Run CMD
                 var cmd = 'devices[' + deviceIncId + '].data.givenName.value=\'' + givenName + '\'';
                 dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
-                $scope.lastIncludedDevice = $scope._t('nm_last_included_device') + '  (' + updateTime + ')  <a href="#config/configuration/' + deviceIncId + '"><strong>' + givenName + '</strong></a>';
+                $scope.lastIncludedDevice = $scope._t('nm_last_included_device') + '  (' + updateTime + ')  <a href="#configuration/interview/' + deviceIncId + '"><strong>' + givenName + '</strong></a>';
             }
 
 
@@ -4021,6 +4025,48 @@ appController.controller('InterviewCommandController', function($scope, $filter)
         $(target).on('shown.bs.modal', function() {
             $(target + ' .modal-body').html(html);
         });
+    };
+});
+// LicenseController
+appController.controller('LicenseController', function($scope, $filter, dataService) {
+    $scope.alert = {
+        "type": 'hidden',
+        "message": null
+    };
+    $scope.formData = {
+        "scratch_id": null
+    };
+    $scope.license = {
+        "scratch_id": null,
+        "capability": null,
+        "uid": null,
+        "license_id": null,
+        "base_license": null,
+        "reseller_id": null,
+        "revoke": null,
+        "selldate": null,
+        "usedate": null
+    };
+    /**
+     *
+     * Get license key
+     */
+    $scope.getLicense = function(formData) {
+        if (!formData.scratch_id) {
+            return;
+        }
+        $('.fa-spin').css('display', 'inline-block');
+        dataService.getLicense(formData, function(data) {
+            console.log(data)
+            $scope.alert = {
+                "type": data.type,
+                "message": $scope._t(data.message)
+            };
+            if (angular.isDefined(data.data[0])) {
+                $scope.license = data.data[0];
+            }
+        }, $scope._t('error_handling_data'));
+        $('button .fa-spin,a .fa-spin').fadeOut(1000);
     };
 });
 

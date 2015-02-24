@@ -50,7 +50,7 @@
                 </li>
                 <li class="list-group-item" ng-show="assocRemovedDevices.length > 1">
                     <p ng-repeat="v in assocRemovedDevices">
-                        <a class="text-danger" href="#config/configuration/{{v.id}}">(#{{v.id}}) {{v.name}} {{_t('txt_assoc_removed')}}:</a><br />
+                        <a class="text-danger" href="#configuration/interview/{{v.id}}">(#{{v.id}}) {{v.name}} {{_t('txt_assoc_removed')}}:</a><br />
                         <em ng-repeat="a in v.assoc">{{a.name}}, </em> 
                     </p>
                 </li>
@@ -61,7 +61,7 @@
                 </li>
                 <li class="list-group-item">
                     <p ng-repeat="v in notConfigDevices | unique:id">
-                        <a class="text-danger" href="#config/configuration/{{v.id}}">(#{{v.id}}) {{v.name}} {{_t('device_changed_configuration')}}</a> 
+                        <a class="text-danger" href="#configuration/interview/{{v.id}}">(#{{v.id}}) {{v.name}} {{_t('device_changed_configuration')}}</a> 
                     </p>
                 </li>
             </ul>
