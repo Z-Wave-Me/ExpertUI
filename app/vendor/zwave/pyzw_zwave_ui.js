@@ -5130,7 +5130,16 @@ function renderMethodSpec(ccId, data) {
 		// Proprietary
 		case 0x88:
 			return {
-				"Get": []
+				"Get": [],
+				"Set": [
+					{
+						"label": "Data in format [1,2,3,..,0xa,..]",
+						"type": {
+							"string": {
+							}
+						}
+					}
+				]
 			};
 		
 		// MeterPulse
