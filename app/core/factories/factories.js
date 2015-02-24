@@ -52,6 +52,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         putReorgLog: putReorgLog,
         purgeCache: purgeCache,
         getLicense: getLicense,
+        zmeCapabilities: zmeCapabilities,
         getLanguageFile: getLanguageFile
     });
     /**
@@ -554,6 +555,29 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
             }
 
         });
+    }
+    
+    /**
+     * Set ZME Capabilities
+     */
+    function zmeCapabilities(data,error) {
+        console.log(data);
+        return;
+        // TODO: send command
+        var url = cfg.server_url + cfg.store_url;
+        var request = $http({
+            method: 'POST',
+            url: url
+        });
+        request.success(function(data) {
+            handleSuccess(data);
+        }).error(function() {
+            if (error) {
+                $window.alert(error + '\n' + url);
+            }
+
+        });
+
     }
 
 

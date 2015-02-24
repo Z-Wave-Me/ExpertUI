@@ -4028,7 +4028,7 @@ appController.controller('InterviewCommandController', function($scope, $filter)
     };
 });
 // LicenseController
-appController.controller('LicenseController', function($scope, $filter, dataService) {
+appController.controller('LicenseController', function($scope, dataService) {
     $scope.alert = {
         "type": 'hidden',
         "message": null
@@ -4057,13 +4057,14 @@ appController.controller('LicenseController', function($scope, $filter, dataServ
         }
         $('.fa-spin').css('display', 'inline-block');
         dataService.getLicense(formData, function(data) {
-            console.log(data)
             $scope.alert = {
                 "type": data.type,
                 "message": $scope._t(data.message)
             };
             if (angular.isDefined(data.data[0])) {
                 $scope.license = data.data[0];
+                //TODO: send command to ZMECapabilities (0xf5)
+                dataService.zmeCapabilities(data.data[0], $scope._t('error_handling_data'));
             }
         }, $scope._t('error_handling_data'));
         $('button .fa-spin,a .fa-spin').fadeOut(1000);

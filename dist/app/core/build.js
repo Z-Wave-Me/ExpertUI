@@ -6718,7 +6718,16 @@ function renderMethodSpec(ccId, data) {
 		// Proprietary
 		case 0x88:
 			return {
-				"Get": []
+				"Get": [],
+				"Set": [
+					{
+						"label": "Data in format [1,2,3,..,0xa,..]",
+						"type": {
+							"string": {
+							}
+						}
+					}
+				]
 			};
 		
 		// MeterPulse
@@ -9601,6 +9610,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         putReorgLog: putReorgLog,
         purgeCache: purgeCache,
         getLicense: getLicense,
+        zmeCapabilities: zmeCapabilities,
         getLanguageFile: getLanguageFile
     });
     /**
@@ -10103,6 +10113,29 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
             }
 
         });
+    }
+    
+    /**
+     * Set ZME Capabilities
+     */
+    function zmeCapabilities(data,error) {
+        console.log(data);
+        return;
+        // TODO: send command
+        var url = cfg.server_url + cfg.store_url;
+        var request = $http({
+            method: 'POST',
+            url: url
+        });
+        request.success(function(data) {
+            handleSuccess(data);
+        }).error(function() {
+            if (error) {
+                $window.alert(error + '\n' + url);
+            }
+
+        });
+
     }
 
 
@@ -15205,7 +15238,7 @@ appController.controller('InterviewCommandController', function($scope, $filter)
     };
 });
 // LicenseController
-appController.controller('LicenseController', function($scope, $filter, dataService) {
+appController.controller('LicenseController', function($scope, dataService) {
     $scope.alert = {
         "type": 'hidden',
         "message": null
@@ -15234,13 +15267,14 @@ appController.controller('LicenseController', function($scope, $filter, dataServ
         }
         $('.fa-spin').css('display', 'inline-block');
         dataService.getLicense(formData, function(data) {
-            console.log(data)
             $scope.alert = {
                 "type": data.type,
                 "message": $scope._t(data.message)
             };
             if (angular.isDefined(data.data[0])) {
                 $scope.license = data.data[0];
+                //TODO: send command to ZMECapabilities (0xf5)
+                dataService.zmeCapabilities(data.data[0], $scope._t('error_handling_data'));
             }
         }, $scope._t('error_handling_data'));
         $('button .fa-spin,a .fa-spin').fadeOut(1000);
