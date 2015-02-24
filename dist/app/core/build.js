@@ -15983,7 +15983,7 @@ appController.controller('ConfigAssociationController', function($scope, $filter
                 $scope.removeNodes[nodeId] = '(#' + nodeId + ') ' + $filter('deviceName')(nodeId, $scope.ZWaveAPIData.devices[nodeId]);
                 $scope.removeNodesSort[nodeId] = {
                     'key': nodeId,
-                    'val': $filter('deviceName')(nodeId, $scope.ZWaveAPIData.devices[nodeId]) + ' (#' + nodeId + ')'
+                    'val': '(#' + nodeId + ') ' + $filter('deviceName')(nodeId, $scope.ZWaveAPIData.devices[nodeId])
                 };
 
             }
