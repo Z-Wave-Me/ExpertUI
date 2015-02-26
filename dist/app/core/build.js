@@ -8254,6 +8254,10 @@ angApp.config(['$routeProvider',
                 when('/license', {
                     templateUrl: 'app/views/pages/license.html'
                 }).
+                 // UZB
+                when('/uzb', {
+                    templateUrl: 'app/views/pages/uzb.html'
+                }).
                         // Help
                 when('/help/:nodeId?', {
                     templateUrl: 'app/views/help/help.html'
@@ -9597,7 +9601,6 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         getZddXml: getZddXml,
         getCfgXml: getCfgXml,
         putCfgXml: putCfgXml,
-        getUzb: getUzb,
         getTiming: getTiming,
         getQueueData: getQueueData,
         updateQueueData: updateQueueData,
@@ -9609,6 +9612,8 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         getReorgLog: getReorgLog,
         putReorgLog: putReorgLog,
         purgeCache: purgeCache,
+        getUzb: getUzb,
+        updateUzb: updateUzb,
         getLicense: getLicense,
         zmeCapabilities: zmeCapabilities,
         getLanguageFile: getLanguageFile
@@ -9900,7 +9905,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
     function getCfgXml(callback) {
         var request = $http({
             method: "get",
-            url: cfg.server_url + '/config/Configuration.xml' 
+            url: cfg.server_url + '/config/Configuration.xml'
         });
         request.success(function(data) {
             var x2js = new X2JS();
@@ -9911,7 +9916,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
 
         });
     }
-    
+
     /**
      * Put config XML file
      */
@@ -9919,7 +9924,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         var request = $http({
             method: "PUT",
             //dataType: "text", 
-            url: cfg.server_url + '/config/Configuration.xml', 
+            url: cfg.server_url + '/config/Configuration.xml',
             data: data,
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
@@ -9928,32 +9933,12 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         request.success(function(data) {
             handleSuccess(data);
         }).error(function(error) {
-             $('button .fa-spin,a .fa-spin').fadeOut(1000);
+            $('button .fa-spin,a .fa-spin').fadeOut(1000);
             handleError();
 
         });
     }
-    
-    /**
-     *Get Uzb
-     */
-    function getUzb(params,callback) {
-        var request = $http({
-             method: "get",
-            url: cfg.uzb_url + params,
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            }
-        }); 
-        request.success(function(data) {
-            return callback(data);
-        }).error(function(error) {
-             return callback(null); 
-        });
-    }
-    
-    
+
 
     /**
      * Get timing (statistics) data
@@ -10092,11 +10077,70 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
 
         });
     }
-    
+    /**
+     * Update Uzb
+     */
+    function getUzb(params) {
+       return $http({
+            method: 'get',
+            url: cfg.uzb_url + params
+        }).then(function(response) {
+            if (typeof response.data.data === 'object') {
+                return response.data.data;
+            } else {
+                // invalid response
+                return $q.reject(response);
+            }
+        }, function(response) {
+            // something went wrong
+            return $q.reject(response);
+        });
+    }
+
+    /**
+     * Update Uzb
+     */
+    function updateUzb(url) {
+        //alert('Run HTTP request: ' + url);
+        return $http({
+            method: 'POST',
+            url: url
+        }).then(function(response) {
+           return response;
+        }, function(response) {
+            // something went wrong
+           return $q.reject(response);
+        });
+       }
+       
+        /**
+     * Get license key
+     */
+    function getLicense(data) {
+        return $http({
+            method: 'post',
+            url: cfg.license_url,
+            data: $.param(data),
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+        }).then(function(response) {
+           if (typeof response.data[0] === 'object') {
+                return response.data[0];
+            } else {
+                // invalid response
+                return $q.reject(response);
+            }
+        }, function(response) {
+            // something went wrong
+            return $q.reject(response);
+        });
+    }
+
     /**
      * Get license key
      */
-    function getLicense(data,callback,error) {
+    function _getLicense(data, callback, error) {
         var request = $http({
             method: "POST",
             url: cfg.license_url,
@@ -10114,11 +10158,11 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
 
         });
     }
-    
+
     /**
      * Set ZME Capabilities
      */
-    function zmeCapabilities(data,error) {
+    function zmeCapabilities(data, error) {
         console.log(data);
         return;
         // TODO: send command
@@ -11032,8 +11076,8 @@ appService.service('deviceService', function($filter) {
                 gui_descr[0].type.range.max = parseInt(wakeup_zwave_max, 10);
                 var wakeup_conf_value;
                 var wakeup_conf_node_value = 0;
-                if (cfgFile !== undefined) {
-                    wakeup_conf_value = cfgFile[0] || null;
+                if (angular.isArray(cfgFile) && cfgFile.length > 0) {
+                    wakeup_conf_value = cfgFile[0] || 0;
                     wakeup_conf_node_value = cfgFile[1] || 0;
                 } else {
                     if (wakeup_zwave_value != "" && wakeup_zwave_value != 0 && wakeup_zwave_nodeId != "") {
@@ -11287,7 +11331,7 @@ appController.controller('BaseController', function($scope, $cookies, $filter, $
         }
     };
     $scope.mobileCheck(navigator.userAgent || navigator.vendor || window.opera);
-    
+
     $scope.scrollTo = function(id) {
         $location.hash(id);
         $anchorScroll();
@@ -12138,7 +12182,7 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                         obj['name'] = devName;
                         obj['type'] = alarmSensor.name;
                         obj['purpose'] = val.typeString.value;
-                        obj['level'] = (val.value ? $scope._t('sensor_triggered') : $scope._t('sensor_idle'));
+                        obj['level'] = (val.sensorState.value ? $scope._t('sensor_triggered') : $scope._t('sensor_idle'));
                         obj['levelExt'] = null;
                         obj['invalidateTime'] = val.invalidateTime;
                         obj['updateTime'] = val.updateTime;
@@ -15240,9 +15284,11 @@ appController.controller('InterviewCommandController', function($scope, $filter)
 // LicenseController
 appController.controller('LicenseController', function($scope, dataService) {
     $scope.alert = {
-        "type": 'hidden',
-        "message": null
+        'message': false,
+        'status': 'is-hidden'
+
     };
+    $scope.loader = false;
     $scope.formData = {
         "scratch_id": null
     };
@@ -15265,7 +15311,27 @@ appController.controller('LicenseController', function($scope, dataService) {
         if (!formData.scratch_id) {
             return;
         }
-        $('.fa-spin').css('display', 'inline-block');
+        $scope.alert = {
+        'message': false,
+        'status': 'is-hidden'
+
+    };
+        $scope.loader = 'Step 1';
+        dataService.getLicense(formData).then(function(response) {
+            $scope.loader = false;
+            $scope.alert = {
+                'message': $scope._t('success_licence_key'),
+                'status': 'alert-success'
+
+            };
+        }, function(error) {
+            $scope.loader = false;
+            console.log('ERROR', error);
+            alert($scope._t('error_no_licence_key'));
+        });
+        return;
+        
+        
         dataService.getLicense(formData, function(data) {
             $scope.alert = {
                 "type": data.type,
@@ -15278,6 +15344,81 @@ appController.controller('LicenseController', function($scope, dataService) {
             }
         }, $scope._t('error_handling_data'));
         $('button .fa-spin,a .fa-spin').fadeOut(1000);
+    };
+});
+
+// UzbController
+appController.controller('UzbController', function($scope, $timeout, dataService) {
+    $scope.uzbUpgrade = [];
+    $scope.uzbFromUrl = [];
+    $scope.noData = false;
+    $scope.loader = true;
+    $scope.alert = {
+        'message': false,
+        'status': 'is-hidden'
+
+    };
+
+    /**
+     * Load data
+     *
+     */
+    $scope.load = function() {
+        dataService.getZwaveData(function(ZWaveAPIData) {
+            //var controller = ZWaveAPIData.controller.data;
+            var vendorId = parseInt(ZWaveAPIData.controller.data.manufacturerId.value, 10);
+            //0x0115 = 277, 0x0147 = 327
+            var allowedVendors = [277, 327];
+            if (allowedVendors.indexOf(vendorId) === -1) {
+                $scope.loader = false;
+                return;
+            }
+
+            var appVersion = ZWaveAPIData.controller.data.APIVersion.value.split('.');
+            var appVersionMajor = parseInt(appVersion[0], 10);
+            var appVersionMinor = parseInt(appVersion[1], 10);
+            var urlParams = '?vendorId=' + vendorId + '&appVersionMajor=' + appVersionMajor + '&appVersionMinor=' + appVersionMinor;
+
+            dataService.getUzb(urlParams).then(function(response) {
+                $scope.loader = false;
+                if (response.length > 0) {
+                    $scope.uzbUpgrade = response;
+                }else{
+                    $scope.noData = $scope._t('noavailable_firmware_update');
+                }
+            }, function(error) {
+                $scope.loader = false;
+                console.log('ERROR', error);
+                alert($scope._t('error_handling_data_remote')  + '\n' + $scope.cfg.uzb_url);
+                
+            });
+        });
+
+    };
+    $scope.load();
+    
+    // Store data on RazBerry
+    $scope.store = function(row, file) {
+        $(row + ' .fa-spin').css('display', 'inline-block');
+        var url = $scope.cfg.server_url + $scope.cfg.store_url + file;
+        dataService.updateUzb(url).then(function(response) {
+            $(row).fadeOut(1000);
+            $scope.alert = {
+                'message': 'Firmware was successfully updated. Please reload the page',
+                'status': 'alert-success'
+
+            };
+        }, function(error) {
+            $(row + ' .fa-spin').fadeOut(1000);
+            console.log('ERROR', error);
+            alert($scope._t('error_firmware_update'));
+        });
+        return;
+        $timeout(function() {
+
+        }, 3000);
+
+        return;
     };
 });
 

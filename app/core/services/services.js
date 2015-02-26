@@ -771,8 +771,8 @@ appService.service('deviceService', function($filter) {
                 gui_descr[0].type.range.max = parseInt(wakeup_zwave_max, 10);
                 var wakeup_conf_value;
                 var wakeup_conf_node_value = 0;
-                if (cfgFile !== undefined) {
-                    wakeup_conf_value = cfgFile[0] || null;
+                if (angular.isArray(cfgFile) && cfgFile.length > 0) {
+                    wakeup_conf_value = cfgFile[0] || 0;
                     wakeup_conf_node_value = cfgFile[1] || 0;
                 } else {
                     if (wakeup_zwave_value != "" && wakeup_zwave_value != 0 && wakeup_zwave_nodeId != "") {
