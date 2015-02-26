@@ -960,16 +960,19 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                     levelExt = (obj.value ? $scope._t('sensor_triggered') : $scope._t('sensor_idle'));
                     updateTime = obj.level.updateTime;
                     invalidateTime = obj.level.invalidateTime;
+
                 } else if (v.cmdId == 0x9c) {
-                    levelExt = (obj.level.value ? $scope._t('sensor_triggered') : $scope._t('sensor_idle'));
+                    levelExt = (obj.sensorState.value ? $scope._t('sensor_triggered') : $scope._t('sensor_idle'));
                     updateTime = obj.val.updateTime;
                     invalidateTime = obj.val.invalidateTime;
+
                 }
                 else {
                     level = obj.val.value;
                     levelExt = obj.scaleString.value;
                     updateTime = obj.val.updateTime;
                     invalidateTime = obj.val.invalidateTime;
+
                 }
 
                 // Update row
@@ -978,8 +981,8 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                 if (updateTime > invalidateTime) {
                     $('#' + v.rowId + ' .row-time').removeClass('is-updated-false');
                 }
+                //console.log('Updating:' + v.rowId + ' | At: ' + updateTime + ' | with: ' + level);//REM
 
-                // console.log('Updating:' + v.rowId + ' | At: ' + updateTime + ' | with: ' + level);//REM
             }
         });
     }
@@ -4029,12 +4032,16 @@ appController.controller('InterviewCommandController', function($scope, $filter)
 });
 // LicenseController
 appController.controller('LicenseController', function($scope, dataService) {
-    $scope.alert = {
+    $scope.proccessVerify = {
         'message': false,
         'status': 'is-hidden'
 
     };
-    $scope.loader = false;
+    $scope.proccessUpdate = {
+        'message': false,
+        'status': 'is-hidden'
+
+    };
     $scope.formData = {
         "scratch_id": null
     };
@@ -4050,46 +4057,50 @@ appController.controller('LicenseController', function($scope, dataService) {
         "usedate": null
     };
     /**
-     *
      * Get license key
      */
     $scope.getLicense = function(formData) {
+        // Clear messages
+        $scope.proccessVerify.message = false;
+        $scope.proccessUpdate.message = false;
         if (!formData.scratch_id) {
             return;
         }
-        $scope.alert = {
-        'message': false,
-        'status': 'is-hidden'
+        $scope.proccessVerify = {'message': $scope._t('verifying_licence_key'), 'status': 'fa fa-spinner fa-spin'};
 
-    };
-        $scope.loader = 'Step 1';
         dataService.getLicense(formData).then(function(response) {
-            $scope.loader = false;
-            $scope.alert = {
-                'message': $scope._t('success_licence_key'),
-                'status': 'alert-success'
+            $scope.proccessVerify = {'message': $scope._t('success_licence_key'), 'status': 'fa fa-check text-success'};
+            console.log('---------- SUCCESS Verification ----------', response);
+            // Update capabilities
+            updateCapabilities(response);
 
-            };
-        }, function(error) {
-            $scope.loader = false;
-            console.log('ERROR', error);
-            alert($scope._t('error_no_licence_key'));
+        }, function(error) {// Error verifying key
+            //alert($scope._t('error_no_licence_key'));
+            var message = $scope._t('error_no_licence_key');
+            if (error.status == 404) {
+                var message = $scope._t('error_404_licence_key');
+            }
+            $scope.proccessVerify = {'message': message, 'status': 'fa fa-exclamation-triangle text-danger'};
+            console.log('---------- ERROR Verification ----------', error);
+
         });
         return;
-        
-        
-        dataService.getLicense(formData, function(data) {
-            $scope.alert = {
-                "type": data.type,
-                "message": $scope._t(data.message)
-            };
-            if (angular.isDefined(data.data[0])) {
-                $scope.license = data.data[0];
-                //TODO: send command to ZMECapabilities (0xf5)
-                dataService.zmeCapabilities(data.data[0], $scope._t('error_handling_data'));
-            }
-        }, $scope._t('error_handling_data'));
-        $('button .fa-spin,a .fa-spin').fadeOut(1000);
+    };
+
+   /// --- Private functions --- ///
+    /**
+     * Update capabilities
+     */
+    function updateCapabilities(data) {
+        $scope.proccessUpdate = {'message': $scope._t('upgrading_capabilities'), 'status': 'fa fa-spinner fa-spin'};
+        dataService.zmeCapabilities(data).then(function(response) {
+            $scope.proccessUpdate = {'message': $scope._t('success_capabilities'), 'status': 'fa fa-check text-success'};
+            console.log('---------- SUCCESS capabilities ----------', response);
+        }, function(error) {
+            //alert($scope._t('error_no_capabilities'));
+            $scope.proccessUpdate = {'message': $scope._t('error_no_capabilities'), 'status': 'fa fa-exclamation-triangle text-danger'};
+            console.log('---------- ERROR capabilities ----------', error);
+        });
     };
 });
 
@@ -4097,14 +4108,7 @@ appController.controller('LicenseController', function($scope, dataService) {
 appController.controller('UzbController', function($scope, $timeout, dataService) {
     $scope.uzbUpgrade = [];
     $scope.uzbFromUrl = [];
-    $scope.noData = false;
-    $scope.loader = true;
-    $scope.alert = {
-        'message': false,
-        'status': 'is-hidden'
-
-    };
-
+    $scope.alert = {message: false,status: 'is-hidden',icon: false};
     /**
      * Load data
      *
@@ -4116,58 +4120,63 @@ appController.controller('UzbController', function($scope, $timeout, dataService
             //0x0115 = 277, 0x0147 = 327
             var allowedVendors = [277, 327];
             if (allowedVendors.indexOf(vendorId) === -1) {
-                $scope.loader = false;
+                $scope.alert = {message: $scope._t('noavailable_firmware_update'), status: 'alert-info', icon: 'fa-info-circle'};
                 return;
             }
-
             var appVersion = ZWaveAPIData.controller.data.APIVersion.value.split('.');
             var appVersionMajor = parseInt(appVersion[0], 10);
             var appVersionMinor = parseInt(appVersion[1], 10);
             var urlParams = '?vendorId=' + vendorId + '&appVersionMajor=' + appVersionMajor + '&appVersionMinor=' + appVersionMinor;
-
-            dataService.getUzb(urlParams).then(function(response) {
-                $scope.loader = false;
-                if (response.length > 0) {
-                    $scope.uzbUpgrade = response;
-                }else{
-                    $scope.noData = $scope._t('noavailable_firmware_update');
-                }
-            }, function(error) {
-                $scope.loader = false;
-                console.log('ERROR', error);
-                alert($scope._t('error_handling_data_remote')  + '\n' + $scope.cfg.uzb_url);
-                
-            });
+            //return;
+            // Load uzb
+            loadUzb(urlParams);
         });
-
     };
     $scope.load();
     
+     
     // Store data on RazBerry
     $scope.store = function(row, file) {
+        $scope.alert = {message: false};
         $(row + ' .fa-spin').css('display', 'inline-block');
         var url = $scope.cfg.server_url + $scope.cfg.store_url + file;
         dataService.updateUzb(url).then(function(response) {
             $(row).fadeOut(1000);
-            $scope.alert = {
-                'message': 'Firmware was successfully updated. Please reload the page',
-                'status': 'alert-success'
-
-            };
+            $scope.alert = {message: $scope._t('success_firmware_update'), status: 'alert-success', icon: 'fa-check'};
         }, function(error) {
             $(row + ' .fa-spin').fadeOut(1000);
+            $scope.alert = {message: $scope._t('error_firmware_update'), status: 'alert-danger', icon: 'fa-exclamation-triangle'};
             console.log('ERROR', error);
-            alert($scope._t('error_firmware_update'));
+            //alert($scope._t('error_firmware_update'));
         });
         return;
         $timeout(function() {
 
         }, 3000);
-
         return;
     };
+    
+    /// --- Private functions --- ///
+    
+     /**
+     * Load uzb data
+     */
+    function loadUzb(urlParams) {
+        $scope.alert = {message: $scope._t('loading_data_remote'), status: 'alert-warning', icon: 'fa-spinner fa-spin'};
+            dataService.getUzb(urlParams).then(function(response) {
+                if (response.length > 0) {
+                    $scope.uzbUpgrade = response;
+                    $scope.alert = {message: false};
+                } else {
+                    $scope.alert = {message: $scope._t('noavailable_firmware_update'), status: 'alert-info', icon: 'fa-info-circle'};
+                }
+            }, function(error) {
+                $scope.alert = {message: $scope._t('error_handling_data_remote'), status: 'alert-danger', icon: 'fa-exclamation-triangle'};
+                console.log('ERROR', error);
+                //alert($scope._t('error_handling_data_remote') + '\n' + $scope.cfg.uzb_url);
+            });
+    };
 });
-
 /**
  * Deprecated
  */
@@ -4193,7 +4202,6 @@ appController.controller('___CommandModalController', function($scope, $filter) 
         };
         // Get data
         var html = getCmdData(data, '/', '');
-
         // Fill modal with data
         $(target).on('shown.bs.modal', function() {
             $(target + ' .modal-body').html(html);

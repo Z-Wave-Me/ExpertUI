@@ -576,46 +576,18 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
     }
 
     /**
-     * Get license key
-     */
-    function _getLicense(data, callback, error) {
-        var request = $http({
-            method: "POST",
-            url: cfg.license_url,
-            data: $.param(data),
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            }
-        });
-        request.success(function(data) {
-            return callback(data);
-        }).error(function() {
-            if (error) {
-                $window.alert(error + '\n' + cfg.license_url);
-            }
-
-        });
-    }
-
-    /**
      * Set ZME Capabilities
      */
-    function zmeCapabilities(data, error) {
-        console.log(data);
-        return;
-        // TODO: send command
-        var url = cfg.server_url + cfg.store_url;
-        var request = $http({
+    function zmeCapabilities(data) {
+        return $http({
             method: 'POST',
-            url: url
-        });
-        request.success(function(data) {
-            handleSuccess(data);
-        }).error(function() {
-            if (error) {
-                $window.alert(error + '\n' + url);
-            }
-
+            url: cfg.server_url + cfg.store_url + 'ZMECapabilities(' + data.capability + ')',
+             data: $.param(data)
+        }).then(function(response) {
+           return response;
+        }, function(response) {
+            // something went wrong
+           return $q.reject(response);
         });
 
     }

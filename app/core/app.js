@@ -27,7 +27,7 @@ angApp.config(['$routeProvider',
                     templateUrl: 'app/views/test.html'
                 }).
                  // License
-                when('/license', {
+                when('/licence', {
                     templateUrl: 'app/views/pages/license.html'
                 }).
                  // UZB

@@ -1,33 +1,41 @@
 <!-- License view -->
 <div ng-controller="LicenseController">
-    <div class="page-header"><h1>License</h1></div>
+    <div class="page-header"><h1>{{_t('licence')}}</h1></div>
     <p>
         Curabitur eu pharetra felis. In hac habitasse platea dictumst. Duis id erat non eros laoreet vestibulum. Duis aliquam cursus enim eu congue. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In id fringilla dui.
     </p>
-    <div class="form-inline">
-        <input
-            class="form-control spin-true" 
-            type="text" 
-            name="scratch_id"
-            id="scratch_id" 
-            value="" 
-            placeholder="Please insert your license key" 
-            ng-model="formData.scratch_id" />
-        <button class="btn btn-primary" ng-click="getLicense(formData)">Check</button>
-        <p ng-show="loader"><i class="fa fa-spinner fa-spin"></i> <span ng-bind="loader"></span></p>
 
-    </div> 
-    <div ng-show_="showSteps">
-        <div>
-             <i class="fa fa-spinner fa-spin"></i>
-                 <span>Veryfiing</span>
+    <div class="panel panel-default panel-highlighted">
+        <div class="panel-heading"><i class="fa fa-key"></i> {{_t('licence_key_insert')}}</div>
+        <div class="panel-body">
+            <div class="cfg-block">
+                <div class="form-inline">
+                    <input
+                        class="form-control spin-true" 
+                        type="text" 
+                        name="scratch_id"
+                        id="scratch_id" 
+                        value="" 
+                        ng-model="formData.scratch_id" />
+                    <button class="btn btn-primary" ng-click="getLicense(formData)"> {{_t('btn_licence_verify')}}</button>
+
+                </div> 
+            </div>
+            <p ng-if="proccessVerify.message">
+                <i class="fa-lg" ng-class="proccessVerify.status"></i> <span ng-bind="proccessVerify.message"></span>
+            </p>
+            <p ng-if="proccessUpdate.message">
+                <i class="fa-lg" ng-class="proccessUpdate.status"></i> <span ng-bind="proccessUpdate.message"></span>
+            </p>
+
         </div>
-         <div>
-             <i class="fa fa-spinner fa-spin"></i>
-             <span>Updating</span>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><i class="fa fa-sign-in"></i> {{_t('licence_key_get')}}</div>
+        <div class="panel-body">
+            <p>Duis id erat non eros laoreet vestibulum. Duis aliquam cursus enim eu congue. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+            <p><a href="" class="btn btn-info btn-lg">{{_t('btn_licence_buy')}}</a></p>
         </div>
-        
-        
-        <div class="alert {{alert.status}}" ng-if="alert.message" ng-bind="alert.message"></div>
     </div>
 </div>
