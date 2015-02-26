@@ -39,7 +39,6 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         getZddXml: getZddXml,
         getCfgXml: getCfgXml,
         putCfgXml: putCfgXml,
-        getUzb: getUzb,
         getTiming: getTiming,
         getQueueData: getQueueData,
         updateQueueData: updateQueueData,
@@ -51,6 +50,8 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         getReorgLog: getReorgLog,
         putReorgLog: putReorgLog,
         purgeCache: purgeCache,
+        getUzb: getUzb,
+        updateUzb: updateUzb,
         getLicense: getLicense,
         zmeCapabilities: zmeCapabilities,
         getLanguageFile: getLanguageFile
@@ -342,7 +343,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
     function getCfgXml(callback) {
         var request = $http({
             method: "get",
-            url: cfg.server_url + '/config/Configuration.xml' 
+            url: cfg.server_url + '/config/Configuration.xml'
         });
         request.success(function(data) {
             var x2js = new X2JS();
@@ -353,7 +354,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
 
         });
     }
-    
+
     /**
      * Put config XML file
      */
@@ -361,7 +362,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         var request = $http({
             method: "PUT",
             //dataType: "text", 
-            url: cfg.server_url + '/config/Configuration.xml', 
+            url: cfg.server_url + '/config/Configuration.xml',
             data: data,
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
@@ -370,32 +371,12 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         request.success(function(data) {
             handleSuccess(data);
         }).error(function(error) {
-             $('button .fa-spin,a .fa-spin').fadeOut(1000);
+            $('button .fa-spin,a .fa-spin').fadeOut(1000);
             handleError();
 
         });
     }
-    
-    /**
-     *Get Uzb
-     */
-    function getUzb(params,callback) {
-        var request = $http({
-             method: "get",
-            url: cfg.uzb_url + params,
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            }
-        }); 
-        request.success(function(data) {
-            return callback(data);
-        }).error(function(error) {
-             return callback(null); 
-        });
-    }
-    
-    
+
 
     /**
      * Get timing (statistics) data
@@ -534,11 +515,70 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
 
         });
     }
-    
+    /**
+     * Update Uzb
+     */
+    function getUzb(params) {
+       return $http({
+            method: 'get',
+            url: cfg.uzb_url + params
+        }).then(function(response) {
+            if (typeof response.data.data === 'object') {
+                return response.data.data;
+            } else {
+                // invalid response
+                return $q.reject(response);
+            }
+        }, function(response) {
+            // something went wrong
+            return $q.reject(response);
+        });
+    }
+
+    /**
+     * Update Uzb
+     */
+    function updateUzb(url) {
+        //alert('Run HTTP request: ' + url);
+        return $http({
+            method: 'POST',
+            url: url
+        }).then(function(response) {
+           return response;
+        }, function(response) {
+            // something went wrong
+           return $q.reject(response);
+        });
+       }
+       
+        /**
+     * Get license key
+     */
+    function getLicense(data) {
+        return $http({
+            method: 'post',
+            url: cfg.license_url,
+            data: $.param(data),
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+        }).then(function(response) {
+           if (typeof response.data[0] === 'object') {
+                return response.data[0];
+            } else {
+                // invalid response
+                return $q.reject(response);
+            }
+        }, function(response) {
+            // something went wrong
+            return $q.reject(response);
+        });
+    }
+
     /**
      * Get license key
      */
-    function getLicense(data,callback,error) {
+    function _getLicense(data, callback, error) {
         var request = $http({
             method: "POST",
             url: cfg.license_url,
@@ -556,11 +596,11 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
 
         });
     }
-    
+
     /**
      * Set ZME Capabilities
      */
-    function zmeCapabilities(data,error) {
+    function zmeCapabilities(data, error) {
         console.log(data);
         return;
         // TODO: send command

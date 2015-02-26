@@ -30,6 +30,10 @@ angApp.config(['$routeProvider',
                 when('/license', {
                     templateUrl: 'app/views/pages/license.html'
                 }).
+                 // UZB
+                when('/uzb', {
+                    templateUrl: 'app/views/pages/uzb.html'
+                }).
                         // Help
                 when('/help/:nodeId?', {
                     templateUrl: 'app/views/help/help.html'

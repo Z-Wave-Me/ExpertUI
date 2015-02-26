@@ -1,0 +1,33 @@
+<!-- Uzb view -->
+<div data-ng-controller="UzbController">
+    <div class="page-header"><h1>{{_t('upgrade_bootloader_firmware')}}</h1></div>
+    <p ng-show="loader"><i class="fa fa-spinner fa-spin"></i> Loading firmware upgrades from the remote server...</p>
+    <div class="alert {{alert.status}}" ng-if="alert.message" ng-bind="alert.message"></div>
+    <div class="">
+        <p class="text-info" ng-if="noData" ng-bind="noData"></p>
+        <table class="table table-striped table-condensed table-hover" ng-if="uzbUpgrade.length > 0">
+            <tbody>
+                <tr ng-repeat="v in uzbUpgrade| orderBy:predicate:reverse" id="row_{{v.id}}">
+                    <td  style="white-space: nowrap;"><strong>{{v.released | date:'yyyy-MM-dd'}}</strong></td>
+                    <td>{{v.appVersionMajor + '.' + v.appVersionMinor}} | {{v.file}}</td>
+                    <td>{{v.comment}}</td>
+                    <td>
+                        <button 
+                            data-ng-click="store('#row_' + v.id,'ZMEBootloaderUpgrade/' + cfg.uzb_url + v.fileURL)" 
+                            class="btn btn-primary spin-true" 
+                            id="btn_boot_{{v.id}}"
+                            ng-show="v.type == 'bootloader'">{{_t('upgrade_bootloader')}} <i class="fa fa-spinner fa-spin"></i> 
+                        </button>
+                        <button 
+                            data-ng-click="store('#btn_firmware_' + v.id, 'ZMEFirmwareUpgrade/' + cfg.uzb_url + v.fileURL)"
+                            data-action="reset" 
+                            class="btn btn-info spin-true" 
+                            id="btn_firmware_{{v.id}}"
+                            ng-show="v.type=='firmware'">{{_t('upgrade_firmware')}} <i class="fa fa-spinner fa-spin"></i> 
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
