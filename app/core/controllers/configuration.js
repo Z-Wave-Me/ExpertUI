@@ -5,20 +5,20 @@
 // Redirect to new version of configuration
 appController.controller('ConfigRedirectController', function($routeParams, $location, $cookies, $filter) {
     var configUrl = 'configuration/interview';
-    var nodeId = function(){
+    var nodeId = function() {
         var id = 1;
-        if($routeParams.nodeId == undefined){
+        if ($routeParams.nodeId == undefined) {
             id = (angular.isDefined($cookies.configuration_id) ? $cookies.configuration_id : 1);
-        }else{
+        } else {
             id = $routeParams.nodeId;
         }
         return id;
     };
-    if(nodeId() == $cookies.configuration_id){
-        if(angular.isDefined($cookies.config_url)){
+    if (nodeId() == $cookies.configuration_id) {
+        if (angular.isDefined($cookies.config_url)) {
             configUrl = $cookies.config_url;
         }
-    }else{
+    } else {
         configUrl = configUrl + '/' + nodeId();
     }
 //    console.log('$routeParams.nodeId: ' +  nodeId())
@@ -346,7 +346,7 @@ appController.controller('ConfigConfigurationController', function($scope, $rout
 
             $cookies.configuration_id = nodeId;
             $cookies.config_url = $scope.activeUrl + nodeId;
-           $scope.deviceId = nodeId;
+            $scope.deviceId = nodeId;
             $scope.deviceName = $filter('deviceName')(nodeId, node);
 
             setData(ZWaveAPIData, nodeId);
@@ -396,8 +396,9 @@ appController.controller('ConfigConfigurationController', function($scope, $rout
     /**
      * Apply Config action
      */
-    $scope.submitApplyConfigCfg = function(form, cmd, cfg, hasBattery) {
+    $scope.submitApplyConfigCfg = function(form, cmd, cfgValues, hasBattery,confNum) {
         var xmlData = [];
+        var configValues = [];
         if (hasBattery) {
             alert($scope._t('conf_apply_battery'));
         }
@@ -409,6 +410,7 @@ appController.controller('ConfigConfigurationController', function($scope, $rout
             }
 
         });
+
         angular.forEach(dataValues, function(n, nk) {
             var obj = {};
             var parameter;
@@ -420,8 +422,8 @@ appController.controller('ConfigConfigurationController', function($scope, $rout
             var confSize = 0;
             //var lastNum = n.name.match(/\d+$/);
             var value = n.value;
-
-            angular.forEach(cfg, function(cv, ck) {
+            configValues.push(value)
+            angular.forEach(cfgValues, function(cv, ck) {
                 if (!cv) {
                     return;
                 }
@@ -432,21 +434,59 @@ appController.controller('ConfigConfigurationController', function($scope, $rout
 
             });
             if (num > 0) {
-                parameter = '[' + num + ',' + value + ',' + confSize + ']';
+                parameter = num + ',' + value + ',' + confSize;
             } else {
-                parameter = '[' + value + ']';
+                parameter = value;
             }
 
             obj['id'] = cmd['id'];
             obj['instance'] = cmd['instance'];
             obj['commandclass'] = cmd['commandclass'];
             obj['command'] = cmd['command'];
-            obj['parameter'] = parameter;
+            obj['parameter'] = '[' + parameter + ']';
+            obj['parameterValues'] = parameter;
+            obj['confNum'] = num;
+
             xmlData.push(obj);
-            // dataService.runCmd(request, false, $scope._t('error_handling_data'));
+
+
         });
         //console.log(xmlData)
         //return;
+        
+        // Send command
+        var request = 'devices[' + cmd.id + '].instances[' + cmd.instance + '].commandClasses[0x' + cmd.commandclass + '].';
+        switch (cmd['commandclass']) {
+            case '70':// Config
+                angular.forEach(xmlData, function(v, k) {
+                   
+                    var configRequest = request;
+                    configRequest += cmd.command + '(' + v.parameterValues + ')';
+                    if(confNum){
+                        if(confNum == v.confNum){
+                            dataService.runCmd(configRequest, false, $scope._t('error_handling_data'));
+                        }
+                    }else{
+                        dataService.runCmd(configRequest, false, $scope._t('error_handling_data'));
+                    }
+                    
+                });
+                break;
+            case '75':// Protection
+                request += cmd.command + '(' + configValues.join(",") + ')';
+                dataService.runCmd(request, false, $scope._t('error_handling_data'));
+                break;
+            case '84':// Wakeup
+                request += cmd.command + '(' + configValues.join(",") + ')';
+                dataService.runCmd(request, false, $scope._t('error_handling_data'));
+                break;
+            case '27':// Switch all
+                request += cmd.command + '(' + configValues.join(",") + ')';
+                dataService.runCmd(request, false, $scope._t('error_handling_data'));
+                break;
+            default:
+                break;
+        }
 
         dataService.getCfgXml(function(cfgXml) {
             var xmlFile = deviceService.buildCfgXml(xmlData, cfgXml, cmd['id'], cmd['commandclass']);
@@ -741,7 +781,7 @@ appController.controller('ConfigAssociationController', function($scope, $filter
         var index = $scope.addData.instance;
         var group = parseInt($scope.addData.groupId);
         var cc = 133;
-        
+
         if ($scope.assocToInstance == null) {
             $scope.updates.push("devices." + nodeId + ".instances." + index + ".commandClasses." + (0x85) + ".data." + group);
             $scope.applyQueue.push('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x85].Set(' + params + ')');
@@ -798,7 +838,7 @@ appController.controller('ConfigAssociationController', function($scope, $filter
                 //return;
             }
             var mc = '---';
-             angular.forEach(node.instances, function(instance, instanceId) {
+            angular.forEach(node.instances, function(instance, instanceId) {
                 if (0x60 in instance.commandClasses) {
                     mc = '92';
                 }
@@ -810,7 +850,7 @@ appController.controller('ConfigAssociationController', function($scope, $filter
                 'key': nodeId,
                 'val': '(#' + nodeId + ') ' + $filter('deviceName')(nodeId, node)
             });
-           
+
 
             for (var instanceId in $scope.ZWaveAPIData.devices[nodeId].instances) {
                 var fromInstanceId = $scope.addData.instanceId;
@@ -891,7 +931,7 @@ appController.controller('ConfigAssociationController', function($scope, $filter
     $scope.applyConfig = function() {
         var spinner = $('#AssociationTable .fa-spinner');
         spinner.show();
-        
+
         dataService.getCfgXml(function(cfgXml) {
             var xmlFile = deviceService.buildCfgXmlAssoc($scope.xmlUpdates, cfgXml);
             //dataService.putCfgXml(xmlFile);
@@ -1076,7 +1116,7 @@ appController.controller('ConfigAssociationController', function($scope, $filter
     ;
 });
 // Device configuration commands controller
-appController.controller('ConfigCommandsController', function($scope, $routeParams, $location, $cookies, dataService, deviceService) {
+appController.controller('ConfigCommandsController', function($scope, $routeParams, $location, $cookies, $timeout, dataService, deviceService) {
     $scope.devices = [];
     $scope.commands = [];
     $scope.interviewCommands;
