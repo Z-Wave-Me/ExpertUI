@@ -3755,7 +3755,7 @@ appController.controller('TimingController', function($scope, $filter, dataServi
                 color = (deliveryTime > 100 ? 'black' : 'green');
             }
             var displayTime = deliveryTime / 10;
-            packets += '<span class="' + color + ' timing-packet">' + displayTime.toFixed() + '</span> ';
+            packets += '<span class="' + color + ' timing-packet">' + (displayTime.toFixed() < 1 ? 1 : displayTime.toFixed()) + '</span> ';
         });
         return packets;
 
