@@ -955,7 +955,6 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                 var level = '';
                 var updateTime = 0;
                 var invalidateTime = 0;
-                //var levelExt;
                 if (v.cmdId == 0x30) {
                     level = (obj.value ? $scope._t('sensor_triggered') : $scope._t('sensor_idle'));
                     updateTime = obj.level.updateTime;
@@ -969,7 +968,6 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                 }
                 else {
                     level = obj.val.value;
-                    //levelExt = obj.scaleString.value;
                     updateTime = obj.val.updateTime;
                     invalidateTime = obj.val.invalidateTime;
 
