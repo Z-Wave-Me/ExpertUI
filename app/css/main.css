@@ -171,6 +171,12 @@ background-color: #e4f5fc;
 padding: 10px 10px 0 10px;
 }
 
+/* Slider
+-------------------------------------------------- */
+.ngrs-value.ngrs-value-min{
+    display: none;
+}
+
 /* Page CSS
 -------------------------------------------------- */
 .page-header {

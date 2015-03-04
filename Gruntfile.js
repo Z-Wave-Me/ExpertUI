@@ -47,6 +47,7 @@ module.exports = function(grunt) {
                     'app/core/app.js',
                     //'app/core/config.js',
                     'app/core/directives/directives.js',
+                    'app/core/directives/angular-slider.js',
                     'app/core/filters/filters.js',
                     'app/core/factories/factories.js',
                     'app/core/services/services.js',
@@ -54,7 +55,7 @@ module.exports = function(grunt) {
                     //'app/core/controllers/configuration-controller.js',
                     'app/core/controllers/configuration.js',
                     'app/core/jquery/jquery-app.js',
-                    'app/vendor/slider/angular-slider.js',
+                    
                 ],
                 dest: 'dist/app/core/build.js'
             }

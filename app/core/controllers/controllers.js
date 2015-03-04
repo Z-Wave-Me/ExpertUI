@@ -819,7 +819,7 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                         obj['iId'] = instanceId;
                         obj['cmd'] = sensorBinary.data.name + '.' + val.name;
                         obj['cmdId'] = '48';
-                        obj['rowId'] = sensorBinary.name + '_' + k + '_' + sensor_type;
+                        obj['rowId'] = sensorBinary.name + '_' + k + '_' + instanceId + '_' + sensor_type;
                         obj['name'] = devName;
                         obj['type'] = sensorBinary.name;
                         obj['purpose'] = val.sensorTypeString.value;
@@ -854,7 +854,7 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                         obj['iId'] = instanceId;
                         obj['cmd'] = sensorMultilevel.data.name + '.' + val.name;
                         obj['cmdId'] = '49';
-                        obj['rowId'] = sensorMultilevel.name + '_' + k + '_' + sensor_type;
+                        obj['rowId'] = sensorMultilevel.name + '_' + k + '_' + instanceId + '_' + sensor_type;
                         obj['name'] = devName;
                         obj['type'] = sensorMultilevel.name;
                         obj['purpose'] = val.sensorTypeString.value;
@@ -893,7 +893,7 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                         obj['iId'] = instanceId;
                         obj['cmd'] = meters.data.name + '.' + meter.name;
                         obj['cmdId'] = '50';
-                        obj['rowId'] = meters.name + '_' + k + '_' + sensor_type;
+                        obj['rowId'] = meters.name + '_' + k + '_' + instanceId + '_' + sensor_type;
                         obj['name'] = devName;
                         obj['type'] = meters.name;
                         obj['purpose'] = meter.sensorTypeString.value;
@@ -924,7 +924,7 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                         obj['iId'] = instanceId;
                         obj['cmd'] = alarmSensor.data.name + '.' + val.name;
                         obj['cmdId'] = '0x9c';
-                        obj['rowId'] = alarmSensor.name + '_' + k + '_' + sensor_type;
+                        obj['rowId'] = alarmSensor.name + '_' + k + '_' + instanceId + '_' + sensor_type; 
                         obj['name'] = devName;
                         obj['type'] = alarmSensor.name;
                         obj['purpose'] = val.typeString.value;
@@ -955,21 +955,21 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                 var level = '';
                 var updateTime = 0;
                 var invalidateTime = 0;
-                var levelExt;
+                //var levelExt;
                 if (v.cmdId == 0x30) {
-                    levelExt = (obj.value ? $scope._t('sensor_triggered') : $scope._t('sensor_idle'));
+                    level = (obj.value ? $scope._t('sensor_triggered') : $scope._t('sensor_idle'));
                     updateTime = obj.level.updateTime;
                     invalidateTime = obj.level.invalidateTime;
 
                 } else if (v.cmdId == 0x9c) {
-                    levelExt = (obj.sensorState.value ? $scope._t('sensor_triggered') : $scope._t('sensor_idle'));
+                    level = (obj.sensorState.value ? $scope._t('sensor_triggered') : $scope._t('sensor_idle'));
                     updateTime = obj.val.updateTime;
                     invalidateTime = obj.val.invalidateTime;
 
                 }
                 else {
                     level = obj.val.value;
-                    levelExt = obj.scaleString.value;
+                    //levelExt = obj.scaleString.value;
                     updateTime = obj.val.updateTime;
                     invalidateTime = obj.val.invalidateTime;
 
