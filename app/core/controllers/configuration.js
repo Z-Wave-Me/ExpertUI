@@ -374,6 +374,22 @@ appController.controller('ConfigConfigurationController', function($scope, $rout
     $scope.$on('$destroy', function() {
         dataService.cancelZwaveDataInterval();
     });
+    
+    /**
+     * Update from device action
+     *
+     * @param {string} cmd
+     * @returns {undefined}
+     */
+    $scope.updateFromDevice = function(cmd) {
+        dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
+        $scope.refresh = true;
+        var timeOut;
+        timeOut = $timeout(function() {
+            $scope.refresh = false;
+        }, 10000);
+        return; 
+    };
 
     /**
      * Update from device - configuration section
