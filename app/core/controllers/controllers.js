@@ -4091,8 +4091,7 @@ appController.controller('LicenseController', function($scope, dataService) {
      */
     function updateCapabilities(data) {
         $scope.proccessUpdate = {'message': $scope._t('upgrading_capabilities'), 'status': 'fa fa-spinner fa-spin'};
-        var capabilities = data.capabilities;
-        dataService.zmeCapabilities(capabilities).then(function(response) {
+        dataService.zmeCapabilities(data).then(function(response) {
             $scope.proccessUpdate = {'message': $scope._t('success_capabilities'), 'status': 'fa fa-check text-success'};
             console.log('---------- SUCCESS capabilities ----------', response);
         }, function(error) {
