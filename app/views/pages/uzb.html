@@ -15,13 +15,13 @@
                     <td>{{v.comment}}</td>
                     <td>
                         <button 
-                            data-ng-click="store('#row_' + v.id,'ZMEBootloaderUpgrade/' + cfg.uzb_url + v.fileURL)" 
+                            data-ng-click="store('#row_' + v.id,'/ZWaveAPI/ZMEBootloaderUpgrade', cfg.uzb_url + v.fileURL)" 
                             class="btn btn-primary spin-true" 
                             id="btn_boot_{{v.id}}"
                             ng-show="v.type == 'bootloader'">{{_t('upgrade_bootloader')}} <i class="fa fa-spinner fa-spin"></i> 
                         </button>
                         <button 
-                            data-ng-click="store('#btn_firmware_' + v.id, 'ZMEFirmwareUpgrade/' + cfg.uzb_url + v.fileURL)"
+                            data-ng-click="store('#btn_firmware_' + v.id, '/ZWaveAPI/ZMEFirmwareUpgrade', cfg.uzb_url + v.fileURL)"
                             data-action="reset" 
                             class="btn btn-info spin-true" 
                             id="btn_firmware_{{v.id}}"

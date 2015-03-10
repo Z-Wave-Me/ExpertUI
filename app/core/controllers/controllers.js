@@ -4091,7 +4091,8 @@ appController.controller('LicenseController', function($scope, dataService) {
      */
     function updateCapabilities(data) {
         $scope.proccessUpdate = {'message': $scope._t('upgrading_capabilities'), 'status': 'fa fa-spinner fa-spin'};
-        dataService.zmeCapabilities(data).then(function(response) {
+        var capabilities = data.capabilities;
+        dataService.zmeCapabilities(capabilities).then(function(response) {
             $scope.proccessUpdate = {'message': $scope._t('success_capabilities'), 'status': 'fa fa-check text-success'};
             console.log('---------- SUCCESS capabilities ----------', response);
         }, function(error) {
@@ -4134,11 +4135,14 @@ appController.controller('UzbController', function($scope, $timeout, dataService
     
      
     // Store data on RazBerry
-    $scope.store = function(row, file) {
+    $scope.store = function(row,action, url) {
         $scope.alert = {message: false};
         $(row + ' .fa-spin').css('display', 'inline-block');
-        var url = $scope.cfg.server_url + $scope.cfg.store_url + file;
-        dataService.updateUzb(url).then(function(response) {
+        var cmd = $scope.cfg.server_url + action;
+        var data = {
+            url: url
+        };
+        dataService.updateUzb(cmd,data).then(function(response) {
             $(row).fadeOut(1000);
             $scope.alert = {message: $scope._t('success_firmware_update'), status: 'alert-success', icon: 'fa-check'};
         }, function(error) {
