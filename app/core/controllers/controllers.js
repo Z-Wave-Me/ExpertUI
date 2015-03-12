@@ -924,7 +924,7 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                         obj['iId'] = instanceId;
                         obj['cmd'] = alarmSensor.data.name + '.' + val.name;
                         obj['cmdId'] = '0x9c';
-                        obj['rowId'] = alarmSensor.name + '_' + k + '_' + instanceId + '_' + sensor_type; 
+                        obj['rowId'] = alarmSensor.name + '_' + k + '_' + instanceId + '_' + sensor_type;
                         obj['name'] = devName;
                         obj['type'] = alarmSensor.name;
                         obj['purpose'] = val.typeString.value;
@@ -4029,7 +4029,7 @@ appController.controller('InterviewCommandController', function($scope, $filter)
     };
 });
 // LicenseController
-appController.controller('LicenseController', function($scope, dataService) {
+appController.controller('LicenseController', function($scope, $timeout, dataService) {
     $scope.proccessVerify = {
         'message': false,
         'status': 'is-hidden'
@@ -4073,7 +4073,6 @@ appController.controller('LicenseController', function($scope, dataService) {
             updateCapabilities(response);
 
         }, function(error) {// Error verifying key
-            //alert($scope._t('error_no_licence_key'));
             var message = $scope._t('error_no_licence_key');
             if (error.status == 404) {
                 var message = $scope._t('error_404_licence_key');
@@ -4085,27 +4084,48 @@ appController.controller('LicenseController', function($scope, dataService) {
         return;
     };
 
-   /// --- Private functions --- ///
+    /// --- Private functions --- ///
     /**
      * Update capabilities
      */
     function updateCapabilities(data) {
         $scope.proccessUpdate = {'message': $scope._t('upgrading_capabilities'), 'status': 'fa fa-spinner fa-spin'};
         dataService.zmeCapabilities(data).then(function(response) {
-            $scope.proccessUpdate = {'message': $scope._t('success_capabilities'), 'status': 'fa fa-check text-success'};
-            console.log('---------- SUCCESS capabilities ----------', response);
+            proccessCapabilities(response);
         }, function(error) {
-            //alert($scope._t('error_no_capabilities'));
             $scope.proccessUpdate = {'message': $scope._t('error_no_capabilities'), 'status': 'fa fa-exclamation-triangle text-danger'};
             console.log('---------- ERROR capabilities ----------', error);
         });
-    };
+    }
+    ;
+    /**
+     * Update Proccess capabilities
+     */
+    function proccessCapabilities(response) {
+        $('.verify-ctrl').attr('disabled', true);
+        return;
+
+        $timeout(function() {
+            if (!'do something to check when update is complete') {
+                $scope.proccessUpdate = {'message': $scope._t('success_capabilities'), 'status': 'fa fa-check text-success'};
+                console.log('---------- SUCCESS capabilities ----------', response);
+            } else {// Otherwise show error message
+                $scope.proccessUpdate = {'message': $scope._t('error_no_capabilities'), 'status': 'fa fa-exclamation-triangle text-danger'};
+                console.log('---------- ERROR capabilities ----------');
+            }
+            $('.verify-ctrl').attr('disabled', false);
+            return;
+
+        }, 3000);
+
+    }
+    ;
 });
 // UzbController
 appController.controller('UzbController', function($scope, $timeout, dataService) {
     $scope.uzbUpgrade = [];
     $scope.uzbFromUrl = [];
-    $scope.alert = {message: false,status: 'is-hidden',icon: false};
+    $scope.alert = {message: false, status: 'is-hidden', icon: false};
     /**
      * Load data
      *
@@ -4130,19 +4150,19 @@ appController.controller('UzbController', function($scope, $timeout, dataService
         });
     };
     $scope.load();
-    
+
     // Upgrade bootloader/firmware
-    $scope.upgrade = function(row,action, url) {
+    $scope.upgrade = function(row, action, url) {
         $scope.alert = {message: false};
         var cmd = $scope.cfg.server_url + action;
         var data = {
             url: url
         };
-        dataService.updateUzb(cmd,data).then(function(response) {
-            if(action == '/ZWaveAPI/ZMEFirmwareUpgrade'){
-                 upgradeFirmware(response);
-            }else{
-                 upgradeBootloader(response);
+        dataService.updateUzb(cmd, data).then(function(response) {
+            if (action == '/ZWaveAPI/ZMEFirmwareUpgrade') {
+                upgradeFirmware(response);
+            } else {
+                upgradeBootloader(response);
             }
         }, function(error) {
             $scope.alert = {message: $scope._t('error_handling_data'), status: 'alert-danger', icon: 'fa-exclamation-triangle'};
@@ -4154,58 +4174,61 @@ appController.controller('UzbController', function($scope, $timeout, dataService
         }, 3000);
         return;
     };
-    
+
     /// --- Private functions --- ///
-    
-     /**
+
+    /**
      * Load uzb data
      */
     function loadUzb(urlParams) {
         $scope.alert = {message: $scope._t('loading_data_remote'), status: 'alert-warning', icon: 'fa-spinner fa-spin'};
-            dataService.getUzb(urlParams).then(function(response) {
-                if (response.length > 0) {
-                    $scope.uzbUpgrade = response;
-                    $scope.alert = {message: false};
-                } else {
-                    $scope.alert = {message: $scope._t('noavailable_firmware_update'), status: 'alert-info', icon: 'fa-info-circle'};
-                }
-            }, function(error) {
-                $scope.alert = {message: $scope._t('error_handling_data_remote'), status: 'alert-danger', icon: 'fa-exclamation-triangle'};
-                console.log('ERROR', error);
-            });
-    };
-    
-     /**
+        dataService.getUzb(urlParams).then(function(response) {
+            if (response.length > 0) {
+                $scope.uzbUpgrade = response;
+                $scope.alert = {message: false};
+            } else {
+                $scope.alert = {message: $scope._t('noavailable_firmware_update'), status: 'alert-info', icon: 'fa-info-circle'};
+            }
+        }, function(error) {
+            $scope.alert = {message: $scope._t('error_handling_data_remote'), status: 'alert-danger', icon: 'fa-exclamation-triangle'};
+            console.log('ERROR', error);
+        });
+    }
+    ;
+
+    /**
      * Proccessing bootloader upgrade
      */
     function upgradeBootloader(response) {
         $('.update-ctrl button').attr('disabled', true);
-       $scope.alert = {message: $scope._t('upgrade_bootloader_proccess'), status: 'alert-warning', icon: 'fa-spinner fa-spin'};
+        $scope.alert = {message: $scope._t('upgrade_bootloader_proccess'), status: 'alert-warning', icon: 'fa-spinner fa-spin'};
         //console.log(response);
         return;
         $timeout(function() {
-             $('.update-ctrl button').attr('disabled', false);
-              //$scope.alert = {message: $scope._t('error_bootloader_update'), status: 'alert-danger', icon: 'fa-exclamation-triangle'};
+            $('.update-ctrl button').attr('disabled', false);
+            //$scope.alert = {message: $scope._t('error_bootloader_update'), status: 'alert-danger', icon: 'fa-exclamation-triangle'};
             $scope.alert = {message: $scope._t('success_bootloader_update'), status: 'alert-success', icon: 'fa-check'};
         }, 3000);
-       
-    };
-    
-     /**
+
+    }
+    ;
+
+    /**
      * Proccessing firmware upgrade
      */
     function upgradeFirmware(response) {
         $('.update-ctrl button').attr('disabled', true);
-       $scope.alert = {message: $scope._t('upgrade_firmware_proccess'), status: 'alert-warning', icon: 'fa-spinner fa-spin'};
+        $scope.alert = {message: $scope._t('upgrade_firmware_proccess'), status: 'alert-warning', icon: 'fa-spinner fa-spin'};
         //console.log(response); 
         return;
-         $timeout(function() {
-             //$('.update-ctrl button').attr('disabled', false);
-              $scope.alert = {message: $scope._t('error_firmware_update'), status: 'alert-danger', icon: 'fa-exclamation-triangle'};
+        $timeout(function() {
+            //$('.update-ctrl button').attr('disabled', false);
+            $scope.alert = {message: $scope._t('error_firmware_update'), status: 'alert-danger', icon: 'fa-exclamation-triangle'};
             $scope.alert = {message: $scope._t('success_firmware_update'), status: 'alert-success', icon: 'fa-check'};
         }, 3000);
-       
-    };
+
+    }
+    ;
 });
 /**
  * Deprecated
