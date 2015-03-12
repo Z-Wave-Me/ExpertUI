@@ -10665,11 +10665,15 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
     /**
      * Update Uzb
      */
-    function updateUzb(url) {
+    function updateUzb(url,data) {
         //alert('Run HTTP request: ' + url);
         return $http({
             method: 'POST',
-            url: url
+            url: url,
+            data: $.param(data),
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
         }).then(function(response) {
            return response;
         }, function(response) {
@@ -10706,10 +10710,15 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
      * Set ZME Capabilities
      */
     function zmeCapabilities(data) {
+        var capabilities = [0x1E, 0x14, 0xC2, 0x47, 0x26, 0x68, 0x71, 0x40, 0x1E, 0x4F, 0xBA, 0x6A, 0x06, 0xD9, 0x3D, 0xF4, 0xC2, 0x37, 0x30, 0x00, 0x5B, 0x67, 0x0E, 0x93, 0xFE, 0x4E, 0x24, 0x33, 0x24, 0x93, 0xF1, 0xE9, 0x5C, 0x6B, 0x81, 0x35, 0xE9, 0x71, 0x08, 0xD1, 0x67, 0x31, 0xC5, 0x77, 0xC6, 0x75, 0xE3, 0x94];
+        ///JS/Run/zway.ZMECapabilities([0x1E, 0x14, 0xC2, 0x47, 0x26, 0x68, 0x71, 0x40, 0x1E, 0x4F, 0xBA, 0x6A, 0x06, 0xD9, 0x3D, 0xF4, 0xC2, 0x37, 0x30, 0x00, 0x5B, 0x67, 0x0E, 0x93, 0xFE, 0x4E, 0x24, 0x33, 0x24, 0x93, 0xF1, 0xE9, 0x5C, 0x6B, 0x81, 0x35, 0xE9, 0x71, 0x08, 0xD1, 0x67, 0x31, 0xC5, 0x77, 0xC6, 0x75, 0xE3, 0x94])
         return $http({
             method: 'POST',
-            url: cfg.server_url + cfg.store_url + 'ZMECapabilities(' + data.capability + ')',
-             data: $.param(data)
+            url: cfg.server_url + cfg.store_url + 'ZMECapabilities(' + capabilities + ')',
+             data: $.param(data),
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
         }).then(function(response) {
            return response;
         }, function(response) {
@@ -15925,11 +15934,14 @@ appController.controller('UzbController', function($scope, $timeout, dataService
     
      
     // Store data on RazBerry
-    $scope.store = function(row, file) {
+    $scope.store = function(row,action, url) {
         $scope.alert = {message: false};
         $(row + ' .fa-spin').css('display', 'inline-block');
-        var url = $scope.cfg.server_url + $scope.cfg.store_url + file;
-        dataService.updateUzb(url).then(function(response) {
+        var cmd = $scope.cfg.server_url + action;
+        var data = {
+            url: url
+        };
+        dataService.updateUzb(cmd,data).then(function(response) {
             $(row).fadeOut(1000);
             $scope.alert = {message: $scope._t('success_firmware_update'), status: 'alert-success', icon: 'fa-check'};
         }, function(error) {

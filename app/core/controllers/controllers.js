@@ -4101,7 +4101,6 @@ appController.controller('LicenseController', function($scope, dataService) {
         });
     };
 });
-
 // UzbController
 appController.controller('UzbController', function($scope, $timeout, dataService) {
     $scope.uzbUpgrade = [];
@@ -4132,23 +4131,22 @@ appController.controller('UzbController', function($scope, $timeout, dataService
     };
     $scope.load();
     
-     
-    // Store data on RazBerry
-    $scope.store = function(row,action, url) {
+    // Upgrade bootloader/firmware
+    $scope.upgrade = function(row,action, url) {
         $scope.alert = {message: false};
-        $(row + ' .fa-spin').css('display', 'inline-block');
         var cmd = $scope.cfg.server_url + action;
         var data = {
             url: url
         };
         dataService.updateUzb(cmd,data).then(function(response) {
-            $(row).fadeOut(1000);
-            $scope.alert = {message: $scope._t('success_firmware_update'), status: 'alert-success', icon: 'fa-check'};
+            if(action == '/ZWaveAPI/ZMEFirmwareUpgrade'){
+                 upgradeFirmware(response);
+            }else{
+                 upgradeBootloader(response);
+            }
         }, function(error) {
-            $(row + ' .fa-spin').fadeOut(1000);
-            $scope.alert = {message: $scope._t('error_firmware_update'), status: 'alert-danger', icon: 'fa-exclamation-triangle'};
+            $scope.alert = {message: $scope._t('error_handling_data'), status: 'alert-danger', icon: 'fa-exclamation-triangle'};
             console.log('ERROR', error);
-            //alert($scope._t('error_firmware_update'));
         });
         return;
         $timeout(function() {
@@ -4174,8 +4172,39 @@ appController.controller('UzbController', function($scope, $timeout, dataService
             }, function(error) {
                 $scope.alert = {message: $scope._t('error_handling_data_remote'), status: 'alert-danger', icon: 'fa-exclamation-triangle'};
                 console.log('ERROR', error);
-                //alert($scope._t('error_handling_data_remote') + '\n' + $scope.cfg.uzb_url);
             });
+    };
+    
+     /**
+     * Proccessing bootloader upgrade
+     */
+    function upgradeBootloader(response) {
+        $('.update-ctrl button').attr('disabled', true);
+       $scope.alert = {message: $scope._t('upgrade_bootloader_proccess'), status: 'alert-warning', icon: 'fa-spinner fa-spin'};
+        //console.log(response);
+        return;
+        $timeout(function() {
+             $('.update-ctrl button').attr('disabled', false);
+              //$scope.alert = {message: $scope._t('error_bootloader_update'), status: 'alert-danger', icon: 'fa-exclamation-triangle'};
+            $scope.alert = {message: $scope._t('success_bootloader_update'), status: 'alert-success', icon: 'fa-check'};
+        }, 3000);
+       
+    };
+    
+     /**
+     * Proccessing firmware upgrade
+     */
+    function upgradeFirmware(response) {
+        $('.update-ctrl button').attr('disabled', true);
+       $scope.alert = {message: $scope._t('upgrade_firmware_proccess'), status: 'alert-warning', icon: 'fa-spinner fa-spin'};
+        //console.log(response); 
+        return;
+         $timeout(function() {
+             //$('.update-ctrl button').attr('disabled', false);
+              $scope.alert = {message: $scope._t('error_firmware_update'), status: 'alert-danger', icon: 'fa-exclamation-triangle'};
+            $scope.alert = {message: $scope._t('success_firmware_update'), status: 'alert-success', icon: 'fa-check'};
+        }, 3000);
+       
     };
 });
 /**
