@@ -4106,7 +4106,7 @@ appController.controller('LicenseController', function($scope, $timeout, dataSer
         return;
 
         $timeout(function() {
-            if (!'do something to check when update is complete') {
+            if ('do something to check when update is complete') {
                 $scope.proccessUpdate = {'message': $scope._t('success_capabilities'), 'status': 'fa fa-check text-success'};
                 console.log('---------- SUCCESS capabilities ----------', response);
             } else {// Otherwise show error message
@@ -4205,9 +4205,15 @@ appController.controller('UzbController', function($scope, $timeout, dataService
         //console.log(response);
         return;
         $timeout(function() {
+            if ('do something to check when update is complete') {
+                $scope.alert = {message: $scope._t('success_bootloader_update'), status: 'alert-success', icon: 'fa-check'};
+                console.log('---------- SUCCESS bootloader ----------', response);
+            } else {// Otherwise show error message
+                $scope.alert = {message: $scope._t('error_bootloader_update'), status: 'alert-danger', icon: 'fa-exclamation-triangle'};
+                console.log('---------- ERROR bootloader ----------');
+            }
             $('.update-ctrl button').attr('disabled', false);
-            //$scope.alert = {message: $scope._t('error_bootloader_update'), status: 'alert-danger', icon: 'fa-exclamation-triangle'};
-            $scope.alert = {message: $scope._t('success_bootloader_update'), status: 'alert-success', icon: 'fa-check'};
+           
         }, 3000);
 
     }
@@ -4222,13 +4228,17 @@ appController.controller('UzbController', function($scope, $timeout, dataService
         //console.log(response); 
         return;
         $timeout(function() {
-            //$('.update-ctrl button').attr('disabled', false);
-            $scope.alert = {message: $scope._t('error_firmware_update'), status: 'alert-danger', icon: 'fa-exclamation-triangle'};
-            $scope.alert = {message: $scope._t('success_firmware_update'), status: 'alert-success', icon: 'fa-check'};
+            if ('do something to check when update is complete') {
+               $scope.alert = {message: $scope._t('success_firmware_update'), status: 'alert-success', icon: 'fa-check'};
+                console.log('---------- SUCCESS firmware ----------', response);
+            } else {// Otherwise show error message
+                $scope.alert = {message: $scope._t('error_firmware_update'), status: 'alert-danger', icon: 'fa-exclamation-triangle'};
+                console.log('---------- ERROR firmware ----------');
+            }
         }, 3000);
 
-    }
-    ;
+    } ;
+    
 });
 /**
  * Deprecated
