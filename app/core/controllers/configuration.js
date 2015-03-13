@@ -844,23 +844,23 @@ appController.controller('ConfigAssociationController', function($scope, $filter
                 return;
             }
 
-            if ($scope.hasMca && !(142 in node.instances[0].commandClasses)) {
-                //console.log(nodeId + ' Has NO MCA (142)'); 
-                //return;
-
-            }
-            if (!$scope.hasMca && 142 in node.instances[0].commandClasses) {
-                //console.log(nodeId + ' Has NO ASSOC (133)');
-                //return;
-            }
-            var mc = '---';
-            angular.forEach(node.instances, function(instance, instanceId) {
-                if (0x60 in instance.commandClasses) {
-                    mc = '92';
-                }
-            });
-            console.log(0x60 in node.instances[0].commandClasses)
-            console.log(nodeId + ' MCA: ' + (142 in node.instances[0].commandClasses ? '142' : '---') + ' MC: ' + (0x60 in node.instances[0].commandClasses ? '0x60' : '---'));
+//            if ($scope.hasMca && !(142 in node.instances[0].commandClasses)) {
+//                //console.log(nodeId + ' Has NO MCA (142)'); 
+//                //return;
+//
+//            }
+//            if (!$scope.hasMca && 142 in node.instances[0].commandClasses) {
+//                //console.log(nodeId + ' Has NO ASSOC (133)');
+//                //return;
+//            }
+//            var mc = '---';
+//            angular.forEach(node.instances, function(instance, instanceId) {
+//                if (0x60 in instance.commandClasses) {
+//                    mc = '92';
+//                }
+//            });
+//            console.log(0x60 in node.instances[0].commandClasses)
+//            console.log(nodeId + ' MCA: ' + (142 in node.instances[0].commandClasses ? '142' : '---') + ' MC: ' + (0x60 in node.instances[0].commandClasses ? '0x60' : '---'));
 
             $scope.addDevices.push({
                 'key': nodeId,

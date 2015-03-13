@@ -3785,15 +3785,18 @@ appController.controller('ControllerController', function($scope, $window, dataS
             //var isSUC = ZWaveAPIData.controller.data.isSUC.value;
             var SUCNodeID = ZWaveAPIData.controller.data.SUCNodeId.value;
             var vendor = ZWaveAPIData.controller.data.vendor.value;
-            var ZWChip = ZWaveAPIData.controller.data.ZWaveChip.value;
             var productId = ZWaveAPIData.controller.data.manufacturerProductId.value;
-            var productType = ZWaveAPIData.controller.data.manufacturerProductType.value;
+            
             var sdk = ZWaveAPIData.controller.data.SDK.value;
             var libType = ZWaveAPIData.controller.data.libType.value;
             var api = ZWaveAPIData.controller.data.APIVersion.value;
             var revId = ZWaveAPIData.controller.data.softwareRevisionId.value;
             var revVer = ZWaveAPIData.controller.data.softwareRevisionVersion.value;
             var revDate = ZWaveAPIData.controller.data.softwareRevisionDate.value;
+            var manufactrerId = ZWaveAPIData.controller.data.manufacturerId.value;
+            var manufacturerProductId = ZWaveAPIData.controller.data.manufacturerProductId.value;
+             var ZWChip = ZWaveAPIData.controller.data.ZWaveChip.value;
+             var productType = ZWaveAPIData.controller.data.manufacturerProductType.value;
             var obj = {};
             $scope.info['ctrl_info_nodeid_value'] = nodeId;
             $scope.info['ctrl_info_homeid_value'] = '0x' + ('00000000' + (homeId + (homeId < 0 ? 0x100000000 : 0)).toString(16)).slice(-8);
@@ -3809,6 +3812,10 @@ appController.controller('ControllerController', function($scope, $window, dataS
             $scope.info['ctrl_info_sw_rev_ver_value'] = revVer;
             $scope.info['ctrl_info_sw_rev_id_value'] = revId;
             $scope.info['ctrl_info_sw_rev_date_value'] = revDate;
+            $scope.info['manufactrerId'] = manufactrerId;
+            $scope.info['ZWaveChip'] = ZWChip;
+            $scope.info['manufacturerProductType'] = productType;
+            $scope.info['manufacturerProductId'] = manufacturerProductId;
             /**
              * Function list
              */
@@ -4035,6 +4042,7 @@ appController.controller('LicenseController', function($scope, $timeout, dataSer
         'status': 'is-hidden'
 
     };
+     $scope.controllerUuid = null;
     $scope.proccessUpdate = {
         'message': false,
         'status': 'is-hidden'
@@ -4054,6 +4062,13 @@ appController.controller('LicenseController', function($scope, $timeout, dataSer
         "selldate": null,
         "usedate": null
     };
+    $scope.ZWaveAPIData = function() {
+        dataService.getZwaveData(function(ZWaveAPIData) {
+            $scope.controllerUuid = ZWaveAPIData.controller.data.uuid.value;
+
+        });
+    };
+    $scope.ZWaveAPIData();
     /**
      * Get license key
      */
@@ -4065,61 +4080,67 @@ appController.controller('LicenseController', function($scope, $timeout, dataSer
             return;
         }
         $scope.proccessVerify = {'message': $scope._t('verifying_licence_key'), 'status': 'fa fa-spinner fa-spin'};
-
-        dataService.getLicense(formData).then(function(response) {
+        var input = {
+            'uuid': $scope.controllerUuid,
+            'scratch': formData.scratch_id 
+        };
+        dataService.getLicense(input).then(function(response) {
             $scope.proccessVerify = {'message': $scope._t('success_licence_key'), 'status': 'fa fa-check text-success'};
-            console.log('---------- SUCCESS Verification ----------', response);
+            console.log('1. ---------- SUCCESS Verification ----------', response);
+            
             // Update capabilities
             updateCapabilities(response);
 
         }, function(error) {// Error verifying key
+            //debugger;
             var message = $scope._t('error_no_licence_key');
             if (error.status == 404) {
                 var message = $scope._t('error_404_licence_key');
             }
             $scope.proccessVerify = {'message': message, 'status': 'fa fa-exclamation-triangle text-danger'};
-            console.log('---------- ERROR Verification ----------', error);
+            console.log('1. ---------- ERROR Verification ----------', error);
 
         });
         return;
     };
+    
 
     /// --- Private functions --- ///
+    
     /**
      * Update capabilities
      */
     function updateCapabilities(data) {
         $scope.proccessUpdate = {'message': $scope._t('upgrading_capabilities'), 'status': 'fa fa-spinner fa-spin'};
         dataService.zmeCapabilities(data).then(function(response) {
-            proccessCapabilities(response);
+            $scope.proccessUpdate = {'message': $scope._t('success_capabilities'), 'status': 'fa fa-check text-success'};
+            console.log('2. ---------- SUCCESS updateCapabilities ----------', error);
+            //proccessCapabilities(response);
         }, function(error) {
             $scope.proccessUpdate = {'message': $scope._t('error_no_capabilities'), 'status': 'fa fa-exclamation-triangle text-danger'};
-            console.log('---------- ERROR capabilities ----------', error);
+            console.log('2. ---------- ERROR updateCapabilities ----------', error);
         });
-    }
-    ;
+    };
     /**
      * Update Proccess capabilities
      */
     function proccessCapabilities(response) {
         $('.verify-ctrl').attr('disabled', true);
         return;
-
         $timeout(function() {
             if ('do something to check when update is complete') {
                 $scope.proccessUpdate = {'message': $scope._t('success_capabilities'), 'status': 'fa fa-check text-success'};
-                console.log('---------- SUCCESS capabilities ----------', response);
+                console.log('3. ---------- SUCCESS proccessCapabilities ----------', response);
             } else {// Otherwise show error message
                 $scope.proccessUpdate = {'message': $scope._t('error_no_capabilities'), 'status': 'fa fa-exclamation-triangle text-danger'};
-                console.log('---------- ERROR capabilities ----------');
+                console.log('3. ---------- ERROR proccessCapabilities ----------');
             }
             $('.verify-ctrl').attr('disabled', false);
             return;
 
         }, 3000);
 
-    }
-    ;
+    };
 });
 // UzbController
 appController.controller('UzbController', function($scope, $timeout, dataService) {
@@ -4158,21 +4179,26 @@ appController.controller('UzbController', function($scope, $timeout, dataService
         var data = {
             url: url
         };
+         $('.update-ctrl button').attr('disabled', true);
+         $scope.alert = {message: $scope._t('upgrade_bootloader_proccess'), status: 'alert-warning', icon: 'fa-spinner fa-spin'};
         dataService.updateUzb(cmd, data).then(function(response) {
             if (action == '/ZWaveAPI/ZMEFirmwareUpgrade') {
-                upgradeFirmware(response);
+                $scope.alert = {message: $scope._t('success_firmware_update'), status: 'alert-success', icon: 'fa-check'};
+               console.log('---------- SUCCESS bootloader ----------', response);
+                //upgradeFirmware(response);
             } else {
-                upgradeBootloader(response);
+                $scope.alert = {message: $scope._t('success_bootloader_update'), status: 'alert-success', icon: 'fa-check'};
+                 console.log('---------- SUCCESS firmware ----------', response);
+                
+                
+                //upgradeBootloader(response);
             }
+            $('.update-ctrl button').attr('disabled', false);
         }, function(error) {
             $scope.alert = {message: $scope._t('error_handling_data'), status: 'alert-danger', icon: 'fa-exclamation-triangle'};
             console.log('ERROR', error);
-        });
-        return;
-        $timeout(function() {
-
-        }, 3000);
-        return;
+            $('.update-ctrl button').attr('disabled', false);
+        }); 
     };
 
     /// --- Private functions --- ///

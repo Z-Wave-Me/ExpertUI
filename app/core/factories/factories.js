@@ -519,7 +519,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
      * Update Uzb
      */
     function getUzb(params) {
-       return $http({
+        return $http({
             method: 'get',
             url: cfg.uzb_url + params
         }).then(function(response) {
@@ -538,7 +538,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
     /**
      * Update Uzb
      */
-    function updateUzb(url,data) {
+    function updateUzb(url, data) {
         //alert('Run HTTP request: ' + url);
         return $http({
             method: 'POST',
@@ -548,14 +548,14 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
                 "Content-Type": "application/x-www-form-urlencoded"
             }
         }).then(function(response) {
-           return response;
+            return response;
         }, function(response) {
             // something went wrong
-           return $q.reject(response);
+            return $q.reject(response);
         });
-       }
-       
-        /**
+    }
+
+    /**
      * Get license key
      */
     function getLicense(data) {
@@ -567,13 +567,14 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
                 "Content-Type": "application/x-www-form-urlencoded"
             }
         }).then(function(response) {
-           if (typeof response.data[0] === 'object') {
-                return response.data[0];
+            if (response.data.license.length > 1) {
+                return response.data.license;
             } else {
                 // invalid response
                 return $q.reject(response);
             }
         }, function(response) {
+            //debugger;
             // something went wrong
             return $q.reject(response);
         });
@@ -583,21 +584,23 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
      * Set ZME Capabilities
      */
     function zmeCapabilities(data) {
-        //var capability = [0x8E, 0x21, 0x53, 0xB7, 0x1C, 0xDC, 0x1B, 0x88, 0x06, 0xF5, 0x21, 0x48, 0x3F, 0x96, 0xB8, 0x0E, 0x7B, 0xCD, 0x1E, 0x6F, 0x96, 0xCF, 0xE8, 0xCA, 0x8A, 0x2A, 0x9A, 0xF8, 0xBD, 0x44, 0x52, 0xD6, 0xAB, 0x53, 0x86, 0x75, 0xE9, 0xCA, 0x02, 0x38, 0x60, 0x16, 0x05, 0x95, 0x4F, 0x82, 0x70, 0xE3];
-        var capability = data.capability;
-        /*return $q.reject(data); // Test error response
-        var deferred = $q.defer();
-            deferred.resolve(data);
-            return deferred.promise;// Test success response*/
-        
+//        return $q.reject(data); // Test error response
+//        var deferred = $q.defer();
+//        deferred.resolve(data);
+//        return deferred.promise;// Test success response
+
         return $http({
             method: 'POST',
-            url: cfg.server_url + cfg.runjs_url + 'zway.ZMECapabilities([' + capability + '])'
+            url: cfg.server_url + cfg.license_load_url,
+            data: $.param({license: data.toString()}),
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
         }).then(function(response) {
-           return response;
+            return response;
         }, function(response) {
             // something went wrong
-           return $q.reject(response);
+            return $q.reject(response);
         });
 
     }

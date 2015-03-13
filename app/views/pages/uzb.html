@@ -1,6 +1,7 @@
 <!-- Uzb view -->
 <div data-ng-controller="UzbController">
     <div class="page-header"><h1>{{_t('upgrade_bootloader_firmware')}}</h1></div>
+    <p>{{_t('txt_uzb_info')}}</p>
     <div class="alert alert-dismissible" ng-if="alert.message" ng-class="alert.status">
         <!--<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
         <i class="fa fa-lg" ng-class="alert.icon"></i> <span ng-bind="alert.message"></span>
@@ -11,8 +12,8 @@
             <tbody>
                 <tr ng-repeat="v in uzbUpgrade| orderBy:predicate:reverse" id="row_{{v.id}}" ngif="v.file == 'bin'">
                     <td  style="white-space: nowrap;"><strong>{{v.released | date:'yyyy-MM-dd'}}</strong></td>
-                    <td>{{v.appVersionMajor + '.' + v.appVersionMinor}} | {{v.file}}</td>
-                    <td>{{v.comment}}</td>
+                    <td>{{v.appVersionMajor + '.' + v.appVersionMinor}}</td>
+                   
                     <td class="update-ctrl">
                         <button 
                             data-ng-click="upgrade('#row_' + v.id,'/ZWaveAPI/ZMEBootloaderUpgrade', cfg.uzb_url + v.fileURL)" 
