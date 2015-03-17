@@ -13,6 +13,7 @@
                 <tr ng-repeat="v in uzbUpgrade| orderBy:predicate:reverse" id="row_{{v.id}}" ngif="v.file == 'bin'">
                     <td  style="white-space: nowrap;"><strong>{{v.released | date:'yyyy-MM-dd'}}</strong></td>
                     <td>{{v.appVersionMajor + '.' + v.appVersionMinor}}</td>
+                    <td>{{v.comment}}</td>
                    
                     <td class="update-ctrl">
                         <button 

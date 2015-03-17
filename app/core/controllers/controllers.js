@@ -4184,11 +4184,11 @@ appController.controller('UzbController', function($scope, $timeout, dataService
         dataService.updateUzb(cmd, data).then(function(response) {
             if (action == '/ZWaveAPI/ZMEFirmwareUpgrade') {
                 $scope.alert = {message: $scope._t('success_firmware_update'), status: 'alert-success', icon: 'fa-check'};
-               console.log('---------- SUCCESS bootloader ----------', response);
+               console.log('---------- SUCCESS firmware ----------', response);
                 //upgradeFirmware(response);
             } else {
                 $scope.alert = {message: $scope._t('success_bootloader_update'), status: 'alert-success', icon: 'fa-check'};
-                 console.log('---------- SUCCESS firmware ----------', response);
+                 console.log('---------- SUCCESS bootloader  ----------', response);
                 
                 
                 //upgradeBootloader(response);
@@ -4225,45 +4225,45 @@ appController.controller('UzbController', function($scope, $timeout, dataService
     /**
      * Proccessing bootloader upgrade
      */
-    function upgradeBootloader(response) {
-        $('.update-ctrl button').attr('disabled', true);
-        $scope.alert = {message: $scope._t('upgrade_bootloader_proccess'), status: 'alert-warning', icon: 'fa-spinner fa-spin'};
-        //console.log(response);
-        return;
-        $timeout(function() {
-            if ('do something to check when update is complete') {
-                $scope.alert = {message: $scope._t('success_bootloader_update'), status: 'alert-success', icon: 'fa-check'};
-                console.log('---------- SUCCESS bootloader ----------', response);
-            } else {// Otherwise show error message
-                $scope.alert = {message: $scope._t('error_bootloader_update'), status: 'alert-danger', icon: 'fa-exclamation-triangle'};
-                console.log('---------- ERROR bootloader ----------');
-            }
-            $('.update-ctrl button').attr('disabled', false);
-           
-        }, 3000);
-
-    }
-    ;
+//    function upgradeBootloader(response) {
+//        $('.update-ctrl button').attr('disabled', true);
+//        $scope.alert = {message: $scope._t('upgrade_bootloader_proccess'), status: 'alert-warning', icon: 'fa-spinner fa-spin'};
+//        //console.log(response);
+//        return;
+//        $timeout(function() {
+//            if ('do something to check when update is complete') {
+//                $scope.alert = {message: $scope._t('success_bootloader_update'), status: 'alert-success', icon: 'fa-check'};
+//                console.log('---------- SUCCESS bootloader ----------', response);
+//            } else {// Otherwise show error message
+//                $scope.alert = {message: $scope._t('error_bootloader_update'), status: 'alert-danger', icon: 'fa-exclamation-triangle'};
+//                console.log('---------- ERROR bootloader ----------');
+//            }
+//            $('.update-ctrl button').attr('disabled', false);
+//           
+//        }, 3000);
+//
+//    }
+//    ;
 
     /**
      * Proccessing firmware upgrade
      */
-    function upgradeFirmware(response) {
-        $('.update-ctrl button').attr('disabled', true);
-        $scope.alert = {message: $scope._t('upgrade_firmware_proccess'), status: 'alert-warning', icon: 'fa-spinner fa-spin'};
-        //console.log(response); 
-        return;
-        $timeout(function() {
-            if ('do something to check when update is complete') {
-               $scope.alert = {message: $scope._t('success_firmware_update'), status: 'alert-success', icon: 'fa-check'};
-                console.log('---------- SUCCESS firmware ----------', response);
-            } else {// Otherwise show error message
-                $scope.alert = {message: $scope._t('error_firmware_update'), status: 'alert-danger', icon: 'fa-exclamation-triangle'};
-                console.log('---------- ERROR firmware ----------');
-            }
-        }, 3000);
-
-    } ;
+//    function upgradeFirmware(response) {
+//        $('.update-ctrl button').attr('disabled', true);
+//        $scope.alert = {message: $scope._t('upgrade_firmware_proccess'), status: 'alert-warning', icon: 'fa-spinner fa-spin'};
+//        //console.log(response); 
+//        return;
+//        $timeout(function() {
+//            if ('do something to check when update is complete') {
+//               $scope.alert = {message: $scope._t('success_firmware_update'), status: 'alert-success', icon: 'fa-check'};
+//                console.log('---------- SUCCESS firmware ----------', response);
+//            } else {// Otherwise show error message
+//                $scope.alert = {message: $scope._t('error_firmware_update'), status: 'alert-danger', icon: 'fa-exclamation-triangle'};
+//                console.log('---------- ERROR firmware ----------');
+//            }
+//        }, 3000);
+//
+//    } ;
     
 });
 /**
