@@ -4114,7 +4114,7 @@ appController.controller('LicenseController', function($scope, $timeout, dataSer
         $scope.proccessUpdate = {'message': $scope._t('upgrading_capabilities'), 'status': 'fa fa-spinner fa-spin'};
         dataService.zmeCapabilities(data).then(function(response) {
             $scope.proccessUpdate = {'message': $scope._t('success_capabilities'), 'status': 'fa fa-check text-success'};
-            console.log('2. ---------- SUCCESS updateCapabilities ----------', error);
+            console.log('2. ---------- SUCCESS updateCapabilities ----------',response);
             //proccessCapabilities(response);
         }, function(error) {
             $scope.proccessUpdate = {'message': $scope._t('error_no_capabilities'), 'status': 'fa fa-exclamation-triangle text-danger'};
@@ -4122,25 +4122,26 @@ appController.controller('LicenseController', function($scope, $timeout, dataSer
         });
     };
     /**
+     * DEPRECATED
      * Update Proccess capabilities
      */
-    function proccessCapabilities(response) {
-        $('.verify-ctrl').attr('disabled', true);
-        return;
-        $timeout(function() {
-            if ('do something to check when update is complete') {
-                $scope.proccessUpdate = {'message': $scope._t('success_capabilities'), 'status': 'fa fa-check text-success'};
-                console.log('3. ---------- SUCCESS proccessCapabilities ----------', response);
-            } else {// Otherwise show error message
-                $scope.proccessUpdate = {'message': $scope._t('error_no_capabilities'), 'status': 'fa fa-exclamation-triangle text-danger'};
-                console.log('3. ---------- ERROR proccessCapabilities ----------');
-            }
-            $('.verify-ctrl').attr('disabled', false);
-            return;
-
-        }, 3000);
-
-    };
+//    function proccessCapabilities(response) {
+//        $('.verify-ctrl').attr('disabled', true);
+//        return;
+//        $timeout(function() {
+//            if ('do something to check when update is complete') {
+//                $scope.proccessUpdate = {'message': $scope._t('success_capabilities'), 'status': 'fa fa-check text-success'};
+//                console.log('3. ---------- SUCCESS proccessCapabilities ----------', response);
+//            } else {// Otherwise show error message
+//                $scope.proccessUpdate = {'message': $scope._t('error_no_capabilities'), 'status': 'fa fa-exclamation-triangle text-danger'};
+//                console.log('3. ---------- ERROR proccessCapabilities ----------');
+//            }
+//            $('.verify-ctrl').attr('disabled', false);
+//            return;
+//
+//        }, 3000);
+//
+//    };
 });
 // UzbController
 appController.controller('UzbController', function($scope, $timeout, dataService) {
@@ -4153,7 +4154,6 @@ appController.controller('UzbController', function($scope, $timeout, dataService
      */
     $scope.load = function() {
         dataService.getZwaveData(function(ZWaveAPIData) {
-            //var controller = ZWaveAPIData.controller.data;
             var vendorId = parseInt(ZWaveAPIData.controller.data.manufacturerId.value, 10);
             //0x0115 = 277, 0x0147 = 327
             var allowedVendors = [277, 327];
@@ -4223,6 +4223,7 @@ appController.controller('UzbController', function($scope, $timeout, dataService
     ;
 
     /**
+     * DEPRECATED
      * Proccessing bootloader upgrade
      */
 //    function upgradeBootloader(response) {
