@@ -10646,7 +10646,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
      * Update Uzb
      */
     function getUzb(params) {
-       return $http({
+        return $http({
             method: 'get',
             url: cfg.uzb_url + params
         }).then(function(response) {
@@ -10665,7 +10665,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
     /**
      * Update Uzb
      */
-    function updateUzb(url,data) {
+    function updateUzb(url, data) {
         //alert('Run HTTP request: ' + url);
         return $http({
             method: 'POST',
@@ -10675,14 +10675,14 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
                 "Content-Type": "application/x-www-form-urlencoded"
             }
         }).then(function(response) {
-           return response;
+            return response;
         }, function(response) {
             // something went wrong
-           return $q.reject(response);
+            return $q.reject(response);
         });
-       }
-       
-        /**
+    }
+
+    /**
      * Get license key
      */
     function getLicense(data) {
@@ -10694,13 +10694,14 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
                 "Content-Type": "application/x-www-form-urlencoded"
             }
         }).then(function(response) {
-           if (typeof response.data[0] === 'object') {
-                return response.data[0];
+            if (response.data.license.length > 1) {
+                return response.data.license;
             } else {
                 // invalid response
                 return $q.reject(response);
             }
         }, function(response) {
+            //debugger;
             // something went wrong
             return $q.reject(response);
         });
@@ -10710,20 +10711,23 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
      * Set ZME Capabilities
      */
     function zmeCapabilities(data) {
-        var capabilities = [0x1E, 0x14, 0xC2, 0x47, 0x26, 0x68, 0x71, 0x40, 0x1E, 0x4F, 0xBA, 0x6A, 0x06, 0xD9, 0x3D, 0xF4, 0xC2, 0x37, 0x30, 0x00, 0x5B, 0x67, 0x0E, 0x93, 0xFE, 0x4E, 0x24, 0x33, 0x24, 0x93, 0xF1, 0xE9, 0x5C, 0x6B, 0x81, 0x35, 0xE9, 0x71, 0x08, 0xD1, 0x67, 0x31, 0xC5, 0x77, 0xC6, 0x75, 0xE3, 0x94];
-        ///JS/Run/zway.ZMECapabilities([0x1E, 0x14, 0xC2, 0x47, 0x26, 0x68, 0x71, 0x40, 0x1E, 0x4F, 0xBA, 0x6A, 0x06, 0xD9, 0x3D, 0xF4, 0xC2, 0x37, 0x30, 0x00, 0x5B, 0x67, 0x0E, 0x93, 0xFE, 0x4E, 0x24, 0x33, 0x24, 0x93, 0xF1, 0xE9, 0x5C, 0x6B, 0x81, 0x35, 0xE9, 0x71, 0x08, 0xD1, 0x67, 0x31, 0xC5, 0x77, 0xC6, 0x75, 0xE3, 0x94])
+//        return $q.reject(data); // Test error response
+//        var deferred = $q.defer();
+//        deferred.resolve(data);
+//        return deferred.promise;// Test success response
+
         return $http({
             method: 'POST',
-            url: cfg.server_url + cfg.store_url + 'ZMECapabilities(' + capabilities + ')',
-             data: $.param(data),
-              headers: {
+            url: cfg.server_url + cfg.license_load_url,
+            data: $.param({license: data.toString()}),
+            headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
         }).then(function(response) {
-           return response;
+            return response;
         }, function(response) {
             // something went wrong
-           return $q.reject(response);
+            return $q.reject(response);
         });
 
     }
@@ -12724,7 +12728,7 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                         obj['iId'] = instanceId;
                         obj['cmd'] = alarmSensor.data.name + '.' + val.name;
                         obj['cmdId'] = '0x9c';
-                        obj['rowId'] = alarmSensor.name + '_' + k + '_' + instanceId + '_' + sensor_type; 
+                        obj['rowId'] = alarmSensor.name + '_' + k + '_' + instanceId + '_' + sensor_type;
                         obj['name'] = devName;
                         obj['type'] = alarmSensor.name;
                         obj['purpose'] = val.typeString.value;
@@ -15585,15 +15589,18 @@ appController.controller('ControllerController', function($scope, $window, dataS
             //var isSUC = ZWaveAPIData.controller.data.isSUC.value;
             var SUCNodeID = ZWaveAPIData.controller.data.SUCNodeId.value;
             var vendor = ZWaveAPIData.controller.data.vendor.value;
-            var ZWChip = ZWaveAPIData.controller.data.ZWaveChip.value;
             var productId = ZWaveAPIData.controller.data.manufacturerProductId.value;
-            var productType = ZWaveAPIData.controller.data.manufacturerProductType.value;
+            
             var sdk = ZWaveAPIData.controller.data.SDK.value;
             var libType = ZWaveAPIData.controller.data.libType.value;
             var api = ZWaveAPIData.controller.data.APIVersion.value;
             var revId = ZWaveAPIData.controller.data.softwareRevisionId.value;
             var revVer = ZWaveAPIData.controller.data.softwareRevisionVersion.value;
             var revDate = ZWaveAPIData.controller.data.softwareRevisionDate.value;
+            var manufactrerId = ZWaveAPIData.controller.data.manufacturerId.value;
+            var manufacturerProductId = ZWaveAPIData.controller.data.manufacturerProductId.value;
+             var ZWChip = ZWaveAPIData.controller.data.ZWaveChip.value;
+             var productType = ZWaveAPIData.controller.data.manufacturerProductType.value;
             var obj = {};
             $scope.info['ctrl_info_nodeid_value'] = nodeId;
             $scope.info['ctrl_info_homeid_value'] = '0x' + ('00000000' + (homeId + (homeId < 0 ? 0x100000000 : 0)).toString(16)).slice(-8);
@@ -15609,6 +15616,10 @@ appController.controller('ControllerController', function($scope, $window, dataS
             $scope.info['ctrl_info_sw_rev_ver_value'] = revVer;
             $scope.info['ctrl_info_sw_rev_id_value'] = revId;
             $scope.info['ctrl_info_sw_rev_date_value'] = revDate;
+            $scope.info['manufactrerId'] = manufactrerId;
+            $scope.info['ZWaveChip'] = ZWChip;
+            $scope.info['manufacturerProductType'] = productType;
+            $scope.info['manufacturerProductId'] = manufacturerProductId;
             /**
              * Function list
              */
@@ -15829,12 +15840,13 @@ appController.controller('InterviewCommandController', function($scope, $filter)
     };
 });
 // LicenseController
-appController.controller('LicenseController', function($scope, dataService) {
+appController.controller('LicenseController', function($scope, $timeout, dataService) {
     $scope.proccessVerify = {
         'message': false,
         'status': 'is-hidden'
 
     };
+     $scope.controllerUuid = null;
     $scope.proccessUpdate = {
         'message': false,
         'status': 'is-hidden'
@@ -15854,6 +15866,13 @@ appController.controller('LicenseController', function($scope, dataService) {
         "selldate": null,
         "usedate": null
     };
+    $scope.ZWaveAPIData = function() {
+        dataService.getZwaveData(function(ZWaveAPIData) {
+            $scope.controllerUuid = ZWaveAPIData.controller.data.uuid.value;
+
+        });
+    };
+    $scope.ZWaveAPIData();
     /**
      * Get license key
      */
@@ -15865,27 +15884,33 @@ appController.controller('LicenseController', function($scope, dataService) {
             return;
         }
         $scope.proccessVerify = {'message': $scope._t('verifying_licence_key'), 'status': 'fa fa-spinner fa-spin'};
-
-        dataService.getLicense(formData).then(function(response) {
+        var input = {
+            'uuid': $scope.controllerUuid,
+            'scratch': formData.scratch_id 
+        };
+        dataService.getLicense(input).then(function(response) {
             $scope.proccessVerify = {'message': $scope._t('success_licence_key'), 'status': 'fa fa-check text-success'};
-            console.log('---------- SUCCESS Verification ----------', response);
+            console.log('1. ---------- SUCCESS Verification ----------', response);
+            
             // Update capabilities
             updateCapabilities(response);
 
         }, function(error) {// Error verifying key
-            //alert($scope._t('error_no_licence_key'));
+            //debugger;
             var message = $scope._t('error_no_licence_key');
             if (error.status == 404) {
                 var message = $scope._t('error_404_licence_key');
             }
             $scope.proccessVerify = {'message': message, 'status': 'fa fa-exclamation-triangle text-danger'};
-            console.log('---------- ERROR Verification ----------', error);
+            console.log('1. ---------- ERROR Verification ----------', error);
 
         });
         return;
     };
+    
 
-   /// --- Private functions --- ///
+    /// --- Private functions --- ///
+    
     /**
      * Update capabilities
      */
@@ -15893,27 +15918,46 @@ appController.controller('LicenseController', function($scope, dataService) {
         $scope.proccessUpdate = {'message': $scope._t('upgrading_capabilities'), 'status': 'fa fa-spinner fa-spin'};
         dataService.zmeCapabilities(data).then(function(response) {
             $scope.proccessUpdate = {'message': $scope._t('success_capabilities'), 'status': 'fa fa-check text-success'};
-            console.log('---------- SUCCESS capabilities ----------', response);
+            console.log('2. ---------- SUCCESS updateCapabilities ----------',response);
+            //proccessCapabilities(response);
         }, function(error) {
-            //alert($scope._t('error_no_capabilities'));
             $scope.proccessUpdate = {'message': $scope._t('error_no_capabilities'), 'status': 'fa fa-exclamation-triangle text-danger'};
-            console.log('---------- ERROR capabilities ----------', error);
+            console.log('2. ---------- ERROR updateCapabilities ----------', error);
         });
     };
+    /**
+     * DEPRECATED
+     * Update Proccess capabilities
+     */
+//    function proccessCapabilities(response) {
+//        $('.verify-ctrl').attr('disabled', true);
+//        return;
+//        $timeout(function() {
+//            if ('do something to check when update is complete') {
+//                $scope.proccessUpdate = {'message': $scope._t('success_capabilities'), 'status': 'fa fa-check text-success'};
+//                console.log('3. ---------- SUCCESS proccessCapabilities ----------', response);
+//            } else {// Otherwise show error message
+//                $scope.proccessUpdate = {'message': $scope._t('error_no_capabilities'), 'status': 'fa fa-exclamation-triangle text-danger'};
+//                console.log('3. ---------- ERROR proccessCapabilities ----------');
+//            }
+//            $('.verify-ctrl').attr('disabled', false);
+//            return;
+//
+//        }, 3000);
+//
+//    };
 });
-
 // UzbController
 appController.controller('UzbController', function($scope, $timeout, dataService) {
     $scope.uzbUpgrade = [];
     $scope.uzbFromUrl = [];
-    $scope.alert = {message: false,status: 'is-hidden',icon: false};
+    $scope.alert = {message: false, status: 'is-hidden', icon: false};
     /**
      * Load data
      *
      */
     $scope.load = function() {
         dataService.getZwaveData(function(ZWaveAPIData) {
-            //var controller = ZWaveAPIData.controller.data;
             var vendorId = parseInt(ZWaveAPIData.controller.data.manufacturerId.value, 10);
             //0x0115 = 277, 0x0147 = 327
             var allowedVendors = [277, 327];
@@ -15931,52 +15975,101 @@ appController.controller('UzbController', function($scope, $timeout, dataService
         });
     };
     $scope.load();
-    
-     
-    // Store data on RazBerry
-    $scope.store = function(row,action, url) {
+
+    // Upgrade bootloader/firmware
+    $scope.upgrade = function(row, action, url) {
         $scope.alert = {message: false};
-        $(row + ' .fa-spin').css('display', 'inline-block');
         var cmd = $scope.cfg.server_url + action;
         var data = {
             url: url
         };
-        dataService.updateUzb(cmd,data).then(function(response) {
-            $(row).fadeOut(1000);
-            $scope.alert = {message: $scope._t('success_firmware_update'), status: 'alert-success', icon: 'fa-check'};
+         $('.update-ctrl button').attr('disabled', true);
+         $scope.alert = {message: $scope._t('upgrade_bootloader_proccess'), status: 'alert-warning', icon: 'fa-spinner fa-spin'};
+        dataService.updateUzb(cmd, data).then(function(response) {
+            if (action == '/ZWaveAPI/ZMEFirmwareUpgrade') {
+                $scope.alert = {message: $scope._t('success_firmware_update'), status: 'alert-success', icon: 'fa-check'};
+               console.log('---------- SUCCESS firmware ----------', response);
+                //upgradeFirmware(response);
+            } else {
+                $scope.alert = {message: $scope._t('success_bootloader_update'), status: 'alert-success', icon: 'fa-check'};
+                 console.log('---------- SUCCESS bootloader  ----------', response);
+                
+                
+                //upgradeBootloader(response);
+            }
+            $('.update-ctrl button').attr('disabled', false);
         }, function(error) {
-            $(row + ' .fa-spin').fadeOut(1000);
-            $scope.alert = {message: $scope._t('error_firmware_update'), status: 'alert-danger', icon: 'fa-exclamation-triangle'};
+            $scope.alert = {message: $scope._t('error_handling_data'), status: 'alert-danger', icon: 'fa-exclamation-triangle'};
             console.log('ERROR', error);
-            //alert($scope._t('error_firmware_update'));
-        });
-        return;
-        $timeout(function() {
-
-        }, 3000);
-        return;
+            $('.update-ctrl button').attr('disabled', false);
+        }); 
     };
-    
+
     /// --- Private functions --- ///
-    
-     /**
+
+    /**
      * Load uzb data
      */
     function loadUzb(urlParams) {
         $scope.alert = {message: $scope._t('loading_data_remote'), status: 'alert-warning', icon: 'fa-spinner fa-spin'};
-            dataService.getUzb(urlParams).then(function(response) {
-                if (response.length > 0) {
-                    $scope.uzbUpgrade = response;
-                    $scope.alert = {message: false};
-                } else {
-                    $scope.alert = {message: $scope._t('noavailable_firmware_update'), status: 'alert-info', icon: 'fa-info-circle'};
-                }
-            }, function(error) {
-                $scope.alert = {message: $scope._t('error_handling_data_remote'), status: 'alert-danger', icon: 'fa-exclamation-triangle'};
-                console.log('ERROR', error);
-                //alert($scope._t('error_handling_data_remote') + '\n' + $scope.cfg.uzb_url);
-            });
-    };
+        dataService.getUzb(urlParams).then(function(response) {
+            if (response.length > 0) {
+                $scope.uzbUpgrade = response;
+                $scope.alert = {message: false};
+            } else {
+                $scope.alert = {message: $scope._t('noavailable_firmware_update'), status: 'alert-info', icon: 'fa-info-circle'};
+            }
+        }, function(error) {
+            $scope.alert = {message: $scope._t('error_handling_data_remote'), status: 'alert-danger', icon: 'fa-exclamation-triangle'};
+            console.log('ERROR', error);
+        });
+    }
+    ;
+
+    /**
+     * DEPRECATED
+     * Proccessing bootloader upgrade
+     */
+//    function upgradeBootloader(response) {
+//        $('.update-ctrl button').attr('disabled', true);
+//        $scope.alert = {message: $scope._t('upgrade_bootloader_proccess'), status: 'alert-warning', icon: 'fa-spinner fa-spin'};
+//        //console.log(response);
+//        return;
+//        $timeout(function() {
+//            if ('do something to check when update is complete') {
+//                $scope.alert = {message: $scope._t('success_bootloader_update'), status: 'alert-success', icon: 'fa-check'};
+//                console.log('---------- SUCCESS bootloader ----------', response);
+//            } else {// Otherwise show error message
+//                $scope.alert = {message: $scope._t('error_bootloader_update'), status: 'alert-danger', icon: 'fa-exclamation-triangle'};
+//                console.log('---------- ERROR bootloader ----------');
+//            }
+//            $('.update-ctrl button').attr('disabled', false);
+//           
+//        }, 3000);
+//
+//    }
+//    ;
+
+    /**
+     * Proccessing firmware upgrade
+     */
+//    function upgradeFirmware(response) {
+//        $('.update-ctrl button').attr('disabled', true);
+//        $scope.alert = {message: $scope._t('upgrade_firmware_proccess'), status: 'alert-warning', icon: 'fa-spinner fa-spin'};
+//        //console.log(response); 
+//        return;
+//        $timeout(function() {
+//            if ('do something to check when update is complete') {
+//               $scope.alert = {message: $scope._t('success_firmware_update'), status: 'alert-success', icon: 'fa-check'};
+//                console.log('---------- SUCCESS firmware ----------', response);
+//            } else {// Otherwise show error message
+//                $scope.alert = {message: $scope._t('error_firmware_update'), status: 'alert-danger', icon: 'fa-exclamation-triangle'};
+//                console.log('---------- ERROR firmware ----------');
+//            }
+//        }, 3000);
+//
+//    } ;
+    
 });
 /**
  * Deprecated
@@ -16857,23 +16950,23 @@ appController.controller('ConfigAssociationController', function($scope, $filter
                 return;
             }
 
-            if ($scope.hasMca && !(142 in node.instances[0].commandClasses)) {
-                //console.log(nodeId + ' Has NO MCA (142)'); 
-                //return;
-
-            }
-            if (!$scope.hasMca && 142 in node.instances[0].commandClasses) {
-                //console.log(nodeId + ' Has NO ASSOC (133)');
-                //return;
-            }
-            var mc = '---';
-            angular.forEach(node.instances, function(instance, instanceId) {
-                if (0x60 in instance.commandClasses) {
-                    mc = '92';
-                }
-            });
-            console.log(0x60 in node.instances[0].commandClasses)
-            console.log(nodeId + ' MCA: ' + (142 in node.instances[0].commandClasses ? '142' : '---') + ' MC: ' + (0x60 in node.instances[0].commandClasses ? '0x60' : '---'));
+//            if ($scope.hasMca && !(142 in node.instances[0].commandClasses)) {
+//                //console.log(nodeId + ' Has NO MCA (142)'); 
+//                //return;
+//
+//            }
+//            if (!$scope.hasMca && 142 in node.instances[0].commandClasses) {
+//                //console.log(nodeId + ' Has NO ASSOC (133)');
+//                //return;
+//            }
+//            var mc = '---';
+//            angular.forEach(node.instances, function(instance, instanceId) {
+//                if (0x60 in instance.commandClasses) {
+//                    mc = '92';
+//                }
+//            });
+//            console.log(0x60 in node.instances[0].commandClasses)
+//            console.log(nodeId + ' MCA: ' + (142 in node.instances[0].commandClasses ? '142' : '---') + ' MC: ' + (0x60 in node.instances[0].commandClasses ? '0x60' : '---'));
 
             $scope.addDevices.push({
                 'key': nodeId,

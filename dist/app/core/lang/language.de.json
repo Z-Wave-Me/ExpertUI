@@ -1,4 +1,5 @@
 {
+   "txt_uzb_info":"Die Firmware ihres Z-Wave Transceivers can über diese Schnittstelle aktualisiert werden. Eine solche Aktualisierung sollte nicht ohne Konsultation des Supports erfolgen. Für manche Aktualisierungsschritte kann es erforderlich sein, vorher den Bootloader-Teil der Firmwares parat zu aktualisieren, bevor die eigentliche Firmware aktualisiert wird. ",
    "nm_restore_pick_up": "Datei Upload",
    "apply_config_into_device": "Speichern",
     "nav_active_associations":"Assoziationsmanagement",

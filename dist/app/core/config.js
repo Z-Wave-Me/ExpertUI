@@ -20,6 +20,7 @@ var config_data = {
         'restore_url': '/ZWaveAPI/Restore', // Url to restore backup
         'queue_url': '/ZWaveAPI/InspectQueue', // Url for inspect queue
         'fw_update_url': '/ZWaveAPI/FirmwareUpdate', // Url for Firmware Update
+        'license_load_url': '/ZWaveAPI/ZMELicense', // Url to load new license
         'runjs_url': '/JS/Run/', // Url for running JS
         'device_classes_url': '/translations/DeviceClasses.xml', // Url to Device Classes
         'config_url': '/config/', // Url for store config data
@@ -28,7 +29,8 @@ var config_data = {
         'zddx_create_url': '/ZWaveAPI/CreateZDDX/', // Create zddx file
         'notes_url': '/config/notes.log', // Url for store notes data
         'uzb_url': 'http://www.zwave.eu/api/expertui/uzb/', // Url for uzb data
-        'license_url': 'http://www.zwave.eu/api/expertui/license/', // Url for license key
+        'license_url': 'http://store.zwaveeurope.com/license/utility_uzb.php', // Url for license key
+        'buy_licence_key': 'http://www.zwave.me/index.php?id=41', // Buy licence key url
         'lang_dir': 'app/core/lang/', // Language directory
         'lang': 'en', // Default language
         'lang_list': ["en", "de", "fr", "es", "ru"], // List of languages

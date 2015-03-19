@@ -1,9 +1,9 @@
 <!-- License view -->
 <div ng-controller="LicenseController">
     <div class="page-header"><h1>{{_t('licence')}}</h1></div>
-    <p>
+    <!--<p>
         Curabitur eu pharetra felis. In hac habitasse platea dictumst. Duis id erat non eros laoreet vestibulum. Duis aliquam cursus enim eu congue. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In id fringilla dui.
-    </p>
+    </p> -->
 
     <div class="panel panel-default panel-highlighted">
         <div class="panel-heading"><i class="fa fa-key"></i> {{_t('licence_key_insert')}}</div>
@@ -11,13 +11,13 @@
             <div class="cfg-block">
                 <div class="form-inline">
                     <input
-                        class="form-control spin-true" 
+                        class="form-control spin-true verify-ctrl" 
                         type="text" 
                         name="scratch_id"
                         id="scratch_id" 
                         value="" 
                         ng-model="formData.scratch_id" />
-                    <button class="btn btn-primary" ng-click="getLicense(formData)"> {{_t('btn_licence_verify')}}</button>
+                    <button class="btn btn-primary verify-ctrl" ng-click="getLicense(formData)"> {{_t('btn_licence_verify')}}</button>
 
                 </div> 
             </div>
@@ -34,8 +34,10 @@
     <div class="panel panel-default">
         <div class="panel-heading"><i class="fa fa-sign-in"></i> {{_t('licence_key_get')}}</div>
         <div class="panel-body">
+            <!--
             <p>Duis id erat non eros laoreet vestibulum. Duis aliquam cursus enim eu congue. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-            <p><a href="" class="btn btn-info btn-lg">{{_t('btn_licence_buy')}}</a></p>
+             -->
+            <p><a ng-href="{{cfg.buy_licence_key}}" class="btn btn-info btn-lg">{{_t('btn_licence_buy')}}</a></p>
         </div>
     </div>
 </div>
