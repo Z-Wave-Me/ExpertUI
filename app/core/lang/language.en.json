@@ -1,5 +1,6 @@
 {
     "--- missing": "---",
+     "--- ": "---",
     "value_changed_to": "Value was changed to",
     "value_not_stored_indevice": "but not stored in device yet.",
     "device_changed_configuration": "Device changed configuration but some values are not written. Wait for device to wake up.",
@@ -31,7 +32,8 @@
     "timing_green": "the response time is not beyond the allowable range.",
     "timing_black": "controller was not able to reach the given node with 3 attempts and tried a different route that finally worked.",
     "timing_red": "the communication finally failed after some re-routing attempts.",
-    "--- ": "---",
+    "licence_upgrade_info": "Your Z-Wave transceiver contains an firmware internal capability management that can enable/disable certain functions for the hardware. This include the maximum number of devices controllable or other function enhancements.",
+     "licence_upgrade_key":"If you have acquired a licensing key for such an function enhancement you may include this key here to extend the functions and capabilities of  Z-Way.",
      "licence_upgrade": "Licence Upgrade",
     "upgrade_bootloader_firmware": "Firmware Update",
     "txt_uzb_info": "The firmware of your Z-Wave transceiver is upgradable using this interface. You should only perform an upgrade if asked by support. its possible that certain firmware upgrade require to upgrade the board loader part of the firmare first. ",
