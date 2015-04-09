@@ -3023,6 +3023,17 @@ appController.controller('ControllController', function($scope, $filter, $upload
         }
 
     };
+    
+    /**
+     * Close failed node modal window
+     */
+    $scope.closeFailedNode = function(modal) {
+        console.log('closeFailedNode')
+        $("#remove_node_confirm").attr('checked', false);
+        $scope.goFailedNode = false;
+        $(modal).modal('hide');
+
+    };
     /**
      * Close reset controller modal window
      *
