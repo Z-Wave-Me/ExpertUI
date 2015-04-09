@@ -693,8 +693,8 @@ appController.controller('ConfigAssociationController', function($scope, $filter
         $scope.removeNodes = {};
         $scope.removeNodesSort = {};
         $scope.removeInstances = {};
-        //$scope.assocToNode = '';
-        //$scope.assocToInstance = '';
+        $scope.assocToNode = null;
+        $scope.assocToInstance = null;
         $scope.removeNodesLength = $scope.removeData.nodeIds;
         $scope.removeInstancesLength = [];
         var cnt = 0;
