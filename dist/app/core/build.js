@@ -12737,8 +12737,8 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                         obj['invalidateTime'] = val.invalidateTime;
                         obj['updateTime'] = val.updateTime;
                         obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
-                        obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[' + instanceId + '].commandClasses[0x9c].Get()';
-                        obj['cmdToUpdate'] = 'devices.' + obj['id'] + '.instances.' + instanceId + '.commandClasses.0x9c.data.' + sensor_type;
+                        obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[' + instanceId + '].commandClasses[156].Get()';
+                        obj['cmdToUpdate'] = 'devices.' + obj['id'] + '.instances.' + instanceId + '.commandClasses.156.data.' + sensor_type;
                         // Push to sensors
                         $scope.sensors.push(obj);
                     });
@@ -12753,7 +12753,7 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
      */
     function refreshData(data) {
         angular.forEach($scope.sensors, function(v, k) {
-            // Check for updated data
+           // Check for updated data
             if (v.cmdToUpdate in data.update) {
                 var obj = data.update[v.cmdToUpdate];
                 var level = '';
@@ -12766,8 +12766,8 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
 
                 } else if (v.cmdId == 0x9c) {
                     level = (obj.sensorState.value ? $scope._t('sensor_triggered') : $scope._t('sensor_idle'));
-                    updateTime = obj.val.updateTime;
-                    invalidateTime = obj.val.invalidateTime;
+                    updateTime = obj.sensorState.updateTime;
+                    invalidateTime = obj.sensorState.invalidateTime;
 
                 }
                 else {
@@ -12783,7 +12783,7 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                 if (updateTime > invalidateTime) {
                     $('#' + v.rowId + ' .row-time').removeClass('is-updated-false');
                 }
-                //console.log('Updating:' + v.rowId + ' | At: ' + updateTime + ' | with: ' + level);//REM
+                console.log('Updating: ' + v.rowId + ' | At: ' + $filter('isTodayFromUnix')(updateTime) + ' | with: ' + level);//REM
 
             }
         });
@@ -14827,6 +14827,17 @@ appController.controller('ControllController', function($scope, $filter, $upload
         }
 
     };
+    
+    /**
+     * Close failed node modal window
+     */
+    $scope.closeFailedNode = function(modal) {
+        console.log('closeFailedNode')
+        $("#remove_node_confirm").attr('checked', false);
+        $scope.goFailedNode = false;
+        $(modal).modal('hide');
+
+    };
     /**
      * Close reset controller modal window
      *
@@ -16799,8 +16810,8 @@ appController.controller('ConfigAssociationController', function($scope, $filter
         $scope.removeNodes = {};
         $scope.removeNodesSort = {};
         $scope.removeInstances = {};
-        //$scope.assocToNode = '';
-        //$scope.assocToInstance = '';
+        $scope.assocToNode = null;
+        $scope.assocToInstance = null;
         $scope.removeNodesLength = $scope.removeData.nodeIds;
         $scope.removeInstancesLength = [];
         var cnt = 0;
