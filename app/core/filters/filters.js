@@ -367,24 +367,52 @@ angApp.filter('lockIsOpen', function() {
 
 
 /**
+ * DEPRECATED
  * Set battery icon
  */
-angApp.filter('batteryIcon', function() {
+//angApp.filter('batteryIcon', function() {
+//    return function(input) {
+//        var icon = '';
+//        if(input >= 80){
+//            icon = 'fa fa-star fa-lg text-success';
+//        }
+//        if(input > 50 && input < 80){
+//            icon = 'fa fa-star-half-o fa-lg text-success';
+//        }
+//        if(input > 10 && input <= 50){
+//            icon = 'fa fa-star-half-o fa-lg text-danger';
+//        }
+//        if(input <= 10){
+//            icon = 'fa fa-star-o fa-lg text-danger';
+//        }
+//        return  icon;
+//    };
+//});
+
+/**
+ * Get battery icon
+ */
+angApp.filter('getBatteryIcon', function() {
     return function(input) {
-        var icon = '';
-        if(input >= 80){
-            icon = 'fa fa-star fa-lg text-success';
+        var icon = 'battery.png';
+        if (isNaN(input)) {
+            return icon;
         }
-        if(input > 50 && input < 80){
-            icon = 'fa fa-star-half-o fa-lg text-success';
+        var level = parseInt(input);
+        if(level > 95){
+            icon = 'battery-100.png';
+        }else if(level >= 70 && level <= 95){
+            icon = 'battery-80.png';
+        }else if(level >= 50 && level < 70){
+            icon = 'battery-50.png';
+        }else if(level > 20 && level < 50){
+            icon = 'battery-30.png';
+        }else if(level >= 5 && level <= 20){
+            icon = 'battery-20.png';
+        }else{
+            icon = 'battery-0.png';
         }
-        if(input > 10 && input <= 50){
-            icon = 'fa fa-star-half-o fa-lg text-danger';
-        }
-        if(input <= 10){
-            icon = 'fa fa-star-o fa-lg text-danger';
-        }
-        return  icon;
+        return icon;
     };
 });
 

@@ -165,6 +165,10 @@ background-color: #e4f5fc;
 .text-alert {
    margin: 7px 0;
 }
+.report-img{
+    display: inline-block;
+    max-width: 32px;
+}
 /* Modal
 -------------------------------------------------- */
 .modal-body {
