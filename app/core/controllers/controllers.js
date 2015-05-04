@@ -1605,7 +1605,8 @@ appController.controller('StatusController', function($scope, $filter, dataServi
         obj['sleeping'] = sleeping_cont;
         obj['awake'] = awake_cont;
         obj['updateTime'] = operating_cont;
-        obj['ddr'] = ddr;
+        //obj['ddr'] = ddr;
+        obj['ddr'] = ddrCont(node);
         obj['interview'] = interview_cont;
         obj['urlToStore'] = (isListening || isFLiRS ? 'devices[' + nodeId + '].SendNoOperation()' : false);
         obj['interview'] = interview_cont;
@@ -1712,8 +1713,17 @@ appController.controller('StatusController', function($scope, $filter, dataServi
     }
     // Get operating HTML
     function operatingCont(isFailed, lastCommunication) {
-        var operating_cont = (isFailed ? ('<i class="fa fa-check fa-lg text-danger" title="' + $scope._t('device_is_dead') + '"></i>') : ('<i class="fa fa-check fa-lg text-success" title="' + $scope._t('device_is_operating') + '"></i>')) + ' <span title="' + $scope._t('last_communication') + '" class="not_important">' + $filter('isTodayFromUnix')(lastCommunication) + '</span>';
+        var operating_cont = (isFailed ? ('<i class="fa fa-ban fa-lg text-danger" title="' + $scope._t('device_is_dead') + '"></i>') : ('<i class="fa fa-check fa-lg text-success" title="' + $scope._t('device_is_operating') + '"></i>')) + ' <span title="' + $scope._t('last_communication') + '" class="not_important">' + $filter('isTodayFromUnix')(lastCommunication) + '</span>';
         return operating_cont;
+    }
+    
+     // Get ddr
+    function ddrCont(node) {
+       var ddr = '<i class="fa fa-minus"></i>';
+        if (angular.isDefined(node.data.ZDDXMLFile) && node.data.ZDDXMLFile.value) {
+           ddr = '<i class="fa fa-check"></i>';
+        }
+        return ddr;
     }
 
     // Get Sleeping HTML

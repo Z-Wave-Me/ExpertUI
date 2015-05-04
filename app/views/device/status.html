@@ -55,7 +55,7 @@
         <td data-title="{{ _t('th_sleeping')}}" class="row-sleeping"><span ng-bind-html="v.sleeping | toTrusted"></span> &nbsp;</td>
                     <td data-title="{{ _t('th_awake')}}" class="row-awake"><span ng-bind-html="v.awake | toTrusted"></span> &nbsp;</td>
                     <td data-title="{{ _t('datetime')}}" class="row-time"><span ng-bind-html="v.updateTime | toTrusted"></span> &nbsp;</td>
-                    <td data-title="{{ _t('th_ddr')}}" class="row-ddr"><i class="{{v.ddr | checkedIcon}}"></i> &nbsp;</td>
+                    <td data-title="{{ _t('th_ddr')}}" class="row-ddr"><span ng-bind-html="v.ddr | toTrusted"></span> &nbsp;</td>
                     <td class="row-interview">
                          <a href="" ng-show="v.interview" ng-click="showModalInterview('#modal_interview', $index,v.id,v.name)" title="{{v.interview}}"><i class="fa fa-question-circle fa-lg text-info"></i></a> &nbsp;
                     </td>
