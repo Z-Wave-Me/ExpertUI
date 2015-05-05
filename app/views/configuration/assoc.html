@@ -1,10 +1,10 @@
 <!-- Association view -->
-<div id="AssociationTable" ng-controller="ConfigAssociationController">
+<div id="AssociationTable" ng-controller="ConfigAssocController">
     <!-- Config navigation -->
     <div ng-include="'app/views/configuration/header.html'"></div>
 
     <div class="tab-content" ng-show_="deviceId > 0">
-        <div class="page-header"><h1>{{ _t('associations_list')}}</h1></div>
+        <div class="page-header"><h1 class="text-danger">{{ _t('associations_list')}} !!! DEV !!!</h1></div>
         <button 
             type="button" 
             class="btn btn-primary"
