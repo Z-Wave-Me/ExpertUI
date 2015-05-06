@@ -631,15 +631,15 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             if (!node) {
                 return;
             }
-            if (nodeId == 255 || node.data.isVirtual.value){
+            if (nodeId == 255 || node.data.isVirtual.value) {
                 return;
             }
-            
+
             $cookies.configuration_id = nodeId;
             $cookies.config_url = $scope.activeUrl + nodeId;
             $scope.deviceId = nodeId;
 
-            setData(node, ZWaveAPIData,nodeId);
+            setData(node, ZWaveAPIData, nodeId);
 
         });
     };
@@ -649,35 +649,48 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
     /**
      * Set zwave data
      */
-    function setData(node, ZWaveAPIData,nodeId) {
+    function setData(node, ZWaveAPIData, nodeId) {
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         var zddXmlFile = $filter('hasNode')(node, 'data.ZDDXMLFile.value');
         var assocGroups;
-         console.log('zddXmlFile: ' + zddXmlFile);
+        console.log('zddXmlFile: ' + zddXmlFile);
         // not available
         if (!zddXmlFile || zddXmlFile === 'undefined') {
-            $scope.assocGroups = getAssocDevices(node, ZWaveAPIData, null, controllerNodeId);
-            assocGroups = getAssocGroups(node, null, nodeId);
-            console.log('assocGroups: ', assocGroups);
+            //$scope.assocGroups = getAssocDevices(node, ZWaveAPIData, null, controllerNodeId);
+            $scope.assocGroups = getAssocGroups(node, null, nodeId,ZWaveAPIData);
+            console.log('assocGroups: ', $scope.assocGroups);
             return;
         }
-       
+
         dataService.getZddXml(zddXmlFile, function(zddXmlData) {
             var zdd = $filter('hasNode')(zddXmlData, 'ZWaveDevice.assocGroups');
-            $scope.assocGroups = getAssocDevices(node, ZWaveAPIData, zdd, controllerNodeId);
-            assocGroups = getAssocGroups(node, zdd, nodeId);
-            console.log('assocGroups: ', assocGroups);
+            //$scope.assocGroups = getAssocDevices(node, ZWaveAPIData, zdd, controllerNodeId);
+            $scope.assocGroups = getAssocGroups(node, zdd, nodeId,ZWaveAPIData);
+            console.log('assocGroups: ', $scope.assocGroups);
 
         });
 
     }
-    
-     /**
+
+    /**
      * Get assoc groups
      */
-    function getAssocGroups(node, zdd, nodeId) {
+    function getAssocGroups(node, zdd, nodeId,ZWaveAPIData) {
         var assocGroups = [];
-         angular.forEach(node.instances, function( instance,index) {
+        var groupZdd = [];
+       
+        if (zdd) {
+            angular.forEach(zdd, function(zddval, zddkey) {
+                if (angular.isArray(zddval)) {
+                    angular.forEach(zddval, function(val, key) {
+                        groupZdd[val._number] = val;
+                    });
+                } else {
+                    groupZdd[zddval._number] = zddval;
+                }
+            });
+        }
+        angular.forEach(node.instances, function(instance, index) {
             if (!("commandClasses" in instance)) {
                 return;
             }
@@ -691,18 +704,22 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                         groups = instance.commandClasses[0x8e].data.groups.value;
                 }
                 for (var group = 0; group < groups; group++) {
-                    var key = nodeId + "." + index + "." + group;
+//                    var key = nodeId + "." + index + "." + group;
 //                    if ($.inArray(key, $scope.keys) == -1){
 //                        $scope.keys.push(key);
 //                    }
-                        
+
                     var data;
+                    var assocDevices = [];
                     var timeArray; // object to get updateTime from
                     var nodeIds = [];
                     var instanceIds = [];
                     var persistent = [];
                     var tooltips = [];
                     var type = null;
+                    var groupId;
+                    var label;
+                    var max;
                     var obj = {};
                     if ((0x85 in instance.commandClasses) && (group < instance.commandClasses[0x85].data.groups.value)) {
                         data = instance.commandClasses[0x85].data[group + 1];
@@ -719,6 +736,11 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                                 persistent.push("dissapeared");
                                 tooltips.push($scope._t('device_disappeared'));
                             }
+                            assocDevices.push({
+                                id: targetNodeId, 
+                                name: $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId]),
+                                instance: targetInstanceId
+                            });
                         }
                     }
                     if ((0x8e in instance.commandClasses) && (group < instance.commandClasses[0x8e].data.groups.value)) {
@@ -726,6 +748,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                         timeArray = data.nodesInstances;
                         for (var i = 0; i < data.nodesInstances.value.length; i += 2) {
                             var targetNodeId = data.nodesInstances.value[i];
+                             
                             nodeIds.push(targetNodeId);
                             var targetInstanceId = data.nodesInstances.value[i + 1];
                             instanceIds.push(targetInstanceId);
@@ -736,134 +759,38 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                                 persistent.push("notInZWave");
                                 tooltips.push($scope._t('device_disappeared'));
                             }
+                            assocDevices.push({
+                                id: targetNodeId, 
+                                name: $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId]),
+                                instance: targetInstanceId
+                            });
+                             
                         }
                     }
+                    groupId = (group + 1);
+                    label = getGroupLabel(groupZdd[groupId], group, instance);
+                    max = $filter('hasNode')(groupZdd[groupId],'_maxNodes');
+
                     obj = {
-                        label: getGroupLabel(nodeId, group, instance), 
-                        tooltips: tooltips, 
-                        nodeId: nodeId, 
-                        instanceId: index, 
-                        node: node, 
-                        instance: index, 
-                        groupId: (group + 1), 
-                        nodeIds: nodeIds, 
-                        instanceIds: instanceIds, 
-                        persistent: persistent, 
-                        update: timeArray, 
-                        max: data.max.value, 
-                        remaining: (data.max.value - nodeIds.length)};
-                    console.log(obj)
+                        label: label,
+                        devices: assocDevices,
+                        tooltips: tooltips,
+                        nodeId: nodeId,
+                        node: node,
+                        instance: index,
+                        groupId: groupId,
+                        nodeIds: nodeIds,
+                        instanceIds: instanceIds,
+                        persistent: persistent,
+                        update: timeArray,
+                        max: max || data.max.value,
+                        remaining: (data.max.value - nodeIds.length)
+                    };
+                    assocGroups.push(obj);
                 }
             }
         });
-
         return assocGroups;
-    }
-
-
-    /**
-     * Get assoc devices
-     */
-    function getAssocDevices(node, ZWaveAPIData, zdd, controllerNodeId) {
-        var assocGroups = [];
-        var assocDevices = [];
-        var assoc = [];
-        var data;
-        if (0x85 in node.instances[0].commandClasses) {
-             var cc = node.instances[0].commandClasses[0x85].data;
-                if (cc.groups.value >= 1) {
-                for (var grp_num = 1; grp_num <= parseInt(cc.groups.value, 10); grp_num++) {
-                    var groupArr = [];
-                    var groupDev = [];
-                    if (assocGroups.indexOf(grp_num) == -1) {
-                        assocGroups.push(grp_num);
-                    }
-                    data = cc[grp_num];
-                    for (var i = 0; i < data.nodes.value.length; i++) {
-                        var targetNodeId = data.nodes.value[i];
-                        var device = {'id': targetNodeId, 'name': $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId])};
-                        assocDevices.push({group: grp_num, device: device,updateTime:data.updateTime,invalidateTime:data.invalidateTime,maxNodes: data.max.value});
-                    }
-
-                }
-            }
-        }
-         
-        if (0x8e in node.instances[0].commandClasses) {
-           var cc = node.instances[0].commandClasses[0x8e].data;
-            if (cc.groups.value >= 1) {
-                for (var grp_num = 1; grp_num <= parseInt(cc.groups.value, 10); grp_num++) {
-                    var groupDev = [];
-                    if (assocGroups.indexOf(grp_num) == -1) {
-                        assocGroups.push(grp_num);
-                    }
-                    data = cc[grp_num];
-
-                    for (var i = 0; i < data.nodesInstances.value.length; i += 2) {
-                        var targetNodeId = data.nodesInstances.value[i];
-                        var targetInstanceId = data.nodesInstances.value[i + 1];
-                        var instanceId = (targetInstanceId > 0 ? '.' + targetInstanceId : '')
-                        var device = {'id': targetNodeId, 'name': $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId])};
-                        assocDevices.push({'group': grp_num, 'device': device,updateTime:data.updateTime,invalidateTime:data.invalidateTime,maxNodes: data.max.value});
-                    }
-                }
-            }
-        }
-       
-        angular.forEach(assocGroups, function(v, k) {
-            var dev = [];
-            var name;
-            var maxNodes = [];
-            var updateTime = [];
-             var invalidateTime = [];
-            if (zdd) {
-                angular.forEach(zdd, function(zddval, zddkey) {
-                    if (angular.isArray(zddval)) {
-                        angular.forEach(zddval, function(val, key) {
-                            if (val._number == v) {
-                                name = getGroupLabel(val, v, node.instances);
-                                maxNodes[v] = val._maxNodes;
-                            }
-
-                        });
-                    } else {
-
-                        if (zddval._number == v) {
-                            name = getGroupLabel(zddval, v, node.instances);
-                            maxNodes[v] = zddval._maxNodes;
-                            
-                        }
-                    }
-                });
-            } else {
-                name = getGroupLabel([], v - 1, node.instances);
-            }
-
-            angular.forEach(assocDevices, function(d, key) {
-                maxNodes[v] ? maxNodes[v] : d.maxNodes;
-                 updateTime[v] = d.updateTime;
-                  invalidateTime[v] = d.invalidateTime;
-            if (d['group'] == v) {
-                    dev.push({
-                        label: d.device.name,
-                        id: d.device.id
-                    });
-                }
-            });
-             
-            if (dev.length > 0) {
-                assoc.push({
-                    label: name, 
-                    devices: dev, 
-                    maxNodes: maxNodes[v], 
-                    updateTime:  updateTime[v],
-                    invalidateTime:  invalidateTime[v]
-                });
-            }
-           
-        });
-
-        return assoc;
     }
 
     /**

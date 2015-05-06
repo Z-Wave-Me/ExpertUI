@@ -19,15 +19,19 @@
                 <tbody>
                     <tr ng-repeat="v in assocGroups">
                         <td class="association-text"> 
-                            <h4>{{v.label}} ({{ _t('assoc_max')}} {{v.maxNodes}} {{ _t('assoc_nodes')}})</h4>
+                            <h5>
+                                {{v.label}} ({{ _t('assoc_max')}} {{v.max}} {{ _t('assoc_nodes')}}) 
+                                <em>{{ _t('assoc_info_from')}}: <span ng-class="v.update.updateTime < v.update.invalidateTime ? 'red': ''">{{v.update.updateTime| isTodayFromUnix}}</span></em>
+                            </h5>
                             
                             <div>
-                               <span ng-repeat="d in v.devices">
-                                <a class="btn btn-info btn-assoc">(#{{d.id}}) {{d.label}}</a> 
+                                <div class="btn-group" role="group" ng-repeat="d in v.devices">
+                                <button type="button"  class="btn btn-info btn-assoc">(#{{d.id}}<span ng-if="d.instance != null">.{{d.instance}}</span>) {{d.name}}</button>
+                                <button type="button" class="btn btn-primary">-</button>
                                 <!--<br ng_if="$index % 5 == 4"/> -->
-                            </span>
                             </div>
-                            <p>{{ _t('assoc_info_from')}}: <span ng-class="v.updateTime < v.invalidateTime ? 'red': ''">{{v.updateTime| isTodayFromUnix}}</span></p>
+                            </div>
+                            
                         </td>
                         <td  class="association-action" style="text-align: right; width: 20%;"> 
                             <button type="button" class="btn btn-primary" 
