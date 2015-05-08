@@ -132,6 +132,14 @@ appService.service('deviceService', function($filter) {
     this.getCfgXmlParam = function(cfgXml, nodeId, instance, commandClass, command) {
         return getCfgXmlParam(cfgXml, nodeId, instance, commandClass, command);
     };
+    
+    /**
+     * Get assoc xml config param
+     */
+    this.getCfgXmlAssoc = function(cfgXml, nodeId, instance, commandClass, command,groupId) {
+        return getCfgXmlAssoc(cfgXml, nodeId, instance, commandClass, command,groupId);
+    };
+    
 
     /**
      *Build config XML file
@@ -836,6 +844,53 @@ appService.service('deviceService', function($filter) {
                 }
             }
 
+        });
+        //console.log(collection)
+        return collection;
+
+    }
+    
+    /**
+     * Get assoc xml config param
+     */
+    function getCfgXmlAssoc(cfgXml, nodeId, instance, commandClass, command,groupId) {
+       var cfg = $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration');
+        if (!cfg) {
+            return []; 
+        }
+        // Get data for given device by id
+        var collection = []; 
+        collection[groupId] = [];
+        angular.forEach(cfg, function(v, k) {
+          
+             if (v['_id'] == nodeId && v['_instance'] == instance && v['_commandclass'] == commandClass && v['_command'] == command) {
+          
+                var obj = {};
+//                if(!angular.isArray(v['_parameter'])){
+//                    return;
+//                }
+                var array = JSON.parse(v['_parameter']);
+                //collection[array[0]] = array[1];
+                 
+//                if (array.length > 2) {
+//                    collection[array[0]] = array[1];
+//                }
+               if (array.length == 2) {
+                    obj['groupId'] = array[0];
+                    obj['deviceId'] = array[1];
+                    //collection.push(obj);
+                    if(array[0] == groupId &&  array[1] > 1){
+                        collection[groupId].push(array[1]);
+                    }
+                      
+
+                }
+//                else {
+//                    collection[0] = array[0];
+//                    return;
+//                }
+            }
+          
         });
         //console.log(collection)
         return collection;

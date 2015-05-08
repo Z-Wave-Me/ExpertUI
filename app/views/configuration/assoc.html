@@ -14,6 +14,7 @@
         <br/><br/>
         <!-- ////////////////////////////////////////////////////////////////////////////////////// -->
         <!-- Assoc design -->
+         <p class="text-danger text-alert-list" ><i class="fa fa-exclamation-triangle"></i>  {{_t('device_changed_configuration')}}</p>
         <div class="table-responsive"> 
             <table class="table table-striped table-condensed">
                 <tbody>
@@ -21,13 +22,16 @@
                         <td class="association-text"> 
                             <h5>
                                 {{v.label}} ({{ _t('assoc_max')}} {{v.max}} {{ _t('assoc_nodes')}}) 
-                                <em>{{ _t('assoc_info_from')}}: <span ng-class="v.update.updateTime < v.update.invalidateTime ? 'red': ''">{{v.update.updateTime| isTodayFromUnix}}</span></em>
+                                <span> | <i class="fa fa-clock-o"></i> <span ng-class="v.updateTime < v.invalidateTime ? 'red': ''">{{v.updateTime| isTodayFromUnix}}</span></span> <!--updateTime: {{v.updateTime |dateFromUnix}}, invalidateTime: {{v.invalidateTime|dateFromUnix}}-->
                             </h5>
                             
                             <div>
-                                <div class="btn-group" role="group" ng-repeat="d in v.devices">
-                                <button type="button"  class="btn btn-info btn-assoc">(#{{d.id}}<span ng-if="d.instance != null">.{{d.instance}}</span>) {{d.name}}</button>
-                                <button type="button" class="btn btn-primary">-</button>
+                                <div class="btn-group btn-group-assoc-devices" role="group" ng-repeat="d in v.devices" id="assoc_device_{{v.groupId}}_{{d.id}}">
+                                <button type="button"  class="btn btn-info btn-assoc" title="{{d.name}}">
+                                    <i class="fa fa-exclamation-triangle text-danger" ng-if="!d.isSaved"></i> 
+                                    {{_t('txt_device')}} (#{{d.id}}<span ng-if="d.instance != null">.{{d.instance}}</span>)
+                                </button>
+                                <button type="button" class="btn btn-primary" ng-click="deleteAssoc('assoc_device_' + v.groupId + '_' + d.id)">-</button>
                                 <!--<br ng_if="$index % 5 == 4"/> -->
                             </div>
                             </div>
