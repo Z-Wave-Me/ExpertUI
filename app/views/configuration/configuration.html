@@ -78,7 +78,7 @@
                     <a
                         href="" 
                         class="btn btn-primary spin-true"
-                        ng-click="updateFromDevice(wakeupCont.cmd + '.Get()')"
+                        ng-click="updateFromDevice(wakeupCont.cmd + '.Get()',hasBattery)"
                         >{{_t('btn_update_from_device')}} <i class="fa fa-spinner fa-spin"></i></a>
                     <button 
                         type="submit" 
@@ -122,7 +122,7 @@
                     novalidate>
                     <a
                         class="btn btn-primary spin-true"
-                        ng-click="updateFromDevice(switchAllCont.cmd + '.Get()')"
+                        ng-click="updateFromDevice(switchAllCont.cmd + '.Get()',hasBattery)"
                         >{{_t('btn_update_from_device')}} <i class="fa fa-spinner fa-spin"></i></a>
                     <button 
                         type="submit" 
@@ -160,7 +160,7 @@
                     novalidate>
                     <a
                         class="btn btn-primary spin-true"
-                        ng-click="updateFromDevice(protectionCont.cmd + '.Get()')"
+                        ng-click="updateFromDevice(protectionCont.cmd + '.Get()',hasBattery)"
                         >{{_t('btn_update_from_device')}} <i class="fa fa-spinner fa-spin"></i></a>
                     <button 
                         type="submit" 

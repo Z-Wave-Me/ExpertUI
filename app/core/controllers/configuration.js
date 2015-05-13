@@ -381,7 +381,10 @@ appController.controller('ConfigConfigurationController', function($scope, $rout
      * @param {string} cmd
      * @returns {undefined}
      */
-    $scope.updateFromDevice = function(cmd) {
+    $scope.updateFromDevice = function(cmd,hasBattery) {
+        if (hasBattery) {
+            alert($scope._t('conf_apply_battery'));
+        }
         dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
         $scope.refresh = true;
         var timeOut;
