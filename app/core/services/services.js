@@ -148,10 +148,10 @@ appService.service('deviceService', function($filter) {
         return buildCfgXml(data, cfgXml, id, commandclass);
     };
     /**
-     *Build config XML file
+     *Delete from CFG XML - asoc
      */
-    this.buildCfgXmlAssoc = function(data, cfgXml) {
-        return buildCfgXmlAssoc(data, cfgXml);
+    this.deleteCfgXmlAssoc = function(data, cfgXml) {
+        return deleteCfgXmlAssoc(data, cfgXml);
     };
 
     /// --- Private functions --- ///
@@ -938,26 +938,30 @@ appService.service('deviceService', function($filter) {
     }
 
     /**
-     *Build config XML file
+     *Delete from cfg xml file - assoc
      */
-    function buildCfgXmlAssoc(data, cfgXml) {
+    function deleteCfgXmlAssoc(data, cfgXml) {
+        
         var xmlData = [];
-        var removeFromXml = {
-            'id': [],
-            'group': [],
-            'parameter': [],
-        }
-        angular.forEach(data, function(v, k) {
-            var obj = {};
-            obj['id'] = v['id'];
-            obj['instance'] = v['instance'];
-            obj['commandclass'] = parseInt(v['commandclass'], 10);
-            obj['command'] = v['command'];
-            obj['parameter'] = '[' + v['parameter'] + ']';
-            obj['group'] = v['group'];
-            xmlData.push(obj);
-
-        });
+        xmlData.push(data);
+//        console.log(xmlData)
+//        return;
+//        var removeFromXml = {
+//            'id': [],
+//            'group': [],
+//            'parameter': [],
+//        }
+//        angular.forEach(data, function(v, k) {
+//            var obj = {};
+//            obj['id'] = v['id'];
+//            obj['instance'] = v['instance'];
+//            obj['commandclass'] = parseInt(v['commandclass'], 10);
+//            obj['command'] = v['command'];
+//            obj['parameter'] = '[' + v['parameter'] + ']';
+//            obj['group'] = v['group'];
+//            xmlData.push(obj);
+//
+//        });
         var hasCfgXml = $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration');
         if (hasCfgXml) {
             angular.forEach(hasCfgXml, function(v, k) {
@@ -967,11 +971,16 @@ appService.service('deviceService', function($filter) {
                 obj['commandclass'] = parseInt(v['_commandclass'], 10);
                 obj['command'] = v['_command'];
                 obj['parameter'] = v['_parameter'];
-                obj['group'] = v['_group'];
-                xmlData.push(obj);
+                if(JSON.stringify(obj) == JSON.stringify(data)){
+                    console.log('XML:',JSON.stringify(obj))
+                 console.log('DATA:',JSON.stringify(data))
+                }
+                
+               // xmlData.push(obj);
 
             });
         }
+        return;
         var ret = buildCfgXmlFile(xmlData);
         return ret; 
     }
