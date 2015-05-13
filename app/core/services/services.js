@@ -185,26 +185,30 @@ appService.service('deviceService', function($filter) {
      *  Get language from zddx
      */
     function configGetZddxLang(langs, currLang) {
-        var label = null;
+         var label = null;
         if (!langs) {
             return label;
         }
-
         if (angular.isArray(langs)) {
-            angular.forEach(langs, function(lang, index) {
-                if (("__text" in lang) && (lang["_xml:lang"] == currLang)) {
-                    label = lang.__text;
-                    return false;
+            for (var i = 0, len = langs.length; i < len; i++) {
+                if (("__text" in langs[i]) && (langs[i]["_xml:lang"] == currLang)) {
+                   label = langs[i].__text;
+                   return label;
+                     
+                    //continue;
+                }else{
+                     if (("__text" in langs[i]) && (langs[i]["_xml:lang"] == 'en')) {
+                    label = langs[i].__text;
+                    return label;
+                     }
                 }
-                if (("__text" in lang) && (lang["_xml:lang"] == "en")) {
-                    label = lang.__text;
-                }
-            });
+            }
         } else {
             if (("__text" in langs)) {
                 label = langs.__text;
             }
         }
+         //console.log(label)
         return label;
     }
 
@@ -343,15 +347,7 @@ appService.service('deviceService', function($filter) {
         }
         var config_cont = [];
         var params = zddXml.ZWaveDevice.configParams['configParam'];
-        var lang = 'en';
-        var langs = {
-            "en": "1",
-            "de": "0"
-        };
-        if (angular.isDefined(langs[lang])) {
-            lang = lang;
-        }
-        var langId = langs[lang];
+
         // Loop throught params
         var parCnt = 0;
         var cfgFile = getCfgXmlParam(cfgXml, nodeId, '0', '70', 'Set');
