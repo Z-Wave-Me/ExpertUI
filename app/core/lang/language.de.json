@@ -1,4 +1,5 @@
 {
+    "set_value" : "Der eingestellte Wert ist",
     "updated":"Aktualisiert am",
     "value_changed_to": "Wert geändert in",
     "value_not_stored_indevice": "aber noch nicht im Gerät gespeichert",
