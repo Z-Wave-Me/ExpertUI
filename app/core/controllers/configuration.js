@@ -587,21 +587,21 @@ appController.controller('ConfigConfigurationController', function($scope, $rout
 
 });
 // Device configuration Association controller - new version
-appController.controller('ConfigAssocController', function($scope, $filter, $routeParams, $location, $cookies, $timeout,$http, dataService, deviceService, myCache, cfg) {
+appController.controller('ConfigAssocController', function($scope, $filter, $routeParams, $location, $cookies, $timeout, $http, dataService, deviceService, myCache, cfg) {
     $scope.devices = [];
     $scope.deviceId = 0;
     $scope.activeTab = 'association';
     $scope.activeUrl = 'configuration/association/';
     $cookies.tab_config = $scope.activeTab;
-    
+
     // Assoc vars
     $scope.node = [];
     $scope.assocGroups = [];
     $scope.assocGroupsDevices = [];
     $scope.cfgXml = [];
-    
-     $scope.reset = function() {
-         $scope.assocGroups = angular.copy([]);
+
+    $scope.reset = function() {
+        $scope.assocGroups = angular.copy([]);
     };
 
     //---------------------///
@@ -636,18 +636,18 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
     // Load data
     $scope.load = function(nodeId) {
         dataService.getZwaveData(function(ZWaveAPIData) {
-             $scope.assocGroups = angular.copy([]);
+            $scope.assocGroups = angular.copy([]);
             $scope.ZWaveAPIData = ZWaveAPIData;
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
             var node = ZWaveAPIData.devices[nodeId];
-           
+
             if (!node) {
                 return;
             }
             if (nodeId == 255 || node.data.isVirtual.value) {
                 return;
             }
-             $scope.node = node;
+            $scope.node = node;
             $cookies.configuration_id = nodeId;
             $cookies.config_url = $scope.activeUrl + nodeId;
             $scope.deviceId = nodeId;
@@ -659,62 +659,62 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
         });
     };
     $scope.load($routeParams.nodeId);
-    
-     // Update data from device
+
+    // Update data from device
     $scope.updateFromDevice = function(elId) {
         //$scope.applyQueue = [];
         //$scope.updates = [];
         //var updates = [];
         var nodeId = $scope.deviceId;
         var node = $scope.node;
-        
-        angular.forEach(node.instances, function(instance,index) {
+
+        angular.forEach(node.instances, function(instance, index) {
             if (!("commandClasses" in instance)) {
                 return;
             }
             if (0x85 in instance.commandClasses) {
                 for (var group = 0; group < instance.commandClasses[0x85].data.groups.value; group++) {
-                    dataService.runCmd('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x85].Get(' + (group + 1) + ')', false, $scope._t('error_handling_data'),true);
+                    dataService.runCmd('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x85].Get(' + (group + 1) + ')', false, $scope._t('error_handling_data'), true);
                 }
             }
             if (0x8e in instance.commandClasses) {
                 for (var group = 0; group < instance.commandClasses[0x8e].data.groups.value; group++) {
-                     dataService.runCmd('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x8e].Get(' + (group + 1) + ')', false, $scope._t('error_handling_data'),true);
+                    dataService.runCmd('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x8e].Get(' + (group + 1) + ')', false, $scope._t('error_handling_data'), true);
 
                 }
             }
-           $timeout(function() {
-               $(elId + ' .fa-spin').fadeOut(1000);
-            $scope.load(nodeId);
-        }, 7000);
-        return;
-             
+            $timeout(function() {
+                $(elId + ' .fa-spin').fadeOut(1000);
+                $scope.load(nodeId);
+            }, 7000);
+            return;
+
 
         });
     };
 
     //Delete assoc device from group
-    $scope.deleteAssoc = function(d,groupId,nodeId,elId) {
+    $scope.deleteAssoc = function(d, groupId, nodeId, elId) {
         console.log(d)
-        var cmd =   'devices[' + d.node.id + '].instances[' + d.node.instance + '].commandClasses[' + d.node.cc + '].Remove(' + groupId +',' + nodeId + ')';
+        var cmd = 'devices[' + d.node.id + '].instances[' + d.node.instance + '].commandClasses[' + d.node.cc + '].Remove(' + groupId + ',' + nodeId + ')';
         console.log(cmd)
-        
+
         var data = {
             'id': d.node.id,
             'instance': d.node.instance,
             'commandclass': d.node.cc,
             'command': 'Set',
             'parameter': '[' + groupId + ',' + nodeId + ']'
-            
+
         };
         //dataService.runCmd(cmd);
         dataService.getCfgXml(function(cfgXml) {
-             console.log(cfgXml)
+            console.log(cfgXml)
             var xmlFile = deviceService.deleteCfgXmlAssoc(data, cfgXml);
             //dataService.putCfgXml(xmlFile);
         });
-       
-        $('#' + elId).fadeOut(3000); 
+
+        $('#' + elId).fadeOut(3000);
         //$scope.load(d.node.id);
     };
 
@@ -748,7 +748,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
      * Get assoc groups
      */
     function getAssocGroups(node, zdd, nodeId, ZWaveAPIData, cfgXml) {
-       
+
         var assocGroups = [];
         var groupZdd = [];
 
@@ -787,7 +787,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                     var assocDevices = [];
                     var cfgArray;
                     var groupCfg = [];
-                   var groupDevices = []
+                    var groupDevices = []
                     var savedDevices = [];
                     var nodeIds = [];
                     var instanceIds = [];
@@ -800,7 +800,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                     var label;
                     var max;
                     var obj = {};
-                   
+
 
                     groupId = (group + 1);
                     label = getGroupLabel(groupZdd[groupId], group, instance);
@@ -1506,10 +1506,11 @@ appController.controller('ConfigAssociationController', function($scope, $filter
     ;
 });
 // Device configuration commands controller
-appController.controller('ConfigCommandsController', function($scope, $routeParams, $location, $cookies, $timeout, dataService, deviceService) {
+appController.controller('ConfigCommandsController', function($scope, $routeParams, $location, $cookies, $timeout, $filter, dataService, deviceService) {
     $scope.devices = [];
     $scope.commands = [];
     $scope.interviewCommands;
+
     $scope.deviceId = 0;
     $scope.activeTab = 'commands';
     $scope.activeUrl = 'configuration/commands/';
@@ -1540,6 +1541,11 @@ appController.controller('ConfigCommandsController', function($scope, $routePara
                 return devices;
             };
             $scope.interviewCommands = deviceService.configGetInterviewCommands(node, ZWaveAPIData.updateTime);
+            //if(updateTime){
+            //html += '<p class="help-block"><em>' + $filter('dateFromUnix')(ZWaveAPIData.updateTime)+ '<em></p>'; 
+            //}
+            //$scope.commandClass = deviceService.configGetCommandClass($scope.interviewCommands[0].cmdData, '/', '') ; 
+            //$scope.commandClass += '<p class="help-block"><em>' + $filter('dateFromUnix')(ZWaveAPIData.updateTime)+ '<em></p>';
 
             $cookies.configuration_id = nodeId;
             $cookies.config_url = $scope.activeUrl + nodeId;
@@ -1562,6 +1568,7 @@ appController.controller('ConfigCommandsController', function($scope, $routePara
                     obj['cmdDataIn'] = ZWaveAPIData.devices[nodeId].instances[instanceId].data;
                     obj['commandClass'] = commandClass.name;
                     obj['command'] = command;
+                    obj['updateTime'] = ZWaveAPIData.updateTime;
                     $scope.commands.push(obj);
                 });
             });
@@ -1599,6 +1606,46 @@ appController.controller('ConfigCommandsController', function($scope, $routePara
         }, 10000);
         return;
     };
+
+    // Show modal dialog
+    $scope.showModal = function(target, instanceId, index, ccId, type) {
+        var node = $scope.ZWaveAPIData.devices[$routeParams.nodeId];
+        //console.log(target, instanceId, index, ccId, type);
+        //var ccData = $scope.commands[index][type];
+        var ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.data');
+        if (type == 'cmdData') {
+            ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.commandClasses.' + ccId + '.data');
+        }
+        var cc = deviceService.configGetCommandClass(ccData, '/', '');
+
+        $scope.commandClass = deviceService.configSetCommandClass(cc, $scope.commands[index]['updateTime']);
+        /**
+         * Refresh data
+         */
+        dataService.joinedZwaveData(function(data) {
+            node = data.joined.devices[$routeParams.nodeId];
+            //console.log(node.instances)
+            var newCc = $filter('hasNode')(node, 'instances.' + instanceId + '.data');
+            if (type == 'cmdData') {
+                newCc = $filter('hasNode')(node, 'instances.' + instanceId + '.commandClasses.' + ccId + '.data');
+            }
+            if (newCc) {
+                 if (JSON.stringify(ccData) === JSON.stringify(newCc)) {
+                    return;
+                }
+                //console.log(ccData, newCc)
+                $scope.commandClass = deviceService.configSetCommandClass(deviceService.configGetCommandClass(newCc, '/', ''), data.joined.updateTime);
+            }
+        });
+        $(target).modal();
+    };
+    // Show modal dialog
+    $scope.hideModal = function() {
+        dataService.cancelZwaveDataInterval();
+    };
+
+    /// --- Private functions --- ///
+    
 
 });
 // Device configuration firmware controller
