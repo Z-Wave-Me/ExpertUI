@@ -297,6 +297,7 @@ appController.controller('ConfigInterviewController', function($scope, $routePar
      * Refresh description cont
      */
     function refreshData(node, nodeId, ZWaveAPIData) {
+        $scope.interviewCommands = deviceService.configGetInterviewCommands(node, ZWaveAPIData.updateTime);
         $('#device_sleep_state .config-interview-val').html(deviceService.configDeviceState(node, $scope.languages));
         $('#device_description_interview .config-interview-val').html(deviceService.configInterviewStage(ZWaveAPIData, nodeId, $scope.languages));
     }

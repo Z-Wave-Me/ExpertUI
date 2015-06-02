@@ -233,7 +233,6 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
      * Run api cmd
      */
     function runCmd(param, request, error,noFade) {
-        console.log(noFade)
         var url = (request ? cfg.server_url + request : cfg.server_url + cfg.store_url + param);
         var request = $http({
             method: 'POST',
