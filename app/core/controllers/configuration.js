@@ -97,6 +97,29 @@ appController.controller('ConfigInterviewController', function($scope, $routePar
         var url = $scope.cfg.server_url + $scope.cfg.store_url + $(btn).attr('data-store-url');
         dataService.runCmd($(btn).attr('data-store-url'), false, $scope._t('error_handling_data'));
     };
+    
+    // Show modal CommandClass dialog
+    $scope.showModalCommandClass = function(target, instanceId, ccId, type) {
+        var node = $scope.ZWaveAPIData.devices[$routeParams.nodeId];
+        var ccData;
+        //console.log(target, instanceId, index, ccId, type);
+        //var ccData = $scope.commands[index][type];
+        switch(type){
+            case 'cmdData':
+                ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.commandClasses.' + ccId + '.data');
+                break;
+           case 'cmdDataIn':
+                ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.data');
+                break;
+            default:
+                ccData = $filter('hasNode')(node, 'data');
+               break;
+        }
+        var cc = deviceService.configGetCommandClass(ccData, '/', '');
+
+        $scope.commandClass = deviceService.configSetCommandClass(cc);
+         $(target).modal();
+    };
 
     // Show modal dialog
     $scope.showModalInterview = function(target) {
