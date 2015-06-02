@@ -160,8 +160,8 @@
                 </div>
                 <div class="modal-body">
 
-                    <div class="alert alert-warning allert-hidden">Can't select device description</div>
-                    <div ng-show="deviceZddx.length > 0">
+                     <!--<div class="alert alert-warning allert-hidden">Can't select device description</div>-->
+                    <div ng-if="deviceZddx.length > 0">
                         <p ng-bind-html="_t('select_zddx_help') | toTrusted"></p>
                         <select 
                             name="select_zddx_help" 
@@ -177,8 +177,7 @@
                             }"
                                 ng-repeat="v in deviceZddx"
                                 value="{{v.fileName}}" 
-                                data-image="{{v.deviceImage}}"
-                                {{selectCfg.selected}}>{{selectCfg.name}}</option>
+                                data-image="{{v.deviceImage}}">{{selectCfg.name}}</option>
                         </select>
                         <div id="device_select_image_container">
                             <div id="device_select_image">
