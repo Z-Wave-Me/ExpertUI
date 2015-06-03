@@ -208,13 +208,11 @@ appService.service('deviceService', function($filter) {
             for (var i = 0, len = langs.length; i < len; i++) {
                 if (("__text" in langs[i]) && (langs[i]["_xml:lang"] == currLang)) {
                    label = langs[i].__text;
-                   return label;
-                     
-                    //continue;
+                   continue;
                 }else{
                      if (("__text" in langs[i]) && (langs[i]["_xml:lang"] == 'en')) {
                     label = langs[i].__text;
-                    return label;
+                    continue;
                      }
                 }
             }
@@ -223,7 +221,6 @@ appService.service('deviceService', function($filter) {
                 label = langs.__text;
             }
         }
-         //console.log(label)
         return label;
     }
 

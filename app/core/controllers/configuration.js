@@ -248,7 +248,8 @@ appController.controller('ConfigInterviewController', function($scope, $routePar
         });
         // Has device a zddx XML file
         if (zddXml) {
-            var lang = 'en';
+            // DEORECATED ----------------
+            /*var lang = 'en';
             var langs = {
                 "en": "1",
                 "de": "0",
@@ -257,23 +258,31 @@ appController.controller('ConfigInterviewController', function($scope, $routePar
             if (angular.isDefined(langs[$scope.lang])) {
                 lang = $scope.lang;
             }
-            var langId = langs[lang];
-            if (angular.isDefined(zddXml.ZWaveDevice.deviceDescription.description.lang[langId])) {
+            var langId = langs[lang];*/
+            
+            /*if (angular.isDefined(zddXml.ZWaveDevice.deviceDescription.description.lang[langId])) {
                 deviceDescription = zddXml.ZWaveDevice.deviceDescription.description.lang[langId].__text;
-            }
-            if ('productName' in zddXml.ZWaveDevice.deviceDescription) {
-                productName = zddXml.ZWaveDevice.deviceDescription.productName;
-            }
-            if (angular.isDefined(zddXml.ZWaveDevice.deviceDescription.inclusionNote.lang[langId])) {
+            }*/
+            
+            /*if (angular.isDefined(zddXml.ZWaveDevice.deviceDescription.inclusionNote.lang[langId])) {
                 inclusionNote = zddXml.ZWaveDevice.deviceDescription.inclusionNote.lang[langId].__text;
-            }
+            }*/
+            /*if (angular.isDefined(zddXml.ZWaveDevice.deviceDescription.wakeupNote.lang[langId])) {
+                wakeupNote = zddXml.ZWaveDevice.deviceDescription.wakeupNote.lang[langId].__text;
+            }*/
+            // ----------------
+            deviceDescription = deviceService.configGetZddxLang($filter('hasNode')(zddXml, 'ZWaveDevice.deviceDescription.description.lang'), $scope.lang);
+            inclusionNote = deviceService.configGetZddxLang($filter('hasNode')(zddXml, 'ZWaveDevice.deviceDescription.inclusionNote.lang'), $scope.lang);
+             wakeupNote = deviceService.configGetZddxLang($filter('hasNode')(zddXml, 'ZWaveDevice.deviceDescription.wakeupNote.lang'), $scope.lang);
 
             if ('brandName' in zddXml.ZWaveDevice.deviceDescription) {
                 brandName = zddXml.ZWaveDevice.deviceDescription.brandName;
             }
-            if (angular.isDefined(zddXml.ZWaveDevice.deviceDescription.wakeupNote.lang[langId])) {
-                wakeupNote = zddXml.ZWaveDevice.deviceDescription.wakeupNote.lang[langId].__text;
+            
+            if ('productName' in zddXml.ZWaveDevice.deviceDescription) {
+                productName = zddXml.ZWaveDevice.deviceDescription.productName;
             }
+            
             if (angular.isDefined(zddXml.ZWaveDevice.resourceLinks)) {
                 deviceImage = zddXml.ZWaveDevice.resourceLinks.deviceImage._url;
             }
@@ -299,7 +308,7 @@ appController.controller('ConfigInterviewController', function($scope, $routePar
         obj["f"] = {"key": "device_description_product", "val": productName};
         obj["g"] = {"key": "device_description_description", "val": deviceDescription};
         obj["h"] = {"key": "device_description_inclusion_note", "val": inclusionNote};
-        obj["i"] = {"key": "device_description_wakeup_note", "val": (wakeupNote ? wakeupNote : '')};
+        obj["i"] = {"key": "device_description_wakeup_note", "val": wakeupNote};
         obj["j"] = {"key": "device_description_interview", "val": deviceService.configInterviewStage(ZWaveAPIData, nodeId, $scope.languages)};
         obj["k"] = {"key": "device_sleep_state", "val": deviceService.configDeviceState(node, $scope.languages)};
         //obj["l"] = {"key": "device_queue_length", "val": queueLength(ZWaveAPIData, node)};
@@ -950,13 +959,15 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                 for (var i = 0, len = langs.length; i < len; i++) {
                     if (("__text" in langs[i]) && (langs[i]["_xml:lang"] == $scope.lang)) {
                         label = langs[i].__text;
-                        return label;
+                        continue;
+                        //return label;
 
                         //continue;
                     } else {
                         if (("__text" in langs[i]) && (langs[i]["_xml:lang"] == 'en')) {
                             label = langs[i].__text;
-                            return label;
+                            continue;
+                            //return label;
                         }
                     }
                 }
