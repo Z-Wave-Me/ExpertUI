@@ -94,16 +94,13 @@ appController.controller('ConfigInterviewController', function($scope, $routePar
 
     // Store data on remote server
     $scope.store = function(btn) {
-        var url = $scope.cfg.server_url + $scope.cfg.store_url + $(btn).attr('data-store-url');
-        dataService.runCmd($(btn).attr('data-store-url'), false, $scope._t('error_handling_data'));
+       dataService.runCmd($(btn).attr('data-store-url'), false, $scope._t('error_handling_data'));
     };
     
     // Show modal CommandClass dialog
     $scope.showModalCommandClass = function(target, instanceId, ccId, type) {
         var node = $scope.ZWaveAPIData.devices[$routeParams.nodeId];
         var ccData;
-        //console.log(target, instanceId, index, ccId, type);
-        //var ccData = $scope.commands[index][type];
         switch(type){
             case 'cmdData':
                 ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.commandClasses.' + ccId + '.data');
@@ -1575,12 +1572,6 @@ appController.controller('ConfigCommandsController', function($scope, $routePara
                 return devices;
             };
             $scope.interviewCommands = deviceService.configGetInterviewCommands(node, ZWaveAPIData.updateTime);
-            //if(updateTime){
-            //html += '<p class="help-block"><em>' + $filter('dateFromUnix')(ZWaveAPIData.updateTime)+ '<em></p>'; 
-            //}
-            //$scope.commandClass = deviceService.configGetCommandClass($scope.interviewCommands[0].cmdData, '/', '') ; 
-            //$scope.commandClass += '<p class="help-block"><em>' + $filter('dateFromUnix')(ZWaveAPIData.updateTime)+ '<em></p>';
-
             $cookies.configuration_id = nodeId;
             $cookies.config_url = $scope.activeUrl + nodeId;
             $scope.deviceId = nodeId;
@@ -1644,8 +1635,6 @@ appController.controller('ConfigCommandsController', function($scope, $routePara
     // Show modal dialog
     $scope.showModal = function(target, instanceId, index, ccId, type) {
         var node = $scope.ZWaveAPIData.devices[$routeParams.nodeId];
-        //console.log(target, instanceId, index, ccId, type);
-        //var ccData = $scope.commands[index][type];
         var ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.data');
         if (type == 'cmdData') {
             ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.commandClasses.' + ccId + '.data');
@@ -1667,7 +1656,6 @@ appController.controller('ConfigCommandsController', function($scope, $routePara
                  if (JSON.stringify(ccData) === JSON.stringify(newCc)) {
                     return;
                 }
-                //console.log(ccData, newCc)
                 $scope.commandClass = deviceService.configSetCommandClass(deviceService.configGetCommandClass(newCc, '/', ''), data.joined.updateTime);
             }
         });

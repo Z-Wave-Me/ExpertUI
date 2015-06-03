@@ -1467,7 +1467,7 @@ appController.controller('LocksController', function($scope, $filter, dataServic
     }
 });
 // Status controller
-appController.controller('StatusController', function($scope, $filter, dataService) {
+appController.controller('StatusController', function($scope, $filter, dataService,deviceService) {
     $scope.statuses = [];
     $scope.interviewCommandsDevice = [];
     $scope.interviewCommands = [];
@@ -1476,14 +1476,21 @@ appController.controller('StatusController', function($scope, $filter, dataServi
         "id": null,
         "name": null
     };
+    $scope.ZWaveAPIData;
+     $scope.interviewDeviceId = null;
     $scope.reset = function() {
         $scope.statuses = angular.copy([]);
     };
     // Load data
     $scope.load = function() {
         dataService.getZwaveData(function(ZWaveAPIData) {
-            setData(ZWaveAPIData);
+            $scope.ZWaveAPIData = ZWaveAPIData;
+            setData($scope.ZWaveAPIData);
             dataService.joinedZwaveData(function(data) {
+                 if($scope.interviewDeviceId > 1){
+                    refreshModalInterview($scope.ZWaveAPIData.devices[$scope.interviewDeviceId],data.joined.devices[$scope.interviewDeviceId]);
+                }
+                
 //                $scope.reset();
 //                setData(data.joined);
                 refreshData(data.update);
@@ -1503,6 +1510,7 @@ appController.controller('StatusController', function($scope, $filter, dataServi
         var url = $(btn).attr('data-store-url');
         dataService.runCmd(url, false, $scope._t('error_handling_data'));
     };
+    
     // Store all data on remote server
     $scope.storeAll = function(btn) {
         angular.forEach($scope.statuses, function(v, k) {
@@ -1512,12 +1520,44 @@ appController.controller('StatusController', function($scope, $filter, dataServi
         });
     };
     $scope.showModalInterview = function(target, index, id, name) {
-        $scope.deviceInfo = {
+       $scope.deviceInfo = {
             "index": index,
             "id": id,
             "name": name
         };
+         $scope.interviewDeviceId = id;
+        var node = $scope.ZWaveAPIData.devices[id];
+        $scope.interviewCommands = deviceService.configGetInterviewCommands(node);
+        //$scope.interviewCommands.push(deviceService.configGetInterviewCommands(node));
         $(target).modal();
+    };
+    // Show modal dialog
+    $scope.hideModalInterview = function() {
+        $scope.interviewDeviceId = null;
+    };
+    
+    // Show modal CommandClass dialog
+    $scope.showModalCommandClass = function(target, instanceId, ccId, type) {
+        var node = $scope.ZWaveAPIData.devices[$scope.interviewDeviceId];
+        if(!node){
+            return;
+        }
+        var ccData;
+        switch(type){
+            case 'cmdData':
+                ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.commandClasses.' + ccId + '.data');
+                break;
+           case 'cmdDataIn':
+                ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.data');
+                break;
+            default:
+                ccData = $filter('hasNode')(node, 'data');
+               break;
+        }
+        var cc = deviceService.configGetCommandClass(ccData, '/', '');
+
+        $scope.commandClass = deviceService.configSetCommandClass(cc);
+         $(target).modal();
     };
     /// --- Private functions --- ///
 
@@ -1550,7 +1590,8 @@ appController.controller('StatusController', function($scope, $filter, dataServi
             var prefixD = 'devices.' + nodeId + '.data.';
             var prefixIC = 'devices.' + nodeId + '.instances.0.commandClasses';
             var bindPath = prefixD + 'isFailed,' + prefixD + 'isAwake,' + prefixD + 'lastSend,' + prefixD + 'lastReceived,' + prefixD + 'queueLength,devices.' + nodeId + '.instances[*].commandClasses[*].data.interviewDone,' + prefixIC + '.' + 0x84 + '.data.lastWakeup,' + prefixIC + '.' + 0x84 + '.data.lastSleep,' + prefixIC + '.' + 0x84 + '.data.interval,' + prefixIC + '.' + 0x80 + '.data.last';
-            $scope.interviewCommands.push(interviewCommands(node));
+            //$scope.interviewCommands.push(interviewCommands(node));
+             //$scope.interviewCommands.push(deviceService.configGetInterviewCommands(node));
             $scope.interviewCommandsDevice.push(node.data);
             updateDeviceInfo(ZWaveAPIData, nodeId, basicType, genericType, specificType, isFLiRS, hasWakeup, hasBattery, isListening, bindPath);
         });
@@ -1623,7 +1664,6 @@ appController.controller('StatusController', function($scope, $filter, dataServi
 
     // Refresh data
     function refreshData(data) {
-
         angular.forEach($scope.statuses, function(v, k) {
             angular.forEach(v.cmd, function(ccId, key) {
                 if (ccId in data) {
@@ -1680,28 +1720,40 @@ appController.controller('StatusController', function($scope, $filter, dataServi
         });
     }
     ;
-
-    // Interview commands
-    function interviewCommands(node) {
-        var interviews = [];
-        for (var iId in node.instances) {
-            var cnt = 0;
-            for (var ccId in node.instances[iId].commandClasses) {
-                var obj = {};
-                obj['iId'] = iId;
-                obj['ccId'] = ccId;
-                obj['ccName'] = node.instances[iId].commandClasses[ccId].name;
-                obj['interviewDone'] = node.instances[iId].commandClasses[ccId].data.interviewDone.value;
-                obj['cmdData'] = node.instances[iId].commandClasses[ccId].data;
-                obj['cmdDataIn'] = node.instances[iId].data;
-                interviews.push(obj);
-                cnt++;
-            }
-            ;
-        }
-        ;
-        return interviews;
+    
+     // Refresh Modal Interview data
+    function refreshModalInterview(oldCc,newCc) {
+         var refresh = JSON.stringify(oldCc) !== JSON.stringify(newCc);
+         if(refresh){
+             $scope.interviewCommands = deviceService.configGetInterviewCommands(newCc);
+         }
+        
+       
+       
     }
+
+    //  DEPRECATED
+    // Interview commands
+//    function interviewCommands(node) {
+//        var interviews = [];
+//        for (var iId in node.instances) {
+//            var cnt = 0;
+//            for (var ccId in node.instances[iId].commandClasses) {
+//                var obj = {};
+//                obj['iId'] = iId;
+//                obj['ccId'] = ccId;
+//                obj['ccName'] = node.instances[iId].commandClasses[ccId].name;
+//                obj['interviewDone'] = node.instances[iId].commandClasses[ccId].data.interviewDone.value;
+//                obj['cmdData'] = node.instances[iId].commandClasses[ccId].data;
+//                obj['cmdDataIn'] = node.instances[iId].data;
+//                interviews.push(obj);
+//                cnt++;
+//            }
+//            ;
+//        }
+//        ;
+//        return interviews;
+//    }
 
 
     // Get Awake HTML
