@@ -987,7 +987,7 @@ appService.service('deviceService', function($filter) {
     function deleteCfgXmlAssoc(data, cfgXml) {
         
         var xmlData = [];
-        xmlData.push(data);
+        //xmlData.push(data);
 //        console.log(xmlData)
 //        return;
 //        var removeFromXml = {
@@ -1016,16 +1016,19 @@ appService.service('deviceService', function($filter) {
                 obj['command'] = v['_command'];
                 obj['parameter'] = v['_parameter'];
                 if(JSON.stringify(obj) == JSON.stringify(data)){
+                    obj['command'] = 'Remove';
                     console.log('XML:',JSON.stringify(obj))
                  console.log('DATA:',JSON.stringify(data))
                 }
                 
-               // xmlData.push(obj);
+                xmlData.push(obj);
 
             });
         }
-        return;
+       
         var ret = buildCfgXmlFile(xmlData);
+//        console.log(ret)
+//         return;
         return ret; 
     }
     

@@ -253,7 +253,11 @@ padding: 10px 10px 0 10px;
     margin: 20px 0 10px 0;
 }
 
-
+/* Sensors
+-------------------------------------------------- */
+.sensor-triggered{
+    color: #FFB200;
+}
 /* Expert Commands CSS
 -------------------------------------------------- */
 #row_commands .thumbnail{

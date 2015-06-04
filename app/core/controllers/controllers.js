@@ -823,7 +823,8 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                         obj['name'] = devName;
                         obj['type'] = sensorBinary.name;
                         obj['purpose'] = val.sensorTypeString.value;
-                        obj['level'] = (val.level.value ? $scope._t('sensor_triggered') : $scope._t('sensor_idle'));
+                        obj['level'] = (val.level.value ? '<span class="sensor-triggered">' + $scope._t('sensor_triggered') + '</span>' : $scope._t('sensor_idle'));
+                         obj['html'] = true;
                         obj['levelExt'] = null;
                         obj['invalidateTime'] = val.invalidateTime;
                         obj['updateTime'] = val.updateTime;
@@ -928,7 +929,8 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                         obj['name'] = devName;
                         obj['type'] = alarmSensor.name;
                         obj['purpose'] = val.typeString.value;
-                        obj['level'] = (val.sensorState.value ? $scope._t('sensor_triggered') : $scope._t('sensor_idle'));
+                        obj['level'] = (val.sensorState.value ? '<span class="sensor-triggered">' + $scope._t('sensor_triggered') + '</span>' : $scope._t('sensor_idle'));
+                        obj['html'] = true;
                         obj['levelExt'] = null;
                         obj['invalidateTime'] = val.invalidateTime;
                         obj['updateTime'] = val.updateTime;
@@ -956,12 +958,12 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                 var updateTime = 0;
                 var invalidateTime = 0;
                 if (v.cmdId == 0x30) {
-                    level = (obj.value ? $scope._t('sensor_triggered') : $scope._t('sensor_idle'));
+                    level = (obj.value ? '<span class="sensor-triggered">' + $scope._t('sensor_triggered') + '</span>' : $scope._t('sensor_idle'));
                     updateTime = obj.level.updateTime;
                     invalidateTime = obj.level.invalidateTime;
 
                 } else if (v.cmdId == 0x9c) {
-                    level = (obj.sensorState.value ? $scope._t('sensor_triggered') : $scope._t('sensor_idle'));
+                    level = (obj.sensorState.value ? '<span class="sensor-triggered">' + $scope._t('sensor_triggered') + '</span>' : $scope._t('sensor_idle'));
                     updateTime = obj.sensorState.updateTime;
                     invalidateTime = obj.sensorState.invalidateTime;
 
@@ -974,7 +976,7 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                 }
 
                 // Update row
-                $('#' + v.rowId + ' .row-level').html(level);
+                $('#' + v.rowId + ' .row-level').html((level == null ? '' : level) +' &nbsp;');
                 $('#' + v.rowId + ' .row-time').html($filter('isTodayFromUnix')(updateTime));
                 if (updateTime > invalidateTime) {
                     $('#' + v.rowId + ' .row-time').removeClass('is-updated-false');
