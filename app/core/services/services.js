@@ -985,27 +985,7 @@ appService.service('deviceService', function($filter) {
      *Delete from cfg xml file - assoc
      */
     function deleteCfgXmlAssoc(data, cfgXml) {
-        
-        var xmlData = [];
-        //xmlData.push(data);
-//        console.log(xmlData)
-//        return;
-//        var removeFromXml = {
-//            'id': [],
-//            'group': [],
-//            'parameter': [],
-//        }
-//        angular.forEach(data, function(v, k) {
-//            var obj = {};
-//            obj['id'] = v['id'];
-//            obj['instance'] = v['instance'];
-//            obj['commandclass'] = parseInt(v['commandclass'], 10);
-//            obj['command'] = v['command'];
-//            obj['parameter'] = '[' + v['parameter'] + ']';
-//            obj['group'] = v['group'];
-//            xmlData.push(obj);
-//
-//        });
+       var xmlData = [];
         var hasCfgXml = $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration');
         if (hasCfgXml) {
             angular.forEach(hasCfgXml, function(v, k) {
@@ -1015,20 +995,20 @@ appService.service('deviceService', function($filter) {
                 obj['commandclass'] = parseInt(v['_commandclass'], 10);
                 obj['command'] = v['_command'];
                 obj['parameter'] = v['_parameter'];
-                if(JSON.stringify(obj) == JSON.stringify(data)){
-                    obj['command'] = 'Remove';
+                if(JSON.stringify(obj) !== JSON.stringify(data)){
+                     xmlData.push(obj);
+                   /* obj['command'] = 'Remove';
                     console.log('XML:',JSON.stringify(obj))
-                 console.log('DATA:',JSON.stringify(data))
+                 console.log('DATA:',JSON.stringify(data))*/
                 }
-                
-                xmlData.push(obj);
-
+               
             });
+        }else{
+             data['command'] = 'Remove';
+            xmlData.push(data); 
         }
        
         var ret = buildCfgXmlFile(xmlData);
-//        console.log(ret)
-//         return;
         return ret; 
     }
     

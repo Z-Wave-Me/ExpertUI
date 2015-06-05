@@ -10,8 +10,8 @@ var config_data = {
         'custom_ip': false,
         'user_field': 'USERXXXX',
         'pass_field': 'PSWDXXXX',
-        'interval': 1000, // Set interval in miliseconds to refresh data
-        'queue_interval': 1000, // Set interval in miliseconds to refresh queue data 
+        'interval': 3000, // Set interval in miliseconds to refresh data
+        'queue_interval': 3000, // Set interval in miliseconds to refresh queue data 
         'route_update_timeout': 15000, // Maximum time in miliseconds to wait for an update-route
         //'server_url': 'http://zwave.dyndns.org:8083/', // Remote JSON
         'server_url': '', // Remote JSON
