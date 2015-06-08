@@ -42,8 +42,8 @@
                             
                         </td>
                         <td  class="association-action" style="text-align: right; width: 20%;"> 
-                            <button type="button" class="btn btn-primary" 
-                                    data-toggle="modal" data-ng-click="openAdd(data[key])" data-target="#modal_add" ng-disabled="data[key].max <= data[key].nodeIds.length"><span style="display: inline-block;width:12px;">+</span></button>
+                            <button type="button" class="btn btn-primary" id="myId"
+                                    data-toggle="modal" data-ng-click="modalAssocAdd(v.groupId)" data-target="#modal_assoc_add" ng-disabled="data[key].max <= data[key].nodeIds.length"><span style="display: inline-block;width:12px;">+</span></button>
                         </td>
                     </tr>
                 </tbody>
@@ -51,76 +51,39 @@
         </div>
         <!-- ////////////////////////////////////////////////////////////////////////////////////// -->
 
-        <!-- Modal remove -->
-        <div class="modal fade" id="modal_remove" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">{{ _t('assoc_confirm_remove')}}</h4>
-                    </div>
-                    <div class="modal-body" style="white-space: normal;">
-                        <div class="form-inline">
-                            <div class="form-group">
-                                <!--<select ng-model="assocToNode" class="form-control" ng-options="k as v for (k,v) in removeNodes">
-                                    <option value="">&lt; {{ _t('assoc_select_to_node')}} {{$index}}&gt;</option>
-                                </select>-->
-                                <select ng-model="assocToNode" class="form-control">
-                                    <option value="">&lt; {{ _t('assoc_select_to_node')}} &gt;</option>
-                                    <option ng-repeat="v in removeNodesSort| orderBy:'key'" value="{{v.key}}" ng-selected="v.key == assocToNode">{{v.val}}</option>
-                                </select>
-                            </div>
-                            <div class="form-group" ng-show="removeInstances[assocToNode] != undefined">
-
-                                <!--<select ng-model="assocToInstance" ng-init="assocToInstance = 1" class="form-control" ng-options="k as v for (k,v) in removeInstances[assocToNode]">
-                                   <option value="">&lt; {{ _t('assoc_select_to_instance')}} &gt;</option>
-                               </select>-->
-
-                                <select ng-model="assocToInstance" class="form-control">
-                                    <option value="" ng-hide_="(removeInstances[assocToNode] | getObjectLength) == 1">&lt; {{ _t('assoc_select_to_instance')}} &gt;</option>
-                                    <option ng-repeat="(k,v) in removeInstances[assocToNode]" value="{{k}}" ng-init="assocToInstance = (removeInstances[assocToNode] | getObjectLength) == 1 ? (removeInstances[assocToNode] | getFirstObjectKey) : ''" ng-selected="k == assocToInstance">{{v}}</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closeRemove()">{{ _t('dialog_abort')}}</button>
-                        <button class="btn btn-primary update" data-ng-click="remove()" ng-disabled="assocToNode == '' || ((removeInstances[assocToNode] != undefined) && (removeInstances[assocToNode] | getObjectLength) != 1 && assocToInstance == '')">{{ _t('dialog_remove')}}</button>
-                    </div>
-                </div>
-            </div>
-        </div><!-- /.Modal -->
         <!-- Modal add -->
-        <div class="modal fade" id="modal_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade" id="modal_assoc_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
+                     <form name="form_assoc" id="form_assoc" ng-submit="storeAssoc(input)" novalidate>
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">{{ _t('assoc_add_title')}}</h4>
                     </div>
                     <div class="modal-body" style="white-space: normal;"> 
+                       {{input}}
                         <div class="form-inline">
-                            {{ _t('fro')}} {{addData.nodeId| deviceName:addData.node}} {{ _t('to_locate')}} <br/>
+                            {{ _t('fro')}} {{nodeCfg.name}} {{ _t('to_locate')}} <br/>
                             <div class="form-group">
-                                <!--<select ng-model="assocToNode" class="form-control" ng-options="k as v for (k,v) in addNodes">
-                                   <option value="">&lt; {{ _t('assoc_select_to_node')}} &gt;</option>
-                               </select>-->
-                                <select ng-model="assocToNode" class="form-control">
+                                <select class="form-control" ng-model="input.toNode"  ng-change="showAssocNodeInstance(input.toNode)">
                                     <option value=""  ng-selected="true">&lt; {{ _t('assoc_select_to_node')}} &gt;</option>
-                                    <option ng-repeat="v in addDevices" value="{{v.key}}">{{v.val}}</option>
+                                    <option ng-repeat="v in assocAddDevices" value="{{v.id}}">(#{{v.id}}) {{v.name}}</option>
                                 </select>
                             </div>
-                            <div class="form-group" ng-show="addInstances[assocToNode] != undefined">
-                                <select ng-model="assocToInstance" class="form-control" ng-options="k as v for (k,v) in addInstances[assocToNode]">
-                                    <option value="">&lt; {{ _t('assoc_select_to_instance')}} &gt;</option>
+                            <div class="form-group" ng-if="nodeCfg.hasMca && assocAddInstances">
+                                <select class="form-control" ng-model="input.toInstance">
+                                  <!-- <option value="" ng-selected="true">&lt; {{ _t('assoc_select_to_instance')}} &gt;</option>-->
+                                     <option ng-repeat="v in assocAddInstances" value="{{v.key}}">{{v.val}}</option>
                                 </select>
                             </div> 
                         </div>
                     </div>
+                     
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">{{ _t('dialog_abort')}}</button>
-                        <button class="btn btn-primary update assocAdd" data-ng-click="add()" ng-disabled="assocToNode == null || ((addInstances[assocToNode] != undefined) && assocToInstance == null)">{{ _t('dialog_add')}}</button>
-                    </div> 
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="modalAssocHide()">{{ _t('dialog_abort')}}</button>
+                        <button type="submit" class="btn btn-primary update assocAdd" ng-disabled_="assocToNode == null || ((addInstances[assocToNode] != undefined) && assocToInstance == null)">{{ _t('dialog_add')}}</button>
+                    </div>
+                    </form>
                 </div>
             </div>
         </div><!-- /.Modal -->
