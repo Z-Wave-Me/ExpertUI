@@ -1,4 +1,5 @@
 {
+    "assoc_max_nodes_reached": "Maximale Anzahl assoziierbarer Geräte erreicht",
     "pingDevice": "Prüfe verbindung",
     "set_value" : "Der eingestellte Wert ist",
     "updated":"Aktualisiert am",

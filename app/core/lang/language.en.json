@@ -1,4 +1,5 @@
 {
+    "assoc_max_nodes_reached": "Number of assoctiated nodes have reached the maximum allowed number",
     "pingDevice": "Check connectivity",
     "set_value" : "Set value",
     "--- ": "---",
