@@ -1,4 +1,5 @@
 {
+    "no_association_groups_found": "Can not configure associations: groups were not reported by the device. Do interview.",
     "assoc_max_nodes_reached": "Number of assoctiated nodes have reached the maximum allowed number",
     "pingDevice": "Check connectivity",
     "set_value" : "Set value",

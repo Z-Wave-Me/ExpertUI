@@ -149,10 +149,10 @@ appService.service('deviceService', function($filter) {
     };
     
     /**
-     * Get assoc xml config param
+     * Check if device is in config
      */
-    this.hasCfgXmlAssoc = function(data, cfgXml) {
-        return hasCfgXmlAssoc(data, cfgXml);
+    this.isInCfgXml = function(data, cfgXml) {
+        return isInCfgXml(data, cfgXml);
     };
     
     /**
@@ -905,12 +905,11 @@ appService.service('deviceService', function($filter) {
     }
     
     /**
-     * Get assoc xml config param
+     * Check if device is in config
      */
-    function hasCfgXmlAssoc(data, cfgXml) {
-        console.log(data, cfgXml)
+    function isInCfgXml(data, cfgXml) {
+        var inConfig = false;
         var hasCfgXml = false;
-        var xmlData = [];
         if (angular.isObject(cfgXml) && $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration')) {
             hasCfgXml = cfgXml.config.devices.deviceconfiguration;
             angular.forEach(hasCfgXml, function(v, k) {
@@ -920,56 +919,13 @@ appService.service('deviceService', function($filter) {
                 obj['commandclass'] = v['_commandclass'];
                 obj['command'] = v['_command'];
                 obj['parameter'] = v['_parameter'];
-                if(JSON.stringify(obj) !== JSON.stringify(data)){
-                     xmlData.push(obj);
-                   /* console.log('XML:',JSON.stringify(obj))
-                 console.log('DATA:',JSON.stringify(data))*/
+                if(JSON.stringify(obj) === JSON.stringify(data)){
+                     inConfig = true;
+                     return;
                 }
-
             });
         }
-        return;
-       var cfg = $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration');
-        if (!cfg) {
-            return []; 
-        }
-        // Get data for given device by id
-        var collection = []; 
-        collection[groupId] = [];
-        angular.forEach(cfg, function(v, k) {
-          
-             if (v['_id'] == nodeId && v['_instance'] == instance && v['_commandclass'] == commandClass && v['_command'] == command) {
-          
-                var obj = {};
-//                if(!angular.isArray(v['_parameter'])){
-//                    return;
-//                }
-                var array = JSON.parse(v['_parameter']);
-                //collection[array[0]] = array[1];
-                 
-//                if (array.length > 2) {
-//                    collection[array[0]] = array[1];
-//                }
-               if (array.length == 2) {
-                    obj['groupId'] = array[0];
-                    obj['deviceId'] = array[1];
-                    //collection.push(obj);
-                    if(array[0] == groupId &&  array[1] > 1){
-                        collection[groupId].push(array[1]);
-                    }
-                      
-
-                }
-//                else {
-//                    collection[0] = array[0];
-//                    return;
-//                }
-            }
-          
-        });
-        //console.log(collection)
-        return collection;
-
+        return inConfig;
     }
     
     /**

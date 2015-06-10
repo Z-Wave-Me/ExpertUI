@@ -72,10 +72,10 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
     /**
      * Gets all of the data in the remote collection.
      */
-    function getZwaveData(callback) {
+    function getZwaveData(callback,noCache) {
         getAppIp();
         var time = Math.round(+new Date() / 1000);
-        if (apiData) {
+        if (apiData && !noCache) {
             console.log('CACHED');
             return callback(apiData);
         }

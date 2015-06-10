@@ -371,12 +371,16 @@ padding: 10px 10px 0 10px;
 }
 
 .btn-group-assoc-devices.false-false .btn {
-  color: #333;
+  display: none;
+}
+
+.btn-group-assoc-devices.true-false .btn {
+ color: #333;
   background-color: #f9f9f9;
   border-color: #ccc;
 }
 
-.btn-group-assoc-devices.false-true .btn,.btn-group-assoc-devices.true-false .btn {
+.btn-group-assoc-devices.false-true .btn{
   color: #fff;
   background-color: #f0ad4e;
   border-color: #eea236;

@@ -5,32 +5,36 @@
 
     <div class="tab-content" ng-show_="deviceId > 0">
         <div class="page-header"><h1 class="text-danger">{{ _t('associations_list')}} !!! DEV !!!</h1></div>
+        <div class="alert" ng-if="alert.message" ng-class="alert.status">
+        <i class="fa fa-lg" ng-class="alert.icon"></i> <span ng-bind="alert.message"></span>
+    </div>
         
-        <button 
+        
+        <!-- ////////////////////////////////////////////////////////////////////////////////////// -->
+        <!-- Assoc design -->
+        <div class="table-responsive" ng-if="assocGroups.length > 0">
+            <button 
             type="button" 
             class="btn btn-primary spin-true"
             id="btn_update_from_device"
             ng-click="updateFromDevice('#btn_update_from_device')" 
             >{{_t('update_from_device')}} <i class="fa fa-spinner fa-spin"></i></button>
         <br/><br/>
-        <!-- ////////////////////////////////////////////////////////////////////////////////////// -->
-        <!-- Assoc design -->
         <p class="text-alert-list" ng-if="nodeCfg.hasBattery"><i class="fa fa-info-circle text-warning"></i> {{_t('conf_apply_battery')}}</p>
         <p class="text-alert-list"><i class="fa fa-exclamation-triangle text-danger"></i>  {{_t('device_changed_configuration')}}</p>
-        <div class="table-responsive"> 
             <table class="table table-striped_ table-condensed">
                 <tbody>
                     <tr ng-repeat="v in assocGroups">
                         <td class="association-text"> 
                             <h5>
                                 {{v.label}} ({{ _t('assoc_max')}} {{v.max}} {{ _t('assoc_nodes')}}) 
-                                <span> | <i class="fa fa-clock-o"></i> <span ng-class="v.updateTime < v.invalidateTime ? 'red': ''">{{v.updateTime| isTodayFromUnix}}</span></span> <!--updateTime: {{v.updateTime |dateFromUnix}}, invalidateTime: {{v.invalidateTime|dateFromUnix}}-->
+                                <span> | <i class="fa fa-clock-o"></i> <span class="{{v.timeClass}}">{{v.updateTime| isTodayFromUnix}}</span></span> <!--updateTime: {{v.updateTime |dateFromUnix}}, invalidateTime: {{v.invalidateTime|dateFromUnix}}-->
                             </h5>
                             
                             <div>
                                 <div class="btn-group btn-group-assoc-devices {{d.status}}" role="group" ng-repeat="d in assocGroupsDevices[v.groupId]" id="{{d.elId}}">
                                 <button type="button" class="btn btn-info" title="{{d.name}}">
-                                   <!--inDevice: {{d.inDevice}}  | inConfig: {{d.inConfig}} | Status: {{d.status}}-->
+                                   <!--inDevice: {{d.inDevice}}  | inConfig: {{d.inConfig}} | Status: {{d.status}}--> 
                                     <i class="fa fa-exclamation-triangle text-danger" ng-if="d.status !== 'true-true'"></i> 
                                     {{_t('txt_device')}} (#{{d.id}}<span ng-if="nodeCfg.hasMca && d.instance > 0">.{{d.instance}}</span>)
                                 </button>
@@ -40,7 +44,7 @@
                                 <!--<br ng_if="$index % 5 == 4"/> -->
                             </div>
                             </div>
-                            <p class="text-danger text-alert-list" ng-if="v.remaining < 1"><i class="fa fa-exclamation-triangle"></i>  {{_t('assoc_max_nodes_reached')}}</p>
+                            <p class="text-alert-list" ng-if="v.remaining < 1"><i class="fa fa-exclamation-circle text-warning"></i>  {{_t('assoc_max_nodes_reached')}}</p>
                             
                         </td>
                         <td  class="association-action" style="text-align: right; width: 20%;"> 
@@ -67,7 +71,6 @@
                         <h4 class="modal-title">{{ _t('assoc_add_title')}}</h4>
                     </div>
                     <div class="modal-body" style="white-space: normal;"> 
-                       {{nodeCfg}}
                         <div class="form-inline">
                             {{ _t('fro')}} {{nodeCfg.name}} {{ _t('to_locate')}} <br/>
                             <div class="form-group">
