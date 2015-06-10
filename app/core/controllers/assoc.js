@@ -25,13 +25,10 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
     $scope.cfgXml = [];
     $scope.input = {
         nodeId: 0,
+        goupCfg: false,
         //goupId: 0,
         toNode: false,
         toInstance: false
-    };
-
-    $scope.reset = function() {
-        $scope.assocGroups = angular.copy([]);
     };
 
 
@@ -44,9 +41,8 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
     };
 
     // Load data
-    $scope.load = function(nodeId,noCache) {
+    $scope.load = function(nodeId, noCache) {
         dataService.getZwaveData(function(ZWaveAPIData) {
-            $scope.assocGroups = angular.copy([]);
             $scope.ZWaveAPIData = ZWaveAPIData;
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
             var node = ZWaveAPIData.devices[nodeId];
@@ -74,7 +70,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             });
 
 
-        },noCache);
+        }, noCache);
     };
     $scope.load($routeParams.nodeId);
 
@@ -100,7 +96,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             }
             $timeout(function() {
                 $(elId + ' .fa-spin').fadeOut(1000);
-                $scope.load(nodeId,true);
+                $scope.load(nodeId, true);
             }, 5000);
             return;
 
@@ -109,9 +105,12 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
     };
 
     //Show list of the devices to assocciate
-    $scope.modalAssocAdd = function(groupId) {
-        $scope.input.groupId = groupId;
+    $scope.modalAssocAdd = function(group) {
+        $scope.input.groupCfg = group;
+        $scope.input.groupId = group.groupId;
         // Prepare devices and nodes
+        console.log(group.nodeIds)
+
         angular.forEach($scope.ZWaveAPIData.devices, function(node, nodeId) {
             if (nodeId == 255 || node.data.isVirtual.value || nodeId == $scope.deviceId) {
                 return;
@@ -121,9 +120,19 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             obj['name'] = $filter('deviceName')(nodeId, node);
             obj['hasMca'] = 142 in node.instances[0].commandClasses;
             obj['instances'] = getNodeInstances(node, nodeId);
-            $scope.assocAddDevices.push(obj);
-            //console.log(obj)
-
+            if ($scope.nodeCfg.hasMca) {
+                if (obj['hasMca']) {
+                    $scope.assocAddDevices.push(obj);
+                } else {
+                    if (group.nodeIds.indexOf(parseInt(nodeId)) === -1) {
+                        $scope.assocAddDevices.push(obj);
+                    }
+                }
+            } else {
+                if (group.nodeIds.indexOf(parseInt(nodeId)) === -1) {
+                    $scope.assocAddDevices.push(obj);
+                }
+            }
         });
 
     };
@@ -135,7 +144,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
         $scope.assocAddInstances = false;
         $scope.assocAddDevices = angular.copy([]);
         $timeout(function() {
-            $scope.load($scope.nodeCfg.id,true);
+            $scope.load($scope.nodeCfg.id, true);
         }, 5000);
 
     };
@@ -182,7 +191,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             dataService.putCfgXml(xmlFile);
             dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
             $timeout(function() {
-                $scope.load(input.nodeId,true);
+                $scope.load(input.nodeId, true);
             }, 5000);
         });
     };
@@ -234,6 +243,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
      */
     function setData(node, ZWaveAPIData, nodeId, cfgXml) {
         var zddXmlFile = $filter('hasNode')(node, 'data.ZDDXMLFile.value');
+        $scope.assocGroups = angular.copy([]);
         //  zddXmlFile not available
         if (!zddXmlFile || zddXmlFile === 'undefined') {
             $scope.assocGroups = getAssocGroups(node, null, nodeId, ZWaveAPIData, cfgXml);
@@ -317,16 +327,16 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
 
                     //console.log(cfgArray)
                     if ((0x85 in instance.commandClasses) && (group < instance.commandClasses[0x85].data.groups.value)) {
-                         var savedNodesInDevice = [];
-                         data = instance.commandClasses[0x85].data[group + 1];
-                         // Find duplicates in nodes
+                        var savedNodesInDevice = [];
+                        data = instance.commandClasses[0x85].data[group + 1];
+                        // Find duplicates in nodes
                         for (var i = 0; i < data.nodes.value.length; i++) {
-                            if(savedNodesInDevice.indexOf(data.nodes.value[i]) === -1){
+                            if (savedNodesInDevice.indexOf(data.nodes.value[i]) === -1) {
                                 savedNodesInDevice.push(data.nodes.value[i]);
                             }
                             /*if ((data.nodes.value.lastIndexOf(data.nodes.value[i]) != i) && (savedNodesInDevice.indexOf(data.nodes.value[i]) == -1)) {
-                                savedNodesInDevice.push(data.nodes.value[i]);
-                            }*/
+                             savedNodesInDevice.push(data.nodes.value[i]);
+                             }*/
                         }
                         groupDevices = data.nodes.value;
                         updateTime = data.nodes.updateTime;
@@ -335,10 +345,10 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                             groupCfg = cfgArray[groupId];
                             $.merge(groupDevices, groupCfg);
                         }
-                      
-                      
+
+
                         for (var i = 0; i < $filter('unique')(groupDevices).length; i++) {
-                             //console.log(data.nodes.value[i])
+                            //console.log(data.nodes.value[i])
 
                             var targetNodeId = data.nodes.value[i];
                             nodeIds.push(targetNodeId);
@@ -367,9 +377,9 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                                 instance: index,
                                 cc: 85
                             };
-                           // objAssoc['inDevice'] =  savedNodesInDevice.indexOf(targetNodeId) > -1 ? true : false;
-                           // objAssoc['inConfig'] = inConfig;
-                            objAssoc['status'] = ( savedNodesInDevice.indexOf(targetNodeId) > -1 ? true : false) + '-' + inConfig;
+                            // objAssoc['inDevice'] =  savedNodesInDevice.indexOf(targetNodeId) > -1 ? true : false;
+                            // objAssoc['inConfig'] = inConfig;
+                            objAssoc['status'] = (savedNodesInDevice.indexOf(targetNodeId) > -1 ? true : false) + '-' + inConfig;
                             assocDevices.push(objAssoc);
                             $scope.assocGroupsDevices[groupId][targetNodeId] = objAssoc;
                         }
@@ -432,7 +442,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                         max: max || data.max.value,
                         updateTime: updateTime,
                         invalidateTime: invalidateTime,
-                        timeClass: updateTime > invalidateTime ? 'undef': 'red',
+                        timeClass: updateTime > invalidateTime ? 'undef' : 'red',
                         remaining: (data.max.value - $filter('unique')(nodeIds).length)
                     };
                     assocGroups.push(obj);
