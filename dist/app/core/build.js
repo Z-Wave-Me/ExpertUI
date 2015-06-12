@@ -17282,15 +17282,24 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
         toNode: false,
         toInstance: false
     };
-
-
-
     // Redirect to detail page
     $scope.changeDevice = function(deviceId) {
         if (deviceId > 0) {
             $location.path($scope.activeUrl + deviceId);
         }
     };
+
+    // Refresh data
+    $scope.refresh = function() {
+        dataService.joinedZwaveData(function(data) {
+        });
+    };
+    $scope.refresh();
+
+    // Cancel interval on page destroy
+    $scope.$on('$destroy', function() {
+        dataService.cancelZwaveDataInterval();
+    });
 
     // Load data
     $scope.load = function(nodeId, noCache) {
@@ -17348,7 +17357,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             }
             $timeout(function() {
                 $(elId + ' .fa-spin').fadeOut(1000);
-                $scope.load(nodeId, true);
+                $scope.load(nodeId);
             }, 5000);
             return;
 
@@ -17396,7 +17405,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
         $scope.assocAddInstances = false;
         $scope.assocAddDevices = angular.copy([]);
         $timeout(function() {
-            $scope.load($scope.nodeCfg.id, true);
+            $scope.load($scope.nodeCfg.id);
         }, 5000);
 
     };
@@ -17440,7 +17449,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             dataService.putCfgXml(xmlFile);
             dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
             $timeout(function() {
-                $scope.load(input.nodeId, true);
+                $scope.load(input.nodeId);
             }, 5000);
         });
     };
@@ -17463,8 +17472,12 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             var xmlFile = deviceService.deleteCfgXmlAssoc(data, cfgXml);
             dataService.putCfgXml(xmlFile);
             dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
+            $('#' + d.elId).addClass('true-false');
+            $timeout(function() {
+                $scope.load(d.node.id);
+            }, 5000);
         });
-        $('#' + d.elId).addClass('true-false');
+
         //$scope.load(d.node.id);
     };
 
