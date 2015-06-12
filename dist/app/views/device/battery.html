@@ -21,7 +21,7 @@
                         </a>
                     </th>
                     
-                    <th class="text-right">
+                    <th>
                         <a href="" ng-click="orderBy('level')">{{ _t('th_level')}}
                             <span ng-show="predicate == 'level'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
@@ -43,9 +43,10 @@
                 <td data-title="#">{{ v.id }}</td>
                 <td data-title="{{ _t('device_name')}}"> <a href="#configuration/interview/{{v.id}}">{{ v.name}}</a></td>
                 <td data-title="{{ _t('th_battery_type')}}">{{ v.batteryCount }}<span ng-show="v.batteryCount">*</span>{{ v.batteryType }} &nbsp;</td>
-                 <td data-title="{{ _t('th_level')}}" class="text-right">
-                     &nbsp;<span class="row-level">{{ v.level }}</span>%
-                     <i class="{{ v.level | batteryIcon }}"></i>
+                 <td data-title="{{ _t('th_level')}}">
+                     
+                     <!-- <i class="{{ v.level | batteryIcon }}"></i>-->
+                     <img class="report-img" ng-src="app/images/batteries/{{v.level|getBatteryIcon}}" alt="img" />&nbsp;<span class="row-level">{{ v.level }}%</span>
                       
                  </td>
                   <td data-title="{{ _t('datetime')}}" class="row-time is-updated-{{v.isUpdated}}">{{ v.updateTime | isTodayFromUnix }} &nbsp;</td>

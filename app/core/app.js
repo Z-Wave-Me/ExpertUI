@@ -91,7 +91,7 @@ angApp.config(['$routeProvider',
                     templateUrl: 'app/views/configuration/assoc.html'
                 }).
                 when('/configuration/association/:nodeId?', {
-                    templateUrl: 'app/views/configuration/association.html'
+                    templateUrl: 'app/views/configuration/assoc.html'
                 }).
                 when('/configuration/commands/:nodeId?', {
                     templateUrl: 'app/views/configuration/commands.html'

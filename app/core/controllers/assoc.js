@@ -150,7 +150,6 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
     };
     //Show node instances (if any)
     $scope.showAssocNodeInstance = function(nodeId) {
-        var instances = [];
         // Prepare devices and nodes
         angular.forEach($scope.assocAddDevices, function(v, k) {
             if (v.id == nodeId) {
@@ -161,8 +160,6 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
 
 
         });
-        console.log($scope.assocAddInstances)
-        //console.log($scope.assocToInstance)
 
 
     };
@@ -215,7 +212,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             dataService.putCfgXml(xmlFile);
             dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
         });
-        $('#' + d.elId).fadeOut(1000);
+        $('#' + d.elId).addClass('true-false');
         //$scope.load(d.node.id);
     };
 

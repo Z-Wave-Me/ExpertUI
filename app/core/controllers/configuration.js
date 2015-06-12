@@ -615,6 +615,7 @@ appController.controller('ConfigConfigurationController', function($scope, $rout
 
 
 });
+// DEPRECATED
 // Device configuration Association controller
 appController.controller('ConfigAssociationController', function($scope, $filter, $routeParams, $location, $cookies, $http, dataService, deviceService, myCache, cfg) {
     $scope.devices = [];

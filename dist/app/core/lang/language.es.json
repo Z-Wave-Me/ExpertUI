@@ -1,4 +1,5 @@
 {
+	"set_value" : "El valor del",
 	"syntax_error": "Error Sintaxis XML: ",
 	"area_new": "Nueva Zona",
 	"area_edit": "Editar Zona",

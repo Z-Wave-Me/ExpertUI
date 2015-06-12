@@ -54,6 +54,7 @@ module.exports = function(grunt) {
                     'app/core/controllers/controllers.js',
                     //'app/core/controllers/configuration-controller.js',
                     'app/core/controllers/configuration.js',
+                    'app/core/controllers/assoc.js',
                     'app/core/jquery/jquery-app.js',
                     
                 ],
