@@ -94,8 +94,28 @@ appController.controller('ConfigInterviewController', function($scope, $routePar
 
     // Store data on remote server
     $scope.store = function(btn) {
-        var url = $scope.cfg.server_url + $scope.cfg.store_url + $(btn).attr('data-store-url');
-        dataService.runCmd($(btn).attr('data-store-url'), false, $scope._t('error_handling_data'));
+       dataService.runCmd($(btn).attr('data-store-url'), false, $scope._t('error_handling_data'));
+    };
+    
+    // Show modal CommandClass dialog
+    $scope.showModalCommandClass = function(target, instanceId, ccId, type) {
+        var node = $scope.ZWaveAPIData.devices[$routeParams.nodeId];
+        var ccData;
+        switch(type){
+            case 'cmdData':
+                ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.commandClasses.' + ccId + '.data');
+                break;
+           case 'cmdDataIn':
+                ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.data');
+                break;
+            default:
+                ccData = $filter('hasNode')(node, 'data');
+               break;
+        }
+        var cc = deviceService.configGetCommandClass(ccData, '/', '');
+
+        $scope.commandClass = deviceService.configSetCommandClass(cc);
+         $(target).modal();
     };
 
     // Show modal dialog
@@ -225,7 +245,8 @@ appController.controller('ConfigInterviewController', function($scope, $routePar
         });
         // Has device a zddx XML file
         if (zddXml) {
-            var lang = 'en';
+            // DEORECATED ----------------
+            /*var lang = 'en';
             var langs = {
                 "en": "1",
                 "de": "0",
@@ -234,23 +255,31 @@ appController.controller('ConfigInterviewController', function($scope, $routePar
             if (angular.isDefined(langs[$scope.lang])) {
                 lang = $scope.lang;
             }
-            var langId = langs[lang];
-            if (angular.isDefined(zddXml.ZWaveDevice.deviceDescription.description.lang[langId])) {
+            var langId = langs[lang];*/
+            
+            /*if (angular.isDefined(zddXml.ZWaveDevice.deviceDescription.description.lang[langId])) {
                 deviceDescription = zddXml.ZWaveDevice.deviceDescription.description.lang[langId].__text;
-            }
-            if ('productName' in zddXml.ZWaveDevice.deviceDescription) {
-                productName = zddXml.ZWaveDevice.deviceDescription.productName;
-            }
-            if (angular.isDefined(zddXml.ZWaveDevice.deviceDescription.inclusionNote.lang[langId])) {
+            }*/
+            
+            /*if (angular.isDefined(zddXml.ZWaveDevice.deviceDescription.inclusionNote.lang[langId])) {
                 inclusionNote = zddXml.ZWaveDevice.deviceDescription.inclusionNote.lang[langId].__text;
-            }
+            }*/
+            /*if (angular.isDefined(zddXml.ZWaveDevice.deviceDescription.wakeupNote.lang[langId])) {
+                wakeupNote = zddXml.ZWaveDevice.deviceDescription.wakeupNote.lang[langId].__text;
+            }*/
+            // ----------------
+            deviceDescription = deviceService.configGetZddxLang($filter('hasNode')(zddXml, 'ZWaveDevice.deviceDescription.description.lang'), $scope.lang);
+            inclusionNote = deviceService.configGetZddxLang($filter('hasNode')(zddXml, 'ZWaveDevice.deviceDescription.inclusionNote.lang'), $scope.lang);
+             wakeupNote = deviceService.configGetZddxLang($filter('hasNode')(zddXml, 'ZWaveDevice.deviceDescription.wakeupNote.lang'), $scope.lang);
 
             if ('brandName' in zddXml.ZWaveDevice.deviceDescription) {
                 brandName = zddXml.ZWaveDevice.deviceDescription.brandName;
             }
-            if (angular.isDefined(zddXml.ZWaveDevice.deviceDescription.wakeupNote.lang[langId])) {
-                wakeupNote = zddXml.ZWaveDevice.deviceDescription.wakeupNote.lang[langId].__text;
+            
+            if ('productName' in zddXml.ZWaveDevice.deviceDescription) {
+                productName = zddXml.ZWaveDevice.deviceDescription.productName;
             }
+            
             if (angular.isDefined(zddXml.ZWaveDevice.resourceLinks)) {
                 deviceImage = zddXml.ZWaveDevice.resourceLinks.deviceImage._url;
             }
@@ -276,7 +305,7 @@ appController.controller('ConfigInterviewController', function($scope, $routePar
         obj["f"] = {"key": "device_description_product", "val": productName};
         obj["g"] = {"key": "device_description_description", "val": deviceDescription};
         obj["h"] = {"key": "device_description_inclusion_note", "val": inclusionNote};
-        obj["i"] = {"key": "device_description_wakeup_note", "val": (wakeupNote ? wakeupNote : '')};
+        obj["i"] = {"key": "device_description_wakeup_note", "val": wakeupNote};
         obj["j"] = {"key": "device_description_interview", "val": deviceService.configInterviewStage(ZWaveAPIData, nodeId, $scope.languages)};
         obj["k"] = {"key": "device_sleep_state", "val": deviceService.configDeviceState(node, $scope.languages)};
         //obj["l"] = {"key": "device_queue_length", "val": queueLength(ZWaveAPIData, node)};
@@ -297,6 +326,7 @@ appController.controller('ConfigInterviewController', function($scope, $routePar
      * Refresh description cont
      */
     function refreshData(node, nodeId, ZWaveAPIData) {
+        $scope.interviewCommands = deviceService.configGetInterviewCommands(node, ZWaveAPIData.updateTime);
         $('#device_sleep_state .config-interview-val').html(deviceService.configDeviceState(node, $scope.languages));
         $('#device_description_interview .config-interview-val').html(deviceService.configInterviewStage(ZWaveAPIData, nodeId, $scope.languages));
     }
@@ -374,21 +404,24 @@ appController.controller('ConfigConfigurationController', function($scope, $rout
     $scope.$on('$destroy', function() {
         dataService.cancelZwaveDataInterval();
     });
-    
+
     /**
      * Update from device action
      *
      * @param {string} cmd
      * @returns {undefined}
      */
-    $scope.updateFromDevice = function(cmd) {
+    $scope.updateFromDevice = function(cmd, hasBattery) {
+        if (hasBattery) {
+            alert($scope._t('conf_apply_battery'));
+        }
         dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
         $scope.refresh = true;
         var timeOut;
         timeOut = $timeout(function() {
             $scope.refresh = false;
         }, 10000);
-        return; 
+        return;
     };
 
     /**
@@ -412,7 +445,7 @@ appController.controller('ConfigConfigurationController', function($scope, $rout
     /**
      * Apply Config action
      */
-    $scope.submitApplyConfigCfg = function(form, cmd, cfgValues, hasBattery,confNum) {
+    $scope.submitApplyConfigCfg = function(form, cmd, cfgValues, hasBattery, confNum) {
         var xmlData = [];
         var configValues = [];
         if (hasBattery) {
@@ -469,23 +502,23 @@ appController.controller('ConfigConfigurationController', function($scope, $rout
         });
         //console.log(xmlData)
         //return;
-        
+
         // Send command
         var request = 'devices[' + cmd.id + '].instances[' + cmd.instance + '].commandClasses[0x' + cmd.commandclass + '].';
         switch (cmd['commandclass']) {
             case '70':// Config
                 angular.forEach(xmlData, function(v, k) {
-                   
+
                     var configRequest = request;
                     configRequest += cmd.command + '(' + v.parameterValues + ')';
-                    if(confNum){
-                        if(confNum == v.confNum){
+                    if (confNum) {
+                        if (confNum == v.confNum) {
                             dataService.runCmd(configRequest, false, $scope._t('error_handling_data'));
                         }
-                    }else{
+                    } else {
                         dataService.runCmd(configRequest, false, $scope._t('error_handling_data'));
                     }
-                    
+
                 });
                 break;
             case '75':// Protection
@@ -582,6 +615,7 @@ appController.controller('ConfigConfigurationController', function($scope, $rout
 
 
 });
+// DEPRECATED
 // Device configuration Association controller
 appController.controller('ConfigAssociationController', function($scope, $filter, $routeParams, $location, $cookies, $http, dataService, deviceService, myCache, cfg) {
     $scope.devices = [];
@@ -1132,10 +1166,11 @@ appController.controller('ConfigAssociationController', function($scope, $filter
     ;
 });
 // Device configuration commands controller
-appController.controller('ConfigCommandsController', function($scope, $routeParams, $location, $cookies, $timeout, dataService, deviceService) {
+appController.controller('ConfigCommandsController', function($scope, $routeParams, $location, $cookies, $timeout, $filter, dataService, deviceService) {
     $scope.devices = [];
     $scope.commands = [];
     $scope.interviewCommands;
+
     $scope.deviceId = 0;
     $scope.activeTab = 'commands';
     $scope.activeUrl = 'configuration/commands/';
@@ -1166,7 +1201,6 @@ appController.controller('ConfigCommandsController', function($scope, $routePara
                 return devices;
             };
             $scope.interviewCommands = deviceService.configGetInterviewCommands(node, ZWaveAPIData.updateTime);
-
             $cookies.configuration_id = nodeId;
             $cookies.config_url = $scope.activeUrl + nodeId;
             $scope.deviceId = nodeId;
@@ -1188,6 +1222,7 @@ appController.controller('ConfigCommandsController', function($scope, $routePara
                     obj['cmdDataIn'] = ZWaveAPIData.devices[nodeId].instances[instanceId].data;
                     obj['commandClass'] = commandClass.name;
                     obj['command'] = command;
+                    obj['updateTime'] = ZWaveAPIData.updateTime;
                     $scope.commands.push(obj);
                 });
             });
@@ -1225,6 +1260,43 @@ appController.controller('ConfigCommandsController', function($scope, $routePara
         }, 10000);
         return;
     };
+
+    // Show modal dialog
+    $scope.showModal = function(target, instanceId, index, ccId, type) {
+        var node = $scope.ZWaveAPIData.devices[$routeParams.nodeId];
+        var ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.data');
+        if (type == 'cmdData') {
+            ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.commandClasses.' + ccId + '.data');
+        }
+        var cc = deviceService.configGetCommandClass(ccData, '/', '');
+
+        $scope.commandClass = deviceService.configSetCommandClass(cc, $scope.commands[index]['updateTime']);
+        /**
+         * Refresh data
+         */
+        dataService.joinedZwaveData(function(data) {
+            node = data.joined.devices[$routeParams.nodeId];
+            //console.log(node.instances)
+            var newCc = $filter('hasNode')(node, 'instances.' + instanceId + '.data');
+            if (type == 'cmdData') {
+                newCc = $filter('hasNode')(node, 'instances.' + instanceId + '.commandClasses.' + ccId + '.data');
+            }
+            if (newCc) {
+                 if (JSON.stringify(ccData) === JSON.stringify(newCc)) {
+                    return;
+                }
+                $scope.commandClass = deviceService.configSetCommandClass(deviceService.configGetCommandClass(newCc, '/', ''), data.joined.updateTime);
+            }
+        });
+        $(target).modal();
+    };
+    // Show modal dialog
+    $scope.hideModal = function() {
+        dataService.cancelZwaveDataInterval();
+    };
+
+    /// --- Private functions --- ///
+    
 
 });
 // Device configuration firmware controller

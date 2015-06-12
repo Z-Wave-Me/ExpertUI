@@ -82,6 +82,21 @@ appService.service('deviceService', function($filter) {
     this.configGetInterviewCommands = function(node, updateTime) {
         return configGetInterviewCommands(node, updateTime);
     };
+    
+    /**
+     *  Get CommandClass
+     */
+    this.configGetCommandClass = function(data, name, space) {
+        return configGetCommandClass(data, name, space);
+    };
+    
+    /**
+     *  Set CommandClass
+     */
+    this.configSetCommandClass = function(data,updateTime) {
+        return configSetCommandClass(data,updateTime);
+    };
+
 
     /**
      *  Get interview stage
@@ -132,6 +147,21 @@ appService.service('deviceService', function($filter) {
     this.getCfgXmlParam = function(cfgXml, nodeId, instance, commandClass, command) {
         return getCfgXmlParam(cfgXml, nodeId, instance, commandClass, command);
     };
+    
+    /**
+     * Check if device is in config
+     */
+    this.isInCfgXml = function(data, cfgXml) {
+        return isInCfgXml(data, cfgXml);
+    };
+    
+    /**
+     * Get assoc xml config param
+     */
+    this.getCfgXmlAssoc = function(cfgXml, nodeId, instance, commandClass, command,groupId) {
+        return getCfgXmlAssoc(cfgXml, nodeId, instance, commandClass, command,groupId);
+    };
+    
 
     /**
      *Build config XML file
@@ -139,11 +169,18 @@ appService.service('deviceService', function($filter) {
     this.buildCfgXml = function(data, cfgXml, id, commandclass) {
         return buildCfgXml(data, cfgXml, id, commandclass);
     };
+    
     /**
-     *Build config XML file
+     *Build assoc config XML file
      */
     this.buildCfgXmlAssoc = function(data, cfgXml) {
         return buildCfgXmlAssoc(data, cfgXml);
+    };
+    /**
+     *Delete from CFG XML - asoc
+     */
+    this.deleteCfgXmlAssoc = function(data, cfgXml) {
+        return deleteCfgXmlAssoc(data, cfgXml);
     };
 
     /// --- Private functions --- ///
@@ -177,21 +214,22 @@ appService.service('deviceService', function($filter) {
      *  Get language from zddx
      */
     function configGetZddxLang(langs, currLang) {
-        var label = null;
+         var label = null;
         if (!langs) {
             return label;
         }
-
         if (angular.isArray(langs)) {
-            angular.forEach(langs, function(lang, index) {
-                if (("__text" in lang) && (lang["_xml:lang"] == currLang)) {
-                    label = lang.__text;
-                    return false;
+            for (var i = 0, len = langs.length; i < len; i++) {
+                if (("__text" in langs[i]) && (langs[i]["_xml:lang"] == currLang)) {
+                   label = langs[i].__text;
+                   continue;
+                }else{
+                     if (("__text" in langs[i]) && (langs[i]["_xml:lang"] == 'en')) {
+                    label = langs[i].__text;
+                    continue;
+                     }
                 }
-                if (("__text" in lang) && (lang["_xml:lang"] == "en")) {
-                    label = lang.__text;
-                }
-            });
+            }
         } else {
             if (("__text" in langs)) {
                 label = langs.__text;
@@ -268,6 +306,38 @@ appService.service('deviceService', function($filter) {
         ;
         return interviews;
     }
+    
+    /**
+     *  Get CommandClass Commands
+     */
+    function configGetCommandClass(data, name, space) {
+        // Formated output
+        //var getCmdData = function(data, name, space) {
+            if (name == undefined) {
+                return '';
+            }
+            var html = '<div class="cc-data-element">' + space + name + ': <span class="' + ((data.updateTime > data.invalidateTime) ? 'green' : 'red') + '">' + ((typeof (data.value) !== 'undefined' && data.value != null) ? data.value.toString() : 'None') + '</span>' + ' (<span class="' + ((data.updateTime > data.invalidateTime) ? '' : 'red') + '">' + $filter('isTodayFromUnix')(data.updateTime) + '</span>)</div>';
+            angular.forEach(data, function(el, key) {
+
+                if (key != 'type' && key != 'updateTime' && key != 'invalidateTime' && key != 'value' && // these are internal values
+                        key != 'capabilitiesNames') { // these make the dialog monstrious
+                    html += configGetCommandClass(el, key, space + '&nbsp;&nbsp;&nbsp;&nbsp;');
+                }
+            });
+            return html;
+       //};
+    }
+    
+    /**
+     *  Set CommandClass Commands
+     */
+    function configSetCommandClass(data,updateTime) {
+        var html = data ;
+        /*if(updateTime){
+         html += '<p class="help-block"><em>' + $filter('dateFromUnix')(updateTime )+ '<em></p>'; 
+         }*/
+        return html;
+    }
 
     /**
      *  Get interview stage
@@ -335,15 +405,7 @@ appService.service('deviceService', function($filter) {
         }
         var config_cont = [];
         var params = zddXml.ZWaveDevice.configParams['configParam'];
-        var lang = 'en';
-        var langs = {
-            "en": "1",
-            "de": "0"
-        };
-        if (angular.isDefined(langs[lang])) {
-            lang = lang;
-        }
-        var langId = langs[lang];
+
         // Loop throught params
         var parCnt = 0;
         var cfgFile = getCfgXmlParam(cfgXml, nodeId, '0', '70', 'Set');
@@ -841,6 +903,77 @@ appService.service('deviceService', function($filter) {
         return collection;
 
     }
+    
+    /**
+     * Check if device is in config
+     */
+    function isInCfgXml(data, cfgXml) {
+        var inConfig = false;
+        var hasCfgXml = false;
+        if (angular.isObject(cfgXml) && $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration')) {
+            hasCfgXml = cfgXml.config.devices.deviceconfiguration;
+            angular.forEach(hasCfgXml, function(v, k) {
+                var obj = {};
+                obj['id'] = v['_id'];
+                obj['instance'] = v['_instance'];
+                obj['commandclass'] = v['_commandclass'];
+                obj['command'] = v['_command'];
+                obj['parameter'] = v['_parameter'];
+                if(JSON.stringify(obj) === JSON.stringify(data)){
+                     inConfig = true;
+                     return;
+                }
+            });
+        }
+        return inConfig;
+    }
+    
+    /**
+     * Get assoc xml config param
+     */
+    function getCfgXmlAssoc(cfgXml, nodeId, instance, commandClass, command,groupId) {
+       var cfg = $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration');
+        if (!cfg) {
+            return []; 
+        }
+        // Get data for given device by id
+        var collection = []; 
+        collection[groupId] = [];
+        angular.forEach(cfg, function(v, k) {
+          
+             if (v['_id'] == nodeId && v['_instance'] == instance && v['_commandclass'] == commandClass && v['_command'] == command) {
+          
+                var obj = {};
+//                if(!angular.isArray(v['_parameter'])){
+//                    return;
+//                }
+                var array = JSON.parse(v['_parameter']);
+                //collection[array[0]] = array[1];
+                 
+//                if (array.length > 2) {
+//                    collection[array[0]] = array[1];
+//                }
+               if (array.length == 2) {
+                    obj['groupId'] = array[0];
+                    obj['deviceId'] = array[1];
+                    //collection.push(obj);
+                    if(array[0] == groupId &&  array[1] > 1){
+                        collection[groupId].push(array[1]);
+                    }
+                      
+
+                }
+//                else {
+//                    collection[0] = array[0];
+//                    return;
+//                }
+            }
+          
+        });
+        //console.log(collection)
+        return collection;
+
+    }
 
     /**
      *Build config XML file
@@ -885,28 +1018,41 @@ appService.service('deviceService', function($filter) {
         return ret;
 
     }
-
+    
     /**
-     *Build config XML file
+     *Build config assoc XML file
      */
     function buildCfgXmlAssoc(data, cfgXml) {
+        var hasCfgXml = false;
         var xmlData = [];
-        var removeFromXml = {
-            'id': [],
-            'group': [],
-            'parameter': [],
-        }
-        angular.forEach(data, function(v, k) {
-            var obj = {};
-            obj['id'] = v['id'];
-            obj['instance'] = v['instance'];
-            obj['commandclass'] = parseInt(v['commandclass'], 10);
-            obj['command'] = v['command'];
-            obj['parameter'] = '[' + v['parameter'] + ']';
-            obj['group'] = v['group'];
-            xmlData.push(obj);
+        if (angular.isObject(cfgXml) && $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration')) {
+            hasCfgXml = cfgXml.config.devices.deviceconfiguration;
+            angular.forEach(hasCfgXml, function(v, k) {
+                var obj = {};
+                obj['id'] = v['_id'];
+                obj['instance'] = v['_instance'];
+                obj['commandclass'] = v['_commandclass'];
+                obj['command'] = v['_command'];
+                obj['parameter'] = v['_parameter'];
+                if(JSON.stringify(obj) !== JSON.stringify(data)){
+                     xmlData.push(obj);
+                   /* console.log('XML:',JSON.stringify(obj))
+                 console.log('DATA:',JSON.stringify(data))*/
+                }
 
-        });
+            });
+        }
+        xmlData.push(data);
+        var ret = buildCfgXmlFile(xmlData); 
+        return ret;
+
+    }
+
+    /**
+     *Delete from cfg xml file - assoc
+     */
+    function deleteCfgXmlAssoc(data, cfgXml) {
+       var xmlData = [];
         var hasCfgXml = $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration');
         if (hasCfgXml) {
             angular.forEach(hasCfgXml, function(v, k) {
@@ -916,11 +1062,19 @@ appService.service('deviceService', function($filter) {
                 obj['commandclass'] = parseInt(v['_commandclass'], 10);
                 obj['command'] = v['_command'];
                 obj['parameter'] = v['_parameter'];
-                obj['group'] = v['_group'];
-                xmlData.push(obj);
-
+                if(JSON.stringify(obj) !== JSON.stringify(data)){
+                     xmlData.push(obj);
+                   /* obj['command'] = 'Remove';
+                    console.log('XML:',JSON.stringify(obj))
+                 console.log('DATA:',JSON.stringify(data))*/
+                }
+               
             });
+        }else{
+             data['command'] = 'Remove';
+            xmlData.push(data); 
         }
+       
         var ret = buildCfgXmlFile(xmlData);
         return ret; 
     }
@@ -929,17 +1083,9 @@ appService.service('deviceService', function($filter) {
      * Build cfg XML file
      */
     function buildCfgXmlFile(xmlData) {
-        var assocCc = [133, 142];
        var xml = '<config><devices>' + "\n";
-
         angular.forEach(xmlData, function(v, k) {
-            if (assocCc.indexOf( parseInt(v.commandclass,10)) > -1) {
-                xml += '<deviceconfiguration id="' + v.id + '" instance="' + v.instance + '" commandclass="' + v.commandclass + '" command="' + v.command + '" group="' + v.group + '" parameter="' + v.parameter + '"/>' + "\n";
-               
-            } else {
-                xml += '<deviceconfiguration id="' + v.id + '" instance="' + v.instance + '" commandclass="' + v.commandclass + '" command="' + v.command + '" parameter="' + v.parameter + '"/>' + "\n";
-            }
-
+            xml += '<deviceconfiguration id="' + v.id + '" instance="' + v.instance + '" commandclass="' + v.commandclass + '" command="' + v.command + '" parameter="' + v.parameter + '"/>' + "\n";
         });
         xml += '</devices></config>' + "\n";
         return xml;

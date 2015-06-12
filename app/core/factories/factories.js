@@ -72,10 +72,10 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
     /**
      * Gets all of the data in the remote collection.
      */
-    function getZwaveData(callback) {
+    function getZwaveData(callback,noCache) {
         getAppIp();
         var time = Math.round(+new Date() / 1000);
-        if (apiData) {
+        if (apiData && !noCache) {
             console.log('CACHED');
             return callback(apiData);
         }
@@ -232,17 +232,22 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
     /**
      * Run api cmd
      */
-    function runCmd(param, request, error) {
+    function runCmd(param, request, error,noFade) {
         var url = (request ? cfg.server_url + request : cfg.server_url + cfg.store_url + param);
         var request = $http({
             method: 'POST',
             url: url
         });
         request.success(function(data) {
-            $('button .fa-spin,a .fa-spin').fadeOut(1000);
+            if(!noFade){
+                $('button .fa-spin,a .fa-spin').fadeOut(1000);
+            }
+            
             handleSuccess(data);
         }).error(function() {
-            $('button .fa-spin,a .fa-spin').fadeOut(1000);
+            if(!noFade){
+                $('button .fa-spin,a .fa-spin').fadeOut(1000);
+            }
             if (error) {
                 $window.alert(error + '\n' + url);
             }

@@ -49,13 +49,15 @@
                     <td data-title="{{ _t('device_name')}}" ng-switch on="v.type">
                         <i ng-switch-when="SensorBinary" class="fa fa-eye fa-lg"></i>
                         <i ng-switch-when="Meter" class="fa fa-lightbulb-o fa-lg"></i> 
-                        <i ng-switch-default class="fa fa-bullseye fa-lg"></i> 
+                        <i ng-switch-default class="fa fa-bullseye fa-lg"></i>
                         {{ v.name}}
                     </td>
-                    <td data-title="{{ _t('device_description_device_type')}}">{{ v.purpose}} &nbsp;</td>
-                    <td data-title="{{ _t('th_level')}}" class="row-level text-right">{{ v.level}} &nbsp;</td>
-                    <td data-title="{{ _t('th_scale')}}" class="row-level-ext">{{ v.levelExt}} &nbsp;</td>
-                    <td data-title="{{ _t('datetime')}}" class="row-time is-updated-{{v.isUpdated}}">{{ v.updateTime | isTodayFromUnix }} &nbsp;</td>
+                    <td data-title="{{ _t('device_description_device_type')}}">{{v.purpose}} &nbsp;</td>
+                    <td data-title="{{ _t('th_level')}}" class="row-level text-right">
+                        <span ng-if="!v.html" ng-bind="v.level"></span> <span ng-if="v.html" ng-bind-html="v.level|toTrusted"></span> &nbsp;
+                    </td>
+                    <td data-title="{{ _t('th_scale')}}" class="row-level-ext">{{v.levelExt}} &nbsp;</td>
+                    <td data-title="{{ _t('datetime')}}" class="row-time is-updated-{{v.isUpdated}}">{{v.updateTime | isTodayFromUnix }} &nbsp;</td>
                     <td>
                         <button data-ng-click="store(v.urlToStore)" class="btn btn-primary spin-true" id="btn_update_{{ v.rowId}}">
                             {{ _t('update')}} <i class="fa fa-spinner fa-spin"></i>

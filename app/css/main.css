@@ -253,7 +253,11 @@ padding: 10px 10px 0 10px;
     margin: 20px 0 10px 0;
 }
 
-
+/* Sensors
+-------------------------------------------------- */
+.sensor-triggered{
+    color: #FFB200;
+}
 /* Expert Commands CSS
 -------------------------------------------------- */
 #row_commands .thumbnail{
@@ -336,6 +340,10 @@ padding: 10px 10px 0 10px;
     margin-bottom: 5px;
 }
 
+.btn-group-assoc-devices{
+    margin: 0 5px 5px 0;
+}
+
 /* Network controll
 -------------------------------------------------- */
 
@@ -360,6 +368,22 @@ padding: 10px 10px 0 10px;
 .badge-assoc{
    margin: 0 5px 5px 0;
    padding: 5px;
+}
+
+.btn-group-assoc-devices.false-false .btn {
+  display: none;
+}
+
+.btn-group-assoc-devices.true-false .btn {
+ color: #333;
+  background-color: #f9f9f9;
+  border-color: #ccc;
+}
+
+.btn-group-assoc-devices.false-true .btn{
+  color: #fff;
+  background-color: #f0ad4e;
+  border-color: #eea236;
 }
 
 /* Timing

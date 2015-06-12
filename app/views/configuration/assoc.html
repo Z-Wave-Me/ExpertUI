@@ -1,0 +1,102 @@
+<!-- Association view -->
+<div id="AssociationTable" ng-controller="ConfigAssocController">
+    <!-- Config navigation -->
+    <div ng-include="'app/views/configuration/header.html'"></div>
+
+    <div class="tab-content" ng-show_="deviceId > 0">
+        <div class="page-header"><h1 class="text-danger">{{ _t('associations_list')}}</h1></div>
+        <div class="alert" ng-if="alert.message" ng-class="alert.status">
+        <i class="fa fa-lg" ng-class="alert.icon"></i> <span ng-bind="alert.message"></span>
+    </div>
+        
+        
+        <!-- ////////////////////////////////////////////////////////////////////////////////////// -->
+        <!-- Assoc design -->
+        <div class="table-responsive" ng-if="assocGroups.length > 0">
+            <button 
+            type="button" 
+            class="btn btn-primary spin-true"
+            id="btn_update_from_device"
+            ng-click="updateFromDevice('#btn_update_from_device')" 
+            >{{_t('update_from_device')}} <i class="fa fa-spinner fa-spin"></i></button>
+        <br/><br/>
+        <p class="text-alert-list" ng-if="nodeCfg.hasBattery"><i class="fa fa-info-circle text-warning"></i> {{_t('conf_apply_battery')}}</p>
+        <p class="text-alert-list"><i class="fa fa-exclamation-triangle text-danger"></i>  {{_t('device_changed_configuration')}}</p>
+            <table class="table table-striped_ table-condensed">
+                <tbody>
+                    <tr ng-repeat="v in assocGroups">
+                        <td class="association-text"> 
+                            <h5>
+                                {{v.label}} ({{ _t('assoc_max')}} {{v.max}} {{ _t('assoc_nodes')}}) 
+                                <span> | <i class="fa fa-clock-o"></i> <span class="{{v.timeClass}}">{{v.updateTime| isTodayFromUnix}}</span></span> <!--updateTime: {{v.updateTime |dateFromUnix}}, invalidateTime: {{v.invalidateTime|dateFromUnix}}-->
+                            </h5>
+                            
+                            <div>
+                                <div class="btn-group btn-group-assoc-devices {{d.status}}" role="group" ng-repeat="d in assocGroupsDevices[v.groupId]" id="{{d.elId}}">
+                                <button type="button" class="btn btn-info" title="{{d.name}}">
+                                   <!--inDevice: {{d.inDevice}}  | inConfig: {{d.inConfig}} | Status: {{d.status}}--> 
+                                    <i class="fa fa-exclamation-triangle text-danger" ng-if="d.status !== 'true-true'"></i> 
+                                    {{_t('txt_device')}} (#{{d.id}}<span ng-if="nodeCfg.hasMca && d.instance > 0">.{{d.instance}}</span>)
+                                </button>
+                                <button type="button" class="btn btn-primary" ng-click="deleteAssoc(d)">
+                                    <i class="fa fa-times text-danger"></i>
+                                </button>
+                                <!--<br ng_if="$index % 5 == 4"/> -->
+                            </div>
+                            </div>
+                            <p class="text-alert-list" ng-if="v.remaining < 1"><i class="fa fa-exclamation-circle text-warning"></i>  {{_t('assoc_max_nodes_reached')}}</p>
+                            
+                        </td>
+                        <td  class="association-action" style="text-align: right; width: 20%;"> 
+                            <button type="button" 
+                                    class="btn btn-primary" id="myId"
+                                    data-toggle="modal" 
+                                    ng-click="modalAssocAdd(v)" 
+                                    data-target="#modal_assoc_add" 
+                                    ng-if="v.remaining > 0"><span>+</span></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- ////////////////////////////////////////////////////////////////////////////////////// -->
+
+        <!-- Modal add -->
+        <div class="modal fade" id="modal_assoc_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                     <form name="form_assoc" id="form_assoc" ng-submit="storeAssoc(input)" novalidate>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">{{ _t('assoc_add_title')}}</h4>
+                    </div>
+                    <div class="modal-body" style="white-space: normal;"> 
+                        <div class="form-inline">
+                            {{ _t('fro')}} {{nodeCfg.name}} {{ _t('to_locate')}} <br/>
+                            <div class="form-group">
+                                <select class="form-control" ng-model="input.toNode"  ng-change="showAssocNodeInstance(input.toNode)">
+                                    <option value=""  ng-selected="true">&lt; {{ _t('assoc_select_to_node')}} &gt;</option>
+                                    <option ng-repeat="v in assocAddDevices" value="{{v.id}}">(#{{v.id}}) {{v.name}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group" ng-if="nodeCfg.hasMca && assocAddInstances">
+                                <select class="form-control" ng-model="input.toInstance">
+                                  <option value="" ng-selected="true">&lt; {{ _t('assoc_select_to_instance')}} &gt;</option>
+                                     <option ng-repeat="v in assocAddInstances" value="{{v.key}}">{{v.val}}</option>
+                                </select>
+                            </div> 
+                        </div>
+                       
+                           
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="modalAssocHide()">{{ _t('dialog_abort')}}</button>
+                        <button type="submit" class="btn btn-primary" ng-disabled="!input.toNode || ((assocAddInstances) && !input.toInstance)">{{ _t('dialog_add')}}</button>
+                        <!--<button type="submit" class="btn btn-primary" ng-disabled="assocToNode == null || ((addInstances[assocToNode] != undefined) && assocToInstance == null)">{{ _t('dialog_add')}}</button>-->
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div><!-- /.Modal -->
+    </div> 
+</div><!-- /ng-controler -->
