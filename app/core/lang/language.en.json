@@ -239,7 +239,7 @@
     "no": "NO",
     "no_device_image": "No device image",
     "no_device_reset_locally": "No device reset locally",
-    "no_zddx_file": "No configuration file",
+    "no_zddx_file": "Device has no configuration",
     "noavailable_firmware_update": "Your stick uses the latest firmware",
     "protection_list": "Protection Settings",
     "reorg_battery_powered": "Battery operated devices",

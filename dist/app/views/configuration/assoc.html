@@ -8,7 +8,7 @@
         <div class="alert" ng-if="alert.message" ng-class="alert.status">
         <i class="fa fa-lg" ng-class="alert.icon"></i> <span ng-bind="alert.message"></span>
     </div>
-        
+        hasMca: {{nodeCfg.hasMca}}
         
         <!-- ////////////////////////////////////////////////////////////////////////////////////// -->
         <!-- Assoc design -->
@@ -65,7 +65,7 @@
         <div class="modal fade" id="modal_assoc_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                     <form name="form_assoc" id="form_assoc" ng-submit="storeAssoc(input)" novalidate>
+                     <form name="form_assoc" id="form_assoc" ng-submit_="storeAssoc(input)" novalidate>
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">{{ _t('assoc_add_title')}}</h4>
@@ -74,7 +74,7 @@
                         <div class="form-inline">
                             {{ _t('fro')}} {{nodeCfg.name}} {{ _t('to_locate')}} <br/>
                             <div class="form-group">
-                                <select class="form-control" ng-model="input.toNode"  ng-change="showAssocNodeInstance(input.toNode)">
+                                <select class="form-control" ng-model="input.toNode"  ng-change="showAssocNodeInstance(input.toNode,nodeCfg.hasMca)">
                                     <option value=""  ng-selected="true">&lt; {{ _t('assoc_select_to_node')}} &gt;</option>
                                     <option ng-repeat="v in assocAddDevices" value="{{v.id}}">(#{{v.id}}) {{v.name}}</option>
                                 </select>
@@ -86,12 +86,10 @@
                                 </select>
                             </div> 
                         </div>
-                       
-                           
-                    </div>
+                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="modalAssocHide()">{{ _t('dialog_abort')}}</button>
-                        <button type="submit" class="btn btn-primary" ng-disabled="!input.toNode || ((assocAddInstances) && !input.toInstance)">{{ _t('dialog_add')}}</button>
+                        <button type="submit" class="btn btn-primary" data-dismiss="modal" ng-click="storeAssoc(input)" ng-disabled="!input.toNode || ((assocAddInstances) && !input.toInstance)">{{ _t('dialog_add')}}</button>
                         <!--<button type="submit" class="btn btn-primary" ng-disabled="assocToNode == null || ((addInstances[assocToNode] != undefined) && assocToInstance == null)">{{ _t('dialog_add')}}</button>-->
                     </div>
                     </form>

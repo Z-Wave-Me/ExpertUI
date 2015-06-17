@@ -118,7 +118,6 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
         $scope.input.groupCfg = group;
         $scope.input.groupId = group.groupId;
         // Prepare devices and nodes
-        console.log(group.nodeIds)
 
         angular.forEach($scope.ZWaveAPIData.devices, function(node, nodeId) {
             if (nodeId == 255 || node.data.isVirtual.value || nodeId == $scope.deviceId) {
@@ -154,11 +153,14 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
         $scope.assocAddDevices = angular.copy([]);
         $timeout(function() {
             $scope.load($scope.nodeCfg.id);
-        }, 5000);
+        }, 3000);
 
     };
     //Show node instances (if any)
-    $scope.showAssocNodeInstance = function(nodeId) {
+    $scope.showAssocNodeInstance = function(nodeId,hasMca) {
+        if(!hasMca){
+            return;
+        }
         // Prepare devices and nodes
         angular.forEach($scope.assocAddDevices, function(v, k) {
             if (v.id == nodeId) {
@@ -198,7 +200,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
             $timeout(function() {
                 $scope.load(input.nodeId);
-            }, 5000);
+            }, 3000);
         });
     };
 
@@ -270,7 +272,6 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             if ($scope.assocGroups.length < 1) {
                 $scope.alert = {message: $scope._t('no_association_groups_found'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
             }
-            //console.log('assocGroups: ', $scope.assocGroups);
 
         });
 
@@ -334,8 +335,6 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                     cfgArray = deviceService.getCfgXmlAssoc(cfgXml, nodeId, '0', '85', 'Set', groupId);
 
                     $scope.assocGroupsDevices[groupId] = {};
-
-                    //console.log(cfgArray)
                     if ((0x85 in instance.commandClasses) && (group < instance.commandClasses[0x85].data.groups.value)) {
                         var savedNodesInDevice = [];
                         data = instance.commandClasses[0x85].data[group + 1];
@@ -358,7 +357,6 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
 
 
                         for (var i = 0; i < $filter('unique')(groupDevices).length; i++) {
-                            //console.log(data.nodes.value[i])
 
                             var targetNodeId = data.nodes.value[i];
                             nodeIds.push(targetNodeId);
@@ -397,7 +395,6 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                     if ((0x8e in instance.commandClasses) && (group < instance.commandClasses[0x8e].data.groups.value)) {
                         var savedNodesInstancesInDevice = [];
                         data = instance.commandClasses[0x8e].data[group + 1];
-                        //console.log(data)
                         for (var i = 0; i < Object.keys(data.nodesInstances.value).length; i += 2) {
                             savedNodesInstancesInDevice.push(data.nodesInstances.value[i] + '_' + data.nodesInstances.value[i + 1]);
                         }
@@ -459,7 +456,6 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                 }
             }
         });
-        //console.log($scope.assocGroupsDevices)
         return assocGroups;
     }
 
