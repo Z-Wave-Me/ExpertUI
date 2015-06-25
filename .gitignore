@@ -2,6 +2,7 @@
 /_project/*
 /nbproject/*
 /upload/*
+/storage/*
 upload.php
 /test/*
 #/app/core/config.js
