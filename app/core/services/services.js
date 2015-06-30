@@ -384,7 +384,7 @@ appService.service('deviceService', function($filter) {
         if (!node.data.isListening.value && !node.data.sensor250.value && !node.data.sensor1000.value) {
             out = (node.data.isAwake.value ? '<i class="fa fa-certificate fa-lg text-orange""></i> ' + getLangLine('device_is_active', languages) : '<i class="fa fa-moon-o fa-lg text-primary"></i> ' + getLangLine('device_is_sleeping', languages));
         } else {
-            out = (node.data.isFailed.value ? '<i class="fa fa-check fa-lg text-danger"></i> ' + getLangLine('device_is_dead', languages) : '<i class="fa fa-check fa-lg text-success"></i> ' + getLangLine('device_is_operating', languages));
+            out = (node.data.isFailed.value ? '<i class="fa fa-ban fa-lg text-danger"></i> ' + getLangLine('device_is_dead', languages) : '<i class="fa fa-check fa-lg text-success"></i> ' + getLangLine('device_is_operating', languages));
         }
         return out;
     }

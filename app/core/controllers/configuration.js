@@ -245,29 +245,6 @@ appController.controller('ConfigInterviewController', function($scope, $routePar
         });
         // Has device a zddx XML file
         if (zddXml) {
-            // DEORECATED ----------------
-            /*var lang = 'en';
-            var langs = {
-                "en": "1",
-                "de": "0",
-                "ru": "2"
-            };
-            if (angular.isDefined(langs[$scope.lang])) {
-                lang = $scope.lang;
-            }
-            var langId = langs[lang];*/
-            
-            /*if (angular.isDefined(zddXml.ZWaveDevice.deviceDescription.description.lang[langId])) {
-                deviceDescription = zddXml.ZWaveDevice.deviceDescription.description.lang[langId].__text;
-            }*/
-            
-            /*if (angular.isDefined(zddXml.ZWaveDevice.deviceDescription.inclusionNote.lang[langId])) {
-                inclusionNote = zddXml.ZWaveDevice.deviceDescription.inclusionNote.lang[langId].__text;
-            }*/
-            /*if (angular.isDefined(zddXml.ZWaveDevice.deviceDescription.wakeupNote.lang[langId])) {
-                wakeupNote = zddXml.ZWaveDevice.deviceDescription.wakeupNote.lang[langId].__text;
-            }*/
-            // ----------------
             deviceDescription = deviceService.configGetZddxLang($filter('hasNode')(zddXml, 'ZWaveDevice.deviceDescription.description.lang'), $scope.lang);
             inclusionNote = deviceService.configGetZddxLang($filter('hasNode')(zddXml, 'ZWaveDevice.deviceDescription.inclusionNote.lang'), $scope.lang);
              wakeupNote = deviceService.configGetZddxLang($filter('hasNode')(zddXml, 'ZWaveDevice.deviceDescription.wakeupNote.lang'), $scope.lang);
