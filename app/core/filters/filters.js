@@ -55,6 +55,15 @@ angApp.filter('getObjectLength', function() {
         
     };
 });
+/**
+ * Has property
+ */
+angApp.filter('hasProp', function() {
+    return function(obj,prop) {
+        return Object.prototype.hasOwnProperty.call(obj, prop);
+        
+    };
+});
 
 /**
  * Get object length
