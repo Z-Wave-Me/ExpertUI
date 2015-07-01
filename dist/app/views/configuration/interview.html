@@ -167,7 +167,7 @@
                             name="select_zddx_help" 
                             id="select_zddx_help" 
                             class="form-control" 
-                            ng-change="changeDeviceSelect('#select_zddx_help', '#device_select_image')" 
+                            ng-change="changeDeviceSelect('#select_zddx_help', '#device_select_image',modelSelectZddx)" 
                             ng-model="modelSelectZddx">
                             <option value="">---</option>
                             <option 
@@ -186,7 +186,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="runCmdDeviceSelect(deviceId, modelSelectZddx, '#modal_device_select')">{{_t('btn_select')}}</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="runCmdDeviceSelect(deviceId)">{{_t('btn_select')}}</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">{{_t('btn_cancel')}}</button>
                 </div>
             </div>

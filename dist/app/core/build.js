@@ -11284,7 +11284,7 @@ appService.service('deviceService', function($filter) {
         if (!node.data.isListening.value && !node.data.sensor250.value && !node.data.sensor1000.value) {
             out = (node.data.isAwake.value ? '<i class="fa fa-certificate fa-lg text-orange""></i> ' + getLangLine('device_is_active', languages) : '<i class="fa fa-moon-o fa-lg text-primary"></i> ' + getLangLine('device_is_sleeping', languages));
         } else {
-            out = (node.data.isFailed.value ? '<i class="fa fa-check fa-lg text-danger"></i> ' + getLangLine('device_is_dead', languages) : '<i class="fa fa-check fa-lg text-success"></i> ' + getLangLine('device_is_operating', languages));
+            out = (node.data.isFailed.value ? '<i class="fa fa-ban fa-lg text-danger"></i> ' + getLangLine('device_is_dead', languages) : '<i class="fa fa-check fa-lg text-success"></i> ' + getLangLine('device_is_operating', languages));
         }
         return out;
     }
@@ -13729,28 +13729,16 @@ appController.controller('StatusController', function($scope, $filter, dataServi
 
     }
 
-    //  DEPRECATED
-    // Interview commands
-//    function interviewCommands(node) {
-//        var interviews = [];
-//        for (var iId in node.instances) {
-//            var cnt = 0;
-//            for (var ccId in node.instances[iId].commandClasses) {
-//                var obj = {};
-//                obj['iId'] = iId;
-//                obj['ccId'] = ccId;
-//                obj['ccName'] = node.instances[iId].commandClasses[ccId].name;
-//                obj['interviewDone'] = node.instances[iId].commandClasses[ccId].data.interviewDone.value;
-//                obj['cmdData'] = node.instances[iId].commandClasses[ccId].data;
-//                obj['cmdDataIn'] = node.instances[iId].data;
-//                interviews.push(obj);
-//                cnt++;
-//            }
-//            ;
-//        }
-//        ;
-//        return interviews;
-//    }
+    // Refresh Modal Interview data
+    function refreshModalInterview(oldCc, newCc) {
+        var refresh = JSON.stringify(oldCc) !== JSON.stringify(newCc);
+        if (refresh) {
+            $scope.interviewCommands = deviceService.configGetInterviewCommands(newCc);
+        }
+
+
+
+    }
 
 
     // Get Awake HTML
@@ -16009,6 +15997,7 @@ appController.controller('ConfigInterviewController', function($scope, $routePar
     $scope.activeTab = 'interview';
     $scope.activeUrl = 'configuration/interview/';
     $cookies.tab_config = $scope.activeTab;
+    $scope.modelSelectZddx = false;
 
     // Interview data
     $scope.descriptionCont;
@@ -16108,7 +16097,7 @@ appController.controller('ConfigInterviewController', function($scope, $routePar
     };
 
     // Change device select
-    $scope.changeDeviceSelect = function(selector, target) {
+    $scope.changeDeviceSelect = function(selector, target,file) {
         var imageFile = $(selector).find(':selected').data('image');
         var image;
         if (imageFile == undefined) {
@@ -16116,12 +16105,13 @@ appController.controller('ConfigInterviewController', function($scope, $routePar
         } else {
             image = '<img src="' + imageFile + '" />';
         }
+        $scope.modelSelectZddx = file;
         $(target).html(image);
     };
 
     // Update device zddx file
-    $scope.runCmdDeviceSelect = function(nodeId, file) {
-        var cmd = 'devices[' + nodeId + '].LoadXMLFile("' + file + '")';
+    $scope.runCmdDeviceSelect = function(nodeId) {
+        var cmd = 'devices[' + nodeId + '].LoadXMLFile("' + $scope.modelSelectZddx + '")';
         dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
         dataService.purgeCache();
         dataService.cancelZwaveDataInterval();
@@ -16220,29 +16210,6 @@ appController.controller('ConfigInterviewController', function($scope, $routePar
         });
         // Has device a zddx XML file
         if (zddXml) {
-            // DEORECATED ----------------
-            /*var lang = 'en';
-            var langs = {
-                "en": "1",
-                "de": "0",
-                "ru": "2"
-            };
-            if (angular.isDefined(langs[$scope.lang])) {
-                lang = $scope.lang;
-            }
-            var langId = langs[lang];*/
-            
-            /*if (angular.isDefined(zddXml.ZWaveDevice.deviceDescription.description.lang[langId])) {
-                deviceDescription = zddXml.ZWaveDevice.deviceDescription.description.lang[langId].__text;
-            }*/
-            
-            /*if (angular.isDefined(zddXml.ZWaveDevice.deviceDescription.inclusionNote.lang[langId])) {
-                inclusionNote = zddXml.ZWaveDevice.deviceDescription.inclusionNote.lang[langId].__text;
-            }*/
-            /*if (angular.isDefined(zddXml.ZWaveDevice.deviceDescription.wakeupNote.lang[langId])) {
-                wakeupNote = zddXml.ZWaveDevice.deviceDescription.wakeupNote.lang[langId].__text;
-            }*/
-            // ----------------
             deviceDescription = deviceService.configGetZddxLang($filter('hasNode')(zddXml, 'ZWaveDevice.deviceDescription.description.lang'), $scope.lang);
             inclusionNote = deviceService.configGetZddxLang($filter('hasNode')(zddXml, 'ZWaveDevice.deviceDescription.inclusionNote.lang'), $scope.lang);
              wakeupNote = deviceService.configGetZddxLang($filter('hasNode')(zddXml, 'ZWaveDevice.deviceDescription.wakeupNote.lang'), $scope.lang);
