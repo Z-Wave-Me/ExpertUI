@@ -34,6 +34,7 @@ appController.controller('ConfigInterviewController', function($scope, $routePar
     $scope.activeTab = 'interview';
     $scope.activeUrl = 'configuration/interview/';
     $cookies.tab_config = $scope.activeTab;
+    $scope.modelSelectZddx = false;
 
     // Interview data
     $scope.descriptionCont;
@@ -133,7 +134,7 @@ appController.controller('ConfigInterviewController', function($scope, $routePar
     };
 
     // Change device select
-    $scope.changeDeviceSelect = function(selector, target) {
+    $scope.changeDeviceSelect = function(selector, target,file) {
         var imageFile = $(selector).find(':selected').data('image');
         var image;
         if (imageFile == undefined) {
@@ -141,12 +142,13 @@ appController.controller('ConfigInterviewController', function($scope, $routePar
         } else {
             image = '<img src="' + imageFile + '" />';
         }
+        $scope.modelSelectZddx = file;
         $(target).html(image);
     };
 
     // Update device zddx file
-    $scope.runCmdDeviceSelect = function(nodeId, file) {
-        var cmd = 'devices[' + nodeId + '].LoadXMLFile("' + file + '")';
+    $scope.runCmdDeviceSelect = function(nodeId) {
+        var cmd = 'devices[' + nodeId + '].LoadXMLFile("' + $scope.modelSelectZddx + '")';
         dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
         dataService.purgeCache();
         dataService.cancelZwaveDataInterval();
