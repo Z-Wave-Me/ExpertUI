@@ -1734,28 +1734,16 @@ appController.controller('StatusController', function($scope, $filter, dataServi
 
     }
 
-    //  DEPRECATED
-    // Interview commands
-//    function interviewCommands(node) {
-//        var interviews = [];
-//        for (var iId in node.instances) {
-//            var cnt = 0;
-//            for (var ccId in node.instances[iId].commandClasses) {
-//                var obj = {};
-//                obj['iId'] = iId;
-//                obj['ccId'] = ccId;
-//                obj['ccName'] = node.instances[iId].commandClasses[ccId].name;
-//                obj['interviewDone'] = node.instances[iId].commandClasses[ccId].data.interviewDone.value;
-//                obj['cmdData'] = node.instances[iId].commandClasses[ccId].data;
-//                obj['cmdDataIn'] = node.instances[iId].data;
-//                interviews.push(obj);
-//                cnt++;
-//            }
-//            ;
-//        }
-//        ;
-//        return interviews;
-//    }
+    // Refresh Modal Interview data
+    function refreshModalInterview(oldCc, newCc) {
+        var refresh = JSON.stringify(oldCc) !== JSON.stringify(newCc);
+        if (refresh) {
+            $scope.interviewCommands = deviceService.configGetInterviewCommands(newCc);
+        }
+
+
+
+    }
 
 
     // Get Awake HTML
