@@ -1,4 +1,8 @@
 {
+    "--- translate": "---",
+    "link_to_device_description":"You can select device description from the tab \"Interview\"",
+    "---": "---",
+    "link_to_device_description":"You can select device description from the tab \"Interview\"",
     "no_association_groups_found": "Keine Assoziationsgruppe in diesem Gerät",
     "assoc_max_nodes_reached": "Maximale Anzahl assoziierbarer Geräte erreicht",
     "pingDevice": "Prüfe verbindung",

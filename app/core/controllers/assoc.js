@@ -117,8 +117,8 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
     $scope.modalAssocAdd = function(group) {
         $scope.input.groupCfg = group;
         $scope.input.groupId = group.groupId;
+        $scope.assocAddDevices = [];
         // Prepare devices and nodes
-
         angular.forEach($scope.ZWaveAPIData.devices, function(node, nodeId) {
             if (nodeId == 255 || node.data.isVirtual.value || nodeId == $scope.deviceId) {
                 return;
