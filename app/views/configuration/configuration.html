@@ -4,7 +4,9 @@
     <div ng-include="'app/views/configuration/header.html'"></div>
 
     <div class="tab-content" ng-show="deviceId > 0">
-        <div class="alert alert-warning" ng-show="!configCont"><i class="fa fa-exclamation-triangle"></i> {{_t('no_zddx_file')}}</div>
+        <div class="text-alert-list" ng-if="!configCont">
+            <i class="fa fa-info-circle text-info"></i> {{_t('no_zddx_file')}} <a href="#configuration/interview/{{deviceId}}"><strong>{{_t('link_to_device_description')}}</strong></a>
+        </div>
 
         <!-- config_cont -->
         <div class="cfg-block" id="config_cont" ng-if="configCont">
