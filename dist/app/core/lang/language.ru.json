@@ -1,10 +1,10 @@
 {
+    "--- translate": "---",
+    "link_to_device_description":"You can select device description from the tab \"Interview\"",
+    "---": "---",
     "pingDevice": "Проверить связь",
-    "--- ": "---",
     "licence_upgrade": "License Upgrade",
     "licence_upgrade_key": "If you have acquired a licensing key for such an function enhancement you may include this key here to extend the functions and capabilities of  Z-Way.",
-    "--- missing": "---",
-    "---": "---",
     "Sensortyp": "Devicetype",
     "apply_config": "Применить настройки к данному устройству",
     "apply_config_into_device": "Применить данный параметр",
