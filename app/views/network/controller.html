@@ -43,6 +43,14 @@
                 <tr><td id="ctrl_info_sw_rev_date_title" class="controller-th">{{_t('ctrl_info_sw_rev_date_title')}}</td><td id="ctrl_info_sw_rev_date_value">{{master['controller.data.softwareRevisionDate']}}</td></tr>
         </tbody>
         </table>
+         
+         <!-- Z_Way Software Information -->
+         <h3>{{_t('ui')}}</h3>
+        <table class="table table-condensed">
+            <tbody>
+                <tr><td id="ctrl_ui_version" class="controller-th">{{_t('ui_version')}}</td><td id="ctrl_ui_version_value">{{cfg.app_version}}</td></tr>
+        </tbody>
+        </table>
     </div>
     <!------------------------- DEPRECATED ---------------------------------------------->
     <!--<div class="table-responsive table-controller">

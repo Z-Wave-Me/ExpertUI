@@ -1,6 +1,8 @@
 {
     
     "--- translate": "---",
+     "ui":"UI",
+     "ui_version":"UI version",
     "link_to_device_description":"You can select device description from the tab \"Interview\"",
     "---": "---",
     "no_association_groups_found": "Can not configure associations: groups were not reported by the device. Do interview.",
