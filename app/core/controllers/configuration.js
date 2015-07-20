@@ -675,7 +675,7 @@ appController.controller('ConfigCommandsController', function($scope, $routePara
         var dataJoined = [];
         angular.forEach(data, function(v, k) {
             if (v.value === '') {
-                dataJoined.push('');
+                dataJoined.push('\'\'');
             }else{
                 if(isNaN(v.value)){
                      dataJoined.push('\'' + v.value + '\'');
