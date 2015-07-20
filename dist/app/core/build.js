@@ -16637,8 +16637,14 @@ appController.controller('ConfigCommandsController', function($scope, $routePara
         var data = $('#' + form).serializeArray();
         var dataJoined = [];
         angular.forEach(data, function(v, k) {
-            if (v.value !== '') {
-                dataJoined.push(v.value);
+            if (v.value === '') {
+                dataJoined.push('');
+            }else{
+                if(isNaN(v.value)){
+                     dataJoined.push('\'' + v.value + '\'');
+                }else{
+                    dataJoined.push(v.value); 
+                }
             }
 
         });

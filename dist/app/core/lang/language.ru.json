@@ -1,5 +1,7 @@
 {
     "--- translate": "---",
+    "ui":"UI",
+     "ui_version":"UI version",
     "link_to_device_description":"You can select device description from the tab \"Interview\"",
     "---": "---",
     "pingDevice": "Проверить связь",
