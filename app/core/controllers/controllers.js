@@ -20,6 +20,10 @@ appController.controller('BaseController', function($scope, $cookies, $filter, $
     }
     // Is mobile
     $scope.isMobile = false;
+    
+    // Url array
+    $scope.urlArray = [];
+
 
     // Show page content
     $scope.showContent = false;
@@ -68,7 +72,15 @@ appController.controller('BaseController', function($scope, $cookies, $filter, $
     $scope.getBodyId = function() {
         var path = $location.path();
         var lastSegment = path.split('/').pop();
+        $scope.urlArray = path.split('/');
         return lastSegment;
+    };
+     /*
+     * Menu active class
+     */
+    $scope.isActive = function(route,segment) {
+         var path = $location.path().split('/');
+        return (route === path[segment] ? 'active' : '');
     };
 
     $scope.mobileCheck = function(a) {

@@ -47,6 +47,18 @@ body {
     background-color: #6BA2C8;
 }
 
+.navbar-inverse .dropdown-toggle.active, 
+.navbar-inverse .dropdown-toggle.active:hover,
+.navbar-inverse .no-dropdown.active,
+.navbar-inverse .no-dropdown.active:hover{
+    color: #fff;
+   background-color: #2A6496;
+}
+.dropdown-menu > li > a.active,
+.dropdown-menu > li > a.active:hover {
+   color: #fff;
+    background-color: #6BA2C8;
+}
 .navbar-inverse .navbar-toggle {
     border-color: #174778;
 }
