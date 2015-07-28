@@ -425,7 +425,6 @@ appController.controller('ConfigConfigurationController', function($scope, $rout
      * Apply Config action
      */
     $scope.submitApplyConfigCfg = function(form, cmd, cfgValues, hasBattery, confNum,defaultValue) {
-        console.log(defaultValue)
         var xmlData = [];
         var configValues = [];
         if (hasBattery) {
