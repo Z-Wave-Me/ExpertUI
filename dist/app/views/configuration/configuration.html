@@ -49,9 +49,8 @@
 
                             <span> | {{_t('set_value')}}: {{v.configCconfigValue}}</span>
 
-                            <span> | <a href="" ng-click="submitApplyConfigCfg(formName, {'id': deviceId, 'instance': '0', 'commandclass': '70', 'command': 'Set'}, configCont, hasBattery,v.confNum,v.showDefaultValue)">
-                                    {{_t('default_value_is')}}: <config-default-value collection='v' show_default_value='v.showDefaultValue' default_value='v.defaultValue'></config-default-value>
-                                </a></span>
+                            <span> | {{_t('default_value_is')}}: <config-default-value collection='v' show_default_value='v.showDefaultValue' default_value='v.defaultValue'></config-default-value>
+                                </span>
                             <!-- <span ng-if="v.showDefaultValue > -1"> | {{_t('default_value_is')}}: {{v.showDefaultValue}}</span>
                             <span ng-if="v.defaultValue === ''"> | {{_t('param_default_value_undefined')}}</span>-->
                             <span ng-if="v.description">  | 
@@ -64,6 +63,11 @@
                             class="btn btn-primary spin-true"
                             ng-click="submitApplyConfigCfg(formName, {'id': deviceId, 'instance': '0', 'commandclass': '70', 'command': 'Set'}, configCont, hasBattery,v.confNum)"
                             >{{_t('apply_config_into_device')}} <i class="fa fa-spinner fa-spin"></i></button>
+                            <button 
+                            type="button" 
+                            class="btn btn-info spin-true"
+                            ng-click="submitApplyConfigCfg(formName, {'id': deviceId, 'instance': '0', 'commandclass': '70', 'command': 'Set'}, configCont, hasBattery,v.confNum,{confNum: v.confNum,showDefaultValue: v.showDefaultValue})"
+                            >{{_t('set_to_default')}} <i class="fa fa-spinner fa-spin"></i></button>
                     </div>
                 </form>
             </div>

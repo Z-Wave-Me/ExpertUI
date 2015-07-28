@@ -424,7 +424,7 @@ appController.controller('ConfigConfigurationController', function($scope, $rout
     /**
      * Apply Config action
      */
-    $scope.submitApplyConfigCfg = function(form, cmd, cfgValues, hasBattery, confNum,defaultValue) {
+    $scope.submitApplyConfigCfg = function(form, cmd, cfgValues, hasBattery, confNum,setDefault) {
         var xmlData = [];
         var configValues = [];
         if (hasBattery) {
@@ -432,13 +432,13 @@ appController.controller('ConfigConfigurationController', function($scope, $rout
         }
         var data = $('#' + form).serializeArray();
         var dataValues = [];
+        
         angular.forEach(data, function(v, k) {
             if (v.value !== '') {
                 dataValues.push({"value": v.value, "name": v.name});
             }
 
         });
-
         angular.forEach(dataValues, function(n, nk) {
             var obj = {};
             var parameter;
@@ -446,13 +446,17 @@ appController.controller('ConfigConfigurationController', function($scope, $rout
             if (!lastNum) {
                 return;
             }
+             
             var num = lastNum[0];
+            //console.log('num', num)
             var confSize = 0;
-            //var lastNum = n.name.match(/\d+$/);
-            var value = defaultValue || n.value;
+            var value = n.value;
+            if(angular.isObject(setDefault) && setDefault.confNum == num){
+                value = setDefault.showDefaultValue;
+            }
             configValues.push(value)
             angular.forEach(cfgValues, function(cv, ck) {
-                if (!cv) {
+               if (!cv) {
                     return;
                 }
                 if (cv.confNum == num) {
