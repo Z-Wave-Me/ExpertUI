@@ -1,6 +1,7 @@
 {
     
     "--- translate": "---",
+     "set_to_default":"Set to default",
      "ui":"UI",
      "ui_version":"UI version",
     "link_to_device_description":"You can select device description from the tab \"Interview\"",
