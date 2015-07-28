@@ -424,7 +424,8 @@ appController.controller('ConfigConfigurationController', function($scope, $rout
     /**
      * Apply Config action
      */
-    $scope.submitApplyConfigCfg = function(form, cmd, cfgValues, hasBattery, confNum) {
+    $scope.submitApplyConfigCfg = function(form, cmd, cfgValues, hasBattery, confNum,defaultValue) {
+        console.log(defaultValue)
         var xmlData = [];
         var configValues = [];
         if (hasBattery) {
@@ -449,7 +450,7 @@ appController.controller('ConfigConfigurationController', function($scope, $rout
             var num = lastNum[0];
             var confSize = 0;
             //var lastNum = n.name.match(/\d+$/);
-            var value = n.value;
+            var value = defaultValue || n.value;
             configValues.push(value)
             angular.forEach(cfgValues, function(cv, ck) {
                 if (!cv) {

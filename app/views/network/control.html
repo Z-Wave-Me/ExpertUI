@@ -46,14 +46,13 @@
                         id="btn_nm_include_start"
                         title="{{_t('nm_include_start_tooltip')}}"
                         ng-disabled="[5, 6, 7, 20].indexOf(controllerState) > -1"
-                        ng-hide="[19].indexOf(controllerState) > -1"
                         ng-show="[1, 2, 3, 4].indexOf(controllerState) == -1"
                         ng-click="runCmd('controller.AddNodeToNetwork(1)')"
                         >{{_t('nm_include_start')}}</button>
                     <button 
                         class="btn btn-danger"
                         id="btn_nm_include_stop"
-                        ng-show="[1, 2, 3, 4,19].indexOf(controllerState) > -1"
+                        ng-show="[1, 2, 3, 4].indexOf(controllerState) > -1"
                         ng-click="runCmd('controller.AddNodeToNetwork(0)')"
                         ><i class="fa fa-spinner fa-spin"></i> {{_t('nm_include_stop')}}</button>
 
@@ -64,7 +63,6 @@
                         title="{{_t('nm_exclude_start_tooltip')}}"
                         ng-disabled="[1, 2, 3, 4, 20].indexOf(controllerState) > -1"
                         ng-show="[5, 6, 7].indexOf(controllerState) == -1"
-                        ng-hide="[19].indexOf(controllerState) > -1"
                         ng-click="runCmd('controller.RemoveNodeFromNetwork(1)')"
                         >{{_t('nm_exclude_start')}}</button>
                     <button 
@@ -213,7 +211,7 @@
                         <!-- replace_failed_node -->
                         <div class="cfg-block form-inline">
                             <p class="input-help">{{_t('nm_replace_node_war')}}</p>
-                            <div class="alert nm-response alert-danger" ng-show="[17, 18, 19].indexOf(controllerState) != -1">{{_t('nm_controller_state_' + controllerState)}}</div>
+                            <div class="alert nm-response alert-danger" ng-show_="[17, 18].indexOf(controllerState) != -1">{{_t('nm_controller_state_19')}}</div>
                             <select 
                                 name="replace_failed_node" 
                                 id="replace_failed_node" 
@@ -228,15 +226,8 @@
                                 class="btn btn-primary"
                                 id="btn_replace_failed_node"
                                 ng-disabled="!modelReplaceNode"
-                                ng-hide="[19].indexOf(controllerState) > -1"
                                 ng-click="runCmd('ReplaceFailedNode(' + modelReplaceNode + ')', null, null, {'name': 'remove_option', 'id': '#replace_failed_node', 'value': modelReplaceNode})"
                                 >{{_t('nm_replace_node')}}</button>
-                             <button 
-                                class="btn btn-danger"
-                                id="btn_nm_include_stop"
-                                ng-show="[19].indexOf(controllerState) > -1"
-                                ng-click="runCmd('controller.AddNodeToNetwork(0)')"
-                                ><i class="fa fa-spinner fa-spin"></i> {{_t('nm_include_stop')}}</button>
 
                         </div>
 
