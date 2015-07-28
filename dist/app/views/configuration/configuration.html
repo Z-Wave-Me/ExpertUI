@@ -45,11 +45,13 @@
                         <div class="text-danger text-alert" ng-if="v.configCconfigValue != v.configZwaveValue" title="Val: {{v.configCconfigValue}} | Device: {{v.configZwaveValue}}"><i class="fa fa-exclamation-triangle"></i> {{_t('value_changed_to')}} <strong config-value-title collection='v' show_value='v.configCconfigValue'></strong> {{_t('value_not_stored_indevice')}}</div> 
                         <p class="cfg-info">
 
-                            <span class="is-updated-{{v.isUpdated}}">{{_t('updated')}}: {{v.updateTime}}</span>
+                            <span class="is-updated-{{v.isUpdated}}">{{_t('rt_header_update_time')}}: {{v.updateTime}}</span>
 
                             <span> | {{_t('set_value')}}: {{v.configCconfigValue}}</span>
 
-                            <span> | {{_t('default_value_is')}}: {{v.showDefaultValue}} - <config-default-value collection='v' show_default_value='v.showDefaultValue' default_value='v.defaultValue'></config-default-value></span>
+                            <span> | <a href="" ng-click="submitApplyConfigCfg(formName, {'id': deviceId, 'instance': '0', 'commandclass': '70', 'command': 'Set'}, configCont, hasBattery,v.confNum,v.showDefaultValue)">
+                                    {{_t('default_value_is')}}: <config-default-value collection='v' show_default_value='v.showDefaultValue' default_value='v.defaultValue'></config-default-value>
+                                </a></span>
                             <!-- <span ng-if="v.showDefaultValue > -1"> | {{_t('default_value_is')}}: {{v.showDefaultValue}}</span>
                             <span ng-if="v.defaultValue === ''"> | {{_t('param_default_value_undefined')}}</span>-->
                             <span ng-if="v.description">  | 
@@ -59,11 +61,9 @@
                         </p>
                         <button 
                             type="button" 
-                            class="btn btn-info spin-true"
+                            class="btn btn-primary spin-true"
                             ng-click="submitApplyConfigCfg(formName, {'id': deviceId, 'instance': '0', 'commandclass': '70', 'command': 'Set'}, configCont, hasBattery,v.confNum)"
                             >{{_t('apply_config_into_device')}} <i class="fa fa-spinner fa-spin"></i></button>
-
-
                     </div>
                 </form>
             </div>

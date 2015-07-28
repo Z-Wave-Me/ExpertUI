@@ -230,7 +230,7 @@
     "nm_controller_not_sis_or_primary": "Der Controller ist nur Sekundärcontroller und kann keine Geräte in das Netz inkludieren oder aus dem Netz exkludieren.",
     "nm_controller_state_17": "Abbrechen",
     "nm_controller_state_18": "Prozess zum Ersetzen eines defekten Gerätes gestartet.",
-    "nm_controller_state_19": "Controller ist bereit zum Inkludieren eines neuen Gerätes.",
+    "nm_controller_state_19": "Controller ist bereit zum Inkludieren eines neuen Gerätes. Diese Aktion erlaubt es nicht, die Inklusion abzubrechen",
     "nm_controller_state_20": "Controller in Auslieferungszustand zurückgesetzt.",
     "ctrl_info_nodeid_title": "Geräte-Id:",
     "ctrl_info_homeid_title": "Netzwerk-Id:",

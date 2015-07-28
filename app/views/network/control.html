@@ -211,7 +211,7 @@
                         <!-- replace_failed_node -->
                         <div class="cfg-block form-inline">
                             <p class="input-help">{{_t('nm_replace_node_war')}}</p>
-                            <div class="alert nm-response alert-danger" ng-show_="[17, 18].indexOf(controllerState) != -1">{{_t('nm_controller_state_19')}}</div>
+                            <div class="alert nm-response alert-danger" ng-show="[17, 18].indexOf(controllerState) != -1">{{_t('nm_controller_state_' + controllerState)}}</div>
                             <select 
                                 name="replace_failed_node" 
                                 id="replace_failed_node" 
