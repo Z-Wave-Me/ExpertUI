@@ -12,12 +12,20 @@ var appFactory = angular.module('appFactory', ['ngResource']);
 appFactory.factory('myCache', function($cacheFactory) {
     return $cacheFactory('myData');
 });
+
+/**
+ * Underscore
+ */
+appFactory.factory('_', function() {
+        return window._; // assumes underscore has already been loaded on the page
+});
 /**
  * Data service
  * @todo: Replace all data handler with this service
  * @todo: Complete error handling
  */
 appFactory.factory('dataService', function($http, $q, $interval, $filter, $location, $window, myCache, cfg) {
+    var updatedTime = Math.round(+new Date() / 1000);
     var apiData;
     var apiDataInterval;
     var deviceClasses;
@@ -54,7 +62,10 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         updateUzb: updateUzb,
         getLicense: getLicense,
         zmeCapabilities: zmeCapabilities,
-        getLanguageFile: getLanguageFile
+        getLanguageFile: getLanguageFile,
+        //Test New functions
+        loadZwaveApiData: loadZwaveApiData,
+        loadJoinedZwaveData: loadJoinedZwaveData
     });
     /**
      * Get IP
@@ -76,13 +87,11 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         getAppIp();
         var time = Math.round(+new Date() / 1000);
         if (apiData && !noCache) {
-            console.log('CACHED');
             return callback(apiData);
         }
         else {
 
             //pageLoader();
-            console.log('NOOOOT CACHED');
             var request = $http({
                 method: "POST",
                 url: cfg.server_url + cfg.update_url + "0"
@@ -108,12 +117,10 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
     function getZwaveDataQuietly(callback) {
         var time = Math.round(+new Date() / 1000);
         if (apiData) {
-            console.log('CACHED');
             return callback(apiData);
         }
         else {
 
-            console.log('NOOOOT CACHED');
             var request = $http({
                 method: "POST",
                 url: cfg.server_url + cfg.update_url + "0"
@@ -726,6 +733,81 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         $('#respone_container_inner').html('<div class="alert alert-warning page-load-spinner"><i class="fa fa-spinner fa-lg fa-spin"></i><br /> Loading data....</div>');
         return;
 
+    }
+    
+    ///////////////////////////////////////////////////////////// Test - new functions /////////////////////////////////////////////////////////////////////
+    /**
+     * Load ZwaveApiData 
+     */
+    function loadZwaveApiData(noCache) {
+        // Cached data
+        var cacheName = 'zwaveapidata';
+        var cached = myCache.get(cacheName);
+        if (!noCache && cached) {
+            var deferred = $q.defer();
+            deferred.resolve(cached);
+            return deferred.promise;
+        }
+        return $http({
+            method: 'post',
+            url: cfg.server_url + cfg.update_url + "0"
+        }).then(function(response) {
+            if (typeof response.data === 'object') {
+                myCache.put(cacheName, response.data);
+                return response.data;
+            } else {
+                // invalid response
+                return $q.reject(response);
+            }
+        }, function(response) {
+            // something went wrong
+            return $q.reject(response);
+        });
+    }
+    
+    /**
+     * Get updated data and join with ZwaveData
+     */
+    function  loadJoinedZwaveData(ZWaveAPIData) {
+        var time = Math.round(+new Date() / 1000);
+        var cacheName = 'zwaveapidata';
+        var apiData = myCache.get(cacheName);// || ZWaveAPIData;
+        //console.log(apiData)
+        var result = {};
+        return $http({
+            method: 'post',
+            url: cfg.server_url + cfg.update_url + updatedTime
+        }).then(function(response) {
+            if (typeof response.data === 'object' && apiData) {
+                //time = response.data.updateTime;
+                angular.forEach(response.data, function(obj, path) {
+                    if (!angular.isString(path)) {
+                        return;
+                    }
+                    var pobj = apiData;
+                    var pe_arr = path.split('.');
+                    for (var pe in pe_arr.slice(0, -1)) {
+                        pobj = pobj[pe_arr[pe]];
+                    }
+                    pobj[pe_arr.slice(-1)] = obj;
+                });
+                result = {
+                    "joined": apiData,
+                    "update": response.data
+                };
+                response.data = result;
+                updatedTime = ($filter('hasNode')(response, 'data.updateTime') || Math.round(+new Date() / 1000));
+                myCache.put(cacheName, apiData);
+                return response;
+            } else {
+                // invalid response
+                return $q.reject(response);
+            }
+        }, function(response) {
+            // something went wrong
+            return $q.reject(response);
+        });
+        return;
     }
 });
 

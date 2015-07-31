@@ -29,6 +29,7 @@ module.exports = function(grunt) {
                 src: [
                     // Vendors
                     'app/vendor/jquery/jquery-1.11.1.min.js',
+                    'app/vendor/underscore/underscore-1.8.3/underscore-min.js',
                     'app/vendor/upload/angular-file-upload-shim.js',
                     // Angular
                     'app/vendor/angular/angular-1.2.14/angular.min.js',
