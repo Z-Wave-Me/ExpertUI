@@ -118,6 +118,10 @@ angApp.config(['$routeProvider',
                  when('/network/queue', {
                     templateUrl: 'app/views/network/queue.html'
                 }).
+                // Error page
+                when('/error/:code?', {
+                    templateUrl: 'app/views/error.html'
+                }).
                 otherwise({
                     redirectTo: '/'
                 });
