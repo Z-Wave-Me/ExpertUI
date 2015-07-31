@@ -1,22 +1,28 @@
 <!-- Test view -->
 <div data-ng-controller="TestController">
-    <div class="page-header"><h1>Upgrade bootloader and firmware</h1></div>
-    <div class="alert alert-info" ng-if="uzbUpgrade.length < 1">No available f/w for upgrade</div>
-    <p>{{uzbUpgrade.comment}}</p>
-    <div class="" ng-if="uzbUpgrade" ng-init="v = uzbUpgrade">
-
-        <button 
-            data-ng-click="store('#btn_boot_' + v.id, '/ZWaveAPI/Run/ZWaveAPI/ZMEBootloaderUpgrade/' + v.fileURL)" 
-            class="btn btn-primary spin-true" 
-            id="btn_boot_{{v.id}}"
-            ng-show_="v.type=='bootloader'">Upgrade bootloader <i class="fa fa-spinner fa-spin"></i> 
-        </button>
-        <button 
-            data-ng-click="store('#btn_firmware_' + v.id, '/ZWaveAPI/Run/ZWaveAPI/ZMEFirmwareUpgrade/' + v.fileURL)"
-            data-action="reset" 
-            class="btn btn-info spin-true" 
-            id="btn_firmware_{{v.id}}"
-            ng-show_="v.type=='firmware'">Upgrade firmware <i class="fa fa-spinner fa-spin"></i> 
-        </button>
-    </div>
+    <h1>Test page</h1>
+    <h2>Failed nodes</h2>
+    {{failedNodes}}
+    <select name="remove_failed_node" id="remove_failed_node" class="form-control">
+        <option value="">---</option>
+        <option ng-repeat="v in failedNodes track by v.id | orderBy:'-name'" value="{{v.id}}">{{v.id}} - {{v.name}}</option>
+    </select>
+    <h2>replaceNodes</h2>
+    {{replaceNodes}}
+    <select name="replaceNodes" id="replaceNodes" class="form-control">
+        <option value="">---</option>
+        <option ng-repeat="v in replaceNodes track by v.id | orderBy:'-name'" value="{{v.id}}">{{v.id}} - {{v.name}}</option>
+    </select>
+    <h2>failedBatteries</h2>
+    {{failedBatteries}}
+    <select name="failedBatteries" id="failedBatteries" class="form-control">
+        <option value="">---</option>
+        <option ng-repeat="v in failedBatteries track by v.id | orderBy:'-name'" value="{{v.id}}">{{v.id}} - {{v.name}}</option>
+    </select>
+     <h2>sucNodes</h2>
+    {{sucNodes}}
+    <select name="sucNodes" id="sucNodes" class="form-control">
+        <option value="">---</option>
+        <option ng-repeat="v in sucNodes track by v.id | orderBy:'-name'" value="{{v.id}}">{{v.id}} - {{v.name}}</option>
+    </select>
 </div>

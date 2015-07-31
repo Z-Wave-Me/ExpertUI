@@ -7,7 +7,7 @@ var appService = angular.module('appService', []);
 /**
  * Device service
  */
-appService.service('deviceService', function($filter) {
+appService.service('deviceService', function($filter,$log) {
     /// --- Public functions --- ///
 
     /**
@@ -15,6 +15,31 @@ appService.service('deviceService', function($filter) {
      */
     this.getLangLine = function(key, languages) {
         return getLangLine(key, languages);
+    };
+    
+    /**
+     * Show connection error
+     */
+    this.showConnectionError = function(error) {
+        $('#update_time_tick').html('<i class="fa fa-minus-circle fa-lg text-danger"></i>');
+        return this.logError(error, 'Unable to recieve HTTP data');
+    };
+    
+    /**
+     * Update time tick
+     */
+    this.updateTimeTick = function(time) {
+
+        time = (time || Math.round(+new Date() / 1000));
+        $('#update_time_tick').html($filter('getCurrentTime')(time));
+    };
+    
+    /**
+     * Log error
+     */
+    this.logError = function(error, message) {
+        message = message || 'ERROR:';
+        $log.error('---------- ' + message + ' ----------', error);
     };
 
     /**

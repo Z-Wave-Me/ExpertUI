@@ -1,5 +1,10 @@
 {
     "--- translate": "---",
+    "error_0": "Unknown error",
+    "error_401": "Unauthorized",
+    "error_403": "403 Forbidden. You have no permissions to see this page!",
+    "error_404": "404 Not Found. Requested data does not exists",
+    "error_500": "Internal Server Error",
     "set_to_default":"Set to default",
     "ui":"UI",
      "ui_version":"UI version",
