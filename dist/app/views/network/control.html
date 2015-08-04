@@ -112,10 +112,23 @@
                 </div>
             </div>
             
-             <div class="panel panel-default">
+             <div class="panel panel-default" ng-if="frequency">
                 <div class="panel-heading"><i class="fa fa-map-marker"></i> {{_t('nm_frequency_title')}}</div>
                 <div class="panel-body">
-                    <!-- freq_change -->
+                    <div class="text-alert-list">
+                        <i class="fa fa-info-circle text-info"></i> {{_t('frequency_info')}}
+                    </div>
+                   <div class="cfg-block form-inline block-frequency">
+                        <button class="btn" 
+                                id="btn_nm_freq_change_{{k}}"
+                                ng-class="k == frequency ? 'btn-info' : 'btn-primary'"
+                                ng-click="runCmd('ZMEFreqChange(' + k +')')"
+                                ng-if="k > -1"
+                                ng-repeat="(k,v) in cfg.frequency">{{v}}</button>
+                         
+                    </div>
+                    <div>{{_t('current_frequency')}}: <strong>{{cfg.frequency[frequency]}}</strong></div>
+                    <!-- freq_change
                     <div class="cfg-block form-inline">
                         <button 
                             class="btn btn-primary"
@@ -176,7 +189,7 @@
                             id="btn_nm_freq_change_il"
                             ng-click="runCmd('ZMEFreqChange(9)')"
                             >IL</button>
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </div>
