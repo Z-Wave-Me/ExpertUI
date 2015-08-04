@@ -362,6 +362,9 @@ padding: 10px 10px 0 10px;
 .nm-response.alert-danger{
     font-weight: bold;
 }
+.block-frequency .btn{
+    margin: 8px 8px 0 0;
+}
 
 /*  Network controller
 -------------------------------------------------- */

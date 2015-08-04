@@ -1,5 +1,7 @@
 {
     "--- translate": "---",
+    "current_frequency":"Current frequency",
+    "frequency_info":"Can be unknown, unsupported or any region (EU/US/RU/....)",
     "set_to_default":"Set to default",
     "ui":"UI",
      "ui_version":"UI version",

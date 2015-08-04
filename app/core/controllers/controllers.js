@@ -2628,6 +2628,7 @@ appController.controller('ControllController', function($scope, $filter, $upload
     $scope.failedBatteries = {};
     $scope.modelSucSicNode = 1;
     //$scope.sucNodes = [];
+     $scope.frequency = false;
     $scope.disableSUCRequest = true;
     $scope.controllerState = 0;
     $scope.secureInclusion;
@@ -2911,6 +2912,7 @@ appController.controller('ControllController', function($scope, $filter, $upload
         var isSIS = ZWaveAPIData.controller.data.SISPresent.value;
         var hasSUC = ZWaveAPIData.controller.data.SUCNodeId.value;
         var hasDevices = Object.keys(ZWaveAPIData.devices).length;
+        $scope.frequency = $filter('hasNode')(ZWaveAPIData,'controller.data.frequency.value');
         $scope.controllerState = ZWaveAPIData.controller.data.controllerState.value;
         $scope.secureInclusion = ZWaveAPIData.controller.data.secureInclusion.value;
         $scope.startLearnMode = !isRealPrimary || hasDevices < 2 ? true : false;
@@ -2919,6 +2921,7 @@ appController.controller('ControllController', function($scope, $filter, $upload
         if (hasSUC && hasSUC != controllerNodeId) {
             $scope.disableSUCRequest = false;
         }
+        console.log($scope.frequency) 
 
         /* console.log('Controller isPrimary: ' + isPrimary);
          console.log('Controller isSIS: ' + isSIS);

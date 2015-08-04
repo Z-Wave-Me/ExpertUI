@@ -34,6 +34,21 @@ var config_data = {
         'lang_dir': 'app/core/lang/', // Language directory
         'lang': 'en', // Default language
         'lang_list': ["en", "de", "fr", "es", "ru"], // List of languages
+        'frequency': {
+            0: 'EU',
+           1:' RU',
+            2:'IN',
+            6: 'CN',
+            10: 'MY',
+            4: 'ANZ_BR',
+            5: 'HK',
+            8: 'KR',
+            7: 'JP',
+            3: 'US',
+            9: 'IL',
+            unsupported: 'unsupported',
+            unknown: 'unknown'
+        }, // List of frequencies
         'thermostat_range': {// Min and max thermostat range
             "min": "0",
             "max": "40"
