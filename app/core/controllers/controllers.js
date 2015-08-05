@@ -1161,8 +1161,8 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                 }
                 else {
                     level = obj.val.value;
-                    updateTime = obj.val.updateTime;
-                    invalidateTime = obj.val.invalidateTime;
+                    updateTime = obj.updateTime;
+                    invalidateTime = obj.invalidateTime; 
 
                 }
 
@@ -1171,8 +1171,10 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                 $('#' + v.rowId + ' .row-time').html($filter('isTodayFromUnix')(updateTime));
                 if (updateTime > invalidateTime) {
                     $('#' + v.rowId + ' .row-time').removeClass('is-updated-false');
+                }else{
+                    $('#' + v.rowId + ' .row-time').addClass('is-updated-false');
                 }
-                console.log('Updating: ' + v.rowId + ' | At: ' + $filter('isTodayFromUnix')(updateTime) + ' | with: ' + level);//REM
+                //console.log('Updating: ' + v.rowId + ' | At: ' + $filter('isTodayFromUnix')(updateTime) + ' | with: ' + level);//REM
 
             }
         });
