@@ -17161,6 +17161,17 @@ appController.controller('ConfigCommandsController', function($scope, $routePara
             $location.path($scope.activeUrl + deviceId);
         }
     };
+    
+    /**
+     * Refresh data
+     *
+     */
+    $scope.refresh = function() {
+        dataService.joinedZwaveData(function(data) {
+            
+        });
+    };
+    $scope.refresh();
 
     /**
      * Submit expert commands form
@@ -17183,11 +17194,11 @@ appController.controller('ConfigCommandsController', function($scope, $routePara
         });
         var request = cmd + '(' + dataJoined.join() + ')';
         dataService.runCmd(request, false, $scope._t('error_handling_data'));
-        $scope.refresh = true;
+        //$scope.refresh = true;
         var timeOut;
         timeOut = $timeout(function() {
             $('button .fa-spin,a .fa-spin').fadeOut(1000);
-            $scope.refresh = false;
+            //$scope.refresh = false;
         }, 10000);
         return;
     };
@@ -17224,6 +17235,7 @@ appController.controller('ConfigCommandsController', function($scope, $routePara
     // Show modal dialog
     $scope.hideModal = function() {
         dataService.cancelZwaveDataInterval();
+       
     };
 
     /// --- Private functions --- ///
