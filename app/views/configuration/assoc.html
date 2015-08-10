@@ -20,8 +20,7 @@
         <br/><br/>
         <p class="text-alert-list" ng-if="nodeCfg.hasBattery"><i class="fa fa-info-circle text-warning"></i> {{_t('conf_apply_battery')}}</p>
         <p class="text-alert-list"><i class="fa fa-exclamation-triangle text-danger"></i>  {{_t('device_changed_configuration')}}</p>
-        {{assocGroupsDevices}}
-            <table class="table table-striped_ table-condensed">
+        <table class="table table-striped_ table-condensed">
                 <tbody>
                     <tr ng-repeat="v in assocGroups">
                         <td class="association-text"> 
