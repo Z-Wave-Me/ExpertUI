@@ -452,7 +452,7 @@
                     <button 
                         type="button" 
                         class="btn btn-primary" 
-                        ng-click="runCmd(['devices[' + modelBatteryFailed + '].SendNoOperation()', 'devices[' + modelBatteryFailed + '].WakeupQueue()', 'IsFailedNode(' + modelBatteryFailed + ')'], '#modal_battery_node', null, {'name': 'remove_option', 'id': '#mark_battery_failed', 'value': modelBatteryFailed})"
+                        ng-click="runCmd(['devices[' + modelBatteryFailed + '].SendNoOperation()', 'devices[' + modelBatteryFailed + '].WakeupQueue()'], '#modal_battery_node', null, {'name': 'remove_option', 'id': '#mark_battery_failed', 'value': modelBatteryFailed})"
                         >{{_t('nm_mark_battery_as_failed')}}</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">{{_t('btn_cancel')}}</button>
                 </div>
