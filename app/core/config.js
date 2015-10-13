@@ -30,7 +30,7 @@ var config_data = {
         'notes_url': '/config/notes.log', // Url for store notes data
         'uzb_url': 'http://www.zwave.eu/api/expertui/uzb/', // Url for uzb data
         'license_url': 'http://store.zwaveeurope.com/license/utility_uzb.php', // Url for license key
-        'buy_licence_key': 'http://www.zwave.me/index.php?id=41', // Buy licence key url
+        'buy_licence_key': 'http://www.z-wave.me/index.php?id=41', // Buy licence key url
         'lang_dir': 'app/core/lang/', // Language directory
         'lang': 'en', // Default language
         'lang_list': ["en", "de", "fr", "es", "ru"], // List of languages
