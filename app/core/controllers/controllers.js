@@ -2787,7 +2787,6 @@ appController.controller('ControllController', function($scope, $filter, $upload
                 case 'reset_controller':
                     $("#reset_confirm").attr('checked', false);
                     $scope.goReset = false;
-                    console.log('reset_controller');
                     break;
             }
         }
@@ -2853,7 +2852,6 @@ appController.controller('ControllController', function($scope, $filter, $upload
      * Close failed node modal window
      */
     $scope.closeFailedNode = function(modal) {
-        console.log('closeFailedNode')
         $("#remove_node_confirm").attr('checked', false);
         $scope.goFailedNode = false;
         $(modal).modal('hide');
@@ -2923,7 +2921,7 @@ appController.controller('ControllController', function($scope, $filter, $upload
         if (hasSUC && hasSUC != controllerNodeId) {
             $scope.disableSUCRequest = false;
         }
-        console.log($scope.frequency) 
+        //console.log($scope.frequency) 
 
         /* console.log('Controller isPrimary: ' + isPrimary);
          console.log('Controller isSIS: ' + isSIS);
