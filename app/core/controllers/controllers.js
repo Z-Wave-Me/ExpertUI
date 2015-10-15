@@ -1162,7 +1162,7 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                 else {
                     level = obj.val.value;
                     updateTime = obj.updateTime;
-                    invalidateTime = obj.invalidateTime; 
+                    invalidateTime = obj.invalidateTime;
 
                 }
 
@@ -1171,7 +1171,7 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                 $('#' + v.rowId + ' .row-time').html($filter('isTodayFromUnix')(updateTime));
                 if (updateTime > invalidateTime) {
                     $('#' + v.rowId + ' .row-time').removeClass('is-updated-false');
-                }else{
+                } else {
                     $('#' + v.rowId + ' .row-time').addClass('is-updated-false');
                 }
                 //console.log('Updating: ' + v.rowId + ' | At: ' + $filter('isTodayFromUnix')(updateTime) + ' | with: ' + level);//REM
@@ -1878,8 +1878,12 @@ appController.controller('StatusController', function($scope, $filter, dataServi
                             break;
                         case isFailedCmd:
                             var isFailed = data[isFailedCmd].value;
-                            var operating_cont = operatingCont(isFailed, lastCommunication);
-                            $('#' + v.rowId + ' .row-time').html(operating_cont);
+                            console.log(data[isFailedCmd].value)
+                            if (isFailed) {
+                                var operating_cont = operatingCont(isFailed, lastCommunication);
+                                $('#' + v.rowId + ' .row-time').html(operating_cont);
+                            }
+
                             break;
                         case lastReceiveCmd:
                             var lastReceive = data[lastReceiveCmd].updateTime;
@@ -2621,7 +2625,7 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
 
 });
 // Controll controller
-appController.controller('ControllController', function($scope, $filter, $upload, $interval,$location, cfg, dataService,deviceService) {
+appController.controller('ControllController', function($scope, $filter, $upload, $interval, $location, cfg, dataService, deviceService) {
     $scope.apiDataInterval;
     $scope.devices = {};
     $scope.sucNodes = {};
@@ -2630,7 +2634,7 @@ appController.controller('ControllController', function($scope, $filter, $upload
     $scope.failedBatteries = {};
     $scope.modelSucSicNode = 1;
     //$scope.sucNodes = [];
-     $scope.frequency = false;
+    $scope.frequency = false;
     $scope.disableSUCRequest = true;
     $scope.controllerState = 0;
     $scope.secureInclusion;
@@ -2912,7 +2916,7 @@ appController.controller('ControllController', function($scope, $filter, $upload
         var isSIS = ZWaveAPIData.controller.data.SISPresent.value;
         var hasSUC = ZWaveAPIData.controller.data.SUCNodeId.value;
         var hasDevices = Object.keys(ZWaveAPIData.devices).length;
-        $scope.frequency = $filter('hasNode')(ZWaveAPIData,'controller.data.frequency.value');
+        $scope.frequency = $filter('hasNode')(ZWaveAPIData, 'controller.data.frequency.value');
         $scope.controllerState = ZWaveAPIData.controller.data.controllerState.value;
         $scope.secureInclusion = ZWaveAPIData.controller.data.secureInclusion.value;
         $scope.startLearnMode = !isRealPrimary || hasDevices < 2 ? true : false;
