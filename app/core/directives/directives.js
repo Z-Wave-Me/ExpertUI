@@ -276,9 +276,9 @@ angApp.directive('expertCommandInput', function($filter) {
                 }
                 
                 if (!isNaN(parseInt(value, 10))) {
-                    checked = (enumVal == value ? ' checked="checked"' : '');
+                    checked = (enumVal == value ? ' checked="checked"' : ''); 
                 }
-                input += '<input name="radio_' + inName + '" class="commands-data-chbx" type="radio" value="' + type.fix.value + '"' + checked + ' /> <span class="commands-label' + isCurrent + '">' + title + '</span><br />';
+                input += '<input name="radio_' + inName + '" class="commands-data-chbx" type="radio" value="' + type.fix.value + '"' + checked + ' /> ('+ type.fix.value + ') <span class="commands-label' + isCurrent + '">' + title + '</span><br />';
             } else if ('range' in type) {
                 var min = type.range.min;
                 var max = type.range.max;
