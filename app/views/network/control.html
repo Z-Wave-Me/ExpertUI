@@ -115,81 +115,94 @@
              <div class="panel panel-default" ng-if="frequency">
                 <div class="panel-heading"><i class="fa fa-map-marker"></i> {{_t('nm_frequency_title')}}</div>
                 <div class="panel-body">
+                    <div>{{_t('current_frequency')}}: <strong>{{frequency}}</strong></div>
                     <div class="text-alert-list">
                         <i class="fa fa-info-circle text-info"></i> {{_t('frequency_info')}}
                     </div>
-                   <div class="cfg-block form-inline block-frequency">
-                        <button class="btn" 
+                    <!--<div class="cfg-block form-inline block-frequency">
+                       <button class="btn" 
                                 id="btn_nm_freq_change_{{k}}"
                                 ng-class="k == frequency ? 'btn-info' : 'btn-primary'"
                                 ng-click="runCmd('ZMEFreqChange(' + k +')')"
                                 ng-if="k > -1"
                                 ng-repeat="(k,v) in cfg.frequency">{{v}}</button>
                          
-                    </div>
-                    <div>{{_t('current_frequency')}}: <strong>{{frequency}}</strong></div>
-                    <!-- freq_change
-                    <div class="cfg-block form-inline">
+                    </div> -->
+                   
+                    
+                    <div class="cfg-block form-inline block-frequency">
                         <button 
-                            class="btn btn-primary"
+                            class="btn"
                             id="btn_nm_freq_change_eu"
+                            ng-class="frequency == 0 ? 'btn-info' : 'btn-primary'"
                             ng-click="runCmd('ZMEFreqChange(0)')"
                             >EU</button>
                         <button 
-                            class="btn btn-primary"
+                            class="btn"
                             id="btn_nm_freq_change_ru"
+                            ng-class="frequency == 1 ? 'btn-info' : 'btn-primary'"
                             ng-click="runCmd('ZMEFreqChange(1)')"
                             >RU</button>
                         <button 
-                            class="btn btn-primary"
+                            class="btn"
                             id="btn_nm_freq_change_in"
+                            ng-class="frequency == 2 ? 'btn-info' : 'btn-primary'"
                             ng-click="runCmd('ZMEFreqChange(2)')"
                             >IN</button>
                         <button 
-                            class="btn btn-primary"
+                            class="btn"
                             id="btn_nm_freq_change_cn"
+                            ng-class="frequency == 6 ? 'btn-info' : 'btn-primary'"
                             ng-click="runCmd('ZMEFreqChange(6)')"
                             >CN</button>
                         <button 
-                            class="btn btn-primary"
+                            class="btn"
                             id="btn_nm_freq_change_my"
+                            ng-class="frequency == 10 ? 'btn-info' : 'btn-primary'"
                             ng-click="runCmd('ZMEFreqChange(10)')"
                             >MY</button>
                     </div>
                     <div class="cfg-block form-inline">
                         <button 
-                            class="btn btn-primary"
+                            class="btn"
                             id="btn_nm_freq_change_anz"
+                            ng-class="frequency == 4 ? 'btn-info' : 'btn-primary'"
                             ng-click="runCmd('ZMEFreqChange(4)')"
                             >ANZ/BR</button>
                         <button 
-                            class="btn btn-primary"
+                            class="btn"
                             id="btn_nm_freq_change_hk"
+                            ng-class="frequency == 5 ? 'btn-info' : 'btn-primary'"
                             ng-click="runCmd('ZMEFreqChange(5)')"
                             >HK</button>
                         <button 
-                            class="btn btn-primary"
+                            class="btn"
                             id="btn_nm_freq_change_kr"
+                            ng-class="frequency == 8 ? 'btn-info' : 'btn-primary'"
                             ng-click="runCmd('ZMEFreqChange(8)')"
                             >KR</button>
                         <button 
-                            class="btn btn-primary"
+                            class="btn"
                             id="btn_nm_freq_change_jp"
+                            ng-class="frequency == 7 ? 'btn-info' : 'btn-primary'"
                             ng-click="runCmd('ZMEFreqChange(7)')"
                             >JP</button>
                     </div>
                     <div class="cfg-block form-inline">
                         <button 
-                            class="btn btn-primary"
+                            class="btn"
                             id="btn_nm_freq_change_us"
                             ng-click="runCmd('ZMEFreqChange(3)')"
+                            ng-class="frequency == 3 ? 'btn-info' : 'btn-primary'"
                             >US</button>
                         <button 
-                            class="btn btn-primary"
+                            class="btn"
                             id="btn_nm_freq_change_il"
+                            ng-class="frequency == 9 ? 'btn-info' : 'btn-primary'"
                             ng-click="runCmd('ZMEFreqChange(9)')"
                             >IL</button>
-                    </div>-->
+                    </div>
+                     
                 </div>
             </div>
         </div>
