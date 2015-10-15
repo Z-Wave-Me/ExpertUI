@@ -1,5 +1,6 @@
 {
     "--- translate": "---",
+    "device_changed_configuration_battery": "Device changed configuration but some values are not written. Wait for device to wake up.",
      "current_frequency":"Current frequency",
     "frequency_info":"Can be unknown, unsupported or any region (EU/US/RU/....)",
     "set_to_default":"Set to default",
@@ -89,7 +90,7 @@
     "ctrl_info_sw_title": "Прошивка",
     "datetime": "Дата и время",
     "default_value_is": "Значение по умолчанию",
-    "device_changed_configuration": "Device changed configuration but some values are not written. Wait for device to wake up.",
+    "device_changed_configuration": "Device changed configuration but some values are not written.",
     "device_description_app_version": "Версия прошивки",
     "device_description_brand": "Бренд",
     "device_description_description": "Описание",
