@@ -1149,7 +1149,7 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                 var updateTime = 0;
                 var invalidateTime = 0;
                 if (v.cmdId == 0x30) {
-                    level = (obj.value ? '<span class="sensor-triggered">' + $scope._t('sensor_triggered') + '</span>' : $scope._t('sensor_idle'));
+                    level = (obj.level.value ? '<span class="sensor-triggered">' + $scope._t('sensor_triggered') + '</span>' : $scope._t('sensor_idle'));
                     updateTime = obj.level.updateTime;
                     invalidateTime = obj.level.invalidateTime;
 
