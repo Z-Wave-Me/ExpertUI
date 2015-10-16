@@ -1811,7 +1811,7 @@ appController.controller('StatusController', function($scope, $filter, dataServi
         // Conts
         var sleeping_cont = sleepingCont(isListening, hasWakeup, isFLiRS, sleepingSince, lastWakeup, interval);
         var awake_cont = awakeCont(isAwake, isListening, isFLiRS);
-        var operating_cont = operatingCont(isFailed, lastCommunication);
+        var operating_cont = operatingCont(lastCommunication);
         var interview_cont = false;
         //var _interview_cont = '<i class="fa fa-question-circle fa-lg text-info" title="' + $scope._t('device_is_not_fully_interviewed') + '"></i>';
         var _interview_cont = $scope._t('device_is_not_fully_interviewed');
@@ -1841,6 +1841,7 @@ appController.controller('StatusController', function($scope, $filter, dataServi
         obj['sleeping'] = sleeping_cont;
         obj['awake'] = awake_cont;
         obj['updateTime'] = operating_cont;
+        obj['isFailed'] =  getIsFailedCont(isFailed);
         //obj['ddr'] = ddr;
         obj['ddr'] = ddrCont(node);
         obj['interview'] = interview_cont;
@@ -1878,23 +1879,21 @@ appController.controller('StatusController', function($scope, $filter, dataServi
                             break;
                         case isFailedCmd:
                             var isFailed = data[isFailedCmd].value;
-                            console.log(data[isFailedCmd].value)
                             if (isFailed) {
-                                var operating_cont = operatingCont(isFailed, lastCommunication);
-                                $('#' + v.rowId + ' .row-time').html(operating_cont);
+                                $('#' + v.rowId + ' .row-isfailed').html(getIsFailedCont(isFailed));
                             }
-
+                            $('#' + v.rowId + ' .row-time').html(operatingCont(lastCommunication));
                             break;
                         case lastReceiveCmd:
                             var lastReceive = data[lastReceiveCmd].updateTime;
                             lastCommunication = (lastReceive > lastCommunication) ? lastReceive : lastCommunication;
-                            var operating_cont_rec = operatingCont(false, lastCommunication);
+                            var operating_cont_rec = operatingCont(lastCommunication);
                             $('#' + v.rowId + ' .row-time').html(operating_cont_rec);
                             break;
                         case lastSendCmd:
                             var lastSend = data[lastSendCmd].updateTime;
                             lastCommunication = (lastSend > lastCommunication) ? lastSend : lastCommunication;
-                            var operating_cont_send = operatingCont(false, lastCommunication);
+                            var operating_cont_send = operatingCont(lastCommunication);
                             $('#' + v.rowId + ' .row-time').html(operating_cont_send);
                             break;
                         case lastWakeupCmd:
@@ -1946,14 +1945,21 @@ appController.controller('StatusController', function($scope, $filter, dataServi
     // Get Awake HTML
     function awakeCont(isAwake, isListening, isFLiRS) {
         var awake_cont = '';
-        if (!isListening && !isFLiRS)
+        if (!isListening && !isFLiRS) 
             awake_cont = isAwake ? ('<i class="fa fa-certificate fa-lg text-orange" title="' + $scope._t('device_is_active') + '"></i>') : ('<i class="fa fa-moon-o fa-lg text-primary" title="' + $scope._t('device_is_sleeping') + '"></i>');
         return awake_cont;
     }
     // Get operating HTML
-    function operatingCont(isFailed, lastCommunication) {
-        var operating_cont = (isFailed ? ('<i class="fa fa-ban fa-lg text-danger" title="' + $scope._t('device_is_dead') + '"></i>') : ('<i class="fa fa-check fa-lg text-success" title="' + $scope._t('device_is_operating') + '"></i>')) + ' <span title="' + $scope._t('last_communication') + '" class="not_important">' + $filter('isTodayFromUnix')(lastCommunication) + '</span>';
+    function operatingCont(lastCommunication) {
+//        var operating_cont = (isFailed ? ('<i class="fa fa-ban fa-lg text-danger" title="' + $scope._t('device_is_dead') + '"></i>') : ('<i class="fa fa-check fa-lg text-success" title="' + $scope._t('device_is_operating') + '"></i>')) + ' <span title="' + $scope._t('last_communication') + '" class="not_important">' + $filter('isTodayFromUnix')(lastCommunication) + '</span>';
+ var operating_cont = '<span title="' + $scope._t('last_communication') + '" class="not_important">' + $filter('isTodayFromUnix')(lastCommunication) + '</span>';
         return operating_cont;
+    }
+    
+     // Get is failed
+    function getIsFailedCont(isFailed) {
+        var failed_cont = (isFailed ? ('<i class="fa fa-ban fa-lg text-danger" title="' + $scope._t('device_is_dead') + '"></i>') : ('<i class="fa fa-check fa-lg text-success" title="' + $scope._t('device_is_operating') + '"></i>'));
+        return failed_cont;
     }
 
     // Get ddr
