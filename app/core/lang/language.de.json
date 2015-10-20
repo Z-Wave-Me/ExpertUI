@@ -1,5 +1,5 @@
 {
-    "--- translate": "---",
+    "ctrl_info_sw_caps_title": "Capabilities:",
     "device_changed_configuration_battery": "Device changed configuration but some values are not written. Wait for device to wake up.",
     "current_frequency":"Current frequency",
     "frequency_info":"Can be unknown, unsupported or any region (EU/US/RU/....)",
@@ -7,7 +7,6 @@
     "ui":"UI",
      "ui_version":"UI version",
     "link_to_device_description":"You can select device description from the tab \"Interview\"",
-    "---": "---",
     "error_0": "Unbekannter Fehler",
     "error_401": "Nicht eingeloggt",
     "error_403": "Nicht erlaubt. Sie haben keine Berechtigung diese Seite anzuzeigen!",

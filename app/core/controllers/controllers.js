@@ -3863,12 +3863,11 @@ appController.controller('ControllerController', function($scope, $window, $filt
             $scope.master['controller.data.libType'] = ZWaveAPIData.controller.data.libType.value;
             $scope.master['controller.data.SDK'] = ZWaveAPIData.controller.data.SDK.value;
             $scope.master['controller.data.APIVersion'] = ZWaveAPIData.controller.data.APIVersion.value;
-            $scope.master['controller.data.APIVersion'] = ZWaveAPIData.controller.data.APIVersion.value;
+            $scope.master['controller.data.capabilities'] = ZWaveAPIData.controller.data.capabilities.value.join(', ');
             $scope.master['controller.data.softwareRevisionVersion'] = ZWaveAPIData.controller.data.softwareRevisionVersion.value;
             $scope.master['controller.data.softwareRevisionId'] = ZWaveAPIData.controller.data.softwareRevisionId.value;
             $scope.master['controller.data.softwareRevisionDate'] = ZWaveAPIData.controller.data.softwareRevisionDate.value;
             $scope.master['controller.data.softwareRevisionDate'] = ZWaveAPIData.controller.data.softwareRevisionDate.value;
-
             // Texts
             $scope.master['txtHomeId'] = '';
             $scope.master['txtSucSis'] = '';
