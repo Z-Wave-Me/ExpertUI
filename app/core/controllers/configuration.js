@@ -687,10 +687,13 @@ appController.controller('ConfigCommandsController', function($scope, $routePara
     $scope.submitExpertCommndsForm = function(form, cmd) {
         //var data = $('#' + form).serialize();
         var data = $('#' + form).serializeArray();
+        console.log(data)
         var dataJoined = [];
         angular.forEach(data, function(v, k) {
+            console.log(v)
             if (v.value === '') {
-                dataJoined.push('\'\'');
+                return;
+                //dataJoined.push('\'\'');
             }else{
                 if(isNaN(v.value)){
                      dataJoined.push('\'' + v.value + '\'');
