@@ -26,15 +26,15 @@ angApp.config(['$routeProvider',
                 when('/test', {
                     templateUrl: 'app/views/test.html'
                 }).
-                 // License
+                // License
                 when('/licence', {
                     templateUrl: 'app/views/pages/license.html'
                 }).
-                 // UZB
+                // UZB
                 when('/uzb', {
                     templateUrl: 'app/views/pages/uzb.html'
                 }).
-                        // Help
+                // Help
                 when('/help/:nodeId?', {
                     templateUrl: 'app/views/help/help.html'
                 }).
@@ -77,10 +77,10 @@ angApp.config(['$routeProvider',
                     templateUrl: 'app/views/device/security.html'
                 }).
                 // Config
-                 when('/config/configuration/:nodeId?', {
-                     templateUrl: 'app/views/configuration/redirect.html'
+                when('/config/configuration/:nodeId?', {
+                    templateUrl: 'app/views/configuration/redirect.html'
                 }).
-                 // New Configuration
+                // New Configuration
                 when('/configuration/interview/:nodeId?', {
                     templateUrl: 'app/views/configuration/interview.html'
                 }).
@@ -96,7 +96,7 @@ angApp.config(['$routeProvider',
                 when('/configuration/commands/:nodeId?', {
                     templateUrl: 'app/views/configuration/commands.html'
                 }).
-                 when('/configuration/firmware/:nodeId?', {
+                when('/configuration/firmware/:nodeId?', {
                     templateUrl: 'app/views/configuration/firmware.html'
                 }).
                 // Network
@@ -115,7 +115,7 @@ angApp.config(['$routeProvider',
                 when('/network/controller', {
                     templateUrl: 'app/views/network/controller.html'
                 }).
-                 when('/network/queue', {
+                when('/network/queue', {
                     templateUrl: 'app/views/network/queue.html'
                 }).
                 // Error page
@@ -131,6 +131,22 @@ angApp.config(['$routeProvider',
  * App configuration
  */
 var config_module = angular.module('appConfig', []);
+// Extend cfg dongle 
+angApp.run(function run($cookies) {
+    if ($cookies.dongle) {
+        angular.extend(config_data.cfg, {dongle: $cookies.dongle});
+    }
+});
+angular.extend(config_data.cfg, {
+    update_url: '/ZWave.' + config_data.cfg.dongle + '/Data/',
+    store_url: '/ZWave.' + config_data.cfg.dongle + '/Run/',
+    restore_url: '/ZWave.' + config_data.cfg.dongle + '/Restore',
+    queue_url: '/ZWave.' + config_data.cfg.dongle + '/InspectQueue',
+    fw_update_url: '/ZWave.' + config_data.cfg.dongle + '/FirmwareUpdate',
+    license_load_url: '/ZWave.' + config_data.cfg.dongle + '/ZMELicense',
+    zddx_create_url: '/ZWave.' + config_data.cfg.dongle + '/CreateZDDX/'
+
+});
 angular.forEach(config_data, function(key, value) {
     config_module.constant(value, key);
 });

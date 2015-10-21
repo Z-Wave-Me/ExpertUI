@@ -360,3 +360,45 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
     }
     ;
 });
+
+// Home Dongle controller
+appController.controller('HomeDongleController', function($scope, $route,$cookies,dataService) {
+    // Controller vars
+    $scope.homeDongle ={
+        model: {
+            current: $scope.cfg.dongle,
+            dongle: ''
+        },
+        //data: ['zway','newdongle','mydongle']
+        data: []
+    };
+    /**
+     * Load zwave dongles
+     */
+    $scope.loadHomeDongle = function() {
+        dataService.getZwaveList().then(function(response) {
+            if(response.length > 1){
+                 angular.extend($scope.homeDongle,{data: response});
+            }else{
+                 delete $cookies['dongle'];
+            }
+        }, function(error) {
+            delete $cookies['dongle'];
+        });
+    };
+    $scope.loadHomeDongle();
+    
+    /**
+     * Set dongle 
+     */
+    $scope.setHomeDongle = function() {
+        if($scope.homeDongle.model.dongle === ''){
+            return;
+        }
+        angular.extend($scope.cfg,{dongle: $scope.homeDongle.model.dongle});
+        $cookies.dongle = $scope.homeDongle.model.dongle;
+        dataService.purgeCache();
+        $route.reload();
+        //console.log($scope.cfg)
+    };
+});

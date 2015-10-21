@@ -1,6 +1,7 @@
 {
     
     "--- newtrans": "---",
+    "select_dongle": "Select dongle",
     "nm_nwi_learn_start": "Start NWI Learn Mode",
     "ctrl_info_sw_caps_title": "Capabilities:",
     "device_changed_configuration_battery": "Device changed configuration but some values are not written. Wait for device to wake up.",

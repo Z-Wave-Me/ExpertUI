@@ -1,12 +1,13 @@
 <!-- Home view -->
 <div ng-controller="HomeController">
+
     <div class="form-inline form-home-ip" ng-show="cfg.custom_ip">
-        
+
         <div class="form-home-ip-in product-data-list">
             <input name="custom_ip" id="custom_ip" type="text" class="form-control" ng-model="customIP.url" value="{{customIP.url}}" placeholder="Server Name or IP, e.g. 192.168.1.1" />
             <button type="button" class="btn btn-primary" id="btn_add_ip" ng-click="setIP(customIP.url)">Connect</button>
             <div class="text-danger custom-ip-message custom-ip-error">Error in connecting {{cfg.server_url}}</div>
-             <div class="text-success custom-ip-message custom-ip-success">Connected to {{cfg.server_url}}</div>
+            <div class="text-success custom-ip-message custom-ip-success">Connected to {{cfg.server_url}}</div>
         </div>
     </div>
     <div class="row home-page_" ng-show="ZWaveAPIData">
@@ -27,6 +28,16 @@
             </div>
         </div>
         <div class="col-sm-6 product-data-list pull-right">
+            <div ng-controller="HomeDongleController">
+                <div class="form-inline home-dongle" ng-if="homeDongle.data.length > 0">
+                    <h3><i class="fa fa-code-fork"></i> {{_t('select_dongle')}}</h3>
+                        <select class="form-control" ng-model="homeDongle.model.dongle" ng-change="setHomeDongle()" >
+                            <!-- <option value="">--- Select one ---</option>-->
+                            <option ng-repeat="v in homeDongle.data" ng-selected="homeDongle.model.current == v" value="{{v}}">{{v}}</option>
+                        </select>
+
+                </div>
+            </div>
 
             <h3><i class="fa fa-info-circle"></i> {{_t('txt_network_info')}}</h3>
             <ul class="list-group">
@@ -60,7 +71,7 @@
                     </p>
                 </li>
                 <li class="list-group-item">
-                    <p ng-repeat="v in notConfigDevices | unique:id">
+                    <p ng-repeat="v in notConfigDevices| unique:id">
                         <a class="text-danger" href="#configuration/interview/{{v.id}}">(#{{v.id}}) {{v.name}} {{_t('device_changed_configuration')}}</a> 
                     </p>
                 </li>
