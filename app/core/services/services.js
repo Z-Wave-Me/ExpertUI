@@ -7,7 +7,7 @@ var appService = angular.module('appService', []);
 /**
  * Device service
  */
-appService.service('deviceService', function($filter,$log) {
+appService.service('deviceService', function($filter, $log,_) {
     /// --- Public functions --- ///
 
     /**
@@ -16,7 +16,7 @@ appService.service('deviceService', function($filter,$log) {
     this.getLangLine = function(key, languages) {
         return getLangLine(key, languages);
     };
-    
+
     /**
      * Show connection error
      */
@@ -24,7 +24,7 @@ appService.service('deviceService', function($filter,$log) {
         $('#update_time_tick').html('<i class="fa fa-minus-circle fa-lg text-danger"></i>');
         return this.logError(error, 'Unable to recieve HTTP data');
     };
-    
+
     /**
      * Update time tick
      */
@@ -33,7 +33,7 @@ appService.service('deviceService', function($filter,$log) {
         time = (time || Math.round(+new Date() / 1000));
         $('#update_time_tick').html($filter('getCurrentTime')(time));
     };
-    
+
     /**
      * Log error
      */
@@ -107,19 +107,19 @@ appService.service('deviceService', function($filter,$log) {
     this.configGetInterviewCommands = function(node, updateTime) {
         return configGetInterviewCommands(node, updateTime);
     };
-    
+
     /**
      *  Get CommandClass
      */
     this.configGetCommandClass = function(data, name, space) {
         return configGetCommandClass(data, name, space);
     };
-    
+
     /**
      *  Set CommandClass
      */
-    this.configSetCommandClass = function(data,updateTime) {
-        return configSetCommandClass(data,updateTime);
+    this.configSetCommandClass = function(data, updateTime) {
+        return configSetCommandClass(data, updateTime);
     };
 
 
@@ -172,21 +172,21 @@ appService.service('deviceService', function($filter,$log) {
     this.getCfgXmlParam = function(cfgXml, nodeId, instance, commandClass, command) {
         return getCfgXmlParam(cfgXml, nodeId, instance, commandClass, command);
     };
-    
+
     /**
      * Check if device is in config
      */
     this.isInCfgXml = function(data, cfgXml) {
         return isInCfgXml(data, cfgXml);
     };
-    
+
     /**
      * Get assoc xml config param
      */
-    this.getCfgXmlAssoc = function(cfgXml, nodeId, instance, commandClass, command,groupId) {
-        return getCfgXmlAssoc(cfgXml, nodeId, instance, commandClass, command,groupId);
+    this.getCfgXmlAssoc = function(cfgXml, nodeId, instance, commandClass, command, groupId) {
+        return getCfgXmlAssoc(cfgXml, nodeId, instance, commandClass, command, groupId);
     };
-    
+
 
     /**
      *Build config XML file
@@ -194,7 +194,7 @@ appService.service('deviceService', function($filter,$log) {
     this.buildCfgXml = function(data, cfgXml, id, commandclass) {
         return buildCfgXml(data, cfgXml, id, commandclass);
     };
-    
+
     /**
      *Build assoc config XML file
      */
@@ -239,28 +239,24 @@ appService.service('deviceService', function($filter,$log) {
      *  Get language from zddx
      */
     function configGetZddxLang(langs, currLang) {
-         var label = null;
         if (!langs) {
-            return label;
+            return null;
         }
-        if (angular.isArray(langs)) {
-            for (var i = 0, len = langs.length; i < len; i++) {
-                if (("__text" in langs[i]) && (langs[i]["_xml:lang"] == currLang)) {
-                   label = langs[i].__text;
-                   continue;
-                }else{
-                     if (("__text" in langs[i]) && (langs[i]["_xml:lang"] == 'en')) {
-                    label = langs[i].__text;
-                    continue;
-                     }
-                }
-            }
-        } else {
+        if (!angular.isArray(langs)) {
             if (("__text" in langs)) {
-                label = langs.__text;
+               return langs.__text;
             }
+            return null;
         }
-        return label;
+        var lang = _.findWhere(langs, {'_xml:lang': currLang});
+        if(lang){
+            return lang.__text;
+        }
+        var defaultLang = _.findWhere(langs, {'_xml:lang': 'en'});
+         if(defaultLang){
+           return defaultLang.__text;
+        }
+        return null;
     }
 
 
@@ -331,33 +327,33 @@ appService.service('deviceService', function($filter,$log) {
         ;
         return interviews;
     }
-    
+
     /**
      *  Get CommandClass Commands
      */
     function configGetCommandClass(data, name, space) {
         // Formated output
         //var getCmdData = function(data, name, space) {
-            if (name == undefined) {
-                return '';
-            }
-            var html = '<div class="cc-data-element">' + space + name + ': <span class="' + ((data.updateTime > data.invalidateTime) ? 'green' : 'red') + '">' + ((typeof (data.value) !== 'undefined' && data.value != null) ? data.value.toString() : 'None') + '</span>' + ' (<span class="' + ((data.updateTime > data.invalidateTime) ? '' : 'red') + '">' + $filter('isTodayFromUnix')(data.updateTime) + '</span>)</div>';
-            angular.forEach(data, function(el, key) {
+        if (name == undefined) {
+            return '';
+        }
+        var html = '<div class="cc-data-element">' + space + name + ': <span class="' + ((data.updateTime > data.invalidateTime) ? 'green' : 'red') + '">' + ((typeof (data.value) !== 'undefined' && data.value != null) ? data.value.toString() : 'None') + '</span>' + ' (<span class="' + ((data.updateTime > data.invalidateTime) ? '' : 'red') + '">' + $filter('isTodayFromUnix')(data.updateTime) + '</span>)</div>';
+        angular.forEach(data, function(el, key) {
 
-                if (key != 'type' && key != 'updateTime' && key != 'invalidateTime' && key != 'value' && // these are internal values
-                        key != 'capabilitiesNames') { // these make the dialog monstrious
-                    html += configGetCommandClass(el, key, space + '&nbsp;&nbsp;&nbsp;&nbsp;');
-                }
-            });
-            return html;
-       //};
+            if (key != 'type' && key != 'updateTime' && key != 'invalidateTime' && key != 'value' && // these are internal values
+                    key != 'capabilitiesNames') { // these make the dialog monstrious
+                html += configGetCommandClass(el, key, space + '&nbsp;&nbsp;&nbsp;&nbsp;');
+            }
+        });
+        return html;
+        //};
     }
-    
+
     /**
      *  Set CommandClass Commands
      */
-    function configSetCommandClass(data,updateTime) {
-        var html = data ;
+    function configSetCommandClass(data, updateTime) {
+        var html = data;
         /*if(updateTime){
          html += '<p class="help-block"><em>' + $filter('dateFromUnix')(updateTime )+ '<em></p>'; 
          }*/
@@ -928,7 +924,7 @@ appService.service('deviceService', function($filter,$log) {
         return collection;
 
     }
-    
+
     /**
      * Check if device is in config
      */
@@ -944,48 +940,48 @@ appService.service('deviceService', function($filter,$log) {
                 obj['commandclass'] = v['_commandclass'];
                 obj['command'] = v['_command'];
                 obj['parameter'] = v['_parameter'];
-                if(JSON.stringify(obj) === JSON.stringify(data)){
-                     inConfig = true;
-                     return;
+                if (JSON.stringify(obj) === JSON.stringify(data)) {
+                    inConfig = true;
+                    return;
                 }
             });
         }
         return inConfig;
     }
-    
+
     /**
      * Get assoc xml config param
      */
-    function getCfgXmlAssoc(cfgXml, nodeId, instance, commandClass, command,groupId) {
-       var cfg = $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration');
+    function getCfgXmlAssoc(cfgXml, nodeId, instance, commandClass, command, groupId) {
+        var cfg = $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration');
         if (!cfg) {
-            return []; 
+            return [];
         }
         // Get data for given device by id
-        var collection = []; 
+        var collection = [];
         collection[groupId] = [];
         angular.forEach(cfg, function(v, k) {
-          
-             if (v['_id'] == nodeId && v['_instance'] == instance && v['_commandclass'] == commandClass && v['_command'] == command) {
-          
+
+            if (v['_id'] == nodeId && v['_instance'] == instance && v['_commandclass'] == commandClass && v['_command'] == command) {
+
                 var obj = {};
 //                if(!angular.isArray(v['_parameter'])){
 //                    return;
 //                }
                 var array = JSON.parse(v['_parameter']);
                 //collection[array[0]] = array[1];
-                 
+
 //                if (array.length > 2) {
 //                    collection[array[0]] = array[1];
 //                }
-               if (array.length == 2) {
+                if (array.length == 2) {
                     obj['groupId'] = array[0];
                     obj['deviceId'] = array[1];
                     //collection.push(obj);
-                    if(array[0] == groupId &&  array[1] > 1){
+                    if (array[0] == groupId && array[1] > 1) {
                         collection[groupId].push(array[1]);
                     }
-                      
+
 
                 }
 //                else {
@@ -993,7 +989,7 @@ appService.service('deviceService', function($filter,$log) {
 //                    return;
 //                }
             }
-          
+
         });
         //console.log(collection)
         return collection;
@@ -1005,7 +1001,7 @@ appService.service('deviceService', function($filter,$log) {
      */
     function buildCfgXml(data, cfgXml, id, commandclass) {
         var hasCfgXml = false;
-         var assocCc = [133, 142];
+        var assocCc = [133, 142];
         var formData = [];
         if (commandclass == '84') {
             var par1 = JSON.parse(data[0]['parameter']);
@@ -1034,7 +1030,7 @@ appService.service('deviceService', function($filter,$log) {
                 obj['commandclass'] = v['_commandclass'];
                 obj['command'] = v['_command'];
                 obj['parameter'] = v['_parameter'];
-                 obj['group'] = v['_group'];
+                obj['group'] = v['_group'];
                 xmlData.push(obj);
 
             });
@@ -1043,7 +1039,7 @@ appService.service('deviceService', function($filter,$log) {
         return ret;
 
     }
-    
+
     /**
      *Build config assoc XML file
      */
@@ -1059,16 +1055,16 @@ appService.service('deviceService', function($filter,$log) {
                 obj['commandclass'] = v['_commandclass'];
                 obj['command'] = v['_command'];
                 obj['parameter'] = v['_parameter'];
-                if(JSON.stringify(obj) !== JSON.stringify(data)){
-                     xmlData.push(obj);
-                   /* console.log('XML:',JSON.stringify(obj))
-                 console.log('DATA:',JSON.stringify(data))*/
+                if (JSON.stringify(obj) !== JSON.stringify(data)) {
+                    xmlData.push(obj);
+                    /* console.log('XML:',JSON.stringify(obj))
+                     console.log('DATA:',JSON.stringify(data))*/
                 }
 
             });
         }
         xmlData.push(data);
-        var ret = buildCfgXmlFile(xmlData); 
+        var ret = buildCfgXmlFile(xmlData);
         return ret;
 
     }
@@ -1077,7 +1073,7 @@ appService.service('deviceService', function($filter,$log) {
      *Delete from cfg xml file - assoc
      */
     function deleteCfgXmlAssoc(data, cfgXml) {
-       var xmlData = [];
+        var xmlData = [];
         var hasCfgXml = $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration');
         if (hasCfgXml) {
             angular.forEach(hasCfgXml, function(v, k) {
@@ -1087,28 +1083,28 @@ appService.service('deviceService', function($filter,$log) {
                 obj['commandclass'] = parseInt(v['_commandclass'], 10);
                 obj['command'] = v['_command'];
                 obj['parameter'] = v['_parameter'];
-                if(JSON.stringify(obj) !== JSON.stringify(data)){
-                     xmlData.push(obj);
-                   /* obj['command'] = 'Remove';
-                    console.log('XML:',JSON.stringify(obj))
-                 console.log('DATA:',JSON.stringify(data))*/
+                if (JSON.stringify(obj) !== JSON.stringify(data)) {
+                    xmlData.push(obj);
+                    /* obj['command'] = 'Remove';
+                     console.log('XML:',JSON.stringify(obj))
+                     console.log('DATA:',JSON.stringify(data))*/
                 }
-               
+
             });
-        }else{
-             data['command'] = 'Remove';
-            xmlData.push(data); 
+        } else {
+            data['command'] = 'Remove';
+            xmlData.push(data);
         }
-       
+
         var ret = buildCfgXmlFile(xmlData);
-        return ret; 
+        return ret;
     }
-    
+
     /**
      * Build cfg XML file
      */
     function buildCfgXmlFile(xmlData) {
-       var xml = '<config><devices>' + "\n";
+        var xml = '<config><devices>' + "\n";
         angular.forEach(xmlData, function(v, k) {
             xml += '<deviceconfiguration id="' + v.id + '" instance="' + v.instance + '" commandclass="' + v.commandclass + '" command="' + v.command + '" parameter="' + v.parameter + '"/>' + "\n";
         });
