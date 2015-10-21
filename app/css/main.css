@@ -299,6 +299,9 @@ padding: 10px 10px 0 10px;
 .commands-data-control .form-group{
     margin-bottom: 10px;
 }
+.commands-title-block{
+   display: block;
+}
 
 /* Config CSS
 -------------------------------------------------- */

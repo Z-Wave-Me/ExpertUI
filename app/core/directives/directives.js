@@ -260,7 +260,7 @@ angApp.directive('expertCommandInput', function($filter) {
         var cnt = 1;
         var value = (currValue !== undefined ? currValue : defaultValue);
         angular.forEach(enums.enumof, function(v, k) {
-            var title = v.label;
+            var title = v.label||'';
             var type = v.type;
             var enumVal =  $filter('hasNode')(v, 'type.fix.value');
             var checked = (cnt == 1 ? ' checked="checked"' : '');
@@ -311,7 +311,7 @@ angApp.directive('expertCommandInput', function($filter) {
                 if (!hideRadio) {
                     input += '<div><input name="radio_' + inName + '" class="commands-data-chbx" type="radio" value=""' + checked + ' /> <span class="commands-label' + isCurrent + '">' + title + '</span> <input type="text" name="radio_txt_' + inName + '" class="form-control commands-data-txt-chbx" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '"' + disabled + ' /></div>';
                 } else {
-                    input += '<input type="text" name="radio_txt_' + inName + '" class="form-control" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '" /><br />';
+                    input +=  (title !== '' ? '<span class="commands-title-block">' + title + ' </span>':'') + '<input type="text" name="radio_txt_' + inName + '" class="form-control" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '" /><br />';
                 }
 
 
