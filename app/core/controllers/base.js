@@ -29,7 +29,7 @@ appController.controller('BaseController', function($scope, $cookies, $filter, $
         }, function(error) {
         });
     };
-    //$scope.setDongle();
+    $scope.setDongle();
     // Custom IP
     $scope.customIP = {
         'url': cfg.server_url,
