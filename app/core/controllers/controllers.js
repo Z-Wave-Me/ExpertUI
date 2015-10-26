@@ -3325,7 +3325,9 @@ appController.controller('ControllerController', function($scope, $window, $filt
             return str === 'ff' ? $scope._t('unlimited') : str;
         };
         var caps = function(str) {
-            switch (str) {
+           //console.log((parseInt(str,10) >>> 0).toString(2));
+           var cap = '0000000' + str;
+           switch (str) {
                 case'0001':
                     return 'S';
                     break;
@@ -3353,10 +3355,11 @@ appController.controller('ControllerController', function($scope, $window, $filt
             $scope.master['controller.data.libType'] = ZWaveAPIData.controller.data.libType.value;
             $scope.master['controller.data.SDK'] = ZWaveAPIData.controller.data.SDK.value;
             $scope.master['controller.data.APIVersion'] = ZWaveAPIData.controller.data.APIVersion.value;
-            $scope.master['controller.data.caps.subvendor1'] = dec2hex(ZWaveAPIData.controller.data.caps.value[0]).slice(2);
-            $scope.master['controller.data.caps.subvendor2'] = dec2hex(ZWaveAPIData.controller.data.caps.value[1]).slice(2);
+            $scope.master['controller.data.caps.subvendor1'] = '0x' + dec2hex(ZWaveAPIData.controller.data.caps.value[0]);
+            $scope.master['controller.data.caps.subvendor2'] = '0x' +dec2hex(ZWaveAPIData.controller.data.caps.value[1]);
             $scope.master['controller.data.caps.nodes'] = nodeLimit(dec2hex(ZWaveAPIData.controller.data.caps.value[2]).slice(-2));
-            $scope.master['controller.data.caps.cap'] = caps(dec2hex(ZWaveAPIData.controller.data.caps.value[3]));
+            //$scope.master['controller.data.caps.cap'] = caps(dec2hex(ZWaveAPIData.controller.data.caps.value[3]));
+            $scope.master['controller.data.caps.cap'] = caps(ZWaveAPIData.controller.data.caps.value[3]);
             $scope.master['controller.data.softwareRevisionVersion'] = ZWaveAPIData.controller.data.softwareRevisionVersion.value;
             $scope.master['controller.data.softwareRevisionId'] = ZWaveAPIData.controller.data.softwareRevisionId.value;
             $scope.master['controller.data.softwareRevisionDate'] = ZWaveAPIData.controller.data.softwareRevisionDate.value;
@@ -3452,7 +3455,7 @@ appController.controller('ControllerController', function($scope, $window, $filt
         else if (i >= 4096 && i <= 65535) {
             result = i.toString(16);
         }
-        return result
+        return result;
     }
 
 
