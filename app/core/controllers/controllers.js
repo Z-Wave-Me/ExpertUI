@@ -1386,7 +1386,7 @@ appController.controller('StatusController', function($scope, $filter, dataServi
         obj['sleeping'] = sleeping_cont;
         obj['awake'] = awake_cont;
         obj['updateTime'] = operating_cont;
-        obj['isFailed'] =  getIsFailedCont(isFailed);
+        obj['isFailed'] = getIsFailedCont(isFailed);
         //obj['ddr'] = ddr;
         obj['ddr'] = ddrCont(node);
         obj['interview'] = interview_cont;
@@ -1490,18 +1490,18 @@ appController.controller('StatusController', function($scope, $filter, dataServi
     // Get Awake HTML
     function awakeCont(isAwake, isListening, isFLiRS) {
         var awake_cont = '';
-        if (!isListening && !isFLiRS) 
+        if (!isListening && !isFLiRS)
             awake_cont = isAwake ? ('<i class="fa fa-certificate fa-lg text-orange" title="' + $scope._t('device_is_active') + '"></i>') : ('<i class="fa fa-moon-o fa-lg text-primary" title="' + $scope._t('device_is_sleeping') + '"></i>');
         return awake_cont;
     }
     // Get operating HTML
     function operatingCont(lastCommunication) {
 //        var operating_cont = (isFailed ? ('<i class="fa fa-ban fa-lg text-danger" title="' + $scope._t('device_is_dead') + '"></i>') : ('<i class="fa fa-check fa-lg text-success" title="' + $scope._t('device_is_operating') + '"></i>')) + ' <span title="' + $scope._t('last_communication') + '" class="not_important">' + $filter('isTodayFromUnix')(lastCommunication) + '</span>';
- var operating_cont = '<span title="' + $scope._t('last_communication') + '" class="not_important">' + $filter('isTodayFromUnix')(lastCommunication) + '</span>';
+        var operating_cont = '<span title="' + $scope._t('last_communication') + '" class="not_important">' + $filter('isTodayFromUnix')(lastCommunication) + '</span>';
         return operating_cont;
     }
-    
-     // Get is failed
+
+    // Get is failed
     function getIsFailedCont(isFailed) {
         var failed_cont = (isFailed ? ('<i class="fa fa-ban fa-lg text-danger" title="' + $scope._t('device_is_dead') + '"></i>') : ('<i class="fa fa-check fa-lg text-success" title="' + $scope._t('device_is_operating') + '"></i>'));
         return failed_cont;
@@ -1884,7 +1884,7 @@ appController.controller('TypeController', function($scope, $filter, dataService
                 }
             });
 
-            // Product name from zddx file 
+            // Product name from zddx file
             if (zddXmlFile) {
                 dataService.getZddXml(zddXmlFile, function(zddxml) {
                     //productName = $filter('hasNode')(zddxml, 'ZWaveDevice.deviceDescription.productName');
@@ -2476,7 +2476,7 @@ appController.controller('ControllController', function($scope, $filter, $upload
         if (hasSUC && hasSUC != controllerNodeId) {
             $scope.disableSUCRequest = false;
         }
-        //console.log($scope.frequency) 
+        //console.log($scope.frequency)
 
         /* console.log('Controller isPrimary: ' + isPrimary);
          console.log('Controller isSIS: ' + isSIS);
@@ -2848,7 +2848,7 @@ appController.controller('RoutingController', function($scope, $filter, dataServ
                 return;
             }
             nnodeName = $filter('deviceName')(nnodeId, nnode);
-            //console.log(nodeId + ' ' + nodeName + ' - ' + nnodeId + ' ' + nnodeName)    
+            //console.log(nodeId + ' ' + nodeName + ' - ' + nnodeId + ' ' + nnodeName)
             line[nnodeId] = $scope.cellState(nodeId, nnodeId, routesCount, nodeName, nnodeName);
         });
         $scope.data[nodeId] = line;
@@ -3315,83 +3315,28 @@ appController.controller('ControllerController', function($scope, $window, $filt
         dataService.cancelQueueDataInterval();
         dataService.cancelZwaveDataInterval();
     });
-    /**
-     * DEPRECATED
-     * Load data
-     *
-     */
-//    $scope.load = function() {
-//        dataService.getZwaveData(function(ZWaveAPIData) {
-//
-//            $scope.ZWaveAPIData = ZWaveAPIData;
-////        if (path == 'controller.data.nonManagmentJobs')
-////		return; // we don't want to redraw this page on each (de)queued packet
-//
-//            var homeId = ZWaveAPIData.controller.data.homeId.value;
-//            var nodeId = ZWaveAPIData.controller.data.nodeId.value;
-//            var canAdd = ZWaveAPIData.controller.data.isPrimary.value;
-//            var isRealPrimary = ZWaveAPIData.controller.data.isRealPrimary.value;
-//            var haveSIS = ZWaveAPIData.controller.data.SISPresent.value;
-//            //var isSUC = ZWaveAPIData.controller.data.isSUC.value;
-//            var SUCNodeID = ZWaveAPIData.controller.data.SUCNodeId.value;
-//            var vendor = ZWaveAPIData.controller.data.vendor.value;
-//            var productId = ZWaveAPIData.controller.data.manufacturerProductId.value;
-//
-//            var sdk = ZWaveAPIData.controller.data.SDK.value;
-//            var libType = ZWaveAPIData.controller.data.libType.value;
-//            var api = ZWaveAPIData.controller.data.APIVersion.value;
-//            var revId = ZWaveAPIData.controller.data.softwareRevisionId.value;
-//            var revVer = ZWaveAPIData.controller.data.softwareRevisionVersion.value;
-//            var revDate = ZWaveAPIData.controller.data.softwareRevisionDate.value;
-//            var manufactrerId = ZWaveAPIData.controller.data.manufacturerId.value;
-//            var manufacturerProductId = ZWaveAPIData.controller.data.manufacturerProductId.value;
-//            var ZWChip = ZWaveAPIData.controller.data.ZWaveChip.value;
-//            var productType = ZWaveAPIData.controller.data.manufacturerProductType.value;
-//            var obj = {};
-//
-//            $scope.info['ctrl_info_nodeid_value'] = nodeId;
-//            $scope.info['ctrl_info_homeid_value'] = '0x' + ('00000000' + (homeId + (homeId < 0 ? 0x100000000 : 0)).toString(16)).slice(-8);
-//            $scope.info['ctrl_info_primary_value'] = canAdd ? 'yes' : 'no';
-//            $scope.info['ctrl_info_real_primary_value'] = isRealPrimary ? 'yes' : 'no';
-//            $scope.info['ctrl_info_suc_sis_value'] = (SUCNodeID != 0) ? (SUCNodeID.toString() + ' (' + (haveSIS ? 'SIS' : 'SUC') + ')') : $scope._t('nm_suc_not_present');
-//            $scope.info['ctrl_info_hw_vendor_value'] = vendor;
-//            $scope.info['ctrl_info_hw_product_value'] = productType.toString() + " / " + productId.toString();
-//            $scope.info['ctrl_info_hw_chip_value'] = ZWChip;
-//            $scope.info['ctrl_info_sw_lib_value'] = libType;
-//            $scope.info['ctrl_info_sw_sdk_value'] = sdk;
-//            $scope.info['ctrl_info_sw_api_value'] = api;
-//            $scope.info['ctrl_info_sw_rev_ver_value'] = revVer;
-//            $scope.info['ctrl_info_sw_rev_id_value'] = revId;
-//            $scope.info['ctrl_info_sw_rev_date_value'] = revDate;
-//            $scope.info['manufactrerId'] = manufactrerId;
-//            $scope.info['ZWaveChip'] = ZWChip;
-//            $scope.info['manufacturerProductType'] = productType;
-//            $scope.info['manufacturerProductId'] = manufacturerProductId;
-//            /**
-//             * Function list
-//             */
-//            var funcList = '';
-//            var _fc = array_unique(ZWaveAPIData.controller.data.capabilities.value.concat(ZWaveAPIData.controller.data.functionClasses.value));
-//            _fc.sort(function(a, b) {
-//                return a - b
-//            });
-//            angular.forEach(_fc, function(func, index) {
-//                var fcIndex = ZWaveAPIData.controller.data.functionClasses.value.indexOf(func);
-//                var capIndex = ZWaveAPIData.controller.data.capabilities.value.indexOf(func);
-//                var fcName = (fcIndex != -1) ? ZWaveAPIData.controller.data.functionClassesNames.value[fcIndex] : 'Not implemented';
-//                funcList += '<span style="color: ' + ((capIndex != -1) ? ((fcIndex != -1) ? '' : 'gray') : 'red') + '">' + fcName + ' (0x' + ('00' + func.toString(16)).slice(-2) + ')</span>, ';
-//            });
-//            $scope.funcList = funcList;
-//
-//        });
-//    };
-    //$scope.load();
 
     /**
      * Load data
      *
      */
     $scope.loadData = function() {
+        var nodeLimit = function(str) {
+            return str === 'ff' ? $scope._t('unlimited') : str;
+        };
+        var caps = function(str) {
+            switch (str) {
+                case'0001':
+                    return 'S';
+                    break;
+                case'0002':
+                    return 'l';
+                case'0004':
+                    return 'M';
+                    break;
+            }
+
+        };
         dataService.getZwaveData(function(ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
             $scope.master['controller.data.nodeId'] = ZWaveAPIData.controller.data.nodeId.value;
@@ -3408,7 +3353,10 @@ appController.controller('ControllerController', function($scope, $window, $filt
             $scope.master['controller.data.libType'] = ZWaveAPIData.controller.data.libType.value;
             $scope.master['controller.data.SDK'] = ZWaveAPIData.controller.data.SDK.value;
             $scope.master['controller.data.APIVersion'] = ZWaveAPIData.controller.data.APIVersion.value;
-            $scope.master['controller.data.capabilities'] = ZWaveAPIData.controller.data.capabilities.value.join(', ');
+            $scope.master['controller.data.caps.subvendor1'] = dec2hex(ZWaveAPIData.controller.data.caps.value[0]).slice(2);
+            $scope.master['controller.data.caps.subvendor2'] = dec2hex(ZWaveAPIData.controller.data.caps.value[1]).slice(2);
+            $scope.master['controller.data.caps.nodes'] = nodeLimit(dec2hex(ZWaveAPIData.controller.data.caps.value[2]).slice(-2));
+            $scope.master['controller.data.caps.cap'] = caps(dec2hex(ZWaveAPIData.controller.data.caps.value[3]));
             $scope.master['controller.data.softwareRevisionVersion'] = ZWaveAPIData.controller.data.softwareRevisionVersion.value;
             $scope.master['controller.data.softwareRevisionId'] = ZWaveAPIData.controller.data.softwareRevisionId.value;
             $scope.master['controller.data.softwareRevisionDate'] = ZWaveAPIData.controller.data.softwareRevisionDate.value;
@@ -3424,6 +3372,7 @@ appController.controller('ControllerController', function($scope, $window, $filt
             _fc.sort(function(a, b) {
                 return a - b
             });
+
             angular.forEach(_fc, function(func, index) {
                 var fcIndex = ZWaveAPIData.controller.data.functionClasses.value.indexOf(func);
                 var capIndex = ZWaveAPIData.controller.data.capabilities.value.indexOf(func);
@@ -3487,6 +3436,24 @@ appController.controller('ControllerController', function($scope, $window, $filt
     };
 
     /// --- Private functions --- ///
+    function dec2hex(i)
+    {
+        //return  ("0"+(Number(i).toString(16))).slice(-2).toUpperCase()
+        var result = "0000";
+        if (i >= 0 && i <= 15) {
+            result = "000" + i.toString(16);
+        }
+        else if (i >= 16 && i <= 255) {
+            result = "00" + i.toString(16);
+        }
+        else if (i >= 256 && i <= 4095) {
+            result = "0" + i.toString(16);
+        }
+        else if (i >= 4096 && i <= 65535) {
+            result = i.toString(16);
+        }
+        return result
+    }
 
 
     // Get Queue updates
@@ -3661,7 +3628,7 @@ appController.controller('InterviewCommandController', function($scope, $filter,
         //var html = getCmdData(interviewData, '/', '');
         var html = deviceService.configGetCommandClass(interviewData, '/', '');
         /*if(updateTime){
-         html += '<p class="help-block"><em>' + $filter('dateFromUnix')(updateTime )+ '<em></p>'; 
+         html += '<p class="help-block"><em>' + $filter('dateFromUnix')(updateTime )+ '<em></p>';
          }*/
 
 
@@ -3877,7 +3844,7 @@ appController.controller('UzbController', function($scope, $timeout, dataService
 //                console.log('---------- ERROR bootloader ----------');
 //            }
 //            $('.update-ctrl button').attr('disabled', false);
-//           
+//
 //        }, 3000);
 //
 //    }
@@ -3889,7 +3856,7 @@ appController.controller('UzbController', function($scope, $timeout, dataService
 //    function upgradeFirmware(response) {
 //        $('.update-ctrl button').attr('disabled', true);
 //        $scope.alert = {message: $scope._t('upgrade_firmware_proccess'), status: 'alert-warning', icon: 'fa-spinner fa-spin'};
-//        //console.log(response); 
+//        //console.log(response);
 //        return;
 //        $timeout(function() {
 //            if ('do something to check when update is complete') {

@@ -1,11 +1,15 @@
 {
     
     "--- newtrans": "---",
+    "unlimited":"Unlimited",
+    "ctrl_info_caps_subvendor_title":"Subvendor:",
+     "ctrl_info_caps_nodes_title":"Nodes limit:",
+     "ctrl_info_caps_cap_title":"Capabillities:",
     "---": "---",
     "zwave_network": "Z-Wave Network",
     "select_dongle": "Select Z-Wave Network",
     "nm_nwi_learn_start": "Start NWI Learn Mode",
-    "ctrl_info_sw_caps_title": "Capabilities:",
+    "ctrl_info_sw_caps_title": "Capabillities:",
     "device_changed_configuration_battery": "Device changed configuration but some values are not written. Wait for device to wake up.",
     "current_frequency":"Current frequency",
     "frequency_info":"Can be unknown, unsupported or any region (EU/US/RU/....)",
