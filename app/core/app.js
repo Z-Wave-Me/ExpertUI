@@ -135,18 +135,19 @@ var config_module = angular.module('appConfig', []);
 angApp.run(function run($cookies) {
     if ($cookies.dongle) {
         angular.extend(config_data.cfg, {dongle: $cookies.dongle});
+        angular.extend(config_data.cfg, {
+            update_url: '/ZWave.' + config_data.cfg.dongle + '/Data/',
+            store_url: '/ZWave.' + config_data.cfg.dongle + '/Run/',
+            restore_url: '/ZWave.' + config_data.cfg.dongle + '/Restore',
+            queue_url: '/ZWave.' + config_data.cfg.dongle + '/InspectQueue',
+            fw_update_url: '/ZWave.' + config_data.cfg.dongle + '/FirmwareUpdate',
+            license_load_url: '/ZWave.' + config_data.cfg.dongle + '/ZMELicense',
+            zddx_create_url: '/ZWave.' + config_data.cfg.dongle + '/CreateZDDX/'
+
+        });
     }
 });
-angular.extend(config_data.cfg, {
-    update_url: '/ZWave.' + config_data.cfg.dongle + '/Data/',
-    store_url: '/ZWave.' + config_data.cfg.dongle + '/Run/',
-    restore_url: '/ZWave.' + config_data.cfg.dongle + '/Restore',
-    queue_url: '/ZWave.' + config_data.cfg.dongle + '/InspectQueue',
-    fw_update_url: '/ZWave.' + config_data.cfg.dongle + '/FirmwareUpdate',
-    license_load_url: '/ZWave.' + config_data.cfg.dongle + '/ZMELicense',
-    zddx_create_url: '/ZWave.' + config_data.cfg.dongle + '/CreateZDDX/'
 
-});
 angular.forEach(config_data, function(key, value) {
     config_module.constant(value, key);
 });

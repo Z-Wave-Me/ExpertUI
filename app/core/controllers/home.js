@@ -95,24 +95,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
         cfg.server_url = setIp;
         dataService.purgeCache();
         $scope.loadHomeData = true;
-        //$scope.loadData();
         $route.reload();
-//        $http.get(setIp)
-//                .success(function(data, status, headers, config) {
-//                    dataService.purgeCache();
-//                    cfg.server_url = setIp;
-//                    $scope.showHome = true;
-//                    $scope.customIP.message = false;
-//                     $scope.customIP.connected = 'Connected to: ' + setIp;
-//                    $route.reload();
-//                }).error(function(data, status, headers, config) {
-//            $scope.showHome = false;
-//            $scope.customIP.message = 'Server error';
-//            $scope.customIP.connected = false;
-//        });
-
-//        dataService.getZwaveData(function(ZWaveAPIData) {
-//        });
     };
 
     // Cancel interval on page destroy
@@ -362,14 +345,14 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
 });
 
 // Home Dongle controller
-appController.controller('HomeDongleController', function($scope, $route,$cookies,dataService) {
+appController.controller('HomeDongleController', function($scope, $window,$cookies,dataService) {
     // Controller vars
     $scope.homeDongle ={
         model: {
             current: $scope.cfg.dongle,
             dongle: ''
         },
-        //data: ['zway','newdongle','mydongle']
+        //data: ['zway','newdongle','mydongle'],
         data: []
     };
     /**
@@ -379,12 +362,8 @@ appController.controller('HomeDongleController', function($scope, $route,$cookie
         dataService.getZwaveList().then(function(response) {
             if(response.length > 1){
                  angular.extend($scope.homeDongle,{data: response});
-            }else{
-                 delete $cookies['dongle'];
             }
-        }, function(error) {
-            delete $cookies['dongle'];
-        });
+        }, function(error) {});
     };
     $scope.loadHomeDongle();
     
@@ -398,7 +377,7 @@ appController.controller('HomeDongleController', function($scope, $route,$cookie
         angular.extend($scope.cfg,{dongle: $scope.homeDongle.model.dongle});
         $cookies.dongle = $scope.homeDongle.model.dongle;
         dataService.purgeCache();
-        $route.reload();
-        //console.log($scope.cfg)
+        //$route.reload();
+        $window.location.reload();
     };
 });

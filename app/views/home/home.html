@@ -32,11 +32,12 @@
                 <div class="form-inline home-dongle" ng-if="homeDongle.data.length > 0">
                     <h3><i class="fa fa-code-fork"></i> {{_t('select_dongle')}}</h3>
                         <select class="form-control" ng-model="homeDongle.model.dongle" ng-change="setHomeDongle()" >
-                            <!-- <option value="">--- Select one ---</option>-->
+                            <option value="" class="hidden-selectopt">--- Select one ---</option>
                             <option ng-repeat="v in homeDongle.data" ng-selected="homeDongle.model.current == v" value="{{v}}">{{v}}</option>
                         </select>
 
                 </div>
+                <h3 ng-if="homeDongle.data.length < 1"><i class="fa fa-code-fork"></i> {{_t('zwave_network')}}: <em>{{cfg.dongle}}</em></h3>
             </div>
 
             <h3><i class="fa fa-info-circle"></i> {{_t('txt_network_info')}}</h3>

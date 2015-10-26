@@ -7,6 +7,29 @@
 var appController = angular.module('appController', []);
 // Base controller
 appController.controller('BaseController', function($scope, $cookies, $filter, $location, $anchorScroll, $window, $route, cfg, dataService, deviceService, myCache) {
+    /**
+     * Load zwave dongles
+     */
+    $scope.setDongle = function() {
+        dataService.getZwaveList().then(function(response) {
+            if (response.length === 1) {
+                angular.extend(cfg, {dongle: response[0]});
+                $cookies.dongle = response[0];
+                angular.extend(cfg, {
+                    update_url: '/ZWave.' + cfg.dongle + '/Data/',
+                    store_url: '/ZWave.' + cfg.dongle + '/Run/',
+                    restore_url: '/ZWave.' + cfg.dongle + '/Restore',
+                    queue_url: '/ZWave.' + cfg.dongle + '/InspectQueue',
+                    fw_update_url: '/ZWave.' + cfg.dongle + '/FirmwareUpdate',
+                    license_load_url: '/ZWave.' + cfg.dongle + '/ZMELicense',
+                    zddx_create_url: '/ZWave.' + cfg.dongle + '/CreateZDDX/'
+
+                });
+            }
+        }, function(error) {
+        });
+    };
+    //$scope.setDongle();
     // Custom IP
     $scope.customIP = {
         'url': cfg.server_url,
@@ -82,7 +105,7 @@ appController.controller('BaseController', function($scope, $cookies, $filter, $
         return (route === path[segment] ? 'active' : '');
     };
 
-     /**
+    /**
      *
      * Mobile detect
      */

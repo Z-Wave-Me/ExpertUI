@@ -1,4 +1,5 @@
 {
+    "zwave_network": "Z-Wave Network",
     "select_dongle": "Z-Wave Netz wählen",
     "nm_nwi_learn_start": "Start NWI Learn Mode",
     "ctrl_info_sw_caps_title": "Capabilities:",

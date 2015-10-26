@@ -181,6 +181,9 @@ background-color: #e4f5fc;
     display: inline-block;
     max-width: 32px;
 }
+.hidden-selectopt{
+    display: none !important;
+}
 /* Modal
 -------------------------------------------------- */
 .modal-body {
