@@ -53,11 +53,15 @@
                                 </span>
                             <!-- <span ng-if="v.showDefaultValue > -1"> | {{_t('default_value_is')}}: {{v.showDefaultValue}}</span>
                             <span ng-if="v.defaultValue === ''"> | {{_t('param_default_value_undefined')}}</span>-->
-                            <span ng-if="v.description">  | 
+                             <!--<span ng-if="v.description">  | 
                                 <a href="" ng-click="goInfo = !goInfo"><i class="fa fa-info-circle fa-lg"></i></a> 
                                 <em ng-show="goInfo">{{v.description}}</em>
-                            </span>
+                            </span>-->
                         </p>
+                         <br />
+                         <p ng-if="v.description">
+                               <i class="fa fa-info-circle fa-lg text-primary"></i> <em>{{v.description}}</em>
+                            </p>
                         <button 
                             type="button" 
                             class="btn btn-primary spin-true"

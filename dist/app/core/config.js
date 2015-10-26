@@ -15,6 +15,8 @@ var config_data = {
         'route_update_timeout': 15000, // Maximum time in miliseconds to wait for an update-route
         //'server_url': 'http://zwave.dyndns.org:8083/', // Remote JSON
         'server_url': '', // Remote JSON
+        'dongle': 'zway', // Default dongle
+        'zwave_list': '/ZWave/list', // Zwave list of dongles
         'update_url': '/ZWaveAPI/Data/', // Url for update (refresh data)
         'store_url': '/ZWaveAPI/Run/', // Url for store data
         'restore_url': '/ZWaveAPI/Restore', // Url to restore backup
@@ -30,7 +32,7 @@ var config_data = {
         'notes_url': '/config/notes.log', // Url for store notes data
         'uzb_url': 'http://www.zwave.eu/api/expertui/uzb/', // Url for uzb data
         'license_url': 'http://store.zwaveeurope.com/license/utility_uzb.php', // Url for license key
-        'buy_licence_key': 'http://www.zwave.me/index.php?id=41', // Buy licence key url
+        'buy_licence_key': 'http://www.z-wave.me/index.php?id=41', // Buy licence key url
         'lang_dir': 'app/core/lang/', // Language directory
         'lang': 'en', // Default language
         'lang_list': ["en", "de", "fr", "es", "ru"], // List of languages
