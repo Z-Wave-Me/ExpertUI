@@ -432,16 +432,18 @@
                                 ng-model="modelRestoreChipInfo" /> {{_t('restore_backup_chip')}}
 
                         </div>
-                        <div class="text-center">
-                             <button 
+                        <p class="text-center">
+                             <!--<button 
                         ng-show="goRestore"
                         ng-file-select="restoreBackup($files,modelRestoreChipInfo,'.btn-spinner-hidden','#btn_upload')" 
                         data-multiple="true"
                         onclick="this.value = null" 
                         id="btn_upload"
                         class="btn btn-primary" 
-                        ><i class="fa fa-download"></i> {{_t('nm_restore_pick_up')}}<input type="file" ng-file-select="restoreBackup($files,modelRestoreChipInfo,'.btn-spinner-hidden','#btn_upload')" data-multiple="true" title="select file" onclick="this.value = null" class="upload-button" multiple="multiple" style="top: 0px; bottom: 0px; left: 0px; right: 0px; width: 100%; opacity: 0; position: absolute;"></button>
-                           </div>  
+                        ><i class="fa fa-download"></i> {{_t('nm_restore_pick_up')}}<input type="file" ng-file-select="restoreBackup($files,modelRestoreChipInfo,'.btn-spinner-hidden','#btn_upload')" data-multiple="true" title="select file" onclick="this.value = null" class="upload-button" multiple="multiple" style="top: 0px; bottom: 0px; left: 0px; right: 0px; width: 100%; opacity: 0; position: absolute;"></button>-->
+                        
+                        <input id="btn_upload" ng-show="goRestore" type="file" name="file" onchange="angular.element(this).scope().restoreFromFile(this.files,'.btn-spinner-hidden','#btn_upload')" />
+                           </p>  
                        
                     </div>
                     <div class="alert alert-info" ng-show="restoreBackupStatus == 1"><i class="fa fa-spinner fa-spin"></i> {{_t('restore_wait')}}</div>
