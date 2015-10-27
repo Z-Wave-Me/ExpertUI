@@ -836,7 +836,6 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
             // something went wrong
             return $q.reject(response);
         });
-        return;
     }
 });
 

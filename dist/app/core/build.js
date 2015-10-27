@@ -13814,7 +13814,7 @@ appController.controller('StatusController', function($scope, $filter, dataServi
     // Get Awake HTML
     function awakeCont(isAwake, isListening, isFLiRS) {
         var awake_cont = '';
-        if (!isListening && !isFLiRS) 
+        if (!isListening && !isFLiRS)
             awake_cont = isAwake ? ('<i class="fa fa-certificate fa-lg text-orange" title="' + $scope._t('device_is_active') + '"></i>') : ('<i class="fa fa-moon-o fa-lg text-primary" title="' + $scope._t('device_is_sleeping') + '"></i>');
         return awake_cont;
     }
@@ -13823,12 +13823,6 @@ appController.controller('StatusController', function($scope, $filter, dataServi
 //        var operating_cont = (isFailed ? ('<i class="fa fa-ban fa-lg text-danger" title="' + $scope._t('device_is_dead') + '"></i>') : ('<i class="fa fa-check fa-lg text-success" title="' + $scope._t('device_is_operating') + '"></i>')) + ' <span title="' + $scope._t('last_communication') + '" class="not_important">' + $filter('isTodayFromUnix')(lastCommunication) + '</span>';
         var operating_cont = '<span title="' + $scope._t('last_communication') + '" class="not_important">' + $filter('isTodayFromUnix')(lastCommunication) + '</span>';
         return operating_cont;
-    }
-    
-     // Get is failed
-    function getIsFailedCont(isFailed) {
-        var failed_cont = (isFailed ? ('<i class="fa fa-ban fa-lg text-danger" title="' + $scope._t('device_is_dead') + '"></i>') : ('<i class="fa fa-check fa-lg text-success" title="' + $scope._t('device_is_operating') + '"></i>'));
-        return failed_cont;
     }
 
     // Get is failed
@@ -15654,19 +15648,12 @@ appController.controller('ControllerController', function($scope, $window, $filt
         var nodeLimit = function(str) {
             return str === 'ff' ? $scope._t('unlimited') : str;
         };
-        var caps = function(str) {
-           //console.log((parseInt(str,10) >>> 0).toString(2));
-           var cap = '0000000' + str;
-           switch (str) {
-                case'0001':
-                    return 'S';
-                    break;
-                case'0002':
-                    return 'l';
-                case'0004':
-                    return 'M';
-                    break;
-            }
+        var caps = function(arr) {
+           var cap = '';
+           cap += (arr[3] === 1 ? 'S' : 's');
+           cap += (arr[0] === 2 ? 'l' : 'L');
+           cap += (arr[1] === 4 ? 'M' : 'm');
+           return cap;
 
         };
         dataService.getZwaveData(function(ZWaveAPIData) {
@@ -15689,7 +15676,7 @@ appController.controller('ControllerController', function($scope, $window, $filt
             $scope.master['controller.data.caps.subvendor2'] = '0x' +dec2hex(ZWaveAPIData.controller.data.caps.value[1]);
             $scope.master['controller.data.caps.nodes'] = nodeLimit(dec2hex(ZWaveAPIData.controller.data.caps.value[2]).slice(-2));
             //$scope.master['controller.data.caps.cap'] = caps(dec2hex(ZWaveAPIData.controller.data.caps.value[3]));
-            $scope.master['controller.data.caps.cap'] = caps(ZWaveAPIData.controller.data.caps.value[3]);
+            $scope.master['controller.data.caps.cap'] = caps(ZWaveAPIData.controller.data.caps.value);
             $scope.master['controller.data.softwareRevisionVersion'] = ZWaveAPIData.controller.data.softwareRevisionVersion.value;
             $scope.master['controller.data.softwareRevisionId'] = ZWaveAPIData.controller.data.softwareRevisionId.value;
             $scope.master['controller.data.softwareRevisionDate'] = ZWaveAPIData.controller.data.softwareRevisionDate.value;
