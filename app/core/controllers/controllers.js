@@ -2202,6 +2202,7 @@ appController.controller('ControllController', function($scope, $filter, $upload
     $scope.deviceClasses = [];
     $scope.goReset = false;
     $scope.refresh = true;
+    $scope.modelRestoreChipInfo = 0;
     // Cancel interval on page destroy
     $scope.$on('$destroy', function() {
         //dataService.cancelZwaveDataInterval();
@@ -2279,24 +2280,6 @@ appController.controller('ControllController', function($scope, $filter, $upload
         $scope.apiDataInterval = $interval(refresh, $scope.cfg.interval);
     };
 
-    /**
-     * DEPRECATED
-     * Load data
-     */
-//    $scope.load = function() {
-//        dataService.getZwaveData(function(ZWaveAPIData) {
-//            setData(ZWaveAPIData, true);
-//            dataService.joinedZwaveData(function(data) {
-//                //$scope.reset($scope.refresh);
-//                //setData(data.joined, $scope.refresh);
-//                $scope.reset(false);
-//                setData(data.joined, false);
-//                refresh(data.update);
-//            });
-//        });
-//    };
-//    $scope.load();
-
 
     /**
      * Show modal window
@@ -2352,15 +2335,17 @@ appController.controller('ControllController', function($scope, $filter, $upload
 
         return;
     };
-    /**
+    
+     /**
      * Send request restore backup
      * @returns {void}
      */
-    $scope.restoreBackup = function($files, chip, show, hide) {
-        chip = (!chip ? 0 : chip);
+    $scope.restoreFromFile = function($files, show, hide) {
+        var chip = (!$scope.modelRestoreChipInfo ? 0 : $scope.modelRestoreChipInfo);
         //var url = 'upload.php?restore_chip_info=' + chip;
         var url = cfg.server_url + cfg.restore_url + '?restore_chip_info=' + chip;
         //$files: an array of files selected, each file has name, size, and type.
+        
         $(show).show();
         $(hide).hide();
         for (var i = 0; i < $files.length; i++) {
@@ -2388,6 +2373,44 @@ appController.controller('ControllController', function($scope, $filter, $upload
 
         }
     };
+    /**
+     * DEPRECATED
+     * 
+     * Send request restore backup
+     * @returns {void}
+     */
+//    $scope.restoreBackup = function($files, chip, show, hide) {
+//        chip = (!chip ? 0 : chip);
+//        //var url = 'upload.php?restore_chip_info=' + chip;
+//        var url = cfg.server_url + cfg.restore_url + '?restore_chip_info=' + chip;
+//        //$files: an array of files selected, each file has name, size, and type.
+//        $(show).show();
+//        $(hide).hide();
+//        for (var i = 0; i < $files.length; i++) {
+//            var $file = $files[i];
+//            $upload.upload({
+//                url: url,
+//                fileFormDataName: 'config_backup',
+//                file: $file
+//            }).progress(function(evt) {
+//                $scope.restoreBackupStatus = 1;
+//                //console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+//            }).success(function(data, status, headers, config) {
+//                if (data && data.replace(/(<([^>]+)>)/ig, "") !== "null") {//Error
+//                    $scope.restoreBackupStatus = 3;
+//                } else {// Success
+//                    $scope.restoreBackupStatus = 2;
+//                }
+//
+//                // file is uploaded successfully
+//                //console.log(data, status);
+//            }).error(function(data, status) {
+//                $scope.restoreBackupStatus = 3;
+//                //console.log(data, status);
+//            });
+//
+//        }
+//    };
 
     /**
      * Close reset controller modal window
