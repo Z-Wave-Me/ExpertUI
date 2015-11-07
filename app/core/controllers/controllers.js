@@ -3373,9 +3373,15 @@ appController.controller('ControllerController', function($scope, $window, $filt
             $scope.master['controller.data.SDK'] = ZWaveAPIData.controller.data.SDK.value;
             $scope.master['controller.data.APIVersion'] = ZWaveAPIData.controller.data.APIVersion.value;
             $scope.master['controller.data.uuid'] = ZWaveAPIData.controller.data.uuid.value;
-            $scope.master['controller.data.caps.subvendor'] = '0x' + dec2hex((ZWaveAPIData.controller.data.caps.value[0] << 8) + ZWaveAPIData.controller.data.caps.value[1]);
-            $scope.master['controller.data.caps.nodes'] = nodeLimit(dec2hex(ZWaveAPIData.controller.data.caps.value[2]).slice(-2));
-            $scope.master['controller.data.caps.cap'] = caps(ZWaveAPIData.controller.data.caps.value);
+            if (ZWaveAPIData.controller.data.caps.value) {
+                $scope.master['controller.data.caps.subvendor'] = '0x' + dec2hex((ZWaveAPIData.controller.data.caps.value[0] << 8) + ZWaveAPIData.controller.data.caps.value[1]);
+                $scope.master['controller.data.caps.nodes'] = nodeLimit(dec2hex(ZWaveAPIData.controller.data.caps.value[2]).slice(-2));
+                $scope.master['controller.data.caps.cap'] = caps(ZWaveAPIData.controller.data.caps.value);
+            } else {
+                $scope.master['controller.data.caps.subvendor'] = '';
+                $scope.master['controller.data.caps.nodes'] = '';
+                $scope.master['controller.data.caps.cap'] = '';
+            }
             $scope.master['controller.data.softwareRevisionVersion'] = ZWaveAPIData.controller.data.softwareRevisionVersion.value;
             $scope.master['controller.data.softwareRevisionId'] = ZWaveAPIData.controller.data.softwareRevisionId.value;
             $scope.master['controller.data.softwareRevisionDate'] = ZWaveAPIData.controller.data.softwareRevisionDate.value;
