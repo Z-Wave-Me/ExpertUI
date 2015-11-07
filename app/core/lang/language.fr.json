@@ -1,5 +1,6 @@
 
 {
+	"ctrl_info_uuid_title":"UUID:",
 	"syntax_error": "Erreur de syntaxe XML: ",
 	"area_new": "Ajouter une Zone",
 	"area_edit": "Modifier Zone",

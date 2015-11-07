@@ -3349,9 +3349,10 @@ appController.controller('ControllerController', function($scope, $window, $filt
         };
         var caps = function(arr) {
            var cap = '';
-           cap += (arr[3] === 1 ? 'S' : 's');
-           cap += (arr[0] === 2 ? 'l' : 'L');
-           cap += (arr[1] === 4 ? 'M' : 'm');
+           cap += (arr[3] & 0x01 ? 'S' : 's');
+           cap += (arr[3] & 0x02 ? 'L' : 'l');
+           cap += (arr[3] & 0x04 ? 'M' : 'm');
+           console.log(arr);
            return cap;
 
         };
@@ -3371,10 +3372,9 @@ appController.controller('ControllerController', function($scope, $window, $filt
             $scope.master['controller.data.libType'] = ZWaveAPIData.controller.data.libType.value;
             $scope.master['controller.data.SDK'] = ZWaveAPIData.controller.data.SDK.value;
             $scope.master['controller.data.APIVersion'] = ZWaveAPIData.controller.data.APIVersion.value;
-            $scope.master['controller.data.caps.subvendor1'] = '0x' + dec2hex(ZWaveAPIData.controller.data.caps.value[0]);
-            $scope.master['controller.data.caps.subvendor2'] = '0x' +dec2hex(ZWaveAPIData.controller.data.caps.value[1]);
+            $scope.master['controller.data.uuid'] = ZWaveAPIData.controller.data.uuid.value;
+            $scope.master['controller.data.caps.subvendor'] = '0x' + dec2hex((ZWaveAPIData.controller.data.caps.value[0] << 8) + ZWaveAPIData.controller.data.caps.value[1]);
             $scope.master['controller.data.caps.nodes'] = nodeLimit(dec2hex(ZWaveAPIData.controller.data.caps.value[2]).slice(-2));
-            //$scope.master['controller.data.caps.cap'] = caps(dec2hex(ZWaveAPIData.controller.data.caps.value[3]));
             $scope.master['controller.data.caps.cap'] = caps(ZWaveAPIData.controller.data.caps.value);
             $scope.master['controller.data.softwareRevisionVersion'] = ZWaveAPIData.controller.data.softwareRevisionVersion.value;
             $scope.master['controller.data.softwareRevisionId'] = ZWaveAPIData.controller.data.softwareRevisionId.value;

@@ -2,9 +2,10 @@
     
     "--- newtrans": "---",
     "unlimited":"Unlimited",
+    "ctrl_info_uuid_title":"UUID:",
     "ctrl_info_caps_subvendor_title":"Subvendor:",
-     "ctrl_info_caps_nodes_title":"Nodes limit:",
-     "ctrl_info_caps_cap_title":"Capabillities:",
+    "ctrl_info_caps_nodes_title":"Nodes limit:",
+    "ctrl_info_caps_cap_title":"Capabillities:",
     "---": "---",
     "zwave_network": "Z-Wave Network",
     "select_dongle": "Select Z-Wave Network",

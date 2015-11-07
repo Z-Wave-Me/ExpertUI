@@ -1,4 +1,9 @@
 {
+    "unlimited":"Не ограничено",
+    "ctrl_info_uuid_title":"UUID:",
+    "ctrl_info_caps_subvendor_title":"Подвид:",
+    "ctrl_info_caps_nodes_title":"Ограничение по количеству узлов:",
+    "ctrl_info_caps_cap_title":"Возможности:",
     "zwave_network": "Z-Wave Network",
     "select_dongle": "Select Z-Wave Network",
     "nm_nwi_learn_start": "Start NWI Learn Mode",
