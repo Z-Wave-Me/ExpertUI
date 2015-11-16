@@ -206,9 +206,10 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
 
     //Delete assoc device from group
     $scope.deleteAssoc = function(d) {
-        var params = d.groupId + ',' + d.id + (d.instance ? ',' + d.instance : '');
+        //console.log(d)
+        var params = d.groupId + ',' + d.id + (d.instance > -1 ? ',' + d.instance : '');
         var cmd = 'devices[' + d.node.id + '].instances[' + d.node.instance + '].commandClasses[0x' + d.node.cc + '].Remove(' + params + ')';
-
+        //return;
         var data = {
             'id': d.node.id,
             'instance': d.node.instance,
@@ -414,6 +415,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                                 'parameter': '[' + groupId + ',' + targetNodeId + ',' + targetInstanceId + ']'
 
                             };
+                            console.log(toCfgXml)
 
                             var inConfig = deviceService.isInCfgXml(toCfgXml, cfgXml);
                             var objAssoc = {};
