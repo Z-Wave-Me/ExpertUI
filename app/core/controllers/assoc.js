@@ -157,8 +157,8 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
 
     };
     //Show node instances (if any)
-    $scope.showAssocNodeInstance = function(nodeId,hasMca) {
-        if(!hasMca){
+    $scope.showAssocNodeInstance = function(nodeId, hasMca) {
+        if (!hasMca) {
             return;
         }
         // Prepare devices and nodes
@@ -180,7 +180,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
         var commandClasses = '85';
         var commandClassesH = 0x85;
         var toInstance = '';
-        if (input.toInstance) {
+        if (input.toInstance && input.toInstance !== 'plain') {
             commandClasses = '142';
             commandClassesH = 0x8e;
             toInstance = ',' + input.toInstance;
@@ -208,6 +208,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
     $scope.deleteAssoc = function(d) {
         var params = d.groupId + ',' + d.id + (d.instance ? ',' + d.instance : '');
         var cmd = 'devices[' + d.node.id + '].instances[' + d.node.instance + '].commandClasses[0x' + d.node.cc + '].Remove(' + params + ')';
+
         var data = {
             'id': d.node.id,
             'instance': d.node.instance,
