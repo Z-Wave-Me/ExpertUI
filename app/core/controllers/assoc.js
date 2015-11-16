@@ -40,6 +40,20 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
     // Refresh data
     $scope.refresh = function() {
         dataService.joinedZwaveData(function(data) {
+            var updateData = false;
+            var searchStr = 'devices.' + $routeParams.nodeId + '.'
+            angular.forEach(data.update, function(v, k) {
+                if(k.indexOf(searchStr) !== -1){
+                      //console.log(searchStr);
+                      updateData = true;
+                     return;
+                 }
+            });
+            if(updateData){
+                $scope.load($routeParams.nodeId,true); 
+            }
+           
+           
         });
     };
     $scope.refresh();
@@ -67,7 +81,8 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                 instance: 0,
                 hasMca: 142 in node.instances[0].commandClasses,
                 name: $filter('deviceName')(nodeId, node),
-                hasBattery: 0x80 in node.instances[0].commandClasses
+                hasBattery: 0x80 in node.instances[0].commandClasses,
+                isAwake: node.data.isAwake.value
             };
             $scope.input.nodeId = nodeId;
 
@@ -206,10 +221,12 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
 
     //Delete assoc device from group
     $scope.deleteAssoc = function(d) {
-        //console.log(d)
-        var params = d.groupId + ',' + d.id + (d.instance > -1 ? ',' + d.instance : '');
+        console.log(d)
+        var params = d.groupId + ',' + d.id;
+        if (d.node.cc === '8e') {
+            params = d.groupId + ',' + d.id + (d.instance > -1 ? ',' + d.instance : '');
+        }
         var cmd = 'devices[' + d.node.id + '].instances[' + d.node.instance + '].commandClasses[0x' + d.node.cc + '].Remove(' + params + ')';
-        //return;
         var data = {
             'id': d.node.id,
             'instance': d.node.instance,
@@ -389,6 +406,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                             // objAssoc['inDevice'] =  savedNodesInDevice.indexOf(targetNodeId) > -1 ? true : false;
                             // objAssoc['inConfig'] = inConfig;
                             objAssoc['status'] = (savedNodesInDevice.indexOf(targetNodeId) > -1 ? true : false) + '-' + inConfig;
+                            //console.log(groupId + ': ' + objAssoc['status'])
                             assocDevices.push(objAssoc);
                             $scope.assocGroupsDevices[groupId][targetNodeId] = objAssoc;
                         }
@@ -415,8 +433,6 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                                 'parameter': '[' + groupId + ',' + targetNodeId + ',' + targetInstanceId + ']'
 
                             };
-                            console.log(toCfgXml)
-
                             var inConfig = deviceService.isInCfgXml(toCfgXml, cfgXml);
                             var objAssoc = {};
                             objAssoc['id'] = targetNodeId;
