@@ -1,5 +1,5 @@
 {
-    "--- translate": "---",
+   "plain_association":"Plain association",
     "apply_config_into_device": "Save this parameter",
     "assoc_max_nodes_reached": "Number of assoctiated nodes have reached the maximum allowed number",
     "assoc_remove_from": "Remove association from",
@@ -84,7 +84,6 @@
     "value_changed_to": "Value was changed to",
     "value_not_stored_indevice": "but not stored in device yet.",
     "verifying_licence_key": "Verifying the License Key",
-    "---": "---",
     "are_you_sure_remove_node": "Är du säker på att du vill exkludera enheten",
     "inspect_queue_empty": "Kön är tom",
     "error_handling_data":"Fel uppstod vid hantering av data från",
