@@ -18,9 +18,9 @@
             ng-click="updateFromDevice('#btn_update_from_device')" 
             >{{_t('update_from_device')}} <i class="fa fa-spinner fa-spin"></i></button>
         <br/><br/>
-        <p class="text-alert-list" ng-if="nodeCfg.hasBattery"><i class="fa fa-info-circle text-warning"></i> {{_t('conf_apply_battery')}}</p>
-         <p class="text-alert-list" ng-if="nodeCfg.hasBattery"><i class="fa fa-exclamation-triangle text-danger"></i>  {{_t('device_changed_configuration_battery')}}</p>
-        <p class="text-alert-list" ng-if="!nodeCfg.hasBattery"><i class="fa fa-exclamation-triangle text-danger"></i>  {{_t('device_changed_configuration')}}</p>
+        <p class="text-alert-list" ng-if="nodeCfg.hasBattery && !nodeCfg.isAwake"><i class="fa fa-info-circle text-warning"></i> {{_t('conf_apply_battery')}}</p>
+          <!--<p class="text-alert-list" ng-if="nodeCfg.hasBattery"><i class="fa fa-exclamation-triangle text-danger"></i>  {{_t('device_changed_configuration_battery')}}</p>-->
+        <!--<p class="text-alert-list" ng-if="!nodeCfg.hasBattery"><i class="fa fa-exclamation-triangle text-danger"></i>  {{_t('device_changed_configuration')}}</p>-->
         <table class="table table-striped_ table-condensed">
                 <tbody>
                     <tr ng-repeat="v in assocGroups">

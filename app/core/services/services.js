@@ -7,7 +7,7 @@ var appService = angular.module('appService', []);
 /**
  * Device service
  */
-appService.service('deviceService', function($filter, $log,_) {
+appService.service('deviceService', function($filter, $log, _) {
     /// --- Public functions --- ///
     /**
      * Mobile device detect
@@ -213,7 +213,7 @@ appService.service('deviceService', function($filter, $log,_) {
         return deleteCfgXmlAssoc(data, cfgXml);
     };
 
-   /// --- Private functions --- ///
+    /// --- Private functions --- ///
 
     /**
      * Mobile device detect
@@ -260,17 +260,17 @@ appService.service('deviceService', function($filter, $log,_) {
         }
         if (!angular.isArray(langs)) {
             if (("__text" in langs)) {
-               return langs.__text;
+                return langs.__text;
             }
             return null;
         }
         var lang = _.findWhere(langs, {'_xml:lang': currLang});
-        if(lang){
+        if (lang) {
             return lang.__text;
         }
         var defaultLang = _.findWhere(langs, {'_xml:lang': 'en'});
-         if(defaultLang){
-           return defaultLang.__text;
+        if (defaultLang) {
+            return defaultLang.__text;
         }
         return null;
     }
@@ -949,13 +949,29 @@ appService.service('deviceService', function($filter, $log,_) {
         var hasCfgXml = false;
         if (angular.isObject(cfgXml) && $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration')) {
             hasCfgXml = cfgXml.config.devices.deviceconfiguration;
+            if (!_.isArray(hasCfgXml)) {
+                var obj = {};
+                obj['id'] = hasCfgXml['_id'];
+                obj['instance'] = hasCfgXml['_instance'];
+                obj['commandclass'] = hasCfgXml['_commandclass'];
+                obj['command'] = hasCfgXml['_command'];
+                obj['parameter'] = hasCfgXml['_parameter'];
+                if (JSON.stringify(obj) === JSON.stringify(data)) {
+                    return true;
+                }
+                return false;
+            }
             angular.forEach(hasCfgXml, function(v, k) {
+
                 var obj = {};
                 obj['id'] = v['_id'];
                 obj['instance'] = v['_instance'];
                 obj['commandclass'] = v['_commandclass'];
                 obj['command'] = v['_command'];
                 obj['parameter'] = v['_parameter'];
+
+                /*console.log('XML:',JSON.stringify(obj))
+                 console.log('DATA:',JSON.stringify(data))*/
                 if (JSON.stringify(obj) === JSON.stringify(data)) {
                     inConfig = true;
                     return;
@@ -1064,20 +1080,30 @@ appService.service('deviceService', function($filter, $log,_) {
         var xmlData = [];
         if (angular.isObject(cfgXml) && $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration')) {
             hasCfgXml = cfgXml.config.devices.deviceconfiguration;
-            angular.forEach(hasCfgXml, function(v, k) {
+            if (_.isArray(hasCfgXml)) {
+                angular.forEach(hasCfgXml, function(v, k) {
+                    var obj = {};
+                    obj['id'] = v['_id'];
+                    obj['instance'] = v['_instance'];
+                    obj['commandclass'] = v['_commandclass'];
+                    obj['command'] = v['_command'];
+                    obj['parameter'] = v['_parameter'];
+                    if (JSON.stringify(obj) !== JSON.stringify(data)) {
+                        xmlData.push(obj);
+                    }
+                });
+
+            } else {
                 var obj = {};
-                obj['id'] = v['_id'];
-                obj['instance'] = v['_instance'];
-                obj['commandclass'] = v['_commandclass'];
-                obj['command'] = v['_command'];
-                obj['parameter'] = v['_parameter'];
+                obj['id'] = hasCfgXml['_id'];
+                obj['instance'] = hasCfgXml['_instance'];
+                obj['commandclass'] = hasCfgXml['_commandclass'];
+                obj['command'] = hasCfgXml['_command'];
+                obj['parameter'] = hasCfgXml['_parameter'];
                 if (JSON.stringify(obj) !== JSON.stringify(data)) {
                     xmlData.push(obj);
-                    /* console.log('XML:',JSON.stringify(obj))
-                     console.log('DATA:',JSON.stringify(data))*/
                 }
-
-            });
+            }
         }
         xmlData.push(data);
         var ret = buildCfgXmlFile(xmlData);
@@ -1092,28 +1118,36 @@ appService.service('deviceService', function($filter, $log,_) {
         var xmlData = [];
         var hasCfgXml = $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration');
         if (hasCfgXml) {
-            angular.forEach(hasCfgXml, function(v, k) {
+            if (_.isArray(hasCfgXml)) {
+                angular.forEach(hasCfgXml, function(v, k) {
+                    var obj = {};
+                    obj['id'] = v['_id'];
+                    obj['instance'] = v['_instance'];
+                    obj['commandclass'] = parseInt(v['_commandclass'], 10);
+                    obj['command'] = v['_command'];
+                    obj['parameter'] = v['_parameter'];
+                    if (JSON.stringify(obj) !== JSON.stringify(data)) {
+                        xmlData.push(obj);
+                        /* 
+                         console.log('XML:',JSON.stringify(obj))
+                         console.log('DATA:',JSON.stringify(data))*/
+                    }
+
+                });
+            } else {
                 var obj = {};
-                obj['id'] = v['_id'];
-                obj['instance'] = v['_instance'];
-                obj['commandclass'] = parseInt(v['_commandclass'], 10);
-                obj['command'] = v['_command'];
-                obj['parameter'] = v['_parameter'];
+                obj['id'] = hasCfgXml['_id'];
+                obj['instance'] = hasCfgXml['_instance'];
+                obj['commandclass'] = hasCfgXml['_commandclass'];
+                obj['command'] = hasCfgXml['_command'];
+                obj['parameter'] = hasCfgXml['_parameter'];
                 if (JSON.stringify(obj) !== JSON.stringify(data)) {
                     xmlData.push(obj);
-                    /* obj['command'] = 'Remove';
-                     console.log('XML:',JSON.stringify(obj))
-                     console.log('DATA:',JSON.stringify(data))*/
                 }
+            }
 
-            });
-        } else {
-            data['command'] = 'Remove';
-            xmlData.push(data);
         }
-
-        var ret = buildCfgXmlFile(xmlData);
-        return ret;
+        return buildCfgXmlFile(xmlData);
     }
 
     /**
@@ -1122,7 +1156,9 @@ appService.service('deviceService', function($filter, $log,_) {
     function buildCfgXmlFile(xmlData) {
         var xml = '<config><devices>' + "\n";
         angular.forEach(xmlData, function(v, k) {
-            xml += '<deviceconfiguration id="' + v.id + '" instance="' + v.instance + '" commandclass="' + v.commandclass + '" command="' + v.command + '" parameter="' + v.parameter + '"/>' + "\n";
+            if (_.isNumber(parseInt(v.id, 10))) {
+                xml += '<deviceconfiguration id="' + v.id + '" instance="' + v.instance + '" commandclass="' + v.commandclass + '" command="' + v.command + '" parameter="' + v.parameter + '"/>' + "\n";
+            }
         });
         xml += '</devices></config>' + "\n";
         return xml;
