@@ -23,6 +23,7 @@ var config_data = {
         'queue_url': '/ZWaveAPI/InspectQueue', // Url for inspect queue
         'fw_update_url': '/ZWaveAPI/FirmwareUpdate', // Url for Firmware Update
         'license_load_url': '/ZWaveAPI/ZMELicense', // Url to load new license
+        'stat_url': '/ZWaveAPI/CommunicationStatistics', // Url to statistics
         'runjs_url': '/JS/Run/', // Url for running JS
         'device_classes_url': '/translations/DeviceClasses.xml', // Url to Device Classes
         'config_url': '/config/', // Url for store config data

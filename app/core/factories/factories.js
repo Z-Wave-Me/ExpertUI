@@ -315,7 +315,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
     function getSelectZDDX(nodeId, callback, alert) {
         var request = $http({
             method: "POST",
-            url: cfg.server_url + '/ZWaveAPI/Run/devices[' + nodeId + '].GuessXML()'
+            url: cfg.server_url + cfg.store_url + 'devices[' + nodeId + '].GuessXML()'
         });
         request.success(function(data) {
             return callback(data);
@@ -399,7 +399,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         var request = $http({
             method: "POST",
             //url: 'storage/timing.json'
-            url: cfg.server_url + '/ZWaveAPI/CommunicationStatistics'
+            url: cfg.server_url +  cfg.stat_url
         });
         request.success(function(data) {
             return callback(data);
