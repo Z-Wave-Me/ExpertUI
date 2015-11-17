@@ -18,9 +18,9 @@
             ng-click="updateFromDevice('#btn_update_from_device')" 
             >{{_t('update_from_device')}} <i class="fa fa-spinner fa-spin"></i></button>
         <br/><br/>
-        <p class="text-alert-list" ng-if="nodeCfg.hasBattery"><i class="fa fa-info-circle text-warning"></i> {{_t('conf_apply_battery')}}</p>
-         <p class="text-alert-list" ng-if="nodeCfg.hasBattery"><i class="fa fa-exclamation-triangle text-danger"></i>  {{_t('device_changed_configuration_battery')}}</p>
-        <p class="text-alert-list" ng-if="!nodeCfg.hasBattery"><i class="fa fa-exclamation-triangle text-danger"></i>  {{_t('device_changed_configuration')}}</p>
+        <p class="text-alert-list" ng-if="nodeCfg.hasBattery && !nodeCfg.isAwake"><i class="fa fa-info-circle text-warning"></i> {{_t('conf_apply_battery')}}</p>
+          <!--<p class="text-alert-list" ng-if="nodeCfg.hasBattery"><i class="fa fa-exclamation-triangle text-danger"></i>  {{_t('device_changed_configuration_battery')}}</p>-->
+        <!--<p class="text-alert-list" ng-if="!nodeCfg.hasBattery"><i class="fa fa-exclamation-triangle text-danger"></i>  {{_t('device_changed_configuration')}}</p>-->
         <table class="table table-striped_ table-condensed">
                 <tbody>
                     <tr ng-repeat="v in assocGroups">
@@ -55,6 +55,16 @@
                                     ng-if="v.remaining > 0"><span>+</span></button>
                         </td>
                     </tr>
+                    <tr>
+                        <td class="association-text" colspan="2">
+                             <h3>{{_t('legend')}}</h3>
+                             <div>1. {{_t('assoc_legend_1')}}</div>
+                             <div>2. {{_t('assoc_legend_2')}}</div>
+                              <div>3. {{_t('assoc_legend_3')}}</div>
+                               <div>4. {{_t('assoc_legend_4')}}</div>
+
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -81,6 +91,7 @@
                             <div class="form-group" ng-if="nodeCfg.hasMca && assocAddInstances">
                                 <select class="form-control" ng-model="input.toInstance">
                                   <option value="" ng-selected="true">&lt; {{ _t('assoc_select_to_instance')}} &gt;</option>
+                                  <option value="plain" ng-selected="true">{{ _t('plain_association')}}</option>
                                      <option ng-repeat="v in assocAddInstances" value="{{v.key}}">{{v.val}}</option>
                                 </select>
                             </div> 
