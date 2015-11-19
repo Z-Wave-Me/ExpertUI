@@ -3,7 +3,7 @@
  * @author Martin Vach
  */
 // Device configuration Association controller - new version
-appController.controller('ConfigAssocController', function($scope, $filter, $routeParams, $location, $cookies, $timeout, $http, $element, dataService, deviceService, myCache, cfg) {
+appController.controller('ConfigAssocController', function($scope, $filter, $routeParams, $location, $cookies, $timeout, $http, $element, dataService, deviceService, myCache, cfg,_) {
     $scope.devices = [];
     $scope.deviceId = 0;
     $scope.activeTab = 'association';
@@ -190,6 +190,8 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
     };
     //Store assoc device from group
     $scope.storeAssoc = function(input) {
+        var addDevice = {};
+         var deviceCfg = false;
         var instances = '0';
         var commandClasses = '85';
         var commandClassesH = 0x85;
@@ -208,6 +210,20 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             'parameter': '[' + input.groupId + ',' + input.toNode + toInstance + ']'
 
         };
+        addDevice[input.toNode] = {
+            isNew: true,
+            status: 'false-true',
+            elId: _.now(),
+            id: input.toNode,
+            instance: 0,
+            name: _.findWhere($scope.assocAddDevices,{id: input.toNode}).name
+        };
+        angular.extend($scope.assocGroupsDevices[input.groupId],addDevice);
+//        console.log(input);
+//        console.log($scope.assocGroupsDevices[input.groupId]);
+//        
+//         console.log($scope.assocGroupsDevices[input.groupId]);
+//        return;
         dataService.getCfgXml(function(cfgXml) {
             var xmlFile = deviceService.buildCfgXmlAssoc(data, cfgXml);
             dataService.putCfgXml(xmlFile);
@@ -216,10 +232,10 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             $scope.input.toInstance = false;
             $scope.input.groupId = 0;
             $scope.assocAddInstances = false;
-            $scope.assocAddDevices = angular.copy([]);
-            $timeout(function() {
-                $scope.load(input.nodeId,true);
-            }, 3000);
+            //$scope.assocAddDevices = angular.copy([]);
+//            $timeout(function() {
+//                $scope.load(input.nodeId,true);
+//            }, 3000);
         });
     };
 
@@ -244,9 +260,9 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             dataService.putCfgXml(xmlFile);
             dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
             $('#' + d.elId).addClass('true-false');
-            $timeout(function() {
-                $scope.load(d.node.id,true);
-            }, 3000);
+//            $timeout(function() {
+//                $scope.load(d.node.id,true);
+//            }, 3000);
         });
 
         $scope.load(d.node.id);
@@ -396,6 +412,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                             var inConfig = deviceService.isInCfgXml(toCfgXml, cfgXml);
                             var objAssoc = {};
                             objAssoc['id'] = targetNodeId;
+                            objAssoc['isNew'] = false;
                             objAssoc['groupId'] = groupId;
                             objAssoc['elId'] = groupId + '_' + targetNodeId + '_' + targetInstanceId + '_' + i;
                             objAssoc['name'] = $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId]);
@@ -438,6 +455,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                             var inConfig = deviceService.isInCfgXml(toCfgXml, cfgXml);
                             var objAssoc = {};
                             objAssoc['id'] = targetNodeId;
+                            objAssoc['isNew'] = false;
                             objAssoc['groupId'] = groupId;
                             objAssoc['elId'] = groupId + '_' + targetNodeId + '_' + targetInstanceId + '_' + i;
                             objAssoc['name'] = $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId]);
