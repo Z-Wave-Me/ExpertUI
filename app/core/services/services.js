@@ -984,28 +984,73 @@ appService.service('deviceService', function($filter, $log, _) {
     /**
      * Get assoc xml config param
      */
+//    function ___getCfgXmlAssoc(cfgXml, nodeId, instance, commandClass, command, groupId) {
+//        var cfg = $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration');
+//        if (!cfg) {
+//            return [];
+//        }
+//        // Get data for given device by id
+//        var collection = [];
+//        collection[groupId] = [];
+//         console.log(cfg)
+//        angular.forEach(cfg, function(v, k) {
+//             console.log(v['_id'],' : ',nodeId)
+//             console.log(v['_instance'],' : ',instance)
+//              console.log(v['_commandclass'],' : ',commandClass)
+//               console.log(v['_command'],' : ',command)
+//            if (v['_id'] == nodeId && v['_instance'] == instance && v['_commandclass'] == commandClass && v['_command'] == command) {
+//                console.log('Is in')
+//
+//                var obj = {};
+////                if(!angular.isArray(v['_parameter'])){
+////                    return;
+////                }
+//                var array = JSON.parse(v['_parameter']);
+//                //collection[array[0]] = array[1];
+//
+////                if (array.length > 2) {
+////                    collection[array[0]] = array[1];
+////                }
+//                if (array.length == 2) {
+//                    obj['groupId'] = array[0];
+//                    obj['deviceId'] = array[1];
+//                    //collection.push(obj);
+//                    if (array[0] == groupId && array[1] > 1) {
+//                        collection[groupId].push(array[1]);
+//                    }
+//
+//
+//                }
+////                else {
+////                    collection[0] = array[0];
+////                    return;
+////                }
+//            }
+//
+//        });
+//        //console.log(collection)
+//        return collection;
+//
+//    }
+    /**
+     * Get assoc xml config param
+     */
     function getCfgXmlAssoc(cfgXml, nodeId, instance, commandClass, command, groupId) {
         var cfg = $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration');
+        //console.log(cfg)
         if (!cfg) {
             return [];
         }
         // Get data for given device by id
         var collection = [];
         collection[groupId] = [];
-        angular.forEach(cfg, function(v, k) {
-
-            if (v['_id'] == nodeId && v['_instance'] == instance && v['_commandclass'] == commandClass && v['_command'] == command) {
-
+        if (!(_.isArray(cfg))) {
+            //cfg[0] = cfg;
+            if (cfg['_id'] == nodeId && cfg['_instance'] == instance && cfg['_commandclass'] == commandClass && cfg['_command'] == command) {
+               
                 var obj = {};
-//                if(!angular.isArray(v['_parameter'])){
-//                    return;
-//                }
-                var array = JSON.parse(v['_parameter']);
-                //collection[array[0]] = array[1];
-
-//                if (array.length > 2) {
-//                    collection[array[0]] = array[1];
-//                }
+                var array = JSON.parse(cfg['_parameter']);
+                 //console.log('Is IN', array)
                 if (array.length == 2) {
                     obj['groupId'] = array[0];
                     obj['deviceId'] = array[1];
@@ -1016,14 +1061,35 @@ appService.service('deviceService', function($filter, $log, _) {
 
 
                 }
-//                else {
-//                    collection[0] = array[0];
-//                    return;
-//                }
+            }
+        }else{
+            angular.forEach(cfg, function(v, k) {
+            /*console.log(v['_id'], ' : ', nodeId)
+            console.log(v['_instance'], ' : ', instance)
+            console.log(v['_commandclass'], ' : ', commandClass)
+            console.log(v['_command'], ' : ', command)*/
+            if (v['_id'] == nodeId && v['_instance'] == instance && v['_commandclass'] == commandClass && v['_command'] == command) {
+               
+                var obj = {};
+                var array = JSON.parse(v['_parameter']);
+                 //console.log('Is IN', array)
+                if (array.length == 2) {
+                    obj['groupId'] = array[0];
+                    obj['deviceId'] = array[1];
+                    //collection.push(obj);
+                    if (array[0] == groupId && array[1] > 1) {
+                        collection[groupId].push(array[1]);
+                    }
+
+
+                }
             }
 
         });
-        //console.log(collection)
+        }
+       
+        
+
         return collection;
 
     }
@@ -1138,7 +1204,7 @@ appService.service('deviceService', function($filter, $log, _) {
                 var obj = {};
                 obj['id'] = hasCfgXml['_id'];
                 obj['instance'] = hasCfgXml['_instance'];
-                obj['commandclass'] = hasCfgXml['_commandclass'];
+                obj['commandclass'] = parseInt(hasCfgXml['_commandclass'], 10);
                 obj['command'] = hasCfgXml['_command'];
                 obj['parameter'] = hasCfgXml['_parameter'];
                 if (JSON.stringify(obj) !== JSON.stringify(data)) {
