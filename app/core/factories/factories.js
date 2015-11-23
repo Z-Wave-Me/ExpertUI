@@ -66,7 +66,8 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         //Test New functions
         getZwaveList: getZwaveList,
         loadZwaveApiData: loadZwaveApiData,
-        loadJoinedZwaveData: loadJoinedZwaveData
+        loadJoinedZwaveData: loadJoinedZwaveData,
+        runZwaveCmd:runZwaveCmd
     });
     /**
      * Get IP
@@ -834,6 +835,20 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
             }
         }, function(response) {
             // something went wrong
+            return $q.reject(response);
+        });
+    }
+    
+    /**
+     * Run zwave command
+     */
+    function runZwaveCmd(cmd) {
+        return $http({
+            method: 'post',
+            url: cfg.server_url + cfg.store_url + cmd
+        }).then(function(response) {
+            return response;
+        }, function(response) {// something went wrong
             return $q.reject(response);
         });
     }

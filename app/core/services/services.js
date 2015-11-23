@@ -936,7 +936,6 @@ appService.service('deviceService', function($filter, $log, _) {
             }
 
         });
-        //console.log(collection)
         return collection;
 
     }
@@ -980,116 +979,68 @@ appService.service('deviceService', function($filter, $log, _) {
         }
         return inConfig;
     }
-
-    /**
-     * Get assoc xml config param
-     */
-//    function ___getCfgXmlAssoc(cfgXml, nodeId, instance, commandClass, command, groupId) {
-//        var cfg = $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration');
-//        if (!cfg) {
-//            return [];
-//        }
-//        // Get data for given device by id
-//        var collection = [];
-//        collection[groupId] = [];
-//         console.log(cfg)
-//        angular.forEach(cfg, function(v, k) {
-//             console.log(v['_id'],' : ',nodeId)
-//             console.log(v['_instance'],' : ',instance)
-//              console.log(v['_commandclass'],' : ',commandClass)
-//               console.log(v['_command'],' : ',command)
-//            if (v['_id'] == nodeId && v['_instance'] == instance && v['_commandclass'] == commandClass && v['_command'] == command) {
-//                console.log('Is in')
-//
-//                var obj = {};
-////                if(!angular.isArray(v['_parameter'])){
-////                    return;
-////                }
-//                var array = JSON.parse(v['_parameter']);
-//                //collection[array[0]] = array[1];
-//
-////                if (array.length > 2) {
-////                    collection[array[0]] = array[1];
-////                }
-//                if (array.length == 2) {
-//                    obj['groupId'] = array[0];
-//                    obj['deviceId'] = array[1];
-//                    //collection.push(obj);
-//                    if (array[0] == groupId && array[1] > 1) {
-//                        collection[groupId].push(array[1]);
-//                    }
-//
-//
-//                }
-////                else {
-////                    collection[0] = array[0];
-////                    return;
-////                }
-//            }
-//
-//        });
-//        //console.log(collection)
-//        return collection;
-//
-//    }
     /**
      * Get assoc xml config param
      */
     function getCfgXmlAssoc(cfgXml, nodeId, instance, commandClass, command, groupId) {
         var cfg = $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration');
-        //console.log(cfg)
         if (!cfg) {
             return [];
         }
         // Get data for given device by id
         var collection = [];
-        collection[groupId] = [];
+        collection[groupId] = {
+            nodes: [],
+             nodeInstances: []
+        };
         if (!(_.isArray(cfg))) {
-            //cfg[0] = cfg;
             if (cfg['_id'] == nodeId && cfg['_instance'] == instance && cfg['_commandclass'] == commandClass && cfg['_command'] == command) {
-               
+
                 var obj = {};
                 var array = JSON.parse(cfg['_parameter']);
-                 //console.log('Is IN', array)
+
                 if (array.length == 2) {
                     obj['groupId'] = array[0];
                     obj['deviceId'] = array[1];
-                    //collection.push(obj);
                     if (array[0] == groupId && array[1] > 1) {
-                        collection[groupId].push(array[1]);
+                        collection[groupId].nodes.push(array[1]);
                     }
 
 
                 }
-            }
-        }else{
+                if (array.length > 2) {
+                        obj['groupId'] = array[0];
+                        obj['deviceId'] = array[1];
+                        obj['instanceId'] = array[2];
+                        if (array[0] == groupId && array[1] > 0) {
+                            collection[groupId].nodeInstances.push(array[1] + '_' + array[2]);
+                        }
+                    }
+                }
+        } else {
             angular.forEach(cfg, function(v, k) {
-            /*console.log(v['_id'], ' : ', nodeId)
-            console.log(v['_instance'], ' : ', instance)
-            console.log(v['_commandclass'], ' : ', commandClass)
-            console.log(v['_command'], ' : ', command)*/
-            if (v['_id'] == nodeId && v['_instance'] == instance && v['_commandclass'] == commandClass && v['_command'] == command) {
-               
-                var obj = {};
-                var array = JSON.parse(v['_parameter']);
-                 //console.log('Is IN', array)
-                if (array.length == 2) {
-                    obj['groupId'] = array[0];
-                    obj['deviceId'] = array[1];
-                    //collection.push(obj);
-                    if (array[0] == groupId && array[1] > 1) {
-                        collection[groupId].push(array[1]);
+                if (v['_id'] == nodeId && v['_instance'] == instance && v['_commandclass'] == commandClass && v['_command'] == command) {
+                    var obj = {};
+                    var array = JSON.parse(v['_parameter']);
+                    if (array.length == 2) {
+                        obj['groupId'] = array[0];
+                        obj['deviceId'] = array[1];
+                        if (array[0] == groupId && array[1] > 0) {
+                             collection[groupId].nodes.push(array[1]);
+                        }
                     }
-
-
+                    if (array.length > 2) {
+                        obj['groupId'] = array[0]; 
+                        obj['deviceId'] = array[1];
+                        obj['instanceId'] = array[2];
+                        if (array[0] == groupId && array[1] > 0) {
+                            collection[groupId].nodeInstances.push(array[1] + '_' + array[2]);
+                        }
+                    }
                 }
-            }
 
-        });
+            }); 
         }
-       
-        
-
         return collection;
 
     }
@@ -1181,6 +1132,7 @@ appService.service('deviceService', function($filter, $log, _) {
      *Delete from cfg xml file - assoc
      */
     function deleteCfgXmlAssoc(data, cfgXml) {
+        
         var xmlData = [];
         var hasCfgXml = $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration');
         if (hasCfgXml) {
@@ -1189,7 +1141,7 @@ appService.service('deviceService', function($filter, $log, _) {
                     var obj = {};
                     obj['id'] = v['_id'];
                     obj['instance'] = v['_instance'];
-                    obj['commandclass'] = parseInt(v['_commandclass'], 10);
+                    obj['commandclass'] = v['_commandclass'];
                     obj['command'] = v['_command'];
                     obj['parameter'] = v['_parameter'];
                     if (JSON.stringify(obj) !== JSON.stringify(data)) {
@@ -1204,9 +1156,10 @@ appService.service('deviceService', function($filter, $log, _) {
                 var obj = {};
                 obj['id'] = hasCfgXml['_id'];
                 obj['instance'] = hasCfgXml['_instance'];
-                obj['commandclass'] = parseInt(hasCfgXml['_commandclass'], 10);
+                obj['commandclass'] = hasCfgXml['_commandclass'];
                 obj['command'] = hasCfgXml['_command'];
                 obj['parameter'] = hasCfgXml['_parameter'];
+               
                 if (JSON.stringify(obj) !== JSON.stringify(data)) {
                     xmlData.push(obj);
                 }
