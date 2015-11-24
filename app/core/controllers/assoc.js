@@ -183,15 +183,11 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
         angular.forEach($scope.assocAddDevices, function(v, k) {
             if (v.id == nodeId) {
                 $scope.assocAddInstances = Object.keys(v.instances).length > 0 ? v.instances : false;
-
                 return;
             }
-
-
         });
-
-
     };
+    
     //Store assoc device from group
     $scope.storeAssoc = function(input) {
         var addDevice = {};
@@ -263,14 +259,6 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             }, function(error) {
                 $window.alert($scope._t('error_handling_data') + '\n' + cmd);
             });
-           
-            //return;
-           
-            //dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
-            
-//            $timeout(function() {
-//                $scope.load(d.node.id,true);
-//            }, 3000);
         });
     };
 
