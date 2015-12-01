@@ -28,9 +28,8 @@ appController.controller('BaseController', function($scope, $cookies, $filter, $
             }
         }, function(error) {
            if(error.status === 401){
-               var redirectTo = $location.$$protocol+'://' + $location.$$host + ':' + $location.$$port + cfg.smarthome_login
-                window.location = redirectTo;    
-                  //console.log(redirectTo)   
+               //var redirectTo = $location.$$protocol+'://' + $location.$$host + ':' + $location.$$port + cfg.smarthome_login
+                window.location.href = cfg.smarthome_login;   
              };
         });
     };

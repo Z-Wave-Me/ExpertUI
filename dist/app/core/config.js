@@ -34,6 +34,7 @@ var config_data = {
         'uzb_url': 'http://www.zwave.eu/api/expertui/uzb/', // Url for uzb data
         'license_url': 'http://store.zwaveeurope.com/license/utility_uzb.php', // Url for license key
         'buy_licence_key': 'http://www.z-wave.me/index.php?id=41', // Buy licence key url
+        'smarthome_login': '/smarthome/#/?fromexpert', // Smarthome login page 
         'lang_dir': 'app/core/lang/', // Language directory
         'lang': 'en', // Default language
         'lang_list': ['en','de','fr','es','ru','cz','sk','sv'], // List of languages

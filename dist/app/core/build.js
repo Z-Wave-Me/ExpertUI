@@ -10964,13 +10964,13 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
      */
     function getZwaveList(noCache) {
         // Cached data
-        var cacheName = 'zwavelist';
-        var cached = myCache.get(cacheName);
+       var cacheName = 'zwavelist';
+         /*var cached = myCache.get(cacheName);
         if (!noCache && cached) {
             var deferred = $q.defer();
             deferred.resolve(cached);
-            return deferred.promise;
-        }
+            return deferred.promise; 
+        }*/
         return $http({
             method: 'post',
             url: cfg.server_url + cfg.zwave_list
@@ -12272,7 +12272,7 @@ appService.service('deviceService', function($filter, $log, _) {
 /*** Controllers ***/
 var appController = angular.module('appController', []);
 // Base controller
-appController.controller('BaseController', function($scope, $cookies, $filter, $location, $anchorScroll, $window, $route, cfg, dataService, deviceService, myCache) {
+appController.controller('BaseController', function($scope, $cookies, $filter, $location,$anchorScroll, $window, $route, cfg, dataService, deviceService, myCache) {
     /**
      * Load zwave dongles
      */
@@ -12293,6 +12293,10 @@ appController.controller('BaseController', function($scope, $cookies, $filter, $
                 });
             }
         }, function(error) {
+           if(error.status === 401){
+               //var redirectTo = $location.$$protocol+'://' + $location.$$host + ':' + $location.$$port + cfg.smarthome_login
+                window.location.href = cfg.smarthome_login;   
+             };
         });
     };
     $scope.setDongle();
