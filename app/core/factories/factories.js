@@ -66,7 +66,8 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         //Test New functions
         getZwaveList: getZwaveList,
         loadZwaveApiData: loadZwaveApiData,
-        loadJoinedZwaveData: loadJoinedZwaveData
+        loadJoinedZwaveData: loadJoinedZwaveData,
+        runZwaveCmd:runZwaveCmd
     });
     /**
      * Get IP
@@ -315,7 +316,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
     function getSelectZDDX(nodeId, callback, alert) {
         var request = $http({
             method: "POST",
-            url: cfg.server_url + '/ZWaveAPI/Run/devices[' + nodeId + '].GuessXML()'
+            url: cfg.server_url + cfg.store_url + 'devices[' + nodeId + '].GuessXML()'
         });
         request.success(function(data) {
             return callback(data);
@@ -399,7 +400,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         var request = $http({
             method: "POST",
             //url: 'storage/timing.json'
-            url: cfg.server_url + '/ZWaveAPI/CommunicationStatistics'
+            url: cfg.server_url +  cfg.stat_url
         });
         request.success(function(data) {
             return callback(data);
@@ -742,13 +743,13 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
      */
     function getZwaveList(noCache) {
         // Cached data
-        var cacheName = 'zwavelist';
-        var cached = myCache.get(cacheName);
+       var cacheName = 'zwavelist';
+         /*var cached = myCache.get(cacheName);
         if (!noCache && cached) {
             var deferred = $q.defer();
             deferred.resolve(cached);
-            return deferred.promise;
-        }
+            return deferred.promise; 
+        }*/
         return $http({
             method: 'post',
             url: cfg.server_url + cfg.zwave_list
@@ -834,6 +835,20 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
             }
         }, function(response) {
             // something went wrong
+            return $q.reject(response);
+        });
+    }
+    
+    /**
+     * Run zwave command
+     */
+    function runZwaveCmd(cmd) {
+        return $http({
+            method: 'post',
+            url: cfg.server_url + cfg.store_url + cmd
+        }).then(function(response) {
+            return response;
+        }, function(response) {// something went wrong
             return $q.reject(response);
         });
     }

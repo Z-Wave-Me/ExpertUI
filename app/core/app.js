@@ -140,7 +140,8 @@ angApp.run(function run($cookies) {
             store_url: '/ZWave.' + config_data.cfg.dongle + '/Run/',
             restore_url: '/ZWave.' + config_data.cfg.dongle + '/Restore',
             queue_url: '/ZWave.' + config_data.cfg.dongle + '/InspectQueue',
-            fw_update_url: '/ZWave.' + config_data.cfg.dongle + '/FirmwareUpdate',
+             fw_update_url: '/ZWave.' + config_data.cfg.dongle + '/FirmwareUpdate',
+            stat_url: '/ZWave.' + config_data.cfg.dongle + '/CommunicationStatistics',
             license_load_url: '/ZWave.' + config_data.cfg.dongle + '/ZMELicense',
             zddx_create_url: '/ZWave.' + config_data.cfg.dongle + '/CreateZDDX/'
 

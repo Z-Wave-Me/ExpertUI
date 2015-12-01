@@ -8370,7 +8370,8 @@ angApp.run(function run($cookies) {
             store_url: '/ZWave.' + config_data.cfg.dongle + '/Run/',
             restore_url: '/ZWave.' + config_data.cfg.dongle + '/Restore',
             queue_url: '/ZWave.' + config_data.cfg.dongle + '/InspectQueue',
-            fw_update_url: '/ZWave.' + config_data.cfg.dongle + '/FirmwareUpdate',
+             fw_update_url: '/ZWave.' + config_data.cfg.dongle + '/FirmwareUpdate',
+            stat_url: '/ZWave.' + config_data.cfg.dongle + '/CommunicationStatistics',
             license_load_url: '/ZWave.' + config_data.cfg.dongle + '/ZMELicense',
             zddx_create_url: '/ZWave.' + config_data.cfg.dongle + '/CreateZDDX/'
 
@@ -10286,7 +10287,8 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         //Test New functions
         getZwaveList: getZwaveList,
         loadZwaveApiData: loadZwaveApiData,
-        loadJoinedZwaveData: loadJoinedZwaveData
+        loadJoinedZwaveData: loadJoinedZwaveData,
+        runZwaveCmd:runZwaveCmd
     });
     /**
      * Get IP
@@ -10535,7 +10537,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
     function getSelectZDDX(nodeId, callback, alert) {
         var request = $http({
             method: "POST",
-            url: cfg.server_url + '/ZWaveAPI/Run/devices[' + nodeId + '].GuessXML()'
+            url: cfg.server_url + cfg.store_url + 'devices[' + nodeId + '].GuessXML()'
         });
         request.success(function(data) {
             return callback(data);
@@ -10619,7 +10621,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         var request = $http({
             method: "POST",
             //url: 'storage/timing.json'
-            url: cfg.server_url + '/ZWaveAPI/CommunicationStatistics'
+            url: cfg.server_url +  cfg.stat_url
         });
         request.success(function(data) {
             return callback(data);
@@ -10962,13 +10964,13 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
      */
     function getZwaveList(noCache) {
         // Cached data
-        var cacheName = 'zwavelist';
-        var cached = myCache.get(cacheName);
+       var cacheName = 'zwavelist';
+         /*var cached = myCache.get(cacheName);
         if (!noCache && cached) {
             var deferred = $q.defer();
             deferred.resolve(cached);
-            return deferred.promise;
-        }
+            return deferred.promise; 
+        }*/
         return $http({
             method: 'post',
             url: cfg.server_url + cfg.zwave_list
@@ -11057,6 +11059,20 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
             return $q.reject(response);
         });
     }
+    
+    /**
+     * Run zwave command
+     */
+    function runZwaveCmd(cmd) {
+        return $http({
+            method: 'post',
+            url: cfg.server_url + cfg.store_url + cmd
+        }).then(function(response) {
+            return response;
+        }, function(response) {// something went wrong
+            return $q.reject(response);
+        });
+    }
 });
 
 
@@ -11070,7 +11086,7 @@ var appService = angular.module('appService', []);
 /**
  * Device service
  */
-appService.service('deviceService', function($filter, $log,_) {
+appService.service('deviceService', function($filter, $log, _) {
     /// --- Public functions --- ///
     /**
      * Mobile device detect
@@ -11276,7 +11292,7 @@ appService.service('deviceService', function($filter, $log,_) {
         return deleteCfgXmlAssoc(data, cfgXml);
     };
 
-   /// --- Private functions --- ///
+    /// --- Private functions --- ///
 
     /**
      * Mobile device detect
@@ -11323,17 +11339,17 @@ appService.service('deviceService', function($filter, $log,_) {
         }
         if (!angular.isArray(langs)) {
             if (("__text" in langs)) {
-               return langs.__text;
+                return langs.__text;
             }
             return null;
         }
         var lang = _.findWhere(langs, {'_xml:lang': currLang});
-        if(lang){
+        if (lang) {
             return lang.__text;
         }
         var defaultLang = _.findWhere(langs, {'_xml:lang': 'en'});
-         if(defaultLang){
-           return defaultLang.__text;
+        if (defaultLang) {
+            return defaultLang.__text;
         }
         return null;
     }
@@ -11999,7 +12015,6 @@ appService.service('deviceService', function($filter, $log,_) {
             }
 
         });
-        //console.log(collection)
         return collection;
 
     }
@@ -12012,13 +12027,29 @@ appService.service('deviceService', function($filter, $log,_) {
         var hasCfgXml = false;
         if (angular.isObject(cfgXml) && $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration')) {
             hasCfgXml = cfgXml.config.devices.deviceconfiguration;
+            if (!_.isArray(hasCfgXml)) {
+                var obj = {};
+                obj['id'] = hasCfgXml['_id'];
+                obj['instance'] = hasCfgXml['_instance'];
+                obj['commandclass'] = hasCfgXml['_commandclass'];
+                obj['command'] = hasCfgXml['_command'];
+                obj['parameter'] = hasCfgXml['_parameter'];
+                if (JSON.stringify(obj) === JSON.stringify(data)) {
+                    return true;
+                }
+                return false;
+            }
             angular.forEach(hasCfgXml, function(v, k) {
+
                 var obj = {};
                 obj['id'] = v['_id'];
                 obj['instance'] = v['_instance'];
                 obj['commandclass'] = v['_commandclass'];
                 obj['command'] = v['_command'];
                 obj['parameter'] = v['_parameter'];
+
+                /*console.log('XML:',JSON.stringify(obj))
+                 console.log('DATA:',JSON.stringify(data))*/
                 if (JSON.stringify(obj) === JSON.stringify(data)) {
                     inConfig = true;
                     return;
@@ -12027,7 +12058,6 @@ appService.service('deviceService', function($filter, $log,_) {
         }
         return inConfig;
     }
-
     /**
      * Get assoc xml config param
      */
@@ -12038,39 +12068,58 @@ appService.service('deviceService', function($filter, $log,_) {
         }
         // Get data for given device by id
         var collection = [];
-        collection[groupId] = [];
-        angular.forEach(cfg, function(v, k) {
-
-            if (v['_id'] == nodeId && v['_instance'] == instance && v['_commandclass'] == commandClass && v['_command'] == command) {
+        collection[groupId] = {
+            nodes: [],
+             nodeInstances: []
+        };
+        if (!(_.isArray(cfg))) {
+            if (cfg['_id'] == nodeId && cfg['_instance'] == instance && cfg['_commandclass'] == commandClass && cfg['_command'] == command) {
 
                 var obj = {};
-//                if(!angular.isArray(v['_parameter'])){
-//                    return;
-//                }
-                var array = JSON.parse(v['_parameter']);
-                //collection[array[0]] = array[1];
+                var array = JSON.parse(cfg['_parameter']);
 
-//                if (array.length > 2) {
-//                    collection[array[0]] = array[1];
-//                }
                 if (array.length == 2) {
                     obj['groupId'] = array[0];
                     obj['deviceId'] = array[1];
-                    //collection.push(obj);
                     if (array[0] == groupId && array[1] > 1) {
-                        collection[groupId].push(array[1]);
+                        collection[groupId].nodes.push(array[1]);
                     }
 
 
                 }
-//                else {
-//                    collection[0] = array[0];
-//                    return;
-//                }
-            }
+                if (array.length > 2) {
+                        obj['groupId'] = array[0];
+                        obj['deviceId'] = array[1];
+                        obj['instanceId'] = array[2];
+                        if (array[0] == groupId && array[1] > 0) {
+                            collection[groupId].nodeInstances.push(array[1] + '_' + array[2]);
+                        }
+                    }
+                }
+        } else {
+            angular.forEach(cfg, function(v, k) {
+                if (v['_id'] == nodeId && v['_instance'] == instance && v['_commandclass'] == commandClass && v['_command'] == command) {
+                    var obj = {};
+                    var array = JSON.parse(v['_parameter']);
+                    if (array.length == 2) {
+                        obj['groupId'] = array[0];
+                        obj['deviceId'] = array[1];
+                        if (array[0] == groupId && array[1] > 0) {
+                             collection[groupId].nodes.push(array[1]);
+                        }
+                    }
+                    if (array.length > 2) {
+                        obj['groupId'] = array[0]; 
+                        obj['deviceId'] = array[1];
+                        obj['instanceId'] = array[2];
+                        if (array[0] == groupId && array[1] > 0) {
+                            collection[groupId].nodeInstances.push(array[1] + '_' + array[2]);
+                        }
+                    }
+                }
 
-        });
-        //console.log(collection)
+            }); 
+        }
         return collection;
 
     }
@@ -12127,20 +12176,30 @@ appService.service('deviceService', function($filter, $log,_) {
         var xmlData = [];
         if (angular.isObject(cfgXml) && $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration')) {
             hasCfgXml = cfgXml.config.devices.deviceconfiguration;
-            angular.forEach(hasCfgXml, function(v, k) {
+            if (_.isArray(hasCfgXml)) {
+                angular.forEach(hasCfgXml, function(v, k) {
+                    var obj = {};
+                    obj['id'] = v['_id'];
+                    obj['instance'] = v['_instance'];
+                    obj['commandclass'] = v['_commandclass'];
+                    obj['command'] = v['_command'];
+                    obj['parameter'] = v['_parameter'];
+                    if (JSON.stringify(obj) !== JSON.stringify(data)) {
+                        xmlData.push(obj);
+                    }
+                });
+
+            } else {
                 var obj = {};
-                obj['id'] = v['_id'];
-                obj['instance'] = v['_instance'];
-                obj['commandclass'] = v['_commandclass'];
-                obj['command'] = v['_command'];
-                obj['parameter'] = v['_parameter'];
+                obj['id'] = hasCfgXml['_id'];
+                obj['instance'] = hasCfgXml['_instance'];
+                obj['commandclass'] = hasCfgXml['_commandclass'];
+                obj['command'] = hasCfgXml['_command'];
+                obj['parameter'] = hasCfgXml['_parameter'];
                 if (JSON.stringify(obj) !== JSON.stringify(data)) {
                     xmlData.push(obj);
-                    /* console.log('XML:',JSON.stringify(obj))
-                     console.log('DATA:',JSON.stringify(data))*/
                 }
-
-            });
+            }
         }
         xmlData.push(data);
         var ret = buildCfgXmlFile(xmlData);
@@ -12152,31 +12211,41 @@ appService.service('deviceService', function($filter, $log,_) {
      *Delete from cfg xml file - assoc
      */
     function deleteCfgXmlAssoc(data, cfgXml) {
+        
         var xmlData = [];
         var hasCfgXml = $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration');
         if (hasCfgXml) {
-            angular.forEach(hasCfgXml, function(v, k) {
+            if (_.isArray(hasCfgXml)) {
+                angular.forEach(hasCfgXml, function(v, k) {
+                    var obj = {};
+                    obj['id'] = v['_id'];
+                    obj['instance'] = v['_instance'];
+                    obj['commandclass'] = v['_commandclass'];
+                    obj['command'] = v['_command'];
+                    obj['parameter'] = v['_parameter'];
+                    if (JSON.stringify(obj) !== JSON.stringify(data)) {
+                        xmlData.push(obj);
+                        /* 
+                         console.log('XML:',JSON.stringify(obj))
+                         console.log('DATA:',JSON.stringify(data))*/
+                    }
+
+                });
+            } else {
                 var obj = {};
-                obj['id'] = v['_id'];
-                obj['instance'] = v['_instance'];
-                obj['commandclass'] = parseInt(v['_commandclass'], 10);
-                obj['command'] = v['_command'];
-                obj['parameter'] = v['_parameter'];
+                obj['id'] = hasCfgXml['_id'];
+                obj['instance'] = hasCfgXml['_instance'];
+                obj['commandclass'] = hasCfgXml['_commandclass'];
+                obj['command'] = hasCfgXml['_command'];
+                obj['parameter'] = hasCfgXml['_parameter'];
+               
                 if (JSON.stringify(obj) !== JSON.stringify(data)) {
                     xmlData.push(obj);
-                    /* obj['command'] = 'Remove';
-                     console.log('XML:',JSON.stringify(obj))
-                     console.log('DATA:',JSON.stringify(data))*/
                 }
+            }
 
-            });
-        } else {
-            data['command'] = 'Remove';
-            xmlData.push(data);
         }
-
-        var ret = buildCfgXmlFile(xmlData);
-        return ret;
+        return buildCfgXmlFile(xmlData);
     }
 
     /**
@@ -12185,7 +12254,9 @@ appService.service('deviceService', function($filter, $log,_) {
     function buildCfgXmlFile(xmlData) {
         var xml = '<config><devices>' + "\n";
         angular.forEach(xmlData, function(v, k) {
-            xml += '<deviceconfiguration id="' + v.id + '" instance="' + v.instance + '" commandclass="' + v.commandclass + '" command="' + v.command + '" parameter="' + v.parameter + '"/>' + "\n";
+            if (_.isNumber(parseInt(v.id, 10))) {
+                xml += '<deviceconfiguration id="' + v.id + '" instance="' + v.instance + '" commandclass="' + v.commandclass + '" command="' + v.command + '" parameter="' + v.parameter + '"/>' + "\n";
+            }
         });
         xml += '</devices></config>' + "\n";
         return xml;
@@ -12201,7 +12272,7 @@ appService.service('deviceService', function($filter, $log,_) {
 /*** Controllers ***/
 var appController = angular.module('appController', []);
 // Base controller
-appController.controller('BaseController', function($scope, $cookies, $filter, $location, $anchorScroll, $window, $route, cfg, dataService, deviceService, myCache) {
+appController.controller('BaseController', function($scope, $cookies, $filter, $location,$anchorScroll, $window, $route, cfg, dataService, deviceService, myCache) {
     /**
      * Load zwave dongles
      */
@@ -12222,6 +12293,10 @@ appController.controller('BaseController', function($scope, $cookies, $filter, $
                 });
             }
         }, function(error) {
+           if(error.status === 401){
+               //var redirectTo = $location.$$protocol+'://' + $location.$$host + ':' + $location.$$port + cfg.smarthome_login
+                window.location.href = cfg.smarthome_login;   
+             };
         });
     };
     $scope.setDongle();
@@ -14629,7 +14704,7 @@ appController.controller('ControllController', function($scope, $filter, $upload
      * @returns {void}
      */
     $scope.runCmd = function(cmd, hideModal, url, action) {
-        var folder = (url ? url : '/ZWaveAPI/Run/');
+        var folder = (url ? url : cfg.store_url);
         if (angular.isArray(cmd)) {
             angular.forEach(cmd, function(v, k) {
                 dataService.runCmd(null, folder + v);
@@ -14696,44 +14771,6 @@ appController.controller('ControllController', function($scope, $filter, $upload
 
         }
     };
-    /**
-     * DEPRECATED
-     * 
-     * Send request restore backup
-     * @returns {void}
-     */
-//    $scope.restoreBackup = function($files, chip, show, hide) {
-//        chip = (!chip ? 0 : chip);
-//        //var url = 'upload.php?restore_chip_info=' + chip;
-//        var url = cfg.server_url + cfg.restore_url + '?restore_chip_info=' + chip;
-//        //$files: an array of files selected, each file has name, size, and type.
-//        $(show).show();
-//        $(hide).hide();
-//        for (var i = 0; i < $files.length; i++) {
-//            var $file = $files[i];
-//            $upload.upload({
-//                url: url,
-//                fileFormDataName: 'config_backup',
-//                file: $file
-//            }).progress(function(evt) {
-//                $scope.restoreBackupStatus = 1;
-//                //console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
-//            }).success(function(data, status, headers, config) {
-//                if (data && data.replace(/(<([^>]+)>)/ig, "") !== "null") {//Error
-//                    $scope.restoreBackupStatus = 3;
-//                } else {// Success
-//                    $scope.restoreBackupStatus = 2;
-//                }
-//
-//                // file is uploaded successfully
-//                //console.log(data, status);
-//            }).error(function(data, status) {
-//                $scope.restoreBackupStatus = 3;
-//                //console.log(data, status);
-//            });
-//
-//        }
-//    };
 
     /**
      * Close reset controller modal window
@@ -15495,25 +15532,7 @@ appController.controller('TimingController', function($scope, $filter, dataServi
     $scope.timing = [];
     $scope.reset = function() {
         $scope.devices = angular.copy([]);
-        //$scope.timing = angular.copy([]);
     };
-
-
-
-    // Load data
-//    $scope.load = function() {
-//        dataService.getZwaveData(function(ZWaveAPIData) {
-//            console.log($scope.timing);
-//            setData(ZWaveAPIData);
-//            dataService.joinedZwaveData(function(data) {
-//                $scope.reset();
-//                //$scope.loadTiming();
-//                setData(data.joined);
-//            });
-//        });
-//    };
-
-    //$scope.load();
 
     // Load timing data
     $scope.loadTiming = function() {
@@ -17467,7 +17486,7 @@ appController.controller('ConfigFirmwareController', function($scope, $routePara
  * @author Martin Vach
  */
 // Device configuration Association controller - new version
-appController.controller('ConfigAssocController', function($scope, $filter, $routeParams, $location, $cookies, $timeout, $http, $element, dataService, deviceService, myCache, cfg) {
+appController.controller('ConfigAssocController', function($scope, $filter, $routeParams, $location, $cookies, $timeout, $window, dataService, deviceService, myCache, cfg, _) {
     $scope.devices = [];
     $scope.deviceId = 0;
     $scope.activeTab = 'association';
@@ -17479,8 +17498,13 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
     $scope.node = [];
     $scope.nodeCfg = {
         id: 0,
+        instance: 0,
+        hasMca: false,
         name: null,
-        hasMca: false
+        hasBattery: false,
+        isAwake: false,
+        notAwake: []
+
     };
     $scope.assocGroups = [];
     $scope.assocGroupsDevices = [];
@@ -17504,6 +17528,19 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
     // Refresh data
     $scope.refresh = function() {
         dataService.joinedZwaveData(function(data) {
+            var updateData = false;
+            var searchStr = 'devices.' + $routeParams.nodeId + '.'
+            angular.forEach(data.update, function(v, k) {
+                if (k.indexOf(searchStr) !== -1) {
+                    updateData = true;
+                    return;
+                }
+            });
+            if (updateData) {
+                $scope.load($routeParams.nodeId, true);
+            }
+
+
         });
     };
     $scope.refresh();
@@ -17526,19 +17563,19 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                 return;
             }
             $scope.node = node;
-            $scope.nodeCfg = {
+            angular.extend($scope.nodeCfg, {
                 id: nodeId,
-                instance: 0,
                 hasMca: 142 in node.instances[0].commandClasses,
                 name: $filter('deviceName')(nodeId, node),
-                hasBattery: 0x80 in node.instances[0].commandClasses
-            };
+                hasBattery: 0x80 in node.instances[0].commandClasses,
+            });
             $scope.input.nodeId = nodeId;
 
             $cookies.configuration_id = nodeId;
             $cookies.config_url = $scope.activeUrl + nodeId;
             $scope.deviceId = nodeId;
             dataService.getCfgXml(function(cfgXml) {
+                //console.log(node)
                 setData(node, ZWaveAPIData, nodeId, cfgXml);
             });
 
@@ -17569,7 +17606,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             }
             $timeout(function() {
                 $(elId + ' .fa-spin').fadeOut(1000);
-                $scope.load(nodeId);
+                //$scope.load(nodeId, true);
             }, 5000);
             return;
 
@@ -17621,30 +17658,27 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
 
     };
     //Show node instances (if any)
-    $scope.showAssocNodeInstance = function(nodeId,hasMca) {
-        if(!hasMca){
+    $scope.showAssocNodeInstance = function(nodeId, hasMca) {
+        if (!hasMca) {
             return;
         }
         // Prepare devices and nodes
         angular.forEach($scope.assocAddDevices, function(v, k) {
             if (v.id == nodeId) {
                 $scope.assocAddInstances = Object.keys(v.instances).length > 0 ? v.instances : false;
-
                 return;
             }
-
-
         });
-
-
     };
+    
     //Store assoc device from group
     $scope.storeAssoc = function(input) {
+        var addDevice = {};
         var instances = '0';
         var commandClasses = '85';
         var commandClassesH = 0x85;
         var toInstance = '';
-        if (input.toInstance) {
+        if (input.toInstance && input.toInstance !== 'plain') {
             commandClasses = '142';
             commandClassesH = 0x8e;
             toInstance = ',' + input.toInstance;
@@ -17658,48 +17692,64 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             'parameter': '[' + input.groupId + ',' + input.toNode + toInstance + ']'
 
         };
+        addDevice[input.toNode] = {
+            isNew: true,
+            status: 'false-true',
+            elId: _.now(),
+            id: input.toNode,
+            instance: parseInt(input.toInstance, 10),
+            name: _.findWhere($scope.assocAddDevices, {id: input.toNode}).name
+        };
+         angular.extend($scope.assocGroupsDevices[input.groupId], addDevice);
+       
         dataService.getCfgXml(function(cfgXml) {
-            var xmlFile = deviceService.buildCfgXmlAssoc(data, cfgXml);
-            dataService.putCfgXml(xmlFile);
-            dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
-            $timeout(function() {
-                $scope.load(input.nodeId);
-            }, 3000);
+            dataService.runZwaveCmd(cmd).then(function(response) {
+                var xmlFile = deviceService.buildCfgXmlAssoc(data, cfgXml);
+                dataService.putCfgXml(xmlFile);
+            }, function(error) {
+                $window.alert($scope._t('error_handling_data') + '\n' + cmd);
+                $scope.load($routeParams.nodeId);
+            });
+            $scope.input.toNode = false;
+            $scope.input.toInstance = false;
+            $scope.input.groupId = 0;
+            $scope.assocAddInstances = false;
+            return;
         });
     };
 
     //Delete assoc device from group
     $scope.deleteAssoc = function(d) {
-        var params = d.groupId + ',' + d.id + (d.instance ? ',' + d.instance : '');
+        var params = d.groupId + ',' + d.id;
+        if (d.node.cc === '8e') {
+            params = d.groupId + ',' + d.id + (d.instance > -1 ? ',' + d.instance : '');
+        }
         var cmd = 'devices[' + d.node.id + '].instances[' + d.node.instance + '].commandClasses[0x' + d.node.cc + '].Remove(' + params + ')';
-
         var data = {
             'id': d.node.id,
             'instance': d.node.instance,
-            'commandclass': d.node.cc,
+            'commandclass': (d.node.cc === '8e' ? '142' : String(d.node.cc)),
             'command': 'Set',
             'parameter': '[' + params + ']'
 
         };
-        //dataService.runCmd(cmd);
         dataService.getCfgXml(function(cfgXml) {
-            var xmlFile = deviceService.deleteCfgXmlAssoc(data, cfgXml);
-            dataService.putCfgXml(xmlFile);
-            dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
-            $('#' + d.elId).addClass('true-false');
-            $timeout(function() {
-                $scope.load(d.node.id);
-            }, 5000);
-        });
+            dataService.runZwaveCmd(cmd).then(function(response) {
+                var xmlFile = deviceService.deleteCfgXmlAssoc(data, cfgXml);
+                dataService.putCfgXml(xmlFile);
+                $('#' + d.elId).addClass('true-false');
 
-        //$scope.load(d.node.id);
+            }, function(error) {
+                $window.alert($scope._t('error_handling_data') + '\n' + cmd);
+            });
+        });
     };
 
     /// --- Private functions --- ///
     /**
      * Get node instances
      */
-    function getNodeInstances(node, nodeId) {
+    function getNodeInstances(node) {
         var instances = [];
         if (Object.keys(node.instances).length < 2) {
             return instances;
@@ -17719,7 +17769,6 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
      */
     function setData(node, ZWaveAPIData, nodeId, cfgXml) {
         var zddXmlFile = $filter('hasNode')(node, 'data.ZDDXMLFile.value');
-        $scope.assocGroups = angular.copy([]);
         //  zddXmlFile not available
         if (!zddXmlFile || zddXmlFile === 'undefined') {
             $scope.assocGroups = getAssocGroups(node, null, nodeId, ZWaveAPIData, cfgXml);
@@ -17731,7 +17780,6 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
 
         dataService.getZddXml(zddXmlFile, function(zddXmlData) {
             var zdd = $filter('hasNode')(zddXmlData, 'ZWaveDevice.assocGroups');
-            //$scope.assocGroups = getAssocDevices(node, ZWaveAPIData, zdd, controllerNodeId);
             $scope.assocGroups = getAssocGroups(node, zdd, nodeId, ZWaveAPIData, cfgXml);
             if ($scope.assocGroups.length < 1) {
                 $scope.alert = {message: $scope._t('no_association_groups_found'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
@@ -17758,13 +17806,16 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                 }
             });
         }
+        $scope.nodeCfg.notAwake = [];
+        //console.log('Has assoc', node.instances)
 
         angular.forEach(node.instances, function(instance, index) {
 
             if (!("commandClasses" in instance)) {
                 return;
             }
-            if ((0x85 in instance.commandClasses) || (0x8e in instance.commandClasses)) {
+
+            if (0x85 in instance.commandClasses || 0x8e in instance.commandClasses) {
                 var groups = 0;
                 if (0x85 in instance.commandClasses) {
                     groups = instance.commandClasses[0x85].data.groups.value;
@@ -17772,13 +17823,18 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                 }
 
                 if (0x8e in instance.commandClasses) {
-                    if (instance.commandClasses[0x8e].data.groups.value > groups)
+                    if (instance.commandClasses[0x8e].data.groups.value > groups) {
                         groups = instance.commandClasses[0x8e].data.groups.value;
+                    }
+
                 }
+
                 for (var group = 0; group < groups; group++) {
                     var data;
+                    var dataMca;
                     var assocDevices = [];
                     var cfgArray;
+                    var cfgArrayMca;
                     var groupCfg = [];
                     var groupDevices = [];
                     var savedInDevice = [];
@@ -17787,19 +17843,25 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                     var persistent = [];
                     var updateTime;
                     var invalidateTime;
+                    var updateTimeMca;
+                    var invalidateTimeMca;
                     var groupId;
                     var label;
                     var max;
+                    var timeClass = 'undef';
                     var obj = {};
 
 
                     groupId = (group + 1);
                     label = getGroupLabel(groupZdd[groupId], group, instance);
                     max = $filter('hasNode')(groupZdd[groupId], '_maxNodes');
-                    cfgArray = deviceService.getCfgXmlAssoc(cfgXml, nodeId, '0', '85', 'Set', groupId);
 
                     $scope.assocGroupsDevices[groupId] = {};
+
                     if ((0x85 in instance.commandClasses) && (group < instance.commandClasses[0x85].data.groups.value)) {
+
+
+                        cfgArray = deviceService.getCfgXmlAssoc(cfgXml, nodeId, '0', '85', 'Set', groupId);
                         var savedNodesInDevice = [];
                         data = instance.commandClasses[0x85].data[group + 1];
                         // Find duplicates in nodes
@@ -17811,11 +17873,12 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                              savedNodesInDevice.push(data.nodes.value[i]);
                              }*/
                         }
+
                         groupDevices = data.nodes.value;
                         updateTime = data.nodes.updateTime;
                         invalidateTime = data.nodes.invalidateTime;
-                        if (cfgArray.length > 0 && cfgArray[groupId].length > 0) {
-                            groupCfg = cfgArray[groupId];
+                        if (cfgArray[groupId] && cfgArray[groupId].nodes.length > 0) {
+                            groupCfg = cfgArray[groupId].nodes;
                             $.merge(groupDevices, groupCfg);
                         }
 
@@ -17839,6 +17902,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                             var inConfig = deviceService.isInCfgXml(toCfgXml, cfgXml);
                             var objAssoc = {};
                             objAssoc['id'] = targetNodeId;
+                            objAssoc['isNew'] = false;
                             objAssoc['groupId'] = groupId;
                             objAssoc['elId'] = groupId + '_' + targetNodeId + '_' + targetInstanceId + '_' + i;
                             objAssoc['name'] = $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId]);
@@ -17854,22 +17918,34 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                             objAssoc['status'] = (savedNodesInDevice.indexOf(targetNodeId) > -1 ? true : false) + '-' + inConfig;
                             assocDevices.push(objAssoc);
                             $scope.assocGroupsDevices[groupId][targetNodeId] = objAssoc;
+                            //console.log($scope.assocGroupsDevices[groupId])
                         }
                     }
+
                     if ((0x8e in instance.commandClasses) && (group < instance.commandClasses[0x8e].data.groups.value)) {
+                        cfgArrayMca = deviceService.getCfgXmlAssoc(cfgXml, nodeId, '0', '142', 'Set', groupId);
                         var savedNodesInstancesInDevice = [];
-                        data = instance.commandClasses[0x8e].data[group + 1];
-                        for (var i = 0; i < Object.keys(data.nodesInstances.value).length; i += 2) {
-                            savedNodesInstancesInDevice.push(data.nodesInstances.value[i] + '_' + data.nodesInstances.value[i + 1]);
+                        dataMca = instance.commandClasses[0x8e].data[group + 1];
+                        for (var i = 0; i < Object.keys(dataMca.nodesInstances.value).length; i += 2) {
+                            savedNodesInstancesInDevice.push(dataMca.nodesInstances.value[i] + '_' + dataMca.nodesInstances.value[i + 1]);
                         }
-                        updateTime = data.nodesInstances.updateTime;
-                        invalidateTime = data.nodesInstances.invalidateTime;
-                        for (var i = 0; i < Object.keys(data.nodesInstances.value).length; i += 2) {
-                            var targetNodeId = data.nodesInstances.value[i];
+                        updateTimeMca = dataMca.nodesInstances.updateTime;
+                        invalidateTimeMca = dataMca.nodesInstances.invalidateTime;
+                        if (cfgArrayMca[groupId] && cfgArrayMca[groupId].nodeInstances.length > 0) {
+                            angular.forEach(cfgArrayMca[groupId].nodeInstances, function(vMca) {
+                                if (savedNodesInstancesInDevice.indexOf(vMca) === -1) {
+                                    var slice = vMca.split('_');
+                                    dataMca.nodesInstances.value.push(parseInt(slice[0], 10));
+                                    dataMca.nodesInstances.value.push(parseInt(slice[1], 10));
+                                }
+                            });
+                        }
+                        for (var i = 0; i < Object.keys(dataMca.nodesInstances.value).length; i += 2) {
+                            var targetNodeId = dataMca.nodesInstances.value[i];
                             nodeIds.push(targetNodeId);
-                            var targetInstanceId = data.nodesInstances.value[i + 1];
+                            var targetInstanceId = dataMca.nodesInstances.value[i + 1];
                             instanceIds.push(targetInstanceId);
-                            var idNodeInstance = data.nodesInstances.value[i] + '_' + data.nodesInstances.value[i + 1];
+                            var idNodeInstance = dataMca.nodesInstances.value[i] + '_' + dataMca.nodesInstances.value[i + 1];
                             var toCfgXml = {
                                 'id': String($scope.nodeCfg.id),
                                 'instance': String($scope.nodeCfg.instance),
@@ -17878,10 +17954,10 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                                 'parameter': '[' + groupId + ',' + targetNodeId + ',' + targetInstanceId + ']'
 
                             };
-
                             var inConfig = deviceService.isInCfgXml(toCfgXml, cfgXml);
                             var objAssoc = {};
                             objAssoc['id'] = targetNodeId;
+                            objAssoc['isNew'] = false;
                             objAssoc['groupId'] = groupId;
                             objAssoc['elId'] = groupId + '_' + targetNodeId + '_' + targetInstanceId + '_' + i;
                             objAssoc['name'] = $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId]);
@@ -17900,6 +17976,15 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                         }
                     }
 
+                    if ((updateTime < invalidateTime) || (updateTimeMca < invalidateTimeMca)) {
+                        timeClass = 'red';
+                        $scope.nodeCfg.isAwake = true;
+                        if ($scope.nodeCfg.notAwake.indexOf(groupId) === -1) {
+                            $scope.nodeCfg.notAwake.push(groupId);
+                        }
+
+                    }
+
                     obj = {
                         label: label,
                         devices: assocDevices,
@@ -17913,12 +17998,13 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                         max: max || data.max.value,
                         updateTime: updateTime,
                         invalidateTime: invalidateTime,
-                        timeClass: updateTime > invalidateTime ? 'undef' : 'red',
+                        timeClass: timeClass,
                         remaining: (data.max.value - $filter('unique')(nodeIds).length)
                     };
                     assocGroups.push(obj);
                 }
             }
+
         });
         return assocGroups;
     }

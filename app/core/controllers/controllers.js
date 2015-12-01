@@ -2306,7 +2306,7 @@ appController.controller('ControllController', function($scope, $filter, $upload
      * @returns {void}
      */
     $scope.runCmd = function(cmd, hideModal, url, action) {
-        var folder = (url ? url : '/ZWaveAPI/Run/');
+        var folder = (url ? url : cfg.store_url);
         if (angular.isArray(cmd)) {
             angular.forEach(cmd, function(v, k) {
                 dataService.runCmd(null, folder + v);
@@ -2373,44 +2373,6 @@ appController.controller('ControllController', function($scope, $filter, $upload
 
         }
     };
-    /**
-     * DEPRECATED
-     * 
-     * Send request restore backup
-     * @returns {void}
-     */
-//    $scope.restoreBackup = function($files, chip, show, hide) {
-//        chip = (!chip ? 0 : chip);
-//        //var url = 'upload.php?restore_chip_info=' + chip;
-//        var url = cfg.server_url + cfg.restore_url + '?restore_chip_info=' + chip;
-//        //$files: an array of files selected, each file has name, size, and type.
-//        $(show).show();
-//        $(hide).hide();
-//        for (var i = 0; i < $files.length; i++) {
-//            var $file = $files[i];
-//            $upload.upload({
-//                url: url,
-//                fileFormDataName: 'config_backup',
-//                file: $file
-//            }).progress(function(evt) {
-//                $scope.restoreBackupStatus = 1;
-//                //console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
-//            }).success(function(data, status, headers, config) {
-//                if (data && data.replace(/(<([^>]+)>)/ig, "") !== "null") {//Error
-//                    $scope.restoreBackupStatus = 3;
-//                } else {// Success
-//                    $scope.restoreBackupStatus = 2;
-//                }
-//
-//                // file is uploaded successfully
-//                //console.log(data, status);
-//            }).error(function(data, status) {
-//                $scope.restoreBackupStatus = 3;
-//                //console.log(data, status);
-//            });
-//
-//        }
-//    };
 
     /**
      * Close reset controller modal window
@@ -3172,25 +3134,7 @@ appController.controller('TimingController', function($scope, $filter, dataServi
     $scope.timing = [];
     $scope.reset = function() {
         $scope.devices = angular.copy([]);
-        //$scope.timing = angular.copy([]);
     };
-
-
-
-    // Load data
-//    $scope.load = function() {
-//        dataService.getZwaveData(function(ZWaveAPIData) {
-//            console.log($scope.timing);
-//            setData(ZWaveAPIData);
-//            dataService.joinedZwaveData(function(data) {
-//                $scope.reset();
-//                //$scope.loadTiming();
-//                setData(data.joined);
-//            });
-//        });
-//    };
-
-    //$scope.load();
 
     // Load timing data
     $scope.loadTiming = function() {
