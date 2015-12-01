@@ -6,7 +6,7 @@
 /*** Controllers ***/
 var appController = angular.module('appController', []);
 // Base controller
-appController.controller('BaseController', function($scope, $cookies, $filter, $location, $anchorScroll, $window, $route, cfg, dataService, deviceService, myCache) {
+appController.controller('BaseController', function($scope, $cookies, $filter, $location,$anchorScroll, $window, $route, cfg, dataService, deviceService, myCache) {
     /**
      * Load zwave dongles
      */
@@ -27,6 +27,11 @@ appController.controller('BaseController', function($scope, $cookies, $filter, $
                 });
             }
         }, function(error) {
+           if(error.status === 401){
+               var redirectTo = $location.$$protocol+'://' + $location.$$host + ':' + $location.$$port + cfg.smarthome_login
+                window.location = redirectTo;    
+                  //console.log(redirectTo)   
+             };
         });
     };
     $scope.setDongle();
