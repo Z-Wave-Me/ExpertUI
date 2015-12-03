@@ -1,6 +1,7 @@
 {
     
-     "plain_association":"Plain association",
+    "replug_device": "Replug the device",
+    "plain_association":"Plain association",
     "legend":"Legend",
     "assoc_legend_1":"Not in device and not desired: not shown",
     "assoc_legend_2":"Selected in UI but not active in device yet",
