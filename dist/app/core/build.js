@@ -16013,6 +16013,7 @@ appController.controller('LicenseController', function($scope, $timeout, dataSer
 
     };
     $scope.controllerUuid = null;
+     $scope.controllerIsZeroUuid = false;
     $scope.proccessUpdate = {
         'message': false,
         'status': 'is-hidden'
@@ -16035,6 +16036,7 @@ appController.controller('LicenseController', function($scope, $timeout, dataSer
     $scope.ZWaveAPIData = function() {
         dataService.getZwaveData(function(ZWaveAPIData) {
             $scope.controllerUuid = ZWaveAPIData.controller.data.uuid.value;
+            $scope.controllerIsZeroUuid = parseFloat(ZWaveAPIData.controller.data.uuid.value) === 0;
 
         });
     };
