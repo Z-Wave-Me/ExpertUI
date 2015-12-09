@@ -15691,10 +15691,11 @@ appController.controller('ControllerController', function($scope, $window, $filt
         };
         var caps = function(arr) {
            var cap = '';
-           cap += (arr[3] & 0x01 ? 'S' : 's');
-           cap += (arr[3] & 0x02 ? 'L' : 'l');
-           cap += (arr[3] & 0x04 ? 'M' : 'm');
-           console.log(arr);
+           if (angular.isArray(arr)) {
+            cap += (arr[3] & 0x01 ? 'S' : 's');
+            cap += (arr[3] & 0x02 ? 'L' : 'l');
+            cap += (arr[3] & 0x04 ? 'M' : 'm');
+           }
            return cap;
 
         };
