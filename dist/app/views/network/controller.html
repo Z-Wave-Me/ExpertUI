@@ -122,8 +122,10 @@
                 >{{_t('nm_send_node_information')}}</button>
         
         <!-- Update fitmware  -->
-        <span ng-if="master['controller.data.manufacturerProductId'] == 1 && master['controller.data.manufacturerId'] == 277 && master['controller.data.manufacturerProductType'] == 1024 && master['controller.data.ZWaveChip'] == 'ZW0500'">
+        <span ng-if="master['controller.data.manufacturerProductId'] == 1 && (master['controller.data.manufacturerId'] == 277 || master['controller.data.manufacturerId'] == 327)&& master['controller.data.manufacturerProductType'] == 1024 && master['controller.data.ZWaveChip'] == 'ZW0500'">
         <a href="#uzb" class="btn btn-primary">{{_t('upgrade_bootloader_firmware')}}</a>
+        </span>
+        <span ng-if="master['controller.data.manufacturerProductId'] == 1 && master['controller.data.manufacturerId'] == 277 && master['controller.data.manufacturerProductType'] == 1024 && master['controller.data.ZWaveChip'] == 'ZW0500'">
         <a href="#licence" class="btn btn-primary">{{_t('licence_upgrade')}}</a>
         </span>
     </div>
