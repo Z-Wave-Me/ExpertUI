@@ -38,7 +38,7 @@ var config_data = {
          'smarthome_logout': '/smarthome/#/logout', // Smarthome login page 
         'lang_dir': 'app/core/lang/', // Language directory
         'lang': 'en', // Default language
-        'lang_list': ['en','de','fr','es','ru','cz','sk','sv'], // List of languages
+        'lang_list': ['en','de','fr','es','ru','cz','sk','sv','cn'], // List of languages
         'frequency': {
             0: 'EU',
            1:' RU',
