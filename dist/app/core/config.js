@@ -6,7 +6,7 @@
 var config_data = {
     'cfg': {
         'app_name': 'Z-Wave',
-        'app_version': '1.0.3 ',
+        'app_version': '1.0.4 ',
         'custom_ip': false,
         'user_field': 'USERXXXX',
         'pass_field': 'PSWDXXXX',
@@ -38,7 +38,7 @@ var config_data = {
          'smarthome_logout': '/smarthome/#/logout', // Smarthome login page 
         'lang_dir': 'app/core/lang/', // Language directory
         'lang': 'en', // Default language
-        'lang_list': ['en','de','fr','es','ru','cz','sk','sv'], // List of languages
+        'lang_list': ['en','de','fr','es','ru','cz','sk','sv','cn'], // List of languages
         'frequency': {
             0: 'EU',
            1:' RU',
