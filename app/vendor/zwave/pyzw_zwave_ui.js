@@ -1,21 +1,27 @@
 var _methods_specs_rendered = null;
+
 function getMethodSpec(ZWaveAPIData,devId, instId, ccId, method) {
-	if (_methods_specs_rendered === null)
-        renderAllMethodSpec(ZWaveAPIData);
+	if (_methods_specs_rendered === null) {
+		renderAllMethodSpec(ZWaveAPIData);
+	}
 	
 	try {
-		if (!(devId in _methods_specs_rendered))
+		if (!(devId in _methods_specs_rendered)) {
 			_methods_specs_rendered[devId] = {};
-		if (!(instId in _methods_specs_rendered[devId]))
+		}
+		if (!(instId in _methods_specs_rendered[devId])) {
 			_methods_specs_rendered[devId][instId] = {};
-		if (!(ccId in _methods_specs_rendered[devId][instId]))
+		}
+		if (!(ccId in _methods_specs_rendered[devId][instId])) {
 			 _methods_specs_rendered[devId][instId][ccId] = renderMethodSpec(parseInt(ccId, 10), ZWaveAPIData.devices[devId].instances[instId].commandClasses[ccId].data);
+		}
 
 		var methods = _methods_specs_rendered[devId][instId][ccId];
-		if (method)
+		if (method) {
 			return methods[method];
-		else
+		} else {
 			return methods;
+		}
 	} catch(err) {
 		return null;
 	}
@@ -244,7 +250,7 @@ function renderMethodSpec(ccId, data) {
 		case 0x33:
 			return {
 				"Get": [
-				       {
+					{
 						"label": "Color Capability",
 						"type": {
 							"enumof": (
@@ -254,7 +260,7 @@ function renderMethodSpec(ccId, data) {
 											var key;
 											for (key in data) {
 												var ikey = parseInt(key);
-												if (!isNaN(ikey))
+												if (!isNaN(ikey)) {
 													arr.push({
 														"label": data[ikey].capabilityString.value,
 														"type": {
@@ -263,7 +269,8 @@ function renderMethodSpec(ccId, data) {
 															}
 														}
 													});
-											};
+												}
+											}
 											return arr;
 										} catch(err) {}
 										return [];
@@ -273,7 +280,7 @@ function renderMethodSpec(ccId, data) {
 					}
 				],
 				"Set": [
-				       {
+					{
 						"label": "Color Capability",
 						"type": {
 							"enumof": (
@@ -283,7 +290,7 @@ function renderMethodSpec(ccId, data) {
 											var key;
 											for (key in data) {
 												var ikey = parseInt(key);
-												if (!isNaN(ikey))
+												if (!isNaN(ikey)) {
 													arr.push({
 														"label": data[ikey].capabilityString.value,
 														"type": {
@@ -292,7 +299,8 @@ function renderMethodSpec(ccId, data) {
 															}
 														}
 													});
-											};
+												}
+											}
 											return arr;
 										} catch(err) {}
 										return [];
@@ -321,7 +329,7 @@ function renderMethodSpec(ccId, data) {
 											var key;
 											for (key in data) {
 												var ikey = parseInt(key);
-												if (!isNaN(ikey))
+												if (!isNaN(ikey)) {
 													arr.push({
 														"label": data[ikey].capabilityString.value,
 														"type": {
@@ -330,7 +338,8 @@ function renderMethodSpec(ccId, data) {
 															}
 														}
 													});
-											};
+												}
+											}
 											return arr;
 										} catch(err) {}
 										return [];
@@ -373,7 +382,7 @@ function renderMethodSpec(ccId, data) {
 											var key;
 											for (key in data) {
 												var ikey = parseInt(key);
-												if (!isNaN(ikey))
+												if (!isNaN(ikey)) {
 													arr.push({
 														"label": data[ikey].capabilityString.value,
 														"type": {
@@ -382,7 +391,8 @@ function renderMethodSpec(ccId, data) {
 															}
 														}
 													});
-											};
+												}
+											}
 											return arr;
 										} catch(err) {}
 										return [];
@@ -620,7 +630,7 @@ function renderMethodSpec(ccId, data) {
 		case 0x43:
 			return {
 				"Get": [
-				       {
+					{
 						"label": "Type",
 						"type": {
 							"enumof": (
@@ -630,7 +640,7 @@ function renderMethodSpec(ccId, data) {
 											var key;
 											for (key in data) {
 												var ikey = parseInt(key);
-												if (!isNaN(ikey))
+												if (!isNaN(ikey)) {
 													arr.push({
 														"label": data[ikey].modeName.value,
 														"type": {
@@ -639,7 +649,8 @@ function renderMethodSpec(ccId, data) {
 															}
 														}
 													});
-											};
+												}
+											}
 											return arr;
 										} catch(err) {}
 										return [];
@@ -649,7 +660,7 @@ function renderMethodSpec(ccId, data) {
 					}
 				],
 				"Set": [
-				       {
+					{
 						"label": "Type",
 						"type": {
 							"enumof": (
@@ -659,7 +670,7 @@ function renderMethodSpec(ccId, data) {
 											var key;
 											for (key in data) {
 												var ikey = parseInt(key);
-												if (!isNaN(ikey))
+												if (!isNaN(ikey)) {
 													arr.push({
 														"label": data[ikey].modeName.value,
 														"type": {
@@ -668,7 +679,8 @@ function renderMethodSpec(ccId, data) {
 															}
 														}
 													});
-											};
+												}
+											}
 											return arr;
 										} catch(err) {}
 										return [];
@@ -694,15 +706,16 @@ function renderMethodSpec(ccId, data) {
 				"Get": [],
 				"CapabilitiesGet": [],
 				"Set": [
-				       {
+					{
 						"label": "Wakeup time, seconds",
 						"type": {
 							"range": {
 								"min": 	(
 									function() {
 										try {
-											if (data.version.value >= 2 && data.min.value !== null)
+											if (data.version.value >= 2 && data.min.value !== null) {
 												return data.min.value;
+											}
 										} catch(err) {}
 										return 0;
 									}
@@ -710,8 +723,9 @@ function renderMethodSpec(ccId, data) {
 								"max": 	(
 									function() {
 										try {
-											if (data.version.value >= 2 && data.max.value !== null)
+											if (data.version.value >= 2 && data.max.value !== null) {
 												return data.max.value;
+											}
 										} catch(err) {}
 										return 256 * 256 * 256 - 1;
 									}
@@ -751,7 +765,7 @@ function renderMethodSpec(ccId, data) {
 											var key;
 											for (key in data) {
 												var ikey = parseInt(key);
-												if (!isNaN(ikey))
+												if (!isNaN(ikey)) {
 													arr.push({
 														"label": data[ikey].modeName.value,
 														"type": {
@@ -760,7 +774,8 @@ function renderMethodSpec(ccId, data) {
 															}
 														}
 													});
-											};
+												}
+											}
 											return arr;
 										} catch(err) {}
 										return [];
@@ -809,7 +824,7 @@ function renderMethodSpec(ccId, data) {
 											var key;
 											for (key in data) {
 												var ikey = parseInt(key);
-												if (!isNaN(ikey))
+												if (!isNaN(ikey)) {
 													arr.push({
 														"label": data[ikey].modeName.value,
 														"type": {
@@ -818,7 +833,8 @@ function renderMethodSpec(ccId, data) {
 															}
 														}
 													});
-											};
+												}
+											}
 											return arr;
 										} catch(err) {}
 										return [];
@@ -899,7 +915,7 @@ function renderMethodSpec(ccId, data) {
 					}
 				],
 				"StartLevelChange": [
-				       {
+					{
 						"label": "Direction",
 						"type": {
 							"enumof": [
@@ -1254,6 +1270,7 @@ function renderMethodSpec(ccId, data) {
 								]
 						}
 					},
+					/* Current version of SimpleAV implementation does not support media item
 					{
 						"label": "Media item",
 						"type": {
@@ -1278,6 +1295,7 @@ function renderMethodSpec(ccId, data) {
 								]
 						}
 					},
+					*/
 					{
 						"label": "Button",
 						"type": {
@@ -5268,53 +5286,220 @@ function renderMethodSpec(ccId, data) {
 		// ScheduleEntryLock
 		case 0x4e:
 			return {
-				"WeekDayScheduleGet": [
+				"Enable": [
+					{
+						"label": "User",
+						"type": {
+							"range": {
+								"min": 	0,
+								"max": 255
+							}
+						}
+					},
+					{
+						"label": "Status",
+						"type": {
+							"enumof": [
+								{
+									"label": "disable",
+									"type": {
+										"fix": 	{
+											"value": 0
+										}
+									}
+								},
+								{
+									"label": "enable",
+									"type": {
+										"fix": 	{
+											"value": 1
+										}
+									}
+								}
+							]
+						}
+					}
+				],
+				"WeekdayGet": [
 					{
 						"label": "User",
 						"type": {
 							"range": {
 								"min": 0,
-								"max": 99
+								"max": 255
+							}
+						}
+					},
+					{
+						"label": "Slot",
+						"type": {
+							"range": {
+								"min": 0,
+								"max": 255
 							}
 						}
 					}
 				],
-				"YearScheduleGet": [
+				"WeekdaySet": [
 					{
 						"label": "User",
 						"type": {
 							"range": {
 								"min": 0,
-								"max": 99
+								"max": 255
+							}
+						}
+					},
+					{
+						"label": "Slot",
+						"type": {
+							"range": {
+								"min": 0,
+								"max": 255
+							}
+						}
+					},
+					{
+						"label": "Day of week",
+						"type": {
+							"enumof": [
+								{
+									"label": "Monday",
+									"type": {
+										"fix": 	{
+											"value": 1
+										}
+									}
+								},
+								{
+									"label": "Tuesday",
+									"type": {
+										"fix": 	{
+											"value": 2
+										}
+									}
+								},
+								{
+									"label": "Wednesday",
+									"type": {
+										"fix": 	{
+											"value": 3
+										}
+									}
+								},
+								{
+									"label": "Thursday",
+									"type": {
+										"fix": 	{
+											"value": 4
+										}
+									}
+								},
+								{
+									"label": "Friday",
+									"type": {
+										"fix": 	{
+											"value": 5
+										}
+									}
+								},
+								{
+									"label": "Saturday",
+									"type": {
+										"fix": 	{
+											"value": 6
+										}
+									}
+								},
+								{
+									"label": "Sunday",
+									"type": {
+										"fix": 	{
+											"value": 0
+										}
+									}
+								}
+							]
+						}
+					},
+					{
+						"label": "Begin hour",
+						"type": {
+							"range": {
+								"min": 0,
+								"max": 23
+							}
+						}
+					},
+					{
+						"label": "Begin minute",
+						"type": {
+							"range": {
+								"min": 0,
+								"max": 59
+							}
+						}
+					},
+					{
+						"label": "End hour",
+						"type": {
+							"range": {
+								"min": 0,
+								"max": 23
+							}
+						}
+					},
+					{
+						"label": "End minute",
+						"type": {
+							"range": {
+								"min": 0,
+								"max": 59
 							}
 						}
 					}
 				],
-				"WeekDayScheduleSet": [
+				"YearGet": [
 					{
 						"label": "User",
 						"type": {
 							"range": {
 								"min": 0,
-								"max": 99
+								"max": 255
+							}
+						}
+					},
+					{
+						"label": "Slot",
+						"type": {
+							"range": {
+								"min": 0,
+								"max": 255
 							}
 						}
 					}
 				],
-				"YearScheduleSet": [
+				"YearSet": [
 					{
 						"label": "User",
 						"type": {
 							"range": {
 								"min": 0,
-								"max": 99
+								"max": 255
 							}
 						}
-					}
-				],
-				"Set": [
+					},
 					{
-						"label": "User",
+						"label": "Slot",
+						"type": {
+							"range": {
+								"min": 0,
+								"max": 255
+							}
+						}
+					},
+					{
+						"label": "Begin year",
 						"type": {
 							"range": {
 								"min": 0,
@@ -5323,52 +5508,84 @@ function renderMethodSpec(ccId, data) {
 						}
 					},
 					{
-						"label": "Level",
+						"label": "Begin month",
 						"type": {
-							"enumof": [
-								{
-									"label": "Disable",
-									"type": {
-										"fix": 	{
-											"value": 0
-										}
-									}
-								},
-								{
-									"label": "Enable",
-									"type": {
-										"fix": 	{
-											"value": 1
-										}
-									}
-								}
-							]
+							"range": {
+								"min": 1,
+								"max": 12
+							}
 						}
-					}
-				],
-
-				"AllSet": [
+					},
 					{
-						"label": "Level",
+						"label": "Begin day",
 						"type": {
-							"enumof": [
-								{
-									"label": "Disable",
-									"type": {
-										"fix": 	{
-											"value": 0
-										}
-									}
-								},
-								{
-									"label": "Enable",
-									"type": {
-										"fix": 	{
-											"value": 1
-										}
-									}
-								}
-							]
+							"range": {
+								"min": 1,
+								"max": 31
+							}
+						}
+					},
+					{
+						"label": "Begin hour",
+						"type": {
+							"range": {
+								"min": 0,
+								"max": 23
+							}
+						}
+					},
+					{
+						"label": "Begin minute",
+						"type": {
+							"range": {
+								"min": 0,
+								"max": 59
+							}
+						}
+					},
+					{
+						"label": "End year",
+						"type": {
+							"range": {
+								"min": 0,
+								"max": 99
+							}
+						}
+					},
+					{
+						"label": "End month",
+						"type": {
+							"range": {
+								"min": 1,
+								"max": 12
+							}
+						}
+					},
+					{
+						"label": "End day",
+						"type": {
+							"range": {
+								"min": 1,
+								"max": 31
+							}
+						}
+					},
+					{
+						"label": "End hour",
+						"type": {
+							"range": {
+								"min": 0,
+								"max": 23
+							}
+						}
+					},
+					{
+						"label": "End minute",
+						"type": {
+							"range": {
+								"min": 0,
+								"max": 59
+							}
 						}
 					}
 				]
@@ -5787,7 +6004,7 @@ function renderMethodSpec(ccId, data) {
 											var key;
 											for (key in data) {
 												var ikey = parseInt(key);
-												if (!isNaN(ikey))
+												if (!isNaN(ikey)) {
 													arr.push({
 														"label": data[ikey].typeString.value,
 														"type": {
@@ -5796,7 +6013,8 @@ function renderMethodSpec(ccId, data) {
 															}
 														}
 													});
-											};
+												}
+											}
 											return arr;
 										} catch(err) {}
 										return [];
@@ -5819,7 +6037,7 @@ function renderMethodSpec(ccId, data) {
 											var key;
 											for (key in data) {
 												var ikey = parseInt(key);
-												if (!isNaN(ikey))
+												if (!isNaN(ikey)) {
 													arr.push({
 														"label": data[ikey].typeString.value,
 														"type": {
@@ -5828,7 +6046,8 @@ function renderMethodSpec(ccId, data) {
 															}
 														}
 													});
-											};
+												}
+											}
 											return arr;
 										} catch(err) {}
 										return [];
@@ -6628,7 +6847,7 @@ function renderMethodSpec(ccId, data) {
 					
 										
 				]								
-			};   
+			};
 
 		default: return {};
 	}
