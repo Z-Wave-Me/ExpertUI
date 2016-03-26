@@ -13,7 +13,6 @@
     "ctrl_info_caps_cap_title": "容量:",
     "zwave_network": "Z-Wave网络",
     "select_dongle": "选择Z-Wave网络",
-    "nm_nwi_learn_start": "开始NWI学习模式",
     "ctrl_info_sw_caps_title": "容量:",
     "device_changed_configuration_battery": "设备更改配置但是一些数值未写入，等待唤醒设备.",
     "current_frequency": "目前频率",

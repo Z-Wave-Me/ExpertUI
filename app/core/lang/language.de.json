@@ -13,7 +13,6 @@
     "ctrl_info_caps_cap_title": "Capabillities:",
     "zwave_network": "Z-Wave-Netzwerk",
     "select_dongle": "Z-Wave Netz wählen",
-    "nm_nwi_learn_start": "Start NWI Learn Mode",
     "ctrl_info_sw_caps_title": "Funktionen:",
     "device_changed_configuration_battery": "Gerätekonfiguration verändert, aber einige Werte wurden noch nicht geschrieben. Mit dem nächsten Wakeup des Geräts werden die Änderungen abgeschlossen.",
     "current_frequency": "Aktuelle Frequenz",

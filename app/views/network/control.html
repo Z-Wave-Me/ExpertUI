@@ -312,13 +312,6 @@
                                 ng-show="[8, 9, 10, 11, 12].indexOf(controllerState) == -1"
                                 >{{_t('nm_learn_start')}}</button>
                             <button 
-                                class="btn btn-primary"
-                                id="btn_nwi_learn_start"
-                                ng-disabled="[20].indexOf(controllerState) > -1 || startLearnMode == false"
-                                ng-click="runCmd('controller.SetLearnMode(2)')"
-                                ng-show="[8, 9, 10, 11, 12].indexOf(controllerState) == -1"
-                                >{{_t('nm_nwi_learn_start')}}</button>
-                            <button 
                                 class="btn btn-danger"
                                 id="btn_learn_stop"
                                 ng-show="[8, 9, 10, 11, 12].indexOf(controllerState) > -1"
