@@ -316,90 +316,78 @@ appController.controller('SwitchController', function($scope, $filter, dataServi
             // Loop throught instances
             var cnt = 1;
             angular.forEach(node.instances, function(instance, instanceId) {
-                if (instanceId == 0 && node.instances.length > 1) {
-                    return;
-                }
-                var hasBinary = 0x25 in instance.commandClasses;
-                var hasMultilevel = 0x26 in instance.commandClasses;
-                var switchAllValue = null;
-                var hasSwitchAll = (0x27 in instance.commandClasses) && (instanceId == 0);
-                if (hasSwitchAll) {
-                    switchAllValue = instance.commandClasses[0x27].data.mode.value;
-                }
+                angular.forEach([0x25, 0x26], function(ccId) {
+                    if (!(ccId in instance.commandClasses)) return;
+                    var switchAllValue = null;
+                    var hasSwitchAll = (0x27 in instance.commandClasses) && (instanceId == 0);
+                    if (hasSwitchAll) {
+                        switchAllValue = instance.commandClasses[0x27].data.mode.value;
+                    }
 
-                var ccId;
-                var deviceType = null;
-                if (hasMultilevel) {
-                    ccId = 0x26;
-                    deviceType = 'multilevel';
-                } else if (hasBinary) {
-                    ccId = 0x25;
-                    deviceType = 'binary';
-                } else {
-                    return; // we skip instance if there is no SwitchBinary or SwitchMultilevel CCs
-                }
+                    var deviceType = ccId == 0x25 ? 'binary' : 'multilevel';
+                    
+                    var genericType = ZWaveAPIData.devices[nodeId].data.genericType.value;
+                    var specificType = ZWaveAPIData.devices[nodeId].data.specificType.value;
+                    var genspecType = genericType + '/' + specificType;
 
-                var genericType = ZWaveAPIData.devices[nodeId].data.genericType.value;
-                var specificType = ZWaveAPIData.devices[nodeId].data.specificType.value;
-                var genspecType = genericType + '/' + specificType;
+                    // Set object
+                    var obj = {};
 
-                // Set object
-                var obj = {};
+                    // Motor devices
+                    var btnOn = $scope._t('switched_on');
+                    var btnOff = $scope._t('switched_off');
+                    var btnFull = $scope._t('btn_full');
+                    var hasMotor = false;
+                    var motorDevices = ['17/3', '17/5', '17/6', '17/7', '9/0', ' 9/1'];
+                    if (motorDevices.indexOf(genspecType) !== -1) {
+                        btnOn = $scope._t('btn_switched_up');
+                        btnOff = $scope._t('btn_switched_down');
+                        hasMotor = true;
+                    }
+                    //console.log(nodeId + '.' + instanceId + ': ' + genspecType + ' motor: ' + hasMotor);
+                    var multiChannel = false;
+                    if (0x60 in instance.commandClasses) {
+                        multiChannel = true;
+                    }
+                    var level = updateLevel(instance.commandClasses[ccId].data.level, ccId, btnOn, btnOff);
 
-                // Motor devices
-                var btnOn = $scope._t('switched_on');
-                var btnOff = $scope._t('switched_off');
-                var btnFull = $scope._t('btn_full');
-                var hasMotor = false;
-                var motorDevices = ['17/3', '17/5', '17/6', '17/7', '9/0', ' 9/1'];
-                if (motorDevices.indexOf(genspecType) !== -1) {
-                    btnOn = $scope._t('btn_switched_up');
-                    btnOff = $scope._t('btn_switched_down');
-                    hasMotor = true;
-                }
-                //console.log(nodeId + '.' + instanceId + ': ' + genspecType + ' motor: ' + hasMotor);
-                var multiChannel = false;
-                if (0x60 in instance.commandClasses) {
-                    multiChannel = true;
-                }
-                var level = updateLevel(instance.commandClasses[ccId].data.level, ccId, btnOn, btnOff);
-
-                obj['id'] = nodeId;
-                obj['cmd'] = instance.commandClasses[ccId].data.name + '.level';
-                obj['iId'] = instanceId;
-                obj['ccId'] = ccId;
-                obj['hasMotor'] = hasMotor;
-                obj['multiChannel'] = multiChannel;
-                obj['deviceType'] = deviceType;
-                obj['genericType'] = genericType;
-                obj['specificType'] = specificType;
-                obj['hasSwitchAll'] = hasSwitchAll;
-                obj['switchAllValue'] = switchAllValue;
-                obj['rowId'] = 'switch_' + nodeId + '_' + cnt;
-                obj['name'] = $filter('deviceName')(nodeId, node);
-                obj['updateTime'] = instance.commandClasses[ccId].data.level.updateTime;
-                obj['invalidateTime'] = instance.commandClasses[ccId].data.level.invalidateTime;
-                obj['urlToStore'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Get()';
-                obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
-                //obj['level'] = ZWaveAPIData.devices[nodeId].instances[instanceId].commandClasses[ccId].data.level;
-                obj['level'] = level.level_cont;
-                obj['levelColor'] = level.level_color;
-                obj['levelStatus'] = level.level_status;
-                obj['levelMax'] = level.level_max;
-                obj['levelVal'] = level.level_val;
-                obj['urlToOff'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Set(0)';
-                obj['urlToOn'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Set(255)';
-                obj['urlToFull'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Set(99)';
-                obj['urlToSlide'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']';
-                obj['btnOn'] = btnOn;
-                obj['btnOff'] = btnOff;
-                obj['btnFull'] = btnFull;
-                obj['cmdToUpdate'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.level';
+                    obj['id'] = nodeId;
+                    obj['cmd'] = instance.commandClasses[ccId].data.name + '.level';
+                    obj['iId'] = instanceId;
+                    obj['ccId'] = ccId;
+                    obj['hasMotor'] = hasMotor;
+                    obj['multiChannel'] = multiChannel;
+                    obj['deviceType'] = deviceType;
+                    obj['genericType'] = genericType;
+                    obj['specificType'] = specificType;
+                    obj['hasSwitchAll'] = hasSwitchAll;
+                    obj['switchAllValue'] = switchAllValue;
+                    obj['rowId'] = 'switch_' + nodeId + '_' + cnt;
+                    obj['name'] = $filter('deviceName')(nodeId, node);
+                    obj['updateTime'] = instance.commandClasses[ccId].data.level.updateTime;
+                    obj['invalidateTime'] = instance.commandClasses[ccId].data.level.invalidateTime;
+                    obj['urlToStore'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Get()';
+                    obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
+                    //obj['level'] = ZWaveAPIData.devices[nodeId].instances[instanceId].commandClasses[ccId].data.level;
+                    obj['level'] = level.level_cont;
+                    obj['levelColor'] = level.level_color;
+                    obj['levelStatus'] = level.level_status;
+                    obj['levelMax'] = level.level_max;
+                    obj['levelVal'] = level.level_val;
+                    obj['urlToOff'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Set(0)';
+                    obj['urlToOn'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Set(255)';
+                    obj['urlToFull'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Set(99)';
+                    obj['urlToSlide'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']';
+                    obj['btnOn'] = btnOn;
+                    obj['btnOff'] = btnOff;
+                    obj['btnFull'] = btnFull;
+                    obj['cmdToUpdate'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.level';
 
 
-                $scope.switches.push(obj);
-                $scope.rangeSlider.push(obj['range_' + nodeId] = level.level_val);
-                cnt++;
+                    $scope.switches.push(obj);
+                    $scope.rangeSlider.push(obj['range_' + nodeId] = level.level_val);
+                    cnt++;
+                });
             });
         });
     }
@@ -935,9 +923,6 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
             // Loop throught instances
             var cnt = 1;
             angular.forEach(node.instances, function(instance, instanceId) {
-                if (instanceId == 0 && node.instances.length > 1) {
-                    return;
-                }
                 // we skip devices without ThermostatSetPint AND ThermostatMode CC
                 if (!(0x43 in instance.commandClasses) && !(0x40 in instance.commandClasses)) {
                     return;
@@ -1147,9 +1132,6 @@ appController.controller('LocksController', function($scope, $filter, dataServic
             // Loop throught instances
             var cnt = 1;
             angular.forEach(node.instances, function(instance, instanceId) {
-                if (instanceId == 0 && node.instances.length > 1) {
-                    return;
-                }
                 // we don't want devices without DoorLock CC
                 if (!(doorLockCCId in instance.commandClasses)) {
                     return;
