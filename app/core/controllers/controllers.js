@@ -971,6 +971,7 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
                 if (hasThermostatSetpoint) {
                     if (angular.isDefined(instance.commandClasses[0x43].data[curThermMode])) {
                         level = instance.commandClasses[0x43].data[curThermMode].setVal.value;
+                        scale = instance.commandClasses[0x43].data[curThermMode].scaleString.value;
                         updateTime = instance.commandClasses[0x43].data[curThermMode].updateTime;
                         invalidateTime = instance.commandClasses[0x43].data[curThermMode].invalidateTime;
                         changeTemperature = true;
@@ -992,6 +993,7 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
                 obj['curThermMode'] = curThermMode;
                 obj['changeTemperature'] = changeTemperature;
                 obj['level'] = level;
+                obj['scale'] = scale;
                 obj['hasExt'] = hasExt;
                 obj['updateTime'] = updateTime;
                 obj['invalidateTime'] = invalidateTime;

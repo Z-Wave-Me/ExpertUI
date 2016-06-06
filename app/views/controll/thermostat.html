@@ -35,7 +35,7 @@
                     <td data-title="#">{{ v.id}}</td>
                     <td data-title="{{ _t('device_name')}}"><i class="fa fa-sort-amount-asc fa-lg"></i> {{ v.name}}</td>
                     <td data-title="{{ _t('switch_point_temp')}}" class="row-level">
-                        <span class="level-val" ng-show="v.level != null">{{ v.level}}</span>&nbsp;<span  ng-show="v.hasExt">&deg;C</span>
+                        <span class="level-val" ng-show="v.level != null">{{ v.level}}</span>&nbsp;<span  ng-show="v.hasExt">{{ v.scale}}</span>
                     </td>
                     <td data-title="{{ _t('datetime')}}" class="row-time">
                         <span class="is-updated-{{v.isUpdated}}" ng-show="v.level != null">{{ v.updateTime | isTodayFromUnix }}</span>
