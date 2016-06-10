@@ -383,9 +383,34 @@ angApp.directive('expertCommandInput', function($filter) {
     
     // Get bitset
     function getBitset(label, enums, defaultValue, name, hideRadio,currValue) {
-        
-        var input = 'Bitset';
-        
+        //console.log(enums)
+        if (!enums) {
+            return;
+        }
+        var inName = $filter('stringToSlug')(name ? name : label);
+        var input = '';
+         input += '<label>' + label + '</label><br />';
+          var value = (currValue !== undefined ? currValue : 0);
+         angular.forEach(enums.bitset, function(v, k) {
+             var title = v.label||'';
+            var type = v.type;
+            //var checked = (cnt == 1 ? ' checked="checked"' : '');
+            //var isCurrent = (cnt == 1 ? ' commads-is-current' : '');
+
+            if ('bitrange' in type) {
+                 var min = type.bitrange.bit_from;
+                var max = type.bitrange.bit_to;
+                var setVal = value;
+                 input += '<div><input type="text" name="checkbox_txt' + inName +'" class="form-control commands-data-txt-chbx_" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '" /></div>';
+             } else if('bitcheck' in type){
+                 input += '<input name="checkbox_' + inName +'" class="commands-data-chbx" type="checkbox" value="' + type.bitcheck.bit + '" /> ('+ type.bitcheck.bit + ')'
+                 + '<span class="commands-label"> ' + title + '</span><br />';
+            }else{
+               input += ''; 
+            }
+            
+             //console.log(v)
+         });
         return input;
     }
 
@@ -475,7 +500,6 @@ angApp.directive('configDefaultValue', function() {
             var type = scope.collection.type;
             var name = scope.collection.name;
             var hideRadio = scope.collection.hideRadio;
-            
             if (type) {
                 if ('range' in type) {
                     //input = getText(label, scope.values, type.range.min, type.range.max, name);
@@ -488,6 +512,8 @@ angApp.directive('configDefaultValue', function() {
                     //input = getConstant(label, type, scope.defaultValue, name);
                 } else if ('string' in type) {
                     //input = getString(label, scope.values, name);
+                } else if ('bitset' in type) {
+                    input = scope.defaultValue;
                 } else {
                     input = scope.showDefaultValue;
                 }
@@ -503,6 +529,39 @@ angApp.directive('configDefaultValue', function() {
 
     // Get enumerators
     function getEnum(enums, defaultValue,showDefaultValue) {
+        //console.log(enums)
+        var input = showDefaultValue;
+        if (!enums) {
+            return;
+        }
+        angular.forEach(enums.enumof, function(v, k) {
+          
+            var title = v.label ? v.label : showDefaultValue;
+            var type = v.type;
+             // debugger; 
+            if ('fix' in type) {
+                if (type.fix.value == showDefaultValue) {
+                    input = title;
+                    return;
+                }
+ 
+            } else if ('range' in type) {
+                var min = type.range.min;
+                var max = type.range.max;
+                var setVal = (defaultValue ? defaultValue : min);
+                if (setVal == showDefaultValue) {
+                    input = showDefaultValue;
+                    return;
+                }
+            }
+
+        });
+        
+        return input;
+    }
+    
+    // Get bitset
+    function getBitset(enums, defaultValue,showDefaultValue) {
         //console.log(enums)
         var input = showDefaultValue;
         if (!enums) {

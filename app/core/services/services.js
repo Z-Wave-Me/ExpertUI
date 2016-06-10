@@ -683,7 +683,7 @@ appService.service('deviceService', function($filter, $log, _) {
                     break;
                 case 'bitset':
                     // Remove when a bitset view completed
-                    return;
+                    //return;
                     var param_struct_arr = [];
                     var conf_param_options = '';
                     var conf_default_value_arr = new Object;
@@ -699,8 +699,15 @@ appService.service('deviceService', function($filter, $log, _) {
                         var value = value_html;
                         var value_from = parseInt(value['_from'], 16);
                         var value_to = parseInt(value['_to'], 16);
-                        var value_description = 'fdf';
                         var value_description = '';
+                        if (angular.isDefined(value.description)) {
+                            value_description = configGetZddxLang($filter('hasNode')(value, 'description.lang'), lang);
+                        }
+                        if (angular.isDefined(value.lang)) {
+                            value_description = configGetZddxLang($filter('hasNode')(value, 'lang'), lang);
+
+                        }
+                        //console.log(value_description)
                         if (conf_default !== null) {
                             if (value_from == value_to) {
                                 if ((1 << value_from) & conf_default)
@@ -758,6 +765,7 @@ appService.service('deviceService', function($filter, $log, _) {
                         confNum: conf_num,
                         confSize: conf_size
                     };
+                    //console.log(conf_method_descr)
                     break;
                 default:
                     return;
