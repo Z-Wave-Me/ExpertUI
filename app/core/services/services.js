@@ -682,6 +682,8 @@ appService.service('deviceService', function($filter, $log, _) {
 
                     break;
                 case 'bitset':
+                    // Remove when a bitset view completed
+                    return;
                     var param_struct_arr = [];
                     var conf_param_options = '';
                     var conf_default_value_arr = new Object;
