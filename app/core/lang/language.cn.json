@@ -1,4 +1,6 @@
 {
+    "no_device_installed": "There is no device installed yet",
+    "select_device": "Select device",
     "replug_device": "重新接上设备 ",
     "plain_association": "关联",
     "legend": "图例",

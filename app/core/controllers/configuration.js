@@ -46,7 +46,7 @@ appController.controller('ConfigInterviewController', function($scope, $routePar
             $scope.ZWaveAPIData = ZWaveAPIData;
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
             var node = ZWaveAPIData.devices[nodeId];
-            if (!node) {
+            if (!node || deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
             }
 
@@ -335,7 +335,7 @@ appController.controller('ConfigConfigurationController', function($scope, $rout
             $scope.ZWaveAPIData = ZWaveAPIData;
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
             var node = ZWaveAPIData.devices[nodeId];
-            if (!node) {
+            if (!node || deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
             }
 
@@ -617,7 +617,7 @@ appController.controller('ConfigCommandsController', function($scope, $routePara
             $scope.ZWaveAPIData = ZWaveAPIData;
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
             var node = ZWaveAPIData.devices[nodeId];
-            if (!node) {
+             if (!node || deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
             }
             $scope.getNodeDevices = function() {
@@ -769,7 +769,7 @@ appController.controller('ConfigFirmwareController', function($scope, $routePara
         dataService.getZwaveData(function(ZWaveAPIData) {
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
             var node = ZWaveAPIData.devices[nodeId];
-            if (!node) {
+             if (!node || deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
             }
             // Remember device id

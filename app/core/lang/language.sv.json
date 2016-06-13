@@ -1,4 +1,6 @@
 {
+    "no_device_installed": "There is no device installed yet",
+    "select_device": "Select device",
     "replug_device": "Replug the device",
     "plain_association":"Plain association",
     "legend":"Legend",

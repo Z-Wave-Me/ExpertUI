@@ -2,8 +2,7 @@
 <div ng-controller="ConfigInterviewController">
     <!-- Config navigation -->
     <div ng-include="'app/views/configuration/header.html'"></div>
-
-    <div class="tab-content" ng-show="deviceId > 0">
+    <div class="tab-content" ng-show="deviceId">
         <!-- rename_cont -->
         <div class="cfg-block" id="rename_cont">
             <h4><a href="" ng-click="goRename = !goRename">{{_t('device_rename_tooltip')}} <i class="fa fa-pencil"></i> </a></h4>
