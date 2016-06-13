@@ -28,7 +28,7 @@ appController.controller('ConfigRedirectController', function($routeParams, $loc
     $location.path(configUrl);
 });
 // Device configuration Interview controller
-appController.controller('ConfigInterviewController', function($scope, $routeParams, $location, $cookies, $filter, $http, dataService, deviceService, myCache) {
+appController.controller('ConfigInterviewController', function($scope, $routeParams, $route, $location, $cookies, $filter, $http, dataService, deviceService, myCache) {
     $scope.devices = [];
     $scope.deviceId = 0;
     $scope.activeTab = 'interview';
@@ -87,6 +87,7 @@ appController.controller('ConfigInterviewController', function($scope, $routePar
         dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
         $('#config_device_name').html(givenName);
         $('#device_node_name').html(givenName);
+        $route.reload();
         return;
     };
 
