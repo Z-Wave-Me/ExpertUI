@@ -132,7 +132,10 @@ angApp.config(['$routeProvider',
  */
 var config_module = angular.module('appConfig', []);
 // Extend cfg dongle 
-angApp.run(function run($cookies) {
+angApp.run(function run($cookies,$rootScope) {
+    // Run ubderscore js in views
+    $rootScope._ = _;
+    
     if ($cookies.dongle) {
         angular.extend(config_data.cfg, {dongle: $cookies.dongle});
         angular.extend(config_data.cfg, {

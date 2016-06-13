@@ -28,7 +28,7 @@ appController.controller('ConfigRedirectController', function($routeParams, $loc
     $location.path(configUrl);
 });
 // Device configuration Interview controller
-appController.controller('ConfigInterviewController', function($scope, $routeParams, $location, $cookies, $filter, $http, dataService, deviceService, myCache) {
+appController.controller('ConfigInterviewController', function($scope, $routeParams, $route, $location, $cookies, $filter, $http, dataService, deviceService, myCache) {
     $scope.devices = [];
     $scope.deviceId = 0;
     $scope.activeTab = 'interview';
@@ -46,7 +46,7 @@ appController.controller('ConfigInterviewController', function($scope, $routePar
             $scope.ZWaveAPIData = ZWaveAPIData;
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
             var node = ZWaveAPIData.devices[nodeId];
-            if (!node) {
+            if (!node || deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
             }
 
@@ -59,12 +59,9 @@ appController.controller('ConfigInterviewController', function($scope, $routePar
             dataService.joinedZwaveData(function(data) {
                 node = data.joined.devices[nodeId];
                 refreshData(node, nodeId, data.joined);
-//                    $scope.reset();
-//                    setNavigation(data.joined);
-//                    setData(data.joined, nodeId, true);
                 $scope.ZWaveAPIData = ZWaveAPIData;
             });
-        });
+        },true);
     };
     $scope.load($routeParams.nodeId);
 
@@ -90,12 +87,14 @@ appController.controller('ConfigInterviewController', function($scope, $routePar
         dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
         $('#config_device_name').html(givenName);
         $('#device_node_name').html(givenName);
+        $route.reload();
         return;
     };
 
     // Store data on remote server
-    $scope.store = function(btn) {
-       dataService.runCmd($(btn).attr('data-store-url'), false, $scope._t('error_handling_data'));
+    $scope.store = function(v) {
+        var url = 'devices['+$scope.deviceId+'].instances['+v.iId+'].commandClasses['+v.ccId+'].Interview()';
+       dataService.runCmd(url);
     };
     
     // Show modal CommandClass dialog
@@ -334,7 +333,7 @@ appController.controller('ConfigConfigurationController', function($scope, $rout
             $scope.ZWaveAPIData = ZWaveAPIData;
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
             var node = ZWaveAPIData.devices[nodeId];
-            if (!node) {
+            if (!node || deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
             }
 
@@ -599,7 +598,7 @@ appController.controller('ConfigConfigurationController', function($scope, $rout
 
 });
 // Device configuration commands controller
-appController.controller('ConfigCommandsController', function($scope, $routeParams, $location, $cookies, $timeout, $filter, dataService, deviceService) {
+appController.controller('ConfigCommandsController', function($scope, $routeParams, $location, $cookies, $timeout, $filter, dataService, deviceService,_) {
     $scope.devices = [];
     $scope.commands = [];
     $scope.interviewCommands;
@@ -616,7 +615,7 @@ appController.controller('ConfigCommandsController', function($scope, $routePara
             $scope.ZWaveAPIData = ZWaveAPIData;
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
             var node = ZWaveAPIData.devices[nodeId];
-            if (!node) {
+             if (!node || deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
             }
             $scope.getNodeDevices = function() {
@@ -685,20 +684,17 @@ appController.controller('ConfigCommandsController', function($scope, $routePara
      * Submit expert commands form
      */
     $scope.submitExpertCommndsForm = function(form, cmd) {
-        //var data = $('#' + form).serialize();
         var data = $('#' + form).serializeArray();
         var dataJoined = [];
-        angular.forEach(data, function(v, k) {
-             if (v.value === '') {
-                return;
-                //dataJoined.push('\'\'');
-            }else{
-                if(isNaN(v.value)){
-                     dataJoined.push('\'' + v.value + '\'');
-                }else{
-                    dataJoined.push(v.value); 
-                }
+        var setValue = function(value){
+            if(isNaN(parseInt(value))){
+                return '\'' + value + '\''; 
+            }else {
+                return value; 
             }
+        };
+        angular.forEach(data, function(v, k) {
+             dataJoined.push(setValue(v.value)); 
 
         });
         var request = cmd + '(' + dataJoined.join() + ')';
@@ -768,7 +764,7 @@ appController.controller('ConfigFirmwareController', function($scope, $routePara
         dataService.getZwaveData(function(ZWaveAPIData) {
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
             var node = ZWaveAPIData.devices[nodeId];
-            if (!node) {
+             if (!node || deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
             }
             // Remember device id

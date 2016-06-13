@@ -6,7 +6,7 @@
 var config_data = {
     'cfg': {
         'app_name': 'Z-Wave',
-        'app_version': '1.0.5 ',
+        'app_version': '1.0.6',
         'custom_ip': false,
         'user_field': 'USERXXXX',
         'pass_field': 'PSWDXXXX',
