@@ -598,7 +598,7 @@ appController.controller('ConfigConfigurationController', function($scope, $rout
 
 });
 // Device configuration commands controller
-appController.controller('ConfigCommandsController', function($scope, $routeParams, $location, $cookies, $timeout, $filter, dataService, deviceService) {
+appController.controller('ConfigCommandsController', function($scope, $routeParams, $location, $cookies, $timeout, $filter, dataService, deviceService,_) {
     $scope.devices = [];
     $scope.commands = [];
     $scope.interviewCommands;
@@ -684,20 +684,17 @@ appController.controller('ConfigCommandsController', function($scope, $routePara
      * Submit expert commands form
      */
     $scope.submitExpertCommndsForm = function(form, cmd) {
-        //var data = $('#' + form).serialize();
         var data = $('#' + form).serializeArray();
         var dataJoined = [];
-        angular.forEach(data, function(v, k) {
-             if (v.value === '') {
-                return;
-                //dataJoined.push('\'\'');
-            }else{
-                if(isNaN(v.value)){
-                     dataJoined.push('\'' + v.value + '\'');
-                }else{
-                    dataJoined.push(v.value); 
-                }
+        var setValue = function(value){
+            if(isNaN(parseInt(value))){
+                return '\'' + value + '\''; 
+            }else {
+                return value; 
             }
+        };
+        angular.forEach(data, function(v, k) {
+             dataJoined.push(setValue(v.value)); 
 
         });
         var request = cmd + '(' + dataJoined.join() + ')';
