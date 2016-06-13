@@ -59,12 +59,9 @@ appController.controller('ConfigInterviewController', function($scope, $routePar
             dataService.joinedZwaveData(function(data) {
                 node = data.joined.devices[nodeId];
                 refreshData(node, nodeId, data.joined);
-//                    $scope.reset();
-//                    setNavigation(data.joined);
-//                    setData(data.joined, nodeId, true);
                 $scope.ZWaveAPIData = ZWaveAPIData;
             });
-        });
+        },true);
     };
     $scope.load($routeParams.nodeId);
 
