@@ -94,8 +94,9 @@ appController.controller('ConfigInterviewController', function($scope, $routePar
     };
 
     // Store data on remote server
-    $scope.store = function(btn) {
-       dataService.runCmd($(btn).attr('data-store-url'), false, $scope._t('error_handling_data'));
+    $scope.store = function(v) {
+        var url = 'devices['+$scope.deviceId+'].instances['+v.iId+'].commandClasses['+v.ccId+'].Interview()';
+       dataService.runCmd(url);
     };
     
     // Show modal CommandClass dialog
