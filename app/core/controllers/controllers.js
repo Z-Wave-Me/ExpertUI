@@ -1526,7 +1526,7 @@ appController.controller('StatusController', function($scope, $filter, dataServi
     }
 });
 // Battery controller
-appController.controller('BatteryController', function($scope, $filter, $http, dataService, myCache) {
+appController.controller('BatteryController', function($scope, $filter, $http,cfg,dataService, myCache) {
     $scope.battery = [];
     $scope.batteryInfo = [];
     $scope.reset = function() {
@@ -1592,6 +1592,7 @@ appController.controller('BatteryController', function($scope, $filter, $http, d
             obj['rowId'] = 'row_' + nodeId;
             obj['name'] = $filter('deviceName')(nodeId, node);
             obj['level'] = battery_charge;
+            obj['scale'] = '%';
             obj['updateTime'] = battery_updateTime;
             obj['urlToStore'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Get()';
             obj['cmdToUpdate'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data';
@@ -1629,7 +1630,6 @@ appController.controller('BatteryController', function($scope, $filter, $http, d
      * Refresh zwave data
      */
     function refreshData(data) {
-
         angular.forEach($scope.battery, function(v, k) {
             var obj = data.update[v.cmdToUpdate];
             if (obj) {
@@ -1637,8 +1637,9 @@ appController.controller('BatteryController', function($scope, $filter, $http, d
                 var updateTime = obj.last.updateTime;
                 //var invalidateTime;
                 var formatTime = $filter('isTodayFromUnix')(updateTime);
-                $('#' + v.rowId + ' .row-level').html(level);
+                $('#' + v.rowId + ' .row-level').html(level + '%');
                 $('#' + v.rowId + ' .row-time').html(formatTime);
+                $('#' + v.rowId + ' .report-img').attr('src', cfg.img.batteries + $filter('getBatteryIcon')(v.level));
                 //console.log('Updating:' + v.rowId + ' | At: ' + formatTime + ' | with: ' + level);//REM
             }
         });
