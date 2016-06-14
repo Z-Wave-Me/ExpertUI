@@ -1,5 +1,10 @@
 {
     
+    "direct": "Direct",
+    "routed": "Routed",
+    "badly_routed": "Badly routed",
+    "not_linked": "Not linked",
+    "unavailable": "Unavailable",
     "no_device_installed": "There is no device installed yet",
     "select_device": "Select device",
     "replug_device": "Replug the device",
