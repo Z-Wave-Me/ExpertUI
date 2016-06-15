@@ -932,11 +932,12 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
                 var curThermMode = getCurrentThermostatMode(instance);
                 var level = null;
                 var hasExt = false;
-                var changeTemperature = false;
                 var updateTime;
                 var invalidateTime;
                 var modeType = null;
                 var modeList = {};
+                var urlChangeTemperature = false;
+                var scale = null;
 
                 var hasThermostatMode = 0x40 in instance.commandClasses;
                 var hasThermostatSetpoint = 0x43 in instance.commandClasses;
@@ -974,7 +975,6 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
                         scale = instance.commandClasses[0x43].data[curThermMode].scaleString.value;
                         updateTime = instance.commandClasses[0x43].data[curThermMode].updateTime;
                         invalidateTime = instance.commandClasses[0x43].data[curThermMode].invalidateTime;
-                        changeTemperature = true;
                         hasExt = true;
                         modeType = 'hasThermostatSetpoint';
                         isThermostatSetpoint = true;
@@ -991,7 +991,6 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
                 obj['rowId'] = 'row_' + nodeId + '_' + cnt;
                 obj['name'] = $filter('deviceName')(nodeId, node);
                 obj['curThermMode'] = curThermMode;
-                obj['changeTemperature'] = changeTemperature;
                 obj['level'] = level;
                 obj['scale'] = scale;
                 obj['hasExt'] = hasExt;
@@ -999,6 +998,7 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
                 obj['invalidateTime'] = invalidateTime;
                 obj['isUpdated'] = (updateTime > invalidateTime ? true : false);
                 obj['urlToStore'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']';
+                obj['urlChangeTemperature'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + 0x43 + ']';
                 obj['cmdToUpdate'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.' + curThermMode;
                 obj['modeType'] = modeType;
                 obj['isThermostatMode'] = isThermostatMode;
@@ -1526,7 +1526,7 @@ appController.controller('StatusController', function($scope, $filter, dataServi
     }
 });
 // Battery controller
-appController.controller('BatteryController', function($scope, $filter, $http, dataService, myCache) {
+appController.controller('BatteryController', function($scope, $filter, $http,cfg,dataService, myCache) {
     $scope.battery = [];
     $scope.batteryInfo = [];
     $scope.reset = function() {
@@ -1592,6 +1592,7 @@ appController.controller('BatteryController', function($scope, $filter, $http, d
             obj['rowId'] = 'row_' + nodeId;
             obj['name'] = $filter('deviceName')(nodeId, node);
             obj['level'] = battery_charge;
+            obj['scale'] = '%';
             obj['updateTime'] = battery_updateTime;
             obj['urlToStore'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Get()';
             obj['cmdToUpdate'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data';
@@ -1629,7 +1630,6 @@ appController.controller('BatteryController', function($scope, $filter, $http, d
      * Refresh zwave data
      */
     function refreshData(data) {
-
         angular.forEach($scope.battery, function(v, k) {
             var obj = data.update[v.cmdToUpdate];
             if (obj) {
@@ -1637,8 +1637,9 @@ appController.controller('BatteryController', function($scope, $filter, $http, d
                 var updateTime = obj.last.updateTime;
                 //var invalidateTime;
                 var formatTime = $filter('isTodayFromUnix')(updateTime);
-                $('#' + v.rowId + ' .row-level').html(level);
+                $('#' + v.rowId + ' .row-level').html(level + '%');
                 $('#' + v.rowId + ' .row-time').html(formatTime);
+                $('#' + v.rowId + ' .report-img').attr('src', cfg.img.batteries + $filter('getBatteryIcon')(v.level));
                 //console.log('Updating:' + v.rowId + ' | At: ' + formatTime + ' | with: ' + level);//REM
             }
         });

@@ -646,7 +646,7 @@ appController.controller('ConfigCommandsController', function($scope, $routePara
                     var command = deviceService.configGetCommands(methods, ZWaveAPIData);
                     var obj = {};
                     obj['nodeId'] = nodeId;
-                    obj['rowId'] = 'row_' + nodeId + '_' + ccId;
+                    obj['rowId'] = 'row_' + nodeId + '_' + instanceId + '_' + ccId;
                     obj['instanceId'] = instanceId;
                     obj['ccId'] = ccId;
                     obj['cmd'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']';

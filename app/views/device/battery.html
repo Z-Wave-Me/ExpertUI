@@ -46,7 +46,7 @@
                  <td data-title="{{ _t('th_level')}}">
                      
                      <!-- <i class="{{ v.level | batteryIcon }}"></i>-->
-                     <img class="report-img" ng-src="app/images/batteries/{{v.level|getBatteryIcon}}" alt="img" />&nbsp;<span class="row-level">{{ v.level }}%</span>
+                     <img class="report-img" ng-src="{{cfg.img.batteries}}{{v.level|getBatteryIcon}}" alt="img" />&nbsp;<span class="row-level">{{ v.level+v.scale }}</span>
                       
                  </td>
                   <td data-title="{{ _t('datetime')}}" class="row-time is-updated-{{v.isUpdated}}">{{ v.updateTime | isTodayFromUnix }} &nbsp;</td>

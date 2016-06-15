@@ -23,7 +23,7 @@
                         <a class="btn btn-info" href="" ng-click="showModal('#modal_command_class',v.instanceId,$index,v.ccId, 'cmdData')">{{v.commandClass}}</a>&nbsp;
                     </td>
                     <td data-title="{{_t('th_command_param')}}">
-                        <div class="commands-data" ng-repeat="c in v.command| orderBy:predicate:reverse" ng-init="formName = 'form_' + v.commandClass + '_' + c.data.method + '_' + $index">
+                        <div class="commands-data" ng-repeat="c in v.command| orderBy:predicate:reverse" ng-init="formName = 'form_' + c.data.method + '_' + v.rowId">
                             <form 
                                 name="{{formName}}" 
                                 id="{{formName}}"

@@ -193,7 +193,6 @@ padding: 10px 10px 0 10px;
 /* Slider
 -------------------------------------------------- */
 .ngrs-value.ngrs-value-min{
-    //display: none;
 }
 
 /* Page CSS
@@ -212,7 +211,6 @@ padding: 10px 10px 0 10px;
 
 }
 #respone_container_inner {
-    //display: none;
     margin: 0 auto;
     text-align: center;
     /*position: relative;*/
@@ -240,7 +238,6 @@ padding: 10px 10px 0 10px;
 }
 
 .form-home-ip-in {
-    //display: none;
     margin: 10px auto;
     text-align: center;
     padding: 10px;

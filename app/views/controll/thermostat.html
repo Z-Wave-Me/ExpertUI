@@ -54,13 +54,13 @@
                         <div class="btn-group" ng-show="v.isThermostatSetpoint">
                             <button 
                                 class="btn btn-info spinner-selector_"
-                                ng-click="tempChange(v.urlToStore, $index, '-')"
+                                ng-click="tempChange(v.urlChangeTemperature, $index, '-')"
                                 data-spinner-scale="1" 
                                 data-spinner-max="{{cfg.thermostat_range.max}}" 
                                 data-spinner-min="{{cfg.thermostat_range.min}}">{{_t.('btn_minus')}}</button>
                             <button 
                                 class="btn btn-primary spinner-selector_"
-                                ng-click="tempChange(v.urlToStore, $index, '+')"
+                                ng-click="tempChange(v.urlChangeTemperature, $index, '+')"
                                 data-spinner-scale="1" 
                                 data-spinner-max="{{cfg.thermostat_range.max}}" 
                                 data-spinner-min="{{cfg.thermostat_range.min}}">{{_t.('btn_plus')}}</button>
@@ -75,7 +75,7 @@
                                  max='cfg.thermostat_range.max'  
                                  model-max="rangeSlider[$index]" 
                                  pin-handle="min" 
-                                 on-handle-up="sliderChange(v.urlToStore,$index)">
+                                 on-handle-up="sliderChange(v.urlChangeTemperature,$index)">
                             </div>
                         </div>
                     </td>

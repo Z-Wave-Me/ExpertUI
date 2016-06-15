@@ -57,6 +57,10 @@ var config_data = {
         'thermostat_range': {// Min and max thermostat range
             "min": "0",
             "max": "40" 
+        },
+        // Image path
+        'img': {
+            'batteries':'app/images/batteries/'
         }
 
     }
