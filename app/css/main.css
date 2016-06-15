@@ -668,6 +668,10 @@ padding: 10px 10px 0 10px;
     padding: 0px 6px;
 }
 
+#RoutingComments {
+    margin-top: 10px;
+}
+
 /* device not present in config file and not present in Z-Wave assoc group */
 .dissapeared {
     color: #911;
