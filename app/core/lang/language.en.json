@@ -1,9 +1,9 @@
 {
     "--- newtrans": "---",
-    "direct": "Direct",
-    "routed": "Routed",
-    "badly_routed": "Badly routed",
-    "not_linked": "Not linked",
+    "direct": "Direct connection",
+    "routed": "Communication through 1 node. There are several routes",
+    "badly_routed": "Communication through 1 node. There is 1 route",
+    "not_linked": "Communication through 2 or more nodes. Unreliable communications",
     "unavailable": "Unavailable",
     "---": "---",
     "no_device_installed": "There is no device installed yet",
