@@ -311,7 +311,7 @@ angApp.directive('expertCommandInput', function($filter) {
                 if (!hideRadio) {
                     input += '<div><input name="radio_' + inName + '" class="commands-data-chbx commands-data-chbx-hastxt" type="radio" value=""' + checked + ' /> <span class="commands-label' + isCurrent + '">' + title + '</span> <input type="text" name="radio_txt_' + inName + '" class="form-control commands-data-txt-chbx" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '"' + disabled + ' /></div>';
                 } else {
-                    input +=  (title !== '' ? '<span class="commands-title-block">' + title + ' </span>':'') + '<input type="text" name="radio_txt_' + inName + '" class="form-control" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '" /><br />';
+                    input +=  (title !== '' ? '<span class="commands-title-block">' + title + ' </span>':'') + '<input type="text" name="radio_txt_' + inName + '" class="form-control" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '" /> (min: ' + min + ', max: ' + max + ')<br />';
                 }
 
 
@@ -382,34 +382,30 @@ angApp.directive('expertCommandInput', function($filter) {
     }
     
     // Get bitset
-    function getBitset(label, enums, defaultValue, name, hideRadio,currValue) {
-        //console.log(enums)
+    function getBitset(label, enums, currValue) {
         if (!enums) {
             return;
         }
-        var inName = $filter('stringToSlug')(name ? name : label);
+        //var inName = $filter('stringToSlug')(name ? name : label);
         var input = '';
+        var bitArray = $filter('getBitArray')(currValue,32);
          input += '<label>' + label + '</label><br />';
-          var value = (currValue !== undefined ? currValue : 0);
+          var setVal = 0;//(currValue !== undefined ? currValue : 0);
          angular.forEach(enums.bitset, function(v, k) {
-             var title = v.label||'';
+             var title = v.label||'---';
             var type = v.type;
-            //var checked = (cnt == 1 ? ' checked="checked"' : '');
-            //var isCurrent = (cnt == 1 ? ' commads-is-current' : '');
-
+            var inBitArray = bitArray[k];
+             var checked = (inBitArray ? ' checked="checked"' : '');
             if ('bitrange' in type) {
                  var min = type.bitrange.bit_from;
                 var max = type.bitrange.bit_to;
-                var setVal = value;
-                 input += '<div><input type="text" name="checkbox_txt' + inName +'" class="form-control commands-data-txt-chbx_" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '" /></div>';
+                 input += '<div><input type="text" name="' + v.name +'" class="form-control commands-data-txt-chbx_" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '" /> (min: ' + min + ', max: ' + max + ')</div>';
              } else if('bitcheck' in type){
-                 input += '<input name="checkbox_' + inName +'" class="commands-data-chbx" type="checkbox" value="' + type.bitcheck.bit + '" /> ('+ type.bitcheck.bit + ')'
+                 input += '<input name="' + v.name +'" class="commands-data-chbx" type="checkbox" value="' + type.bitcheck.bit + '"' + checked + ' /> ('+ type.bitcheck.bit + ')'
                  + '<span class="commands-label"> ' + title + '</span><br />';
             }else{
                input += ''; 
             }
-            
-             //console.log(v)
          });
         return input;
     }
@@ -463,7 +459,7 @@ angApp.directive('expertCommandInput', function($filter) {
                 } else if ('enumof' in type) {
                     input = getEnum(label, type, scope.defaultValue, name, hideRadio,scope.currValue);
                 } else if ('bitset' in type) {
-                    input = getBitset(label, type, scope.defaultValue, name, hideRadio,scope.currValue);
+                    input = getBitset(label, type,scope.currValue);
                 } else if ('constant' in type) {
                     input = getConstant(label, type, scope.defaultValue, name,scope.currValue);
                 } else if ('string' in type) {

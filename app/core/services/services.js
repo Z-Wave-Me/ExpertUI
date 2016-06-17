@@ -98,7 +98,7 @@ appService.service('deviceService', function($filter, $log, _) {
     this.configGetNav = function(ZWaveAPIData) {
         return configGetNav(ZWaveAPIData);
     };
-
+    
     /**
      *  Get expert commands
      */
@@ -722,7 +722,7 @@ appService.service('deviceService', function($filter, $log, _) {
                         if (value_from == value_to)
                             param_struct_arr.push({
                                 label: value_description,
-                                name: 'input_' + nodeId + '_' + conf_num,
+                                name: 'bitcheck_input_' + nodeId + '_' + conf_num,
                                 type: {
                                     bitcheck: {
                                         bit: value_from
@@ -732,7 +732,7 @@ appService.service('deviceService', function($filter, $log, _) {
                         else
                             param_struct_arr.push({
                                 label: value_description,
-                                name: 'input_' + nodeId + '_' + conf_num,
+                                name: 'bitrange_input_' + nodeId + '_' + conf_num,
                                 type: {
                                     bitrange: {
                                         bit_from: value_from,
@@ -754,7 +754,7 @@ appService.service('deviceService', function($filter, $log, _) {
                         type: {
                             bitset: param_struct_arr
                         },
-                        name: 'input_' + nodeId + '_' + conf_num,
+                        name: 'bitset_input_' + nodeId + '_' + conf_num,
                         description: conf_description,
                         updateTime: updateTime,
                         isUpdated: isUpdated,
