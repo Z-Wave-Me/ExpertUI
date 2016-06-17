@@ -439,7 +439,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
        
         angular.forEach(data, function (v, k) {
             var value = $filter('setConfigValue')(v.value);
-            var confNum = v.name.match(/\d+$/);
+            var confNum = v.name.match(/\d+$/)[0];
             var inputType = v.name.split('_')[0];
             if (!confNum) {
                 return;
@@ -459,6 +459,8 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                      value = Math.pow(2,value);
                 }
                
+            }else if('enumof' in cfg.type){
+                //console.log('Range')
             }
             if (dataArray[confNum]) {
                 dataArray[confNum].value += value;

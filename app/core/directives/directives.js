@@ -255,11 +255,12 @@ angApp.directive('expertCommandInput', function($filter) {
         if (!enums) {
             return;
         }
-        var inName = $filter('stringToSlug')(name ? name : label);
+        //var inName = $filter('stringToSlug')(name ? name : label);
         input += '<label>' + label + '</label><br />';
         var cnt = 1;
         var value = (currValue !== undefined ? currValue : defaultValue);
         angular.forEach(enums.enumof, function(v, k) {
+            var inName =  $filter('stringToSlug')(name ? v.name : label);
             var title = v.label||'';
             var type = v.type;
             var enumVal =  $filter('hasNode')(v, 'type.fix.value');
@@ -278,8 +279,9 @@ angApp.directive('expertCommandInput', function($filter) {
                 if (!isNaN(parseInt(value, 10))) {
                     checked = (enumVal == value ? ' checked="checked"' : ''); 
                 }
-                input += '<input name="radio_' + inName + '" class="commands-data-chbx" type="radio" value="' + type.fix.value + '"' + checked + ' /> ('+ type.fix.value + ') <span class="commands-label' + isCurrent + '">' + title + '</span><br />';
+                input += '<input name="' + inName + '" class="commands-data-chbx" type="radio" value="' + type.fix.value + '"' + checked + ' /> ('+ type.fix.value + ') <span class="commands-label' + isCurrent + '">' + title + '</span><br />';
             } else if ('range' in type) {
+                var textName =  $filter('stringToSlug')(name ? v.textName : label);
                 var min = type.range.min;
                 var max = type.range.max;
                 var disabled = ' disabled="true"';
@@ -309,9 +311,9 @@ angApp.directive('expertCommandInput', function($filter) {
 
 //                input += '<input name="radio_' + inName + '" class="commands-data-chbx" type="radio" value=""' + checked + ' /> ' + title + ' <input type="text" name="radio_' + inName + '_txt" class="form-control commands-data-txt-chbx" value="' + min + '" title=" min: ' + min + ', max: ' + max + '"'+ disabled + ' /><br />'; 
                 if (!hideRadio) {
-                    input += '<div><input name="radio_' + inName + '" class="commands-data-chbx commands-data-chbx-hastxt" type="radio" value=""' + checked + ' /> <span class="commands-label' + isCurrent + '">' + title + '</span> <input type="text" name="radio_txt_' + inName + '" class="form-control commands-data-txt-chbx" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '"' + disabled + ' /></div>';
+                    input += '<div><input name="' + inName + '" class="commands-data-chbx commands-data-chbx-hastxt" type="radio" value=""' + checked + ' /> <span class="commands-label' + isCurrent + '">' + title + '</span> <input type="text" name="' + textName + '" class="form-control commands-data-txt-chbx" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '"' + disabled + ' /> (min: ' + min + ', max: ' + max + ')</div>';
                 } else {
-                    input +=  (title !== '' ? '<span class="commands-title-block">' + title + ' </span>':'') + '<input type="text" name="radio_txt_' + inName + '" class="form-control" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '" /> (min: ' + min + ', max: ' + max + ')<br />';
+                    input +=  (title !== '' ? '<span class="commands-title-block">' + title + ' </span>':'') + '<input type="text" name="' + textName + '" class="form-control" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '" /> (min: ' + min + ', max: ' + max + ')<br />';
                 }
 
 
@@ -382,7 +384,7 @@ angApp.directive('expertCommandInput', function($filter) {
     }
     
     // Get bitset
-    function getBitset(label, enums, currValue) {
+    function getBitset(label, enums, currValue,name) {
         if (!enums) {
             return;
         }
@@ -392,6 +394,7 @@ angApp.directive('expertCommandInput', function($filter) {
          input += '<label>' + label + '</label><br />';
           var setVal = 0;//(currValue !== undefined ? currValue : 0);
          angular.forEach(enums.bitset, function(v, k) {
+              var inName =  $filter('stringToSlug')(name ? v.name : label);
              var title = v.label||'---';
             var type = v.type;
             var inBitArray = bitArray[k];
@@ -399,9 +402,9 @@ angApp.directive('expertCommandInput', function($filter) {
             if ('bitrange' in type) {
                  var min = type.bitrange.bit_from;
                 var max = type.bitrange.bit_to;
-                 input += '<div><input type="text" name="' + v.name +'" class="form-control commands-data-txt-chbx_" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '" /> (min: ' + min + ', max: ' + max + ')</div>';
+                 input += '<div><input type="text" name="' +  inName +'" class="form-control commands-data-txt-chbx_" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '" /> (min: ' + min + ', max: ' + max + ')</div>';
              } else if('bitcheck' in type){
-                 input += '<input name="' + v.name +'" class="commands-data-chbx" type="checkbox" value="' + type.bitcheck.bit + '"' + checked + ' /> ('+ type.bitcheck.bit + ')'
+                 input += '<input name="' +  inName +'" class="commands-data-chbx" type="checkbox" value="' + type.bitcheck.bit + '"' + checked + ' /> ('+ type.bitcheck.bit + ')'
                  + '<span class="commands-label"> ' + title + '</span><br />';
             }else{
                input += ''; 
@@ -459,7 +462,7 @@ angApp.directive('expertCommandInput', function($filter) {
                 } else if ('enumof' in type) {
                     input = getEnum(label, type, scope.defaultValue, name, hideRadio,scope.currValue);
                 } else if ('bitset' in type) {
-                    input = getBitset(label, type,scope.currValue);
+                    input = getBitset(label, type,scope.currValue,name);
                 } else if ('constant' in type) {
                     input = getConstant(label, type, scope.defaultValue, name,scope.currValue);
                 } else if ('string' in type) {

@@ -534,6 +534,7 @@ appService.service('deviceService', function($filter, $log, _) {
                             }
                         param_struct_arr.push({
                             label: value_description,
+                             name:  'constant_input_' + nodeId + '_' + conf_num,
                             type: {
                                 fix: {
                                     value: value_repr
@@ -558,14 +559,13 @@ appService.service('deviceService', function($filter, $log, _) {
                         confNum: conf_num,
                         confSize: conf_size
                     };
-
                     break;
                 case 'range':
 
                     var param_struct_arr = [];
                     var rangeParam = conf['value'];
                     //console.log(rangeParam, conf_num);
-
+                    var rangeParamCnt = 0;
                     if (!rangeParam) {
                         conf_method_descr = {
                             nodeId: nodeId,
@@ -616,6 +616,8 @@ appService.service('deviceService', function($filter, $log, _) {
                             if (value_description != '') {
                                 var rangeVal = {
                                     label: value_description,
+                                    name: 'range_input_' + nodeId + '_' + conf_num,
+                                    textName: 'range_input_text_' + '_' + rangeParamCnt +'_' + nodeId + '_' + conf_num,
                                     type: {
                                         range: {
                                             min: value_from,
@@ -630,6 +632,7 @@ appService.service('deviceService', function($filter, $log, _) {
                         if (value_description != '') {
                             param_struct_arr.push({
                                 label: value_description,
+                                name: 'fix_input_' + nodeId + '_' + conf_num,
                                 type: {
                                     fix: {
                                         value: value_from
@@ -637,6 +640,7 @@ appService.service('deviceService', function($filter, $log, _) {
                                 }
                             });
                         }
+                    rangeParamCnt++;
                     });
 
                     if (param_struct_arr.length > 1)
@@ -679,7 +683,6 @@ appService.service('deviceService', function($filter, $log, _) {
                             confSize: conf_size
                         };
                     }
-
                     break;
                 case 'bitset':
                     // Remove when a bitset view completed
@@ -776,7 +779,6 @@ appService.service('deviceService', function($filter, $log, _) {
             config_cont.push(conf_method_descr);
             parCnt++;
         });
-        //console.log(config_cont);
         return config_cont;
     }
 
