@@ -51,14 +51,12 @@
 
         <div class="cfg-block">
             <button
-                    data-ng-click="store('#btn_request_nif')" 
-                    data-store-url="devices[{{deviceId}}].RequestNodeInformation()" 
+                    data-ng-click="runCmd('devices[' + deviceId + '].RequestNodeInformation()')" 
                     class="btn btn-primary btn-spinner" 
                     id="btn_request_nif"
                     >{{_t('config_ui_request_node_info')}}</button>
                 <button
-                    data-ng-click="store('#btn_interview_force')" 
-                    data-store-url="devices[{{deviceId}}].InterviewForce()"
+                    data-ng-click="runCmd('devices[' + deviceId + '].InterviewForce()')" 
                     data-redirect="{{deviceId}}" 
                     class="btn btn-primary btn-spinner" 
                     id="btn_interview_force"

@@ -144,6 +144,11 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         $scope.modelSelectZddx = file;
         $(target).html(image);
     };
+    
+    // Run cmd
+    $scope.runCmd = function (cmd) {
+        dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
+    };
 
     // Update device zddx file
     $scope.runCmdDeviceSelect = function (nodeId) {
