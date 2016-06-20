@@ -436,16 +436,18 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         }
         var data = $('#' + form).serializeArray();
         var dataArray = {};
-       
+        
         angular.forEach(data, function (v, k) {
-            var value = $filter('setConfigValue')(v.value);
-            var confNum = v.name.match(/\d+$/)[0];
-            var inputType = v.name.split('_')[0];
-            if (!confNum) {
+            if(!confNum || v.value === 'N/A'){
                 return;
             }
-
-            var cfg = _.findWhere(cfgValues, {confNum: confNum.toString()});
+           var value = $filter('setConfigValue')(v.value);
+            var inputConfNum = v.name.match(/\d+$/)[0];
+            var inputType = v.name.split('_')[0];
+            if (!inputConfNum) {
+                return;
+            }
+            var cfg = _.findWhere(cfgValues, {confNum: inputConfNum.toString()});
             if ('bitset' in cfg.type) {
                 if(inputType === 'bitrange'){
                     var bitRange = _.findWhere(cfg.type.bitset,{name: v.name});
@@ -457,15 +459,18 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                     }
                 }else{
                      value = Math.pow(2,value);
+                     
                 }
                
-            }else if('enumof' in cfg.type){
-                //console.log('Range')
             }
-            if (dataArray[confNum]) {
-                dataArray[confNum].value += value;
+            /*else if('enumof' in cfg.type){
+                var enumof = _.findWhere(cfg.type.enumof,{name: v.name});
+               
+            }*/
+            if (dataArray[inputConfNum]) {
+                dataArray[inputConfNum].value += value;
             } else {
-                dataArray[confNum] = {
+                dataArray[inputConfNum] = {
                     value: value,
                     name: v.name,
                     cfg: cfg

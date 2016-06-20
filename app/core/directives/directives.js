@@ -3,19 +3,19 @@
  * @author Martin Vach
  */
 
-angApp.directive('sortBy', function() {
+angApp.directive('sortBy', function () {
     return {
         restrict: "E",
         replace: true,
         template: '<span ng-show="predicate == {{coll_name}}"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>',
-        link: function(scope, element, attr) {
+        link: function (scope, element, attr) {
             // this is link function
             var col_name = scope.$eval(attr.col_name);
         }
     };
 });
 
-angApp.directive('btnSpinner', function() {
+angApp.directive('btnSpinner', function () {
     return {
         restrict: "E",
         replace: true,
@@ -23,14 +23,14 @@ angApp.directive('btnSpinner', function() {
     };
 });
 
-angApp.directive('tooltip', function() {
+angApp.directive('tooltip', function () {
     return {
         restrict: 'A',
-        link: function(scope, element, attrs) {
-            $(element).hover(function() {
+        link: function (scope, element, attrs) {
+            $(element).hover(function () {
                 // on mouseenter
                 $(element).tooltip('show');
-            }, function() {
+            }, function () {
                 // on mouseleave
                 $(element).tooltip('hide');
             });
@@ -40,25 +40,25 @@ angApp.directive('tooltip', function() {
 /**
  * Hide collapsed navi after click on mobile devices
  */
-angApp.directive('collapseNavbar', function() {
+angApp.directive('collapseNavbar', function () {
     return {
         restrict: 'A',
-        link: function(scope, element, attrs) {
-            $(element).click(function() {
+        link: function (scope, element, attrs) {
+            $(element).click(function () {
                 $("#nav_collapse").removeClass("in").addClass("collapse");
             });
         }
     };
 });
 
-angApp.directive('draggable', ['$document', function($document) {
+angApp.directive('draggable', ['$document', function ($document) {
         return {
             restrict: 'A',
-            link: function(scope, elm, attrs) {
+            link: function (scope, elm, attrs) {
                 var startX, startY, initialMouseX, initialMouseY;
                 elm.css({position: 'absolute'});
 
-                elm.bind('mousedown', function($event) {
+                elm.bind('mousedown', function ($event) {
                     startX = elm.prop('offsetLeft');
                     startY = elm.prop('offsetTop');
                     initialMouseX = $event.clientX;
@@ -92,12 +92,12 @@ angApp.directive('draggable', ['$document', function($document) {
  */
 
 // Switch type
-angApp.directive('switchTypeIcon', function() {
+angApp.directive('switchTypeIcon', function () {
     return {
         restrict: "E",
         replace: true,
         template: ' <i class="fa {{icon}} fa-lg"></i> ',
-        link: function(scope, elem, attr) {
+        link: function (scope, elem, attr) {
             var icon;
             scope.generic = attr.generic;
             scope.specific = attr.specific;
@@ -142,12 +142,12 @@ angApp.directive('switchTypeIcon', function() {
 
 // Switch all icons
 //@todo: move to filters
-angApp.directive('switchAllIcon', function() {
+angApp.directive('switchAllIcon', function () {
     return {
         restrict: "E",
         replace: true,
         template: '<img src="{{src}}" />',
-        link: function(scope, elem, attr) {
+        link: function (scope, elem, attr) {
             var src;
             if (attr.hasall !== null) {
                 switch (parseInt(attr.hasall, 10)) {
@@ -181,12 +181,12 @@ angApp.directive('switchAllIcon', function() {
 
 // Switch all icons
 //@todo: move to filters
-angApp.directive('routingTypeIcon', function() {
+angApp.directive('routingTypeIcon', function () {
     return {
         restrict: "E",
         replace: true,
         template: '<img src="{{src}}" title="{{title}}" />',
-        link: function($scope, elem, attr) {
+        link: function ($scope, elem, attr) {
             var src;
             var title;
             if (attr.nodeId !== null && $scope.ZWaveAPIData) {
@@ -221,7 +221,7 @@ angApp.directive('routingTypeIcon', function() {
     };
 });
 
-angApp.directive('expertCommandInput', function($filter) {
+angApp.directive('expertCommandInput', function ($filter) {
     // Get text input
     function getText(label, value, min, max, name) {
         var input = '';
@@ -234,11 +234,11 @@ angApp.directive('expertCommandInput', function($filter) {
     function getNode(label, devices, currValue, name) {
         var input = '';
         var inName = $filter('stringToSlug')(name ? name : label);
-        
+
         input += '<label>' + label + '</label> ';
         input += '<select name="select_' + inName + '" class="form-control">';
         input += '<option value="1">Z-Way</option>';
-        angular.forEach(devices, function(v, k) {
+        angular.forEach(devices, function (v, k) {
             var selected = (v.id == currValue ? ' selected' : '');
             input += '<option value="' + v.id + '"' + selected + '>' + v.name + '</option>';
         });
@@ -249,21 +249,24 @@ angApp.directive('expertCommandInput', function($filter) {
     }
 
     // Get enumerators
-    function getEnum(label, enums, defaultValue, name, hideRadio,currValue) {
-        
+    function getEnum(label, enums, defaultValue, name, hideRadio, currValue) {
+
         var input = '';
         if (!enums) {
             return;
         }
+
         //var inName = $filter('stringToSlug')(name ? name : label);
         input += '<label>' + label + '</label><br />';
         var cnt = 1;
         var value = (currValue !== undefined ? currValue : defaultValue);
-        angular.forEach(enums.enumof, function(v, k) {
-            var inName =  $filter('stringToSlug')(name ? v.name : label);
-            var title = v.label||'';
+        angular.forEach(enums.enumof, function (v, k) {
+            //var inName =  $filter('stringToSlug')(name ? v.name : label);
+            var inName = name ? name : v.name;
+            //console.log(inName);
+            var title = v.label || '';
             var type = v.type;
-            var enumVal =  $filter('hasNode')(v, 'type.fix.value');
+            var enumVal = $filter('hasNode')(v, 'type.fix.value');
             var checked = (cnt == 1 ? ' checked="checked"' : '');
             var isCurrent = (cnt == 1 ? ' commads-is-current' : '');
 
@@ -272,16 +275,17 @@ angApp.directive('expertCommandInput', function($filter) {
                     if (isNaN(parseInt(defaultValue, 10))) {
                         isCurrent = (v.label == defaultValue ? ' commads-is-current' : '');
                     } else {
-                         isCurrent = '';
+                        isCurrent = '';
                     }
                 }
-                
+
                 if (!isNaN(parseInt(value, 10))) {
-                    checked = (enumVal == value ? ' checked="checked"' : ''); 
+                    checked = (enumVal == value ? ' checked="checked"' : '');
                 }
-                input += '<input name="' + inName + '" class="commands-data-chbx" type="radio" value="' + type.fix.value + '"' + checked + ' /> ('+ type.fix.value + ') <span class="commands-label' + isCurrent + '">' + title + '</span><br />';
+                input += '<input name="' + inName + '" class="commands-data-chbx" type="radio" value="' + type.fix.value + '"' + checked + ' /> (' + type.fix.value + ') <span class="commands-label' + isCurrent + '">' + title + '</span><br />';
             } else if ('range' in type) {
-                var textName =  $filter('stringToSlug')(name ? v.textName : label);
+                //var textName =  $filter('stringToSlug')(name ? v.textName : label);
+                var textName = v.textName;
                 var min = type.range.min;
                 var max = type.range.max;
                 var disabled = ' disabled="true"';
@@ -304,16 +308,16 @@ angApp.directive('expertCommandInput', function($filter) {
                 } else {
                     checked = '';
                 }
-                
+
                 if (hideRadio) {
                     disabled = '';
                 }
 
 //                input += '<input name="radio_' + inName + '" class="commands-data-chbx" type="radio" value=""' + checked + ' /> ' + title + ' <input type="text" name="radio_' + inName + '_txt" class="form-control commands-data-txt-chbx" value="' + min + '" title=" min: ' + min + ', max: ' + max + '"'+ disabled + ' /><br />'; 
                 if (!hideRadio) {
-                    input += '<div><input name="' + inName + '" class="commands-data-chbx commands-data-chbx-hastxt" type="radio" value=""' + checked + ' /> <span class="commands-label' + isCurrent + '">' + title + '</span> <input type="text" name="' + textName + '" class="form-control commands-data-txt-chbx" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '"' + disabled + ' /> (min: ' + min + ', max: ' + max + ')</div>';
+                    input += '<div><input name="' + inName + '" class="commands-data-chbx commands-data-chbx-hastxt" type="radio" value="N/A"' + checked + ' /> <span class="commands-label' + isCurrent + '">' + title + '</span> <input type="text" name="' + textName + '" class="form-control commands-data-txt-chbx" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '"' + disabled + ' /> (min: ' + min + ', max: ' + max + ')</div>';
                 } else {
-                    input +=  (title !== '' ? '<span class="commands-title-block">' + title + ' </span>':'') + '<input type="text" name="' + textName + '" class="form-control" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '" /> (min: ' + min + ', max: ' + max + ')<br />';
+                    input += (title !== '' ? '<span class="commands-title-block">' + title + ' </span>' : '') + '<input type="text" name="' + textName + '" class="form-control" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '" /> (min: ' + min + ', max: ' + max + ')<br />';
                 }
 
 
@@ -327,14 +331,14 @@ angApp.directive('expertCommandInput', function($filter) {
     }
 
     // Get dropdown list
-    function getDropdown(label, enums, defaultValue, name,currValue) {
+    function getDropdown(label, enums, defaultValue, name, currValue) {
         var input = '';
         var cValue = (currValue !== undefined ? currValue : defaultValue);
         var inName = $filter('stringToSlug')(name ? name : label);
         input += '<label>' + label + '</label><br />';
         input += '<select name="select_' + inName + '" class="form-control">';
         var cnt = 1;
-        angular.forEach(enums.enumof, function(v, k) {
+        angular.forEach(enums.enumof, function (v, k) {
             var title = v.label;
             var type = v.type;
             var value;
@@ -356,13 +360,13 @@ angApp.directive('expertCommandInput', function($filter) {
     }
 
     // Get constant 
-    function getConstant(label, type, defaultValue, name,currValue) {
+    function getConstant(label, type, defaultValue, name, currValue) {
         var input = '';
         var inName = $filter('stringToSlug')(name ? name : label);
         input += '<label>' + label + '</label><br />';
         if (type.constant.length > 0) {
             input += '<select name="select_' + inName + '" class="form-control">';
-            angular.forEach(type.constant, function(v, k) {
+            angular.forEach(type.constant, function (v, k) {
 
                 input += '<option value="' + v.type.constant.value + '"> ' + v.label + '</option>';
             });
@@ -382,34 +386,34 @@ angApp.directive('expertCommandInput', function($filter) {
         input += '<input class="form-control" name="' + inName + '" type="text" class="form-control" value="' + value + '" />';
         return input;
     }
-    
+
     // Get bitset
-    function getBitset(label, enums, currValue,name) {
+    function getBitset(label, enums, currValue, name) {
         if (!enums) {
             return;
         }
-        //var inName = $filter('stringToSlug')(name ? name : label);
         var input = '';
-        var bitArray = $filter('getBitArray')(currValue,32);
-         input += '<label>' + label + '</label><br />';
-          var setVal = 0;//(currValue !== undefined ? currValue : 0);
-         angular.forEach(enums.bitset, function(v, k) {
-              var inName =  $filter('stringToSlug')(name ? v.name : label);
-             var title = v.label||'---';
+        var bitArray = $filter('getBitArray')(currValue, 32);
+        input += '<label>' + label + '</label><br />';
+        var setVal = 0;//(currValue !== undefined ? currValue : 0);
+        angular.forEach(enums.bitset, function (v, k) {
+            // var inName =  $filter('stringToSlug')(name ? v.name : label);
+            var inName = name ? name : v.name;
+            var title = v.label || '---';
             var type = v.type;
             var inBitArray = bitArray[k];
-             var checked = (inBitArray ? ' checked="checked"' : '');
+            var checked = (inBitArray ? ' checked="checked"' : '');
             if ('bitrange' in type) {
-                 var min = type.bitrange.bit_from;
+                var min = type.bitrange.bit_from;
                 var max = type.bitrange.bit_to;
-                 input += '<div><input type="text" name="' +  inName +'" class="form-control commands-data-txt-chbx_" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '" /> (min: ' + min + ', max: ' + max + ')</div>';
-             } else if('bitcheck' in type){
-                 input += '<input name="' +  inName +'" class="commands-data-chbx" type="checkbox" value="' + type.bitcheck.bit + '"' + checked + ' /> ('+ type.bitcheck.bit + ')'
-                 + '<span class="commands-label"> ' + title + '</span><br />';
-            }else{
-               input += ''; 
+                input += '<div><input type="text" name="' + inName + '" class="form-control commands-data-txt-chbx_" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '" /> (min: ' + min + ', max: ' + max + ')</div>';
+            } else if ('bitcheck' in type) {
+                input += '<input name="' + inName + '" class="commands-data-chbx" type="checkbox" value="' + type.bitcheck.bit + '"' + checked + ' /> (' + type.bitcheck.bit + ')'
+                        + '<span class="commands-label"> ' + title + '</span><br />';
+            } else {
+                input += '';
             }
-         });
+        });
         return input;
     }
 
@@ -438,18 +442,18 @@ angApp.directive('expertCommandInput', function($filter) {
             name: '=',
             divId: '='
         },
-        link: function(scope, element, attrs) {
-
+        link: function (scope, element, attrs) {
             var input = '';
             if (!scope.collection) {
                 return;
             }
             var label = scope.collection.label;
             var type = scope.collection.type;
-            var name = (scope.collection.name || scope.name);
+            //var name = (scope.collection.name || scope.name);
+            var name = scope.name;
             var hideRadio = scope.collection.hideRadio;
             if (scope.isDropdown) {
-                input = getDropdown(label, type, scope.defaultValue, name,scope.currValue);
+                input = getDropdown(label, type, scope.defaultValue, name, scope.currValue);
                 scope.input = input;
                 return;
             }
@@ -460,13 +464,13 @@ angApp.directive('expertCommandInput', function($filter) {
                 } else if ('node' in type) {
                     input = getNode(label, scope.getNodeDevices(), scope.currNodeValue, name);
                 } else if ('enumof' in type) {
-                    input = getEnum(label, type, scope.defaultValue, name, hideRadio,scope.currValue);
+                    input = getEnum(label, type, scope.defaultValue, name, hideRadio, scope.currValue);
                 } else if ('bitset' in type) {
-                    input = getBitset(label, type,scope.currValue,name);
+                    input = getBitset(label, type, scope.currValue, name);
                 } else if ('constant' in type) {
-                    input = getConstant(label, type, scope.defaultValue, name,scope.currValue);
+                    input = getConstant(label, type, scope.defaultValue, name, scope.currValue);
                 } else if ('string' in type) {
-                    input = getString(label, scope.values, name,scope.currValue);
+                    input = getString(label, scope.values, name, scope.currValue);
                 } else {
                     input = getDefault(label);
                 }
@@ -479,7 +483,7 @@ angApp.directive('expertCommandInput', function($filter) {
     };
 });
 
-angApp.directive('configDefaultValue', function() {
+angApp.directive('configDefaultValue', function () {
     return {
         restrict: "E",
         replace: true,
@@ -489,7 +493,7 @@ angApp.directive('configDefaultValue', function() {
             defaultValue: '=',
             showDefaultValue: '='
         },
-        link: function(scope, element, attrs) {
+        link: function (scope, element, attrs) {
             scope.input = scope.showDefaultValue;
             var input = '';
             if (!scope.collection) {
@@ -505,8 +509,8 @@ angApp.directive('configDefaultValue', function() {
                 } else if ('node' in type) {
                     //input = getNode(label, scope.getNodeDevices(), 'null', name);
                 } else if ('enumof' in type) {
-                    input = getEnum(type, scope.defaultValue,scope.showDefaultValue);
-                   
+                    input = getEnum(type, scope.defaultValue, scope.showDefaultValue);
+
                 } else if ('constant' in type) {
                     //input = getConstant(label, type, scope.defaultValue, name);
                 } else if ('string' in type) {
@@ -517,7 +521,7 @@ angApp.directive('configDefaultValue', function() {
                     input = scope.showDefaultValue;
                 }
                 scope.input = input;
-                
+
                 return;
             }
 
@@ -527,23 +531,23 @@ angApp.directive('configDefaultValue', function() {
     };
 
     // Get enumerators
-    function getEnum(enums, defaultValue,showDefaultValue) {
+    function getEnum(enums, defaultValue, showDefaultValue) {
         //console.log(enums)
         var input = showDefaultValue;
         if (!enums) {
             return;
         }
-        angular.forEach(enums.enumof, function(v, k) {
-          
+        angular.forEach(enums.enumof, function (v, k) {
+
             var title = v.label ? v.label : showDefaultValue;
             var type = v.type;
-             // debugger; 
+            // debugger; 
             if ('fix' in type) {
                 if (type.fix.value == showDefaultValue) {
                     input = title;
                     return;
                 }
- 
+
             } else if ('range' in type) {
                 var min = type.range.min;
                 var max = type.range.max;
@@ -555,28 +559,28 @@ angApp.directive('configDefaultValue', function() {
             }
 
         });
-        
+
         return input;
     }
-    
+
     // Get bitset
-    function getBitset(enums, defaultValue,showDefaultValue) {
+    function getBitset(enums, defaultValue, showDefaultValue) {
         //console.log(enums)
         var input = showDefaultValue;
         if (!enums) {
             return;
         }
-        angular.forEach(enums.enumof, function(v, k) {
-          
+        angular.forEach(enums.enumof, function (v, k) {
+
             var title = v.label ? v.label : showDefaultValue;
             var type = v.type;
-             // debugger; 
+            // debugger; 
             if ('fix' in type) {
                 if (type.fix.value == showDefaultValue) {
                     input = title;
                     return;
                 }
- 
+
             } else if ('range' in type) {
                 var min = type.range.min;
                 var max = type.range.max;
@@ -588,12 +592,12 @@ angApp.directive('configDefaultValue', function() {
             }
 
         });
-        
+
         return input;
     }
 });
 
-angApp.directive('configValueTitle', function() {
+angApp.directive('configValueTitle', function () {
     return {
         restrict: "A",
         //replace: true,
@@ -602,14 +606,14 @@ angApp.directive('configValueTitle', function() {
             collection: '=',
             showValue: '='
         },
-        link: function(scope, element, attrs) {
+        link: function (scope, element, attrs) {
             scope.input = scope.showValue;
             var input = '';
             if (!scope.collection) {
                 return;
             }
             var type = scope.collection.type;
-            
+
             if (type) {
                 if ('range' in type) {
                     //input = getText(label, scope.values, type.range.min, type.range.max, name);
@@ -617,7 +621,7 @@ angApp.directive('configValueTitle', function() {
                     //input = getNode(label, scope.getNodeDevices(), 'null', name);
                 } else if ('enumof' in type) {
                     input = getEnum(type, scope.showValue);
-                   
+
                 } else if ('constant' in type) {
                     //input = getConstant(label, type, scope.defaultValue, name);
                 } else if ('string' in type) {
@@ -626,7 +630,7 @@ angApp.directive('configValueTitle', function() {
                     input = scope.showValue;
                 }
                 scope.input = input;
-                
+
                 return;
             }
 
@@ -642,17 +646,17 @@ angApp.directive('configValueTitle', function() {
         if (!enums) {
             return;
         }
-        angular.forEach(enums.enumof, function(v, k) {
-          
+        angular.forEach(enums.enumof, function (v, k) {
+
             var title = v.label ? v.label : showValue;
             var type = v.type;
-             // debugger; 
+            // debugger; 
             if ('fix' in type) {
                 if (type.fix.value == showValue) {
                     input = title;
                     return;
                 }
- 
+
             } else if ('range' in type) {
                 var min = type.range.min;
                 var max = type.range.max;
@@ -664,32 +668,32 @@ angApp.directive('configValueTitle', function() {
             }
 
         });
-        
+
         return input;
     }
 });
 
 angApp.directive('fileModel', ['$parse', function ($parse) {
-    return {
-        restrict: 'A',
-        link: function(scope, element, attrs) {
-            var model = $parse(attrs.fileModel);
-            var modelSetter = model.assign;
-            
-            element.bind('change', function(){
-                scope.$apply(function(){
-                    modelSetter(scope, element[0].files[0]);
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                var model = $parse(attrs.fileModel);
+                var modelSetter = model.assign;
+
+                element.bind('change', function () {
+                    scope.$apply(function () {
+                        modelSetter(scope, element[0].files[0]);
+                    });
                 });
-            });
-        }
-    };
-}]);
+            }
+        };
+    }]);
 
 /*** Fixes ***/
 // js holder fix
-angApp.directive('jsholderFix', function() {
+angApp.directive('jsholderFix', function () {
     return {
-        link: function(scope, element, attrs) {
+        link: function (scope, element, attrs) {
             Holder.run({images: element[0], nocss: true});
         }
     };

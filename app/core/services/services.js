@@ -548,7 +548,7 @@ appService.service('deviceService', function($filter, $log, _) {
                         type: {
                             enumof: param_struct_arr
                         },
-                        name: 'input_' + nodeId + '_' + conf_num,
+                        name: 'constant_input_' + nodeId + '_' + conf_num,
                         description: conf_description,
                         updateTime: updateTime,
                         isUpdated: isUpdated,
@@ -573,7 +573,7 @@ appService.service('deviceService', function($filter, $log, _) {
                             type: {
                                 noval: null
                             },
-                            name: 'input_' + nodeId + '_' + conf_num,
+                            name: 'range_input_' + nodeId + '_' + conf_num,
                             description: conf_description,
                             updateTime: updateTime,
                             isUpdated: isUpdated,
@@ -617,7 +617,7 @@ appService.service('deviceService', function($filter, $log, _) {
                                 var rangeVal = {
                                     label: value_description,
                                     name: 'range_input_' + nodeId + '_' + conf_num,
-                                    textName: 'range_input_text_' + '_' + rangeParamCnt +'_' + nodeId + '_' + conf_num,
+                                    textName: 'range_input_text_' + rangeParamCnt +'_' + nodeId + '_' + conf_num,
                                     type: {
                                         range: {
                                             min: value_from,
@@ -632,7 +632,7 @@ appService.service('deviceService', function($filter, $log, _) {
                         if (value_description != '') {
                             param_struct_arr.push({
                                 label: value_description,
-                                name: 'fix_input_' + nodeId + '_' + conf_num,
+                                name: 'range_input_' + nodeId + '_' + conf_num,
                                 type: {
                                     fix: {
                                         value: value_from
@@ -651,7 +651,7 @@ appService.service('deviceService', function($filter, $log, _) {
                                 enumof: param_struct_arr
                             },
                             hideRadio: false,
-                            name: 'input_' + nodeId + '_' + conf_num,
+                            name: 'range_input_' + nodeId + '_' + conf_num,
                             description: conf_description,
                             updateTime: updateTime,
                             isUpdated: isUpdated,
@@ -670,7 +670,7 @@ appService.service('deviceService', function($filter, $log, _) {
                             type: {
                                 enumof: param_struct_arr
                             },
-                            name: 'input_' + nodeId + '_' + conf_num,
+                            name: 'range_input_' + nodeId + '_' + conf_num,
                             hideRadio: true,
                             description: conf_description,
                             updateTime: updateTime,
