@@ -1,4 +1,5 @@
 {
+    "set_all_default": "Set all to default",
     "direct": "Direct connection",
     "routed": "Communication through 1 node. There are several routes",
     "badly_routed": "Communication through 1 node. There is 1 route",

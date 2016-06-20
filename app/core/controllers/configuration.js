@@ -315,7 +315,7 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
     }
 });
 // Device configuration Configuration controller
-appController.controller('ConfigConfigurationController', function ($scope, $routeParams, $location, $cookies, $filter, $http, $timeout, dataService, deviceService, myCache, _) {
+appController.controller('ConfigConfigurationController', function ($scope, $routeParams, $location, $cookies, $filter, $http, $timeout, $route, dataService, deviceService, myCache, _) {
     $scope.devices = [];
     $scope.deviceId = 0;
     $scope.activeTab = 'configuration';
@@ -426,6 +426,27 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
     };
 
     /**
+     * Set all values to default
+     */
+    $scope.setAllToDefault = function (cmd, cfgValues, hasBattery) {
+        var dataArray = {};
+        angular.forEach(cfgValues, function (v, k) {
+            dataArray[v.confNum] = {
+                value: $filter('setConfigValue')(v.showDefaultValue),
+                name: v.name
+                        //cfg: v
+            };
+        });
+        //console.log(dataArray)
+        $scope.submitApplyConfigCfg(dataArray, cmd, cfgValues, hasBattery);
+        $timeout(function () {
+            $route.reload();
+        }, 3000);
+
+    };
+
+
+    /**
      * Apply Config action
      */
     $scope.submitApplyConfigCfg = function (form, cmd, cfgValues, hasBattery, confNum, setDefault) {
@@ -434,52 +455,55 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         if (hasBattery) {
             alert($scope._t('conf_apply_battery'));
         }
-        var data = $('#' + form).serializeArray();
-        var dataArray = {};
 
-        angular.forEach(data, function (v, k) {
-            if (!confNum || v.value === 'N/A') {
-                return;
-            }
-            var value = $filter('setConfigValue')(v.value);
-            var inputConfNum = v.name.match(/\d+$/)[0];
-            var inputType = v.name.split('_')[0];
-            if (!inputConfNum) {
-                return;
-            }
-            var cfg = _.findWhere(cfgValues, {confNum: inputConfNum.toString()});
-            if ('bitset' in cfg.type) {
-                if (inputType === 'bitrange') {
-                    var bitRange = _.findWhere(cfg.type.bitset, {name: v.name});
-                    value = (value === '' ? 0 : parseInt(value));
-                    if (value < bitRange.type.bitrange.bit_from && value > 0) {
-                        value = bitRange.type.bitrange.bit_from;
-                    } else if (value > bitRange.type.bitrange.bit_to) {
-                        value = bitRange.type.bitrange.bit_to;
+        var dataArray = _.isObject(form) ? form : {};
+
+        if (!_.isObject(form)) {
+            data = $('#' + form).serializeArray();
+            angular.forEach(data, function (v, k) {
+                if (!confNum || v.value === 'N/A') {
+                    return;
+                }
+                var value = $filter('setConfigValue')(v.value);
+                var inputConfNum = v.name.match(/\d+$/)[0];
+                var inputType = v.name.split('_')[0];
+                if (!inputConfNum) {
+                    return;
+                }
+                var cfg = _.findWhere(cfgValues, {confNum: inputConfNum.toString()});
+                if ('bitset' in cfg.type) {
+                    if (inputType === 'bitrange') {
+                        var bitRange = _.findWhere(cfg.type.bitset, {name: v.name});
+                        value = (value === '' ? 0 : parseInt(value));
+                        if (value < bitRange.type.bitrange.bit_from && value > 0) {
+                            value = bitRange.type.bitrange.bit_from;
+                        } else if (value > bitRange.type.bitrange.bit_to) {
+                            value = bitRange.type.bitrange.bit_to;
+                        }
+                    } else {
+                        value = Math.pow(2, value);
+
                     }
+
+                }
+                /*else if('enumof' in cfg.type){
+                 var enumof = _.findWhere(cfg.type.enumof,{name: v.name});
+                 
+                 }*/
+                if (dataArray[inputConfNum]) {
+                    dataArray[inputConfNum].value += value;
                 } else {
-                    value = Math.pow(2, value);
+                    dataArray[inputConfNum] = {
+                        value: value,
+                        name: v.name
+                                //cfg: cfg
+                    };
+
 
                 }
 
-            }
-            /*else if('enumof' in cfg.type){
-             var enumof = _.findWhere(cfg.type.enumof,{name: v.name});
-             
-             }*/
-            if (dataArray[inputConfNum]) {
-                dataArray[inputConfNum].value += value;
-            } else {
-                dataArray[inputConfNum] = {
-                    value: value,
-                    name: v.name,
-                    cfg: cfg
-                };
-
-
-            }
-
-        });
+            });
+        }
         angular.forEach(dataArray, function (n, nk) {
             var obj = {};
             var parameter;
