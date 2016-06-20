@@ -9,12 +9,12 @@
         </div>
 
         <!-- config_cont -->
-        <div class="cfg-block" id="config_cont" ng-if="configCont">
+         <!--<div class="cfg-block" id="config_cont" ng-if="configCont">
 
             <h4>{{_t('configurations_list')}}</h4>
             <div class="alert-list">
         <p class="text-danger text-alert-list" ng-repeat="v in configCont" ng-if="v.configCconfigValue != v.configZwaveValue">{{v.label}}: {{_t('value_changed_to')}} <strong config-value-title collection='v' show_value='v.configCconfigValue'></strong> {{_t('value_not_stored_indevice')}}</p>
-    </div>
+    </div> -->
             <div class="cfg-block-content" ng-init="formName = 'form_config'">
                 <form 
                     name="{{formName}}" 
@@ -23,15 +23,20 @@
                     role="form"
                     ng-submit="submitApplyConfigCfg(formName,{'id': deviceId,'instance': '0','commandclass': '70','command': 'Set'}, configCont, hasBattery)" 
                     novalidate>
+                    <div class="cfg-block">
+                        
                     <a
                         class="btn btn-primary spin-true"
                         ng-click="updateFromDeviceCfg('devices[' + deviceId + '].instances[0].commandClasses[0x70].Get', configCont,deviceId)" 
-                        >{{_t('btn_update_from_device')}} <i class="fa fa-spinner fa-spin"></i></a>
+                        >{{_t('btn_update_from_device')}} <i class="fa fa-spinner fa-spin"></i>
+                    </a>
                     <button 
                         type="submit" 
-                        class="btn btn-info spin-true" 
-                        >{{_t('apply_config')}} <i class="fa fa-spinner fa-spin"></i></button> 
-                    <div class="cfg-control-content" id="cfg_control_{{v.confNum}}" ng-repeat="v in configCont">
+                        class="btn btn-info spin-true">
+                        {{_t('apply_config')}} <i class="fa fa-spinner fa-spin"></i>
+                    </button> 
+                    </div>
+                    <div class="cfg-control-content" id="cfg_control_{{v.confNum}}" ng-repeat="v in configCont track by $index">
                         
                         <div class="form-inline">
                             <expert-command-input
@@ -51,12 +56,6 @@
 
                             <span> | {{_t('default_value_is')}}: <config-default-value collection='v' show_default_value='v.showDefaultValue' default_value='v.defaultValue'></config-default-value>
                                 </span>
-                            <!-- <span ng-if="v.showDefaultValue > -1"> | {{_t('default_value_is')}}: {{v.showDefaultValue}}</span>
-                            <span ng-if="v.defaultValue === ''"> | {{_t('param_default_value_undefined')}}</span>-->
-                             <!--<span ng-if="v.description">  | 
-                                <a href="" ng-click="goInfo = !goInfo"><i class="fa fa-info-circle fa-lg"></i></a> 
-                                <em ng-show="goInfo">{{v.description}}</em>
-                            </span>-->
                         </p>
                          <br />
                          <p ng-if="v.description">
@@ -90,7 +89,7 @@
                     <a
                         href="" 
                         class="btn btn-primary spin-true"
-                        ng-click="updateFromDevice(wakeupCont.cmd + '.Get()',hasBattery)"
+                        ng-click="updateFromDevice(wakeupCont.cmd + '.Get()',hasBattery,deviceId)"
                         >{{_t('btn_update_from_device')}} <i class="fa fa-spinner fa-spin"></i></a>
                     <button 
                         type="submit" 
@@ -98,7 +97,7 @@
                         >{{_t('apply_config')}} <i class="fa fa-spinner fa-spin"></i></button> 
                     <div class="clearfix"></div>
                     <div class="cfg-control-content">
-                        <div ng-repeat="v in wakeupCont.params">
+                        <div ng-repeat="v in wakeupCont.params track by $index">
                             <div class="form-inline" >
                                 <expert-command-input 
                                     collection='v'
@@ -134,13 +133,13 @@
                     novalidate>
                     <a
                         class="btn btn-primary spin-true"
-                        ng-click="updateFromDevice(switchAllCont.cmd + '.Get()',hasBattery)"
+                        ng-click="updateFromDevice(switchAllCont.cmd + '.Get()',hasBattery,deviceId)"
                         >{{_t('btn_update_from_device')}} <i class="fa fa-spinner fa-spin"></i></a>
                     <button 
                         type="submit" 
                         class="btn btn-info spin-true" 
                         >{{_t('apply_config')}} <i class="fa fa-spinner fa-spin"></i></button> 
-                    <div class="cfg-control-content" ng-repeat="v in switchAllCont.params">
+                    <div class="cfg-control-content" ng-repeat="v in switchAllCont.params track by $index">
                         <div class="form-inline" >
                             <expert-command-input 
                                 collection='v'
@@ -172,13 +171,13 @@
                     novalidate>
                     <a
                         class="btn btn-primary spin-true"
-                        ng-click="updateFromDevice(protectionCont.cmd + '.Get()',hasBattery)"
+                        ng-click="updateFromDevice(protectionCont.cmd + '.Get()',hasBattery,deviceId)"
                         >{{_t('btn_update_from_device')}} <i class="fa fa-spinner fa-spin"></i></a>
                     <button 
                         type="submit" 
                         class="btn btn-info spin-true"
                         >{{_t('apply_config')}} <i class="fa fa-spinner fa-spin"></i></button> 
-                    <div class="cfg-control-content" ng-repeat="v in protectionCont.params">
+                    <div class="cfg-control-content" ng-repeat="v in protectionCont.params track by $index">
                         <div class="form-inline" >
                             <expert-command-input 
                                 collection='v'

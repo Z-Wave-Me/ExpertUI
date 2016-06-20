@@ -144,7 +144,7 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         $scope.modelSelectZddx = file;
         $(target).html(image);
     };
-    
+
     // Run cmd
     $scope.runCmd = function (cmd) {
         dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
@@ -394,15 +394,15 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
      * @param {string} cmd
      * @returns {undefined}
      */
-    $scope.updateFromDevice = function (cmd, hasBattery) {
+    $scope.updateFromDevice = function (cmd, hasBattery, deviceId) {
         if (hasBattery) {
             alert($scope._t('conf_apply_battery'));
         }
         dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
-        $scope.refresh = true;
+        $scope.refresh(deviceId);
         var timeOut;
         timeOut = $timeout(function () {
-            $scope.refresh = false;
+            dataService.cancelZwaveDataInterval();
         }, 10000);
         return;
     };
@@ -436,12 +436,12 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         }
         var data = $('#' + form).serializeArray();
         var dataArray = {};
-        
+
         angular.forEach(data, function (v, k) {
-            if(!confNum || v.value === 'N/A'){
+            if (!confNum || v.value === 'N/A') {
                 return;
             }
-           var value = $filter('setConfigValue')(v.value);
+            var value = $filter('setConfigValue')(v.value);
             var inputConfNum = v.name.match(/\d+$/)[0];
             var inputType = v.name.split('_')[0];
             if (!inputConfNum) {
@@ -449,24 +449,24 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             }
             var cfg = _.findWhere(cfgValues, {confNum: inputConfNum.toString()});
             if ('bitset' in cfg.type) {
-                if(inputType === 'bitrange'){
-                    var bitRange = _.findWhere(cfg.type.bitset,{name: v.name});
-                    value = (value === ''? 0: parseInt(value));
-                    if(value < bitRange.type.bitrange.bit_from && value > 0){
-                       value =  bitRange.type.bitrange.bit_from;
-                    }else if(value > bitRange.type.bitrange.bit_to){
-                         value =  bitRange.type.bitrange.bit_to;
+                if (inputType === 'bitrange') {
+                    var bitRange = _.findWhere(cfg.type.bitset, {name: v.name});
+                    value = (value === '' ? 0 : parseInt(value));
+                    if (value < bitRange.type.bitrange.bit_from && value > 0) {
+                        value = bitRange.type.bitrange.bit_from;
+                    } else if (value > bitRange.type.bitrange.bit_to) {
+                        value = bitRange.type.bitrange.bit_to;
                     }
-                }else{
-                     value = Math.pow(2,value);
-                     
+                } else {
+                    value = Math.pow(2, value);
+
                 }
-               
+
             }
             /*else if('enumof' in cfg.type){
-                var enumof = _.findWhere(cfg.type.enumof,{name: v.name});
-               
-            }*/
+             var enumof = _.findWhere(cfg.type.enumof,{name: v.name});
+             
+             }*/
             if (dataArray[inputConfNum]) {
                 dataArray[inputConfNum].value += value;
             } else {
@@ -475,8 +475,8 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                     name: v.name,
                     cfg: cfg
                 };
-                
-               
+
+
             }
 
         });

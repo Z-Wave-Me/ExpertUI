@@ -8,6 +8,7 @@ This User Interfaces allows to operate a Smart Home Network based on Z-Wave devi
 - Descriptions about colors of Routing Table #154.
 
 #### Fixes
+- Can't configure second parameter #174.
 - Thermostat widget sends wrong command #146.
 - Associations tab does not work for devices with multiple instances/endpoints #167.
 - Expert commands use input field from instance 0, regardless of the actual instance #168.
