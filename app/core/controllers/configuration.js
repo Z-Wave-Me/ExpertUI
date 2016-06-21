@@ -2,31 +2,6 @@
  * Configuration controller
  * @author Martin Vach
  */
-// Redirect to new version of configuration
-appController.controller('ConfigRedirectController', function ($routeParams, $location, $cookies, $filter) {
-    var configUrl = 'configuration/interview';
-    var nodeId = function () {
-        var id = 1;
-        if ($routeParams.nodeId == undefined) {
-            id = (angular.isDefined($cookies.configuration_id) ? $cookies.configuration_id : 1);
-        } else {
-            id = $routeParams.nodeId;
-        }
-        return id;
-    };
-    if (nodeId() == $cookies.configuration_id) {
-        if (angular.isDefined($cookies.config_url)) {
-            configUrl = $cookies.config_url;
-        }
-    } else {
-        configUrl = configUrl + '/' + nodeId();
-    }
-//    console.log('$routeParams.nodeId: ' +  nodeId())
-//    console.log('$cookies.configuration_id: ' + $cookies.configuration_id)
-//    console.log(configUrl)
-//    return;
-    $location.path(configUrl);
-});
 // Device configuration Interview controller
 appController.controller('ConfigInterviewController', function ($scope, $routeParams, $route, $location, $cookies, $filter, $http, dataService, deviceService, myCache) {
     $scope.devices = [];
@@ -371,7 +346,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
     // Refresh data
     $scope.refresh = function (nodeId) {
         dataService.joinedZwaveData(function (data) {
-            setData(data.joined, nodeId, true);
+            //setData(data.joined, nodeId, true);
         });
     };
     //$scope.refresh($routeParams.nodeId); 
@@ -394,23 +369,26 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
      * @param {string} cmd
      * @returns {undefined}
      */
-    $scope.updateFromDevice = function (cmd, hasBattery, deviceId) {
+    $scope.updateFromDevice = function (cmd, hasBattery, deviceId,form) {
         if (hasBattery) {
             alert($scope._t('conf_apply_battery'));
         }
         dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
         $scope.refresh(deviceId);
-        var timeOut;
-        timeOut = $timeout(function () {
+        
+       $('#'+form+' .cfg-control-content :input').prop('disabled', true);
+        $timeout(function () {
             dataService.cancelZwaveDataInterval();
-        }, 10000);
+            $scope.load($routeParams.nodeId);
+             $('#'+form+' .cfg-control-content :input').prop('disabled', false);
+        }, 5000);
         return;
     };
 
     /**
      * Update from device - configuration section
      */
-    $scope.updateFromDeviceCfg = function (cmd, cfg, deviceId) {
+    $scope.updateFromDeviceCfg = function (cmd, cfg, deviceId,form) {
         angular.forEach(cfg, function (v, k) {
             if (v.confNum) {
                 var request = cmd + '(' + v.confNum + ')';
@@ -418,17 +396,18 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             }
         });
         $scope.refresh(deviceId);
-        var timeOut;
-        timeOut = $timeout(function () {
+         $('#'+form+' .cfg-control-content :input').prop('disabled', true);
+        $timeout(function () {
             dataService.cancelZwaveDataInterval();
-        }, 10000);
+            $scope.load($routeParams.nodeId);
+        }, 3000);
         return;
     };
 
     /**
      * Set all values to default
      */
-    $scope.setAllToDefault = function (cmd, cfgValues, hasBattery) {
+    $scope.setAllToDefault = function (cmd, cfgValues, hasBattery,form) {
         var dataArray = {};
         angular.forEach(cfgValues, function (v, k) {
             dataArray[v.confNum] = {
@@ -438,10 +417,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             };
         });
         //console.log(dataArray)
-        $scope.submitApplyConfigCfg(dataArray, cmd, cfgValues, hasBattery);
-        $timeout(function () {
-            $route.reload();
-        }, 3000);
+        $scope.submitApplyConfigCfg(form, cmd, cfgValues, hasBattery,null,false,dataArray);
 
     };
 
@@ -449,19 +425,19 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
     /**
      * Apply Config action
      */
-    $scope.submitApplyConfigCfg = function (form, cmd, cfgValues, hasBattery, confNum, setDefault) {
+    $scope.submitApplyConfigCfg = function (form, cmd, cfgValues, hasBattery, confNum, setDefault,hasData) {
         var xmlData = [];
         var configValues = [];
         if (hasBattery) {
             alert($scope._t('conf_apply_battery'));
         }
 
-        var dataArray = _.isObject(form) ? form : {};
+        var dataArray = _.isObject(hasData) ? hasData : {};
 
-        if (!_.isObject(form)) {
+        if (!_.isObject(hasData)) {
             data = $('#' + form).serializeArray();
             angular.forEach(data, function (v, k) {
-                if (!confNum || v.value === 'N/A') {
+                if (v.value === 'N/A') {
                     return;
                 }
                 var value = $filter('setConfigValue')(v.value);
@@ -471,6 +447,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                     return;
                 }
                 var cfg = _.findWhere(cfgValues, {confNum: inputConfNum.toString()});
+                if(cfg) {
                 if ('bitset' in cfg.type) {
                     if (inputType === 'bitrange') {
                         var bitRange = _.findWhere(cfg.type.bitset, {name: v.name});
@@ -490,6 +467,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                  var enumof = _.findWhere(cfg.type.enumof,{name: v.name});
                  
                  }*/
+                }
                 if (dataArray[inputConfNum]) {
                     dataArray[inputConfNum].value += value;
                 } else {
@@ -593,11 +571,17 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
 
         //debugger;
         $scope.refresh(cmd['id']);
-        var timeOut;
-        timeOut = $timeout(function () {
+        if (confNum) {
+             $('#cfg_control_'+confNum+' :input').prop('disabled', true);
+        }else{
+             $('#'+form+' .cfg-control-content :input').prop('disabled', true);
+        }
+       $timeout(function () {
+            $scope.load($routeParams.nodeId);
             $('button .fa-spin,a .fa-spin').fadeOut(1000);
+             $('#'+form+' .cfg-control-content :input').prop('disabled', false);
             dataService.cancelZwaveDataInterval();
-        }, 10000);
+        }, 3000);
         return;
     };
 

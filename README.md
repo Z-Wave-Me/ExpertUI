@@ -13,7 +13,7 @@ This User Interfaces allows to operate a Smart Home Network based on Z-Wave devi
 - Thermostat widget sends wrong command #146.
 - Associations tab does not work for devices with multiple instances/endpoints #167.
 - Expert commands use input field from instance 0, regardless of the actual instance #168.
-- In Association tab Association to 118:0 write # 118.0 and not just # 118. #173.
+- In Association tab Association to 118:0 write 118.0 and not just 118. #173.
 - Battery Icon Update Problem #179.
 - Wrong handling of Expert Commands prototypes #184.
 - New device name not showed in Configuration for field #183.

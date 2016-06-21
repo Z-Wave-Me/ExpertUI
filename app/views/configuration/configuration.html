@@ -27,7 +27,7 @@
                         
                     <a
                         class="btn btn-primary spin-true"
-                        ng-click="updateFromDeviceCfg('devices[' + deviceId + '].instances[0].commandClasses[0x70].Get', configCont,deviceId)" 
+                        ng-click="updateFromDeviceCfg('devices[' + deviceId + '].instances[0].commandClasses[0x70].Get', configCont,deviceId,formName)" 
                         >{{_t('btn_update_from_device')}} <i class="fa fa-spinner fa-spin"></i>
                     </a>
                     <button 
@@ -38,11 +38,11 @@
                         <button 
                         type="button" 
                         class="btn btn-info spin-true"
-                         ng-click="setAllToDefault({'id': deviceId,'instance': '0','commandclass': '70','command': 'Set'},configCont,hasBattery)" >
+                         ng-click="setAllToDefault({'id': deviceId,'instance': '0','commandclass': '70','command': 'Set'},configCont,hasBattery,formName)" >
                         {{_t('set_all_default')}} <i class="fa fa-spinner fa-spin"></i>
                     </button> 
                     </div>
-                    <div class="cfg-control-content" id="cfg_control_{{v.confNum}}" ng-repeat="v in configCont track by $index">
+                    <div class="cfg-control-content" id="cfg_control_{{v.confNum}}" ng-repeat="v in configCont">
                         
                         <div class="form-inline">
                             <expert-command-input
@@ -96,7 +96,7 @@
                     <a
                         href="" 
                         class="btn btn-primary spin-true"
-                        ng-click="updateFromDevice(wakeupCont.cmd + '.Get()',hasBattery,deviceId)"
+                        ng-click="updateFromDevice(wakeupCont.cmd + '.Get()',hasBattery,deviceId,formName)"
                         >{{_t('btn_update_from_device')}} <i class="fa fa-spinner fa-spin"></i></a>
                     <button 
                         type="submit" 
@@ -104,7 +104,7 @@
                         >{{_t('apply_config')}} <i class="fa fa-spinner fa-spin"></i></button> 
                     <div class="clearfix"></div>
                     <div class="cfg-control-content">
-                        <div ng-repeat="v in wakeupCont.params track by $index">
+                        <div ng-repeat="v in wakeupCont.params">
                             <div class="form-inline" >
                                 <expert-command-input 
                                     collection='v'
@@ -140,13 +140,13 @@
                     novalidate>
                     <a
                         class="btn btn-primary spin-true"
-                        ng-click="updateFromDevice(switchAllCont.cmd + '.Get()',hasBattery,deviceId)"
+                        ng-click="updateFromDevice(switchAllCont.cmd + '.Get()',hasBattery,deviceId,formName)"
                         >{{_t('btn_update_from_device')}} <i class="fa fa-spinner fa-spin"></i></a>
                     <button 
                         type="submit" 
                         class="btn btn-info spin-true" 
                         >{{_t('apply_config')}} <i class="fa fa-spinner fa-spin"></i></button> 
-                    <div class="cfg-control-content" ng-repeat="v in switchAllCont.params track by $index">
+                    <div class="cfg-control-content" ng-repeat="v in switchAllCont.params">
                         <div class="form-inline" >
                             <expert-command-input 
                                 collection='v'
@@ -178,13 +178,13 @@
                     novalidate>
                     <a
                         class="btn btn-primary spin-true"
-                        ng-click="updateFromDevice(protectionCont.cmd + '.Get()',hasBattery,deviceId)"
+                        ng-click="updateFromDevice(protectionCont.cmd + '.Get()',hasBattery,deviceId,formName)"
                         >{{_t('btn_update_from_device')}} <i class="fa fa-spinner fa-spin"></i></a>
                     <button 
                         type="submit" 
                         class="btn btn-info spin-true"
                         >{{_t('apply_config')}} <i class="fa fa-spinner fa-spin"></i></button> 
-                    <div class="cfg-control-content" ng-repeat="v in protectionCont.params track by $index">
+                    <div class="cfg-control-content" ng-repeat="v in protectionCont.params">
                         <div class="form-inline" >
                             <expert-command-input 
                                 collection='v'

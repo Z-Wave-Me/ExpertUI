@@ -76,11 +76,7 @@ angApp.config(['$routeProvider',
                 when('/device/security', {
                     templateUrl: 'app/views/device/security.html'
                 }).
-                // Config
-                when('/config/configuration/:nodeId?', {
-                    templateUrl: 'app/views/configuration/redirect.html'
-                }).
-                // New Configuration
+                // Configuration
                 when('/configuration/interview/:nodeId?', {
                     templateUrl: 'app/views/configuration/interview.html'
                 }).
