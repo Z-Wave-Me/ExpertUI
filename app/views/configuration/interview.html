@@ -169,10 +169,9 @@
                             <option value="">---</option>
                             <option 
                                 ng-init="selectCfg = {
-                                'name':((v.brandName == '' || v.productName == '')?('Unnamed ZDDX: ' + v.fileName):(v.brandName + ' ' + v.productName)),
-                                'selected':(deviceZddxFile == v.fileName ? ' selected' : '')
-                            }"
-                                ng-repeat="v in deviceZddx"
+                                'name':((v.brandName == '' && v.productName == '')?('Unnamed ZDDX: ' + v.fileName):(v.brandName + ' ' + v.productName))}"
+                                ng-repeat="v in deviceZddx | orderBy:'brandName':false"
+                                ng-selected="deviceZddxFile == v.fileName"
                                 value="{{v.fileName}}" 
                                 data-image="{{v.deviceImage}}">{{selectCfg.name}}</option>
                         </select>

@@ -4,9 +4,32 @@
     <div ng-include="'app/views/configuration/header.html'"></div>
 
     <div class="tab-content" ng-show="deviceId">
-        <div class="text-alert-list" ng-if="!configCont">
-            <i class="fa fa-info-circle text-info"></i> {{_t('no_zddx_file')}} <a href="#configuration/interview/{{deviceId}}"><strong>{{_t('link_to_device_description')}}</strong></a>
-        </div>
+             <!--<div class="text-alert-list" ng-if="!configCont && deviceZddx.length < 1">
+               <i class="fa fa-info-circle text-info"></i> {{_t('no_zddx_file')}} <a href="#configuration/interview/{{deviceId}}"><strong>{{_t('link_to_device_description')}}</strong></a>
+            </div>-->
+            <div ng-if="!configCont && deviceZddx.length > 0">
+                <p ng-bind-html="_t('select_zddx_help') | toTrusted"></p>
+                 <select 
+                    name="select_zddx_help" 
+                    id="select_zddx_help" 
+                    class="form-control" 
+                    ng-change="changeDeviceSelect('#select_zddx_help', '#device_select_image',modelSelectZddx)" 
+                    ng-model="modelSelectZddx">
+                    <option value="">---</option>
+                    <option
+                        ng-repeat="v in deviceZddx | orderBy:'brandName':false"
+                        value="{{v.fileName}}" 
+                        data-image="{{v.deviceImage}}">{{((v.brandName == '' && v.productName == '')?('Unnamed ZDDX: ' + v.fileName):(v.brandName + ' ' + v.productName))}}</option>
+                </select>
+                <div id="device_select_image_container">
+                    <div id="device_select_image">
+                    </div>
+                </div>
+                    <div class="text-right" ng-if="modelSelectZddx">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="runCmdDeviceSelect(deviceId)">{{_t('btn_save')}}</button>
+                </div>
+
+            </div>
 
         <!-- config_cont -->
          <!--<div class="cfg-block" id="config_cont" ng-if="configCont">
@@ -15,7 +38,7 @@
             <div class="alert-list">
         <p class="text-danger text-alert-list" ng-repeat="v in configCont" ng-if="v.configCconfigValue != v.configZwaveValue">{{v.label}}: {{_t('value_changed_to')}} <strong config-value-title collection='v' show_value='v.configCconfigValue'></strong> {{_t('value_not_stored_indevice')}}</p>
     </div> -->
-            <div class="cfg-block-content" ng-init="formName = 'form_config'">
+            <div class="cfg-block-content"  ng-if="configCont" ng-init="formName = 'form_config'">
                 <form 
                     name="{{formName}}" 
                     id="{{formName}}"
@@ -81,7 +104,6 @@
                     </div>
                 </form>
             </div>
-        </div>
         <!-- wakeup_cont -->
         <div class="cfg-block" id="wakeup_cont" ng-if="wakeupCont">
             <h4>{{_t('wakeup_list')}}</h4>
