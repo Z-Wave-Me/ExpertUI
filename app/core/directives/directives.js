@@ -285,7 +285,7 @@ angApp.directive('expertCommandInput', function ($filter) {
                 input += '<input name="' + inName + '" class="commands-data-chbx" type="radio" value="' + type.fix.value + '"' + checked + ' /> (' + type.fix.value + ') <span class="commands-label' + isCurrent + '">' + title + '</span><br />';
             } else if ('range' in type) {
                 //var textName =  $filter('stringToSlug')(name ? v.textName : label);
-                var textName = v.textName;
+                var textName = v.textName || inName;
                 var min = type.range.min;
                 var max = type.range.max;
                 var disabled = ' disabled="true"';

@@ -793,6 +793,10 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
         var data = $('#' + form).serializeArray();
         var dataJoined = [];
         angular.forEach(data, function (v, k) {
+            if(v.value === 'N/A'){
+                return;
+            }
+           
             dataJoined.push($filter('setConfigValue')(v.value));
 
         });
