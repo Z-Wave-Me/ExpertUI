@@ -3,7 +3,7 @@
     <!-- Config navigation -->
     <div ng-include="'app/views/configuration/header.html'"></div>
 
-    <div class="tab-content" ng-show="deviceId > 0">
+    <div class="tab-content" ng-show="deviceId">
         <form name="form_firmware" id="form_firmware" class="form form-inline" ng-show="showForm" ng-submit="updateFirmware(deviceId)" novalidate>
             <!--<label>{{_t('nav_firmware_update')}}:</label>-->
             <input id="url" type="text" value="" name="url" class="form-control" ng-model="formFirmware.url" placeholder="URL" title="please use format http:// ...... " data-toggle="tooltip" data-position="top" tooltip />

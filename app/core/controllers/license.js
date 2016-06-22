@@ -1,383 +1,114 @@
 /**
- * Application Home controller
+ * LicenseController
  * @author Martin Vach
  */
-
-/**
- * Report controller
- */
-// Home controller
-appController.controller('HomeController', function($scope, $filter, $timeout, $route, dataService, deviceService, cfg) {
-    $scope.ZWaveAPIData;
-    $scope.countDevices;
-    $scope.failedDevices = [];
-    $scope.batteryDevices;
-    $scope.lowBatteryDevices = [];
-    $scope.flirsDevices;
-    $scope.mainsDevices;
-    $scope.localyResetDevices = [];
-    $scope.notInterviewDevices = [];
-    $scope.assocRemovedDevices = [];
-    $scope.notConfigDevices = [];
-    $scope.notes = [];
-    $scope.notesData = '';
-    $scope.updateTime = $filter('getTimestamp');
-
-    $scope.reset = function() {
-        $scope.failedDevices = angular.copy([]);
-        $scope.lowBatteryDevices = angular.copy([]);
-        $scope.notInterviewDevices = angular.copy([]);
-        $scope.localyResetDevices = angular.copy([]);
-        $scope.assocRemovedDevices = angular.copy([]);
-        $scope.notConfigDevices = angular.copy([]);
+appController.controller('LicenseController', function($scope, $timeout, dataService) {
+    $scope.proccessVerify = {
+        'message': false,
+        'status': 'is-hidden'
 
     };
+    $scope.controllerUuid = null;
+     $scope.controllerIsZeroUuid = false;
+    $scope.proccessUpdate = {
+        'message': false,
+        'status': 'is-hidden'
 
-
-    /**
-     * Notes
-     */
-    $scope.loadNotesData = function() {
-        dataService.getNotes(function(data) {
-            $scope.notesData = data;
-        });
     };
-
-
-    /**
-     * Load data
-     *
-     */
-    $scope.loadData = function() {
+    $scope.formData = {
+        "scratch_id": null
+    };
+    $scope.license = {
+        "scratch_id": null,
+        "capability": null,
+        "uid": null,
+        "license_id": null,
+        "base_license": null,
+        "reseller_id": null,
+        "revoke": null,
+        "selldate": null,
+        "usedate": null
+    };
+    $scope.ZWaveAPIData = function() {
         dataService.getZwaveData(function(ZWaveAPIData) {
-            $scope.ZWaveAPIData = ZWaveAPIData;
-            notInterviewDevices(ZWaveAPIData);
-            notInterviewDevices(ZWaveAPIData);
-            countDevices(ZWaveAPIData);
-            assocRemovedDevices(ZWaveAPIData);
-            notConfigDevices(ZWaveAPIData);
-            batteryDevices(ZWaveAPIData);
-            $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
-            dataService.joinedZwaveData(function(data) {
-                $scope.reset();
-                notInterviewDevices(data.joined);
-                countDevices(data.joined);
-                assocRemovedDevices(data.joined);
-                //notConfigDevices(ZWaveAPIData);
-                batteryDevices(data.joined);
-                $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
+            $scope.controllerUuid = ZWaveAPIData.controller.data.uuid.value;
+            $scope.controllerIsZeroUuid = parseFloat(ZWaveAPIData.controller.data.uuid.value) === 0;
 
-            });
         });
     };
-    if (!cfg.custom_ip) {
-        $scope.loadData();
-        $scope.loadNotesData();
-    } else {
-        if (cfg.server_url != '') {
-            $scope.loadData();
-            $scope.loadNotesData();
-        }
-    }
-
-
+    $scope.ZWaveAPIData();
     /**
-     * Set custom IP
+     * Get license key
      */
-    $scope.setIP = function(ip) {
-        if (!ip || ip == '') {
-            $('.custom-ip-error').show();
+    $scope.getLicense = function(formData) {
+        // Clear messages
+        $scope.proccessVerify.message = false;
+        $scope.proccessUpdate.message = false;
+        if (!formData.scratch_id) {
             return;
         }
-        dataService.cancelZwaveDataInterval();
-        $('.custom-ip-success,.custom-ip-true .home-page').hide();
-        var setIp = 'http://' + ip + ':8083';
-        cfg.server_url = setIp;
-        dataService.purgeCache();
-        $scope.loadHomeData = true;
-        $route.reload();
-    };
+        $scope.proccessVerify = {'message': $scope._t('verifying_licence_key'), 'status': 'fa fa-spinner fa-spin'};
+        var input = {
+            'uuid': $scope.controllerUuid,
+            'scratch': formData.scratch_id
+        };
+        dataService.getLicense(input).then(function(response) {
+            $scope.proccessVerify = {'message': $scope._t('success_licence_key'), 'status': 'fa fa-check text-success'};
+            console.log('1. ---------- SUCCESS Verification ----------', response);
 
-    // Cancel interval on page destroy
-    $scope.$on('$destroy', function() {
-        dataService.cancelZwaveDataInterval();
-    });
-    /**
-     * Save notes
-     */
-    $scope.saveNotes = function(form, btn) {
-        var input = $('#' + form + ' #note').val();
-        if (!input || input == '') {
-            return;
-        }
-        $(btn).attr('disabled', true);
-        dataService.putNotes(input);
+            // Update capabilities
+            updateCapabilities(response);
 
-        $timeout(function() {
-            $(btn).removeAttr('disabled');
-        }, 2000);
+        }, function(error) {// Error verifying key
+            //debugger;
+            var message = $scope._t('error_no_licence_key');
+            if (error.status == 404) {
+                var message = $scope._t('error_404_licence_key');
+            }
+            $scope.proccessVerify = {'message': message, 'status': 'fa fa-exclamation-triangle text-danger'};
+            console.log('1. ---------- ERROR Verification ----------', error);
+
+        });
         return;
-
-
     };
+
 
     /// --- Private functions --- ///
 
     /**
-     * Count devices
+     * Update capabilities
      */
-    function countDevices(ZWaveAPIData) {
-        var cnt = 0;
-        var cntFlirs = 0;
-        // Loop throught devices
-        angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-
-            if (deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
-                return;
-            }
-            var isFLiRS = deviceService.isFLiRS(node);
-            var isLocalyReset = deviceService.isLocalyReset(node);
-            var isFailed = deviceService.isFailed(node);
-
-            if (isFLiRS) {
-                cntFlirs++;
-            }
-
-            var obj = {};
-            obj['name'] = $filter('deviceName')(nodeId, node);
-            obj['id'] = nodeId;
-            if (isFailed) {
-                $scope.failedDevices.push(obj);
-            }
-            if (isLocalyReset) {
-                $scope.localyResetDevices.push(obj);
-            }
-
-            cnt++;
-        });
-        $scope.flirsDevices = cntFlirs;
-        $scope.countDevices = cnt;
-    }
-    ;
-
-    /**
-     * batteryDevices
-     */
-    function batteryDevices(ZWaveAPIData) {
-        var controllerId = ZWaveAPIData.controller.data.nodeId.value;
-        var cnt = 0;
-        // Loop throught devices
-        angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255 || nodeId == controllerId || node.data.isVirtual.value) {
-                return;
-            }
-            var hasBattery = 0x80 in node.instances[0].commandClasses;
-            var instanceId = 0;
-            var interviewDone = false;
-            var ccId = 0x80;
-            if (!hasBattery) {
-                return;
-            }
-            // Is interview done
-            for (var iId in ZWaveAPIData.devices[nodeId].instances) {
-                for (var ccId in ZWaveAPIData.devices[nodeId].instances[iId].commandClasses) {
-                    var isDone = ZWaveAPIData.devices[nodeId].instances[iId].commandClasses[ccId].data.interviewDone.value;
-                    if (isDone != false) {
-                        interviewDone = true;
-                    }
-                }
-            }
-            var node = ZWaveAPIData.devices[nodeId];
-            var battery_charge = parseInt(node.instances[0].commandClasses[0x80].data.last.value);
-            var obj = {};
-            obj['name'] = $filter('deviceName')(nodeId, node);
-            obj['id'] = nodeId;
-            obj['battery_charge'] = battery_charge;
-            if (battery_charge <= 20 && interviewDone) {
-                $scope.lowBatteryDevices.push(obj);
-            }
-            cnt++;
-        });
-        $scope.batteryDevices = cnt;
-    }
-    ;
-
-    /**
-     * notInterviewDevices
-     */
-    function notInterviewDevices(ZWaveAPIData) {
-        var controllerId = ZWaveAPIData.controller.data.nodeId.value;
-        var cnt = 0;
-        // Loop throught devices
-        angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255 || nodeId == controllerId || node.data.isVirtual.value) {
-                return;
-            }
-            var obj = {};
-            obj['name'] = $filter('deviceName')(nodeId, node);
-            obj['id'] = nodeId;
-            for (var iId in ZWaveAPIData.devices[nodeId].instances) {
-                for (var ccId in ZWaveAPIData.devices[nodeId].instances[iId].commandClasses) {
-                    var isDone = ZWaveAPIData.devices[nodeId].instances[iId].commandClasses[ccId].data.interviewDone.value;
-                    if (isDone == false) {
-                        $scope.notInterviewDevices.push(obj);
-                        return;
-                    }
-                }
-            }
-            cnt++;
-        });
-        return cnt;
-    }
-    ;
-
-    /**
-     * notInterviewDevices
-     */
-    function notConfigDevices(ZWaveAPIData) {
-        var controllerId = ZWaveAPIData.controller.data.nodeId.value;
-        var cnt = 0;
-        var cnt = 0;
-        // Loop throught devices
-        dataService.getCfgXml(function(cfgXml) {
-            angular.forEach(cfgXml.config.devices.deviceconfiguration, function(cfg, cfgId) {
-                var node = ZWaveAPIData.devices[cfg['_id']];
-                if (!node) {
-                    return;
-                }
-                var array = JSON.parse(cfg['_parameter']);
-                var cfgNum = 0;
-                var cfgVal;
-                var devVal;
-                if (array.length > 2) {
-                    cfgNum = array[0];
-                    cfgVal = array[1];
-                    if (node.instances[0].commandClasses[0x70].val) {
-                        devVal = node.instances[0].commandClasses[0x70].data[cfgNum].val.value;
-                        if (cfgVal != devVal) {
-                            var obj = {};
-                            obj['name'] = $filter('deviceName')(cfg['_id'], node);
-                            obj['id'] = cfg['_id'];
-                            $scope.notConfigDevices.push(obj);
-                        }
-                    }
-
-
-                }
-            });
+    function updateCapabilities(data) {
+        $scope.proccessUpdate = {'message': $scope._t('upgrading_capabilities'), 'status': 'fa fa-spinner fa-spin'};
+        dataService.zmeCapabilities(data).then(function(response) {
+            $scope.proccessUpdate = {'message': $scope._t('success_capabilities'), 'status': 'fa fa-check text-success'};
+            console.log('2. ---------- SUCCESS updateCapabilities ----------', response);
+            //proccessCapabilities(response);
+        }, function(error) {
+            $scope.proccessUpdate = {'message': $scope._t('error_no_capabilities'), 'status': 'fa fa-exclamation-triangle text-danger'};
+            console.log('2. ---------- ERROR updateCapabilities ----------', error);
         });
     }
     ;
     /**
-     * assocRemovedDevices
+     * DEPRECATED
+     * Update Proccess capabilities
      */
-    function assocRemovedDevices(ZWaveAPIData) {
-        var controllerId = ZWaveAPIData.controller.data.nodeId.value;
-        var cnt = 0;
-        // Loop throught devices
-        angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255 || nodeId == controllerId || node.data.isVirtual.value) {
-                return;
-            }
-            var removedDevices = assocGedRemovedDevices(node, ZWaveAPIData);
-            if (removedDevices.length > 0) {
-
-                var obj = {};
-                obj['name'] = $filter('deviceName')(nodeId, node);
-                obj['id'] = nodeId;
-                obj['assoc'] = removedDevices;
-                $scope.assocRemovedDevices.push(obj);
-                cnt++;
-            }
-        });
-        return cnt;
-    }
-    ;
-
-    /**
-     * assocGedRemovedDevices
-     */
-    function assocGedRemovedDevices(node, ZWaveAPIData) {
-        var assocDevices = [];
-        var data;
-        if (0x85 in node.instances[0].commandClasses) {
-            var cc = node.instances[0].commandClasses[0x85].data;
-            if (cc.groups.value >= 1) {
-                for (var grp_num = 1; grp_num <= parseInt(cc.groups.value, 10); grp_num++) {
-                    data = cc[grp_num];
-                    for (var i = 0; i < data.nodes.value.length; i++) {
-                        var targetNodeId = data.nodes.value[i];
-                        if (!(targetNodeId in ZWaveAPIData.devices)) {
-                            assocDevices.push({'id': targetNodeId, 'name': '(#' + targetNodeId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId])});
-                        }
-                    }
-
-                }
-            }
-        }
-
-        if (0x8e in node.instances[0].commandClasses) {
-            var cc = node.instances[0].commandClasses[0x8e].data;
-            if (cc.groups.value >= 1) {
-                for (var grp_num = 1; grp_num <= parseInt(cc.groups.value, 10); grp_num++) {
-
-                    data = cc[grp_num];
-
-                    for (var i = 0; i < data.nodesInstances.value.length; i += 2) {
-                        var targetNodeId = data.nodesInstances.value[i];
-                        var targetInstanceId = data.nodesInstances.value[i + 1];
-                        var instanceId = (targetInstanceId > 0 ? '.' + targetInstanceId : '');
-                        if (!(targetNodeId in ZWaveAPIData.devices)) {
-                            assocDevices.push({'id': targetNodeId, 'name': '(#' + targetNodeId + instanceId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId])});
-                        }
-
-                    }
-                }
-            }
-        }
-        if (assocDevices.length > 0) {
-            //console.log(assocDevices)
-        }
-
-        return assocDevices;
-    }
-    ;
-});
-
-// Home Dongle controller
-appController.controller('HomeDongleController', function($scope, $window,$cookies,dataService) {
-    // Controller vars
-    $scope.homeDongle ={
-        model: {
-            current: $scope.cfg.dongle,
-            dongle: ''
-        },
-        //data: ['zway','newdongle','mydongle'],
-        data: []
-    };
-    /**
-     * Load zwave dongles
-     */
-    $scope.loadHomeDongle = function() {
-        dataService.getZwaveList().then(function(response) {
-            if(response.length > 1){
-                 angular.extend($scope.homeDongle,{data: response});
-            }
-        }, function(error) {});
-    };
-    $scope.loadHomeDongle();
-    
-    /**
-     * Set dongle 
-     */
-    $scope.setHomeDongle = function() {
-        if($scope.homeDongle.model.dongle === ''){
-            return;
-        }
-        angular.extend($scope.cfg,{dongle: $scope.homeDongle.model.dongle});
-        $cookies.dongle = $scope.homeDongle.model.dongle;
-        dataService.purgeCache();
-        //$route.reload();
-        $window.location.reload();
-    };
+//    function proccessCapabilities(response) {
+//        $('.verify-ctrl').attr('disabled', true);
+//        return;
+//        $timeout(function() {
+//            if ('do something to check when update is complete') {
+//                $scope.proccessUpdate = {'message': $scope._t('success_capabilities'), 'status': 'fa fa-check text-success'};
+//                console.log('3. ---------- SUCCESS proccessCapabilities ----------', response);
+//            } else {// Otherwise show error message
+//                $scope.proccessUpdate = {'message': $scope._t('error_no_capabilities'), 'status': 'fa fa-exclamation-triangle text-danger'};
+//                console.log('3. ---------- ERROR proccessCapabilities ----------');
+//            }
+//            $('.verify-ctrl').attr('disabled', false);
+//            return;
+//
+//        }, 3000);
+//
+//    };
 });

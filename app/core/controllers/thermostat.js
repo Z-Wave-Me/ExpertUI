@@ -1,383 +1,252 @@
 /**
- * Application Home controller
+ * ThermostatController
  * @author Martin Vach
  */
-
-/**
- * Report controller
- */
-// Home controller
-appController.controller('HomeController', function($scope, $filter, $timeout, $route, dataService, deviceService, cfg) {
-    $scope.ZWaveAPIData;
-    $scope.countDevices;
-    $scope.failedDevices = [];
-    $scope.batteryDevices;
-    $scope.lowBatteryDevices = [];
-    $scope.flirsDevices;
-    $scope.mainsDevices;
-    $scope.localyResetDevices = [];
-    $scope.notInterviewDevices = [];
-    $scope.assocRemovedDevices = [];
-    $scope.notConfigDevices = [];
-    $scope.notes = [];
-    $scope.notesData = '';
-    $scope.updateTime = $filter('getTimestamp');
-
+appController.controller('ThermostatController', function($scope, $filter, dataService) {
+    $scope.thermostats = [];
+    $scope.rangeSlider = [];
+    $scope.mChangeMode = [];
     $scope.reset = function() {
-        $scope.failedDevices = angular.copy([]);
-        $scope.lowBatteryDevices = angular.copy([]);
-        $scope.notInterviewDevices = angular.copy([]);
-        $scope.localyResetDevices = angular.copy([]);
-        $scope.assocRemovedDevices = angular.copy([]);
-        $scope.notConfigDevices = angular.copy([]);
-
+        $scope.thermostats = angular.copy([]);
     };
-
-
-    /**
-     * Notes
-     */
-    $scope.loadNotesData = function() {
-        dataService.getNotes(function(data) {
-            $scope.notesData = data;
-        });
-    };
-
-
-    /**
-     * Load data
-     *
-     */
-    $scope.loadData = function() {
+    // Load data
+    $scope.load = function() {
         dataService.getZwaveData(function(ZWaveAPIData) {
-            $scope.ZWaveAPIData = ZWaveAPIData;
-            notInterviewDevices(ZWaveAPIData);
-            notInterviewDevices(ZWaveAPIData);
-            countDevices(ZWaveAPIData);
-            assocRemovedDevices(ZWaveAPIData);
-            notConfigDevices(ZWaveAPIData);
-            batteryDevices(ZWaveAPIData);
-            $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
+            setData(ZWaveAPIData);
             dataService.joinedZwaveData(function(data) {
-                $scope.reset();
-                notInterviewDevices(data.joined);
-                countDevices(data.joined);
-                assocRemovedDevices(data.joined);
-                //notConfigDevices(ZWaveAPIData);
-                batteryDevices(data.joined);
-                $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
-
+                refreshData(data);
             });
         });
     };
-    if (!cfg.custom_ip) {
-        $scope.loadData();
-        $scope.loadNotesData();
-    } else {
-        if (cfg.server_url != '') {
-            $scope.loadData();
-            $scope.loadNotesData();
-        }
-    }
-
-
-    /**
-     * Set custom IP
-     */
-    $scope.setIP = function(ip) {
-        if (!ip || ip == '') {
-            $('.custom-ip-error').show();
-            return;
-        }
-        dataService.cancelZwaveDataInterval();
-        $('.custom-ip-success,.custom-ip-true .home-page').hide();
-        var setIp = 'http://' + ip + ':8083';
-        cfg.server_url = setIp;
-        dataService.purgeCache();
-        $scope.loadHomeData = true;
-        $route.reload();
-    };
+    // Load data
+    $scope.load();
 
     // Cancel interval on page destroy
     $scope.$on('$destroy', function() {
         dataService.cancelZwaveDataInterval();
     });
-    /**
-     * Save notes
-     */
-    $scope.saveNotes = function(form, btn) {
-        var input = $('#' + form + ' #note').val();
-        if (!input || input == '') {
+    // Change temperature on click
+    $scope.tempChange = function(cmd, index, type) {
+        var val = $scope.rangeSlider[index];
+        var min = parseInt($scope.cfg.thermostat_range.min, 10);
+        var max = parseInt($scope.cfg.thermostat_range.max, 10);
+        var count = (type === '-' ? val - 1 : val + 1);
+        if (count < min) {
+            count = min;
+        }
+        if (count > max) {
+            count = max;
+        }
+        $scope.rangeSlider[index] = count;
+        var url = cmd + '.Set(1,' + count + ')';
+        console.log('Sending value: ' + $scope.rangeSlider[index]);
+        dataService.runCmd(url, false, $scope._t('error_handling_data'));
+    };
+    // Change temperature after slider handle
+    $scope.sliderChange = function(cmd, index) {
+        var count = parseInt($scope.rangeSlider[index]);
+        var min = parseInt($scope.cfg.thermostat_range.min, 10);
+        var max = parseInt($scope.cfg.thermostat_range.max, 10);
+        if (count < min) {
+            count = min;
+        }
+        if (count > max) {
+            count = max;
+        }
+        $scope.rangeSlider[index] = count;
+        var url = cmd + '.Set(1,' + count + ')';
+        dataService.runCmd(url, false, $scope._t('error_handling_data'));
+    };
+    // Change mode
+    $scope.changeMode = function(cmd, mode) {
+        if (!mode) {
             return;
         }
-        $(btn).attr('disabled', true);
-        dataService.putNotes(input);
-
-        $timeout(function() {
-            $(btn).removeAttr('disabled');
-        }, 2000);
-        return;
-
-
+        var url = cmd + '.Set(' + mode + ')';
+        dataService.runCmd(url);
     };
 
     /// --- Private functions --- ///
 
     /**
-     * Count devices
+     * Set zwave data
      */
-    function countDevices(ZWaveAPIData) {
-        var cnt = 0;
-        var cntFlirs = 0;
+    function setData(ZWaveAPIData) {
+        var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-
-            if (deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
+            if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
                 return;
             }
-            var isFLiRS = deviceService.isFLiRS(node);
-            var isLocalyReset = deviceService.isLocalyReset(node);
-            var isFailed = deviceService.isFailed(node);
 
-            if (isFLiRS) {
-                cntFlirs++;
-            }
-
-            var obj = {};
-            obj['name'] = $filter('deviceName')(nodeId, node);
-            obj['id'] = nodeId;
-            if (isFailed) {
-                $scope.failedDevices.push(obj);
-            }
-            if (isLocalyReset) {
-                $scope.localyResetDevices.push(obj);
-            }
-
-            cnt++;
-        });
-        $scope.flirsDevices = cntFlirs;
-        $scope.countDevices = cnt;
-    }
-    ;
-
-    /**
-     * batteryDevices
-     */
-    function batteryDevices(ZWaveAPIData) {
-        var controllerId = ZWaveAPIData.controller.data.nodeId.value;
-        var cnt = 0;
-        // Loop throught devices
-        angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255 || nodeId == controllerId || node.data.isVirtual.value) {
-                return;
-            }
-            var hasBattery = 0x80 in node.instances[0].commandClasses;
-            var instanceId = 0;
-            var interviewDone = false;
-            var ccId = 0x80;
-            if (!hasBattery) {
-                return;
-            }
-            // Is interview done
-            for (var iId in ZWaveAPIData.devices[nodeId].instances) {
-                for (var ccId in ZWaveAPIData.devices[nodeId].instances[iId].commandClasses) {
-                    var isDone = ZWaveAPIData.devices[nodeId].instances[iId].commandClasses[ccId].data.interviewDone.value;
-                    if (isDone != false) {
-                        interviewDone = true;
-                    }
-                }
-            }
-            var node = ZWaveAPIData.devices[nodeId];
-            var battery_charge = parseInt(node.instances[0].commandClasses[0x80].data.last.value);
-            var obj = {};
-            obj['name'] = $filter('deviceName')(nodeId, node);
-            obj['id'] = nodeId;
-            obj['battery_charge'] = battery_charge;
-            if (battery_charge <= 20 && interviewDone) {
-                $scope.lowBatteryDevices.push(obj);
-            }
-            cnt++;
-        });
-        $scope.batteryDevices = cnt;
-    }
-    ;
-
-    /**
-     * notInterviewDevices
-     */
-    function notInterviewDevices(ZWaveAPIData) {
-        var controllerId = ZWaveAPIData.controller.data.nodeId.value;
-        var cnt = 0;
-        // Loop throught devices
-        angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255 || nodeId == controllerId || node.data.isVirtual.value) {
-                return;
-            }
-            var obj = {};
-            obj['name'] = $filter('deviceName')(nodeId, node);
-            obj['id'] = nodeId;
-            for (var iId in ZWaveAPIData.devices[nodeId].instances) {
-                for (var ccId in ZWaveAPIData.devices[nodeId].instances[iId].commandClasses) {
-                    var isDone = ZWaveAPIData.devices[nodeId].instances[iId].commandClasses[ccId].data.interviewDone.value;
-                    if (isDone == false) {
-                        $scope.notInterviewDevices.push(obj);
-                        return;
-                    }
-                }
-            }
-            cnt++;
-        });
-        return cnt;
-    }
-    ;
-
-    /**
-     * notInterviewDevices
-     */
-    function notConfigDevices(ZWaveAPIData) {
-        var controllerId = ZWaveAPIData.controller.data.nodeId.value;
-        var cnt = 0;
-        var cnt = 0;
-        // Loop throught devices
-        dataService.getCfgXml(function(cfgXml) {
-            angular.forEach(cfgXml.config.devices.deviceconfiguration, function(cfg, cfgId) {
-                var node = ZWaveAPIData.devices[cfg['_id']];
-                if (!node) {
+            // Loop throught instances
+            var cnt = 1;
+            angular.forEach(node.instances, function(instance, instanceId) {
+                // we skip devices without ThermostatSetPint AND ThermostatMode CC
+                if (!(0x43 in instance.commandClasses) && !(0x40 in instance.commandClasses)) {
                     return;
                 }
-                var array = JSON.parse(cfg['_parameter']);
-                var cfgNum = 0;
-                var cfgVal;
-                var devVal;
-                if (array.length > 2) {
-                    cfgNum = array[0];
-                    cfgVal = array[1];
-                    if (node.instances[0].commandClasses[0x70].val) {
-                        devVal = node.instances[0].commandClasses[0x70].data[cfgNum].val.value;
-                        if (cfgVal != devVal) {
-                            var obj = {};
-                            obj['name'] = $filter('deviceName')(cfg['_id'], node);
-                            obj['id'] = cfg['_id'];
-                            $scope.notConfigDevices.push(obj);
-                        }
-                    }
 
+                var ccId;
+                var curThermMode = getCurrentThermostatMode(instance);
+                var level = null;
+                var hasExt = false;
+                var updateTime;
+                var invalidateTime;
+                var modeType = null;
+                var modeList = {};
+                //var urlChangeTemperature = false;
+                var scale = null;
+
+                var hasThermostatMode = 0x40 in instance.commandClasses;
+                var hasThermostatSetpoint = 0x43 in instance.commandClasses;
+                var isThermostatMode = false;
+                var isThermostatSetpoint = false;
+                //var hasThermostatSetback = 0x47 in instance.commandClasses;
+                //var hasClimateControlSchedule = 0x46 in instance.commandClasses;
+                //var curThermModeName = '';
+
+                if (!hasThermostatSetpoint && !hasThermostatMode) { // to include more Thermostat* CCs
+                    return; // we don't want devices without ThermostatSetpoint AND ThermostatMode CCs
+                }
+                //console.log( nodeId + ': ' + curThermMode);
+                if (hasThermostatMode) {
+                    ccId = 0x40;
+                }
+                else if (hasThermostatSetpoint) {
+                    ccId = 0x43;
 
                 }
+                if (hasThermostatMode) {
+                    //curThermModeName = (curThermMode in instance.commandClasses[0x40].data) ? instance.commandClasses[0x40].data[curThermMode].modeName.value : "???";
+                    modeList = getModeList(instance.commandClasses[0x40].data);
+                    if (curThermMode in instance.commandClasses[0x40].data) {
+                        updateTime = instance.commandClasses[0x40].data.mode.updateTime;
+                        invalidateTime = instance.commandClasses[0x40].data.mode.invalidateTime;
+                        modeType = 'hasThermostatMode';
+                        isThermostatMode = true;
+
+                    }
+                }
+                if (hasThermostatSetpoint) {
+                    if (angular.isDefined(instance.commandClasses[0x43].data[curThermMode])) {
+                        level = instance.commandClasses[0x43].data[curThermMode].setVal.value;
+                        scale = instance.commandClasses[0x43].data[curThermMode].scaleString.value;
+                        updateTime = instance.commandClasses[0x43].data[curThermMode].updateTime;
+                        invalidateTime = instance.commandClasses[0x43].data[curThermMode].invalidateTime;
+                        hasExt = true;
+                        modeType = 'hasThermostatSetpoint';
+                        isThermostatSetpoint = true;
+                    }
+
+                }
+
+                // Set object
+                var obj = {};
+
+                obj['id'] = nodeId;
+                obj['cmd'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.' + curThermMode;
+                obj['ccId'] = ccId;
+                obj['rowId'] = 'row_' + nodeId + '_' + cnt;
+                obj['name'] = $filter('deviceName')(nodeId, node);
+                obj['curThermMode'] = curThermMode;
+                obj['level'] = level;
+                obj['scale'] = scale;
+                obj['hasExt'] = hasExt;
+                obj['updateTime'] = updateTime;
+                obj['invalidateTime'] = invalidateTime;
+                obj['isUpdated'] = (updateTime > invalidateTime ? true : false);
+                obj['urlToStore'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']';
+                obj['urlChangeTemperature'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + 0x43 + ']';
+                obj['cmdToUpdate'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.' + curThermMode;
+                obj['modeType'] = modeType;
+                obj['isThermostatMode'] = isThermostatMode;
+                obj['isThermostatSetpoint'] = isThermostatSetpoint;
+                obj['modeList'] = modeList;
+                $scope.thermostats.push(obj);
+                $scope.rangeSlider.push(obj['range_' + nodeId] = obj['level']);
+                //console.log(obj);
+                cnt++;
             });
         });
     }
-    ;
+
     /**
-     * assocRemovedDevices
+     * Refresh zwave data
      */
-    function assocRemovedDevices(ZWaveAPIData) {
-        var controllerId = ZWaveAPIData.controller.data.nodeId.value;
-        var cnt = 0;
-        // Loop throught devices
-        angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255 || nodeId == controllerId || node.data.isVirtual.value) {
+    function refreshData(data) {
+        angular.forEach($scope.thermostats, function(v, k) {
+            //console.log($scope.thermostats[k].curThermMode)
+            //$scope.thermostats[k].curThermMode = 0;
+            if (!v.modeType) {
                 return;
             }
-            var removedDevices = assocGedRemovedDevices(node, ZWaveAPIData);
-            if (removedDevices.length > 0) {
-
-                var obj = {};
-                obj['name'] = $filter('deviceName')(nodeId, node);
-                obj['id'] = nodeId;
-                obj['assoc'] = removedDevices;
-                $scope.assocRemovedDevices.push(obj);
-                cnt++;
+            var obj = data.update[v.cmdToUpdate];
+            var level = null;
+            var updateTime;
+            var invalidateTime;
+            if (!angular.isObject(data.update)) {
+                return;
+            }
+            if (v.cmdToUpdate in data.update) {
+                if (v.modeType == 'hasThermostatMode') {
+                    updateTime = obj.mode.updateTime;
+                    invalidateTime = obj.mode.invalidateTime;
+                }
+                if (v.modeType == 'hasThermostatSetpoint') {
+                    updateTime = obj.updateTime;
+                    invalidateTime = obj.invalidateTime;
+                    level = obj.setVal.value;
+                }
+                var formatTime = $filter('isTodayFromUnix')(updateTime);
+                $('#' + v.rowId + ' .row-level .level-val').html(level);
+                $('#' + v.rowId + ' .row-time').html(formatTime);
+                if (updateTime > invalidateTime) {
+                    $('#' + v.rowId + ' .row-time').removeClass('is-updated-false');
+                }
+                console.log('Updating:' + v.rowId + ' | At: ' + formatTime + ' | with: ' + level);//REM
             }
         });
-        return cnt;
+    }
+
+    // used to pick up thermstat mode
+    function getCurrentThermostatMode(_instance) {
+        var hasThermostatMode = 0x40 in _instance.commandClasses;
+
+        var _curThermMode = 1;
+        if (hasThermostatMode) {
+            _curThermMode = _instance.commandClasses[0x40].data.mode.value;
+            if (isNaN(parseInt(_curThermMode, 10)))
+                _curThermMode = null; // Mode not retrieved yet
+        }
+//        else {
+//            // we pick up first available mode, since not ThermostatMode is supported to change modes
+//            _curThermMode = null;
+//            angular.forEach(_instance.commandClasses[0x43].data, function(name, k) {
+//                if (!isNaN(parseInt(name, 10))) {
+//                    _curThermMode = parseInt(name, 10);
+//                    return false;
+//                }
+//            });
+//        }
+//        ;
+        return _curThermMode;
     }
     ;
-
-    /**
-     * assocGedRemovedDevices
-     */
-    function assocGedRemovedDevices(node, ZWaveAPIData) {
-        var assocDevices = [];
-        var data;
-        if (0x85 in node.instances[0].commandClasses) {
-            var cc = node.instances[0].commandClasses[0x85].data;
-            if (cc.groups.value >= 1) {
-                for (var grp_num = 1; grp_num <= parseInt(cc.groups.value, 10); grp_num++) {
-                    data = cc[grp_num];
-                    for (var i = 0; i < data.nodes.value.length; i++) {
-                        var targetNodeId = data.nodes.value[i];
-                        if (!(targetNodeId in ZWaveAPIData.devices)) {
-                            assocDevices.push({'id': targetNodeId, 'name': '(#' + targetNodeId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId])});
-                        }
-                    }
-
-                }
+    // used to pick up thermstat mode
+    function getModeList(data) {
+        var list = []
+        angular.forEach(data, function(v, k) {
+            if (!k || isNaN(parseInt(k, 10))) {
+                return;
             }
-        }
+            var obj = {};
+            obj['key'] = k;
+            obj['val'] = $filter('hasNode')(v, 'modeName.value');
+            list.push(obj);
+        });
 
-        if (0x8e in node.instances[0].commandClasses) {
-            var cc = node.instances[0].commandClasses[0x8e].data;
-            if (cc.groups.value >= 1) {
-                for (var grp_num = 1; grp_num <= parseInt(cc.groups.value, 10); grp_num++) {
-
-                    data = cc[grp_num];
-
-                    for (var i = 0; i < data.nodesInstances.value.length; i += 2) {
-                        var targetNodeId = data.nodesInstances.value[i];
-                        var targetInstanceId = data.nodesInstances.value[i + 1];
-                        var instanceId = (targetInstanceId > 0 ? '.' + targetInstanceId : '');
-                        if (!(targetNodeId in ZWaveAPIData.devices)) {
-                            assocDevices.push({'id': targetNodeId, 'name': '(#' + targetNodeId + instanceId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId])});
-                        }
-
-                    }
-                }
-            }
-        }
-        if (assocDevices.length > 0) {
-            //console.log(assocDevices)
-        }
-
-        return assocDevices;
+        return list;
     }
     ;
-});
-
-// Home Dongle controller
-appController.controller('HomeDongleController', function($scope, $window,$cookies,dataService) {
-    // Controller vars
-    $scope.homeDongle ={
-        model: {
-            current: $scope.cfg.dongle,
-            dongle: ''
-        },
-        //data: ['zway','newdongle','mydongle'],
-        data: []
-    };
-    /**
-     * Load zwave dongles
-     */
-    $scope.loadHomeDongle = function() {
-        dataService.getZwaveList().then(function(response) {
-            if(response.length > 1){
-                 angular.extend($scope.homeDongle,{data: response});
-            }
-        }, function(error) {});
-    };
-    $scope.loadHomeDongle();
-    
-    /**
-     * Set dongle 
-     */
-    $scope.setHomeDongle = function() {
-        if($scope.homeDongle.model.dongle === ''){
-            return;
-        }
-        angular.extend($scope.cfg,{dongle: $scope.homeDongle.model.dongle});
-        $cookies.dongle = $scope.homeDongle.model.dongle;
-        dataService.purgeCache();
-        //$route.reload();
-        $window.location.reload();
-    };
 });

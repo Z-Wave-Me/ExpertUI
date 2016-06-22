@@ -1,383 +1,189 @@
 /**
- * Application Home controller
+ * TypeController
  * @author Martin Vach
  */
-
-/**
- * Report controller
- */
-// Home controller
-appController.controller('HomeController', function($scope, $filter, $timeout, $route, dataService, deviceService, cfg) {
-    $scope.ZWaveAPIData;
-    $scope.countDevices;
-    $scope.failedDevices = [];
-    $scope.batteryDevices;
-    $scope.lowBatteryDevices = [];
-    $scope.flirsDevices;
-    $scope.mainsDevices;
-    $scope.localyResetDevices = [];
-    $scope.notInterviewDevices = [];
-    $scope.assocRemovedDevices = [];
-    $scope.notConfigDevices = [];
-    $scope.notes = [];
-    $scope.notesData = '';
-    $scope.updateTime = $filter('getTimestamp');
-
+appController.controller('TypeController', function($scope, $filter, dataService, deviceService) {
+    $scope.devices = [];
     $scope.reset = function() {
-        $scope.failedDevices = angular.copy([]);
-        $scope.lowBatteryDevices = angular.copy([]);
-        $scope.notInterviewDevices = angular.copy([]);
-        $scope.localyResetDevices = angular.copy([]);
-        $scope.assocRemovedDevices = angular.copy([]);
-        $scope.notConfigDevices = angular.copy([]);
-
+        $scope.devices = angular.copy([]);
     };
-
-
-    /**
-     * Notes
-     */
-    $scope.loadNotesData = function() {
-        dataService.getNotes(function(data) {
-            $scope.notesData = data;
-        });
-    };
-
-
-    /**
-     * Load data
-     *
-     */
-    $scope.loadData = function() {
-        dataService.getZwaveData(function(ZWaveAPIData) {
-            $scope.ZWaveAPIData = ZWaveAPIData;
-            notInterviewDevices(ZWaveAPIData);
-            notInterviewDevices(ZWaveAPIData);
-            countDevices(ZWaveAPIData);
-            assocRemovedDevices(ZWaveAPIData);
-            notConfigDevices(ZWaveAPIData);
-            batteryDevices(ZWaveAPIData);
-            $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
-            dataService.joinedZwaveData(function(data) {
-                $scope.reset();
-                notInterviewDevices(data.joined);
-                countDevices(data.joined);
-                assocRemovedDevices(data.joined);
-                //notConfigDevices(ZWaveAPIData);
-                batteryDevices(data.joined);
-                $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
-
+    $scope.deviceClasses = [];
+    $scope.productNames = [];
+    // Load  device classes xml data
+    $scope.loadDeviceClasses = function() {
+        dataService.getDeviceClasses(function(data) {
+            var lang = 'en';
+            angular.forEach(data.DeviceClasses.Generic, function(val, key) {
+                var obj = {};
+                var langs = {
+                    "en": "0",
+                    "de": "1",
+                    "ru": "2"
+                };
+                if (angular.isDefined(langs[$scope.lang])) {
+                    lang = $scope.lang;
+                }
+                var langId = langs[lang];
+                obj['id'] = parseInt(val._id);
+                //obj['generic'] = val.name.lang[langId].__text;
+                obj['generic'] = deviceService.configGetZddxLang(val.name.lang, $scope.lang);
+                obj['specific'] = val.Specific;
+                obj['langId'] = langId;
+                $scope.deviceClasses.push(obj);
             });
         });
     };
-    if (!cfg.custom_ip) {
-        $scope.loadData();
-        $scope.loadNotesData();
-    } else {
-        if (cfg.server_url != '') {
-            $scope.loadData();
-            $scope.loadNotesData();
-        }
-    }
 
 
-    /**
-     * Set custom IP
-     */
-    $scope.setIP = function(ip) {
-        if (!ip || ip == '') {
-            $('.custom-ip-error').show();
-            return;
-        }
-        dataService.cancelZwaveDataInterval();
-        $('.custom-ip-success,.custom-ip-true .home-page').hide();
-        var setIp = 'http://' + ip + ':8083';
-        cfg.server_url = setIp;
-        dataService.purgeCache();
-        $scope.loadHomeData = true;
-        $route.reload();
+    // Load data
+    $scope.load = function() {
+        dataService.getZwaveData(function(ZWaveAPIData) {
+            setData(ZWaveAPIData);
+            dataService.joinedZwaveData(function(data) {
+                $scope.reset();
+                setData(data.joined);
+                dataService.cancelZwaveDataInterval();
+            });
+        });
     };
+    $scope.$watch('lang', function() {
+        $scope.loadDeviceClasses();
+        $scope.load();
+    });
+
 
     // Cancel interval on page destroy
     $scope.$on('$destroy', function() {
         dataService.cancelZwaveDataInterval();
     });
-    /**
-     * Save notes
-     */
-    $scope.saveNotes = function(form, btn) {
-        var input = $('#' + form + ' #note').val();
-        if (!input || input == '') {
-            return;
-        }
-        $(btn).attr('disabled', true);
-        dataService.putNotes(input);
-
-        $timeout(function() {
-            $(btn).removeAttr('disabled');
-        }, 2000);
-        return;
-
-
-    };
 
     /// --- Private functions --- ///
 
     /**
-     * Count devices
+     * Set zwave data
      */
-    function countDevices(ZWaveAPIData) {
-        var cnt = 0;
-        var cntFlirs = 0;
+    function setData(ZWaveAPIData) {
+        var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-
-            if (deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
+            if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
                 return;
-            }
-            var isFLiRS = deviceService.isFLiRS(node);
-            var isLocalyReset = deviceService.isLocalyReset(node);
-            var isFailed = deviceService.isFailed(node);
-
-            if (isFLiRS) {
-                cntFlirs++;
-            }
-
-            var obj = {};
-            obj['name'] = $filter('deviceName')(nodeId, node);
-            obj['id'] = nodeId;
-            if (isFailed) {
-                $scope.failedDevices.push(obj);
-            }
-            if (isLocalyReset) {
-                $scope.localyResetDevices.push(obj);
-            }
-
-            cnt++;
-        });
-        $scope.flirsDevices = cntFlirs;
-        $scope.countDevices = cnt;
-    }
-    ;
-
-    /**
-     * batteryDevices
-     */
-    function batteryDevices(ZWaveAPIData) {
-        var controllerId = ZWaveAPIData.controller.data.nodeId.value;
-        var cnt = 0;
-        // Loop throught devices
-        angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255 || nodeId == controllerId || node.data.isVirtual.value) {
-                return;
-            }
-            var hasBattery = 0x80 in node.instances[0].commandClasses;
-            var instanceId = 0;
-            var interviewDone = false;
-            var ccId = 0x80;
-            if (!hasBattery) {
-                return;
-            }
-            // Is interview done
-            for (var iId in ZWaveAPIData.devices[nodeId].instances) {
-                for (var ccId in ZWaveAPIData.devices[nodeId].instances[iId].commandClasses) {
-                    var isDone = ZWaveAPIData.devices[nodeId].instances[iId].commandClasses[ccId].data.interviewDone.value;
-                    if (isDone != false) {
-                        interviewDone = true;
-                    }
-                }
             }
             var node = ZWaveAPIData.devices[nodeId];
-            var battery_charge = parseInt(node.instances[0].commandClasses[0x80].data.last.value);
-            var obj = {};
-            obj['name'] = $filter('deviceName')(nodeId, node);
-            obj['id'] = nodeId;
-            obj['battery_charge'] = battery_charge;
-            if (battery_charge <= 20 && interviewDone) {
-                $scope.lowBatteryDevices.push(obj);
+            var instanceId = 0;
+            var ccIds = [32, 34, 37, 38, 43, 70, 91, 94, 96, 114, 119, 129, 134, 138, 143, 152];
+            var basicType = node.data.basicType.value;
+            var genericType = node.data.genericType.value;
+            var specificType = node.data.specificType.value;
+            var major = node.data.ZWProtocolMajor.value;
+            var minor = node.data.ZWProtocolMinor.value;
+            var vendorName = node.data.vendorString.value;
+            var zddXmlFile = $filter('hasNode')(node, 'data.ZDDXMLFile.value');
+            var productName = null;
+            var fromSdk = true;
+            var sdk;
+            // SDK
+            if (node.data.SDK.value == '') {
+                sdk = major + '.' + minor;
+                fromSdk = false;
+            } else {
+                sdk = node.data.SDK.value;
             }
-            cnt++;
-        });
-        $scope.batteryDevices = cnt;
-    }
-    ;
-
-    /**
-     * notInterviewDevices
-     */
-    function notInterviewDevices(ZWaveAPIData) {
-        var controllerId = ZWaveAPIData.controller.data.nodeId.value;
-        var cnt = 0;
-        // Loop throught devices
-        angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255 || nodeId == controllerId || node.data.isVirtual.value) {
-                return;
-            }
-            var obj = {};
-            obj['name'] = $filter('deviceName')(nodeId, node);
-            obj['id'] = nodeId;
-            for (var iId in ZWaveAPIData.devices[nodeId].instances) {
-                for (var ccId in ZWaveAPIData.devices[nodeId].instances[iId].commandClasses) {
-                    var isDone = ZWaveAPIData.devices[nodeId].instances[iId].commandClasses[ccId].data.interviewDone.value;
-                    if (isDone == false) {
-                        $scope.notInterviewDevices.push(obj);
-                        return;
-                    }
-                }
-            }
-            cnt++;
-        });
-        return cnt;
-    }
-    ;
-
-    /**
-     * notInterviewDevices
-     */
-    function notConfigDevices(ZWaveAPIData) {
-        var controllerId = ZWaveAPIData.controller.data.nodeId.value;
-        var cnt = 0;
-        var cnt = 0;
-        // Loop throught devices
-        dataService.getCfgXml(function(cfgXml) {
-            angular.forEach(cfgXml.config.devices.deviceconfiguration, function(cfg, cfgId) {
-                var node = ZWaveAPIData.devices[cfg['_id']];
-                if (!node) {
+            // Version
+            var appVersion = node.data.applicationMajor.value + '.' + node.data.applicationMinor.value;
+            // Security and ZWavePlusInfo
+            var security = 0;
+            angular.forEach(ccIds, function(v, k) {
+                var cmd = node.instances[instanceId].commandClasses[v];
+                if (angular.isObject(cmd) && cmd.name === 'Security') {
+                    security = cmd.data.interviewDone.value;
                     return;
                 }
-                var array = JSON.parse(cfg['_parameter']);
-                var cfgNum = 0;
-                var cfgVal;
-                var devVal;
-                if (array.length > 2) {
-                    cfgNum = array[0];
-                    cfgVal = array[1];
-                    if (node.instances[0].commandClasses[0x70].val) {
-                        devVal = node.instances[0].commandClasses[0x70].data[cfgNum].val.value;
-                        if (cfgVal != devVal) {
-                            var obj = {};
-                            obj['name'] = $filter('deviceName')(cfg['_id'], node);
-                            obj['id'] = cfg['_id'];
-                            $scope.notConfigDevices.push(obj);
-                        }
-                    }
+            });
+            // MWI and EF
+            var mwief = getEXFrame(major, minor);
 
+            // DDR
+            var ddr = false;
+            if (angular.isDefined(node.data.ZDDXMLFile)) {
+                ddr = node.data.ZDDXMLFile.value;
+            }
 
+            // Zwave plus
+            var ZWavePlusInfo = false;
+            angular.forEach(ccIds, function(v, k) {
+                var cmd = node.instances[instanceId].commandClasses[v];
+                if (angular.isObject(cmd) && cmd.name === 'ZWavePlusInfo') {
+                    ZWavePlusInfo = true;
+                    return;
                 }
             });
+            // Device type
+            var deviceXml = $scope.deviceClasses;
+            var deviceType = $scope._t('unknown_device_type') + ': ' + genericType;
+            angular.forEach(deviceXml, function(v, k) {
+                if (genericType == v.id) {
+                    deviceType = v.generic;
+                    angular.forEach(v.specific, function(s, sk) {
+                        if (specificType == s._id) {
+                            deviceType = deviceService.configGetZddxLang(s.name.lang, $scope.lang);
+//                            if (angular.isDefined(s.name.lang[v.langId].__text)) {
+//                                deviceType = s.name.lang[v.langId].__text;
+//                            }
+                        }
+                    });
+                    return;
+                }
+            });
+
+            // Product name from zddx file
+            if (zddXmlFile) {
+                dataService.getZddXml(zddXmlFile, function(zddxml) {
+                    //productName = $filter('hasNode')(zddxml, 'ZWaveDevice.deviceDescription.productName');
+                    // productName = zddxml.ZWaveDevice.deviceDescription.productName;
+                    $scope.productNames[nodeId] = zddxml.ZWaveDevice.deviceDescription.productName;
+                });
+
+            }
+            // Set object
+            var obj = {};
+            obj['id'] = nodeId;
+            obj['rowId'] = 'row_' + nodeId;
+            obj['name'] = $filter('deviceName')(nodeId, node);
+            obj['security'] = security;
+            obj['mwief'] = mwief;
+            obj['ddr'] = ddr;
+            obj['ZWavePlusInfo'] = ZWavePlusInfo;
+            obj['sdk'] = (sdk == '0.0' ? '?' : sdk);
+            obj['fromSdk'] = fromSdk;
+            obj['appVersion'] = appVersion;
+            obj['type'] = deviceType;
+            obj['deviceType'] = deviceType;
+            obj['basicType'] = basicType;
+            obj['genericType'] = genericType;
+            obj['specificType'] = specificType;
+            obj['vendorName'] = vendorName;
+            obj['productName'] = productName;
+            $scope.devices.push(obj);
         });
     }
-    ;
-    /**
-     * assocRemovedDevices
-     */
-    function assocRemovedDevices(ZWaveAPIData) {
-        var controllerId = ZWaveAPIData.controller.data.nodeId.value;
-        var cnt = 0;
-        // Loop throught devices
-        angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255 || nodeId == controllerId || node.data.isVirtual.value) {
-                return;
-            }
-            var removedDevices = assocGedRemovedDevices(node, ZWaveAPIData);
-            if (removedDevices.length > 0) {
 
-                var obj = {};
-                obj['name'] = $filter('deviceName')(nodeId, node);
-                obj['id'] = nodeId;
-                obj['assoc'] = removedDevices;
-                $scope.assocRemovedDevices.push(obj);
-                cnt++;
-            }
-        });
-        return cnt;
+    /**
+     * Get EXF frame
+     */
+    function getEXFrame($major, $minor) {
+        if ($major == 1)
+            return 0;
+        if ($major == 2) {
+            if ($minor >= 96)
+                return 1;
+            if ($minor == 74)
+                return 1;
+            return 0;
+        }
+        if ($major == 3)
+            return 1;
+        return 0;
     }
-    ;
 
-    /**
-     * assocGedRemovedDevices
-     */
-    function assocGedRemovedDevices(node, ZWaveAPIData) {
-        var assocDevices = [];
-        var data;
-        if (0x85 in node.instances[0].commandClasses) {
-            var cc = node.instances[0].commandClasses[0x85].data;
-            if (cc.groups.value >= 1) {
-                for (var grp_num = 1; grp_num <= parseInt(cc.groups.value, 10); grp_num++) {
-                    data = cc[grp_num];
-                    for (var i = 0; i < data.nodes.value.length; i++) {
-                        var targetNodeId = data.nodes.value[i];
-                        if (!(targetNodeId in ZWaveAPIData.devices)) {
-                            assocDevices.push({'id': targetNodeId, 'name': '(#' + targetNodeId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId])});
-                        }
-                    }
-
-                }
-            }
-        }
-
-        if (0x8e in node.instances[0].commandClasses) {
-            var cc = node.instances[0].commandClasses[0x8e].data;
-            if (cc.groups.value >= 1) {
-                for (var grp_num = 1; grp_num <= parseInt(cc.groups.value, 10); grp_num++) {
-
-                    data = cc[grp_num];
-
-                    for (var i = 0; i < data.nodesInstances.value.length; i += 2) {
-                        var targetNodeId = data.nodesInstances.value[i];
-                        var targetInstanceId = data.nodesInstances.value[i + 1];
-                        var instanceId = (targetInstanceId > 0 ? '.' + targetInstanceId : '');
-                        if (!(targetNodeId in ZWaveAPIData.devices)) {
-                            assocDevices.push({'id': targetNodeId, 'name': '(#' + targetNodeId + instanceId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId])});
-                        }
-
-                    }
-                }
-            }
-        }
-        if (assocDevices.length > 0) {
-            //console.log(assocDevices)
-        }
-
-        return assocDevices;
-    }
-    ;
-});
-
-// Home Dongle controller
-appController.controller('HomeDongleController', function($scope, $window,$cookies,dataService) {
-    // Controller vars
-    $scope.homeDongle ={
-        model: {
-            current: $scope.cfg.dongle,
-            dongle: ''
-        },
-        //data: ['zway','newdongle','mydongle'],
-        data: []
-    };
-    /**
-     * Load zwave dongles
-     */
-    $scope.loadHomeDongle = function() {
-        dataService.getZwaveList().then(function(response) {
-            if(response.length > 1){
-                 angular.extend($scope.homeDongle,{data: response});
-            }
-        }, function(error) {});
-    };
-    $scope.loadHomeDongle();
-    
-    /**
-     * Set dongle 
-     */
-    $scope.setHomeDongle = function() {
-        if($scope.homeDongle.model.dongle === ''){
-            return;
-        }
-        angular.extend($scope.cfg,{dongle: $scope.homeDongle.model.dongle});
-        $cookies.dongle = $scope.homeDongle.model.dongle;
-        dataService.purgeCache();
-        //$route.reload();
-        $window.location.reload();
-    };
 });
