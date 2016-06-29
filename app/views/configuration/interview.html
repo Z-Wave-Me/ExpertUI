@@ -2,8 +2,7 @@
 <div ng-controller="ConfigInterviewController">
     <!-- Config navigation -->
     <div ng-include="'app/views/configuration/header.html'"></div>
-
-    <div class="tab-content" ng-show="deviceId > 0">
+    <div class="tab-content" ng-show="deviceId">
         <!-- rename_cont -->
         <div class="cfg-block" id="rename_cont">
             <h4><a href="" ng-click="goRename = !goRename">{{_t('device_rename_tooltip')}} <i class="fa fa-pencil"></i> </a></h4>
@@ -52,14 +51,12 @@
 
         <div class="cfg-block">
             <button
-                    data-ng-click="store('#btn_request_nif')" 
-                    data-store-url="devices[{{deviceId}}].RequestNodeInformation()" 
+                    data-ng-click="runCmd('devices[' + deviceId + '].RequestNodeInformation()')" 
                     class="btn btn-primary btn-spinner" 
                     id="btn_request_nif"
                     >{{_t('config_ui_request_node_info')}}</button>
                 <button
-                    data-ng-click="store('#btn_interview_force')" 
-                    data-store-url="devices[{{deviceId}}].InterviewForce()"
+                    data-ng-click="runCmd('devices[' + deviceId + '].InterviewForce()')" 
                     data-redirect="{{deviceId}}" 
                     class="btn btn-primary btn-spinner" 
                     id="btn_interview_force"
@@ -116,7 +113,7 @@
                                         <button
                                             ng-if="!v.interviewDone"
                                             data-store-url="devices[{{deviceId}}].instances[{{v.iId}}].commandClasses[{{v.ccId}}].Interview()"
-                                            data-ng-click="store('#btn_force_interview_' + v.ccId)" 
+                                            data-ng-click="store(v)" 
                                             class="btn btn-primary btn-sm" 
                                             id="btn_force_interview_{{v.ccId}}"
                                             >{{_t('config_ui_force_interview')}}</button> &nbsp;
@@ -172,10 +169,9 @@
                             <option value="">---</option>
                             <option 
                                 ng-init="selectCfg = {
-                                'name':((v.brandName == '' || v.productName == '')?('Unnamed ZDDX: ' + v.fileName):(v.brandName + ' ' + v.productName)),
-                                'selected':(deviceZddxFile == v.fileName ? ' selected' : '')
-                            }"
-                                ng-repeat="v in deviceZddx"
+                                'name':((v.brandName == '' && v.productName == '')?('Unnamed ZDDX: ' + v.fileName):(v.brandName + ' ' + v.productName))}"
+                                ng-repeat="v in deviceZddx | orderBy:'brandName':false"
+                                ng-selected="deviceZddxFile == v.fileName"
                                 value="{{v.fileName}}" 
                                 data-image="{{v.deviceImage}}">{{selectCfg.name}}</option>
                         </select>

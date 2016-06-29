@@ -1,10 +1,12 @@
-<div class="page-header form-inline">
+<div class="page-header form-inline" ng-if="_.size(devices) > 0">
     <label>{{_t('h1_configuration_for')}}</label> 
     <select name="devices" class="form-control" ng-model="deviceId" ng-change="changeDevice(deviceId)">
-        <option value="" ng-selected="v.id != deviceId">--- {{_t('h1_configuration_no_device')}} ---</option>
+        <option value="" ng-selected="v.id != deviceId">--- {{_t('select_device')}} ---</option>
         <option ng-repeat="v in devices| orderBy:predicate:reverse" value="{{v.id}}" ng-selected="v.id == deviceId">(#{{v.id}}) {{v.name}}</option>
     </select>
 </div>
+<!--<div class="alert alert-warning" ng-if="_.size(devices) < 1"><i class="fa fa-info-circle" aria-hidden="true"></i> {{_t('no_device_installed')}}</div>
+ <div class="alert alert-warning" ng-if="!deviceId"><i class="fa fa-info-circle" aria-hidden="true"></i> {{_t('h1_configuration_no_device')}}</div>-->
 <ul class="nav nav-tabs" role="tablist" ng-show="deviceId > 0">
     <li ng-class="activeTab == 'interview' ? 'active' : ''">
         <a href="#configuration/interview/{{deviceId}}">{{_t('nav_device_interview')}}</a>

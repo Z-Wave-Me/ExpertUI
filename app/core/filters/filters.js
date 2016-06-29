@@ -7,8 +7,8 @@
 /**
  * Check if JSON keys/nodes exist
  */
-angApp.filter('hasNode', function() {
-    return function(obj, path) {
+angApp.filter('hasNode', function () {
+    return function (obj, path) {
         path = path.split('.');
         var p = obj || {};
         for (var i in path) {
@@ -24,9 +24,9 @@ angApp.filter('hasNode', function() {
 /**
  * Convert text to slug
  */
-angApp.filter('stringToSlug', function() {
-    return function(str) {
-       str = str.replace(/^\s+|\s+$/g, ''); // trim
+angApp.filter('stringToSlug', function () {
+    return function (str) {
+        str = str.replace(/^\s+|\s+$/g, ''); // trim
         str = str.toLowerCase();
 
         // remove accents, swap ñ for n, etc
@@ -47,8 +47,8 @@ angApp.filter('stringToSlug', function() {
 /**
  * Cut text into x chars
  */
-angApp.filter('cutText', function() {
-    return function(value, wordwise, max, tail) {
+angApp.filter('cutText', function () {
+    return function (value, wordwise, max, tail) {
         if (!value)
             return '';
 
@@ -72,43 +72,72 @@ angApp.filter('cutText', function() {
 /**
  * Get object length
  */
-angApp.filter('getObjectLength', function() {
-    return function(obj) {
-        if(angular.isObject(obj)){
-           return Object.keys(obj).length; 
+angApp.filter('getObjectLength', function () {
+    return function (obj) {
+        if (angular.isObject(obj)) {
+            return Object.keys(obj).length;
         }
         return 0;
-        
+
     };
 });
 /**
  * Has property
  */
-angApp.filter('hasProp', function() {
-    return function(obj,prop) {
+angApp.filter('hasProp', function () {
+    return function (obj, prop) {
         return Object.prototype.hasOwnProperty.call(obj, prop);
-        
+
+    };
+});
+/**
+ * Set a configuration value
+ */
+angApp.filter('setConfigValue', function () {
+    return function (value) {
+        if (isNaN(parseInt(value))) {
+            return '\'' + value + '\'';
+        } else {
+            return value;
+        }
+
+    };
+});
+
+/**
+ * Build an array from bits
+ */
+angApp.filter('getBitArray', function () {
+    return function (value, length) {
+        value = parseInt(value,10);
+        length = length || 32;
+        var base2_ = (value).toString(2).split("").reverse().join("");
+        var baseL_ = new Array(length - base2_.length).join("0");
+        var base2 = base2_ + baseL_;
+        return base2.split('').map(Number);
+        ;
+
     };
 });
 
 /**
  * Get object length
  */
-angApp.filter('getFirstObjectKey', function() {
-    return function(obj) {
-        if(angular.isObject(obj)){
-           return Object.keys(obj)[0];
+angApp.filter('getFirstObjectKey', function () {
+    return function (obj) {
+        if (angular.isObject(obj)) {
+            return Object.keys(obj)[0];
         }
         return {};
-        
+
     };
 });
 
 /**
  * Get only unique values
  */
-angApp.filter('unique', function() {
-    return function(items, filterOn) {
+angApp.filter('unique', function () {
+    return function (items, filterOn) {
 
         if (filterOn === false) {
             return items;
@@ -117,7 +146,7 @@ angApp.filter('unique', function() {
         if ((filterOn || angular.isUndefined(filterOn)) && angular.isArray(items)) {
             var hashCheck = {}, newItems = [];
 
-            var extractValueToCompare = function(item) {
+            var extractValueToCompare = function (item) {
                 if (angular.isObject(item) && angular.isString(filterOn)) {
                     return item[filterOn];
                 } else {
@@ -125,7 +154,7 @@ angApp.filter('unique', function() {
                 }
             };
 
-            angular.forEach(items, function(item) {
+            angular.forEach(items, function (item) {
                 var valueToCheck, isDuplicate = false;
 
                 for (var i = 0; i < newItems.length; i++) {
@@ -147,29 +176,29 @@ angApp.filter('unique', function() {
 /**
  * Convert unix timastamp to date
  */
-angApp.filter('getTimestamp', function() {
+angApp.filter('getTimestamp', function () {
     return Math.round(+new Date() / 1000);
 });
 
 /**
  * Calculates difference between two dates in days
  */
-angApp.filter('days_between', function() {
-    return function(date1, date2) {
+angApp.filter('days_between', function () {
+    return function (date1, date2) {
         return Math.round(Math.abs(date2.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24));
     };
 });
 
 /**
  * Return string with date in smart format: "hh:mm:ss" if current day, "hh:mm dd" if this week, "hh:mm dd mmmm" if this year, else "hh:mm dd mmmm yyyy"
- */ 
-angApp.filter('getTime', function($filter) {
-    return function(timestamp, invalidReturn) {
-        var d = new Date(parseInt(timestamp, 10)*1000);
+ */
+angApp.filter('getTime', function ($filter) {
+    return function (timestamp, invalidReturn) {
+        var d = new Date(parseInt(timestamp, 10) * 1000);
         if (timestamp === 0 || isNaN(d.getTime()))
             return invalidReturn
 
-            var day = d.getDate();
+        var day = d.getDate();
         var mon = d.getMonth() + 1; //Months are zero based
         var year = d.getFullYear();
         var hrs = d.getHours();
@@ -181,7 +210,7 @@ angApp.filter('getTime', function($filter) {
         var time;
         if ($filter('days_between')(cd, d) < 1 && cd.getDate() == d.getDate()) // this day
             time = hrs + ':' + min + ':' + sec;
-        else if ($filter('days_between')(cd, d)  < 7 && ((cd < d) ^ (cd.getDay() >= d.getDay()))) // this week
+        else if ($filter('days_between')(cd, d) < 7 && ((cd < d) ^ (cd.getDay() >= d.getDay()))) // this week
             time = day + '. ' + hrs + ':' + min;
         else if (cd.getFullYear() == d.getFullYear()) // this year
             time = day + '.' + mon + '. ' + hrs + ':' + min;
@@ -196,19 +225,19 @@ angApp.filter('getTime', function($filter) {
 /**
  * Return "red" if the data is outdated or "" if up to date
  */
-angApp.filter('getUpdated', function() {
-    return function(data) {
+angApp.filter('getUpdated', function () {
+    return function (data) {
         if (data === undefined)
             return '';
-        return ((data.updateTime > data.invalidateTime) ?'':'red');
+        return ((data.updateTime > data.invalidateTime) ? '' : 'red');
     };
 });
 
 /**
  * Strip HTML tags
  */
-angApp.filter('stripTags', function() {
-    return function(input) {
+angApp.filter('stripTags', function () {
+    return function (input) {
         return String(input).replace(/<[^>]+>/gm, '');
         //return  input.replace(/<\/?[^>]+(>|$)/g, "");
     };
@@ -216,12 +245,12 @@ angApp.filter('stripTags', function() {
 /**
  * Display HTML tags in scope
  */
-angApp.filter('toTrusted', ['$sce', function($sce){
-       
-        return function(text) {
-             if(text == null){
-            return '';
-        }
+angApp.filter('toTrusted', ['$sce', function ($sce) {
+
+        return function (text) {
+            if (text == null) {
+                return '';
+            }
             return $sce.trustAsHtml(text);
         };
     }]);
@@ -229,14 +258,14 @@ angApp.filter('toTrusted', ['$sce', function($sce){
 /**
  * Display device name
  */
-angApp.filter('deviceName', function() {
-    return function(deviceId,device) {
+angApp.filter('deviceName', function () {
+    return function (deviceId, device) {
         var name = (deviceId == 1 ? 'Z-Way' : 'Device ' + '_' + deviceId);
         if (device === undefined) {
             return name;
         }
-        if(device.data.givenName.value != ''){
-             name = device.data.givenName.value;
+        if (device.data.givenName.value != '') {
+            name = device.data.givenName.value;
         }
         return name;
     };
@@ -245,24 +274,24 @@ angApp.filter('deviceName', function() {
 /**
  * Display device name
  */
-angApp.filter('getDeviceName', function() {
-    return function(deviceId,data) {
+angApp.filter('getDeviceName', function () {
+    return function (deviceId, data) {
         var name = 'Device ' + deviceId;
-       angular.forEach(data, function(v, k) {
-              if(v.id == deviceId){
+        angular.forEach(data, function (v, k) {
+            if (v.id == deviceId) {
                 name = v.name;
                 return;
-              }
-                
-            });
+            }
+
+        });
         return name;
     };
 });
 
-angApp.filter('getByProperty', function() {
-    return function(propertyName, propertyValue, collection) {
-        var i=0, len=collection.length;
-        for (; i<len; i++) {
+angApp.filter('getByProperty', function () {
+    return function (propertyName, propertyValue, collection) {
+        var i = 0, len = collection.length;
+        for (; i < len; i++) {
             if (collection[i][propertyName] == +propertyValue) {
                 return collection[i];
             }
@@ -271,8 +300,8 @@ angApp.filter('getByProperty', function() {
     };
 });
 // Convert unix timastamp to date
-angApp.filter('dateFromUnix', function() {
-    return function(input) {
+angApp.filter('dateFromUnix', function () {
+    return function (input) {
         var d = new Date(input * 1000);
         var day = d.getDate();
         var mon = d.getMonth() + 1; //Months are zero based
@@ -286,23 +315,23 @@ angApp.filter('dateFromUnix', function() {
 });
 
 //Get current date time
-angApp.filter('getCurrentDate', function() {
-   
-        var d = new Date();
-        var day = d.getDate();
-        var mon = d.getMonth() + 1; //Months are zero based
-        var year = d.getFullYear();
-        var hrs = d.getHours();
-        var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
-        var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
-        var time = day + '.' + mon + '.' + year + ' ' + hrs + ':' + min + ':' + sec;
-        return time;
-   
+angApp.filter('getCurrentDate', function () {
+
+    var d = new Date();
+    var day = d.getDate();
+    var mon = d.getMonth() + 1; //Months are zero based
+    var year = d.getFullYear();
+    var hrs = d.getHours();
+    var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
+    var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
+    var time = day + '.' + mon + '.' + year + ' ' + hrs + ':' + min + ':' + sec;
+    return time;
+
 });
 
 //Get current time
-angApp.filter('getCurrentTime', function() {
-    return function() {
+angApp.filter('getCurrentTime', function () {
+    return function () {
         var d = new Date();
         var hrs = (d.getHours() < 10 ? '0' + d.getHours() : d.getHours());
         var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
@@ -313,15 +342,15 @@ angApp.filter('getCurrentTime', function() {
 });
 
 //Check for today
-angApp.filter('isTodayFromUnix', function() {
-    return function(input) {
-        if(isNaN(input)){
+angApp.filter('isTodayFromUnix', function () {
+    return function (input) {
+        if (isNaN(input)) {
             return '?';
         }
         var d = new Date(input * 1000);
         var day = (d.getDate() < 10 ? '0' + d.getDate() : d.getDate());
         var mon = d.getMonth() + 1; //Months are zero based
-        mon = ( mon < 10 ? '0' +  mon :  mon);
+        mon = (mon < 10 ? '0' + mon : mon);
         var year = d.getFullYear();
         var hrs = (d.getHours() < 10 ? '0' + d.getHours() : d.getHours());
         var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
@@ -341,8 +370,8 @@ angApp.filter('isTodayFromUnix', function() {
 /**
  * Replace Lock state with text
  */
-angApp.filter('lockStatus', function() {
-    return function(input) {
+angApp.filter('lockStatus', function () {
+    return function (input) {
         var mode = input;
         var mode_lbl;
 
@@ -350,21 +379,22 @@ angApp.filter('lockStatus', function() {
             mode_lbl = '?';
         } else {
             switch (mode) {
-            case 0x00:
-                mode_lbl = 'Open';
-                break;
-            case 0x10:
-                mode_lbl = 'Open from inside';
-                break;
-            case 0x20:
-                mode_lbl = 'Open from outside';
-                break;
-            case 0xff:
-                mode_lbl = 'Closed';
-                break;
+                case 0x00:
+                    mode_lbl = 'Open';
+                    break;
+                case 0x10:
+                    mode_lbl = 'Open from inside';
+                    break;
+                case 0x20:
+                    mode_lbl = 'Open from outside';
+                    break;
+                case 0xff:
+                    mode_lbl = 'Closed';
+                    break;
             }
             ;
-        };
+        }
+        ;
         return  mode_lbl;
     };
 });
@@ -372,8 +402,8 @@ angApp.filter('lockStatus', function() {
 /**
  * Replace Lock state with text
  */
-angApp.filter('lockIsOpen', function() {
-    return function(input) {
+angApp.filter('lockIsOpen', function () {
+    return function (input) {
         var mode = input;
         var status = true;
 
@@ -381,21 +411,22 @@ angApp.filter('lockIsOpen', function() {
             status = false;
         } else {
             switch (mode) {
-            case 0x00:
-                status = true;
-                break;
-            case 0x10:
-                status = true;
-                break;
-            case 0x20:
-                status = true;
-                break;
-            case 0xff:
-                status = false;
-                break;
+                case 0x00:
+                    status = true;
+                    break;
+                case 0x10:
+                    status = true;
+                    break;
+                case 0x20:
+                    status = true;
+                    break;
+                case 0xff:
+                    status = false;
+                    break;
             }
             ;
-        };
+        }
+        ;
         return  status;
     };
 });
@@ -427,24 +458,24 @@ angApp.filter('lockIsOpen', function() {
 /**
  * Get battery icon
  */
-angApp.filter('getBatteryIcon', function() {
-    return function(input) {
+angApp.filter('getBatteryIcon', function () {
+    return function (input) {
         var icon = 'battery.png';
         if (isNaN(input)) {
             return icon;
         }
         var level = parseInt(input);
-        if(level > 95){
+        if (level > 95) {
             icon = 'battery-100.png';
-        }else if(level >= 70 && level <= 95){
+        } else if (level >= 70 && level <= 95) {
             icon = 'battery-80.png';
-        }else if(level >= 50 && level < 70){
+        } else if (level >= 50 && level < 70) {
             icon = 'battery-50.png';
-        }else if(level > 20 && level < 50){
+        } else if (level > 20 && level < 50) {
             icon = 'battery-30.png';
-        }else if(level >= 5 && level <= 20){
+        } else if (level >= 5 && level <= 20) {
             icon = 'battery-20.png';
-        }else{
+        } else {
             icon = 'battery-0.png';
         }
         return icon;
@@ -453,20 +484,20 @@ angApp.filter('getBatteryIcon', function() {
 
 /**
  * Returns <code>true</code> if an association (in Association or Multichannel Association
-class) form fromNode is set to toNodeId, <code>false</code> elsewise.
+ class) form fromNode is set to toNodeId, <code>false</code> elsewise.
  * @param fromNode node to check if an association is set to toNodeId.
  * @param toNodeId node to check if an association from fromNode exists.
  */
-angApp.filter('associationExists', function() {
-    return function(fromNode, toNodeId) {
+angApp.filter('associationExists', function () {
+    return function (fromNode, toNodeId) {
         var exists = false;
         $.each(fromNode.instances, function (index, instance) {
             if (!("commandClasses" in instance)) {
                 return;
             }
-            
+
             if (0x85 in instance.commandClasses) {
-                for(var group = 0 ; group < instance.commandClasses[0x85].data.groups.value; group++) {
+                for (var group = 0; group < instance.commandClasses[0x85].data.groups.value; group++) {
                     var associations = instance.commandClasses[0x85].data[group + 1].nodes.value;
                     if ($.inArray(parseInt(toNodeId), associations) != -1) {
                         exists = true;
@@ -475,9 +506,9 @@ angApp.filter('associationExists', function() {
                 }
             }
             if (0x8e in instance.commandClasses) {
-                for(var group = 0 ; group < instance.commandClasses[0x8e].data.groups.value; group++) {
+                for (var group = 0; group < instance.commandClasses[0x8e].data.groups.value; group++) {
                     var associations = instance.commandClasses[0x8e].data[group + 1].nodesInstances.value;
-                    for(var i = 0; i < associations.length; i+=2) {
+                    for (var i = 0; i < associations.length; i += 2) {
                         if (parseInt(toNodeId) == associations[i]) {
                             exists = true;
                             return false;
@@ -494,8 +525,8 @@ angApp.filter('associationExists', function() {
  * Filter nodes which are updateable concerning routes.
  * @param batteryOnly if undefined includes all devices, if true includes only battery devices, if false includes only non-battery devices
  */
-angApp.filter('updateable', function() {
-    return function(node, nodeId, batteryOnly) {
+angApp.filter('updateable', function () {
+    return function (node, nodeId, batteryOnly) {
         var nodeIsVirtual = node.data.isVirtual;
         var nodeBasicType = node.data.basicType;
         if (nodeId == 255 || nodeIsVirtual == null || nodeIsVirtual.value == true || nodeBasicType == null || nodeBasicType.value == 1) {
@@ -512,29 +543,30 @@ angApp.filter('updateable', function() {
 /**
  * Count Routes
  */
-angApp.filter('getRoutesCount', function($filter) {
-    return function(ZWaveAPIData, nodeId) {
-        var in_array=function(v, arr, return_index){
-            for (var i=0; i<arr.length; i++)
-                if (arr[i]==v) 
-                    return return_index?i:true;
+angApp.filter('getRoutesCount', function ($filter) {
+    return function (ZWaveAPIData, nodeId) {
+        var in_array = function (v, arr, return_index) {
+            for (var i = 0; i < arr.length; i++)
+                if (arr[i] == v)
+                    return return_index ? i : true;
             return false;
         };
-        var getFarNeighbours=function(nodeId, exludeNodeIds, hops) {
+        var getFarNeighbours = function (nodeId, exludeNodeIds, hops) {
             if (hops === undefined) {
                 var hops = 0;
                 var exludeNodeIds = [nodeId];
-            };
+            }
+            ;
 
             if (hops > 2) // Z-Wave allows only 4 routers, but we are interested in only 2, since network becomes unstable if more that 2 routers are used in communications
                 return [];
 
             var nodesList = [];
-            angular.forEach(ZWaveAPIData.devices[nodeId].data.neighbours.value, function(nnodeId, index) {
+            angular.forEach(ZWaveAPIData.devices[nodeId].data.neighbours.value, function (nnodeId, index) {
                 if (!(nnodeId in ZWaveAPIData.devices))
                     return; // skip deviced reported in routing table but absent in reality. This may happen after restore of routing table.
                 if (!in_array(nnodeId, exludeNodeIds)) {
-                    nodesList.push({ nodeId: nnodeId, hops: hops });
+                    nodesList.push({nodeId: nnodeId, hops: hops});
                     if (ZWaveAPIData.devices[nnodeId].data.isListening.value && ZWaveAPIData.devices[nnodeId].data.isRouting.value)
                         $.merge(nodesList, getFarNeighbours(nnodeId, $.merge([nnodeId], exludeNodeIds) /* this will not alter exludeNodeIds */, hops + 1));
                 }
@@ -543,7 +575,7 @@ angApp.filter('getRoutesCount', function($filter) {
         };
 
         var routesCount = {};
-        angular.forEach(getFarNeighbours(nodeId), function(nnode, index) {
+        angular.forEach(getFarNeighbours(nodeId), function (nnode, index) {
             if (nnode.nodeId in routesCount) {
                 if (nnode.hops in routesCount[nnode.nodeId])
                     routesCount[nnode.nodeId][nnode.hops]++;
@@ -561,14 +593,14 @@ angApp.filter('getRoutesCount', function($filter) {
 /*
  * Set security icon
  */
-angApp.filter('securityIcon', function() {
-    return function(input) {
+angApp.filter('securityIcon', function () {
+    return function (input) {
         //var icon = 'fa fa-minus';
         var icon = '&nbsp';
-        if(input === false){
+        if (input === false) {
             icon = 'fa fa-check fa-lg text-danger';
         }
-        if(input === true){
+        if (input === true) {
             icon = 'fa fa-check fa-lg text-success';
         }
         return  icon;
@@ -578,14 +610,14 @@ angApp.filter('securityIcon', function() {
 /*
  * Set mwief icon
  */
-angApp.filter('mwiefIcon', function() {
-    return function(input) {
+angApp.filter('mwiefIcon', function () {
+    return function (input) {
         //var icon = 'fa fa-minus';
         var icon = '&nbsp';
 //        if(input === false){
 //            icon = 'fa fa-check fa-lg text-danger';
 //        }
-        if(input){
+        if (input) {
             icon = 'fa fa-check fa-lg text-success';
         }
         return  icon;
@@ -595,17 +627,17 @@ angApp.filter('mwiefIcon', function() {
 /*
  * Set mwief icon
  */
-angApp.filter('checkedIcon', function() { 
-    return function(input) {
+angApp.filter('checkedIcon', function () {
+    return function (input) {
         //var icon = 'fa fa-minus';
         var icon = '&nbsp';
 //        if(input === false){
 //            icon = 'fa fa-check fa-lg text-danger';
 //        }
-        if(input){
+        if (input) {
             icon = 'fa fa-check fa-lg text-success';
-        }else{
-             icon = 'fa fa-ban fa-lg text-danger';
+        } else {
+            icon = 'fa fa-ban fa-lg text-danger';
         }
         return  icon;
     };
@@ -614,11 +646,11 @@ angApp.filter('checkedIcon', function() {
 /**
  * Set zWavePlus icon
  */
-angApp.filter('zWavePlusIcon', function() {
-    return function(input) {
+angApp.filter('zWavePlusIcon', function () {
+    return function (input) {
         //var icon = 'fa fa-minus';
         var icon = '&nbsp';
-        if(input === true){
+        if (input === true) {
             icon = 'fa fa-plus fa-lg text-success';
         }
         return  icon;

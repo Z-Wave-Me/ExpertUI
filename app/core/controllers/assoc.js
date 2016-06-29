@@ -73,10 +73,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             $scope.ZWaveAPIData = ZWaveAPIData;
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
             var node = ZWaveAPIData.devices[nodeId];
-            if (!node) {
-                return;
-            }
-            if (nodeId == 255 || node.data.isVirtual.value) {
+            if (!node || deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
             }
             $scope.node = node;

@@ -6,7 +6,7 @@
 var config_data = {
     'cfg': {
         'app_name': 'Z-Wave',
-        'app_version': '1.0.5 ',
+        'app_version': '1.0.6',
         'custom_ip': false,
         'user_field': 'USERXXXX',
         'pass_field': 'PSWDXXXX',
@@ -57,6 +57,10 @@ var config_data = {
         'thermostat_range': {// Min and max thermostat range
             "min": "0",
             "max": "40" 
+        },
+        // Image path
+        'img': {
+            'batteries':'app/images/batteries/'
         }
 
     }

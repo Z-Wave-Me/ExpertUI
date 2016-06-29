@@ -1,28 +1,4 @@
 <!-- Test view -->
-<div data-ng-controller="TestController">
+<div ng-controller="TestController">
     <h1>Test page</h1>
-    <h2>Failed nodes</h2>
-    {{failedNodes}}
-    <select name="remove_failed_node" id="remove_failed_node" class="form-control">
-        <option value="">---</option>
-        <option ng-repeat="v in failedNodes track by v.id | orderBy:'-name'" value="{{v.id}}">{{v.id}} - {{v.name}}</option>
-    </select>
-    <h2>replaceNodes</h2>
-    {{replaceNodes}}
-    <select name="replaceNodes" id="replaceNodes" class="form-control">
-        <option value="">---</option>
-        <option ng-repeat="v in replaceNodes track by v.id | orderBy:'-name'" value="{{v.id}}">{{v.id}} - {{v.name}}</option>
-    </select>
-    <h2>failedBatteries</h2>
-    {{failedBatteries}}
-    <select name="failedBatteries" id="failedBatteries" class="form-control">
-        <option value="">---</option>
-        <option ng-repeat="v in failedBatteries track by v.id | orderBy:'-name'" value="{{v.id}}">{{v.id}} - {{v.name}}</option>
-    </select>
-     <h2>sucNodes</h2>
-    {{sucNodes}}
-    <select name="sucNodes" id="sucNodes" class="form-control">
-        <option value="">---</option>
-        <option ng-repeat="v in sucNodes track by v.id | orderBy:'-name'" value="{{v.id}}">{{v.id}} - {{v.name}}</option>
-    </select>
 </div>

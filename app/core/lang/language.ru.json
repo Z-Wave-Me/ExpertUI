@@ -1,4 +1,12 @@
 {
+    "set_all_default": "Set all to default",
+    "direct": "Прямая связь",
+    "routed": "Связь через 1 узел. Есть несколько различных маршрутов",
+    "badly_routed": "Связь через 1 узел. Есть только 1 маршрут",
+    "not_linked": "Связь через 2 и более узлов. Ненадежная связь",
+    "unavailable": "Недоступно",
+    "no_device_installed": "There is no device installed yet",
+    "select_device": "Select device",
     "replug_device": "Replug the device",
     "plain_association": "Plain association",
     "legend": "Legend",

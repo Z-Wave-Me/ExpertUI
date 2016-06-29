@@ -3,7 +3,7 @@
     <!-- Config navigation -->
     <div ng-include="'app/views/configuration/header.html'"></div>
 
-    <div id="table_mobile" class="tab-content" ng-show="deviceId > 0">
+    <div id="table_mobile" class="tab-content" ng-show="deviceId">
         <table class="table">
             <thead>
                 <tr>
@@ -23,7 +23,7 @@
                         <a class="btn btn-info" href="" ng-click="showModal('#modal_command_class',v.instanceId,$index,v.ccId, 'cmdData')">{{v.commandClass}}</a>&nbsp;
                     </td>
                     <td data-title="{{_t('th_command_param')}}">
-                        <div class="commands-data" ng-repeat="c in v.command| orderBy:predicate:reverse" ng-init="formName = 'form_' + v.commandClass + '_' + c.data.method + '_' + $index">
+                        <div class="commands-data" ng-repeat="c in v.command| orderBy:predicate:reverse" ng-init="formName = 'form_' + c.data.method + '_' + v.rowId">
                             <form 
                                 name="{{formName}}" 
                                 id="{{formName}}"
@@ -37,6 +37,7 @@
                                             collection='p' 
                                             values='c.data.values[pk]'
                                             devices='devices'
+                                            name='c.data.method'
                                             get-node-devices='getNodeDevices'
                                             ></expert-command-input>
                                         <!-- {{pk}} {{p}} 

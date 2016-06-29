@@ -98,7 +98,7 @@ appService.service('deviceService', function($filter, $log, _) {
     this.configGetNav = function(ZWaveAPIData) {
         return configGetNav(ZWaveAPIData);
     };
-
+    
     /**
      *  Get expert commands
      */
@@ -534,6 +534,7 @@ appService.service('deviceService', function($filter, $log, _) {
                             }
                         param_struct_arr.push({
                             label: value_description,
+                             name:  'constant_input_' + nodeId + '_' + conf_num,
                             type: {
                                 fix: {
                                     value: value_repr
@@ -547,7 +548,7 @@ appService.service('deviceService', function($filter, $log, _) {
                         type: {
                             enumof: param_struct_arr
                         },
-                        name: 'input_' + nodeId + '_' + conf_num,
+                        name: 'constant_input_' + nodeId + '_' + conf_num,
                         description: conf_description,
                         updateTime: updateTime,
                         isUpdated: isUpdated,
@@ -558,14 +559,13 @@ appService.service('deviceService', function($filter, $log, _) {
                         confNum: conf_num,
                         confSize: conf_size
                     };
-
                     break;
                 case 'range':
 
                     var param_struct_arr = [];
                     var rangeParam = conf['value'];
                     //console.log(rangeParam, conf_num);
-
+                    var rangeParamCnt = 0;
                     if (!rangeParam) {
                         conf_method_descr = {
                             nodeId: nodeId,
@@ -573,7 +573,7 @@ appService.service('deviceService', function($filter, $log, _) {
                             type: {
                                 noval: null
                             },
-                            name: 'input_' + nodeId + '_' + conf_num,
+                            name: 'range_input_' + nodeId + '_' + conf_num,
                             description: conf_description,
                             updateTime: updateTime,
                             isUpdated: isUpdated,
@@ -616,6 +616,8 @@ appService.service('deviceService', function($filter, $log, _) {
                             if (value_description != '') {
                                 var rangeVal = {
                                     label: value_description,
+                                    name: 'range_input_' + nodeId + '_' + conf_num,
+                                    textName: 'range_input_text_' + rangeParamCnt +'_' + nodeId + '_' + conf_num,
                                     type: {
                                         range: {
                                             min: value_from,
@@ -630,6 +632,7 @@ appService.service('deviceService', function($filter, $log, _) {
                         if (value_description != '') {
                             param_struct_arr.push({
                                 label: value_description,
+                                name: 'range_input_' + nodeId + '_' + conf_num,
                                 type: {
                                     fix: {
                                         value: value_from
@@ -637,6 +640,7 @@ appService.service('deviceService', function($filter, $log, _) {
                                 }
                             });
                         }
+                    rangeParamCnt++;
                     });
 
                     if (param_struct_arr.length > 1)
@@ -647,7 +651,7 @@ appService.service('deviceService', function($filter, $log, _) {
                                 enumof: param_struct_arr
                             },
                             hideRadio: false,
-                            name: 'input_' + nodeId + '_' + conf_num,
+                            name: 'range_input_' + nodeId + '_' + conf_num,
                             description: conf_description,
                             updateTime: updateTime,
                             isUpdated: isUpdated,
@@ -666,7 +670,7 @@ appService.service('deviceService', function($filter, $log, _) {
                             type: {
                                 enumof: param_struct_arr
                             },
-                            name: 'input_' + nodeId + '_' + conf_num,
+                            name: 'range_input_' + nodeId + '_' + conf_num,
                             hideRadio: true,
                             description: conf_description,
                             updateTime: updateTime,
@@ -679,9 +683,10 @@ appService.service('deviceService', function($filter, $log, _) {
                             confSize: conf_size
                         };
                     }
-
                     break;
                 case 'bitset':
+                    // Remove when a bitset view completed
+                    //return;
                     var param_struct_arr = [];
                     var conf_param_options = '';
                     var conf_default_value_arr = new Object;
@@ -697,8 +702,15 @@ appService.service('deviceService', function($filter, $log, _) {
                         var value = value_html;
                         var value_from = parseInt(value['_from'], 16);
                         var value_to = parseInt(value['_to'], 16);
-                        var value_description = 'fdf';
                         var value_description = '';
+                        if (angular.isDefined(value.description)) {
+                            value_description = configGetZddxLang($filter('hasNode')(value, 'description.lang'), lang);
+                        }
+                        if (angular.isDefined(value.lang)) {
+                            value_description = configGetZddxLang($filter('hasNode')(value, 'lang'), lang);
+
+                        }
+                        //console.log(value_description)
                         if (conf_default !== null) {
                             if (value_from == value_to) {
                                 if ((1 << value_from) & conf_default)
@@ -713,7 +725,7 @@ appService.service('deviceService', function($filter, $log, _) {
                         if (value_from == value_to)
                             param_struct_arr.push({
                                 label: value_description,
-                                name: 'input_' + nodeId + '_' + conf_num,
+                                name: 'bitcheck_input_' + nodeId + '_' + conf_num,
                                 type: {
                                     bitcheck: {
                                         bit: value_from
@@ -723,7 +735,7 @@ appService.service('deviceService', function($filter, $log, _) {
                         else
                             param_struct_arr.push({
                                 label: value_description,
-                                name: 'input_' + nodeId + '_' + conf_num,
+                                name: 'bitrange_input_' + nodeId + '_' + conf_num,
                                 type: {
                                     bitrange: {
                                         bit_from: value_from,
@@ -745,7 +757,7 @@ appService.service('deviceService', function($filter, $log, _) {
                         type: {
                             bitset: param_struct_arr
                         },
-                        name: 'input_' + nodeId + '_' + conf_num,
+                        name: 'bitset_input_' + nodeId + '_' + conf_num,
                         description: conf_description,
                         updateTime: updateTime,
                         isUpdated: isUpdated,
@@ -756,6 +768,7 @@ appService.service('deviceService', function($filter, $log, _) {
                         confNum: conf_num,
                         confSize: conf_size
                     };
+                    //console.log(conf_method_descr)
                     break;
                 default:
                     return;
@@ -766,7 +779,6 @@ appService.service('deviceService', function($filter, $log, _) {
             config_cont.push(conf_method_descr);
             parCnt++;
         });
-        //console.log(config_cont);
         return config_cont;
     }
 
