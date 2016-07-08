@@ -2715,6 +2715,126 @@ function renderMethodSpec(ccId, data) {
 				"Get": []
 			};
 		
+		// BarrierOperator
+		case 0x66:
+			return {
+				"Get": [],
+				"Set": [
+					{
+						"label": "State",
+						"type": {
+							"enumof": [
+								{
+									"label": "Close",
+									"type": {
+										"fix": 	{
+											"value": 0x00
+										}
+									}
+								},
+								{
+									"label": "Open",
+									"type": {
+										"fix": 	{
+											"value": 0xff
+										}
+									}
+								}
+							]
+						}
+					}
+				],
+				"SignalGet": [
+					{
+						"label": "Signal type",
+						"type": {
+							"enumof": [
+								{
+									"label": "Not supported",
+									"type": {
+										"fix": 	{
+											"value": 0x00
+										}
+									}
+								},
+								{
+									"label": "Audible notification",
+									"type": {
+										"fix": 	{
+											"value": 0x01
+										}
+									}
+								},
+								{
+									"label": "Visual notification",
+									"type": {
+										"fix": 	{
+											"value": 0x02
+										}
+									}
+								}
+							]
+						}
+					}
+				],
+				"SignalSet": [
+					{
+						"label": "Signal type",
+						"type": {
+							"enumof": [
+								{
+									"label": "Not supported",
+									"type": {
+										"fix": 	{
+											"value": 0x00
+										}
+									}
+								},
+								{
+									"label": "Audible notification",
+									"type": {
+										"fix": 	{
+											"value": 0x01
+										}
+									}
+								},
+								{
+									"label": "Visual notification",
+									"type": {
+										"fix": 	{
+											"value": 0x02
+										}
+									}
+								}
+							]
+						}
+					},
+					{
+						"label": "State",
+						"type": {
+							"enumof": [
+								{
+									"label": "Off",
+									"type": {
+										"fix": 	{
+											"value": 0x00
+										}
+									}
+								},
+								{
+									"label": "On",
+									"type": {
+										"fix": 	{
+											"value": 0xff
+										}
+									}
+								}
+							]
+						}
+					}
+				]
+			};
+		
 		// NodeNaming
 		case 0x77:
 			return {
