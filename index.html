@@ -63,7 +63,7 @@
   <script src="app/core/controllers/interviewcommand.js"></script>
   <script src="app/core/controllers/license.js"></script>
   <script src="app/core/controllers/uzb.js"></script>
-  
+   <script src="app/core/controllers/zniffer.js"></script>
   
    <script src="app/core/controllers/home.js"></script>
   <script src="app/core/controllers/configuration.js"></script>
@@ -121,6 +121,13 @@
                                 <li><a href="#network/reorganization" data-collapse-navbar ng-class="isActive('reorganization',2)">{{ _t('nav_reorganization') }}</a></li>
                                 <li><a href="#network/timing" data-collapse-navbar ng-class="isActive('timing',2)">{{ _t('nav_timing_info') }}</a></li>
                                 <li><a href="#network/controller" data-collapse-navbar ng-class="isActive('controller',2)">{{ _t('nav_controller_info') }}</a></li>
+                            </ul>
+                        </li>
+                        <li class="divider-vertical remove-margin"></li>
+                        <li class="dropdown">
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown" ng-class="isActive('installer',1)">{{ _t('nav_installer') }} <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#installer/zniffer" data-collapse-navbar ng-class="isActive('zniffer',2)">{{ _t('nav_zniffer') }}</a></li>
                             </ul>
                         </li>
                         <li class="divider-vertical remove-margin"></li>

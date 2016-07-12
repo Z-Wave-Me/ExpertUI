@@ -1,0 +1,62 @@
+<!-- Help view -->
+<div ng-controller="ZnifferController">
+    <div class="page-header"><h1>{{ _t('nav_zniffer')}}</h1></div>
+    <div id="table_mobile">
+        <table class="table table-striped table-condensed table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        <a href="" ng-click="orderBy('timestamp')">{{ _t('timestamp')}} 
+                            <span ng-show="predicate == 'timestamp'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="" ng-click="orderBy('speed')">{{ _t('speed')}}  
+                            <span ng-show="predicate == 'speed'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="" ng-click="orderBy('rssi')">{{ _t('rssi')}}   
+                            <span ng-show="predicate == 'rssi'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="" ng-click="orderBy('src')">{{ _t('src')}}   
+                            <span ng-show="predicate == 'src'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="" ng-click="orderBy('dest')">{{ _t('dest')}}  
+                            <span ng-show="predicate == 'dest'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="" ng-click="orderBy('homeid')">{{ _t('homeid')}}   
+                            <span ng-show="predicate == 'homeid'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="" ng-click="orderBy('data_txt')">{{ _t('Data')}}   
+                            <span ng-show="predicate == 'data_txt'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th>{{ _t('pakettype')}}</th>
+                    <th>{{ _t('hexdata')}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="zniffer_row_{{v.data}}" ng-repeat="v in zniffer.all | orderBy:predicate:reverse" id="{{$index}}">
+                    <td>{{v.timestamp}}</td>
+                    <td>{{v.speed}}Kbit/s</td>
+                    <td>{{v.rssi}}</td>
+                    <td>{{v.src}}</td>
+                    <td>{{v.dest}}</td>
+                     <td>{{v.homeid}}</td>
+                    <td>{{v.data_txt}}</td>
+                    <td>{{v.pakettype}}</td>
+                   <td>{{v.hexdata}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

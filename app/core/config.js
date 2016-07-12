@@ -14,6 +14,7 @@ var config_data = {
         'queue_interval': 1000, // Set interval in miliseconds to refresh queue data 
         'route_update_timeout': 15000, // Maximum time in miliseconds to wait for an update-route
         //'server_url': 'http://zwave.dyndns.org:8083/', // Remote JSON
+        'local_data_url':'app/data/',
         'server_url': '', // Remote JSON
         'dongle': 'zway', // Default dongle
         'zwave_list': '/ZWave/list', // Zwave list of dongles

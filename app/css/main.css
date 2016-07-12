@@ -692,3 +692,15 @@ padding: 10px 10px 0 10px;
     border-color: #955 !important;
 }
 
+/* Zniffer
+-------------------------------------------------- */
+.zniffer_row_1{
+    color:#80AD80;
+}
+.zniffer_row_2{
+    color: #6494BC;
+}
+.zniffer_row_3{
+    color:  #d9534f;
+}
+

@@ -64,6 +64,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         zmeCapabilities: zmeCapabilities,
         getLanguageFile: getLanguageFile,
         //Test New functions
+        getApiLocal: getApiLocal,
         getZwaveList: getZwaveList,
         loadZwaveApiData: loadZwaveApiData,
         loadJoinedZwaveData: loadJoinedZwaveData,
@@ -738,6 +739,26 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
     }
     
     ///////////////////////////////////////////////////////////// Test - new functions /////////////////////////////////////////////////////////////////////
+    /**
+     * Get local data from the storage directory
+     * @param {string} file
+     * @returns {unresolved}
+     */
+    function getApiLocal(file) {
+        return $http({
+            method: 'get',
+            url: cfg.local_data_url + file
+        }).then(function (response) {
+            if (typeof response.data === 'object') {
+                return response;
+            } else {// invalid response
+                return $q.reject(response);
+            }
+        }, function (response) {// something went wrong
+            return $q.reject(response);
+        });
+
+    }
     /**
      * Get zwave list
      */

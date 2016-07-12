@@ -119,6 +119,10 @@ angApp.config(['$routeProvider',
                 when('/network/queue', {
                     templateUrl: 'app/views/network/queue.html'
                 }).
+                  // Installer - zniffer
+                 when('/installer/zniffer', {
+                    templateUrl: 'app/views/installer/zniffer.html'
+                }).
                 // Error page
                 when('/error/:code?', {
                     templateUrl: 'app/views/error.html'
