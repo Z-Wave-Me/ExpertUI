@@ -84,7 +84,9 @@ li.lang-switch_ a{
 #page_queue .navbar, #page_queue #footer{
     display: none;
 }
-
+.a-disabled{
+    color: #A0A0A0 !important;
+}
 
 /* Typo
 -------------------------------------------------- */
