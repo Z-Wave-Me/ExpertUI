@@ -107,12 +107,12 @@ angApp.config(['$routeProvider',
                 when('/network/routing', {
                     templateUrl: 'app/views/network/routing.html'
                 }).
-                when('/network/reorganization', {
-                    templateUrl: 'app/views/network/reorganization.html'
-                }).
-                when('/network/timing', {
-                    templateUrl: 'app/views/network/timing.html'
-                }).
+//                when('/network/reorganization', {
+//                    templateUrl: 'app/views/network/reorganization.html'
+//                }).
+//                when('/network/timing', {
+//                    templateUrl: 'app/views/network/timing.html'
+//                }).
                 when('/network/controller', {
                     templateUrl: 'app/views/network/controller.html'
                 }).
