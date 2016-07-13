@@ -4,7 +4,8 @@
  */
 appController.controller('ZnifferController', function ($scope, dataService, _) {
     $scope.zniffer = {
-        all: []
+        all: [],
+        filter: ['homeid','src','dest']
     };
 
     /**
