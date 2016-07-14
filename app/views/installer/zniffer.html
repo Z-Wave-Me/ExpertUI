@@ -4,17 +4,30 @@
     <div class="page-control form-inline">
         <div class="row">
             <div class="col-md-6">
-                <select name="devices" class="form-control" ng-model="zniffer.model.filter" ng-change="setZnifferFilter()">
-                    <option value="" ng-selected="v.id != deviceId">--- {{_t('zniffer_filter')}} ---</option>
-                    <option ng-repeat="v in zniffer.filter" value="{{v}}">{{v}}</option>
-                </select>
-                <span ng-if="zniffer.model.filter">{{zniffer.model.filter}}</span>
+                Other stuff
             </div>
-            <div class="col-md-6">
-                <div class="input-group">
-                    <input type="text" ng-model="q" class="form-control form-search" value="{{q}}">
-                    <span class="input-group-addon"><i class="fa fa-search"></i></span> 
+            <div class="col-md-6 text-right">
+                <div class="form-group">
+                    <select name="devices" class="form-control" ng-model="zniffer.filter.model" ng-change="setZnifferFilter()">
+                        <option value="" ng-selected="v.id != deviceId">--- {{_t('zniffer_filter')}} ---</option>
+                        <option ng-repeat="v in zniffer.filter.items" value="{{v}}">{{v}}</option>
+                    </select>
                 </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <input name="add_tag" id="add_tag" type="text" class="form-control" placeholder="{{_t('lb_add_tag')}}" 
+                               ng-model="zniffer.filter.search" bb-key-event="searchZniffer()" ng-disabled="!zniffer.filter.model" />
+                        <div class="app-dropdown" ng-if="zniffer.filter.suggestions.length">
+                            <ul>
+                                <li href="" ng-click="searchResulzZniffer(v)" 
+                                    ng-repeat="v in  zniffer.filter.suggestions | orderBy:'toString()'"><a href=""> <i class="fa fa-plus text-success"></i> {{v}}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!--<input type="text" ng-model="q" class="form-control form-search" value="{{q}}">
+                <span class="input-group-addon"><i class="fa fa-search"></i></span>--> 
             </div>
         </div>
 

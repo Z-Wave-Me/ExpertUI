@@ -689,6 +689,24 @@ angApp.directive('fileModel', ['$parse', function ($parse) {
         };
     }]);
 
+/**
+ * Catch a key event
+ * @class bbKeyEvent
+ */
+angApp.directive('bbKeyEvent', function () {
+    return function (scope, element, attrs) {
+        element.bind("keyup", function (event) {
+            if (event.which !== 13) {
+                scope.$apply(function () {
+                    scope.$eval(attrs.bbKeyEvent);
+                });
+
+                event.preventDefault();
+            }
+        });
+    };
+});
+
 /*** Fixes ***/
 // js holder fix
 angApp.directive('jsholderFix', function () {
