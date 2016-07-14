@@ -4,6 +4,9 @@
  */
 appController.controller('ZnifferController', function ($scope, dataService, _) {
     $scope.zniffer = {
+        model: {
+            filter: false
+        },
         all: [],
         filter: ['homeid','src','dest']
     };
@@ -18,6 +21,15 @@ appController.controller('ZnifferController', function ($scope, dataService, _) 
         }, function (error) {
             alert('Unable to load data');
         });
+    };
+    $scope.loadZniffer();
+    
+    /**
+     * Set zniffer filter
+     * @returns {undefined}
+     */
+    $scope.setZnifferFilter = function () {
+        console.log($scope.zniffer)
     };
     $scope.loadZniffer();
 
