@@ -1,0 +1,113 @@
+/* Routing table cell styles
+-------------------------------------------------- */
+/* Routing table cell styles
+-------------------------------------------------- */
+#RoutingTable td.rtCell {
+    width: 22px;
+    height: 22px;
+    padding: 0px 0px 1px 1px;
+}
+
+#RoutingTable div.rtDiv {
+    min-width: 20px;
+    min-height: 20px;
+    height: 100%;
+    width: 100%;
+    border-radius: 4px;
+    border-collapse: separate;
+    border: 1px solid white;
+    display: table;
+    text-align: center;
+}
+
+#RoutingTable span.routeHops {
+    display: table-cell;
+    vertical-align: middle;
+    border: 0;
+}
+
+#RoutingTable td.rtInfo {
+    text-align: left;
+    white-space: nowrap;
+}
+
+#RoutingTable td.rtHeader {
+    text-align: center;
+    white-space: nowrap;
+}
+
+#RoutingTable td.rtHeaderNames {
+    text-align: left;
+    white-space: nowrap;
+}
+
+#RoutingTable td.rtNodes {
+    text-align: right;
+}
+
+#RoutingTable td.rtNodesNames {
+    text-align: left;
+    padding: 0 1em 0 0;
+}
+
+#RoutingTable td {
+    white-space: nowrap;
+    padding: 0px 0px 1px 1px;
+}
+
+#RoutingTable th {
+    white-space: nowrap;
+    padding: 0px 0px 1px 1px;
+}
+
+#RoutingTable div.rtDirect {
+    background-color: green;
+}
+
+#RoutingTable div.rtRouted {
+    background-color: #8C0;
+}
+
+#RoutingTable div.rtBadlyRouted {
+    background-color: yellow;
+}
+
+#RoutingTable div.rtNotLinked {
+    background-color: red;
+}
+
+#RoutingTable div.rtUnavailable {
+    background-color: gray;
+}
+
+#RoutingTable .info {
+    font-size: smaller;
+}
+
+#RoutingTable button {
+    padding: 0px 6px;
+}
+
+#RoutingComments {
+    margin-top: 10px;
+}
+
+/* device not present in config file and not present in Z-Wave assoc group */
+.dissapeared {
+    color: #911;
+}
+
+/* device present in config file but not present in Z-Wave assoc group */
+.notInZWave {
+    color: #955;
+}
+
+/* device present in config file and in Z-Wave assoc group */
+.inZWave {
+    color: #000;
+}
+
+.assocAdd {
+    background-color: #911 !important;
+    border-color: #955 !important;
+}

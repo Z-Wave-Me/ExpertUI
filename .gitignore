@@ -8,3 +8,4 @@ upload.php
 #/app/core/config.js
 /node_modules/*
 npm-debug.log
+/app/css/vendor/*
