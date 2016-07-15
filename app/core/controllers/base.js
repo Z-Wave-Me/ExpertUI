@@ -127,5 +127,28 @@ appController.controller('BaseController', function($scope, $cookies, $filter, $
         myCache.removeAll();
         $route.reload();
     };
+    
+     $scope.filterExpanded = {};
+    /**
+     * Expand/collapse filter
+     * @param {string} key
+     * @param {object} $event
+     * @param {boolean} status
+     * @returns {undefined}
+     */
+    $scope.expandFilter = function (key, $event, status) {
+        if ($scope.filterExpanded[key]) {
+            $scope.filterExpanded = {};
+            $event.stopPropagation();
+            return;
+        }
+        $scope.filterExpanded = {};
+        if (typeof status === 'boolean') {
+            $scope.filterExpanded[key] = status;
+        } else {
+            $scope.filterExpanded[key] = !$scope.filterExpanded[key];
+        }
+        $event.stopPropagation();
+    };
 
 });

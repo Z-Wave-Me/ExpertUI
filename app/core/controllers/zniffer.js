@@ -8,6 +8,7 @@ appController.controller('ZnifferController', function ($scope, dataService, _) 
         filter: {
             model: false,
             items: ['homeid','src','dest'],
+            data: [],
             search: '',
             suggestions:[]
         }
@@ -33,6 +34,10 @@ appController.controller('ZnifferController', function ($scope, dataService, _) 
     $scope.setZnifferFilter = function () {
         $scope.zniffer.filter.search = '';
         console.log($scope.zniffer)
+         $scope.zniffer.filter.data = _.countBy($scope.zniffer.all,function (v) {
+            return v[$scope.zniffer.filter.model];
+        });
+        console.log($scope.zniffer.filter.data)
     };
     $scope.loadZniffer();
     
@@ -62,6 +67,7 @@ appController.controller('ZnifferController', function ($scope, dataService, _) 
         $scope.zniffer.filter.suggestions = [];
         console.log('Now filtering by: ', $scope.zniffer.filter)
         //$scope.zniffer.filter.search = '';
+        $scope.loadZniffer();
         return;
     };
 
@@ -71,6 +77,7 @@ appController.controller('ZnifferController', function ($scope, dataService, _) 
             var zero = places - num.toString().length + 1;
             return Array(+(zero > 0 && zero)).join("0") + num;
         };
+        var filter = {};
         var dataTxt = ['Singlecast','Explorer Normal','Ack','CRC_ERROR'];
 
         var zniffer = _.chain(data)
@@ -81,7 +88,10 @@ appController.controller('ZnifferController', function ($scope, dataService, _) 
                v.data_txt = dataTxt[v.data];
                     return v;
                 });
-        $scope.zniffer.all = zniffer.value();
+        if($scope.zniffer.filter.model && $scope.zniffer.filter.search){
+            filter[$scope.zniffer.filter.model] = $scope.zniffer.filter.search;
+        }
+        $scope.zniffer.all = zniffer.where(filter).value();
     }
     
     /**

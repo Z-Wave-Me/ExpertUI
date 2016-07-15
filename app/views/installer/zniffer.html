@@ -4,7 +4,15 @@
     <div class="page-control form-inline">
         <div class="row">
             <div class="col-md-6">
-                Other stuff
+                <div class="btn-group">
+                    <button class="btn btn-default" ng-click="expandFilter('znifferFilter', $event)">
+                        <i class="fa fa-filter"></i> 
+                        <span class="btn-name">{{_t(dataHolder.modules.orderBy) | cutText:true:15}}</span>
+                    </button>
+                    <button class="btn btn-default" ng-click="expandFilter('zwAlianceDataFilter', $event)" ng-if_="zwAlianceData.filter.type">
+                        <span class="btn-name">{{zwAlianceData.filter.type| cutText:true:15}}</span> <i class="fa fa-caret-down"></i>
+                    </button>
+                </div>
             </div>
             <div class="col-md-6 text-right">
                 <div class="form-group">
@@ -20,7 +28,7 @@
                         <div class="app-dropdown" ng-if="zniffer.filter.suggestions.length">
                             <ul>
                                 <li href="" ng-click="searchResulzZniffer(v)" 
-                                    ng-repeat="v in  zniffer.filter.suggestions | orderBy:'toString()'"><a href=""> <i class="fa fa-plus text-success"></i> {{v}}</a></li>
+                                    ng-repeat="v in  zniffer.filter.suggestions| orderBy:'toString()'"><a href=""> <i class="fa fa-plus text-success"></i> {{v}}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -31,6 +39,22 @@
             </div>
         </div>
 
+    </div>
+    
+    <!-- Page subnavi  sort by -->
+    <div class="page-navi" ng-if="filterExpanded.znifferFilter">
+        <div class="page-navi-in">
+            <div class="navi-overflow">
+            <div class="page-navi-content">
+                Subnavi content
+            </div>
+            </div>
+            
+            <div class="appnavi-footer">
+                <span class="clickable" ng-click="expandFilter('znifferFilter', $event)">
+                    <i class="fa fa-times text-danger"></i> Close&nbsp;&nbsp;&nbsp;</span>
+            </div>
+        </div>
     </div>
     <div id="table_mobile">
         <table class="table table-striped table-condensed table-hover">
