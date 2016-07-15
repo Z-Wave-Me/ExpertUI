@@ -1,0 +1,90 @@
+/*
+ * The responsive style for the front-end
+ */
+
+/* Global settings
+-------------------------------------------------- */
+/*.clearfix {
+    *zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+    display: table;
+    content: "";
+    line-height: 0;
+}
+.clearfix:after {
+    clear: both;
+}
+.hide-text {
+    font: 0/0 a;
+    color: transparent;
+    text-shadow: none;
+    background-color: transparent;
+    border: 0;
+}
+.input-block-level {
+    display: block;
+    width: 100%;
+    min-height: 30px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}*/
+
+/*==========  Overflow  ==========*/
+
+
+
+/*==================================================
+=            Bootstrap 3 Media Queries             =
+==================================================*/
+
+/*.is-mobile-true{
+    .mobile-hide{
+        display: none !important;
+    }
+}*/
+
+/*==========  Mobile First Method  ==========*/
+
+/* Custom, iPhone Retina */
+//@media only screen and (min-width : 320px) {}
+
+/* Extra Small Devices, Phones */
+//@media only screen and (min-width : 480px) {}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+    @import "_mq_sm";
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) and (orientation:landscape) {
+    @import "_mq_md";
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px)and (orientation:landscape) {
+    @import "_mq_lg";
+}
+
+
+
+/*==========  Non-Mobile First Method  ==========*/
+
+/* Large Devices, Wide Screens */
+//@media only screen and (max-width : 1200px) {}
+
+/* Medium Devices, Desktops */
+//@media only screen and (max-width : 992px)   {}
+
+/* Small Devices, Tablets */
+//@media only screen and (max-width : 768px),(orientation:portrait){}
+
+/* Extra Small Devices, Phones */
+//@media only screen and (max-width : 480px) {}
+
+/* Custom, iPhone Retina */
+//@media only screen and (max-width : 360px) {}
