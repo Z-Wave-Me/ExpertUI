@@ -51,9 +51,7 @@ var config_data = {
             8: 'KR',
             7: 'JP',
             3: 'US',
-            9: 'IL',
-            unsupported: 'unsupported',
-            unknown: 'unknown'
+            9: 'IL'
         }, // List of frequencies
         'thermostat_range': {// Min and max thermostat range
             "min": "0",

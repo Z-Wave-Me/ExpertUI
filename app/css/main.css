@@ -1167,40 +1167,46 @@ h3 {
 }
 
 /* line 71, ../sass/common/_dropdown.scss */
+.appdropdown-footer {
+  padding: 10px;
+  text-align: right;
+}
+
+/* line 76, ../sass/common/_dropdown.scss */
 .dropdown-100 {
   width: 100%;
 }
 
-/* line 74, ../sass/common/_dropdown.scss */
+/* line 79, ../sass/common/_dropdown.scss */
 .dropdown-50 {
   width: 50%;
 }
 
-/* line 77, ../sass/common/_dropdown.scss */
+/* line 82, ../sass/common/_dropdown.scss */
 .dropdown-lang {
   min-width: 250px;
 }
-/* line 80, ../sass/common/_dropdown.scss */
+/* line 85, ../sass/common/_dropdown.scss */
 .dropdown-lang ul li {
   display: inline-block;
   padding: 5px;
   border: 0;
 }
 
-/* line 88, ../sass/common/_dropdown.scss */
+/* line 93, ../sass/common/_dropdown.scss */
 .app-dropdown-left {
   float: left;
   left: 0;
   right: auto;
 }
 
-/* line 93, ../sass/common/_dropdown.scss */
+/* line 98, ../sass/common/_dropdown.scss */
 .app-dropdown-bottom {
   top: auto;
   bottom: 100%;
 }
 
-/* line 98, ../sass/common/_dropdown.scss */
+/* line 103, ../sass/common/_dropdown.scss */
 .app-dropdown-mxh-600 {
   height: auto;
   max-height: 600px;

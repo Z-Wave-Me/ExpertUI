@@ -5,9 +5,14 @@
 appController.controller('ZnifferController', function ($scope, dataService, _) {
     $scope.zniffer = {
         all: [],
+        frequency: 0,
+        uzb: {
+            current: 0,
+            all: ['COM 1','COM 2','COM 3','COM 4']
+        },
         filter: {
             model: false,
-            items: ['homeid', 'src', 'dest'],
+            items: ['homeid', 'src', 'dest','rssi','speed','data'],
             data: [],
             search: '',
             suggestions: []
@@ -34,6 +39,7 @@ appController.controller('ZnifferController', function ($scope, dataService, _) 
     $scope.setZnifferFilter = function (filter) {
         $scope.zniffer.filter.search = '';
         $scope.zniffer.filter.model = filter;
+         //$scope.loadZniffer();
     };
 
     /**
@@ -54,6 +60,24 @@ appController.controller('ZnifferController', function ($scope, dataService, _) 
     $scope.applyZnifferFilter = function (value) {
         $scope.zniffer.filter.suggestions = [];
         $scope.zniffer.filter.search = value;
+        $scope.loadZniffer();
+    };
+    
+    /**
+     * Set zniffer frequency
+     * @returns {undefined}
+     */
+    $scope.setZnifferFrequency = function (frq) {
+        $scope.zniffer.frequency = frq;
+        $scope.loadZniffer();
+    };
+    
+    /**
+     * Set zniffer uzb
+     * @returns {undefined}
+     */
+    $scope.setZnifferUzb = function (uzb) {
+        $scope.zniffer.uzb.current = uzb;
         $scope.loadZniffer();
     };
 
@@ -83,7 +107,11 @@ appController.controller('ZnifferController', function ($scope, dataService, _) 
                 .filter(function (v) {
                     v.src = zeroPad(v.src, 3);
                     v.dest = zeroPad(v.dest, 3);
-                    v.data_txt = dataTxt[v.data];
+                     v.dataInt = v.data;
+                    v.data = dataTxt[v.data];
+                    
+                    v.rssi = v.rssi.toString();
+                     v.speed = v.speed.toString();
                     return v;
                 });
         // Set filter data

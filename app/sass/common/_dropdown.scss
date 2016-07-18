@@ -68,6 +68,11 @@
 
     }
 }
+.appdropdown-footer{
+     padding: $spacing;
+  //border-top: solid 1px $modal-border-color;  
+  text-align: right;
+}
 .dropdown-100{
     width: 100%;
 }
