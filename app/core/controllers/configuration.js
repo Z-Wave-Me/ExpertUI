@@ -314,6 +314,213 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         $('#device_description_interview .config-interview-val').html(deviceService.configInterviewStage(ZWaveAPIData, nodeId, $scope.languages));
     }
 });
+
+// Device configuration Postfix controller
+appController.controller('PostfixController', function ($scope, $routeParams, $route, $location, $cookies, $filter, $http, dataService, deviceService, myCache) {
+    $scope.devices = [];
+    $scope.deviceId = 0;
+    $scope.activeTab = 'postfix';
+    $scope.activeUrl = 'configuration/postfix/';
+    $cookies.tab_config = $scope.activeTab;
+    $scope.modelSelectZddx = false;
+
+    // Interview data
+    $scope.descriptionCont;
+    $scope.deviceZddx = [];
+    // Load data
+    $scope.load = function (nodeId) {
+        //nodeId = parseInt(nodeId,10);
+        dataService.getZwaveData(function (ZWaveAPIData) {
+            $scope.ZWaveAPIData = ZWaveAPIData;
+            $scope.devices = deviceService.configGetNav(ZWaveAPIData);
+
+
+            var node = ZWaveAPIData.devices[nodeId];
+            if (!node || deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
+                return;
+            }
+
+            $cookies.configuration_id = nodeId;
+            $cookies.config_url = $scope.activeUrl + nodeId;
+            $scope.deviceId = nodeId;
+            $scope.deviceName = $filter('deviceName')(nodeId, node);
+
+            setData(ZWaveAPIData, nodeId);
+
+
+            dataService.joinedZwaveData(function (data) {
+                node = data.joined.devices[nodeId];
+                refreshData(node, nodeId, data.joined);
+                $scope.ZWaveAPIData = ZWaveAPIData;
+            });
+        }, true);
+    };
+    $scope.load($routeParams.nodeId);
+
+    // Redirect to detail page
+    $scope.changeDevice = function (deviceId) {
+        if (deviceId > 0) {
+            $location.path($scope.activeUrl + deviceId);
+        }
+    };
+
+
+    // Change device select
+    $scope.changeDeviceSelect = function (selector, target, file) {
+        var imageFile = $(selector).find(':selected').data('image');
+        var image;
+        if (imageFile == undefined) {
+            image = $scope._t('no_device_image');
+        } else {
+            image = '<img src="' + imageFile + '" />';
+        }
+        $scope.modelSelectZddx = file;
+        $(target).html(image);
+    };
+
+    $scope.submitPostfix = function (form) {
+        var data = $('#' + form).serializeArray();
+
+        var p_id = $('#p_id').text().trim();
+        console.log(p_id);
+        var obj = {};
+        data.forEach(function(d) {
+            if((d.name === "postInterview" || d.name === "preInterview")) {
+
+                obj[d.name] = d.value!="" ? JSON.parse(d.value) : [];
+            } else {
+                obj[d.name] = d.value;
+            }
+        });
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = (date.getMonth() + 1 < 10) ? "0"+(date.getMonth() + 1) : date.getMonth() + 1;
+        var day = (date.getDate() < 10) ? "0"+date.getDate() : date.getDate();
+        var h = (date.getHours() < 10) ? "0"+date.getHours() : date.getHours();
+        var m = (date.getMinutes() < 10) ? "0"+date.getMinutes() : date.getMinutes();
+        var s = (date.getSeconds() < 10) ? "0"+date.getSeconds() : date.getSeconds();
+
+        obj['last_update'] = year+"-"+month+"-"+day+" "+h+":"+m+":"+s;
+        obj['p_id'] = p_id;
+
+        var json = JSON.stringify(obj);
+
+        $http.post($scope.cfg.server_url + '/ZWaveAPI/PostfixAdd', json, {
+            headers: {'Content-Type': 'application/json'}
+        }).success(function(response) {
+            console.log(JSON.stringify(response));
+
+            alert(response);
+
+
+        }).error(function(response) {
+            console.log(response);
+            alert("Error: "+response);
+        });
+
+    };
+
+    /// --- Private functions --- ///
+    /**
+     * Set zwave data
+     */
+    function setData(ZWaveAPIData, nodeId, refresh) {
+        var node = ZWaveAPIData.devices[nodeId];
+        if (!node) {
+            return;
+        }
+        $scope.showDevices = true;
+
+        var msg = {'p_id': getPId(node)};
+        //var msg = {'p_id': '340.256.267'};
+
+        $http.post($scope.cfg.server_url + '/ZWaveAPI/PostfixGet', msg, {
+            headers: {'Content-Type': 'application/json'}
+        }).success(function(response) {
+            $scope.descriptionCont = setCont(response, node);
+        }).error(function(response) {
+            alert("Error: "+response);
+            $scope.descriptionCont = setCont({}, node);
+        });
+
+    }
+
+    function getPId(node) {
+
+        var mId = node.data.manufacturerId.value? node.data.manufacturerId.value : null;
+        var mPT = node.data.manufacturerProductType.value? node.data.manufacturerProductType.value : null;
+        var mPId = node.data.manufacturerProductId.value? node.data.manufacturerProductId.value: null;
+
+        var p_id = mId+"."+mPT+"."+mPId;
+
+        return p_id;
+    }
+
+    /**
+     * Device description
+     */
+    function setCont(data, node) {
+
+        console.log("data: "+data.p_id);
+
+        // Set device data
+        var deviceImage = 'app/images/no_device_image.png';
+        var p_id = (data.p_id)? data.p_id : getPId(node);
+        var product_name = data.product ? data.product : '';
+        var preInterview = [];
+        if(data.preInterview) {
+            data.preInterview.forEach(function(el) {
+                 preInterview.push(el);
+            });
+        }
+        var postInterview = [];
+        if(data.postInterview) {
+            data.postInterview.forEach(function(el) {
+                postInterview.push(el);
+            });
+        }
+        var last_update = data.last_update ? data.last_update : '';
+        var tester = data.tester ? data.tester : '';
+        var commentary = data.commentary ? data.commentary : '';
+
+        // Set device image
+        $scope.deviceImage = deviceImage;
+        // OBJ
+        var obj = {};
+        obj["a"] = {"key": "p_id", "val": p_id};
+        obj["b"] = {"key": "product", "val": product_name};
+        obj["c"] = {"key": "preInterview", "val": preInterview};
+        obj["d"] = {"key": "postInterview", "val": postInterview};
+        obj["e"] = {"key": "last_update", "val": last_update};
+        obj["f"] = {"key": "tester", "val": tester};
+        obj["g"] = {"key": "commentary", "val": commentary};
+        /*obj["h"] = {"key": "device_description_inclusion_note", "val": inclusionNote};
+        obj["i"] = {"key": "device_description_wakeup_note", "val": wakeupNote};
+        obj["j"] = {"key": "device_description_interview", "val": deviceService.configInterviewStage(ZWaveAPIData, nodeId, $scope.languages)};
+        obj["k"] = {"key": "device_sleep_state", "val": deviceService.configDeviceState(node, $scope.languages)};
+        //obj["l"] = {"key": "device_queue_length", "val": queueLength(ZWaveAPIData, node)};
+        obj["m"] = {"key": "device_description_app_version", "val": deviceDescriptionAppVersion + '.' + deviceDescriptionAppSubVersion};
+        obj["o"] = {"key": "device_description_sdk_version", "val": sdk};
+        obj["p"] = {"key": "command_class", "val": ccNames};
+        obj["q"] = {"key": "zwave_role_type", "val": ZWavePlusRoles.join(', ')};
+        if (deviceService.isLocalyReset(node)) {
+            obj["r"] = {"key": "device_reset_locally", "val": '<i class="' + $filter('checkedIcon')(true) + '"></i>'};
+        }
+        if (typeof securityInterview === 'boolean') {
+            obj["s"] = {"key": "device_security_interview", "val": '<i class="' + $filter('checkedIcon')(securityInterview === true ? false : true) + '"></i>'};
+        }*/
+        return obj;
+    }
+
+    /**
+     * Refresh description cont
+     */
+    function refreshData(node, nodeId, ZWaveAPIData) {
+        $scope.interviewCommands = deviceService.configGetInterviewCommands(node, ZWaveAPIData.updateTime);
+        $('#device_sleep_state .config-interview-val').html(deviceService.configDeviceState(node, $scope.languages));
+        $('#device_description_interview .config-interview-val').html(deviceService.configInterviewStage(ZWaveAPIData, nodeId, $scope.languages));
+    }
+});
 // Device configuration Configuration controller
 appController.controller('ConfigConfigurationController', function ($scope, $routeParams, $location, $cookies, $filter, $http, $timeout, $route,$window, dataService, deviceService, myCache, _) {
     $scope.devices = [];

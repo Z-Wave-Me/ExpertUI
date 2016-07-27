@@ -180,6 +180,7 @@
     "nav_expert": "Expert",
     "nav_expert_commands": "Expert commands",
     "nav_firmware_update": "Firmware update",
+    "nav_postfix_update": "Postfix",
     "nav_help": "Z-Wave Device Problems",
     "nav_home": "Home",
     "nav_locks": "Locks",

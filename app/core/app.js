@@ -100,6 +100,9 @@ angApp.config(['$routeProvider',
                 when('/configuration/firmware/:nodeId?', {
                     templateUrl: 'app/views/configuration/firmware.html'
                 }).
+                when('/configuration/postfix/:nodeId?', {
+                    templateUrl: 'app/views/configuration/postfix.html'
+                }).
                 // Network
                 when('/network/control', {
                     templateUrl: 'app/views/network/control.html'
