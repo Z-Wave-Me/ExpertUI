@@ -7,7 +7,6 @@
               name="postfix"
               role="form"
               class="form"
-              ng-submit="submitPostfix('postfix')"
               novalidate>
             <div class="cfg-block">
                 <div class="row">
@@ -36,10 +35,15 @@
 
             <div class="cfg-block">
                     <button
-                        type="submit"
+                        ng-click="submitPostfix('postfix')"
                         class="btn btn-primary btn-primary"
                         id="btn_request_postfix"
                         >{{_t('btn_save')}}</button>
+                    <button
+                            ng-click="removePostfix()"
+                            class="btn btn-primary btn-primary"
+                            id="btn_request_postfix_remove"
+                    >Remove</button>
             </div>
         </form>
     </div> 

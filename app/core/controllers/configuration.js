@@ -374,9 +374,27 @@ appController.controller('PostfixController', function ($scope, $routeParams, $r
         } else {
             image = '<img src="' + imageFile + '" />';
         }
+
         $scope.modelSelectZddx = file;
         $(target).html(image);
     };
+
+
+    $scope.removePostfix = function() {
+        var p_id = $('#p_id').text().trim();
+        var msg = {'p_id': p_id};
+
+        $http.post($scope.cfg.server_url + '/ZWaveAPI/PostfixRemove', msg, {
+            headers: {'Content-Type': 'application/json'}
+        }).success(function(response) {
+            console.log(JSON.stringify(response));
+            alert(response);
+        }).error(function(response) {
+            console.log(response);
+            alert("Error: "+response);
+        });
+    };
+
 
     $scope.submitPostfix = function (form) {
         var data = $('#' + form).serializeArray();
@@ -431,17 +449,28 @@ appController.controller('PostfixController', function ($scope, $routeParams, $r
         }
         $scope.showDevices = true;
 
-        var msg = {'p_id': getPId(node)};
-        //var msg = {'p_id': '340.256.267'};
 
-        $http.post($scope.cfg.server_url + '/ZWaveAPI/PostfixGet', msg, {
-            headers: {'Content-Type': 'application/json'}
-        }).success(function(response) {
-            $scope.descriptionCont = setCont(response, node);
-        }).error(function(response) {
-            alert("Error: "+response);
-            $scope.descriptionCont = setCont({}, node);
-        });
+        var p_id = getPId(node);
+
+        if(p_id != "null.null.null") {
+            $('#btn_request_postfix').prop('disabled', false);
+            $('#btn_request_postfix_remove').prop('disabled', false);
+
+            var msg = {'p_id': p_id};
+            //var msg = {'p_id': '340.256.267'};
+
+            $http.post($scope.cfg.server_url + '/ZWaveAPI/PostfixGet', msg, {
+                headers: {'Content-Type': 'application/json'}
+            }).success(function (response) {
+                $scope.descriptionCont = setCont(response, node);
+            }).error(function (response) {
+                alert("Error: " + response);
+                $scope.descriptionCont = setCont({}, node);
+            });
+        } else {
+            $('#btn_request_postfix').prop('disabled', true);
+            $('#btn_request_postfix_remove').prop('disabled', true);
+        }
 
     }
 
