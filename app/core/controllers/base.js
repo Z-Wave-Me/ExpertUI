@@ -127,5 +127,39 @@ appController.controller('BaseController', function($scope, $cookies, $filter, $
         myCache.removeAll();
         $route.reload();
     };
+    
+     // Alertify defaults
+    alertify.defaults.glossary.title = cfg.app_name;
+    alertify.defaults.glossary.ok = 'OK';
+    alertify.defaults.glossary.cancel = 'CANCEL';
+
+    // Extend existing alert (ERROR) dialog
+    if (!alertify.alertError) {
+        //define a new errorAlert base on alert
+        alertify.dialog('alertError', function factory() {
+            return{
+                build: function () {
+                    var errorHeader = '<span class="fa fa-exclamation-triangle fa-lg text-danger" '
+                            + 'style="vertical-align:middle;">'
+                            + '</span> ' + cfg.app_name + ' - ERROR';
+                    this.setHeader(errorHeader);
+                }
+            };
+        }, true, 'alert');
+    }
+
+    // Extend existing alert (WARNING) dialog
+    if (!alertify.alertWarning) {
+        alertify.dialog('alertWarning', function factory() {
+            return{
+                build: function () {
+                    var errorHeader = '<span class="fa fa-exclamation-circle fa-lg text-warning" '
+                            + 'style="vertical-align:middle;">'
+                            + '</span> ' + cfg.app_name + ' - WARNING';
+                    this.setHeader(errorHeader);
+                }
+            };
+        }, true, 'alert');
+    }
 
 });

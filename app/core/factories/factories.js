@@ -9,22 +9,22 @@ var appFactory = angular.module('appFactory', ['ngResource']);
 /**
  * Caching the river...
  */
-appFactory.factory('myCache', function($cacheFactory) {
+appFactory.factory('myCache', function ($cacheFactory) {
     return $cacheFactory('myData');
 });
 
 /**
  * Underscore
  */
-appFactory.factory('_', function() {
-        return window._; // assumes underscore has already been loaded on the page
+appFactory.factory('_', function () {
+    return window._; // assumes underscore has already been loaded on the page
 });
 /**
  * Data service
  * @todo: Replace all data handler with this service
  * @todo: Complete error handling
  */
-appFactory.factory('dataService', function($http, $q, $interval, $filter, $location, $window, myCache, cfg) {
+appFactory.factory('dataService', function ($http, $q, $interval, $filter, $location, $window, myCache, cfg) {
     var updatedTime = Math.round(+new Date() / 1000);
     var apiData;
     var apiDataInterval;
@@ -67,7 +67,9 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         getZwaveList: getZwaveList,
         loadZwaveApiData: loadZwaveApiData,
         loadJoinedZwaveData: loadJoinedZwaveData,
-        runZwaveCmd:runZwaveCmd
+        runZwaveCmd: runZwaveCmd,
+        getApi: getApi,
+        postApi: postApi,
     });
     /**
      * Get IP
@@ -85,13 +87,12 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
     /**
      * Gets all of the data in the remote collection.
      */
-    function getZwaveData(callback,noCache) {
+    function getZwaveData(callback, noCache) {
         getAppIp();
         var time = Math.round(+new Date() / 1000);
         if (apiData && !noCache) {
             return callback(apiData);
-        }
-        else {
+        } else {
 
             //pageLoader();
             var request = $http({
@@ -99,12 +100,12 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
                 url: cfg.server_url + cfg.update_url + "0"
                         //url: 'storage/all_cp.json'
             });
-            request.success(function(data) {
+            request.success(function (data) {
                 $('#update_time_tick').html($filter('getCurrentTime')(time));
                 apiData = data;
                 pageLoader(true);
                 return callback(data);
-            }).error(function() {
+            }).error(function () {
                 pageLoader(true);
                 handleError(false, true, false);
 
@@ -120,18 +121,17 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         var time = Math.round(+new Date() / 1000);
         if (apiData) {
             return callback(apiData);
-        }
-        else {
+        } else {
 
             var request = $http({
                 method: "POST",
                 url: cfg.server_url + cfg.update_url + "0"
             });
-            request.success(function(data) {
+            request.success(function (data) {
                 $('#update_time_tick').html($filter('getCurrentTime')(time));
                 apiData = data;
                 return callback(data);
-            }).error(function() {
+            }).error(function () {
                 handleError(false, true, true);
 
             });
@@ -143,16 +143,16 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
      */
     function  updateZwaveData(callback) {
         var time = Math.round(+new Date() / 1000);
-        var refresh = function() {
+        var refresh = function () {
             var request = $http({
                 method: "POST",
                 url: cfg.server_url + cfg.update_url + time
             });
-            request.success(function(data) {
+            request.success(function (data) {
                 time = data.updateTime;
                 $('#update_time_tick').html($filter('getCurrentTime')(time));
                 return callback(data);
-            }).error(function() {
+            }).error(function () {
                 handleError();
 
             });
@@ -172,11 +172,11 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
             method: "POST",
             url: cfg.server_url + cfg.update_url + time
         });
-        request.success(function(data) {
+        request.success(function (data) {
             time = data.updateTime;
             $('#update_time_tick').html($filter('getCurrentTime')(time));
             return callback(data);
-        }).error(function(error) {
+        }).error(function (error) {
             handleError();
             if (errorCallback !== undefined)
                 errorCallback(error);
@@ -190,19 +190,19 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         var time = Math.round(+new Date() / 1000);
 
         var result = {};
-        var refresh = function() {
+        var refresh = function () {
             //console.log(apiData);
             var request = $http({
                 method: "POST",
                 //url: "storage/updated.json"
                 url: cfg.server_url + cfg.update_url + time
             });
-            request.success(function(data) {
+            request.success(function (data) {
                 $('#update_time_tick').html($filter('getCurrentTime')(time));
                 if (!apiData || !data)
                     return;
                 time = data.updateTime;
-                angular.forEach(data, function(obj, path) {
+                angular.forEach(data, function (obj, path) {
                     if (!angular.isString(path)) {
                         return;
                     }
@@ -218,7 +218,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
                     "update": data
                 };
                 return callback(result);
-            }).error(function() {
+            }).error(function () {
                 handleError();
 
             });
@@ -241,20 +241,20 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
     /**
      * Run api cmd
      */
-    function runCmd(param, request, error,noFade) {
+    function runCmd(param, request, error, noFade) {
         var url = (request ? cfg.server_url + request : cfg.server_url + cfg.store_url + param);
         var request = $http({
             method: 'POST',
             url: url
         });
-        request.success(function(data) {
-            if(!noFade){
+        request.success(function (data) {
+            if (!noFade) {
                 $('button .fa-spin,a .fa-spin').fadeOut(1000);
             }
-            
+
             handleSuccess(data);
-        }).error(function() {
-            if(!noFade){
+        }).error(function () {
+            if (!noFade) {
                 $('button .fa-spin,a .fa-spin').fadeOut(1000);
             }
             if (error) {
@@ -274,11 +274,11 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
             method: 'POST',
             url: url
         });
-        request.success(function(data) {
+        request.success(function (data) {
             handleSuccess(data);
             if (success)
                 success();
-        }).error(function(err) {
+        }).error(function (err) {
             handleError();
             if (error)
                 error(err);
@@ -292,18 +292,17 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
     function getDeviceClasses(callback) {
         if (deviceClasses) {
             return callback(deviceClasses);
-        }
-        else {
+        } else {
             var request = $http({
                 method: "get",
                 url: cfg.server_url + cfg.device_classes_url
             });
-            request.success(function(data) {
+            request.success(function (data) {
                 var x2js = new X2JS();
                 var json = x2js.xml_str2json(data);
                 deviceClasses = json;
                 return callback(deviceClasses);
-            }).error(function() {
+            }).error(function () {
                 handleError();
 
             });
@@ -318,9 +317,9 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
             method: "POST",
             url: cfg.server_url + cfg.store_url + 'devices[' + nodeId + '].GuessXML()'
         });
-        request.success(function(data) {
+        request.success(function (data) {
             return callback(data);
-        }).error(function() {
+        }).error(function () {
             $(alert).removeClass('allert-hidden');
 
         });
@@ -333,18 +332,17 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         var cachedZddXml = myCache.get(file);
         if (cachedZddXml) {
             return callback(cachedZddXml);
-        }
-        else {
+        } else {
             var request = $http({
                 method: "get",
                 url: cfg.server_url + cfg.zddx_url + file
             });
-            request.success(function(data) {
+            request.success(function (data) {
                 var x2js = new X2JS();
                 var json = x2js.xml_str2json(data);
                 myCache.put(file, json);
                 return callback(json);
-            }).error(function() {
+            }).error(function () {
                 handleError();
 
             });
@@ -359,11 +357,11 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
             method: "get",
             url: cfg.server_url + '/config/Configuration.xml'
         });
-        request.success(function(data) {
+        request.success(function (data) {
             var x2js = new X2JS();
             var json = x2js.xml_str2json(data);
             return callback(json);
-        }).error(function() {
+        }).error(function () {
             return callback(null);
 
         });
@@ -382,9 +380,9 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
                 "Content-Type": "application/x-www-form-urlencoded"
             }
         });
-        request.success(function(data) {
+        request.success(function (data) {
             handleSuccess(data);
-        }).error(function(error) {
+        }).error(function (error) {
             $('button .fa-spin,a .fa-spin').fadeOut(1000);
             handleError();
 
@@ -400,11 +398,11 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         var request = $http({
             method: "POST",
             //url: 'storage/timing.json'
-            url: cfg.server_url +  cfg.stat_url
+            url: cfg.server_url + cfg.stat_url
         });
-        request.success(function(data) {
+        request.success(function (data) {
             return callback(data);
-        }).error(function() {
+        }).error(function () {
             console.log('Error: CommunicationStatistics');
             handleError(false, true);
 
@@ -425,9 +423,9 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
             method: "POST",
             url: cfg.server_url + cfg.queue_url
         });
-        request.success(function(data) {
+        request.success(function (data) {
             return callback(data);
-        }).error(function() {
+        }).error(function () {
             handleError();
 
         });
@@ -437,7 +435,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
      * Load and update Queue data
      */
     function updateQueueData(callback) {
-        var refresh = function() {
+        var refresh = function () {
             getQueueData(callback);
         };
         queueDataInterval = $interval(refresh, cfg.queue_interval);
@@ -462,9 +460,9 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
             dataType: "json",
             url: cfg.server_url + cfg.runjs_url + param
         });
-        request.success(function(data) {
+        request.success(function (data) {
             handleSuccess(data);
-        }).error(function() {
+        }).error(function () {
             handleError();
 
         });
@@ -483,9 +481,9 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         $http.post(uploadUrl, fd, {
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}
-        }).success(function() {
+        }).success(function () {
             handleSuccess(data);
-        }).error(function() {
+        }).error(function () {
             handleError();
         });
 
@@ -499,9 +497,9 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
             method: 'GET',
             url: cfg.server_url + cfg.notes_url
         });
-        request.success(function(data) {
+        request.success(function (data) {
             return callback(data);
-        }).error(function() {
+        }).error(function () {
             //handleError();
             console.log('Notes error');
 
@@ -522,9 +520,9 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
                 "Content-Type": "application/json"
             }
         });
-        request.success(function(data) {
+        request.success(function (data) {
             handleSuccess(data);
-        }).error(function(error) {
+        }).error(function (error) {
             handleError();
 
         });
@@ -536,14 +534,14 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         return $http({
             method: 'get',
             url: cfg.uzb_url + params
-        }).then(function(response) {
+        }).then(function (response) {
             if (typeof response.data.data === 'object') {
                 return response.data.data;
             } else {
                 // invalid response
                 return $q.reject(response);
             }
-        }, function(response) {
+        }, function (response) {
             // something went wrong
             return $q.reject(response);
         });
@@ -561,9 +559,9 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
-        }).then(function(response) {
+        }).then(function (response) {
             return response;
-        }, function(response) {
+        }, function (response) {
             // something went wrong
             return $q.reject(response);
         });
@@ -580,14 +578,14 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
-        }).then(function(response) {
+        }).then(function (response) {
             if (response.data.license.length > 1) {
                 return response.data.license;
             } else {
                 // invalid response
                 return $q.reject(response);
             }
-        }, function(response) {
+        }, function (response) {
             //debugger;
             // something went wrong
             return $q.reject(response);
@@ -610,9 +608,9 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
-        }).then(function(response) {
+        }).then(function (response) {
             return response;
-        }, function(response) {
+        }, function (response) {
             // something went wrong
             return $q.reject(response);
         });
@@ -624,7 +622,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
      * Gets reorg log from remote text file
      */
     function getReorgLog(callback) {
-        return $http({method: 'GET', url: cfg.server_url + cfg.reorg_log_url + '?at=' + (new Date()).getTime()}).success(function(data, status, headers, config) {
+        return $http({method: 'GET', url: cfg.server_url + cfg.reorg_log_url + '?at=' + (new Date()).getTime()}).success(function (data, status, headers, config) {
             callback(data);
         });
     }
@@ -662,10 +660,10 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
             method: "get",
             url: cfg.lang_dir + langFile
         };
-        return $http(request).success(function(data) {
+        return $http(request).success(function (data) {
             myCache.put(langFile, data);
             return callback(data);
-        }).error(function() {
+        }).error(function () {
             handleError(false, true);
 
         });
@@ -736,24 +734,24 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         return;
 
     }
-    
+
     ///////////////////////////////////////////////////////////// Test - new functions /////////////////////////////////////////////////////////////////////
     /**
      * Get zwave list
      */
     function getZwaveList(noCache) {
         // Cached data
-       var cacheName = 'zwavelist';
-         /*var cached = myCache.get(cacheName);
-        if (!noCache && cached) {
-            var deferred = $q.defer();
-            deferred.resolve(cached);
-            return deferred.promise; 
-        }*/
+        var cacheName = 'zwavelist';
+        /*var cached = myCache.get(cacheName);
+         if (!noCache && cached) {
+         var deferred = $q.defer();
+         deferred.resolve(cached);
+         return deferred.promise; 
+         }*/
         return $http({
             method: 'post',
             url: cfg.server_url + cfg.zwave_list
-        }).then(function(response) {
+        }).then(function (response) {
             if (typeof response.data === 'object') {
                 myCache.put(cacheName, response.data);
                 return response.data;
@@ -761,7 +759,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
                 // invalid response
                 return $q.reject(response);
             }
-        }, function(response) {
+        }, function (response) {
             // something went wrong
             return $q.reject(response);
         });
@@ -781,7 +779,7 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         return $http({
             method: 'post',
             url: cfg.server_url + cfg.update_url + "0"
-        }).then(function(response) {
+        }).then(function (response) {
             if (typeof response.data === 'object') {
                 myCache.put(cacheName, response.data);
                 return response.data;
@@ -789,12 +787,12 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
                 // invalid response
                 return $q.reject(response);
             }
-        }, function(response) {
+        }, function (response) {
             // something went wrong
             return $q.reject(response);
         });
     }
-    
+
     /**
      * Get updated data and join with ZwaveData
      */
@@ -807,10 +805,10 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         return $http({
             method: 'post',
             url: cfg.server_url + cfg.update_url + updatedTime
-        }).then(function(response) {
+        }).then(function (response) {
             if (typeof response.data === 'object' && apiData) {
                 //time = response.data.updateTime;
-                angular.forEach(response.data, function(obj, path) {
+                angular.forEach(response.data, function (obj, path) {
                     if (!angular.isString(path)) {
                         return;
                     }
@@ -833,12 +831,12 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
                 // invalid response
                 return $q.reject(response);
             }
-        }, function(response) {
+        }, function (response) {
             // something went wrong
             return $q.reject(response);
         });
     }
-    
+
     /**
      * Run zwave command
      */
@@ -846,9 +844,64 @@ appFactory.factory('dataService', function($http, $q, $interval, $filter, $locat
         return $http({
             method: 'post',
             url: cfg.server_url + cfg.store_url + cmd
-        }).then(function(response) {
+        }).then(function (response) {
             return response;
-        }, function(response) {// something went wrong
+        }, function (response) {// something went wrong
+            return $q.reject(response);
+        });
+    }
+    /**
+     * Get ZAutomation api data
+     * @param {string} api
+     * @param {string} params
+     * @param {boolean} noCache
+     * @returns {unresolved}
+     */
+    function getApi(api, params, noCache) {
+        // Cached data
+        var cacheName = api + (params || '');
+        var cached = myCache.get(cacheName);
+
+        if (!noCache && cached) {
+            var deferred = $q.defer();
+            deferred.resolve(cached);
+            return deferred.promise;
+        }
+        return $http({
+            method: 'get',
+            url: cfg.server_url + cfg[api] + (params ? params : '')
+        }).then(function (response) {
+            if (!angular.isDefined(response.data)) {
+                return $q.reject(response);
+            }
+            if (typeof response.data === 'object') {
+                myCache.put(cacheName, response);
+                return response;
+            } else {// invalid response
+                return $q.reject(response);
+            }
+
+        }, function (response) {// something went wrong
+            return $q.reject(response);
+        });
+    }
+
+
+    /**
+     * Post ZAutomation api data
+     * @param {string} api
+     * @param {object} data
+     * @param {string} params
+     * @returns {unresolved}
+     */
+    function postApi(api, data, params) {
+        return $http({
+            method: "post",
+            data: data,
+            url: cfg.server_url + cfg[api] + (params ? params : '')
+        }).then(function (response) {
+            return response;
+        }, function (response) {// something went wrong
             return $q.reject(response);
         });
     }

@@ -316,25 +316,41 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
 });
 
 // Device configuration Postfix controller
-appController.controller('PostfixController', function ($scope, $routeParams, $route, $location, $cookies, $filter, $http, dataService, deviceService, myCache) {
+appController.controller('PostfixController', function ($scope, $routeParams, $location, $cookies, $filter, $http, dataService, deviceService) {
     $scope.devices = [];
     $scope.deviceId = 0;
     $scope.activeTab = 'postfix';
     $scope.activeUrl = 'configuration/postfix/';
     $cookies.tab_config = $scope.activeTab;
-    $scope.modelSelectZddx = false;
-
+    $scope.postfix = {
+        show: true,
+        interview: {
+             preInterview:'',
+             postInterview: '',
+        },
+        model: {
+            p_id: false,
+            product: '',
+            preInterview: [],
+            postInterview: [],
+            last_update: '',
+            tester: '',
+            commentary: ''
+        }
+    };
     // Interview data
     $scope.descriptionCont;
     $scope.deviceZddx = [];
+     // Redirect to detail page
+    $scope.changeDevice = function (deviceId) {
+        if (deviceId > 0) {
+            $location.path($scope.activeUrl + deviceId);
+        }
+    };
     // Load data
-    $scope.load = function (nodeId) {
-        //nodeId = parseInt(nodeId,10);
-        dataService.getZwaveData(function (ZWaveAPIData) {
-            $scope.ZWaveAPIData = ZWaveAPIData;
+    $scope.loadData = function (nodeId) {
+        dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
-
-
             var node = ZWaveAPIData.devices[nodeId];
             if (!node || deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
@@ -343,215 +359,65 @@ appController.controller('PostfixController', function ($scope, $routeParams, $r
             $cookies.configuration_id = nodeId;
             $cookies.config_url = $scope.activeUrl + nodeId;
             $scope.deviceId = nodeId;
-            $scope.deviceName = $filter('deviceName')(nodeId, node);
+            //setData(ZWaveAPIData, nodeId);
+            $scope.postfix.model.p_id = getPId(node);
+        }, function (error) {
+            $location.path('/error/' + error.status);
+            return;
+        });
+    };
+    $scope.loadData($routeParams.nodeId);
+    
+     // Add interview
+    $scope.addInterview = function (key) {
+        var source =  $scope.postfix.interview[key];
+        if(key && source){
+           $scope.postfix.model[key].push(source);
+           $scope.postfix.interview[key] = '';
+        }
+    };
 
-            setData(ZWaveAPIData, nodeId);
-
-
-            dataService.joinedZwaveData(function (data) {
-                node = data.joined.devices[nodeId];
-                refreshData(node, nodeId, data.joined);
-                $scope.ZWaveAPIData = ZWaveAPIData;
+   
+    // Update a postfix
+    $scope.updatePostfix = function () {
+        $scope.postfix.model.last_update = $filter('getMysqlFromNow')('');
+        dataService.postApi('postfixadd_url', $scope.postfix.model).then(function (response) {
+            deviceService.showNotifier({message: $scope._t('zwave_reinstalled')});
+        }, function (error) {
+            alertify.alertError($scope._t('error_update_data'));
+            return;
+        });
+    };
+    // Delete postfix
+    $scope.deletePostfix = function (message) {
+        alertify.confirm(message, function () {
+            var input = {p_id: $scope.postfix.model.p_id};
+            dataService.postApi('postfixremove_url', input).then(function (response) {
+                deviceService.showNotifier({message: $scope._t('delete_successful')});
+            }, function (error) {
+                alertify.alertError($scope._t('error_delete_data'));
+                return;
             });
-        }, true);
-    };
-    $scope.load($routeParams.nodeId);
-
-    // Redirect to detail page
-    $scope.changeDevice = function (deviceId) {
-        if (deviceId > 0) {
-            $location.path($scope.activeUrl + deviceId);
-        }
-    };
-
-
-    // Change device select
-    $scope.changeDeviceSelect = function (selector, target, file) {
-        var imageFile = $(selector).find(':selected').data('image');
-        var image;
-        if (imageFile == undefined) {
-            image = $scope._t('no_device_image');
-        } else {
-            image = '<img src="' + imageFile + '" />';
-        }
-
-        $scope.modelSelectZddx = file;
-        $(target).html(image);
-    };
-
-
-    $scope.removePostfix = function() {
-        var p_id = $('#p_id').text().trim();
-        var msg = {'p_id': p_id};
-
-        $http.post($scope.cfg.server_url + '/ZWaveAPI/PostfixRemove', msg, {
-            headers: {'Content-Type': 'application/json'}
-        }).success(function(response) {
-            console.log(JSON.stringify(response));
-            alert(response);
-        }).error(function(response) {
-            console.log(response);
-            alert("Error: "+response);
         });
-    };
 
-
-    $scope.submitPostfix = function (form) {
-        var data = $('#' + form).serializeArray();
-
-        var p_id = $('#p_id').text().trim();
-        console.log(p_id);
-        var obj = {};
-        data.forEach(function(d) {
-            if((d.name === "postInterview" || d.name === "preInterview")) {
-
-                obj[d.name] = d.value!="" ? JSON.parse(d.value) : [];
-            } else {
-                obj[d.name] = d.value;
-            }
-        });
-        var date = new Date();
-        var year = date.getFullYear();
-        var month = (date.getMonth() + 1 < 10) ? "0"+(date.getMonth() + 1) : date.getMonth() + 1;
-        var day = (date.getDate() < 10) ? "0"+date.getDate() : date.getDate();
-        var h = (date.getHours() < 10) ? "0"+date.getHours() : date.getHours();
-        var m = (date.getMinutes() < 10) ? "0"+date.getMinutes() : date.getMinutes();
-        var s = (date.getSeconds() < 10) ? "0"+date.getSeconds() : date.getSeconds();
-
-        obj['last_update'] = year+"-"+month+"-"+day+" "+h+":"+m+":"+s;
-        obj['p_id'] = p_id;
-
-        var json = JSON.stringify(obj);
-
-        $http.post($scope.cfg.server_url + '/ZWaveAPI/PostfixAdd', json, {
-            headers: {'Content-Type': 'application/json'}
-        }).success(function(response) {
-            console.log(JSON.stringify(response));
-
-            alert(response);
-
-
-        }).error(function(response) {
-            console.log(response);
-            alert("Error: "+response);
-        });
 
     };
 
     /// --- Private functions --- ///
-    /**
-     * Set zwave data
-     */
-    function setData(ZWaveAPIData, nodeId, refresh) {
-        var node = ZWaveAPIData.devices[nodeId];
-        if (!node) {
-            return;
-        }
-        $scope.showDevices = true;
-
-
-        var p_id = getPId(node);
-
-        if(p_id != "null.null.null") {
-            $('#btn_request_postfix').prop('disabled', false);
-            $('#btn_request_postfix_remove').prop('disabled', false);
-
-            var msg = {'p_id': p_id};
-            //var msg = {'p_id': '340.256.267'};
-
-            $http.post($scope.cfg.server_url + '/ZWaveAPI/PostfixGet', msg, {
-                headers: {'Content-Type': 'application/json'}
-            }).success(function (response) {
-                $scope.descriptionCont = setCont(response, node);
-            }).error(function (response) {
-                alert("Error: " + response);
-                $scope.descriptionCont = setCont({}, node);
-            });
-        } else {
-            $('#btn_request_postfix').prop('disabled', true);
-            $('#btn_request_postfix_remove').prop('disabled', true);
-        }
-
-    }
 
     function getPId(node) {
 
-        var mId = node.data.manufacturerId.value? node.data.manufacturerId.value : null;
-        var mPT = node.data.manufacturerProductType.value? node.data.manufacturerProductType.value : null;
-        var mPId = node.data.manufacturerProductId.value? node.data.manufacturerProductId.value: null;
+        var mId = node.data.manufacturerId.value ? node.data.manufacturerId.value : null;
+        var mPT = node.data.manufacturerProductType.value ? node.data.manufacturerProductType.value : null;
+        var mPId = node.data.manufacturerProductId.value ? node.data.manufacturerProductId.value : null;
 
-        var p_id = mId+"."+mPT+"."+mPId;
+        var p_id = mId + "." + mPT + "." + mPId;
 
-        return p_id;
-    }
-
-    /**
-     * Device description
-     */
-    function setCont(data, node) {
-
-        console.log("data: "+data.p_id);
-
-        // Set device data
-        var deviceImage = 'app/images/no_device_image.png';
-        var p_id = (data.p_id)? data.p_id : getPId(node);
-        var product_name = data.product ? data.product : '';
-        var preInterview = [];
-        if(data.preInterview) {
-            data.preInterview.forEach(function(el) {
-                 preInterview.push(el);
-            });
-        }
-        var postInterview = [];
-        if(data.postInterview) {
-            data.postInterview.forEach(function(el) {
-                postInterview.push(el);
-            });
-        }
-        var last_update = data.last_update ? data.last_update : '';
-        var tester = data.tester ? data.tester : '';
-        var commentary = data.commentary ? data.commentary : '';
-
-        // Set device image
-        $scope.deviceImage = deviceImage;
-        // OBJ
-        var obj = {};
-        obj["a"] = {"key": "p_id", "val": p_id};
-        obj["b"] = {"key": "product", "val": product_name};
-        obj["c"] = {"key": "preInterview", "val": preInterview};
-        obj["d"] = {"key": "postInterview", "val": postInterview};
-        obj["e"] = {"key": "last_update", "val": last_update};
-        obj["f"] = {"key": "tester", "val": tester};
-        obj["g"] = {"key": "commentary", "val": commentary};
-        /*obj["h"] = {"key": "device_description_inclusion_note", "val": inclusionNote};
-        obj["i"] = {"key": "device_description_wakeup_note", "val": wakeupNote};
-        obj["j"] = {"key": "device_description_interview", "val": deviceService.configInterviewStage(ZWaveAPIData, nodeId, $scope.languages)};
-        obj["k"] = {"key": "device_sleep_state", "val": deviceService.configDeviceState(node, $scope.languages)};
-        //obj["l"] = {"key": "device_queue_length", "val": queueLength(ZWaveAPIData, node)};
-        obj["m"] = {"key": "device_description_app_version", "val": deviceDescriptionAppVersion + '.' + deviceDescriptionAppSubVersion};
-        obj["o"] = {"key": "device_description_sdk_version", "val": sdk};
-        obj["p"] = {"key": "command_class", "val": ccNames};
-        obj["q"] = {"key": "zwave_role_type", "val": ZWavePlusRoles.join(', ')};
-        if (deviceService.isLocalyReset(node)) {
-            obj["r"] = {"key": "device_reset_locally", "val": '<i class="' + $filter('checkedIcon')(true) + '"></i>'};
-        }
-        if (typeof securityInterview === 'boolean') {
-            obj["s"] = {"key": "device_security_interview", "val": '<i class="' + $filter('checkedIcon')(securityInterview === true ? false : true) + '"></i>'};
-        }*/
-        return obj;
-    }
-
-    /**
-     * Refresh description cont
-     */
-    function refreshData(node, nodeId, ZWaveAPIData) {
-        $scope.interviewCommands = deviceService.configGetInterviewCommands(node, ZWaveAPIData.updateTime);
-        $('#device_sleep_state .config-interview-val').html(deviceService.configDeviceState(node, $scope.languages));
-        $('#device_description_interview .config-interview-val').html(deviceService.configInterviewStage(ZWaveAPIData, nodeId, $scope.languages));
+        return (p_id !== 'null.null.null' ? p_id : false);
     }
 });
 // Device configuration Configuration controller
-appController.controller('ConfigConfigurationController', function ($scope, $routeParams, $location, $cookies, $filter, $http, $timeout, $route,$window, dataService, deviceService, myCache, _) {
+appController.controller('ConfigConfigurationController', function ($scope, $routeParams, $location, $cookies, $filter, $http, $timeout, $route, $window, dataService, deviceService, myCache, _) {
     $scope.devices = [];
     $scope.deviceId = 0;
     $scope.activeTab = 'configuration';
@@ -603,7 +469,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         });
     };
     $scope.load($routeParams.nodeId);
-    
+
     // Load device description
     $scope.loadDeviceDescription = function (nodeId) {
         dataService.getSelectZDDX(nodeId, function (data) {
@@ -612,7 +478,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
 
     };
     $scope.loadDeviceDescription($routeParams.nodeId);
-    
+
     // Change device select
     $scope.changeDeviceSelect = function (selector, target, file) {
         var imageFile = $(selector).find(':selected').data('image');
@@ -625,16 +491,16 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         $scope.modelSelectZddx = file;
         $(target).html(image);
     };
-    
+
     // Update device zddx file
     $scope.runCmdDeviceSelect = function (nodeId) {
         var cmd = 'devices[' + nodeId + '].LoadXMLFile("' + $scope.modelSelectZddx + '")';
         dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
         //$window.location.reload();
-         dataService.purgeCache();
+        dataService.purgeCache();
         $route.reload();
     };
-    
+
     // Refresh data
     $scope.refresh = function (nodeId) {
         dataService.joinedZwaveData(function (data) {
@@ -661,18 +527,18 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
      * @param {string} cmd
      * @returns {undefined}
      */
-    $scope.updateFromDevice = function (cmd, hasBattery, deviceId,form) {
+    $scope.updateFromDevice = function (cmd, hasBattery, deviceId, form) {
         if (hasBattery) {
             alert($scope._t('conf_apply_battery'));
         }
         dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
         $scope.refresh(deviceId);
-        
-       $('#'+form+' .cfg-control-content :input').prop('disabled', true);
+
+        $('#' + form + ' .cfg-control-content :input').prop('disabled', true);
         $timeout(function () {
             dataService.cancelZwaveDataInterval();
             $scope.load($routeParams.nodeId);
-             $('#'+form+' .cfg-control-content :input').prop('disabled', false);
+            $('#' + form + ' .cfg-control-content :input').prop('disabled', false);
         }, 5000);
         return;
     };
@@ -680,7 +546,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
     /**
      * Update from device - configuration section
      */
-    $scope.updateFromDeviceCfg = function (cmd, cfg, deviceId,form) {
+    $scope.updateFromDeviceCfg = function (cmd, cfg, deviceId, form) {
         angular.forEach(cfg, function (v, k) {
             if (v.confNum) {
                 var request = cmd + '(' + v.confNum + ')';
@@ -688,7 +554,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             }
         });
         $scope.refresh(deviceId);
-         $('#'+form+' .cfg-control-content :input').prop('disabled', true);
+        $('#' + form + ' .cfg-control-content :input').prop('disabled', true);
         $timeout(function () {
             dataService.cancelZwaveDataInterval();
             $scope.load($routeParams.nodeId);
@@ -699,7 +565,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
     /**
      * Set all values to default
      */
-    $scope.setAllToDefault = function (cmd, cfgValues, hasBattery,form) {
+    $scope.setAllToDefault = function (cmd, cfgValues, hasBattery, form) {
         var dataArray = {};
         angular.forEach(cfgValues, function (v, k) {
             dataArray[v.confNum] = {
@@ -709,7 +575,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             };
         });
         //console.log(dataArray)
-        $scope.submitApplyConfigCfg(form, cmd, cfgValues, hasBattery,null,false,dataArray);
+        $scope.submitApplyConfigCfg(form, cmd, cfgValues, hasBattery, null, false, dataArray);
 
     };
 
@@ -717,7 +583,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
     /**
      * Apply Config action
      */
-    $scope.submitApplyConfigCfg = function (form, cmd, cfgValues, hasBattery, confNum, setDefault,hasData) {
+    $scope.submitApplyConfigCfg = function (form, cmd, cfgValues, hasBattery, confNum, setDefault, hasData) {
         var xmlData = [];
         var configValues = [];
         if (hasBattery) {
@@ -739,26 +605,26 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                     return;
                 }
                 var cfg = _.findWhere(cfgValues, {confNum: inputConfNum.toString()});
-                if(cfg) {
-                if ('bitset' in cfg.type) {
-                    if (inputType === 'bitrange') {
-                        var bitRange = _.findWhere(cfg.type.bitset, {name: v.name});
-                        value = (value === '' ? 0 : parseInt(value));
-                        if (value < bitRange.type.bitrange.bit_from && value > 0) {
-                            value = bitRange.type.bitrange.bit_from;
-                        } else if (value > bitRange.type.bitrange.bit_to) {
-                            value = bitRange.type.bitrange.bit_to;
+                if (cfg) {
+                    if ('bitset' in cfg.type) {
+                        if (inputType === 'bitrange') {
+                            var bitRange = _.findWhere(cfg.type.bitset, {name: v.name});
+                            value = (value === '' ? 0 : parseInt(value));
+                            if (value < bitRange.type.bitrange.bit_from && value > 0) {
+                                value = bitRange.type.bitrange.bit_from;
+                            } else if (value > bitRange.type.bitrange.bit_to) {
+                                value = bitRange.type.bitrange.bit_to;
+                            }
+                        } else {
+                            value = Math.pow(2, value);
+
                         }
-                    } else {
-                        value = Math.pow(2, value);
 
                     }
-
-                }
-                /*else if('enumof' in cfg.type){
-                 var enumof = _.findWhere(cfg.type.enumof,{name: v.name});
-                 
-                 }*/
+                    /*else if('enumof' in cfg.type){
+                     var enumof = _.findWhere(cfg.type.enumof,{name: v.name});
+                     
+                     }*/
                 }
                 if (dataArray[inputConfNum]) {
                     dataArray[inputConfNum].value += value;
@@ -864,14 +730,14 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         //debugger;
         $scope.refresh(cmd['id']);
         if (confNum) {
-             $('#cfg_control_'+confNum+' :input').prop('disabled', true);
-        }else{
-             $('#'+form+' .cfg-control-content :input').prop('disabled', true);
+            $('#cfg_control_' + confNum + ' :input').prop('disabled', true);
+        } else {
+            $('#' + form + ' .cfg-control-content :input').prop('disabled', true);
         }
-       $timeout(function () {
+        $timeout(function () {
             $scope.load($routeParams.nodeId);
             $('button .fa-spin,a .fa-spin').fadeOut(1000);
-             $('#'+form+' .cfg-control-content :input').prop('disabled', false);
+            $('#' + form + ' .cfg-control-content :input').prop('disabled', false);
             dataService.cancelZwaveDataInterval();
         }, 3000);
         return;
@@ -1029,10 +895,10 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
         var data = $('#' + form).serializeArray();
         var dataJoined = [];
         angular.forEach(data, function (v, k) {
-            if(v.value === 'N/A'){
+            if (v.value === 'N/A') {
                 return;
             }
-           
+
             dataJoined.push($filter('setConfigValue')(v.value));
 
         });
