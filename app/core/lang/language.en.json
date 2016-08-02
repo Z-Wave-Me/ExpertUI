@@ -1,5 +1,7 @@
 {
     "--- newtrans": "---",
+     "new_entry": "New entry",
+    "show_json": "Show JSON",
      "delete_successful": "Data was successfully deleted",
      "error_delete_data": "Unable to delete data",
     "error_update_data":"Unable to update data.",

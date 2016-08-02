@@ -316,17 +316,17 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
 });
 
 // Device configuration Postfix controller
-appController.controller('PostfixController', function ($scope, $routeParams, $location, $cookies, $filter, $http, dataService, deviceService) {
+appController.controller('PostfixController', function ($scope, $routeParams, $location, $cookies, $filter, $timeout, $window, dataService, deviceService) {
     $scope.devices = [];
     $scope.deviceId = 0;
     $scope.activeTab = 'postfix';
     $scope.activeUrl = 'configuration/postfix/';
     $cookies.tab_config = $scope.activeTab;
     $scope.postfix = {
-        show: true,
+        find: false,
         interview: {
-             preInterview:'',
-             postInterview: '',
+            preInterview: '',
+            postInterview: '',
         },
         model: {
             p_id: false,
@@ -341,7 +341,7 @@ appController.controller('PostfixController', function ($scope, $routeParams, $l
     // Interview data
     $scope.descriptionCont;
     $scope.deviceZddx = [];
-     // Redirect to detail page
+    // Redirect to detail page
     $scope.changeDevice = function (deviceId) {
         if (deviceId > 0) {
             $location.path($scope.activeUrl + deviceId);
@@ -359,30 +359,50 @@ appController.controller('PostfixController', function ($scope, $routeParams, $l
             $cookies.configuration_id = nodeId;
             $cookies.config_url = $scope.activeUrl + nodeId;
             $scope.deviceId = nodeId;
-            //setData(ZWaveAPIData, nodeId);
+
             $scope.postfix.model.p_id = getPId(node);
+            $scope.loadPostfix($scope.postfix.model.p_id);
         }, function (error) {
             $location.path('/error/' + error.status);
             return;
         });
     };
     $scope.loadData($routeParams.nodeId);
-    
-     // Add interview
-    $scope.addInterview = function (key) {
-        var source =  $scope.postfix.interview[key];
-        if(key && source){
-           $scope.postfix.model[key].push(source);
-           $scope.postfix.interview[key] = '';
+
+    // Load postfix
+    $scope.loadPostfix = function (p_id) {
+        if (!p_id) {
+            return;
         }
+        dataService.getApi('postfixget_url', '/' + p_id, false).then(function (response) {
+            $scope.postfix.find = response.data;
+        }, function (error) {});
     };
 
-   
+    // Add interview
+    $scope.addInterview = function (key) {
+        var source = $scope.postfix.interview[key];
+        if (key && source) {
+            $scope.postfix.model[key].push(source);
+            $scope.postfix.interview[key] = '';
+        }
+    };
+    // Remove interview
+    $scope.removeInterview = function (key, index) {
+        $scope.postfix.model[key].splice(index, 1);
+        return;
+    };
+
+
     // Update a postfix
     $scope.updatePostfix = function () {
         $scope.postfix.model.last_update = $filter('getMysqlFromNow')('');
         dataService.postApi('postfixadd_url', $scope.postfix.model).then(function (response) {
             deviceService.showNotifier({message: $scope._t('zwave_reinstalled')});
+            $timeout(function () {
+                alertify.dismissAll();
+                $window.location.reload();
+            }, 5000);
         }, function (error) {
             alertify.alertError($scope._t('error_update_data'));
             return;
@@ -394,6 +414,10 @@ appController.controller('PostfixController', function ($scope, $routeParams, $l
             var input = {p_id: $scope.postfix.model.p_id};
             dataService.postApi('postfixremove_url', input).then(function (response) {
                 deviceService.showNotifier({message: $scope._t('delete_successful')});
+                $timeout(function () {
+                    alertify.dismissAll();
+                    $window.location.reload();
+                }, 5000);
             }, function (error) {
                 alertify.alertError($scope._t('error_delete_data'));
                 return;

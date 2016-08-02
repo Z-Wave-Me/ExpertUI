@@ -159,6 +159,14 @@ angApp.run(function run($cookies,$rootScope) {
 angular.forEach(config_data, function(key, value) {
     config_module.constant(value, key);
 });
+/**
+ * Angular run function
+ * @function run
+ */
+myApp.run(function ($rootScope, $location, dataService, cfg) {
+    // Run ubderscore js in views
+    $rootScope._ = _;
+});
 
 /**
  * Intercepting HTTP calls with AngularJS.

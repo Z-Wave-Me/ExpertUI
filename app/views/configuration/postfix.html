@@ -27,12 +27,16 @@
                             <th>{{_t('preInterview')}}</th>
                             <td>
                                 <input name="preInterview" id="preInterview" class="form-control" type="text" value="" ng-model="postfix.interview.preInterview" />
-                                <div ng-repeat="v in postfix.model.preInterview">{{v}}</div>
+                                <div ng-repeat="v in postfix.model.preInterview track by $index">{{v}} 
+                                    <span class="clickable" ng-click="removeInterview('preInterview',$index)">
+                                        <i class="fa fa-times text-danger"></i>
+                                    </span>
+                                </div>
                                  
                             </td>
                              <td>
-                                 <button type="button" class="btn btn-success" ng-click="addInterview('preInterview')">
-                                     <i class="fa fa-plus"></i>
+                                 <button type="button" class="btn btn-default" ng-click="addInterview('preInterview')">
+                                     <i class="fa fa-plus text-success"></i>
                                  </button>
                              </td>
                         </tr>
@@ -41,11 +45,15 @@
                             <th>{{_t('postInterview')}}</th>
                             <td>
                                 <input name="postInterview" id="postInterview" class="form-control" type="text" value="" ng-model="postfix.interview.postInterview" />
-                                <div ng-repeat="v in postfix.model.postInterview">{{v}}</div>
+                                <div ng-repeat="v in postfix.model.postInterview">{{v}} 
+                                    <span class="clickable" ng-click="removeInterview('postInterview',$index)">
+                                        <i class="fa fa-times text-danger"></i>
+                                    </span>
+                                </div>
                             </td>
                            <td>
-                                 <button type="button" class="btn btn-success" ng-click="addInterview('postInterview')">
-                                     <i class="fa fa-plus"></i>
+                                 <button type="button" class="btn btn-default" ng-click="addInterview('postInterview')">
+                                     <i class="fa fa-plus text-success"></i>
                                  </button>
                              </td>
                         </tr>
@@ -69,10 +77,20 @@
                 </table>
             </div>
 
-            <div class="cfg-block">
-                <button type="submit" class="btn btn-primary">{{_t('btn_save')}}</button>
-                <a class="btn btn-info" href="{{cfg.postfixget_url + '/' + postfix.model.p_id}}" >Show</a>
-                <button type="button" ng-click="deletePostfix(_t('lb_delete_confirm'))" class="btn btn-danger">Remove</button>
+            <div class="cfg-block text-right">
+                <!-- Delete -->
+                 <button type="button" class="btn btn-default" ng-click="deletePostfix(_t('lb_delete_confirm'))" ng-if="postfix.find">
+                     <i class="fa fa-times text-danger"></i> {{_t('dialog_remove')}}
+                 </button>
+                <!-- Save -->
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-check"></i> {{_t('new_entry')}}
+                </button>
+                <!-- Show -->
+                <a class="btn btn-info" href="{{cfg.postfixget_url + '/' + postfix.model.p_id}}" target="blank" ng-if="postfix.find">
+                    <i class="fa fa-file-code-o"></i> {{_t('show_json')}}
+                </a>
+               
             </div>
         </form>
     </div> 
