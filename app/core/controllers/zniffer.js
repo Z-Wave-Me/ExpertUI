@@ -18,6 +18,21 @@ appController.controller('ZnifferController', function ($scope, dataService, _) 
             suggestions: []
         }
     };
+    
+     $scope.packet = {
+         all: []
+     };
+     
+     /**
+     * Load packet data
+     * @returns {undefined}
+     */
+    $scope.loadPacket = function () {
+        dataService.getApi('incoming_packet_url', null, false).then(function (response) {
+           console.log(response.data)
+        }, function (error) {});
+    };
+    $scope.loadPacket();
 
     /**
      * Load zniffer data
