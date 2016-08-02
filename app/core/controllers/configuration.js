@@ -314,8 +314,134 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         $('#device_description_interview .config-interview-val').html(deviceService.configInterviewStage(ZWaveAPIData, nodeId, $scope.languages));
     }
 });
+
+// Device configuration Postfix controller
+appController.controller('PostfixController', function ($scope, $routeParams, $location, $cookies, $filter, $timeout, $window, dataService, deviceService) {
+    $scope.devices = [];
+    $scope.deviceId = 0;
+    $scope.activeTab = 'postfix';
+    $scope.activeUrl = 'configuration/postfix/';
+    $cookies.tab_config = $scope.activeTab;
+    $scope.postfix = {
+        find: false,
+        interview: {
+            preInterview: '',
+            postInterview: '',
+        },
+        model: {
+            p_id: false,
+            product: '',
+            preInterview: [],
+            postInterview: [],
+            last_update: '',
+            tester: '',
+            commentary: ''
+        }
+    };
+    // Interview data
+    $scope.descriptionCont;
+    $scope.deviceZddx = [];
+    // Redirect to detail page
+    $scope.changeDevice = function (deviceId) {
+        if (deviceId > 0) {
+            $location.path($scope.activeUrl + deviceId);
+        }
+    };
+    // Load data
+    $scope.loadData = function (nodeId) {
+        dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
+            $scope.devices = deviceService.configGetNav(ZWaveAPIData);
+            var node = ZWaveAPIData.devices[nodeId];
+            if (!node || deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
+                return;
+            }
+
+            $cookies.configuration_id = nodeId;
+            $cookies.config_url = $scope.activeUrl + nodeId;
+            $scope.deviceId = nodeId;
+
+            $scope.postfix.model.p_id = getPId(node);
+            $scope.loadPostfix($scope.postfix.model.p_id);
+        }, function (error) {
+            $location.path('/error/' + error.status);
+            return;
+        });
+    };
+    $scope.loadData($routeParams.nodeId);
+
+    // Load postfix
+    $scope.loadPostfix = function (p_id) {
+        if (!p_id) {
+            return;
+        }
+        dataService.getApi('postfixget_url', '/' + p_id, false).then(function (response) {
+            $scope.postfix.find = response.data;
+        }, function (error) {});
+    };
+
+    // Add interview
+    $scope.addInterview = function (key) {
+        var source = $scope.postfix.interview[key];
+        if (key && source) {
+            $scope.postfix.model[key].push(source);
+            $scope.postfix.interview[key] = '';
+        }
+    };
+    // Remove interview
+    $scope.removeInterview = function (key, index) {
+        $scope.postfix.model[key].splice(index, 1);
+        return;
+    };
+
+
+    // Update a postfix
+    $scope.updatePostfix = function () {
+        $scope.postfix.model.last_update = $filter('getMysqlFromNow')('');
+        dataService.postApi('postfixadd_url', $scope.postfix.model).then(function (response) {
+            deviceService.showNotifier({message: $scope._t('zwave_reinstalled')});
+            $timeout(function () {
+                alertify.dismissAll();
+                $window.location.reload();
+            }, 5000);
+        }, function (error) {
+            alertify.alertError($scope._t('error_update_data'));
+            return;
+        });
+    };
+    // Delete postfix
+    $scope.deletePostfix = function (message) {
+        alertify.confirm(message, function () {
+            var input = {p_id: $scope.postfix.model.p_id};
+            dataService.postApi('postfixremove_url', input).then(function (response) {
+                deviceService.showNotifier({message: $scope._t('delete_successful')});
+                $timeout(function () {
+                    alertify.dismissAll();
+                    $window.location.reload();
+                }, 5000);
+            }, function (error) {
+                alertify.alertError($scope._t('error_delete_data'));
+                return;
+            });
+        });
+
+
+    };
+
+    /// --- Private functions --- ///
+
+    function getPId(node) {
+
+        var mId = node.data.manufacturerId.value ? node.data.manufacturerId.value : null;
+        var mPT = node.data.manufacturerProductType.value ? node.data.manufacturerProductType.value : null;
+        var mPId = node.data.manufacturerProductId.value ? node.data.manufacturerProductId.value : null;
+
+        var p_id = mId + "." + mPT + "." + mPId;
+
+        return (p_id !== 'null.null.null' ? p_id : false);
+    }
+});
 // Device configuration Configuration controller
-appController.controller('ConfigConfigurationController', function ($scope, $routeParams, $location, $cookies, $filter, $http, $timeout, $route,$window, dataService, deviceService, myCache, _) {
+appController.controller('ConfigConfigurationController', function ($scope, $routeParams, $location, $cookies, $filter, $http, $timeout, $route, $window, dataService, deviceService, myCache, _) {
     $scope.devices = [];
     $scope.deviceId = 0;
     $scope.activeTab = 'configuration';
@@ -367,7 +493,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         });
     };
     $scope.load($routeParams.nodeId);
-    
+
     // Load device description
     $scope.loadDeviceDescription = function (nodeId) {
         dataService.getSelectZDDX(nodeId, function (data) {
@@ -376,7 +502,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
 
     };
     $scope.loadDeviceDescription($routeParams.nodeId);
-    
+
     // Change device select
     $scope.changeDeviceSelect = function (selector, target, file) {
         var imageFile = $(selector).find(':selected').data('image');
@@ -389,16 +515,16 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         $scope.modelSelectZddx = file;
         $(target).html(image);
     };
-    
+
     // Update device zddx file
     $scope.runCmdDeviceSelect = function (nodeId) {
         var cmd = 'devices[' + nodeId + '].LoadXMLFile("' + $scope.modelSelectZddx + '")';
         dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
         //$window.location.reload();
-         dataService.purgeCache();
+        dataService.purgeCache();
         $route.reload();
     };
-    
+
     // Refresh data
     $scope.refresh = function (nodeId) {
         dataService.joinedZwaveData(function (data) {
@@ -425,18 +551,18 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
      * @param {string} cmd
      * @returns {undefined}
      */
-    $scope.updateFromDevice = function (cmd, hasBattery, deviceId,form) {
+    $scope.updateFromDevice = function (cmd, hasBattery, deviceId, form) {
         if (hasBattery) {
             alert($scope._t('conf_apply_battery'));
         }
         dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
         $scope.refresh(deviceId);
-        
-       $('#'+form+' .cfg-control-content :input').prop('disabled', true);
+
+        $('#' + form + ' .cfg-control-content :input').prop('disabled', true);
         $timeout(function () {
             dataService.cancelZwaveDataInterval();
             $scope.load($routeParams.nodeId);
-             $('#'+form+' .cfg-control-content :input').prop('disabled', false);
+            $('#' + form + ' .cfg-control-content :input').prop('disabled', false);
         }, 5000);
         return;
     };
@@ -444,7 +570,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
     /**
      * Update from device - configuration section
      */
-    $scope.updateFromDeviceCfg = function (cmd, cfg, deviceId,form) {
+    $scope.updateFromDeviceCfg = function (cmd, cfg, deviceId, form) {
         angular.forEach(cfg, function (v, k) {
             if (v.confNum) {
                 var request = cmd + '(' + v.confNum + ')';
@@ -452,7 +578,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             }
         });
         $scope.refresh(deviceId);
-         $('#'+form+' .cfg-control-content :input').prop('disabled', true);
+        $('#' + form + ' .cfg-control-content :input').prop('disabled', true);
         $timeout(function () {
             dataService.cancelZwaveDataInterval();
             $scope.load($routeParams.nodeId);
@@ -463,7 +589,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
     /**
      * Set all values to default
      */
-    $scope.setAllToDefault = function (cmd, cfgValues, hasBattery,form) {
+    $scope.setAllToDefault = function (cmd, cfgValues, hasBattery, form) {
         var dataArray = {};
         angular.forEach(cfgValues, function (v, k) {
             dataArray[v.confNum] = {
@@ -473,7 +599,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             };
         });
         //console.log(dataArray)
-        $scope.submitApplyConfigCfg(form, cmd, cfgValues, hasBattery,null,false,dataArray);
+        $scope.submitApplyConfigCfg(form, cmd, cfgValues, hasBattery, null, false, dataArray);
 
     };
 
@@ -481,7 +607,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
     /**
      * Apply Config action
      */
-    $scope.submitApplyConfigCfg = function (form, cmd, cfgValues, hasBattery, confNum, setDefault,hasData) {
+    $scope.submitApplyConfigCfg = function (form, cmd, cfgValues, hasBattery, confNum, setDefault, hasData) {
         var xmlData = [];
         var configValues = [];
         if (hasBattery) {
@@ -503,26 +629,26 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                     return;
                 }
                 var cfg = _.findWhere(cfgValues, {confNum: inputConfNum.toString()});
-                if(cfg) {
-                if ('bitset' in cfg.type) {
-                    if (inputType === 'bitrange') {
-                        var bitRange = _.findWhere(cfg.type.bitset, {name: v.name});
-                        value = (value === '' ? 0 : parseInt(value));
-                        if (value < bitRange.type.bitrange.bit_from && value > 0) {
-                            value = bitRange.type.bitrange.bit_from;
-                        } else if (value > bitRange.type.bitrange.bit_to) {
-                            value = bitRange.type.bitrange.bit_to;
+                if (cfg) {
+                    if ('bitset' in cfg.type) {
+                        if (inputType === 'bitrange') {
+                            var bitRange = _.findWhere(cfg.type.bitset, {name: v.name});
+                            value = (value === '' ? 0 : parseInt(value));
+                            if (value < bitRange.type.bitrange.bit_from && value > 0) {
+                                value = bitRange.type.bitrange.bit_from;
+                            } else if (value > bitRange.type.bitrange.bit_to) {
+                                value = bitRange.type.bitrange.bit_to;
+                            }
+                        } else {
+                            value = Math.pow(2, value);
+
                         }
-                    } else {
-                        value = Math.pow(2, value);
 
                     }
-
-                }
-                /*else if('enumof' in cfg.type){
-                 var enumof = _.findWhere(cfg.type.enumof,{name: v.name});
-                 
-                 }*/
+                    /*else if('enumof' in cfg.type){
+                     var enumof = _.findWhere(cfg.type.enumof,{name: v.name});
+                     
+                     }*/
                 }
                 if (dataArray[inputConfNum]) {
                     dataArray[inputConfNum].value += value;
@@ -628,14 +754,14 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         //debugger;
         $scope.refresh(cmd['id']);
         if (confNum) {
-             $('#cfg_control_'+confNum+' :input').prop('disabled', true);
-        }else{
-             $('#'+form+' .cfg-control-content :input').prop('disabled', true);
+            $('#cfg_control_' + confNum + ' :input').prop('disabled', true);
+        } else {
+            $('#' + form + ' .cfg-control-content :input').prop('disabled', true);
         }
-       $timeout(function () {
+        $timeout(function () {
             $scope.load($routeParams.nodeId);
             $('button .fa-spin,a .fa-spin').fadeOut(1000);
-             $('#'+form+' .cfg-control-content :input').prop('disabled', false);
+            $('#' + form + ' .cfg-control-content :input').prop('disabled', false);
             dataService.cancelZwaveDataInterval();
         }, 3000);
         return;
@@ -793,10 +919,10 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
         var data = $('#' + form).serializeArray();
         var dataJoined = [];
         angular.forEach(data, function (v, k) {
-            if(v.value === 'N/A'){
+            if (v.value === 'N/A') {
                 return;
             }
-           
+
             dataJoined.push($filter('setConfigValue')(v.value));
 
         });

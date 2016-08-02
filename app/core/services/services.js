@@ -21,6 +21,19 @@ appService.service('deviceService', function($filter, $log, _) {
     this.getLangLine = function(key, languages) {
         return getLangLine(key, languages);
     };
+    
+    /**
+     * Render alertify notifier
+     * @param {object} notifier
+     * @returns {undefined}
+     */
+    this.showNotifier = function (notifier) {
+        var param = _.defaults(notifier, {position: 'top-right', message: false, type: 'success', wait: 5});
+        if (notifier.message) {
+            alertify.set('notifier', 'position', 'top-right');
+            alertify.notify(param.message, param.type, param.wait);
+        }
+    };
 
     /**
      * Show connection error

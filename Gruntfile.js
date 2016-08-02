@@ -30,6 +30,7 @@ pkg: grunt.file.readJSON('package.json'),
                         'app/vendor/jquery/jquery-1.11.1.min.js',
                         'app/vendor/underscore/underscore-1.8.3/underscore-min.js',
                         'app/vendor/upload/angular-file-upload-shim.js',
+                        'app/vendor/alertify/alertify.min.js',
                         // Angular
                         'app/vendor/angular/angular-1.2.14/angular.min.js',
                         'app/vendor/upload/angular-file-upload.js',

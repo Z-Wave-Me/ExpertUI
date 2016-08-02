@@ -100,6 +100,9 @@ angApp.config(['$routeProvider',
                 when('/configuration/firmware/:nodeId?', {
                     templateUrl: 'app/views/configuration/firmware.html'
                 }).
+                when('/configuration/postfix/:nodeId?', {
+                    templateUrl: 'app/views/configuration/postfix.html'
+                }).
                 // Network
                 when('/network/control', {
                     templateUrl: 'app/views/network/control.html'
@@ -160,3 +163,48 @@ angApp.run(function run($cookies,$rootScope) {
 angular.forEach(config_data, function(key, value) {
     config_module.constant(value, key);
 });
+/**
+ * Angular run function
+ * @function run
+ */
+myApp.run(function ($rootScope, $location, dataService, cfg) {
+    // Run ubderscore js in views
+    $rootScope._ = _;
+});
+
+/**
+ * Intercepting HTTP calls with AngularJS.
+ * @function config
+ */
+angApp.config(function ($provide, $httpProvider, cfg) {
+    $httpProvider.defaults.timeout = 5000;
+    // Intercept http calls.
+    $provide.factory('MyHttpInterceptor', function ($q, $location) {
+        var path = $location.path().split('/');
+        return {
+            // On request success
+            request: function (config) {
+                // Return the config or wrap it in a promise if blank.
+                return config || $q.when(config);
+            },
+            // On request failure
+            requestError: function (rejection) {
+                // Return the promise rejection.
+                return $q.reject(rejection);
+            },
+            // On response success
+            response: function (response) {
+                // Return the response or promise.
+                return response || $q.when(response);
+            },
+            // On response failture
+            responseError: function (rejection) {
+                // Return the promise rejection.
+                    return $q.reject(rejection);
+            }
+        };
+    });
+
+    // Add the interceptor to the $httpProvider.
+    $httpProvider.interceptors.push('MyHttpInterceptor');
+   });

@@ -25,6 +25,9 @@ var config_data = {
         'fw_update_url': '/ZWaveAPI/FirmwareUpdate', // Url for Firmware Update
         'license_load_url': '/ZWaveAPI/ZMELicense', // Url to load new license
         'stat_url': '/ZWaveAPI/CommunicationStatistics', // Url to statistics
+        'postfixget_url': '/ZWaveAPI/PostfixGet', // Postfix GET
+        'postfixadd_url': '/ZWaveAPI/PostfixAdd', // Postfix Add
+        'postfixremove_url': '/ZWaveAPI/PostfixRemove', // Postfix Remove
         'runjs_url': '/JS/Run/', // Url for running JS
         'device_classes_url': '/translations/DeviceClasses.xml', // Url to Device Classes
         'config_url': '/config/', // Url for store config data
@@ -60,7 +63,12 @@ var config_data = {
         // Image path
         'img': {
             'batteries':'app/images/batteries/'
-        }
+        },
+         // Debug mode
+        'debug': false,
+        // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
+        // Application type : default/installer
+        'app_type': 'default'
 
     }
 };
