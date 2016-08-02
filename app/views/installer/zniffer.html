@@ -1,7 +1,48 @@
 <!-- Help view -->
 <div ng-controller="ZnifferController">
     <div class="page-header"><h1>{{ _t('nav_zniffer')}}</h1></div>
-     <!-- ------------------------------------ Demo -------------------------------------------- -->
-    <div ng-include="'app/views/installer/demo.html'"></div>
+    <!-- ------------------------------------ Demo -------------------------------------------- -->
+    <div ng-include="'app/views/installer/demo.html'"></div><br /><br />
     <!-- ------------------------------------ Live -------------------------------------------- -->
+    <!-- Control -->
+    <div class="form-inline">
+        <div class="form-group">
+            <div class="btn-group">
+                <button class="btn btn-default" title="Start new trace"
+                        ng-class="packet.trace === 'start'? 'active':''"
+                        ng-disabled="packet.trace === 'start'"
+                        ng-click="setTrace('start')">
+                    <i class="fa fa-play text-success"></i> 
+                </button>
+
+                <button class="btn btn-default" title="Pause trace"
+                         ng-class="packet.trace === 'pause'? 'active':''"
+                         ng-disabled="packet.trace === 'pause'"
+                          ng-click="setTrace('pause')">
+                    <i class="fa fa-pause"></i>
+                </button>
+                <button class="btn btn-default" title="Stop trace"
+                         ng-class="packet.trace === 'stop'? 'active':''"
+                         ng-disabled="packet.trace === 'stop'"
+                          ng-click="setTrace('stop')">
+                    <i class="fa fa-stop text-danger"></i>
+                </button>
+
+            </div>
+        </div>
+    </div>
+    <!-- Table -->
+    <!--<pre>{{packet.all|json}}</pre>-->
+    <table class="table table-condensed table-hover">
+        <thead>
+        <th>{{ _t('timestamp')}} </th>
+        <th>Value</th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="v in packet.all track by $index">
+                <td>{{v.updateTime}}</td>
+                <td>{{v.value}}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>

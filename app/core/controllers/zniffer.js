@@ -2,37 +2,92 @@
  * ZnifferController
  * @author Martin Vach
  */
-appController.controller('ZnifferController', function ($scope, dataService, _) {
+appController.controller('ZnifferController', function ($scope, $interval, dataService, _) {
     $scope.zniffer = {
-        all: [],
+        all: {},
         frequency: 0,
         uzb: {
             current: 0,
-            all: ['COM 1','COM 2','COM 3','COM 4']
+            all: ['COM 1', 'COM 2', 'COM 3', 'COM 4']
         },
         filter: {
             model: false,
-            items: ['homeid', 'src', 'dest','rssi','speed','data'],
+            items: ['homeid', 'src', 'dest', 'rssi', 'speed', 'data'],
             data: [],
             search: '',
             suggestions: []
         }
     };
-    
-     $scope.packet = {
-         all: []
-     };
-     
-     /**
+
+    $scope.packet = {
+        interval: null,
+        trace: 'start',
+        all: []
+    };
+
+    /**
+     * Cancel interval on page destroy
+     */
+    $scope.$on('$destroy', function () {
+        $interval.cancel($scope.packet.interval);
+    });
+
+    /**
      * Load packet data
      * @returns {undefined}
      */
     $scope.loadPacket = function () {
-        dataService.getApi('incoming_packet_url', null, false).then(function (response) {
-           console.log(response.data)
+        dataService.getApi('incoming_packet_url', null, true).then(function (response) {
+            var exist = _.find($scope.packet.all, {updateTime: response.data.updateTime});
+            if (exist) {
+                return;
+            }
+            $scope.packet.all.push(
+                    {
+                        updateTime: response.data.updateTime,
+                        value: response.data.value
+                    }
+            );
+            //console.log(exist)
         }, function (error) {});
     };
-    $scope.loadPacket();
+    //$scope.loadPacket();
+
+    /**
+     * Refresh packet
+     */
+    $scope.refreshPacket = function () {
+        var refresh = function () {
+            $scope.loadPacket();
+        };
+        $scope.packet.interval = $interval(refresh, $scope.cfg.interval);
+    };
+
+    $scope.refreshPacket();
+    /**
+     * Set trace
+     */
+    $scope.setTrace = function (trace) {
+        switch (trace) {
+            case 'pause':
+                $scope.packet.trace = 'pause';
+                $interval.cancel($scope.packet.interval);
+                break;
+            case 'stop':
+                $scope.packet.trace = 'stop';
+                $interval.cancel($scope.packet.interval);
+                angular.copy([], $scope.packet.all);
+                break;
+            default:
+                $scope.packet.trace = 'start';
+                $scope.refreshPacket();
+                break;
+
+        }
+        console.log('Set trace: ', $scope.packet.trace)
+    };
+
+
 
     /**
      * Load zniffer data
@@ -54,7 +109,7 @@ appController.controller('ZnifferController', function ($scope, dataService, _) 
     $scope.setZnifferFilter = function (filter) {
         $scope.zniffer.filter.search = '';
         $scope.zniffer.filter.model = filter;
-         //$scope.loadZniffer();
+        //$scope.loadZniffer();
     };
 
     /**
@@ -77,7 +132,7 @@ appController.controller('ZnifferController', function ($scope, dataService, _) 
         $scope.zniffer.filter.search = value;
         $scope.loadZniffer();
     };
-    
+
     /**
      * Set zniffer frequency
      * @returns {undefined}
@@ -86,7 +141,7 @@ appController.controller('ZnifferController', function ($scope, dataService, _) 
         $scope.zniffer.frequency = frq;
         $scope.loadZniffer();
     };
-    
+
     /**
      * Set zniffer uzb
      * @returns {undefined}
@@ -102,8 +157,8 @@ appController.controller('ZnifferController', function ($scope, dataService, _) 
     $scope.searchZniffer = function () {
         $scope.zniffer.filter.suggestions = [];
         if ($scope.zniffer.filter.search.length >= 2) {
-            var searchArr= _.keys($scope.zniffer.filter.data[$scope.zniffer.filter.model]);
-             var search= $scope.zniffer.filter.search;
+            var searchArr = _.keys($scope.zniffer.filter.data[$scope.zniffer.filter.model]);
+            var search = $scope.zniffer.filter.search;
             findText(searchArr, search);
         }
     };
@@ -122,11 +177,11 @@ appController.controller('ZnifferController', function ($scope, dataService, _) 
                 .filter(function (v) {
                     v.src = zeroPad(v.src, 3);
                     v.dest = zeroPad(v.dest, 3);
-                     v.dataInt = v.data;
+                    v.dataInt = v.data;
                     v.data = dataTxt[v.data];
-                    
+
                     v.rssi = v.rssi.toString();
-                     v.speed = v.speed.toString();
+                    v.speed = v.speed.toString();
                     return v;
                 });
         // Set filter data
