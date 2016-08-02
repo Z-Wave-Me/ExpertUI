@@ -163,7 +163,7 @@ angular.forEach(config_data, function(key, value) {
  * Angular run function
  * @function run
  */
-myApp.run(function ($rootScope, $location, dataService, cfg) {
+angApp.run(function ($rootScope, $location, dataService, cfg) {
     // Run ubderscore js in views
     $rootScope._ = _;
 });
