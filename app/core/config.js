@@ -66,7 +66,10 @@ var config_data = {
             'batteries':'app/images/batteries/'
         },
          // Debug mode
-        'debug': false
+        'debug': false,
+        // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
+        // Application type : default/installer
+        'app_type': 'default'
 
     }
 };
