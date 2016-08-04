@@ -26,4 +26,7 @@
     <li ng-class="activeTab == 'postfix' ? 'active' : ''" ng-if="!cfg.debug">
         <a href="#configuration/postfix/{{deviceId}}">{{_t('nav_postfix_update')}}</a>
     </li>
+     <li ng-class="activeTab == 'health' ? 'active' : ''">
+        <a href="#configuration/health/{{deviceId}}">{{_t('link_health')}}</a>
+    </li>
 </ul>

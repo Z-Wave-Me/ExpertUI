@@ -1,5 +1,8 @@
 {
     "--- newtrans": "---",
+     "link_health": "Link health",
+     "not_linked_devices": "There are no linked devices",
+      "error_load_data": "Unable to load data",
      "---": "---",
     "new_entry": "New entry",
     "show_json": "Show JSON",

@@ -3,6 +3,21 @@
  * @author Martin Vach
  */
 
+/**
+ * Displays an alert message within the div
+ * @class bbAlert
+ */
+angApp.directive('bbAlert', function () {
+    return {
+        restrict: "E",
+        replace: true,
+        scope: {alert: '='},
+        template: '<div class="alert" ng-if="alert.message" ng-class="alert.status">'
+                + '<i class="fa fa-lg" ng-class="alert.icon"></i> <span ng-bind-html="alert.message|toTrusted"></span>'
+                + '</div>'
+    };
+});
+
 angApp.directive('sortBy', function () {
     return {
         restrict: "E",

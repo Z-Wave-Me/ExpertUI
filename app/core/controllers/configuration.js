@@ -1056,3 +1056,110 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
     };
 
 });
+
+// Configuration link health controller
+appController.controller('ConfigHealthController', function ($scope, $routeParams, $location, $cookies, $filter, deviceService, dataService) {
+    $scope.devices = [];
+    $scope.deviceId = 0;
+    $scope.activeTab = 'health';
+    $scope.activeUrl = 'configuration/health/';
+    $cookies.tab_config = $scope.activeTab;
+    $scope.health = {
+        alert: {message: false, status: 'is-hidden', icon: false},
+        device: {
+            hasPowerLevel: false
+        },
+        cmd:{
+            testNodeInstance: 0
+        },
+        neighbours: []
+    };
+    
+    // Redirect to detail page
+    $scope.changeDevice = function (deviceId) {
+        if (deviceId > 0) {
+            $location.path($scope.activeUrl + deviceId);
+        }
+    };
+
+    // Load data
+    $scope.load = function (nodeId) {
+         //$scope.health.alert = {message: $scope._t('not_linked_devices'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+         
+        dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
+            $scope.devices = deviceService.configGetNav(ZWaveAPIData);
+            var node = ZWaveAPIData.devices[nodeId];
+            if (!node || deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
+                return;
+            }
+            var neighbours = $filter('hasNode')(node.data,'neighbours.value')
+             //console.log(node)
+            //console.log(neighbours)
+            // Remember device id
+            $cookies.configuration_id = nodeId;
+            $cookies.config_url = $scope.activeUrl + nodeId;
+            $scope.deviceId = nodeId;
+            setDevice(node);
+            setData(ZWaveAPIData,neighbours);
+            
+         }, function (error) {
+            alertify.alertError($scope._t('error_load_data'));
+            return;
+        });
+    };
+    $scope.load($routeParams.nodeId);
+
+    /// --- Private functions --- ///
+    function setDevice(node) {
+        angular.forEach(node.instances, function(instance, instanceId) {
+            if(instance.commandClasses[115]){
+                $scope.health.device.hasPowerLevel = true;
+                $scope.health.cmd.testNodeInstance = instanceId;
+                console.log('hasPowerLevel|instance: ',instanceId)
+            }
+            
+           
+        });
+    }
+    function setData(ZWaveAPIData,neighbours) {
+        angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
+            nodeId =  parseInt(nodeId);
+            /*if (deviceService.notDevice(ZWaveAPIData, node, nodeId) || neighbours.indexOf(nodeId)=== -1) {
+                return;
+            }*/
+            if (deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
+                return;
+            }
+            //console.log(node)
+            var cmdTestNode = $scope.health.cmd.testNode;
+            var isListening = node.data.isListening.value;
+            var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
+            var hasWakeup = 0x84 in node.instances[0].commandClasses;
+            var hasBattery = 0x80 in node.instances[0].commandClasses;
+            var centralController = true;
+            var status;
+            if(node.data.genericType.value === 1){
+                status = 'portable';
+            }else if(node.data.genericType.value === 2){
+                status = 'static';
+            }else if(isFLiRS){
+                status = 'flirs';
+            }else if(hasWakeup){
+                status = node.data.isAwake.value ? 'battery':'sleep';
+            }else if(isListening){
+                status = 'mains';
+            }else{
+                status = 'error';
+            }
+             $scope.health.neighbours.push({
+                 id: nodeId,
+                 name: $filter('deviceName')(nodeId, node),
+                 updateTime:node.data.updateTime,
+                 status: status,
+                 centralController: centralController,
+                 cmdTestNode: 'devices[' + $routeParams.nodeId + '].instances['+ $scope.health.cmd.testNodeInstance +'].commandClasses[115].TestNodeSet('+ nodeId +',6,2)'
+             });
+            console.log( $scope.health.device.hasPowerLevel)
+        });
+    }
+});

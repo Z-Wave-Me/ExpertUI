@@ -1,0 +1,58 @@
+<!-- Link health -->
+<div ng-controller="ConfigHealthController">
+    <!-- Config navigation -->
+    <div ng-include="'app/views/configuration/header.html'"></div>
+    <bb-alert alert="health.alert"></bb-alert>
+    <div class="tab-content" ng-show="deviceId && !_.isEmpty(health.neighbours)">
+        <div id="table_mobile">
+            <table class="table table-striped table-condensed table-hover">
+                <thead class="cf">
+                    <tr>
+                        <th>
+                            <a href="" ng-click="orderBy('id')">#  
+                                <span ng-show="predicate == 'id'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                            </a>
+                        </th>
+                        <th>
+                            <a href="" ng-click="orderBy('name')">{{ _t('device_name')}}
+                                <span ng-show="predicate == 'name'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                            </a>
+                        </th>
+                        <th>
+                            <a href="" ng-click="orderBy('updateTime')">{{ _t('datetime')}}
+                                <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                            </a>
+                        </th>
+                        <th>&nbsp;</th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    <tr ng-repeat="v in health.neighbours| orderBy:predicate:reverse" id="{{v.rowId}}">
+                        <td data-title="#">
+                            <button class="btn btn-default btn-{{v.status}}">{{ v.id}}</button>| {{v.status}}
+                        </td>
+                        <td data-title="{{ _t('device_name')}}">
+                            <span ng-switch="v.status">
+                                <i class="fa fa-bolt" ng-switch-when="mains"></i>
+                                <i class="fa fa-battery-full text-success" ng-switch-when="sleep"></i>
+                                 <i class="fa fa-battery-full text-success" ng-switch-when="battery"></i>
+                                <i ng-switch-default></i>
+                                
+                            </span>
+                            {{ v.name}}
+                        </td>
+                        <td data-title="{{ _t('datetime')}}">
+                            <span class="row-time is-updated-{{v.isUpdated}}">{{ v.updateTime | isTodayFromUnix }}</span>
+                        </td>
+                        <td data-title="" ng-switch on="v.deviceType">
+                           <button class="btn btn-success" ng-if="health.device.hasPowerLevel">Has PwerLevel</button>
+                           <button class="btn btn-info" ng-if="!health.device.hasPowerLevel"ng-if="health.device.hasPowerLevel">NO PwerLevel</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div> 
+
+</div><!-- /ng-controler -->
