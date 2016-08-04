@@ -2,7 +2,7 @@
  * ZnifferController
  * @author Martin Vach
  */
-appController.controller('ZnifferController', function ($scope, $interval, dataService, _) {
+appController.controller('ZnifferController', function ($scope, $interval, $filter, cfg, dataService, myCache, _) {
     $scope.zniffer = {
         all: {},
         frequency: 0,
@@ -22,6 +22,7 @@ appController.controller('ZnifferController', function ($scope, $interval, dataS
     $scope.packet = {
         interval: null,
         trace: 'start',
+        cmdClass: [],
         all: []
     };
 
@@ -29,8 +30,39 @@ appController.controller('ZnifferController', function ($scope, $interval, dataS
      * Cancel interval on page destroy
      */
     $scope.$on('$destroy', function () {
-        $interval.cancel($scope.packet.interval);
+        //$interval.cancel($scope.packet.interval);
     });
+
+    /**
+     * Get cached packets
+     */
+
+
+    /**
+     * Load zwave command classes
+     * @returns {undefined}
+     */
+    $scope.loadCmdClass = function () {
+        dataService.xmlToJson(cfg.zwave_classes_url).then(function (response) {
+            $scope.packet.cmdClass = response.zw_classes.cmd_class;
+        }, function (error) {
+            alertify.alertError($scope._t('error_xml_load'));
+        });
+
+    };
+    $scope.loadCmdClass();
+
+    /**
+     * Load cached packet
+     * @returns {undefined}
+     */
+    $scope.loadCachedPackets = function () {
+        if (myCache.get('incoming_packet')) {
+            $scope.packet.all = myCache.get('incoming_packet');
+        }
+
+    };
+    $scope.loadCachedPackets();
 
     /**
      * Load packet data
@@ -45,9 +77,14 @@ appController.controller('ZnifferController', function ($scope, $interval, dataS
             $scope.packet.all.push(
                     {
                         updateTime: response.data.updateTime,
-                        value: response.data.value
+                        value: response.data.value,
+                        nodeId: response.data.value[3],
+                        dateTime: $filter('getDateTimeObj')(response.data.updateTime),
+                        application: packetApplication(response.data.value),
+                        hexCc: response.data.value[5].toString(16)
                     }
             );
+            myCache.put('incoming_packet', $scope.packet.all);
             //console.log(exist)
         }, function (error) {});
     };
@@ -60,7 +97,10 @@ appController.controller('ZnifferController', function ($scope, $interval, dataS
         var refresh = function () {
             $scope.loadPacket();
         };
-        $scope.packet.interval = $interval(refresh, $scope.cfg.interval);
+        if($scope.packet.trace === 'start'){
+           $scope.packet.interval = $interval(refresh, $scope.cfg.interval); 
+        }
+        
     };
 
     $scope.refreshPacket();
@@ -76,15 +116,17 @@ appController.controller('ZnifferController', function ($scope, $interval, dataS
             case 'stop':
                 $scope.packet.trace = 'stop';
                 $interval.cancel($scope.packet.interval);
+                myCache.remove('incoming_packet');
                 angular.copy([], $scope.packet.all);
                 break;
             default:
                 $scope.packet.trace = 'start';
+                $scope.loadCachedPackets();
                 $scope.refreshPacket();
                 break;
 
         }
-        console.log('Set trace: ', $scope.packet.trace)
+        //console.log('Set trace: ', $scope.packet.trace)
     };
 
 
@@ -164,6 +206,36 @@ appController.controller('ZnifferController', function ($scope, $interval, dataS
     };
 
     /// --- Private functions --- ///
+    /**
+     * Set an application col
+     * @param {array} packet
+     * @returns {undefined}
+     */
+    function packetApplication(packet) {
+        // Get a command class from position 5
+        var cmdClassKey = $filter('decToHex')(packet[5], 2, '0x');
+        //key = '0x20'; // cc with cmd array
+        var cmdKey = $filter('decToHex')(packet[6], 2, '0x');
+        //keyCmd = '0x03';
+        console.log('cmdClassKey: ', cmdClassKey)
+
+        var cmdClassVersion = '1';
+        var ret = {};
+        //var cc = _.findWhere($scope.packet.cmdClass, {_key: cmdClassKey, _version: cmdClassVersion });
+        var findCmdClass = _.where($scope.packet.cmdClass, {_key: cmdClassKey});
+        if (!findCmdClass) {
+            return ret;
+        }
+        var cmdClass = findCmdClass.pop();
+        console.log(cmdClass)
+        if (_.isArray(cmdClass.cmd)) {
+            ret = _.findWhere(cmdClass.cmd, {_key: cmdKey});
+        } else {
+            ret = cmdClass.cmd;
+        }
+        return ret;
+    }
+
     function setZniffer(data) {
         var zeroPad = function (num, places) {
             var zero = places - num.toString().length + 1;

@@ -314,6 +314,33 @@ angApp.filter('dateFromUnix', function () {
     };
 });
 
+//Get date time as object
+angApp.filter('getDateTimeObj', function () {
+    return function (timestamp) {
+        var d = (timestamp ? new Date(timestamp * 1000): new Date());
+         var obj = {
+             day: d.getDate(),
+             mon: d.getMonth() + 1,
+             year: d.getFullYear(),
+             hrs: d.getHours(),
+             min: (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes()),
+             sec: (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds()),
+             mis: d.getMilliseconds(),
+             today: (d.toDateString() === (new Date()).toDateString()? true : false)
+             
+         };
+        //var day = d.getDate();
+        //var mon = d.getMonth() + 1; //Months are zero based
+        //var year = d.getFullYear();
+        //var hrs = d.getHours();
+        //var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
+        //var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
+        //var time = day + '.' + mon + '.' + year + ' ' + hrs + ':' + min + ':' + sec;
+        return obj;
+    };
+
+});
+
 //Get current date time
 angApp.filter('getCurrentDate', function () {
 
@@ -378,6 +405,13 @@ angApp.filter('getMysqlFromNow', function () {
         var m = (date.getMinutes() < 10) ? "0"+date.getMinutes() : date.getMinutes();
         var s = (date.getSeconds() < 10) ? "0"+date.getSeconds() : date.getSeconds();
         return year+"-"+month+"-"+day+" "+h+":"+m+":"+s;
+    };
+});
+//Convert decimal to hex
+angApp.filter('decToHex', function () {
+    return function (decimal,chars,x) {
+        var hex = (decimal + Math.pow(16, chars)).toString(16).slice(-chars).toUpperCase();
+       return (x||'') + hex;
     };
 });
 

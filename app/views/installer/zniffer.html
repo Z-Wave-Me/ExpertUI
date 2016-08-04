@@ -35,13 +35,22 @@
     <!--<pre>{{packet.all|json}}</pre>-->
     <table class="table table-condensed table-hover">
         <thead>
-        <th>{{ _t('timestamp')}} </th>
+        <th>#</th>    
+        <th>{{ _t('date')}} </th>
+        <th>{{ _t('time')}} </th>
         <th>Value</th>
+         <th>Application</th>
         </thead>
         <tbody>
             <tr ng-repeat="v in packet.all track by $index">
-                <td>{{v.updateTime}}</td>
+                 <td>{{v.nodeId}}</td>
+                <td>{{v.dateTime.day + '.' + v.dateTime.mon + '.' + v.dateTime.year}}</td>
+                <td>{{v.dateTime.hrs + ':' + v.dateTime.min + ':' + v.dateTime.sec}}</td>
                 <td>{{v.value}}</td>
+                <td> 
+                    {{v.application._help}}
+                    <!--<pre>{{v.application|json}}</pre>-->
+                </td>
             </tr>
         </tbody>
     </table>

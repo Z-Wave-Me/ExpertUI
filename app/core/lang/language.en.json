@@ -1,6 +1,8 @@
 {
     "--- newtrans": "---",
-    "timestamp": "Date",
+    "error_xml_load": "Unable to load a XML file",
+    "date": "Date",
+    "time": "Time",
     "speed": "Speed",
     "rssi": "RSSI",
     "src": "SRC",

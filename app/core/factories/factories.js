@@ -71,6 +71,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         runZwaveCmd: runZwaveCmd,
         getApi: getApi,
         postApi: postApi,
+        xmlToJson: xmlToJson
     });
     /**
      * Get IP
@@ -922,6 +923,40 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             url: cfg.server_url + cfg[api] + (params ? params : '')
         }).then(function (response) {
             return response;
+        }, function (response) {// something went wrong
+            return $q.reject(response);
+        });
+    }
+    
+    /**
+     * Get XML from url and convert it to JSON
+     * @param {string} url
+     * @param {boolean} noCache
+     * @returns {unresolved}
+     */
+    function xmlToJson(url, noCache) {
+        // Cached data
+        var cacheName = 'cache_' + url;
+        var cached = myCache.get(cacheName);
+
+        if (!noCache && cached) {
+            var deferred = $q.defer();
+            deferred.resolve(cached);
+            return deferred.promise;
+        }
+        // NOT Cached data
+        return $http({
+            method: 'get',
+            url: url
+        }).then(function (response) {
+            var x2js = new X2JS();
+            var json = x2js.xml_str2json(response.data);
+            if (json) {
+                myCache.put(cacheName, json);
+                return json;
+            } else {// invalid response
+                return $q.reject(response);
+            }
         }, function (response) {// something went wrong
             return $q.reject(response);
         });
