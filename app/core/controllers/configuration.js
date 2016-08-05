@@ -1157,7 +1157,8 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
                  updateTime:node.data.updateTime,
                  status: status,
                  centralController: centralController,
-                 cmdTestNode: 'devices[' + $routeParams.nodeId + '].instances['+ $scope.health.cmd.testNodeInstance +'].commandClasses[115].TestNodeSet('+ nodeId +',6,2)'
+                 cmdTestNode: 'devices[' + $routeParams.nodeId + '].instances['+ $scope.health.cmd.testNodeInstance +'].commandClasses[115].TestNodeSet('+ nodeId +',6,2)',
+                 cmdNop: 'NOP'
              });
             console.log( $scope.health.device.hasPowerLevel)
         });

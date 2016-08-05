@@ -18,7 +18,7 @@ pkg: grunt.file.readJSON('package.json'),
                 src: [
                         'app/css/bootstrap/bootstrap.css',
                         'app/css/main.css',
-                        'app/css/font-awesome-4.1.0/css/font-awesome.min.css',
+                        'app/css/font-awesome-4.6.3/css/font-awesome.min.css',
                         'app/css/angular-slider.css',
                         'app/css/main-responsive.css'
                 ],

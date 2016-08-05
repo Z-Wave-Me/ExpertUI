@@ -843,7 +843,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
     function runZwaveCmd(cmd) {
         return $http({
             method: 'post',
-            url: cfg.server_url + cfg.store_url + cmd
+            url: cfg.server_url + cmd
         }).then(function (response) {
             return response;
         }, function (response) {// something went wrong
