@@ -128,6 +128,24 @@ appController.controller('BaseController', function($scope, $cookies, $filter, $
         $route.reload();
     };
     
+    $scope.modalArr = {};
+    /**
+     * Open/close a modal window
+     * @param {string} key
+     * @param {object} $event
+     * @param {boolean} status
+     * @returns {undefined}
+     */
+    $scope.handleModal = function (key, $event, status) {
+        if (typeof status === 'boolean') {
+            $scope.modalArr[key] = status;
+        } else {
+            $scope.modalArr[key] = !($scope.modalArr[key]);
+        }
+
+        $event.stopPropagation();
+    };
+    
      // Alertify defaults
     alertify.defaults.glossary.title = cfg.app_name;
     alertify.defaults.glossary.ok = 'OK';

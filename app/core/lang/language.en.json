@@ -1,8 +1,13 @@
 {
     "--- newtrans": "---",
      "link_health": "Link health",
+      "link_health_no_powerlevel": "If configuration device does not have powerlevel Command Class, place a warning somewhere that link test and only be done in simple way from Controller.",
      "not_linked_devices": "There are no linked devices",
       "error_load_data": "Unable to load data",
+     "test_link": "Test link",
+      "nop": "NOP",
+      "link_to_node": "Link to node",
+       "traffic": "Traffic",
      "---": "---",
     "new_entry": "New entry",
     "show_json": "Show JSON",
