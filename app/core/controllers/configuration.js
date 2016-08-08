@@ -939,8 +939,10 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
 
     // Show modal dialog
     $scope.showModal = function (target, instanceId, index, ccId, type) {
+        console.log('Showing modal')
         var node = $scope.ZWaveAPIData.devices[$routeParams.nodeId];
         var ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.data');
+
         if (type == 'cmdData') {
             ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.commandClasses.' + ccId + '.data');
         }
@@ -957,6 +959,7 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
             if (type == 'cmdData') {
                 newCc = $filter('hasNode')(node, 'instances.' + instanceId + '.commandClasses.' + ccId + '.data');
             }
+
             if (newCc) {
                 if (JSON.stringify(ccData) === JSON.stringify(newCc)) {
                     return;
@@ -1058,28 +1061,39 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
 });
 
 // Configuration link health controller
-appController.controller('ConfigHealthController', function ($scope, $routeParams, $location, $cookies, $filter, cfg, deviceService, dataService) {
+appController.controller('ConfigHealthController', function ($scope, $routeParams, $location, $cookies, $filter, $interval, cfg, deviceService, dataService) {
+     $scope.apiDataInterval;
     $scope.devices = [];
     $scope.deviceId = 0;
     $scope.activeTab = 'health';
     $scope.activeUrl = 'configuration/health/';
     $cookies.tab_config = $scope.activeTab;
+     $cookies.interval = $scope.activeTab;
     $scope.health = {
+        ctrlNodeId: 1,
         alert: {message: false, status: 'is-hidden', icon: false},
         device: {
-            hasPowerLevel: false
+            neighbours:[],
+            node: {},
+            find: {},
+            hasPowerLevel: false,
+            commandClass: false
         },
         cmd: {
             testNodeInstance: 0
         },
         neighbours: [],
         timing: {
-            all: [],
+            all: {},
+            indicator: {},
             find: {
-                
             }
         }
     };
+     // Cancel interval on page destroy
+    $scope.$on('$destroy', function() {
+        $interval.cancel($scope.apiDataInterval);
+    });
 
     // Redirect to detail page
     $scope.changeDevice = function (deviceId) {
@@ -1091,10 +1105,9 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
     // Load timing data
     $scope.loadTiming = function () {
         //$scope.health.alert = {message: $scope._t('not_linked_devices'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
-
         dataService.getApi('stat_url', null, true).then(function (response) {
             $scope.health.timing.all = response.data;
-
+            $scope.health.timing.indicator =  setTimingIndicator(response.data[$routeParams.nodeId]);
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
             return;
@@ -1103,32 +1116,48 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
     $scope.loadTiming();
 
     // Load data
-    $scope.load = function (nodeId) {
+    $scope.load = function () {
         //$scope.health.alert = {message: $scope._t('not_linked_devices'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
 
         dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
-            var node = ZWaveAPIData.devices[nodeId];
-            if (!node || deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
+            $scope.health.ctrlNodeId = ZWaveAPIData.controller.data.nodeId.value;
+            var node = ZWaveAPIData.devices[$routeParams.nodeId];
+            if (!node || deviceService.notDevice(ZWaveAPIData, node, $routeParams.nodeId)) {
                 return;
             }
-            var neighbours = $filter('hasNode')(node.data, 'neighbours.value')
-            //console.log(node)
-            //console.log(neighbours)
-            // Remember device id
-            $cookies.configuration_id = nodeId;
-            $cookies.config_url = $scope.activeUrl + nodeId;
-            $scope.deviceId = nodeId;
+            var neighbours = $filter('hasNode')(node.data, 'neighbours.value');
+            $scope.health.device.neighbours = $filter('hasNode')(node.data, 'neighbours.value');
+            
+            // Remember device id   
+            $cookies.configuration_id = $routeParams.nodeId;
+            $cookies.config_url = $scope.activeUrl + $routeParams.nodeId;
+            $scope.deviceId = $routeParams.nodeId;
+            $scope.health.device.node = node;
             setDevice(node);
             setData(ZWaveAPIData, neighbours);
-
+            $scope.refreshData(ZWaveAPIData);
 
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
             return;
         });
     };
-    $scope.load($routeParams.nodeId);
+    $scope.load();
+    
+    /**
+     * Refresh data
+     */
+    $scope.refreshData = function(ZWaveAPIData) {
+        var refresh = function() {
+            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+                setData(ZWaveAPIData);
+            }, function(error) {
+                return;
+            });
+        };
+        $scope.apiDataInterval = $interval(refresh, $scope.cfg.interval);
+    };
 
     // Run Zwave Command
     $scope.runZwaveCmd = function (cmd) {
@@ -1138,13 +1167,43 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
             //$window.alert($scope._t('error_handling_data') + '\n' + cmd);
         });
     };
-    
-    // Open timing modal window
-    $scope.openTimingModal = function (name,event,device) {
+    // Run Zwave NOP Command
+    $scope.runZwaveNopCmd = function (cmd) {
+        for (i = 0; i < 21; i++) {
+            $scope.runZwaveCmd(cmd);
+        }
+    };
+
+    // Handle power level modal window
+    $scope.handlePowerLevelModal = function (name, event, device) {
         $scope.handleModal(name, event);
-        $scope.health.timing.find.push({
-                device: device
-            });
+        $scope.health.device.find = device;
+        if (!device) {
+            $scope.health.device.commandClass = {};
+            return;
+        }
+        var cc = deviceService.configGetCommandClass($scope.health.device.hasPowerLevel[device.id], '/', '');
+        $scope.health.device.commandClass = deviceService.configSetCommandClass(cc);
+    };
+
+    // Handle timing modal window
+    $scope.handleTimingModal = function (name, event, device) {
+        $scope.handleModal(name, event);
+        $scope.health.device.find = device;
+        if (!device) {
+            $scope.health.timing.find = {};
+            return;
+        }
+        $scope.loadTiming();
+        var timingItems = $scope.health.timing.all[$routeParams.nodeId];
+        if (!timingItems || _.isEmpty(timingItems)) {
+            return;
+        }
+        $scope.health.timing.find = {
+            totalPackets: timingItems.length,
+            okPackets: deviceService.getOkPackets(timingItems),
+            lastPackets: deviceService.getLastPackets(timingItems)
+        };
     };
 
     /// --- Private functions --- ///
@@ -1156,7 +1215,6 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
     function setDevice(node) {
         angular.forEach(node.instances, function (instance, instanceId) {
             if (instance.commandClasses[115]) {
-                console.log(instance.commandClasses[115].data)
                 $scope.health.device.hasPowerLevel = instance.commandClasses[115].data;
                 $scope.health.cmd.testNodeInstance = instanceId;
             }
@@ -1170,24 +1228,26 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
      * @param {object} ZWaveAPIData
      * @returns {undefined}
      */
-    function setData(ZWaveAPIData,neighbours) {
+    function setData(ZWaveAPIData, neighbours) {
         angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
             //console.log($scope.health.timing)
             nodeId = parseInt(nodeId);
-            if (neighbours.indexOf(nodeId)=== -1) {
-             return;
-             }
+            if ($scope.health.device.neighbours.indexOf(nodeId) === -1) {
+                return;
+            }
             //console.log(node)
             var isListening = node.data.isListening.value;
             var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
             var hasWakeup = 0x84 in node.instances[0].commandClasses;
-            var hasBattery = 0x80 in node.instances[0].commandClasses;
             var centralController = true;
             var type;
-            var powerLevel = false;
-            if($scope.health.device.hasPowerLevel){
-                powerLevel = setPowerLevel($scope.health.device.hasPowerLevel[nodeId]);
+            var indicator;
+            var powerLevel = $scope.health.device.hasPowerLevel[nodeId];
+            var powerLevelIndicator = false;
+            if (powerLevel) {
+                indicator = setPowerLevelIndicator(powerLevel);
             }
+            var timing = false;
             if (node.data.genericType.value === 1) {
                 type = 'portable';
             } else if (node.data.genericType.value === 2) {
@@ -1201,63 +1261,71 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
             } else {
                 type = 'error';
             }
-            $scope.health.neighbours.push({
+            var obj = {
                 id: nodeId,
                 name: $filter('deviceName')(nodeId, node),
                 updateTime: node.data.updateTime,
                 type: type,
                 centralController: centralController,
                 powerLevel: powerLevel,
-                //traffic: setTrafficIndicator($scope.health.device.hasPowerLevel[nodeId]),
+                indicator: indicator,
                 cmdTestNode: 'devices[' + $routeParams.nodeId + '].instances[' + $scope.health.cmd.testNodeInstance + '].commandClasses[115].TestNodeSet(' + nodeId + ',6,20)',
-                cmdNop: 'NOP'
-            });
+                cmdNop: 'devices[' + $routeParams.nodeId + '].instances[' + $scope.health.cmd.testNodeInstance + '].commandClasses[32].Get()'
+            }
+             var index = _.findIndex($scope.health.neighbours, {id: nodeId});
+                        if ($scope.health.neighbours[index]) {
+                             angular.extend($scope.health.neighbours[index],obj);
+                        }else{
+                            $scope.health.neighbours.push(obj);
+                        }
+            
         });
     }
     /**
-     * Set power level
-     * @param {object} timing
-     * @returns {undefined}
+     * Set power level indicator
+     * @param {object} data
+     * @returns {object}
      */
-    function setPowerLevel(data) {
-        if (!data || _.isEmpty(data)) {
-            return false;
+    function setPowerLevelIndicator(data) {
+        var indicator = {
+            color: 'gray',
+            updateTime: false
+        };
+        var traffic = 'gray';
+        if (!data || _.isEmpty(data) || data.acknowledgedFrames.value === null) {
+            return indicator;
         }
-        var traffic = 'red';
-         if (data.acknowledgedFrames.value > 0) {
-            traffic = (data.acknowledgedFrames.value > 100 ? 'black' : 'green');
+        if (data.acknowledgedFrames.value > -1 && data.acknowledgedFrames.value < 6) {
+            indicator.color = 'red';
+        } else if (data.acknowledgedFrames.value > 5 && data.acknowledgedFrames.value < 18) {
+            indicator.color = 'orange';
+        } else if (data.acknowledgedFrames.value > 17) {
+            indicator.color = 'green';
         }
-        data.traffic = traffic;
-        return data;
-        console.log(data.acknowledgedFrames.value)
-        return;
-        var color = 'red';
-        var cnt = 0;
-        var sum = 0;
-        var avg;
-        angular.forEach(data.slice(-20), function (v, k) {
-            var val = 0;
-            if (v.delivered) {
-                val = parseInt(v.deliveryTime);
-                sum += val;
-            }
-            cnt++;
-        });
-        avg = (sum / cnt).toFixed();
-        if (avg > 0) {
-            color = (avg > 100 ? 'black' : 'green');
-        }
-        return color;
+        indicator.updateTime = data.acknowledgedFrames.updateTime;
+        return  indicator;
     }
-    function setTrafficIndicator_(data) {
+    /**
+     * Set power level indicator
+     * @param {int} nodeId
+     * @returns {object}
+     */
+    function setTimingIndicator(data) {
+        var indicator = {
+            color: 'gray',
+            updateTime: false
+        };
         if (!data || _.isEmpty(data)) {
-            return false;
+            return indicator;
         }
-        var color = 'red';
+        //console.log(data)
+        //return;
+
         var cnt = 0;
         var sum = 0;
         var avg;
         angular.forEach(data.slice(-20), function (v, k) {
+            indicator.updateTime = v.date;
             var val = 0;
             if (v.delivered) {
                 val = parseInt(v.deliveryTime);
@@ -1267,8 +1335,10 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
         });
         avg = (sum / cnt).toFixed();
         if (avg > 0) {
-            color = (avg > 100 ? 'black' : 'green');
+            indicator.color = (avg > 100 ? 'black' : 'green');
+        } else {
+            indicator.color = 'red';
         }
-        return color;
+        return indicator;
     }
 });

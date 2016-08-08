@@ -22,7 +22,7 @@
                             </a>
                         </th>
                         <th>
-                            <a href="" ng-click="orderBy('type')">{{_t('th_type')}}  
+                            <a href="" ng-click="orderBy('type')">{{_t('device_description_device_type')}}  
                                 <span ng-show="predicate == 'type'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                             </a>
                         </th>
@@ -32,20 +32,18 @@
                             </a>
                         </th>
                         <th>
-                            <a href="" ng-click="orderBy('traffic')">{{ _t('traffic')}}
-                                <span ng-show="predicate == 'traffic'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                            </a>
+                            {{ _t('linkquality')}}
                         </th>
                         <th>&nbsp;</th>
                     </tr>
 
                 </thead>
                 <tbody>
-                    <tr ng-repeat="v in health.neighbours| orderBy:predicate:reverse" id="{{v.rowId}}">
+                    <tr ng-repeat="v in health.neighbours| orderBy:predicate:reverse track by $index" id="{{v.rowId}}">
                         <td data-title="#">
                             <button class="btn btn-default btn-{{v.type}}">{{ v.id}}</button>
                         </td>
-                        <td data-title="{{ _t('device_name')}}">
+                        <td data-title="{{ _t('device_description_device_type')}}">
                             {{ v.name}}
                         </td>
                         <td data-title="{{ _t('type')}}">
@@ -56,20 +54,21 @@
                                 <i class="fa fa-battery-full text-success" ng-switch-when="sleep"></i>
                                 <i class="fa fa-battery-full text-success" ng-switch-when="battery"></i>
                                 <i ng-switch-default></i>
-                                | {{v.type}}
+                               
                             </span>
                         </td>
                         <td data-title="{{ _t('datetime')}}">
-                            <span class="row-time is-updated-{{v.isUpdated}}"
-                                  ng-if="v.powerLevel.acknowledgedFrames.updateTime">
-                                {{ v.powerLevel.acknowledgedFrames.updateTime | isTodayFromUnix }}
+                            <span class="row-time" ng-if="v.powerLevel" >
+                                {{ v.indicator.updateTime | isTodayFromUnix }}
                             </span>
                         </td>
-                        <td data-title="{{ _t('traffic')}}">
-                            <i class="fa fa-dot-circle-o fa-lg clickable {{v.powerLevel.traffic}}" 
-                               ng-if="v.powerLevel.traffic" 
-                               ng-click="openTimingModal('healthTimingModal', $event,v)"></i>
-                            <span ng-if="!v.powerLevel">---</span>
+                        <td data-title="{{ _t('linkquality')}}">
+                            <i class="fa fa-circle fa-2x clickable {{v.indicator.color}}" 
+                               ng-if="v.powerLevel" 
+                               ng-click="handlePowerLevelModal('healthPowerLevelModal', $event, v)"></i>
+                            <i class="fa fa-exclamation-circle fa-2x clickable {{health.timing.indicator.color}}" 
+                               ng-if="!v.powerLevel && v.id === health.ctrlNodeId" 
+                               ng-click="handleTimingModal('healthTimingModal', $event, v)"></i>
                         </td>
                         <td data-title="" ng-switch on="v.deviceType">
                             <!-- Test node -->
@@ -80,7 +79,7 @@
                             <!-- NOP -->
                             <button class="btn btn-info" 
                                     ng-if="!health.device.hasPowerLevel && v.type === 'static'" 
-                                    ng-click="runZwaveCmd(v.cmdNop)">
+                                    ng-click="runZwaveNopCmd(v.cmdNop)">
                                 {{ _t('nop')}}</button>
                         </td>
                     </tr>
@@ -88,27 +87,47 @@
             </table>
         </div>
     </div> 
-     <!-- Modal timing --> 
-    <div id="healthTimingModal" class="appmodal" ng-if="modalArr.healthTimingModal">
+    <!-- Modal power level --> 
+    <div id="healthPowerLevelModal" class="appmodal" ng-if="modalArr.healthPowerLevelModal">
         <div class="appmodal-in">
             <div class="appmodal-header">
-                <span class="appmodal-close" ng-click="handleModal('healthTimingModal', $event)"><i class="fa fa-times"></i></span>
-                <h3>{{health.timing.find.device.name|cutText:true:30}}</h3>
+                <span class="appmodal-close" ng-click="handlePowerLevelModal('healthPowerLevelModal', $event)"><i class="fa fa-times"></i></span>
+                <h3>{{health.device.find.name|cutText:true:30}}</h3>
             </div>
-            <div class="appmodal-body">
-                Modal body
+            <div class="appmodal-body" ng-bind-html="health.device.commandClass | toTrusted">
             </div>
             <div class="appmodal-footer">
                 <!-- Close --> 
-                <button type="button" class="btn btn-default" ng-click="handleModal('iconOnlineModal', $event)">
-                    <i class="fa fa-times text-danger"></i> <span class="btn-name">{{_t('lb_close')}}</span>
+                <button type="button" class="btn btn-default" ng-click="handlePowerLevelModal('healthPowerLevelModal', $event)">
+                    <i class="fa fa-times text-danger"></i> <span class="btn-name">{{_t('btn_close')}}</span>
                 </button>
-                <!-- Download --> 
-                <button href="" class="btn btn-submit" title="{{_t('lb_download')}}" 
-                       ng-click="handleModal('iconOnlineModal', $event);downloadIconSet(iconsOnline.find)">
-                    <i class="fa fa-download"></i> <span class="btn-name">{{_t('lb_download')}}</span>
-                </button>
+            </div>
         </div>
+    </div>
+
+    <!-- Modal timing --> 
+    <div id="healthTimingModal" class="appmodal" ng-if="modalArr.healthTimingModal">
+        <div class="appmodal-in">
+            <div class="appmodal-header">
+                <span class="appmodal-close" ng-click="handleTimingModal('healthTimingModal', $event)"><i class="fa fa-times"></i></span>
+                <h3>{{health.device.find.name|cutText:true:30}}</h3>
+            </div>
+            <div class="appmodal-body">
+                <p><strong>{{_t('th_total')}} (pkts)</strong>: {{health.timing.find.totalPackets}}</p>
+                <p><strong>{{_t('th_ok')}}</strong>: {{health.timing.find.okPackets}}%</p>
+                <p><strong>{{_t('th_lastpackets')}}</strong>: <span ng-bind-html="health.timing.find.lastPackets | toTrusted"></span></p>
+                <p><strong>{{_t('timing_color_description')}}:</strong><br /> 
+                    <i class="fa fa-square fa-lg" style="color: green;"></i> {{_t('timing_green')}}<br /> 
+                    <i class="fa fa-square fa-lg" style="color: black;"></i> {{_t('timing_black')}}<br />
+                    <i class="fa fa-square fa-lg" style="color: red;"></i> {{_t('timing_red')}}.<br /> 
+                </p>
+            </div>
+            <div class="appmodal-footer">
+                <!-- Close --> 
+                <button type="button" class="btn btn-default" ng-click="handleTimingModal('healthTimingModal', $event)">
+                    <i class="fa fa-times text-danger"></i> <span class="btn-name">{{_t('btn_close')}}</span>
+                </button>
+            </div>
         </div>
     </div>
 

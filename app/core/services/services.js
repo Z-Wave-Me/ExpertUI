@@ -97,6 +97,49 @@ appService.service('deviceService', function($filter, $log, _) {
     this.isLocalyReset = function(node) {
         return isLocalyReset(node);
     };
+    
+    /**
+     * Get percentage of delivered packets
+     */
+    this.getOkPackets = function(data) {
+        var isDelivered = 0;
+        var notDelivered = 0;
+        angular.forEach(data, function(v, k) {
+            if (v.delivered == true) {
+                isDelivered++;
+            } else {
+                notDelivered++;
+            }
+
+        });
+        var calcPercent = isDelivered / data.length * 100;
+        var percent = 0;
+        if (!isNaN(calcPercent)) {
+            percent = calcPercent.toFixed(0);
+        }
+        return percent;
+    };
+    
+     /**
+     * Get list of last packets
+     */
+    this.getLastPackets = function(data) {
+        var packets = '&nbsp;';
+        var deliveryTime = 0;
+        var color;
+        angular.forEach(data.slice(-20), function(v, k) {
+            deliveryTime = parseInt(v.deliveryTime);
+            if (!v.delivered) {
+                color = 'red';
+            } else {
+                color = (deliveryTime > 100 ? 'black' : 'green');
+            }
+            var displayTime = deliveryTime / 10;
+            packets += '<span class="' + color + ' timing-packet">' + (displayTime.toFixed() < 1 ? 1 : displayTime.toFixed()) + '</span> ';
+        });
+        return packets;
+
+    }
 
     /**
      * Get language from zddx
