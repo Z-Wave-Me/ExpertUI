@@ -58,15 +58,18 @@
                             </span>
                         </td>
                         <td data-title="{{ _t('datetime')}}">
-                            <span class="row-time" ng-if="v.powerLevel" >
+                            <span class="row-time" ng-if="v.powerLevel">
                                 {{ v.indicator.updateTime | isTodayFromUnix }}
+                            </span>
+                            <span class="row-time" ng-if="!v.powerLevel && v.id === health.ctrlNodeId">
+                                {{ health.timing.indicator.updateTime | isTodayFromUnix }}
                             </span>
                         </td>
                         <td data-title="{{ _t('linkquality')}}">
                             <i class="fa fa-circle fa-2x clickable {{v.indicator.color}}" 
                                ng-if="v.powerLevel" 
                                ng-click="handlePowerLevelModal('healthPowerLevelModal', $event, v)"></i>
-                            <i class="fa fa-exclamation-circle fa-2x clickable {{health.timing.indicator.color}}" 
+                            <i class="fa fa-circle fa-2x clickable {{health.timing.indicator.color}}" 
                                ng-if="!v.powerLevel && v.id === health.ctrlNodeId" 
                                ng-click="handleTimingModal('healthTimingModal', $event, v)"></i>
                         </td>

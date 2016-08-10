@@ -1243,11 +1243,9 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
             var type;
             var indicator;
             var powerLevel = $scope.health.device.hasPowerLevel[nodeId];
-            var powerLevelIndicator = false;
             if (powerLevel) {
                 indicator = setPowerLevelIndicator(powerLevel);
             }
-            var timing = false;
             if (node.data.genericType.value === 1) {
                 type = 'portable';
             } else if (node.data.genericType.value === 2) {
@@ -1271,7 +1269,7 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
                 indicator: indicator,
                 cmdTestNode: 'devices[' + $routeParams.nodeId + '].instances[' + $scope.health.cmd.testNodeInstance + '].commandClasses[115].TestNodeSet(' + nodeId + ',6,20)',
                 cmdNop: 'devices[' + $routeParams.nodeId + '].instances[' + $scope.health.cmd.testNodeInstance + '].commandClasses[32].Get()'
-            }
+            };
              var index = _.findIndex($scope.health.neighbours, {id: nodeId});
                         if ($scope.health.neighbours[index]) {
                              angular.extend($scope.health.neighbours[index],obj);
