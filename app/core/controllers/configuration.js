@@ -1279,6 +1279,7 @@ appController.controller('PostfixController', function ($scope, $routeParams, $l
         }
         dataService.getApi('postfixget_url', '/' + p_id, false).then(function (response) {
             $scope.postfix.find = response.data;
+            angular.extend($scope.postfix.model,_.omit(response.data,'p_id'));
         }, function (error) {});
     };
 
@@ -1316,7 +1317,8 @@ appController.controller('PostfixController', function ($scope, $routeParams, $l
         alertify.confirm(message, function () {
             var input = {p_id: $scope.postfix.model.p_id};
             dataService.postApi('postfixremove_url', input).then(function (response) {
-                deviceService.showNotifier({message: $scope._t('delete_successful')});
+                deviceService.showNotifier({message: $scope._t('delete_successful') + ' ' +  $scope._t('zwave_reinstalled')});
+                 $scope.postfix.model = {p_id: $scope.postfix.model.p_id};
                 $timeout(function () {
                     alertify.dismissAll();
                     $window.location.reload();

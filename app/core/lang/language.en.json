@@ -1,5 +1,6 @@
 {
     "--- newtrans": "---",
+    "---": "---",
     "link_health": "Link health",
     "linkquality": "Link quality",
     "link_health_no_powerlevel": "This device does not allow Link Health Check to Neighbors. Only Route Quality to Controller can be tested.",
@@ -8,7 +9,6 @@
     "test_link": "Test link",
     "nop": "NOP",
     "link_to_node": "Link to node",
-    "---": "---",
     "new_entry": "New entry",
     "show_json": "Show JSON",
     "delete_successful": "Data was successfully deleted",
