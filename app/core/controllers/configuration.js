@@ -314,132 +314,6 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         $('#device_description_interview .config-interview-val').html(deviceService.configInterviewStage(ZWaveAPIData, nodeId, $scope.languages));
     }
 });
-
-// Device configuration Postfix controller
-appController.controller('PostfixController', function ($scope, $routeParams, $location, $cookies, $filter, $timeout, $window, dataService, deviceService) {
-    $scope.devices = [];
-    $scope.deviceId = 0;
-    $scope.activeTab = 'postfix';
-    $scope.activeUrl = 'configuration/postfix/';
-    $cookies.tab_config = $scope.activeTab;
-    $scope.postfix = {
-        find: false,
-        interview: {
-            preInterview: '',
-            postInterview: '',
-        },
-        model: {
-            p_id: false,
-            product: '',
-            preInterview: [],
-            postInterview: [],
-            last_update: '',
-            tester: '',
-            commentary: ''
-        }
-    };
-    // Interview data
-    $scope.descriptionCont;
-    $scope.deviceZddx = [];
-    // Redirect to detail page
-    $scope.changeDevice = function (deviceId) {
-        if (deviceId > 0) {
-            $location.path($scope.activeUrl + deviceId);
-        }
-    };
-    // Load data
-    $scope.loadData = function (nodeId) {
-        dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
-            $scope.devices = deviceService.configGetNav(ZWaveAPIData);
-            var node = ZWaveAPIData.devices[nodeId];
-            if (!node || deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
-                return;
-            }
-
-            $cookies.configuration_id = nodeId;
-            $cookies.config_url = $scope.activeUrl + nodeId;
-            $scope.deviceId = nodeId;
-
-            $scope.postfix.model.p_id = getPId(node);
-            $scope.loadPostfix($scope.postfix.model.p_id);
-        }, function (error) {
-            $location.path('/error/' + error.status);
-            return;
-        });
-    };
-    $scope.loadData($routeParams.nodeId);
-
-    // Load postfix
-    $scope.loadPostfix = function (p_id) {
-        if (!p_id) {
-            return;
-        }
-        dataService.getApi('postfixget_url', '/' + p_id, false).then(function (response) {
-            $scope.postfix.find = response.data;
-        }, function (error) {});
-    };
-
-    // Add interview
-    $scope.addInterview = function (key) {
-        var source = $scope.postfix.interview[key];
-        if (key && source) {
-            $scope.postfix.model[key].push(source);
-            $scope.postfix.interview[key] = '';
-        }
-    };
-    // Remove interview
-    $scope.removeInterview = function (key, index) {
-        $scope.postfix.model[key].splice(index, 1);
-        return;
-    };
-
-
-    // Update a postfix
-    $scope.updatePostfix = function () {
-        $scope.postfix.model.last_update = $filter('getMysqlFromNow')('');
-        dataService.postApi('postfixadd_url', $scope.postfix.model).then(function (response) {
-            deviceService.showNotifier({message: $scope._t('zwave_reinstalled')});
-            $timeout(function () {
-                alertify.dismissAll();
-                $window.location.reload();
-            }, 5000);
-        }, function (error) {
-            alertify.alertError($scope._t('error_update_data'));
-            return;
-        });
-    };
-    // Delete postfix
-    $scope.deletePostfix = function (message) {
-        alertify.confirm(message, function () {
-            var input = {p_id: $scope.postfix.model.p_id};
-            dataService.postApi('postfixremove_url', input).then(function (response) {
-                deviceService.showNotifier({message: $scope._t('delete_successful')});
-                $timeout(function () {
-                    alertify.dismissAll();
-                    $window.location.reload();
-                }, 5000);
-            }, function (error) {
-                alertify.alertError($scope._t('error_delete_data'));
-                return;
-            });
-        });
-
-
-    };
-
-    /// --- Private functions --- ///
-
-    function getPId(node) {
-
-        var mId = node.data.manufacturerId.value ? node.data.manufacturerId.value : null;
-        var mPT = node.data.manufacturerProductType.value ? node.data.manufacturerProductType.value : null;
-        var mPId = node.data.manufacturerProductId.value ? node.data.manufacturerProductId.value : null;
-
-        var p_id = mId + "." + mPT + "." + mPId;
-
-        return (p_id !== 'null.null.null' ? p_id : false);
-    }
-});
 // Device configuration Configuration controller
 appController.controller('ConfigConfigurationController', function ($scope, $routeParams, $location, $cookies, $filter, $http, $timeout, $route, $window, dataService, deviceService, myCache, _) {
     $scope.devices = [];
@@ -1107,7 +981,7 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
         //$scope.health.alert = {message: $scope._t('not_linked_devices'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
         dataService.getApi('stat_url', null, true).then(function (response) {
             $scope.health.timing.all = response.data;
-            $scope.health.timing.indicator =  setTimingIndicator(response.data[$routeParams.nodeId]);
+            $scope.health.timing.indicator.color =  setTimingIndicatorColor(response.data[$routeParams.nodeId]);
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
             return;
@@ -1230,7 +1104,12 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
      */
     function setData(ZWaveAPIData, neighbours) {
         angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
-            //console.log($scope.health.timing)
+            console.log(node.data.lastReceived.updateTime)
+            if(nodeId === $routeParams.nodeId){
+                 $scope.health.timing.indicator.updateTime = node.data.lastReceived.updateTime;
+                 $scope.health.timing.indicator.updateTimeColor = (node.data.lastReceived.updateTime > node.data.lastReceived.invalidateTime ? '' : 'red');
+            }
+           
             nodeId = parseInt(nodeId);
             if ($scope.health.device.neighbours.indexOf(nodeId) === -1) {
                 return;
@@ -1287,7 +1166,8 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
     function setPowerLevelIndicator(data) {
         var indicator = {
             color: 'gray',
-            updateTime: false
+            updateTime: false,
+            updateTimeColor: ''
         };
         var traffic = 'gray';
         if (!data || _.isEmpty(data) || data.acknowledgedFrames.value === null) {
@@ -1301,6 +1181,7 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
             indicator.color = 'green';
         }
         indicator.updateTime = data.acknowledgedFrames.updateTime;
+        indicator.updateTimeColor = (data.acknowledgedFrames.updateTime > data.acknowledgedFrames.invalidateTime ? '' : 'red');
         return  indicator;
     }
     /**
@@ -1308,11 +1189,8 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
      * @param {int} nodeId
      * @returns {object}
      */
-    function setTimingIndicator(data) {
-        var indicator = {
-            color: 'gray',
-            updateTime: false
-        };
+    function setTimingIndicatorColor(data) {
+        var color = 'gray';
         if (!data || _.isEmpty(data)) {
             return indicator;
         }
@@ -1323,7 +1201,6 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
         var sum = 0;
         var avg;
         angular.forEach(data.slice(-20), function (v, k) {
-            indicator.updateTime = v.date;
             var val = 0;
             if (v.delivered) {
                 val = parseInt(v.deliveryTime);
@@ -1333,10 +1210,136 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
         });
         avg = (sum / cnt).toFixed();
         if (avg > 0) {
-            indicator.color = (avg > 100 ? 'black' : 'green');
+            color = (avg > 100 ? 'black' : 'green');
         } else {
-            indicator.color = 'red';
+            color = 'red';
         }
-        return indicator;
+        return color;
+    }
+});
+
+// Device configuration Postfix controller
+appController.controller('PostfixController', function ($scope, $routeParams, $location, $cookies, $filter, $timeout, $window, dataService, deviceService) {
+    $scope.devices = [];
+    $scope.deviceId = 0;
+    $scope.activeTab = 'postfix';
+    $scope.activeUrl = 'configuration/postfix/';
+    $cookies.tab_config = $scope.activeTab;
+    $scope.postfix = {
+        find: false,
+        interview: {
+            preInterview: '',
+            postInterview: '',
+        },
+        model: {
+            p_id: false,
+            product: '',
+            preInterview: [],
+            postInterview: [],
+            last_update: '',
+            tester: '',
+            commentary: ''
+        }
+    };
+    // Interview data
+    $scope.descriptionCont;
+    $scope.deviceZddx = [];
+    // Redirect to detail page
+    $scope.changeDevice = function (deviceId) {
+        if (deviceId > 0) {
+            $location.path($scope.activeUrl + deviceId);
+        }
+    };
+    // Load data
+    $scope.loadData = function (nodeId) {
+        dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
+            $scope.devices = deviceService.configGetNav(ZWaveAPIData);
+            var node = ZWaveAPIData.devices[nodeId];
+            if (!node || deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
+                return;
+            }
+
+            $cookies.configuration_id = nodeId;
+            $cookies.config_url = $scope.activeUrl + nodeId;
+            $scope.deviceId = nodeId;
+
+            $scope.postfix.model.p_id = getPId(node);
+            $scope.loadPostfix($scope.postfix.model.p_id);
+        }, function (error) {
+            $location.path('/error/' + error.status);
+            return;
+        });
+    };
+    $scope.loadData($routeParams.nodeId);
+
+    // Load postfix
+    $scope.loadPostfix = function (p_id) {
+        if (!p_id) {
+            return;
+        }
+        dataService.getApi('postfixget_url', '/' + p_id, false).then(function (response) {
+            $scope.postfix.find = response.data;
+        }, function (error) {});
+    };
+
+    // Add interview
+    $scope.addInterview = function (key) {
+        var source = $scope.postfix.interview[key];
+        if (key && source) {
+            $scope.postfix.model[key].push(source);
+            $scope.postfix.interview[key] = '';
+        }
+    };
+    // Remove interview
+    $scope.removeInterview = function (key, index) {
+        $scope.postfix.model[key].splice(index, 1);
+        return;
+    };
+
+
+    // Update a postfix
+    $scope.updatePostfix = function () {
+        $scope.postfix.model.last_update = $filter('getMysqlFromNow')('');
+        dataService.postApi('postfixadd_url', $scope.postfix.model).then(function (response) {
+            deviceService.showNotifier({message: $scope._t('zwave_reinstalled')});
+            $timeout(function () {
+                alertify.dismissAll();
+                $window.location.reload();
+            }, 5000);
+        }, function (error) {
+            alertify.alertError($scope._t('error_update_data'));
+            return;
+        });
+    };
+    // Delete postfix
+    $scope.deletePostfix = function (message) {
+        alertify.confirm(message, function () {
+            var input = {p_id: $scope.postfix.model.p_id};
+            dataService.postApi('postfixremove_url', input).then(function (response) {
+                deviceService.showNotifier({message: $scope._t('delete_successful')});
+                $timeout(function () {
+                    alertify.dismissAll();
+                    $window.location.reload();
+                }, 5000);
+            }, function (error) {
+                alertify.alertError($scope._t('error_delete_data'));
+                return;
+            });
+        });
+
+
+    };
+
+    /// --- Private functions --- ///
+
+    function getPId(node) {
+
+        var mId = node.data.manufacturerId.value ? node.data.manufacturerId.value : null;
+        var mPT = node.data.manufacturerProductType.value ? node.data.manufacturerProductType.value : null;
+        var mPId = node.data.manufacturerProductId.value ? node.data.manufacturerProductId.value : null;
+
+        var p_id = mId + "." + mPT + "." + mPId;
+
+        return (p_id !== 'null.null.null' ? p_id : false);
     }
 });

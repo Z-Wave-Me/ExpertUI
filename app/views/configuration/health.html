@@ -58,10 +58,10 @@
                             </span>
                         </td>
                         <td data-title="{{ _t('datetime')}}">
-                            <span class="row-time" ng-if="v.powerLevel">
+                            <span class="row-time {{v.indicator.updateTimeColor}}" ng-if="v.powerLevel">
                                 {{ v.indicator.updateTime | isTodayFromUnix }}
                             </span>
-                            <span class="row-time" ng-if="!v.powerLevel && v.id === health.ctrlNodeId">
+                            <span class="row-time {{health.timing.indicator.updateTimeColor}}" ng-if="!v.powerLevel && v.id === health.ctrlNodeId">
                                 {{ health.timing.indicator.updateTime | isTodayFromUnix }}
                             </span>
                         </td>
