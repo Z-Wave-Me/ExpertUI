@@ -26,7 +26,7 @@
     <li ng-class="activeTab == 'firmware' ? 'active' : ''">
         <a href="#configuration/firmware/{{deviceId}}">{{_t('nav_firmware_update')}}</a>
     </li>
-    <li ng-class="activeTab == 'postfix' ? 'active' : ''" ng-if="cfg.debug">
+    <li ng-class="activeTab == 'postfix' ? 'active' : ''" ng-if="cfg.zwavecfg.debug">
         <a href="#configuration/postfix/{{deviceId}}">{{_t('nav_postfix_update')}}</a>
     </li>
 </ul>

@@ -3,6 +3,7 @@
     <!-- Config navigation -->
     <div ng-include="'app/views/configuration/header.html'"></div>
     <div class="tab-content" ng-show="deviceId">
+        <div class="alert alert-warning" ng-if="!postfix.model.p_id"><i class="fa fa-exclamation-circle"></i> {{_t('postfix_missingid')}}</div>
         <form id="postfix_form" name="postfix_form" role="form" class="form" novalidate ng-if="postfix.model.p_id" ng-submit="updatePostfix()">
             <div class="cfg-block">
                 <table class="table table-striped table-condensed table-cfg-interview">

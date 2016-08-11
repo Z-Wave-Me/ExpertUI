@@ -55,6 +55,13 @@ appController.controller('BaseController', function($scope, $cookies, $filter, $
     $scope.showContent = false;
     // Global config
     $scope.cfg = cfg;
+     // Load zwave config
+    $scope.loadZwaveConfig = function (nocache) {
+        dataService.getApi('configget_url',null,nocache).then(function (response) {
+            angular.extend(cfg.zwavecfg,response.data);
+        }, function (error) {});
+    };
+    $scope.loadZwaveConfig();
 
     // Lang settings
     $scope.lang_list = cfg.lang_list;

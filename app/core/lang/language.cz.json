@@ -1,4 +1,6 @@
 {
+    "postfix_missingid": "This device has missing product ID",
+    "update_successful": "Data was successfully updated",
     "link_health": "Link health",
     "linkquality": "Link quality",
     "link_health_no_powerlevel": "This device does not allow Link Health Check to Neighbors. Only Route Quality to Controller can be tested.",
