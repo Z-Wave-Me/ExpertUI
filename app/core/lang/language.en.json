@@ -1,5 +1,7 @@
 {
     "--- newtrans": "---",
+     "data": "Data",
+     "application": "Application",
     "error_xml_load": "Unable to load a XML file",
     "date": "Date",
     "time": "Time",

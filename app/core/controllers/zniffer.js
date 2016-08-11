@@ -23,6 +23,14 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
         interval: null,
         trace: 'start',
         cmdClass: [],
+        all: [],
+        data: {
+            45: 'Singlecast',
+            255: 'Predicast',
+            100: 'Multicast'
+        }
+    };
+    $scope.outgoingPacket = {
         all: []
     };
 
@@ -68,7 +76,7 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
      * Load packet data
      * @returns {undefined}
      */
-    $scope.loadPacket = function () {
+    $scope.loadIncomingPacket = function () {
         dataService.getApi('incoming_packet_url', null, true).then(function (response) {
             var exist = _.find($scope.packet.all, {updateTime: response.data.updateTime});
             if (exist) {
@@ -80,22 +88,52 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
                         value: response.data.value,
                         nodeId: response.data.value[3],
                         dateTime: $filter('getDateTimeObj')(response.data.updateTime),
-                        application: packetApplication(response.data.value),
-                        hexCc: response.data.value[5].toString(16)
+                        rssi: '???',
+                        src: response.data.value[4],
+                       dest: '???',
+                        data: (response.data.value[2] == 0 || response.data.value[2] == 255 ? $scope.packet.data[response.data.value[2]] : $scope.packet.data[100]),
+                        application: packetApplication(response.data.value)
+                        //hexCc: response.data.value[5].toString(16)
                     }
             );
             myCache.put('incoming_packet', $scope.packet.all);
             //console.log(exist)
         }, function (error) {});
     };
-    //$scope.loadPacket();
+    //$scope.loadIncomingPacket();
+    /**
+     * Load packet data
+     * @returns {undefined}
+     */
+    $scope.loadOutgoingPacket = function () {
+        dataService.getApi('outgoing_packet_url', null, true).then(function (response) {
+            var exist = _.find($scope.outgoingPacket.all, {updateTime: response.data.updateTime});
+            if (exist) {
+                return;
+            }
+            $scope.outgoingPacket.all.push(
+                    {
+                        updateTime: response.data.updateTime,
+                        value: response.data.value,
+                        nodeId: response.data.value[3],
+                        dateTime: $filter('getDateTimeObj')(response.data.updateTime),
+                        application: packetApplication(response.data.value),
+                        hexCc: response.data.value[5].toString(16)
+                    }
+            );
+            myCache.put('outgoing_packet', $scope.packet.all);
+            //console.log(exist)
+        }, function (error) {});
+    };
+    //$scope.loadOutgoingPacket();
 
     /**
      * Refresh packet
      */
     $scope.refreshPacket = function () {
         var refresh = function () {
-            $scope.loadPacket();
+            $scope.loadIncomingPacket();
+            $scope.loadOutgoingPacket();
         };
         if($scope.packet.trace === 'start'){
            $scope.packet.interval = $interval(refresh, $scope.cfg.interval); 
@@ -217,17 +255,20 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
         //key = '0x20'; // cc with cmd array
         var cmdKey = $filter('decToHex')(packet[6], 2, '0x');
         //keyCmd = '0x03';
-        console.log('cmdClassKey: ', cmdClassKey)
+        //console.log('cmdClassKey: ', cmdClassKey)
 
         var cmdClassVersion = '1';
         var ret = {};
         //var cc = _.findWhere($scope.packet.cmdClass, {_key: cmdClassKey, _version: cmdClassVersion });
+        
+        if(_.isEmpty($scope.packet.cmdClass)){
+           return;
+        }
         var findCmdClass = _.where($scope.packet.cmdClass, {_key: cmdClassKey});
         if (!findCmdClass) {
             return ret;
         }
         var cmdClass = findCmdClass.pop();
-        console.log(cmdClass)
         if (_.isArray(cmdClass.cmd)) {
             ret = _.findWhere(cmdClass.cmd, {_key: cmdKey});
         } else {

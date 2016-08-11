@@ -9,22 +9,22 @@
         <div class="form-group">
             <div class="btn-group">
                 <button class="btn btn-default" title="Start new trace"
-                        ng-class="packet.trace === 'start'? 'active':''"
+                        ng-class="packet.trace === 'start' ? 'active' : ''"
                         ng-disabled="packet.trace === 'start'"
                         ng-click="setTrace('start')">
                     <i class="fa fa-play text-success"></i> 
                 </button>
 
                 <button class="btn btn-default" title="Pause trace"
-                         ng-class="packet.trace === 'pause'? 'active':''"
-                         ng-disabled="packet.trace === 'pause'"
-                          ng-click="setTrace('pause')">
+                        ng-class="packet.trace === 'pause' ? 'active' : ''"
+                        ng-disabled="packet.trace === 'pause'"
+                        ng-click="setTrace('pause')">
                     <i class="fa fa-pause"></i>
                 </button>
                 <button class="btn btn-default" title="Stop trace"
-                         ng-class="packet.trace === 'stop'? 'active':''"
-                         ng-disabled="packet.trace === 'stop'"
-                          ng-click="setTrace('stop')">
+                        ng-class="packet.trace === 'stop' ? 'active' : ''"
+                        ng-disabled="packet.trace === 'stop'"
+                        ng-click="setTrace('stop')">
                     <i class="fa fa-stop text-danger"></i>
                 </button>
 
@@ -36,21 +36,31 @@
     <table class="table table-condensed table-hover">
         <thead>
         <th>#</th>    
-        <th>{{ _t('date')}} </th>
-        <th>{{ _t('time')}} </th>
-        <th>Value</th>
-         <th>Application</th>
+        <th>{{ _t('date')}}</th>
+        <th>{{ _t('time')}}</th>
+        <th>{{ _t('rssi')}}</th>
+        <th>{{ _t('src')}}</th>
+        <th>{{ _t('dest')}}</th>
+         <th>{{ _t('data')}}</th>
+        <th>{{ _t('application')}}</th>
+        <th>Packet</th>
+
         </thead>
         <tbody>
             <tr ng-repeat="v in packet.all track by $index">
-                 <td>{{v.nodeId}}</td>
+                <td>{{v.nodeId}}</td>
                 <td>{{v.dateTime.day + '.' + v.dateTime.mon + '.' + v.dateTime.year}}</td>
                 <td>{{v.dateTime.hrs + ':' + v.dateTime.min + ':' + v.dateTime.sec}}</td>
-                <td>{{v.value}}</td>
-                <td> 
-                    {{v.application._help}}
-                    <!--<pre>{{v.application|json}}</pre>-->
+                <td>{{v.rssi}}</td>
+                <td>{{v.src}}</td>
+                <td>{{v.dest}}</td>
+                <td>{{v.data}}</td>
+                <td>{{v.application._help}}</td>
+                <td>
+                    Incoming: {{v.value}}<br />
+                    Outgoing: {{outgoingPacket.all[$index].value}}
                 </td>
+
             </tr>
         </tbody>
     </table>

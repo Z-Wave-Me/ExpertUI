@@ -29,6 +29,7 @@ var config_data = {
         'postfixadd_url': '/ZWaveAPI/PostfixAdd', // Postfix Add
         'postfixremove_url': '/ZWaveAPI/PostfixRemove', // Postfix Remove
         'incoming_packet_url': '/ZWaveAPI/Run/controller.data.incomingPacket', // Url to incoming packet
+        'outgoing_packet_url': '/ZWaveAPI/Run/controller.data.outgoingPacket', // Url to outgoing packet
         'configget_url': '/ZWaveAPI/ExpertConfigGet', // Config get
         'configupdate_url': '/ZWaveAPI/ExpertConfigUpdate', // Config update
         'runjs_url': '/JS/Run/', // Url for running JS
