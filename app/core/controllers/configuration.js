@@ -1104,7 +1104,6 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
      */
     function setData(ZWaveAPIData, neighbours) {
         angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
-            console.log(node.data.lastReceived.updateTime)
             if(nodeId === $routeParams.nodeId){
                  $scope.health.timing.indicator.updateTime = node.data.lastReceived.updateTime;
                  $scope.health.timing.indicator.updateTimeColor = (node.data.lastReceived.updateTime > node.data.lastReceived.invalidateTime ? '' : 'red');
@@ -1192,7 +1191,7 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
     function setTimingIndicatorColor(data) {
         var color = 'gray';
         if (!data || _.isEmpty(data)) {
-            return indicator;
+            return color;
         }
         //console.log(data)
         //return;

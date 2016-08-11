@@ -883,8 +883,6 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         // Cached data
         var cacheName = api + (params || '');
         var cached = myCache.get(cacheName);
-        console.log(cached)
-
         if (!noCache && cached) {
             var deferred = $q.defer();
             deferred.resolve(cached);
