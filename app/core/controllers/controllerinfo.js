@@ -2,7 +2,7 @@
  * Application ControllerInfo controller
  * @author Martin Vach
  */
-appController.controller('ControllerController', function($scope, $window, $filter, dataService) {
+appController.controller('ControllerController', function($scope, $window, $filter, cfg,dataService,deviceService) {
     $scope.funcList;
     $scope.ZWaveAPIData;
     $scope.info = {};
@@ -109,6 +109,24 @@ appController.controller('ControllerController', function($scope, $window, $filt
      */
     $scope.runCmd = function(cmd) {
         dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
+    };
+    
+     /**
+     *
+     * Set debug mode
+     */
+    $scope.setDebugMode = function(status) {
+        var input = {
+            debug: status
+        };
+        dataService.postApi('configupdate_url', input).then(function (response) {
+             //cfg.zwavecfg.debug = status;
+            deviceService.showNotifier({message: $scope._t('update_successful')});
+            $scope.loadZwaveConfig(true);
+        }, function (error) {
+            alertify.alertError($scope._t('error_update_data'));
+            return;
+        });
     };
 
     /**

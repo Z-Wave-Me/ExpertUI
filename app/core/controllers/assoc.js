@@ -217,7 +217,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
          angular.extend($scope.assocGroupsDevices[input.groupId], addDevice);
        
         dataService.getCfgXml(function(cfgXml) {
-            dataService.runZwaveCmd(cmd).then(function(response) {
+            dataService.runZwaveCmd(cfg.store_url + cmd).then(function(response) {
                 var xmlFile = deviceService.buildCfgXmlAssoc(data, cfgXml);
                 dataService.putCfgXml(xmlFile);
             }, function(error) {
@@ -248,7 +248,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
 
         };
         dataService.getCfgXml(function(cfgXml) {
-            dataService.runZwaveCmd(cmd).then(function(response) {
+            dataService.runZwaveCmd(cfg.store_url + cmd).then(function(response) {
                 var xmlFile = deviceService.deleteCfgXmlAssoc(data, cfgXml);
                 dataService.putCfgXml(xmlFile);
                 $('#' + d.elId).addClass('true-false');

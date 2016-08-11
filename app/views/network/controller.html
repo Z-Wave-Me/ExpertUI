@@ -62,47 +62,6 @@
         </tbody>
         </table>
     </div>
-    <!------------------------- DEPRECATED ---------------------------------------------->
-    <!--<div class="table-responsive table-controller">
-         <h3>{{_t('ctrl_info_role_title')}}</h3>
-        <table class="table table-condensed">
-            <tbody>
-               
-                <tr><td id="ctrl_info_nodeid_title" class="controller-th">{{_t('ctrl_info_nodeid_title')}}</td><td id="ctrl_info_nodeid_value">{{info.ctrl_info_nodeid_value}}</td></tr>				
-                <tr><td id="ctrl_info_homeid_title" class="controller-th">{{_t('ctrl_info_homeid_title')}}</td><td id="ctrl_info_homeid_value">{{info.ctrl_info_homeid_value}}</td></tr>
-                <tr><td id="ctrl_info_primary_title" class="controller-th">{{_t('ctrl_info_primary_title')}}</td><td id="ctrl_info_primary_value">{{info.ctrl_info_primary_value}}</td></tr>	
-                <tr><td id="ctrl_info_real_primary_title" class="controller-th">{{_t('ctrl_info_real_primary_title')}}</td><td id="ctrl_info_real_primary_value">{{info.ctrl_info_real_primary_value}}</td></tr>					
-                <tr><td id="ctrl_info_suc_sis_title" class="controller-th">{{_t('ctrl_info_suc_sis_title')}}</td><td id="ctrl_info_suc_sis_value">{{info.ctrl_info_suc_sis_value}}</td></tr>
-            </tbody>
-        </table>
-        
-         <h3>{{_t('ctrl_info_hw_title')}}</h3>
-        <table class="table table-condensed">
-            <tbody>
-                <tr><td id="ctrl_info_hw_vendor_title" class="controller-th">{{_t('ctrl_info_hw_vendor_title')}}</td><td id="ctrl_info_hw_vendor_value">{{info.ctrl_info_hw_vendor_value}}</td></tr>				
-                <tr><td id="ctrl_info_hw_product_title" class="controller-th">{{_t('ctrl_info_hw_product_title')}}</td><td id="ctrl_info_hw_product_value">{{info.ctrl_info_hw_product_value}}</td></tr>			
-                <tr><td id="ctrl_info_hw_chip_title" class="controller-th">{{_t('ctrl_info_hw_chip_title')}}</td><td id="ctrl_info_hw_chip_value">{{info.ctrl_info_hw_chip_value}}</td></tr>
-        </tbody>
-        </table>
-         
-        <h3>{{_t('ctrl_info_sw_title')}}</h3>
-        <table class="table table-condensed">
-            <tbody>
-                <tr><td id="ctrl_info_sw_lib_title" class="controller-th">{{_t('ctrl_info_sw_lib_title')}}</td><td id="ctrl_info_sw_lib_value">{{info.ctrl_info_sw_lib_value}}</td></tr>				
-                <tr><td id="ctrl_info_sw_sdk_title" class="controller-th">{{_t('ctrl_info_sw_sdk_title')}}</td><td id="ctrl_info_sw_sdk_value">{{info.ctrl_info_sw_sdk_value}}</td></tr>			
-                <tr><td id="ctrl_info_sw_api_title" class="controller-th">{{_t('ctrl_info_sw_api_title')}}</td><td id="ctrl_info_sw_api_value">{{info.ctrl_info_sw_api_value}}</td></tr>
-        </tbody>
-        </table>
-        
-       <h3>{{_t('ctrl_info_sw_rev_title')}}</h3>
-        <table class="table table-condensed">
-            <tbody>
-                 <tr><td id="ctrl_info_sw_rev_ver_title" class="controller-th">{{_t('ctrl_info_sw_rev_ver_title')}}</td><td id="ctrl_info_sw_rev_ver_value">{{info.ctrl_info_sw_rev_ver_value}}</td></tr>			
-                <tr><td id="ctrl_info_sw_rev_id_title" class="controller-th">{{_t('ctrl_info_sw_rev_id_title')}}</td><td id="ctrl_info_sw_rev_id_value">{{info.ctrl_info_sw_rev_id_value}}</td></tr>			
-                <tr><td id="ctrl_info_sw_rev_date_title" class="controller-th">{{_t('ctrl_info_sw_rev_date_title')}}</td><td id="ctrl_info_sw_rev_date_value">{{info.ctrl_info_sw_rev_date_value}}</td></tr>
-        </tbody>
-        </table>
-    </div>-->
     <div class="well well-sm">
         <!-- ctrl_info_data  -->
         <button class="btn btn-primary" 
@@ -120,6 +79,11 @@
         <button class="btn btn-primary"
                 ng-click="runCmd('controller.SendNodeInformation()')"
                 >{{_t('nm_send_node_information')}}</button>
+        <!-- Debug mode  -->
+        <button class="btn"
+                ng-class="cfg.zwavecfg.debug === true ? 'btn-success active': 'btn-default'"
+                ng-click="setDebugMode(cfg.zwavecfg.debug === true ? false : true)"
+                >{{_t('Debug mode')}}</button>
         
         <!-- Update fitmware  -->
         <span ng-if="master['controller.data.manufacturerProductId'] == 1 && (master['controller.data.manufacturerId'] == 277 || master['controller.data.manufacturerId'] == 327)&& master['controller.data.manufacturerProductType'] == 1024 && master['controller.data.ZWaveChip'] == 'ZW0500'">

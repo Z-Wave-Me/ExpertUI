@@ -103,6 +103,9 @@ angApp.config(['$routeProvider',
                 when('/configuration/postfix/:nodeId?', {
                     templateUrl: 'app/views/configuration/postfix.html'
                 }).
+                when('/configuration/health/:nodeId?', {
+                    templateUrl: 'app/views/configuration/health.html'
+                }).
                 // Network
                 when('/network/control', {
                     templateUrl: 'app/views/network/control.html'
@@ -113,9 +116,9 @@ angApp.config(['$routeProvider',
 //                when('/network/reorganization', {
 //                    templateUrl: 'app/views/network/reorganization.html'
 //                }).
-//                when('/network/timing', {
-//                    templateUrl: 'app/views/network/timing.html'
-//                }).
+                when('/network/timing', {
+                    templateUrl: 'app/views/network/timing.html'
+                }).
                 when('/network/controller', {
                     templateUrl: 'app/views/network/controller.html'
                 }).

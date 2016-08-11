@@ -55,6 +55,13 @@ appController.controller('BaseController', function($scope, $cookies, $filter, $
     $scope.showContent = false;
     // Global config
     $scope.cfg = cfg;
+     // Load zwave config
+    $scope.loadZwaveConfig = function (nocache) {
+        dataService.getApi('configget_url',null,nocache).then(function (response) {
+            angular.extend(cfg.zwavecfg,response.data);
+        }, function (error) {});
+    };
+    $scope.loadZwaveConfig();
 
     // Lang settings
     $scope.lang_list = cfg.lang_list;
@@ -158,6 +165,30 @@ appController.controller('BaseController', function($scope, $cookies, $filter, $
         }
     };
     
+    $scope.modalArr = {};
+    /**
+     * Open/close a modal window
+     * @param {string} key
+     * @param {object} $event
+     * @param {boolean} status
+     * @returns {undefined}
+     */
+    $scope.handleModal = function (key, $event, status) {
+        if (typeof status === 'boolean') {
+            $scope.modalArr[key] = status;
+        } else {
+            $scope.modalArr[key] = !($scope.modalArr[key]);
+        }
+        $event.stopPropagation();
+    };
+    // Collapse element/menu when clicking outside
+    window.onclick = function () {
+        if ($scope.naviExpanded) {
+            angular.copy({}, $scope.naviExpanded);
+            $scope.$apply();
+        }
+    };
+
      $scope.filterExpanded = {};
     /**
      * Expand/collapse filter
@@ -169,7 +200,7 @@ appController.controller('BaseController', function($scope, $cookies, $filter, $
     $scope.expandFilter = function (key, $event, status) {
         if ($scope.filterExpanded[key]) {
             $scope.filterExpanded = {};
-            $event.stopPropagation();
+        $event.stopPropagation();
             return;
         }
         $scope.filterExpanded = {};
@@ -180,6 +211,7 @@ appController.controller('BaseController', function($scope, $cookies, $filter, $
         }
         $event.stopPropagation();
     };
+    
      // Alertify defaults
     alertify.defaults.glossary.title = cfg.app_name;
     alertify.defaults.glossary.ok = 'OK';

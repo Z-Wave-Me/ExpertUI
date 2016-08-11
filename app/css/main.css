@@ -189,58 +189,73 @@ h3 {
   color: green;
 }
 
-/* line 131, ../sass/common/_main.scss */
+/* line 123, ../sass/common/_main.scss */
+.yellow {
+  color: yellow;
+}
+
+/* line 126, ../sass/common/_main.scss */
+.gray {
+  color: gray;
+}
+
+/* line 129, ../sass/common/_main.scss */
+.orange {
+  color: orange;
+}
+
+/* line 133, ../sass/common/_main.scss */
 .main_spinner {
   font-size: 14px;
   color: #555;
 }
 
-/* line 136, ../sass/common/_main.scss */
+/* line 138, ../sass/common/_main.scss */
 .text-yellow {
   color: yellow;
 }
 
-/* line 139, ../sass/common/_main.scss */
+/* line 141, ../sass/common/_main.scss */
 .text-orange {
   color: orange;
 }
 
-/* line 142, ../sass/common/_main.scss */
+/* line 144, ../sass/common/_main.scss */
 .input-help {
   color: #666666;
   font-size: 13px;
   line-height: 1.2em;
 }
 
-/* line 147, ../sass/common/_main.scss */
+/* line 149, ../sass/common/_main.scss */
 .input-help:hover {
   color: #333;
   cursor: help;
 }
 
-/* line 151, ../sass/common/_main.scss */
+/* line 153, ../sass/common/_main.scss */
 .list-group-item {
   border: 1px solid #9fd8ef;
 }
 
-/* line 155, ../sass/common/_main.scss */
+/* line 157, ../sass/common/_main.scss */
 .tooltip-inner {
   background-color: #1f355e;
 }
 
-/* line 159, ../sass/common/_main.scss */
+/* line 161, ../sass/common/_main.scss */
 .dropdown-menu {
   border-color: #9fd8ef;
 }
 
-/* line 162, ../sass/common/_main.scss */
+/* line 164, ../sass/common/_main.scss */
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
   color: #262626;
   text-decoration: none;
   background-color: #e4f5fc;
 }
 
-/* line 168, ../sass/common/_main.scss */
+/* line 170, ../sass/common/_main.scss */
 .custom-ip-message {
   display: none;
 }
@@ -252,46 +267,46 @@ h3 {
 
 /* Global
 -------------------------------------------------- */
-/* line 177, ../sass/common/_main.scss */
+/* line 176, ../sass/common/_main.scss */
 .is-hidden, .alert-hidden, .alert- {
   display: none !important;
 }
 
-/* line 181, ../sass/common/_main.scss */
+/* line 180, ../sass/common/_main.scss */
 .alert-list {
   margin: 8px 0;
 }
 
-/* line 185, ../sass/common/_main.scss */
+/* line 184, ../sass/common/_main.scss */
 .text-alert, .text-alert-list {
   font-size: 85%;
   margin: 0 0 0 7px;
 }
 
-/* line 189, ../sass/common/_main.scss */
+/* line 188, ../sass/common/_main.scss */
 .text-alert {
   margin: 7px 0;
 }
 
-/* line 192, ../sass/common/_main.scss */
+/* line 191, ../sass/common/_main.scss */
 .report-img {
   display: inline-block;
   max-width: 32px;
 }
 
-/* line 196, ../sass/common/_main.scss */
+/* line 195, ../sass/common/_main.scss */
 .hidden-selectopt {
   display: none !important;
 }
 
-/* line 199, ../sass/common/_main.scss */
+/* line 198, ../sass/common/_main.scss */
 .clickable {
   cursor: pointer;
 }
 
 /* Modal
 -------------------------------------------------- */
-/* line 204, ../sass/common/_main.scss */
+/* line 203, ../sass/common/_main.scss */
 .modal-body {
   padding: 10px 10px 0 10px;
 }
@@ -300,7 +315,7 @@ h3 {
 -------------------------------------------------- */
 /* Page CSS
 -------------------------------------------------- */
-/* line 215, ../sass/common/_main.scss */
+/* line 214, ../sass/common/_main.scss */
 .page-header {
   padding-bottom: 0;
   margin: 0 0 20px 0;
@@ -309,19 +324,19 @@ h3 {
 
 /* Response
 -------------------------------------------------- */
-/* line 224, ../sass/common/_main.scss */
+/* line 223, ../sass/common/_main.scss */
 #respone_container {
   display: none;
 }
 
-/* line 228, ../sass/common/_main.scss */
+/* line 227, ../sass/common/_main.scss */
 #respone_container_inner {
   margin: 0 auto;
   text-align: center;
   /*position: relative;*/
 }
 
-/* line 233, ../sass/common/_main.scss */
+/* line 232, ../sass/common/_main.scss */
 .page-load-spinner {
   z-index: 1000;
   text-align: center;
@@ -331,7 +346,7 @@ h3 {
   width: 150px;
 }
 
-/* line 242, ../sass/common/_main.scss */
+/* line 241, ../sass/common/_main.scss */
 .response-message {
   z-index: 1000;
   text-align: center;
@@ -341,12 +356,12 @@ h3 {
 
 /* Homepage
 -------------------------------------------------- */
-/* line 251, ../sass/common/_main.scss */
+/* line 250, ../sass/common/_main.scss */
 #page_.custom-ip-true #respone_container .alert-danger {
   display: none !important;
 }
 
-/* line 255, ../sass/common/_main.scss */
+/* line 254, ../sass/common/_main.scss */
 .form-home-ip-in {
   margin: 10px auto;
   text-align: center;
@@ -354,12 +369,12 @@ h3 {
   /*position: relative;*/
 }
 
-/* line 261, ../sass/common/_main.scss */
+/* line 260, ../sass/common/_main.scss */
 .product-logo {
   max-width: 200px;
 }
 
-/* line 264, ../sass/common/_main.scss */
+/* line 263, ../sass/common/_main.scss */
 .product-description {
   line-height: 1.6em;
   margin: 30px 0 0 0;
@@ -367,7 +382,7 @@ h3 {
   border-top: 1px solid #9fd8ef;
 }
 
-/* line 270, ../sass/common/_main.scss */
+/* line 269, ../sass/common/_main.scss */
 .product-data-list {
   background-color: #e4f5fc;
   -webkit-border-radius: 5px;
@@ -375,7 +390,7 @@ h3 {
   border-radius: 5px;
 }
 
-/* line 276, ../sass/common/_main.scss */
+/* line 275, ../sass/common/_main.scss */
 .product-data-list h3 {
   color: #2A6496;
   font-size: 120%;
@@ -385,178 +400,178 @@ h3 {
 
 /* Sensors
 -------------------------------------------------- */
-/* line 285, ../sass/common/_main.scss */
+/* line 284, ../sass/common/_main.scss */
 .sensor-triggered {
   color: #FFB200;
 }
 
 /* Expert Commands CSS
 -------------------------------------------------- */
-/* line 290, ../sass/common/_main.scss */
+/* line 289, ../sass/common/_main.scss */
 #row_commands .thumbnail {
   width: 100%;
 }
 
-/* line 293, ../sass/common/_main.scss */
+/* line 292, ../sass/common/_main.scss */
 #row_commands .thumbnail:hover {
   border: solid 1px #6BA2C8;
 }
 
-/* line 296, ../sass/common/_main.scss */
+/* line 295, ../sass/common/_main.scss */
 #row_commands .thumbnail-title a {
   color: #012F49;
   font-weight: bold;
 }
 
-/* line 301, ../sass/common/_main.scss */
+/* line 300, ../sass/common/_main.scss */
 #row_commands img {
   vertical-align: top !important;
 }
 
-/* line 305, ../sass/common/_main.scss */
+/* line 304, ../sass/common/_main.scss */
 .commands-data {
   padding: 10px 0;
   border-top: solid 1px #9fd8ef;
 }
 
-/* line 310, ../sass/common/_main.scss */
+/* line 309, ../sass/common/_main.scss */
 .commands-data-control {
   padding: 10px;
   background-color: #e4f5fc;
 }
 
-/* line 314, ../sass/common/_main.scss */
+/* line 313, ../sass/common/_main.scss */
 .commands-data-control .form-group {
   margin-bottom: 10px;
 }
 
-/* line 317, ../sass/common/_main.scss */
+/* line 316, ../sass/common/_main.scss */
 .commands-title-block {
   display: block;
 }
 
 /* Config CSS
 -------------------------------------------------- */
-/* line 323, ../sass/common/_main.scss */
+/* line 322, ../sass/common/_main.scss */
 .table-cfg-interview th {
   width: 25%;
 }
 
-/* line 326, ../sass/common/_main.scss */
+/* line 325, ../sass/common/_main.scss */
 .cfg-block {
   margin: 0 0 20px 0;
   padding: 0 0 20px 0;
   border-bottom: solid 1px #9fd8ef;
 }
 
-/* line 332, ../sass/common/_main.scss */
+/* line 331, ../sass/common/_main.scss */
 .cfg-block h4 {
   color: #2A6496;
 }
 
-/* line 336, ../sass/common/_main.scss */
+/* line 335, ../sass/common/_main.scss */
 .cfg-control-content {
   padding: 10px;
   margin: 10px 0;
   background-color: #e4f5fc;
 }
 
-/* line 341, ../sass/common/_main.scss */
+/* line 340, ../sass/common/_main.scss */
 .cfg-info {
   margin: 10px 0 0 0;
   padding: 10px 0 0 0;
   border-top: solid 1px #fff;
 }
 
-/* line 346, ../sass/common/_main.scss */
+/* line 345, ../sass/common/_main.scss */
 .commads-is-current {
   text-decoration: underline;
 }
 
-/* line 349, ../sass/common/_main.scss */
+/* line 348, ../sass/common/_main.scss */
 #wakeup_cont .form-inline {
   /*    max-width: 300px;*/
   float: left;
 }
 
-/* line 354, ../sass/common/_main.scss */
+/* line 353, ../sass/common/_main.scss */
 #device_select_image_container {
   margin: 20px;
 }
 
-/* line 358, ../sass/common/_main.scss */
+/* line 357, ../sass/common/_main.scss */
 #device_select_image {
   margin: 0 auto;
   text-align: center;
 }
 
-/* line 364, ../sass/common/_main.scss */
+/* line 363, ../sass/common/_main.scss */
 #device_select_image img {
   margin: 0 auto;
   max-width: 200px;
 }
 
-/* line 369, ../sass/common/_main.scss */
+/* line 368, ../sass/common/_main.scss */
 .btn-assoc {
   margin-bottom: 5px;
 }
 
-/* line 373, ../sass/common/_main.scss */
+/* line 372, ../sass/common/_main.scss */
 .btn-group-assoc-devices {
   margin: 0 5px 5px 0;
 }
 
 /* Network controll
 -------------------------------------------------- */
-/* line 380, ../sass/common/_main.scss */
+/* line 379, ../sass/common/_main.scss */
 .nm-response.alert-danger {
   font-weight: bold;
 }
 
-/* line 383, ../sass/common/_main.scss */
+/* line 382, ../sass/common/_main.scss */
 .block-frequency .btn {
   margin: 8px 8px 0 0;
 }
 
 /*  Network controller
 -------------------------------------------------- */
-/* line 389, ../sass/common/_main.scss */
+/* line 388, ../sass/common/_main.scss */
 .table-controller table {
   margin-bottom: 20px;
 }
 
-/* line 392, ../sass/common/_main.scss */
+/* line 391, ../sass/common/_main.scss */
 .table-controller h3 {
   font-size: 100%;
   font-weight: bold;
 }
 
-/* line 396, ../sass/common/_main.scss */
+/* line 395, ../sass/common/_main.scss */
 .controller-th {
   width: 15%;
 }
 
 /* Device assoc
 -------------------------------------------------- */
-/* line 401, ../sass/common/_main.scss */
+/* line 400, ../sass/common/_main.scss */
 .badge-assoc {
   margin: 0 5px 5px 0;
   padding: 5px;
 }
 
-/* line 406, ../sass/common/_main.scss */
+/* line 405, ../sass/common/_main.scss */
 .btn-group-assoc-devices.false-false .btn {
   display: none;
 }
 
-/* line 410, ../sass/common/_main.scss */
+/* line 409, ../sass/common/_main.scss */
 .btn-group-assoc-devices.true-false .btn {
   color: #333;
   background-color: #f9f9f9;
   border-color: #ccc;
 }
 
-/* line 416, ../sass/common/_main.scss */
+/* line 415, ../sass/common/_main.scss */
 .btn-group-assoc-devices.false-true .btn {
   color: #fff;
   background-color: #f0ad4e;
@@ -565,7 +580,7 @@ h3 {
 
 /* Timing
 -------------------------------------------------- */
-/* line 424, ../sass/common/_main.scss */
+/* line 423, ../sass/common/_main.scss */
 .timing-packet {
   margin: 0 7px 0 0;
   /*   padding: 5px;*/
@@ -573,24 +588,24 @@ h3 {
 
 /*Images
 -------------------------------------------------- */
-/* line 431, ../sass/common/_main.scss */
+/* line 430, ../sass/common/_main.scss */
 .config-device-img {
   max-width: 200px;
 }
 
 /* Tables
 -------------------------------------------------- */
-/* line 437, ../sass/common/_main.scss */
+/* line 436, ../sass/common/_main.scss */
 .table {
   margin-bottom: 0;
 }
 
-/* line 440, ../sass/common/_main.scss */
+/* line 439, ../sass/common/_main.scss */
 .table > thead > tr > th {
   border-bottom: 2px solid #9fd8ef;
 }
 
-/* line 443, ../sass/common/_main.scss */
+/* line 442, ../sass/common/_main.scss */
 .table > thead > tr > th,
 .table > tbody > tr > th,
 .table > tfoot > tr > th,
@@ -599,23 +614,23 @@ h3 {
   border-top: 1px solid #9fd8ef;
 }
 
-/* line 451, ../sass/common/_main.scss */
+/* line 450, ../sass/common/_main.scss */
 .table-hover > tbody > tr:hover > td, .table-hover > tbody > tr:hover > th {
   background-color: #e4f5fc;
 }
 
-/* line 455, ../sass/common/_main.scss */
+/* line 454, ../sass/common/_main.scss */
 #inspect_queue_table {
   font-size: 12px;
   width: 100%;
 }
 
-/* line 459, ../sass/common/_main.scss */
+/* line 458, ../sass/common/_main.scss */
 .th-slider {
   min-width: 100px;
 }
 
-/* line 463, ../sass/common/_main.scss */
+/* line 462, ../sass/common/_main.scss */
 .table-condensed td p {
   margin: 0 !important;
   padding: 0 !important;
@@ -623,7 +638,7 @@ h3 {
 
 /* Modals
 -------------------------------------------------- */
-/* line 473, ../sass/common/_main.scss */
+/* line 472, ../sass/common/_main.scss */
 .cc-data-element {
   white-space: -moz-pre-wrap;
   /* Mozilla */
@@ -642,19 +657,19 @@ h3 {
   word-break: break-all;
 }
 
-/* line 483, ../sass/common/_main.scss */
+/* line 482, ../sass/common/_main.scss */
 #modal_queue .modal-dialog {
   width: 60%;
 }
 
 /* Tabs
 -------------------------------------------------- */
-/* line 489, ../sass/common/_main.scss */
+/* line 488, ../sass/common/_main.scss */
 .nav-tabs {
   border-bottom: 1px solid #9fd8ef;
 }
 
-/* line 493, ../sass/common/_main.scss */
+/* line 492, ../sass/common/_main.scss */
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
   color: #555;
   cursor: default;
@@ -663,18 +678,18 @@ h3 {
   border-bottom-color: transparent;
 }
 
-/* line 501, ../sass/common/_main.scss */
+/* line 500, ../sass/common/_main.scss */
 .nav > li > a:hover, .nav > li > a:focus {
   text-decoration: none;
   background-color: #e4f5fc;
 }
 
-/* line 506, ../sass/common/_main.scss */
+/* line 505, ../sass/common/_main.scss */
 .nav-tabs > li > a:hover {
   border-color: #9fd8ef;
 }
 
-/* line 510, ../sass/common/_main.scss */
+/* line 509, ../sass/common/_main.scss */
 .tab-content {
   padding: 20px;
   margin: 0 0 20px 0;
@@ -684,14 +699,14 @@ h3 {
 
 /* Panel CSS
 -------------------------------------------------- */
-/* line 519, ../sass/common/_main.scss */
+/* line 518, ../sass/common/_main.scss */
 .panel {
   border: 1px solid #9fd8ef;
   -webkit-box-shadow: 0;
   box-shadow: 0;
 }
 
-/* line 524, ../sass/common/_main.scss */
+/* line 523, ../sass/common/_main.scss */
 .panel-highlighted {
   border: 4px solid #7ec8e5;
   -webkit-box-shadow: 0px 0px 6px 0px rgba(50, 50, 50, 0.43);
@@ -699,7 +714,7 @@ h3 {
   box-shadow: 0px 0px 6px 0px rgba(50, 50, 50, 0.43);
 }
 
-/* line 530, ../sass/common/_main.scss */
+/* line 529, ../sass/common/_main.scss */
 .panel-default > .panel-heading {
   color: #2A6496;
   font-size: 16px;
@@ -710,7 +725,7 @@ h3 {
 
 /* Well CSS
 -------------------------------------------------- */
-/* line 539, ../sass/common/_main.scss */
+/* line 538, ../sass/common/_main.scss */
 .well {
   background-color: #e4f5fc;
   border: 1px solid #9fd8ef;
@@ -721,29 +736,29 @@ h3 {
 
 /* Form CSS
 -------------------------------------------------- */
-/* line 549, ../sass/common/_main.scss */
+/* line 548, ../sass/common/_main.scss */
 .form-control {
   border: 1px solid #9fd8ef;
 }
 
-/* line 553, ../sass/common/_main.scss */
+/* line 552, ../sass/common/_main.scss */
 .btn-spinner-hidden, .btn .fa-spin {
   display: none;
 }
 
-/* line 557, ../sass/common/_main.scss */
+/* line 556, ../sass/common/_main.scss */
 .btn-default, .btn-default.active, .open .dropdown-toggle.btn-default {
   border-color: #9fd8ef;
 }
 
-/* line 560, ../sass/common/_main.scss */
+/* line 559, ../sass/common/_main.scss */
 .btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open .dropdown-toggle.btn-default {
   color: #2A6496;
   background-color: #e4f5fc;
   border-color: #9fd8ef;
 }
 
-/* line 566, ../sass/common/_main.scss */
+/* line 565, ../sass/common/_main.scss */
 .dropdown-config {
   font-size: 16px;
   /*    text-shadow: 3px 1px 2px rgba(150, 150, 150, 1);*/
@@ -752,7 +767,7 @@ h3 {
 
 /* Footer
 -------------------------------------------------- */
-/* line 574, ../sass/common/_main.scss */
+/* line 573, ../sass/common/_main.scss */
 #footer {
   /*    border-top: solid 2px #6BA2C8;*/
   font-size: 12px;
@@ -763,14 +778,14 @@ h3 {
   height: 60px;
 }
 
-/* line 584, ../sass/common/_main.scss */
+/* line 583, ../sass/common/_main.scss */
 #footer .text-muted {
   margin: 15px 0;
   text-align: center;
   color: #6BA2C8;
 }
 
-/* line 589, ../sass/common/_main.scss */
+/* line 588, ../sass/common/_main.scss */
 #footer a {
   color: #6BA2C8;
   display: inline-block;
@@ -778,24 +793,24 @@ h3 {
   text-align: center;
 }
 
-/* line 595, ../sass/common/_main.scss */
+/* line 594, ../sass/common/_main.scss */
 #footer a:hover {
   color: #17497B;
 }
 
 /* Zniffer
 -------------------------------------------------- */
-/* line 601, ../sass/common/_main.scss */
+/* line 600, ../sass/common/_main.scss */
 .zniffer_row_1 {
   color: #80AD80;
 }
 
-/* line 604, ../sass/common/_main.scss */
+/* line 603, ../sass/common/_main.scss */
 .zniffer_row_2 {
   color: #6494BC;
 }
 
-/* line 607, ../sass/common/_main.scss */
+/* line 606, ../sass/common/_main.scss */
 .zniffer_row_3 {
   color: #d9534f;
 }
@@ -2269,21 +2284,179 @@ h3 {
 
 /*@import "common/_accordion"; 
 @import "common/_loader"; 
-@import "common/_alert";
-@import "common/_modal";
-@import "common/_pagination"; */
+@import "common/_alert";*/
+/* Modal
+-------------------------------------------------- */
+/* line 3, ../sass/common/_modal.scss */
+.appmodal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2300;
+  overflow: show;
+  color: #0d0d0d;
+}
+/* line 12, ../sass/common/_modal.scss */
+.appmodal .appmodal-in {
+  width: 99%;
+  position: relative;
+  margin: 70px auto 20px auto;
+  background-color: #FFFFFF;
+}
+
+/* line 20, ../sass/common/_modal.scss */
+.appmodal-100 .appmodal-in {
+  width: 99% !important;
+}
+
+/* line 25, ../sass/common/_modal.scss */
+.appmodal-90 .appmodal-in {
+  width: 90%;
+}
+
+/* line 29, ../sass/common/_modal.scss */
+#modalHistory {
+  z-index: 2301;
+}
+
+/* line 33, ../sass/common/_modal.scss */
+.appmodal:before {
+  content: '';
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(37, 37, 37, 0.5);
+}
+
+/* line 43, ../sass/common/_modal.scss */
+.appmodal-header, .appmodal-body, .appmodal-footer {
+  padding: 10px 15px;
+}
+
+/* line 47, ../sass/common/_modal.scss */
+.appmodal-header {
+  border-bottom: solid 1px #cccccc;
+}
+/* line 49, ../sass/common/_modal.scss */
+.appmodal-header .appmodal-close {
+  color: #404040;
+  font-size: 180%;
+  display: block;
+  text-decoration: none;
+  position: absolute;
+  right: 10px;
+  top: 0;
+  z-index: 2;
+  cursor: pointer;
+}
+/* line 59, ../sass/common/_modal.scss */
+.appmodal-header .appmodal-close span {
+  display: inline-block;
+}
+/* line 63, ../sass/common/_modal.scss */
+.appmodal-header h3 {
+  font-size: 110%;
+  margin: 0;
+  color: #737373;
+}
+
+/* line 72, ../sass/common/_modal.scss */
+.appmodal-footer {
+  border-top: solid 1px #cccccc;
+  text-align: right;
+}
+
+/* Modal with knob
+-------------------------------------------------- */
+/* line 80, ../sass/common/_modal.scss */
+.app-row-knob .knob-col {
+  padding: 10px;
+}
+
+/* Confirm content
+-------------------------------------------------- */
+/* line 87, ../sass/common/_modal.scss */
+.app-confirm-content {
+  padding: 10px;
+  border: solid 1px #cccccc;
+  margin: 10px 0;
+  max-height: 200px;
+  overflow: auto;
+}
+
+/* Modal James Box
+-------------------------------------------------- */
+/* line 97, ../sass/common/_modal.scss */
+#jamesBoxUpdateModal #updateTimeout {
+  text-align: center;
+  font-weight: bold;
+  margin: 15px 0;
+  font-size: 16px;
+}
+
+/* line 104, ../sass/common/_modal.scss */
+#jamesBoxUpdateModal ol {
+  margin: 15px 0;
+}
+
+/* line 108, ../sass/common/_modal.scss */
+#jamesBoxUpdateModal li.jamesboxUpdateInfoList {
+  margin: 0 0 5px 0;
+}
+
+/*@import "common/_pagination"; */
+/* Link health
+-------------------------------------------------- */
+/* ID buttons */
+/* line 4, ../sass/modules/_configuration.scss */
+.btn-mains {
+  color: #f0ad4e;
+  background-color: #fcf8e3;
+  border-color: #f0ad4e;
+}
+
+/* line 9, ../sass/modules/_configuration.scss */
+.btn-sleep {
+  color: #d9534f;
+  background-color: #f2dede;
+  border-color: #d9534f;
+}
+
+/* line 14, ../sass/modules/_configuration.scss */
+.btn-flirs {
+  color: #5bc0de;
+  background-color: #d9edf7;
+  border-color: #5bc0de;
+}
+
+/* line 19, ../sass/modules/_configuration.scss */
+.btn-battery {
+  color: #80AD80;
+  background-color: #dff0d8;
+  border-color: #80AD80;
+}
+
+/* Traffic indicator */
+/* line 26, ../sass/modules/_configuration.scss */
+.traffic-default {
+  color: #80AD80;
+}
+
 /* Routing table cell styles
 -------------------------------------------------- */
-/* Routing table cell styles
--------------------------------------------------- */
-/* line 5, ../sass/modules/_routing.scss */
+/* line 3, ../sass/modules/_routing.scss */
 #RoutingTable td.rtCell {
   width: 22px;
   height: 22px;
   padding: 0px 0px 1px 1px;
 }
 
-/* line 11, ../sass/modules/_routing.scss */
+/* line 9, ../sass/modules/_routing.scss */
 #RoutingTable div.rtDiv {
   min-width: 20px;
   min-height: 20px;
@@ -2296,554 +2469,114 @@ h3 {
   text-align: center;
 }
 
-/* line 23, ../sass/modules/_routing.scss */
+/* line 21, ../sass/modules/_routing.scss */
 #RoutingTable span.routeHops {
   display: table-cell;
   vertical-align: middle;
   border: 0;
 }
 
-/* line 29, ../sass/modules/_routing.scss */
+/* line 27, ../sass/modules/_routing.scss */
 #RoutingTable td.rtInfo {
   text-align: left;
   white-space: nowrap;
 }
 
-/* line 34, ../sass/modules/_routing.scss */
+/* line 32, ../sass/modules/_routing.scss */
 #RoutingTable td.rtHeader {
   text-align: center;
   white-space: nowrap;
 }
 
-/* line 39, ../sass/modules/_routing.scss */
+/* line 37, ../sass/modules/_routing.scss */
 #RoutingTable td.rtHeaderNames {
   text-align: left;
   white-space: nowrap;
 }
 
-/* line 44, ../sass/modules/_routing.scss */
+/* line 42, ../sass/modules/_routing.scss */
 #RoutingTable td.rtNodes {
   text-align: right;
 }
 
-/* line 48, ../sass/modules/_routing.scss */
+/* line 46, ../sass/modules/_routing.scss */
 #RoutingTable td.rtNodesNames {
   text-align: left;
   padding: 0 1em 0 0;
 }
 
-/* line 53, ../sass/modules/_routing.scss */
+/* line 51, ../sass/modules/_routing.scss */
 #RoutingTable td {
   white-space: nowrap;
   padding: 0px 0px 1px 1px;
 }
 
-/* line 58, ../sass/modules/_routing.scss */
+/* line 56, ../sass/modules/_routing.scss */
 #RoutingTable th {
   white-space: nowrap;
   padding: 0px 0px 1px 1px;
 }
 
-/* line 63, ../sass/modules/_routing.scss */
+/* line 61, ../sass/modules/_routing.scss */
 #RoutingTable div.rtDirect {
   background-color: green;
 }
 
-/* line 67, ../sass/modules/_routing.scss */
+/* line 65, ../sass/modules/_routing.scss */
 #RoutingTable div.rtRouted {
   background-color: #8C0;
 }
 
-/* line 71, ../sass/modules/_routing.scss */
+/* line 69, ../sass/modules/_routing.scss */
 #RoutingTable div.rtBadlyRouted {
   background-color: yellow;
 }
 
-/* line 75, ../sass/modules/_routing.scss */
+/* line 73, ../sass/modules/_routing.scss */
 #RoutingTable div.rtNotLinked {
   background-color: red;
 }
 
-/* line 79, ../sass/modules/_routing.scss */
+/* line 77, ../sass/modules/_routing.scss */
 #RoutingTable div.rtUnavailable {
   background-color: gray;
 }
 
-/* line 83, ../sass/modules/_routing.scss */
+/* line 81, ../sass/modules/_routing.scss */
 #RoutingTable .info {
   font-size: smaller;
 }
 
-/* line 87, ../sass/modules/_routing.scss */
+/* line 85, ../sass/modules/_routing.scss */
 #RoutingTable button {
   padding: 0px 6px;
 }
 
-/* line 91, ../sass/modules/_routing.scss */
+/* line 89, ../sass/modules/_routing.scss */
 #RoutingComments {
   margin-top: 10px;
 }
 
 /* device not present in config file and not present in Z-Wave assoc group */
-/* line 96, ../sass/modules/_routing.scss */
+/* line 94, ../sass/modules/_routing.scss */
 .dissapeared {
   color: #911;
 }
 
 /* device present in config file but not present in Z-Wave assoc group */
-/* line 101, ../sass/modules/_routing.scss */
+/* line 99, ../sass/modules/_routing.scss */
 .notInZWave {
   color: #955;
 }
 
 /* device present in config file and in Z-Wave assoc group */
-/* line 106, ../sass/modules/_routing.scss */
+/* line 104, ../sass/modules/_routing.scss */
 .inZWave {
   color: #000;
 }
 
-/* line 110, ../sass/modules/_routing.scss */
+/* line 108, ../sass/modules/_routing.scss */
 .assocAdd {
   background-color: #911 !important;
   border-color: #955 !important;
 }
-
-/*
- * The responsive style for the front-end
- */
-/* Global settings
--------------------------------------------------- */
-/*.clearfix {
-    *zoom: 1;
-}
-.clearfix:before,
-.clearfix:after {
-    display: table;
-    content: "";
-    line-height: 0;
-}
-.clearfix:after {
-    clear: both;
-}
-.hide-text {
-    font: 0/0 a;
-    color: transparent;
-    text-shadow: none;
-    background-color: transparent;
-    border: 0;
-}
-.input-block-level {
-    display: block;
-    width: 100%;
-    min-height: 30px;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}*/
-/*==========  Overflow  ==========*/
-/*==================================================
-=            Bootstrap 3 Media Queries             =
-==================================================*/
-/*.is-mobile-true{
-    .mobile-hide{
-        display: none !important;
-    }
-}*/
-/*==========  Mobile First Method  ==========*/
-/* Custom, iPhone Retina */
-/* Extra Small Devices, Phones */
-/* Small Devices, Tablets */
-@media only screen and (min-width: 768px) {
-  /*  Small Devices, Tablets
-  -------------------------------------------------- */
-}
-/* Medium Devices, Desktops */
-@media only screen and (min-width: 992px) and (orientation: landscape) {
-  /* Medium Devices, Desktops
-  -------------------------------------------------- */
-  /*-------------------------------------*/
-  /* Shared styles
-  -------------------------------------------------- */
-  /* Body reset
-  -------------------------------------------------- */
-  /*html {
-      font-size: $app-body-font-size;
-  }*/
-  /*body {
-      font-size: $app-body-font-size;
-      line-height: $app-line-height-base;
-  }*/
-  /* Header
-  -------------------------------------------------- */
-  /*#header{
-      .divider-vertical {
-          height: $header-h;
-      }
-  }*/
-  /* Main navigation
-  -------------------------------------------------- */
-  /*#main_navigation_wrap{
-      height: $header-h;
-  }
-  
-  #main_navigation{
-      line-height: $header-h;
-      a{
-          line-height: $header-h;
-      }
-  }*/
-  /* Subnavigation
-  -------------------------------------------------- */
-  /*#sub_navigation_in{
-      ul{
-          margin: $subnavigation-margin;
-          li{
-              a{
-                  padding: 0 $spacing;
-              }
-  
-          }
-      }
-  }*/
-  /* Gird
-  -------------------------------------------------- */
-  /*#main_content {
-      margin-top: $header-h + $spacing-double; 
-      margin-bottom: $footer-h + $spacing-double;
-  }
-  .container{
-      max-width:$app-container-w;
-  
-  }
-  .block-50{
-      @include appFloat(left);
-      width: 50%; 
-  }*/
-  /* Page navigation
-  -------------------------------------------------- */
-  /* line 67, ../sass/responsive/_mq_shared.scss */
-  .page-navi ul li {
-    display: block;
-    float: left;
-    width: 33.33333%;
-  }
-  /* line 71, ../sass/responsive/_mq_shared.scss */
-  .page-navi ul li a {
-    min-height: 30px;
-    margin: auto 10px;
-  }
-  /* line 76, ../sass/responsive/_mq_shared.scss */
-  .page-navi ul li .page-navi-icon {
-    display: none !important;
-  }
-
-  /* Images
-  -------------------------------------------------- */
-  /* Input
-  -------------------------------------------------- */
-  /*.form-control {
-      padding: $app-input-padding;
-  }
-  input[type=checkbox]{
-      -ms-transform: scale($checkbox-scale);  IE 
-      -moz-transform: scale($checkbox-scale);  FF 
-      -webkit-transform: scale($checkbox-scale);  Safari and Chrome 
-      -o-transform: scale($checkbox-scale);  Opera 
-  }
-  input[type=radio] { 
-      transform: scale($radio-scale, $radio-scale); 
-      -moz-transform: scale($radio-scale, $radio-scale); 
-      -ms-transform: scale($radio-scale, $radio-scale); 
-      -webkit-transform: scale($radio-scale, $radio-scale); 
-      -o-transform: scale($radio-scale, $radio-scale); 
-  }*/
-  /* Button
-  -------------------------------------------------- */
-  /*.btn,.btn-device-admin {
-      .fa{
-          font-size: $app-btn-icon-size; 
-      }
-  }*/
-  /*.btn-goup-block{
-      width: auto !important;
-      display: inline-block;
-      margin: 0;
-      .btn{
-          width: auto !important;
-      }
-  }*/
-  /* line 120, ../sass/responsive/_mq_shared.scss */
-  .btn-tag {
-    display: inline-block;
-    position: static;
-    font-size: 100%;
-    margin: 0 10px 10px 0;
-  }
-  /* line 125, ../sass/responsive/_mq_shared.scss */
-  .btn-tag .fa {
-    position: static;
-    margin: 0 0 0 10px;
-    font-size: 120%;
-  }
-
-  /* Modal
-  -------------------------------------------------- */
-  /*.appmodal { 
-      .appmodal-in{
-          width: $modal-w;
-      }
-  }
-  
-  .appmodal-header{
-      .appmodal-close{
-          font-size: $modal-close-size;
-      }
-  }*/
-  /* Dropdown
-  -------------------------------------------------- */
-  /* line 147, ../sass/responsive/_mq_shared.scss */
-  .app-dropdown {
-    min-width: 360px;
-  }
-
-  /* line 152, ../sass/responsive/_mq_shared.scss */
-  .app-dropdown.dropdown-lang {
-    min-width: 250px;
-  }
-  /* line 155, ../sass/responsive/_mq_shared.scss */
-  .app-dropdown.dropdown-lang ul li {
-    padding: 5px;
-  }
-
-  /* Report
-  -------------------------------------------------- */
-  /*.report-img{
-      max-width: $report-img;
-      max-height: $report-img;
-  }
-  .app-row-zwave{
-      .report-entry {
-          .report-ctrl{
-              vertical-align: top !important;
-          }
-      }
-  }*/
-  /* Footer
-  -------------------------------------------------- */
-  /*#footer{
-      #footer_in{
-          height: $footer-h;
-          line-height: $footer-h;
-      }
-  }
-  #footer{
-      display: none; 
-  }*/
-  /* Others
-  -------------------------------------------------- */
-  /*.timestamp{
-      font-size: $app-updatetime-font-size !important;
-      .fa{
-          font-size: $app-updatetime-icon-size !important; 
-      }
-  }*/
-}
-/* Large Devices, Wide Screens */
-@media only screen and (min-width: 1200px) and (orientation: landscape) {
-  /* Large Devices, Wide Screens
-  -------------------------------------------------- */
-  /*-------------------------------------*/
-  /* Shared styles
-  -------------------------------------------------- */
-  /* Body reset
-  -------------------------------------------------- */
-  /*html {
-      font-size: $app-body-font-size;
-  }*/
-  /*body {
-      font-size: $app-body-font-size;
-      line-height: $app-line-height-base;
-  }*/
-  /* Header
-  -------------------------------------------------- */
-  /*#header{
-      .divider-vertical {
-          height: $header-h;
-      }
-  }*/
-  /* Main navigation
-  -------------------------------------------------- */
-  /*#main_navigation_wrap{
-      height: $header-h;
-  }
-  
-  #main_navigation{
-      line-height: $header-h;
-      a{
-          line-height: $header-h;
-      }
-  }*/
-  /* Subnavigation
-  -------------------------------------------------- */
-  /*#sub_navigation_in{
-      ul{
-          margin: $subnavigation-margin;
-          li{
-              a{
-                  padding: 0 $spacing;
-              }
-  
-          }
-      }
-  }*/
-  /* Gird
-  -------------------------------------------------- */
-  /*#main_content {
-      margin-top: $header-h + $spacing-double; 
-      margin-bottom: $footer-h + $spacing-double;
-  }
-  .container{
-      max-width:$app-container-w;
-  
-  }
-  .block-50{
-      @include appFloat(left);
-      width: 50%; 
-  }*/
-  /* Page navigation
-  -------------------------------------------------- */
-  /* line 67, ../sass/responsive/_mq_shared.scss */
-  .page-navi ul li {
-    display: block;
-    float: left;
-    width: 33.33333%;
-  }
-  /* line 71, ../sass/responsive/_mq_shared.scss */
-  .page-navi ul li a {
-    min-height: 30px;
-    margin: auto 10px;
-  }
-  /* line 76, ../sass/responsive/_mq_shared.scss */
-  .page-navi ul li .page-navi-icon {
-    display: none !important;
-  }
-
-  /* Images
-  -------------------------------------------------- */
-  /* Input
-  -------------------------------------------------- */
-  /*.form-control {
-      padding: $app-input-padding;
-  }
-  input[type=checkbox]{
-      -ms-transform: scale($checkbox-scale);  IE 
-      -moz-transform: scale($checkbox-scale);  FF 
-      -webkit-transform: scale($checkbox-scale);  Safari and Chrome 
-      -o-transform: scale($checkbox-scale);  Opera 
-  }
-  input[type=radio] { 
-      transform: scale($radio-scale, $radio-scale); 
-      -moz-transform: scale($radio-scale, $radio-scale); 
-      -ms-transform: scale($radio-scale, $radio-scale); 
-      -webkit-transform: scale($radio-scale, $radio-scale); 
-      -o-transform: scale($radio-scale, $radio-scale); 
-  }*/
-  /* Button
-  -------------------------------------------------- */
-  /*.btn,.btn-device-admin {
-      .fa{
-          font-size: $app-btn-icon-size; 
-      }
-  }*/
-  /*.btn-goup-block{
-      width: auto !important;
-      display: inline-block;
-      margin: 0;
-      .btn{
-          width: auto !important;
-      }
-  }*/
-  /* line 120, ../sass/responsive/_mq_shared.scss */
-  .btn-tag {
-    display: inline-block;
-    position: static;
-    font-size: 100%;
-    margin: 0 10px 10px 0;
-  }
-  /* line 125, ../sass/responsive/_mq_shared.scss */
-  .btn-tag .fa {
-    position: static;
-    margin: 0 0 0 10px;
-    font-size: 120%;
-  }
-
-  /* Modal
-  -------------------------------------------------- */
-  /*.appmodal { 
-      .appmodal-in{
-          width: $modal-w;
-      }
-  }
-  
-  .appmodal-header{
-      .appmodal-close{
-          font-size: $modal-close-size;
-      }
-  }*/
-  /* Dropdown
-  -------------------------------------------------- */
-  /* line 147, ../sass/responsive/_mq_shared.scss */
-  .app-dropdown {
-    min-width: 380px;
-  }
-
-  /* line 152, ../sass/responsive/_mq_shared.scss */
-  .app-dropdown.dropdown-lang {
-    min-width: 250px;
-  }
-  /* line 155, ../sass/responsive/_mq_shared.scss */
-  .app-dropdown.dropdown-lang ul li {
-    padding: 5px;
-  }
-
-  /* Report
-  -------------------------------------------------- */
-  /*.report-img{
-      max-width: $report-img;
-      max-height: $report-img;
-  }
-  .app-row-zwave{
-      .report-entry {
-          .report-ctrl{
-              vertical-align: top !important;
-          }
-      }
-  }*/
-  /* Footer
-  -------------------------------------------------- */
-  /*#footer{
-      #footer_in{
-          height: $footer-h;
-          line-height: $footer-h;
-      }
-  }
-  #footer{
-      display: none; 
-  }*/
-  /* Others
-  -------------------------------------------------- */
-  /*.timestamp{
-      font-size: $app-updatetime-font-size !important;
-      .fa{
-          font-size: $app-updatetime-icon-size !important; 
-      }
-  }*/
-}
-/*==========  Non-Mobile First Method  ==========*/
-/* Large Devices, Wide Screens */
-/* Medium Devices, Desktops */
-/* Small Devices, Tablets */
-/* Extra Small Devices, Phones */
-/* Custom, iPhone Retina */
-
-/*# sourceMappingURL=main.css.map */

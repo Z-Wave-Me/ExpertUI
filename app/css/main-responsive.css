@@ -209,9 +209,15 @@
 
 /* Medium Devices, Desktops */
 @media only screen and (min-width : 992px) {
-
+    /* Modal
+-------------------------------------------------- */
+.appmodal .appmodal-in{
+        width: 60%;
 }
 
+.appmodal-header .appmodal-close{
+        font-size: 140%;
+}
 /* Large Devices, Wide Screens */
 @media only screen and (min-width : 1200px) {
 

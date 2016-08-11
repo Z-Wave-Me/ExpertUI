@@ -371,8 +371,8 @@ angApp.filter('getCurrentTime', function () {
 //Check for today
 angApp.filter('isTodayFromUnix', function () {
     return function (input) {
-        if (isNaN(input)) {
-            return '?';
+        if (!input || isNaN(input)) {
+            return '-';
         }
         var d = new Date(input * 1000);
         var day = (d.getDate() < 10 ? '0' + d.getDate() : d.getDate());

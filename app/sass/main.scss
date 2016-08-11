@@ -36,11 +36,12 @@
 @import "common/_dropdown";
 /*@import "common/_accordion"; 
 @import "common/_loader"; 
-@import "common/_alert";
+@import "common/_alert";*/
 @import "common/_modal";
-@import "common/_pagination"; */
+/*@import "common/_pagination"; */
 
 // Modules 
+@import "modules/_configuration";
 @import "modules/_routing";
 
 // Skin main

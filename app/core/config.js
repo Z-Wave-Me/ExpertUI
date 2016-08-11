@@ -6,7 +6,7 @@
 var config_data = {
     'cfg': {
         'app_name': 'Z-Wave',
-        'app_version': '1.0.6',
+        'app_version': '1.1.0',
         'custom_ip': false,
         'user_field': 'USERXXXX',
         'pass_field': 'PSWDXXXX',
@@ -29,6 +29,8 @@ var config_data = {
         'postfixadd_url': '/ZWaveAPI/PostfixAdd', // Postfix Add
         'postfixremove_url': '/ZWaveAPI/PostfixRemove', // Postfix Remove
         'incoming_packet_url': '/ZWaveAPI/Run/controller.data.incomingPacket', // Url to incoming packet
+        'configget_url': '/ZWaveAPI/ExpertConfigGet', // Config get
+        'configupdate_url': '/ZWaveAPI/ExpertConfigUpdate', // Config update
         'runjs_url': '/JS/Run/', // Url for running JS
         'device_classes_url': '/translations/DeviceClasses.xml', // Url to Device Classes
         'zwave_classes_url': '/config/ZWave_cmd_classes.xml', // Url to Zwave Classes
@@ -66,8 +68,11 @@ var config_data = {
         'img': {
             'batteries':'app/images/batteries/'
         },
-         // Debug mode
-        'debug': false,
+        // Zwave config
+        'zwavecfg': {
+            // Debug mode
+            'debug': false
+        },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer
         'app_type': 'default'
