@@ -689,6 +689,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
      * Set all conts
      */
     function setCont(node, nodeId, zddXml, ZWaveAPIData, refresh) {
+        // If no zddx an is Configuration command class - show config class from ExpertCommands
         if (!zddXml) {
             $scope.noZddx = true;
         }

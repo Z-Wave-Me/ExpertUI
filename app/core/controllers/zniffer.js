@@ -3,24 +3,9 @@
  * @author Martin Vach
  */
 appController.controller('ZnifferController', function ($scope, $interval, $filter, cfg, dataService, myCache, _) {
-    $scope.zniffer = {
-        all: {},
-        frequency: 0,
-        uzb: {
-            current: 0,
-            all: ['COM 1', 'COM 2', 'COM 3', 'COM 4']
-        },
-        filter: {
-            model: false,
-            items: ['homeid', 'src', 'dest', 'rssi', 'speed', 'data'],
-            data: [],
-            search: '',
-            suggestions: []
-        }
-    };
-
     $scope.packet = {
         interval: null,
+        controller: {},
         trace: 'start',
         cmdClass: [],
         all: []
@@ -35,9 +20,17 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
     });
 
     /**
-     * Get cached packets
+     * Load zwave API
      */
-
+    $scope.loadZwaveApi = function () {
+        dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
+            $scope.packet.controller.nodeId = ZWaveAPIData.controller.data.nodeId.value;
+        }, function (error) {
+            alertify.alertError($scope._t('error_load_data'));
+            return;
+        });
+    };
+    $scope.loadZwaveApi();
 
     /**
      * Load zwave command classes
@@ -83,7 +76,7 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
                         value: response.data.value,
                         dateTime: $filter('getDateTimeObj')(response.data.updateTime),
                         src: response.data.value[3],
-                        dest: response.data.value[6],
+                        dest: $scope.packet.controller.nodeId,
                         data: setZnifferDataType(response.data.value[2]),
                         application: packetApplication(response.data.value)
                     }
@@ -109,7 +102,7 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
                         updateTime: response.data.updateTime,
                         value: response.data.value,
                         dateTime: $filter('getDateTimeObj')(response.data.updateTime),
-                        src: response.data.value[6],
+                        src: $scope.packet.controller.nodeId,
                         dest: response.data.value[3],
                         data: setZnifferDataType(response.data.value[2]),
                         application: packetApplication(response.data.value)
@@ -161,7 +154,73 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
         //console.log('Set trace: ', $scope.packet.trace)
     };
 
+    /// --- Private functions --- ///
+    /**
+     * Set an application col
+     * @param {array} packet
+     * @returns {undefined}
+     */
+    function packetApplication(packet) {
+        // Get a command class from position 5
+        var cmdClassKey = $filter('decToHex')(packet[5], 2, '0x');
+        //key = '0x20'; // cc with cmd array
+        var cmdKey = $filter('decToHex')(packet[6], 2, '0x');
+        //keyCmd = '0x03';
+        //console.log('cmdClassKey: ', cmdClassKey)
 
+        var cmdClassVersion = '1';
+        var ret = {};
+        //var cc = _.findWhere($scope.packet.cmdClass, {_key: cmdClassKey, _version: cmdClassVersion });
+
+        if (_.isEmpty($scope.packet.cmdClass)) {
+            return;
+        }
+        var findCmdClass = _.where($scope.packet.cmdClass, {_key: cmdClassKey});
+        if (!findCmdClass) {
+            return ret;
+        }
+        var cmdClass = findCmdClass.pop();
+        if (_.isArray(cmdClass.cmd)) {
+            ret = _.findWhere(cmdClass.cmd, {_key: cmdKey});
+        } else {
+            ret = cmdClass.cmd;
+        }
+        return ret;
+    }
+    
+    function setZnifferDataType(data) {
+        switch(data){
+            case 0:
+                return 'Singlecast';
+             case 255:
+                return 'Predicast'; 
+            default:
+                return 'Multicast';
+        }
+    }
+
+});
+
+/**
+ * ZnifferControllerDemo
+ * @author Martin Vach
+ */
+appController.controller('ZnifferControllerDemo', function ($scope, $interval, $filter, cfg, dataService, myCache, _) {
+    $scope.zniffer = {
+        all: {},
+        frequency: 0,
+        uzb: {
+            current: 0,
+            all: ['COM 1', 'COM 2', 'COM 3', 'COM 4']
+        },
+        filter: {
+            model: false,
+            items: ['homeid', 'src', 'dest', 'rssi', 'speed', 'data'],
+            data: [],
+            search: '',
+            suggestions: []
+        }
+    };
 
     /**
      * Load zniffer data
@@ -238,81 +297,6 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
     };
 
     /// --- Private functions --- ///
-    /**
-     * Set an application col
-     * @param {array} packet
-     * @returns {undefined}
-     */
-    function packetApplication(packet) {
-        // Get a command class from position 5
-        var cmdClassKey = $filter('decToHex')(packet[5], 2, '0x');
-        //key = '0x20'; // cc with cmd array
-        var cmdKey = $filter('decToHex')(packet[6], 2, '0x');
-        //keyCmd = '0x03';
-        //console.log('cmdClassKey: ', cmdClassKey)
-
-        var cmdClassVersion = '1';
-        var ret = {};
-        //var cc = _.findWhere($scope.packet.cmdClass, {_key: cmdClassKey, _version: cmdClassVersion });
-
-        if (_.isEmpty($scope.packet.cmdClass)) {
-            return;
-        }
-        var findCmdClass = _.where($scope.packet.cmdClass, {_key: cmdClassKey});
-        if (!findCmdClass) {
-            return ret;
-        }
-        var cmdClass = findCmdClass.pop();
-        if (_.isArray(cmdClass.cmd)) {
-            ret = _.findWhere(cmdClass.cmd, {_key: cmdKey});
-        } else {
-            ret = cmdClass.cmd;
-        }
-        return ret;
-    }
-
-    function setZniffer(data) {
-        var zeroPad = function (num, places) {
-            var zero = places - num.toString().length + 1;
-            return Array(+(zero > 0 && zero)).join("0") + num;
-        };
-        var filter = {};
-        var dataTxt = ['Singlecast', 'Explorer Normal', 'Ack', 'CRC_ERROR'];
-
-        var zniffer = _.chain(data)
-                .flatten()
-                .filter(function (v) {
-                    v.src = zeroPad(v.src, 3);
-                    v.dest = zeroPad(v.dest, 3);
-                    v.dataInt = v.data;
-                    v.data = dataTxt[v.data];
-
-                    v.rssi = v.rssi.toString();
-                    v.speed = v.speed.toString();
-                    return v;
-                });
-        // Set filter data
-        angular.forEach($scope.zniffer.filter.items, function (item) {
-            $scope.zniffer.filter.data[item] = _.countBy(zniffer.value(), function (v) {
-                return v[item];
-            });
-        });
-        if ($scope.zniffer.filter.model && $scope.zniffer.filter.search) {
-            filter[$scope.zniffer.filter.model] = $scope.zniffer.filter.search;
-        }
-        $scope.zniffer.all = zniffer.where(filter).value();
-    }
-    
-    function setZnifferDataType(data) {
-        switch(data){
-            case 0:
-                return 'Singlecast';
-             case 255:
-                return 'Predicast'; 
-            default:
-                return 'Multicast';
-        }
-    }
 
     /**
      * Find text
