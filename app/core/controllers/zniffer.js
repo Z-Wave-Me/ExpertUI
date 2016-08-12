@@ -68,7 +68,6 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
             if (exist) {
                 return;
             }
-            console.log('response.data.value[2] ', response.data.value[2],':',typeof response.data.value[2])
             $scope.packet.all.push(
                     {
                         type: 'incoming',

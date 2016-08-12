@@ -76,7 +76,7 @@ var config_data = {
         },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer
-        'app_type': 'installer',
+        'app_type': 'default',
          'custom_cfg': {
              'default':{
                  'logo': 'app/images/zplus.jpg',
