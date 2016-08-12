@@ -16,7 +16,7 @@ var angApp = angular.module('angApp', [
 
 //Define Routing for app
 angApp.config(['$routeProvider',
-    function($routeProvider) {
+    function ($routeProvider) {
         $routeProvider.
                 // Home
                 when('/', {
@@ -125,9 +125,16 @@ angApp.config(['$routeProvider',
                 when('/network/queue', {
                     templateUrl: 'app/views/network/queue.html'
                 }).
-                  // Installer - zniffer
-                 when('/installer/zniffer', {
+                when('/network/map', {
+                    templateUrl: 'app/views/network/map.html'
+                }).
+                // Installer - zniffer
+                when('/installer/zniffer', {
                     templateUrl: 'app/views/installer/zniffer.html'
+                }).
+                // Installer - spectrum
+                when('/installer/spectrum', {
+                    templateUrl: 'app/views/installer/spectrum.html'
                 }).
                 // Error page
                 when('/error/:code?', {
@@ -143,10 +150,10 @@ angApp.config(['$routeProvider',
  */
 var config_module = angular.module('appConfig', []);
 // Extend cfg dongle 
-angApp.run(function run($cookies,$rootScope) {
+angApp.run(function run($cookies, $rootScope) {
     // Run ubderscore js in views
     $rootScope._ = _;
-    
+
     if ($cookies.dongle) {
         angular.extend(config_data.cfg, {dongle: $cookies.dongle});
         angular.extend(config_data.cfg, {
@@ -154,7 +161,7 @@ angApp.run(function run($cookies,$rootScope) {
             store_url: '/ZWave.' + config_data.cfg.dongle + '/Run/',
             restore_url: '/ZWave.' + config_data.cfg.dongle + '/Restore',
             queue_url: '/ZWave.' + config_data.cfg.dongle + '/InspectQueue',
-             fw_update_url: '/ZWave.' + config_data.cfg.dongle + '/FirmwareUpdate',
+            fw_update_url: '/ZWave.' + config_data.cfg.dongle + '/FirmwareUpdate',
             stat_url: '/ZWave.' + config_data.cfg.dongle + '/CommunicationStatistics',
             license_load_url: '/ZWave.' + config_data.cfg.dongle + '/ZMELicense',
             zddx_create_url: '/ZWave.' + config_data.cfg.dongle + '/CreateZDDX/'
@@ -163,7 +170,7 @@ angApp.run(function run($cookies,$rootScope) {
     }
 });
 
-angular.forEach(config_data, function(key, value) {
+angular.forEach(config_data, function (key, value) {
     config_module.constant(value, key);
 });
 /**
@@ -203,11 +210,11 @@ angApp.config(function ($provide, $httpProvider, cfg) {
             // On response failture
             responseError: function (rejection) {
                 // Return the promise rejection.
-                    return $q.reject(rejection);
+                return $q.reject(rejection);
             }
         };
     });
 
     // Add the interceptor to the $httpProvider.
     $httpProvider.interceptors.push('MyHttpInterceptor');
-   });
+});

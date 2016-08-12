@@ -315,7 +315,7 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
     }
 });
 // Device configuration Configuration controller
-appController.controller('ConfigConfigurationController', function ($scope, $routeParams, $location, $cookies, $filter, $http, $timeout, $route, $window, dataService, deviceService, myCache, _) {
+appController.controller('ConfigConfigurationController', function ($scope, $routeParams, $location, $cookies, $filter, $http, $timeout, $route, cfg, dataService, deviceService, myCache, _) {
     $scope.devices = [];
     $scope.deviceId = 0;
     $scope.activeTab = 'configuration';
@@ -697,6 +697,13 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             $scope.wakeupCont = deviceService.configWakeupCont(node, nodeId, ZWaveAPIData, cfgXml);
             $scope.protectionCont = deviceService.configProtectionCont(node, nodeId, ZWaveAPIData, cfgXml);
             $scope.switchAllCont = deviceService.configSwitchAllCont(node, nodeId, ZWaveAPIData, cfgXml);
+            if (cfg.app_type === 'installer') {
+                if (!$scope.configCont && !$scope.wakeupCont && !$scope.protectionCont && !$scope.switchAllCont) {
+                    $location.path('/configuration/commands/' + $routeParams.nodeId);
+                    return;
+                }
+            }
+
         });
     }
 
@@ -936,18 +943,18 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
 
 // Configuration link health controller
 appController.controller('ConfigHealthController', function ($scope, $routeParams, $location, $cookies, $filter, $interval, cfg, deviceService, dataService) {
-     $scope.apiDataInterval;
+    $scope.apiDataInterval;
     $scope.devices = [];
     $scope.deviceId = 0;
     $scope.activeTab = 'health';
     $scope.activeUrl = 'configuration/health/';
     $cookies.tab_config = $scope.activeTab;
-     $cookies.interval = $scope.activeTab;
+    $cookies.interval = $scope.activeTab;
     $scope.health = {
         ctrlNodeId: 1,
         alert: {message: false, status: 'is-hidden', icon: false},
         device: {
-            neighbours:[],
+            neighbours: [],
             node: {},
             find: {},
             hasPowerLevel: false,
@@ -964,8 +971,8 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
             }
         }
     };
-     // Cancel interval on page destroy
-    $scope.$on('$destroy', function() {
+    // Cancel interval on page destroy
+    $scope.$on('$destroy', function () {
         $interval.cancel($scope.apiDataInterval);
     });
 
@@ -981,7 +988,7 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
         //$scope.health.alert = {message: $scope._t('not_linked_devices'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
         dataService.getApi('stat_url', null, true).then(function (response) {
             $scope.health.timing.all = response.data;
-            $scope.health.timing.indicator.color =  setTimingIndicatorColor(response.data[$routeParams.nodeId]);
+            $scope.health.timing.indicator.color = setTimingIndicatorColor(response.data[$routeParams.nodeId]);
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
             return;
@@ -1002,7 +1009,7 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
             }
             var neighbours = $filter('hasNode')(node.data, 'neighbours.value');
             $scope.health.device.neighbours = $filter('hasNode')(node.data, 'neighbours.value');
-            
+
             // Remember device id   
             $cookies.configuration_id = $routeParams.nodeId;
             $cookies.config_url = $scope.activeUrl + $routeParams.nodeId;
@@ -1018,15 +1025,15 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
         });
     };
     $scope.load();
-    
+
     /**
      * Refresh data
      */
-    $scope.refreshData = function(ZWaveAPIData) {
-        var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+    $scope.refreshData = function (ZWaveAPIData) {
+        var refresh = function () {
+            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function (response) {
                 setData(ZWaveAPIData);
-            }, function(error) {
+            }, function (error) {
                 return;
             });
         };
@@ -1104,11 +1111,11 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
      */
     function setData(ZWaveAPIData, neighbours) {
         angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
-            if(nodeId === $routeParams.nodeId){
-                 $scope.health.timing.indicator.updateTime = node.data.lastReceived.updateTime;
-                 $scope.health.timing.indicator.updateTimeColor = (node.data.lastReceived.updateTime > node.data.lastReceived.invalidateTime ? '' : 'red');
+            if (nodeId === $routeParams.nodeId) {
+                $scope.health.timing.indicator.updateTime = node.data.lastReceived.updateTime;
+                $scope.health.timing.indicator.updateTimeColor = (node.data.lastReceived.updateTime > node.data.lastReceived.invalidateTime ? '' : 'red');
             }
-           
+
             nodeId = parseInt(nodeId);
             if ($scope.health.device.neighbours.indexOf(nodeId) === -1) {
                 return;
@@ -1148,13 +1155,13 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
                 cmdTestNode: 'devices[' + $routeParams.nodeId + '].instances[' + $scope.health.cmd.testNodeInstance + '].commandClasses[115].TestNodeSet(' + nodeId + ',6,20)',
                 cmdNop: 'devices[' + $routeParams.nodeId + '].instances[' + $scope.health.cmd.testNodeInstance + '].commandClasses[32].Get()'
             };
-             var index = _.findIndex($scope.health.neighbours, {id: nodeId});
-                        if ($scope.health.neighbours[index]) {
-                             angular.extend($scope.health.neighbours[index],obj);
-                        }else{
-                            $scope.health.neighbours.push(obj);
-                        }
-            
+            var index = _.findIndex($scope.health.neighbours, {id: nodeId});
+            if ($scope.health.neighbours[index]) {
+                angular.extend($scope.health.neighbours[index], obj);
+            } else {
+                $scope.health.neighbours.push(obj);
+            }
+
         });
     }
     /**
@@ -1278,7 +1285,7 @@ appController.controller('PostfixController', function ($scope, $routeParams, $l
         }
         dataService.getApi('postfixget_url', '/' + p_id, false).then(function (response) {
             $scope.postfix.find = response.data;
-            angular.extend($scope.postfix.model,_.omit(response.data,'p_id'));
+            angular.extend($scope.postfix.model, _.omit(response.data, 'p_id'));
         }, function (error) {});
     };
 
@@ -1316,8 +1323,8 @@ appController.controller('PostfixController', function ($scope, $routeParams, $l
         alertify.confirm(message, function () {
             var input = {p_id: $scope.postfix.model.p_id};
             dataService.postApi('postfixremove_url', input).then(function (response) {
-                deviceService.showNotifier({message: $scope._t('delete_successful') + ' ' +  $scope._t('zwave_reinstalled')});
-                 $scope.postfix.model = {p_id: $scope.postfix.model.p_id};
+                deviceService.showNotifier({message: $scope._t('delete_successful') + ' ' + $scope._t('zwave_reinstalled')});
+                $scope.postfix.model = {p_id: $scope.postfix.model.p_id};
                 $timeout(function () {
                     alertify.dismissAll();
                     $window.location.reload();

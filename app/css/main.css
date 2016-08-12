@@ -371,10 +371,11 @@ h3 {
 
 /* line 270, ../sass/common/_main.scss */
 .product-logo {
-  max-width: 200px;
+  max-width: 100px;
+  max-height: 150px;
 }
 
-/* line 273, ../sass/common/_main.scss */
+/* line 274, ../sass/common/_main.scss */
 .product-description {
   line-height: 1.6em;
   margin: 30px 0 0 0;
@@ -382,7 +383,7 @@ h3 {
   border-top: 1px solid #9fd8ef;
 }
 
-/* line 279, ../sass/common/_main.scss */
+/* line 280, ../sass/common/_main.scss */
 .product-data-list {
   background-color: #e4f5fc;
   -webkit-border-radius: 5px;
@@ -390,7 +391,7 @@ h3 {
   border-radius: 5px;
 }
 
-/* line 285, ../sass/common/_main.scss */
+/* line 286, ../sass/common/_main.scss */
 .product-data-list h3 {
   color: #2A6496;
   font-size: 120%;
@@ -400,178 +401,178 @@ h3 {
 
 /* Sensors
 -------------------------------------------------- */
-/* line 294, ../sass/common/_main.scss */
+/* line 295, ../sass/common/_main.scss */
 .sensor-triggered {
   color: #FFB200;
 }
 
 /* Expert Commands CSS
 -------------------------------------------------- */
-/* line 299, ../sass/common/_main.scss */
+/* line 300, ../sass/common/_main.scss */
 #row_commands .thumbnail {
   width: 100%;
 }
 
-/* line 302, ../sass/common/_main.scss */
+/* line 303, ../sass/common/_main.scss */
 #row_commands .thumbnail:hover {
   border: solid 1px #6BA2C8;
 }
 
-/* line 305, ../sass/common/_main.scss */
+/* line 306, ../sass/common/_main.scss */
 #row_commands .thumbnail-title a {
   color: #012F49;
   font-weight: bold;
 }
 
-/* line 310, ../sass/common/_main.scss */
+/* line 311, ../sass/common/_main.scss */
 #row_commands img {
   vertical-align: top !important;
 }
 
-/* line 314, ../sass/common/_main.scss */
+/* line 315, ../sass/common/_main.scss */
 .commands-data {
   padding: 10px 0;
   border-top: solid 1px #9fd8ef;
 }
 
-/* line 319, ../sass/common/_main.scss */
+/* line 320, ../sass/common/_main.scss */
 .commands-data-control {
   padding: 10px;
   background-color: #e4f5fc;
 }
 
-/* line 323, ../sass/common/_main.scss */
+/* line 324, ../sass/common/_main.scss */
 .commands-data-control .form-group {
   margin-bottom: 10px;
 }
 
-/* line 326, ../sass/common/_main.scss */
+/* line 327, ../sass/common/_main.scss */
 .commands-title-block {
   display: block;
 }
 
 /* Config CSS
 -------------------------------------------------- */
-/* line 332, ../sass/common/_main.scss */
+/* line 333, ../sass/common/_main.scss */
 .table-cfg-interview th {
   width: 25%;
 }
 
-/* line 335, ../sass/common/_main.scss */
+/* line 336, ../sass/common/_main.scss */
 .cfg-block {
   margin: 0 0 20px 0;
   padding: 0 0 20px 0;
   border-bottom: solid 1px #9fd8ef;
 }
 
-/* line 341, ../sass/common/_main.scss */
+/* line 342, ../sass/common/_main.scss */
 .cfg-block h4 {
   color: #2A6496;
 }
 
-/* line 345, ../sass/common/_main.scss */
+/* line 346, ../sass/common/_main.scss */
 .cfg-control-content {
   padding: 10px;
   margin: 10px 0;
   background-color: #e4f5fc;
 }
 
-/* line 350, ../sass/common/_main.scss */
+/* line 351, ../sass/common/_main.scss */
 .cfg-info {
   margin: 10px 0 0 0;
   padding: 10px 0 0 0;
   border-top: solid 1px #fff;
 }
 
-/* line 355, ../sass/common/_main.scss */
+/* line 356, ../sass/common/_main.scss */
 .commads-is-current {
   text-decoration: underline;
 }
 
-/* line 358, ../sass/common/_main.scss */
+/* line 359, ../sass/common/_main.scss */
 #wakeup_cont .form-inline {
   /*    max-width: 300px;*/
   float: left;
 }
 
-/* line 363, ../sass/common/_main.scss */
+/* line 364, ../sass/common/_main.scss */
 #device_select_image_container {
   margin: 20px;
 }
 
-/* line 367, ../sass/common/_main.scss */
+/* line 368, ../sass/common/_main.scss */
 #device_select_image {
   margin: 0 auto;
   text-align: center;
 }
 
-/* line 373, ../sass/common/_main.scss */
+/* line 374, ../sass/common/_main.scss */
 #device_select_image img {
   margin: 0 auto;
   max-width: 200px;
 }
 
-/* line 378, ../sass/common/_main.scss */
+/* line 379, ../sass/common/_main.scss */
 .btn-assoc {
   margin-bottom: 5px;
 }
 
-/* line 382, ../sass/common/_main.scss */
+/* line 383, ../sass/common/_main.scss */
 .btn-group-assoc-devices {
   margin: 0 5px 5px 0;
 }
 
 /* Network controll
 -------------------------------------------------- */
-/* line 389, ../sass/common/_main.scss */
+/* line 390, ../sass/common/_main.scss */
 .nm-response.alert-danger {
   font-weight: bold;
 }
 
-/* line 392, ../sass/common/_main.scss */
+/* line 393, ../sass/common/_main.scss */
 .block-frequency .btn {
   margin: 8px 8px 0 0;
 }
 
 /*  Network controller
 -------------------------------------------------- */
-/* line 398, ../sass/common/_main.scss */
+/* line 399, ../sass/common/_main.scss */
 .table-controller table {
   margin-bottom: 20px;
 }
 
-/* line 401, ../sass/common/_main.scss */
+/* line 402, ../sass/common/_main.scss */
 .table-controller h3 {
   font-size: 100%;
   font-weight: bold;
 }
 
-/* line 405, ../sass/common/_main.scss */
+/* line 406, ../sass/common/_main.scss */
 .controller-th {
   width: 15%;
 }
 
 /* Device assoc
 -------------------------------------------------- */
-/* line 410, ../sass/common/_main.scss */
+/* line 411, ../sass/common/_main.scss */
 .badge-assoc {
   margin: 0 5px 5px 0;
   padding: 5px;
 }
 
-/* line 415, ../sass/common/_main.scss */
+/* line 416, ../sass/common/_main.scss */
 .btn-group-assoc-devices.false-false .btn {
   display: none;
 }
 
-/* line 419, ../sass/common/_main.scss */
+/* line 420, ../sass/common/_main.scss */
 .btn-group-assoc-devices.true-false .btn {
   color: #333;
   background-color: #f9f9f9;
   border-color: #ccc;
 }
 
-/* line 425, ../sass/common/_main.scss */
+/* line 426, ../sass/common/_main.scss */
 .btn-group-assoc-devices.false-true .btn {
   color: #fff;
   background-color: #f0ad4e;
@@ -580,7 +581,7 @@ h3 {
 
 /* Timing
 -------------------------------------------------- */
-/* line 433, ../sass/common/_main.scss */
+/* line 434, ../sass/common/_main.scss */
 .timing-packet {
   margin: 0 7px 0 0;
   /*   padding: 5px;*/
@@ -588,24 +589,24 @@ h3 {
 
 /*Images
 -------------------------------------------------- */
-/* line 440, ../sass/common/_main.scss */
+/* line 441, ../sass/common/_main.scss */
 .config-device-img {
   max-width: 200px;
 }
 
 /* Tables
 -------------------------------------------------- */
-/* line 446, ../sass/common/_main.scss */
+/* line 447, ../sass/common/_main.scss */
 .table {
   margin-bottom: 0;
 }
 
-/* line 449, ../sass/common/_main.scss */
+/* line 450, ../sass/common/_main.scss */
 .table > thead > tr > th {
   border-bottom: 2px solid #9fd8ef;
 }
 
-/* line 452, ../sass/common/_main.scss */
+/* line 453, ../sass/common/_main.scss */
 .table > thead > tr > th,
 .table > tbody > tr > th,
 .table > tfoot > tr > th,
@@ -614,23 +615,23 @@ h3 {
   border-top: 1px solid #9fd8ef;
 }
 
-/* line 460, ../sass/common/_main.scss */
+/* line 461, ../sass/common/_main.scss */
 .table-hover > tbody > tr:hover > td, .table-hover > tbody > tr:hover > th {
   background-color: #e4f5fc;
 }
 
-/* line 464, ../sass/common/_main.scss */
+/* line 465, ../sass/common/_main.scss */
 #inspect_queue_table {
   font-size: 12px;
   width: 100%;
 }
 
-/* line 468, ../sass/common/_main.scss */
+/* line 469, ../sass/common/_main.scss */
 .th-slider {
   min-width: 100px;
 }
 
-/* line 472, ../sass/common/_main.scss */
+/* line 473, ../sass/common/_main.scss */
 .table-condensed td p {
   margin: 0 !important;
   padding: 0 !important;
@@ -638,7 +639,7 @@ h3 {
 
 /* Modals
 -------------------------------------------------- */
-/* line 482, ../sass/common/_main.scss */
+/* line 483, ../sass/common/_main.scss */
 .cc-data-element {
   white-space: -moz-pre-wrap;
   /* Mozilla */
@@ -657,19 +658,19 @@ h3 {
   word-break: break-all;
 }
 
-/* line 492, ../sass/common/_main.scss */
+/* line 493, ../sass/common/_main.scss */
 #modal_queue .modal-dialog {
   width: 60%;
 }
 
 /* Tabs
 -------------------------------------------------- */
-/* line 498, ../sass/common/_main.scss */
+/* line 499, ../sass/common/_main.scss */
 .nav-tabs {
   border-bottom: 1px solid #9fd8ef;
 }
 
-/* line 502, ../sass/common/_main.scss */
+/* line 503, ../sass/common/_main.scss */
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
   color: #555;
   cursor: default;
@@ -678,18 +679,18 @@ h3 {
   border-bottom-color: transparent;
 }
 
-/* line 510, ../sass/common/_main.scss */
+/* line 511, ../sass/common/_main.scss */
 .nav > li > a:hover, .nav > li > a:focus {
   text-decoration: none;
   background-color: #e4f5fc;
 }
 
-/* line 515, ../sass/common/_main.scss */
+/* line 516, ../sass/common/_main.scss */
 .nav-tabs > li > a:hover {
   border-color: #9fd8ef;
 }
 
-/* line 519, ../sass/common/_main.scss */
+/* line 520, ../sass/common/_main.scss */
 .tab-content {
   padding: 20px;
   margin: 0 0 20px 0;
@@ -699,14 +700,14 @@ h3 {
 
 /* Panel CSS
 -------------------------------------------------- */
-/* line 528, ../sass/common/_main.scss */
+/* line 529, ../sass/common/_main.scss */
 .panel {
   border: 1px solid #9fd8ef;
   -webkit-box-shadow: 0;
   box-shadow: 0;
 }
 
-/* line 533, ../sass/common/_main.scss */
+/* line 534, ../sass/common/_main.scss */
 .panel-highlighted {
   border: 4px solid #7ec8e5;
   -webkit-box-shadow: 0px 0px 6px 0px rgba(50, 50, 50, 0.43);
@@ -714,7 +715,7 @@ h3 {
   box-shadow: 0px 0px 6px 0px rgba(50, 50, 50, 0.43);
 }
 
-/* line 539, ../sass/common/_main.scss */
+/* line 540, ../sass/common/_main.scss */
 .panel-default > .panel-heading {
   color: #2A6496;
   font-size: 16px;
@@ -725,7 +726,7 @@ h3 {
 
 /* Well CSS
 -------------------------------------------------- */
-/* line 548, ../sass/common/_main.scss */
+/* line 549, ../sass/common/_main.scss */
 .well {
   background-color: #e4f5fc;
   border: 1px solid #9fd8ef;
@@ -736,29 +737,29 @@ h3 {
 
 /* Form CSS
 -------------------------------------------------- */
-/* line 558, ../sass/common/_main.scss */
+/* line 559, ../sass/common/_main.scss */
 .form-control {
   border: 1px solid #9fd8ef;
 }
 
-/* line 562, ../sass/common/_main.scss */
+/* line 563, ../sass/common/_main.scss */
 .btn-spinner-hidden, .btn .fa-spin {
   display: none;
 }
 
-/* line 566, ../sass/common/_main.scss */
+/* line 567, ../sass/common/_main.scss */
 .btn-default, .btn-default.active, .open .dropdown-toggle.btn-default {
   border-color: #9fd8ef;
 }
 
-/* line 569, ../sass/common/_main.scss */
+/* line 570, ../sass/common/_main.scss */
 .btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open .dropdown-toggle.btn-default {
   color: #2A6496;
   background-color: #e4f5fc;
   border-color: #9fd8ef;
 }
 
-/* line 575, ../sass/common/_main.scss */
+/* line 576, ../sass/common/_main.scss */
 .dropdown-config {
   font-size: 16px;
   /*    text-shadow: 3px 1px 2px rgba(150, 150, 150, 1);*/
@@ -767,7 +768,7 @@ h3 {
 
 /* Footer
 -------------------------------------------------- */
-/* line 583, ../sass/common/_main.scss */
+/* line 584, ../sass/common/_main.scss */
 #footer {
   /*    border-top: solid 2px #6BA2C8;*/
   font-size: 12px;
@@ -778,14 +779,14 @@ h3 {
   height: 60px;
 }
 
-/* line 593, ../sass/common/_main.scss */
+/* line 594, ../sass/common/_main.scss */
 #footer .text-muted {
   margin: 15px 0;
   text-align: center;
   color: #6BA2C8;
 }
 
-/* line 598, ../sass/common/_main.scss */
+/* line 599, ../sass/common/_main.scss */
 #footer a {
   color: #6BA2C8;
   display: inline-block;
@@ -793,7 +794,7 @@ h3 {
   text-align: center;
 }
 
-/* line 604, ../sass/common/_main.scss */
+/* line 605, ../sass/common/_main.scss */
 #footer a:hover {
   color: #17497B;
 }
@@ -2574,6 +2575,51 @@ h3 {
 /* line 6, ../sass/modules/_installer.scss */
 .zniffer-row-Multicast {
   color: #80AD80;
+}
+
+/* Zwave alliance
+-------------------------------------------------- */
+/* line 3, ../sass/common/_zwavealliance.scss */
+.app-type-installer {
+  /* Header */
+  /* Dropdown menu */
+  /* Logo */
+}
+/* line 5, ../sass/common/_zwavealliance.scss */
+.app-type-installer .navbar-inverse {
+  background: #083366;
+}
+/* line 8, ../sass/common/_zwavealliance.scss */
+.app-type-installer .navbar-inverse .navbar-nav > li > a {
+  color: #F89847;
+}
+/* line 11, ../sass/common/_zwavealliance.scss */
+.app-type-installer .navbar-inverse .dropdown-toggle.active,
+.app-type-installer .navbar-inverse .dropdown-toggle.active:hover,
+.app-type-installer .navbar-inverse .no-dropdown.active,
+.app-type-installer .navbar-inverse .no-dropdown.active:hover {
+  color: #47aa42;
+  background-color: #2A6496;
+}
+/* line 19, ../sass/common/_zwavealliance.scss */
+.app-type-installer .dropdown-menu {
+  background-color: #47AA42;
+  border: 1px solid #e3e3e3;
+}
+/* line 24, ../sass/common/_zwavealliance.scss */
+.app-type-installer .dropdown-menu > li > a {
+  color: #083366;
+}
+/* line 27, ../sass/common/_zwavealliance.scss */
+.app-type-installer .dropdown-menu > li > a.active,
+.app-type-installer .dropdown-menu > li > a.active:hover {
+  color: #47aa42;
+  background-color: #083366;
+}
+/* line 33, ../sass/common/_zwavealliance.scss */
+.app-type-installer .product-logo {
+  max-width: 150px;
+  max-height: 150px;
 }
 
 /*

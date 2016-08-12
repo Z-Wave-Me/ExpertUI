@@ -1,0 +1,37 @@
+/* Zwave alliance
+-------------------------------------------------- */
+.app-type-installer{
+    /* Header */
+    .navbar-inverse{
+        background: #083366; 
+    }
+    .navbar-inverse .navbar-nav > li > a {
+        color: #F89847;
+    }
+    .navbar-inverse .dropdown-toggle.active, 
+    .navbar-inverse .dropdown-toggle.active:hover,
+        .navbar-inverse .no-dropdown.active,
+        .navbar-inverse .no-dropdown.active:hover{
+        color: #47aa42;
+        background-color: #2A6496;
+    }
+    /* Dropdown menu */
+    .dropdown-menu {
+        background-color: #47AA42;
+        border: 1px solid #e3e3e3;
+    }
+
+    .dropdown-menu > li > a {
+        color: #083366;
+    }
+    .dropdown-menu > li > a.active,
+    .dropdown-menu > li > a.active:hover {
+        color: #47aa42;
+        background-color: #083366;
+    }
+    /* Logo */
+    .product-logo{
+        max-width: 150px;
+        max-height: 150px;
+    }
+}

@@ -76,7 +76,17 @@ var config_data = {
         },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer
-        'app_type': 'default'
+        'app_type': 'default',
+         'custom_cfg': {
+             'default':{
+                 'logo': 'app/images/zplus.jpg',
+                  'footer_text': '&COPY; 2014 by Z-Wave.Me'
+             },
+              'installer':{
+                  'logo': 'app/images/z-wave-aliance-logo.png',
+                   'footer_text': '&COPY; 2016 Z-Wave Alliance'
+              }
+         }
 
     }
 };

@@ -26,9 +26,6 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
         all: []
        
     };
-    $scope.outgoingPacket = {
-        all: []
-    };
 
     /**
      * Cancel interval on page destroy

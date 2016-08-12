@@ -212,6 +212,18 @@ appController.controller('BaseController', function($scope, $cookies, $filter, $
         $event.stopPropagation();
     };
     
+    /**
+     * Get array from custom config
+     * @param {string} key
+     * @returns {Array}
+     */
+    $scope.getCustomCfgArr = function (key) {
+        if (cfg.custom_cfg[cfg.app_type]) {
+            return cfg.custom_cfg[cfg.app_type][key] || [];
+        }
+        return [];
+    };
+    
      // Alertify defaults
     alertify.defaults.glossary.title = cfg.app_name;
     alertify.defaults.glossary.ok = 'OK';

@@ -45,8 +45,8 @@
 @import "modules/_routing";
 @import "modules/_installer";
 
-// Skin main
-//@import "skins/default/_main";
+// Installer css
+@import "common/_zwavealliance";
 
 // Mobile
 @import "responsive/_responsive"; 

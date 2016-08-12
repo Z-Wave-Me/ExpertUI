@@ -372,7 +372,7 @@
     "txt_devices_mains": "设备是主电网供电",
     "txt_devices_present": "设备",
     "txt_failed": "失败",
-    "txt_homepage_promo": "<p>该完全静态Z-Wave Plus 遥控器于2014年11月通过认证，认证号码ZC10-14110009.认证包含Z-Wave遥控器堆栈和高级用户界面。.</p><p>遥控器兼容所有市面上Z-Wave认证通过的产品，就是这些在数据库上列出的清单 <a href=\"http://pepper1.net/zwavedb/\">http://pepper1.net/zwavedb/</a>.</p><p>对于这些设备遥控器将使用元数据如图片或者配置选项。然而它同样可能兼容不在这个清单上的设备. 对于具体的配置和使用信息请参考设备使用手册.</p> <p>你可以从这里下载全部的使用手册 <a href=\"http://razberry.z-wave.me\">www.z-wave.me</a></p>",
+    "txt_homepage_promo_default": "<p>该完全静态Z-Wave Plus 遥控器于2014年11月通过认证，认证号码ZC10-14110009.认证包含Z-Wave遥控器堆栈和高级用户界面。.</p><p>遥控器兼容所有市面上Z-Wave认证通过的产品，就是这些在数据库上列出的清单 <a href=\"http://pepper1.net/zwavedb/\">http://pepper1.net/zwavedb/</a>.</p><p>对于这些设备遥控器将使用元数据如图片或者配置选项。然而它同样可能兼容不在这个清单上的设备. 对于具体的配置和使用信息请参考设备使用手册.</p> <p>你可以从这里下载全部的使用手册 <a href=\"http://razberry.z-wave.me\">www.z-wave.me</a></p>",
     "txt_inspect_queue": "检查队列将开启第二个窗口来允许监测遥控器发出的指令.",
     "txt_interview_not": "访问没有完成",
     "txt_low_battery": "低电量",

@@ -66,13 +66,14 @@
   <script src="app/core/controllers/license.js"></script>
   <script src="app/core/controllers/uzb.js"></script>
    <script src="app/core/controllers/zniffer.js"></script>
-  
+    <script src="app/core/controllers/spectrum.js"></script>
+   <script src="app/core/controllers/networkmap.js"></script>
    <script src="app/core/controllers/home.js"></script>
   <script src="app/core/controllers/configuration.js"></script>
   <script src="app/core/controllers/assoc.js"></script> 
   <script src="app/core/jquery/jquery-app.js"></script>
 </head>
- <body ng-app="angApp" ng-controller="BaseController" id="page_{{getBodyId()}}" class="is-mobile-{{isMobile}} custom-ip-{{cfg.custom_ip}}">
+ <body ng-app="angApp" ng-controller="BaseController" id="page_{{getBodyId()}}" class="is-mobile-{{isMobile}} custom-ip-{{cfg.custom_ip}} app-type-{{cfg.app_type}}">
     <div id="main_navbar" class="navbar navbar-inverse navbar-fixed-top___" role="navigation">
             <div class="container">
                 <div class="navbar-header">
@@ -90,7 +91,7 @@
                     <ul class="nav navbar-nav" id="main_nav">
                          <li><a href="#" data-collapse-navbar><i class="fa fa-home fa-lg"></i></a></li>
                          <li class="divider-vertical remove-margin"></li>
-                        <li class="dropdown">
+                        <li class="dropdown" ng-if="cfg.app_type === 'default'">
                             <a href="" class="dropdown-toggle" data-toggle="dropdown" ng-class="isActive('control',1)">{{ _t('nav_control') }} <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="#control/switch" data-collapse-navbar ng-class="isActive('switch',2)">{{ _t('nav_switch') }}</a></li>
@@ -121,17 +122,20 @@
                                 <li><a href="#network/control" data-collapse-navbar ng-class="isActive('control',2)">{{ _t('nav_control') }}</a></li>
                                 <li><a href="#network/routing" data-collapse-navbar ng-class="isActive('routing',2)">{{ _t('nav_routing') }}</a></li>
                                 <li><a class="a-disabled" title="Temporary disabled. Will be back in the next release." data-collapse-navbar ng-class="isActive('reorganization',2)">{{ _t('nav_reorganization') }}</a></li>
-                                <li><a class="a-disabled" title="Temporary disabled. Will be back in the next release." data-collapse-navbar ng-class="isActive('timing',2)">{{ _t('nav_timing_info') }}</a></li>
-                                 <!--<li><a href="#network/reorganization" data-collapse-navbar ng-class="isActive('reorganization',2)">{{ _t('nav_reorganization') }}</a></li>
-                                <li><a href="#network/timing" data-collapse-navbar ng-class="isActive('timing',2)">{{ _t('nav_timing_info') }}</a></li>-->
+                                 <!--<li><a href="#network/reorganization" data-collapse-navbar ng-class="isActive('reorganization',2)">{{ _t('nav_reorganization') }}</a></li>-->
+                                <li><a href="#network/timing" data-collapse-navbar ng-class="isActive('timing',2)">{{ _t('nav_timing_info') }}</a></li>
+                                <!--<li><a class="a-disabled" title="Temporary disabled. Will be back in the next release." data-collapse-navbar ng-class="isActive('timing',2)">{{ _t('nav_timing_info') }}</a></li>-->
+                                <li><a href="#network/map" data-collapse-navbar ng-class="isActive('map',2)">{{ _t('nav_network_map') }}</a></li>
                                 <li><a href="#network/controller" data-collapse-navbar ng-class="isActive('controller',2)">{{ _t('nav_controller_info') }}</a></li>
                             </ul>
                         </li>
                         <li class="divider-vertical remove-margin"></li>
-                        <li class="dropdown">
+                        <li class="dropdown" ng-if="cfg.app_type === 'installer'">
                             <a href="" class="dropdown-toggle" data-toggle="dropdown" ng-class="isActive('installer',1)">{{ _t('nav_installer') }} <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="#installer/zniffer" data-collapse-navbar ng-class="isActive('zniffer',2)">{{ _t('nav_zniffer') }}</a></li>
+                                <li><a href="#installer/spectrum" data-collapse-navbar ng-class="isActive('spectrum',2)">{{ _t('nav_spectrum_analyzer') }}</a></li>
+                               
                             </ul>
                         </li>
                         <li class="divider-vertical remove-margin"></li>
@@ -157,7 +161,7 @@
 
         <div id="footer">
             <div class="container-fluid">
-                      <p class="text-muted" ng-bind-html="_t('footer_text') | toTrusted"></p>
+                      <p class="text-muted" ng-bind-html="getCustomCfgArr('footer_text') | toTrusted"></p>
             </div>
         </div>
 
