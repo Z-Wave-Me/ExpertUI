@@ -35,10 +35,9 @@
     <!--<pre>{{packet.all|json}}</pre>-->
     <table class="table table-condensed table-hover">
         <thead>
-        <th>#</th>    
+         <!--<th>#</th>-->    
         <th>{{ _t('date')}}</th>
         <th>{{ _t('time')}}</th>
-        <th>{{ _t('rssi')}}</th>
         <th>{{ _t('src')}}</th>
         <th>{{ _t('dest')}}</th>
          <th>{{ _t('data')}}</th>
@@ -47,19 +46,15 @@
 
         </thead>
         <tbody>
-            <tr ng-repeat="v in packet.all track by $index">
-                <td>{{v.nodeId}}</td>
+            <tr class="zniffer-row-{{v.data}}" ng-repeat="v in packet.all track by $index">
+                 <!--<td>{{v.nodeId}}</td>--> 
                 <td>{{v.dateTime.day + '.' + v.dateTime.mon + '.' + v.dateTime.year}}</td>
                 <td>{{v.dateTime.hrs + ':' + v.dateTime.min + ':' + v.dateTime.sec}}</td>
-                <td>{{v.rssi}}</td>
                 <td>{{v.src}}</td>
                 <td>{{v.dest}}</td>
                 <td>{{v.data}}</td>
                 <td>{{v.application._help}}</td>
-                <td>
-                    Incoming: {{v.value}}<br />
-                    Outgoing: {{outgoingPacket.all[$index].value}}
-                </td>
+                <td>{{v.type}}: {{v.value}} </td>
 
             </tr>
         </tbody>
