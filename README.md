@@ -5,6 +5,7 @@ This User Interfaces allows to operate a Smart Home Network based on Z-Wave devi
 
 ## v1.1.0
 #### New features
+- Network map. 
 - Zniffer. 
 - Configuration: Generic configuration if no zddXml file. 
 - Configuration: New section postfix. 

@@ -2577,6 +2577,21 @@ h3 {
   color: #80AD80;
 }
 
+/* Network map / cytoscype
+-------------------------------------------------- */
+/* line 3, ../sass/modules/_networkmap.scss */
+#cy {
+  width: 600px;
+  height: 600px;
+  display: block;
+  border: solid 1px red;
+  /*   height: 100%;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;*/
+}
+
 /* Zwave alliance
 -------------------------------------------------- */
 /* line 3, ../sass/common/_zwavealliance.scss */
