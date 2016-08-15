@@ -691,18 +691,16 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
      */
     function setCont(node, nodeId, zddXml, ZWaveAPIData, refresh) {
         // If no zddx an is Configuration command class - show config class from ExpertCommands
-        console.log('zddXml: ', zddXml)
         if (!zddXml) {
-            //console.log(node)
             $scope.noZddx = true;
-            configurationCc(node, nodeId, ZWaveAPIData);
             // Loop throught instances
-//            angular.forEach(node.instances, function (instance, instanceId) {
-//                if (instance.commandClasses[112]) {
-//                    $scope.hasConfigurationCc = instance.commandClasses[112];
-//                    return;
-//                }
-//            });
+            angular.forEach(node.instances, function (instance, instanceId) {
+                if (instance.commandClasses[112]) {
+                   
+                    $scope.hasConfigurationCc =  configurationCc(instance.commandClasses[112], instanceId,nodeId, ZWaveAPIData);
+                    return;
+                }
+            });
         }
         dataService.getCfgXml(function (cfgXml) {
             $scope.configCont = deviceService.configConfigCont(node, nodeId, zddXml, cfgXml, $scope.lang, $scope.languages);
@@ -718,48 +716,24 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
 
         });
     }
-    function configurationCc(node, nodeId, ZWaveAPIData) {
-        /**
-         * Expert commands
-         */
-        angular.forEach(node.instances, function (instance, instanceId) {
-//                if (instance.commandClasses[112]) {
-//                    $scope.hasConfigurationCc = instance.commandClasses[112];
-//                    var methods = getMethodSpec(ZWaveAPIData, nodeId, instanceId, ccId, null);
-//                    var command = deviceService.configGetCommands(methods, ZWaveAPIData);
-//                    var obj = {};
-//                    obj['nodeId'] = nodeId;
-//                    obj['rowId'] = 'row_' + nodeId + '_' + instanceId + '_' + ccId;
-//                    obj['instanceId'] = instanceId;
-//                    obj['ccId'] = ccId;
-//                    obj['cmd'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']';
-//                    obj['cmdData'] = ZWaveAPIData.devices[nodeId].instances[instanceId].commandClasses[ccId].data;
-//                    obj['cmdDataIn'] = ZWaveAPIData.devices[nodeId].instances[instanceId].data;
-//                    obj['commandClass'] = commandClass.name;
-//                    obj['command'] = command;
-//                    obj['updateTime'] = ZWaveAPIData.updateTime;
-//                }
-            angular.forEach(instance.commandClasses, function (commandClass, ccId) {
-                if (instance.commandClasses[112]) {
-                    console.log(instance.commandClasses[112].name)
-                    var methods = getMethodSpec(ZWaveAPIData, nodeId, instanceId, ccId, null);
-                    var command = deviceService.configGetCommands(methods, ZWaveAPIData);
-                    var obj = {};
-                    obj['nodeId'] = nodeId;
-                    obj['rowId'] = 'row_' + nodeId + '_' + instanceId + '_' + ccId;
-                    obj['instanceId'] = instanceId;
-                    obj['ccId'] = ccId;
-                    obj['cmd'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']';
-                    obj['cmdData'] = ZWaveAPIData.devices[nodeId].instances[instanceId].commandClasses[ccId].data;
-                    obj['cmdDataIn'] = ZWaveAPIData.devices[nodeId].instances[instanceId].data;
-                    obj['commandClass'] = commandClass.name;
-                    obj['command'] = command;
-                    obj['updateTime'] = ZWaveAPIData.updateTime;
-                    console.log(obj)
-                    return;
-                }
-            });
-        });
+    function configurationCc(commandClass, instanceId,nodeId, ZWaveAPIData) {
+        //console.log(node);
+        
+        var ccId = 112;
+        var methods = getMethodSpec(ZWaveAPIData, nodeId, instanceId, ccId, null);
+        var command = deviceService.configGetCommands(methods, ZWaveAPIData);
+        var obj = {};
+        obj['nodeId'] = nodeId;
+        obj['rowId'] = 'row_' + nodeId + '_' + instanceId + '_' + ccId;
+        obj['instanceId'] = instanceId;
+        obj['ccId'] = ccId;
+        obj['cmd'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']';
+        obj['cmdData'] = ZWaveAPIData.devices[nodeId].instances[instanceId].commandClasses[ccId].data;
+        obj['cmdDataIn'] = ZWaveAPIData.devices[nodeId].instances[instanceId].data;
+        obj['commandClass'] = commandClass.name;
+        obj['command'] = command;
+        obj['updateTime'] = ZWaveAPIData.updateTime;
+        return obj;
     }
 
 
