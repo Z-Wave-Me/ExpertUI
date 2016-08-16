@@ -29,60 +29,23 @@ appController.controller('NetworkMapController', function ($scope, $interval, $f
                         'target-arrow-color': '#61bffc',
                         'transition-property': 'background-color, line-color, target-arrow-color',
                         'transition-duration': '0.5s'
+                    })
+                    .selector('#1')
+                    .css({
+                        'background-color': '#2A6496'
                     }),
             elements: {
-                nodes: [
-//                    {data: {id: '1'}},
-//                    {data: {id: '2'}},
-//                    {data: {id: '3'}},
-//                    {data: {id: '7'}},
-//                    {data: {id: '8'}},
-//                    {data: {id: '9'}}
-                ],
-                edges: [
-                    {data: {id: '21', source: '2', target: '1'}},
-                    {data: {id: '31', source: '3', target: '1'}},
-                    {data: {id: '71', source: '7', target: '1'}},
-                    {data: {id: '81', source: '8', target: '1'}},
-                    {data: {id: '91', source: '9', target: '1'}},
-                    {data: {id: '78', source: '7', target: '8'}},
-                    {data: {id: '89', source: '8', target: '9'}},
-                    {data: {id: '38', source: '3', target: '8'}},
-                    {data: {id: '92', source: '9', target: '2'}},
-                    //{data: {id: '19', source: '1', target: '9'}},
-                ]
-//                   nodes: [
-//                    {data: {id: '1'}},
-//                    {data: {id: 'b'}},
-//                    {data: {id: 'c'}}
-//                ],
-//                edges: [
-//                    {data: {id: '1"c', source: '1', target: 'c'}},
-//                    {data: {id: '1b', source: '1', target: 'b'}},
-//                    {data: {id: 'b', source: 'b', target: 'c'}}
-//                ]
-
-//                nodes: [
-//                    {data: {id: 'a'}},
-//                    {data: {id: 'b'}},
-//                    {data: {id: 'c'}},
-//                    {data: {id: 'd'}},
-//                    {data: {id: 'e'}}
-//                ],
-//                edges: [
-//                    {data: {id: 'a"e', weight: 1, source: 'a', target: 'e'}},
-//                    {data: {id: 'ab', weight: 3, source: 'a', target: 'b'}},
-//                    {data: {id: 'be', weight: 4, source: 'b', target: 'e'}},
-//                    {data: {id: 'bc', weight: 5, source: 'b', target: 'c'}},
-//                    {data: {id: 'ce', weight: 6, source: 'c', target: 'e'}},
-//                    {data: {id: 'cd', weight: 2, source: 'c', target: 'd'}},
-//                    {data: {id: 'de', weight: 7, source: 'd', target: 'e'}}
-//                ]
+                nodes: [],
+                edges: []
             },
             layout: {
+//                 name: 'cose',
+//            idealEdgeLength: 100,
+//            nodeOverlap: 20,
+            
                 name: 'breadthfirst',
                 directed: true,
-               // roots: '#1',
+                // roots: '#1',
                 padding: 10
             }
         }
@@ -93,7 +56,7 @@ appController.controller('NetworkMapController', function ($scope, $interval, $f
      */
     $scope.loadZwaveApi = function () {
         dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
-            $scope.networkmap.cytoscape.elements = getNodes(ZWaveAPIData);
+            $scope.networkmap.cytoscape.elements = setCyElements(ZWaveAPIData);
             var cy = cytoscape($scope.networkmap.cytoscape);
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
@@ -103,86 +66,58 @@ appController.controller('NetworkMapController', function ($scope, $interval, $f
     $scope.loadZwaveApi();
 
     /// --- Private functions --- ///
-    function getNodes(ZWaveAPIData) {
-        //var nodes = [];
+    /**
+     * Set cytoscape elements
+     * @param {type} ZWaveAPIData
+     * @returns {obj}
+     */
+    function setCyElements(ZWaveAPIData) {
         var edges = {};
         var obj = {
             nodes: [],
-            edges: [
-                {data: {id: '21', source: '2', target: '1'}},
-                {data: {id: '31', source: '3', target: '1'}},
-                {data: {id: '71', source: '7', target: '1'}},
-                {data: {id: '81', source: '8', target: '1'}},
-                {data: {id: '91', source: '9', target: '1'}},
-                {data: {id: '78', source: '7', target: '8'}},
-                {data: {id: '89', source: '8', target: '9'}},
-                {data: {id: '38', source: '3', target: '8'}},
-                {data: {id: '92', source: '9', target: '2'}},
-            ]
+            edges: []
         };
         var ctrlNodeId = ZWaveAPIData.controller.data.nodeId.value;
         angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
             var neighbours = $filter('hasNode')(node.data, 'neighbours.value');
 
             obj.nodes.push({data: {
-                    id: nodeId
+                    id: nodeId,
+                    name: 'Device_' + nodeId
                 }});
             if (nodeId != ctrlNodeId && neighbours) {
                 edges[nodeId] = neighbours;
-                //console.log(nodeId, ': ', $filter('hasNode')(node.data, 'neighbours.value'))
-                //etEdges(neighbours,nodeId)
-               //angular.extend(obj.edges, getEdges(neighbours,nodeId));
-                
+
             }
 
         });
-        //console.log(edges)
-        obj.edges = getEdges(edges);
+        obj.edges = setCyEdges(edges);
         return obj;
     }
-    function getEdges(edges) {
-       var obj = [];
-         var cnt = 0;
+    /**
+     * Set cytoscape edges
+     * @param {type} edges
+     * @returns {Array}
+     */
+    function setCyEdges(edges) {
+        var obj = [];
+        var cnt = 0;
+        var blackList = [];
         angular.forEach(edges, function (node, nodeId) {
-           
-             angular.forEach(node, function (v, k) {
-                 //console.log('ID: ',nodeId + v)
-                    obj[cnt] = {data: {
+            angular.forEach(node, function (v, k) {
+                blackList.push(v + nodeId);
+                if (blackList.indexOf(nodeId + v) === -1) {
+                    obj[cnt] ={data: {
                             id: nodeId + v,
-                            source:  nodeId,
+                            source: nodeId,
                             target: v.toString()
                         }};
-                    cnt++;
-                     //console.log(obj[k].data)
+                      cnt++;
+                }
 
-                });
-//                    obj.push({data: {
-//                            id: k + v,
-//                            source: k,
-//                            target: v
-//                        }});
-                     //console.log(obj[k].data)
+            });
 
-                });
-              console.log(obj)
-             
-              var obj_ =  [
-                {data: {id: '21', source: '2', target: '1'}},
-                {data: {id: '31', source: '3', target: '1'}},
-                {data: {id: '71', source: '7', target: '1'}},
-                {data: {id: '81', source: '8', target: '1'}},
-                {data: {id: '91', source: '9', target: '1'}},
-                {data: {id: '78', source: '7', target: '8'}},
-                {data: {id: '89', source: '8', target: '9'}},
-                {data: {id: '38', source: '3', target: '8'}},
-                {data: {id: '92', source: '9', target: '2'}},
-            ];
-             console.log(obj)
-         return obj;
-       
+        });
+        return obj;
     }
-
-
-
-
 });
