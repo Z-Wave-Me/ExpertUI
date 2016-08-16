@@ -1,4 +1,28 @@
 {
+    "postfix_missingid": "This device has missing product ID",
+    "update_successful": "Data was successfully updated",
+    "link_health": "Link health",
+    "linkquality": "Link quality",
+    "link_health_no_powerlevel": "This device does not allow Link Health Check to Neighbors. Only Route Quality to Controller can be tested.",
+    "not_linked_devices": "There are no linked devices",
+    "error_load_data": "Unable to load data",
+    "test_link": "Test link",
+    "nop": "NOP",
+    "link_to_node": "Link to node",
+    "new_entry": "New entry",
+    "show_json": "Show JSON",
+    "delete_successful": "Data was successfully deleted",
+    "error_delete_data": "Unable to delete data",
+    "error_update_data": "Unable to update data.",
+    "lb_delete_confirm": "Are you sure you want to delete this?",
+    "nav_postfix_update": "Postfix",
+    "p_id": "Product ID",
+    "product": "Product",
+    "preInterview": "Pre Interview",
+    "postInterview": "Post Interview",
+    "tester": "Tester",
+    "commentary": "Commentary",
+    "zwave_reinstalled": "ZWave will be reinitialized. Reload the page after 15-20 sec to check if fixes are up to date.",
     "set_all_default": "Set all to default",
     "direct": "Direct connection",
     "routed": "Communication through 1 node. There are several routes",
@@ -583,5 +607,7 @@
     "language_select_reload_interface": "Por favor, actualice la página para aplicar los cambios",
     "device_disappeared": "Device removed from network",
     "rt_associated": "Direct association",
-    "ie_last_element": "Solo para recordar, que IE no le gusta la coma (,) al final de la lista de elementos de matriz asociativa"
+    "ie_last_element": "Solo para recordar, que IE no le gusta la coma (,) al final de la lista de elementos de matriz asociativa",
+     "txt_homepage_promo_default": "<p>This complete Static Z-Wave Plus Controller is certified under No ZC10-14110009 in November 2014. Certification includes both the Z-Wave Controller stack and this Expert User Interface.</p><p>The controller supports all certified Z-Wave devices in the market, namely those listed in the device data base <a href=\"http://pepper1.net/zwavedb/\">http://pepper1.net/zwavedb/</a>.</p><p>For these devices the controller will use some meta data such as image or configuration option. However it is also possible to control Z-Wave compatible devices not listed in this database. Please refer to the device manual for configuration and usage information.</p> <p>You can download the full users manual from <a href=\"http://razberry.z-wave.me\">www.z-wave.me</a></p>"
+    
 }

@@ -12,10 +12,10 @@
     </div>
     <div class="row home-page_" ng-show="ZWaveAPIData">
         <div class="col-sm-6 home-page-image">
-            <img class="product-logo" src="app/images/zplus.jpg" alt="Z-Wave" width="90" />
+            <img class="product-logo" ng-src="{{getCustomCfgArr('logo')}}" alt="Logo" />
             <p></p>
 
-            <div class="product-description" ng-bind-html="_t('txt_homepage_promo') | toTrusted"></div>
+            <div class="product-description" ng-bind-html="_t('txt_homepage_promo_' + cfg.app_type) | toTrusted"></div>
 
 
             <div>
@@ -55,7 +55,7 @@
                         <a class="text-danger" href="#device/battery">(#{{v.id}}) {{v.name}} {{_t('txt_low_battery')}} ({{v.battery_charge}}%)</a>
                     </p>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item" ng-if="cfg.app_type === 'default'">
                     <p ng-repeat="v in notInterviewDevices">
                         <a class="text-danger" href="#help/{{v.id}}"> (#{{v.id}}) {{v.name}} {{_t('txt_interview_not')}}</a>
                     </p>

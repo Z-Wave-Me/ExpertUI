@@ -17,10 +17,16 @@
     <li ng-class="activeTab == 'association' ? 'active' : ''">
          <a href="#configuration/association/{{deviceId}}">{{_t('nav_device_assoc')}}</a>
     </li>
+    <li ng-class="activeTab == 'health' ? 'active' : ''">
+        <a href="#configuration/health/{{deviceId}}">{{_t('link_health')}}</a>
+    </li>
     <li ng-class="activeTab == 'commands' ? 'active' : ''">
         <a href="#configuration/commands/{{deviceId}}">{{_t('nav_expert_commands')}}</a>
     </li>
     <li ng-class="activeTab == 'firmware' ? 'active' : ''">
         <a href="#configuration/firmware/{{deviceId}}">{{_t('nav_firmware_update')}}</a>
+    </li>
+    <li ng-class="activeTab == 'postfix' ? 'active' : ''" ng-if="cfg.zwavecfg.debug">
+        <a href="#configuration/postfix/{{deviceId}}">{{_t('nav_postfix_update')}}</a>
     </li>
 </ul>

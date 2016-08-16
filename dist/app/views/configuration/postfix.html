@@ -1,0 +1,99 @@
+<!-- Interview view -->
+<div ng-controller="PostfixController">
+    <!-- Config navigation -->
+    <div ng-include="'app/views/configuration/header.html'"></div>
+    <div class="tab-content" ng-show="deviceId">
+        <div class="alert alert-warning" ng-if="!postfix.model.p_id"><i class="fa fa-exclamation-circle"></i> {{_t('postfix_missingid')}}</div>
+        <form id="postfix_form" name="postfix_form" role="form" class="form" novalidate ng-if="postfix.model.p_id" ng-submit="updatePostfix()">
+            <div class="cfg-block">
+                <table class="table table-striped table-condensed table-cfg-interview">
+                    <tbody>
+
+                        <!--  p_id -->
+                        <tr>
+                            <th>{{_t('p_id')}}</th>
+                            <td>{{postfix.model.p_id}}</td>
+                             <td>&nbsp;</td>
+                        </tr>
+                        <!--  product -->
+                        <tr>
+                            <th>{{_t('product')}}</th>
+                            <td>
+                                <input name="product" id="product" class="form-control" type="text" value="" ng-model="postfix.model.product" />
+                            </td>
+                             <td>&nbsp;</td>
+                        </tr>
+                        <!--  preInterview -->
+                        <tr>
+                            <th>{{_t('preInterview')}}</th>
+                            <td>
+                                <input name="preInterview" id="preInterview" class="form-control" type="text" value="" ng-model="postfix.interview.preInterview" />
+                                <div ng-repeat="v in postfix.model.preInterview track by $index">{{v}} 
+                                    <span class="clickable" ng-click="removeInterview('preInterview',$index)">
+                                        <i class="fa fa-times text-danger"></i>
+                                    </span>
+                                </div>
+                                 
+                            </td>
+                             <td>
+                                 <button type="button" class="btn btn-default" ng-click="addInterview('preInterview')">
+                                     <i class="fa fa-plus text-success"></i>
+                                 </button>
+                             </td>
+                        </tr>
+                        <!--  postInterview -->
+                        <tr>
+                            <th>{{_t('postInterview')}}</th>
+                            <td>
+                                <input name="postInterview" id="postInterview" class="form-control" type="text" value="" ng-model="postfix.interview.postInterview" />
+                                <div ng-repeat="v in postfix.model.postInterview">{{v}} 
+                                    <span class="clickable" ng-click="removeInterview('postInterview',$index)">
+                                        <i class="fa fa-times text-danger"></i>
+                                    </span>
+                                </div>
+                            </td>
+                           <td>
+                                 <button type="button" class="btn btn-default" ng-click="addInterview('postInterview')">
+                                     <i class="fa fa-plus text-success"></i>
+                                 </button>
+                             </td>
+                        </tr>
+                        <!--  tester -->
+                        <tr>
+                            <th>{{_t('tester')}}</th>
+                            <td>
+                                <input name="tester" id="tester" class="form-control" type="text" value="" ng-model="postfix.model.tester" /> 
+                            </td>
+                             <td>&nbsp;</td>
+                        </tr>
+                        <!--  commentary -->
+                        <tr>
+                            <th>{{_t('commentary')}}</th>
+                            <td>
+                                <input name="commentary" id="commentary" class="form-control" type="text" value="" ng-model="postfix.model.commentary" /> 
+                            </td>
+                             <td>&nbsp;</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="cfg-block text-right">
+                <!-- Delete -->
+                 <button type="button" class="btn btn-default" ng-click="deletePostfix(_t('lb_delete_confirm'))" ng-if="postfix.find">
+                     <i class="fa fa-times text-danger"></i> {{_t('dialog_remove')}}
+                 </button>
+                <!-- Save -->
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-check"></i> {{_t('btn_save')}}
+                </button>
+                <!-- Show -->
+                <a class="btn btn-info" href="{{cfg.postfixget_url + '/' + postfix.model.p_id}}" target="blank" ng-if="postfix.find">
+                    <i class="fa fa-file-code-o"></i> {{_t('show_json')}}
+                </a>
+               
+            </div>
+        </form>
+    </div> 
+
+</div><!-- /ng-controler -->

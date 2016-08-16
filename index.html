@@ -131,7 +131,7 @@
                                 <li><a href="#network/controller" data-collapse-navbar ng-class="isActive('controller',2)">{{ _t('nav_controller_info') }}</a></li>
                             </ul>
                         </li>
-                        <li class="divider-vertical remove-margin"></li>
+                        <li class="divider-vertical remove-margin" ng-if="cfg.app_type === 'installer'"></li>
                         <li class="dropdown" ng-if="cfg.app_type === 'installer'">
                             <a href="" class="dropdown-toggle" data-toggle="dropdown" ng-class="isActive('installer',1)">{{ _t('nav_installer') }} <b class="caret"></b></a>
                             <ul class="dropdown-menu">

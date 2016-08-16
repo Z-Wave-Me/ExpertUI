@@ -29,6 +29,7 @@ pkg: grunt.file.readJSON('package.json'),
                         // Vendors
                         'app/vendor/jquery/jquery-1.11.1.min.js',
                         'app/vendor/underscore/underscore-1.8.3/underscore-min.js',
+                        'app/vendor/cytoscape/cytoscape.js',
                         'app/vendor/upload/angular-file-upload-shim.js',
                         'app/vendor/alertify/alertify.min.js',
                         // Angular

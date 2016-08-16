@@ -6,7 +6,7 @@
 var config_data = {
     'cfg': {
         'app_name': 'Z-Wave',
-        'app_version': '1.0.6',
+        'app_version': '1.1.0',
         'custom_ip': false,
         'user_field': 'USERXXXX',
         'pass_field': 'PSWDXXXX',
@@ -14,6 +14,7 @@ var config_data = {
         'queue_interval': 1000, // Set interval in miliseconds to refresh queue data 
         'route_update_timeout': 15000, // Maximum time in miliseconds to wait for an update-route
         //'server_url': 'http://zwave.dyndns.org:8083/', // Remote JSON
+        'local_data_url':'app/data/',
         'server_url': '', // Remote JSON
         'dongle': 'zway', // Default dongle
         'zwave_list': '/ZWave/list', // Zwave list of dongles
@@ -24,8 +25,16 @@ var config_data = {
         'fw_update_url': '/ZWaveAPI/FirmwareUpdate', // Url for Firmware Update
         'license_load_url': '/ZWaveAPI/ZMELicense', // Url to load new license
         'stat_url': '/ZWaveAPI/CommunicationStatistics', // Url to statistics
+        'postfixget_url': '/ZWaveAPI/PostfixGet', // Postfix GET
+        'postfixadd_url': '/ZWaveAPI/PostfixAdd', // Postfix Add
+        'postfixremove_url': '/ZWaveAPI/PostfixRemove', // Postfix Remove
+        'incoming_packet_url': '/ZWaveAPI/Run/controller.data.incomingPacket', // Url to incoming packet
+        'outgoing_packet_url': '/ZWaveAPI/Run/controller.data.outgoingPacket', // Url to outgoing packet
+        'configget_url': '/ZWaveAPI/ExpertConfigGet', // Config get
+        'configupdate_url': '/ZWaveAPI/ExpertConfigUpdate', // Config update
         'runjs_url': '/JS/Run/', // Url for running JS
         'device_classes_url': '/translations/DeviceClasses.xml', // Url to Device Classes
+        'zwave_classes_url': '/config/ZWave_cmd_classes.xml', // Url to Zwave Classes
         'config_url': '/config/', // Url for store config data
         'reorg_log_url': '/config/reorg.log', // Url for store reorg log data
         'zddx_url': '/ZDDX/', // Url for zddx xml files
@@ -50,9 +59,7 @@ var config_data = {
             8: 'KR',
             7: 'JP',
             3: 'US',
-            9: 'IL',
-            unsupported: 'unsupported',
-            unknown: 'unknown'
+            9: 'IL'
         }, // List of frequencies
         'thermostat_range': {// Min and max thermostat range
             "min": "0",
@@ -61,7 +68,25 @@ var config_data = {
         // Image path
         'img': {
             'batteries':'app/images/batteries/'
-        }
+        },
+        // Zwave config
+        'zwavecfg': {
+            // Debug mode
+            'debug': false
+        },
+        // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
+        // Application type : default/installer
+        'app_type': 'default',
+         'custom_cfg': {
+             'default':{
+                 'logo': 'app/images/zplus.jpg',
+                  'footer_text': '&COPY; 2014 by Z-Wave.Me'
+             },
+              'installer':{
+                  'logo': 'app/images/z-wave-aliance-logo.png',
+                   'footer_text': '&COPY; 2016 Z-Wave Alliance'
+              }
+         }
 
     }
 };
