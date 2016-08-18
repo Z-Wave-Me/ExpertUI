@@ -2591,21 +2591,43 @@ h3 {
 
 /* Zwave alliance
 -------------------------------------------------- */
-/* line 3, ../sass/common/_zwavealliance.scss */
+/* line 8, ../sass/common/_zwavealliance.scss */
 .app-type-installer {
+  /*Typo */
   /* Header */
   /* Dropdown menu */
   /* Logo */
+  /* Homepage */
+  /*    .product-data-list h3 {
+          color: $alliance-green;
+      }*/
+  /* Table  */
+  /*Form */
+  /* Tabs */
+  /* Panel */
+  /* Welll */
 }
-/* line 5, ../sass/common/_zwavealliance.scss */
+/* line 10, ../sass/common/_zwavealliance.scss */
+.app-type-installer h1 {
+  color: #083366;
+}
+/* line 13, ../sass/common/_zwavealliance.scss */
+.app-type-installer a {
+  color: #083366;
+}
+/* line 16, ../sass/common/_zwavealliance.scss */
+.app-type-installer .list-group-item {
+  border-color: #87cf83;
+}
+/* line 20, ../sass/common/_zwavealliance.scss */
 .app-type-installer .navbar-inverse {
   background: #083366;
 }
-/* line 8, ../sass/common/_zwavealliance.scss */
+/* line 23, ../sass/common/_zwavealliance.scss */
 .app-type-installer .navbar-inverse .navbar-nav > li > a {
   color: #F89847;
 }
-/* line 11, ../sass/common/_zwavealliance.scss */
+/* line 26, ../sass/common/_zwavealliance.scss */
 .app-type-installer .navbar-inverse .dropdown-toggle.active,
 .app-type-installer .navbar-inverse .dropdown-toggle.active:hover,
 .app-type-installer .navbar-inverse .no-dropdown.active,
@@ -2613,25 +2635,84 @@ h3 {
   color: #47aa42;
   background-color: #2A6496;
 }
-/* line 19, ../sass/common/_zwavealliance.scss */
+/* line 34, ../sass/common/_zwavealliance.scss */
 .app-type-installer .dropdown-menu {
   background-color: #47AA42;
   border: 1px solid #e3e3e3;
 }
-/* line 24, ../sass/common/_zwavealliance.scss */
+/* line 39, ../sass/common/_zwavealliance.scss */
 .app-type-installer .dropdown-menu > li > a {
   color: #083366;
 }
-/* line 27, ../sass/common/_zwavealliance.scss */
+/* line 42, ../sass/common/_zwavealliance.scss */
 .app-type-installer .dropdown-menu > li > a.active,
 .app-type-installer .dropdown-menu > li > a.active:hover {
-  color: #47aa42;
+  color: #47AA42;
   background-color: #083366;
 }
-/* line 33, ../sass/common/_zwavealliance.scss */
+/* line 48, ../sass/common/_zwavealliance.scss */
 .app-type-installer .product-logo {
   max-width: 150px;
   max-height: 150px;
+}
+/* line 54, ../sass/common/_zwavealliance.scss */
+.app-type-installer .product-data-list {
+  background-color: #ceebcd;
+}
+/* line 57, ../sass/common/_zwavealliance.scss */
+.app-type-installer .product-description {
+  border-color: #87cf83;
+}
+/* line 67, ../sass/common/_zwavealliance.scss */
+.app-type-installer .table > thead > tr > th {
+  border-color: #87cf83;
+}
+/* line 71, ../sass/common/_zwavealliance.scss */
+.app-type-installer .table > thead > tr > th, .app-type-installer .table > tbody > tr > th, .app-type-installer .table > tfoot > tr > th, .app-type-installer .table > thead > tr > td, .app-type-installer .table > tbody > tr > td, .app-type-installer .table > tfoot > tr > td {
+  border-color: #87cf83;
+}
+/* line 76, ../sass/common/_zwavealliance.scss */
+.app-type-installer .form-control {
+  border-color: #87cf83;
+}
+/* line 79, ../sass/common/_zwavealliance.scss */
+.app-type-installer .commands-data-control {
+  background-color: #ceebcd;
+}
+/* line 82, ../sass/common/_zwavealliance.scss */
+.app-type-installer .commands-data {
+  border-color: #87cf83;
+}
+/* line 85, ../sass/common/_zwavealliance.scss */
+.app-type-installer .cfg-block {
+  border-color: #87cf83;
+}
+/* line 89, ../sass/common/_zwavealliance.scss */
+.app-type-installer .nav-tabs > li.active > a, .app-type-installer .nav-tabs > li.active > a:hover, .app-type-installer .nav-tabs > li.active > a:focus {
+  background-color: #ceebcd;
+  border-color: #87cf83;
+}
+/* line 93, ../sass/common/_zwavealliance.scss */
+.app-type-installer .tab-content {
+  border-color: transparent #87cf83 #87cf83;
+}
+/* line 96, ../sass/common/_zwavealliance.scss */
+.app-type-installer .nav-tabs {
+  border-color: #87cf83;
+}
+/* line 100, ../sass/common/_zwavealliance.scss */
+.app-type-installer .panel {
+  border-color: #87cf83;
+}
+/* line 103, ../sass/common/_zwavealliance.scss */
+.app-type-installer .panel-default > .panel-heading {
+  background-color: #ceebcd;
+  border-color: #87cf83;
+}
+/* line 108, ../sass/common/_zwavealliance.scss */
+.app-type-installer .well {
+  background-color: #ceebcd;
+  border-color: #87cf83;
 }
 
 /*
@@ -3071,3 +3152,5 @@ h3 {
 /* Small Devices, Tablets */
 /* Extra Small Devices, Phones */
 /* Custom, iPhone Retina */
+
+/*# sourceMappingURL=main.css.map */
