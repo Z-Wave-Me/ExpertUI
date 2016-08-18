@@ -10,11 +10,11 @@ var config_data = {
         'custom_ip': false,
         'user_field': 'USERXXXX',
         'pass_field': 'PSWDXXXX',
-        'interval': 3000, // Set interval in miliseconds to refresh data 
+        'interval': 1000, // Set interval in miliseconds to refresh data 
         'queue_interval': 1000, // Set interval in miliseconds to refresh queue data 
         'route_update_timeout': 15000, // Maximum time in miliseconds to wait for an update-route
         //'server_url': 'http://zwave.dyndns.org:8083/', // Remote JSON
-        'local_data_url':'app/data/',
+        'local_data_url':'storage/data/',
         'server_url': '', // Remote JSON
         'dongle': 'zway', // Default dongle
         'zwave_list': '/ZWave/list', // Zwave list of dongles
@@ -34,7 +34,7 @@ var config_data = {
         'configupdate_url': '/ZWaveAPI/ExpertConfigUpdate', // Config update
         'runjs_url': '/JS/Run/', // Url for running JS
         'device_classes_url': '/translations/DeviceClasses.xml', // Url to Device Classes
-        'zwave_classes_url': '/config/ZWave_cmd_classes.xml', // Url to Zwave Classes
+        'zwave_classes_url': 'storage/data/ZWave_cmd_classes.xml', // Url to Zwave Classes
         'config_url': '/config/', // Url for store config data
         'reorg_log_url': '/config/reorg.log', // Url for store reorg log data
         'zddx_url': '/ZDDX/', // Url for zddx xml files
