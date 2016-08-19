@@ -1145,7 +1145,7 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
             }
 
             nodeId = parseInt(nodeId);
-            if (!$scope.health.device.neighbours || $scope.health.device.neighbours.indexOf(nodeId) === -1) {
+            if ($scope.health.device.neighbours.indexOf(nodeId) === -1) {
                 return;
             }
             //console.log(node)
