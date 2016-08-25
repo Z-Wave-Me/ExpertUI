@@ -135,8 +135,10 @@
                         <li class="dropdown" ng-if="cfg.app_type === 'installer'">
                             <a href="" class="dropdown-toggle" data-toggle="dropdown" ng-class="isActive('installer',1)">{{ _t('nav_installer') }} <b class="caret"></b></a>
                             <ul class="dropdown-menu">
+                                <li><a href="#installer/zniffernew" data-collapse-navbar ng-class="isActive('zniffernew',2)">{{ _t('nav_zniffer') }} NEW</a></li>
                                 <li><a href="#installer/zniffer" data-collapse-navbar ng-class="isActive('zniffer',2)">{{ _t('nav_zniffer') }}</a></li>
-                                <li><a href="#installer/spectrum" data-collapse-navbar ng-class="isActive('spectrum',2)">{{ _t('nav_spectrum_analyzer') }}</a></li>
+                                 
+                                <!--<li><a href="#installer/spectrum" data-collapse-navbar ng-class="isActive('spectrum',2)">{{ _t('nav_spectrum_analyzer') }}</a></li>-->
                                
                             </ul>
                         </li>

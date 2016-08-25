@@ -1,5 +1,10 @@
 {
     "--- newtrans": "---",
+    "enter_value":"Enter a value",
+    "use_charcter_delimit":"Use character \",\" to delimit values",
+    "show":"Show",
+    "hide":"Hide",
+    "reset_filter": "Reset filter",
     "nav_network_map":"Network map",
     "txt_homepage_promo_installer":"<h1>Provided by Z-Wave Alliance</h1>",
     "nav_spectrum_analyzer": "Spectrum analyzer",
