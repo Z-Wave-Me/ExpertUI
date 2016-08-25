@@ -237,100 +237,19 @@ appController.controller('ZnifferNewController', function ($scope, $interval, $f
     $scope.$on('$destroy', function () {
         //$interval.cancel( $scope.zniffer.interval);
     });
-
-    /**
-     * Load zwave API
-     */
-    $scope.loadZwaveApi = function () {
-        dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
-             $scope.zniffer.controller.nodeId = ZWaveAPIData.controller.data.nodeId.value;
-        }, function (error) {
-            alertify.alertError($scope._t('error_load_data'));
-            return;
-        });
-    };
-    $scope.loadZwaveApi();
-
-    /**
-     * Load zwave command classes
+      /**
+     * Load communication history
      * @returns {undefined}
      */
-    $scope.loadCmdClass = function () {
-        dataService.xmlToJson(cfg.zwave_classes_url).then(function (response) {
-             $scope.zniffer.cmdClass = response.zw_classes.cmd_class;
-        }, function (error) {
-            alertify.alertError($scope._t('error_xml_load'));
-        });
-
-    };
-    $scope.loadCmdClass();
-
-    /**
-     * Load cached packet
-     * @returns {undefined}
-     */
-    $scope.loadCachedPackets = function () {
-        if (myCache.get('inout_packet')) {
-             $scope.zniffer.all = myCache.get('inout_packet');
-        }
-
-    };
-    $scope.loadCachedPackets();
-
-    /**
-     * Load packet data
-     * @returns {undefined}
-     */
-    $scope.loadIncomingPacket = function () {
-        dataService.getApi('incoming_packet_url', null, true).then(function (response) {
-            var exist = _.find( $scope.zniffer.all, {updateTime: response.data.updateTime});
-            if (exist) {
-                return;
-            }
-             $scope.zniffer.all.push(
-                    {
-                        type: 'incoming',
-                        updateTime: response.data.updateTime,
-                        value: response.data.value,
-                        dateTime: $filter('getDateTimeObj')(response.data.updateTime),
-                        src: response.data.value[3],
-                        dest:  $scope.zniffer.controller.nodeId,
-                        data: setZnifferDataType(response.data.value[2]),
-                        application: packetApplication(response.data.value)
-                    }
-            );
-            myCache.put('inout_packet',  $scope.zniffer.all);
-            //console.log(exist)
+   $scope.loadCommunication = function () {
+        dataService.getApi('communication_history_url', null, true).then(function (response) {
+           
+             $scope.zniffer.all = response.data;
         }, function (error) {});
     };
-    //$scope.loadIncomingPacket();
-    /**
-     * Load packet data
-     * @returns {undefined}
-     */
-    $scope.loadOutgoingPacket = function () {
-        dataService.getApi('outgoing_packet_url', null, true).then(function (response) {
-            var exist = _.find( $scope.zniffer.all, {updateTime: response.data.updateTime});
-            if (exist) {
-                return;
-            }
-             $scope.zniffer.all.push(
-                    {
-                       type: 'outgoing',
-                        updateTime: response.data.updateTime,
-                        value: response.data.value,
-                        dateTime: $filter('getDateTimeObj')(response.data.updateTime),
-                        src:  $scope.zniffer.controller.nodeId,
-                        dest: response.data.value[3],
-                        data: setZnifferDataType(response.data.value[2]),
-                        application: packetApplication(response.data.value)
-                    }
-            );
-            myCache.put('inout_packet',  $scope.zniffer.all);
-            //console.log(exist)
-        }, function (error) {});
-    };
-    //$scope.loadOutgoingPacket();
+    $scope.loadCommunication();
+
+    
    
 
     /**
@@ -344,7 +263,7 @@ appController.controller('ZnifferNewController', function ($scope, $interval, $f
          $scope.zniffer.interval = $interval(refresh, $scope.cfg.interval);
 
     };
-    $scope.refreshPacket();
+    //$scope.refreshPacket();
     
      /**
      * Set zniffer filter
