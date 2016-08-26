@@ -1,15 +1,175 @@
 /**
+ * ZnifferController - NEW
+ * @author Martin Vach
+ */
+appController.controller('ZnifferController', function ($scope, $interval, $filter, $cookies,cfg, dataService, myCache, _) {
+    $scope.zniffer = {
+        interval: null,
+        updateTime: Math.round(+new Date() / 1000),
+        controller: {},
+        cmdClass: [],
+        all: [],
+        collection: {},
+        filter: {
+            model: {
+                src: {
+                    value: '',
+                    show: 1
+                },
+                dest: {
+                    value: '',
+                    show: 1
+                },
+                data: {
+                    value: '',
+                    show: 1
+                }
+            },
+            items: {
+                data: ['Singlecast', 'Predicast', 'Multicast']
+            },
+            used: []
+        }
+
+    };
+    /**
+     * Cancel interval on page destroy
+     */
+    $scope.$on('$destroy', function () {
+        $interval.cancel( $scope.zniffer.interval);
+    });
+    
+     /**
+     * Reset zniffer filter
+     * @returns {undefined}
+     */
+    $scope.resetZniffer = function () {
+        $interval.cancel($scope.zniffer.interval);
+         $scope.zniffer.all = [];
+        
+         $scope.loadCommunication();
+         $scope.refreshCommunication($scope.zniffer.updateTime);
+          //$scope.detectZnifferFilter();
+    };
+    
+    /**
+     * Load cached zniffer filter
+     * @returns {undefined}
+     */
+    $scope.loadCachedZnifferFilter = function () {
+        if($cookies.znifferFilter){
+            angular.extend($scope.zniffer.filter.model,angular.fromJson($cookies.znifferFilter));
+        }
+
+    };
+    $scope.loadCachedZnifferFilter();
+    
+     /**
+     * Detect zniffer filter
+     * @returns {undefined}
+     */
+    $scope.detectZnifferFilter = function () {
+        angular.forEach($scope.zniffer.filter.model,function(v,k){
+            var index =  $scope.zniffer.filter.used.indexOf(k);
+            if(v['value'] !== '' && index === -1){
+               $scope.zniffer.filter.used.push(k);
+           }
+        });
+    };
+   $scope.detectZnifferFilter();
+    
+    /**
+     * Load communication history
+     * @returns {undefined}
+     */
+    $scope.loadCommunication = function (updateTime) {
+        var params;
+        var time = (updateTime ? '/' + updateTime : '');
+        var filter = '?filter=' + JSON.stringify($scope.zniffer.filter.model);
+        params = time + filter;
+        dataService.getApi('communication_history_url', params, true).then(function (response) {
+            var zniffer = _.chain(response.data)
+                    .flatten()
+                    .filter(function (v) {
+                        v.dateTime = $filter('getDateTimeObj')(v.updateTime);
+                        v.bytes = v.value.slice(5, -1);
+                        $scope.zniffer.all.push(v);
+                        return v;
+                    });
+            //$scope.zniffer.all = zniffer.value();
+            $scope.zniffer.updateTime = zniffer.max(function (v) {
+                return v.updateTime;
+            }).value().updateTime;
+             
+        }, function (error) {});
+    };
+    $scope.loadCommunication();
+
+    /**
+     * Refresh communication history
+     * @returns {undefined}
+     */
+    $scope.refreshCommunication = function (time) {
+        var refresh = function () {
+            //var updateTime = $scope.zniffer.updateTime + cfg.interval;
+            var updateTime = Math.round(+new Date() / 1000);
+            //console.log('updateTime: ', time)
+            $scope.loadCommunication(updateTime);
+        };
+        $scope.zniffer.interval = $interval(refresh, cfg.interval);
+
+    };
+    $scope.refreshCommunication($scope.zniffer.updateTime);
+
+    /**
+     * Set zniffer filter
+     * @returns {undefined}
+     */
+    $scope.setZnifferFilter = function (key) {
+        //$cookies.znifferFilter =  JSON.stringify($scope.zniffer.filter.model);
+        $cookies.znifferFilter = angular.toJson($scope.zniffer.filter.model);
+        if(! _.contains($scope.zniffer.filter.used, key)){
+            $scope.zniffer.filter.used.push(key);
+        }
+        $scope.resetZniffer();
+    };
+    /**
+     * Reset zniffer filter
+     * @returns {undefined}
+     */
+    $scope.resetZnifferFilter = function (key) {
+        $scope.zniffer.filter.model[key].value = '';
+        $scope.zniffer.filter.used = _.without($scope.zniffer.filter.used, key);
+        $cookies.znifferFilter = angular.toJson($scope.zniffer.filter.model);
+         $scope.resetZniffer();
+    };
+    /**
+     * Reset all zniffer filters
+     * @returns {undefined}
+     */
+    $scope.resetZnifferFilterAll = function () {
+         angular.forEach($scope.zniffer.filter.model,function(v,k){
+           $scope.zniffer.filter.model[k].value = '';
+        });
+        
+        $scope.zniffer.filter.used =[];
+        $cookies.znifferFilter = angular.toJson($scope.zniffer.filter.model);
+         $scope.resetZniffer();
+    };
+
+});
+/**
  * ZnifferController
  * @author Martin Vach
  */
-appController.controller('ZnifferController', function ($scope, $interval, $filter, cfg, dataService, myCache, _) {
-     $scope.zniffer = {
+appController.controller('ZnifferController_', function ($scope, $interval, $filter, cfg, dataService, myCache, _) {
+    $scope.zniffer = {
         interval: null,
         controller: {},
         trace: 'start',
         cmdClass: [],
         all: []
-       
+
     };
 
     /**
@@ -24,7 +184,7 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
      */
     $scope.loadZwaveApi = function () {
         dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
-             $scope.zniffer.controller.nodeId = ZWaveAPIData.controller.data.nodeId.value;
+            $scope.zniffer.controller.nodeId = ZWaveAPIData.controller.data.nodeId.value;
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
             return;
@@ -38,7 +198,7 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
      */
     $scope.loadCmdClass = function () {
         dataService.xmlToJson(cfg.zwave_classes_url).then(function (response) {
-             $scope.zniffer.cmdClass = response.zw_classes.cmd_class;
+            $scope.zniffer.cmdClass = response.zw_classes.cmd_class;
         }, function (error) {
             alertify.alertError($scope._t('error_xml_load'));
         });
@@ -52,7 +212,7 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
      */
     $scope.loadCachedPackets = function () {
         if (myCache.get('inout_packet')) {
-             $scope.zniffer.all = myCache.get('inout_packet');
+            $scope.zniffer.all = myCache.get('inout_packet');
         }
 
     };
@@ -64,23 +224,23 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
      */
     $scope.loadIncomingPacket = function () {
         dataService.getApi('incoming_packet_url', null, true).then(function (response) {
-            var exist = _.find( $scope.zniffer.all, {updateTime: response.data.updateTime});
+            var exist = _.find($scope.zniffer.all, {updateTime: response.data.updateTime});
             if (exist) {
                 return;
             }
-             $scope.zniffer.all.push(
+            $scope.zniffer.all.push(
                     {
                         type: 'incoming',
                         updateTime: response.data.updateTime,
                         value: response.data.value,
                         dateTime: $filter('getDateTimeObj')(response.data.updateTime),
                         src: response.data.value[3],
-                        dest:  $scope.zniffer.controller.nodeId,
+                        dest: $scope.zniffer.controller.nodeId,
                         data: setZnifferDataType(response.data.value[2]),
                         application: packetApplication(response.data.value)
                     }
             );
-            myCache.put('inout_packet',  $scope.zniffer.all);
+            myCache.put('inout_packet', $scope.zniffer.all);
             //console.log(exist)
         }, function (error) {});
     };
@@ -91,23 +251,23 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
      */
     $scope.loadOutgoingPacket = function () {
         dataService.getApi('outgoing_packet_url', null, true).then(function (response) {
-            var exist = _.find( $scope.zniffer.all, {updateTime: response.data.updateTime});
+            var exist = _.find($scope.zniffer.all, {updateTime: response.data.updateTime});
             if (exist) {
                 return;
             }
-             $scope.zniffer.all.push(
+            $scope.zniffer.all.push(
                     {
-                       type: 'outgoing',
+                        type: 'outgoing',
                         updateTime: response.data.updateTime,
                         value: response.data.value,
                         dateTime: $filter('getDateTimeObj')(response.data.updateTime),
-                        src:  $scope.zniffer.controller.nodeId,
+                        src: $scope.zniffer.controller.nodeId,
                         dest: response.data.value[3],
                         data: setZnifferDataType(response.data.value[2]),
                         application: packetApplication(response.data.value)
                     }
             );
-            myCache.put('inout_packet',  $scope.zniffer.all);
+            myCache.put('inout_packet', $scope.zniffer.all);
             //console.log(exist)
         }, function (error) {});
     };
@@ -121,8 +281,8 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
             $scope.loadIncomingPacket();
             $scope.loadOutgoingPacket();
         };
-        if ( $scope.zniffer.trace === 'start') {
-             $scope.zniffer.interval = $interval(refresh, $scope.cfg.interval);
+        if ($scope.zniffer.trace === 'start') {
+            $scope.zniffer.interval = $interval(refresh, $scope.cfg.interval);
         }
 
     };
@@ -134,17 +294,17 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
     $scope.setTrace = function (trace) {
         switch (trace) {
             case 'pause':
-                 $scope.zniffer.trace = 'pause';
-                $interval.cancel( $scope.zniffer.interval);
+                $scope.zniffer.trace = 'pause';
+                $interval.cancel($scope.zniffer.interval);
                 break;
             case 'stop':
-                 $scope.zniffer.trace = 'stop';
-                $interval.cancel( $scope.zniffer.interval);
+                $scope.zniffer.trace = 'stop';
+                $interval.cancel($scope.zniffer.interval);
                 myCache.remove('incoming_packet');
-                angular.copy([],  $scope.zniffer.all);
+                angular.copy([], $scope.zniffer.all);
                 break;
             default:
-                 $scope.zniffer.trace = 'start';
+                $scope.zniffer.trace = 'start';
                 $scope.loadCachedPackets();
                 $scope.refreshPacket();
                 break;
@@ -171,10 +331,10 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
         var ret = {};
         //var cc = _.findWhere( $scope.zniffer.cmdClass, {_key: cmdClassKey, _version: cmdClassVersion });
 
-        if (_.isEmpty( $scope.zniffer.cmdClass)) {
+        if (_.isEmpty($scope.zniffer.cmdClass)) {
             return;
         }
-        var findCmdClass = _.where( $scope.zniffer.cmdClass, {_key: cmdClassKey});
+        var findCmdClass = _.where($scope.zniffer.cmdClass, {_key: cmdClassKey});
         if (!findCmdClass) {
             return ret;
         }
@@ -186,147 +346,13 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
         }
         return ret;
     }
-    
+
     function setZnifferDataType(data) {
-        switch(data){
+        switch (data) {
             case 0:
                 return 'Singlecast';
-             case 255:
-                return 'Predicast'; 
-            default:
-                return 'Multicast';
-        }
-    }
-
-});
-/**
- * ZnifferController - NEW
- * @author Martin Vach
- */
-appController.controller('ZnifferNewController', function ($scope, $interval, $filter, cfg, dataService, myCache, _) {
-     $scope.zniffer = {
-        interval: null,
-        controller: {},
-        cmdClass: [],
-        all: [],
-        collection: {},
-        filter: {
-            model: {
-                src: {
-                    value: '',
-                    show: 1
-                },
-                dest: {
-                    value: '',
-                    show: 1
-                },
-                data: {
-                    value: '',
-                    show: 1
-                }
-            },
-            items:{
-                data: ['Singlecast','Predicast','Multicast']
-            }
-        }
-       
-    };
-    /**
-     * Cancel interval on page destroy
-     */
-    $scope.$on('$destroy', function () {
-        //$interval.cancel( $scope.zniffer.interval);
-    });
-      /**
-     * Load communication history
-     * @returns {undefined}
-     */
-   $scope.loadCommunication = function () {
-        dataService.getApi('communication_history_url', null, true).then(function (response) {
-           
-             $scope.zniffer.all = response.data;
-        }, function (error) {});
-    };
-    $scope.loadCommunication();
-
-    
-   
-
-    /**
-     * Refresh packet
-     */
-    $scope.refreshPacket = function () {
-        var refresh = function () {
-            $scope.loadIncomingPacket();
-            $scope.loadOutgoingPacket();
-        };
-         $scope.zniffer.interval = $interval(refresh, $scope.cfg.interval);
-
-    };
-    //$scope.refreshPacket();
-    
-     /**
-     * Set zniffer filter
-     * @returns {undefined}
-     */
-    $scope.setZnifferFilter = function (filter) {
-        var params = JSON.stringify($scope.zniffer.filter.model);
-        //filter.show = parseInt(filter.show);
-        //$scope.zniffer.filter.model = filter;
-        console.log('filter=' + params)
-       //$scope.loadIncomingPacket();
-        //$scope.loadOutgoingPacket();
-    };
-    /**
-     * Reset zniffer filter
-     * @returns {undefined}
-     */
-    $scope.resetZnifferFilter = function () {
-//        $scope.zniffer.filter.model = false;
-//        $scope.loadIncomingPacket();
-//            $scope.loadOutgoingPacket();
-    };
-
-    /// --- Private functions --- ///
-    /**
-     * Set an application col
-     * @param {array} packet
-     * @returns {undefined}
-     */
-    function packetApplication(packet) {
-        // Get a command class from position 5
-        var cmdClassKey = $filter('decToHex')(packet[5], 2, '0x');
-        //key = '0x20'; // cc with cmd array
-        var cmdKey = $filter('decToHex')(packet[6], 2, '0x');
-        //keyCmd = '0x03';
-        //console.log('cmdClassKey: ', cmdClassKey)
-
-        var cmdClassVersion = '1';
-        var ret = {};
-        //var cc = _.findWhere( $scope.zniffer.cmdClass, {_key: cmdClassKey, _version: cmdClassVersion });
-
-        if (_.isEmpty( $scope.zniffer.cmdClass)) {
-            return;
-        }
-        var findCmdClass = _.where( $scope.zniffer.cmdClass, {_key: cmdClassKey});
-        if (!findCmdClass) {
-            return ret;
-        }
-        var cmdClass = findCmdClass.pop();
-        if (_.isArray(cmdClass.cmd)) {
-            ret = _.findWhere(cmdClass.cmd, {_key: cmdKey});
-        } else {
-            ret = cmdClass.cmd;
-        }
-        return ret;
-    }
-    
-    function setZnifferDataType(data) {
-        switch(data){
-            case 0:
-                return 'Singlecast';
-             case 255:
-                return 'Predicast'; 
+            case 255:
+                return 'Predicast';
             default:
                 return 'Multicast';
         }

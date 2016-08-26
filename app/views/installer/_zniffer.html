@@ -1,0 +1,67 @@
+<!--Zniffer view -->
+ <!-- ------------------------------------ Demo -------------------------------------------- -->
+     <!--<div ng-include="'app/views/installer/demo.html'"></div><br /><br />-->
+    <!-- ------------------------------------ Live -------------------------------------------- -->
+<div ng-controller="ZnifferController">
+    <div class="page-header"><h1>{{ _t('nav_zniffer')}}</h1></div>
+   
+    <!-- Control -->
+    <div class="form-inline">
+        <div class="form-group">
+            <div class="btn-group">
+                <button class="btn btn-default" title="Start new trace"
+                        ng-class="packet.trace === 'start' ? 'active' : ''"
+                        ng-disabled="packet.trace === 'start'"
+                        ng-click="setTrace('start')">
+                    <i class="fa fa-play text-success"></i> 
+                </button>
+
+                <button class="btn btn-default" title="Pause trace"
+                        ng-class="packet.trace === 'pause' ? 'active' : ''"
+                        ng-disabled="packet.trace === 'pause'"
+                        ng-click="setTrace('pause')">
+                    <i class="fa fa-pause"></i>
+                </button>
+                <button class="btn btn-default" title="Stop trace"
+                        ng-class="packet.trace === 'stop' ? 'active' : ''"
+                        ng-disabled="packet.trace === 'stop'"
+                        ng-click="setTrace('stop')">
+                    <i class="fa fa-stop text-danger"></i>
+                </button>
+
+            </div>
+        </div>
+    </div>
+    <!-- Table -->
+    <!--<pre>{{packet.all|json}}</pre>-->
+    <table class="table table-condensed table-hover">
+        <thead>
+         <!--<th>#</th>--> 
+        <th>&nbsp;</th>
+        <th>{{ _t('date')}}</th>
+        <th>{{ _t('time')}}</th>
+        <th>{{ _t('src')}}</th>
+        <th>{{ _t('dest')}}</th>
+         <th>{{ _t('data')}}</th>
+        <th>{{ _t('application')}}</th>
+         <!--<th>Packet</th>--> 
+
+        </thead>
+        <tbody>
+            <tr class="zniffer-row-{{v.data}}" ng-repeat="v in packet.all| orderBy: '-updateTime' track by $index">
+                 <td>
+                   <i title="{{v.type}}" class="fa fa-long-arrow-right" ng-if="v.type === 'incoming'"></i>
+                    <i title="{{v.type}}" class="fa fa-long-arrow-left" ng-if="v.type === 'outgoing'"></i> 
+                 </td>
+                <td>{{v.dateTime.day + '.' + v.dateTime.mon + '.' + v.dateTime.year}}</td>
+                <td>{{v.dateTime.hrs + ':' + v.dateTime.min + ':' + v.dateTime.sec}}</td>
+                <td>{{v.src}}</td>
+                <td>{{v.dest}}</td>
+                <td>{{v.data}}</td>
+                <td>{{v.application._help}}</td>
+                 <!--<td>{{v.type}}: {{v.value}} </td>--> 
+
+            </tr>
+        </tbody>
+    </table>
+</div>
