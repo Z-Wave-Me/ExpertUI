@@ -2266,9 +2266,67 @@ h3 {
   overflow-x: hidden;
 }
 
-/*@import "common/_accordion"; 
-@import "common/_loader"; 
-@import "common/_alert";*/
+/*@import "common/_accordion";*/
+/* Absolute Center CSS Spinner
+http://codepen.io/MattIn4D/pen/LiKFC
+-------------------------------------------------- */
+/* line 4, ../sass/common/_loader.scss */
+#loading {
+  position: fixed;
+  z-index: 2399;
+  width: 260px;
+  height: 50px;
+  overflow: show;
+  margin: 80px auto auto auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  text-align: center;
+  color: #0d0d0d;
+}
+/* line 17, ../sass/common/_loader.scss */
+#loading .loading-in {
+  position: relative;
+  z-index: 2400;
+  margin: auto;
+  padding: 10px;
+  background-color: #FFFFFF;
+  border: solid 2px #cccccc;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+/* line 26, ../sass/common/_loader.scss */
+#loading a {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+/* Transparent Overlay */
+/* line 33, ../sass/common/_loader.scss */
+.loading-spin:before {
+  content: '';
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(37, 37, 37, 0.5);
+}
+
+/* line 44, ../sass/common/_loader.scss */
+.loading-fade {
+  opacity: 0;
+  -webkit-transition: opacity 7s;
+  -moz-transition: opacity 7s;
+  -ms-transition: opacity 7s;
+  -o-transition: opacity 7s;
+  transition: opacity 7s;
+}
+
+/*@import "common/_alert";*/
 /* Modal
 -------------------------------------------------- */
 /* line 3, ../sass/common/_modal.scss */

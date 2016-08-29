@@ -46,7 +46,6 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
     $scope.resetZniffer = function () {
         $interval.cancel($scope.zniffer.interval);
          $scope.zniffer.all = [];
-        
          $scope.loadCommunication();
          $scope.refreshCommunication($scope.zniffer.updateTime);
           //$scope.detectZnifferFilter();
@@ -87,12 +86,17 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
         var time = (updateTime ? '/' + updateTime : '');
         var filter = '?filter=' + JSON.stringify($scope.zniffer.filter.model);
         params = time + filter;
+        if(!updateTime){
+            $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin'};
+        }
         dataService.getApi('communication_history_url', params, true).then(function (response) {
+             $scope.loading = false;
             var zniffer = _.chain(response.data)
                     .flatten()
                     .filter(function (v) {
+                        var bytes =  v.value.slice(5, -1);
                         v.dateTime = $filter('getDateTimeObj')(v.updateTime);
-                        v.bytes = v.value.slice(5, -1);
+                        v.bytes = (bytes ? bytes.toString() : '');
                         $scope.zniffer.all.push(v);
                         return v;
                     });
@@ -101,7 +105,9 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
                 return v.updateTime;
             }).value().updateTime;
              
-        }, function (error) {});
+        }, function (error) {
+             $scope.loading = false;
+        });
     };
     $scope.loadCommunication();
 
@@ -127,6 +133,9 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
      */
     $scope.setZnifferFilter = function (key) {
         //$cookies.znifferFilter =  JSON.stringify($scope.zniffer.filter.model);
+         if(!$scope.zniffer.filter.model[key].value){
+             return false;
+         }
         $cookies.znifferFilter = angular.toJson($scope.zniffer.filter.model);
         if(! _.contains($scope.zniffer.filter.used, key)){
             $scope.zniffer.filter.used.push(key);

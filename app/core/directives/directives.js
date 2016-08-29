@@ -30,6 +30,20 @@ angApp.directive('sortBy', function () {
     };
 });
 
+/**
+ * Displays a page loader
+ * @class bbLoader
+ */
+angApp.directive('bbLoader', function () {
+    return {
+        restrict: "E",
+        replace: true,
+        template: '<div id="loading" ng-show="loading" ng-class="loading.status"><div class="loading-in">'
+                + '<i class="fa fa-lg" ng-class="loading.icon"></i> <span ng-bind-html="loading.message|toTrusted"></span>'
+                + '</div></div>'
+    };
+});
+
 angApp.directive('btnSpinner', function () {
     return {
         restrict: "E",
