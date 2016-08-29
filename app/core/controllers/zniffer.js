@@ -83,9 +83,9 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
      */
     $scope.loadCommunication = function (updateTime) {
         var params;
-        var time = (updateTime ? '/' + updateTime : '');
-        var filter = '?filter=' + JSON.stringify($scope.zniffer.filter.model);
-        params = time + filter;
+//        var time = (updateTime ? '/' + updateTime : '');
+//        var filter = '?filter=' + JSON.stringify($scope.zniffer.filter.model);
+//        params = time + filter;
         if(!updateTime){
             $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin'};
         }
