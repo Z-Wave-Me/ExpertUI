@@ -159,9 +159,12 @@
         </div> <!-- /.navbar --> 
     
     <!-- Ang Container -->
+    <div class="container-installer" ng-if="cfg.app_type === 'installer'">
+        <div class="alert alert-warning" ng-if="!boxData.controller.isPrimary.value"><i class="fa fa-info-circle"></i> {{_t('ready_to_network')}}</div>
+         <div class="alert alert-info" ng-if="boxData.controller.isPrimary.value"><i class="fa fa-check"></i> {{_t('iam_in_network')}}</div>
+    </div>
     <div id="respone_container" class="container"><div id="respone_container_inner"></div></div>
     <div id="main_content" class="container" ng-view></div>
-
         <div id="footer">
             <div class="container-fluid">
                       <p class="text-muted" ng-bind-html="getCustomCfgArr('footer_text') | toTrusted"></p>

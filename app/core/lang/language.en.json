@@ -1,5 +1,10 @@
 {
     "--- newtrans": "---",
+    "ready_to_network":"Ready to include into network",
+    "iam_in_network":"I am in Network",
+     "include_into_network":"Include into Network",
+     "leave_network":"Leave Network",
+    "---": "---",
     "enter_value":"Enter a value",
     "use_charcter_delimit":"Use character \",\" to delimit values",
     "show":"Show",
@@ -23,7 +28,6 @@
     "hexdata": "HEX",
     "nav_zniffer": "Zniffer",
     "nav_installer": "Installer",
-    "---": "---",
     "postfix_missingid": "This device has missing product ID",
     "update_successful": "Data was successfully updated",
     "link_health": "Link health",

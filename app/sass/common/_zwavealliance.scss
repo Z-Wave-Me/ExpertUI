@@ -6,6 +6,13 @@ $alliance-green-bcg: lighten($alliance-green,40%);
 $alliance-green-border: lighten($alliance-green,20%);
 $alliance-orange: #F89847;
 .app-type-installer{
+    .container-installer{
+        width: 100%;
+        .alert{
+            text-align: center;
+            padding: 5px 10px;
+        }
+    }
     /*Typo */
     h1 {
         color: $alliance-blue;

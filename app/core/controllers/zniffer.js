@@ -91,7 +91,7 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
         }
         dataService.getApi('communication_history_url', params, true).then(function (response) {
              $scope.loading = false;
-            var zniffer = _.chain(response.data)
+            var zniffer = _.chain(response.data.data)
                     .flatten()
                     .filter(function (v) {
                         var bytes =  v.value.slice(5, -1);
@@ -116,6 +116,7 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
      * @returns {undefined}
      */
     $scope.refreshCommunication = function (time) {
+        return;
         var refresh = function () {
             //var updateTime = $scope.zniffer.updateTime + cfg.interval;
             var updateTime = Math.round(+new Date() / 1000);
@@ -125,7 +126,7 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
         $scope.zniffer.interval = $interval(refresh, cfg.interval);
 
     };
-    $scope.refreshCommunication($scope.zniffer.updateTime);
+    //$scope.refreshCommunication($scope.zniffer.updateTime); 
 
     /**
      * Set zniffer filter
@@ -168,6 +169,7 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
 
 });
 /**
+ * DEPRECATED
  * ZnifferController
  * @author Martin Vach
  */
@@ -366,121 +368,5 @@ appController.controller('ZnifferController_', function ($scope, $interval, $fil
                 return 'Multicast';
         }
     }
-
-});
-
-/**
- * ZnifferControllerDemo
- * @author Martin Vach
- */
-appController.controller('ZnifferControllerDemo', function ($scope, $interval, $filter, cfg, dataService, myCache, _) {
-    $scope.zniffer = {
-        all: {},
-        frequency: 0,
-        uzb: {
-            current: 0,
-            all: ['COM 1', 'COM 2', 'COM 3', 'COM 4']
-        },
-        filter: {
-            model: false,
-            items: ['homeid', 'src', 'dest', 'rssi', 'speed', 'data'],
-            data: [],
-            search: '',
-            suggestions: []
-        }
-    };
-
-    /**
-     * Load zniffer data
-     * @returns {undefined}
-     */
-    $scope.loadZniffer = function () {
-        dataService.getApiLocal('zniffer.json').then(function (response) {
-            setZniffer(response.data);
-        }, function (error) {
-            alert('Unable to load data');
-        });
-    };
-    $scope.loadZniffer();
-
-    /**
-     * Set zniffer filter
-     * @returns {undefined}
-     */
-    $scope.setZnifferFilter = function (filter) {
-        $scope.zniffer.filter.search = '';
-        $scope.zniffer.filter.model = filter;
-        //$scope.loadZniffer();
-    };
-
-    /**
-     * Reset zniffer filter
-     * @returns {undefined}
-     */
-    $scope.resetZnifferFilter = function () {
-        $scope.zniffer.filter.search = '';
-        $scope.zniffer.filter.model = false;
-        $scope.loadZniffer();
-    };
-
-    /**
-     * Apply zniffer filter
-     * @param {type} value
-     * @returns {undefined}
-     */
-    $scope.applyZnifferFilter = function (value) {
-        $scope.zniffer.filter.suggestions = [];
-        $scope.zniffer.filter.search = value;
-        $scope.loadZniffer();
-    };
-
-    /**
-     * Set zniffer frequency
-     * @returns {undefined}
-     */
-    $scope.setZnifferFrequency = function (frq) {
-        $scope.zniffer.frequency = frq;
-        $scope.loadZniffer();
-    };
-
-    /**
-     * Set zniffer uzb
-     * @returns {undefined}
-     */
-    $scope.setZnifferUzb = function (uzb) {
-        $scope.zniffer.uzb.current = uzb;
-        $scope.loadZniffer();
-    };
-
-    /**
-     * Search in the zniffer by filter
-     */
-    $scope.searchZniffer = function () {
-        $scope.zniffer.filter.suggestions = [];
-        if ($scope.zniffer.filter.search.length >= 2) {
-            var searchArr = _.keys($scope.zniffer.filter.data[$scope.zniffer.filter.model]);
-            var search = $scope.zniffer.filter.search;
-            findText(searchArr, search);
-        }
-    };
-
-    /// --- Private functions --- ///
-
-    /**
-     * Find text
-     */
-    function findText(n, search, exclude) {
-        var gotText = false;
-        for (var i in n) {
-            var re = new RegExp(search, "ig");
-            var s = re.test(n[i]);
-            if (s && (!_.isArray(exclude) || exclude.indexOf(n[i]) === -1)) {
-                $scope.zniffer.filter.suggestions.push(n[i]);
-                gotText = true;
-            }
-        }
-        return gotText;
-    }
-    ;
 
 });

@@ -28,7 +28,7 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
                     'postfixget_url': '/ZWave.' + cfg.dongle + '/PostfixGet',
                     'postfixadd_url': '/ZWave.' + cfg.dongle + '/PostfixAdd',
                     'postfixremove_url': '/ZWave.' + cfg.dongle + '/PostfixRemove',
-                    'communication_history_url': '/ZWave.' + cfg.dongle + '/CommunicationHistory',
+                    //'communication_history_url': '/ZWave.' + cfg.dongle + '/CommunicationHistory',
                     'configget_url': '/ZWave.' + cfg.dongle + '/ExpertConfigGet',
                     'configupdate_url': '/ZWave.' + cfg.dongle + '/ExpertConfigUpdate'
 
@@ -266,5 +266,22 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
             };
         }, true, 'alert');
     }
+    
+    /**
+     * Load Box API data
+     */
+    $scope.loadBoxApiData = function () {
+        $scope.boxData = {};
+        dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
+            $scope.boxData.controller = ZWaveAPIData.controller.data;
+        }, function (error) {
+            alertify.alertError($scope._t('error_load_data'));
+            return;
+        });
+    };
+    if(cfg.app_type === 'installer'){
+         //$scope.loadBoxApiData();
+     }
+   
 
 });
