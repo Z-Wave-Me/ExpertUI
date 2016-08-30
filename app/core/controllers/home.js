@@ -22,6 +22,10 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
     $scope.notes = [];
     $scope.notesData = '';
     $scope.updateTime = $filter('getTimestamp');
+     $scope.controller = {
+         controllerState: 0,
+         startLearnMode: false
+     };
 
     $scope.reset = function() {
         $scope.failedDevices = angular.copy([]);
@@ -50,6 +54,8 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
      */
     $scope.loadData = function() {
         dataService.getZwaveData(function(ZWaveAPIData) {
+            var isRealPrimary = ZWaveAPIData.controller.data.isRealPrimary.value;
+            var hasDevices = Object.keys(ZWaveAPIData.devices).length;
             $scope.ZWaveAPIData = ZWaveAPIData;
             notInterviewDevices(ZWaveAPIData);
             notInterviewDevices(ZWaveAPIData);
@@ -58,6 +64,8 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
             notConfigDevices(ZWaveAPIData);
             batteryDevices(ZWaveAPIData);
             $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
+            $scope.controller.controllerState = ZWaveAPIData.controller.data.controllerState.value;
+            $scope.controller.startLearnMode = !isRealPrimary || hasDevices < 2 ? true : false;
             dataService.joinedZwaveData(function(data) {
                 $scope.reset();
                 notInterviewDevices(data.joined);
@@ -66,6 +74,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
                 //notConfigDevices(ZWaveAPIData);
                 batteryDevices(data.joined);
                 $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
+                $scope.controller.controllerState = data.joined.controller.data.controllerState.value;
 
             });
         });
@@ -119,6 +128,17 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
         return;
 
 
+    };
+    
+     // Run Zwave Command
+    $scope.runZwaveCmd = function (cmd) {
+         $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin'};
+        dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
+             $scope.loading = false;
+        }, function (error) {
+             $scope.loading = false;
+            alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
+        });
     };
 
     /// --- Private functions --- ///

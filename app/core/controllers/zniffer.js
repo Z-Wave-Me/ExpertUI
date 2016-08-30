@@ -2,8 +2,9 @@
  * ZnifferController - NEW
  * @author Martin Vach
  */
-appController.controller('ZnifferController', function ($scope, $interval, $filter, $cookies,cfg, dataService, myCache, _) {
+appController.controller('ZnifferController', function ($scope, $interval, $filter, $cookies, cfg, dataService, myCache, _) {
     $scope.zniffer = {
+        run: false,
         interval: null,
         updateTime: Math.round(+new Date() / 1000),
         controller: {},
@@ -36,77 +37,78 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
      * Cancel interval on page destroy
      */
     $scope.$on('$destroy', function () {
-        $interval.cancel( $scope.zniffer.interval);
+        $interval.cancel($scope.zniffer.interval);
     });
-    
-     /**
+
+    /**
      * Reset zniffer filter
      * @returns {undefined}
      */
     $scope.resetZniffer = function () {
         $interval.cancel($scope.zniffer.interval);
-         $scope.zniffer.all = [];
-         $scope.loadCommunication();
-         $scope.refreshCommunication($scope.zniffer.updateTime);
-          //$scope.detectZnifferFilter();
+        $scope.zniffer.all = [];
+        $scope.loadCommunication();
+        $scope.refreshCommunication($scope.zniffer.updateTime);
+        //$scope.detectZnifferFilter();
     };
-    
+
     /**
      * Load cached zniffer filter
      * @returns {undefined}
      */
     $scope.loadCachedZnifferFilter = function () {
-        if($cookies.znifferFilter){
-            angular.extend($scope.zniffer.filter.model,angular.fromJson($cookies.znifferFilter));
+        if ($cookies.znifferFilter) {
+            angular.extend($scope.zniffer.filter.model, angular.fromJson($cookies.znifferFilter));
         }
 
     };
     $scope.loadCachedZnifferFilter();
-    
-     /**
+
+    /**
      * Detect zniffer filter
      * @returns {undefined}
      */
     $scope.detectZnifferFilter = function () {
-        angular.forEach($scope.zniffer.filter.model,function(v,k){
-            var index =  $scope.zniffer.filter.used.indexOf(k);
-            if(v['value'] !== '' && index === -1){
-               $scope.zniffer.filter.used.push(k);
-           }
+        angular.forEach($scope.zniffer.filter.model, function (v, k) {
+            var index = $scope.zniffer.filter.used.indexOf(k);
+            if (v['value'] !== '' && index === -1) {
+                $scope.zniffer.filter.used.push(k);
+            }
         });
     };
-   $scope.detectZnifferFilter();
-    
+    $scope.detectZnifferFilter();
+
     /**
      * Load communication history
      * @returns {undefined}
      */
     $scope.loadCommunication = function (updateTime) {
         var params;
-//        var time = (updateTime ? '/' + updateTime : '');
-//        var filter = '?filter=' + JSON.stringify($scope.zniffer.filter.model);
-//        params = time + filter;
-        if(!updateTime){
+        var time = (updateTime ? '/' + updateTime : '');
+        var filter = '?filter=' + JSON.stringify($scope.zniffer.filter.model);
+        params = time + filter;
+        if (!updateTime) {
             $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin'};
         }
         dataService.getApi('communication_history_url', params, true).then(function (response) {
-             $scope.loading = false;
+            $scope.loading = false;
+            $scope.zniffer.updateTime = response.data.updateTime;
             var zniffer = _.chain(response.data.data)
                     .flatten()
                     .filter(function (v) {
-                        var bytes =  v.value.slice(5, -1);
+                        var bytes = v.value.slice(5, -1);
                         v.dateTime = $filter('getDateTimeObj')(v.updateTime);
                         v.bytes = (bytes ? bytes.toString() : '');
                         $scope.zniffer.all.push(v);
                         return v;
                     });
-            //$scope.zniffer.all = zniffer.value();
-            $scope.zniffer.updateTime = zniffer.max(function (v) {
-                return v.updateTime;
-            }).value().updateTime;
-             
+            $scope.zniffer.all = zniffer.value();
+            $scope.zniffer.run = true;
         }, function (error) {
-             $scope.loading = false;
+            $scope.zniffer.run = false;
+            $interval.cancel($scope.zniffer.interval);
+            $scope.loading = false;
+            alertify.alertError($scope._t('error_load_data') + ': ' + cfg.communication_history_url);
         });
     };
     $scope.loadCommunication();
@@ -116,17 +118,18 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
      * @returns {undefined}
      */
     $scope.refreshCommunication = function (time) {
-        return;
         var refresh = function () {
-            //var updateTime = $scope.zniffer.updateTime + cfg.interval;
-            var updateTime = Math.round(+new Date() / 1000);
-            //console.log('updateTime: ', time)
-            $scope.loadCommunication(updateTime);
+            $scope.zniffer.updateTime +=  Math.round(+cfg.interval / 1000);;
+            //var updateTime = Math.round(+new Date() / 1000);
+            $scope.loadCommunication($scope.zniffer.updateTime);
         };
-        $scope.zniffer.interval = $interval(refresh, cfg.interval);
+        if ($scope.zniffer.run) {
+            $scope.zniffer.interval = $interval(refresh, cfg.interval);
+        }
+
 
     };
-    //$scope.refreshCommunication($scope.zniffer.updateTime); 
+    $scope.refreshCommunication($scope.zniffer.updateTime);
 
     /**
      * Set zniffer filter
@@ -134,11 +137,11 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
      */
     $scope.setZnifferFilter = function (key) {
         //$cookies.znifferFilter =  JSON.stringify($scope.zniffer.filter.model);
-         if(!$scope.zniffer.filter.model[key].value){
-             return false;
-         }
+        if (!$scope.zniffer.filter.model[key].value) {
+            return false;
+        }
         $cookies.znifferFilter = angular.toJson($scope.zniffer.filter.model);
-        if(! _.contains($scope.zniffer.filter.used, key)){
+        if (!_.contains($scope.zniffer.filter.used, key)) {
             $scope.zniffer.filter.used.push(key);
         }
         $scope.resetZniffer();
@@ -151,20 +154,20 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
         $scope.zniffer.filter.model[key].value = '';
         $scope.zniffer.filter.used = _.without($scope.zniffer.filter.used, key);
         $cookies.znifferFilter = angular.toJson($scope.zniffer.filter.model);
-         $scope.resetZniffer();
+        $scope.resetZniffer();
     };
     /**
      * Reset all zniffer filters
      * @returns {undefined}
      */
     $scope.resetZnifferFilterAll = function () {
-         angular.forEach($scope.zniffer.filter.model,function(v,k){
-           $scope.zniffer.filter.model[k].value = '';
+        angular.forEach($scope.zniffer.filter.model, function (v, k) {
+            $scope.zniffer.filter.model[k].value = '';
         });
-        
-        $scope.zniffer.filter.used =[];
+
+        $scope.zniffer.filter.used = [];
         $cookies.znifferFilter = angular.toJson($scope.zniffer.filter.model);
-         $scope.resetZniffer();
+        $scope.resetZniffer();
     };
 
 });

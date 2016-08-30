@@ -280,7 +280,7 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
         });
     };
     if(cfg.app_type === 'installer'){
-         //$scope.loadBoxApiData();
+         $scope.loadBoxApiData();
      }
    
 
