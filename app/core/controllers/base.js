@@ -271,9 +271,15 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
      * Load Box API data
      */
     $scope.loadBoxApiData = function () {
-        $scope.boxData = {};
+        $scope.boxData = {
+            controller: {}
+        };
         dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
-            $scope.boxData.controller = ZWaveAPIData.controller.data;
+             var hasDevices = Object.keys(ZWaveAPIData.devices).length;
+             var homeId = ZWaveAPIData.controller.data.homeId.value;
+            $scope.boxData.controller.isPrimary = ZWaveAPIData.controller.data.isPrimary.value;
+            $scope.boxData.controller.hasDevices =  hasDevices < 2 ? false : true;
+            $scope.boxData.controller.homeId =   '0x' + ('00000000' + (homeId + (homeId < 0 ? 0x100000000 : 0)).toString(16)).slice(-8);
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
             return;

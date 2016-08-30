@@ -1,8 +1,8 @@
 /**
- * ZnifferController - NEW
+ * ZnifferHistoryControlle
  * @author Martin Vach
  */
-appController.controller('ZnifferController', function ($scope, $interval, $filter, $cookies, cfg, dataService, myCache, _) {
+appController.controller('ZnifferHistoryController', function ($scope, $interval, $filter, $cookies, cfg, dataService, myCache, _) {
     $scope.zniffer = {
         run: false,
         interval: null,
@@ -172,11 +172,10 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
 
 });
 /**
- * DEPRECATED
  * ZnifferController
  * @author Martin Vach
  */
-appController.controller('ZnifferController_', function ($scope, $interval, $filter, cfg, dataService, myCache, _) {
+appController.controller('ZnifferController', function ($scope, $interval, $filter, cfg, dataService, myCache, _) {
     $scope.zniffer = {
         interval: null,
         controller: {},
@@ -239,7 +238,7 @@ appController.controller('ZnifferController_', function ($scope, $interval, $fil
     $scope.loadIncomingPacket = function () {
         dataService.getApi('incoming_packet_url', null, true).then(function (response) {
             var exist = _.find($scope.zniffer.all, {updateTime: response.data.updateTime});
-            if (exist) {
+            if (exist || !response.data.value) {
                 return;
             }
             $scope.zniffer.all.push(
@@ -266,7 +265,7 @@ appController.controller('ZnifferController_', function ($scope, $interval, $fil
     $scope.loadOutgoingPacket = function () {
         dataService.getApi('outgoing_packet_url', null, true).then(function (response) {
             var exist = _.find($scope.zniffer.all, {updateTime: response.data.updateTime});
-            if (exist) {
+            if (exist || !response.data.value) {
                 return;
             }
             $scope.zniffer.all.push(
