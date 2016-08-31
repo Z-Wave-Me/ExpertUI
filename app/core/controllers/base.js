@@ -53,8 +53,6 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
     if (cfg.custom_ip === true) {
         $scope.showHome = false;
     }
-    // Is mobile
-    $scope.isMobile = false;
 
     // Url array
     $scope.urlArray = [];
@@ -123,6 +121,18 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
     $scope.isActive = function (route, segment) {
         var path = $location.path().split('/');
         return (route === path[segment] ? 'active' : '');
+    };
+    
+    /**
+     * Check if route match the pattern.
+     * @param {string} path
+     * @returns {Boolean}
+     */
+    $scope.routeMatch = function (path) {
+        if ($route.current && $route.current.regexp) {
+            return $route.current.regexp.test(path);
+        }
+        return false;
     };
 
     /**

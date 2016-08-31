@@ -136,10 +136,6 @@ angApp.config(['$routeProvider',
                 when('/installer/history', {
                     templateUrl: 'app/views/installer/history.html'
                 }).
-                // Installer - zniffer NEW
-                when('/installer/zniffernew', {
-                    templateUrl: 'app/views/installer/zniffer_new.html'
-                }).
                 // Installer - spectrum
                 when('/installer/spectrum', {
                     templateUrl: 'app/views/installer/spectrum.html'

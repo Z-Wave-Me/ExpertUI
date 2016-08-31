@@ -2,9 +2,11 @@
  * ZnifferHistoryControlle
  * @author Martin Vach
  */
-appController.controller('ZnifferHistoryController', function ($scope, $interval, $filter, $cookies, cfg, dataService, myCache, _) {
+appController.controller('ZnifferController', function ($scope, $interval, $filter, $cookies, $location, cfg, dataService, myCache, _) {
+    console.log($location.path())
     $scope.zniffer = {
-        run: false,
+        run: true,
+        trace: 'start',
         interval: null,
         updateTime: Math.round(+new Date() / 1000),
         controller: {},
@@ -45,6 +47,7 @@ appController.controller('ZnifferHistoryController', function ($scope, $interval
      * @returns {undefined}
      */
     $scope.resetZniffer = function () {
+        $scope.zniffer.trace = 'start';
         $interval.cancel($scope.zniffer.interval);
         $scope.zniffer.all = [];
         $scope.loadCommunication();
@@ -102,7 +105,7 @@ appController.controller('ZnifferHistoryController', function ($scope, $interval
                         $scope.zniffer.all.push(v);
                         return v;
                     });
-            $scope.zniffer.all = zniffer.value();
+            //$scope.zniffer.all = zniffer.value();
             $scope.zniffer.run = true;
         }, function (error) {
             $scope.zniffer.run = false;
@@ -111,19 +114,26 @@ appController.controller('ZnifferHistoryController', function ($scope, $interval
             alertify.alertError($scope._t('error_load_data') + ': ' + cfg.communication_history_url);
         });
     };
-    $scope.loadCommunication();
+    if ($scope.routeMatch('/installer/history')) {
+        $scope.loadCommunication();
+    }
+
 
     /**
      * Refresh communication history
      * @returns {undefined}
      */
     $scope.refreshCommunication = function (time) {
+        if ($scope.routeMatch('/installer/history')) {
+            return;
+        }
         var refresh = function () {
-            $scope.zniffer.updateTime +=  Math.round(+cfg.interval / 1000);;
+            $scope.zniffer.updateTime += Math.round(+cfg.interval / 1000);
+            ;
             //var updateTime = Math.round(+new Date() / 1000);
             $scope.loadCommunication($scope.zniffer.updateTime);
         };
-        if ($scope.zniffer.run) {
+        if ($scope.zniffer.run && $scope.zniffer.trace === 'start') {
             $scope.zniffer.interval = $interval(refresh, cfg.interval);
         }
 
@@ -170,12 +180,36 @@ appController.controller('ZnifferHistoryController', function ($scope, $interval
         $scope.resetZniffer();
     };
 
+    /**
+     * Set trace
+     */
+    $scope.setTrace = function (trace) {
+        switch (trace) {
+            case 'pause':
+                $scope.zniffer.trace = 'pause';
+                $interval.cancel($scope.zniffer.interval);
+                break;
+            case 'stop':
+                $scope.zniffer.trace = 'stop';
+                $interval.cancel($scope.zniffer.interval);
+                myCache.remove('incoming_packet');
+                angular.copy([], $scope.zniffer.all);
+                break;
+            default:
+                $scope.zniffer.trace = 'start';
+                $scope.refreshCommunication($scope.zniffer.updateTime);
+                break;
+
+        }
+        //console.log('Set trace: ',  $scope.zniffer.trace)
+    };
+
 });
 /**
  * ZnifferController
  * @author Martin Vach
  */
-appController.controller('ZnifferController', function ($scope, $interval, $filter, cfg, dataService, myCache, _) {
+appController.controller('ZnifferController_', function ($scope, $interval, $filter, cfg, dataService, myCache, _) {
     $scope.zniffer = {
         interval: null,
         controller: {},
@@ -347,8 +381,9 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
         if (_.isEmpty($scope.zniffer.cmdClass)) {
             return;
         }
-        var findCmdClass = _.where($scope.zniffer.cmdClass, {_key: cmdClassKey});
-        if (!findCmdClass) {
+        var findCmdClass = _.where($scope.zniffer.cmdClass, {_key: '0x71'});
+        if (!findCmdClass || _.isEmpty(findCmdClass)) {
+
             return ret;
         }
         var cmdClass = findCmdClass.pop();
