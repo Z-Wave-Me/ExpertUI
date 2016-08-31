@@ -87,7 +87,7 @@ appController.controller('ZnifferController', function ($scope, $interval, $filt
             var zniffer = _.chain(response.data.data)
                     .flatten()
                     .filter(function (v) {
-                        var bytes = v.value.slice(5, -1);
+                        var bytes = v.value;
                         var exist = _.findWhere($scope.zniffer.all, {updateTime: v.updateTime,bytes:bytes});
                         v.dateTime = $filter('getDateTimeObj')(v.updateTime);
                         v.bytes = (bytes ? bytes.toString() : '');
