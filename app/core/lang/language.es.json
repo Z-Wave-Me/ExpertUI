@@ -1,12 +1,18 @@
 {
-    "enter_value":"Enter a value",
-    "use_charcter_delimit":"Use character \",\" to delimit values",
-    "show":"Show",
-    "hide":"Hide",
+    "ready_to_network": "Ready to include into network",
+    "iam_in_my_network": "I am in my Network",
+    "include_into_network": "Include into Network",
+    "iam_in_network_homeid": "I am in Network",
+    "leave_network": "Leave Network",
+    "nav_history": "History",
+    "enter_value": "Enter a value",
+    "use_charcter_delimit": "Use character \",\" to delimit values",
+    "show": "Show",
+    "hide": "Hide",
     "reset_all_filters": "Remove all filters",
     "reset_filter": "Remove filter",
-    "nav_network_map":"Network map",
-    "txt_homepage_promo_installer":"<h1>Provided by Z-Wave Alliance</h1>",
+    "nav_network_map": "Network map",
+    "txt_homepage_promo_installer": "<h1>Provided by Z-Wave Alliance</h1>",
     "nav_spectrum_analyzer": "Spectrum analyzer",
     "data": "Data",
     "application": "Application",
@@ -631,6 +637,6 @@
     "device_disappeared": "Device removed from network",
     "rt_associated": "Direct association",
     "ie_last_element": "Solo para recordar, que IE no le gusta la coma (,) al final de la lista de elementos de matriz asociativa",
-     "txt_homepage_promo_default": "<p>This complete Static Z-Wave Plus Controller is certified under No ZC10-14110009 in November 2014. Certification includes both the Z-Wave Controller stack and this Expert User Interface.</p><p>The controller supports all certified Z-Wave devices in the market, namely those listed in the device data base <a href=\"http://pepper1.net/zwavedb/\">http://pepper1.net/zwavedb/</a>.</p><p>For these devices the controller will use some meta data such as image or configuration option. However it is also possible to control Z-Wave compatible devices not listed in this database. Please refer to the device manual for configuration and usage information.</p> <p>You can download the full users manual from <a href=\"http://razberry.z-wave.me\">www.z-wave.me</a></p>"
-    
+    "txt_homepage_promo_default": "<p>This complete Static Z-Wave Plus Controller is certified under No ZC10-14110009 in November 2014. Certification includes both the Z-Wave Controller stack and this Expert User Interface.</p><p>The controller supports all certified Z-Wave devices in the market, namely those listed in the device data base <a href=\"http://pepper1.net/zwavedb/\">http://pepper1.net/zwavedb/</a>.</p><p>For these devices the controller will use some meta data such as image or configuration option. However it is also possible to control Z-Wave compatible devices not listed in this database. Please refer to the device manual for configuration and usage information.</p> <p>You can download the full users manual from <a href=\"http://razberry.z-wave.me\">www.z-wave.me</a></p>"
+
 }
