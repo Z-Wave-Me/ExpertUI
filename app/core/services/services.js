@@ -139,7 +139,25 @@ appService.service('deviceService', function($filter, $log, _) {
         });
         return packets;
 
-    }
+    };
+    
+     /**
+     * Set Zniffer data
+     */
+    this.setZnifferData = function(data) {
+        return _.chain(data)
+                .flatten()
+                .filter(function (v) {
+                    //var bytes = v.value;
+                    //var exist = _.findWhere($scope.zniffer.all, {updateTime: v.updateTime, bytes: bytes});
+                    v.dateTime = $filter('getDateTimeObj')(v.updateTime);
+                    v.bytes = (_.isArray(v.value) ? v.value.toString() : v.value);
+                    v.rssi = (_.isArray(v.rssi) ? v.rssi.toString() : v.rssi);
+                    v.hops = (_.isArray(v.hops) ? v.hops.toString() : v.hops);
+                    return v;
+                });
+
+    };
 
     /**
      * Get language from zddx

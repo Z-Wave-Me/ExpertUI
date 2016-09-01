@@ -1,4 +1,5 @@
 {
+     "hops":"Hops",
     "ready_to_network": "Ready to include into network",
     "iam_in_my_network": "I am in my Network",
     "include_into_network": "Include into Network",
