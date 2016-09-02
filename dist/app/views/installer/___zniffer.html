@@ -1,8 +1,9 @@
 <!--Zniffer view -->
-<div ng-controller="ZnifferHistoryController">
+<div ng-controller="ZnifferController">
     <bb-loader></bb-loader>
-    <div class="page-header"><h1>{{ _t('nav_history')}}</h1></div>
+    <div class="page-header"><h1>{{ _t('nav_zniffer')}}</h1></div>
     <!-- Table -->
+    <!--<pre>{{zniffer.all|json}}</pre>-->
     <table class="table table-condensed table-hover">
         <thead>
             <!--<th>#</th>--> 
@@ -16,9 +17,11 @@
                 <th>
                     <div class="input-group">
                         <!-- Title and filter -->
-                        <i class="fa fa-filter clickable"
-                           ng-class="zniffer.filter.model['src'].value !== '' ? 'text-success' : ''"
-                           ng-click="expandFilter('znifferFilterSrc', $event)"></i>  {{ _t('src')}}
+                        <span class="clickable"
+                              ng-class="zniffer.filter.model['src'].value !== '' ? 'text-success' : ''"
+                              ng-click="expandFilter('znifferFilterSrc', $event)"> 
+                            <i class="fa fa-filter"></i>  {{ _t('src')}}
+                        </span>
                         <!-- Dropdown -->
                         <div class="app-dropdown app-dropdown-left" ng-if="filterExpanded.znifferFilterSrc">
                             <div class="app-dropdown-content">
@@ -60,9 +63,11 @@
                 <th>
                     <div class="input-group">
                         <!-- Title and filter -->
-                        <i class="fa fa-filter clickable"  
-                           ng-class="zniffer.filter.model['dest'].value !== '' ? 'text-success' : ''"
-                              ng-click="expandFilter('znifferFilterDest', $event)"></i>  {{ _t('dest')}}
+                        <span class="clickable"
+                              ng-class="zniffer.filter.model['dest'].value !== '' ? 'text-success' : ''"
+                              ng-click="expandFilter('znifferFilterDest', $event)"> 
+                            <i class="fa fa-filter"></i>  {{ _t('dest')}}
+                        </span>
                         <!-- Dropdown -->
                         <div class="app-dropdown app-dropdown-left" ng-if="filterExpanded.znifferFilterDest">
                             <div class="app-dropdown-content">
@@ -100,29 +105,66 @@
                         </div>
                     </div>
                 </th>
-                <!-- speed --> 
-                <th>{{ _t('speed')}}</th>
-                <!-- speed --> 
-                <th>{{ _t('rssi')}}</th>
-                <!-- hops --> 
-                <th>{{ _t('hops')}}</th>
+                <!-- data --> 
+                <th>
+                    <div class="input-group">
+                        <!-- Title and filter -->
+                        <span class="clickable"
+                              ng-class="zniffer.filter.model['data'].value !== '' ? 'text-success' : ''"
+                              ng-click="expandFilter('znifferFilterData', $event)"> 
+                            <i class="fa fa-filter"></i>  {{ _t('data')}}
+                        </span>
+                        <!-- Dropdown -->
+                        <div class="app-dropdown app-dropdown" ng-if="filterExpanded.znifferFilterData">
+                            <div class="app-dropdown-content">
+                                <!--<pre>{{zniffer.filter.model.data|json}} </pre>-->
+                                <div class="form-group">
+                                    <!-- Value -->
+                                    <select class="form-control" ng-model="zniffer.filter.model.data.value">
+                                        <option value="{{v}}" ng-repeat="v in zniffer.filter.items.data">{{v}}</option>
+                                    </select>
+                                </div>
+                                <!-- Visibility -->
+                                <div class="form-group form-inline">
+
+                                    <input class="form-control_" type="radio" name="data_show" value="1" 
+                                           ng-model="zniffer.filter.model.data.show" 
+                                           ng-checked="zniffer.filter.model.data.show == '1'" /> {{_t('show')}}
+                                    <input class="form-control_" type="radio" name="data_show" value="0" 
+                                           ng-model="zniffer.filter.model.data.show" 
+                                           ng-checked="zniffer.filter.model.data.show == '0'" /> {{_t('hide')}}
+                                </div>
+                            </div>
+                            <div class="appdropdown-footer" ng-click="resetZnifferFilter()">
+                                <!-- Reset -->
+                                <button class="btn btn-default" type="button" 
+                                        ng-click="expandFilter('znifferFilterData', $event);resetZnifferFilter('data')">
+                                    <i class="fa fa-times text-danger"></i>  {{_t('reset_filter')}}
+                                </button>
+                                <!-- OK -->
+                                <button class="btn btn-success" type="button" 
+                                        ng-click="expandFilter('znifferFilterData', $event);setZnifferFilter('data')">
+                                    <i class="fa fa-check"></i>  {{_t('th_ok')}}
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </th>
                 <!-- application --> 
                 <th>{{ _t('application')}}</th>
                 <!--<th>Packet</th>--> 
-                <th class="text-right">
-                    <button class="btn btn-default" type="button"
-                            ng-show="!_.isEmpty(zniffer.filter.used)"
+                 <th class="text-right">
+                     <button class="btn btn-default" type="button"
+                             ng-show="!_.isEmpty(zniffer.filter.used)"
                             ng-click="resetZnifferFilterAll()">
                         <i class="fa fa-times text-danger"></i>  {{_t('reset_all_filters')}}
                     </button>
-                </th>
+                 </th>
             </tr>
         </thead>
         <tbody>
-            <!--<tr class="zniffer-row-{{v.data}}" ng-repeat="v in zniffer.all| orderBy: '-updateTime' track by $index">--> 
-            <tr class="zniffer-row-{{v.data}}" 
-                dir-paginate="v in zniffer.all| orderBy: '-updateTime' | itemsPerPage: pageSize" current-page="currentPage" id="row_{{v.id}}">
-                
+            <tr class="zniffer-row-{{v.data}}" ng-repeat="v in zniffer.all| orderBy: '-updateTime' track by $index">
                 <td>
                     <i title="{{v.type}}" class="fa fa-long-arrow-right" ng-if="v.type === 'incoming'"></i>
                     <i title="{{v.type}}" class="fa fa-long-arrow-left" ng-if="v.type === 'outgoing'"></i> 
@@ -131,15 +173,10 @@
                 <td>{{v.dateTime.hrs + ':' + v.dateTime.min + ':' + v.dateTime.sec}}</td>
                 <td ng-class="zniffer.filter.model['src'].value !== '' ? 'bcg-success' : ''">{{v.src}}</td>
                 <td ng-class="zniffer.filter.model['dest'].value !== '' ? 'bcg-success' : ''">{{v.dest}}</td>
-                <td>{{v.speed||'-'}}</td>
-                <td>{{v.rssi||'-'}}</td>
-                <td>{{v.hops||'-'}}</td>
-                <td title="{{v.bytes}}">{{v.application}} ({{v.bytes|cutText:tue:20}})</td>
-                <td>&nbsp;</td>
+                <td ng-class="zniffer.filter.model['data'].value !== '' ? 'bcg-success' : ''">{{v.data}}</td>
+                <td>{{v.application._help}}</td>
+                <td>{{v.bytes}}</td>
             </tr>
         </tbody>
     </table>
-    <div class="text-center mobile-padding" ng-if_="collection.length > 0">
-       <dir-pagination-controls boundary-links="true"></dir-pagination-controls>
-     </div>
 </div>

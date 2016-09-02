@@ -111,7 +111,7 @@ appController.controller('ZnifferController', function ($scope, $interval, $time
  * ZnifferHistoryControlle
  * @author Martin Vach
  */
-appController.controller('ZnifferHistoryController', function ($scope, $interval, $filter, $cookies, $location, cfg, dataService, deviceService, myCache, _) {
+appController.controller('ZnifferHistoryController', function ($scope, $interval, $filter, $cookies, $location, cfg, dataService, deviceService, paginationService, _) {
     $scope.zniffer = {
         all: [],
         filter: {
@@ -136,11 +136,13 @@ appController.controller('ZnifferHistoryController', function ($scope, $interval
         }
 
     };
+    $scope.currentPage = 1;
+    $scope.pageSize = cfg.page_results_history;
     /**
      * Cancel interval on page destroy
      */
-    $scope.$on('$destroy', function () {
-    });
+    //$scope.$on('$destroy', function () {
+    //});
     
     /**
      * Load cached zniffer filter
@@ -235,6 +237,15 @@ appController.controller('ZnifferHistoryController', function ($scope, $interval
         delete $cookies['znifferFilter'];
         //$cookies.znifferFilter = angular.toJson($scope.zniffer.filter.model);
         $scope.resetCommunicationHistory();
+    };
+    
+    // Watch for pagination change
+    $scope.$watch('currentPage', function (page) {
+        paginationService.setCurrentPage(page);
+    });
+
+    $scope.setCurrentPage = function (val) {
+        $scope.currentPage = val;
     };
 
 });
