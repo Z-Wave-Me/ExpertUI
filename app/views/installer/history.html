@@ -16,11 +16,9 @@
                 <th>
                     <div class="input-group">
                         <!-- Title and filter -->
-                        <span class="clickable"
-                              ng-class="zniffer.filter.model['src'].value !== '' ? 'text-success' : ''"
-                              ng-click="expandFilter('znifferFilterSrc', $event)"> 
-                            <i class="fa fa-filter"></i>  {{ _t('src')}}
-                        </span>
+                        <i class="fa fa-filter clickable"
+                           ng-class="zniffer.filter.model['src'].value !== '' ? 'text-success' : ''"
+                           ng-click="expandFilter('znifferFilterSrc', $event)"></i>  {{ _t('src')}}
                         <!-- Dropdown -->
                         <div class="app-dropdown app-dropdown-left" ng-if="filterExpanded.znifferFilterSrc">
                             <div class="app-dropdown-content">
@@ -62,11 +60,9 @@
                 <th>
                     <div class="input-group">
                         <!-- Title and filter -->
-                        <span class="clickable"
-                              ng-class="zniffer.filter.model['dest'].value !== '' ? 'text-success' : ''"
-                              ng-click="expandFilter('znifferFilterDest', $event)"> 
-                            <i class="fa fa-filter"></i>  {{ _t('dest')}}
-                        </span>
+                        <i class="fa fa-filter clickable"  
+                           ng-class="zniffer.filter.model['dest'].value !== '' ? 'text-success' : ''"
+                              ng-click="expandFilter('znifferFilterDest', $event)"></i>  {{ _t('dest')}}
                         <!-- Dropdown -->
                         <div class="app-dropdown app-dropdown-left" ng-if="filterExpanded.znifferFilterDest">
                             <div class="app-dropdown-content">

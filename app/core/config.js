@@ -11,6 +11,7 @@ var config_data = {
         'user_field': 'USERXXXX',
         'pass_field': 'PSWDXXXX',
         'interval': 3000, // Set interval in miliseconds to refresh data 
+        'zniffer_interval': 1000, // Set interval in milisecondsfor zniffer
         'queue_interval': 1000, // Set interval in miliseconds to refresh queue data 
         'route_update_timeout': 15000, // Maximum time in miliseconds to wait for an update-route
         //'server_url': 'http://zwave.dyndns.org:8083/', // Remote JSON
@@ -28,9 +29,10 @@ var config_data = {
         'postfixget_url': '/ZWaveAPI/PostfixGet', // Postfix GET
         'postfixadd_url': '/ZWaveAPI/PostfixAdd', // Postfix Add
         'postfixremove_url': '/ZWaveAPI/PostfixRemove', // Postfix Remove
-        'incoming_packet_url': '/ZWaveAPI/Run/controller.data.incomingPacket', // Url to incoming packet
-        'outgoing_packet_url': '/ZWaveAPI/Run/controller.data.outgoingPacket', // Url to outgoing packet
-         'communication_history_url': '/ZWaveAPI/CommunicationHistory', // Communication History
+        //'incoming_packet_url': '/ZWaveAPI/Run/controller.data.incomingPacket', // Url to incoming packet
+        //'outgoing_packet_url': '/ZWaveAPI/Run/controller.data.outgoingPacket', // Url to outgoing packet
+        'zniffer_url': '/ZWaveAPI/Zniffer', // Zniffer
+        'communication_history_url': '/ZWaveAPI/CommunicationHistory', // Communication History
         'configget_url': '/ZWaveAPI/ExpertConfigGet', // Config get
         'configupdate_url': '/ZWaveAPI/ExpertConfigUpdate', // Config update
         'runjs_url': '/JS/Run/', // Url for running JS

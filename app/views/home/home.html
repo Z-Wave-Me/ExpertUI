@@ -91,15 +91,14 @@
                 <button 
                     class="btn btn-primary"
                     id="btn_learn_start"
-                    ng-disabled="[20].indexOf(controller.controllerState) > -1 || controller.startLearnMode == false"
                     ng-click="runZwaveCmd('controller.SetLearnMode(1)')"
-                    ng-show="[8, 9, 10, 11, 12].indexOf(controller.controllerState) == -1"
+                    ng-if="boxData.controller.isPrimary && (!boxData.controller.hasDevices || boxData.controller.hasDevices)"
                     >{{_t('include_into_network')}}</button>
                 <button 
                     class="btn btn-danger"
                     id="btn_learn_stop"
-                    ng-show="[8, 9, 10, 11, 12].indexOf(controller.controllerState) > -1"
                     ng-click="runZwaveCmd('controller.SetLearnMode(0)')"
+                     ng-if="!boxData.controller.isPrimary"
                     ><i class="fa fa-spinner fa-spin"></i> {{_t('leave_network')}}</button>
             </div>
         </div>
