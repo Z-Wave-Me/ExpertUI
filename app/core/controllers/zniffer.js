@@ -108,7 +108,7 @@ appController.controller('ZnifferController', function ($scope, $interval, $time
 });
 
 /**
- * ZnifferHistoryControlle
+ * ZnifferHistoryController
  * @author Martin Vach
  */
 appController.controller('ZnifferHistoryController', function ($scope, $interval, $filter, $cookies, $location, cfg, dataService, deviceService, paginationService, _) {

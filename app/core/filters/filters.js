@@ -49,7 +49,7 @@ angApp.filter('stringToSlug', function () {
  */
 angApp.filter('cutText', function () {
     return function (value, wordwise, max, tail) {
-         if (!value || value === undefined || value === null){
+         if ((!value && value !== 0) || value === undefined || value === null){
              return '';
         }
         if(!value.length){
