@@ -33659,7 +33659,7 @@ angApp.filter('stringToSlug', function () {
  */
 angApp.filter('cutText', function () {
     return function (value, wordwise, max, tail) {
-         if (!value || value === undefined || value === null){
+         if ((!value && value !== 0) || value === undefined || value === null){
              return '';
         }
         if(!value.length){
@@ -40677,7 +40677,7 @@ appController.controller('ZnifferController', function ($scope, $interval, $time
 });
 
 /**
- * ZnifferHistoryControlle
+ * ZnifferHistoryController
  * @author Martin Vach
  */
 appController.controller('ZnifferHistoryController', function ($scope, $interval, $filter, $cookies, $location, cfg, dataService, deviceService, paginationService, _) {
