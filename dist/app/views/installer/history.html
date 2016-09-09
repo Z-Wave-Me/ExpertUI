@@ -121,8 +121,7 @@
         <tbody>
             <!--<tr class="zniffer-row-{{v.data}}" ng-repeat="v in zniffer.all| orderBy: '-updateTime' track by $index">--> 
             <tr class="zniffer-row-{{v.data}}" 
-                dir-paginate="v in zniffer.all| orderBy: '-updateTime' | itemsPerPage: pageSize" current-page="currentPage" id="row_{{v.id}}">
-                
+                dir-paginate="v in zniffer.all| orderBy: '-id' | itemsPerPage: pageSize" current-page="currentPage" id="row_{{v.id}}">
                 <td>
                     <i title="{{v.type}}" class="fa fa-long-arrow-right" ng-if="v.type === 'incoming'"></i>
                     <i title="{{v.type}}" class="fa fa-long-arrow-left" ng-if="v.type === 'outgoing'"></i> 

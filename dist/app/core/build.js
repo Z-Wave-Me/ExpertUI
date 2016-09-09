@@ -40570,7 +40570,7 @@ appController.controller('UzbController', function($scope, $timeout, dataService
 
 
 /**
- * ZnifferControlle
+ * ZnifferController
  * @author Martin Vach
  */
 appController.controller('ZnifferController', function ($scope, $interval, $timeout, $cookies, $location, $http, cfg, dataService, deviceService, myCache, _) {
@@ -40623,7 +40623,8 @@ appController.controller('ZnifferController', function ($scope, $interval, $time
                 var znifferData = deviceService.setZnifferData(response.data.data);
                 $scope.zniffer.updateTime = response.data.updateTime;
                 _.filter(znifferData.value(), function (v) {
-                    var exist = _.findWhere($scope.zniffer.all, {updateTime: v.updateTime, bytes: v.bytes});
+                    //var exist = _.findWhere($scope.zniffer.all, {updateTime: v.updateTime, bytes: v.bytes});
+                    var exist = _.findWhere($scope.zniffer.all, {id: v.id, bytes: v.bytes});
                     if (!exist) {
                         $scope.zniffer.all.push(v);
                     }
@@ -40821,7 +40822,7 @@ appController.controller('ZnifferHistoryController', function ($scope, $interval
 
 
 /**
- * ZnifferHistoryControlle
+ * ZnifferHistoryController
  * @author Martin Vach
  */
 appController.controller('ZnifferController_', function ($scope, $interval, $filter, $cookies, $location, cfg, dataService, myCache, _) {
