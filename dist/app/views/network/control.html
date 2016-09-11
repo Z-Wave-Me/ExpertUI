@@ -299,7 +299,7 @@
                         </div>
 
                         <!-- learn_start -->
-                        <div class="cfg-block form-inline">
+                        <div class="cfg-block form-inline" ng-if="cfg.app_type === 'default'">
                             <p class="input-help">{{_t('nm_learn_mode_war')}}</p>
                             <div class="nm-response"  ng-class="controllerState == 0 ? 'text-info' : 'text - danger'" ng-show="[8, 9, 10, 11, 12].indexOf(controllerState) > -1">
                                 {{_t('nm_controller_state_' + controllerState)}}

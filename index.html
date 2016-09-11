@@ -42,6 +42,7 @@
   <script src="app/core/app.js"></script>
   <script src="app/core/directives/directives.js"></script>
   <script src="app/core/directives/angular-slider.js"></script> 
+  <script src="app/core/directives/dir-pagination.js"></script> 
   <script src="app/core/filters/filters.js"></script>
   <script src="app/core/factories/factories.js"></script>
   <script src="app/core/services/services.js"></script>
@@ -135,8 +136,8 @@
                         <li class="dropdown" ng-if="cfg.app_type === 'installer'">
                             <a href="" class="dropdown-toggle" data-toggle="dropdown" ng-class="isActive('installer',1)">{{ _t('nav_installer') }} <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#installer/zniffernew" data-collapse-navbar ng-class="isActive('zniffernew',2)">{{ _t('nav_zniffer') }} NEW</a></li>
                                 <li><a href="#installer/zniffer" data-collapse-navbar ng-class="isActive('zniffer',2)">{{ _t('nav_zniffer') }}</a></li>
+                                <li><a href="#installer/history" data-collapse-navbar ng-class="isActive('history',2)">{{ _t('nav_history') }}</a></li>
                                  
                                 <!--<li><a href="#installer/spectrum" data-collapse-navbar ng-class="isActive('spectrum',2)">{{ _t('nav_spectrum_analyzer') }}</a></li>-->
                                
@@ -160,9 +161,13 @@
         </div> <!-- /.navbar --> 
     
     <!-- Ang Container -->
+    <div class="container-installer" ng-if="cfg.app_type === 'installer'">
+        <div class="alert alert-danger" ng-if="boxData.controller.isPrimary && !boxData.controller.hasDevices"><i class="fa fa-info-circle"></i> {{_t('ready_to_network')}}</div>
+         <div class="alert alert-success" ng-if="boxData.controller.isPrimary && boxData.controller.hasDevices"><i class="fa fa-check"></i> {{_t('iam_in_my_network')}}</div>
+          <div class="alert alert-warning" ng-if="!boxData.controller.isPrimary"><i class="fa fa-info-circle"></i> {{_t('iam_in_network_homeid')}}: {{boxData.controller.homeId}} </div>
+    </div>
     <div id="respone_container" class="container"><div id="respone_container_inner"></div></div>
     <div id="main_content" class="container" ng-view></div>
-
         <div id="footer">
             <div class="container-fluid">
                       <p class="text-muted" ng-bind-html="getCustomCfgArr('footer_text') | toTrusted"></p>

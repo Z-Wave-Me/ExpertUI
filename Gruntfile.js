@@ -49,6 +49,7 @@ module.exports = function (grunt) {
                     'app/core/app.js',
                     'app/core/directives/directives.js',
                     'app/core/directives/angular-slider.js',
+                    'app/core/directives/dir-pagination.js',
                     'app/core/filters/filters.js',
                     'app/core/factories/factories.js',
                     'app/core/services/services.js',

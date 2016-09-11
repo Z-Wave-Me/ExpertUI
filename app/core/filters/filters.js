@@ -49,15 +49,24 @@ angApp.filter('stringToSlug', function () {
  */
 angApp.filter('cutText', function () {
     return function (value, wordwise, max, tail) {
-        if (!value)
-            return '';
+         if ((!value && value !== 0) || value === undefined || value === null){
+             return '';
+        }
+        if(!value.length){
+            return value;
+        }
+           
 
         max = parseInt(max, 10);
-        if (!max)
+        if (!max){
             return value;
-        if (value.length <= max)
+        }
+            
+        if (value.length <= max){
             return value;
-
+        }
+            
+           
         value = value.substr(0, max);
         if (wordwise) {
             var lastspace = value.lastIndexOf(' ');
