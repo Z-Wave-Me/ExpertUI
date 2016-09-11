@@ -41,9 +41,9 @@ var config_data = {
         'zddx_url': '/ZDDX/', // Url for zddx xml files
         'zddx_create_url': '/ZWaveAPI/CreateZDDX/', // Create zddx file
         'notes_url': '/config/notes.log', // Url for store notes data
-        'uzb_url': 'http://www.zwave.eu/api/expertui/uzb/', // Url for uzb data
-        'license_url': 'http://store.zwaveeurope.com/license/utility_uzb.php', // Url for license key
-        'buy_licence_key': 'http://www.z-wave.me/index.php?id=41', // Buy licence key url
+        'uzb_url': 'https://www.zwave.eu/api/expertui/uzb/', // Url for uzb data
+        'license_url': 'https://store.zwaveeurope.com/license/utility_uzb.php', // Url for license key
+        'buy_licence_key': 'https://www.z-wave.me/index.php?id=41', // Buy licence key url
         'smarthome_login': '/smarthome/#/?fromexpert', // Smarthome login page 
          'smarthome_logout': '/smarthome/#/logout', // Smarthome login page 
         'lang_dir': 'app/core/lang/', // Language directory
