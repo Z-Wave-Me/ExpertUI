@@ -1,4 +1,11 @@
 <!-- Home view -->
+
+<script>
+    function refreshPage(){
+        window.location.reload();
+    }
+</script>
+
 <div ng-controller="HomeController">
      <bb-loader></bb-loader>
     <div class="form-inline form-home-ip" ng-show="cfg.custom_ip">
@@ -48,35 +55,7 @@
                 <li class="list-group-item"><strong>{{flirsDevices}}</strong> {{_t('txt_devices_flirs')}}</li>
             </ul>
 
-            <h3><i class="fa fa-plus-square"></i> {{_t('txt_net_health')}}</h3>
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <p ng-repeat="v in lowBatteryDevices">
-                        <a class="text-danger" href="#device/battery">(#{{v.id}}) {{v.name}} {{_t('txt_low_battery')}} ({{v.battery_charge}}%)</a>
-                    </p>
-                </li>
-                <li class="list-group-item" ng-if="cfg.app_type === 'default'">
-                    <p ng-repeat="v in notInterviewDevices">
-                        <a class="text-danger" href="#help/{{v.id}}"> (#{{v.id}}) {{v.name}} {{_t('txt_interview_not')}}</a>
-                    </p>
-                </li>
-                <li class="list-group-item" ng-show="assocRemovedDevices.length > 1">
-                    <p ng-repeat="v in assocRemovedDevices">
-                        <a class="text-danger" href="#configuration/interview/{{v.id}}">(#{{v.id}}) {{v.name}} {{_t('txt_assoc_removed')}}:</a><br />
-                        <em ng-repeat="a in v.assoc">{{a.name}}, </em> 
-                    </p>
-                </li>
-                <li class="list-group-item">
-                    <p ng-repeat="v in failedDevices">
-                        <a class="text-danger" href="#help/{{v.id}}">(#{{v.id}}) {{v.name}} {{_t('txt_failed')}}</a>
-                    </p>
-                </li>
-                <li class="list-group-item">
-                    <p ng-repeat="v in notConfigDevices| unique:id">
-                        <a class="text-danger" href="#configuration/interview/{{v.id}}">(#{{v.id}}) {{v.name}} {{_t('device_changed_configuration')}}</a> 
-                    </p>
-                </li>
-            </ul>
+            
             <div ng-if="cfg.app_type === 'default'">
                 <h3><i class="fa fa-info-circle"></i> {{_t('device_reset_locally')}}</h3>
                 <ul class="list-group">
@@ -92,14 +71,35 @@
                     class="btn btn-primary"
                     id="btn_learn_start"
                     ng-click="runZwaveCmd('controller.SetLearnMode(1)')"
-                    ng-if="boxData.controller.isPrimary && (!boxData.controller.hasDevices || boxData.controller.hasDevices)"
+                    ng-if="boxData.controller.isPrimary && (!boxData.controller.hasDevices && boxData.controller.controllerState == 0)"
+                    onClick="refreshPage()"
+
                     >{{_t('include_into_network')}}</button>
+                <button
+                        class="btn btn-primary"
+                        id="btn_learn_start"
+                        ng-click="runZwaveCmd('controller.SetLearnMode(1)')"
+                        ng-if="boxData.controller.isPrimary && (boxData.controller.hasDevices)"
+                        style="background-color: grey;"
+                >{{_t('include_into_network')}}</button>
                 <button 
                     class="btn btn-danger"
                     id="btn_learn_stop"
                     ng-click="runZwaveCmd('controller.SetLearnMode(0)')"
                      ng-if="!boxData.controller.isPrimary"
                     ><i class="fa fa-spinner fa-spin"></i> {{_t('leave_network')}}</button>
+
+
+                <button
+                        class="btn btn-danger"
+                        id="btn_learn_stop"
+                        ng-click="runZwaveCmd('controller.SetLearnMode(0)')"
+                        ng-if="boxData.controller.controllerState == 9 && boxData.controller.isPrimary"
+                        onClick="refreshPage()"
+                ><i class="fa fa-spinner fa-spin"></i> {{_t('Stop inclusion')}}</button>
+
+
+
             </div>
         </div>
     </div>

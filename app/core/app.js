@@ -140,6 +140,10 @@ angApp.config(['$routeProvider',
                 when('/installer/spectrum', {
                     templateUrl: 'app/views/installer/spectrum.html'
                 }).
+                // Installer - spectrum
+                when('/installer/rssi', {
+                    templateUrl: 'app/views/installer/rssi_background.html'
+                }).
                 // Error page
                 when('/error/:code?', {
                     templateUrl: 'app/views/error.html'

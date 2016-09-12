@@ -1,6 +1,7 @@
 {
     "--- newtrans": "---",
      "---": "---",
+    "nav_rssi":"Background Noise",
      "hops":"Hops",
     "ready_to_network":"Ready to include into network",
     "iam_in_my_network":"I am in my Network",
@@ -433,5 +434,7 @@
     "wakeup_list": "Wakeup Settings",
     "yes": "YES",
     "zwave_role_type": "Z-Wave+ Role Type",
-    "ie_last_element": "just to remember, that IE do not like trailing comma (,) at the end the list of associative array elements"
+    "ie_last_element": "just to remember, that IE do not like trailing comma (,) at the end the list of associative array elements",
+  "nm_inc_into_nw" : "Enter / Leave different Networks",
+  "nm_inc_into_nw_desc" : "This modes allows this controller to enter and leave a different network as normal node."
 }
