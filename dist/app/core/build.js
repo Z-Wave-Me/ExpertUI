@@ -38559,6 +38559,100 @@ appController.controller('ZnifferController_', function ($scope, $interval, $fil
     }
 
 });
+
+/**
+ * The controller that handles OpenWeather element.
+ * @class ElementOpenWeatherController
+ */
+appController.controller('ZnifferRSSIController', function ($scope, $interval, $filter, cfg, dataService, myCache, _) {
+    /*$scope.widgetOpenWeather = {
+        find: {},
+        alert: {message: false, status: 'is-hidden', icon: false}
+    };'/
+    /**
+     * Load single device
+     */
+    /*$scope.loadDeviceId = function () {
+        var device = _.where($scope.dataHolder.devices.collection, {id: $scope.dataHolder.devices.find.id});
+        if (_.isEmpty(device)) {
+            $scope.widgetOpenWeather.alert = {message: $scope._t('error_load_data'), status: 'alert-danger', icon: 'fa-exclamation-triangle'};
+            return;
+        }
+        $scope.widgetOpenWeather.find = device[0];
+        return;
+    };
+    $scope.loadDeviceId(); */
+    $scope.rssi = {
+        chartOptions: {
+            title:{
+                text: ""
+            },
+            axisX:{
+                title: "Time",
+                tickColor: "black",
+                tickLength: 5,
+                tickThickness: 2,
+                valueFormatString: "HH:mm"
+            },
+            axisY:{
+                title: "RSSI (dBm)",
+                tickColor: "black",
+                tickLength: 5,
+                tickThickness: 2
+            },
+            data: [
+                {
+                    type: "line",
+                    xValueType: "dateTime",
+                    xValueFormatString: "HH:mm",
+                    dataPoints: [],
+                }
+            ],
+            zoomEnabled:true
+        },
+        chartData1: [],
+        chartData2: [],
+        interval: null
+    }
+
+    $scope.loadingRSSIData = function() {
+        $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin'};
+        dataService.getApi('rssi_chart','', true).then(function (response) {
+            $scope.loading = false;
+
+            var rssiData = typeof response === 'string'? JSON.parse(response) : response;
+            //var array = json.data;
+            rssiData.data.data.forEach(function (entry){
+                if (new Date(entry.time * 1000) > (new Date().setHours(0,0,0,0))) {
+                    $scope.rssi.chartData1.push({x: new Date(entry.time * 1000), y: parseInt(entry.channel1)});
+                    $scope.rssi.chartData2.push({x: new Date(entry.time * 1000), y: parseInt(entry.channel2)});
+                }
+            });
+
+            $scope.rssi.chartOptions.title.text= 'Channel 1';
+            $scope.rssi.chartOptions.data[0].dataPoints = $scope.rssi.chartData1
+            $scope.createChart('chart1',$scope.rssi.chartOptions);
+
+            $scope.rssi.chartOptions.title.text= 'Channel 2';
+            $scope.rssi.chartOptions.data[0].dataPoints = $scope.rssi.chartData2
+            $scope.createChart('chart2',$scope.rssi.chartOptions);
+
+        }, function (error) {
+            $scope.loading = false;
+            alertify.alertError($scope._t('error_load_data') + ': ' + cfg.rssi_chart);
+        });
+    };
+    $scope.loadingRSSIData();
+
+    $scope.createChart = function (elementID,chartData) {
+        chart = new CanvasJS.Chart(elementID, chartData);
+        chart.render();
+    };
+
+    $scope.rssi.interval = $interval($scope.loadingRSSIData, 60000);
+    //setTimeout(function(){$scope.loadingRSSIData()}, 60000);
+});
+
 /**
  * SpectrumController
  * @author Martin Vach

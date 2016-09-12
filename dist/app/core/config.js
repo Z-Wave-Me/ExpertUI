@@ -33,7 +33,7 @@ var config_data = {
         //'outgoing_packet_url': '/ZWaveAPI/Run/controller.data.outgoingPacket', // Url to outgoing packet
         'zniffer_url': '/ZWaveAPI/Zniffer', // Zniffer
         'communication_history_url': '/ZWaveAPI/CommunicationHistory', // Communication History
-        'rssi_chart': '/rssi', // chart of rssi channels 1 and 2
+        'rssi_chart': '/ZWaveAPI/RSSIGet', // chart of rssi channels 1 and 2
         'configget_url': '/ZWaveAPI/ExpertConfigGet', // Config get
         'configupdate_url': '/ZWaveAPI/ExpertConfigUpdate', // Config update
         'runjs_url': '/JS/Run/', // Url for running JS
