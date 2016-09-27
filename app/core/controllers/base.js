@@ -39,7 +39,6 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
                 //var redirectTo = $location.$$protocol+'://' + $location.$$host + ':' + $location.$$port + cfg.smarthome_login
                 window.location.href = cfg.smarthome_login;
             }
-            ;
         });
     };
     $scope.setDongle();
@@ -163,7 +162,6 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
      *Reload data
      */
     $scope.reloadData = function () {
-        console.log('Reloading')
         myCache.removeAll();
         $route.reload();
     };
@@ -308,7 +306,7 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
             $scope.boxData.controller.controllerState = ZWaveAPIData.controller.data.controllerState.value;
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
-            return;
+
         });
     };
     if(cfg.app_type === 'installer'){
