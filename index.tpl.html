@@ -85,7 +85,12 @@
                             </ul>
                         </li>
                         <li class="divider-vertical remove-margin"></li>
-                        <li><a href=""><i class="fa fa-clock-o"></i> <span id="update_time_tick"></span></a></li>
+                        <!--<li><a href=""><i class="fa fa-clock-o"></i> <span id="update_time_tick"></span></a></li>-->
+                        <li ng-if="cfg.route.time.string">
+                            <a href="" ng-click="reloadData()">
+                                <i class="fa fa-clock-o"></i> {{cfg.route.time.string}}
+                            </a>
+                        </li>
                         <li class="divider-vertical remove-margin"></li>
                         <li><a ng-href="{{cfg.smarthome_logout}}"><i class="fa fa-sign-out fa-lg"></i></a></li>
 

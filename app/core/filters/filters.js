@@ -183,6 +183,22 @@ angApp.filter('unique', function () {
     };
 });
 /**
+ * Get time from the box and displays it in the hrs:min:sec format
+ * @function getCurrentTime
+ */
+angApp.filter('setTimeFromBox', function () {
+    return function (input) {
+        if (input.localTimeUT) {
+            var d = new Date(input.localTimeUT * 1000);
+        } else {
+            var d = new Date();
+        }
+        // Convert to ISO
+        // 2016-06-07T11:49:51.000Z
+        return d.toISOString().substring(11, d.toISOString().indexOf('.'));
+    };
+});
+/**
  * Convert unix timastamp to date
  */
 angApp.filter('getTimestamp', function () {

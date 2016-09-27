@@ -6,7 +6,7 @@
 /*** Controllers ***/
 var appController = angular.module('appController', []);
 // Base controller
-appController.controller('BaseController', function ($scope, $cookies, $filter, $location, $anchorScroll, $window, $route, cfg, dataService, deviceService, myCache) {
+appController.controller('BaseController', function ($scope, $cookies, $filter, $location, $anchorScroll, $window, $route, $interval,cfg, dataService, deviceService, myCache) {
     $scope.loading = false;
     /**
      * Load zwave dongles
@@ -64,8 +64,21 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
     $scope.cfg = cfg;
     // Load zwave config
     $scope.loadZwaveConfig = function (nocache) {
+        // Set config
         dataService.getApi('configget_url', null, nocache).then(function (response) {
             angular.extend(cfg.zwavecfg, response.data);
+        }, function (error) {});
+        // Set time
+        dataService.getApi('timezone', null, true).then(function (response) {
+            angular.extend(cfg.route.time, {string: $filter('setTimeFromBox')(response.data.data)});
+
+            var refresh = function () {
+                dataService.getApi('timezone', null, true).then(function (response) {
+                    angular.extend(cfg.route.time, {string: $filter('setTimeFromBox')(response.data.data)});
+
+                }, function (error) {});
+            };
+            $scope.timeZoneInterval = $interval(refresh, $scope.cfg.interval);
         }, function (error) {});
     };
     $scope.loadZwaveConfig();
@@ -150,6 +163,7 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
      *Reload data
      */
     $scope.reloadData = function () {
+        console.log('Reloading')
         myCache.removeAll();
         $route.reload();
     };
