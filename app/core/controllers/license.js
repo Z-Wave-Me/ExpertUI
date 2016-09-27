@@ -32,7 +32,7 @@ appController.controller('LicenseController', function($scope, $timeout, dataSer
     $scope.ZWaveAPIData = function() {
         dataService.getZwaveData(function(ZWaveAPIData) {
             $scope.controllerUuid = ZWaveAPIData.controller.data.uuid.value;
-            $scope.controllerIsZeroUuid = parseFloat(ZWaveAPIData.controller.data.uuid.value) === 0;
+            $scope.controllerIsZeroUuid = parseInt("0x" + ZWaveAPIData.controller.data.uuid.value, 16) === 0;
 
         });
     };
