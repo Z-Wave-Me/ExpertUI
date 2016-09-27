@@ -11,6 +11,9 @@ This User Interfaces allows to operate a Smart Home Network based on Z-Wave devi
 - Configuration: New section postfix. 
 - Configuration: New section link health.
 
+#### Fixes
+- Error on license tab #211.
+
 ## v1.0.6
 #### New features
 - Configuration: Select Device Description No configuration file #103. 
