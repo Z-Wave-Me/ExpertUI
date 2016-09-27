@@ -18,7 +18,7 @@ var config_data = {
         'local_data_url':'app/data/',
         'server_url': '', // Remote JSON
         'dongle': 'zway', // Default dongle
-        'zwave_list': '/ZWaveAPI/list', // Zwave list of dongles
+        'zwave_list': '/ZWave/list', // Zwave list of dongles
         'update_url': '/ZWaveAPI/Data/', // Url for update (refresh data)
         'store_url': '/ZWaveAPI/Run/', // Url for store data
         'restore_url': '/ZWaveAPI/Restore', // Url to restore backup
