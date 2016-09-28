@@ -31105,6 +31105,22 @@ angApp.filter('unique', function () {
     };
 });
 /**
+ * Get time from the box and displays it in the hrs:min:sec format
+ * @function getCurrentTime
+ */
+angApp.filter('setTimeFromBox', function () {
+    return function (input) {
+        if (input.localTimeUT) {
+            var d = new Date(input.localTimeUT * 1000);
+        } else {
+            var d = new Date();
+        }
+        // Convert to ISO
+        // 2016-06-07T11:49:51.000Z
+        return d.toISOString().substring(11, d.toISOString().indexOf('.'));
+    };
+});
+/**
  * Convert unix timastamp to date
  */
 angApp.filter('getTimestamp', function () {
@@ -33882,7 +33898,7 @@ appService.service('deviceService', function($filter, $log, _) {
 /*** Controllers ***/
 var appController = angular.module('appController', []);
 // Base controller
-appController.controller('BaseController', function ($scope, $cookies, $filter, $location, $anchorScroll, $window, $route, cfg, dataService, deviceService, myCache) {
+appController.controller('BaseController', function ($scope, $cookies, $filter, $location, $anchorScroll, $window, $route, $interval,cfg, dataService, deviceService, myCache) {
     $scope.loading = false;
     /**
      * Load zwave dongles
@@ -33915,7 +33931,6 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
                 //var redirectTo = $location.$$protocol+'://' + $location.$$host + ':' + $location.$$port + cfg.smarthome_login
                 window.location.href = cfg.smarthome_login;
             }
-            ;
         });
     };
     $scope.setDongle();
@@ -33940,8 +33955,21 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
     $scope.cfg = cfg;
     // Load zwave config
     $scope.loadZwaveConfig = function (nocache) {
+        // Set config
         dataService.getApi('configget_url', null, nocache).then(function (response) {
             angular.extend(cfg.zwavecfg, response.data);
+        }, function (error) {});
+        // Set time
+        dataService.getApi('timezone', null, true).then(function (response) {
+            angular.extend(cfg.route.time, {string: $filter('setTimeFromBox')(response.data.data)});
+
+            var refresh = function () {
+                dataService.getApi('timezone', null, true).then(function (response) {
+                    angular.extend(cfg.route.time, {string: $filter('setTimeFromBox')(response.data.data)});
+
+                }, function (error) {});
+            };
+            $scope.timeZoneInterval = $interval(refresh, $scope.cfg.interval);
         }, function (error) {});
     };
     $scope.loadZwaveConfig();
@@ -34170,7 +34198,7 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
             $scope.boxData.controller.controllerState = ZWaveAPIData.controller.data.controllerState.value;
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
-            return;
+
         });
     };
     if(cfg.app_type === 'installer'){
@@ -37674,7 +37702,7 @@ appController.controller('LicenseController', function($scope, $timeout, dataSer
     $scope.ZWaveAPIData = function() {
         dataService.getZwaveData(function(ZWaveAPIData) {
             $scope.controllerUuid = ZWaveAPIData.controller.data.uuid.value;
-            $scope.controllerIsZeroUuid = parseFloat(ZWaveAPIData.controller.data.uuid.value) === 0;
+            $scope.controllerIsZeroUuid = parseInt("0x" + ZWaveAPIData.controller.data.uuid.value, 16) === 0;
 
         });
     };

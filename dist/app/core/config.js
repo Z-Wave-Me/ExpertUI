@@ -18,7 +18,7 @@ var config_data = {
         'local_data_url':'app/data/',
         'server_url': '', // Remote JSON
         'dongle': 'zway', // Default dongle
-        'zwave_list': '/ZWaveAPI/list', // Zwave list of dongles
+        'zwave_list': '/ZWave/list', // Zwave list of dongles
         'update_url': '/ZWaveAPI/Data/', // Url for update (refresh data)
         'store_url': '/ZWaveAPI/Run/', // Url for store data
         'restore_url': '/ZWaveAPI/Restore', // Url to restore backup
@@ -36,6 +36,7 @@ var config_data = {
         'rssi_chart': '/ZWaveAPI/RSSIGet', // chart of rssi channels 1 and 2
         'configget_url': '/ZWaveAPI/ExpertConfigGet', // Config get
         'configupdate_url': '/ZWaveAPI/ExpertConfigUpdate', // Config update
+        'timezone': '/ZAutomation/api/v1/system/time/get',// Get time
         'runjs_url': '/JS/Run/', // Url for running JS
         'device_classes_url': '/translations/DeviceClasses.xml', // Url to Device Classes
         'zwave_classes_url': 'storage/data/ZWave_cmd_classes.xml', // Url to Zwave Classes
@@ -77,11 +78,19 @@ var config_data = {
         // Zwave config
         'zwavecfg': {
             // Debug mode
-            'debug': false
+            'debug': false,
+        },
+        // Route - will be extended
+        'route': {
+            // Time zone
+            time: {
+                string: false,
+                timestamp: false
+            }
         },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer
-        'app_type': 'installer',
+        'app_type': 'default',
          'custom_cfg': {
              'default':{
                  'logo': 'app/images/zplus.jpg',
