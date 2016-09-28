@@ -35,6 +35,7 @@
             </div>
         </div>
         <div class="col-sm-6 product-data-list pull-right">
+            <!-- Z-Wave Network -->
             <div ng-controller="HomeDongleController">
                 <div class="form-inline home-dongle" ng-if="homeDongle.data.length > 0">
                     <h3><i class="fa fa-code-fork"></i> {{_t('select_dongle')}}</h3>
@@ -46,7 +47,7 @@
                 </div>
                 <h3 ng-if="homeDongle.data.length < 1"><i class="fa fa-code-fork"></i> {{_t('zwave_network')}}: <em>{{cfg.dongle}}</em></h3>
             </div>
-
+            <!-- Network Information -->
             <h3><i class="fa fa-info-circle"></i> {{_t('txt_network_info')}}</h3>
             <ul class="list-group">
                 <li class="list-group-item"><strong>{{countDevices}}</strong> {{_t('txt_devices_present')}}</li>
@@ -55,8 +56,39 @@
                 <li class="list-group-item"><strong>{{flirsDevices}}</strong> {{_t('txt_devices_flirs')}}</li>
             </ul>
 
-
+            <!-- only default -->
             <div ng-if="cfg.app_type === 'default'">
+                <!-- Network Health -->
+                <h3><i class="fa fa-plus-square"></i> {{_t('txt_net_health')}}</h3>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <p ng-repeat="v in lowBatteryDevices">
+                            <a class="text-danger" href="#device/battery">(#{{v.id}}) {{v.name}} {{_t('txt_low_battery')}} ({{v.battery_charge}}%)</a>
+                        </p>
+                    </li>
+                    <li class="list-group-item" ng-if="cfg.app_type === 'default'">
+                        <p ng-repeat="v in notInterviewDevices">
+                            <a class="text-danger" href="#help/{{v.id}}"> (#{{v.id}}) {{v.name}} {{_t('txt_interview_not')}}</a>
+                        </p>
+                    </li>
+                    <li class="list-group-item" ng-show="assocRemovedDevices.length > 1">
+                        <p ng-repeat="v in assocRemovedDevices">
+                            <a class="text-danger" href="#configuration/interview/{{v.id}}">(#{{v.id}}) {{v.name}} {{_t('txt_assoc_removed')}}:</a><br />
+                            <em ng-repeat="a in v.assoc">{{a.name}}, </em>
+                        </p>
+                    </li>
+                    <li class="list-group-item">
+                        <p ng-repeat="v in failedDevices">
+                            <a class="text-danger" href="#help/{{v.id}}">(#{{v.id}}) {{v.name}} {{_t('txt_failed')}}</a>
+                        </p>
+                    </li>
+                    <li class="list-group-item">
+                        <p ng-repeat="v in notConfigDevices| unique:id">
+                            <a class="text-danger" href="#configuration/interview/{{v.id}}">(#{{v.id}}) {{v.name}} {{_t('device_changed_configuration')}}</a>
+                        </p>
+                    </li>
+                </ul>
+                <!-- Device reset locally -->
                 <h3><i class="fa fa-info-circle"></i> {{_t('device_reset_locally')}}</h3>
                 <ul class="list-group">
                     <li class="list-group-item" ng-repeat="v in localyResetDevices"> (#{{v.id}}) {{v.name}}</li>
@@ -64,8 +96,9 @@
                 </ul>
             </div>
 
-            <!-- learn_start -->
+            <!-- only installer -->
             <div class="cfg-block form-inline" ng-if="cfg.app_type === 'installer'">
+                <!-- learn_start -->
                 <p class="input-help">{{_t('nm_learn_mode_war')}}</p>
                 <button
                         class="btn btn-primary"
