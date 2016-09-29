@@ -250,7 +250,7 @@
     "th_battery_type": "Batterie-Typ",
     "th_battery_count": "Anzahl",
     "th_lastpackets": "Letzte Paketzeiten (*10 ms)",
-    "th_sdk": "SDK",
+    "th_sdk":"Z-Wave Version",
     "th_appversion": "Firmware-Version",
     "th_mwief": "Explorer",
     "th_mwief_tip": "Netzweite Inklusion und Explorer-Frame",

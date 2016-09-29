@@ -166,10 +166,10 @@ appController.controller('StatusController', function($scope, $filter, dataServi
         }
 
         // DDR
-        var ddr = false;
+        /*var ddr = false;
         if (angular.isDefined(node.data.ZDDXMLFile)) {
             ddr = node.data.ZDDXMLFile.value;
-        }
+        }*/
 
         var obj = {};
         obj['id'] = nodeId;
@@ -182,9 +182,7 @@ appController.controller('StatusController', function($scope, $filter, dataServi
         obj['awake'] = awake_cont;
         obj['updateTime'] = operating_cont;
         obj['isFailed'] = getIsFailedCont(isFailed);
-        //obj['ddr'] = ddr;
-        obj['ddr'] = ddrCont(node);
-        obj['interview'] = interview_cont;
+        // obj['ddr'] = ddrCont(node);
         obj['urlToStore'] = (isListening || isFLiRS ? 'devices[' + nodeId + '].SendNoOperation()' : false);
         obj['interview'] = interview_cont;
         obj['isListening'] = isListening;

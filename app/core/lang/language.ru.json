@@ -381,7 +381,7 @@
     "th_progress": "Progress",
     "th_result": "Результат",
     "th_scale": "Единица измерения",
-    "th_sdk": "SDK",
+    "th_sdk":"Z-Wave Version",
     "th_security": "Шифрование",
     "th_sleeping": "Спящие",
     "th_switchall": "Выключить всё",

@@ -246,7 +246,7 @@
     "th_battery_type": "Batterityp",
     "th_battery_count": "Antal batterier",
     "th_lastpackets": "Senaste packet (i 10 ms-enheter)",
-    "th_sdk": "SDK",
+    "th_sdk":"Z-Wave Version",
     "th_appversion": "App-version",
     "th_mwief": "NWI & EF",
     "th_mwief_tip": "Network Wide Inclusion och Explorer Frame",

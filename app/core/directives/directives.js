@@ -208,9 +208,50 @@ angApp.directive('switchAllIcon', function () {
 });
 
 
-// Switch all icons
+// Routyng icons
 //@todo: move to filters
 angApp.directive('routingTypeIcon', function () {
+    return {
+        restrict: "E",
+        replace: true,
+        template: '<i class="fa {{cls}} fa-lg" title="{{title}}"></i>',
+        link: function ($scope, elem, attr) {
+            var src;
+            var title;
+            var cls;
+            if (attr.nodeId !== null && $scope.ZWaveAPIData) {
+                var node = $scope.ZWaveAPIData.devices[attr.nodeId];
+
+                var isListening = node.data.isListening.value;
+                var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
+                var hasWakeup = 0x84 in node.instances[0].commandClasses;
+                var hasBattery = 0x80 in node.instances[0].commandClasses;
+                var isPortableRemoteControl = (node.data.deviceTypeString.value == "Portable Remote Controller");
+
+                if (isListening) { // mains powered
+                    cls = 'fa-bolt text-warning';
+                     title = $scope._t('conf_apply_mains');
+                } else if (hasWakeup) {
+                    cls = 'fa-battery-full text-success';
+                    title = $scope._t('battery_powered_device');
+                } else if (isFLiRS) {
+                    cls = 'fa-fire text-info';
+                    title = $scope._t('FLiRS_device');
+                } else if (isPortableRemoteControl) {
+                    cls = 'fa-feed text-primary';
+                    title = $scope._t('battery_operated_remote_control');
+                } else {
+                    cls = '';
+                    title = "";
+                }
+            }
+            $scope.src = src;
+            $scope.title = title;
+            $scope.cls = cls;
+        }
+    };
+});
+/*angApp.directive('routingTypeIcon', function () {
     return {
         restrict: "E",
         replace: true,
@@ -248,7 +289,7 @@ angApp.directive('routingTypeIcon', function () {
             $scope.title = title;
         }
     };
-});
+});*/
 
 angApp.directive('expertCommandInput', function ($filter) {
     // Get text input
