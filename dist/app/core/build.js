@@ -33756,7 +33756,7 @@ appService.service('deviceService', function($filter, $log, _) {
     function buildCfgXml(data, cfgXml, id, commandclass) {
         var hasCfgXml = false;
         var assocCc = [133, 142];
-        var formData = [];
+       /* var formData = [];
         if (commandclass == '84') {
             var par1 = JSON.parse(data[0]['parameter']);
             var par2 = JSON.parse(data[1]['parameter']);
@@ -33771,7 +33771,8 @@ appService.service('deviceService', function($filter, $log, _) {
         } else {
             formData = data;
         }
-        var xmlData = formData;
+        var xmlData = formData;*/
+        var xmlData = data;
         if (angular.isObject(cfgXml) && $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration')) {
             hasCfgXml = cfgXml.config.devices.deviceconfiguration;
             angular.forEach(hasCfgXml, function(v, k) {
@@ -39803,7 +39804,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                      }*/
                 }
                 if (dataArray[inputConfNum]) {
-                    dataArray[inputConfNum].value += value;
+                    dataArray[inputConfNum].value += ',' + value;
                 } else {
                     dataArray[inputConfNum] = {
                         value: value,
@@ -39828,6 +39829,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             //console.log('num', num)
             var confSize = 0;
             var value = n.value;
+
             if (angular.isObject(setDefault) && setDefault.confNum == num) {
                 value = setDefault.showDefaultValue;
             }

@@ -163,7 +163,7 @@
                 </div>
             </div>
             
-             <div class="panel panel-default" ng-if="frequency">
+             <div class="panel panel-default" ng-if="frequency && cfg.app_type !== 'installer'">
                 <div class="panel-heading"><i class="fa fa-map-marker"></i> {{_t('nm_frequency_title')}}</div>
                 <div class="panel-body">
                     <div>{{_t('current_frequency')}}: <strong>{{frequency}}</strong></div>
@@ -259,6 +259,17 @@
         </div>
 
         <div class="col-md-6 col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a href="#network/controller">
+                        <i class="fa fa-info-circle"></i>
+                        {{_t('nav_controller_info')}}
+                    </a>
+                </div>
+
+
+
+            </div>
             <div class="panel panel-default">
                 <div class="panel-heading"><i class="fa fa-sitemap"></i> {{_t('nm_net_maintance')}}</div>
                 <div class="panel-body">
