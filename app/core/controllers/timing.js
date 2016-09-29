@@ -62,7 +62,7 @@ appController.controller('TimingController', function($scope, $filter, dataServi
             var specificType = node.data.specificType.value;
 
             // Device type
-            if (isListening) {
+            /*if (isListening) {
                 type = 'type_mains';
             } else if (!isListening && hasWakeup) {
                 type = 'type_battery_wakup';
@@ -71,6 +71,19 @@ appController.controller('TimingController', function($scope, $filter, dataServi
             } else {
                 type = 'type_remote';
 
+            }*/
+            if (node.data.genericType.value === 1) {
+                type = 'portable';
+            } else if (node.data.genericType.value === 2) {
+                type = 'static';
+            } else if (isFLiRS) {
+                type = 'flirs';
+            } else if (hasWakeup) {
+                type = node.data.isAwake.value ? 'battery' : 'sleep';
+            } else if (isListening) {
+                type = 'mains';
+            } else {
+                type = 'error';
             }
 
             // Packets
