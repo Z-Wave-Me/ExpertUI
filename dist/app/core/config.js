@@ -5,12 +5,13 @@
  */
 var config_data = {
     'cfg': {
-        'app_name': 'Z-Wave',
+        'app_name': 'Expert UI',
         'app_version': '1.1.0',
         'custom_ip': false,
         'user_field': 'USERXXXX',
         'pass_field': 'PSWDXXXX',
-        'interval': 1000, // Set interval in miliseconds to refresh data 
+        'interval': 3000, // Set interval in miliseconds to refresh data 
+        'zniffer_interval': 3000, // Set interval in milisecondsfor zniffer
         'queue_interval': 1000, // Set interval in miliseconds to refresh queue data 
         'route_update_timeout': 15000, // Maximum time in miliseconds to wait for an update-route
         //'server_url': 'http://zwave.dyndns.org:8083/', // Remote JSON
@@ -28,10 +29,14 @@ var config_data = {
         'postfixget_url': '/ZWaveAPI/PostfixGet', // Postfix GET
         'postfixadd_url': '/ZWaveAPI/PostfixAdd', // Postfix Add
         'postfixremove_url': '/ZWaveAPI/PostfixRemove', // Postfix Remove
-        'incoming_packet_url': '/ZWaveAPI/Run/controller.data.incomingPacket', // Url to incoming packet
-        'outgoing_packet_url': '/ZWaveAPI/Run/controller.data.outgoingPacket', // Url to outgoing packet
+        //'incoming_packet_url': '/ZWaveAPI/Run/controller.data.incomingPacket', // Url to incoming packet
+        //'outgoing_packet_url': '/ZWaveAPI/Run/controller.data.outgoingPacket', // Url to outgoing packet
+        'zniffer_url': '/ZWaveAPI/Zniffer', // Zniffer
+        'communication_history_url': '/ZWaveAPI/CommunicationHistory', // Communication History
+        'rssi_chart': '/ZWaveAPI/RSSIGet', // chart of rssi channels 1 and 2
         'configget_url': '/ZWaveAPI/ExpertConfigGet', // Config get
         'configupdate_url': '/ZWaveAPI/ExpertConfigUpdate', // Config update
+        'timezone': '/ZAutomation/api/v1/system/time/get',// Get time
         'runjs_url': '/JS/Run/', // Url for running JS
         'device_classes_url': '/translations/DeviceClasses.xml', // Url to Device Classes
         'zwave_classes_url': 'storage/data/ZWave_cmd_classes.xml', // Url to Zwave Classes
@@ -48,6 +53,7 @@ var config_data = {
         'lang_dir': 'app/core/lang/', // Language directory
         'lang': 'en', // Default language
         'lang_list': ['en','de','fr','es','ru','cz','sk','sv','cn'], // List of languages
+        'page_results_history': 20, // List of languages
         'frequency': {
             0: 'EU',
            1:' RU',
@@ -72,7 +78,15 @@ var config_data = {
         // Zwave config
         'zwavecfg': {
             // Debug mode
-            'debug': false
+            'debug': false,
+        },
+        // Route - will be extended
+        'route': {
+            // Time zone
+            time: {
+                string: false,
+                timestamp: false
+            }
         },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer

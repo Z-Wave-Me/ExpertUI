@@ -49,15 +49,24 @@ angApp.filter('stringToSlug', function () {
  */
 angApp.filter('cutText', function () {
     return function (value, wordwise, max, tail) {
-        if (!value)
-            return '';
+         if ((!value && value !== 0) || value === undefined || value === null){
+             return '';
+        }
+        if(!value.length){
+            return value;
+        }
+           
 
         max = parseInt(max, 10);
-        if (!max)
+        if (!max){
             return value;
-        if (value.length <= max)
+        }
+            
+        if (value.length <= max){
             return value;
-
+        }
+            
+           
         value = value.substr(0, max);
         if (wordwise) {
             var lastspace = value.lastIndexOf(' ');
@@ -171,6 +180,22 @@ angApp.filter('unique', function () {
             items = newItems;
         }
         return items;
+    };
+});
+/**
+ * Get time from the box and displays it in the hrs:min:sec format
+ * @function getCurrentTime
+ */
+angApp.filter('setTimeFromBox', function () {
+    return function (input) {
+        if (input.localTimeUT) {
+            var d = new Date(input.localTimeUT * 1000);
+        } else {
+            var d = new Date();
+        }
+        // Convert to ISO
+        // 2016-06-07T11:49:51.000Z
+        return d.toISOString().substring(11, d.toISOString().indexOf('.'));
     };
 });
 /**

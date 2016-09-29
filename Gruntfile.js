@@ -44,11 +44,13 @@ module.exports = function (grunt) {
                     'app/vendor/xml/xml2json.js',
                     // Z-Wave uld ExpertU
                     'app/vendor/zwave/pyzw.js',
-                    'app/vendor/zwave/pyzw_zwave_ui.js',
+                    // CANVAS JS
+                    'app/vendor/canvasjs/canvasjs.min.js',
                     // APP
                     'app/core/app.js',
                     'app/core/directives/directives.js',
                     'app/core/directives/angular-slider.js',
+                    'app/core/directives/dir-pagination.js',
                     'app/core/filters/filters.js',
                     'app/core/factories/factories.js',
                     'app/core/services/services.js',

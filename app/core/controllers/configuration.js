@@ -526,7 +526,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                      }*/
                 }
                 if (dataArray[inputConfNum]) {
-                    dataArray[inputConfNum].value += value;
+                    dataArray[inputConfNum].value += ',' + value;
                 } else {
                     dataArray[inputConfNum] = {
                         value: value,
@@ -551,6 +551,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             //console.log('num', num)
             var confSize = 0;
             var value = n.value;
+
             if (angular.isObject(setDefault) && setDefault.confNum == num) {
                 value = setDefault.showDefaultValue;
             }

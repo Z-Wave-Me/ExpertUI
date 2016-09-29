@@ -139,7 +139,23 @@ appService.service('deviceService', function($filter, $log, _) {
         });
         return packets;
 
-    }
+    };
+    
+     /**
+     * Set Zniffer data
+     */
+    this.setZnifferData = function(data) {
+        return _.chain(data)
+                .flatten()
+                .filter(function (v) {
+                    v.dateTime = $filter('getDateTimeObj')(v.updateTime);
+                    v.bytes = (_.isArray(v.value) ? v.value.toString() : v.value);
+                    v.rssi = (_.isArray(v.rssi) ? v.rssi.toString() : v.rssi);
+                    v.hops = (_.isArray(v.hops) ? v.hops.toString() : v.hops);
+                    return v;
+                });
+
+    };
 
     /**
      * Get language from zddx
@@ -1119,7 +1135,7 @@ appService.service('deviceService', function($filter, $log, _) {
     function buildCfgXml(data, cfgXml, id, commandclass) {
         var hasCfgXml = false;
         var assocCc = [133, 142];
-        var formData = [];
+       /* var formData = [];
         if (commandclass == '84') {
             var par1 = JSON.parse(data[0]['parameter']);
             var par2 = JSON.parse(data[1]['parameter']);
@@ -1134,7 +1150,8 @@ appService.service('deviceService', function($filter, $log, _) {
         } else {
             formData = data;
         }
-        var xmlData = formData;
+        var xmlData = formData;*/
+        var xmlData = data;
         if (angular.isObject(cfgXml) && $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration')) {
             hasCfgXml = cfgXml.config.devices.deviceconfiguration;
             angular.forEach(hasCfgXml, function(v, k) {

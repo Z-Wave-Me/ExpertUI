@@ -2243,6 +2243,16 @@ fieldset[disabled] .btn-warning.active {
   color: #f0ad4e;
   background-color: #fff;
 }
+
+
+.btn-disabled {
+  color: #fff;
+  background-color: lightgrey;
+  border-color: #d43f3a;
+
+}
+
+
 .btn-danger {
   color: #fff;
   background-color: #d9534f;
@@ -4453,15 +4463,15 @@ a.thumbnail.active {
   right: -21px;
   color: inherit;
 }
-.alert-success {
+.alert-danger {
   color: #3c763d;
   background-color: #dff0d8;
   border-color: #d6e9c6;
 }
-.alert-success hr {
+.alert-danger hr {
   border-top-color: #c9e2b3;
 }
-.alert-success .alert-link {
+.alert-danger .alert-link {
   color: #2b542c;
 }
 .alert-info {
@@ -4475,26 +4485,26 @@ a.thumbnail.active {
 .alert-info .alert-link {
   color: #245269;
 }
-.alert-warning {
+.alert-success {
   color: #8a6d3b;
   background-color: #fcf8e3;
   border-color: #faebcc;
 }
-.alert-warning hr {
+.alert-success hr {
   border-top-color: #f7e1b5;
 }
-.alert-warning .alert-link {
+.alert-success .alert-link {
   color: #66512c;
 }
-.alert-danger {
+.alert-warning {
   color: #a94442;
   background-color: #f2dede;
   border-color: #ebccd1;
 }
-.alert-danger hr {
+.alert-warning hr {
   border-top-color: #e4b9c0;
 }
-.alert-danger .alert-link {
+.alert-warning .alert-link {
   color: #843534;
 }
 @-webkit-keyframes progress-bar-stripes {

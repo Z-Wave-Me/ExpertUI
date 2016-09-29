@@ -11,6 +11,15 @@ This User Interfaces allows to operate a Smart Home Network based on Z-Wave devi
 - Configuration: New section postfix. 
 - Configuration: New section link health.
 
+#### Changes
+- Controller info removed from the menu and is displayed on the Network > Control page.
+- Menu Configuration moved to Device > Configuration.
+- Network/Control: Frequency is hidden in the IMA version.
+
+#### Fixes
+- Error when setting Wake up time for StellaZ thermostatic device #206.
+- Error on license tab #211.
+
 ## v1.0.6
 #### New features
 - Configuration: Select Device Description No configuration file #103. 

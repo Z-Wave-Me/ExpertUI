@@ -8,3 +8,5 @@ upload.php
 /node_modules/*
 npm-debug.log
 /app/css/vendor/*
+*.iml
+/.idea

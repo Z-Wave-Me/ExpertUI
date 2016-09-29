@@ -132,9 +132,17 @@ angApp.config(['$routeProvider',
                 when('/installer/zniffer', {
                     templateUrl: 'app/views/installer/zniffer.html'
                 }).
+                // Installer - history
+                when('/installer/history', {
+                    templateUrl: 'app/views/installer/history.html'
+                }).
                 // Installer - spectrum
                 when('/installer/spectrum', {
                     templateUrl: 'app/views/installer/spectrum.html'
+                }).
+                // Installer - spectrum
+                when('/installer/rssi', {
+                    templateUrl: 'app/views/installer/rssi_background.html'
                 }).
                 // Error page
                 when('/error/:code?', {
@@ -189,7 +197,7 @@ angApp.run(function ($rootScope, $location, dataService, cfg) {
 angApp.config(function ($provide, $httpProvider, cfg) {
     $httpProvider.defaults.timeout = 5000;
     // Intercept http calls.
-    $provide.factory('MyHttpInterceptor', function ($q, $location) {
+    $provide.factory('MyHttpInterceptor', function ($q, $location, deviceService) {
         var path = $location.path().split('/');
         return {
             // On request success
@@ -209,6 +217,7 @@ angApp.config(function ($provide, $httpProvider, cfg) {
             },
             // On response failture
             responseError: function (rejection) {
+                 deviceService.logError(rejection);
                 // Return the promise rejection.
                 return $q.reject(rejection);
             }

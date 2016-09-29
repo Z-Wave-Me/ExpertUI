@@ -1,4 +1,11 @@
 <!-- Controll view -->
+
+<script>
+    function refreshPage(){
+        window.location.reload();
+    }
+</script>
+
 <div ng-controller="ControllController" ng-show="showContent">
     <div class="page-header"><h1>{{_t('nav_control')}}</h1></div>
     <div class="row" id="row_controll">
@@ -57,7 +64,7 @@
                         ><i class="fa fa-spinner fa-spin"></i> {{_t('nm_include_stop')}}</button>
 
                     <!-- exclude -->
-                    <button 
+                    <button
                         class="btn btn-primary"
                         id="nm_exclude_start"
                         title="{{_t('nm_exclude_start_tooltip')}}"
@@ -72,6 +79,50 @@
                         ng-click="runCmd('controller.RemoveNodeFromNetwork(0)')"
                         ><i class="fa fa-spinner fa-spin"></i> {{_t('nm_exclude_stop')}}</button>
                 </div>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading"><i class="fa fa-sitemap"></i> {{_t('nm_inc_into_nw')}}</div>
+                <div class="panel-body">
+                <p class="input-help">{{_t('nm_inc_into_nw_desc')}}</p>
+
+
+                        <button
+                                class="btn btn-danger"
+                                id="btn_learn_stop"
+                                ng-click="runZwaveCmd('controller.SetLearnMode(0)')"
+                                ng-if="!boxData.controller.isPrimary"
+                        ><i class="fa fa-spinner fa-spin"></i> {{_t('leave_network')}}</button>
+
+                    <button
+                            class="btn btn-primary"
+                            id="btn_learn_start"
+                            ng-click="runZwaveCmd('controller.SetLearnMode(1)')"
+                            ng-if="boxData.controller.isPrimary && (boxData.controller.hasDevices)"
+                            style="background-color: grey;"
+                            disabled
+                    >{{_t('include_into_network')}}</button>
+
+                        <button
+                                class="btn btn-primary"
+                                id="btn_learn_start"
+                                ng-click="runCmd('controller.SetLearnMode(1)')"
+                                ng-if="boxData.controller.isPrimary && (!boxData.controller.hasDevices)"
+                                ng-show="[8, 9, 10, 11, 12].indexOf(controllerState) == -1"
+                        >{{_t('nm_learn_start')}}</button>
+                        <button
+                                class="btn btn-danger"
+                                id="btn_learn_stop"
+                                ng-show="[8, 9, 10, 11, 12].indexOf(controllerState) > -1"
+                                ng-if="boxData.controller.isPrimary && (!boxData.controller.hasDevices)"
+                                ng-click="runCmd('controller.SetLearnMode(0)')"
+                        ><i class="fa fa-spinner fa-spin"></i> {{_t('nm_learn_stop')}}</button>
+
+            </div>
+
+
+
             </div>
 
 
@@ -112,7 +163,7 @@
                 </div>
             </div>
             
-             <div class="panel panel-default" ng-if="frequency">
+             <div class="panel panel-default" ng-if="frequency && cfg.app_type !== 'installer'">
                 <div class="panel-heading"><i class="fa fa-map-marker"></i> {{_t('nm_frequency_title')}}</div>
                 <div class="panel-body">
                     <div>{{_t('current_frequency')}}: <strong>{{frequency}}</strong></div>
@@ -209,6 +260,17 @@
 
         <div class="col-md-6 col-lg-6">
             <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a href="#network/controller">
+                        <i class="fa fa-info-circle"></i>
+                        {{_t('nav_controller_info')}}
+                    </a>
+                </div>
+
+
+
+            </div>
+            <div class="panel panel-default">
                 <div class="panel-heading"><i class="fa fa-sitemap"></i> {{_t('nm_net_maintance')}}</div>
                 <div class="panel-body">
                     <div>
@@ -299,7 +361,7 @@
                         </div>
 
                         <!-- learn_start -->
-                        <div class="cfg-block form-inline">
+                        <div class="cfg-block form-inline" ng-if="cfg.app_type === 'default'">
                             <p class="input-help">{{_t('nm_learn_mode_war')}}</p>
                             <div class="nm-response"  ng-class="controllerState == 0 ? 'text-info' : 'text - danger'" ng-show="[8, 9, 10, 11, 12].indexOf(controllerState) > -1">
                                 {{_t('nm_controller_state_' + controllerState)}}
