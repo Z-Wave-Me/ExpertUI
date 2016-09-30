@@ -1857,11 +1857,162 @@ h3 {
   left: 0;
 }
 
-/*@import "common/_gird"; 
-@import "common/_body";
-@import "common/_header";
-@import "common/_footer";
-@import "common/_images";*/
+/* Header
+-------------------------------------------------- */
+/* line 3, ../sass/common/_header.scss */
+#header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 2100;
+  color: #0d0d0d;
+  font-size: 120%;
+}
+/* line 12, ../sass/common/_header.scss */
+#header .container {
+  padding: 0;
+}
+/* line 15, ../sass/common/_header.scss */
+#header .divider-vertical {
+  height: 50px;
+  border-left: 1px solid #b3b3b3;
+  border-right: 1px solid #f2f2f2;
+}
+/* line 22, ../sass/common/_header.scss */
+#header .fa {
+  font-size: 120%;
+}
+
+/* Main navigation
+-------------------------------------------------- */
+/* line 29, ../sass/common/_header.scss */
+#main_navigation_wrap {
+  background-color: #FFFFFF;
+  border-bottom: solid 1px #cccccc;
+  height: 50px;
+}
+
+/* line 34, ../sass/common/_header.scss */
+#main_navigation {
+  position: relative;
+  line-height: 50px;
+}
+/* line 37, ../sass/common/_header.scss */
+#main_navigation a {
+  display: inline-block;
+  padding: 0 15px;
+  color: #333333;
+  line-height: 50px;
+}
+/* line 43, ../sass/common/_header.scss */
+#main_navigation a:hover {
+  background-color: #bfbfbf;
+}
+/* line 46, ../sass/common/_header.scss */
+#main_navigation .active {
+  background-color: #cccccc;
+  color: #e6e6e6;
+}
+
+/* line 51, ../sass/common/_header.scss */
+#header_logo {
+  max-height: 40px;
+  max-width: 100px;
+}
+
+/* line 55, ../sass/common/_header.scss */
+#navigation_left {
+  position: absolute;
+}
+
+/* line 59, ../sass/common/_header.scss */
+#navigation_right {
+  float: right;
+}
+
+/* line 62, ../sass/common/_header.scss */
+#navi_settings {
+  border-radius: 4px;
+  height: 40px;
+  line-height: 40px !important;
+  padding: 7px;
+  margin-right: 15px;
+}
+
+/* line 70, ../sass/common/_header.scss */
+.navi-time-link {
+  cursor: pointer;
+}
+
+/* line 73, ../sass/common/_header.scss */
+.navi-time {
+  padding-left: 10px;
+}
+
+/* line 77, ../sass/common/_header.scss */
+.mobile-icon {
+  padding-left: 7px;
+  color: #333333;
+}
+/* line 80, ../sass/common/_header.scss */
+.mobile-icon .fa {
+  font-size: 17px;
+}
+
+/* Subnavigation
+-------------------------------------------------- */
+/* line 87, ../sass/common/_header.scss */
+#sub_navigation {
+  position: relative;
+}
+
+/* line 91, ../sass/common/_header.scss */
+#sub_navigation_in ul {
+  padding: 0;
+  list-style: none;
+  margin: 0 10px;
+  background-color: #FFFFFF;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  -moz-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  border: 1px solid #cccccc;
+}
+/* line 99, ../sass/common/_header.scss */
+#sub_navigation_in ul li {
+  padding: 10px 0;
+  border-bottom: solid 1px #cccccc;
+}
+/* line 102, ../sass/common/_header.scss */
+#sub_navigation_in ul li a {
+  display: block;
+  position: relative;
+  padding: 10px 20px;
+  vertical-align: middle;
+  color: #333333;
+}
+/* line 111, ../sass/common/_header.scss */
+#sub_navigation_in ul li .subnavi-arrow {
+  position: absolute;
+  right: 1%;
+  display: inline-block;
+}
+/* line 119, ../sass/common/_header.scss */
+#sub_navigation_in ul .active a {
+  color: #b3b3b3;
+  font-weight: bold;
+  text-decoration: underline;
+}
+/* line 124, ../sass/common/_header.scss */
+#sub_navigation_in ul .active .fa {
+  color: #b3b3b3;
+}
+/* line 128, ../sass/common/_header.scss */
+#sub_navigation_in ul .fa {
+  color: #666666;
+  padding-right: 7px;
+}
+
 /* Page navigation
 -------------------------------------------------- */
 /* line 3, ../sass/common/_navi.scss */
