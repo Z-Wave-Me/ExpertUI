@@ -12,7 +12,7 @@ This User Interfaces allows to operate a Smart Home Network based on Z-Wave devi
 - Configuration: New section link health.
 
 #### Changes
-- Device/Status: removed column DD, interview icon replaced, check conectivity button replaced with icon.
+- Device/Status: removed column DDR, interview icon replaced, check conectivity button replaced with icon.
 - Controller info removed from the menu and is displayed on the Network > Control page.
 - Menu Configuration moved to Device > Configuration.
 - Network/Timing: Type replaced with icon.

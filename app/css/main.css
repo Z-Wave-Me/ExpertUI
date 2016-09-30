@@ -119,7 +119,7 @@ body {
 
 /* line 75, ../sass/common/_main.scss */
 #main_navbar {
-  margin-bottom: 0;
+  margin-bottom: 20px;
 }
 
 /* line 80, ../sass/common/_main.scss */
@@ -3225,5 +3225,3 @@ http://codepen.io/MattIn4D/pen/LiKFC
 /* Small Devices, Tablets */
 /* Extra Small Devices, Phones */
 /* Custom, iPhone Retina */
-
-/*# sourceMappingURL=main.css.map */
