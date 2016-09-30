@@ -1893,45 +1893,54 @@ h3 {
   height: 50px;
 }
 
-/* line 34, ../sass/common/_header.scss */
+/* line 35, ../sass/common/_header.scss */
 #main_navigation {
   position: relative;
   line-height: 50px;
 }
-/* line 37, ../sass/common/_header.scss */
-#main_navigation a {
-  display: inline-block;
-  padding: 0 15px;
-  color: #333333;
-  line-height: 50px;
+/* line 38, ../sass/common/_header.scss */
+#main_navigation ul.navibar {
+  list-style: none;
 }
-/* line 43, ../sass/common/_header.scss */
+/* line 40, ../sass/common/_header.scss */
+#main_navigation ul.navibar .navibar-item {
+  display: inline-block;
+  line-height: 50px;
+  color: #333333;
+}
+/* line 47, ../sass/common/_header.scss */
+#main_navigation .navibar-item-root, #main_navigation .timestamp {
+  padding: 0 15px;
+  display: inline-block;
+  color: #333333;
+}
+/* line 53, ../sass/common/_header.scss */
 #main_navigation a:hover {
   background-color: #bfbfbf;
 }
-/* line 46, ../sass/common/_header.scss */
+/* line 56, ../sass/common/_header.scss */
 #main_navigation .active {
   background-color: #cccccc;
   color: #e6e6e6;
 }
 
-/* line 51, ../sass/common/_header.scss */
+/* line 62, ../sass/common/_header.scss */
 #header_logo {
   max-height: 40px;
   max-width: 100px;
 }
 
-/* line 55, ../sass/common/_header.scss */
+/* line 67, ../sass/common/_header.scss */
 #navigation_left {
   position: absolute;
 }
 
-/* line 59, ../sass/common/_header.scss */
+/* line 72, ../sass/common/_header.scss */
 #navigation_right {
   float: right;
 }
 
-/* line 62, ../sass/common/_header.scss */
+/* line 76, ../sass/common/_header.scss */
 #navi_settings {
   border-radius: 4px;
   height: 40px;
@@ -1940,77 +1949,97 @@ h3 {
   margin-right: 15px;
 }
 
-/* line 70, ../sass/common/_header.scss */
+/* line 85, ../sass/common/_header.scss */
 .navi-time-link {
   cursor: pointer;
 }
 
-/* line 73, ../sass/common/_header.scss */
+/* line 89, ../sass/common/_header.scss */
 .navi-time {
   padding-left: 10px;
 }
 
-/* line 77, ../sass/common/_header.scss */
+/* line 93, ../sass/common/_header.scss */
 .mobile-icon {
   padding-left: 7px;
   color: #333333;
 }
-/* line 80, ../sass/common/_header.scss */
+/* line 96, ../sass/common/_header.scss */
 .mobile-icon .fa {
   font-size: 17px;
 }
 
 /* Subnavigation
 -------------------------------------------------- */
-/* line 87, ../sass/common/_header.scss */
-#sub_navigation {
-  position: relative;
-}
-
-/* line 91, ../sass/common/_header.scss */
-#sub_navigation_in ul {
+/* line 103, ../sass/common/_header.scss */
+.sub-navigation {
+  font-size: 110%;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: auto;
+  z-index: 1100;
+  float: right;
+  width: 100%;
   padding: 0;
-  list-style: none;
-  margin: 0 10px;
+  text-align: left;
   background-color: #FFFFFF;
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   -moz-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   border: 1px solid #cccccc;
+  background-clip: padding-box;
+  color: #333333;
+  font-weight: normal;
 }
-/* line 99, ../sass/common/_header.scss */
-#sub_navigation_in ul li {
+/* line 121, ../sass/common/_header.scss */
+.sub-navigation ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+/* line 125, ../sass/common/_header.scss */
+.sub-navigation ul li {
   padding: 10px 0;
   border-bottom: solid 1px #cccccc;
 }
-/* line 102, ../sass/common/_header.scss */
-#sub_navigation_in ul li a {
+/* line 129, ../sass/common/_header.scss */
+.sub-navigation ul li a {
   display: block;
   position: relative;
-  padding: 10px 20px;
+  padding: 0 20px;
   vertical-align: middle;
   color: #333333;
 }
-/* line 111, ../sass/common/_header.scss */
-#sub_navigation_in ul li .subnavi-arrow {
+/* line 137, ../sass/common/_header.scss */
+.sub-navigation ul li .fa {
+  color: #666666;
+  padding-right: 7px;
+}
+/* line 141, ../sass/common/_header.scss */
+.sub-navigation ul li .subnavi-arrow {
   position: absolute;
   right: 1%;
   display: inline-block;
 }
-/* line 119, ../sass/common/_header.scss */
-#sub_navigation_in ul .active a {
-  color: #b3b3b3;
+/* line 149, ../sass/common/_header.scss */
+.sub-navigation ul .active a {
+  color: #999999;
   font-weight: bold;
   text-decoration: underline;
+  cursor: text;
 }
-/* line 124, ../sass/common/_header.scss */
-#sub_navigation_in ul .active .fa {
-  color: #b3b3b3;
+/* line 156, ../sass/common/_header.scss */
+.sub-navigation ul .fa {
+  font-size: 120%;
+  padding-right: 10px;
 }
-/* line 128, ../sass/common/_header.scss */
-#sub_navigation_in ul .fa {
-  color: #666666;
-  padding-right: 7px;
+
+/* line 164, ../sass/common/_header.scss */
+.sub-navigation-left {
+  float: left;
+  left: 0;
+  right: auto;
 }
 
 /* Page navigation
@@ -3001,59 +3030,72 @@ http://codepen.io/MattIn4D/pen/LiKFC
   -------------------------------------------------- */
   /* Body reset
   -------------------------------------------------- */
-  /*html {
-      font-size: $app-body-font-size;
-  }*/
-  /*body {
-      font-size: $app-body-font-size;
-      line-height: $app-line-height-base;
-  }*/
+  /* line 6, ../sass/responsive/_mq_shared.scss */
+  html {
+    font-size: 14px;
+  }
+
+  /* line 10, ../sass/responsive/_mq_shared.scss */
+  body {
+    font-size: 14px;
+    line-height: 1.42857;
+  }
+
   /* Header
   -------------------------------------------------- */
-  /*#header{
-      .divider-vertical {
-          height: $header-h;
-      }
-  }*/
+  /* line 18, ../sass/responsive/_mq_shared.scss */
+  #header .divider-vertical {
+    height: 50px;
+  }
+
   /* Main navigation
   -------------------------------------------------- */
-  /*#main_navigation_wrap{
-      height: $header-h;
+  /* line 25, ../sass/responsive/_mq_shared.scss */
+  #main_navigation_wrap {
+    height: 50px;
   }
-  
-  #main_navigation{
-      line-height: $header-h;
-      a{
-          line-height: $header-h;
-      }
-  }*/
+
+  /* line 29, ../sass/responsive/_mq_shared.scss */
+  #main_navigation {
+    line-height: 50px;
+  }
+  /* line 31, ../sass/responsive/_mq_shared.scss */
+  #main_navigation a {
+    line-height: 50px;
+  }
+
   /* Subnavigation
   -------------------------------------------------- */
-  /*#sub_navigation_in{
-      ul{
-          margin: $subnavigation-margin;
-          li{
-              a{
-                  padding: 0 $spacing;
-              }
-  
-          }
-      }
-  }*/
+  /* line 39, ../sass/responsive/_mq_shared.scss */
+  #sub_navigation_in ul {
+    margin: 0 0 0 50%;
+  }
+  /* line 42, ../sass/responsive/_mq_shared.scss */
+  #sub_navigation_in ul li a {
+    padding: 0 10px;
+  }
+
   /* Gird
   -------------------------------------------------- */
-  /*#main_content {
-      margin-top: $header-h + $spacing-double; 
-      margin-bottom: $footer-h + $spacing-double;
+  /* line 51, ../sass/responsive/_mq_shared.scss */
+  #main_content {
+    margin-top: 70px;
+    margin-bottom: 60px;
   }
-  .container{
-      max-width:$app-container-w;
-  
+
+  /* line 55, ../sass/responsive/_mq_shared.scss */
+  .container {
+    max-width: 100%;
   }
-  .block-50{
-      @include appFloat(left);
-      width: 50%; 
-  }*/
+
+  /* line 59, ../sass/responsive/_mq_shared.scss */
+  .block-50 {
+    float: left;
+    position: relative;
+    min-height: 1px;
+    width: 50%;
+  }
+
   /* Page navigation
   -------------------------------------------------- */
   /* line 67, ../sass/responsive/_mq_shared.scss */
@@ -3076,37 +3118,46 @@ http://codepen.io/MattIn4D/pen/LiKFC
   -------------------------------------------------- */
   /* Input
   -------------------------------------------------- */
-  /*.form-control {
-      padding: $app-input-padding;
+  /* line 88, ../sass/responsive/_mq_shared.scss */
+  .form-control {
+    padding: 6px 12px;
   }
-  input[type=checkbox]{
-      -ms-transform: scale($checkbox-scale);  IE 
-      -moz-transform: scale($checkbox-scale);  FF 
-      -webkit-transform: scale($checkbox-scale);  Safari and Chrome 
-      -o-transform: scale($checkbox-scale);  Opera 
+
+  /* line 91, ../sass/responsive/_mq_shared.scss */
+  input[type=checkbox] {
+    -ms-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    -o-transform: scale(1.2);
   }
-  input[type=radio] { 
-      transform: scale($radio-scale, $radio-scale); 
-      -moz-transform: scale($radio-scale, $radio-scale); 
-      -ms-transform: scale($radio-scale, $radio-scale); 
-      -webkit-transform: scale($radio-scale, $radio-scale); 
-      -o-transform: scale($radio-scale, $radio-scale); 
-  }*/
+
+  /* line 97, ../sass/responsive/_mq_shared.scss */
+  input[type=radio] {
+    transform: scale(1.2, 1.2);
+    -moz-transform: scale(1.2, 1.2);
+    -ms-transform: scale(1.2, 1.2);
+    -webkit-transform: scale(1.2, 1.2);
+    -o-transform: scale(1.2, 1.2);
+  }
+
   /* Button
   -------------------------------------------------- */
-  /*.btn,.btn-device-admin {
-      .fa{
-          font-size: $app-btn-icon-size; 
-      }
-  }*/
-  /*.btn-goup-block{
-      width: auto !important;
-      display: inline-block;
-      margin: 0;
-      .btn{
-          width: auto !important;
-      }
-  }*/
+  /* line 108, ../sass/responsive/_mq_shared.scss */
+  .btn .fa, .btn-device-admin .fa {
+    font-size: 120%;
+  }
+
+  /* line 112, ../sass/responsive/_mq_shared.scss */
+  .btn-goup-block {
+    width: auto !important;
+    display: inline-block;
+    margin: 0;
+  }
+  /* line 116, ../sass/responsive/_mq_shared.scss */
+  .btn-goup-block .btn {
+    width: auto !important;
+  }
+
   /* line 120, ../sass/responsive/_mq_shared.scss */
   .btn-tag {
     display: inline-block;
@@ -3123,17 +3174,16 @@ http://codepen.io/MattIn4D/pen/LiKFC
 
   /* Modal
   -------------------------------------------------- */
-  /*.appmodal { 
-      .appmodal-in{
-          width: $modal-w;
-      }
+  /* line 134, ../sass/responsive/_mq_shared.scss */
+  .appmodal .appmodal-in {
+    width: 60%;
   }
-  
-  .appmodal-header{
-      .appmodal-close{
-          font-size: $modal-close-size;
-      }
-  }*/
+
+  /* line 140, ../sass/responsive/_mq_shared.scss */
+  .appmodal-header .appmodal-close {
+    font-size: 140%;
+  }
+
   /* Dropdown
   -------------------------------------------------- */
   /* line 147, ../sass/responsive/_mq_shared.scss */
@@ -3152,36 +3202,40 @@ http://codepen.io/MattIn4D/pen/LiKFC
 
   /* Report
   -------------------------------------------------- */
-  /*.report-img{
-      max-width: $report-img;
-      max-height: $report-img;
+  /* line 166, ../sass/responsive/_mq_shared.scss */
+  .report-img {
+    max-width: 40px;
+    max-height: 40px;
   }
-  .app-row-zwave{
-      .report-entry {
-          .report-ctrl{
-              vertical-align: top !important;
-          }
-      }
-  }*/
+
+  /* line 172, ../sass/responsive/_mq_shared.scss */
+  .app-row-zwave .report-entry .report-ctrl {
+    vertical-align: top !important;
+  }
+
   /* Footer
   -------------------------------------------------- */
-  /*#footer{
-      #footer_in{
-          height: $footer-h;
-          line-height: $footer-h;
-      }
+  /* line 181, ../sass/responsive/_mq_shared.scss */
+  #footer #footer_in {
+    height: 40px;
+    line-height: 40px;
   }
-  #footer{
-      display: none; 
-  }*/
+
+  /* line 186, ../sass/responsive/_mq_shared.scss */
+  #footer {
+    display: none;
+  }
+
   /* Others
   -------------------------------------------------- */
-  /*.timestamp{
-      font-size: $app-updatetime-font-size !important;
-      .fa{
-          font-size: $app-updatetime-icon-size !important; 
-      }
-  }*/
+  /* line 192, ../sass/responsive/_mq_shared.scss */
+  .timestamp {
+    font-size: 90% !important;
+  }
+  /* line 194, ../sass/responsive/_mq_shared.scss */
+  .timestamp .fa {
+    font-size: 90% !important;
+  }
 }
 /* Large Devices, Wide Screens */
 @media only screen and (min-width: 1200px) and (orientation: landscape) {
@@ -3192,59 +3246,72 @@ http://codepen.io/MattIn4D/pen/LiKFC
   -------------------------------------------------- */
   /* Body reset
   -------------------------------------------------- */
-  /*html {
-      font-size: $app-body-font-size;
-  }*/
-  /*body {
-      font-size: $app-body-font-size;
-      line-height: $app-line-height-base;
-  }*/
+  /* line 6, ../sass/responsive/_mq_shared.scss */
+  html {
+    font-size: 14px;
+  }
+
+  /* line 10, ../sass/responsive/_mq_shared.scss */
+  body {
+    font-size: 14px;
+    line-height: 1.42857;
+  }
+
   /* Header
   -------------------------------------------------- */
-  /*#header{
-      .divider-vertical {
-          height: $header-h;
-      }
-  }*/
+  /* line 18, ../sass/responsive/_mq_shared.scss */
+  #header .divider-vertical {
+    height: 50px;
+  }
+
   /* Main navigation
   -------------------------------------------------- */
-  /*#main_navigation_wrap{
-      height: $header-h;
+  /* line 25, ../sass/responsive/_mq_shared.scss */
+  #main_navigation_wrap {
+    height: 50px;
   }
-  
-  #main_navigation{
-      line-height: $header-h;
-      a{
-          line-height: $header-h;
-      }
-  }*/
+
+  /* line 29, ../sass/responsive/_mq_shared.scss */
+  #main_navigation {
+    line-height: 50px;
+  }
+  /* line 31, ../sass/responsive/_mq_shared.scss */
+  #main_navigation a {
+    line-height: 50px;
+  }
+
   /* Subnavigation
   -------------------------------------------------- */
-  /*#sub_navigation_in{
-      ul{
-          margin: $subnavigation-margin;
-          li{
-              a{
-                  padding: 0 $spacing;
-              }
-  
-          }
-      }
-  }*/
+  /* line 39, ../sass/responsive/_mq_shared.scss */
+  #sub_navigation_in ul {
+    margin: 0 0 0 66%;
+  }
+  /* line 42, ../sass/responsive/_mq_shared.scss */
+  #sub_navigation_in ul li a {
+    padding: 0 10px;
+  }
+
   /* Gird
   -------------------------------------------------- */
-  /*#main_content {
-      margin-top: $header-h + $spacing-double; 
-      margin-bottom: $footer-h + $spacing-double;
+  /* line 51, ../sass/responsive/_mq_shared.scss */
+  #main_content {
+    margin-top: 70px;
+    margin-bottom: 60px;
   }
-  .container{
-      max-width:$app-container-w;
-  
+
+  /* line 55, ../sass/responsive/_mq_shared.scss */
+  .container {
+    max-width: 1200px;
   }
-  .block-50{
-      @include appFloat(left);
-      width: 50%; 
-  }*/
+
+  /* line 59, ../sass/responsive/_mq_shared.scss */
+  .block-50 {
+    float: left;
+    position: relative;
+    min-height: 1px;
+    width: 50%;
+  }
+
   /* Page navigation
   -------------------------------------------------- */
   /* line 67, ../sass/responsive/_mq_shared.scss */
@@ -3267,37 +3334,46 @@ http://codepen.io/MattIn4D/pen/LiKFC
   -------------------------------------------------- */
   /* Input
   -------------------------------------------------- */
-  /*.form-control {
-      padding: $app-input-padding;
+  /* line 88, ../sass/responsive/_mq_shared.scss */
+  .form-control {
+    padding: 6px 12px;
   }
-  input[type=checkbox]{
-      -ms-transform: scale($checkbox-scale);  IE 
-      -moz-transform: scale($checkbox-scale);  FF 
-      -webkit-transform: scale($checkbox-scale);  Safari and Chrome 
-      -o-transform: scale($checkbox-scale);  Opera 
+
+  /* line 91, ../sass/responsive/_mq_shared.scss */
+  input[type=checkbox] {
+    -ms-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    -o-transform: scale(1.2);
   }
-  input[type=radio] { 
-      transform: scale($radio-scale, $radio-scale); 
-      -moz-transform: scale($radio-scale, $radio-scale); 
-      -ms-transform: scale($radio-scale, $radio-scale); 
-      -webkit-transform: scale($radio-scale, $radio-scale); 
-      -o-transform: scale($radio-scale, $radio-scale); 
-  }*/
+
+  /* line 97, ../sass/responsive/_mq_shared.scss */
+  input[type=radio] {
+    transform: scale(1.2, 1.2);
+    -moz-transform: scale(1.2, 1.2);
+    -ms-transform: scale(1.2, 1.2);
+    -webkit-transform: scale(1.2, 1.2);
+    -o-transform: scale(1.2, 1.2);
+  }
+
   /* Button
   -------------------------------------------------- */
-  /*.btn,.btn-device-admin {
-      .fa{
-          font-size: $app-btn-icon-size; 
-      }
-  }*/
-  /*.btn-goup-block{
-      width: auto !important;
-      display: inline-block;
-      margin: 0;
-      .btn{
-          width: auto !important;
-      }
-  }*/
+  /* line 108, ../sass/responsive/_mq_shared.scss */
+  .btn .fa, .btn-device-admin .fa {
+    font-size: 120%;
+  }
+
+  /* line 112, ../sass/responsive/_mq_shared.scss */
+  .btn-goup-block {
+    width: auto !important;
+    display: inline-block;
+    margin: 0;
+  }
+  /* line 116, ../sass/responsive/_mq_shared.scss */
+  .btn-goup-block .btn {
+    width: auto !important;
+  }
+
   /* line 120, ../sass/responsive/_mq_shared.scss */
   .btn-tag {
     display: inline-block;
@@ -3314,17 +3390,16 @@ http://codepen.io/MattIn4D/pen/LiKFC
 
   /* Modal
   -------------------------------------------------- */
-  /*.appmodal { 
-      .appmodal-in{
-          width: $modal-w;
-      }
+  /* line 134, ../sass/responsive/_mq_shared.scss */
+  .appmodal .appmodal-in {
+    width: 60%;
   }
-  
-  .appmodal-header{
-      .appmodal-close{
-          font-size: $modal-close-size;
-      }
-  }*/
+
+  /* line 140, ../sass/responsive/_mq_shared.scss */
+  .appmodal-header .appmodal-close {
+    font-size: 140%;
+  }
+
   /* Dropdown
   -------------------------------------------------- */
   /* line 147, ../sass/responsive/_mq_shared.scss */
@@ -3343,36 +3418,40 @@ http://codepen.io/MattIn4D/pen/LiKFC
 
   /* Report
   -------------------------------------------------- */
-  /*.report-img{
-      max-width: $report-img;
-      max-height: $report-img;
+  /* line 166, ../sass/responsive/_mq_shared.scss */
+  .report-img {
+    max-width: 40px;
+    max-height: 40px;
   }
-  .app-row-zwave{
-      .report-entry {
-          .report-ctrl{
-              vertical-align: top !important;
-          }
-      }
-  }*/
+
+  /* line 172, ../sass/responsive/_mq_shared.scss */
+  .app-row-zwave .report-entry .report-ctrl {
+    vertical-align: top !important;
+  }
+
   /* Footer
   -------------------------------------------------- */
-  /*#footer{
-      #footer_in{
-          height: $footer-h;
-          line-height: $footer-h;
-      }
+  /* line 181, ../sass/responsive/_mq_shared.scss */
+  #footer #footer_in {
+    height: 40px;
+    line-height: 40px;
   }
-  #footer{
-      display: none; 
-  }*/
+
+  /* line 186, ../sass/responsive/_mq_shared.scss */
+  #footer {
+    display: none;
+  }
+
   /* Others
   -------------------------------------------------- */
-  /*.timestamp{
-      font-size: $app-updatetime-font-size !important;
-      .fa{
-          font-size: $app-updatetime-icon-size !important; 
-      }
-  }*/
+  /* line 192, ../sass/responsive/_mq_shared.scss */
+  .timestamp {
+    font-size: 90% !important;
+  }
+  /* line 194, ../sass/responsive/_mq_shared.scss */
+  .timestamp .fa {
+    font-size: 90% !important;
+  }
 }
 /*==========  Non-Mobile First Method  ==========*/
 /* Large Devices, Wide Screens */
