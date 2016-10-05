@@ -75,16 +75,30 @@
 /*==========  Non-Mobile First Method  ==========*/
 
 /* Large Devices, Wide Screens */
-//@media only screen and (max-width : 1200px) {}
+@media only screen and (max-width : 1200px) {}
 
 /* Medium Devices, Desktops */
-//@media only screen and (max-width : 992px)   {}
+@media only screen and (max-width : 992px)   {
+    .nav-logo,
+    #__header .timestamp,
+    #main_navigation .divider-vertical,
+    .main-nav-name,.btn-name{
+        display: none !important;
+    }
+    .mobile-block{
+        margin: $spacing 0 0 0;
+        display: block;
+    }
+    #footer .timestamp{
+        display: inline-block !important;
+    }
+}
 
 /* Small Devices, Tablets */
-//@media only screen and (max-width : 768px),(orientation:portrait){}
+@media only screen and (max-width : 768px),(orientation:portrait){}
 
 /* Extra Small Devices, Phones */
-//@media only screen and (max-width : 480px) {}
+@media only screen and (max-width : 480px) {}
 
 /* Custom, iPhone Retina */
-//@media only screen and (max-width : 360px) {}
+@media only screen and (max-width : 360px) {}

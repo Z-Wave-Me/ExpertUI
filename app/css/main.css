@@ -1901,46 +1901,42 @@ h3 {
 /* line 38, ../sass/common/_header.scss */
 #main_navigation ul.navibar {
   list-style: none;
+  margin: 0;
 }
-/* line 40, ../sass/common/_header.scss */
+/* line 41, ../sass/common/_header.scss */
 #main_navigation ul.navibar .navibar-item {
   display: inline-block;
   line-height: 50px;
   color: #333333;
 }
-/* line 47, ../sass/common/_header.scss */
+/* line 49, ../sass/common/_header.scss */
 #main_navigation .navibar-item-root, #main_navigation .timestamp {
   padding: 0 15px;
   display: inline-block;
   color: #333333;
 }
-/* line 53, ../sass/common/_header.scss */
+/* line 55, ../sass/common/_header.scss */
 #main_navigation a:hover {
   background-color: #bfbfbf;
 }
-/* line 56, ../sass/common/_header.scss */
+/* line 58, ../sass/common/_header.scss */
 #main_navigation .active {
   background-color: #cccccc;
   color: #e6e6e6;
 }
 
-/* line 62, ../sass/common/_header.scss */
+/* line 64, ../sass/common/_header.scss */
 #header_logo {
   max-height: 40px;
   max-width: 100px;
 }
 
-/* line 67, ../sass/common/_header.scss */
-#navigation_left {
-  position: absolute;
-}
-
-/* line 72, ../sass/common/_header.scss */
+/* line 74, ../sass/common/_header.scss */
 #navigation_right {
   float: right;
 }
 
-/* line 76, ../sass/common/_header.scss */
+/* line 78, ../sass/common/_header.scss */
 #navi_settings {
   border-radius: 4px;
   height: 40px;
@@ -1949,29 +1945,29 @@ h3 {
   margin-right: 15px;
 }
 
-/* line 85, ../sass/common/_header.scss */
+/* line 87, ../sass/common/_header.scss */
 .navi-time-link {
   cursor: pointer;
 }
 
-/* line 89, ../sass/common/_header.scss */
+/* line 91, ../sass/common/_header.scss */
 .navi-time {
   padding-left: 10px;
 }
 
-/* line 93, ../sass/common/_header.scss */
+/* line 95, ../sass/common/_header.scss */
 .mobile-icon {
   padding-left: 7px;
   color: #333333;
 }
-/* line 96, ../sass/common/_header.scss */
+/* line 98, ../sass/common/_header.scss */
 .mobile-icon .fa {
   font-size: 17px;
 }
 
 /* Subnavigation
 -------------------------------------------------- */
-/* line 103, ../sass/common/_header.scss */
+/* line 105, ../sass/common/_header.scss */
 .sub-navigation {
   font-size: 110%;
   position: absolute;
@@ -1992,18 +1988,18 @@ h3 {
   color: #333333;
   font-weight: normal;
 }
-/* line 121, ../sass/common/_header.scss */
+/* line 122, ../sass/common/_header.scss */
 .sub-navigation ul {
   padding: 0;
   margin: 0;
   list-style: none;
 }
-/* line 125, ../sass/common/_header.scss */
+/* line 126, ../sass/common/_header.scss */
 .sub-navigation ul li {
   padding: 10px 0;
   border-bottom: solid 1px #cccccc;
 }
-/* line 129, ../sass/common/_header.scss */
+/* line 130, ../sass/common/_header.scss */
 .sub-navigation ul li a {
   display: block;
   position: relative;
@@ -2011,31 +2007,31 @@ h3 {
   vertical-align: middle;
   color: #333333;
 }
-/* line 137, ../sass/common/_header.scss */
+/* line 138, ../sass/common/_header.scss */
 .sub-navigation ul li .fa {
   color: #666666;
   padding-right: 7px;
 }
-/* line 141, ../sass/common/_header.scss */
+/* line 142, ../sass/common/_header.scss */
 .sub-navigation ul li .subnavi-arrow {
   position: absolute;
   right: 1%;
   display: inline-block;
 }
-/* line 149, ../sass/common/_header.scss */
+/* line 150, ../sass/common/_header.scss */
 .sub-navigation ul .active a {
   color: #999999;
   font-weight: bold;
   text-decoration: underline;
   cursor: text;
 }
-/* line 156, ../sass/common/_header.scss */
+/* line 157, ../sass/common/_header.scss */
 .sub-navigation ul .fa {
   font-size: 120%;
   padding-right: 10px;
 }
 
-/* line 164, ../sass/common/_header.scss */
+/* line 165, ../sass/common/_header.scss */
 .sub-navigation-left {
   float: left;
   left: 0;
@@ -3063,32 +3059,40 @@ http://codepen.io/MattIn4D/pen/LiKFC
   #main_navigation a {
     line-height: 50px;
   }
+  /* line 35, ../sass/responsive/_mq_shared.scss */
+  #main_navigation ul.navibar .navibar-item {
+    position: relative;
+  }
 
   /* Subnavigation
   -------------------------------------------------- */
-  /* line 39, ../sass/responsive/_mq_shared.scss */
-  #sub_navigation_in ul {
-    margin: 0 0 0 50%;
+  /* line 43, ../sass/responsive/_mq_shared.scss */
+  .sub-navigation {
+    min-width: 200px;
   }
-  /* line 42, ../sass/responsive/_mq_shared.scss */
-  #sub_navigation_in ul li a {
+  /* line 47, ../sass/responsive/_mq_shared.scss */
+  .sub-navigation ul li {
+    padding: 0;
+  }
+  /* line 49, ../sass/responsive/_mq_shared.scss */
+  .sub-navigation ul li a {
     padding: 0 10px;
   }
 
   /* Gird
   -------------------------------------------------- */
-  /* line 51, ../sass/responsive/_mq_shared.scss */
+  /* line 58, ../sass/responsive/_mq_shared.scss */
   #main_content {
     margin-top: 70px;
     margin-bottom: 60px;
   }
 
-  /* line 55, ../sass/responsive/_mq_shared.scss */
+  /* line 62, ../sass/responsive/_mq_shared.scss */
   .container {
     max-width: 100%;
   }
 
-  /* line 59, ../sass/responsive/_mq_shared.scss */
+  /* line 66, ../sass/responsive/_mq_shared.scss */
   .block-50 {
     float: left;
     position: relative;
@@ -3098,18 +3102,18 @@ http://codepen.io/MattIn4D/pen/LiKFC
 
   /* Page navigation
   -------------------------------------------------- */
-  /* line 67, ../sass/responsive/_mq_shared.scss */
+  /* line 74, ../sass/responsive/_mq_shared.scss */
   .page-navi ul li {
     display: block;
     float: left;
     width: 33.33333%;
   }
-  /* line 71, ../sass/responsive/_mq_shared.scss */
+  /* line 78, ../sass/responsive/_mq_shared.scss */
   .page-navi ul li a {
     min-height: 30px;
     margin: auto 10px;
   }
-  /* line 76, ../sass/responsive/_mq_shared.scss */
+  /* line 83, ../sass/responsive/_mq_shared.scss */
   .page-navi ul li .page-navi-icon {
     display: none !important;
   }
@@ -3118,12 +3122,12 @@ http://codepen.io/MattIn4D/pen/LiKFC
   -------------------------------------------------- */
   /* Input
   -------------------------------------------------- */
-  /* line 88, ../sass/responsive/_mq_shared.scss */
+  /* line 95, ../sass/responsive/_mq_shared.scss */
   .form-control {
     padding: 6px 12px;
   }
 
-  /* line 91, ../sass/responsive/_mq_shared.scss */
+  /* line 98, ../sass/responsive/_mq_shared.scss */
   input[type=checkbox] {
     -ms-transform: scale(1.2);
     -moz-transform: scale(1.2);
@@ -3131,7 +3135,7 @@ http://codepen.io/MattIn4D/pen/LiKFC
     -o-transform: scale(1.2);
   }
 
-  /* line 97, ../sass/responsive/_mq_shared.scss */
+  /* line 104, ../sass/responsive/_mq_shared.scss */
   input[type=radio] {
     transform: scale(1.2, 1.2);
     -moz-transform: scale(1.2, 1.2);
@@ -3142,30 +3146,30 @@ http://codepen.io/MattIn4D/pen/LiKFC
 
   /* Button
   -------------------------------------------------- */
-  /* line 108, ../sass/responsive/_mq_shared.scss */
+  /* line 115, ../sass/responsive/_mq_shared.scss */
   .btn .fa, .btn-device-admin .fa {
     font-size: 120%;
   }
 
-  /* line 112, ../sass/responsive/_mq_shared.scss */
+  /* line 119, ../sass/responsive/_mq_shared.scss */
   .btn-goup-block {
     width: auto !important;
     display: inline-block;
     margin: 0;
   }
-  /* line 116, ../sass/responsive/_mq_shared.scss */
+  /* line 123, ../sass/responsive/_mq_shared.scss */
   .btn-goup-block .btn {
     width: auto !important;
   }
 
-  /* line 120, ../sass/responsive/_mq_shared.scss */
+  /* line 127, ../sass/responsive/_mq_shared.scss */
   .btn-tag {
     display: inline-block;
     position: static;
     font-size: 100%;
     margin: 0 10px 10px 0;
   }
-  /* line 125, ../sass/responsive/_mq_shared.scss */
+  /* line 132, ../sass/responsive/_mq_shared.scss */
   .btn-tag .fa {
     position: static;
     margin: 0 0 0 10px;
@@ -3174,65 +3178,65 @@ http://codepen.io/MattIn4D/pen/LiKFC
 
   /* Modal
   -------------------------------------------------- */
-  /* line 134, ../sass/responsive/_mq_shared.scss */
+  /* line 141, ../sass/responsive/_mq_shared.scss */
   .appmodal .appmodal-in {
     width: 60%;
   }
 
-  /* line 140, ../sass/responsive/_mq_shared.scss */
+  /* line 147, ../sass/responsive/_mq_shared.scss */
   .appmodal-header .appmodal-close {
     font-size: 140%;
   }
 
   /* Dropdown
   -------------------------------------------------- */
-  /* line 147, ../sass/responsive/_mq_shared.scss */
+  /* line 154, ../sass/responsive/_mq_shared.scss */
   .app-dropdown {
     min-width: 360px;
   }
 
-  /* line 152, ../sass/responsive/_mq_shared.scss */
+  /* line 159, ../sass/responsive/_mq_shared.scss */
   .app-dropdown.dropdown-lang {
     min-width: 250px;
   }
-  /* line 155, ../sass/responsive/_mq_shared.scss */
+  /* line 162, ../sass/responsive/_mq_shared.scss */
   .app-dropdown.dropdown-lang ul li {
     padding: 5px;
   }
 
   /* Report
   -------------------------------------------------- */
-  /* line 166, ../sass/responsive/_mq_shared.scss */
+  /* line 173, ../sass/responsive/_mq_shared.scss */
   .report-img {
     max-width: 40px;
     max-height: 40px;
   }
 
-  /* line 172, ../sass/responsive/_mq_shared.scss */
+  /* line 179, ../sass/responsive/_mq_shared.scss */
   .app-row-zwave .report-entry .report-ctrl {
     vertical-align: top !important;
   }
 
   /* Footer
   -------------------------------------------------- */
-  /* line 181, ../sass/responsive/_mq_shared.scss */
+  /* line 188, ../sass/responsive/_mq_shared.scss */
   #footer #footer_in {
     height: 40px;
     line-height: 40px;
   }
 
-  /* line 186, ../sass/responsive/_mq_shared.scss */
+  /* line 193, ../sass/responsive/_mq_shared.scss */
   #footer {
     display: none;
   }
 
   /* Others
   -------------------------------------------------- */
-  /* line 192, ../sass/responsive/_mq_shared.scss */
+  /* line 199, ../sass/responsive/_mq_shared.scss */
   .timestamp {
     font-size: 90% !important;
   }
-  /* line 194, ../sass/responsive/_mq_shared.scss */
+  /* line 201, ../sass/responsive/_mq_shared.scss */
   .timestamp .fa {
     font-size: 90% !important;
   }
@@ -3279,32 +3283,40 @@ http://codepen.io/MattIn4D/pen/LiKFC
   #main_navigation a {
     line-height: 50px;
   }
+  /* line 35, ../sass/responsive/_mq_shared.scss */
+  #main_navigation ul.navibar .navibar-item {
+    position: relative;
+  }
 
   /* Subnavigation
   -------------------------------------------------- */
-  /* line 39, ../sass/responsive/_mq_shared.scss */
-  #sub_navigation_in ul {
-    margin: 0 0 0 66%;
+  /* line 43, ../sass/responsive/_mq_shared.scss */
+  .sub-navigation {
+    min-width: 200px;
   }
-  /* line 42, ../sass/responsive/_mq_shared.scss */
-  #sub_navigation_in ul li a {
+  /* line 47, ../sass/responsive/_mq_shared.scss */
+  .sub-navigation ul li {
+    padding: 0;
+  }
+  /* line 49, ../sass/responsive/_mq_shared.scss */
+  .sub-navigation ul li a {
     padding: 0 10px;
   }
 
   /* Gird
   -------------------------------------------------- */
-  /* line 51, ../sass/responsive/_mq_shared.scss */
+  /* line 58, ../sass/responsive/_mq_shared.scss */
   #main_content {
     margin-top: 70px;
     margin-bottom: 60px;
   }
 
-  /* line 55, ../sass/responsive/_mq_shared.scss */
+  /* line 62, ../sass/responsive/_mq_shared.scss */
   .container {
     max-width: 1200px;
   }
 
-  /* line 59, ../sass/responsive/_mq_shared.scss */
+  /* line 66, ../sass/responsive/_mq_shared.scss */
   .block-50 {
     float: left;
     position: relative;
@@ -3314,18 +3326,18 @@ http://codepen.io/MattIn4D/pen/LiKFC
 
   /* Page navigation
   -------------------------------------------------- */
-  /* line 67, ../sass/responsive/_mq_shared.scss */
+  /* line 74, ../sass/responsive/_mq_shared.scss */
   .page-navi ul li {
     display: block;
     float: left;
     width: 33.33333%;
   }
-  /* line 71, ../sass/responsive/_mq_shared.scss */
+  /* line 78, ../sass/responsive/_mq_shared.scss */
   .page-navi ul li a {
     min-height: 30px;
     margin: auto 10px;
   }
-  /* line 76, ../sass/responsive/_mq_shared.scss */
+  /* line 83, ../sass/responsive/_mq_shared.scss */
   .page-navi ul li .page-navi-icon {
     display: none !important;
   }
@@ -3334,12 +3346,12 @@ http://codepen.io/MattIn4D/pen/LiKFC
   -------------------------------------------------- */
   /* Input
   -------------------------------------------------- */
-  /* line 88, ../sass/responsive/_mq_shared.scss */
+  /* line 95, ../sass/responsive/_mq_shared.scss */
   .form-control {
     padding: 6px 12px;
   }
 
-  /* line 91, ../sass/responsive/_mq_shared.scss */
+  /* line 98, ../sass/responsive/_mq_shared.scss */
   input[type=checkbox] {
     -ms-transform: scale(1.2);
     -moz-transform: scale(1.2);
@@ -3347,7 +3359,7 @@ http://codepen.io/MattIn4D/pen/LiKFC
     -o-transform: scale(1.2);
   }
 
-  /* line 97, ../sass/responsive/_mq_shared.scss */
+  /* line 104, ../sass/responsive/_mq_shared.scss */
   input[type=radio] {
     transform: scale(1.2, 1.2);
     -moz-transform: scale(1.2, 1.2);
@@ -3358,30 +3370,30 @@ http://codepen.io/MattIn4D/pen/LiKFC
 
   /* Button
   -------------------------------------------------- */
-  /* line 108, ../sass/responsive/_mq_shared.scss */
+  /* line 115, ../sass/responsive/_mq_shared.scss */
   .btn .fa, .btn-device-admin .fa {
     font-size: 120%;
   }
 
-  /* line 112, ../sass/responsive/_mq_shared.scss */
+  /* line 119, ../sass/responsive/_mq_shared.scss */
   .btn-goup-block {
     width: auto !important;
     display: inline-block;
     margin: 0;
   }
-  /* line 116, ../sass/responsive/_mq_shared.scss */
+  /* line 123, ../sass/responsive/_mq_shared.scss */
   .btn-goup-block .btn {
     width: auto !important;
   }
 
-  /* line 120, ../sass/responsive/_mq_shared.scss */
+  /* line 127, ../sass/responsive/_mq_shared.scss */
   .btn-tag {
     display: inline-block;
     position: static;
     font-size: 100%;
     margin: 0 10px 10px 0;
   }
-  /* line 125, ../sass/responsive/_mq_shared.scss */
+  /* line 132, ../sass/responsive/_mq_shared.scss */
   .btn-tag .fa {
     position: static;
     margin: 0 0 0 10px;
@@ -3390,65 +3402,65 @@ http://codepen.io/MattIn4D/pen/LiKFC
 
   /* Modal
   -------------------------------------------------- */
-  /* line 134, ../sass/responsive/_mq_shared.scss */
+  /* line 141, ../sass/responsive/_mq_shared.scss */
   .appmodal .appmodal-in {
     width: 60%;
   }
 
-  /* line 140, ../sass/responsive/_mq_shared.scss */
+  /* line 147, ../sass/responsive/_mq_shared.scss */
   .appmodal-header .appmodal-close {
     font-size: 140%;
   }
 
   /* Dropdown
   -------------------------------------------------- */
-  /* line 147, ../sass/responsive/_mq_shared.scss */
+  /* line 154, ../sass/responsive/_mq_shared.scss */
   .app-dropdown {
     min-width: 380px;
   }
 
-  /* line 152, ../sass/responsive/_mq_shared.scss */
+  /* line 159, ../sass/responsive/_mq_shared.scss */
   .app-dropdown.dropdown-lang {
     min-width: 250px;
   }
-  /* line 155, ../sass/responsive/_mq_shared.scss */
+  /* line 162, ../sass/responsive/_mq_shared.scss */
   .app-dropdown.dropdown-lang ul li {
     padding: 5px;
   }
 
   /* Report
   -------------------------------------------------- */
-  /* line 166, ../sass/responsive/_mq_shared.scss */
+  /* line 173, ../sass/responsive/_mq_shared.scss */
   .report-img {
     max-width: 40px;
     max-height: 40px;
   }
 
-  /* line 172, ../sass/responsive/_mq_shared.scss */
+  /* line 179, ../sass/responsive/_mq_shared.scss */
   .app-row-zwave .report-entry .report-ctrl {
     vertical-align: top !important;
   }
 
   /* Footer
   -------------------------------------------------- */
-  /* line 181, ../sass/responsive/_mq_shared.scss */
+  /* line 188, ../sass/responsive/_mq_shared.scss */
   #footer #footer_in {
     height: 40px;
     line-height: 40px;
   }
 
-  /* line 186, ../sass/responsive/_mq_shared.scss */
+  /* line 193, ../sass/responsive/_mq_shared.scss */
   #footer {
     display: none;
   }
 
   /* Others
   -------------------------------------------------- */
-  /* line 192, ../sass/responsive/_mq_shared.scss */
+  /* line 199, ../sass/responsive/_mq_shared.scss */
   .timestamp {
     font-size: 90% !important;
   }
-  /* line 194, ../sass/responsive/_mq_shared.scss */
+  /* line 201, ../sass/responsive/_mq_shared.scss */
   .timestamp .fa {
     font-size: 90% !important;
   }
@@ -3456,6 +3468,28 @@ http://codepen.io/MattIn4D/pen/LiKFC
 /*==========  Non-Mobile First Method  ==========*/
 /* Large Devices, Wide Screens */
 /* Medium Devices, Desktops */
+@media only screen and (max-width: 992px) {
+  /* line 82, ../sass/responsive/_responsive.scss */
+  .nav-logo,
+  #__header .timestamp,
+  #main_navigation .divider-vertical,
+  .main-nav-name, .btn-name {
+    display: none !important;
+  }
+
+  /* line 88, ../sass/responsive/_responsive.scss */
+  .mobile-block {
+    margin: 10px 0 0 0;
+    display: block;
+  }
+
+  /* line 92, ../sass/responsive/_responsive.scss */
+  #footer .timestamp {
+    display: inline-block !important;
+  }
+}
 /* Small Devices, Tablets */
 /* Extra Small Devices, Phones */
 /* Custom, iPhone Retina */
+
+/*# sourceMappingURL=main.css.map */

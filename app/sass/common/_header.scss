@@ -37,8 +37,10 @@
   line-height: $header-h;
   ul.navibar {
     list-style: none;
+    margin: 0;
     .navibar-item{
-      //position: relative;
+     // position: relative;
+
       display: inline-block;
       line-height: $header-h;
       color: $header-a-color;
@@ -65,7 +67,7 @@
 }
 
 #navigation_left {
-  position: absolute;
+  //position: absolute;
 
 }
 
@@ -108,7 +110,6 @@
   left: auto;
   z-index: $zindex-dropdown;
   float: right;
-  //min-width: $dropdown-w;
   width: 100%;
   padding: 0;
   text-align: left;

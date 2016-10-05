@@ -92,55 +92,78 @@
                 <ul class="navibar">
                     <!-- Home -->
                     <li class="navibar-item">
-                        <a class="navibar-item-root"href="#home" title="{{_t('nav_home')}}" ng-class="isActive('dashboard')">
+                        <a class="navibar-item-root"href="#home" title="{{_t('nav_home')}}" ng-class="isActive('home')">
                             <i class="fa fa-home"></i>
                         </a>
                     </li>
                     <!-- Conrol -->
                     <li class="navibar-item" ng-click="expandNavi('naviControl', $event)">
                         <span class="divider-vertical"></span>
-                        <a class="navibar-item-root" href="" title="{{ _t('nav_control')" ng-class="isActive('home')">
+                        <a class="navibar-item-root" href="" title="{{ _t('nav_control')"
+                           ng-class="isActive('control',1)">
                             <i class="fa fa-sliders"></i> <span class="main-nav-name">{{ _t('nav_control')}}</span>
                         </a>
-                        <div class="sub-navigation sub-navigation-left" ng-if_="naviExpanded.naviControl">
+                        <div class="sub-navigation sub-navigation-left" ng-if="naviExpanded.naviControl">
                             <ul>
-                                <li>
-                                    <a ng-href="#events">
-                                        Item 1 <i class="fa fa-chevron-right subnavi-arrow"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a ng-href="#events/source/{{v.source}}"><i class="fa fa-check"></i> <span ng-bind="_t('lb_events_source')"></span></a>
-                                </li>
-                                <li>
-                                    <a ng-href="#events/type/{{v.type}}"><i class="fa fa-check-square"></i> <span ng-bind="_t('lb_events_type')"></span></a>
-                                </li>
+                                <li><a href="#control/switch" ng-class="isActive('switch',2)">{{ _t('nav_switch') }}</a></li>
+                                <!-- <li><a href="#controll/dimmer" data-collapse-navbar>Dimmer</a></li> -->
+                                <li><a href="#control/sensors" data-collapse-navbar ng-class="isActive('sensors',2)">{{ _t('nav_sensors') }}</a></li>
+                                <li><a href="#control/meters" data-collapse-navbar ng-class="isActive('meters',2)">{{ _t('nav_meters') }}</a></li>
+                                <li><a href="#control/thermostat" data-collapse-navbar ng-class="isActive('thermostat',2)">{{ _t('nav_thermostat') }}</a></li>
+                                <li><a href="#control/locks" data-collapse-navbar ng-class="isActive('locks',2)">{{ _t('nav_locks') }}</a></li>
                             </ul>
                         </div>
                     </li>
 
                     <!-- Device -->
-                    <li class="navibar-item">
+                    <li class="navibar-item" ng-click="expandNavi('naviDevice', $event)">
                         <span class="divider-vertical"></span>
-                        <a class="navibar-item-root" href="" title="{{_t('nav_device')}}" ng-class="isActive('control',1)">
+                        <a class="navibar-item-root" href="" title="{{_t('nav_device')}}" ng-class="isActive('device',1)">
                             <i class="fa fa-cogs"> </i> <span class="main-nav-name">{{ _t('nav_device')}}</span>
                         </a>
+                        <div class="sub-navigation sub-navigation-left" ng-if="naviExpanded.naviDevice">
+                            <ul>
+                                <li><a href="#device/status" data-collapse-navbar ng-class="isActive('status',2)">{{ _t('nav_status') }}</a></li>
+                                <li><a href="#device/type" data-collapse-navbar ng-class="isActive('type',2)">{{ _t('nav_type_info') }}</a></li>
+                                <li><a href="#device/battery" data-collapse-navbar ng-class="isActive('battery',2)">{{ _t('nav_battery') }}</a></li>
+                                <li><a href="#config/configuration" data-collapse-navbar ng-class="isActive('configuration',2)">{{ _t('nav_configuration') }}</a></li>
+                                <li><a href="#device/associations" data-collapse-navbar ng-class="isActive('associations',2)">{{ _t('nav_active_associations') }}</a></li>
+                                <!--  <li><a href="#device/security" data-collapse-navbar>{{ _t('nav_security_status') }}</a></li>-->
+                            </ul>
+                        </div>
                     </li>
 
                     <!-- Network -->
-                    <li class="navibar-item">
+                    <li class="navibar-item" ng-click="expandNavi('naviNetwork', $event)">
                         <span class="divider-vertical"></span>
                         <a class="navibar-item-root" href="" title="{{_t('nav_network')}}" ng-class="isActive('network',1)">
                             <i class="fa fa-sitemap"></i> <span class="main-nav-name">{{ _t('nav_network')}}</span>
                         </a>
+                        <div class="sub-navigation sub-navigation-left" ng-if="naviExpanded.naviNetwork">
+                            <ul>
+                                <li><a href="#network/control" data-collapse-navbar ng-class="isActive('control',2)">{{ _t('nav_control') }}</a></li>
+                                <li><a href="#network/routing" data-collapse-navbar ng-class="isActive('routing',2)">{{ _t('nav_routing') }}</a></li>
+                                <li><a class="a-disabled" title="Temporary disabled. Will be back in the next release." data-collapse-navbar ng-class="isActive('reorganization',2)">{{ _t('nav_reorganization') }}</a></li>
+                                <!--<li><a href="#network/reorganization" data-collapse-navbar ng-class="isActive('reorganization',2)">{{ _t('nav_reorganization') }}</a></li>-->
+                                <li><a href="#network/timing" data-collapse-navbar ng-class="isActive('timing',2)">{{ _t('nav_timing_info') }}</a></li>
+                                <!--<li><a class="a-disabled" title="Temporary disabled. Will be back in the next release." data-collapse-navbar ng-class="isActive('timing',2)">{{ _t('nav_timing_info') }}</a></li>-->
+                                <li><a href="#network/map" data-collapse-navbar ng-class="isActive('map',2)">{{ _t('nav_network_map') }}</a></li>
+                                <!--<li><a href="#network/controller" data-collapse-navbar ng-class="isActive('controller',2)">{{ _t('nav_controller_info') }}</a></li>-->
+                            </ul>
+                        </div>
                     </li>
 
                     <!-- Zniffer -->
-                    <li class="navibar-item">
+                    <li class="navibar-item" ng-click="expandNavi('naviZniffer', $event)">
                         <span class="divider-vertical"></span>
                         <a class="navibar-item-root" href="" title="{{_t('installer')}}" ng-class="isActive('installer',1)">
                             <i class="fa fa-signal"></i> <span class="main-nav-name">{{ _t('installer')}}</span>
                         </a>
+                        <div class="sub-navigation sub-navigation-left" ng-if="naviExpanded.naviNetwork">
+                            <ul>
+
+                            </ul>
+                        </div>
                     </li>
 
                     <!-- Time -->
@@ -150,13 +173,15 @@
                         <i class="fa fa-clock-o"></i> {{cfg.route.time.string}}
                     </span>
                     </li>
+                    <!-- Logout -->
+                    <li class="navibar-item">
+                        <span class="divider-vertical"></span>
+                        <a class="navibar-item-root" href="" title="{{_t('lb_configuration')}}"
+                           ng-click="expandNavi('mainNav', $event)" ng-class="naviExpanded.mainNav ? 'active' : ''"><i
+                                class="fa fa-cog"></i></a>
+                    </span>
+                    </li>
                 </ul>
-            </div>
-            <div id="navigation_right">
-                <span class="divider-vertical"></span>
-                <a id="navi_settings" href="" title="{{_t('lb_configuration')}}"
-                   ng-click="expandNavi('mainNav', $event)" ng-class="naviExpanded.mainNav ? 'active' : ''"><i
-                        class="fa fa-cog"></i></a>
             </div>
         </div><!-- /#navigation -->
     </div><!-- /#main_navigation_wrap -->

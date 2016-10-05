@@ -31,14 +31,21 @@ body {
     a{
         line-height: $header-h;
     }
+    ul.navibar {
+        .navibar-item{
+            position: relative;
+        }
+    }
 }
 
 /* Subnavigation
 -------------------------------------------------- */
-#sub_navigation_in{
+.sub-navigation{
+  min-width: $subnavigation-w;
     ul{
-        margin: $subnavigation-margin;
+        //margin: $subnavigation-margin;
         li{
+          padding: 0;
             a{
                 padding: 0 $spacing;
             }
