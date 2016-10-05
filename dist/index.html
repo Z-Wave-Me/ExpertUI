@@ -64,7 +64,9 @@
                             <li><a href="#network/timing" data-collapse-navbar ng-class="isActive('timing',2)">{{ _t('nav_timing_info') }}</a></li>
                             <!--<li><a class="a-disabled" title="Temporary disabled. Will be back in the next release." data-collapse-navbar ng-class="isActive('timing',2)">{{ _t('nav_timing_info') }}</a></li>-->
                             <li><a href="#network/map" data-collapse-navbar ng-class="isActive('map',2)">{{ _t('nav_network_map') }}</a></li>
-                            <!--<li><a href="#network/controller" data-collapse-navbar ng-class="isActive('controller',2)">{{ _t('nav_controller_info') }}</a></li>-->
+                            <li ng-if="cfg.app_type !== 'installer'">
+                                <a href="#network/controller" data-collapse-navbar ng-class="isActive('controller',2)">{{ _t('nav_controller_info') }}</a>
+                            </li>
                         </ul>
                     </li>
                     <li class="divider-vertical remove-margin" ng-if="cfg.app_type === 'installer'"></li>
@@ -72,8 +74,8 @@
                         <a href="" class="dropdown-toggle" data-toggle="dropdown" ng-class="isActive('installer',1)">{{ _t('nav_installer') }} <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="#installer/zniffer" data-collapse-navbar ng-class="isActive('zniffer',2)">{{ _t('nav_zniffer') }}</a></li>
-                            <li><a href="#installer/history" data-collapse-navbar ng-class="isActive('history',2)">{{ _t('nav_history') }}</a></li>
                             <li><a href="#installer/rssi" data-collapse-navbar ng-class="isActive('rssi',2)">{{ _t('nav_rssi') }}</a></li>
+                            <li><a href="#installer/history" data-collapse-navbar ng-class="isActive('history',2)">{{ _t('nav_history') }}</a></li>
 
                             <!--<li><a href="#installer/spectrum" data-collapse-navbar ng-class="isActive('spectrum',2)">{{ _t('nav_spectrum_analyzer') }}</a></li>-->
 
