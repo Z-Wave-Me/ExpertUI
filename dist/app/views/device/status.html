@@ -30,11 +30,11 @@
                             <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
-                     <th>
+                     <!--<th>
                         <a href="" ng-click="orderBy('ddr')" title="{{ _t('th_ddr_tip')}}" tooltip>{{ _t('th_ddr')}}
                             <span ng-show="predicate == 'ddr'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
-                    </th>
+                    </th>-->
                     <th>&nbsp;</th>
 
                     <th class="mobile-show">
@@ -55,18 +55,25 @@
         <td data-title="{{ _t('th_sleeping')}}" class="row-sleeping"><span ng-bind-html="v.sleeping | toTrusted"></span> &nbsp;</td>
                     <td data-title="{{ _t('th_awake')}}" class="row-awake"><span ng-bind-html="v.awake | toTrusted"></span> &nbsp;</td>
                     <td data-title="{{ _t('datetime')}}"><span  class="row-isfailed" ng-bind-html="v.isFailed | toTrusted"></span> <span  class="row-time" ng-bind-html="v.updateTime | toTrusted"></span> &nbsp;</td>
-                    <td data-title="{{ _t('th_ddr')}}" class="row-ddr"><span ng-bind-html="v.ddr | toTrusted"></span> &nbsp;</td>
+                    <!--<td data-title="{{ _t('th_ddr')}}" class="row-ddr"><span ng-bind-html="v.ddr | toTrusted"></span> &nbsp;</td>-->
                     <td class="row-interview">
-                         <a href="" ng-show="v.interview" ng-click="showModalInterview('#modal_interview', $index,v.id,v.name)" title="{{v.interview}}"><i class="fa fa-question-circle fa-lg text-info"></i></a> &nbsp;
+                         <a href="" ng-show="v.interview" ng-click="showModalInterview('#modal_interview', $index,v.id,v.name)" title="{{v.interview}}"><i class="fa fa-search-minus fa-lg text-danger"></i></a> &nbsp;
                     </td>
                     <td class="row-ping">
-                        <button
+                        <a href="" title="{{ _t('pingDevice')}}"
+                           ng-if="v.urlToStore"
+                           data-ng-click="store('#btn_ping_' + v.rowId)"
+                           data-store-url="{{ v.urlToStore}}"
+                           id="btn_ping_{{ v.rowId}}">
+                            <i class="fa fa-question-circle fa-lg text-info"></i>
+                        </a>
+                        <!--<button
                             ng-if="v.urlToStore"
                             data-ng-click="store('#btn_ping_' + v.rowId)" 
                             data-store-url="{{ v.urlToStore}}" 
                             class="btn btn-primary spin-true" 
                             id="btn_ping_{{ v.rowId}}"
-                            >{{ _t('pingDevice')}} <i class="fa fa-spinner fa-spin"></i></button>
+                            >{{ _t('pingDevice')}} <i class="fa fa-spinner fa-spin"></i></button>-->
                     </td>
                 </tr>
             </tbody>

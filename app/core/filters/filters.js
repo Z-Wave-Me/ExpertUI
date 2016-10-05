@@ -669,13 +669,9 @@ angApp.filter('getRoutesCount', function ($filter) {
  */
 angApp.filter('securityIcon', function () {
     return function (input) {
-        //var icon = 'fa fa-minus';
-        var icon = '&nbsp';
-        if (input === false) {
-            icon = 'fa fa-check fa-lg text-danger';
-        }
-        if (input === true) {
-            icon = 'fa fa-check fa-lg text-success';
+        var icon = 'fa fa-unlock-alt fa-lg text-danger';
+        if (input) {
+            icon = 'fa fa-lock fa-lg text-success';
         }
         return  icon;
     };

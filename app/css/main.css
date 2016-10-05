@@ -119,7 +119,7 @@ body {
 
 /* line 75, ../sass/common/_main.scss */
 #main_navbar {
-  margin-bottom: 0;
+  margin-bottom: 20px;
 }
 
 /* line 80, ../sass/common/_main.scss */
@@ -2654,7 +2654,7 @@ http://codepen.io/MattIn4D/pen/LiKFC
 
 /* Zwave alliance
 -------------------------------------------------- */
-/* line 8, ../sass/common/_zwavealliance.scss */
+/* line 8, ../sass/common/_installer.scss */
 .app-type-installer {
   /*Typo */
   /* Header */
@@ -2670,37 +2670,41 @@ http://codepen.io/MattIn4D/pen/LiKFC
   /* Panel */
   /* Welll */
 }
-/* line 9, ../sass/common/_zwavealliance.scss */
+/* line 9, ../sass/common/_installer.scss */
+.app-type-installer #main_navbar {
+  margin-bottom: 0;
+}
+/* line 12, ../sass/common/_installer.scss */
 .app-type-installer .container-installer {
   width: 100%;
 }
-/* line 11, ../sass/common/_zwavealliance.scss */
+/* line 14, ../sass/common/_installer.scss */
 .app-type-installer .container-installer .alert {
   font-size: 120%;
   text-align: center;
   padding: 10px 15px;
 }
-/* line 18, ../sass/common/_zwavealliance.scss */
+/* line 21, ../sass/common/_installer.scss */
 .app-type-installer h1 {
   color: #083366;
 }
-/* line 21, ../sass/common/_zwavealliance.scss */
+/* line 24, ../sass/common/_installer.scss */
 .app-type-installer a {
   color: #083366;
 }
-/* line 24, ../sass/common/_zwavealliance.scss */
+/* line 27, ../sass/common/_installer.scss */
 .app-type-installer .list-group-item {
   border-color: #87cf83;
 }
-/* line 28, ../sass/common/_zwavealliance.scss */
+/* line 31, ../sass/common/_installer.scss */
 .app-type-installer .navbar-inverse {
   background: #083366;
 }
-/* line 31, ../sass/common/_zwavealliance.scss */
+/* line 34, ../sass/common/_installer.scss */
 .app-type-installer .navbar-inverse .navbar-nav > li > a {
   color: #F89847;
 }
-/* line 34, ../sass/common/_zwavealliance.scss */
+/* line 37, ../sass/common/_installer.scss */
 .app-type-installer .navbar-inverse .dropdown-toggle.active,
 .app-type-installer .navbar-inverse .dropdown-toggle.active:hover,
 .app-type-installer .navbar-inverse .no-dropdown.active,
@@ -2708,81 +2712,81 @@ http://codepen.io/MattIn4D/pen/LiKFC
   color: #47aa42;
   background-color: #2A6496;
 }
-/* line 42, ../sass/common/_zwavealliance.scss */
+/* line 45, ../sass/common/_installer.scss */
 .app-type-installer .dropdown-menu {
   background-color: #47AA42;
   border: 1px solid #e3e3e3;
 }
-/* line 47, ../sass/common/_zwavealliance.scss */
+/* line 50, ../sass/common/_installer.scss */
 .app-type-installer .dropdown-menu > li > a {
   color: #083366;
 }
-/* line 50, ../sass/common/_zwavealliance.scss */
+/* line 53, ../sass/common/_installer.scss */
 .app-type-installer .dropdown-menu > li > a.active,
 .app-type-installer .dropdown-menu > li > a.active:hover {
   color: #47AA42;
   background-color: #083366;
 }
-/* line 56, ../sass/common/_zwavealliance.scss */
+/* line 59, ../sass/common/_installer.scss */
 .app-type-installer .product-logo {
   max-width: 150px;
   max-height: 150px;
 }
-/* line 62, ../sass/common/_zwavealliance.scss */
+/* line 65, ../sass/common/_installer.scss */
 .app-type-installer .product-data-list {
   background-color: #ceebcd;
 }
-/* line 65, ../sass/common/_zwavealliance.scss */
+/* line 68, ../sass/common/_installer.scss */
 .app-type-installer .product-description {
   border-color: #87cf83;
 }
-/* line 75, ../sass/common/_zwavealliance.scss */
+/* line 78, ../sass/common/_installer.scss */
 .app-type-installer .table > thead > tr > th {
   border-color: #87cf83;
 }
-/* line 79, ../sass/common/_zwavealliance.scss */
+/* line 82, ../sass/common/_installer.scss */
 .app-type-installer .table > thead > tr > th, .app-type-installer .table > tbody > tr > th, .app-type-installer .table > tfoot > tr > th, .app-type-installer .table > thead > tr > td, .app-type-installer .table > tbody > tr > td, .app-type-installer .table > tfoot > tr > td {
   border-color: #87cf83;
 }
-/* line 84, ../sass/common/_zwavealliance.scss */
+/* line 87, ../sass/common/_installer.scss */
 .app-type-installer .form-control {
   border-color: #87cf83;
 }
-/* line 87, ../sass/common/_zwavealliance.scss */
+/* line 90, ../sass/common/_installer.scss */
 .app-type-installer .commands-data-control {
   background-color: #ceebcd;
 }
-/* line 90, ../sass/common/_zwavealliance.scss */
+/* line 93, ../sass/common/_installer.scss */
 .app-type-installer .commands-data {
   border-color: #87cf83;
 }
-/* line 93, ../sass/common/_zwavealliance.scss */
+/* line 96, ../sass/common/_installer.scss */
 .app-type-installer .cfg-block {
   border-color: #87cf83;
 }
-/* line 97, ../sass/common/_zwavealliance.scss */
+/* line 100, ../sass/common/_installer.scss */
 .app-type-installer .nav-tabs > li.active > a, .app-type-installer .nav-tabs > li.active > a:hover, .app-type-installer .nav-tabs > li.active > a:focus {
   background-color: #ceebcd;
   border-color: #87cf83;
 }
-/* line 101, ../sass/common/_zwavealliance.scss */
+/* line 104, ../sass/common/_installer.scss */
 .app-type-installer .tab-content {
   border-color: transparent #87cf83 #87cf83;
 }
-/* line 104, ../sass/common/_zwavealliance.scss */
+/* line 107, ../sass/common/_installer.scss */
 .app-type-installer .nav-tabs {
   border-color: #87cf83;
 }
-/* line 108, ../sass/common/_zwavealliance.scss */
+/* line 111, ../sass/common/_installer.scss */
 .app-type-installer .panel {
   border-color: #87cf83;
 }
-/* line 111, ../sass/common/_zwavealliance.scss */
+/* line 114, ../sass/common/_installer.scss */
 .app-type-installer .panel-default > .panel-heading {
   background-color: #ceebcd;
   border-color: #87cf83;
 }
-/* line 116, ../sass/common/_zwavealliance.scss */
+/* line 119, ../sass/common/_installer.scss */
 .app-type-installer .well {
   background-color: #ceebcd;
   border-color: #87cf83;
@@ -3225,5 +3229,3 @@ http://codepen.io/MattIn4D/pen/LiKFC
 /* Small Devices, Tablets */
 /* Extra Small Devices, Phones */
 /* Custom, iPhone Retina */
-
-/*# sourceMappingURL=main.css.map */

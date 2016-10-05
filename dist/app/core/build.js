@@ -29587,9 +29587,50 @@ angApp.directive('switchAllIcon', function () {
 });
 
 
-// Switch all icons
+// Routyng icons
 //@todo: move to filters
 angApp.directive('routingTypeIcon', function () {
+    return {
+        restrict: "E",
+        replace: true,
+        template: '<i class="fa {{cls}} fa-lg" title="{{title}}"></i>',
+        link: function ($scope, elem, attr) {
+            var src;
+            var title;
+            var cls;
+            if (attr.nodeId !== null && $scope.ZWaveAPIData) {
+                var node = $scope.ZWaveAPIData.devices[attr.nodeId];
+
+                var isListening = node.data.isListening.value;
+                var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
+                var hasWakeup = 0x84 in node.instances[0].commandClasses;
+                var hasBattery = 0x80 in node.instances[0].commandClasses;
+                var isPortableRemoteControl = (node.data.deviceTypeString.value == "Portable Remote Controller");
+
+                if (isListening) { // mains powered
+                    cls = 'fa-bolt text-warning';
+                     title = $scope._t('conf_apply_mains');
+                } else if (hasWakeup) {
+                    cls = 'fa-battery-full text-success';
+                    title = $scope._t('battery_powered_device');
+                } else if (isFLiRS) {
+                    cls = 'fa-fire text-info';
+                    title = $scope._t('FLiRS_device');
+                } else if (isPortableRemoteControl) {
+                    cls = 'fa-feed text-primary';
+                    title = $scope._t('battery_operated_remote_control');
+                } else {
+                    cls = '';
+                    title = "";
+                }
+            }
+            $scope.src = src;
+            $scope.title = title;
+            $scope.cls = cls;
+        }
+    };
+});
+/*angApp.directive('routingTypeIcon', function () {
     return {
         restrict: "E",
         replace: true,
@@ -29627,7 +29668,7 @@ angApp.directive('routingTypeIcon', function () {
             $scope.title = title;
         }
     };
-});
+});*/
 
 angApp.directive('expertCommandInput', function ($filter) {
     // Get text input
@@ -31591,13 +31632,9 @@ angApp.filter('getRoutesCount', function ($filter) {
  */
 angApp.filter('securityIcon', function () {
     return function (input) {
-        //var icon = 'fa fa-minus';
-        var icon = '&nbsp';
-        if (input === false) {
-            icon = 'fa fa-check fa-lg text-danger';
-        }
-        if (input === true) {
-            icon = 'fa fa-check fa-lg text-success';
+        var icon = 'fa fa-unlock-alt fa-lg text-danger';
+        if (input) {
+            icon = 'fa fa-lock fa-lg text-success';
         }
         return  icon;
     };
@@ -35383,10 +35420,10 @@ appController.controller('StatusController', function($scope, $filter, dataServi
         }
 
         // DDR
-        var ddr = false;
+        /*var ddr = false;
         if (angular.isDefined(node.data.ZDDXMLFile)) {
             ddr = node.data.ZDDXMLFile.value;
-        }
+        }*/
 
         var obj = {};
         obj['id'] = nodeId;
@@ -35399,9 +35436,7 @@ appController.controller('StatusController', function($scope, $filter, dataServi
         obj['awake'] = awake_cont;
         obj['updateTime'] = operating_cont;
         obj['isFailed'] = getIsFailedCont(isFailed);
-        //obj['ddr'] = ddr;
-        obj['ddr'] = ddrCont(node);
-        obj['interview'] = interview_cont;
+        // obj['ddr'] = ddrCont(node);
         obj['urlToStore'] = (isListening || isFLiRS ? 'devices[' + nodeId + '].SendNoOperation()' : false);
         obj['interview'] = interview_cont;
         obj['isListening'] = isListening;
@@ -35859,7 +35894,7 @@ appController.controller('TypeController', function($scope, $filter, dataService
             // Version
             var appVersion = node.data.applicationMajor.value + '.' + node.data.applicationMinor.value;
             // Security and ZWavePlusInfo
-            var security = 0;
+            var security = false;
             angular.forEach(ccIds, function(v, k) {
                 var cmd = node.instances[instanceId].commandClasses[v];
                 if (angular.isObject(cmd) && cmd.name === 'Security') {
@@ -35867,8 +35902,7 @@ appController.controller('TypeController', function($scope, $filter, dataService
                     return;
                 }
             });
-            // MWI and EF
-            var mwief = getEXFrame(major, minor);
+
 
             // DDR
             var ddr = false;
@@ -35885,6 +35919,11 @@ appController.controller('TypeController', function($scope, $filter, dataService
                     return;
                 }
             });
+            // MWI and EF
+            var mwief = getEXFrame(major, minor);
+            if(ZWavePlusInfo){
+                mwief = 1;
+            }
             // Device type
             var deviceXml = $scope.deviceClasses;
             var deviceType = $scope._t('unknown_device_type') + ': ' + genericType;
@@ -37223,7 +37262,7 @@ appController.controller('TimingController', function($scope, $filter, dataServi
             var specificType = node.data.specificType.value;
 
             // Device type
-            if (isListening) {
+            /*if (isListening) {
                 type = 'type_mains';
             } else if (!isListening && hasWakeup) {
                 type = 'type_battery_wakup';
@@ -37232,6 +37271,19 @@ appController.controller('TimingController', function($scope, $filter, dataServi
             } else {
                 type = 'type_remote';
 
+            }*/
+            if (node.data.genericType.value === 1) {
+                type = 'portable';
+            } else if (node.data.genericType.value === 2) {
+                type = 'static';
+            } else if (isFLiRS) {
+                type = 'flirs';
+            } else if (hasWakeup) {
+                type = node.data.isAwake.value ? 'battery' : 'sleep';
+            } else if (isListening) {
+                type = 'mains';
+            } else {
+                type = 'error';
             }
 
             // Packets

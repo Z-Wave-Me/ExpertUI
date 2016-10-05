@@ -92,7 +92,7 @@ appController.controller('TypeController', function($scope, $filter, dataService
             // Version
             var appVersion = node.data.applicationMajor.value + '.' + node.data.applicationMinor.value;
             // Security and ZWavePlusInfo
-            var security = 0;
+            var security = false;
             angular.forEach(ccIds, function(v, k) {
                 var cmd = node.instances[instanceId].commandClasses[v];
                 if (angular.isObject(cmd) && cmd.name === 'Security') {
@@ -100,8 +100,7 @@ appController.controller('TypeController', function($scope, $filter, dataService
                     return;
                 }
             });
-            // MWI and EF
-            var mwief = getEXFrame(major, minor);
+
 
             // DDR
             var ddr = false;
@@ -118,6 +117,11 @@ appController.controller('TypeController', function($scope, $filter, dataService
                     return;
                 }
             });
+            // MWI and EF
+            var mwief = getEXFrame(major, minor);
+            if(ZWavePlusInfo){
+                mwief = 1;
+            }
             // Device type
             var deviceXml = $scope.deviceClasses;
             var deviceType = $scope._t('unknown_device_type') + ': ' + genericType;
