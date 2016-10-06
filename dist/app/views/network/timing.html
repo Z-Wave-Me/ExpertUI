@@ -40,7 +40,19 @@
                 <tr ng-repeat="v in devices | orderBy:predicate:reverse" id="{{ v.rowId}}">
                     <td data-title="{{_t('th_node')}}">{{ v.id}}</td>
                     <td data-title="{{ _t('device_name')}}"><!-- <switch-type-icon generic="{{ v.genericType}}" specific="{{ v.specificType}}"></switch-type-icon> -->{{ v.name }}</td>
-                    <td data-title="{{_t('th_type')}}">{{ _t(v.type)}}</td>
+                    <td data-title="{{_t('th_type')}}">
+                        <span ng-switch="v.type" title="{{v.type}}">
+                                <i class="fa fa-cog" ng-switch-when="static"></i>
+                                <i class="fa fa-fire text-info" ng-switch-when="flirs"></i>
+                                <i class="fa fa-bolt text-warning" ng-switch-when="mains"></i>
+                                <i class="fa fa-battery-full text-danger" ng-switch-when="sleep"></i>
+                                <i class="fa fa-battery-full text-success" ng-switch-when="battery"></i>
+                                <i class="fa fa-feed text-primary" ng-switch-when="portable"></i>
+                                <i ng-switch-default></i>
+
+                            </span>
+                        <!--{{ _t(v.type)}}-->
+                    </td>
                    <td data-title="{{_t('th_total')}}">{{ v.totalPackets}} &nbsp;</td>
                     <td data-title="{{_t('th_ok')}}">{{ v.okPackets}}% &nbsp;</td>
                     <td data-title="{{_t('th_lastpackets')}}"><span ng-bind-html="v.lastPackets | toTrusted"></span> &nbsp;</td>

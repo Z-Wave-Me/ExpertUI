@@ -174,13 +174,6 @@ input[type=radio] {
     max-width: $report-img;
     max-height: $report-img;
 }
-.app-row-zwave{
-    .report-entry {
-        .report-ctrl{
-            vertical-align: top !important;
-        }
-    }
-}
 
 /* Footer
 -------------------------------------------------- */
@@ -189,9 +182,6 @@ input[type=radio] {
         height: $footer-h;
         line-height: $footer-h;
     }
-}
-#footer{
-    display: none; 
 }
 
 /* Others

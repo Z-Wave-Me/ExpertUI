@@ -65,16 +65,6 @@ $fatal-error-img: 32px;
 $navi-img: 32px;
 $report-img: 60px;
 $widget-img: 64px;
-$app-detail-img:128px;
-$element-icon-img: 48px;
-$customize-img: 120px;
-$customize-detail-img: 300px;
-$include-detail-img:128px;
-$customize-icon-preview-img:64px;
-$product-img: 64px;
-$vendor-img: 80px;
-$room-img-upload: 70px;
-$room-img-preview: 130px;
 $report-img-s: 32px;
 $lang-img: 32px;
 
@@ -85,18 +75,6 @@ $footer-h: 50px;
 $widget-col-w: 100%;
 $widget-col-h: 150px;
 $widget-zwave-col-w: 100%;
-
-//Room
-$room-col-w: 50%;
-
-//Login
-$auth-page-w: 500px;
-
-//Badge number
-$badge-number-w: 32px;
-
-//Devices
-$device-vendor-w: 33.33333%;
 
 /*-------------------------------------*/
 // Z:INDEX
@@ -291,11 +269,6 @@ $form-addon-bcg-color: #EEEEEE;
 $report-border-color: $app-border-color;
 $report-bcg-color: #FFFFFF;
 
-// Device
-$device-bcg-color: #FFFFFF;
-$device-color: $app-body-color;
-$device-border-color: $app-border-color;
-
 // Widget
 $widget-bcg-color: #FFFFFF;
 $widget-img-border-color: #FFFFFF;
@@ -306,36 +279,6 @@ $widget-warning-border-color: lighten($app-brand-warning,20%);
 $widget-danger-border-color: lighten($app-brand-danger,20%);
 $widget-heading-color: $app-heading-color;
 $widget-icon-color:lighten($widget-color, 40%);
-
-// Element
-$element-widget-room-color: lighten($widget-color, 40%);
-$element-widget-caret-color: lighten($widget-color, 40%);
-$element-widget-time-color: lighten($widget-color, 40%);
-$element-widget-level-color: $app-body-color;
-$element-widget-btn-color: lighten($widget-color, 80%);
-$element-widget-btn-border-color: $element-widget-btn-color;
-$element-widget-btn-bcg-color: #FFFFFF;
-$element-widget-btn-0-color: $app-brand-danger;
-$element-widget-btn-1-color: $app-brand-success;
-$element-widget-btn-on-color: lighten($widget-color, 40%);
-$element-widget-img-update-border-color: $app-border-color;
-$element-widget-isnew-border-color: lighten($app-brand-success,20%);
-
-// Customiz
-$customize-border-color: $app-border-color;
-// Room
-$room-border-color: $app-border-color;
-
-// Badge number
-$badge-number-bcg-color: lighten($app-body-color, 60%);
-$badge-number-color: #FFFFFF;
-
-// Comments and ratings
-$rating-color: lighten($app-body-color,70%);
-$rating-israted-color: lighten(#f0ad4e,10%);
-$comment-even-bcg-color:  #E9E9E9;
-$comment-color: $app-body-color;
-$comment-header-color:  lighten($comment-color, 20%);
 
 
 /*-------------------------------------*/

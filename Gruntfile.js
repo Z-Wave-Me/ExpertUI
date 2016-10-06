@@ -16,11 +16,7 @@ module.exports = function (grunt) {
             },
             css: {
                 src: [
-                    'app/css/bootstrap/bootstrap.css',
-                    'app/css/main.css',
-                    'app/css/font-awesome-4.6.3/css/font-awesome.min.css',
-                    'app/css/angular-slider.css',
-                    'app/css/main-responsive.css'
+                    'app/css/main.css'
                 ],
                 dest: 'dist/app/css/build.css'
             },
@@ -107,7 +103,7 @@ module.exports = function (grunt) {
             },
             fonts: {
                 files: [
-                    {expand: true, src: ['app/css/font-awesome-4.6.3/fonts/*'], dest: 'dist/app/fonts/', flatten: true}
+                    {expand: true, src: ['app/fonts/*'], dest: 'dist/app/fonts/', flatten: true}
                 ]
             },
             angmap: {
