@@ -92,6 +92,9 @@
     #footer .timestamp{
         display: inline-block !important;
     }
+    #table_mobile{
+       @include appTableMobile();
+    }
 }
 
 /* Small Devices, Tablets */

@@ -74,37 +74,21 @@
   text-align: right;
 }
 
-/* Modal with knob
+/* Modals - old bootstrap modal - will be removed
 -------------------------------------------------- */
-.app-row-knob{
-    .knob-col{
-       padding: $spacing;
-   }
+.modal-body {
+  padding: 10px 10px 0 10px;
 }
-
-/* Confirm content
--------------------------------------------------- */
-.app-confirm-content{
-    padding: $spacing;
-    border: solid 1px $app-border-color;
-    margin: $spacing 0;
-    max-height: 200px;
-    overflow: auto;
+.cc-data-element{
+  white-space: -moz-pre-wrap; /* Mozilla */
+  white-space: -hp-pre-wrap; /* HP printers */
+  white-space: -o-pre-wrap; /* Opera 7 */
+  white-space: -pre-wrap; /* Opera 4-6 */
+  white-space: pre-wrap; /* CSS 2.1 */
+  white-space: pre-line; /* CSS 3 (and 2.1 as well, actually) */
+  word-wrap: break-word; /* IE */
+  word-break: break-all;
 }
-
-/* Modal James Box
--------------------------------------------------- */
-#jamesBoxUpdateModal #updateTimeout {
-    text-align: center;
-    font-weight: bold;
-    margin: 15px 0;
-    font-size: 16px;
-}
-
-#jamesBoxUpdateModal ol {
-        margin: 15px 0;
-}
-
-#jamesBoxUpdateModal li.jamesboxUpdateInfoList {
-        margin: 0 0 5px 0;
+#modal_queue .modal-dialog {
+  width: 60%;
 }

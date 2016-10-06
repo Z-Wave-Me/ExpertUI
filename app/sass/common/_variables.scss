@@ -67,6 +67,7 @@ $report-img: 60px;
 $widget-img: 64px;
 $report-img-s: 32px;
 $lang-img: 32px;
+$config-device-img: 200px;
 
 // Footer
 $footer-h: 50px;
@@ -194,7 +195,6 @@ $header-subnavi-bcg-color: #FFFFFF;
 $header-subnavi-active-color: lighten($header-subnavi-color, 50%);
 
 
-
 // Page navigation
 $page-navi-bcg-color: #FFFFFF;
 $page-navi-color: $app-a-color;
@@ -252,6 +252,7 @@ $pagination-active-bcg-color: $pagination-border-color;
 $pagination-active-color: #FFFFFF;
 
 // Footer
+$footer-color: $app-color-primary;
 $footer-border-color: $app-border-color;
 $footer-bcg-color: #FFFFFF;
 
@@ -265,6 +266,10 @@ $form-input-border-color: #CCCCCC;
 $form-input-color: lighten($app-body-color, 30%);
 $form-submit-entry-bcg-color: #FFFFFF;
 $form-addon-bcg-color: #EEEEEE;
+
+// Table
+$table-border-color: $app-border-color;
+$table-bcg-color: #FFFFFF;
 
 // Report
 $report-border-color: $app-border-color;

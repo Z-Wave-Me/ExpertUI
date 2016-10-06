@@ -71,4 +71,54 @@
 
 }
 
+// Gradient warning
+@mixin appTableMobile() {
+    /* Force table to not be like tables anymore */
+    table,thead,tbody,th, td,tr {
+        display: block;
+    }
+
+    /* Hide table headers (but not display: none;, for accessibility) */
+    table thead tr th{
+        border: 0;
+        display: none;
+    }
+    thead tr th.mobile-show{
+        display: block !important;
+    }
+
+    tr { border: 1px solid $table-border-color; }
+
+    td {
+        /* Behave  like a "row" */
+        border: none;
+        border-bottom: 1px dotted $table-border-color;
+        position: relative;
+        padding-left: 50%;
+        white-space: normal;
+        text-align:left;
+    }
+
+    td:before{
+        /* Now like a table header */
+        position: absolute;
+        /* Top/left values mimic padding */
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: $spacing;
+        white-space: nowrap;
+        text-align:left;
+        font-weight: bold;
+    }
+    .table-responsive{
+        border: 0;
+    }
+    /*
+    Label the data
+    */
+    td:before { content: attr(data-title); }
+
+}
+
 

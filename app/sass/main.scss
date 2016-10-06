@@ -13,8 +13,7 @@
 //@import "common/_main";
 
 // Skin variables
-//@import "skins/default/_variables";
-//@import "skins/komsa/_variables";
+@import "skins/default/_variables";
 // Vendors
 
 @import "vendor/_angular.slider.scss";
@@ -31,7 +30,8 @@
 @import "common/_table";
 @import "common/_button";
 @import "common/_form";
-//@import "common/_tab";
+@import "common/_tabs";
+@import "common/_panel";
 @import "common/_dropdown";
 //@import "common/_accordion";
 @import "common/_loader";
@@ -39,11 +39,20 @@
 @import "common/_modal";
 //@import "common/_pagination";
 
-// Modules 
+// Modules
+@import "modules/_home";
+@import "modules/_sensors";
+@import "modules/_activeassoc";
 @import "modules/_configuration";
+@import "modules/_commands";
+@import "modules/_linkhealth";
 @import "modules/_routing";
+@import "modules/_control";
 @import "modules/_installer";
 @import "modules/_networkmap";
+@import "modules/_timing";
+@import "modules/_controllerinfo";
+
 
 // Installer css
 @import "common/_installer";
