@@ -97,7 +97,7 @@
                         </a>
                     </li>
                     <!-- Conrol -->
-                    <li class="navibar-item" ng-click="expandNavi('naviControl', $event)">
+                    <li class="navibar-item" ng-click="expandNavi('naviControl', $event)" ng-if="cfg.app_type !== 'installer'">
                         <span class="divider-vertical"></span>
                         <a class="navibar-item-root" href="" title="{{ _t('nav_control')"
                            ng-class="isActive('control',1)">
@@ -147,13 +147,15 @@
                                 <li><a href="#network/timing" ng-class="isActive('timing',2)">{{ _t('nav_timing_info') }}</a></li>
                                 <!--<li><a class="a-disabled" title="Temporary disabled. Will be back in the next release." ng-class="isActive('timing',2)">{{ _t('nav_timing_info') }}</a></li>-->
                                 <li><a href="#network/map" dng-class="isActive('map',2)">{{ _t('nav_network_map') }}</a></li>
-                                <!--<li><a href="#network/controller" ng-class="isActive('controller',2)">{{ _t('nav_controller_info') }}</a></li>-->
+                                <li ng-if="cfg.app_type !== 'installer'">
+                                    <a href="#network/controller" ng-class="isActive('controller',2)">{{ _t('nav_controller_info') }}</a>
+                                </li>
                             </ul>
                         </div>
                     </li>
 
                     <!-- Zniffer -->
-                    <li class="navibar-item" ng-click="expandNavi('naviInstaller', $event)">
+                    <li class="navibar-item" ng-click="expandNavi('naviInstaller', $event)"  ng-if="cfg.app_type === 'installer'">
                         <span class="divider-vertical"></span>
                         <a class="navibar-item-root" href="" title="{{_t('installer')}}" ng-class="isActive('installer',1)">
                             <i class="fa fa-signal"></i> <span class="main-nav-name">{{ _t('installer')}}</span>
@@ -182,7 +184,7 @@
                         <span class="divider-vertical"></span>
 
                         <a class="navibar-item-root" href="" title="{{lang}}">
-                            <i class="fa fa-globe fa-lg"></i> <span class="main-nav-name">{{lang}}</span>
+                            <i class="fa fa-globe fa-lg"></i>
                         </a>
                         <div class="sub-navigation sub-navigation-left" ng-if="naviExpanded.naviLang">
                             <ul>

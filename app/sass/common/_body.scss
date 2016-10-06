@@ -66,6 +66,15 @@ h4 {
 .item-cnt{
     font-size: 80%;
 }
+.page-header {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    h1 {
+        font-size:$app-header-h1-font-size;
+        font-weight:bold;
+    }
+}
 /* Colors
 -------------------------------------------------- */
 .color-orange{
