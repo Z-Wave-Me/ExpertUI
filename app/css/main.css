@@ -13377,8 +13377,8 @@ a:focus {
   right: 0;
   left: 0;
   z-index: 2100;
-  color: #3071aa;
-  font-size: 120%;
+  color: #6BA2C8;
+  font-size: 110%;
 }
 /* line 12, ../sass/common/_header.scss */
 #header .container {
@@ -13387,8 +13387,8 @@ a:focus {
 /* line 15, ../sass/common/_header.scss */
 #header .divider-vertical {
   height: 50px;
-  border-left: 1px solid #73c6e8;
-  border-right: 1px solid #e1f3fa;
+  border-left: 1px solid #1C3B67;
+  border-right: 1px solid #1e578c;
 }
 /* line 22, ../sass/common/_header.scss */
 #header .fa {
@@ -13400,7 +13400,7 @@ a:focus {
 /* line 29, ../sass/common/_header.scss */
 #main_navigation_wrap {
   background-color: #FFFFFF;
-  border-bottom: solid 1px #9fd8ef;
+  border-bottom: solid 1px #2A6496;
   height: 50px;
 }
 
@@ -13416,38 +13416,47 @@ a:focus {
 }
 /* line 41, ../sass/common/_header.scss */
 #main_navigation ul.navibar .navibar-item {
-  display: inline-block;
+  float: left;
+  display: block;
   line-height: 50px;
   color: #5698d0;
 }
-/* line 49, ../sass/common/_header.scss */
+/* line 48, ../sass/common/_header.scss */
+#main_navigation ul.navibar .navibar-divider {
+  float: left;
+  display: block;
+  height: 50px;
+  border-left: 1px solid #1C3B67;
+  border-right: 1px solid #1e578c;
+}
+/* line 59, ../sass/common/_header.scss */
 #main_navigation .navibar-item-root, #main_navigation .timestamp {
   padding: 0 15px;
   display: inline-block;
   color: #5698d0;
 }
-/* line 55, ../sass/common/_header.scss */
+/* line 65, ../sass/common/_header.scss */
 #main_navigation a:hover {
-  background-color: #89cfeb;
+  text-decoration: none;
 }
-/* line 58, ../sass/common/_header.scss */
+/* line 69, ../sass/common/_header.scss */
 #main_navigation .active {
-  background-color: #9fd8ef;
-  color: #cbeaf6;
+  background-color: #2A6496;
+  color: #FFF;
 }
 
-/* line 64, ../sass/common/_header.scss */
+/* line 75, ../sass/common/_header.scss */
 #header_logo {
   max-height: 40px;
   max-width: 100px;
 }
 
-/* line 74, ../sass/common/_header.scss */
+/* line 85, ../sass/common/_header.scss */
 #navigation_right {
   float: right;
 }
 
-/* line 78, ../sass/common/_header.scss */
+/* line 89, ../sass/common/_header.scss */
 #navi_settings {
   border-radius: 4px;
   height: 40px;
@@ -13456,29 +13465,29 @@ a:focus {
   margin-right: 15px;
 }
 
-/* line 87, ../sass/common/_header.scss */
+/* line 98, ../sass/common/_header.scss */
 .navi-time-link {
   cursor: pointer;
 }
 
-/* line 91, ../sass/common/_header.scss */
+/* line 102, ../sass/common/_header.scss */
 .navi-time {
   padding-left: 10px;
 }
 
-/* line 95, ../sass/common/_header.scss */
+/* line 106, ../sass/common/_header.scss */
 .mobile-icon {
   padding-left: 7px;
   color: #5698d0;
 }
-/* line 98, ../sass/common/_header.scss */
+/* line 109, ../sass/common/_header.scss */
 .mobile-icon .fa {
   font-size: 17px;
 }
 
 /* Subnavigation
 -------------------------------------------------- */
-/* line 105, ../sass/common/_header.scss */
+/* line 116, ../sass/common/_header.scss */
 .sub-navigation {
   font-size: 110%;
   position: absolute;
@@ -13496,53 +13505,53 @@ a:focus {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   border: 1px solid #9fd8ef;
   background-clip: padding-box;
-  color: #5698d0;
+  color: #272822;
   font-weight: normal;
 }
-/* line 122, ../sass/common/_header.scss */
+/* line 133, ../sass/common/_header.scss */
 .sub-navigation ul {
   padding: 0;
   margin: 0;
   list-style: none;
 }
-/* line 126, ../sass/common/_header.scss */
+/* line 137, ../sass/common/_header.scss */
 .sub-navigation ul li {
   padding: 10px 0;
   border-bottom: solid 1px #9fd8ef;
 }
-/* line 130, ../sass/common/_header.scss */
+/* line 141, ../sass/common/_header.scss */
 .sub-navigation ul li a {
   display: block;
   position: relative;
   padding: 0 20px;
   vertical-align: middle;
-  color: #5698d0;
+  color: #272822;
 }
-/* line 138, ../sass/common/_header.scss */
+/* line 149, ../sass/common/_header.scss */
 .sub-navigation ul li .fa {
   color: #a6c8e6;
   padding-right: 7px;
 }
-/* line 142, ../sass/common/_header.scss */
+/* line 153, ../sass/common/_header.scss */
 .sub-navigation ul li .subnavi-arrow {
   position: absolute;
   right: 1%;
   display: inline-block;
 }
-/* line 150, ../sass/common/_header.scss */
+/* line 161, ../sass/common/_header.scss */
 .sub-navigation ul .active a {
   color: #f6f9fc;
   font-weight: bold;
   text-decoration: underline;
   cursor: text;
 }
-/* line 157, ../sass/common/_header.scss */
+/* line 168, ../sass/common/_header.scss */
 .sub-navigation ul .fa {
   font-size: 120%;
   padding-right: 10px;
 }
 
-/* line 165, ../sass/common/_header.scss */
+/* line 176, ../sass/common/_header.scss */
 .sub-navigation-left {
   float: left;
   left: 0;
@@ -15157,6 +15166,39 @@ http://codepen.io/MattIn4D/pen/LiKFC
 /* line 10, ../sass/modules/_controllerinfo.scss */
 .controller-th {
   width: 15%;
+}
+
+/* Main navigation
+-------------------------------------------------- */
+/* line 5, ../sass/skins/default/_main.scss */
+#main_navigation_wrap {
+  /*background-color: $header-bcg-color;
+  border-bottom: solid 1px $header-border-color;
+  height: $header-h;*/
+  background: #1f355e;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #1f355e 0%, #174a7c 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #1f355e), color-stop(100%, #174a7c));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #1f355e 0%, #174a7c 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #1f355e 0%, #174a7c 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #1f355e 0%, #174a7c 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #1f355e 0%, #174a7c 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1f355e', endColorstr='#174a7c',GradientType=0 );
+  /* IE6-9 */
+  border-bottom: solid 4px #2A6496;
+}
+
+/* Form
+-------------------------------------------------- */
+/* line 24, ../sass/skins/default/_main.scss */
+.form-page {
+  border-width: 4px;
 }
 
 /* Zwave alliance

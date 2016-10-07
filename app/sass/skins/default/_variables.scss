@@ -35,17 +35,18 @@ $app-bcg-danger: #f2dede;
 $app-overlay-bcg-color: rgba(37, 37, 37, 0.5);
 
 // Header
-$header-color: lighten($app-color-primary, 5%);
+$header-color: #6BA2C8;
 $header-bcg-color:  #FFFFFF;
-$header-border-color: $app-border-color;
+$header-border-color:  #2A6496;
 $header-delim-color: $app-border-color;
-$header-delim-l-color: darken($app-border-color, 10%);
-$header-delim-r-color: lighten($app-border-color, 15%);
+$header-delim-l-color: #1C3B67;
+$header-delim-r-color: #1e578c;;
 $header-a-color: $app-a-color;
 $header-icon-color: lighten($header-a-color, 20%);
-$header-a-active-color: $app-border-color;
+$header-a-active-color: #FFF;
+$header-a-active-bcg-color: #2A6496;
 $header-subnavi-border-color: $app-border-color;
-$header-subnavi-color: $app-a-color;
+$header-subnavi-color: #272822;
 $header-subnavi-bcg-color: #FFFFFF;
 $header-subnavi-active-color: lighten($header-subnavi-color, 50%);
 

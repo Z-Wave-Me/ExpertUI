@@ -103,7 +103,7 @@ $app-font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace 
 $app-body-font-size: 17px;
 $app-error-message-font-size: 120%;
 $app-error-info-font-size: 105%;
-$app-navi-font-size: 120%;
+$app-navi-font-size: 110%;
 $app-btn-font-size: 110%;
 $app-btn-icon-size: 150%;
 $app-btn-small-font-size: 90%;
@@ -189,6 +189,7 @@ $header-delim-r-color: lighten($app-border-color, 15%);
 $header-a-color: $app-a-color;
 $header-icon-color: lighten($header-a-color, 20%);
 $header-a-active-color: $app-border-color;
+$header-a-active-bcg-color: lighten($app-border-color, 25%);
 $header-subnavi-border-color: $app-border-color;
 $header-subnavi-color: $app-a-color;
 $header-subnavi-bcg-color: #FFFFFF;

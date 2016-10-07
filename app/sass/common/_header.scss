@@ -40,10 +40,20 @@
     margin: 0;
     .navibar-item{
      // position: relative;
-
-      display: inline-block;
+  float: left;
+      display: block;
       line-height: $header-h;
       color: $header-a-color;
+    }
+    .navibar-divider{
+      // position: relative;
+      //width: 10px;
+      float: left;
+      display: block;
+      //line-height: $header-h;
+      height: $header-h;
+      border-left: 1px solid $header-delim-l-color;
+      border-right: 1px solid $header-delim-r-color;
     }
   }
   .navibar-item-root,.timestamp{
@@ -53,11 +63,12 @@
 
   }
   a:hover {
-    background-color: darken($header-a-active-color, 5%);
+    text-decoration: none;
+    //background-color: darken($header-a-active-color, 5%);
   }
   .active {
-    background-color: $header-a-active-color;
-    color: lighten($header-a-active-color, 10%);
+    background-color: $header-a-active-bcg-color;
+    color: $header-a-active-color;
   }
 }
 
@@ -126,7 +137,7 @@
     li{
       //padding: $spacing;
       padding: $spacing 0;
-      border-bottom: solid 1px $header-border-color;
+      border-bottom: solid 1px $header-subnavi-border-color;
       a{
         display: block;
         position:relative;
