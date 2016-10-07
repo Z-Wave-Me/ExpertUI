@@ -13528,30 +13528,34 @@ a:focus {
   color: #272822;
 }
 /* line 149, ../sass/common/_header.scss */
+.sub-navigation ul li .a-disabled {
+  color: #a9ac9d;
+}
+/* line 152, ../sass/common/_header.scss */
 .sub-navigation ul li .fa {
   color: #a6c8e6;
   padding-right: 7px;
 }
-/* line 153, ../sass/common/_header.scss */
+/* line 156, ../sass/common/_header.scss */
 .sub-navigation ul li .subnavi-arrow {
   position: absolute;
   right: 1%;
   display: inline-block;
 }
-/* line 161, ../sass/common/_header.scss */
+/* line 164, ../sass/common/_header.scss */
 .sub-navigation ul .active a {
   color: #f6f9fc;
   font-weight: bold;
   text-decoration: underline;
   cursor: text;
 }
-/* line 168, ../sass/common/_header.scss */
+/* line 171, ../sass/common/_header.scss */
 .sub-navigation ul .fa {
   font-size: 120%;
   padding-right: 10px;
 }
 
-/* line 176, ../sass/common/_header.scss */
+/* line 179, ../sass/common/_header.scss */
 .sub-navigation-left {
   float: left;
   left: 0;
@@ -13579,6 +13583,7 @@ a:focus {
 }
 /* line 17, ../sass/common/_footer.scss */
 #footer #footer_in .timestamp {
+  color: #2A6496;
   display: none;
 }
 
@@ -15203,7 +15208,7 @@ http://codepen.io/MattIn4D/pen/LiKFC
 
 /* Zwave alliance
 -------------------------------------------------- */
-/* line 8, ../sass/common/_installer.scss */
+/* line 8, ../sass/skins/installer/_main.scss */
 .app-type-installer {
   /*Typo */
   /* Header */
@@ -15219,125 +15224,134 @@ http://codepen.io/MattIn4D/pen/LiKFC
   /* Panel */
   /* Welll */
 }
-/* line 9, ../sass/common/_installer.scss */
-.app-type-installer #main_navbar {
+/* line 9, ../sass/skins/installer/_main.scss */
+.app-type-installer #main_navigation {
   margin-bottom: 0;
 }
-/* line 12, ../sass/common/_installer.scss */
+/* line 12, ../sass/skins/installer/_main.scss */
 .app-type-installer .container-installer {
+  margin: 50px 0 0 0;
   width: 100%;
 }
-/* line 14, ../sass/common/_installer.scss */
+/* line 15, ../sass/skins/installer/_main.scss */
 .app-type-installer .container-installer .alert {
   font-size: 120%;
   text-align: center;
   padding: 10px 15px;
 }
-/* line 21, ../sass/common/_installer.scss */
+/* line 22, ../sass/skins/installer/_main.scss */
 .app-type-installer h1 {
   color: #083366;
 }
-/* line 24, ../sass/common/_installer.scss */
+/* line 25, ../sass/skins/installer/_main.scss */
 .app-type-installer a {
   color: #083366;
 }
-/* line 27, ../sass/common/_installer.scss */
+/* line 28, ../sass/skins/installer/_main.scss */
 .app-type-installer .list-group-item {
   border-color: #87cf83;
 }
-/* line 31, ../sass/common/_installer.scss */
-.app-type-installer .navbar-inverse {
-  background: #083366;
-}
-/* line 34, ../sass/common/_installer.scss */
-.app-type-installer .navbar-inverse .navbar-nav > li > a {
+/* line 33, ../sass/skins/installer/_main.scss */
+.app-type-installer #main_navigation .navibar-item-root, .app-type-installer #main_navigation .timestamp {
   color: #F89847;
 }
-/* line 37, ../sass/common/_installer.scss */
-.app-type-installer .navbar-inverse .dropdown-toggle.active,
-.app-type-installer .navbar-inverse .dropdown-toggle.active:hover,
-.app-type-installer .navbar-inverse .no-dropdown.active,
-.app-type-installer .navbar-inverse .no-dropdown.active:hover {
+/* line 36, ../sass/skins/installer/_main.scss */
+.app-type-installer #main_navigation .active {
   color: #47aa42;
   background-color: #2A6496;
 }
-/* line 45, ../sass/common/_installer.scss */
+/* line 42, ../sass/skins/installer/_main.scss */
+.app-type-installer .sub-navigation {
+  background-color: #47AA42;
+  border: 1px solid #e3e3e3;
+}
+/* line 46, ../sass/skins/installer/_main.scss */
+.app-type-installer .sub-navigation ul li {
+  border-color: #FFF;
+}
+/* line 52, ../sass/skins/installer/_main.scss */
 .app-type-installer .dropdown-menu {
   background-color: #47AA42;
   border: 1px solid #e3e3e3;
 }
-/* line 50, ../sass/common/_installer.scss */
+/* line 57, ../sass/skins/installer/_main.scss */
 .app-type-installer .dropdown-menu > li > a {
   color: #083366;
 }
-/* line 53, ../sass/common/_installer.scss */
+/* line 60, ../sass/skins/installer/_main.scss */
 .app-type-installer .dropdown-menu > li > a.active,
 .app-type-installer .dropdown-menu > li > a.active:hover {
   color: #47AA42;
   background-color: #083366;
 }
-/* line 59, ../sass/common/_installer.scss */
+/* line 66, ../sass/skins/installer/_main.scss */
 .app-type-installer .product-logo {
   max-width: 150px;
   max-height: 150px;
 }
-/* line 65, ../sass/common/_installer.scss */
+/* line 72, ../sass/skins/installer/_main.scss */
 .app-type-installer .product-data-list {
   background-color: #ceebcd;
 }
-/* line 68, ../sass/common/_installer.scss */
+/* line 75, ../sass/skins/installer/_main.scss */
 .app-type-installer .product-description {
   border-color: #87cf83;
 }
-/* line 78, ../sass/common/_installer.scss */
+/* line 85, ../sass/skins/installer/_main.scss */
 .app-type-installer .table > thead > tr > th {
   border-color: #87cf83;
 }
-/* line 82, ../sass/common/_installer.scss */
+/* line 89, ../sass/skins/installer/_main.scss */
 .app-type-installer .table > thead > tr > th, .app-type-installer .table > tbody > tr > th, .app-type-installer .table > tfoot > tr > th, .app-type-installer .table > thead > tr > td, .app-type-installer .table > tbody > tr > td, .app-type-installer .table > tfoot > tr > td {
   border-color: #87cf83;
 }
-/* line 87, ../sass/common/_installer.scss */
+/* line 94, ../sass/skins/installer/_main.scss */
 .app-type-installer .form-control {
   border-color: #87cf83;
 }
-/* line 90, ../sass/common/_installer.scss */
+/* line 97, ../sass/skins/installer/_main.scss */
 .app-type-installer .commands-data-control {
   background-color: #ceebcd;
 }
-/* line 93, ../sass/common/_installer.scss */
+/* line 100, ../sass/skins/installer/_main.scss */
 .app-type-installer .commands-data {
   border-color: #87cf83;
 }
-/* line 96, ../sass/common/_installer.scss */
+/* line 103, ../sass/skins/installer/_main.scss */
 .app-type-installer .cfg-block {
   border-color: #87cf83;
 }
-/* line 100, ../sass/common/_installer.scss */
+/* line 107, ../sass/skins/installer/_main.scss */
 .app-type-installer .nav-tabs > li.active > a, .app-type-installer .nav-tabs > li.active > a:hover, .app-type-installer .nav-tabs > li.active > a:focus {
   background-color: #ceebcd;
   border-color: #87cf83;
 }
-/* line 104, ../sass/common/_installer.scss */
+/* line 111, ../sass/skins/installer/_main.scss */
 .app-type-installer .tab-content {
   border-color: transparent #87cf83 #87cf83;
 }
-/* line 107, ../sass/common/_installer.scss */
+/* line 114, ../sass/skins/installer/_main.scss */
 .app-type-installer .nav-tabs {
   border-color: #87cf83;
 }
-/* line 111, ../sass/common/_installer.scss */
+/* line 118, ../sass/skins/installer/_main.scss */
 .app-type-installer .panel {
   border-color: #87cf83;
 }
-/* line 114, ../sass/common/_installer.scss */
+/* line 121, ../sass/skins/installer/_main.scss */
 .app-type-installer .panel-default > .panel-heading {
   background-color: #ceebcd;
   border-color: #87cf83;
 }
-/* line 119, ../sass/common/_installer.scss */
+/* line 126, ../sass/skins/installer/_main.scss */
 .app-type-installer .well {
   background-color: #ceebcd;
+  border-color: #87cf83;
+}
+
+/* footer */
+/* line 132, ../sass/skins/installer/_main.scss */
+#footer {
   border-color: #87cf83;
 }
 
@@ -15836,12 +15850,7 @@ http://codepen.io/MattIn4D/pen/LiKFC
     display: block;
   }
 
-  /* line 92, ../sass/responsive/_responsive.scss */
-  #footer .timestamp {
-    display: inline-block !important;
-  }
-
-  /* line 95, ../sass/responsive/_responsive.scss */
+  /* line 93, ../sass/responsive/_responsive.scss */
   #table_mobile {
     /* Force table to not be like tables anymore */
     /* Hide table headers (but not display: none;, for accessibility) */
@@ -15899,6 +15908,21 @@ http://codepen.io/MattIn4D/pen/LiKFC
   }
 }
 /* Small Devices, Tablets */
+@media only screen and (max-width: 768px) {
+  /* line 102, ../sass/responsive/_responsive.scss */
+  #footer .timestamp {
+    display: inline-block !important;
+  }
+  /* line 105, ../sass/responsive/_responsive.scss */
+  #footer .copyright {
+    display: none !important;
+  }
+
+  /* line 110, ../sass/responsive/_responsive.scss */
+  .navi-timestamp {
+    display: none !important;
+  }
+}
 /* Extra Small Devices, Phones */
 /* Custom, iPhone Retina */
 

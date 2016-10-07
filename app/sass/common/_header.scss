@@ -146,6 +146,9 @@
         vertical-align: middle;
         color: $header-subnavi-color;
       }
+     .a-disabled {
+        color: lighten($header-subnavi-color,50%);
+      }
       .fa{
         color: $header-icon-color;
         padding-right: 7px;

@@ -89,17 +89,30 @@
         margin: $spacing 0 0 0;
         display: block;
     }
-    #footer .timestamp{
-        display: inline-block !important;
-    }
+
     #table_mobile{
        @include appTableMobile();
     }
 }
 
 /* Small Devices, Tablets */
-@media only screen and (max-width : 768px),(orientation:portrait){}
+//@media only screen and (max-width : 768px),(orientation:portrait){}
+@media only screen and (max-width : 768px){
+    #footer{
+        .timestamp{
+            display: inline-block !important;
+        }
+        .copyright{
+            display: none !important;
+        }
 
+    }
+    .navi-timestamp{
+        display: none !important;
+    }
+
+
+}
 /* Extra Small Devices, Phones */
 @media only screen and (max-width : 480px) {}
 

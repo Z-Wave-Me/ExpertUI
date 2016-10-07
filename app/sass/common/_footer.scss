@@ -15,6 +15,7 @@
         height: $footer-h;
         line-height: $footer-h;
         .timestamp{
+            color: $footer-color;
             display: none;
         }
     }
