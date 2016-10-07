@@ -15223,6 +15223,7 @@ http://codepen.io/MattIn4D/pen/LiKFC
   /* Tabs */
   /* Panel */
   /* Welll */
+  /* footer */
 }
 /* line 9, ../sass/skins/installer/_main.scss */
 .app-type-installer #main_navigation {
@@ -15348,10 +15349,8 @@ http://codepen.io/MattIn4D/pen/LiKFC
   background-color: #ceebcd;
   border-color: #87cf83;
 }
-
-/* footer */
-/* line 132, ../sass/skins/installer/_main.scss */
-#footer {
+/* line 131, ../sass/skins/installer/_main.scss */
+.app-type-installer #footer {
   border-color: #87cf83;
 }
 
