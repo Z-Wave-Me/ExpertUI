@@ -20,6 +20,11 @@
                             <span ng-show="predicate == 'sleeping'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
+                    <th>
+                        <a href="" ng-click="orderBy('interval')">{{ _t('wakeup_interval')}}
+                            <span ng-show="predicate == 'interval'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
                      <th>
                         <a href="" ng-click="orderBy('awake')">{{ _t('th_awake')}}
                             <span ng-show="predicate == 'awake'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
@@ -53,6 +58,9 @@
             <a href="#configuration/interview/{{v.id}}">{{ v.name}}</a>
         </td>
         <td data-title="{{ _t('th_sleeping')}}" class="row-sleeping"><span ng-bind-html="v.sleeping | toTrusted"></span> &nbsp;</td>
+                    <td data-title="{{ _t('wakeup_interval')}}" class="row-wakeupint">
+                        <span ng-if="v.interval">{{v.interval}}s</span> &nbsp;
+                    </td>
                     <td data-title="{{ _t('th_awake')}}" class="row-awake"><span ng-bind-html="v.awake | toTrusted"></span> &nbsp;</td>
                     <td data-title="{{ _t('datetime')}}"><span  class="row-isfailed" ng-bind-html="v.isFailed | toTrusted"></span> <span  class="row-time" ng-bind-html="v.updateTime | toTrusted"></span> &nbsp;</td>
                     <!--<td data-title="{{ _t('th_ddr')}}" class="row-ddr"><span ng-bind-html="v.ddr | toTrusted"></span> &nbsp;</td>-->

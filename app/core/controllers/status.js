@@ -326,7 +326,7 @@ appController.controller('StatusController', function($scope, $filter, dataServi
                 interval = NaN; // to indicate that interval and hence next wakeup are unknown
             var lastSleep = $filter('isTodayFromUnix')(sleepingSince);
             var nextWakeup = $filter('isTodayFromUnix')(sleepingSince + interval);
-            sleeping_cont = '<span title="' + $scope._t('sleeping_since') + '" class="not_important">' + approx + lastSleep + '</span> &#8594; <span title="' + $scope._t('next_wakeup') + '">' + approx + nextWakeup + '</span> <i class="fa fa-clock-o fa-lg" title="' + $scope._t('battery_operated_device_with_wakeup') + '"></i>';
+            sleeping_cont = ' <i class="fa fa-clock-o fa-lg" title="' + $scope._t('battery_operated_device_with_wakeup') + '"></i> <span title="' + $scope._t('sleeping_since') + '" class="not_important">' + approx + lastSleep + '</span> &#8594; <span title="' + $scope._t('next_wakeup') + '">' + approx + nextWakeup + '</span>';
         } else if (!isListening && isFLiRS)
             sleeping_cont = '<i class="fa fa-headphones fa-lg" title="' + $scope._t('FLiRS_device') + '"></i>';
         else

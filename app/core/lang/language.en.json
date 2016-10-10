@@ -1,6 +1,10 @@
 {
     "--- newtrans": "---",
-    "my_own": "My own",
+  "wakeup_interval": "Wakeup interval",
+  "sleeping_since": "Sleeping since",
+  "next_wakeup": "Next wakeup",
+  "battery_operated_device_with_wakeup": "Battery operated device with wakeup",
+  "my_own": "My own",
     "other_network": "Other network",
     "secondary_inclusion_controller": "Secondary Inclusion Controller",
   "before_leaving_network": "Before you leave the network create a backup of your network informations. Have you already backup of your network informations?",
