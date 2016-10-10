@@ -13,7 +13,7 @@ This User Interfaces allows to operate a Smart Home Network based on Z-Wave devi
 
 #### Changes
 - Device/Status: removed column DDR, interview icon replaced, check conectivity button replaced with icon.
-- IMA: Controller info removed from the menu and is displayed on the Network > Control page.
+- IMA: Controller info removed from the menu and is displayed on the Network > Control page. Removed Capabillities, Functions, Buttons.
 - Menu Configuration moved to Device > Configuration.
 - Network/Timing: Type replaced with icon.
 - Network/Routing: New type icons.

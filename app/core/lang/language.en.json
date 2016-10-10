@@ -1,5 +1,8 @@
 {
     "--- newtrans": "---",
+    "my_own": "My own",
+    "other_network": "Other network",
+    "secondary_inclusion_controller": "Secondary Inclusion Controller",
      "---": "---",
     "nav_rssi":"Background Noise",
      "hops":"Hops",
