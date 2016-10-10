@@ -34,7 +34,7 @@
                 </form>
             </div>
         </div>
-        <div class="col-sm-6 product-data-list pull-right">
+        <div class="col-sm-6 product-data-list pull-right_">
             <!-- Z-Wave Network -->
             <div ng-controller="HomeDongleController">
                 <div class="form-inline home-dongle" ng-if="homeDongle.data.length > 0">
@@ -49,10 +49,10 @@
             </div>
             <!-- Network Information -->
             <h3><i class="fa fa-info-circle"></i> {{_t('txt_network_info')}}</h3>
+            <p><strong>{{countDevices}}</strong> {{_t('txt_devices_present')}}:</p>
             <ul class="list-group">
-                <li class="list-group-item"><strong>{{countDevices}}</strong> {{_t('txt_devices_present')}}</li>
-                <li class="list-group-item"><strong>{{mainsDevices}}</strong> {{_t('txt_devices_mains')}}</li>
-                <li class="list-group-item"><strong>{{batteryDevices}}</strong> {{_t('txt_devices_battery')}}</li>
+               <li class="list-group-item"><strong>{{mainsDevices}}</strong> {{_t('txt_devices_mains')}}</li>
+                <li class="list-group-item"><strong>{{batteryWakeupDevices}}</strong> {{_t('txt_devices_battery')}}</li>
                 <li class="list-group-item"><strong>{{flirsDevices}}</strong> {{_t('txt_devices_flirs')}}</li>
             </ul>
 
@@ -115,11 +115,11 @@
                         ng-if="boxData.controller.isPrimary && (boxData.controller.hasDevices)"
                         style="background-color: grey;"
                         disabled
-                >{{_t('Exclude from Network')}}</button>
+                >{{_t('leave_network')}}</button>
                 <button
                         class="btn btn-danger"
                         id="btn_learn_stop"
-                        ng-click="runZwaveCmd('controller.SetLearnMode(0)')"
+                        ng-click="runZwaveCmd('controller._SetLearnMode(0)',_t('before_leaving_network'))"
                         ng-if="!boxData.controller.isPrimary"
                 ><i class="fa fa-spinner fa-spin"></i> {{_t('leave_network')}}</button>
 
@@ -135,6 +135,6 @@
 
 
             </div>
-        </div>
+        </span>
     </div>
 </div>
