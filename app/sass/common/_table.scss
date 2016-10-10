@@ -1,11 +1,15 @@
 /* Table
 -------------------------------------------------- */
 .table{
+    .td-action{
+        text-align: right;
+    }
     tbody{
         tr{
             td{
                 border-top: 1px solid $app-border-color; 
             }
+
         }
     }
 

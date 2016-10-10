@@ -2007,8 +2007,52 @@ h3 {
 }
 
 /*@import "common/_widget"; 
-@import "common/_report"; 
-@import "common/_table"; */
+@import "common/_report"; */
+/* Table
+-------------------------------------------------- */
+/* line 4, ../sass/common/_table.scss */
+.table .td-action {
+  text-align: right;
+}
+/* line 9, ../sass/common/_table.scss */
+.table tbody tr td {
+  border-top: 1px solid #cccccc;
+}
+
+/* line 17, ../sass/common/_table.scss */
+.table-report {
+  border: 0 !important;
+  margin-bottom: 0 !important;
+}
+/* line 21, ../sass/common/_table.scss */
+.table-report tbody td {
+  vertical-align: middle !important;
+  background-color: #FFFFFF;
+}
+/* line 25, ../sass/common/_table.scss */
+.table-report tbody .td-img {
+  width: 30px;
+}
+/* line 28, ../sass/common/_table.scss */
+.table-report tbody .td-action {
+  text-align: right;
+}
+
+/* line 34, ../sass/common/_table.scss */
+.table-products td {
+  vertical-align: middle !important;
+}
+
+/* line 39, ../sass/common/_table.scss */
+.td20 {
+  width: 20%;
+}
+
+/* line 42, ../sass/common/_table.scss */
+.td30 {
+  width: 30%;
+}
+
 /* Button
 -------------------------------------------------- */
 /* line 3, ../sass/common/_button.scss */
@@ -3229,3 +3273,5 @@ http://codepen.io/MattIn4D/pen/LiKFC
 /* Small Devices, Tablets */
 /* Extra Small Devices, Phones */
 /* Custom, iPhone Retina */
+
+/*# sourceMappingURL=main.css.map */
