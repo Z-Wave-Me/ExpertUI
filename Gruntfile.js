@@ -38,8 +38,9 @@ module.exports = function (grunt) {
                     'app/vendor/bootstrap/bootstrap.min.js',
                     // XML
                     'app/vendor/xml/xml2json.js',
-                    // Z-Wave uld ExpertU
+                    // Z-Wave old ExpertU
                     'app/vendor/zwave/pyzw.js',
+                    'app/vendor/zwave/pyzw_zwave_ui.js',
                     // CANVAS JS
                     'app/vendor/canvasjs/canvasjs.min.js',
                     // APP
