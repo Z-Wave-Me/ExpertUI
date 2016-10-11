@@ -44,6 +44,28 @@ angApp.directive('bbLoader', function () {
     };
 });
 
+/**
+ * Displays a spinner in the table row
+ * @class bbRowSpinner
+ */
+angApp.directive('bbRowSpinner', function () {
+    return {
+        restrict: "E",
+        replace: true,
+        scope: {
+            label: '=',
+            spinner: '=',
+            icon: '='
+        },
+        template: '<span title="{{label}}"><span class="btn-spin" ng-if_="spinner">' +
+        '<i class="fa " ng-class="spinner ? \'fa-spinner fa-spin\':icon"></i>' +
+        '</span> ' +
+        '<span class="btn-label">' +
+        '{{label}}' +
+        '</span></span>'
+    };
+});
+
 angApp.directive('btnSpinner', function () {
     return {
         restrict: "E",

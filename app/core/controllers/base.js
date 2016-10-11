@@ -243,6 +243,20 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
         $event.stopPropagation();
     };
 
+    $scope.rowSpinner = [];
+    /**
+     * Toggle row spinner
+     * @param {string} key
+     * @returns {undefined}
+     */
+    $scope.toggleRowSpinner = function (key) {
+        if (!key) {
+            $scope.rowSpinner = [];
+            return;
+        }
+        $scope.rowSpinner[key] = !$scope.rowSpinner[key];
+    };
+
     /**
      * Get array from custom config
      * @param {string} key

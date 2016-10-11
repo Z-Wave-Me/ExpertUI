@@ -2,71 +2,124 @@
  * SwitchController
  * @author Martin Vach
  */
-appController.controller('SwitchController', function($scope, $filter, dataService, cfg) {
+appController.controller('SwitchController', function($scope, $filter, $timeout,$interval,dataService, cfg,_) {
+    $scope.apiDataInterval;
     $scope.switches = [];
     $scope.rangeSlider = [];
     $scope.updateTime = $filter('getTimestamp');
     $scope.reset = function() {
         $scope.switches = angular.copy([]);
     };
+    $scope.$on('$destroy', function() {
+        $interval.cancel($scope.apiDataInterval);
+    });
 
+    /**
+     * Load data
+     */
+    $scope.loadZwaveData = function() {
+        dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
+            setData(ZWaveAPIData,true);
+            $scope.refreshZwaveData(ZWaveAPIData);
+        }, function(error) {
+            alertify.alertError($scope._t('error_load_data'));
+        });
+    };
+    $scope.loadZwaveData();
+
+    /**
+     * Refresh data
+     */
+    $scope.refreshZwaveData = function(ZWaveAPIData) {
+        var refresh = function() {
+            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+                setData(response.data.joined);
+            }, function(error) {});
+        };
+        $scope.apiDataInterval = $interval(refresh, $scope.cfg.interval);
+    };
+
+    // DEPRECATED
     // Load data
-    $scope.load = function() {
+    /*$scope.load = function() {
         dataService.getZwaveData(function(ZWaveAPIData) {
             setData(ZWaveAPIData);
+
             dataService.joinedZwaveData(function(data) {
                 refreshData(data);
             });
         });
     };
-
+*/
 
     // Load data
-    $scope.load();
+    //$scope.load();
 
+    // DEPRECATED
     // Refresh data
-    $scope.refresh = function() {
+   /* $scope.refresh = function() {
         dataService.joinedZwaveData(function(data) {
             $scope.reset();
             setData(data.joined);
         });
-    };
+    };*/
     //$scope.refresh();
 
+    // DEPRECATED
     // Cancel interval on page destroy
-    $scope.$on('$destroy', function() {
+    /*$scope.$on('$destroy', function() {
         dataService.cancelZwaveDataInterval();
-    });
+    });*/
 
-    // Store data from on remote server
-    $scope.store = function(btn) {
-        var url = $(btn).attr('data-store-url');
-        dataService.runCmd(url, false, $scope._t('error_handling_data'));
-    };
-
-    // Store all data on remote server
-    $scope.storeAll = function(id) {
-        angular.forEach($scope.switches, function(v, k) {
-            dataService.runCmd(v.urlToStore);
+    /**
+     * Update switch
+     * @param {string} url
+     */
+    $scope.updateSwitch = function(url) {
+        $scope.toggleRowSpinner(url);
+        dataService.runZwaveCmd(cfg.store_url + url).then(function (response) {
+            $timeout($scope.toggleRowSpinner, 1000);
+        }, function (error) {
+            $scope.toggleRowSpinner();
+            alertify.alertError($scope._t('error_update_data') + '\n' + url);
         });
     };
-
-    // Store data with switch all
-    $scope.storeSwitchAll = function(btn) {
-        var action_url = $(btn).attr('data-store-url');
+    /**
+     * Update all switches
+     * @param {string} id
+     * @param {string} urlType
+     */
+    $scope.updateAllSwitches = function(id,urlType) {
+        var lastItem = _.last($scope.switches);
+        $scope.toggleRowSpinner(id);
         angular.forEach($scope.switches, function(v, k) {
-            var url = 'devices[' + v['id'] + '].instances[0].commandClasses[0x27].' + action_url;
-            if (v.hasSwitchAll) {
-                dataService.runCmd(url);
+            $scope.toggleRowSpinner(v[urlType]);
+            dataService.runZwaveCmd(cfg.store_url + v[urlType]).then(function (response) {
+                alertify.dismissAll();
+            }, function (error) {
+                alertify.dismissAll();
+                alertify.alertError($scope._t('error_update_data') + '\n' +  v[urlType]);
+            });
+            if(lastItem.rowId === v.rowId){
+                $timeout($scope.toggleRowSpinner, 1000);
             }
         });
-        ;
-    };
 
+    };
+    /**
+     * Update switch with slider
+     * @param cmd
+     * @param index
+     */
     $scope.sliderChange = function(cmd, index) {
         var val = $scope.rangeSlider[index];
         var url = cmd + '.Set(' + val + ')';
-        dataService.runCmd(url, false, $scope._t('error_handling_data'));
+        dataService.runZwaveCmd(cfg.store_url + url).then(function (response) {
+            $scope.toggleRowSpinner();
+        }, function (error) {
+            $scope.toggleRowSpinner();
+            alertify.alertError($scope._t('error_update_data') + '\n' + url);
+        });
     };
 
     /// --- Private functions --- ///
@@ -74,7 +127,7 @@ appController.controller('SwitchController', function($scope, $filter, dataServi
     /**
      * Set zwave data
      */
-    function setData(ZWaveAPIData) {
+    function setData(ZWaveAPIData,pushData) {
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
@@ -87,6 +140,7 @@ appController.controller('SwitchController', function($scope, $filter, dataServi
             angular.forEach(node.instances, function(instance, instanceId) {
                 angular.forEach([0x25, 0x26], function(ccId) {
                     if (!(ccId in instance.commandClasses)) return;
+                    var findIndex = _.findIndex($scope.switches, function(v) { return v.id == nodeId });
                     var switchAllValue = null;
                     var hasSwitchAll = (0x27 in instance.commandClasses) && (instanceId == 0);
                     if (hasSwitchAll) {
@@ -151,10 +205,17 @@ appController.controller('SwitchController', function($scope, $filter, dataServi
                     obj['btnOff'] = btnOff;
                     obj['btnFull'] = btnFull;
                     obj['cmdToUpdate'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.level';
+                    console.log(findIndex)
+
+                    if(findIndex < 0){
+                        $scope.switches.push(obj);
+                        $scope.rangeSlider.push(obj['range_' + nodeId] = level.level_val);
+                    }else{
+                        angular.extend($scope.switches[findIndex],obj);
+                        $scope.rangeSlider[findIndex] = level.level_val;
+                    }
 
 
-                    $scope.switches.push(obj);
-                    $scope.rangeSlider.push(obj['range_' + nodeId] = level.level_val);
                     cnt++;
                 });
             });
@@ -163,9 +224,10 @@ appController.controller('SwitchController', function($scope, $filter, dataServi
     ;
 
     /**
+     * DEPRECATED
      * Refresh zwave data
      */
-    function refreshData(data) {
+   /* function refreshData(data) {
         angular.forEach($scope.switches, function(v, k) {
             //console.log(v.cmdToUpdate);
             //return;
@@ -184,7 +246,7 @@ appController.controller('SwitchController', function($scope, $filter, dataServi
                 //console.log('Updating:' + v.rowId + ' | At: ' + updateTime + ' | with: ' + level);//REM
             }
         });
-    }
+    }*/
 
     // Update level
     function updateLevel(obj, ccId, btnOn, btnOff) {
