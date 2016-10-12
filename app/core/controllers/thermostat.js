@@ -3,12 +3,24 @@
  * @author Martin Vach
  */
 appController.controller('ThermostatController', function($scope, $filter, dataService) {
-    $scope.thermostats = [];
-    $scope.rangeSlider = [];
-    $scope.mChangeMode = [];
-    $scope.reset = function() {
-        $scope.thermostats = angular.copy([]);
+    $scope.thermostats = {
+        all: [],
+        interval: null,
+        show: false,
+        rangeSlider: [],
+        mChangeMode: []
     };
+
+    /**
+     * Cancel interval on page destroy
+     */
+    $scope.$on('$destroy', function() {
+        $interval.cancel($scope.thermostats.interval);
+    });
+
+
+
+
     // Load data
     $scope.load = function() {
         dataService.getZwaveData(function(ZWaveAPIData) {
@@ -27,7 +39,7 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
     });
     // Change temperature on click
     $scope.tempChange = function(cmd, index, type) {
-        var val = $scope.rangeSlider[index];
+        var val = $scope.thermostats.rangeSlider[index];
         var min = parseInt($scope.cfg.thermostat_range.min, 10);
         var max = parseInt($scope.cfg.thermostat_range.max, 10);
         var count = (type === '-' ? val - 1 : val + 1);
@@ -37,14 +49,14 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
         if (count > max) {
             count = max;
         }
-        $scope.rangeSlider[index] = count;
+        $scope.thermostats.rangeSlider[index] = count;
         var url = cmd + '.Set(1,' + count + ')';
-        console.log('Sending value: ' + $scope.rangeSlider[index]);
+        console.log('Sending value: ' + $scope.thermostats.rangeSlider[index]);
         dataService.runCmd(url, false, $scope._t('error_handling_data'));
     };
     // Change temperature after slider handle
     $scope.sliderChange = function(cmd, index) {
-        var count = parseInt($scope.rangeSlider[index]);
+        var count = parseInt($scope.thermostats.rangeSlider[index]);
         var min = parseInt($scope.cfg.thermostat_range.min, 10);
         var max = parseInt($scope.cfg.thermostat_range.max, 10);
         if (count < min) {
@@ -53,7 +65,7 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
         if (count > max) {
             count = max;
         }
-        $scope.rangeSlider[index] = count;
+        $scope.thermostats.rangeSlider[index] = count;
         var url = cmd + '.Set(1,' + count + ')';
         dataService.runCmd(url, false, $scope._t('error_handling_data'));
     };
@@ -163,8 +175,17 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
                 obj['isThermostatMode'] = isThermostatMode;
                 obj['isThermostatSetpoint'] = isThermostatSetpoint;
                 obj['modeList'] = modeList;
-                $scope.thermostats.push(obj);
-                $scope.rangeSlider.push(obj['range_' + nodeId] = obj['level']);
+
+                var findIndex = _.findIndex($scope.thermostats.all, {rowId: obj.rowId});
+                if(findIndex > -1){
+                    angular.extend($scope.thermostats.all[findIndex],obj);
+
+                }else{
+                    $scope.thermostats.all.push(obj);
+                }
+
+                //$scope.thermostats.push(obj);
+                $scope.thermostats.rangeSlider.push(obj['range_' + nodeId] = obj['level']);
                 //console.log(obj);
                 cnt++;
             });
@@ -175,9 +196,9 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
      * Refresh zwave data
      */
     function refreshData(data) {
-        angular.forEach($scope.thermostats, function(v, k) {
-            //console.log($scope.thermostats[k].curThermMode)
-            //$scope.thermostats[k].curThermMode = 0;
+        angular.forEach($scope.thermostats.all, function(v, k) {
+            //console.log($scope.thermostats.all[k].curThermMode)
+            //$scope.thermostats.all[k].curThermMode = 0;
             if (!v.modeType) {
                 return;
             }

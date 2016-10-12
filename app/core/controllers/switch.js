@@ -7,10 +7,9 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
         all: [],
         interval: null,
         rangeSlider: [],
-        switchButton: []
+        switchButton: [],
+        show: false
     };
-    //$scope.rangeSlider = [];
-    //$scope.updateTime = $filter('getTimestamp');
     /**
      * Cancel interval on page destroy
      */
@@ -22,10 +21,18 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
      * Load zwave data
      */
     $scope.loadZwaveData = function() {
+        $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin'};
         dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
             setData(ZWaveAPIData);
+            $scope.loading = false;
+            if(_.isEmpty($scope.switches.all)){
+                $scope.alert = {message: $scope._t('error_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                return;
+            }
+            $scope.switches.show = true;
             $scope.refreshZwaveData(ZWaveAPIData);
         }, function(error) {
+            $scope.loading = false;
             alertify.alertError($scope._t('error_load_data'));
         });
     };
@@ -178,7 +185,7 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
                     obj['btnOff'] = btnOff;
                     obj['btnFull'] = btnFull;
                     obj['cmdToUpdate'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.level';
-                    var findIndex = _.findIndex($scope.switches.all, {id: nodeId});
+                    var findIndex = _.findIndex($scope.switches.all, {rowId: obj.rowId});
                     if(findIndex > -1){
                         angular.extend($scope.switches.all[findIndex],obj);
                         $scope.switches.rangeSlider[findIndex] = level.level_val;

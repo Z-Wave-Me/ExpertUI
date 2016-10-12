@@ -1,7 +1,9 @@
 <!-- Locks view -->
 <div ng-controller="LocksController">
+    <bb-loader></bb-loader>
     <div class="page-header"><h1>{{_t('nav_locks')}}</h1></div>
-    <div id="table_mobile">
+    <bb-alert alert="alert"></bb-alert>
+    <div id="table_mobile"  ng-if="locks.show">
         <table class="table table-striped table-condensed table-hover">
             <thead>
                 <tr>
@@ -30,40 +32,51 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="v in locks| orderBy:predicate:reverse" id="{{ v.rowId}}">
+                <tr ng-repeat="v in locks.all | orderBy:predicate:reverse track by $index" id="{{ v.rowId}}">
                     <td data-title="#">{{ v.id}}</td>
                     <td data-title="{{ _t('device_name')}}">{{ v.name}}</td>
                     <td data-title="{{ _t('th_level')}}" class="row-level">{{ v.level |lockStatus }} &nbsp;</td>
                     <td data-title="{{ _t('datetime')}}" class="row-time is-updated-{{v.isUpdated}}">{{ v.updateTime | isTodayFromUnix }} &nbsp;</td>
-                    <td>
-                        <button 
-                            data-ng-click="store('#btn_update_' + v.rowId)" 
-                            data-store-url="{{ v.urlToStore}}.Get()" 
-                            class="btn btn-primary spin-true" 
-                            id="btn_update_{{ v.rowId}}"
-                            >{{ _t('update')}} <i class="fa fa-spinner fa-spin"></i></button>
+                    <td class="td-action" data-title="">
+                        <button class="btn btn-default" id="btn_update_{{ v.rowId}}"
+                                ng-click="updateLock(v.urlToStore)"
+                                ng-disabled="rowSpinner[v.urlToStore]">
+                            <bb-row-spinner
+                                    spinner="rowSpinner[v.urlToStore]"
+                                    label=" _t('update')"
+                                    icon="'fa-check text-success'">
+
+                            </bb-row-spinner>
+                        </button>
                     </td>
-                    <td class="lock-controll">
-                       
-                        <div class="btn-group btn-group-lock">
+                    <td class="lock-controll td-action" data-title="">
+                       <div class="btn-group btn-group-lock">
                           <button 
                                 type="button" 
-                                class="btn btn-primary btn-lock"
+                                class="btn btn-default btn-lock"
                                 id="btn_lock_{{ v.rowId}}"
                                 title="{{_t('btn_close')}}"
                                 ng-class="{active: v.level=='255'}"
-                                data-ng-click="store('#btn_lock_' + v.rowId)" 
-                                data-store-url="{{ v.urlToStore}}.Set(255)" 
-                                ><i class="fa fa-lock fa-lg"></i></button>
+                                ng-click="updateLock(v.urlToOn)"
+                                ng-disabled="rowSpinner[v.urlToOn]">
+                              <bb-row-spinner
+                                      spinner="rowSpinner[v.urlToOn]"
+                                      icon="'fa-lock text-success'">
+                              </bb-row-spinner>
+                          </button>
                             <button 
                                 type="button" 
-                                class="btn btn-primary btn-unlock"
+                                class="btn btn-default btn-unlock"
                                 id="btn_unlock_{{ v.rowId}}"
                                 title="{{_t('btn_open')}}"
                                 ng-class="{active: v.level=='0'}"
-                                data-ng-click="store('#btn_unlock_' + v.rowId)" 
-                                data-store-url="{{ v.urlToStore}}.Set(0)" 
-                                ><i class="fa fa-unlock fa-lg"></i></button>
+                                ng-click="updateLock(v.urlToOff)"
+                                ng-disabled="rowSpinner[v.urlToOff]">
+                                <bb-row-spinner
+                                        spinner="rowSpinner[v.urlToOff]"
+                                        icon="'fa-unlock text-success'">
+                                </bb-row-spinner>
+                            </button>
                         </div>
                         
                     </td>

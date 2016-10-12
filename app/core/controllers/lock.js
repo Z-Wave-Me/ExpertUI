@@ -2,13 +2,71 @@
  * LocksController
  * @author Martin Vach
  */
-appController.controller('LocksController', function($scope, $filter, dataService) {
-    $scope.locks = [];
-    $scope.reset = function() {
-        $scope.locks = angular.copy([]);
+appController.controller('LocksController', function($scope, $filter, $timeout,$interval,dataService, cfg,_) {
+    $scope.locks = {
+        all: [],
+        interval: null,
+        show: false
     };
+
+    /**
+     * Cancel interval on page destroy
+     */
+    $scope.$on('$destroy', function() {
+        $interval.cancel($scope.locks.interval);
+    });
+
+    /**
+     * Load zwave data
+     */
+    $scope.loadZwaveData = function() {
+        $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin'};
+        dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
+            setData(ZWaveAPIData);
+            $scope.loading = false;
+            if(_.isEmpty($scope.locks.all)){
+                $scope.alert = {message: $scope._t('error_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                return;
+            }
+            $scope.locks.show = true;
+            $scope.refreshZwaveData(ZWaveAPIData);
+        }, function(error) {
+            $scope.loading = false;
+            alertify.alertError($scope._t('error_load_data'));
+        });
+    };
+    $scope.loadZwaveData();
+
+    /**
+     * Refresh zwave data
+     * @param {object} ZWaveAPIData
+     */
+    $scope.refreshZwaveData = function(ZWaveAPIData) {
+        var refresh = function() {
+            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+                setData(response.data.joined);
+            }, function(error) {});
+        };
+        $scope.switches.interval = $interval(refresh, $scope.cfg.interval);
+    };
+
+    /**
+     * Update lock
+     * @param {string} url
+     */
+    $scope.updateLock = function(url) {
+        $scope.toggleRowSpinner(url);
+        dataService.runZwaveCmd(cfg.store_url + url).then(function (response) {
+            $timeout($scope.toggleRowSpinner, 1000);
+        }, function (error) {
+            $scope.toggleRowSpinner();
+            alertify.alertError($scope._t('error_update_data') + '\n' + url);
+        });
+    };
+
+    // DEPRECATED
     // Load data
-    $scope.load = function(lang) {
+    /*$scope.load = function(lang) {
         dataService.getZwaveData(function(ZWaveAPIData) {
             setData(ZWaveAPIData);
             dataService.joinedZwaveData(function(data) {
@@ -17,18 +75,13 @@ appController.controller('LocksController', function($scope, $filter, dataServic
         });
     };
     // Load data
-    $scope.load($scope.lang);
-
-    // Cancel interval on page destroy
-    $scope.$on('$destroy', function() {
-        dataService.cancelZwaveDataInterval();
-    });
+    $scope.load($scope.lang);*/
     // Store data on remote server
-    $scope.store = function(btn) {
+    /*$scope.store = function(btn) {
         var url = $(btn).attr('data-store-url');
         dataService.runCmd(url, false, $scope._t('error_handling_data'));
         return;
-    };
+    };*/
     /// --- Private functions --- ///
 
     /**
@@ -61,6 +114,7 @@ appController.controller('LocksController', function($scope, $filter, dataServic
                 // Set object
                 var obj = {};
                 //var level = $scope.updateLevel(instance.commandClasses[ccId].data.level, ccId);
+                var apiUrl = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']';
 
                 obj['id'] = nodeId;
                 obj['cmd'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.mode';
@@ -71,18 +125,27 @@ appController.controller('LocksController', function($scope, $filter, dataServic
                 obj['updateTime'] = instance.commandClasses[ccId].data.mode.updateTime;
                 obj['invalidateTime'] = instance.commandClasses[ccId].data.mode.invalidateTime;
                 obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
-                obj['urlToStore'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']';
+                obj['urlToStore'] = apiUrl + '.Get()';
+                obj['urlToOff'] =  apiUrl + '.Set(0)';
+                obj['urlToOn'] =  apiUrl + '.Set(255)';
                 obj['cmdToUpdate'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.mode';
-                $scope.locks.push(obj);
+                var findIndex = _.findIndex($scope.locks.all, {rowId: obj.rowId});
+                if(findIndex > -1){
+                    angular.extend($scope.locks.all[findIndex],obj);
+
+                }else{
+                    $scope.locks.all.push(obj);
+                }
                 cnt++;
             });
         });
     }
 
     /**
+     * DEPRECATED
      * Refresh zwave data
      */
-    function refreshData(data) {
+    /*function refreshData(data) {
         angular.forEach($scope.locks, function(v, k) {
 
             if (v.cmdToUpdate in data.update) {
@@ -100,5 +163,5 @@ appController.controller('LocksController', function($scope, $filter, dataServic
                 }
             }
         });
-    }
+    }*/
 });

@@ -2,14 +2,57 @@
  * MetersController
  * @author Martin Vach
  */
-appController.controller('MetersController', function($scope, $filter, dataService) {
-    $scope.meters = [];
-    $scope.reset = function() {
-        $scope.meters = angular.copy([]);
+appController.controller('MetersController', function($scope, $filter, $timeout,$interval,dataService, cfg,_) {
+    $scope.meters = {
+        all: [],
+        interval: null,
+        show: false
     };
 
+    /**
+     * Cancel interval on page destroy
+     */
+    $scope.$on('$destroy', function() {
+        $interval.cancel($scope.meters.interval);
+    });
+
+    /**
+     * Load zwave data
+     */
+    $scope.loadZwaveData = function() {
+        $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin'};
+        dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
+            setData(ZWaveAPIData);
+            $scope.loading = false;
+            if(_.isEmpty($scope.meters.all)){
+                $scope.alert = {message: $scope._t('error_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                return;
+            }
+            $scope.meters.show = true;
+            $scope.refreshZwaveData(ZWaveAPIData);
+        }, function(error) {
+            $scope.loading = false;
+            alertify.alertError($scope._t('error_load_data'));
+        });
+    };
+    $scope.loadZwaveData();
+
+    /**
+     * Refresh zwave data
+     * @param {object} ZWaveAPIData
+     */
+    $scope.refreshZwaveData = function(ZWaveAPIData) {
+        var refresh = function() {
+            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+                setData(response.data.joined);
+            }, function(error) {});
+        };
+        $scope.meters.interval = $interval(refresh, $scope.cfg.interval);
+    };
+
+    // DEPRECATED
     // Load data
-    $scope.load = function() {
+   /* $scope.load = function() {
         dataService.getZwaveData(function(ZWaveAPIData) {
             setData(ZWaveAPIData);
             dataService.joinedZwaveData(function(data) {
@@ -18,26 +61,41 @@ appController.controller('MetersController', function($scope, $filter, dataServi
         });
     };
 
-    $scope.load();
+    $scope.load();*/
 
-    // Cancel interval on page destroy
-    $scope.$on('$destroy', function() {
-        dataService.cancelZwaveDataInterval();
-    });
-
-    // Store data from meter on remote server
-    $scope.store = function(cmd, action) {
-        // Is clicked on RESET?
-        if (action === 'reset' && !window.confirm($scope._t('are_you_sure_reset_meter'))) {
-            return;
-        }
-        dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
+    /**
+     * Update meter
+     * @param {string} url
+     */
+    $scope.updateMeter = function(url) {
+        $scope.toggleRowSpinner(url);
+        dataService.runZwaveCmd(cfg.store_url + url).then(function (response) {
+            $timeout($scope.toggleRowSpinner, 1000);
+        }, function (error) {
+            $scope.toggleRowSpinner();
+            alertify.alertError($scope._t('error_update_data') + '\n' + url);
+        });
     };
 
-    // Store all data from sensors on remote server
-    $scope.storeAll = function(id) {
-        angular.forEach($scope.meters, function(v, k) {
-            dataService.runCmd(v.urlToStore);
+    /**
+     * Update all meters
+     * @param {string} id
+     * @param {string} urlType
+     */
+    $scope.updateAllMeters = function(id,urlType) {
+        var lastItem = _.last($scope.meters.all);
+        $scope.toggleRowSpinner(id);
+        angular.forEach($scope.meters.all, function(v, k) {
+            $scope.toggleRowSpinner(v[urlType]);
+            dataService.runZwaveCmd(cfg.store_url + v[urlType]).then(function (response) {
+                alertify.dismissAll();
+            }, function (error) {
+                alertify.dismissAll();
+                alertify.alertError($scope._t('error_update_data') + '\n' +  v[urlType]);
+            });
+            if(lastItem.rowId === v.rowId){
+                $timeout($scope.toggleRowSpinner, 1000);
+            }
         });
 
     };
@@ -99,7 +157,13 @@ appController.controller('MetersController', function($scope, $filter, dataServi
                             obj['urlToReset'] = 'devices[' + obj['id'] + '].instances[' + instanceId + '].commandClasses[50].Reset()';
                         }
 
-                        $scope.meters.push(obj);
+                        var findIndex = _.findIndex($scope.meters.all, {rowId: obj.rowId});
+                        if(findIndex > -1){
+                            angular.extend($scope.meters.all[findIndex],obj);
+
+                        }else{
+                            $scope.meters.all.push(obj);
+                        }
                     });
                 }
 
@@ -108,10 +172,11 @@ appController.controller('MetersController', function($scope, $filter, dataServi
     }
 
     /**
+     * DEPRECATED
      * Refresh zwave data
      */
-    function refreshData(data) {
-        angular.forEach($scope.meters, function(v, k) {
+    /*function refreshData(data) {
+        angular.forEach($scope.meters.all, function(v, k) {
             var obj = data.update[v.cmdToUpdate];
             if (v.cmdToUpdate in data.update) {
                 var level = obj.val.value;
@@ -123,5 +188,5 @@ appController.controller('MetersController', function($scope, $filter, dataServi
                 }
             }
         });
-    }
+    }*/
 });

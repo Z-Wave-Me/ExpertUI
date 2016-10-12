@@ -5,7 +5,8 @@
 appController.controller('SensorsController', function($scope, $filter, $timeout,$interval,cfg,dataService,_) {
     $scope.sensors = {
         all: [],
-        interval: null
+        interval: null,
+        show: false
     };
     /**
      * Cancel interval on page destroy
@@ -19,10 +20,18 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
      * Load zwave data
      */
     $scope.loadZwaveData = function() {
+        $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin'};
         dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
             setData(ZWaveAPIData);
+            $scope.loading = false;
+            if(_.isEmpty($scope.sensors.all)){
+                $scope.alert = {message: $scope._t('error_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                return;
+            }
+            $scope.sensors.show = true;
             $scope.refreshZwaveData(ZWaveAPIData);
         }, function(error) {
+            $scope.loading = false;
             alertify.alertError($scope._t('error_load_data'));
         });
     };
@@ -150,8 +159,6 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
                         }else{
                             $scope.sensors.all.push(obj);
                         }
-                        // Push to sensors
-                        //$scope.sensors.all.push(obj);
                     });
                 }
 

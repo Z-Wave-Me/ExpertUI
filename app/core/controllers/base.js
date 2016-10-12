@@ -8,6 +8,7 @@ var appController = angular.module('appController', []);
 // Base controller
 appController.controller('BaseController', function ($scope, $cookies, $filter, $location, $anchorScroll, $window, $route, $interval,cfg, dataService, deviceService, myCache) {
     $scope.loading = false;
+    $scope.alert = {message: false, status: 'is-hidden', icon: false};
     /**
      * Load zwave dongles
      */
