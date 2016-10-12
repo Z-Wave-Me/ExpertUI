@@ -2,14 +2,48 @@
  * SensorsController
  * @author Martin Vach
  */
-appController.controller('SensorsController', function($scope, $filter, dataService) {
-    $scope.sensors = [];
-    $scope.reset = function() {
-        $scope.sensors = angular.copy([]);
+appController.controller('SensorsController', function($scope, $filter, $timeout,$interval,cfg,dataService,_) {
+    $scope.sensors = {
+        all: [],
+        interval: null
+    };
+    /**
+     * Cancel interval on page destroy
+     */
+    $scope.$on('$destroy', function() {
+        $interval.cancel($scope.switches.interval);
+        //dataService.cancelZwaveDataInterval();
+    });
+
+    /**
+     * Load zwave data
+     */
+    $scope.loadZwaveData = function() {
+        dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
+            setData(ZWaveAPIData);
+            $scope.refreshZwaveData(ZWaveAPIData);
+        }, function(error) {
+            alertify.alertError($scope._t('error_load_data'));
+        });
+    };
+    $scope.loadZwaveData();
+
+    /**
+     * Refresh zwave data
+     * @param {object} ZWaveAPIData
+     */
+    $scope.refreshZwaveData = function(ZWaveAPIData) {
+        var refresh = function() {
+            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+                setData(response.data.joined);
+            }, function(error) {});
+        };
+        $scope.sensors.interval = $interval(refresh, $scope.cfg.interval);
     };
 
+    // DEPRECATED
     // Load data
-    $scope.load = function() {
+    /*$scope.load = function() {
         dataService.getZwaveData(function(ZWaveAPIData) {
             setData(ZWaveAPIData);
             dataService.joinedZwaveData(function(data) {
@@ -18,24 +52,45 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
         });
     };
     // Load data
-    $scope.load($scope.lang);
+    $scope.load($scope.lang);*/
 
-    // Cancel interval on page destroy
-    $scope.$on('$destroy', function() {
-        dataService.cancelZwaveDataInterval();
-    });
 
-    // Store data from on remote server
-    $scope.store = function(cmd) {
-        dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
+
+    /**
+     * Update sensor
+     * @param {string} url
+     */
+    $scope.updateSensor = function(id,url) {
+        $scope.toggleRowSpinner(id);
+        dataService.runZwaveCmd(cfg.store_url + url).then(function (response) {
+            $timeout($scope.toggleRowSpinner, 1000);
+        }, function (error) {
+            $scope.toggleRowSpinner();
+            alertify.alertError($scope._t('error_update_data') + '\n' + url);
+        });
     };
 
-    // Store all data on remote server
-    $scope.storeAll = function(id) {
-        var btn = '#btn_update_' + id;
-        angular.forEach($scope.sensors, function(v, k) {
-            dataService.runCmd(v.urlToStore);
+    /**
+     * Update all sensors
+     * @param {string} id
+     * @param {string} urlType
+     */
+    $scope.updateAllSensors = function(id,urlType) {
+        var lastItem = _.last($scope.sensors.all);
+        $scope.toggleRowSpinner(id);
+        angular.forEach($scope.sensors.all, function(v, k) {
+            $scope.toggleRowSpinner(v.cmdToUpdate);
+            dataService.runZwaveCmd(cfg.store_url + v[urlType]).then(function (response) {
+                alertify.dismissAll();
+            }, function (error) {
+                alertify.dismissAll();
+                alertify.alertError($scope._t('error_update_data') + '\n' +  v[urlType]);
+            });
+            if(lastItem.rowId === v.rowId){
+                $timeout($scope.toggleRowSpinner, 1000);
+            }
         });
+
     };
 
     /// --- Private functions --- ///
@@ -88,8 +143,15 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                         obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
                         obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[' + instanceId + '].commandClasses[48].Get()';
                         obj['cmdToUpdate'] = 'devices.' + obj['id'] + '.instances.' + instanceId + '.commandClasses.48.data.' + sensor_type;
+                        var findIndex = _.findIndex($scope.sensors.all, {rowId: obj.rowId});
+                        if(findIndex > -1){
+                            angular.extend($scope.sensors.all[findIndex],obj);
+
+                        }else{
+                            $scope.sensors.all.push(obj);
+                        }
                         // Push to sensors
-                        $scope.sensors.push(obj);
+                        //$scope.sensors.all.push(obj);
                     });
                 }
 
@@ -123,8 +185,15 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                         obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
                         obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[' + instanceId + '].commandClasses[49].Get()';
                         obj['cmdToUpdate'] = 'devices.' + obj['id'] + '.instances.' + instanceId + '.commandClasses.49.data.' + sensor_type;
+                        var findIndex = _.findIndex($scope.sensors.all, {rowId: obj.rowId});
+                        if(findIndex > -1){
+                            angular.extend($scope.sensors.all[findIndex],obj);
+
+                        }else{
+                            $scope.sensors.all.push(obj);
+                        }
                         // Push to sensors
-                        $scope.sensors.push(obj);
+                       // $scope.sensors.all.push(obj);
                     });
                 }
 
@@ -162,7 +231,14 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                         obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
                         obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[' + instanceId + '].commandClasses[50].Get()';
                         obj['cmdToUpdate'] = 'devices.' + obj['id'] + '.instances.' + instanceId + '.commandClasses.50.data.' + sensor_type;
-                        $scope.sensors.push(obj);
+                        var findIndex = _.findIndex($scope.sensors.all, {rowId: obj.rowId});
+                        if(findIndex > -1){
+                            angular.extend($scope.sensors.all[findIndex],obj);
+
+                        }else{
+                            $scope.sensors.all.push(obj);
+                        }
+                        //$scope.sensors.all.push(obj);
                     });
                 }
 
@@ -194,8 +270,15 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
                         obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
                         obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[' + instanceId + '].commandClasses[156].Get()';
                         obj['cmdToUpdate'] = 'devices.' + obj['id'] + '.instances.' + instanceId + '.commandClasses.156.data.' + sensor_type;
+                        var findIndex = _.findIndex($scope.sensors.all, {rowId: obj.rowId});
+                        if(findIndex > -1){
+                            angular.extend($scope.sensors.all[findIndex],obj);
+
+                        }else{
+                            $scope.sensors.all.push(obj);
+                        }
                         // Push to sensors
-                        $scope.sensors.push(obj);
+                        //$scope.sensors.all.push(obj);
                     });
                 }
 
@@ -204,10 +287,11 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
         });
     }
     /**
+     * DEPRECATED
      * Refresh zwave data
      */
-    function refreshData(data) {
-        angular.forEach($scope.sensors, function(v, k) {
+    /*function refreshData(data) {
+        angular.forEach($scope.sensors.all, function(v, k) {
             // Check for updated data
             if (v.cmdToUpdate in data.update) {
                 var obj = data.update[v.cmdToUpdate];
@@ -244,5 +328,5 @@ appController.controller('SensorsController', function($scope, $filter, dataServ
 
             }
         });
-    }
+    }*/
 });

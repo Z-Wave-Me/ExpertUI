@@ -2194,6 +2194,81 @@ h3 {
   width: 25%;
 }
 
+/* Switch button
+---------- http://www.w3schools.com/howto/howto_css_switch.asp
+-------------------------------------------------- */
+/* line 133, ../sass/common/_button.scss */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+/* line 143, ../sass/common/_button.scss */
+.switch input {
+  display: none;
+}
+
+/* The slider */
+/* line 146, ../sass/common/_button.scss */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  border: solid 1px #CCCCCC;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+/* line 161, ../sass/common/_button.scss */
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  /* height: 26px;
+   width: 26px;*/
+  left: 4px;
+  bottom: 3px;
+  background-color: #d9534f;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+/* line 178, ../sass/common/_button.scss */
+input:checked + .slider:before {
+  background-color: #80AD80;
+}
+
+/* line 183, ../sass/common/_button.scss */
+input:focus + .slider {
+  box-shadow: 0 0 1px #80AD80;
+}
+
+/* line 187, ../sass/common/_button.scss */
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+/* line 194, ../sass/common/_button.scss */
+.slider.round {
+  border-radius: 4px;
+}
+
+/* line 198, ../sass/common/_button.scss */
+.slider.round:before {
+  border-radius: 4px;
+}
+
 /* Dropdown
 -------------------------------------------------- */
 /* line 3, ../sass/common/_dropdown.scss */

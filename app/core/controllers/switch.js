@@ -3,23 +3,27 @@
  * @author Martin Vach
  */
 appController.controller('SwitchController', function($scope, $filter, $timeout,$interval,dataService, cfg,_) {
-    $scope.apiDataInterval;
-    $scope.switches = [];
-    $scope.rangeSlider = [];
-    $scope.updateTime = $filter('getTimestamp');
-    $scope.reset = function() {
-        $scope.switches = angular.copy([]);
+    $scope.switches = {
+        all: [],
+        interval: null,
+        rangeSlider: [],
+        switchButton: []
     };
+    //$scope.rangeSlider = [];
+    //$scope.updateTime = $filter('getTimestamp');
+    /**
+     * Cancel interval on page destroy
+     */
     $scope.$on('$destroy', function() {
-        $interval.cancel($scope.apiDataInterval);
+        $interval.cancel($scope.switches.interval);
     });
 
     /**
-     * Load data
+     * Load zwave data
      */
     $scope.loadZwaveData = function() {
         dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
-            setData(ZWaveAPIData,true);
+            setData(ZWaveAPIData);
             $scope.refreshZwaveData(ZWaveAPIData);
         }, function(error) {
             alertify.alertError($scope._t('error_load_data'));
@@ -28,7 +32,8 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
     $scope.loadZwaveData();
 
     /**
-     * Refresh data
+     * Refresh zwave data
+     * @param {object} ZWaveAPIData
      */
     $scope.refreshZwaveData = function(ZWaveAPIData) {
         var refresh = function() {
@@ -36,40 +41,8 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
                 setData(response.data.joined);
             }, function(error) {});
         };
-        $scope.apiDataInterval = $interval(refresh, $scope.cfg.interval);
+        $scope.switches.interval = $interval(refresh, $scope.cfg.interval);
     };
-
-    // DEPRECATED
-    // Load data
-    /*$scope.load = function() {
-        dataService.getZwaveData(function(ZWaveAPIData) {
-            setData(ZWaveAPIData);
-
-            dataService.joinedZwaveData(function(data) {
-                refreshData(data);
-            });
-        });
-    };
-*/
-
-    // Load data
-    //$scope.load();
-
-    // DEPRECATED
-    // Refresh data
-   /* $scope.refresh = function() {
-        dataService.joinedZwaveData(function(data) {
-            $scope.reset();
-            setData(data.joined);
-        });
-    };*/
-    //$scope.refresh();
-
-    // DEPRECATED
-    // Cancel interval on page destroy
-    /*$scope.$on('$destroy', function() {
-        dataService.cancelZwaveDataInterval();
-    });*/
 
     /**
      * Update switch
@@ -90,9 +63,9 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
      * @param {string} urlType
      */
     $scope.updateAllSwitches = function(id,urlType) {
-        var lastItem = _.last($scope.switches);
+        var lastItem = _.last($scope.switches.all);
         $scope.toggleRowSpinner(id);
-        angular.forEach($scope.switches, function(v, k) {
+        angular.forEach($scope.switches.all, function(v, k) {
             $scope.toggleRowSpinner(v[urlType]);
             dataService.runZwaveCmd(cfg.store_url + v[urlType]).then(function (response) {
                 alertify.dismissAll();
@@ -108,11 +81,11 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
     };
     /**
      * Update switch with slider
-     * @param cmd
-     * @param index
+     * @param {string} cmd
+     * @param {int} index
      */
     $scope.sliderChange = function(cmd, index) {
-        var val = $scope.rangeSlider[index];
+        var val = $scope.switches.rangeSlider[index];
         var url = cmd + '.Set(' + val + ')';
         dataService.runZwaveCmd(cfg.store_url + url).then(function (response) {
             $scope.toggleRowSpinner();
@@ -126,8 +99,9 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
 
     /**
      * Set zwave data
+     * @param {object} ZWaveAPIData
      */
-    function setData(ZWaveAPIData,pushData) {
+    function setData(ZWaveAPIData) {
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
@@ -140,7 +114,6 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
             angular.forEach(node.instances, function(instance, instanceId) {
                 angular.forEach([0x25, 0x26], function(ccId) {
                     if (!(ccId in instance.commandClasses)) return;
-                    var findIndex = _.findIndex($scope.switches, function(v) { return v.id == nodeId });
                     var switchAllValue = null;
                     var hasSwitchAll = (0x27 in instance.commandClasses) && (instanceId == 0);
                     if (hasSwitchAll) {
@@ -205,14 +178,14 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
                     obj['btnOff'] = btnOff;
                     obj['btnFull'] = btnFull;
                     obj['cmdToUpdate'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.level';
-                    console.log(findIndex)
+                    var findIndex = _.findIndex($scope.switches.all, {id: nodeId});
+                    if(findIndex > -1){
+                        angular.extend($scope.switches.all[findIndex],obj);
+                        $scope.switches.rangeSlider[findIndex] = level.level_val;
 
-                    if(findIndex < 0){
-                        $scope.switches.push(obj);
-                        $scope.rangeSlider.push(obj['range_' + nodeId] = level.level_val);
                     }else{
-                        angular.extend($scope.switches[findIndex],obj);
-                        $scope.rangeSlider[findIndex] = level.level_val;
+                        $scope.switches.all.push(obj);
+                        $scope.switches.rangeSlider.push(obj['range_' + nodeId] = level.level_val);
                     }
 
 
