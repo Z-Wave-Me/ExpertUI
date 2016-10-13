@@ -13964,71 +13964,75 @@ img {
 .table {
   margin-bottom: 0;
 }
-/* line 7, ../sass/common/_table.scss */
+/* line 4, ../sass/common/_table.scss */
+.table .td-action {
+  text-align: right;
+}
+/* line 10, ../sass/common/_table.scss */
 .table thead tr th {
   border-bottom: 2px solid #9fd8ef;
 }
-/* line 14, ../sass/common/_table.scss */
+/* line 17, ../sass/common/_table.scss */
 .table tbody tr td {
   border-top: 1px solid #9fd8ef;
 }
-/* line 21, ../sass/common/_table.scss */
+/* line 24, ../sass/common/_table.scss */
 .table tbody tr td {
   border-top: 1px solid #9fd8ef;
 }
 
-/* line 29, ../sass/common/_table.scss */
+/* line 32, ../sass/common/_table.scss */
 .table-hover > tbody > tr:hover > td, .table-hover > tbody > tr:hover > th {
   background-color: #e4f5fc;
 }
 
-/* line 33, ../sass/common/_table.scss */
+/* line 36, ../sass/common/_table.scss */
 #inspect_queue_table {
   font-size: 12px;
   width: 100%;
 }
 
-/* line 37, ../sass/common/_table.scss */
+/* line 40, ../sass/common/_table.scss */
 .th-slider {
   min-width: 100px;
 }
 
-/* line 41, ../sass/common/_table.scss */
+/* line 44, ../sass/common/_table.scss */
 .table-condensed td p {
   margin: 0 !important;
   padding: 0 !important;
 }
 
-/* line 46, ../sass/common/_table.scss */
+/* line 49, ../sass/common/_table.scss */
 .table-report {
   border: 0 !important;
   margin-bottom: 0 !important;
 }
-/* line 50, ../sass/common/_table.scss */
+/* line 53, ../sass/common/_table.scss */
 .table-report tbody td {
   vertical-align: middle !important;
   background-color: #FFFFFF;
 }
-/* line 54, ../sass/common/_table.scss */
+/* line 57, ../sass/common/_table.scss */
 .table-report tbody .td-img {
   width: 30px;
 }
-/* line 57, ../sass/common/_table.scss */
+/* line 60, ../sass/common/_table.scss */
 .table-report tbody .td-action {
   text-align: right;
 }
 
-/* line 63, ../sass/common/_table.scss */
+/* line 66, ../sass/common/_table.scss */
 .table-products td {
   vertical-align: middle !important;
 }
 
-/* line 68, ../sass/common/_table.scss */
+/* line 71, ../sass/common/_table.scss */
 .td20 {
   width: 20%;
 }
 
-/* line 71, ../sass/common/_table.scss */
+/* line 74, ../sass/common/_table.scss */
 .td30 {
   width: 30%;
 }
@@ -14127,66 +14131,122 @@ img {
   font-size: 150%;
 }
 
-/* Form CSS - old CSS - will be removed
--------------------------------------------------- */
-/* line 93, ../sass/common/_button.scss */
-.btn-spinner-hidden, .btn .fa-spin {
-  display: none;
-}
-
-/* line 97, ../sass/common/_button.scss */
-.btn-default, .btn-default.active, .open .dropdown-toggle.btn-default {
-  border-color: #9fd8ef;
-}
-
-/* line 100, ../sass/common/_button.scss */
-.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open .dropdown-toggle.btn-default {
-  color: #2A6496;
-  background-color: #e4f5fc;
-  border-color: #9fd8ef;
-}
-
 /* Button tabs
 -------------------------------------------------- */
-/* line 110, ../sass/common/_button.scss */
+/* line 94, ../sass/common/_button.scss */
 .btn-goup-tabs {
   display: table;
   width: 100%;
   margin: 0 0 10px 0;
 }
-/* line 114, ../sass/common/_button.scss */
+/* line 98, ../sass/common/_button.scss */
 .btn-goup-tabs .btn {
   padding: 10px;
   font-size: 120%;
   background-color: #FFFFFF;
 }
-/* line 118, ../sass/common/_button.scss */
+/* line 102, ../sass/common/_button.scss */
 .btn-goup-tabs .btn.active {
   background-color: #f2f2f2;
 }
-/* line 121, ../sass/common/_button.scss */
+/* line 105, ../sass/common/_button.scss */
 .btn-goup-tabs .btn .fa {
   font-size: 130%;
   color: #404040;
 }
-/* line 126, ../sass/common/_button.scss */
+/* line 110, ../sass/common/_button.scss */
 .btn-goup-tabs .active .fa {
   color: #80AD80;
 }
 
-/* line 131, ../sass/common/_button.scss */
+/* line 115, ../sass/common/_button.scss */
 .btn-tabs-2 .btn {
   width: 50%;
 }
 
-/* line 136, ../sass/common/_button.scss */
+/* line 120, ../sass/common/_button.scss */
 .btn-tabs-3 .btn {
   width: 33.33333%;
 }
 
-/* line 141, ../sass/common/_button.scss */
+/* line 125, ../sass/common/_button.scss */
 .btn-tabs-4 .btn {
   width: 25%;
+}
+
+/* Switch button
+---------- http://www.w3schools.com/howto/howto_css_switch.asp
+-------------------------------------------------- */
+/* line 133, ../sass/common/_button.scss */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+/* line 143, ../sass/common/_button.scss */
+.switch input {
+  display: none;
+}
+
+/* The slider */
+/* line 146, ../sass/common/_button.scss */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  border: solid 1px #CCCCCC;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+/* line 161, ../sass/common/_button.scss */
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  /* height: 26px;
+   width: 26px;*/
+  left: 4px;
+  bottom: 3px;
+  background-color: #d9534f;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+/* line 178, ../sass/common/_button.scss */
+input:checked + .slider:before {
+  background-color: #80AD80;
+}
+
+/* line 183, ../sass/common/_button.scss */
+input:focus + .slider {
+  box-shadow: 0 0 1px #80AD80;
+}
+
+/* line 187, ../sass/common/_button.scss */
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+/* line 194, ../sass/common/_button.scss */
+.slider.round {
+  border-radius: 4px;
+}
+
+/* line 198, ../sass/common/_button.scss */
+.slider.round:before {
+  border-radius: 4px;
 }
 
 /* Form 
@@ -14628,9 +14688,16 @@ http://codepen.io/MattIn4D/pen/LiKFC
   margin: 10px 0;
 }
 
-/* Modal
+/* Modal from the bootstrap - will be removed
 -------------------------------------------------- */
 /* line 3, ../sass/common/_modal.scss */
+.modal {
+  z-index: 2300;
+}
+
+/* Modal
+-------------------------------------------------- */
+/* line 8, ../sass/common/_modal.scss */
 .appmodal {
   position: fixed;
   top: 0;
@@ -14641,7 +14708,7 @@ http://codepen.io/MattIn4D/pen/LiKFC
   overflow: show;
   color: #0d0d0d;
 }
-/* line 12, ../sass/common/_modal.scss */
+/* line 17, ../sass/common/_modal.scss */
 .appmodal .appmodal-in {
   width: 99%;
   position: relative;
@@ -14649,22 +14716,22 @@ http://codepen.io/MattIn4D/pen/LiKFC
   background-color: #FFFFFF;
 }
 
-/* line 20, ../sass/common/_modal.scss */
+/* line 25, ../sass/common/_modal.scss */
 .appmodal-100 .appmodal-in {
   width: 99% !important;
 }
 
-/* line 25, ../sass/common/_modal.scss */
+/* line 30, ../sass/common/_modal.scss */
 .appmodal-90 .appmodal-in {
   width: 90%;
 }
 
-/* line 29, ../sass/common/_modal.scss */
+/* line 34, ../sass/common/_modal.scss */
 #modalHistory {
   z-index: 2301;
 }
 
-/* line 33, ../sass/common/_modal.scss */
+/* line 38, ../sass/common/_modal.scss */
 .appmodal:before {
   content: '';
   display: block;
@@ -14676,16 +14743,16 @@ http://codepen.io/MattIn4D/pen/LiKFC
   background-color: rgba(37, 37, 37, 0.5);
 }
 
-/* line 43, ../sass/common/_modal.scss */
+/* line 48, ../sass/common/_modal.scss */
 .appmodal-header, .appmodal-body, .appmodal-footer {
   padding: 10px 15px;
 }
 
-/* line 47, ../sass/common/_modal.scss */
+/* line 52, ../sass/common/_modal.scss */
 .appmodal-header {
   border-bottom: solid 1px #9fd8ef;
 }
-/* line 49, ../sass/common/_modal.scss */
+/* line 54, ../sass/common/_modal.scss */
 .appmodal-header .appmodal-close {
   color: #404040;
   font-size: 180%;
@@ -14697,18 +14764,18 @@ http://codepen.io/MattIn4D/pen/LiKFC
   z-index: 2;
   cursor: pointer;
 }
-/* line 59, ../sass/common/_modal.scss */
+/* line 64, ../sass/common/_modal.scss */
 .appmodal-header .appmodal-close span {
   display: inline-block;
 }
-/* line 63, ../sass/common/_modal.scss */
+/* line 68, ../sass/common/_modal.scss */
 .appmodal-header h3 {
   font-size: 110%;
   margin: 0;
   color: #357fbe;
 }
 
-/* line 72, ../sass/common/_modal.scss */
+/* line 77, ../sass/common/_modal.scss */
 .appmodal-footer {
   border-top: solid 1px #9fd8ef;
   text-align: right;
@@ -14716,12 +14783,12 @@ http://codepen.io/MattIn4D/pen/LiKFC
 
 /* Modals - old bootstrap modal - will be removed
 -------------------------------------------------- */
-/* line 79, ../sass/common/_modal.scss */
+/* line 84, ../sass/common/_modal.scss */
 .modal-body {
   padding: 10px 10px 0 10px;
 }
 
-/* line 82, ../sass/common/_modal.scss */
+/* line 87, ../sass/common/_modal.scss */
 .cc-data-element {
   white-space: -moz-pre-wrap;
   /* Mozilla */
@@ -14740,7 +14807,7 @@ http://codepen.io/MattIn4D/pen/LiKFC
   word-break: break-all;
 }
 
-/* line 92, ../sass/common/_modal.scss */
+/* line 97, ../sass/common/_modal.scss */
 #modal_queue .modal-dialog {
   width: 60%;
 }

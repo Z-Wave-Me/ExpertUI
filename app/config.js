@@ -10,7 +10,7 @@ var config_data = {
         'custom_ip': false,
         'user_field': 'USERXXXX',
         'pass_field': 'PSWDXXXX',
-        'interval': 3000, // Set interval in miliseconds to refresh data 
+        'interval': 3000, // Set interval in miliseconds to refresh data
         'zniffer_interval': 3000, // Set interval in milisecondsfor zniffer
         'queue_interval': 1000, // Set interval in miliseconds to refresh queue data 
         'route_update_timeout': 15000, // Maximum time in miliseconds to wait for an update-route
@@ -50,7 +50,7 @@ var config_data = {
         'buy_licence_key': 'https://www.z-wave.me/index.php?id=41', // Buy licence key url
         'smarthome_login': '/smarthome/#/?fromexpert', // Smarthome login page 
          'smarthome_logout': '/smarthome/#/logout', // Smarthome login page 
-        'lang_dir': 'app/core/lang/', // Language directory
+        'lang_dir': 'app/lang/', // Language directory
         'lang': 'en', // Default language
         'lang_list': ['en','de','fr','es','ru','cz','sk','sv','cn'], // List of languages
         'page_results_history': 20, // List of languages

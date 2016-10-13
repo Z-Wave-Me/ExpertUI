@@ -44,44 +44,44 @@ module.exports = function (grunt) {
                     // CANVAS JS
                     'app/vendor/canvasjs/canvasjs.min.js',
                     // APP
-                    'app/core/app.js',
-                    'app/core/directives/directives.js',
-                    'app/core/directives/angular-slider.js',
-                    'app/core/directives/dir-pagination.js',
-                    'app/core/filters/filters.js',
-                    'app/core/factories/factories.js',
-                    'app/core/services/services.js',
+                    'app/app.js',
+                    'app/directives/directives.js',
+                    'app/directives/angular-slider.js',
+                    'app/directives/dir-pagination.js',
+                    'app/filters/filters.js',
+                    'app/factories/factories.js',
+                    'app/services/services.js',
                     // Controllers
-                    'app/core/controllers/base.js',
-                    'app/core/controllers/controllers.js',
-                    'app/core/controllers/switch.js',
-                    'app/core/controllers/sensor.js',
-                    'app/core/controllers/meter.js',
-                    'app/core/controllers/thermostat.js',
-                    'app/core/controllers/lock.js',
-                    'app/core/controllers/status.js',
-                    'app/core/controllers/battery.js',
-                    'app/core/controllers/type.js',
-                    'app/core/controllers/association.js',
-                    'app/core/controllers/controll.js',
-                    'app/core/controllers/routing.js',
-                    'app/core/controllers/reorganization.js',
-                    'app/core/controllers/timing.js',
-                    'app/core/controllers/controllerinfo.js',
-                    'app/core/controllers/queue.js',
-                    'app/core/controllers/interviewcommand.js',
-                    'app/core/controllers/license.js',
-                    'app/core/controllers/uzb.js',
-                    'app/core/controllers/zniffer.js',
-                    'app/core/controllers/spectrum.js',
-                    'app/core/controllers/networkmap.js',
-                    'app/core/controllers/home.js',
-                    'app/core/controllers/configuration.js',
-                    'app/core/controllers/assoc.js',
-                    'app/core/jquery/jquery-app.js'
+                    'app/controllers/base.js',
+                    'app/controllers/controllers.js',
+                    'app/controllers/switch.js',
+                    'app/controllers/sensor.js',
+                    'app/controllers/meter.js',
+                    'app/controllers/thermostat.js',
+                    'app/controllers/lock.js',
+                    'app/controllers/status.js',
+                    'app/controllers/battery.js',
+                    'app/controllers/type.js',
+                    'app/controllers/association.js',
+                    'app/controllers/controll.js',
+                    'app/controllers/routing.js',
+                    'app/controllers/reorganization.js',
+                    'app/controllers/timing.js',
+                    'app/controllers/controllerinfo.js',
+                    'app/controllers/queue.js',
+                    'app/controllers/interviewcommand.js',
+                    'app/controllers/license.js',
+                    'app/controllers/uzb.js',
+                    'app/controllers/zniffer.js',
+                    'app/controllers/spectrum.js',
+                    'app/controllers/networkmap.js',
+                    'app/controllers/home.js',
+                    'app/controllers/configuration.js',
+                    'app/controllers/assoc.js',
+                    'app/jquery/jquery-app.js'
 
                 ],
-                dest: 'dist/app/core/build.js'
+                dest: 'dist/app/build.js'
             }
         },
         // Copy
@@ -92,11 +92,11 @@ module.exports = function (grunt) {
                         src: [
                             'app/images/**',
                             'app/views/**',
-                            'app/core/lang/**'
+                            'app/lang/**'
                         ], dest: 'dist/'
                     },
                     {src:[ 'storage/**'],dest: 'dist/'},
-                    {expand: true, src: ['app/core/config.js'], dest: 'dist/app/core/', flatten: true}
+                    {expand: true, src: ['app/config.js'], dest: 'dist/app/', flatten: true}
                     /*{src: ['storage/img/**'], dest: 'dist/'},
                      {src: ['storage/demo/**'], dest: 'dist/'},
                      {src: ['storage/data/**'], dest: 'dist/'}*/
@@ -109,9 +109,9 @@ module.exports = function (grunt) {
             },
             angmap: {
                 files: [
-                    {expand: true, src: ['app/vendor/angular/angular-1.2.14/angular-cookies.min.js.map'], dest: 'dist/app/core/', flatten: true},
-                    {expand: true, src: ['app/vendor/angular/angular-1.2.14/angular.min.js.map'], dest: 'dist/app/core/', flatten: true},
-                    {expand: true, src: ['app/vendor/angular/angular-1.2.14/angular-route.min.js.map'], dest: 'dist/app/core/', flatten: true}
+                    {expand: true, src: ['app/vendor/angular/angular-1.2.14/angular-cookies.min.js.map'], dest: 'dist/app/', flatten: true},
+                    {expand: true, src: ['app/vendor/angular/angular-1.2.14/angular.min.js.map'], dest: 'dist/app/', flatten: true},
+                    {expand: true, src: ['app/vendor/angular/angular-1.2.14/angular-route.min.js.map'], dest: 'dist/app/', flatten: true}
                 ]
             }
         },

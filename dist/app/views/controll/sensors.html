@@ -1,8 +1,8 @@
 <!-- Sensors view -->
 <div ng-controller="SensorsController">
     <div class="page-header"><h1>{{ _t('h1_sensor')}}</h1></div>
-
-    <div id="table_mobile">
+    <bb-alert alert="alert"></bb-alert>
+    <div id="table_mobile" ng-if="sensors.show">
         <table class="table table-striped table-condensed table-hover">
             <thead>
                 <tr>
@@ -36,15 +36,21 @@
                             <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
-                     <th class="mobile-show">
-                        <button class="btn btn-success spin-true" data-ng-click="storeAll('all_1')" id="btn_update_all_1">
-                            {{ _t('switches_update_all')}} <i class="fa fa-spinner fa-spin"></i>
+                    <th class="mobile-show td-action">
+                        <button class="btn btn-info" id="btn_update_all_1"
+                                ng-click="updateAllSensors('all_1','urlToStore')"
+                                ng-disabled="rowSpinner['all_1']">
+                            <bb-row-spinner
+                                    spinner="rowSpinner['all_1']"
+                                    label="_t('switches_update_all')"
+                                    icon="'fa-check'">
+                            </bb-row-spinner>
                         </button>
                     </th>
             </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="v in sensors| orderBy:predicate:reverse" id="{{ v.rowId}}">
+                <tr ng-repeat="v in sensors.all| orderBy:predicate:reverse track by $index" id="{{ v.rowId}}">
                     <td data-title="#">{{ v.id}}<span ng-show="v.iId != 0">.{{v.iId}}</span></td>
                     <td data-title="{{ _t('device_name')}}" ng-switch on="v.type">
                         <i ng-switch-when="SensorBinary" class="fa fa-eye fa-lg"></i>
@@ -58,9 +64,16 @@
                     </td>
                     <td data-title="{{ _t('th_scale')}}" class="row-level-ext">{{v.levelExt}} &nbsp;</td>
                     <td data-title="{{ _t('datetime')}}" class="row-time is-updated-{{v.isUpdated}}">{{v.updateTime | isTodayFromUnix }} &nbsp;</td>
-                    <td>
-                        <button data-ng-click="store(v.urlToStore)" class="btn btn-primary spin-true" id="btn_update_{{ v.rowId}}">
-                            {{ _t('update')}} <i class="fa fa-spinner fa-spin"></i>
+                    <td class="td-action" data-title="">
+                        <button class="btn btn-default" id="btn_update_{{ v.rowId}}"
+                                ng-click="updateSensor(v.cmdToUpdate,v.urlToStore)"
+                                ng-disabled="rowSpinner[v.cmdToUpdate]">
+                            <bb-row-spinner
+                                    spinner="rowSpinner[v.cmdToUpdate]"
+                                    label=" _t('update')"
+                                    icon="'fa-check text-success'">
+
+                            </bb-row-spinner>
                         </button>
                     </td>
             </tr>
