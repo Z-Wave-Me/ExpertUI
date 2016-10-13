@@ -148,11 +148,8 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
      * Run zwave cmd
      */
     function _runZwaveCmd(cmd) {
-        $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin'};
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
-            $scope.loading = false;
-        }, function (error) {
-            $scope.loading = false;
+            }, function (error) {
             alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
         });
     }

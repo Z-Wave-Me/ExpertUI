@@ -177,14 +177,11 @@ appController.controller('ZnifferHistoryController', function ($scope, $interval
      */
     $scope.loadCommunicationHistory = function () {
         var filter = '?filter=' + JSON.stringify($scope.zniffer.filter.model);
-        $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin'};
         dataService.getApi('communication_history_url', filter, true).then(function (response) {
-            $scope.loading = false;
             $scope.zniffer.all = deviceService.setZnifferData(response.data.data).value();
             //$scope.zniffer.all = zniffer.value();
             $scope.zniffer.run = true;
         }, function (error) {
-            $scope.loading = false;
             alertify.alertError($scope._t('error_load_data') + ': ' + cfg.communication_history_url);
         });
     };
@@ -328,11 +325,7 @@ appController.controller('ZnifferController_', function ($scope, $interval, $fil
         var time = (updateTime ? '/' + updateTime : '');
         var filter = '?filter=' + JSON.stringify($scope.zniffer.filter.model);
         params = time + filter;
-        if (!updateTime) {
-            $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin'};
-        }
         dataService.getApi('communication_history_url', params, true).then(function (response) {
-            $scope.loading = false;
             $scope.zniffer.updateTime = response.data.updateTime;
             setZnifferData(response.data.data);
             //$scope.zniffer.all = zniffer.value();
@@ -340,7 +333,6 @@ appController.controller('ZnifferController_', function ($scope, $interval, $fil
         }, function (error) {
             $scope.zniffer.run = false;
             $interval.cancel($scope.zniffer.interval);
-            $scope.loading = false;
             alertify.alertError($scope._t('error_load_data') + ': ' + cfg.communication_history_url);
         });
     };
@@ -751,10 +743,7 @@ appController.controller('ZnifferRSSIController', function ($scope, $interval, $
     });
 
     $scope.loadingRSSIData = function() {
-        $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin'};
         dataService.getApi('rssi_chart','', true).then(function (response) {
-            $scope.loading = false;
-
             var rssiData = typeof response === 'string'? JSON.parse(response) : response;
             var tInterval = (new Date()).getTime() - 86400000; //86400000 - 24h
             var chartData1 = [];
@@ -791,7 +780,6 @@ appController.controller('ZnifferRSSIController', function ($scope, $interval, $
 
 
         }, function (error) {
-            $scope.loading = false;
             alertify.alertError($scope._t('error_load_data') + ': ' + cfg.rssi_chart);
         });
     };

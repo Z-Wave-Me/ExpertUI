@@ -1,8 +1,14 @@
 /**
- * ThermostatController
+ * @overview This controller renders and handles thermostats.
  * @author Martin Vach
  */
-appController.controller('ThermostatController', function($scope, $filter, dataService) {
+
+/**
+ * Thermostat root controller
+ * @class ThermostatController
+ *
+ */
+appController.controller('ThermostatController', function($scope, $filter, $timeout,$interval,dataService, cfg,_) {
     $scope.thermostats = {
         all: [],
         interval: null,
@@ -18,27 +24,59 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
         $interval.cancel($scope.thermostats.interval);
     });
 
-
-
-
-    // Load data
-    $scope.load = function() {
-        dataService.getZwaveData(function(ZWaveAPIData) {
+    /**
+     * Load zwave data
+     */
+    $scope.loadZwaveData = function() {
+        dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
             setData(ZWaveAPIData);
-            dataService.joinedZwaveData(function(data) {
-                refreshData(data);
-            });
+            if(_.isEmpty($scope.thermostats.all)){
+                $scope.alert = {message: $scope._t('error_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                return;
+            }
+            $scope.thermostats.show = true;
+            $scope.refreshZwaveData(ZWaveAPIData);
+        }, function(error) {
+            alertify.alertError($scope._t('error_load_data'));
         });
     };
-    // Load data
-    $scope.load();
+    $scope.loadZwaveData();
 
-    // Cancel interval on page destroy
-    $scope.$on('$destroy', function() {
-        dataService.cancelZwaveDataInterval();
-    });
-    // Change temperature on click
-    $scope.tempChange = function(cmd, index, type) {
+    /**
+     * Refresh zwave data
+     * @param {object} ZWaveAPIData
+     */
+    $scope.refreshZwaveData = function(ZWaveAPIData) {
+        var refresh = function() {
+            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+                setData(response.data.joined);
+            }, function(error) {});
+        };
+        $scope.thermostats.interval = $interval(refresh, $scope.cfg.interval);
+    };
+
+    /**
+     * Update thermostat mode
+     * @param {string} url
+     * @param {string} mode
+     */
+    $scope.updateThermostatMode = function(url,mode) {
+        if (!mode) {
+            return;
+        }
+        $scope.toggleRowSpinner(url);
+        url = url + '.Set(' + mode + ')';
+        updateThermostat(url);
+    };
+
+    /**
+     * Update thermostat temperature on click
+     * @param {string} url
+     * @param {int}  index
+     * @param {string}  type
+     */
+    $scope.updateThermostatTempClick = function(url, index, type) {
+        $scope.toggleRowSpinner(url);
         var val = $scope.thermostats.rangeSlider[index];
         var min = parseInt($scope.cfg.thermostat_range.min, 10);
         var max = parseInt($scope.cfg.thermostat_range.max, 10);
@@ -50,12 +88,17 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
             count = max;
         }
         $scope.thermostats.rangeSlider[index] = count;
-        var url = cmd + '.Set(1,' + count + ')';
-        console.log('Sending value: ' + $scope.thermostats.rangeSlider[index]);
-        dataService.runCmd(url, false, $scope._t('error_handling_data'));
+        url = url + '.Set(' + count + ')';
+        updateThermostat(url);
     };
-    // Change temperature after slider handle
-    $scope.sliderChange = function(cmd, index) {
+
+    /**
+     * Update thermostat temperature with slider
+     * @param {string} url
+     * @param {int}  index
+     */
+    $scope.updateThermostatTempSlider = function(url, index) {
+        $scope.toggleRowSpinner(url);
         var count = parseInt($scope.thermostats.rangeSlider[index]);
         var min = parseInt($scope.cfg.thermostat_range.min, 10);
         var max = parseInt($scope.cfg.thermostat_range.max, 10);
@@ -66,22 +109,28 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
             count = max;
         }
         $scope.thermostats.rangeSlider[index] = count;
-        var url = cmd + '.Set(1,' + count + ')';
-        dataService.runCmd(url, false, $scope._t('error_handling_data'));
-    };
-    // Change mode
-    $scope.changeMode = function(cmd, mode) {
-        if (!mode) {
-            return;
-        }
-        var url = cmd + '.Set(' + mode + ')';
-        dataService.runCmd(url);
+        url = url + '.Set(' + count + ')';
+        updateThermostat(url);
     };
 
     /// --- Private functions --- ///
 
     /**
+     * Update thermostat
+     * @param {string} url
+     */
+    function updateThermostat(url) {
+        dataService.runZwaveCmd(cfg.store_url + url).then(function (response) {
+            $timeout($scope.toggleRowSpinner, 1000);
+        }, function (error) {
+            $scope.toggleRowSpinner();
+            alertify.alertError($scope._t('error_update_data') + '\n' + url);
+        });
+    };
+
+    /**
      * Set zwave data
+     * @param {object} ZWaveAPIData
      */
     function setData(ZWaveAPIData) {
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
@@ -179,13 +228,15 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
                 var findIndex = _.findIndex($scope.thermostats.all, {rowId: obj.rowId});
                 if(findIndex > -1){
                     angular.extend($scope.thermostats.all[findIndex],obj);
+                    $scope.thermostats.rangeSlider[findIndex] = level;
 
                 }else{
                     $scope.thermostats.all.push(obj);
+                    $scope.thermostats.rangeSlider.push(obj['range_' + nodeId] = obj['level']);
                 }
 
                 //$scope.thermostats.push(obj);
-                $scope.thermostats.rangeSlider.push(obj['range_' + nodeId] = obj['level']);
+               // $scope.thermostats.rangeSlider.push(obj['range_' + nodeId] = obj['level']);
                 //console.log(obj);
                 cnt++;
             });
@@ -193,44 +244,10 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
     }
 
     /**
-     * Refresh zwave data
+     * Used to pick up thermostat mode
+     * @param {object} _instance
+     * @returns {number}
      */
-    function refreshData(data) {
-        angular.forEach($scope.thermostats.all, function(v, k) {
-            //console.log($scope.thermostats.all[k].curThermMode)
-            //$scope.thermostats.all[k].curThermMode = 0;
-            if (!v.modeType) {
-                return;
-            }
-            var obj = data.update[v.cmdToUpdate];
-            var level = null;
-            var updateTime;
-            var invalidateTime;
-            if (!angular.isObject(data.update)) {
-                return;
-            }
-            if (v.cmdToUpdate in data.update) {
-                if (v.modeType == 'hasThermostatMode') {
-                    updateTime = obj.mode.updateTime;
-                    invalidateTime = obj.mode.invalidateTime;
-                }
-                if (v.modeType == 'hasThermostatSetpoint') {
-                    updateTime = obj.updateTime;
-                    invalidateTime = obj.invalidateTime;
-                    level = obj.setVal.value;
-                }
-                var formatTime = $filter('isTodayFromUnix')(updateTime);
-                $('#' + v.rowId + ' .row-level .level-val').html(level);
-                $('#' + v.rowId + ' .row-time').html(formatTime);
-                if (updateTime > invalidateTime) {
-                    $('#' + v.rowId + ' .row-time').removeClass('is-updated-false');
-                }
-                console.log('Updating:' + v.rowId + ' | At: ' + formatTime + ' | with: ' + level);//REM
-            }
-        });
-    }
-
-    // used to pick up thermstat mode
     function getCurrentThermostatMode(_instance) {
         var hasThermostatMode = 0x40 in _instance.commandClasses;
 
@@ -254,7 +271,11 @@ appController.controller('ThermostatController', function($scope, $filter, dataS
         return _curThermMode;
     }
     ;
-    // used to pick up thermstat mode
+    /**
+     * Build a list with the thermostat modes
+     * @param {object} data
+     * @returns {Array}
+     */
     function getModeList(data) {
         var list = []
         angular.forEach(data, function(v, k) {

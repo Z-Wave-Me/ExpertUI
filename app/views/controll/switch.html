@@ -1,6 +1,5 @@
 <!-- Switch view -->
 <div ng-controller="SwitchController">
-    <bb-loader></bb-loader>
     <div class="page-header"><h1>{{_t('nav_switch')}}</h1></div>
     <bb-alert alert="alert"></bb-alert>
     <div id="table_mobile"  ng-if="switches.show">
@@ -38,7 +37,7 @@
                                                                                                        class="fa fa-sort-desc"></i></span>
                     </a>
                 </th>
-                <th class="mobile-show td-action">
+                <th class="mobile-show">
                     <button class="btn btn-info" id="btn_update_all_1"
                             ng-click="updateAllSwitches('all_1','urlToStore')"
                             ng-disabled="rowSpinner['all_1']">
@@ -49,9 +48,9 @@
                         </bb-row-spinner>
                     </button>
                 </th>
-                <th class="mobile-show td-action">
+                <th class="mobile-show">
                     <div class="btn-group" style="min-width: 150px !important;">
-                        <button class="btn btn-danger" id="btn_all_of"
+                        <button class="btn btn-info" id="btn_all_of"
                                 ng-click="updateAllSwitches('btn_all_of','urlToOff')"
                                 ng-disabled="rowSpinner['btn_all_of']">
                             <bb-row-spinner
@@ -61,7 +60,7 @@
 
                             </bb-row-spinner>
                         </button>
-                        <button class="btn btn-success" id="btn_all_on"
+                        <button class="btn btn-info" id="btn_all_on"
                                 ng-click="updateAllSwitches('btn_all_on','urlToOn')"
                                 ng-disabled="rowSpinner['btn_all_on']">
                             <bb-row-spinner
@@ -94,7 +93,7 @@
                     <switch-all-icon hasall="{{ v.switchAllValue}}" ng-if="v.switchAllValue !== null"></switch-all-icon>
                     &nbsp;
                 </td>
-                <td class="td-action" data-title="">
+                <td data-title="">
                     <button class="btn btn-default" id="btn_update_{{ v.rowId}}"
                             ng-click="updateSwitch(v.urlToStore)"
                             ng-disabled="rowSpinner[v.urlToStore]">
@@ -106,7 +105,7 @@
                         </bb-row-spinner>
                     </button>
                 </td>
-                <td class="td-action" data-title="" ng-switch on="v.deviceType">
+                <td data-title="" ng-switch on="v.deviceType">
                     <div ng-switch-when="multilevel">
                         <div class="btn-group" style="min-width: 110px !important;">
                             <label class="switch" title="v.levelStatus === 'on' ? v.btnOff : v.btnOn"
@@ -192,7 +191,7 @@
                          range-slider
                          min="0"
                          max="v.levelMax"
-                         model-max="rangeSlider[$index]"
+                         model-max="switches.rangeSlider[$index]"
                          pin-handle="min"
                          on-handle-up="sliderChange(v.urlToSlide,$index)"></div>
                     <div ng-switch-default>&nbsp;</div>

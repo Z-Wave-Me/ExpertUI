@@ -1,6 +1,12 @@
 /**
- * SensorsController
+ * @overview This controller renders and handles sensors.
  * @author Martin Vach
+ */
+
+/**
+ * Sensor root controller
+ * @class SensorsController
+ *
  */
 appController.controller('SensorsController', function($scope, $filter, $timeout,$interval,cfg,dataService,_) {
     $scope.sensors = {
@@ -12,7 +18,7 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
      * Cancel interval on page destroy
      */
     $scope.$on('$destroy', function() {
-        $interval.cancel($scope.switches.interval);
+        $interval.cancel($scope.sensors.interval);
         //dataService.cancelZwaveDataInterval();
     });
 
@@ -20,10 +26,8 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
      * Load zwave data
      */
     $scope.loadZwaveData = function() {
-        $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin'};
         dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
             setData(ZWaveAPIData);
-            $scope.loading = false;
             if(_.isEmpty($scope.sensors.all)){
                 $scope.alert = {message: $scope._t('error_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
                 return;
@@ -31,7 +35,6 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
             $scope.sensors.show = true;
             $scope.refreshZwaveData(ZWaveAPIData);
         }, function(error) {
-            $scope.loading = false;
             alertify.alertError($scope._t('error_load_data'));
         });
     };
@@ -49,21 +52,6 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
         };
         $scope.sensors.interval = $interval(refresh, $scope.cfg.interval);
     };
-
-    // DEPRECATED
-    // Load data
-    /*$scope.load = function() {
-        dataService.getZwaveData(function(ZWaveAPIData) {
-            setData(ZWaveAPIData);
-            dataService.joinedZwaveData(function(data) {
-                refreshData(data);
-            });
-        });
-    };
-    // Load data
-    $scope.load($scope.lang);*/
-
-
 
     /**
      * Update sensor
@@ -106,6 +94,7 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
 
     /**
      * Set zwave data
+     * @param {object} ZWaveAPIData
      */
     function setData(ZWaveAPIData) {
         $scope.updateTime = ZWaveAPIData.updateTime;
@@ -293,47 +282,4 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
 
         });
     }
-    /**
-     * DEPRECATED
-     * Refresh zwave data
-     */
-    /*function refreshData(data) {
-        angular.forEach($scope.sensors.all, function(v, k) {
-            // Check for updated data
-            if (v.cmdToUpdate in data.update) {
-                var obj = data.update[v.cmdToUpdate];
-                var level = '';
-                var updateTime = 0;
-                var invalidateTime = 0;
-                if (v.cmdId == 0x30) {
-                    level = (obj.level.value ? '<span class="sensor-triggered">' + $scope._t('sensor_triggered') + '</span>' : $scope._t('sensor_idle'));
-                    updateTime = obj.level.updateTime;
-                    invalidateTime = obj.level.invalidateTime;
-
-                } else if (v.cmdId == 0x9c) {
-                    level = (obj.sensorState.value ? '<span class="sensor-triggered">' + $scope._t('sensor_triggered') + '</span>' : $scope._t('sensor_idle'));
-                    updateTime = obj.sensorState.updateTime;
-                    invalidateTime = obj.sensorState.invalidateTime;
-
-                }
-                else {
-                    level = obj.val.value;
-                    updateTime = obj.updateTime;
-                    invalidateTime = obj.invalidateTime;
-
-                }
-
-                // Update row
-                $('#' + v.rowId + ' .row-level').html((level == null ? '' : level) + ' &nbsp;');
-                $('#' + v.rowId + ' .row-time').html($filter('isTodayFromUnix')(updateTime));
-                if (updateTime > invalidateTime) {
-                    $('#' + v.rowId + ' .row-time').removeClass('is-updated-false');
-                } else {
-                    $('#' + v.rowId + ' .row-time').addClass('is-updated-false');
-                }
-                //console.log('Updating: ' + v.rowId + ' | At: ' + $filter('isTodayFromUnix')(updateTime) + ' | with: ' + level);//REM
-
-            }
-        });
-    }*/
 });

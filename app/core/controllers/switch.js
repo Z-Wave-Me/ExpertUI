@@ -1,6 +1,12 @@
 /**
- * SwitchController
+ * @overview This controller renders and handles switches.
  * @author Martin Vach
+ */
+
+/**
+ * Switch root controller
+ * @class SwitchController
+ *
  */
 appController.controller('SwitchController', function($scope, $filter, $timeout,$interval,dataService, cfg,_) {
     $scope.switches = {
@@ -21,18 +27,15 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
      * Load zwave data
      */
     $scope.loadZwaveData = function() {
-        $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin'};
         dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
             setData(ZWaveAPIData);
-            $scope.loading = false;
-            if(_.isEmpty($scope.switches.all)){
+             if(_.isEmpty($scope.switches.all)){
                 $scope.alert = {message: $scope._t('error_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
                 return;
             }
             $scope.switches.show = true;
             $scope.refreshZwaveData(ZWaveAPIData);
         }, function(error) {
-            $scope.loading = false;
             alertify.alertError($scope._t('error_load_data'));
         });
     };
@@ -204,31 +207,13 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
     ;
 
     /**
-     * DEPRECATED
-     * Refresh zwave data
+     * Update level
+     * @param {object} obj
+     * @param {number}  ccId
+     * @param {string} btnOn
+     * @param {string} btnOff
+     * @returns {{level_cont: *, level_color: *, level_status: string, level_val: number, level_max: number}}
      */
-   /* function refreshData(data) {
-        angular.forEach($scope.switches, function(v, k) {
-            //console.log(v.cmdToUpdate);
-            //return;
-            var obj = data.update[v.cmdToUpdate];
-            if (v.cmdToUpdate in data.update) {
-                var level = updateLevel(obj, v.ccId, v.btnOn, v.btnOff);
-                var updateTime = obj.updateTime;
-                var invalidateTime = obj.invalidateTime;
-                var formatTime = $filter('isTodayFromUnix')(updateTime);
-                $('#' + v.rowId + ' .row-level').html(level.level_cont).css({color: level.level_color});
-                $('#' + v.rowId + ' .row-time').html(formatTime);
-                if (updateTime > invalidateTime) {
-                    $('#' + v.rowId + ' .row-time').removeClass('is-updated-false');
-                }
-                $("#the_item_id").css({backgroundColor: "#333", color: "#FFF"});
-                //console.log('Updating:' + v.rowId + ' | At: ' + updateTime + ' | with: ' + level);//REM
-            }
-        });
-    }*/
-
-    // Update level
     function updateLevel(obj, ccId, btnOn, btnOff) {
 
         var level_cont;

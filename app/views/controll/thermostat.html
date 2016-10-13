@@ -1,6 +1,5 @@
 <!-- Thermostat view -->
 <div ng-controller="ThermostatController">
-    <bb-loader></bb-loader>
     <div class="page-header"><h1>{{_t('nav_thermostat')}}</h1></div>
     <bb-alert alert="alert"></bb-alert>
     <div id="table_mobile" ng-if="thermostats.show">
@@ -43,30 +42,29 @@
                         <span class="is-updated-{{v.isUpdated}}" ng-show="v.level != null">{{ v.updateTime | isTodayFromUnix }}</span>
                     </td>
                     <td>
-                        
                         <div class="form-inline" ng-show="v.isThermostatMode">
-                            <select class="form-control" ng-model="thermostats.mChangeMode[v.id]" ng-change="thermostats.changeMode(v.urlToStore,mChangeMode[v.id])">
+                            <select class="form-control"
+                                    ng-model="thermostats.mChangeMode[v.id]"
+                                    ng-change="updateThermostatMode(v.urlToStore,thermostats.mChangeMode[v.id])">
                                 <option value="">--- {{_t.('thermostat_mode_change')}} ---</option>
                                 <option ng-repeat="m in v.modeList" value="{{m.key}}" ng-selected="m.key == v.curThermMode">{{m.val}}</option>
-                                  </select>
+                            </select>
+                            <bb-row-spinner spinner="rowSpinner[v.urlToStore]"></bb-row-spinner>
                         </div>
                     </td>
                     <td> 
                         <!-- <span ng-bind="rangeSlider[$index]"></span>  -->
                         <div class="btn-group" ng-show="!v.curThermMode">
-                            <button 
-                                class="btn btn-default spinner-selector_"
-                                ng-click="tempChange(v.urlChangeTemperature, $index, '-')"
-                                data-spinner-scale="1" 
-                                data-spinner-max="{{cfg.thermostat_range.max}}" 
-                                data-spinner-min="{{cfg.thermostat_range.min}}">{{_t.('btn_minus')}}</button>
-                            <button 
-                                class="btn btn-default spinner-selector_"
-                                ng-click="tempChange(v.urlChangeTemperature, $index, '+')"
-                                data-spinner-scale="1" 
-                                data-spinner-max="{{cfg.thermostat_range.max}}" 
-                                data-spinner-min="{{cfg.thermostat_range.min}}">{{_t.('btn_plus')}}</button>
+                            <button title="{{_t.('btn_minus')}}" class="btn btn-default"
+                                    ng-click="updateThermostatTempClick(v.urlChangeTemperature, $index, '-')">
+                                <i class="fa fa-minus text-danger"></i>
+                            </button>
+                            <button title="{{_t.('btn_plus')}}" class="btn btn-default"
+                                    ng-click="updateThermostatTempClick(v.urlChangeTemperature, $index, '+')">
+                                <i class="fa fa-plus text-success"></i>
+                            </button>
                         </div>
+                        <bb-row-spinner spinner="rowSpinner[v.urlChangeTemperature]"></bb-row-spinner>
                     </td>
                     <td>
                         <div ng-show="!v.curThermMode">
@@ -77,7 +75,7 @@
                                  max='cfg.thermostat_range.max'  
                                  model-max="thermostats.rangeSlider[$index]"
                                  pin-handle="min" 
-                                 on-handle-up="sliderChange(v.urlChangeTemperature,$index)">
+                                 on-handle-up="updateThermostatTempSlider(v.urlChangeTemperature,$index)">
                             </div>
                         </div>
                     </td>

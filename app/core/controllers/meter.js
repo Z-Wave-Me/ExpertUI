@@ -1,6 +1,12 @@
 /**
- * MetersController
+ * @overview This controller renders and handles meters.
  * @author Martin Vach
+ */
+
+/**
+ * Meter root controller
+ * @class MetersController
+ *
  */
 appController.controller('MetersController', function($scope, $filter, $timeout,$interval,dataService, cfg,_) {
     $scope.meters = {
@@ -20,10 +26,8 @@ appController.controller('MetersController', function($scope, $filter, $timeout,
      * Load zwave data
      */
     $scope.loadZwaveData = function() {
-        $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin'};
         dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
             setData(ZWaveAPIData);
-            $scope.loading = false;
             if(_.isEmpty($scope.meters.all)){
                 $scope.alert = {message: $scope._t('error_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
                 return;
@@ -31,7 +35,6 @@ appController.controller('MetersController', function($scope, $filter, $timeout,
             $scope.meters.show = true;
             $scope.refreshZwaveData(ZWaveAPIData);
         }, function(error) {
-            $scope.loading = false;
             alertify.alertError($scope._t('error_load_data'));
         });
     };
@@ -49,19 +52,6 @@ appController.controller('MetersController', function($scope, $filter, $timeout,
         };
         $scope.meters.interval = $interval(refresh, $scope.cfg.interval);
     };
-
-    // DEPRECATED
-    // Load data
-   /* $scope.load = function() {
-        dataService.getZwaveData(function(ZWaveAPIData) {
-            setData(ZWaveAPIData);
-            dataService.joinedZwaveData(function(data) {
-                refreshData(data);
-            });
-        });
-    };
-
-    $scope.load();*/
 
     /**
      * Update meter
@@ -104,6 +94,7 @@ appController.controller('MetersController', function($scope, $filter, $timeout,
 
     /**
      * Set zwave data
+     * @param {object} ZWaveAPIData
      */
     function setData(ZWaveAPIData) {
         $scope.controllerId = ZWaveAPIData.controller.data.nodeId.value;
@@ -170,23 +161,4 @@ appController.controller('MetersController', function($scope, $filter, $timeout,
             });
         });
     }
-
-    /**
-     * DEPRECATED
-     * Refresh zwave data
-     */
-    /*function refreshData(data) {
-        angular.forEach($scope.meters.all, function(v, k) {
-            var obj = data.update[v.cmdToUpdate];
-            if (v.cmdToUpdate in data.update) {
-                var level = obj.val.value;
-                var updateTime = $filter('isTodayFromUnix')(obj.updateTime);
-                $('#' + v.rowId + ' .row-level').html(level);
-                $('#' + v.rowId + ' .row-time').html(updateTime);
-                if (obj.updateTime > obj.invalidateTime) {
-                    $('#' + v.rowId + ' .row-time').removeClass('is-updated-false');
-                }
-            }
-        });
-    }*/
 });

@@ -1,6 +1,12 @@
 /**
- * LocksController
+ * @overview This controller renders and handles locks.
  * @author Martin Vach
+ */
+
+/**
+ * Lock root controller
+ * @class LocksController
+ *
  */
 appController.controller('LocksController', function($scope, $filter, $timeout,$interval,dataService, cfg,_) {
     $scope.locks = {
@@ -20,10 +26,8 @@ appController.controller('LocksController', function($scope, $filter, $timeout,$
      * Load zwave data
      */
     $scope.loadZwaveData = function() {
-        $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin'};
         dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
             setData(ZWaveAPIData);
-            $scope.loading = false;
             if(_.isEmpty($scope.locks.all)){
                 $scope.alert = {message: $scope._t('error_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
                 return;
@@ -31,7 +35,6 @@ appController.controller('LocksController', function($scope, $filter, $timeout,$
             $scope.locks.show = true;
             $scope.refreshZwaveData(ZWaveAPIData);
         }, function(error) {
-            $scope.loading = false;
             alertify.alertError($scope._t('error_load_data'));
         });
     };
@@ -47,7 +50,7 @@ appController.controller('LocksController', function($scope, $filter, $timeout,$
                 setData(response.data.joined);
             }, function(error) {});
         };
-        $scope.switches.interval = $interval(refresh, $scope.cfg.interval);
+        $scope.locks.interval = $interval(refresh, $scope.cfg.interval);
     };
 
     /**
@@ -63,29 +66,11 @@ appController.controller('LocksController', function($scope, $filter, $timeout,$
             alertify.alertError($scope._t('error_update_data') + '\n' + url);
         });
     };
-
-    // DEPRECATED
-    // Load data
-    /*$scope.load = function(lang) {
-        dataService.getZwaveData(function(ZWaveAPIData) {
-            setData(ZWaveAPIData);
-            dataService.joinedZwaveData(function(data) {
-                refreshData(data);
-            });
-        });
-    };
-    // Load data
-    $scope.load($scope.lang);*/
-    // Store data on remote server
-    /*$scope.store = function(btn) {
-        var url = $(btn).attr('data-store-url');
-        dataService.runCmd(url, false, $scope._t('error_handling_data'));
-        return;
-    };*/
     /// --- Private functions --- ///
 
     /**
      * Set zwave data
+     * @param {object} ZWaveAPIData
      */
     function setData(ZWaveAPIData) {
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
@@ -140,28 +125,4 @@ appController.controller('LocksController', function($scope, $filter, $timeout,$
             });
         });
     }
-
-    /**
-     * DEPRECATED
-     * Refresh zwave data
-     */
-    /*function refreshData(data) {
-        angular.forEach($scope.locks, function(v, k) {
-
-            if (v.cmdToUpdate in data.update) {
-                var obj = data.update[v.cmdToUpdate];
-                var active = obj.value;
-                var level = $filter('lockStatus')(obj.value);
-                var updateTime = $filter('isTodayFromUnix')(obj.updateTime);
-                $('#' + v.rowId + ' .row-time').html(updateTime).removeClass('is-updated-false');
-                $('#' + v.rowId + ' .row-level').html(level);
-                $('#' + v.rowId + ' .btn-group-lock button').removeClass('active');
-                if (active == '255') {
-                    $('#' + v.rowId + ' .btn-lock').addClass('active');
-                } else {
-                    $('#' + v.rowId + ' .btn-unlock').addClass('active');
-                }
-            }
-        });
-    }*/
 });
