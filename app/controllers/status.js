@@ -2,8 +2,12 @@
  * StatusController
  * @author Martin Vach
  */
-appController.controller('StatusController', function($scope, $filter, dataService, deviceService) {
-    $scope.statuses = [];
+appController.controller('StatusController', function ($scope, $filter, $timeout,$interval,dataService, cfg,_, deviceService) {
+    $scope.statuses = {
+        all: [],
+        interval: null,
+        show: false
+    };
     $scope.interviewCommandsDevice = [];
     $scope.interviewCommands = [];
     $scope.deviceInfo = {
@@ -13,15 +17,94 @@ appController.controller('StatusController', function($scope, $filter, dataServi
     };
     $scope.ZWaveAPIData;
     $scope.interviewDeviceId = null;
-    $scope.reset = function() {
-        $scope.statuses = angular.copy([]);
+
+    /**
+     * Cancel interval on page destroy
+     */
+    $scope.$on('$destroy', function() {
+        $interval.cancel($scope.switches.interval);
+    });
+
+
+    /**
+     * Load zwave data
+     */
+    $scope.loadZwaveData = function() {
+        dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
+            $scope.ZWaveAPIData = ZWaveAPIData;
+            setData(ZWaveAPIData);
+            if(_.isEmpty($scope.statuses.all)){
+                $scope.alert = {message: $scope._t('error_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                return;
+            }
+            $scope.statuses.show = true;
+            $scope.refreshZwaveData(ZWaveAPIData);
+        }, function(error) {
+            alertify.alertError($scope._t('error_load_data'));
+        });
     };
+    $scope.loadZwaveData();
+
+    /**
+     * Refresh zwave data
+     * @param {object} ZWaveAPIData
+     */
+    $scope.refreshZwaveData = function(ZWaveAPIData) {
+        var refresh = function() {
+            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+                setData(response.data.joined);
+            }, function(error) {});
+        };
+        $scope.statuses.interval = $interval(refresh, $scope.cfg.interval);
+    };
+
+    /**
+     * Ping device
+     * @param {string} url
+     */
+    $scope.pingDevice = function(url) {
+        $scope.toggleRowSpinner(url);
+        dataService.runZwaveCmd(cfg.store_url + url).then(function (response) {
+            $timeout($scope.toggleRowSpinner, 1000);
+        }, function (error) {
+            $scope.toggleRowSpinner();
+            alertify.alertError($scope._t('error_update_data') + '\n' + url);
+        });
+    };
+
+    /**
+     * Ping all devices
+     * @param {string} id
+     * @param {string} urlType
+     */
+    $scope.pingAllDevices = function (id, urlType) {
+        var lastItem = _.last($scope.statuses.all);
+        $scope.toggleRowSpinner(id);
+        angular.forEach($scope.statuses.all, function (v, k) {
+            console.log(v)
+            if (v.urlToStore) {
+                $scope.toggleRowSpinner(v[urlType]);
+                dataService.runZwaveCmd(cfg.store_url + v[urlType]).then(function (response) {
+                    alertify.dismissAll();
+                }, function (error) {
+                    alertify.dismissAll();
+                    alertify.alertError($scope._t('error_update_data') + '\n' + v[urlType]);
+                });
+
+            }
+            if (lastItem.rowId === v.rowId) {
+                $timeout($scope.toggleRowSpinner, 1000);
+            }
+        });
+
+    };
+
     // Load data
-    $scope.load = function() {
-        dataService.getZwaveData(function(ZWaveAPIData) {
+    /*$scope.load = function () {
+        dataService.getZwaveData(function (ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
             setData($scope.ZWaveAPIData);
-            dataService.joinedZwaveData(function(data) {
+            dataService.joinedZwaveData(function (data) {
                 if ($scope.interviewDeviceId > 1) {
                     refreshModalInterview($scope.ZWaveAPIData.devices[$scope.interviewDeviceId], data.joined.devices[$scope.interviewDeviceId]);
                 }
@@ -34,27 +117,27 @@ appController.controller('StatusController', function($scope, $filter, dataServi
     };
 
     // Load data
-    $scope.load($scope.lang);
+    $scope.load($scope.lang);*/
 
     // Cancel interval on page destroy
-    $scope.$on('$destroy', function() {
+    /*$scope.$on('$destroy', function () {
         dataService.cancelZwaveDataInterval();
-    });
-    // Store data from on remote server
-    $scope.store = function(btn) {
+    });*/
+    /*// Store data from on remote server
+    $scope.store = function (btn) {
         var url = $(btn).attr('data-store-url');
         dataService.runCmd(url, false, $scope._t('error_handling_data'));
-    };
+    };*/
 
     // Store all data on remote server
-    $scope.storeAll = function(btn) {
-        angular.forEach($scope.statuses, function(v, k) {
+    /*$scope.storeAll = function (btn) {
+        angular.forEach($scope.statuses.all, function (v, k) {
             if (v.urlToStore) {
                 dataService.runCmd(v.urlToStore);
             }
         });
-    };
-    $scope.showModalInterview = function(target, index, id, name) {
+    };*/
+    $scope.showModalInterview = function (target, index, id, name) {
         $scope.deviceInfo = {
             "index": index,
             "id": id,
@@ -67,12 +150,12 @@ appController.controller('StatusController', function($scope, $filter, dataServi
         $(target).modal();
     };
     // Show modal dialog
-    $scope.hideModalInterview = function() {
+    $scope.hideModalInterview = function () {
         $scope.interviewDeviceId = null;
     };
 
     // Show modal CommandClass dialog
-    $scope.showModalCommandClass = function(target, instanceId, ccId, type) {
+    $scope.showModalCommandClass = function (target, instanceId, ccId, type) {
         var node = $scope.ZWaveAPIData.devices[$scope.interviewDeviceId];
         if (!node) {
             return;
@@ -103,7 +186,7 @@ appController.controller('StatusController', function($scope, $filter, dataServi
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         var doorLockCCId = 0x62;
         // Loop throught devices
-        angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+        angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
             if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
                 return;
             }
@@ -167,9 +250,9 @@ appController.controller('StatusController', function($scope, $filter, dataServi
 
         // DDR
         /*var ddr = false;
-        if (angular.isDefined(node.data.ZDDXMLFile)) {
-            ddr = node.data.ZDDXMLFile.value;
-        }*/
+         if (angular.isDefined(node.data.ZDDXMLFile)) {
+         ddr = node.data.ZDDXMLFile.value;
+         }*/
 
         var obj = {};
         obj['id'] = nodeId;
@@ -192,14 +275,21 @@ appController.controller('StatusController', function($scope, $filter, dataServi
         obj['sleepingSince'] = sleepingSince;
         obj['lastWakeup'] = lastWakeup;
         obj['interval'] = interval;
-        $scope.statuses.push(obj);
+        var findIndex = _.findIndex($scope.statuses.all, {rowId: obj.rowId});
+        if(findIndex > -1){
+            angular.extend( $scope.statuses.all[findIndex],obj);
+
+        }else{
+            $scope.statuses.all.push(obj);
+        }
+
     }
     ;
 
     // Refresh data
     function refreshData(data) {
-        angular.forEach($scope.statuses, function(v, k) {
-            angular.forEach(v.cmd, function(ccId, key) {
+        angular.forEach($scope.statuses.all, function (v, k) {
+            angular.forEach(v.cmd, function (ccId, key) {
                 if (ccId in data) {
                     var node = 'devices.' + v.id;
                     var isAwakeCmd = node + '.data.isAwake';
@@ -265,7 +355,6 @@ appController.controller('StatusController', function($scope, $filter, dataServi
         }
 
 
-
     }
 
     // Refresh Modal Interview data
@@ -274,7 +363,6 @@ appController.controller('StatusController', function($scope, $filter, dataServi
         if (refresh) {
             $scope.interviewCommands = deviceService.configGetInterviewCommands(newCc);
         }
-
 
 
     }
@@ -287,6 +375,7 @@ appController.controller('StatusController', function($scope, $filter, dataServi
             awake_cont = isAwake ? ('<i class="fa fa-certificate fa-lg text-orange" title="' + $scope._t('device_is_active') + '"></i>') : ('<i class="fa fa-moon-o fa-lg text-primary" title="' + $scope._t('device_is_sleeping') + '"></i>');
         return awake_cont;
     }
+
     // Get operating HTML
     function operatingCont(lastCommunication) {
 //        var operating_cont = (isFailed ? ('<i class="fa fa-ban fa-lg text-danger" title="' + $scope._t('device_is_dead') + '"></i>') : ('<i class="fa fa-check fa-lg text-success" title="' + $scope._t('device_is_operating') + '"></i>')) + ' <span title="' + $scope._t('last_communication') + '" class="not_important">' + $filter('isTodayFromUnix')(lastCommunication) + '</span>';
