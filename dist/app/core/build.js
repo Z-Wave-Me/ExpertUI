@@ -38855,7 +38855,7 @@ appController.controller('StatusController', function($scope, $filter, dataServi
                 interval = NaN; // to indicate that interval and hence next wakeup are unknown
             var lastSleep = $filter('isTodayFromUnix')(sleepingSince);
             var nextWakeup = $filter('isTodayFromUnix')(sleepingSince + interval);
-            sleeping_cont = '<span title="' + $scope._t('sleeping_since') + '" class="not_important">' + approx + lastSleep + '</span> &#8594; <span title="' + $scope._t('next_wakeup') + '">' + approx + nextWakeup + '</span> <i class="fa fa-clock-o fa-lg" title="' + $scope._t('battery_operated_device_with_wakeup') + '"></i>';
+            sleeping_cont = ' <i class="fa fa-clock-o fa-lg" title="' + $scope._t('battery_operated_device_with_wakeup') + '"></i> <span title="' + $scope._t('sleeping_since') + '" class="not_important">' + approx + lastSleep + '</span> &#8594; <span title="' + $scope._t('next_wakeup') + '">' + approx + nextWakeup + '</span>';
         } else if (!isListening && isFLiRS)
             sleeping_cont = '<i class="fa fa-headphones fa-lg" title="' + $scope._t('FLiRS_device') + '"></i>';
         else
@@ -42214,6 +42214,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
     $scope.countDevices;
     $scope.failedDevices = [];
     $scope.batteryDevices;
+    $scope.batteryWakeupDevices;
     $scope.lowBatteryDevices = [];
     $scope.flirsDevices;
     $scope.mainsDevices;
@@ -42333,17 +42334,31 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
     };
     
      // Run Zwave Command
-    $scope.runZwaveCmd = function (cmd) {
-         $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin'};
-        dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
-             $scope.loading = false;
-        }, function (error) {
-             $scope.loading = false;
-            alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
-        });
+    $scope.runZwaveCmd = function (cmd,confirm) {
+        if(confirm){
+            alertify.confirm(confirm, function () {
+                _runZwaveCmd(cmd);
+            });
+        }else{
+            _runZwaveCmd(cmd);
+        }
     };
 
     /// --- Private functions --- ///
+
+    /**
+     * Run zwave cmd
+     */
+    function _runZwaveCmd(cmd) {
+        $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin'};
+        dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
+            $scope.loading = false;
+        }, function (error) {
+            $scope.loading = false;
+            alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
+        });
+    }
+    ;
 
     /**
      * Count devices
@@ -42387,17 +42402,19 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
      */
     function batteryDevices(ZWaveAPIData) {
         var controllerId = ZWaveAPIData.controller.data.nodeId.value;
-        var cnt = 0;
+        var batteryCnt = 0;
+        var batteryWakeupCnt = 0;
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
             if (nodeId == 255 || nodeId == controllerId || node.data.isVirtual.value) {
                 return;
             }
             var hasBattery = 0x80 in node.instances[0].commandClasses;
+            var hasBatteryWakeup = 0x84 in node.instances[0].commandClasses;
             var instanceId = 0;
             var interviewDone = false;
             var ccId = 0x80;
-            if (!hasBattery) {
+            if (!hasBattery || !hasBatteryWakeup) {
                 return;
             }
             // Is interview done
@@ -42418,9 +42435,16 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
             if (battery_charge <= 20 && interviewDone) {
                 $scope.lowBatteryDevices.push(obj);
             }
-            cnt++;
+            if(hasBattery){
+                batteryCnt++;
+            }
+            if(hasBatteryWakeup){
+                batteryWakeupCnt++;
+            }
+
         });
-        $scope.batteryDevices = cnt;
+        $scope.batteryDevices = batteryCnt;
+        $scope.batteryWakeupDevices = batteryWakeupCnt;
     }
     ;
 

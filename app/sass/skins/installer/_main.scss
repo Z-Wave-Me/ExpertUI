@@ -6,10 +6,11 @@ $alliance-green-bcg: lighten($alliance-green,40%);
 $alliance-green-border: lighten($alliance-green,20%);
 $alliance-orange: #F89847;
 .app-type-installer{
-    #main_navbar{
+    #main_navigation{
         margin-bottom: 0;
     }
     .container-installer{
+        margin: $header-h 0 0 0;
         width: 100%;
         .alert{
             font-size: 120%;
@@ -28,18 +29,24 @@ $alliance-orange: #F89847;
         border-color: $alliance-green-border;
     }
     /* Header */
-    .navbar-inverse{
-        background: $alliance-blue; 
+    #main_navigation {
+        .navibar-item-root,.timestamp{
+            color: $alliance-orange;
+        }
+        .active {
+            color: #47aa42;
+            background-color: #2A6496;
+        }
     }
-    .navbar-inverse .navbar-nav > li > a {
-        color: $alliance-orange;
-    }
-    .navbar-inverse .dropdown-toggle.active, 
-    .navbar-inverse .dropdown-toggle.active:hover,
-        .navbar-inverse .no-dropdown.active,
-        .navbar-inverse .no-dropdown.active:hover{
-        color: #47aa42;
-        background-color: #2A6496;
+
+    .sub-navigation {
+        background-color: $alliance-green;
+        border: 1px solid #e3e3e3;
+        ul {
+            li {
+                border-color: #FFF;
+            }
+        }
     }
     /* Dropdown menu */
     .dropdown-menu {
@@ -119,5 +126,10 @@ $alliance-orange: #F89847;
     .well {
         background-color: $alliance-green-bcg;
         border-color: $alliance-green-border;
+    }
+    /* footer */
+    #footer{
+        border-color: $alliance-green-border;
+
     }
 }

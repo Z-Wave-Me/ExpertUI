@@ -9,11 +9,13 @@
     z-index: $zindex-footer;
     //height: $footer-h;
      border-top: solid 1px $footer-border-color;
+    color: $footer-color;
     #footer_in{
         background-color: $footer-bcg-color;
         height: $footer-h;
         line-height: $footer-h;
         .timestamp{
+            color: $footer-color;
             display: none;
         }
     }

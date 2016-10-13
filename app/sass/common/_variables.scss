@@ -37,6 +37,7 @@ $app-input-padding: 12px 14px;
 // Header
 $header-h: 50px;
 $header-icon-settings-h: 40px;
+$subnavigation-w: 200px;
 
 // Page navigation
 $page-control-input-h: 40px;
@@ -64,18 +65,9 @@ $fatal-error-img: 32px;
 $navi-img: 32px;
 $report-img: 60px;
 $widget-img: 64px;
-$app-detail-img:128px;
-$element-icon-img: 48px;
-$customize-img: 120px;
-$customize-detail-img: 300px;
-$include-detail-img:128px;
-$customize-icon-preview-img:64px;
-$product-img: 64px;
-$vendor-img: 80px;
-$room-img-upload: 70px;
-$room-img-preview: 130px;
 $report-img-s: 32px;
 $lang-img: 32px;
+$config-device-img: 200px;
 
 // Footer
 $footer-h: 50px;
@@ -84,29 +76,6 @@ $footer-h: 50px;
 $widget-col-w: 100%;
 $widget-col-h: 150px;
 $widget-zwave-col-w: 100%;
-
-//Elements
-$element-widget-col-h: 150px;
-
-//Apps
-$app-widget-col-h: 120px;
-
-//Customize
-$customize-widget-col-h: 120px;
-$customize-icon-preview-h: 300px;
-$customize-modal-content-h: 600px;
-
-//Room
-$room-col-w: 50%;
-
-//Login
-$auth-page-w: 500px;
-
-//Badge number
-$badge-number-w: 32px;
-
-//Devices
-$device-vendor-w: 33.33333%;
 
 //Switch buton
 $switch-btn-w: 60px;
@@ -139,7 +108,7 @@ $app-font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace 
 $app-body-font-size: 17px;
 $app-error-message-font-size: 120%;
 $app-error-info-font-size: 105%;
-$app-navi-font-size: 120%;
+$app-navi-font-size: 110%;
 $app-btn-font-size: 110%;
 $app-btn-icon-size: 150%;
 $app-btn-small-font-size: 90%;
@@ -152,6 +121,7 @@ $app-navi-icon-size: 120%;
 $app-updatetime-font-size: 17px;
 $app-updatetime-icon-size: 110%;
 $app-h1-font-size: 160%;
+$app-header-h1-font-size: 110%;
 $app-h2-font-size: 140%;
 $app-h3-font-size: 120%;
 $app-h4-font-size: 110%;
@@ -224,11 +194,11 @@ $header-delim-r-color: lighten($app-border-color, 15%);
 $header-a-color: $app-a-color;
 $header-icon-color: lighten($header-a-color, 20%);
 $header-a-active-color: $app-border-color;
+$header-a-active-bcg-color: lighten($app-border-color, 25%);
 $header-subnavi-border-color: $app-border-color;
 $header-subnavi-color: $app-a-color;
 $header-subnavi-bcg-color: #FFFFFF;
 $header-subnavi-active-color: lighten($header-subnavi-color, 50%);
-
 
 
 // Page navigation
@@ -288,6 +258,7 @@ $pagination-active-bcg-color: $pagination-border-color;
 $pagination-active-color: #FFFFFF;
 
 // Footer
+$footer-color: $app-color-primary;
 $footer-border-color: $app-border-color;
 $footer-bcg-color: #FFFFFF;
 
@@ -302,14 +273,13 @@ $form-input-color: lighten($app-body-color, 30%);
 $form-submit-entry-bcg-color: #FFFFFF;
 $form-addon-bcg-color: #EEEEEE;
 
+// Table
+$table-border-color: $app-border-color;
+$table-bcg-color: #FFFFFF;
+
 // Report
 $report-border-color: $app-border-color;
 $report-bcg-color: #FFFFFF;
-
-// Device
-$device-bcg-color: #FFFFFF;
-$device-color: $app-body-color;
-$device-border-color: $app-border-color;
 
 // Widget
 $widget-bcg-color: #FFFFFF;
@@ -321,36 +291,6 @@ $widget-warning-border-color: lighten($app-brand-warning,20%);
 $widget-danger-border-color: lighten($app-brand-danger,20%);
 $widget-heading-color: $app-heading-color;
 $widget-icon-color:lighten($widget-color, 40%);
-
-// Element
-$element-widget-room-color: lighten($widget-color, 40%);
-$element-widget-caret-color: lighten($widget-color, 40%);
-$element-widget-time-color: lighten($widget-color, 40%);
-$element-widget-level-color: $app-body-color;
-$element-widget-btn-color: lighten($widget-color, 80%);
-$element-widget-btn-border-color: $element-widget-btn-color;
-$element-widget-btn-bcg-color: #FFFFFF;
-$element-widget-btn-0-color: $app-brand-danger;
-$element-widget-btn-1-color: $app-brand-success;
-$element-widget-btn-on-color: lighten($widget-color, 40%);
-$element-widget-img-update-border-color: $app-border-color;
-$element-widget-isnew-border-color: lighten($app-brand-success,20%);
-
-// Customiz
-$customize-border-color: $app-border-color;
-// Room
-$room-border-color: $app-border-color;
-
-// Badge number
-$badge-number-bcg-color: lighten($app-body-color, 60%);
-$badge-number-color: #FFFFFF;
-
-// Comments and ratings
-$rating-color: lighten($app-body-color,70%);
-$rating-israted-color: lighten(#f0ad4e,10%);
-$comment-even-bcg-color:  #E9E9E9;
-$comment-color: $app-body-color;
-$comment-header-color:  lighten($comment-color, 20%);
 
 
 /*-------------------------------------*/

@@ -87,6 +87,22 @@
     }
 }
 
+/* Form CSS - old CSS - will be removed
+-------------------------------------------------- */
+
+.btn-spinner-hidden,.btn .fa-spin{
+    display: none;
+}
+
+.btn-default, .btn-default.active, .open .dropdown-toggle.btn-default {
+    border-color: #9fd8ef;
+}
+.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open .dropdown-toggle.btn-default {
+    color: #2A6496;
+    background-color: #e4f5fc;
+    border-color: #9fd8ef;
+}
+
 
 
 /* Button tabs
