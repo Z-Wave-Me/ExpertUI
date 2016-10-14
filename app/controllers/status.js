@@ -22,7 +22,7 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
      * Cancel interval on page destroy
      */
     $scope.$on('$destroy', function() {
-        $interval.cancel($scope.switches.interval);
+        $interval.cancel($scope.statuses.interval);
     });
 
 
@@ -81,7 +81,6 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
         var lastItem = _.last($scope.statuses.all);
         $scope.toggleRowSpinner(id);
         angular.forEach($scope.statuses.all, function (v, k) {
-            console.log(v)
             if (v.urlToStore) {
                 $scope.toggleRowSpinner(v[urlType]);
                 dataService.runZwaveCmd(cfg.store_url + v[urlType]).then(function (response) {
