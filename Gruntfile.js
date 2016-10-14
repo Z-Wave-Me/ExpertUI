@@ -45,6 +45,7 @@ module.exports = function (grunt) {
                     'app/vendor/canvasjs/canvasjs.min.js',
                     // APP
                     'app/app.js',
+                    'app/modules/qAllSettled.js',
                     'app/directives/directives.js',
                     'app/directives/angular-slider.js',
                     'app/directives/dir-pagination.js',
