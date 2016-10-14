@@ -61,7 +61,7 @@
                         id="btn_nm_include_stop"
                         ng-show="[1, 2, 3, 4].indexOf(controllerState) > -1"
                         ng-click="runCmd('controller.AddNodeToNetwork(0)')"
-                        ><i class="fa fa-spinner fa-spin"></i> {{_t('nm_include_stop')}}</button>
+                        > {{_t('nm_include_stop')}}</button>
 
                     <!-- exclude -->
                     <button
@@ -77,7 +77,7 @@
                         id="nm_exclude_stop"
                         ng-show="[5, 6, 7].indexOf(controllerState) > -1"
                         ng-click="runCmd('controller.RemoveNodeFromNetwork(0)')"
-                        ><i class="fa fa-spinner fa-spin"></i> {{_t('nm_exclude_stop')}}</button>
+                        > {{_t('nm_exclude_stop')}}</button>
                 </div>
             </div>
 
@@ -93,7 +93,7 @@
                                 id="btn_learn_stop"
                                 ng-click="runZwaveCmd('controller.SetLearnMode(0)')"
                                 ng-if="!boxData.controller.isPrimary"
-                        ><i class="fa fa-spinner fa-spin"></i> {{_t('leave_network')}}</button>
+                        > {{_t('leave_network')}}</button>
 
                     <button
                             class="btn btn-primary"
@@ -117,7 +117,7 @@
                                 ng-show="[8, 9, 10, 11, 12].indexOf(controllerState) > -1"
                                 ng-if="boxData.controller.isPrimary && (!boxData.controller.hasDevices)"
                                 ng-click="runCmd('controller.SetLearnMode(0)')"
-                        ><i class="fa fa-spinner fa-spin"></i> {{_t('nm_learn_stop')}}</button>
+                        > {{_t('nm_learn_stop')}}</button>
 
             </div>
 
@@ -356,7 +356,7 @@
                                     id="btn_controller_change_stop"
                                     ng-show="[13, 14, 15, 16].indexOf(controllerState) > -1"
                                     ng-click="runCmd('controller.ControllerChange(0)')"
-                                    ><i class="fa fa-spinner fa-spin"></i> {{_t('nm_controller_change_stop')}}</button>
+                                    > {{_t('nm_controller_change_stop')}}</button>
                         </div>
 
                         <!-- learn_start -->
@@ -377,7 +377,7 @@
                                 id="btn_learn_stop"
                                 ng-show="[8, 9, 10, 11, 12].indexOf(controllerState) > -1"
                                 ng-click="runCmd('controller.SetLearnMode(0)')"
-                                ><i class="fa fa-spinner fa-spin"></i> {{_t('nm_learn_stop')}}</button>
+                                > {{_t('nm_learn_stop')}}</button>
                         </div>
 
                         <!-- request_nif -->
@@ -500,7 +500,7 @@
                            </p>  
                        
                     </div>
-                    <div class="alert alert-info" ng-show="restoreBackupStatus == 1"><i class="fa fa-spinner fa-spin"></i> {{_t('restore_wait')}}</div>
+                    <div class="alert alert-info" ng-show="restoreBackupStatus == 1"> {{_t('restore_wait')}}</div>
                     <div class="alert alert-success" ng-show="restoreBackupStatus == 2">{{_t('restore_done_reload_ui')}}</div>
                     <div class="alert alert-danger" ng-show="restoreBackupStatus == 3">{{_t('restore_backup_failed')}}</div>
                 </div>

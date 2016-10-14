@@ -120,7 +120,7 @@
                         id="btn_learn_stop"
                         ng-click="runZwaveCmd('controller._SetLearnMode(0)',_t('before_leaving_network'))"
                         ng-if="!boxData.controller.isPrimary"
-                ><i class="fa fa-spinner fa-spin"></i> {{_t('leave_network')}}</button>
+                > {{_t('leave_network')}}</button>
 
 
                 <button
@@ -129,7 +129,7 @@
                         ng-click="runZwaveCmd('controller.SetLearnMode(0)')"
                         ng-if="boxData.controller.controllerState == 9 && boxData.controller.isPrimary"
                         onClick="refreshPage()"
-                ><i class="fa fa-spinner fa-spin"></i> {{_t('Stop inclusion')}}</button>
+                > {{_t('Stop inclusion')}}</button>
 
 
 
