@@ -11,6 +11,7 @@ var angApp = angular.module('angApp', [
     'appFactory',
     'appService',
     'appConfig',
+    'qAllSettled',
     'angularFileUpload'
 ]);
 

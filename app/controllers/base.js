@@ -1,11 +1,17 @@
 /**
- * Application base controller
+ * @overview The parent controller that stores all function used in the child controllers.
  * @author Martin Vach
  */
 
-/*** Controllers ***/
+/**
+ * Angular module instance
+ */
+
 var appController = angular.module('appController', []);
-// Base controller
+/**
+ * The app base controller.
+ * @class BaseController
+ */
 appController.controller('BaseController', function ($scope, $cookies, $filter, $location, $anchorScroll, $window, $route, $interval,cfg, dataService, deviceService, myCache) {
     $scope.loading = false;
     $scope.alert = {message: false, status: 'is-hidden', icon: false};
@@ -110,6 +116,7 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
     };
 
     // Watch for lang change
+    //TODO: display a dialog "Page will be reloaded..." and auto reload page
     $scope.$watch('lang', function () {
         $('.current-lang').html($scope.lang);
         $scope.loadLang($scope.lang);

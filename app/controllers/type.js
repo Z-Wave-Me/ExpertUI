@@ -1,66 +1,109 @@
 /**
- * TypeController
+ * @overview This controller renders and handles device types.
  * @author Martin Vach
  */
-appController.controller('TypeController', function($scope, $filter, dataService, deviceService) {
-    $scope.devices = [];
-    $scope.reset = function() {
-        $scope.devices = angular.copy([]);
+
+/**
+ * Device type root controller
+ * @class TypeController
+ *
+ */
+appController.controller('TypeController', function($scope, $filter, $timeout,$interval,$q,dataService, cfg,_,deviceService) {
+    $scope.devices = {
+        all: [],
+        show: false,
+        interval: null
     };
+
     $scope.deviceClasses = [];
     $scope.productNames = [];
-    // Load  device classes xml data
-    $scope.loadDeviceClasses = function() {
-        dataService.getDeviceClasses(function(data) {
-            var lang = 'en';
-            angular.forEach(data.DeviceClasses.Generic, function(val, key) {
-                var obj = {};
-                var langs = {
-                    "en": "0",
-                    "de": "1",
-                    "ru": "2"
-                };
-                if (angular.isDefined(langs[$scope.lang])) {
-                    lang = $scope.lang;
-                }
-                var langId = langs[lang];
-                obj['id'] = parseInt(val._id);
-                //obj['generic'] = val.name.lang[langId].__text;
-                obj['generic'] = deviceService.configGetZddxLang(val.name.lang, $scope.lang);
-                obj['specific'] = val.Specific;
-                obj['langId'] = langId;
-                $scope.deviceClasses.push(obj);
-            });
-        });
-    };
 
-
-    // Load data
-    $scope.load = function() {
-        dataService.getZwaveData(function(ZWaveAPIData) {
-            setData(ZWaveAPIData);
-            dataService.joinedZwaveData(function(data) {
-                $scope.reset();
-                setData(data.joined);
-                dataService.cancelZwaveDataInterval();
-            });
-        });
-    };
-    $scope.$watch('lang', function() {
-        $scope.loadDeviceClasses();
-        $scope.load();
-    });
-
-
-    // Cancel interval on page destroy
+    /**
+     * Cancel interval on page destroy
+     */
     $scope.$on('$destroy', function() {
-        dataService.cancelZwaveDataInterval();
+        $interval.cancel($scope.devices.interval);
     });
+
+    /**
+     * Load all promises
+     * @returns {undefined}
+     */
+    $scope.allSettled = function () {
+        var promises = [
+            dataService.xmlToJson(cfg.server_url + cfg.device_classes_url),
+            dataService.loadZwaveApiData()
+        ];
+
+        $q.allSettled(promises).then(function (response) {
+            // console.log(response)
+            var deviceClasses = response[0];
+            var zwaveData = response[1];
+            $scope.loading = false;
+
+            // deviceClasses error message
+            if (deviceClasses.state === 'rejected') {
+                alertify.alertError($scope._t('error_load_data') + ':' + cfg.server_url + cfg.device_classes_url);
+            }
+
+            // zwaveData error message
+            if (zwaveData.state === 'rejected') {
+                alertify.alertError($scope._t('error_load_data'));
+                return;
+            }
+            // Success - deviceClasses
+            if (deviceClasses.state === 'fulfilled') {
+                setDeviceClasses(deviceClasses.value);
+            }
+
+            // Success - zwaveData
+            if (zwaveData.state === 'fulfilled') {
+                setData(zwaveData.value);
+                if(_.isEmpty($scope.devices.all)){
+                    $scope.alert = {message: $scope._t('error_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                    return;
+                }
+                $scope.devices.show = true;
+                $scope.refreshZwaveData(zwaveData.value);
+            }
+
+        });
+
+    };
+    $scope.allSettled();
+
+    /**
+     * Refresh zwave data
+     * @param {object} ZWaveAPIData
+     */
+    $scope.refreshZwaveData = function(ZWaveAPIData) {
+        var refresh = function() {
+            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+                setData(response.data.joined);
+            }, function(error) {});
+        };
+        $scope.devices.interval = $interval(refresh, $scope.cfg.interval);
+    };
 
     /// --- Private functions --- ///
+    /**
+     * Set device classess
+     * @param {object} data
+     * @returns {void}
+     */
+    function setDeviceClasses(data) {
+        angular.forEach(data.DeviceClasses.Generic, function(val) {
+            var obj = {};
+            obj['id'] = parseInt(val._id);
+            obj['generic'] = deviceService.configGetZddxLang(val.name.lang, $scope.lang);
+            obj['specific'] = val.Specific;
+            $scope.deviceClasses.push(obj);
+        });
+    }
 
     /**
      * Set zwave data
+     * @param {object} ZWaveAPIData
      */
     function setData(ZWaveAPIData) {
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
@@ -79,7 +122,7 @@ appController.controller('TypeController', function($scope, $filter, dataService
             var minor = node.data.ZWProtocolMinor.value;
             var vendorName = node.data.vendorString.value;
             var zddXmlFile = $filter('hasNode')(node, 'data.ZDDXMLFile.value');
-            var productName = null;
+            //var productName = null;
             var fromSdk = true;
             var sdk;
             // SDK
@@ -93,11 +136,11 @@ appController.controller('TypeController', function($scope, $filter, dataService
             var appVersion = node.data.applicationMajor.value + '.' + node.data.applicationMinor.value;
             // Security and ZWavePlusInfo
             var security = false;
-            angular.forEach(ccIds, function(v, k) {
+            angular.forEach(ccIds, function(v) {
                 var cmd = node.instances[instanceId].commandClasses[v];
                 if (angular.isObject(cmd) && cmd.name === 'Security') {
                     security = cmd.data.interviewDone.value;
-                    return;
+
                 }
             });
 
@@ -110,11 +153,11 @@ appController.controller('TypeController', function($scope, $filter, dataService
 
             // Zwave plus
             var ZWavePlusInfo = false;
-            angular.forEach(ccIds, function(v, k) {
+            angular.forEach(ccIds, function(v) {
                 var cmd = node.instances[instanceId].commandClasses[v];
                 if (angular.isObject(cmd) && cmd.name === 'ZWavePlusInfo') {
                     ZWavePlusInfo = true;
-                    return;
+
                 }
             });
             // MWI and EF
@@ -125,30 +168,18 @@ appController.controller('TypeController', function($scope, $filter, dataService
             // Device type
             var deviceXml = $scope.deviceClasses;
             var deviceType = $scope._t('unknown_device_type') + ': ' + genericType;
-            angular.forEach(deviceXml, function(v, k) {
+            angular.forEach(deviceXml, function(v) {
                 if (genericType == v.id) {
                     deviceType = v.generic;
-                    angular.forEach(v.specific, function(s, sk) {
+                    angular.forEach(v.specific, function(s) {
                         if (specificType == s._id) {
                             deviceType = deviceService.configGetZddxLang(s.name.lang, $scope.lang);
-//                            if (angular.isDefined(s.name.lang[v.langId].__text)) {
-//                                deviceType = s.name.lang[v.langId].__text;
-//                            }
                         }
                     });
-                    return;
+
                 }
             });
 
-            // Product name from zddx file
-            if (zddXmlFile) {
-                dataService.getZddXml(zddXmlFile, function(zddxml) {
-                    //productName = $filter('hasNode')(zddxml, 'ZWaveDevice.deviceDescription.productName');
-                    // productName = zddxml.ZWaveDevice.deviceDescription.productName;
-                    $scope.productNames[nodeId] = zddxml.ZWaveDevice.deviceDescription.productName;
-                });
-
-            }
             // Set object
             var obj = {};
             obj['id'] = nodeId;
@@ -167,13 +198,30 @@ appController.controller('TypeController', function($scope, $filter, dataService
             obj['genericType'] = genericType;
             obj['specificType'] = specificType;
             obj['vendorName'] = vendorName;
-            obj['productName'] = productName;
-            $scope.devices.push(obj);
+            //obj['productName'] = productName;
+
+            var findIndex = _.findIndex($scope.devices.all, {rowId: obj.rowId});
+            if(findIndex > -1){
+                angular.extend($scope.devices.all[findIndex],obj);
+
+            }else{
+                $scope.devices.all.push(obj);
+                // Product name from zddx file
+                if (zddXmlFile) {
+                    dataService.xmlToJson(cfg.server_url + cfg.zddx_url + zddXmlFile).then(function (response) {
+                        $scope.productNames[nodeId] = response.ZWaveDevice.deviceDescription.productName;
+                    });
+                }
+
+            }
         });
     }
 
     /**
      * Get EXF frame
+     * @param {number} $major
+     * @param {number} $minor
+     * @returns {number}
      */
     function getEXFrame($major, $minor) {
         if ($major == 1)
