@@ -1,6 +1,12 @@
 /**
- * AssociationsController
+ * @overview This controller renders and handles active associations.
  * @author Martin Vach
+ */
+
+/**
+ * Associations root controller
+ * @class AssociationsController
+ *
  */
 appController.controller('AssociationsController', function($scope, $filter, $timeout,$interval,$http,dataService, cfg,_,myCache, dataService) {
     $scope.devices = {
