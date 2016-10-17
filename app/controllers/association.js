@@ -75,6 +75,7 @@ appController.controller('AssociationsController', function($scope, $filter, $ti
      */
     function setData(ZWaveAPIData) {
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
+        var controllerSUCNodeId = ZWaveAPIData.controller.data.SUCNodeId.value;
         // Loop throught devices
         var cnt = 1;
         angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
@@ -86,10 +87,10 @@ appController.controller('AssociationsController', function($scope, $filter, $ti
             if (zddXmlFile) {
                 dataService.xmlToJson(cfg.server_url + cfg.zddx_url + zddXmlFile).then(function (response) {
                     zdd = $filter('hasNode')(response, 'ZWaveDevice.assocGroups');
-                    setAssocDevices(nodeId,node, ZWaveAPIData, zdd, controllerNodeId,cnt);
+                    setAssocDevices(nodeId,node, ZWaveAPIData, zdd, controllerSUCNodeId,cnt);
                 });
             }else{
-                setAssocDevices(nodeId,node, ZWaveAPIData, zdd, controllerNodeId,cnt);
+                setAssocDevices(nodeId,node, ZWaveAPIData, zdd, controllerSUCNodeId,cnt);
             }
             cnt++;
         });
@@ -101,11 +102,11 @@ appController.controller('AssociationsController', function($scope, $filter, $ti
      * @param node
      * @param ZWaveAPIData
      * @param zdd
-     * @param controllerNodeId
+     * @param controllerSUCNodeId
      * @param cnt
      */
-    function setAssocDevices(nodeId,node, ZWaveAPIData, zdd, controllerNodeId,cnt){
-        var assocDevices = getAssocDevices(node, ZWaveAPIData, zdd, controllerNodeId);
+    function setAssocDevices(nodeId,node, ZWaveAPIData, zdd, controllerSUCNodeId,cnt){
+        var assocDevices = getAssocDevices(node, ZWaveAPIData, zdd, controllerSUCNodeId);
         var obj = {
             'id': nodeId,
             'rowId': 'row_' + nodeId + '_' + cnt,
@@ -167,10 +168,10 @@ appController.controller('AssociationsController', function($scope, $filter, $ti
      * @param node
      * @param ZWaveAPIData
      * @param zdd
-     * @param controllerNodeId
+     * @param controllerSUCNodeId
      * @returns {Array}
      */
-    function getAssocDevices(node, ZWaveAPIData, zdd, controllerNodeId) {
+    function getAssocDevices(node, ZWaveAPIData, zdd, controllerSUCNodeId) {
         var assocGroups = [];
         var assocDevices = [];
         var assoc = [];
@@ -245,7 +246,7 @@ appController.controller('AssociationsController', function($scope, $filter, $ti
                     if ($scope.devices.showLifeline) {
                         dev.push(d.device.name);
                     } else {
-                        if (controllerNodeId != d.device.id) {
+                        if (controllerSUCNodeId != d.device.id) {
                             dev.push(d.device.name);
                         }
                     }

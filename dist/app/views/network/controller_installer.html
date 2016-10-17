@@ -10,30 +10,10 @@
         <table class="table table-condensed">
             <tbody>
                 <tr><td id="ctrl_info_nodeid_title" class="controller-th">{{_t('ctrl_info_nodeid_title')}}</td><td id="ctrl_info_nodeid_value">{{master['controller.data.nodeId']}}</td></tr>
-                <tr>
-                    <td id="ctrl_info_homeid_title" class="controller-th">{{_t('ctrl_info_homeid_title')}}</td>
-                    <td id="ctrl_info_homeid_value">
-                        <span ng-if="boxData.controller.isPrimary && boxData.controller.hasDevices">
-                            {{_t('my_own')}}
-                        </span>
-                        <span ng-if="!boxData.controller.isPrimary || !boxData.controller.hasDevices">
-                            {{_t('other_network')}}
-                        </span>
-                    </td>
-                    <!--<td id="ctrl_info_homeid_value">{{master['txtHomeId']}}</td>-->
-                </tr>
-                <tr>
-                    <td id="ctrl_info_primary_title" class="controller-th">{{_t('ctrl_info_primary_title')}}</td>
-                    <td id="ctrl_info_primary_value">{{master['controller.data.isPrimary']? 'Yes': 'No'}}</td></tr>
-                 <tr>
-                     <td id="ctrl_info_real_primary_title" class="controller-th">{{_t('ctrl_info_real_primary_title')}}</td>
-                     <td id="ctrl_info_real_primary_value">
-                         {{master['controller.data.isRealPrimary']? 'Yes - ' + _t('secondary_inclusion_controller') : 'No'}}
-                     </td>
-                     <!--<td id="ctrl_info_real_primary_value">{{master['controller.data.isRealPrimary']? 'Yes': 'No'}}</td>-->
-                 </tr>
-               <tr>
-                   <td id="ctrl_info_suc_sis_title" class="controller-th">{{_t('ctrl_info_suc_sis_title')}}</td><td id="ctrl_info_suc_sis_value">{{master['txtSucSis']}}</td> </tr>
+                <tr><td id="ctrl_info_homeid_title" class="controller-th">{{_t('ctrl_info_homeid_title')}}</td><td id="ctrl_info_homeid_value">{{master['txtHomeId']}}</td></tr>
+                <tr><td id="ctrl_info_primary_title" class="controller-th">{{_t('ctrl_info_primary_title')}}</td><td id="ctrl_info_primary_value">{{master['controller.data.isPrimary']? 'Yes': 'No'}}</td></tr>
+                 <tr><td id="ctrl_info_real_primary_title" class="controller-th">{{_t('ctrl_info_real_primary_title')}}</td><td id="ctrl_info_real_primary_value">{{master['controller.data.isRealPrimary']? 'Yes': 'No'}}</td></tr>	
+               <tr><td id="ctrl_info_suc_sis_title" class="controller-th">{{_t('ctrl_info_suc_sis_title')}}</td><td id="ctrl_info_suc_sis_value">{{master['txtSucSis']}}</td> </tr>
             </tbody>
         </table>
          <!-- Hardware -->
@@ -41,11 +21,7 @@
         <table class="table table-condensed">
             <tbody>
                 <tr><td id="ctrl_info_hw_vendor_title" class="controller-th">{{_t('ctrl_info_hw_vendor_title')}}</td><td id="ctrl_info_hw_vendor_value">{{master['controller.data.vendor']}}</td></tr>				
-                <tr>
-                    <td id="ctrl_info_hw_product_title" class="controller-th">{{_t('ctrl_info_hw_product_title')}}</td>
-                    <td id="ctrl_info_hw_product_value">0001 / 0001</td>
-                   <!-- <td id="ctrl_info_hw_product_value">{{master['controller.data.manufacturerProductType']}} / {{master['controller.data.manufacturerProductId']}}</td>-->
-                </tr>
+                <tr><td id="ctrl_info_hw_product_title" class="controller-th">{{_t('ctrl_info_hw_product_title')}}</td><td id="ctrl_info_hw_product_value">{{master['controller.data.manufacturerProductType']}} / {{master['controller.data.manufacturerProductId']}}</td></tr>			
                 <tr><td id="ctrl_info_hw_chip_title" class="controller-th">{{_t('ctrl_info_hw_chip_title')}}</td><td id="ctrl_info_hw_chip_value">{{master['controller.data.ZWaveChip']}}</td></tr>
         </tbody>
         </table>

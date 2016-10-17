@@ -1,5 +1,6 @@
 {
   "--- newtrans": "---",
+  "---": "---",
   "device_not_included_info": "Start the inclusion or learning mode on the customer's primary controller and click the button below.",
   "device_included_info": "Start the exclusion mode on the customer's primary controller and click the button below.",
   "wakeup_interval": "Wakeup interval",
@@ -12,7 +13,6 @@
   "before_leaving_network": "Before you leave the network create a backup of your network informations. Have you already backup of your network informations?",
   "nm_chip_reset_war_ima": "Handle with extreme care.  This function will reset the Certified Installer Toolkit to a factory default state. If the CIT is a part of a customer network, it will transmit a Device Reset Locally command to notify the customer's primary controller that it is leaving the network.  Please use the customer's controller to exclude this device from the network under normal circumstances instead of using this command.",
  "nav_rssi": "Background Noise",
-  "---": "---",
   "hops": "Hops",
   "ready_to_network": "Ready to include into network",
   "iam_in_my_network": "I am in my Network",

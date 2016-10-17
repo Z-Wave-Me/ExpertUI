@@ -1,12 +1,89 @@
 /**
- * TimingController
+ * @overview This controller renders and handles communication history.
  * @author Martin Vach
  */
-appController.controller('TimingController', function($scope, $filter, dataService) {
-    $scope.devices = [];
+
+/**
+ * Timing root controller
+ * @class TimingController
+ *
+ */
+appController.controller('TimingController', function($scope, $filter, $q,$timeout,$interval,dataService, cfg,_) {
+    $scope.devices = {
+        all: [],
+        interval: null,
+        show: false
+    };
     $scope.timing = [];
-    $scope.reset = function() {
-        $scope.devices = angular.copy([]);
+
+    /**
+     * Cancel interval on page destroy
+     */
+    $scope.$on('$destroy', function() {
+        $interval.cancel($scope.devices.interval);
+    });
+
+    /**
+     * Load all promises
+     * @returns {undefined}
+     */
+    $scope.allSettled = function () {
+        var promises = [
+            dataService.getApi('stat_url', null, true),
+            dataService.loadZwaveApiData()
+        ];
+
+        $q.allSettled(promises).then(function (response) {
+            // console.log(response)
+            var timing = response[0];
+            var zwaveData = response[1];
+            $scope.loading = false;
+
+            // timing error message
+            if (timing.state === 'rejected') {
+                alertify.alertError($scope._t('error_load_data') + ':' + cfg.server_url + cfg.device_classes_url);
+            }
+
+            // zwaveData error message
+            if (zwaveData.state === 'rejected') {
+                alertify.alertError($scope._t('error_load_data'));
+                return;
+            }
+            // Success - timing
+            if (timing.state === 'fulfilled') {
+                $scope.timing = timing.value.data;
+
+                //setDeviceClasses(deviceClasses.value);
+            }
+
+            // Success - zwaveData
+            if (zwaveData.state === 'fulfilled') {
+                console.log(zwaveData.value)
+                setData(zwaveData.value);
+                if(_.isEmpty($scope.devices.all)){
+                    $scope.alert = {message: $scope._t('error_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                    return;
+                }
+                $scope.devices.show = true;
+                $scope.refreshZwaveData(zwaveData.value);
+            }
+
+        });
+
+    };
+    $scope.allSettled();
+
+    /**
+     * Refresh zwave data
+     * @param {object} ZWaveAPIData
+     */
+    $scope.refreshZwaveData = function(ZWaveAPIData) {
+        var refresh = function() {
+            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+                setData(response.data.joined);
+            }, function(error) {});
+        };
+        $scope.devices.interval = $interval(refresh, $scope.cfg.interval);
     };
 
     // Load timing data
@@ -23,7 +100,7 @@ appController.controller('TimingController', function($scope, $filter, dataServi
             $scope.timing = data;
         });
     };
-    $scope.loadTiming();
+    //$scope.loadTiming();
     // Cancel interval on page destroy
     $scope.$on('$destroy', function() {
         dataService.cancelZwaveDataInterval();
@@ -37,11 +114,11 @@ appController.controller('TimingController', function($scope, $filter, dataServi
 
 
     /// --- Private functions --- ///
-
     /**
      * Set zwave data
+     * @param {object} ZWaveAPIData
      */
-    function setData(data, ZWaveAPIData) {
+    function setData(ZWaveAPIData) {
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
@@ -62,16 +139,6 @@ appController.controller('TimingController', function($scope, $filter, dataServi
             var specificType = node.data.specificType.value;
 
             // Device type
-            /*if (isListening) {
-                type = 'type_mains';
-            } else if (!isListening && hasWakeup) {
-                type = 'type_battery_wakup';
-            } else if (!isListening && isFLiRS) {
-                type = 'type_flirs';
-            } else {
-                type = 'type_remote';
-
-            }*/
             if (node.data.genericType.value === 1) {
                 type = 'portable';
             } else if (node.data.genericType.value === 2) {
@@ -87,7 +154,7 @@ appController.controller('TimingController', function($scope, $filter, dataServi
             }
 
             // Packets
-            var timingItems = data[nodeId];
+            var timingItems =  $scope.timing[nodeId];
 
             if (angular.isDefined(timingItems)) {
                 totalPackets = timingItems.length;
@@ -107,7 +174,13 @@ appController.controller('TimingController', function($scope, $filter, dataServi
             obj['basicType'] = basicType;
             obj['genericType'] = genericType;
             obj['specificType'] = specificType;
-            $scope.devices.push(obj);
+            var findIndex = _.findIndex($scope.devices.all, {rowId: obj.rowId});
+            if(findIndex > -1){
+                angular.extend($scope.devices.all[findIndex],obj);
+
+            }else{
+                $scope.devices.all.push(obj);
+            }
         });
     }
 
