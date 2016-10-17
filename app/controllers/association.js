@@ -8,7 +8,7 @@
  * @class AssociationsController
  *
  */
-appController.controller('AssociationsController', function($scope, $filter, $timeout,$interval,$http,dataService, cfg,_,myCache, dataService) {
+appController.controller('AssociationsController', function($scope, $filter, $timeout,$interval,$http,dataService, cfg,_,myCache) {
     $scope.devices = {
         all: [],
         show: false,
@@ -81,39 +81,16 @@ appController.controller('AssociationsController', function($scope, $filter, $ti
             if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
                 return;
             }
-            var zddXmlFile = null;
-            if (angular.isDefined(node.data.ZDDXMLFile)) {
-                zddXmlFile = node.data.ZDDXMLFile.value;
-            }
-            var zdd;
-            if (zddXmlFile && zddXmlFile !== 'undefined') {
-                var cachedZddXml = myCache.get(zddXmlFile);
-                if (!cachedZddXml) {
-                    $http.get($scope.cfg.server_url + $scope.cfg.zddx_url + zddXmlFile).then(function(response) {
-                        var x2js = new X2JS();
-                        var zddXml = x2js.xml_str2json(response.data);
-                        myCache.put(zddXmlFile, zddXml);
-                        var assocGroup = [];
-                        if (("ZWaveDevice" in zddXml) && ("assocGroups" in zddXml.ZWaveDevice)) {
-                            zdd = zddXml.ZWaveDevice.assocGroups;
-                            setAssocDevices(nodeId,node, ZWaveAPIData, zdd, controllerNodeId,cnt);
-                        }
-
-                    });
-                } else {
-                    var zddXml = cachedZddXml;
-                    var assocGroup = [];
-                    if (("ZWaveDevice" in zddXml) && ("assocGroups" in zddXml.ZWaveDevice)) {
-                        zdd = zddXml.ZWaveDevice.assocGroups;
-                        setAssocDevices(nodeId,node, ZWaveAPIData, zdd, controllerNodeId,cnt);
-                    }
-                }
-            } else {
-                zdd = null;
+            var zddXmlFile = $filter('hasNode')(node, 'data.ZDDXMLFile.value');
+            var zdd = null;
+            if (zddXmlFile) {
+                dataService.xmlToJson(cfg.server_url + cfg.zddx_url + zddXmlFile).then(function (response) {
+                    zdd = $filter('hasNode')(response, 'ZWaveDevice.assocGroups');
+                    setAssocDevices(nodeId,node, ZWaveAPIData, zdd, controllerNodeId,cnt);
+                });
+            }else{
                 setAssocDevices(nodeId,node, ZWaveAPIData, zdd, controllerNodeId,cnt);
             }
-
-
             cnt++;
         });
     }
