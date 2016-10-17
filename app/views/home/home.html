@@ -97,32 +97,43 @@
 
             <!-- only installer -->
             <div class="cfg-block form-inline" ng-if="cfg.app_type === 'installer'">
-                <!-- learn_start -->
-                <p class="input-help">{{_t('nm_learn_mode_war')}}</p>
-                <button
-                        class="btn btn-primary"
-                        id="btn_learn_start"
-                        ng-click="runZwaveCmd('controller.SetLearnMode(1)')"
-                        ng-if="boxData.controller.isPrimary && (!boxData.controller.hasDevices && boxData.controller.controllerState == 0)"
-                        onClick="refreshPage()"
+                <!-- Not included in network -->
+                <div ng-if="boxData.controller.isPrimary && (!boxData.controller.hasDevices && boxData.controller.controllerState == 0)">
+                    <p class="input-help">{{_t('device_not_included_info')}}</p>
+                    <button
+                            class="btn btn-primary"
+                            id="btn_learn_start"
+                            ng-click="runZwaveCmd('controller.SetLearnMode(1)')"
+                            onClick="refreshPage()"
 
-                >{{_t('include_into_network')}}</button>
-                <button
-                        class="btn btn-primary"
-                        id="btn_learn_start"
-                        ng-click="runZwaveCmd('controller.SetLearnMode(1)')"
-                        ng-if="boxData.controller.isPrimary && (boxData.controller.hasDevices)"
-                        style="background-color: grey;"
-                        disabled
-                >{{_t('leave_network')}}</button>
-                <button
-                        class="btn btn-danger"
-                        id="btn_learn_stop"
-                        ng-click="runZwaveCmd('controller._SetLearnMode(0)',_t('before_leaving_network'))"
-                        ng-if="!boxData.controller.isPrimary"
-                > {{_t('leave_network')}}</button>
+                    >{{_t('include_into_network')}}</button>
+                </div>
+
+                <!-- included in network -->
+                <div  ng-if="boxData.controller.isPrimary && (boxData.controller.hasDevices)">
+                    <p class="input-help">{{_t('device_included_info')}}</p>
+                    <button
+                            class="btn btn-primary"
+                            id="btn_learn_start"
+                            ng-click="runZwaveCmd('controller.SetLearnMode(1)')"
+                            style="background-color: grey;"
+                            disabled
+                    >{{_t('leave_network')}}</button>
+                </div>
+
+                <!-- included in network -->
+               <div ng-if="!boxData.controller.isPrimary">
+                   <p class="input-help">{{_t('device_included_info')}}</p>
+                   <button
+                           class="btn btn-danger"
+                           id="btn_learn_stop"
+                           ng-click="runZwaveCmd('controller._SetLearnMode(0)',_t('before_leaving_network'))"
+
+                   > {{_t('leave_network')}}</button>
+               </div>
 
 
+                <!-- stop inclusion -->
                 <button
                         class="btn btn-danger"
                         id="btn_learn_stop"
@@ -134,6 +145,6 @@
 
 
             </div>
-        </span>
     </div>
+</div>
 </div>
