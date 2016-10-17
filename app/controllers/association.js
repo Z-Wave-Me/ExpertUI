@@ -2,48 +2,70 @@
  * AssociationsController
  * @author Martin Vach
  */
-appController.controller('AssociationsController', function($scope, $filter, $http, myCache, dataService) {
-    $scope.devices = [];
-    $scope.ZWaveAPIData = [];
-    $scope.showLifeline = false;
-    $scope.zdd;
-    $scope.reset = function() {
-        $scope.devices = angular.copy([]);
+appController.controller('AssociationsController', function($scope, $filter, $timeout,$interval,$http,dataService, cfg,_,myCache, dataService) {
+    $scope.devices = {
+        all: [],
+        show: false,
+        interval: null,
+        showLifeline: false
     };
-    // Load data
-    $scope.load = function(lang) {
-        dataService.getZwaveData(function(ZWaveAPIData) {
-            setData(ZWaveAPIData);
-        });
-    };
-    // Load data
-    $scope.load($scope.lang);
 
-    // Refresh data
-    $scope.refresh = function() {
-        dataService.joinedZwaveData(function(data) {
-            $scope.reset();
-            setData(data.joined);
-            dataService.cancelZwaveDataInterval();
-        });
-    };
-    //$scope.refresh();
-
-
-    // Cancel interval on page destroy
+    /**
+     * Cancel interval on page destroy
+     */
     $scope.$on('$destroy', function() {
-        dataService.cancelZwaveDataInterval();
+        $interval.cancel($scope.devices.interval);
     });
+
+    /**
+     * Reset devices
+     */
+    /*$scope.reset = function() {
+        $scope.devices.all = angular.copy([]);
+    };*/
+
+    /**
+     * Load zwave data
+     */
+    $scope.loadZwaveData = function() {
+        dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
+            setData(ZWaveAPIData);
+            if(_.isEmpty($scope.devices.all)){
+                $scope.alert = {message: $scope._t('error_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                return;
+            }
+            $scope.devices.show = true;
+            //$scope.refreshZwaveData(ZWaveAPIData);
+        }, function(error) {
+            alertify.alertError($scope._t('error_load_data'));
+        });
+    };
+    $scope.loadZwaveData();
+
+    /**
+     * Refresh zwave data
+     * @param {object} ZWaveAPIData
+     */
+    $scope.refreshZwaveData = function(ZWaveAPIData) {
+        var refresh = function() {
+            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+                setData(response.data.joined);
+            }, function(error) {});
+        };
+        $scope.devices.interval = $interval(refresh, $scope.cfg.interval);
+    };
+
     // Store data on remote server
     $scope.lifeline = function(status) {
-        $scope.reset();
-        $scope.showLifeline = status;
-        $scope.load($scope.lang);
+        //$scope.reset();
+        $scope.devices.showLifeline = status;
+        $scope.loadZwaveData();
     };
     /// --- Private functions --- ///
 
     /**
      * Set zwave data
+     * @param {obj} ZWaveAPIData
      */
     function setData(ZWaveAPIData) {
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
@@ -68,13 +90,7 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
                         var assocGroup = [];
                         if (("ZWaveDevice" in zddXml) && ("assocGroups" in zddXml.ZWaveDevice)) {
                             zdd = zddXml.ZWaveDevice.assocGroups;
-                            var assocDevices = getAssocDevices(node, ZWaveAPIData, zdd, controllerNodeId);
-                            $scope.devices.push({
-                                'id': nodeId,
-                                'rowId': 'row_' + nodeId + '_' + cnt,
-                                'name': $filter('deviceName')(nodeId, node),
-                                'assocGroup': assocDevices
-                            });
+                            setAssocDevices(nodeId,node, ZWaveAPIData, zdd, controllerNodeId,cnt);
                         }
 
                     });
@@ -83,32 +99,50 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
                     var assocGroup = [];
                     if (("ZWaveDevice" in zddXml) && ("assocGroups" in zddXml.ZWaveDevice)) {
                         zdd = zddXml.ZWaveDevice.assocGroups;
-                        var assocDevices = getAssocDevices(node, ZWaveAPIData, zdd, controllerNodeId);
-                        $scope.devices.push({
-                            'id': nodeId,
-                            'rowId': 'row_' + nodeId + '_' + cnt,
-                            'name': $filter('deviceName')(nodeId, node),
-                            'assocGroup': assocDevices
-                        });
+                        setAssocDevices(nodeId,node, ZWaveAPIData, zdd, controllerNodeId,cnt);
                     }
                 }
             } else {
                 zdd = null;
-                var assocDevices = getAssocDevices(node, ZWaveAPIData, zdd, controllerNodeId);
-                $scope.devices.push({
-                    'id': nodeId,
-                    'rowId': 'row_' + nodeId + '_' + cnt,
-                    'name': $filter('deviceName')(nodeId, node),
-                    'assocGroup': assocDevices
-                });
+                setAssocDevices(nodeId,node, ZWaveAPIData, zdd, controllerNodeId,cnt);
             }
 
 
             cnt++;
         });
     }
+
+    /**
+     * Set assoc devices
+     * @param nodeId
+     * @param node
+     * @param ZWaveAPIData
+     * @param zdd
+     * @param controllerNodeId
+     * @param cnt
+     */
+    function setAssocDevices(nodeId,node, ZWaveAPIData, zdd, controllerNodeId,cnt){
+        var assocDevices = getAssocDevices(node, ZWaveAPIData, zdd, controllerNodeId);
+        var obj = {
+            'id': nodeId,
+            'rowId': 'row_' + nodeId + '_' + cnt,
+            'name': $filter('deviceName')(nodeId, node),
+            'assocGroup': assocDevices
+        };
+        var findIndex = _.findIndex($scope.devices.all, {rowId: obj.rowId});
+        if(findIndex > -1){
+            angular.extend($scope.devices.all[findIndex],obj);
+        }else{
+            $scope.devices.all.push(obj);
+        }
+    }
+
     /**
      * Get group name
+     * @param assocGroups
+     * @param index
+     * @param instance
+     * @returns {string}
      */
     function getGroupLabel(assocGroups, index, instance) {
         // Set default assoc group name
@@ -147,6 +181,11 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
     ;
     /**
      * Get assoc devices
+     * @param node
+     * @param ZWaveAPIData
+     * @param zdd
+     * @param controllerNodeId
+     * @returns {Array}
      */
     function getAssocDevices(node, ZWaveAPIData, zdd, controllerNodeId) {
         var assocGroups = [];
@@ -220,7 +259,7 @@ appController.controller('AssociationsController', function($scope, $filter, $ht
             angular.forEach(assocDevices, function(d, key, nodeId) {
                 //console.log(d)
                 if (d['group'] == v) {
-                    if ($scope.showLifeline) {
+                    if ($scope.devices.showLifeline) {
                         dev.push(d.device.name);
                     } else {
                         if (controllerNodeId != d.device.id) {
