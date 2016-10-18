@@ -25,10 +25,11 @@
 
 
             <div>
-                <h3>{{_t('txt_notes')}}</h3>
                 <form name="form_rename" id="form_notes" ng-model="form_notes" class="form" ng-submit="saveNotes('form_notes', '#btn_save_note')" novalidate>
-                    <textarea id="note" name="note" class="form-control" rows="20">{{notesData}}</textarea><br />
-
+                    <h3>{{_t('network_name')}}</h3>
+                    <p><input type="text" name="networkname" class="form-control"></p>
+                    <h3>{{_t('txt_notes')}}</h3>
+                    <p><textarea id="note" name="note" class="form-control" rows="20">{{notesData}}</textarea><br /></p>
                     <button type="submit" class="btn btn-primary"  id="btn_save_note">{{_t('btn_save')}}</button>
                 </form>
             </div>
@@ -50,7 +51,7 @@
             <h3><i class="fa fa-info-circle"></i> {{_t('txt_network_info')}}</h3>
             <p><strong>{{countDevices}}</strong> {{_t('txt_devices_present')}}:</p>
             <ul class="list-group">
-               <li class="list-group-item"><strong>{{mainsDevices}}</strong> {{_t('txt_devices_mains')}}</li>
+                <li class="list-group-item"><strong>{{mainsDevices}}</strong> {{_t('txt_devices_mains')}}</li>
                 <li class="list-group-item"><strong>{{batteryWakeupDevices}}</strong> {{_t('txt_devices_battery')}}</li>
                 <li class="list-group-item"><strong>{{flirsDevices}}</strong> {{_t('txt_devices_flirs')}}</li>
             </ul>
@@ -122,15 +123,15 @@
                 </div>
 
                 <!-- included in network -->
-               <div ng-if="!boxData.controller.isPrimary">
-                   <p class="input-help">{{_t('device_included_info')}}</p>
-                   <button
-                           class="btn btn-danger"
-                           id="btn_learn_stop"
-                           ng-click="runZwaveCmd('controller._SetLearnMode(0)',_t('before_leaving_network'))"
+                <div ng-if="!boxData.controller.isPrimary">
+                    <p class="input-help">{{_t('device_included_info')}}</p>
+                    <button
+                            class="btn btn-danger"
+                            id="btn_learn_stop"
+                            ng-click="runZwaveCmd('controller._SetLearnMode(0)',_t('before_leaving_network'))"
 
-                   > {{_t('leave_network')}}</button>
-               </div>
+                    > {{_t('leave_network')}}</button>
+                </div>
 
 
                 <!-- stop inclusion -->
@@ -144,7 +145,71 @@
 
 
 
+
+
             </div>
+            <h3><i class="fa fa-download"></i> {{_t('nm_backup_title')}}</h3>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <!-- backup -->
+                    <a class="btn btn-primary" href="{{cfg.server_url}}/ZWaveAPI/Backup">{{_t('nm_backup_download')}}</a>
+                    <button
+                            class="btn btn-primary"
+                            data-ng-click="showModal('#modal_restore_backup')"
+                    >{{_t('nm_restore_backup_upload')}}</button>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+
+    <!-- Modal restore backup -->
+    <div class="modal fade" id="modal_restore_backup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{_t('nm_restore_backup_upload')}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="restore-backup-control" ng-show_="restoreBackupStatus == 0">
+                        <div class="alert alert-warning">
+                            <input type="checkbox" name="restore_confirm" value="1" id="restore_confirm" ng-click="goRestore = !goRestore" /> <span ng-bind-html="_t('are_you_sure_restore') | toTrusted"></span>
+                        </div>
+                        <div ng-show="goRestore">
+                            <input
+                                    type="checkbox"
+                                    name="restore_chip_info"
+                                    id="restore_chip_info"
+                                    value="1"
+                                    ng-true-value="1"
+                                    ng-false-value="0"
+                                    ng-model="modelRestoreChipInfo" /> {{_t('restore_backup_chip')}}
+
+                        </div>
+                        <p class="text-center">
+                            <!--<button
+                       ng-show="goRestore"
+                       ng-file-select="restoreBackup($files,modelRestoreChipInfo,'.btn-spinner-hidden','#btn_upload')"
+                       data-multiple="true"
+                       onclick="this.value = null"
+                       id="btn_upload"
+                       class="btn btn-primary"
+                       ><i class="fa fa-download"></i> {{_t('nm_restore_pick_up')}}<input type="file" ng-file-select="restoreBackup($files,modelRestoreChipInfo,'.btn-spinner-hidden','#btn_upload')" data-multiple="true" title="select file" onclick="this.value = null" class="upload-button" multiple="multiple" style="top: 0px; bottom: 0px; left: 0px; right: 0px; width: 100%; opacity: 0; position: absolute;"></button>-->
+
+                            <input id="btn_upload" ng-show="goRestore" type="file" name="file" onchange="angular.element(this).scope().restoreFromFile(this.files,'.btn-spinner-hidden','#btn_upload')" />
+                        </p>
+
+                    </div>
+                    <div class="alert alert-info" ng-show="restoreBackupStatus == 1"> {{_t('restore_wait')}}</div>
+                    <div class="alert alert-success" ng-show="restoreBackupStatus == 2">{{_t('restore_done_reload_ui')}}</div>
+                    <div class="alert alert-danger" ng-show="restoreBackupStatus == 3">{{_t('restore_backup_failed')}}</div>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-default" ng-click="closeBackup('#modal_restore_backup')" data-dismiss="modal">{{_t('btn_cancel')}}</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.Modal -->
+
 </div>

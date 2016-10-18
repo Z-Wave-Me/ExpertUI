@@ -142,6 +142,26 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
         }
     };
 
+    /**
+     * Show modal window
+     *
+     * @returns {void}
+     */
+    $scope.showModal = function(target, id) {
+
+        /*var obj = $filter('filter')($scope.devices, function(d) {
+            return d.id == id;
+        })[0];
+        if (obj) {
+            $scope.deviceInfo = {
+                "id": obj.id,
+                "name": obj.name
+            };
+        }*/
+        $(target).modal();
+        return;
+    };
+
     /// --- Private functions --- ///
 
     /**

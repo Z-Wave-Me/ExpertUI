@@ -12990,7 +12990,6 @@ body.ngrs-touching {
 -------------------------------------------------- */
 /* line 3, ../sass/common/_gird.scss */
 #main_content {
-  margin-top: 60px;
   margin-bottom: 60px;
 }
 
@@ -13013,6 +13012,12 @@ body.ngrs-touching {
 /* line 21, ../sass/common/_gird.scss */
 .mobile-padding .page-header {
   padding: 0;
+}
+
+/* line 26, ../sass/common/_gird.scss */
+.container-500 {
+  margin: 0 auto;
+  max-width: 500px !important;
 }
 
 /* line 6, ../sass/common/_body.scss */
@@ -15536,7 +15541,6 @@ http://codepen.io/MattIn4D/pen/LiKFC
   -------------------------------------------------- */
   /* line 58, ../sass/responsive/_mq_shared.scss */
   #main_content {
-    margin-top: 70px;
     margin-bottom: 60px;
   }
 
@@ -15750,7 +15754,6 @@ http://codepen.io/MattIn4D/pen/LiKFC
   -------------------------------------------------- */
   /* line 58, ../sass/responsive/_mq_shared.scss */
   #main_content {
-    margin-top: 70px;
     margin-bottom: 60px;
   }
 

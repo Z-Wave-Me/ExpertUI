@@ -1,5 +1,11 @@
 {
   "--- newtrans": "---",
+ "network_name": "Network name",
+ "error_load_user": "User not found. Please check your  login or password",
+ "nav_login": "Login",
+ "lb_login": "Login",
+ "lb_enter": "Login",
+ "lb_password": "Password",
   "---": "---",
   "device_not_included_info": "Start the inclusion or learning mode on the customer's primary controller and click the button below.",
   "device_included_info": "Start the exclusion mode on the customer's primary controller and click the button below.",

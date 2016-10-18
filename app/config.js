@@ -5,7 +5,7 @@
  */
 var config_data = {
     'cfg': {
-        'app_name': 'Expert UI',
+        'app_name': 'Z-Wave Alliance',
         'app_version': '1.1.0',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -79,6 +79,11 @@ var config_data = {
         'zwavecfg': {
             // Debug mode
             'debug': false
+        },
+        // Auth
+        'auth': {
+            'login': 'admin',
+            'password': 'installer'
         },
         // Route - will be extended
         'route': {

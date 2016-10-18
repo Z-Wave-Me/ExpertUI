@@ -35,4 +35,30 @@ appController.controller('ErrorController', function($scope, $routeParams, devic
 
 });
 
+/**
+ * Auth controller
+ */
+appController.controller('AuthController', function($scope, $routeParams, cfg,deviceService) {
+    $scope.input = {
+        login: '',
+        password: ''
+    };
+    /**
+     * Login proccess
+     */
+    $scope.login = function (input) {
+        //$scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin', message: $scope._t('loading')};
+        if (input.login !== cfg.auth.login && input.password !== cfg.auth.password) {
+           alertify.alertError($scope._t('error_load_user'));
+            $scope.input = {
+                login: '',
+                password: ''
+            };
+            return;
+        }
+        window.location.href = '#/home';
+    };
+
+});
+
 

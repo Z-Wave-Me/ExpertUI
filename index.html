@@ -81,7 +81,7 @@
 <body ng-app="angApp" ng-controller="BaseController" id="page_{{getBodyId()}}"
       class="is-mobile-{{isMobile}} custom-ip-{{cfg.custom_ip}} app-type-{{cfg.app_type}}">
 <!-- Header -->
-<div id="header">
+<div id="header" ng-if="getBodyId()">
     <!-- Main navigation -->
     <div id="main_navigation_wrap">
         <div id="main_navigation" class="container">
@@ -219,7 +219,7 @@
 </div><!-- /#header -->
 
 <!-- Ang Container -->
-<div class="container-installer" ng-if="cfg.app_type === 'installer'">
+<div class="container-installer" ng-if="cfg.app_type === 'installer' && getBodyId()">
     <div class="alert alert-danger" ng-if="boxData.controller.isPrimary && !boxData.controller.hasDevices"><i
             class="fa fa-info-circle"></i> {{_t('ready_to_network')}}
     </div>
@@ -245,7 +245,7 @@
 </div>
 <div class="clearfix"></div>
 
-<div id="footer">
+<div id="footer" ng-if="getBodyId()">
     <div id="footer_in">
         <div class="container">
             <span class="copyright" ng-bind-html="getCustomCfgArr('footer_text') | toTrusted"></span>
