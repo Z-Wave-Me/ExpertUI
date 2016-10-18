@@ -63,6 +63,7 @@ appController.controller('ControllerController', function($scope, $window, $filt
             $scope.master['controller.data.softwareRevisionId'] = ZWaveAPIData.controller.data.softwareRevisionId.value;
             $scope.master['controller.data.softwareRevisionDate'] = ZWaveAPIData.controller.data.softwareRevisionDate.value;
             $scope.master['controller.data.softwareRevisionDate'] = ZWaveAPIData.controller.data.softwareRevisionDate.value;
+            $scope.master['controller.data.frequency'] = ZWaveAPIData.controller.data.frequency.value;
             // Texts
             $scope.master['txtHomeId'] = '';
             $scope.master['txtSucSis'] = '';
