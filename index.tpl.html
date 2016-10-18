@@ -151,16 +151,16 @@
     </div><!-- /#header -->
 
     <!-- Ang Container -->
-    <div class="container-installer" ng-if="cfg.app_type === 'installer' && ng-if="getBodyId()">
-    <div class="alert alert-danger" ng-if="boxData.controller.isPrimary && !boxData.controller.hasDevices"><i
-            class="fa fa-info-circle"></i> {{_t('ready_to_network')}}
-    </div>
-    <div class="alert alert-success" ng-if="boxData.controller.isPrimary && boxData.controller.hasDevices"><i
-            class="fa fa-check"></i> {{_t('iam_in_my_network')}}
-    </div>
-    <div class="alert alert-warning" ng-if="!boxData.controller.isPrimary"><i class="fa fa-info-circle"></i>
-        {{_t('iam_in_network_homeid')}}: {{boxData.controller.homeId}}
-    </div>
+    <div class="container-installer" ng-if="cfg.app_type === 'installer' && getBodyId()">
+        <div class="alert alert-danger" ng-if="boxData.controller.isPrimary && !boxData.controller.hasDevices"><i
+                class="fa fa-info-circle"></i> {{_t('ready_to_network')}}
+        </div>
+        <div class="alert alert-success" ng-if="boxData.controller.isPrimary && boxData.controller.hasDevices"><i
+                class="fa fa-check"></i> {{_t('iam_in_my_network')}}
+        </div>
+        <div class="alert alert-warning" ng-if="!boxData.controller.isPrimary"><i class="fa fa-info-circle"></i>
+            {{_t('iam_in_network_homeid')}}: {{boxData.controller.homeId}}
+        </div>
     </div>
     <!--<div id="respone_container" class="container">
         <div id="respone_container_inner"></div>
@@ -186,4 +186,6 @@
 
         </div>
     </div>
+
+    </body>
 </html>

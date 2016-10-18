@@ -13,7 +13,7 @@
     <body ng-app="angApp" ng-controller="BaseController" id="page_{{getBodyId()}}"
           class="is-mobile-{{isMobile}} custom-ip-{{cfg.custom_ip}} app-type-{{cfg.app_type}}">
     <!-- Header -->
-    <div id="header">
+    <div id="header" ng-if="getBodyId()">
         <!-- Main navigation -->
         <div id="main_navigation_wrap">
             <div id="main_navigation" class="container">
@@ -58,11 +58,21 @@
                                     <li><a href="#device/status" ng-class="isActive('status',2)">{{ _t('nav_status') }}</a></li>
                                     <li><a href="#device/type" ng-class="isActive('type',2)">{{ _t('nav_type_info') }}</a></li>
                                     <li><a href="#device/battery" ng-class="isActive('battery',2)">{{ _t('nav_battery') }}</a></li>
-                                    <li><a href="#config/configuration" ng-class="isActive('configuration',2)">{{ _t('nav_configuration') }}</a></li>
+                                    <li><a href="#config/configuration"
+                                           ng-if="cfg.app_type === 'installer'"
+                                           ng-class="isActive('configuration',2)">{{ _t('nav_configuration') }}</a></li>
                                     <li><a href="#device/associations" ng-class="isActive('associations',2)">{{ _t('nav_active_associations') }}</a></li>
                                     <!--  <li><a href="#device/security"{{ _t('nav_security_status') }}</a></li>-->
                                 </ul>
                             </div>
+                        </li>
+
+                        <!-- Configuration -->
+                        <li class="navibar-divider" ng-if="cfg.app_type !== 'installer'"> </li>
+                        <li class="navibar-item" ng-if="cfg.app_type !== 'installer'">
+                            <a class="navibar-item-root" ng-href="#config/configuration" ng-class="isActive('configuration',2)">
+                                <i class="fa fa-wrench"></i> <span class="main-nav-name">{{ _t('nav_configuration')}}</span>
+                            </a>
                         </li>
 
                         <!-- Network -->
@@ -130,8 +140,8 @@
                         </li>
 
                         <!-- Logout -->
-                        <li class="navibar-divider"> </li>
-                        <li class="navibar-item">
+                        <li class="navibar-divider" ng-if="cfg.app_type !== 'installer'"> </li>
+                        <li class="navibar-item" ng-if="cfg.app_type !== 'installer'">
                             <a class="navibar-item-root" ng-href="{{cfg.smarthome_logout}}"><i class="fa fa-sign-out fa-lg"></i></a>
                         </li>
                     </ul>
@@ -141,7 +151,7 @@
     </div><!-- /#header -->
 
     <!-- Ang Container -->
-    <div class="container-installer" ng-if="cfg.app_type === 'installer'">
+    <div class="container-installer" ng-if="cfg.app_type === 'installer' && getBodyId()">
         <div class="alert alert-danger" ng-if="boxData.controller.isPrimary && !boxData.controller.hasDevices"><i
                 class="fa fa-info-circle"></i> {{_t('ready_to_network')}}
         </div>
@@ -167,7 +177,7 @@
     </div>
     <div class="clearfix"></div>
 
-    <div id="footer">
+    <div id="footer" ng-if="getBodyId()">
         <div id="footer_in">
             <div class="container">
                 <span class="copyright" ng-bind-html="getCustomCfgArr('footer_text') | toTrusted"></span>

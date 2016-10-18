@@ -5,7 +5,7 @@
  */
 var config_data = {
     'cfg': {
-        'app_name': 'Expert UI',
+        'app_name': 'Z-Wave Alliance',
         'app_version': '1.1.0',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -78,7 +78,12 @@ var config_data = {
         // Zwave config
         'zwavecfg': {
             // Debug mode
-            'debug': false,
+            'debug': false
+        },
+        // Auth
+        'auth': {
+            'login': 'admin',
+            'password': 'installer'
         },
         // Route - will be extended
         'route': {
@@ -90,7 +95,7 @@ var config_data = {
         },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer
-        'app_type': 'default',
+        'app_type': 'installer',
          'custom_cfg': {
              'default':{
                  'logo': 'app/images/zplus.jpg',

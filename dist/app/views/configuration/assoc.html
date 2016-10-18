@@ -16,7 +16,7 @@
             class="btn btn-primary spin-true"
             id="btn_update_from_device"
             ng-click="updateFromDevice('#btn_update_from_device')" 
-            >{{_t('update_from_device')}} <i class="fa fa-spinner fa-spin"></i></button>
+            >{{_t('update_from_device')}} </button>
         <br/><br/>
         <div class="alert alert-warning" ng-if="nodeCfg.hasBattery && nodeCfg.notAwake.length > 0"><i class="fa fa-info-circle text-warning"></i> {{_t('conf_apply_battery')}}</div>
           <!--<p class="text-alert-list" ng-if="nodeCfg.hasBattery"><i class="fa fa-exclamation-triangle text-danger"></i>  {{_t('device_changed_configuration_battery')}}</p>-->
