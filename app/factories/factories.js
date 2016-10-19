@@ -374,7 +374,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
      */
     function putCfgXml(data) {
         var request = $http({
-            method: "PUT",
+            method: "POST",
             //dataType: "text", 
             url: cfg.server_url + '/config/Configuration.xml',
             data: data,
@@ -514,7 +514,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
      */
     function putNotes(notes) {
         var request = $http({
-            method: "PUT",
+            method: "POST",
             dataType: "text",
             url: cfg.server_url + cfg.notes_url,
             data: notes,
