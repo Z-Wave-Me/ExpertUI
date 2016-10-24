@@ -168,6 +168,7 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
             obj['rowId'] = 'row_' + nodeId;
             obj['name'] = $filter('deviceName')(nodeId, node);
             obj['type'] = type;
+            obj['icon'] = $filter('getDeviceTypeIcon')(type);
             obj['totalPackets'] = totalPackets;
             obj['okPackets'] = okPackets;
             obj['lastPackets'] = lastPackets;

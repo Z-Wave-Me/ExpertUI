@@ -1178,6 +1178,7 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
                 name: $filter('deviceName')(nodeId, node),
                 updateTime: node.data.updateTime,
                 type: type,
+                icon: $filter('getDeviceTypeIcon')(type),
                 centralController: centralController,
                 powerLevel: powerLevel,
                 indicator: indicator,
