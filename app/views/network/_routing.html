@@ -9,7 +9,7 @@
                 <th>{{ _t('device_name')}}</th>
                 <th>{{ _t('nav_type_info')}}</th>
                 <th>{{ _t('rt_header_update_time')}}</th>
-                <th ng-repeat="v in routings.all" style="text-align:center;">{{v.id}}</th>
+                <th ng-repeat="v in routings.nodes" style="text-align:center;">{{v.id}}</th>
 
                 <th class="mobile-show td-action">
                     <button class="btn btn-info" id="btn_update_all_1"
@@ -73,7 +73,7 @@
 </div>
 
 <!-- Old Routing view -->
-<!--<div ng-controller="RoutingTableController">
+<div ng-controller="RoutingTableController">
     <div class="page-header"><h1>{{ _t('tab_routing_table_title')}}</h1></div>
     <div class="table-responsive">
         <table id="RoutingTable" class="table table-striped">
@@ -120,4 +120,4 @@
         <i class="fa fa-square fa-lg" style="color: red;"></i> {{_t('not_linked')}}<br/>
         <i class="fa fa-square fa-lg" style="color: gray;"></i> {{_t('unavailable')}}<br/>
     </div>
-</div>-->
+</div>

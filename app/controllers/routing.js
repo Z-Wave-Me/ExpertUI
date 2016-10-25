@@ -30,6 +30,7 @@ appController.controller('RoutingController', function($scope, $filter, $timeout
      */
     $scope.loadZwaveData = function() {
         dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
+            setNodes(ZWaveAPIData);
             setData(ZWaveAPIData);
             if(_.isEmpty($scope.routings.all)){
                 $scope.alert = {message: $scope._t('error_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
@@ -94,34 +95,46 @@ appController.controller('RoutingController', function($scope, $filter, $timeout
     };
 
     /// --- Private functions --- ///
+    /**
+     * Set nodes data
+     * @param {object} ZWaveAPIData
+     */
+    function setNodes(ZWaveAPIData) {
+        angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+            if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1) {
+                return;
+            }
+            var nodeName = $filter('deviceName')(nodeId, node);
+            var routesCount = $filter('getRoutesCount')(ZWaveAPIData, nodeId);
+
+            $scope.routings.nodes[nodeId] = {
+                "id": nodeId,
+                "nodeName": nodeName,
+                "routesCount": routesCount,
+                "node": node
+            };
+        });
+    }
 
     /**
      * Set zwave data
      */
     function setData(ZWaveAPIData) {
         //var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
-        /*var node = $scope.ZWaveAPIData.devices[nodeId];
-        if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
-            return;
-        var routesCount = $filter('getRoutesCount')($scope.ZWaveAPIData, nodeId);
-        var line = [];
-        var nnodeName;*/
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
             if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1) {
                 return;
             }
-            $scope.nodes[nodeId] = {"label": $filter('deviceName')(nodeId, node), "node": node};
-            var nodeName = $filter('deviceName')(nodeId, node);
-            var routesCount = $filter('getRoutesCount')(ZWaveAPIData, nodeId);
-            //var abcd = cellState(nodeId, nodeId, routesCount, nodeName, nodeName);
-            //console.log(routesCount)
-            //console.log('Node id: ',nodeId,node.data.neighbours.value);
+
+
             var node = ZWaveAPIData.devices[nodeId];
+            var name = $filter('deviceName')(nodeId, node);
             var type;
             var isListening = node.data.isListening.value;
             var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
             var hasWakeup = 0x84 in node.instances[0].commandClasses;
+
 
             // Device type
             if (node.data.genericType.value === 1) {
@@ -137,12 +150,15 @@ appController.controller('RoutingController', function($scope, $filter, $timeout
             } else {
                 type = 'error';
             }
+             var cellState = setCellState(nodeId, node,name)
 
             // Set object
             var obj = {};
             obj['id'] = nodeId;
             obj['rowId'] = 'row_' + nodeId;
-            obj['name'] = $filter('deviceName')(nodeId, node);
+            obj['name'] = name;
+            obj['node'] = node;
+            obj['cellState'] = cellState;
             obj['type'] = type;
             obj['icon'] = $filter('getDeviceTypeIcon')(type);
             obj['invalidateTime'] = node.data.neighbours.invalidateTime;
@@ -157,54 +173,60 @@ appController.controller('RoutingController', function($scope, $filter, $timeout
             }else{
                 $scope.routings.all.push(obj);
             }
-            setCellState(nodeId,routesCount);
+
         });
     }
 
-    function setCellState(nodeId,neighbours) {
-        if($scope.routings.neighbours[nodeId]){
-            return;
-        }
-        $scope.routings.neighbours[nodeId] = neighbours;
-        console.log($scope.routings);
-    }
+    /**
+     * Set table cell state
+     * @param {object} nodeId
+     * @param {number} node
+     * @param {string} nodeName
+     * @returns {Array}
+     */
+    function setCellState(nodeId, node,nodeName) {
+        var routesCount = $scope.routings.nodes[nodeId].routesCount;
+        var state = [];
+        angular.forEach($scope.routings.nodes, function(v, k ){
+            var tooltip = nodeId + ': ' + nodeName + ' - ' + k + ': ' + v.nodeName  + ' ';
+            var hasAssoc = false;
+            var cssClass = 'rtDiv line' + nodeId + ' ';
+            //Check for associations
+            if ($filter('associationExists')(node, k)) {
+                hasAssoc = true;
+                tooltip += ' (' + $scope._t('rt_associated') + ')';
+            }
+            if (nodeId == k
+                || node.data.isVirtual.value
+                || v.node.data.isVirtual.value
+                || node.data.basicType.value == 1
+                || v.node.data.basicType.value == 1) {
+                cssClass = 'rtDiv rtUnavailable';
+            }else if(node.data.neighbours.value.indexOf(parseInt(k, 10)) != -1){
+                cssClass += 'rtDirect';
+            }else if (routesCount[k] && routesCount[k].length > 1){
+                cssClass += 'rtRouted';
+            }else if (routesCount[k] && routesCount[k].length == 1){
+                cssClass += 'rtBadlyRouted';
+            }else{
+                cssClass += 'rtNotLinked';
+            }
 
-    function cellState(nodeId, nnodeId, routesCount, nodeName, nnodeName) {
-        var node = $scope.nodes[nodeId].node;
-        var nnode = $scope.nodes[nnodeId].node;
-        var tooltip = nodeId + ': ' + nodeName + ' - ' + nnodeId + ': ' + nnodeName + ' ';
-        var info;
-        if ($filter('associationExists')(node, nnodeId)) {
-            info = '*';
-            tooltip += ' (' + $scope._t('rt_associated') + ')';
-        } else {
-            info = '';
-        }
-        var clazz = 'rtDiv line' + nodeId + ' ';
-        if (nodeId == nnodeId
-            || node.data.isVirtual.value
-            || nnode.data.isVirtual.value
-            || node.data.basicType.value == 1
-            || nnode.data.basicType.value == 1) {
-            clazz = 'rtDiv rtUnavailable';
-        } else if ($.inArray(parseInt(nnodeId, 10), node.data.neighbours.value) != -1)
-            clazz += 'rtDirect';
-        else if (routesCount[nnodeId]
-            && routesCount[nnodeId][1] > 1)
-            clazz += 'rtRouted';
-        else if (routesCount[nnodeId]
-            && routesCount[nnodeId][1] == 1)
-            clazz += 'rtBadlyRouted';
-        else
-            clazz += 'rtNotLinked';
-        return {
-            info: info,
-            clazz: clazz,
-            tooltip: tooltip
-        };
-    };
+            var obj = {
+                nodeId: nodeId,
+                routingId: k,
+                tooltip: tooltip,
+                hasAssoc: hasAssoc,
+                cssClass: cssClass
+
+            };
+            state.push(obj)
+        });
+        return state;
+    }
 });
 /**
+ * todo: deprecated
  * RoutingController
  * @author Martin Vach
  */
