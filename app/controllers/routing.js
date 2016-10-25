@@ -12,8 +12,11 @@ appController.controller('RoutingController', function($scope, $filter, $timeout
     $scope.routings = {
         all: [],
         interval: null,
-        show: false
+        show: false,
+        nodes: {},
+        neighbours: {}
     };
+    $scope.nodes = {};
 
     /**
      * Cancel interval on page destroy
@@ -96,12 +99,24 @@ appController.controller('RoutingController', function($scope, $filter, $timeout
      * Set zwave data
      */
     function setData(ZWaveAPIData) {
-        var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
+        //var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
+        /*var node = $scope.ZWaveAPIData.devices[nodeId];
+        if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
+            return;
+        var routesCount = $filter('getRoutesCount')($scope.ZWaveAPIData, nodeId);
+        var line = [];
+        var nnodeName;*/
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255  || node.data.isVirtual.value) {
+            if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1) {
                 return;
-            };
+            }
+            $scope.nodes[nodeId] = {"label": $filter('deviceName')(nodeId, node), "node": node};
+            var nodeName = $filter('deviceName')(nodeId, node);
+            var routesCount = $filter('getRoutesCount')(ZWaveAPIData, nodeId);
+            //var abcd = cellState(nodeId, nodeId, routesCount, nodeName, nodeName);
+            //console.log(routesCount)
+            //console.log('Node id: ',nodeId,node.data.neighbours.value);
             var node = ZWaveAPIData.devices[nodeId];
             var type;
             var isListening = node.data.isListening.value;
@@ -142,8 +157,52 @@ appController.controller('RoutingController', function($scope, $filter, $timeout
             }else{
                 $scope.routings.all.push(obj);
             }
+            setCellState(nodeId,routesCount);
         });
     }
+
+    function setCellState(nodeId,neighbours) {
+        if($scope.routings.neighbours[nodeId]){
+            return;
+        }
+        $scope.routings.neighbours[nodeId] = neighbours;
+        console.log($scope.routings);
+    }
+
+    function cellState(nodeId, nnodeId, routesCount, nodeName, nnodeName) {
+        var node = $scope.nodes[nodeId].node;
+        var nnode = $scope.nodes[nnodeId].node;
+        var tooltip = nodeId + ': ' + nodeName + ' - ' + nnodeId + ': ' + nnodeName + ' ';
+        var info;
+        if ($filter('associationExists')(node, nnodeId)) {
+            info = '*';
+            tooltip += ' (' + $scope._t('rt_associated') + ')';
+        } else {
+            info = '';
+        }
+        var clazz = 'rtDiv line' + nodeId + ' ';
+        if (nodeId == nnodeId
+            || node.data.isVirtual.value
+            || nnode.data.isVirtual.value
+            || node.data.basicType.value == 1
+            || nnode.data.basicType.value == 1) {
+            clazz = 'rtDiv rtUnavailable';
+        } else if ($.inArray(parseInt(nnodeId, 10), node.data.neighbours.value) != -1)
+            clazz += 'rtDirect';
+        else if (routesCount[nnodeId]
+            && routesCount[nnodeId][1] > 1)
+            clazz += 'rtRouted';
+        else if (routesCount[nnodeId]
+            && routesCount[nnodeId][1] == 1)
+            clazz += 'rtBadlyRouted';
+        else
+            clazz += 'rtNotLinked';
+        return {
+            info: info,
+            clazz: clazz,
+            tooltip: tooltip
+        };
+    };
 });
 /**
  * RoutingController
