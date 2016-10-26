@@ -1,7 +1,7 @@
 <!-- Home view -->
 
 <script>
-    function refreshPage(){
+    function refreshPage() {
         window.location.reload();
     }
 </script>
@@ -10,27 +10,55 @@
     <div class="form-inline form-home-ip" ng-show="cfg.custom_ip">
 
         <div class="form-home-ip-in product-data-list">
-            <input name="custom_ip" id="custom_ip" type="text" class="form-control" ng-model="customIP.url" value="{{customIP.url}}" placeholder="Server Name or IP, e.g. 192.168.1.1" />
-            <button type="button" class="btn btn-primary" id="btn_add_ip" ng-click="setIP(customIP.url)">Connect</button>
+            <input name="custom_ip" id="custom_ip" type="text" class="form-control" ng-model="customIP.url"
+                   value="{{customIP.url}}" placeholder="Server Name or IP, e.g. 192.168.1.1"/>
+            <button type="button" class="btn btn-primary" id="btn_add_ip" ng-click="setIP(customIP.url)">Connect
+            </button>
             <div class="text-danger custom-ip-message custom-ip-error">Error in connecting {{cfg.server_url}}</div>
             <div class="text-success custom-ip-message custom-ip-success">Connected to {{cfg.server_url}}</div>
         </div>
     </div>
     <div class="row home-page_" ng-show="ZWaveAPIData">
         <div class="col-sm-6 home-page-image">
-            <img class="product-logo" ng-src="{{getCustomCfgArr('logo')}}" alt="Logo" />
+            <!-- Promo text -->
+            <img class="product-logo" ng-src="{{getCustomCfgArr('logo')}}" alt="Logo"/>
             <p></p>
 
             <div class="product-description" ng-bind-html="_t('txt_homepage_promo_' + cfg.app_type) | toTrusted"></div>
 
+            <!-- Settings -->
+            <div class="panel panel-default" ng-controller="SettingsController">
+                <div class="panel-heading">
+                    <i class="fa fa-cog text-info"></i> {{_t('settings')}}
+                </div>
+                <div class="panel-body">
+                    <p>
+                        <strong>{{_t('network_name')}}:</strong> <span>{{settings.input.network_name}}</span>
+                    </p>
+                    <p>
+                        <strong>{{_t('date_format')}}:</strong> <span>{{settings.input.date_format}}</span>
+                    </p>
+                </div>
+                <div class="panel-footer text-right">
+                    <button class="btn btn-default" ng-click="handleModal('settingsModal', $event)">
+                        <i class="fa fa-pencil text-info"></i> {{_t('edit')}}
+                    </button>
+                </div>
+            </div>
 
-            <div>
-                <h3>{{_t('txt_notes')}}</h3>
-                <form name="form_rename" id="form_notes" ng-model="form_notes" class="form" ng-submit="saveNotes('form_notes', '#btn_save_note')" novalidate>
-                    <textarea id="note" name="note" class="form-control" rows="20">{{notesData}}</textarea><br />
-
-                    <button type="submit" class="btn btn-primary"  id="btn_save_note">{{_t('btn_save')}}</button>
-                </form>
+            <!-- Notes -->
+            <div class="panel panel-default" ng-controller="SettingsController">
+                <div class="panel-heading">
+                    <i class="fa fa-list text-info"></i> {{_t('txt_notes')}}
+                </div>
+                <div class="panel-body newlines" ng-if="settings.input.notes">
+                    {{settings.input.notes|stripTags}}
+                </div>
+                <div class="panel-footer text-right">
+                    <button class="btn btn-default" ng-click="handleModal('notesModal', $event)">
+                        <i class="fa fa-pencil text-info"></i> {{_t('edit')}}
+                    </button>
+                </div>
             </div>
         </div>
         <div class="col-sm-6 product-data-list pull-right_">
@@ -38,19 +66,22 @@
             <div ng-controller="HomeDongleController">
                 <div class="form-inline home-dongle" ng-if="homeDongle.data.length > 0">
                     <h3><i class="fa fa-code-fork"></i> {{_t('select_dongle')}}</h3>
-                    <select class="form-control" ng-model="homeDongle.model.dongle" ng-change="setHomeDongle()" >
+                    <select class="form-control" ng-model="homeDongle.model.dongle" ng-change="setHomeDongle()">
                         <option value="" class="hidden-selectopt">--- Select one ---</option>
-                        <option ng-repeat="v in homeDongle.data" ng-selected="homeDongle.model.current == v" value="{{v}}">{{v}}</option>
+                        <option ng-repeat="v in homeDongle.data" ng-selected="homeDongle.model.current == v"
+                                value="{{v}}">{{v}}
+                        </option>
                     </select>
 
                 </div>
-                <h3 ng-if="homeDongle.data.length < 1"><i class="fa fa-code-fork"></i> {{_t('zwave_network')}}: <em>{{cfg.dongle}}</em></h3>
+                <h3 ng-if="homeDongle.data.length < 1"><i class="fa fa-code-fork"></i> {{_t('zwave_network')}}: <em>{{cfg.dongle}}</em>
+                </h3>
             </div>
             <!-- Network Information -->
             <h3><i class="fa fa-info-circle"></i> {{_t('txt_network_info')}}</h3>
             <p><strong>{{countDevices}}</strong> {{_t('txt_devices_present')}}:</p>
             <ul class="list-group">
-               <li class="list-group-item"><strong>{{mainsDevices}}</strong> {{_t('txt_devices_mains')}}</li>
+                <li class="list-group-item"><strong>{{mainsDevices}}</strong> {{_t('txt_devices_mains')}}</li>
                 <li class="list-group-item"><strong>{{batteryWakeupDevices}}</strong> {{_t('txt_devices_battery')}}</li>
                 <li class="list-group-item"><strong>{{flirsDevices}}</strong> {{_t('txt_devices_flirs')}}</li>
             </ul>
@@ -62,17 +93,20 @@
                 <ul class="list-group">
                     <li class="list-group-item">
                         <p ng-repeat="v in lowBatteryDevices">
-                            <a class="text-danger" href="#device/battery">(#{{v.id}}) {{v.name}} {{_t('txt_low_battery')}} ({{v.battery_charge}}%)</a>
+                            <a class="text-danger" href="#device/battery">(#{{v.id}}) {{v.name}}
+                                {{_t('txt_low_battery')}} ({{v.battery_charge}}%)</a>
                         </p>
                     </li>
                     <li class="list-group-item" ng-if="cfg.app_type === 'default'">
                         <p ng-repeat="v in notInterviewDevices">
-                            <a class="text-danger" href="#help/{{v.id}}"> (#{{v.id}}) {{v.name}} {{_t('txt_interview_not')}}</a>
+                            <a class="text-danger" href="#help/{{v.id}}"> (#{{v.id}}) {{v.name}}
+                                {{_t('txt_interview_not')}}</a>
                         </p>
                     </li>
                     <li class="list-group-item" ng-show="assocRemovedDevices.length > 1">
                         <p ng-repeat="v in assocRemovedDevices">
-                            <a class="text-danger" href="#configuration/interview/{{v.id}}">(#{{v.id}}) {{v.name}} {{_t('txt_assoc_removed')}}:</a><br />
+                            <a class="text-danger" href="#configuration/interview/{{v.id}}">(#{{v.id}}) {{v.name}}
+                                {{_t('txt_assoc_removed')}}:</a><br/>
                             <em ng-repeat="a in v.assoc">{{a.name}}, </em>
                         </p>
                     </li>
@@ -83,7 +117,8 @@
                     </li>
                     <li class="list-group-item">
                         <p ng-repeat="v in notConfigDevices| unique:id">
-                            <a class="text-danger" href="#configuration/interview/{{v.id}}">(#{{v.id}}) {{v.name}} {{_t('device_changed_configuration')}}</a>
+                            <a class="text-danger" href="#configuration/interview/{{v.id}}">(#{{v.id}}) {{v.name}}
+                                {{_t('device_changed_configuration')}}</a>
                         </p>
                     </li>
                 </ul>
@@ -91,7 +126,9 @@
                 <h3><i class="fa fa-info-circle"></i> {{_t('device_reset_locally')}}</h3>
                 <ul class="list-group">
                     <li class="list-group-item" ng-repeat="v in localyResetDevices"> (#{{v.id}}) {{v.name}}</li>
-                    <li class="list-group-item" ng-show="localyResetDevices.length < 1">{{_t('no_device_reset_locally')}}</li>
+                    <li class="list-group-item" ng-show="localyResetDevices.length < 1">
+                        {{_t('no_device_reset_locally')}}
+                    </li>
                 </ul>
             </div>
 
@@ -106,11 +143,12 @@
                             ng-click="runZwaveCmd('controller.SetLearnMode(1)')"
                             onClick="refreshPage()"
 
-                    >{{_t('include_into_network')}}</button>
+                    >{{_t('include_into_network')}}
+                    </button>
                 </div>
 
                 <!-- included in network -->
-                <div  ng-if="boxData.controller.isPrimary && (boxData.controller.hasDevices)">
+                <div ng-if="boxData.controller.isPrimary && (boxData.controller.hasDevices)">
                     <p class="input-help">{{_t('device_included_info')}}</p>
                     <button
                             class="btn btn-primary"
@@ -118,19 +156,21 @@
                             ng-click="runZwaveCmd('controller.SetLearnMode(1)')"
                             style="background-color: grey;"
                             disabled
-                    >{{_t('leave_network')}}</button>
+                    >{{_t('leave_network')}}
+                    </button>
                 </div>
 
                 <!-- included in network -->
-               <div ng-if="!boxData.controller.isPrimary">
-                   <p class="input-help">{{_t('device_included_info')}}</p>
-                   <button
-                           class="btn btn-danger"
-                           id="btn_learn_stop"
-                           ng-click="runZwaveCmd('controller._SetLearnMode(0)',_t('before_leaving_network'))"
+                <div ng-if="!boxData.controller.isPrimary">
+                    <p class="input-help">{{_t('device_included_info')}}</p>
+                    <button
+                            class="btn btn-danger"
+                            id="btn_learn_stop"
+                            ng-click="runZwaveCmd('controller._SetLearnMode(0)',_t('before_leaving_network'))"
 
-                   > {{_t('leave_network')}}</button>
-               </div>
+                    > {{_t('leave_network')}}
+                    </button>
+                </div>
 
 
                 <!-- stop inclusion -->
@@ -140,11 +180,87 @@
                         ng-click="runZwaveCmd('controller.SetLearnMode(0)')"
                         ng-if="boxData.controller.controllerState == 9 && boxData.controller.isPrimary"
                         onClick="refreshPage()"
-                > {{_t('Stop inclusion')}}</button>
-
+                > {{_t('Stop inclusion')}}
+                </button>
 
 
             </div>
+        </div>
     </div>
-</div>
-</div>
+</div><!-- /ng-controller -->
+
+<!-- settingsModal -->
+<div id="settingsModal" class="appmodal" ng-if="modalArr.settingsModal" ng-controller="SettingsController">
+    <div class="appmodal-in">
+        <form name="form_settings" id="form_nsettings" class="form"
+              ng-model="notes.input"
+              ng-submit="handleModal('settingsModal', $event);storeSettings(settings.input)" novalidate>
+            <div class="appmodal-header">
+                <span class="appmodal-close" ng-click="handleModal('settingsModal', $event)"><i
+                        class="fa fa-times"></i></span>
+                <h3>{{_t('settings')}}</h3>
+            </div>
+            <div class="appmodal-body">
+                <fieldset>
+                    <!-- network name -->
+                    <div class="form-group">
+                        <label for="network_name">{{_t('network_name')}}: </label>
+                        <input name="network_name" id="network_name" type="text"
+                               class="form-control"
+                               placeholder="{{_t('network_name')}}"
+                               value="{{settings.input.network_name}}"
+                               ng-model="settings.input.network_name" />
+                    </div>
+                    <!-- date format -->
+                    <div class="form-group">
+                        <label>{{_t('date_format')}}: </label>
+                        <select name="date_format" name="date_format" class="form-control"
+                                ng-model="settings.input.date_format">
+                            <option ng-repeat="v in cfg.date_format_list" value="{{v}}"
+                                    ng-selected="v === cfg.zwavecfg.date_format">{{v}}</option>
+                        </select>
+                </fieldset>
+            </div>
+            <div class="appmodal-footer">
+                <!-- Close -->
+                <button type="button" class="btn btn-default" ng-click="handleModal('settingsModal', $event)">
+                    <i class="fa fa-times text-danger"></i> <span class="btn-name">{{_t('btn_cancel')}}</span>
+                </button>
+                <!-- Save -->
+                <button type="submit" class="btn btn-submit" title="{{_t('btn_save')}}">
+                    <i class="fa fa-check"></i> <span class="btn-name">{{_t('btn_save')}}</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div> <!-- /#modal notesModal -->
+
+
+<!-- notesModal -->
+<div id="notesModal" class="appmodal" ng-if="modalArr.notesModal" ng-controller="SettingsController">
+    <div class="appmodal-in">
+        <form name="form_notes" id="form_notes" class="form"
+              ng-model="notes.input"
+              ng-submit="handleModal('notesModal', $event);storeSettings(settings.input)" novalidate>
+            <div class="appmodal-header">
+                <span class="appmodal-close" ng-click="handleModal('notesModal', $event)"><i
+                        class="fa fa-times"></i></span>
+                <h3>{{_t('txt_notes')}}</h3>
+            </div>
+            <div class="appmodal-body">
+                <textarea id="notes" name="notes" class="form-control" rows="20"
+                          ng-model="settings.input.notes">{{settings.input.notes}}</textarea>
+            </div>
+            <div class="appmodal-footer">
+                <!-- Close -->
+                <button type="button" class="btn btn-default" ng-click="handleModal('notesModal', $event)">
+                    <i class="fa fa-times text-danger"></i> <span class="btn-name">{{_t('btn_cancel')}}</span>
+                </button>
+                <!-- Save -->
+                <button type="submit" class="btn btn-submit" title="{{_t('btn_save')}}">
+                    <i class="fa fa-check"></i> <span class="btn-name">{{_t('btn_save')}}</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div> <!-- /#modal notesModal -->

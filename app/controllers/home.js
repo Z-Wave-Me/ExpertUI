@@ -40,16 +40,6 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
 
 
     /**
-     * Notes
-     */
-    $scope.loadNotesData = function() {
-        dataService.getNotes(function(data) {
-            $scope.notesData = data;
-        });
-    };
-
-
-    /**
      * Load data
      *
      */
@@ -82,11 +72,9 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
     };
     if (!cfg.custom_ip) {
         $scope.loadData();
-        $scope.loadNotesData();
     } else {
         if (cfg.server_url != '') {
             $scope.loadData();
-            $scope.loadNotesData();
         }
     }
 
@@ -112,24 +100,6 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
     $scope.$on('$destroy', function() {
         dataService.cancelZwaveDataInterval();
     });
-    /**
-     * Save notes
-     */
-    $scope.saveNotes = function(form, btn) {
-        var input = $('#' + form + ' #note').val();
-        if (!input || input == '') {
-            return;
-        }
-        $(btn).attr('disabled', true);
-        dataService.putNotes(input);
-
-        $timeout(function() {
-            $(btn).removeAttr('disabled');
-        }, 2000);
-        return;
-
-
-    };
     
      // Run Zwave Command
     $scope.runZwaveCmd = function (cmd,confirm) {
