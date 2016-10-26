@@ -61,13 +61,36 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-6 product-data-list pull-right_">
+        <div class="col-sm-6 product-data-list_ pull-right_">
             <!-- Z-Wave Network -->
-            <div ng-controller="HomeDongleController">
+            <div class="panel panel-default" ng-controller="HomeDongleController">
+                <div class="panel-heading">
+                    <i class="fa fa-code-fork"></i> {{_t('zwave_network')}}
+                </div>
+                <div class="panel-body">
+                    <!-- Text only -->
+                    <div ng-if="homeDongle.data.length < 1">
+                        <strong>{{cfg.dongle}}</strong>
+                    </div>
+                    <!-- Drop down -->
+                    <div ng-if="homeDongle.data.length > 0">
+                        <select class="form-control" ng-model="homeDongle.model.dongle" ng-change="setHomeDongle()">
+                            <option value="" class="hidden-selectopt">--- Select one ---</option>
+                            <option ng-repeat="v in homeDongle.data" ng-selected="homeDongle.model.current == v"
+                                    value="{{v}}">{{v}}
+                            </option>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+
+
+           <!-- <div ng-controller="HomeDongleController">
                 <div class="form-inline home-dongle" ng-if="homeDongle.data.length > 0">
                     <h3><i class="fa fa-code-fork"></i> {{_t('select_dongle')}}</h3>
                     <select class="form-control" ng-model="homeDongle.model.dongle" ng-change="setHomeDongle()">
-                        <option value="" class="hidden-selectopt">--- Select one ---</option>
+                        <option value="" class="hidden-selectopt">-&#45;&#45; Select one -&#45;&#45;</option>
                         <option ng-repeat="v in homeDongle.data" ng-selected="homeDongle.model.current == v"
                                 value="{{v}}">{{v}}
                         </option>
@@ -76,7 +99,7 @@
                 </div>
                 <h3 ng-if="homeDongle.data.length < 1"><i class="fa fa-code-fork"></i> {{_t('zwave_network')}}: <em>{{cfg.dongle}}</em>
                 </h3>
-            </div>
+            </div>-->
             <!-- Network Information -->
             <h3><i class="fa fa-info-circle"></i> {{_t('txt_network_info')}}</h3>
             <p><strong>{{countDevices}}</strong> {{_t('txt_devices_present')}}:</p>
