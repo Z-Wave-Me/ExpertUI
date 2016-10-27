@@ -7,7 +7,11 @@
  * Report controller
  */
 // Home controller
-appController.controller('HomeController', function($scope, $filter, $timeout, $route, dataService, deviceService, cfg) {
+appController.controller('HomeController', function($scope, $filter, $timeout, $route, $interval,dataService, deviceService, cfg) {
+    $scope.home = {
+        show: false,
+        interval: null
+    };
     $scope.ZWaveAPIData;
     $scope.countDevices;
     $scope.failedDevices = [];
@@ -28,7 +32,14 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
          startLearnMode: false
      };
 
-    $scope.reset = function() {
+    /**
+     * Cancel interval on page destroy
+     */
+    $scope.$on('$destroy', function() {
+        $interval.cancel($scope.home.interval);
+    });
+
+    /*$scope.reset = function() {
         $scope.failedDevices = angular.copy([]);
         $scope.lowBatteryDevices = angular.copy([]);
         $scope.notInterviewDevices = angular.copy([]);
@@ -36,6 +47,49 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
         $scope.assocRemovedDevices = angular.copy([]);
         $scope.notConfigDevices = angular.copy([]);
 
+    };*/
+
+    /**
+     * Load zwave data
+     */
+    $scope.loadZwaveData = function() {
+        dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
+            $scope.home.show = true;
+            var isRealPrimary = ZWaveAPIData.controller.data.isRealPrimary.value;
+            var hasDevices = Object.keys(ZWaveAPIData.devices).length;
+            $scope.ZWaveAPIData = ZWaveAPIData;
+            notInterviewDevices(ZWaveAPIData);
+            countDevices(ZWaveAPIData);
+            assocRemovedDevices(ZWaveAPIData);
+            notConfigDevices(ZWaveAPIData);
+            batteryDevices(ZWaveAPIData);
+            $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
+            $scope.controller.controllerState = ZWaveAPIData.controller.data.controllerState.value;
+            $scope.controller.startLearnMode = !isRealPrimary || hasDevices < 2 ? true : false;
+            $scope.refreshZwaveData(ZWaveAPIData);
+        }, function(error) {
+            alertify.alertError($scope._t('error_load_data'));
+        });
+    };
+    //$scope.loadZwaveData();
+
+    /**
+     * Refresh zwave data
+     * @param {object} ZWaveAPIData
+     */
+    $scope.refreshZwaveData = function(ZWaveAPIData) {
+        var refresh = function() {
+            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+                notInterviewDevices(response.data.joined);
+                countDevices(response.data.joined);
+                assocRemovedDevices(response.data.joined);
+                //notConfigDevices(ZWaveAPIData);
+                batteryDevices(response.data.joined);
+                $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
+                $scope.controller.controllerState = response.data.joined.controller.data.controllerState.value;
+            }, function(error) {});
+        };
+        $scope.home.interval = $interval(refresh, $scope.cfg.interval);
     };
 
 
@@ -43,12 +97,11 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
      * Load data
      *
      */
-    $scope.loadData = function() {
+    /*$scope.loadData = function() {
         dataService.getZwaveData(function(ZWaveAPIData) {
             var isRealPrimary = ZWaveAPIData.controller.data.isRealPrimary.value;
             var hasDevices = Object.keys(ZWaveAPIData.devices).length;
             $scope.ZWaveAPIData = ZWaveAPIData;
-            notInterviewDevices(ZWaveAPIData);
             notInterviewDevices(ZWaveAPIData);
             countDevices(ZWaveAPIData);
             assocRemovedDevices(ZWaveAPIData);
@@ -69,12 +122,14 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
 
             });
         });
-    };
+    };*/
     if (!cfg.custom_ip) {
-        $scope.loadData();
+        //$scope.loadData();
+        $scope.loadZwaveData();
     } else {
         if (cfg.server_url != '') {
-            $scope.loadData();
+            //$scope.loadData();
+            $scope.loadZwaveData();
         }
     }
 
@@ -97,9 +152,9 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
     };
 
     // Cancel interval on page destroy
-    $scope.$on('$destroy', function() {
+    /*$scope.$on('$destroy', function() {
         dataService.cancelZwaveDataInterval();
-    });
+    });*/
     
      // Run Zwave Command
     $scope.runZwaveCmd = function (cmd,confirm) {
@@ -149,10 +204,24 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
             obj['name'] = $filter('deviceName')(nodeId, node);
             obj['id'] = nodeId;
             if (isFailed) {
-                $scope.failedDevices.push(obj);
+                //$scope.failedDevices.push(obj);
+                var findIndexF = _.findIndex($scope.failedDevices, {id: obj.id});
+                if(findIndexF > -1){
+                    angular.extend($scope.failedDevices[findIndexF],obj);
+
+                }else{
+                    $scope.failedDevices.push(obj);
+                }
             }
             if (isLocalyReset) {
-                $scope.localyResetDevices.push(obj);
+                //$scope.localyResetDevices.push(obj);
+                var findIndexR = _.findIndex($scope.localyResetDevices, {id: obj.id});
+                if(findIndexR > -1){
+                    angular.extend($scope.localyResetDevices[findIndexR],obj);
+
+                }else{
+                    $scope.localyResetDevices.push(obj);
+                }
             }
 
             cnt++;
@@ -198,7 +267,14 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
             obj['id'] = nodeId;
             obj['battery_charge'] = battery_charge;
             if (battery_charge <= 20 && interviewDone) {
-                $scope.lowBatteryDevices.push(obj);
+                //$scope.lowBatteryDevices.push(obj);
+                var findIndex = _.findIndex($scope.lowBatteryDevices, {id: obj.id});
+                if(findIndex > -1){
+                    angular.extend($scope.lowBatteryDevices[findIndex],obj);
+
+                }else{
+                    $scope.lowBatteryDevices.push(obj);
+                }
             }
             if(hasBattery){
                 batteryCnt++;
@@ -231,7 +307,14 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
                 for (var ccId in ZWaveAPIData.devices[nodeId].instances[iId].commandClasses) {
                     var isDone = ZWaveAPIData.devices[nodeId].instances[iId].commandClasses[ccId].data.interviewDone.value;
                     if (isDone == false) {
-                        $scope.notInterviewDevices.push(obj);
+                        //$scope.notInterviewDevices.push(obj);
+                        var findIndex = _.findIndex($scope.notInterviewDevices, {id: obj.id});
+                        if(findIndex > -1){
+                            angular.extend($scope.notInterviewDevices[findIndex],obj);
+
+                        }else{
+                            $scope.notInterviewDevices.push(obj);
+                        }
                         return;
                     }
                 }
@@ -250,8 +333,9 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
         var cnt = 0;
         var cnt = 0;
         // Loop throught devices
-        dataService.getCfgXml(function(cfgXml) {
-            angular.forEach(cfgXml.config.devices.deviceconfiguration, function(cfg, cfgId) {
+        dataService.xmlToJson(cfg.server_url + '/config/Configuration.xml').then(function (response) {
+          //dataService.getCfgXml(function(cfgXml) {
+            angular.forEach(response.config.devices.deviceconfiguration, function(cfg, cfgId) {
                 var node = ZWaveAPIData.devices[cfg['_id']];
                 if (!node) {
                     return;
@@ -269,7 +353,14 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
                             var obj = {};
                             obj['name'] = $filter('deviceName')(cfg['_id'], node);
                             obj['id'] = cfg['_id'];
-                            $scope.notConfigDevices.push(obj);
+                            //$scope.notConfigDevices.push(obj);
+                            var findIndex = _.findIndex($scope.notConfigDevices, {id: obj.id});
+                            if(findIndex > -1){
+                                angular.extend($scope.notConfigDevices[findIndex],obj);
+
+                            }else{
+                                $scope.notConfigDevices.push(obj);
+                            }
                         }
                     }
 
@@ -292,12 +383,18 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
             }
             var removedDevices = assocGedRemovedDevices(node, ZWaveAPIData);
             if (removedDevices.length > 0) {
-
                 var obj = {};
                 obj['name'] = $filter('deviceName')(nodeId, node);
                 obj['id'] = nodeId;
                 obj['assoc'] = removedDevices;
-                $scope.assocRemovedDevices.push(obj);
+                //$scope.assocRemovedDevices.push(obj);
+                var findIndex = _.findIndex($scope.assocRemovedDevices, {id: obj.id});
+                if(findIndex > -1){
+                    angular.extend($scope.assocRemovedDevices[findIndex],obj);
+
+                }else{
+                    $scope.assocRemovedDevices.push(obj);
+                }
                 cnt++;
             }
         });
@@ -353,42 +450,4 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
         return assocDevices;
     }
     ;
-});
-
-// Home Dongle controller
-appController.controller('HomeDongleController', function($scope, $window,$cookies,dataService) {
-    // Controller vars
-    $scope.homeDongle ={
-        model: {
-            current: $scope.cfg.dongle,
-            dongle: ''
-        },
-        //data: ['zway','newdongle','mydongle'],
-        data: []
-    };
-    /**
-     * Load zwave dongles
-     */
-    $scope.loadHomeDongle = function() {
-        dataService.getZwaveList().then(function(response) {
-            if(response.length > 1){
-                 angular.extend($scope.homeDongle,{data: response});
-            }
-        }, function(error) {});
-    };
-    $scope.loadHomeDongle();
-    
-    /**
-     * Set dongle 
-     */
-    $scope.setHomeDongle = function() {
-        if($scope.homeDongle.model.dongle === ''){
-            return;
-        }
-        angular.extend($scope.cfg,{dongle: $scope.homeDongle.model.dongle});
-        $cookies.dongle = $scope.homeDongle.model.dongle;
-        dataService.purgeCache();
-        //$route.reload();
-        $window.location.reload();
-    };
 });

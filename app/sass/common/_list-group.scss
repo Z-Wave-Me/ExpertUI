@@ -1,0 +1,19 @@
+/* List groups
+-------------------------------------------------- */
+
+.list-group-item {
+  border-color: $app-border-color;
+}
+
+.list-report{
+  margin: 0 ;
+  padding: 0;
+  li{
+    padding: $spacing 0;
+    display: block;
+    border-top: solid 1px $app-border-color;
+  }
+  li:first-child{
+    border-top: 0 none;
+  }
+}

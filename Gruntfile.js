@@ -55,7 +55,6 @@ module.exports = function (grunt) {
                     // Controllers
                     'app/controllers/base.js',
                     'app/controllers/controllers.js',
-                    'app/controllers/settings.js',
                     'app/controllers/switch.js',
                     'app/controllers/sensor.js',
                     'app/controllers/meter.js',

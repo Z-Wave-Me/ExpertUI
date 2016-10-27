@@ -63,7 +63,6 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         getLanguageFile: getLanguageFile,
         //Test New functions
         getApiLocal: getApiLocal,
-        getZwaveList: getZwaveList,
         loadZwaveApiData: loadZwaveApiData,
         loadJoinedZwaveData: loadJoinedZwaveData,
         runZwaveCmd: runZwaveCmd,
@@ -718,34 +717,6 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             return $q.reject(response);
         });
 
-    }
-    /**
-     * Get zwave list
-     */
-    function getZwaveList(noCache) {
-        // Cached data
-        var cacheName = 'zwavelist';
-        /*var cached = myCache.get(cacheName);
-         if (!noCache && cached) {
-         var deferred = $q.defer();
-         deferred.resolve(cached);
-         return deferred.promise; 
-         }*/
-        return $http({
-            method: 'post',
-            url: cfg.server_url + cfg.zwave_list
-        }).then(function (response) {
-            if (typeof response.data === 'object') {
-                myCache.put(cacheName, response.data);
-                return response.data;
-            } else {
-                // invalid response
-                return $q.reject(response);
-            }
-        }, function (response) {
-            // something went wrong
-            return $q.reject(response);
-        });
     }
     /**
      * Load ZwaveApiData 

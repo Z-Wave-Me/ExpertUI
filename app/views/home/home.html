@@ -1,13 +1,13 @@
 <!-- Home view -->
 
-<script>
+<!--<script>
     function refreshPage() {
         window.location.reload();
     }
-</script>
+</script>-->
 
 <div ng-controller="HomeController">
-    <div class="form-inline form-home-ip" ng-show="cfg.custom_ip">
+    <div class="form-inline form-home-ip" ng-if="cfg.custom_ip">
 
         <div class="form-home-ip-in product-data-list">
             <input name="custom_ip" id="custom_ip" type="text" class="form-control" ng-model="customIP.url"
@@ -18,7 +18,7 @@
             <div class="text-success custom-ip-message custom-ip-success">Connected to {{cfg.server_url}}</div>
         </div>
     </div>
-    <div class="row home-page_" ng-show="ZWaveAPIData">
+    <div class="row home-page_" ng-if="home.show">
         <div class="col-sm-6 home-page-image">
             <!-- Promo text -->
             <img class="product-logo" ng-src="{{getCustomCfgArr('logo')}}" alt="Logo"/>
@@ -63,7 +63,7 @@
         </div>
         <div class="col-sm-6 product-data-list_ pull-right_">
             <!-- Z-Wave Network -->
-            <div class="panel panel-default" ng-controller="HomeDongleController">
+            <div class="panel panel-default" ng-controller="DongleController">
                 <div class="panel-heading">
                     <i class="fa fa-code-fork"></i> {{_t('zwave_network')}}
                 </div>
@@ -84,128 +84,158 @@
 
                 </div>
             </div>
-
-
-           <!-- <div ng-controller="HomeDongleController">
-                <div class="form-inline home-dongle" ng-if="homeDongle.data.length > 0">
-                    <h3><i class="fa fa-code-fork"></i> {{_t('select_dongle')}}</h3>
-                    <select class="form-control" ng-model="homeDongle.model.dongle" ng-change="setHomeDongle()">
-                        <option value="" class="hidden-selectopt">-&#45;&#45; Select one -&#45;&#45;</option>
-                        <option ng-repeat="v in homeDongle.data" ng-selected="homeDongle.model.current == v"
-                                value="{{v}}">{{v}}
-                        </option>
-                    </select>
+            <!-- Network Information -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-info-circle"></i> {{_t('txt_network_info')}}
+                    (<em>{{countDevices}} {{_t('txt_devices_present')}})</em>
+                </div>
+                <div class="panel-body">
+                    <!--<h3><strong>{{countDevices}}</strong> {{_t('txt_devices_present')}}:</h3>-->
+                    <ul class="list-report">
+                        <li><strong>{{mainsDevices}}</strong> {{_t('txt_devices_mains')}}</li>
+                        <li><strong>{{batteryWakeupDevices}}</strong>
+                            {{_t('txt_devices_battery')}}
+                        </li>
+                        <li><strong>{{flirsDevices}}</strong> {{_t('txt_devices_flirs')}}</li>
+                    </ul>
 
                 </div>
-                <h3 ng-if="homeDongle.data.length < 1"><i class="fa fa-code-fork"></i> {{_t('zwave_network')}}: <em>{{cfg.dongle}}</em>
-                </h3>
-            </div>-->
-            <!-- Network Information -->
-            <h3><i class="fa fa-info-circle"></i> {{_t('txt_network_info')}}</h3>
-            <p><strong>{{countDevices}}</strong> {{_t('txt_devices_present')}}:</p>
-            <ul class="list-group">
-                <li class="list-group-item"><strong>{{mainsDevices}}</strong> {{_t('txt_devices_mains')}}</li>
-                <li class="list-group-item"><strong>{{batteryWakeupDevices}}</strong> {{_t('txt_devices_battery')}}</li>
-                <li class="list-group-item"><strong>{{flirsDevices}}</strong> {{_t('txt_devices_flirs')}}</li>
-            </ul>
-
-            <!-- only default -->
-            <div ng-if="cfg.app_type === 'default'">
-                <!-- Network Health -->
-                <h3><i class="fa fa-plus-square"></i> {{_t('txt_net_health')}}</h3>
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <p ng-repeat="v in lowBatteryDevices">
-                            <a class="text-danger" href="#device/battery">(#{{v.id}}) {{v.name}}
-                                {{_t('txt_low_battery')}} ({{v.battery_charge}}%)</a>
-                        </p>
-                    </li>
-                    <li class="list-group-item" ng-if="cfg.app_type === 'default'">
-                        <p ng-repeat="v in notInterviewDevices">
-                            <a class="text-danger" href="#help/{{v.id}}"> (#{{v.id}}) {{v.name}}
-                                {{_t('txt_interview_not')}}</a>
-                        </p>
-                    </li>
-                    <li class="list-group-item" ng-show="assocRemovedDevices.length > 1">
-                        <p ng-repeat="v in assocRemovedDevices">
-                            <a class="text-danger" href="#configuration/interview/{{v.id}}">(#{{v.id}}) {{v.name}}
-                                {{_t('txt_assoc_removed')}}:</a><br/>
-                            <em ng-repeat="a in v.assoc">{{a.name}}, </em>
-                        </p>
-                    </li>
-                    <li class="list-group-item">
-                        <p ng-repeat="v in failedDevices">
-                            <a class="text-danger" href="#help/{{v.id}}">(#{{v.id}}) {{v.name}} {{_t('txt_failed')}}</a>
-                        </p>
-                    </li>
-                    <li class="list-group-item">
-                        <p ng-repeat="v in notConfigDevices| unique:id">
-                            <a class="text-danger" href="#configuration/interview/{{v.id}}">(#{{v.id}}) {{v.name}}
-                                {{_t('device_changed_configuration')}}</a>
-                        </p>
-                    </li>
-                </ul>
+            </div>
+            <!-- Only default -->
+            <div ng-if="cfg.app_type !== 'installer'">
+                <!-- Network Health - only default -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-plus-square"></i> {{_t('txt_net_health')}}
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-report">
+                            <li ng-if="lowBatteryDevices.length > 0">
+                                <p ng-repeat="v in lowBatteryDevices">
+                                    <a class="text-danger" href="#device/battery">(#{{v.id}}) {{v.name}}
+                                        {{_t('txt_low_battery')}} ({{v.battery_charge}}%)</a>
+                                </p>
+                            </li>
+                            <li ng-if="cfg.app_type === 'default'">
+                                <p ng-repeat="v in notInterviewDevices">
+                                    <a class="text-danger" href="#help/{{v.id}}"> (#{{v.id}}) {{v.name}}
+                                        {{_t('txt_interview_not')}}</a>
+                                </p>
+                            </li>
+                            <li ng-show="assocRemovedDevices.length > 1">
+                                <p ng-repeat="v in assocRemovedDevices">
+                                    <a class="text-danger" href="#configuration/interview/{{v.id}}">(#{{v.id}})
+                                        {{v.name}}
+                                        {{_t('txt_assoc_removed')}}:</a><br/>
+                                    <em ng-repeat="a in v.assoc">{{a.name}}, </em>
+                                </p>
+                            </li>
+                            <li>
+                                <p ng-repeat="v in failedDevices">
+                                    <a class="text-danger" href="#help/{{v.id}}">(#{{v.id}}) {{v.name}}
+                                        {{_t('txt_failed')}}</a>
+                                </p>
+                            </li>
+                            <li>
+                                <p ng-repeat="v in notConfigDevices| unique:id">
+                                    <a class="text-danger" href="#configuration/interview/{{v.id}}">(#{{v.id}})
+                                        {{v.name}}
+                                        {{_t('device_changed_configuration')}}</a>
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
                 <!-- Device reset locally -->
-                <h3><i class="fa fa-info-circle"></i> {{_t('device_reset_locally')}}</h3>
-                <ul class="list-group">
-                    <li class="list-group-item" ng-repeat="v in localyResetDevices"> (#{{v.id}}) {{v.name}}</li>
-                    <li class="list-group-item" ng-show="localyResetDevices.length < 1">
-                        {{_t('no_device_reset_locally')}}
-                    </li>
-                </ul>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-info-circle"></i> {{_t('device_reset_locally')}}
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-report">
+                            <li ng-repeat="v in localyResetDevices"> (#{{v.id}}) {{v.name}}</li>
+                            <li ng-show="localyResetDevices.length < 1">
+                                {{_t('no_device_reset_locally')}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
             </div>
 
             <!-- only installer -->
-            <div class="cfg-block form-inline" ng-if="cfg.app_type === 'installer'">
-                <!-- Not included in network -->
-                <div ng-if="boxData.controller.isPrimary && (!boxData.controller.hasDevices && boxData.controller.controllerState == 0)">
-                    <p class="input-help">{{_t('device_not_included_info')}}</p>
-                    <button
-                            class="btn btn-primary"
-                            id="btn_learn_start"
-                            ng-click="runZwaveCmd('controller.SetLearnMode(1)')"
-                            onClick="refreshPage()"
+            <div class="form-inline" ng-if="cfg.app_type === 'installer'">
+                <!-- Inclusion -->
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <!-- Not included in network -->
+                        <div ng-if="boxData.controller.isPrimary && (!boxData.controller.hasDevices && boxData.controller.controllerState == 0)">
+                            <p class="input-help">{{_t('device_not_included_info')}}</p>
+                            <button
+                                    class="btn btn-primary"
+                                    id="btn_learn_start"
+                                    ng-click="runZwaveCmd('controller.SetLearnMode(1)')"
+                                    onClick="refreshPage()"
 
-                    >{{_t('include_into_network')}}
-                    </button>
+                            >{{_t('include_into_network')}}
+                            </button>
+                        </div>
+
+                        <!-- included in network -->
+                        <div ng-if="boxData.controller.isPrimary && (boxData.controller.hasDevices)">
+                            <p class="input-help">{{_t('device_included_info')}}</p>
+                            <button
+                                    class="btn btn-primary"
+                                    id="btn_learn_start_2"
+                                    ng-click="runZwaveCmd('controller.SetLearnMode(1)')"
+                                    style="background-color: grey;"
+                                    disabled
+                            >{{_t('leave_network')}}
+                            </button>
+                        </div>
+
+                        <!-- included in network -->
+                        <div ng-if="!boxData.controller.isPrimary">
+                            <p class="input-help">{{_t('device_included_info')}}</p>
+                            <button
+                                    class="btn btn-danger"
+                                    id="btn_learn_stop"
+                                    ng-click="runZwaveCmd('controller._SetLearnMode(0)',_t('before_leaving_network'))"
+
+                            > {{_t('leave_network')}}
+                            </button>
+                        </div>
+
+
+                        <!-- stop inclusion -->
+                        <button
+                                class="btn btn-danger"
+                                id="btn_learn_stop_2"
+                                ng-click="runZwaveCmd('controller.SetLearnMode(0)')"
+                                ng-if="boxData.controller.controllerState == 9 && boxData.controller.isPrimary"
+                                onClick="refreshPage()"
+                        > {{_t('Stop inclusion')}}
+                        </button>
+                    </div>
                 </div>
-
-                <!-- included in network -->
-                <div ng-if="boxData.controller.isPrimary && (boxData.controller.hasDevices)">
-                    <p class="input-help">{{_t('device_included_info')}}</p>
-                    <button
-                            class="btn btn-primary"
-                            id="btn_learn_start"
-                            ng-click="runZwaveCmd('controller.SetLearnMode(1)')"
-                            style="background-color: grey;"
-                            disabled
-                    >{{_t('leave_network')}}
-                    </button>
+                <!-- Backup and restore -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-download"></i> {{_t('nm_backup_title')}}
+                    </div>
+                    <div class="panel-body">
+                        <!-- backup -->
+                        <a class="btn btn-info" href="{{cfg.server_url}}/ZWaveAPI/Backup">
+                            <i class="fa fa-download"></i> {{_t('nm_backup_download')}}
+                        </a>
+                        <!-- restore -->
+                        <button class="btn btn-primary"
+                                ng-click="handleModal('restoreModal', $event)">
+                            <i class="fa fa-repeat"></i> {{_t('nm_restore_backup_upload')}}
+                        </button>
+                    </div>
                 </div>
-
-                <!-- included in network -->
-                <div ng-if="!boxData.controller.isPrimary">
-                    <p class="input-help">{{_t('device_included_info')}}</p>
-                    <button
-                            class="btn btn-danger"
-                            id="btn_learn_stop"
-                            ng-click="runZwaveCmd('controller._SetLearnMode(0)',_t('before_leaving_network'))"
-
-                    > {{_t('leave_network')}}
-                    </button>
-                </div>
-
-
-                <!-- stop inclusion -->
-                <button
-                        class="btn btn-danger"
-                        id="btn_learn_stop"
-                        ng-click="runZwaveCmd('controller.SetLearnMode(0)')"
-                        ng-if="boxData.controller.controllerState == 9 && boxData.controller.isPrimary"
-                        onClick="refreshPage()"
-                > {{_t('Stop inclusion')}}
-                </button>
-
 
             </div>
         </div>
@@ -232,7 +262,7 @@
                                class="form-control"
                                placeholder="{{_t('network_name')}}"
                                value="{{settings.input.network_name}}"
-                               ng-model="settings.input.network_name" />
+                               ng-model="settings.input.network_name"/>
                     </div>
                     <!-- date format -->
                     <div class="form-group">
@@ -240,7 +270,8 @@
                         <select name="date_format" name="date_format" class="form-control"
                                 ng-model="settings.input.date_format">
                             <option ng-repeat="v in cfg.date_format_list" value="{{v}}"
-                                    ng-selected="v === cfg.zwavecfg.date_format">{{v}}</option>
+                                    ng-selected="v === cfg.zwavecfg.date_format">{{v}}
+                            </option>
                         </select>
                 </fieldset>
             </div>
@@ -256,7 +287,7 @@
             </div>
         </form>
     </div>
-</div> <!-- /#modal notesModal -->
+</div> <!-- /#modal settingsModal -->
 
 
 <!-- notesModal -->
@@ -287,3 +318,52 @@
         </form>
     </div>
 </div> <!-- /#modal notesModal -->
+
+<!-- restoreModal -->
+<div id="restoreModal" class="appmodal" ng-if="modalArr.restoreModal" ng-controller="RestoreController">
+    <div class="appmodal-in">
+        <form name="form_notes" id="form_modal" class="form"
+              ng-model="notes.input"
+              ng-submit="handleModal('restoreModal', $event);storeSettings(settings.input)" novalidate>
+            <div class="appmodal-header">
+                <span class="appmodal-close" ng-click="handleModal('restoreModal', $event)"><i
+                        class="fa fa-times"></i></span>
+                <h3>{{_t('nm_restore_backup_upload')}}</h3>
+            </div>
+            <div class="appmodal-body">
+                <bb-loader></bb-loader>
+                <div class="restore-backup-control" ng-if_="restoreBackupStatus == 0">
+                    <!-- restore info -->
+                    <div class="alert alert-warning">
+                        <input type="checkbox" name="restore_confirm" value="1" id="restore_confirm"
+                               ng-click="restore.allow = !restore.allow"/>
+                        <span ng-bind-html="_t('are_you_sure_restore') | toTrusted"></span>
+                    </div>
+                    <!-- if restore allowed -->
+                    <div ng-if="restore.allow">
+                        <p>
+                            <input type="checkbox"
+                                   name="restore_chip_info"
+                                   id="restore_chip_info"
+                                   value="1"
+                                   ng-true-value="1"
+                                   ng-false-value="0"
+                                   ng-model="restore.input.restore_chip_info"/> {{_t('restore_backup_chip')}}
+
+                        </p>
+                        <p class="text-center">
+                            <input id="btn_upload" type="file" name="file"
+                                   onchange="angular.element(this).scope().restoreFromBackup(this.files)"/>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="appmodal-footer">
+                <!-- Close -->
+                <button type="button" class="btn btn-default" ng-click="handleModal('restoreModal', $event)">
+                    <i class="fa fa-times text-danger"></i> <span class="btn-name">{{_t('btn_cancel')}}</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div> <!-- /#modal restoreModal -->

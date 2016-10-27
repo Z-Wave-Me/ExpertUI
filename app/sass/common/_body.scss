@@ -94,9 +94,7 @@ h4 {
     color: #333;
     cursor:help;
 }
-.list-group-item {
-    border: 1px solid #9fd8ef;
-}
+
 
 .tooltip-inner {
     background-color: #1f355e;
@@ -116,6 +114,7 @@ h4 {
 }
 
 .newlines{
+    padding-top: 0;
     white-space: pre-line;
 }
 
