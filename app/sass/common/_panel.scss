@@ -19,6 +19,11 @@
     border-color: $app-border-color;
 }
 
+.panel-default > .panel-footer {
+    background-color: lighten($app-color-secondary,5%);
+    border-color: $app-border-color;
+}
+
 /* Well CSS
 -------------------------------------------------- */
 .well {

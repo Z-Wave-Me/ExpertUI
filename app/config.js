@@ -18,6 +18,7 @@ var config_data = {
         'local_data_url':'app/data/',
         'server_url': '', // Remote JSON
         'dongle': 'zway', // Default dongle
+        'dongle_list': [],// Dongle list
         'zwave_list': '/ZWave/list', // Zwave list of dongles
         'update_url': '/ZWaveAPI/Data/', // Url for update (refresh data)
         'store_url': '/ZWaveAPI/Run/', // Url for store data
@@ -78,13 +79,22 @@ var config_data = {
         // Zwave config
         'zwavecfg': {
             // Debug mode
-            'debug': false
+            'debug': false,
+            //Network name
+            'network_name': 'Unnamed',
+            //Date format
+            'date_format': '1.1.2001',
+            //Notes
+            'notes': ''
+
         },
         // Auth
         'auth': {
             'login': 'admin',
             'password': 'installer'
         },
+        // Date format list
+        'date_format_list': ['1.1.2001','01-01-2001','2001/1/1'],
         // Route - will be extended
         'route': {
             // Time zone

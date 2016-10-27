@@ -122,6 +122,19 @@ $alliance-orange: #F89847;
         background-color: $alliance-green-bcg;
         border-color: $alliance-green-border;
     }
+    .panel-default > .panel-footer {
+        background-color: lighten($alliance-green-bcg,10%);
+        border-color:  $alliance-green-border;
+    }
+    /* List group */
+    .list-group-item {
+        border-color: $alliance-green-border;
+    }
+    .list-report{
+        li{
+            border-top: solid 1px $alliance-green-border;
+        }
+    }
     /* Welll */
     .well {
         background-color: $alliance-green-bcg;

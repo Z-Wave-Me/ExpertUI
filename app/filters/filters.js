@@ -529,8 +529,41 @@ angApp.filter('getBatteryIcon', function () {
         return icon;
     };
 });
+/**
+ * Get device type icon
+ */
+angApp.filter('getDeviceTypeIcon', function () {
+    return function (input) {
+        var icon;
+        switch(input){
+            case 'static':
+                icon = 'fa-cog';
+                break;
+            case 'flirs':
+                icon = 'fa-fire text-info';
+                break;
+            case 'mains':
+                icon = 'fa-bolt text-warning';
+                break;
+            case 'sleep':
+                icon = 'fa-battery-full text-danger';
+                break;
+            case 'battery':
+                icon = 'fa-battery-full text-success';
+                break;
+            case 'portable':
+                icon = 'fa-feed text-primary';
+                break;
+            default:
+                icon = '';
+                break;
+        }
+        return icon;
+    };
+});
 
 /**
+ * todo: deprecated
  * Get battery image
  */
 angApp.filter('getBatteryImg', function () {

@@ -53,8 +53,6 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         cancelQueueDataInterval: cancelQueueDataInterval,
         runJs: runJs,
         fwUpdate: fwUpdate,
-        getNotes: getNotes,
-        putNotes: putNotes,
         getReorgLog: getReorgLog,
         putReorgLog: putReorgLog,
         purgeCache: purgeCache,
@@ -65,13 +63,14 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         getLanguageFile: getLanguageFile,
         //Test New functions
         getApiLocal: getApiLocal,
-        getZwaveList: getZwaveList,
         loadZwaveApiData: loadZwaveApiData,
         loadJoinedZwaveData: loadJoinedZwaveData,
         runZwaveCmd: runZwaveCmd,
         getApi: getApi,
         postApi: postApi,
-        xmlToJson: xmlToJson
+        xmlToJson: xmlToJson,
+        getTextFile: getTextFile,
+        storeTextToFile: storeTextToFile
     });
     /**
      * Get IP
@@ -374,7 +373,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
      */
     function putCfgXml(data) {
         var request = $http({
-            method: "PUT",
+            method: "POST",
             //dataType: "text", 
             url: cfg.server_url + '/config/Configuration.xml',
             data: data,
@@ -489,45 +488,6 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             handleError();
         });
 
-    }
-
-    /**
-     * Gets notes from remote text file
-     */
-    function getNotes(callback) {
-        var request = $http({
-            method: 'GET',
-            url: cfg.server_url + cfg.notes_url
-        });
-        request.success(function (data) {
-            return callback(data);
-        }).error(function () {
-            //handleError();
-            console.log('Notes error');
-
-        });
-
-    }
-
-    /**
-     * Put notes in remote text file
-     */
-    function putNotes(notes) {
-        var request = $http({
-            method: "PUT",
-            dataType: "text",
-            url: cfg.server_url + cfg.notes_url,
-            data: notes,
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
-        request.success(function (data) {
-            handleSuccess(data);
-        }).error(function (error) {
-            handleError();
-
-        });
     }
     /**
      * Update Uzb
@@ -759,34 +719,6 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
 
     }
     /**
-     * Get zwave list
-     */
-    function getZwaveList(noCache) {
-        // Cached data
-        var cacheName = 'zwavelist';
-        /*var cached = myCache.get(cacheName);
-         if (!noCache && cached) {
-         var deferred = $q.defer();
-         deferred.resolve(cached);
-         return deferred.promise; 
-         }*/
-        return $http({
-            method: 'post',
-            url: cfg.server_url + cfg.zwave_list
-        }).then(function (response) {
-            if (typeof response.data === 'object') {
-                myCache.put(cacheName, response.data);
-                return response.data;
-            } else {
-                // invalid response
-                return $q.reject(response);
-            }
-        }, function (response) {
-            // something went wrong
-            return $q.reject(response);
-        });
-    }
-    /**
      * Load ZwaveApiData 
      */
     function loadZwaveApiData(noCache) {
@@ -956,6 +888,45 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             } else {// invalid response
                 return $q.reject(response);
             }
+        }, function (response) {// something went wrong
+            return $q.reject(response);
+        });
+    }
+
+    /**
+     * Get data from given text file
+     * @param url
+     * @returns {*}
+     */
+    function getTextFile(url) {
+        return $http({
+            method: 'get',
+            url: url
+        }).then(function (response) {
+            return response;
+        }, function (response) {// something went wrong
+            return $q.reject(response);
+        });
+
+    }
+
+    /**
+     * Store text data to a given file url
+     * @param {string} file
+     * @param {string} data
+     * @returns {*}
+     */
+    function storeTextToFile(url,data) {
+        return $http({
+            method: "POST",
+            dataType: "text",
+            url: url,
+            data: data,
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(function (response) {
+            return response;
         }, function (response) {// something went wrong
             return $q.reject(response);
         });

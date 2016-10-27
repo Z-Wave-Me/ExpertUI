@@ -13133,94 +13133,95 @@ h4 {
   cursor: help;
 }
 
-/* line 97, ../sass/common/_body.scss */
-.list-group-item {
-  border: 1px solid #9fd8ef;
-}
-
-/* line 101, ../sass/common/_body.scss */
+/* line 99, ../sass/common/_body.scss */
 .tooltip-inner {
   background-color: #1f355e;
 }
 
-/* line 105, ../sass/common/_body.scss */
+/* line 103, ../sass/common/_body.scss */
 .dropdown-menu {
   border-color: #9fd8ef;
 }
 
-/* line 108, ../sass/common/_body.scss */
+/* line 106, ../sass/common/_body.scss */
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
   color: #262626;
   text-decoration: none;
   background-color: #e4f5fc;
 }
 
-/* line 114, ../sass/common/_body.scss */
+/* line 112, ../sass/common/_body.scss */
 .custom-ip-message {
   display: none;
 }
 
+/* line 116, ../sass/common/_body.scss */
+.newlines {
+  padding-top: 0;
+  white-space: pre-line;
+}
+
 /* Colors
 -------------------------------------------------- */
-/* line 120, ../sass/common/_body.scss */
+/* line 123, ../sass/common/_body.scss */
 .bcg-success {
   background-color: #dde9dd;
 }
 
-/* line 124, ../sass/common/_body.scss */
+/* line 127, ../sass/common/_body.scss */
 .red, .is-updated-false {
   color: red;
 }
 
-/* line 128, ../sass/common/_body.scss */
+/* line 131, ../sass/common/_body.scss */
 .green, .is-rfreshed {
   color: green;
 }
 
-/* line 131, ../sass/common/_body.scss */
+/* line 134, ../sass/common/_body.scss */
 .yellow {
   color: yellow;
 }
 
-/* line 134, ../sass/common/_body.scss */
+/* line 137, ../sass/common/_body.scss */
 .gray {
   color: gray;
 }
 
-/* line 137, ../sass/common/_body.scss */
+/* line 140, ../sass/common/_body.scss */
 .orange {
   color: orange;
 }
 
-/* line 141, ../sass/common/_body.scss */
+/* line 144, ../sass/common/_body.scss */
 .main_spinner {
   font-size: 14px;
   color: #555;
 }
 
-/* line 146, ../sass/common/_body.scss */
+/* line 149, ../sass/common/_body.scss */
 .text-yellow {
   color: yellow;
 }
 
-/* line 149, ../sass/common/_body.scss */
+/* line 152, ../sass/common/_body.scss */
 .text-orange {
   color: orange;
 }
 
 /* Links
 -------------------------------------------------- */
-/* line 154, ../sass/common/_body.scss */
+/* line 157, ../sass/common/_body.scss */
 a {
   color: #5698d0;
   text-decoration: none;
 }
-/* line 158, ../sass/common/_body.scss */
+/* line 161, ../sass/common/_body.scss */
 a:hover, a:focus {
   color: #357fbe;
   text-decoration: underline;
 }
-/* line 163, ../sass/common/_body.scss */
+/* line 166, ../sass/common/_body.scss */
 a:focus {
   outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
@@ -13229,7 +13230,7 @@ a:focus {
 
 /* Fatal error
 -------------------------------------------------- */
-/* line 173, ../sass/common/_body.scss */
+/* line 176, ../sass/common/_body.scss */
 .app-fatal-error {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -13239,13 +13240,13 @@ a:focus {
   background-color: #FFFFFF;
   border: solid 1px #d9534f;
 }
-/* line 180, ../sass/common/_body.scss */
+/* line 183, ../sass/common/_body.scss */
 .app-fatal-error .fatal-error-message {
   color: #d9534f;
   font-weight: bold;
   font-size: 120%;
 }
-/* line 185, ../sass/common/_body.scss */
+/* line 188, ../sass/common/_body.scss */
 .app-fatal-error .fatal-error-info {
   margin: 10px 0 0 0;
   color: #000000;
@@ -13254,44 +13255,44 @@ a:focus {
 
 /* Others
 -------------------------------------------------- */
-/* line 194, ../sass/common/_body.scss */
+/* line 197, ../sass/common/_body.scss */
 .timestamp {
   color: #333333;
   font-size: 17px;
 }
-/* line 197, ../sass/common/_body.scss */
+/* line 200, ../sass/common/_body.scss */
 .timestamp .fa {
   font-size: 110%;
 }
 
-/* line 201, ../sass/common/_body.scss */
+/* line 204, ../sass/common/_body.scss */
 .bcg-success {
   background-color: #dff0d8;
 }
 
-/* line 204, ../sass/common/_body.scss */
+/* line 207, ../sass/common/_body.scss */
 .bcg-active.false, .bcg-danger {
   background-color: #f2dede;
 }
 
-/* line 208, ../sass/common/_body.scss */
+/* line 211, ../sass/common/_body.scss */
 .clickable {
   cursor: pointer;
 }
 
-/* line 212, ../sass/common/_body.scss */
+/* line 215, ../sass/common/_body.scss */
 .text-supp {
   font-style: italic;
   color: #595959;
 }
 
-/* line 217, ../sass/common/_body.scss */
+/* line 220, ../sass/common/_body.scss */
 .badge {
   padding: 5px;
   margin-right: 5px;
 }
 
-/* line 221, ../sass/common/_body.scss */
+/* line 224, ../sass/common/_body.scss */
 .help-text {
   display: block;
   font-size: 95%;
@@ -13299,63 +13300,63 @@ a:focus {
   margin: 5px 0;
 }
 
-/* line 227, ../sass/common/_body.scss */
+/* line 230, ../sass/common/_body.scss */
 .help-text.inline {
   display: inline;
 }
 
-/* line 231, ../sass/common/_body.scss */
+/* line 234, ../sass/common/_body.scss */
 .display-block {
   display: block;
 }
 
-/* line 235, ../sass/common/_body.scss */
+/* line 238, ../sass/common/_body.scss */
 .is-hidden, .alert-hidden, .alert- {
   display: none !important;
 }
 
-/* line 239, ../sass/common/_body.scss */
+/* line 242, ../sass/common/_body.scss */
 .alert-list {
   margin: 8px 0;
 }
 
-/* line 243, ../sass/common/_body.scss */
+/* line 246, ../sass/common/_body.scss */
 .text-alert, .text-alert-list {
   font-size: 85%;
   margin: 0 0 0 7px;
 }
 
-/* line 247, ../sass/common/_body.scss */
+/* line 250, ../sass/common/_body.scss */
 .text-alert {
   margin: 7px 0;
 }
 
-/* line 250, ../sass/common/_body.scss */
+/* line 253, ../sass/common/_body.scss */
 .report-img {
   display: inline-block;
   max-width: 32px;
 }
 
-/* line 254, ../sass/common/_body.scss */
+/* line 257, ../sass/common/_body.scss */
 .hidden-selectopt {
   display: none !important;
 }
 
 /* Response
 -------------------------------------------------- */
-/* line 260, ../sass/common/_body.scss */
+/* line 263, ../sass/common/_body.scss */
 #respone_container {
   display: none;
 }
 
-/* line 264, ../sass/common/_body.scss */
+/* line 267, ../sass/common/_body.scss */
 #respone_container_inner {
   margin: 0 auto;
   text-align: center;
   /*position: relative;*/
 }
 
-/* line 269, ../sass/common/_body.scss */
+/* line 272, ../sass/common/_body.scss */
 .page-load-spinner {
   z-index: 1000;
   text-align: center;
@@ -13365,7 +13366,7 @@ a:focus {
   width: 150px;
 }
 
-/* line 278, ../sass/common/_body.scss */
+/* line 281, ../sass/common/_body.scss */
 .response-message {
   z-index: 1000;
   text-align: center;
@@ -14482,9 +14483,15 @@ fieldset.submit-entry {
   border-color: #9fd8ef;
 }
 
+/* line 22, ../sass/common/_panel.scss */
+.panel-default > .panel-footer {
+  background-color: #fbfeff;
+  border-color: #9fd8ef;
+}
+
 /* Well CSS
 -------------------------------------------------- */
-/* line 24, ../sass/common/_panel.scss */
+/* line 29, ../sass/common/_panel.scss */
 .well {
   background-color: #e4f5fc;
   border: 1px solid #9fd8ef;
@@ -14625,6 +14632,29 @@ fieldset.submit-entry {
   font-size: 16px;
   /*    text-shadow: 3px 1px 2px rgba(150, 150, 150, 1);*/
   color: #2A6496;
+}
+
+/* List groups
+-------------------------------------------------- */
+/* line 4, ../sass/common/_list-group.scss */
+.list-group-item {
+  border-color: #9fd8ef;
+}
+
+/* line 8, ../sass/common/_list-group.scss */
+.list-report {
+  margin: 0;
+  padding: 0;
+}
+/* line 11, ../sass/common/_list-group.scss */
+.list-report li {
+  padding: 10px 0;
+  display: block;
+  border-top: solid 1px #9fd8ef;
+}
+/* line 16, ../sass/common/_list-group.scss */
+.list-report li:first-child {
+  border-top: 0 none;
 }
 
 /* Absolute Center CSS Spinner
@@ -15055,129 +15085,125 @@ http://codepen.io/MattIn4D/pen/LiKFC
 #RoutingTable td.rtCell {
   width: 22px;
   height: 22px;
-  padding: 0px 0px 1px 1px;
+  vertical-align: middle;
 }
 
-/* line 9, ../sass/modules/_routing.scss */
+/* line 10, ../sass/modules/_routing.scss */
 #RoutingTable div.rtDiv {
   min-width: 20px;
   min-height: 20px;
-  height: 100%;
-  width: 100%;
+  height: 30px;
+  width: 30px;
   border-radius: 4px;
   border-collapse: separate;
   border: 1px solid white;
   display: table;
   text-align: center;
+  vertical-align: middle;
 }
 
-/* line 21, ../sass/modules/_routing.scss */
+/* line 25, ../sass/modules/_routing.scss */
 #RoutingTable span.routeHops {
   display: table-cell;
   vertical-align: middle;
   border: 0;
 }
 
-/* line 27, ../sass/modules/_routing.scss */
+/* line 31, ../sass/modules/_routing.scss */
 #RoutingTable td.rtInfo {
   text-align: left;
   white-space: nowrap;
 }
 
-/* line 32, ../sass/modules/_routing.scss */
+/* line 36, ../sass/modules/_routing.scss */
 #RoutingTable td.rtHeader {
   text-align: center;
   white-space: nowrap;
 }
 
-/* line 37, ../sass/modules/_routing.scss */
+/* line 41, ../sass/modules/_routing.scss */
 #RoutingTable td.rtHeaderNames {
   text-align: left;
   white-space: nowrap;
 }
 
-/* line 42, ../sass/modules/_routing.scss */
+/* line 46, ../sass/modules/_routing.scss */
 #RoutingTable td.rtNodes {
   text-align: right;
 }
 
-/* line 46, ../sass/modules/_routing.scss */
+/* line 50, ../sass/modules/_routing.scss */
 #RoutingTable td.rtNodesNames {
   text-align: left;
   padding: 0 1em 0 0;
 }
 
-/* line 51, ../sass/modules/_routing.scss */
+/* line 55, ../sass/modules/_routing.scss */
 #RoutingTable td {
   white-space: nowrap;
-  padding: 0px 0px 1px 1px;
+  padding: 0;
 }
 
-/* line 56, ../sass/modules/_routing.scss */
+/* line 60, ../sass/modules/_routing.scss */
 #RoutingTable th {
   white-space: nowrap;
   padding: 0px 0px 1px 1px;
 }
 
-/* line 61, ../sass/modules/_routing.scss */
+/* line 65, ../sass/modules/_routing.scss */
 #RoutingTable div.rtDirect {
   background-color: green;
 }
 
-/* line 65, ../sass/modules/_routing.scss */
+/* line 69, ../sass/modules/_routing.scss */
 #RoutingTable div.rtRouted {
   background-color: #8C0;
 }
 
-/* line 69, ../sass/modules/_routing.scss */
+/* line 73, ../sass/modules/_routing.scss */
 #RoutingTable div.rtBadlyRouted {
   background-color: yellow;
 }
 
-/* line 73, ../sass/modules/_routing.scss */
+/* line 77, ../sass/modules/_routing.scss */
 #RoutingTable div.rtNotLinked {
   background-color: red;
 }
 
-/* line 77, ../sass/modules/_routing.scss */
+/* line 81, ../sass/modules/_routing.scss */
 #RoutingTable div.rtUnavailable {
   background-color: gray;
 }
 
-/* line 81, ../sass/modules/_routing.scss */
+/* line 85, ../sass/modules/_routing.scss */
 #RoutingTable .info {
   font-size: smaller;
 }
 
-/* line 85, ../sass/modules/_routing.scss */
-#RoutingTable button {
-  padding: 0px 6px;
-}
-
-/* line 89, ../sass/modules/_routing.scss */
+/* line 93, ../sass/modules/_routing.scss */
 #RoutingComments {
   margin-top: 10px;
 }
 
 /* device not present in config file and not present in Z-Wave assoc group */
-/* line 94, ../sass/modules/_routing.scss */
+/* line 98, ../sass/modules/_routing.scss */
 .dissapeared {
   color: #911;
 }
 
 /* device present in config file but not present in Z-Wave assoc group */
-/* line 99, ../sass/modules/_routing.scss */
+/* line 103, ../sass/modules/_routing.scss */
 .notInZWave {
   color: #955;
 }
 
 /* device present in config file and in Z-Wave assoc group */
-/* line 104, ../sass/modules/_routing.scss */
+/* line 108, ../sass/modules/_routing.scss */
 .inZWave {
   color: #000;
 }
 
-/* line 108, ../sass/modules/_routing.scss */
+/* line 112, ../sass/modules/_routing.scss */
 .assocAdd {
   background-color: #911 !important;
   border-color: #955 !important;
@@ -15294,6 +15320,7 @@ http://codepen.io/MattIn4D/pen/LiKFC
   /*Form */
   /* Tabs */
   /* Panel */
+  /* List group */
   /* Welll */
   /* footer */
 }
@@ -15416,12 +15443,25 @@ http://codepen.io/MattIn4D/pen/LiKFC
   background-color: #ceebcd;
   border-color: #87cf83;
 }
-/* line 126, ../sass/skins/installer/_main.scss */
+/* line 125, ../sass/skins/installer/_main.scss */
+.app-type-installer .panel-default > .panel-footer {
+  background-color: #f2faf1;
+  border-color: #87cf83;
+}
+/* line 130, ../sass/skins/installer/_main.scss */
+.app-type-installer .list-group-item {
+  border-color: #87cf83;
+}
+/* line 134, ../sass/skins/installer/_main.scss */
+.app-type-installer .list-report li {
+  border-top: solid 1px #87cf83;
+}
+/* line 139, ../sass/skins/installer/_main.scss */
 .app-type-installer .well {
   background-color: #ceebcd;
   border-color: #87cf83;
 }
-/* line 131, ../sass/skins/installer/_main.scss */
+/* line 144, ../sass/skins/installer/_main.scss */
 .app-type-installer #footer {
   border-color: #87cf83;
 }
@@ -15927,24 +15967,24 @@ http://codepen.io/MattIn4D/pen/LiKFC
     Label the data
     */
   }
-  /* line 77, ../sass/common/_mixins.scss */
+  /* line 84, ../sass/common/_mixins.scss */
   #table_mobile table, #table_mobile thead, #table_mobile tbody, #table_mobile th, #table_mobile td, #table_mobile tr {
     display: block;
   }
-  /* line 82, ../sass/common/_mixins.scss */
+  /* line 89, ../sass/common/_mixins.scss */
   #table_mobile table thead tr th {
     border: 0;
     display: none;
   }
-  /* line 86, ../sass/common/_mixins.scss */
+  /* line 93, ../sass/common/_mixins.scss */
   #table_mobile thead tr th.mobile-show {
     display: block !important;
   }
-  /* line 90, ../sass/common/_mixins.scss */
+  /* line 97, ../sass/common/_mixins.scss */
   #table_mobile tr {
     border: 1px solid #9fd8ef;
   }
-  /* line 92, ../sass/common/_mixins.scss */
+  /* line 99, ../sass/common/_mixins.scss */
   #table_mobile td {
     /* Behave  like a "row" */
     border: none;
@@ -15954,7 +15994,7 @@ http://codepen.io/MattIn4D/pen/LiKFC
     white-space: normal;
     text-align: left;
   }
-  /* line 102, ../sass/common/_mixins.scss */
+  /* line 109, ../sass/common/_mixins.scss */
   #table_mobile td:before {
     /* Now like a table header */
     position: absolute;
@@ -15967,11 +16007,11 @@ http://codepen.io/MattIn4D/pen/LiKFC
     text-align: left;
     font-weight: bold;
   }
-  /* line 114, ../sass/common/_mixins.scss */
+  /* line 121, ../sass/common/_mixins.scss */
   #table_mobile .table-responsive {
     border: 0;
   }
-  /* line 120, ../sass/common/_mixins.scss */
+  /* line 127, ../sass/common/_mixins.scss */
   #table_mobile td:before {
     content: attr(data-title);
   }
@@ -15994,5 +16034,3 @@ http://codepen.io/MattIn4D/pen/LiKFC
 }
 /* Extra Small Devices, Phones */
 /* Custom, iPhone Retina */
-
-/*# sourceMappingURL=main.css.map */

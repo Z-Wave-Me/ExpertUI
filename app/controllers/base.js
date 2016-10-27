@@ -19,10 +19,14 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
      * Load zwave dongles
      */
     $scope.setDongle = function () {
-        dataService.getZwaveList().then(function (response) {
+        //angular.extend(cfg.route,{dongle_list: ['zway','newdongle','mydongle']});
+        //dataService.getZwaveList().then(function (response) {
+        dataService.getApi('zwave_list').then(function (response) {
             if (response.length === 1) {
                 angular.extend(cfg, {dongle: response[0]});
                 $cookies.dongle = response[0];
+                angular.extend(cfg,{dongle_list: response});
+
                 angular.extend(cfg, {
                     update_url: '/ZWave.' + cfg.dongle + '/Data/',
                     store_url: '/ZWave.' + cfg.dongle + '/Run/',
@@ -218,7 +222,10 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
         } else {
             $scope.modalArr[key] = !($scope.modalArr[key]);
         }
-        $event.stopPropagation();
+        if($event){
+            $event.stopPropagation();
+        }
+
     };
     // Collapse element/menu when clicking outside
     window.onclick = function () {
