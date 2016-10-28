@@ -37,7 +37,7 @@ var config_data = {
         'rssi_chart': '/ZWaveAPI/RSSIGet', // chart of rssi channels 1 and 2
         'configget_url': '/ZWaveAPI/ExpertConfigGet', // Config get
         'configupdate_url': '/ZWaveAPI/ExpertConfigUpdate', // Config update
-        'timezone': '/ZAutomation/api/v1/system/time/get',// Get time
+        'time': '/ZAutomation/api/v1/system/time/get',// Get time
         'runjs_url': '/JS/Run/', // Url for running JS
         'device_classes_url': '/translations/DeviceClasses.xml', // Url to Device Classes
         'zwave_classes_url': 'storage/data/ZWave_cmd_classes.xml', // Url to Zwave Classes
