@@ -105,6 +105,8 @@
                 <th>{{ _t('rssi')}}</th>
                 <!-- hops --> 
                 <th>{{ _t('hops')}}</th>
+                <!-- encapsulation -->
+                <th>{{ _t('encapsulation')}}</th>
                 <!-- application --> 
                 <th>{{ _t('application')}}</th>
                 <!--<th>Packet</th>--> 
@@ -132,6 +134,7 @@
                 <td>{{v.speed||'-'}}</td>
                 <td>{{v.rssi||'-'}}</td>
                 <td>{{v.hops||'-'}}</td>
+                <td>{{v.encaps||'-'}}</td>
                 <td title="{{v.bytes}}">{{v.application}} ({{v.bytes|cutText:tue:20}})</td>
                 <td>&nbsp;</td>
             </tr>
