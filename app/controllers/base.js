@@ -89,13 +89,13 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
      * @returns {undefined}
      */
     $scope.setTimeStamp = function () {
-        dataService.getApi('time', null, true).then(function (response) {
+       dataService.getApi('time', null, true).then(function (response) {
             $interval.cancel($scope.timeZoneInterval);
-            angular.extend(cfg.route.time, {string: $filter('setTimeFromBox')(response.data.data.localTimeUT)},
+            angular.extend(cfg.route.time, {string: $filter('setTimeFromBox')(response.data.data.localTimeUT,true)},
                 {timestamp: response.data.data.localTimeUT});
             var refresh = function () {
                 cfg.route.time.timestamp += (cfg.interval < 1000 ? 1 : cfg.interval/1000)
-                cfg.route.time.string = $filter('setTimeFromBox')(cfg.route.time.timestamp)
+                cfg.route.time.string = $filter('setTimeFromBox')(cfg.route.time.timestamp, true)
             };
             $scope.timeZoneInterval = $interval(refresh, $scope.cfg.interval);
         }, function (error) {});
@@ -135,8 +135,6 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
         $('.current-lang').html($scope.lang);
         $scope.loadLang($scope.lang);
     });
-    // Navi time
-    $scope.navTime = $filter('getCurrentTime');
     // Order by
     $scope.orderBy = function (field) {
         $scope.predicate = field;

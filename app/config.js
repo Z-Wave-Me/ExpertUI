@@ -81,15 +81,19 @@ var config_data = {
             // Debug mode
             'debug': false,
             //Network name
-            'network_name': 'Unnamed',
+            'network_name': 'My network',
             //Date format
-            'date_format': '1.1.2001',
+            'date_format': 'dd.mm.yyyy',
+            //Time format
+            'time_format': '24',
             //Notes
             'notes': ''
 
         },
         // Date format list
-        'date_format_list': ['1.1.2001','01-01-2001','2001/1/1'],
+        'date_format_list': ['dd.mm.yyyy','dd-mm-yyyy','yyyy-mm-dd','yyyy/mm/dd','mm/dd/yyyy'],
+        // Time format list
+        'time_format_list': ['24','12'],
         // Route - will be extended
         'route': {
             // Time zone

@@ -102,7 +102,6 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
                         //url: 'storage/all_cp.json'
             });
             request.success(function (data) {
-                $('#update_time_tick').html($filter('getCurrentTime')(time));
                 apiData = data;
                 pageLoader(true);
                 return callback(data);
@@ -129,7 +128,6 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
                 url: cfg.server_url + cfg.update_url + "0"
             });
             request.success(function (data) {
-                $('#update_time_tick').html($filter('getCurrentTime')(time));
                 apiData = data;
                 return callback(data);
             }).error(function () {
@@ -151,7 +149,6 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             });
             request.success(function (data) {
                 time = data.updateTime;
-                $('#update_time_tick').html($filter('getCurrentTime')(time));
                 return callback(data);
             }).error(function () {
                 handleError();
@@ -175,7 +172,6 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         });
         request.success(function (data) {
             time = data.updateTime;
-            $('#update_time_tick').html($filter('getCurrentTime')(time));
             return callback(data);
         }).error(function (error) {
             handleError();
@@ -199,7 +195,6 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
                 url: cfg.server_url + cfg.update_url + time
             });
             request.success(function (data) {
-                $('#update_time_tick').html($filter('getCurrentTime')(time));
                 if (!apiData || !data)
                     return;
                 time = data.updateTime;

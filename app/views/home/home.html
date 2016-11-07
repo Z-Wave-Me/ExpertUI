@@ -38,6 +38,9 @@
                     <p>
                         <strong>{{_t('date_format')}}:</strong> <span>{{settings.input.date_format}}</span>
                     </p>
+                    <p>
+                        <strong>{{_t('time_format')}}:</strong> <span>{{settings.input.time_format}} {{_t('hours')}}</span>
+                    </p>
                 </div>
                 <div class="panel-footer text-right">
                     <button class="btn btn-default" ng-click="handleModal('settingsModal', $event)">
@@ -273,6 +276,17 @@
                                     ng-selected="v === cfg.zwavecfg.date_format">{{v}}
                             </option>
                         </select>
+                    </div>
+                    <!-- time format -->
+                    <div class="form-group">
+                        <label>{{_t('time_format')}}: </label>
+                        <select name="time_format" name="time_format" class="form-control"
+                                ng-model="settings.input.time_format">
+                            <option ng-repeat="v in cfg.time_format_list" value="{{v}}"
+                                    ng-selected="v === cfg.zwavecfg.time_format">{{v}} {{_t('hours')}}
+                            </option>
+                        </select>
+                    </div>
                 </fieldset>
             </div>
             <div class="appmodal-footer">
