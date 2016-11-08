@@ -91,11 +91,11 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
     $scope.setTimeStamp = function () {
        dataService.getApi('time', null, true).then(function (response) {
             $interval.cancel($scope.timeZoneInterval);
-            angular.extend(cfg.route.time, {string: $filter('setTimeFromBox')(response.data.data.localTimeUT,true)},
+            angular.extend(cfg.route.time, {string: $filter('setTimeFromBox')(response.data.data.localTimeUT)},
                 {timestamp: response.data.data.localTimeUT});
             var refresh = function () {
                 cfg.route.time.timestamp += (cfg.interval < 1000 ? 1 : cfg.interval/1000)
-                cfg.route.time.string = $filter('setTimeFromBox')(cfg.route.time.timestamp, true)
+                cfg.route.time.string = $filter('setTimeFromBox')(cfg.route.time.timestamp)
             };
             $scope.timeZoneInterval = $interval(refresh, $scope.cfg.interval);
         }, function (error) {});

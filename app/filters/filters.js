@@ -37,8 +37,8 @@ angApp.filter('stringToSlug', function () {
         }
 
         str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
-                .replace(/\s+/g, '-') // collapse whitespace and replace by -
-                .replace(/-+/g, '-'); // collapse dashes
+            .replace(/\s+/g, '-') // collapse whitespace and replace by -
+            .replace(/-+/g, '-'); // collapse dashes
 
         return str;
     };
@@ -49,20 +49,20 @@ angApp.filter('stringToSlug', function () {
  */
 angApp.filter('cutText', function () {
     return function (value, wordwise, max, tail) {
-         if ((!value && value !== 0) || value === undefined || value === null){
-             return '';
+        if ((!value && value !== 0) || value === undefined || value === null) {
+            return '';
         }
-        if(!value.length){
+        if (!value.length) {
             return value;
         }
 
 
         max = parseInt(max, 10);
-        if (!max){
+        if (!max) {
             return value;
         }
 
-        if (value.length <= max){
+        if (value.length <= max) {
             return value;
         }
 
@@ -118,7 +118,7 @@ angApp.filter('setConfigValue', function () {
  */
 angApp.filter('getBitArray', function () {
     return function (value, length) {
-        value = parseInt(value,10);
+        value = parseInt(value, 10);
         length = length || 32;
         var base2_ = (value).toString(2).split("").reverse().join("");
         var baseL_ = new Array(length - base2_.length).join("0");
@@ -187,26 +187,18 @@ angApp.filter('unique', function () {
  * Get time from the box and displays it in the hrs:min:sec format
  * @function setTimeFromBox
  */
-angApp.filter('setTimeFromBox', function (cfg,$filter) {
-    return function (input,hasSuffix) {
+angApp.filter('setTimeFromBox', function (cfg, $filter) {
+    return function (input) {
         if (input) {
             var d = new Date(input * 1000);
         } else {
             var d = new Date();
         }
-        // Convert to ISO - 2016-06-07T11:49:51.000Z
-        var isoTime = d.toISOString().substring(11, d.toISOString().indexOf('.'));
-        // Set US time format if defined in config
-        //return (cfg.zwavecfg.time_format === '24' ? isoTime : $filter('timeIsoToUs')(isoTime,hasSuffix));
-        var options = {
-            hour: 'numeric',
-            minute: 'numeric',
-            second: 'numeric',
-            hour12: (cfg.zwavecfg.time_format === '12' ? true: false)
-        }
-        //var timeString = d.toLocaleString('en-US', options);
-        //console.log(timeString)
-        return $filter('getFormattedTime')(d,options);
+        return $filter('getFormattedTime')(
+            d.toISOString().substring(11, d.toISOString().indexOf('.')),
+            false,
+            cfg.zwavecfg.time_format
+        );
     };
 });
 
@@ -214,46 +206,25 @@ angApp.filter('setTimeFromBox', function (cfg,$filter) {
  * Get date time as object
  * @function getDateTimeObj
  */
-angApp.filter('getDateTimeObj', function ($filter,cfg) {
+angApp.filter('getDateTimeObj', function ($filter, cfg) {
     return function (timestamp) {
-        var d = (timestamp ? new Date(timestamp * 1000): new Date());
-        var hour12 = (cfg.zwavecfg.time_format === '12' ? true: false);
-        var optionsToday = {
-            hour: 'numeric',
-            minute: 'numeric',
-            hour12: hour12
-        }
+        var d = (timestamp ? new Date(timestamp * 1000) : new Date());
         var obj = {
-            day: d.getDate(),
-            mon: d.getMonth() + 1,
-            year: d.getFullYear(),
-            hrs: d.getHours(),
-            min: (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes()),
-            sec: (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds()),
-            mis: d.getMilliseconds(),
             date: $filter('getFormattedDate')(d),
-            time: $filter('getFormattedTime')(d,{
-                hour: 'numeric',
-                minute: 'numeric',
-                second: 'numeric',
-                hour12: hour12
-            }),
+            time: $filter('getFormattedTime')(
+                d.toISOString().substring(11, d.toISOString().indexOf('.')),
+                false,
+                cfg.zwavecfg.time_format
+            ),
             today: (d.toDateString() === (new Date()).toDateString()
-            ? $filter('getFormattedTime')(d,{
-            hour: 'numeric',
-            minute: 'numeric',
-            hour12: hour12
-            })
-            : $filter('getFormattedDate')(d))
+                ? $filter('getFormattedTime')(
+                    d.toISOString().substring(11, d.toISOString().indexOf('.')),
+                    false,
+                    cfg.zwavecfg.time_format
+            )
+                : $filter('getFormattedDate')(d))
 
         };
-        //var day = d.getDate();
-        //var mon = d.getMonth() + 1; //Months are zero based
-        //var year = d.getFullYear();
-        //var hrs = d.getHours();
-        //var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
-        //var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
-        //var time = day + '.' + mon + '.' + year + ' ' + hrs + ':' + min + ':' + sec;
         return obj;
     };
 
@@ -265,19 +236,18 @@ angApp.filter('getDateTimeObj', function ($filter,cfg) {
  * NO: displays date
  * @function isTodayFromUnix
  */
-angApp.filter('isTodayFromUnix', function (cfg,$filter) {
+angApp.filter('isTodayFromUnix', function (cfg, $filter) {
     return function (input) {
         if (!input || isNaN(input)) {
             return '-';
         }
         var d = new Date(input * 1000);
         if (d.toDateString() == (new Date()).toDateString()) {
-            var options = {
-                hour: 'numeric',
-                minute: 'numeric',
-                hour12: (cfg.zwavecfg.time_format === '12' ? true: false)
-            }
-            return $filter('getFormattedTime')(d,options);
+            return $filter('getFormattedTime')(
+                d.toISOString().substring(11, d.toISOString().indexOf('.')),
+                'hh:mm',
+                cfg.zwavecfg.time_format
+            );
 
         } else {
             return $filter('getFormattedDate')(d);
@@ -289,9 +259,35 @@ angApp.filter('isTodayFromUnix', function (cfg,$filter) {
  * Get formated date
  * @function getFormattedTime
  */
-angApp.filter('getFormattedTime', function (cfg,$filter) {
-    return function (d,options) {
-        return d.toLocaleString('en-US', options);
+angApp.filter('getFormattedTime', function () {
+    return function (time,stringFormat,timeFormat) {
+        var str = '';
+        var suffix = '';
+        var arr = time.split(':').map(function (x) {
+            return parseInt(x, 10);
+        });
+        // 12 hrs format?
+        if(timeFormat === '12' ){
+            arr[0] =  arr[0] % 12 || 12;
+            suffix = (arr[0] < 12) ? ' AM' : ' PM';
+        }
+
+        var h = arr[0];
+        var m =(arr[1] < 10 ? '0' +  arr[1] :  arr[1]);
+        var s = (arr[2] < 10 ? '0' +  arr[2] :  arr[2]);
+        switch (stringFormat) {
+            case 'hh:mm':
+                str =  h + ':' + m;
+                break;
+            case 'hh':
+                str =  h;
+                break;
+            default:
+                str =  h + ':' + m + ':' + s;
+                break;
+        }
+        //var time = h + ':' + m + ':' + s;
+        return str + suffix;
 
     };
 });
@@ -306,11 +302,11 @@ angApp.filter('getFormattedDate', function (cfg) {
         var mon = d.getMonth() + 1; //Months are zero based
         mon = (mon < 10 ? '0' + mon : mon);
         var year = d.getFullYear();
-        var hrs = (d.getHours() < 10 ? '0' + d.getHours() : d.getHours());
-        var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
-        var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
+        //var hrs = (d.getHours() < 10 ? '0' + d.getHours() : d.getHours());
+        //var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
+        //var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
 
-        switch(cfg.zwavecfg.date_format){
+        switch (cfg.zwavecfg.date_format) {
             case 'dd-mm-yyyy':
                 return day + '-' + mon + '-' + year;
             case 'yyyy-mm-dd':
@@ -331,12 +327,12 @@ angApp.filter('getMysqlFromNow', function () {
     return function () {
         var date = new Date();
         var year = date.getFullYear();
-        var month = (date.getMonth() + 1 < 10) ? "0"+(date.getMonth() + 1) : date.getMonth() + 1;
-        var day = (date.getDate() < 10) ? "0"+date.getDate() : date.getDate();
-        var h = (date.getHours() < 10) ? "0"+date.getHours() : date.getHours();
-        var m = (date.getMinutes() < 10) ? "0"+date.getMinutes() : date.getMinutes();
-        var s = (date.getSeconds() < 10) ? "0"+date.getSeconds() : date.getSeconds();
-        return year+"-"+month+"-"+day+" "+h+":"+m+":"+s;
+        var month = (date.getMonth() + 1 < 10) ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+        var day = (date.getDate() < 10) ? "0" + date.getDate() : date.getDate();
+        var h = (date.getHours() < 10) ? "0" + date.getHours() : date.getHours();
+        var m = (date.getMinutes() < 10) ? "0" + date.getMinutes() : date.getMinutes();
+        var s = (date.getSeconds() < 10) ? "0" + date.getSeconds() : date.getSeconds();
+        return year + "-" + month + "-" + day + " " + h + ":" + m + ":" + s;
     };
 });
 
@@ -346,8 +342,8 @@ angApp.filter('getMysqlFromNow', function () {
  * Convert unix timastamp to date
  */
 /*angApp.filter('getTimestamp', function () {
-    return Math.round(+new Date() / 1000);
-});*/
+ return Math.round(+new Date() / 1000);
+ });*/
 
 /**
  * Calculates difference between two dates in days
@@ -416,13 +412,13 @@ angApp.filter('stripTags', function () {
  */
 angApp.filter('toTrusted', ['$sce', function ($sce) {
 
-        return function (text) {
-            if (text == null) {
-                return '';
-            }
-            return $sce.trustAsHtml(text);
-        };
-    }]);
+    return function (text) {
+        if (text == null) {
+            return '';
+        }
+        return $sce.trustAsHtml(text);
+    };
+}]);
 
 /**
  * Display device name
@@ -471,18 +467,18 @@ angApp.filter('getByProperty', function () {
 // @todo: Deprecated
 // Convert unix timastamp to date
 /*angApp.filter('dateFromUnix', function () {
-    return function (input) {
-        var d = new Date(input * 1000);
-        var day = d.getDate();
-        var mon = d.getMonth() + 1; //Months are zero based
-        var year = d.getFullYear();
-        var hrs = d.getHours();
-        var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
-        var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
-        var time = day + '.' + mon + '.' + year + ' ' + hrs + ':' + min + ':' + sec;
-        return time;
-    };
-});*/
+ return function (input) {
+ var d = new Date(input * 1000);
+ var day = d.getDate();
+ var mon = d.getMonth() + 1; //Months are zero based
+ var year = d.getFullYear();
+ var hrs = d.getHours();
+ var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
+ var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
+ var time = day + '.' + mon + '.' + year + ' ' + hrs + ':' + min + ':' + sec;
+ return time;
+ };
+ });*/
 
 
 
@@ -490,38 +486,38 @@ angApp.filter('getByProperty', function () {
 // Get current date time
 /*angApp.filter('getCurrentDate', function () {
 
-    var d = new Date();
-    var day = d.getDate();
-    var mon = d.getMonth() + 1; //Months are zero based
-    var year = d.getFullYear();
-    var hrs = d.getHours();
-    var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
-    var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
-    var time = day + '.' + mon + '.' + year + ' ' + hrs + ':' + min + ':' + sec;
-    return time;
+ var d = new Date();
+ var day = d.getDate();
+ var mon = d.getMonth() + 1; //Months are zero based
+ var year = d.getFullYear();
+ var hrs = d.getHours();
+ var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
+ var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
+ var time = day + '.' + mon + '.' + year + ' ' + hrs + ':' + min + ':' + sec;
+ return time;
 
-});*/
+ });*/
 
 /**
  * @todo: Deprecated
  */
 /*angApp.filter('getCurrentTime', function () {
-    return function () {
-        var d = new Date();
-        var hrs = (d.getHours() < 10 ? '0' + d.getHours() : d.getHours());
-        var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
-        var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
-        var time = hrs + ':' + min + ':' + sec;
-        return time;
-    };
-});*/
+ return function () {
+ var d = new Date();
+ var hrs = (d.getHours() < 10 ? '0' + d.getHours() : d.getHours());
+ var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
+ var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
+ var time = hrs + ':' + min + ':' + sec;
+ return time;
+ };
+ });*/
 
 
 //Convert decimal to hex
 angApp.filter('decToHex', function () {
-    return function (decimal,chars,x) {
+    return function (decimal, chars, x) {
         var hex = (decimal + Math.pow(16, chars)).toString(16).slice(-chars).toUpperCase();
-       return (x||'') + hex;
+        return (x || '') + hex;
     };
 });
 
@@ -554,7 +550,7 @@ angApp.filter('lockStatus', function () {
             ;
         }
         ;
-        return  mode_lbl;
+        return mode_lbl;
     };
 });
 
@@ -586,7 +582,7 @@ angApp.filter('lockIsOpen', function () {
             ;
         }
         ;
-        return  status;
+        return status;
     };
 });
 
@@ -620,7 +616,7 @@ angApp.filter('getBatteryIcon', function () {
 angApp.filter('getDeviceTypeIcon', function () {
     return function (input) {
         var icon;
-        switch(input){
+        switch (input) {
             case 'static':
                 icon = 'fa-cog';
                 break;
@@ -792,7 +788,7 @@ angApp.filter('securityIcon', function () {
         if (input) {
             icon = 'fa fa-lock fa-lg text-success';
         }
-        return  icon;
+        return icon;
     };
 });
 
@@ -809,7 +805,7 @@ angApp.filter('mwiefIcon', function () {
         if (input) {
             icon = 'fa fa-check fa-lg text-success';
         }
-        return  icon;
+        return icon;
     };
 });
 
@@ -828,7 +824,7 @@ angApp.filter('checkedIcon', function () {
         } else {
             icon = 'fa fa-ban fa-lg text-danger';
         }
-        return  icon;
+        return icon;
     };
 });
 
@@ -842,6 +838,6 @@ angApp.filter('zWavePlusIcon', function () {
         if (input === true) {
             icon = 'fa fa-plus fa-lg text-success';
         }
-        return  icon;
+        return icon;
     };
 });
