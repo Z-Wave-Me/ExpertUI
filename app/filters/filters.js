@@ -219,7 +219,7 @@ angApp.filter('getDateTimeObj', function ($filter, cfg) {
             today: (d.toDateString() === (new Date()).toDateString()
                 ? $filter('getFormattedTime')(
                     d.toISOString().substring(11, d.toISOString().indexOf('.')),
-                    false,
+                    'hh:mm',
                     cfg.zwavecfg.time_format
             )
                 : $filter('getFormattedDate')(d))
