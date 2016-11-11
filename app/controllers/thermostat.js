@@ -93,12 +93,21 @@ appController.controller('ThermostatController', function($scope, $filter, $time
     };
 
     /**
-     * Update thermostat temperature with slider
-     * @param {string} url
-     * @param {int}  index
+     * Calls function when slider handle is grabbed
      */
-    $scope.updateThermostatTempSlider = function(url, index) {
+    $scope.sliderOnHandleDown = function() {
+        $interval.cancel($scope.thermostats.interval);
+    };
+
+
+    /**
+     * Calls function when slider handle is released
+     * @param {string} cmd
+     * @param {int} index
+     */
+    $scope.sliderOnHandleUp = function(url, index) {
         $scope.toggleRowSpinner(url);
+        $scope.refreshZwaveData(null);
         var count = parseInt($scope.thermostats.rangeSlider[index]);
         var min = parseInt($scope.cfg.thermostat_range.min, 10);
         var max = parseInt($scope.cfg.thermostat_range.max, 10);

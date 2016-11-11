@@ -89,12 +89,21 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
         });
 
     };
+
     /**
-     * Update switch with slider
+     * Calls function when slider handle is grabbed
+     */
+    $scope.sliderOnHandleDown = function() {
+        $interval.cancel($scope.switches.interval);
+    };
+
+    /**
+     * Calls function when slider handle is released
      * @param {string} cmd
      * @param {int} index
      */
-    $scope.sliderChange = function(cmd, index) {
+    $scope.sliderOnHandleUp = function(cmd, index) {
+        $scope.refreshZwaveData(null);
         var val = $scope.switches.rangeSlider[index];
         var url = cmd + '.Set(' + val + ')';
         dataService.runZwaveCmd(cfg.store_url + url).then(function (response) {
@@ -104,6 +113,22 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
             alertify.alertError($scope._t('error_update_data') + '\n' + url);
         });
     };
+
+    /**
+     * Update switch with slider
+     * @param {string} cmd
+     * @param {int} index
+     */
+    /*$scope.sliderChange = function(cmd, index) {
+        var val = $scope.switches.rangeSlider[index];
+        var url = cmd + '.Set(' + val + ')';
+        dataService.runZwaveCmd(cfg.store_url + url).then(function (response) {
+            $scope.toggleRowSpinner();
+        }, function (error) {
+            $scope.toggleRowSpinner();
+            alertify.alertError($scope._t('error_update_data') + '\n' + url);
+        });
+    };*/
 
     /// --- Private functions --- ///
 
