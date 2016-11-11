@@ -164,8 +164,8 @@
                 <i title="{{v.type}}" class="fa fa-long-arrow-right" ng-if="v.type === 'incoming'"></i>
                 <i title="{{v.type}}" class="fa fa-long-arrow-left" ng-if="v.type === 'outgoing'"></i> 
             </td>
-            <td>{{v.dateTime.day + '.' + v.dateTime.mon + '.' + v.dateTime.year}}</td>
-            <td>{{v.dateTime.hrs + ':' + v.dateTime.min + ':' + v.dateTime.sec}}</td>
+            <td>{{v.dateTime.date}}</td>
+            <td>{{v.dateTime.time}}</td>
             <td ng-class="zniffer.filter.model['src'].value !== '' ? 'bcg-success' : ''">{{v.src}}</td>
             <td ng-class="zniffer.filter.model['dest'].value !== '' ? 'bcg-success' : ''">{{v.dest}}</td>
             <td ng-class="zniffer.filter.model['data'].value !== '' ? 'bcg-success' : ''">{{v.data}}</td>

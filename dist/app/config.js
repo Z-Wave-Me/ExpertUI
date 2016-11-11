@@ -10,7 +10,7 @@ var config_data = {
         'custom_ip': false,
         'user_field': 'USERXXXX',
         'pass_field': 'PSWDXXXX',
-        'interval': 3000, // Set interval in miliseconds to refresh data
+        'interval': 1000, // Set interval in miliseconds to refresh data
         'zniffer_interval': 3000, // Set interval in milisecondsfor zniffer
         'queue_interval': 1000, // Set interval in miliseconds to refresh queue data 
         'route_update_timeout': 15000, // Maximum time in miliseconds to wait for an update-route
@@ -37,7 +37,7 @@ var config_data = {
         'rssi_chart': '/ZWaveAPI/RSSIGet', // chart of rssi channels 1 and 2
         'configget_url': '/ZWaveAPI/ExpertConfigGet', // Config get
         'configupdate_url': '/ZWaveAPI/ExpertConfigUpdate', // Config update
-        'timezone': '/ZAutomation/api/v1/system/time/get',// Get time
+        'time': '/ZAutomation/api/v1/system/time/get',// Get time
         'runjs_url': '/JS/Run/', // Url for running JS
         'device_classes_url': '/translations/DeviceClasses.xml', // Url to Device Classes
         'zwave_classes_url': 'storage/data/ZWave_cmd_classes.xml', // Url to Zwave Classes
@@ -81,20 +81,19 @@ var config_data = {
             // Debug mode
             'debug': false,
             //Network name
-            'network_name': 'Unnamed',
+            'network_name': 'My network',
             //Date format
-            'date_format': '1.1.2001',
+            'date_format': 'dd.mm.yyyy',
+            //Time format
+            'time_format': '24',
             //Notes
             'notes': ''
 
         },
-        // Auth
-        'auth': {
-            'login': 'admin',
-            'password': 'installer'
-        },
         // Date format list
-        'date_format_list': ['1.1.2001','01-01-2001','2001/1/1'],
+        'date_format_list': ['dd.mm.yyyy','dd-mm-yyyy','yyyy-mm-dd','yyyy/mm/dd','mm/dd/yyyy'],
+        // Time format list
+        'time_format_list': ['24','12'],
         // Route - will be extended
         'route': {
             // Time zone

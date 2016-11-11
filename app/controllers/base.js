@@ -72,26 +72,36 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
     $scope.showContent = false;
     // Global config
     $scope.cfg = cfg;
-    // Load zwave config
+    /**
+     * Set zwave configuration
+     * @returns {undefined}
+     */
     $scope.loadZwaveConfig = function (nocache) {
         // Set config
         dataService.getApi('configget_url', null, nocache).then(function (response) {
             angular.extend(cfg.zwavecfg, response.data);
         }, function (error) {});
-        // Set time
-        dataService.getApi('timezone', null, true).then(function (response) {
-            angular.extend(cfg.route.time, {string: $filter('setTimeFromBox')(response.data.data)});
+    };
+    $scope.loadZwaveConfig();
 
+    /**
+     * Set timestamp and ping server if request fails
+     * @returns {undefined}
+     */
+    $scope.setTimeStamp = function () {
+       dataService.getApi('time', null, true).then(function (response) {
+            $interval.cancel($scope.timeZoneInterval);
+            angular.extend(cfg.route.time, {string: $filter('setTimeFromBox')(response.data.data.localTimeUT)},
+                {timestamp: response.data.data.localTimeUT});
             var refresh = function () {
-                dataService.getApi('timezone', null, true).then(function (response) {
-                    angular.extend(cfg.route.time, {string: $filter('setTimeFromBox')(response.data.data)});
-
-                }, function (error) {});
+                cfg.route.time.timestamp += (cfg.interval < 1000 ? 1 : cfg.interval/1000)
+                cfg.route.time.string = $filter('setTimeFromBox')(cfg.route.time.timestamp)
             };
             $scope.timeZoneInterval = $interval(refresh, $scope.cfg.interval);
         }, function (error) {});
+
     };
-    $scope.loadZwaveConfig();
+    $scope.setTimeStamp();
 
     // Lang settings
     $scope.lang_list = cfg.lang_list;
@@ -125,8 +135,6 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
         $('.current-lang').html($scope.lang);
         $scope.loadLang($scope.lang);
     });
-    // Navi time
-    $scope.navTime = $filter('getCurrentTime');
     // Order by
     $scope.orderBy = function (field) {
         $scope.predicate = field;

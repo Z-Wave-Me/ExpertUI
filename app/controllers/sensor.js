@@ -139,6 +139,7 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
                         obj['invalidateTime'] = val.invalidateTime;
                         obj['updateTime'] = val.updateTime;
                         obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
+                        obj['dateTime'] = $filter('getDateTimeObj')(val.updateTime);
                         obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[' + instanceId + '].commandClasses[48].Get()';
                         obj['cmdToUpdate'] = 'devices.' + obj['id'] + '.instances.' + instanceId + '.commandClasses.48.data.' + sensor_type;
                         var findIndex = _.findIndex($scope.sensors.all, {rowId: obj.rowId});
@@ -179,6 +180,7 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
                         obj['invalidateTime'] = val.invalidateTime;
                         obj['updateTime'] = val.updateTime;
                         obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
+                        obj['dateTime'] = $filter('getDateTimeObj')(val.updateTime);
                         obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[' + instanceId + '].commandClasses[49].Get()';
                         obj['cmdToUpdate'] = 'devices.' + obj['id'] + '.instances.' + instanceId + '.commandClasses.49.data.' + sensor_type;
                         var findIndex = _.findIndex($scope.sensors.all, {rowId: obj.rowId});
@@ -225,6 +227,7 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
                         obj['invalidateTime'] = meter.invalidateTime;
                         obj['updateTime'] = meter.updateTime;
                         obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
+                        obj['dateTime'] = $filter('getDateTimeObj')(meter.updateTime);
                         obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[' + instanceId + '].commandClasses[50].Get()';
                         obj['cmdToUpdate'] = 'devices.' + obj['id'] + '.instances.' + instanceId + '.commandClasses.50.data.' + sensor_type;
                         var findIndex = _.findIndex($scope.sensors.all, {rowId: obj.rowId});
@@ -263,6 +266,7 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
                         obj['levelExt'] = null;
                         obj['invalidateTime'] = val.invalidateTime;
                         obj['updateTime'] = val.updateTime;
+                        obj['dateTime'] = $filter('getDateTimeObj')(val.updateTime);
                         obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
                         obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[' + instanceId + '].commandClasses[156].Get()';
                         obj['cmdToUpdate'] = 'devices.' + obj['id'] + '.instances.' + instanceId + '.commandClasses.156.data.' + sensor_type;

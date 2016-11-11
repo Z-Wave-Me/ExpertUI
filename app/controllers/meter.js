@@ -139,6 +139,7 @@ appController.controller('MetersController', function($scope, $filter, $timeout,
                         obj['invalidateTime'] = meter.invalidateTime;
                         obj['updateTime'] = meter.updateTime;
                         obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
+                        obj['dateTime'] = $filter('getDateTimeObj')(meter.updateTime);
                         obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[' + instanceId + '].commandClasses[50].Get()';
                         obj['cmdToUpdate'] = 'devices.' + k + '.instances.' + instanceId + '.commandClasses.' + 0x32 + '.data.' + scaleId;
                         if (ZWaveAPIData.devices[obj['id']].instances[instanceId].commandClasses[0x32].data.version.value < 2

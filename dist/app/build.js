@@ -32443,105 +32443,140 @@ var angApp = angular.module('angApp', [
 //Define Routing for app
 angApp.config(['$routeProvider',
     function ($routeProvider) {
-        $routeProvider.// Login
-        when('/', {
-            templateUrl: 'app/views/auth/login.html'
-        }).// Home
-        when('/home', {
-            templateUrl: 'app/views/home/home.html'
-        }).// Test
-        when('/test', {
-            templateUrl: 'app/views/test.html'
-        }).// License
-        when('/licence', {
-            templateUrl: 'app/views/pages/license.html'
-        }).// UZB
-        when('/uzb', {
-            templateUrl: 'app/views/pages/uzb.html'
-        }).// Help
-        when('/help/:nodeId?', {
-            templateUrl: 'app/views/help/help.html'
-        }).// Controll
-        when('/control/switch', {
-            templateUrl: 'app/views/controll/switch.html'
-        }).when('/control/dimmer', {
-            templateUrl: 'app/views/controll/dimmer.html'
-        }).when('/control/sensors', {
-            templateUrl: 'app/views/controll/sensors.html'
-        }).when('/control/meters', {
-            templateUrl: 'app/views/controll/meters.html'
-        }).when('/control/thermostat', {
-            templateUrl: 'app/views/controll/thermostat.html'
-        }).when('/control/locks', {
-            templateUrl: 'app/views/controll/locks.html'
-        }).// Device
-        when('/device/status', {
-            templateUrl: 'app/views/device/status.html'
-        }).when('/device/battery', {
-            templateUrl: 'app/views/device/battery.html'
-        }).when('/device/type', {
-            templateUrl: 'app/views/device/type.html'
-        }).when('/device/type', {
-            templateUrl: 'app/views/device/type.html'
-        }).when('/device/associations', {
-            templateUrl: 'app/views/device/associations.html'
-        }).when('/device/security', {
-            templateUrl: 'app/views/device/security.html'
-        }).// Config
-        when('/config/configuration/:nodeId?', {
-            template: ' ',
-            controller: 'ConfigRedirectController'
-        }).// New Configuration
-        when('/configuration/interview/:nodeId?', {
-            templateUrl: 'app/views/configuration/interview.html'
-        }).when('/configuration/configuration/:nodeId?', {
-            templateUrl: 'app/views/configuration/configuration.html'
-        }).when('/configuration/assoc/:nodeId?', {
-            templateUrl: 'app/views/configuration/assoc.html'
-        }).when('/configuration/association/:nodeId?', {
-            templateUrl: 'app/views/configuration/assoc.html'
-        }).when('/configuration/commands/:nodeId?', {
-            templateUrl: 'app/views/configuration/commands.html'
-        }).when('/configuration/firmware/:nodeId?', {
-            templateUrl: 'app/views/configuration/firmware.html'
-        }).when('/configuration/postfix/:nodeId?', {
-            templateUrl: 'app/views/configuration/postfix.html'
-        }).when('/configuration/health/:nodeId?', {
-            templateUrl: 'app/views/configuration/health.html'
-        }).// Network
-        when('/network/control', {
-            templateUrl: 'app/views/network/control.html'
-        }).when('/network/routing', {
-            templateUrl: 'app/views/network/routing.html'
-        }).//                when('/network/reorganization', {
-        //                    templateUrl: 'app/views/network/reorganization.html'
-        //                }).
-        when('/network/timing', {
-            templateUrl: 'app/views/network/timing.html'
-        }).when('/network/controller', {
-            templateUrl: 'app/views/network/controller.html'
-        }).when('/network/queue', {
-            templateUrl: 'app/views/network/queue.html'
-        }).when('/network/map', {
-            templateUrl: 'app/views/network/map.html'
-        }).// Installer - zniffer
-        when('/installer/zniffer', {
-            templateUrl: 'app/views/installer/zniffer.html'
-        }).// Installer - history
-        when('/installer/history', {
-            templateUrl: 'app/views/installer/history.html'
-        }).// Installer - spectrum
-        when('/installer/spectrum', {
-            templateUrl: 'app/views/installer/spectrum.html'
-        }).// Installer - spectrum
-        when('/installer/rssi', {
-            templateUrl: 'app/views/installer/rssi_background.html'
-        }).// Error page
-        when('/error/:code?', {
-            templateUrl: 'app/views/error.html'
-        }).otherwise({
-            redirectTo: '/'
-        });
+        $routeProvider.
+                // Home
+                when('/', {
+                    templateUrl: 'app/views/home/home.html'
+                }).
+                // Test
+                when('/test', {
+                    templateUrl: 'app/views/test.html'
+                }).
+                // License
+                when('/licence', {
+                    templateUrl: 'app/views/pages/license.html'
+                }).
+                // UZB
+                when('/uzb', {
+                    templateUrl: 'app/views/pages/uzb.html'
+                }).
+                // Help
+                when('/help/:nodeId?', {
+                    templateUrl: 'app/views/help/help.html'
+                }).
+                // Controll
+                when('/control/switch', {
+                    templateUrl: 'app/views/controll/switch.html'
+                }).
+                when('/control/dimmer', {
+                    templateUrl: 'app/views/controll/dimmer.html'
+                }).
+                when('/control/sensors', {
+                    templateUrl: 'app/views/controll/sensors.html'
+                }).
+                when('/control/meters', {
+                    templateUrl: 'app/views/controll/meters.html'
+                }).
+                when('/control/thermostat', {
+                    templateUrl: 'app/views/controll/thermostat.html'
+                }).
+                when('/control/locks', {
+                    templateUrl: 'app/views/controll/locks.html'
+                }).
+                // Device
+                when('/device/status', {
+                    templateUrl: 'app/views/device/status.html'
+                }).
+                when('/device/battery', {
+                    templateUrl: 'app/views/device/battery.html'
+                }).
+                when('/device/type', {
+                    templateUrl: 'app/views/device/type.html'
+                }).
+                when('/device/type', {
+                    templateUrl: 'app/views/device/type.html'
+                }).
+                when('/device/associations', {
+                    templateUrl: 'app/views/device/associations.html'
+                }).
+                when('/device/security', {
+                    templateUrl: 'app/views/device/security.html'
+                }).
+                // Config
+                when('/config/configuration/:nodeId?', {
+                    template: ' ',
+                    controller: 'ConfigRedirectController'
+                }).
+                // New Configuration
+                when('/configuration/interview/:nodeId?', {
+                    templateUrl: 'app/views/configuration/interview.html'
+                }).
+                when('/configuration/configuration/:nodeId?', {
+                    templateUrl: 'app/views/configuration/configuration.html'
+                }).
+                when('/configuration/assoc/:nodeId?', {
+                    templateUrl: 'app/views/configuration/assoc.html'
+                }).
+                when('/configuration/association/:nodeId?', {
+                    templateUrl: 'app/views/configuration/assoc.html'
+                }).
+                when('/configuration/commands/:nodeId?', {
+                    templateUrl: 'app/views/configuration/commands.html'
+                }).
+                when('/configuration/firmware/:nodeId?', {
+                    templateUrl: 'app/views/configuration/firmware.html'
+                }).
+                when('/configuration/postfix/:nodeId?', {
+                    templateUrl: 'app/views/configuration/postfix.html'
+                }).
+                when('/configuration/health/:nodeId?', {
+                    templateUrl: 'app/views/configuration/health.html'
+                }).
+                // Network
+                when('/network/control', {
+                    templateUrl: 'app/views/network/control.html'
+                }).
+                when('/network/routing', {
+                    templateUrl: 'app/views/network/routing.html'
+                }).
+//                when('/network/reorganization', {
+//                    templateUrl: 'app/views/network/reorganization.html'
+//                }).
+                when('/network/timing', {
+                    templateUrl: 'app/views/network/timing.html'
+                }).
+                when('/network/controller', {
+                    templateUrl: 'app/views/network/controller.html'
+                }).
+                when('/network/queue', {
+                    templateUrl: 'app/views/network/queue.html'
+                }).
+                when('/network/map', {
+                    templateUrl: 'app/views/network/map.html'
+                }).
+                // Installer - zniffer
+                when('/installer/zniffer', {
+                    templateUrl: 'app/views/installer/zniffer.html'
+                }).
+                // Installer - history
+                when('/installer/history', {
+                    templateUrl: 'app/views/installer/history.html'
+                }).
+                // Installer - spectrum
+                when('/installer/spectrum', {
+                    templateUrl: 'app/views/installer/spectrum.html'
+                }).
+                // Installer - spectrum
+                when('/installer/rssi', {
+                    templateUrl: 'app/views/installer/rssi_background.html'
+                }).
+                // Error page
+                when('/error/:code?', {
+                    templateUrl: 'app/views/error.html'
+                }).
+                otherwise({
+                    redirectTo: '/'
+                });
     }]);
 
 /**
@@ -32608,7 +32643,7 @@ angApp.config(function ($provide, $httpProvider, cfg) {
             },
             // On response failture
             responseError: function (rejection) {
-                deviceService.logError(rejection);
+                 deviceService.logError(rejection);
                 // Return the promise rejection.
                 return $q.reject(rejection);
             }
@@ -34291,8 +34326,8 @@ angApp.filter('stringToSlug', function () {
         }
 
         str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
-                .replace(/\s+/g, '-') // collapse whitespace and replace by -
-                .replace(/-+/g, '-'); // collapse dashes
+            .replace(/\s+/g, '-') // collapse whitespace and replace by -
+            .replace(/-+/g, '-'); // collapse dashes
 
         return str;
     };
@@ -34303,24 +34338,24 @@ angApp.filter('stringToSlug', function () {
  */
 angApp.filter('cutText', function () {
     return function (value, wordwise, max, tail) {
-         if ((!value && value !== 0) || value === undefined || value === null){
-             return '';
+        if ((!value && value !== 0) || value === undefined || value === null) {
+            return '';
         }
-        if(!value.length){
+        if (!value.length) {
             return value;
         }
-           
+
 
         max = parseInt(max, 10);
-        if (!max){
+        if (!max) {
             return value;
         }
-            
-        if (value.length <= max){
+
+        if (value.length <= max) {
             return value;
         }
-            
-           
+
+
         value = value.substr(0, max);
         if (wordwise) {
             var lastspace = value.lastIndexOf(' ');
@@ -34372,7 +34407,7 @@ angApp.filter('setConfigValue', function () {
  */
 angApp.filter('getBitArray', function () {
     return function (value, length) {
-        value = parseInt(value,10);
+        value = parseInt(value, 10);
         length = length || 32;
         var base2_ = (value).toString(2).split("").reverse().join("");
         var baseL_ = new Array(length - base2_.length).join("0");
@@ -34436,28 +34471,168 @@ angApp.filter('unique', function () {
         return items;
     };
 });
+
 /**
  * Get time from the box and displays it in the hrs:min:sec format
- * @function getCurrentTime
+ * @function setTimeFromBox
  */
-angApp.filter('setTimeFromBox', function () {
+angApp.filter('setTimeFromBox', function (cfg, $filter) {
     return function (input) {
-        if (input.localTimeUT) {
-            var d = new Date(input.localTimeUT * 1000);
+        if (input) {
+            var d = new Date(input * 1000);
         } else {
             var d = new Date();
         }
-        // Convert to ISO
-        // 2016-06-07T11:49:51.000Z
-        return d.toISOString().substring(11, d.toISOString().indexOf('.'));
+        return $filter('getFormattedTime')(
+            d.toISOString().substring(11, d.toISOString().indexOf('.')),
+            false,
+            cfg.zwavecfg.time_format
+        );
     };
 });
+
 /**
+ * Get date time as object
+ * @function getDateTimeObj
+ */
+angApp.filter('getDateTimeObj', function ($filter, cfg) {
+    return function (timestamp) {
+        var d = (timestamp ? new Date(timestamp * 1000) : new Date());
+        var obj = {
+            date: $filter('getFormattedDate')(d),
+            time: $filter('getFormattedTime')(
+                d.toISOString().substring(11, d.toISOString().indexOf('.')),
+                false,
+                cfg.zwavecfg.time_format
+            ),
+            today: (d.toDateString() === (new Date()).toDateString()
+                ? $filter('getFormattedTime')(
+                    d.toISOString().substring(11, d.toISOString().indexOf('.')),
+                    'hh:mm',
+                    cfg.zwavecfg.time_format
+            )
+                : $filter('getFormattedDate')(d))
+
+        };
+        return obj;
+    };
+
+});
+
+/**
+ * Check if is today
+ * YES: displays time
+ * NO: displays date
+ * @function isTodayFromUnix
+ */
+angApp.filter('isTodayFromUnix', function (cfg, $filter) {
+    return function (input) {
+        if (!input || isNaN(input)) {
+            return '-';
+        }
+        var d = new Date(input * 1000);
+        if (d.toDateString() == (new Date()).toDateString()) {
+            return $filter('getFormattedTime')(
+                d.toISOString().substring(11, d.toISOString().indexOf('.')),
+                'hh:mm',
+                cfg.zwavecfg.time_format
+            );
+
+        } else {
+            return $filter('getFormattedDate')(d);
+        }
+    };
+});
+
+/**
+ * Get formated date
+ * @function getFormattedTime
+ */
+angApp.filter('getFormattedTime', function () {
+    return function (time,stringFormat,timeFormat) {
+        var str = '';
+        var suffix = '';
+        var arr = time.split(':').map(function (x) {
+            return parseInt(x, 10);
+        });
+        // 12 hrs format?
+        if(timeFormat === '12' ){
+            arr[0] =  arr[0] % 12 || 12;
+            suffix = (arr[0] < 12) ? ' AM' : ' PM';
+        }
+
+        var h = arr[0];
+        var m =(arr[1] < 10 ? '0' +  arr[1] :  arr[1]);
+        var s = (arr[2] < 10 ? '0' +  arr[2] :  arr[2]);
+        switch (stringFormat) {
+            case 'hh:mm':
+                str =  h + ':' + m;
+                break;
+            case 'hh':
+                str =  h;
+                break;
+            default:
+                str =  h + ':' + m + ':' + s;
+                break;
+        }
+        //var time = h + ':' + m + ':' + s;
+        return str + suffix;
+
+    };
+});
+
+/**
+ * Get formated date
+ * @function getFormattedDate
+ */
+angApp.filter('getFormattedDate', function (cfg) {
+    return function (d) {
+        var day = (d.getDate() < 10 ? '0' + d.getDate() : d.getDate());
+        var mon = d.getMonth() + 1; //Months are zero based
+        mon = (mon < 10 ? '0' + mon : mon);
+        var year = d.getFullYear();
+        //var hrs = (d.getHours() < 10 ? '0' + d.getHours() : d.getHours());
+        //var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
+        //var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
+
+        switch (cfg.zwavecfg.date_format) {
+            case 'dd-mm-yyyy':
+                return day + '-' + mon + '-' + year;
+            case 'yyyy-mm-dd':
+                return year + '-' + mon + '-' + day;
+            case 'yyyy/mm/dd':
+                return year + '/' + mon + '/' + day;
+            case 'mm/dd/yyyy':
+                return mon + '/' + day + '/' + year;
+            default:
+                return day + '.' + mon + '.' + year;
+        }
+
+    };
+});
+
+//Get mysql datetime from now
+angApp.filter('getMysqlFromNow', function () {
+    return function () {
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = (date.getMonth() + 1 < 10) ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+        var day = (date.getDate() < 10) ? "0" + date.getDate() : date.getDate();
+        var h = (date.getHours() < 10) ? "0" + date.getHours() : date.getHours();
+        var m = (date.getMinutes() < 10) ? "0" + date.getMinutes() : date.getMinutes();
+        var s = (date.getSeconds() < 10) ? "0" + date.getSeconds() : date.getSeconds();
+        return year + "-" + month + "-" + day + " " + h + ":" + m + ":" + s;
+    };
+});
+
+
+/**
+ * @todo: Deprecated
  * Convert unix timastamp to date
  */
-angApp.filter('getTimestamp', function () {
-    return Math.round(+new Date() / 1000);
-});
+/*angApp.filter('getTimestamp', function () {
+ return Math.round(+new Date() / 1000);
+ });*/
 
 /**
  * Calculates difference between two dates in days
@@ -34526,13 +34701,13 @@ angApp.filter('stripTags', function () {
  */
 angApp.filter('toTrusted', ['$sce', function ($sce) {
 
-        return function (text) {
-            if (text == null) {
-                return '';
-            }
-            return $sce.trustAsHtml(text);
-        };
-    }]);
+    return function (text) {
+        if (text == null) {
+            return '';
+        }
+        return $sce.trustAsHtml(text);
+    };
+}]);
 
 /**
  * Display device name
@@ -34578,119 +34753,60 @@ angApp.filter('getByProperty', function () {
         return null;
     };
 });
+// @todo: Deprecated
 // Convert unix timastamp to date
-angApp.filter('dateFromUnix', function () {
-    return function (input) {
-        var d = new Date(input * 1000);
-        var day = d.getDate();
-        var mon = d.getMonth() + 1; //Months are zero based
-        var year = d.getFullYear();
-        var hrs = d.getHours();
-        var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
-        var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
-        var time = day + '.' + mon + '.' + year + ' ' + hrs + ':' + min + ':' + sec;
-        return time;
-    };
-});
+/*angApp.filter('dateFromUnix', function () {
+ return function (input) {
+ var d = new Date(input * 1000);
+ var day = d.getDate();
+ var mon = d.getMonth() + 1; //Months are zero based
+ var year = d.getFullYear();
+ var hrs = d.getHours();
+ var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
+ var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
+ var time = day + '.' + mon + '.' + year + ' ' + hrs + ':' + min + ':' + sec;
+ return time;
+ };
+ });*/
 
-//Get date time as object
-angApp.filter('getDateTimeObj', function () {
-    return function (timestamp) {
-        var d = (timestamp ? new Date(timestamp * 1000): new Date());
-         var obj = {
-             day: d.getDate(),
-             mon: d.getMonth() + 1,
-             year: d.getFullYear(),
-             hrs: d.getHours(),
-             min: (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes()),
-             sec: (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds()),
-             mis: d.getMilliseconds(),
-             today: (d.toDateString() === (new Date()).toDateString()? true : false)
-             
-         };
-        //var day = d.getDate();
-        //var mon = d.getMonth() + 1; //Months are zero based
-        //var year = d.getFullYear();
-        //var hrs = d.getHours();
-        //var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
-        //var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
-        //var time = day + '.' + mon + '.' + year + ' ' + hrs + ':' + min + ':' + sec;
-        return obj;
-    };
 
-});
 
-//Get current date time
-angApp.filter('getCurrentDate', function () {
+//@todo: Deprecated
+// Get current date time
+/*angApp.filter('getCurrentDate', function () {
 
-    var d = new Date();
-    var day = d.getDate();
-    var mon = d.getMonth() + 1; //Months are zero based
-    var year = d.getFullYear();
-    var hrs = d.getHours();
-    var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
-    var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
-    var time = day + '.' + mon + '.' + year + ' ' + hrs + ':' + min + ':' + sec;
-    return time;
+ var d = new Date();
+ var day = d.getDate();
+ var mon = d.getMonth() + 1; //Months are zero based
+ var year = d.getFullYear();
+ var hrs = d.getHours();
+ var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
+ var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
+ var time = day + '.' + mon + '.' + year + ' ' + hrs + ':' + min + ':' + sec;
+ return time;
 
-});
+ });*/
 
-//Get current time
-angApp.filter('getCurrentTime', function () {
-    return function () {
-        var d = new Date();
-        var hrs = (d.getHours() < 10 ? '0' + d.getHours() : d.getHours());
-        var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
-        var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
-        var time = hrs + ':' + min + ':' + sec;
-        return time;
-    };
-});
+/**
+ * @todo: Deprecated
+ */
+/*angApp.filter('getCurrentTime', function () {
+ return function () {
+ var d = new Date();
+ var hrs = (d.getHours() < 10 ? '0' + d.getHours() : d.getHours());
+ var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
+ var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
+ var time = hrs + ':' + min + ':' + sec;
+ return time;
+ };
+ });*/
 
-//Check for today
-angApp.filter('isTodayFromUnix', function () {
-    return function (input) {
-        if (!input || isNaN(input)) {
-            return '-';
-        }
-        var d = new Date(input * 1000);
-        var day = (d.getDate() < 10 ? '0' + d.getDate() : d.getDate());
-        var mon = d.getMonth() + 1; //Months are zero based
-        mon = (mon < 10 ? '0' + mon : mon);
-        var year = d.getFullYear();
-        var hrs = (d.getHours() < 10 ? '0' + d.getHours() : d.getHours());
-        var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
-        var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
 
-        if (d.toDateString() == (new Date()).toDateString()) {
-            //return hrs + ':' + min + ':' + sec;
-            return hrs + ':' + min;
-
-        } else {
-            //return day + '.' + mon + '.' + year + ' ' + hrs + ':' + min + ':' + sec;
-            return day + '.' + mon + '.' + year;
-        }
-    };
-});
-
-//Get mysql datetime from now
-angApp.filter('getMysqlFromNow', function () {
-    return function () {
-       var date = new Date();
-        var year = date.getFullYear();
-        var month = (date.getMonth() + 1 < 10) ? "0"+(date.getMonth() + 1) : date.getMonth() + 1;
-        var day = (date.getDate() < 10) ? "0"+date.getDate() : date.getDate();
-        var h = (date.getHours() < 10) ? "0"+date.getHours() : date.getHours();
-        var m = (date.getMinutes() < 10) ? "0"+date.getMinutes() : date.getMinutes();
-        var s = (date.getSeconds() < 10) ? "0"+date.getSeconds() : date.getSeconds();
-        return year+"-"+month+"-"+day+" "+h+":"+m+":"+s;
-    };
-});
 //Convert decimal to hex
 angApp.filter('decToHex', function () {
-    return function (decimal,chars,x) {
+    return function (decimal, chars, x) {
         var hex = (decimal + Math.pow(16, chars)).toString(16).slice(-chars).toUpperCase();
-       return (x||'') + hex;
+        return (x || '') + hex;
     };
 });
 
@@ -34723,7 +34839,7 @@ angApp.filter('lockStatus', function () {
             ;
         }
         ;
-        return  mode_lbl;
+        return mode_lbl;
     };
 });
 
@@ -34755,7 +34871,7 @@ angApp.filter('lockIsOpen', function () {
             ;
         }
         ;
-        return  status;
+        return status;
     };
 });
 
@@ -34789,7 +34905,7 @@ angApp.filter('getBatteryIcon', function () {
 angApp.filter('getDeviceTypeIcon', function () {
     return function (input) {
         var icon;
-        switch(input){
+        switch (input) {
             case 'static':
                 icon = 'fa-cog';
                 break;
@@ -34961,7 +35077,7 @@ angApp.filter('securityIcon', function () {
         if (input) {
             icon = 'fa fa-lock fa-lg text-success';
         }
-        return  icon;
+        return icon;
     };
 });
 
@@ -34978,7 +35094,7 @@ angApp.filter('mwiefIcon', function () {
         if (input) {
             icon = 'fa fa-check fa-lg text-success';
         }
-        return  icon;
+        return icon;
     };
 });
 
@@ -34997,7 +35113,7 @@ angApp.filter('checkedIcon', function () {
         } else {
             icon = 'fa fa-ban fa-lg text-danger';
         }
-        return  icon;
+        return icon;
     };
 });
 
@@ -35011,7 +35127,7 @@ angApp.filter('zWavePlusIcon', function () {
         if (input === true) {
             icon = 'fa fa-plus fa-lg text-success';
         }
-        return  icon;
+        return icon;
     };
 });
 
@@ -35119,7 +35235,6 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
                         //url: 'storage/all_cp.json'
             });
             request.success(function (data) {
-                $('#update_time_tick').html($filter('getCurrentTime')(time));
                 apiData = data;
                 pageLoader(true);
                 return callback(data);
@@ -35146,7 +35261,6 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
                 url: cfg.server_url + cfg.update_url + "0"
             });
             request.success(function (data) {
-                $('#update_time_tick').html($filter('getCurrentTime')(time));
                 apiData = data;
                 return callback(data);
             }).error(function () {
@@ -35168,7 +35282,6 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             });
             request.success(function (data) {
                 time = data.updateTime;
-                $('#update_time_tick').html($filter('getCurrentTime')(time));
                 return callback(data);
             }).error(function () {
                 handleError();
@@ -35192,7 +35305,6 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         });
         request.success(function (data) {
             time = data.updateTime;
-            $('#update_time_tick').html($filter('getCurrentTime')(time));
             return callback(data);
         }).error(function (error) {
             handleError();
@@ -35216,7 +35328,6 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
                 url: cfg.server_url + cfg.update_url + time
             });
             request.success(function (data) {
-                $('#update_time_tick').html($filter('getCurrentTime')(time));
                 if (!apiData || !data)
                     return;
                 time = data.updateTime;
@@ -35998,13 +36109,14 @@ appService.service('deviceService', function($filter, $log, _) {
     };
 
     /**
+     * @todo: Deprecated
      * Update time tick
      */
-    this.updateTimeTick = function(time) {
+    /*this.updateTimeTick = function(time) {
 
         time = (time || Math.round(+new Date() / 1000));
         $('#update_time_tick').html($filter('getCurrentTime')(time));
-    };
+    };*/
 
     /**
      * Log error
@@ -37298,26 +37410,36 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
     $scope.showContent = false;
     // Global config
     $scope.cfg = cfg;
-    // Load zwave config
+    /**
+     * Set zwave configuration
+     * @returns {undefined}
+     */
     $scope.loadZwaveConfig = function (nocache) {
         // Set config
         dataService.getApi('configget_url', null, nocache).then(function (response) {
             angular.extend(cfg.zwavecfg, response.data);
         }, function (error) {});
-        // Set time
-        dataService.getApi('timezone', null, true).then(function (response) {
-            angular.extend(cfg.route.time, {string: $filter('setTimeFromBox')(response.data.data)});
+    };
+    $scope.loadZwaveConfig();
 
+    /**
+     * Set timestamp and ping server if request fails
+     * @returns {undefined}
+     */
+    $scope.setTimeStamp = function () {
+       dataService.getApi('time', null, true).then(function (response) {
+            $interval.cancel($scope.timeZoneInterval);
+            angular.extend(cfg.route.time, {string: $filter('setTimeFromBox')(response.data.data.localTimeUT)},
+                {timestamp: response.data.data.localTimeUT});
             var refresh = function () {
-                dataService.getApi('timezone', null, true).then(function (response) {
-                    angular.extend(cfg.route.time, {string: $filter('setTimeFromBox')(response.data.data)});
-
-                }, function (error) {});
+                cfg.route.time.timestamp += (cfg.interval < 1000 ? 1 : cfg.interval/1000)
+                cfg.route.time.string = $filter('setTimeFromBox')(cfg.route.time.timestamp)
             };
             $scope.timeZoneInterval = $interval(refresh, $scope.cfg.interval);
         }, function (error) {});
+
     };
-    $scope.loadZwaveConfig();
+    $scope.setTimeStamp();
 
     // Lang settings
     $scope.lang_list = cfg.lang_list;
@@ -37351,8 +37473,6 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
         $('.current-lang').html($scope.lang);
         $scope.loadLang($scope.lang);
     });
-    // Navi time
-    $scope.navTime = $filter('getCurrentTime');
     // Order by
     $scope.orderBy = function (field) {
         $scope.predicate = field;
@@ -37613,7 +37733,7 @@ appController.controller('ErrorController', function($scope, $routeParams, devic
  * @class SettingsController
  *
  */
-appController.controller('SettingsController', function ($scope, $filter, $timeout,$interval,dataService,deviceService, cfg,_) {
+appController.controller('SettingsController', function ($scope, $filter, $timeout,$interval,$window,dataService,deviceService, cfg,_) {
     $scope.settings = {
         input: {}
     };
@@ -37630,7 +37750,8 @@ appController.controller('SettingsController', function ($scope, $filter, $timeo
      */
     $scope.storeSettings = function(input) {
         dataService.postApi('configupdate_url', input).then(function (response) {
-            $scope.reloadData();
+            //$scope.reloadData();
+            $window.location.reload();
             deviceService.showNotifier({message: $scope._t('update_successful')});
         }, function (error) {
             alertify.alertError($scope._t('error_update_data'));
@@ -37719,32 +37840,6 @@ appController.controller('DongleController', function($scope, $window,$cookies,c
         dataService.purgeCache();
         $window.location.reload();
     };
-});
-
-/**
- * Auth controller
- */
-appController.controller('AuthController', function($scope, $routeParams, cfg,deviceService) {
-    $scope.input = {
-        login: '',
-        password: ''
-    };
-    /**
-     * Login proccess
-     */
-    $scope.login = function (input) {
-        //$scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin', message: $scope._t('loading')};
-        if (input.login !== cfg.auth.login && input.password !== cfg.auth.password) {
-           alertify.alertError($scope._t('error_load_user'));
-            $scope.input = {
-                login: '',
-                password: ''
-            };
-            return;
-        }
-        window.location.href = '#/home';
-    };
-
 });
 
 
@@ -37923,6 +38018,7 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
                     obj['name'] = $filter('deviceName')(nodeId, node);
                     obj['updateTime'] = instance.commandClasses[ccId].data.level.updateTime;
                     obj['invalidateTime'] = instance.commandClasses[ccId].data.level.invalidateTime;
+                    obj['dateTime'] = $filter('getDateTimeObj')(instance.commandClasses[ccId].data.level.updateTime);
                     obj['urlToStore'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Get()';
                     obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
                     //obj['level'] = ZWaveAPIData.devices[nodeId].instances[instanceId].commandClasses[ccId].data.level;
@@ -38153,6 +38249,7 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
                         obj['invalidateTime'] = val.invalidateTime;
                         obj['updateTime'] = val.updateTime;
                         obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
+                        obj['dateTime'] = $filter('getDateTimeObj')(val.updateTime);
                         obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[' + instanceId + '].commandClasses[48].Get()';
                         obj['cmdToUpdate'] = 'devices.' + obj['id'] + '.instances.' + instanceId + '.commandClasses.48.data.' + sensor_type;
                         var findIndex = _.findIndex($scope.sensors.all, {rowId: obj.rowId});
@@ -38193,6 +38290,7 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
                         obj['invalidateTime'] = val.invalidateTime;
                         obj['updateTime'] = val.updateTime;
                         obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
+                        obj['dateTime'] = $filter('getDateTimeObj')(val.updateTime);
                         obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[' + instanceId + '].commandClasses[49].Get()';
                         obj['cmdToUpdate'] = 'devices.' + obj['id'] + '.instances.' + instanceId + '.commandClasses.49.data.' + sensor_type;
                         var findIndex = _.findIndex($scope.sensors.all, {rowId: obj.rowId});
@@ -38239,6 +38337,7 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
                         obj['invalidateTime'] = meter.invalidateTime;
                         obj['updateTime'] = meter.updateTime;
                         obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
+                        obj['dateTime'] = $filter('getDateTimeObj')(meter.updateTime);
                         obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[' + instanceId + '].commandClasses[50].Get()';
                         obj['cmdToUpdate'] = 'devices.' + obj['id'] + '.instances.' + instanceId + '.commandClasses.50.data.' + sensor_type;
                         var findIndex = _.findIndex($scope.sensors.all, {rowId: obj.rowId});
@@ -38277,6 +38376,7 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
                         obj['levelExt'] = null;
                         obj['invalidateTime'] = val.invalidateTime;
                         obj['updateTime'] = val.updateTime;
+                        obj['dateTime'] = $filter('getDateTimeObj')(val.updateTime);
                         obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
                         obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[' + instanceId + '].commandClasses[156].Get()';
                         obj['cmdToUpdate'] = 'devices.' + obj['id'] + '.instances.' + instanceId + '.commandClasses.156.data.' + sensor_type;
@@ -38438,6 +38538,7 @@ appController.controller('MetersController', function($scope, $filter, $timeout,
                         obj['invalidateTime'] = meter.invalidateTime;
                         obj['updateTime'] = meter.updateTime;
                         obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
+                        obj['dateTime'] = $filter('getDateTimeObj')(meter.updateTime);
                         obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[' + instanceId + '].commandClasses[50].Get()';
                         obj['cmdToUpdate'] = 'devices.' + k + '.instances.' + instanceId + '.commandClasses.' + 0x32 + '.data.' + scaleId;
                         if (ZWaveAPIData.devices[obj['id']].instances[instanceId].commandClasses[0x32].data.version.value < 2
@@ -40081,7 +40182,6 @@ appController.controller('ControllController', function($scope, $filter, $upload
             setControllerData(ZWaveAPIData);
             setDevicesData(ZWaveAPIData);
             $scope.refreshData(ZWaveAPIData);
-            deviceService.updateTimeTick(ZWaveAPIData.updateTime);
         }, function(error) {
             $location.path('/error/' + error.status);
             return;
@@ -40100,7 +40200,6 @@ appController.controller('ControllController', function($scope, $filter, $upload
                 setControllerData(response.data.joined);
                 setDevicesData(response.data.joined);
                 setInclusionData(response.data.update);
-                deviceService.updateTimeTick(response.data.update.updateTime);
             }, function(error) {
                 deviceService.showConnectionError(error);
                 return;
@@ -40348,7 +40447,6 @@ appController.controller('ControllController', function($scope, $filter, $upload
         if ('controller.data.controllerState' in data) {
             $scope.controllerState = data['controller.data.controllerState'].value;
         }
-        console.log($filter('getCurrentTime')(Math.round(+new Date() / 1000)) + ': Controller state: ' + $scope.controllerState);
 
         // console.log('Learn mode 2: ' + $scope.learnMode);
         if ('controller.data.lastExcludedDevice' in data) {
@@ -41487,7 +41585,6 @@ appController.controller('ControllerController', function($scope, $window, $filt
             $scope.master['controller.data.softwareRevisionId'] = ZWaveAPIData.controller.data.softwareRevisionId.value;
             $scope.master['controller.data.softwareRevisionDate'] = ZWaveAPIData.controller.data.softwareRevisionDate.value;
             $scope.master['controller.data.softwareRevisionDate'] = ZWaveAPIData.controller.data.softwareRevisionDate.value;
-            $scope.master['controller.data.frequency'] = ZWaveAPIData.controller.data.frequency.value;
             // Texts
             $scope.master['txtHomeId'] = '';
             $scope.master['txtSucSis'] = '';
@@ -43009,7 +43106,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
     $scope.notConfigDevices = [];
     $scope.notes = [];
     $scope.notesData = '';
-    $scope.updateTime = $filter('getTimestamp');
+    //$scope.updateTime = $filter('getTimestamp');
      $scope.controller = {
          controllerState: 0,
          startLearnMode: false
@@ -43148,26 +43245,6 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
         }else{
             _runZwaveCmd(cmd);
         }
-    };
-
-    /**
-     * Show modal window
-     *
-     * @returns {void}
-     */
-    $scope.showModal = function(target, id) {
-
-        /*var obj = $filter('filter')($scope.devices, function(d) {
-            return d.id == id;
-        })[0];
-        if (obj) {
-            $scope.deviceInfo = {
-                "id": obj.id,
-                "name": obj.name
-            };
-        }*/
-        $(target).modal();
-        return;
     };
 
     /// --- Private functions --- ///

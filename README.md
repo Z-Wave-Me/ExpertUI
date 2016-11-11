@@ -5,8 +5,12 @@ This User Interfaces allows to operate a Smart Home Network based on Z-Wave devi
 
 ## v1.2.0
 #### New features
+- Icons in the menu .
+- Time format settings.
+- Edit notes in the modal window.
 - Enhanced display on mobile devices and tablets.
 - Spinner indicators.
+- Icons in the main menu.
 
 #### Changes
 - Notes saved into /ZWaveAPI/ExpertConfigGet.
@@ -15,7 +19,7 @@ This User Interfaces allows to operate a Smart Home Network based on Z-Wave devi
 - Folder app/core removed.
 
 #### Fixes
-- ???.
+- Disappeared temperature slider #146.
 
 ## v1.1.0
 #### New features

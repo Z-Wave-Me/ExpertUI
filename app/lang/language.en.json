@@ -7,6 +7,8 @@
  "lb_enter": "Login",
  "lb_password": "Password",
   "---": "---",
+ "time_format": "Time format",
+ "hours": "Hours",
  "settings": "Settings",
  "date_format": "Date format",
  "network_name": "Network name",

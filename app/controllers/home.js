@@ -26,7 +26,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
     $scope.notConfigDevices = [];
     $scope.notes = [];
     $scope.notesData = '';
-    $scope.updateTime = $filter('getTimestamp');
+    //$scope.updateTime = $filter('getTimestamp');
      $scope.controller = {
          controllerState: 0,
          startLearnMode: false

@@ -78,7 +78,6 @@ appController.controller('ControllController', function($scope, $filter, $upload
             setControllerData(ZWaveAPIData);
             setDevicesData(ZWaveAPIData);
             $scope.refreshData(ZWaveAPIData);
-            deviceService.updateTimeTick(ZWaveAPIData.updateTime);
         }, function(error) {
             $location.path('/error/' + error.status);
             return;
@@ -97,7 +96,6 @@ appController.controller('ControllController', function($scope, $filter, $upload
                 setControllerData(response.data.joined);
                 setDevicesData(response.data.joined);
                 setInclusionData(response.data.update);
-                deviceService.updateTimeTick(response.data.update.updateTime);
             }, function(error) {
                 deviceService.showConnectionError(error);
                 return;
@@ -345,7 +343,6 @@ appController.controller('ControllController', function($scope, $filter, $upload
         if ('controller.data.controllerState' in data) {
             $scope.controllerState = data['controller.data.controllerState'].value;
         }
-        console.log($filter('getCurrentTime')(Math.round(+new Date() / 1000)) + ': Controller state: ' + $scope.controllerState);
 
         // console.log('Learn mode 2: ' + $scope.learnMode);
         if ('controller.data.lastExcludedDevice' in data) {
