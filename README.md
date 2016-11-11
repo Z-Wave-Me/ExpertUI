@@ -5,7 +5,7 @@ This User Interfaces allows to operate a Smart Home Network based on Z-Wave devi
 
 ## v1.2.0
 #### New features
-- Icons in the menu.
+- Icons in the menu .
 - Time format settings.
 - Edit notes in the modal window.
 - Enhanced display on mobile devices and tablets.
