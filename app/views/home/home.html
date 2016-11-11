@@ -32,7 +32,7 @@
                     <i class="fa fa-cog text-info"></i> {{_t('settings')}}
                 </div>
                 <div class="panel-body">
-                    <p>
+                    <p ng-if="cfg.app_type === 'installer'">
                         <strong>{{_t('network_name')}}:</strong> <span>{{settings.input.network_name}}</span>
                     </p>
                     <p>
@@ -259,7 +259,7 @@
             <div class="appmodal-body">
                 <fieldset>
                     <!-- network name -->
-                    <div class="form-group">
+                    <div class="form-group" ng-if="cfg.app_type === 'installer'">
                         <label for="network_name">{{_t('network_name')}}: </label>
                         <input name="network_name" id="network_name" type="text"
                                class="form-control"

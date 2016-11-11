@@ -6,7 +6,7 @@
 var config_data = {
     'cfg': {
         'app_name': 'Expert UI',
-        'app_version': '1.1.0',
+        'app_version': '1.2.0',
         'custom_ip': false,
         'user_field': 'USERXXXX',
         'pass_field': 'PSWDXXXX',
@@ -104,7 +104,7 @@ var config_data = {
         },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer
-        'app_type': 'default',
+        'app_type': 'installer',
          'custom_cfg': {
              'default':{
                  'logo': 'app/images/zplus.jpg',
