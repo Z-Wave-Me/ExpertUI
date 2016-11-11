@@ -37935,12 +37935,21 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
         });
 
     };
+
     /**
-     * Update switch with slider
+     * Calls function when slider handle is grabbed
+     */
+    $scope.sliderOnHandleDown = function() {
+        $interval.cancel($scope.switches.interval);
+    };
+
+    /**
+     * Calls function when slider handle is released
      * @param {string} cmd
      * @param {int} index
      */
-    $scope.sliderChange = function(cmd, index) {
+    $scope.sliderOnHandleUp = function(cmd, index) {
+        $scope.refreshZwaveData(null);
         var val = $scope.switches.rangeSlider[index];
         var url = cmd + '.Set(' + val + ')';
         dataService.runZwaveCmd(cfg.store_url + url).then(function (response) {
@@ -37950,6 +37959,22 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
             alertify.alertError($scope._t('error_update_data') + '\n' + url);
         });
     };
+
+    /**
+     * Update switch with slider
+     * @param {string} cmd
+     * @param {int} index
+     */
+    /*$scope.sliderChange = function(cmd, index) {
+        var val = $scope.switches.rangeSlider[index];
+        var url = cmd + '.Set(' + val + ')';
+        dataService.runZwaveCmd(cfg.store_url + url).then(function (response) {
+            $scope.toggleRowSpinner();
+        }, function (error) {
+            $scope.toggleRowSpinner();
+            alertify.alertError($scope._t('error_update_data') + '\n' + url);
+        });
+    };*/
 
     /// --- Private functions --- ///
 
@@ -38657,12 +38682,21 @@ appController.controller('ThermostatController', function($scope, $filter, $time
     };
 
     /**
-     * Update thermostat temperature with slider
-     * @param {string} url
-     * @param {int}  index
+     * Calls function when slider handle is grabbed
      */
-    $scope.updateThermostatTempSlider = function(url, index) {
+    $scope.sliderOnHandleDown = function() {
+        $interval.cancel($scope.thermostats.interval);
+    };
+
+
+    /**
+     * Calls function when slider handle is released
+     * @param {string} cmd
+     * @param {int} index
+     */
+    $scope.sliderOnHandleUp = function(url, index) {
         $scope.toggleRowSpinner(url);
+        $scope.refreshZwaveData(null);
         var count = parseInt($scope.thermostats.rangeSlider[index]);
         var min = parseInt($scope.cfg.thermostat_range.min, 10);
         var max = parseInt($scope.cfg.thermostat_range.max, 10);

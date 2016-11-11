@@ -193,7 +193,8 @@
                          max="v.levelMax"
                          model-max="switches.rangeSlider[$index]"
                          pin-handle="min"
-                         on-handle-up="sliderChange(v.urlToSlide,$index)"></div>
+                         on-handle-down="sliderOnHandleDown()"
+                         on-handle-up="sliderOnHandleUp(v.urlToSlide,$index)"></div>
                     <div ng-switch-default>&nbsp;</div>
                 </td>
             </tr>
