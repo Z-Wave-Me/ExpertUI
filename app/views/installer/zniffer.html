@@ -1,6 +1,5 @@
 <!--Zniffer view -->
 <div ng-controller="ZnifferController">
-    <bb-loader></bb-loader>
     <div class="page-header"><h1>{{ _t('nav_zniffer')}}</h1></div>
      <!-- Control -->
     <div class="form-inline">
@@ -60,8 +59,8 @@
                     <i title="{{v.type}}" class="fa fa-long-arrow-right" ng-if="v.type === 'incoming'"></i>
                     <i title="{{v.type}}" class="fa fa-long-arrow-left" ng-if="v.type === 'outgoing'"></i> 
                 </td>
-                <td>{{v.dateTime.day + '.' + v.dateTime.mon + '.' + v.dateTime.year}}</td>
-                <td>{{v.dateTime.hrs + ':' + v.dateTime.min + ':' + v.dateTime.sec}}</td>
+                <td>{{v.dateTime.date}}</td>
+                <td>{{v.dateTime.time}}</td>
                 <td>{{v.src}}</td>
                 <td>{{v.dest}}</td>
                 <td>{{v.speed||'-'}}</td>

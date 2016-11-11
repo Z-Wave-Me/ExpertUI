@@ -1,0 +1,123 @@
+<!-- Routing view -->
+<div ng-controller="RoutingController">
+    <div class="page-header"><h1>{{ _t('tab_routing_table_title')}}</h1></div>
+    <div class="table-responsive" ng-if="routings.show">
+        <table id="RoutingTable" class="table table-striped table-condensed table-hover">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>{{ _t('device_name')}}</th>
+                <th>{{ _t('nav_type_info')}}</th>
+                <th>{{ _t('rt_header_update_time')}}</th>
+                <th ng-repeat="v in routings.nodes" style="text-align:center;">{{v.id}}</th>
+
+                <th class="mobile-show td-action">
+                    <button class="btn btn-info" id="btn_update_all_1"
+                            ng-click="updateAllRoutess('all_1','urlToStore')"
+                            ng-disabled="rowSpinner['all_1']">
+                        <bb-row-spinner
+                                spinner="rowSpinner['all_1']"
+                                label="_t('switches_update_all')"
+                                icon="'fa-check'">
+                        </bb-row-spinner>
+                    </button>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="v in routings.all track by $index">
+                <td>{{v.id}}</td>
+                <td>{{v.name}}</td>
+                <td>
+                    <i class="fa" ng-class="v.icon"></i>
+                </td>
+                <td class="row-time is-updated-{{v.isUpdated}}">
+                    {{ v.updateTime | isTodayFromUnix }} &nbsp;
+                </td>
+                <td ng-repeat="n in devices" class="rtCell">
+                    <div id="cell{{nodeId}}-{{n}}" class="{{data[nodeId][n].clazz}}" title="{{data[nodeId][n].tooltip}}"
+                         data-toggle="tooltip" data-position="top" tooltip_><span
+                            class="info">{{data[nodeId][n].info}}</span></div>
+                </td>
+                <td class="rtCell" ng-repeat="n in v.cellState">
+                    <div class="{{n.cssClass}}" title="{{n.tooltip}}">
+                        <span class="info" ng-if="n.hasAssoc">*</span>
+                        <span class="info" ng-if="!n.hasAssoc">&nbsp;</span>
+                    </div>
+
+                </td>
+
+                <td class="td-action">
+                    <button class="btn btn-default" id="btn_update_{{ v.rowId}}"
+                            ng-click="updateRoute(v.urlToStore)"
+                            ng-disabled="rowSpinner[v.urlToStore]">
+                        <bb-row-spinner
+                                spinner="rowSpinner[v.urlToStore]"
+                                label=" _t('update')"
+                                icon="'fa-check text-success'">
+
+                        </bb-row-spinner>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="RoutingComments">
+        <i class="fa fa-square fa-lg" style="color: green;"></i> {{_t('direct')}}<br/>
+        <i class="fa fa-square fa-lg" style="color: #8C0;"></i> {{_t('routed')}}<br/>
+        <i class="fa fa-square fa-lg" style="color: yellow;"></i> {{_t('badly_routed')}}<br/>
+        <i class="fa fa-square fa-lg" style="color: red;"></i> {{_t('not_linked')}}<br/>
+        <i class="fa fa-square fa-lg" style="color: gray;"></i> {{_t('unavailable')}}<br/>
+    </div>
+</div>
+
+<!-- Old Routing view -->
+<div ng-controller="RoutingTableController">
+    <div class="page-header"><h1>{{ _t('tab_routing_table_title')}}</h1></div>
+    <div class="table-responsive">
+        <table id="RoutingTable" class="table table-striped">
+            <thead>
+            <tr>
+                <th class="rtHeader">{{ _t('rt_header_node_id')}}</th>
+                <th class="rtHeader">{{ _t('device_name')}}</th>
+                <th class="rtHeader">{{ _t('nav_type_info')}}</th>
+                <th ng-repeat="d in devices" style="text-align:center;">{{d}}</th>
+                <th class="rtHeader" style="text-align: right;">{{ _t('rt_header_update_time')}}</th>
+                <th class="rtHeader">
+                    <btn-spinner></btn-spinner>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="nodeId in devices">
+                <td>{{nodeId}}</td>
+                <td>{{nodeId| deviceName:nodes[nodeId].node}}</td>
+                <td>
+                    <routing-type-icon node-id="{{nodeId}}"></routing-type-icon>
+                </td>
+                <td ng-repeat="n in devices" class="rtCell">
+                    <div id="cell{{nodeId}}-{{n}}" class="{{data[nodeId][n].clazz}}" title="{{data[nodeId][n].tooltip}}"
+                         data-toggle="tooltip" data-position="top" tooltip_><span
+                            class="info">{{data[nodeId][n].info}}</span></div>
+                </td>
+                <td style="text-align: right;"><span id="update{{nodeId}}"
+                                                     class="{{nodes[nodeId].node.data.neighbours| getUpdated}}">{{nodes[nodeId].node.data.neighbours.updateTime| isTodayFromUnix}}</span>
+                </td>
+                <td ng-if="nodes[nodeId].node | updateable :nodeId">&nbsp;
+                    <button class="btn btn-primary update"
+                            data-ng-click="update(nodeId)" ng-disabled="updating[nodeId]">{{ _t('update')}}
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="RoutingComments">
+        <i class="fa fa-square fa-lg" style="color: green;"></i> {{_t('direct')}}<br/>
+        <i class="fa fa-square fa-lg" style="color: #8C0;"></i> {{_t('routed')}}<br/>
+        <i class="fa fa-square fa-lg" style="color: yellow;"></i> {{_t('badly_routed')}}<br/>
+        <i class="fa fa-square fa-lg" style="color: red;"></i> {{_t('not_linked')}}<br/>
+        <i class="fa fa-square fa-lg" style="color: gray;"></i> {{_t('unavailable')}}<br/>
+    </div>
+</div>

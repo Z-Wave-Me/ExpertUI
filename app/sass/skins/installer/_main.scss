@@ -1,0 +1,148 @@
+/* Zwave alliance
+-------------------------------------------------- */
+$alliance-blue:  #083366;  
+$alliance-green: #47AA42;
+$alliance-green-bcg: lighten($alliance-green,40%);
+$alliance-green-border: lighten($alliance-green,20%);
+$alliance-orange: #F89847;
+.app-type-installer{
+    #main_navigation{
+        margin-bottom: 0;
+    }
+    .container-installer{
+        margin: $header-h 0 0 0;
+        width: 100%;
+        .alert{
+            font-size: 120%;
+            text-align: center;
+            padding: 10px 15px;
+        }
+    }
+    /*Typo */
+    h1 {
+        color: $alliance-blue;
+    }
+    a {
+        color: $alliance-blue;
+    }
+    .list-group-item {
+        border-color: $alliance-green-border;
+    }
+    /* Header */
+    #main_navigation {
+        .navibar-item-root,.timestamp{
+            color: $alliance-orange;
+        }
+        .active {
+            color: #47aa42;
+            background-color: #2A6496;
+        }
+    }
+
+    .sub-navigation {
+        background-color: $alliance-green;
+        border: 1px solid #e3e3e3;
+        ul {
+            li {
+                border-color: #FFF;
+            }
+        }
+    }
+    /* Dropdown menu */
+    .dropdown-menu {
+        background-color: $alliance-green;
+        border: 1px solid #e3e3e3;
+    }
+
+    .dropdown-menu > li > a {
+        color:$alliance-blue;
+    }
+    .dropdown-menu > li > a.active,
+    .dropdown-menu > li > a.active:hover {
+        color: $alliance-green;
+        background-color:$alliance-blue;
+    }
+    /* Logo */
+    .product-logo{
+        max-width: 150px;
+        max-height: 150px;
+    }
+
+    /* Homepage */
+    .product-data-list{
+        background-color: $alliance-green-bcg;
+    }
+    .product-description {
+        border-color: $alliance-green-border;
+    }
+    /*    .product-data-list h3 {
+            color: $alliance-green;
+        }*/
+
+
+
+    /* Table  */
+    .table > thead > tr > th {
+        border-color: $alliance-green-border;
+    }
+
+    .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+        border-color: $alliance-green-border;
+    }
+
+    /*Form */
+    .form-control {
+        border-color: $alliance-green-border;
+    }
+    .commands-data-control {
+        background-color: $alliance-green-bcg;
+    }
+    .commands-data {
+        border-color: $alliance-green-border;
+    }
+    .cfg-block {
+        border-color: $alliance-green-border;
+    }
+    /* Tabs */
+    .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+        background-color: $alliance-green-bcg;
+        border-color: $alliance-green-border;
+    }
+    .tab-content {
+        border-color: transparent $alliance-green-border $alliance-green-border;
+    }
+    .nav-tabs {
+        border-color: $alliance-green-border;
+    }
+    /* Panel */
+    .panel {
+        border-color: $alliance-green-border;
+    }
+    .panel-default > .panel-heading {
+        background-color: $alliance-green-bcg;
+        border-color: $alliance-green-border;
+    }
+    .panel-default > .panel-footer {
+        background-color: lighten($alliance-green-bcg,10%);
+        border-color:  $alliance-green-border;
+    }
+    /* List group */
+    .list-group-item {
+        border-color: $alliance-green-border;
+    }
+    .list-report{
+        li{
+            border-top: solid 1px $alliance-green-border;
+        }
+    }
+    /* Welll */
+    .well {
+        background-color: $alliance-green-bcg;
+        border-color: $alliance-green-border;
+    }
+    /* footer */
+    #footer{
+        border-color: $alliance-green-border;
+
+    }
+}
