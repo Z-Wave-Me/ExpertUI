@@ -48,7 +48,7 @@
   "pakettype": "Paket type",
   "hexdata": "HEX",
   "nav_zniffer": "Zniffer",
-  "nav_installer": "Installer",
+  "nav_installer": "Analytics",
   "postfix_missingid": "This device has missing product ID",
   "update_successful": "Data was successfully updated",
   "link_health": "Link health",
