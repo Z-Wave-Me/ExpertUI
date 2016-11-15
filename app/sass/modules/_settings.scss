@@ -1,0 +1,19 @@
+/* Settings
+-------------------------------------------------- */
+.settings-lang{
+    a{
+
+        img{
+            width: 32px;
+            height: 32px;
+            display: inline-block;
+            margin-right: $spacing-half;
+        }
+    }
+   a.active{
+       img{
+           border: solid 4px $app-border-color;
+       }
+
+   }
+}

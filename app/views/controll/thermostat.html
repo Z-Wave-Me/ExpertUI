@@ -74,8 +74,9 @@
                                  min='cfg.thermostat_range.min' 
                                  max='cfg.thermostat_range.max'  
                                  model-max="thermostats.rangeSlider[$index]"
-                                 pin-handle="min" 
-                                 on-handle-up="updateThermostatTempSlider(v.urlChangeTemperature,$index)">
+                                 pin-handle="min"
+                                 on-handle-down="sliderOnHandleDown()"
+                                 on-handle-up="sliderOnHandleUp(v.urlChangeTemperature,$index)">
                             </div>
                         </div>
                     </td>

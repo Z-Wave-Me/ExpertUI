@@ -63,7 +63,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
             assocRemovedDevices(ZWaveAPIData);
             notConfigDevices(ZWaveAPIData);
             batteryDevices(ZWaveAPIData);
-            $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
+            $scope.mainsDevices = $scope.countDevices - ($scope.batteryDevices + $scope.flirsDevices);
             $scope.controller.controllerState = ZWaveAPIData.controller.data.controllerState.value;
             $scope.controller.startLearnMode = !isRealPrimary || hasDevices < 2 ? true : false;
             $scope.refreshZwaveData(ZWaveAPIData);
@@ -85,7 +85,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
                 assocRemovedDevices(response.data.joined);
                 //notConfigDevices(ZWaveAPIData);
                 batteryDevices(response.data.joined);
-                $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
+                $scope.mainsDevices = $scope.countDevices - ($scope.batteryDevices + $scope.flirsDevices);
                 $scope.controller.controllerState = response.data.joined.controller.data.controllerState.value;
             }, function(error) {});
         };
@@ -247,7 +247,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
             cnt++;
         });
         $scope.flirsDevices = cntFlirs;
-        $scope.countDevices = cnt;
+        $scope.countDevices = cnt + cntFlirs;
     }
     ;
 

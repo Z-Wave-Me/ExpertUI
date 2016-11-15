@@ -15271,6 +15271,20 @@ http://codepen.io/MattIn4D/pen/LiKFC
   width: 15%;
 }
 
+/* Settings
+-------------------------------------------------- */
+/* line 6, ../sass/modules/_settings.scss */
+.settings-lang a img {
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  margin-right: 5px;
+}
+/* line 14, ../sass/modules/_settings.scss */
+.settings-lang a.active img {
+  border: solid 4px #9fd8ef;
+}
+
 /* Main navigation
 -------------------------------------------------- */
 /* line 5, ../sass/skins/default/_main.scss */

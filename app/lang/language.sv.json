@@ -1,4 +1,7 @@
 {
+  "reloading": "Reloading the page...",
+  "language": "Language",
+  "logout": "Logout",
   "settings": "Settings",
   "date_format": "Date format",
   "network_name": "Network name",
@@ -180,7 +183,7 @@
   "btn_show_lifeline": "Visa livlina",
   "btn_hide_lifeline": "Göm livlina",
   "btn_change": "Ändra",
-  "txt_homepage_promo_default": "<p>Detta är en komplett, Statisk Z-Wave Plus Kontroller certifierad i September 2014 av Z-Wave-alliansen under Cert-Nr. XXXXXXXX. Certifikationen inkluderar Z-Wave-stacken och detta Användarinterface. </p><p>Mjukvaran stödjer alla certifierade Z-Wave-enheter på marknaden, närmare bestämt de som listas i enhetsdatabasen: <a href=\"http://pepper1.net/zwavedb/\">http://pepper1.net/zwavedb/</a>. Den använder enhets-metadata som tillhandahålls av denna databas. Om ingen metadata så som bild, SKU-namn etc finns angiven, är enheten ej listad i denna databas än. Det är trots detta möjligt att använda enhetens alla funktioner. Vänligen referera till enhetens manual för konfiguratoions- och användningsinformation.</p><p>Du kan ladda ned den kompletta manualen för denna mjukvara från <a href=\"http://razberry.z-wave.me\">www.z-wave.me</a></p>",
+  "txt_homepage_promo_default": "<p>Detta är en komplett, Statisk Z-Wave Plus Kontroller certifierad i September 2014 av Z-Wave-alliansen under Cert-Nr. XXXXXXXX. Certifikationen inkluderar Z-Wave-stacken och detta Användarinterface. </p><p>Mjukvaran stödjer alla certifierade Z-Wave-enheter på marknaden, närmare bestämt de som listas i enhetsdatabasen: <a href=\"http://pepper1.net/zwavedb/\">http://pepper1.net/zwavedb/</a>. Den använder enhets-metadata som tillhandahålls av denna databas. Om ingen metadata så som bild, SKU-namn etc finns angiven, är enheten ej listad i denna databas än. Det är trots detta möjligt att använda enhetens alla funktioner. Vänligen referera till enhetens manual för konfiguratoions- och användningsinformation.</p><p>Du kan ladda ned den kompletta manualen för denna mjukvara från <a href=\"http://razberry.z-wave.me\">razberry.z-wave.me</a></p>",
   "txt_devices_present": "enheter närvarande",
   "txt_network_info": "Nätverksinformation",
   "txt_devices_mains": "enheterna är elnätsdrivna",

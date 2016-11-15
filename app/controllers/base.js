@@ -79,6 +79,8 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
     $scope.loadZwaveConfig = function (nocache) {
         // Set config
         dataService.getApi('configget_url', null, nocache).then(function (response) {
+            //angular.extend(cfg.zwavecfg, {debug: response.data.debug});
+            //angular.extend(cfg.zwavecfg, {notes: response.data.notes});
             angular.extend(cfg.zwavecfg, response.data);
         }, function (error) {});
     };
@@ -337,6 +339,7 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
              var hasDevices = Object.keys(ZWaveAPIData.devices).length;
              var homeId = ZWaveAPIData.controller.data.homeId.value;
             $scope.boxData.controller.isPrimary = ZWaveAPIData.controller.data.isPrimary.value;
+            $scope.boxData.controller.isRealPrimary = ZWaveAPIData.controller.data.isRealPrimary.value;
             $scope.boxData.controller.hasDevices =  hasDevices < 2 ? false : true;
             $scope.boxData.controller.homeId =   '0x' + ('00000000' + (homeId + (homeId < 0 ? 0x100000000 : 0)).toString(16)).slice(-8);
             // Changes MK
