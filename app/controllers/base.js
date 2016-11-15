@@ -79,6 +79,8 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
     $scope.loadZwaveConfig = function (nocache) {
         // Set config
         dataService.getApi('configget_url', null, nocache).then(function (response) {
+            //angular.extend(cfg.zwavecfg, {debug: response.data.debug});
+            //angular.extend(cfg.zwavecfg, {notes: response.data.notes});
             angular.extend(cfg.zwavecfg, response.data);
         }, function (error) {});
     };

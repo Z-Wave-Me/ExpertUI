@@ -1,8 +1,11 @@
 {
   "--- newtrans": "---",
+ "reloading": "Reloading the page...",
+ "---": "---",
+ "language": "Language",
+ "logout": "Logout",
  "time_format": "Time format",
  "hours": "Hours",
- "---": "---",
  "settings": "Settings",
  "date_format": "Date format",
  "network_name": "Network name",

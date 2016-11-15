@@ -1,4 +1,7 @@
 {
+  "reloading": "Reloading the page...",
+  "language": "Language",
+  "logout": "Logout",
   "settings": "Settings",
   "date_format": "Date format",
   "network_name": "Network name",
