@@ -113,8 +113,8 @@
                                 <input type="checkbox"
                                        ng-disabled="rowSpinner[v.urlToOn]"
                                        ng-checked="v.levelStatus === 'on'"
-                                       ng-model="switches.switchButton[v.id]"
-                                       ng-change="updateSwitch(switches.switchButton[v.id] ? v.urlToOn : v.urlToOff)"
+                                       ng-model="switches.switchButton[v.rowId]"
+                                       ng-change="updateSwitch(switches.switchButton[v.rowId] ? v.urlToOn : v.urlToOff)"
                                 >
                                 <div class="slider round"></div>
                             </label>
