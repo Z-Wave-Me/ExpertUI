@@ -1,0 +1,49 @@
+<!-- Modal restore backup -->
+<div class="modal fade" id="modal_restore_backup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">{{_t('nm_restore_backup_upload')}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="restore-backup-control" ng-show="restoreBackupStatus == 0">
+                    <div class="alert alert-warning">
+                        <input type="checkbox" name="restore_confirm" value="1" id="restore_confirm" ng-click="goRestore = !goRestore" /> <span ng-bind-html="_t('are_you_sure_restore') | toTrusted"></span>
+                    </div>
+                    <div ng-show="goRestore">
+                        <input
+                                type="checkbox"
+                                name="restore_chip_info"
+                                id="restore_chip_info"
+                                value="1"
+                                ng-true-value="1"
+                                ng-false-value="0"
+                                ng-model="modelRestoreChipInfo" /> {{_t('restore_backup_chip')}}
+
+                    </div>
+                    <p class="text-center">
+                        <!--<button
+                   ng-show="goRestore"
+                   ng-file-select="restoreBackup($files,modelRestoreChipInfo,'.btn-spinner-hidden','#btn_upload')"
+                   data-multiple="true"
+                   onclick="this.value = null"
+                   id="btn_upload"
+                   class="btn btn-primary"
+                   ><i class="fa fa-download"></i> {{_t('nm_restore_pick_up')}}<input type="file" ng-file-select="restoreBackup($files,modelRestoreChipInfo,'.btn-spinner-hidden','#btn_upload')" data-multiple="true" title="select file" onclick="this.value = null" class="upload-button" multiple="multiple" style="top: 0px; bottom: 0px; left: 0px; right: 0px; width: 100%; opacity: 0; position: absolute;"></button>-->
+
+                        <input id="btn_upload" ng-show="goRestore" type="file" name="file" onchange="angular.element(this).scope().restoreFromFile(this.files,'.btn-spinner-hidden','#btn_upload')" />
+                    </p>
+
+                </div>
+                <div class="alert alert-info" ng-show="restoreBackupStatus == 1"> {{_t('restore_wait')}}</div>
+                <div class="alert alert-success" ng-show="restoreBackupStatus == 2">{{_t('restore_done_reload_ui')}}</div>
+                <div class="alert alert-danger" ng-show="restoreBackupStatus == 3">{{_t('restore_backup_failed')}}</div>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-default" ng-click="closeBackup('#modal_restore_backup')" data-dismiss="modal">{{_t('btn_cancel')}}</button>
+            </div>
+        </div>
+    </div>
+</div><!-- /.Modal -->

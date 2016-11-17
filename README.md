@@ -12,6 +12,8 @@ This User Interfaces allows to operate a Smart Home Network based on Z-Wave devi
 
 #### Changes
 - Languages moved to settings.
+- Network/Control divided into views.
+- Homepage divided into views.
 - Notes saved into /ZWaveAPI/ExpertConfigGet.
 - Function runCmd() replaced with the new fn runZwaveCmd().
 - Completely refactored CSS for simpler customizations.

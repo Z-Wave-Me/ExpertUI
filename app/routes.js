@@ -73,7 +73,7 @@ angApp.config(['$routeProvider',
             templateUrl: 'app/views/configuration/health.html'
         }).// Network
         when('/network/control', {
-            templateUrl: 'app/views/network/control.html'
+            templateUrl: 'app/views/network/control_' + config_data.cfg.app_type + '.html'
         }).when('/network/routing', {
             templateUrl: 'app/views/network/routing.html'
         }).//                when('/network/reorganization', {
