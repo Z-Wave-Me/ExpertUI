@@ -11,6 +11,7 @@ This User Interfaces allows to operate a Smart Home Network based on Z-Wave devi
 - Spinner indicators.
 
 #### Changes
+- Languages moved to settings.
 - Notes saved into /ZWaveAPI/ExpertConfigGet.
 - Function runCmd() replaced with the new fn runZwaveCmd().
 - Completely refactored CSS for simpler customizations.

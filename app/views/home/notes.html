@@ -1,0 +1,14 @@
+<!-- Notes -->
+<div class="panel panel-default" ng-controller="SettingsController">
+    <div class="panel-heading">
+        <i class="fa fa-list text-info"></i> {{_t('txt_notes')}}
+    </div>
+    <div class="panel-body newlines" ng-if="settings.input.notes">
+        {{settings.input.notes|stripTags}}
+    </div>
+    <div class="panel-footer text-right">
+        <button class="btn btn-default" ng-click="handleModal('notesModal', $event)">
+            <i class="fa fa-pencil text-info"></i> {{_t('edit')}}
+        </button>
+    </div>
+</div>
