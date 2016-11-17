@@ -8,6 +8,27 @@ module.exports = function (grunt) {
             options: {force: true},
             build: ["dist/"]
         },
+        // NG templates
+        ngtemplates: {
+            app: {
+                options: {
+                    standalone: true,
+                    module: 'myAppTemplates',
+                    htmlmin: {
+                        collapseBooleanAttributes: true,
+                        collapseWhitespace: true,
+                        removeAttributeQuotes: true,
+                        removeComments: true, // Only if you don't use comment directives!
+                        removeEmptyAttributes: true,
+                        removeRedundantAttributes: true,
+                        removeScriptTypeAttributes: true,
+                        removeStyleLinkTypeAttributes: true
+                    }
+                },
+                src: 'app/views/**/*.html',
+                dest: 'dist/app/js/templates.js'
+            }
+        },
         // Concat
         concat: {
             indexhtml: {
@@ -45,6 +66,7 @@ module.exports = function (grunt) {
                     'app/vendor/canvasjs/canvasjs.min.js',
                     // APP
                     'app/app.js',
+                    'dist/app/js/templates.js',
                     'app/modules/qAllSettled.js',
                     'app/directives/directives.js',
                     'app/directives/angular-slider.js',
@@ -83,7 +105,7 @@ module.exports = function (grunt) {
                     'app/jquery/jquery-app.js'
 
                 ],
-                dest: 'dist/app/build.js'
+                dest: 'dist/app/js/build.js'
             }
         },
         // Copy
@@ -98,7 +120,7 @@ module.exports = function (grunt) {
                         ], dest: 'dist/'
                     },
                     {src:[ 'storage/**'],dest: 'dist/'},
-                    {expand: true, src: ['app/config.js'], dest: 'dist/app/', flatten: true}
+                    {expand: true, src: ['app/config.js'], dest: 'dist/app/js/', flatten: true}
                     /*{src: ['storage/img/**'], dest: 'dist/'},
                      {src: ['storage/demo/**'], dest: 'dist/'},
                      {src: ['storage/data/**'], dest: 'dist/'}*/
@@ -111,9 +133,9 @@ module.exports = function (grunt) {
             },
             angmap: {
                 files: [
-                    {expand: true, src: ['app/vendor/angular/angular-1.2.14/angular-cookies.min.js.map'], dest: 'dist/app/', flatten: true},
-                    {expand: true, src: ['app/vendor/angular/angular-1.2.14/angular.min.js.map'], dest: 'dist/app/', flatten: true},
-                    {expand: true, src: ['app/vendor/angular/angular-1.2.14/angular-route.min.js.map'], dest: 'dist/app/', flatten: true}
+                    {expand: true, src: ['app/vendor/angular/angular-1.2.14/angular-cookies.min.js.map'], dest: 'dist/app/js/', flatten: true},
+                    {expand: true, src: ['app/vendor/angular/angular-1.2.14/angular.min.js.map'], dest: 'dist/app/js/', flatten: true},
+                    {expand: true, src: ['app/vendor/angular/angular-1.2.14/angular-route.min.js.map'], dest: 'dist/app/js/', flatten: true}
                 ]
             }
         },
@@ -142,11 +164,12 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-angular-templates');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
     grunt.loadNpmTasks('grunt-string-replace');
     // Default task(s).
     //grunt.registerTask('default', ['clean','concat','copy','cssmin','string-replace']);
-    grunt.registerTask('default', ['clean', 'concat', 'copy', 'cssmin']);
+    grunt.registerTask('default', ['clean', 'ngtemplates','concat', 'copy', 'cssmin']);
 };

@@ -27,7 +27,7 @@
             <div class="product-description" ng-bind-html="_t('txt_homepage_promo_' + cfg.app_type) | toTrusted"></div>
 
             <!-- Settings -->
-            <div class="panel panel-default" ng-controller="SettingsController">
+            <!--<div class="panel panel-default" ng-controller="SettingsController">
                 <div class="panel-heading">
                     <i class="fa fa-cog text-info"></i> {{_t('settings')}}
                 </div>
@@ -47,7 +47,7 @@
                         <i class="fa fa-pencil text-info"></i> {{_t('edit')}}
                     </button>
                 </div>
-            </div>
+            </div>-->
 
             <!-- Notes -->
             <div class="panel panel-default" ng-controller="SettingsController">
@@ -66,7 +66,7 @@
         </div>
         <div class="col-sm-6 product-data-list_ pull-right_">
             <!-- Z-Wave Network -->
-            <div class="panel panel-default" ng-controller="DongleController">
+            <div class="panel panel-default" ng-controller="DongleController" ng-if="cfg.app_type !== 'installer'">
                 <div class="panel-heading">
                     <i class="fa fa-code-fork"></i> {{_t('zwave_network')}}
                 </div>
@@ -173,7 +173,7 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <!-- Not included in network -->
-                        <div ng-if="boxData.controller.isPrimary && (!boxData.controller.hasDevices && boxData.controller.controllerState == 0)">
+                        <div ng-if="boxData.controller.isRealPrimary && (!boxData.controller.hasDevices && boxData.controller.controllerState == 0)">
                             <p class="input-help">{{_t('device_not_included_info')}}</p>
                             <button
                                     class="btn btn-primary"
@@ -186,7 +186,7 @@
                         </div>
 
                         <!-- included in network -->
-                        <div ng-if="boxData.controller.isPrimary && (boxData.controller.hasDevices)">
+                        <div ng-if="boxData.controller.isRealPrimary && (boxData.controller.hasDevices)">
                             <p class="input-help">{{_t('device_included_info')}}</p>
                             <button
                                     class="btn btn-primary"
@@ -199,7 +199,7 @@
                         </div>
 
                         <!-- included in network -->
-                        <div ng-if="!boxData.controller.isPrimary">
+                        <div ng-if="!boxData.controller.isRealPrimary">
                             <p class="input-help">{{_t('device_included_info')}}</p>
                             <button
                                     class="btn btn-danger"

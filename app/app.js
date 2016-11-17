@@ -12,7 +12,8 @@ var angApp = angular.module('angApp', [
     'appService',
     'appConfig',
     'qAllSettled',
-    'angularFileUpload'
+    'angularFileUpload',
+    'myAppTemplates'
 ]);
 
 //Define Routing for app
