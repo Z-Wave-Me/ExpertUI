@@ -4,6 +4,21 @@
  */
 
 /**
+ * Window history back
+ * @class bbGoBack
+ */
+angApp.directive('bbGoBack', ['$window', function ($window) {
+    return {
+        restrict: 'A',
+        link: function (scope, elem, attrs) {
+            elem.bind('click', function () {
+                $window.history.back();
+            });
+        }
+    };
+}]);
+
+/**
  * Displays an alert message within the div
  * @class bbAlert
  */

@@ -18,13 +18,13 @@ var angApp = angular.module('angApp', [
 //Define Routing for app
 angApp.config(['$routeProvider',
     function ($routeProvider) {
-        $routeProvider.// Login
-        when('/', {
-            templateUrl: 'app/views/auth/login.html'
-        }).// Home
+        $routeProvider.// Home
         when('/home', {
             templateUrl: 'app/views/home/home.html'
         }).// Test
+        when('/', {
+            templateUrl: 'app/views/auth/login.html'
+        }).
         when('/test', {
             templateUrl: 'app/views/test.html'
         }).// License
@@ -111,6 +111,9 @@ angApp.config(['$routeProvider',
         }).// Installer - spectrum
         when('/installer/rssi', {
             templateUrl: 'app/views/installer/rssi_background.html'
+        }).// Settings
+        when('/settings', {
+            templateUrl: 'app/views/settings/settings.html'
         }).// Error page
         when('/error/:code?', {
             templateUrl: 'app/views/error.html'
