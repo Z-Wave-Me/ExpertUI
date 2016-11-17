@@ -8,10 +8,10 @@ angApp.config(['$routeProvider',
     function ($routeProvider) {
         $routeProvider.// Home
         when('/', {
+            templateUrl: 'app/views/auth/auth_' + config_data.cfg.app_type + '.html'
+        }).// Home
+        when('/home', {
             templateUrl: 'app/views/home/home_' + config_data.cfg.app_type + '.html'
-        }).// Login
-        when('/login', {
-            templateUrl: 'app/views/auth/login.html'
         }).// License
         when('/licence', {
             templateUrl: 'app/views/pages/license.html'
@@ -106,6 +106,6 @@ angApp.config(['$routeProvider',
         when('/error/:code?', {
             templateUrl: 'app/views/error.html'
         }).otherwise({
-            redirectTo: '/'
+            redirectTo: '/home'
         });
     }]);

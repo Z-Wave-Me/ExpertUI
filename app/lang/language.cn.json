@@ -1,4 +1,10 @@
 {
+
+  "error_load_user": "User not found. Please check your  login or password",
+  "nav_login": "Login",
+  "lb_login": "Login",
+  "lb_enter": "Login",
+  "lb_password": "Password",
   "reloading": "Reloading the page...",
   "language": "Language",
   "logout": "Logout",

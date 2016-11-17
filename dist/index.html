@@ -29,7 +29,7 @@
                                 <i class="fa fa-home"></i>
                             </a>
                         </li>
-                        <li class="navibar-divider"> </li>
+                        <li class="navibar-divider"ng-if="cfg.app_type !== 'installer'"> </li>
                         <!-- Conrol -->
                         <li class="navibar-item" ng-click="expandNavi('naviControl', $event)" ng-if="cfg.app_type !== 'installer'">
                             <a class="navibar-item-root" href="" title="{{ _t('nav_control')"
@@ -173,8 +173,6 @@
 
     <!-- Ang Container -->
     <div class="container-installer" ng-if="cfg.app_type === 'installer' && getBodyId()">
-        <div class="alert alert-danger" ng-if="boxData.controller.isPrimary && !boxData.controller.hasDevices"><i
-    <div class="container-installer" ng-if="cfg.app_type === 'installer'">
         <div class="alert alert-danger" ng-if="boxData.controller.isRealPrimary && !boxData.controller.hasDevices"><i
                 class="fa fa-info-circle"></i> {{_t('ready_to_network')}}
         </div>
@@ -209,6 +207,4 @@
 
         </div>
     </div>
-
-    </body>
 </html>

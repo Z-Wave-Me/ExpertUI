@@ -44,26 +44,26 @@ module.exports = function (grunt) {
             js: {
                 src: [
                     // Vendors
-                    'app/vendor/jquery/jquery-1.11.1.min.js',
-                    'app/vendor/underscore/underscore-1.8.3/underscore-min.js',
-                    'app/vendor/cytoscape/cytoscape.js',
-                    'app/vendor/upload/angular-file-upload-shim.js',
-                    'app/vendor/alertify/alertify.min.js',
+                    'vendor/jquery/jquery-1.11.1.min.js',
+                    'vendor/underscore/underscore-1.8.3/underscore-min.js',
+                    'vendor/cytoscape/cytoscape.js',
+                    'vendor/upload/angular-file-upload-shim.js',
+                    'vendor/alertify/alertify.min.js',
                     // Angular
-                    'app/vendor/angular/angular-1.2.14/angular.min.js',
-                    'app/vendor/upload/angular-file-upload.js',
-                    'app/vendor/angular/angular-1.2.14/angular-route.min.js',
-                    'app/vendor/angular/angular-1.2.14/angular-resource.min.js',
-                    'app/vendor/angular/angular-1.2.14/angular-cookies.min.js',
+                    'vendor/angular/angular-1.2.14/angular.min.js',
+                    'vendor/upload/angular-file-upload.js',
+                    'vendor/angular/angular-1.2.14/angular-route.min.js',
+                    'vendor/angular/angular-1.2.14/angular-resource.min.js',
+                    'vendor/angular/angular-1.2.14/angular-cookies.min.js',
                     // Bootstrap
-                    'app/vendor/bootstrap/bootstrap.min.js',
+                    'vendor/bootstrap/bootstrap.min.js',
                     // XML
-                    'app/vendor/xml/xml2json.js',
+                    'vendor/xml/xml2json.js',
                     // Z-Wave old ExpertU
-                    'app/vendor/zwave/pyzw.js',
-                    'app/vendor/zwave/pyzw_zwave_ui.js',
+                    'vendor/zwave/pyzw.js',
+                    'vendor/zwave/pyzw_zwave_ui.js',
                     // CANVAS JS
-                    'app/vendor/canvasjs/canvasjs.min.js',
+                    'vendor/canvasjs/canvasjs.min.js',
                     // APP
                     'app/app.js',
                     'app/routes.js',
@@ -78,6 +78,7 @@ module.exports = function (grunt) {
                     // Controllers
                     'app/controllers/base.js',
                     'app/controllers/controllers.js',
+                    'app/controllers/auth.js',
                     'app/controllers/settings.js',
                     'app/controllers/switch.js',
                     'app/controllers/sensor.js',
@@ -116,7 +117,7 @@ module.exports = function (grunt) {
                     {
                         src: [
                             'app/images/**',
-                            'app/views/**',
+                            //'app/views/**',
                             'app/lang/**'
                         ], dest: 'dist/'
                     },
@@ -134,9 +135,9 @@ module.exports = function (grunt) {
             },
             angmap: {
                 files: [
-                    {expand: true, src: ['app/vendor/angular/angular-1.2.14/angular-cookies.min.js.map'], dest: 'dist/app/js/', flatten: true},
-                    {expand: true, src: ['app/vendor/angular/angular-1.2.14/angular.min.js.map'], dest: 'dist/app/js/', flatten: true},
-                    {expand: true, src: ['app/vendor/angular/angular-1.2.14/angular-route.min.js.map'], dest: 'dist/app/js/', flatten: true}
+                    {expand: true, src: ['vendor/angular/angular-1.2.14/angular-cookies.min.js.map'], dest: 'dist/app/js/', flatten: true},
+                    {expand: true, src: ['vendor/angular/angular-1.2.14/angular.min.js.map'], dest: 'dist/app/js/', flatten: true},
+                    {expand: true, src: ['vendor/angular/angular-1.2.14/angular-route.min.js.map'], dest: 'dist/app/js/', flatten: true}
                 ]
             }
         },
