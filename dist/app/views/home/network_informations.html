@@ -1,0 +1,19 @@
+<!-- Network Information -->
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <i class="fa fa-info-circle"></i> {{_t('txt_network_info')}}
+        (<em>{{countDevices}} {{_t('txt_devices_present')}})</em>
+    </div>
+    <div class="panel-body">
+        <!--<h3><strong>{{countDevices}}</strong> {{_t('txt_devices_present')}}:</h3>-->
+        <ul class="list-report">
+            <li><strong>{{mainsDevices}}</strong> {{_t('txt_devices_mains')}}</li>
+            <li><strong>{{batteryWakeupDevices}}</strong>
+                {{_t('txt_devices_battery')}}
+            </li>
+            <li><strong>{{flirsDevices}}</strong> {{_t('txt_devices_flirs')}}</li>
+        </ul>
+
+    </div>
+</div>
+</div> <!-- /#modal notesModal -->

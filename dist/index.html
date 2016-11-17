@@ -6,9 +6,9 @@
         <!-- CSS -->
         <link media="screen" type="text/css" rel="stylesheet" href="app/css/build.css">
         <!-- App config -->
-        <script src="app/config.js"></script>
+        <script src="app/js/config.js"></script>
         <!-- JS -->
-        <script src="app/build.js"></script>
+        <script src="app/js/build.js"></script>
     </head>
     <body ng-app="angApp" ng-controller="BaseController" id="page_{{getBodyId()}}"
           class="is-mobile-{{isMobile}} custom-ip-{{cfg.custom_ip}} app-type-{{cfg.app_type}}">
@@ -51,7 +51,7 @@
                         <li class="navibar-divider"> </li>
                         <li class="navibar-item" ng-click="expandNavi('naviDevice', $event)">
                             <a class="navibar-item-root" href="" title="{{_t('nav_device')}}" ng-class="isActive('device',1)">
-                                <i class="fa fa-cogs"> </i> <span class="main-nav-name">{{ _t('nav_device')}}</span>
+                                <i class="fa fa-database"> </i> <span class="main-nav-name">{{ _t('nav_device')}}</span>
                             </a>
                             <div class="sub-navigation sub-navigation-left" ng-if="naviExpanded.naviDevice">
                                 <ul>
@@ -101,7 +101,7 @@
                         <li class="navibar-divider" ng-if="cfg.app_type === 'installer'"> </li>
                         <li class="navibar-item" ng-click="expandNavi('naviInstaller', $event)"  ng-if="cfg.app_type === 'installer'">
                             <a class="navibar-item-root" href="" title="{{_t('installer')}}" ng-class="isActive('installer',1)">
-                                <i class="fa fa-signal"></i> <span class="main-nav-name">{{ _t('installer')}}</span>
+                                <i class="fa fa-signal"></i> <span class="main-nav-name">{{ _t('nav_installer')}}</span>
                             </a>
                             <div class="sub-navigation sub-navigation-left" ng-if="naviExpanded.naviInstaller">
                                 <ul>
@@ -122,8 +122,29 @@
                     </span>
                         </li>
 
+                        <!-- Settings -->
+                        <li class="navibar-divider"></li>
+                        <li class="navibar-item">
+                            <a class="navibar-item-root" ng-href="#settings" ng-class="isActive('settings',1)">
+                                <i class="fa fa-cog"></i>
+                            </a>
+                        </li>
+                        <!--<li class="navibar-item" ng-click="expandNavi('naviSettings', $event)">
+                            <a class="navibar-item-root" href="" title="{{_t('settings')}}" ng-class="isActive('settings',1)">
+                                <i class="fa fa-cog"></i> &lt;!&ndash;<span class="main-nav-name">{{ _t('settings')}}</span>&ndash;&gt;
+                            </a>
+                            <div class="sub-navigation sub-navigation-left" ng-if="naviExpanded.naviSettings">
+                                <ul>
+                                    <li><a href="#settings" ng-class="isActive('settings',1)">{{ _t('settings') }}</a></li>
+                                    <li ng-if="cfg.app_type !== 'installer'">
+                                        <a ng-href="{{cfg.smarthome_logout}}">{{_t('logout')}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>-->
+
                         <!-- lang -->
-                        <li class="navibar-divider"> </li>
+                        <!--<li class="navibar-divider"> </li>
                         <li class="navibar-item" ng-click="expandNavi('naviLang', $event)">
                             <a class="navibar-item-root" href="" title="{{lang}}">
                                 <i class="fa fa-globe fa-lg"></i>
@@ -137,7 +158,7 @@
                                     </li>
                                 </ul>
                             </div>
-                        </li>
+                        </li>-->
 
                         <!-- Logout -->
                         <li class="navibar-divider" ng-if="cfg.app_type !== 'installer'"> </li>
@@ -153,12 +174,14 @@
     <!-- Ang Container -->
     <div class="container-installer" ng-if="cfg.app_type === 'installer' && getBodyId()">
         <div class="alert alert-danger" ng-if="boxData.controller.isPrimary && !boxData.controller.hasDevices"><i
+    <div class="container-installer" ng-if="cfg.app_type === 'installer'">
+        <div class="alert alert-danger" ng-if="boxData.controller.isRealPrimary && !boxData.controller.hasDevices"><i
                 class="fa fa-info-circle"></i> {{_t('ready_to_network')}}
         </div>
-        <div class="alert alert-success" ng-if="boxData.controller.isPrimary && boxData.controller.hasDevices"><i
+        <div class="alert alert-success" ng-if="boxData.controller.isRealPrimary && boxData.controller.hasDevices"><i
                 class="fa fa-check"></i> {{_t('iam_in_my_network')}}
         </div>
-        <div class="alert alert-warning" ng-if="!boxData.controller.isPrimary"><i class="fa fa-info-circle"></i>
+        <div class="alert alert-warning" ng-if="!boxData.controller.isRealPrimary"><i class="fa fa-info-circle"></i>
             {{_t('iam_in_network_homeid')}}: {{boxData.controller.homeId}}
         </div>
     </div>
