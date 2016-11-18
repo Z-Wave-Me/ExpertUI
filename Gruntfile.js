@@ -79,6 +79,7 @@ module.exports = function (grunt) {
                     'app/controllers/base.js',
                     'app/controllers/controllers.js',
                     'app/controllers/auth.js',
+                    'app/controllers/note.js',
                     'app/controllers/settings.js',
                     'app/controllers/switch.js',
                     'app/controllers/sensor.js',

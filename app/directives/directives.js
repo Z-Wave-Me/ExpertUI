@@ -44,6 +44,22 @@ angApp.directive('sortBy', function () {
         }
     };
 });
+/**
+ * Displays a help text
+ * @class bbHelpText
+ */
+angApp.directive('bbHelpText', function () {
+    return {
+        restrict: "E",
+        replace: true,
+        scope: {
+            trans: '=',
+            display: '=',
+            icon: '='
+        },
+        template: '<span class="help-text" ng-class="display"><i class="fa text-info" ng-class="icon ? icon : \' fa-info-circle\'"></i> {{trans}}</span>'
+    };
+});
 
 /**
  * Displays a page loader

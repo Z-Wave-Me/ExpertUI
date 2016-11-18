@@ -268,6 +268,16 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
         $event.stopPropagation();
     };
 
+    $scope.expand = {};
+    /**
+     * Expand/collapse an element
+     * @param {string} key
+     * @returns {undefined}
+     */
+    $scope.expandElement = function (key) {
+        $scope.expand[key] = !($scope.expand[key]);
+    };
+
     $scope.rowSpinner = [];
     /**
      * Toggle row spinner
@@ -331,10 +341,11 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
     /**
      * Load Box API data
      */
+    $scope.boxData = {
+        controller: {}
+    };
     $scope.loadBoxApiData = function () {
-        $scope.boxData = {
-            controller: {}
-        };
+
         dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
              var hasDevices = Object.keys(ZWaveAPIData.devices).length;
              var homeId = ZWaveAPIData.controller.data.homeId.value;
@@ -342,6 +353,7 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
             $scope.boxData.controller.isRealPrimary = ZWaveAPIData.controller.data.isRealPrimary.value;
             $scope.boxData.controller.hasDevices =  hasDevices < 2 ? false : true;
             $scope.boxData.controller.homeId =   '0x' + ('00000000' + (homeId + (homeId < 0 ? 0x100000000 : 0)).toString(16)).slice(-8);
+            $scope.boxData.controller.softwareRevisionVersion = ZWaveAPIData.controller.data.softwareRevisionVersion.value;
             // Changes MK
             $scope.boxData.controller.controllerState = ZWaveAPIData.controller.data.controllerState.value;
         }, function (error) {
@@ -349,9 +361,5 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
 
         });
     };
-    if(cfg.app_type === 'installer'){
-         $scope.loadBoxApiData();
-     }
-   
-
+    $scope.loadBoxApiData();
 });

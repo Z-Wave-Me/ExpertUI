@@ -121,7 +121,7 @@ $form-border-color: $app-border-color;
 $form-bcg-color: #FFFFFF;
 $form-input-border-color: $app-border-color;
 $form-input-color: lighten($app-body-color, 30%);
-$form-submit-entry-bcg-color: #FFFFFF;
+$form-submit-entry-bcg-color: $app-color-secondary;
 $form-addon-bcg-color: #EEEEEE;
 
 // Table

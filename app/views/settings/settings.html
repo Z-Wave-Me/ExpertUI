@@ -1,62 +1,8 @@
-<!-- Locks view -->
-<div ng-controller="SettingsController">
-    <div class="page-header"><h1>{{_t('settings')}}</h1></div>
-    <bb-loader></bb-loader>
-    <div class="form form-inline form-page">
-        <div class="fieldset settings-lang">
-            <h3>{{_t('language')}}</h3>
-            <a href="" title="{{v}}"
-               ng-repeat="v in lang_list"
-               ng-click="setLang(v)"
-               ng-class="v === lang ? 'active': ''">
-                <img ng-src="app/images/flags/{{v}}.png" alt="{{ v }}" />
-            </a>
-        </div>
-    </div>
-    <form name="form_settings" id="form_nsettings" class="form form-page"
-          ng-if="cfg.app_type === 'installer'"
-          ng-submit="handleModal('settingsModal', $event);storeSettings(settings.input)" novalidate>
-        <fieldset>
-            <!-- network name -->
-            <div class="form-group form-inline">
-                <label for="network_name">{{_t('network_name')}}: </label>
-                <input name="network_name" id="network_name" type="text"
-                       class="form-control"
-                       placeholder="{{_t('network_name')}}"
-                       value="{{settings.input.network_name}}"
-                       ng-model="settings.input.network_name"/>
-            </div>
-            <!-- date format -->
-            <div class="form-group form-inline">
-                <label>{{_t('date_format')}}: </label>
-                <select name="date_format" name="date_format" class="form-control"
-                        ng-model="settings.input.date_format">
-                    <option ng-repeat="v in cfg.date_format_list" value="{{v}}"
-                            ng-selected="v === cfg.zwavecfg.date_format">{{v}}
-                    </option>
-                </select>
-            </div>
-            <!-- time format -->
-            <div class="form-group form-inline">
-                <label>{{_t('time_format')}}: </label>
-                <select name="time_format" name="time_format" class="form-control"
-                        ng-model="settings.input.time_format">
-                    <option ng-repeat="v in cfg.time_format_list" value="{{v}}"
-                            ng-selected="v === cfg.zwavecfg.time_format">{{v}} {{_t('hours')}}
-                    </option>
-                </select>
-            </div>
-        </fieldset>
-        <fieldset class="submit-entry">
-            <!-- Close -->
-            <button type="button" class="btn btn-default" title="{{_t('btn_cancel')}}" bb-go-back>
-                <i class="fa fa-reply"></i> <span class="btn-name">{{_t('btn_cancel')}}</span>
-            </button>
-            <!-- Save -->
-            <button type="submit" class="btn btn-submit" title="{{_t('btn_save')}}">
-                <i class="fa fa-check"></i> <span class="btn-name">{{_t('btn_save')}}</span>
-            </button>
-        </fieldset>
-    </form>
-
-</div><!-- /ng-controller -->
+<!-- Settings default -->
+<div class="page-header"><h1>{{_t('settings')}}</h1></div>
+<!-- Settings languages  -->
+<div class="accordion-entry" ng-include="'app/views/settings/settings_lang.html'"></div>
+<!-- Settings app -->
+<div class="accordion-entry" ng-include="'app/views/settings/settings_app.html'"></div>
+<!-- Settings firmware  -->
+<div class="accordion-entry" ng-include="'app/views/settings/settings_firmware.html'"></div>

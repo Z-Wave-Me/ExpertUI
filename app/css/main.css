@@ -14398,7 +14398,7 @@ fieldset, .fieldset {
 .submit-entry {
   text-align: right;
   display: block;
-  background-color: #FFFFFF;
+  background-color: #e4f5fc;
   border-top: solid 1px #9fd8ef;
 }
 
@@ -14633,6 +14633,41 @@ fieldset.submit-entry {
   font-size: 16px;
   /*    text-shadow: 3px 1px 2px rgba(150, 150, 150, 1);*/
   color: #2A6496;
+}
+
+/* Accordion
+-------------------------------------------------- */
+/* line 3, ../sass/common/_accordion.scss */
+.accordion-entry {
+  margin-bottom: 10px;
+  border-top: dotted 1px #9fd8ef;
+}
+
+/* line 8, ../sass/common/_accordion.scss */
+.accordion-entry-title {
+  font-size: 120%;
+  position: relative;
+  vertical-align: middle;
+  margin: 10px 0;
+  color: #357fbe;
+  cursor: pointer;
+}
+/* line 15, ../sass/common/_accordion.scss */
+.accordion-entry-title .fa {
+  color: #a6c8e6;
+  padding-right: 10px;
+  font-size: 130%;
+}
+/* line 20, ../sass/common/_accordion.scss */
+.accordion-entry-title .accordion-arrow {
+  position: absolute;
+  right: 1%;
+  display: inline-block;
+  padding: 0;
+}
+/* line 26, ../sass/common/_accordion.scss */
+.accordion-entry-title.expanded-only {
+  cursor: text;
 }
 
 /* List groups
@@ -15314,11 +15349,9 @@ http://codepen.io/MattIn4D/pen/LiKFC
 
 /* Form
 -------------------------------------------------- */
-/* line 24, ../sass/skins/default/_main.scss */
-.form-page {
-  border-width: 4px;
-}
-
+/*.form-page{
+    border-width: 4px;
+}*/
 /* Zwave alliance
 -------------------------------------------------- */
 /* line 8, ../sass/skins/installer/_main.scss */

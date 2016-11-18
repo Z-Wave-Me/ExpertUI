@@ -1,9 +1,10 @@
 <!-- notesModal -->
-<div id="notesModal" class="appmodal" ng-if="modalArr.notesModal" ng-controller="SettingsController">
+<div id="notesModal" class="appmodal" ng-if="modalArr.notesModal" ng-controller="NoteController">
     <div class="appmodal-in">
+        {{note.input.notes}}
         <form name="form_notes" id="form_notes" class="form"
               ng-model="notes.input"
-              ng-submit="handleModal('notesModal', $event);storeSettings(settings.input)" novalidate>
+              ng-submit="handleModal('notesModal', $event);storeSettings(note.input)" novalidate>
             <div class="appmodal-header">
                 <span class="appmodal-close" ng-click="handleModal('notesModal', $event)"><i
                         class="fa fa-times"></i></span>
@@ -11,7 +12,7 @@
             </div>
             <div class="appmodal-body">
                 <textarea id="notes" name="notes" class="form-control" rows="20"
-                          ng-model="settings.input.notes">{{settings.input.notes}}</textarea>
+                          ng-model="note.input.notes">{{note.input.notes}}</textarea>
             </div>
             <div class="appmodal-footer">
                 <!-- Close -->

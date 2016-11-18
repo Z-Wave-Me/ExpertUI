@@ -1,0 +1,46 @@
+<!-- Settings firmware  -->
+<h2 class="accordion-entry-title" ng-click="expandElement('settingsFirmware')">
+    <i class="fa fa-level-up"></i> {{_t('nav_firmware_update')}}
+    <i class="fa accordion-arrow" ng-class="expand.settingsFirmware  ? 'fa-chevron-up':'fa-chevron-down'"></i>
+</h2>
+<div class="accordion-entry-ctrl" ng-class="" ng-if_="expand.settingsFirmware" ng-controller="SettingsFirmwareController">
+    <bb-loader></bb-loader>
+    <div class="alert alert-success" ng-if="firmwareUpdate.isUpToDate">
+        <i class="fa fa-smile-o fa-lg"></i> {{_t('firmware_uptodate')}} ({{firmwareUpdate.softwareCurrentVersion}})
+    </div>
+    <form name="form_firmware" id="form_firmware" class="form form-page" ng-submit="updateFirmware()"
+          ng-if="!firmwareUpdate.isUpToDate">
+        <fieldset>
+            <!-- Currentt version -->
+
+            <p class="form-control-static">
+                <span ng-bind="_t('current_firmware')"></span>: {{firmwareUpdate.softwareCurrentVersion}}
+            </p>
+
+            <div class="form-group">
+                <bb-help-text trans="_t('firmware_update_info')"></bb-help-text>
+            </div>
+        </fieldset>
+        <fieldset class="submit-entry">
+            <button type="button" class="btn btn-submit" title="{{_t('update_to_latest')}}"
+                    ng-click="setAccess('?allow_access=1',true);handleModal('firmwareUpdateModal', $event)">
+                <i class="fa fa-level-up"></i> <span class="btn-name">{{_t('update_to_latest')}} ({{firmwareUpdate.softwareLatestVersion}})</span>
+            </button>
+
+        </fieldset>
+
+    </form>
+
+    <!-- firmwareUpdateModal -->
+    <div id="firmwareUpdateModal" class="appmodal appmodal-100" ng-if="modalArr.firmwareUpdateModal && firmwareUpdate.show">
+        <div class="appmodal-in">
+            <div class="appmodal-header">
+                <span class="appmodal-close" ng-click="setAccess('?allow_access=0');handleModal('firmwareUpdateModal', $event)"><i class="fa fa-times"></i></span>
+                <h3>{{_t('nav_firmware_update')}}</h3>
+            </div>
+            <div class="appmodal-body text-center">
+                <iframe ng-src="{{firmwareUpdate.url}}" height="600" style="width: 100%;" ng-if="firmwareUpdate.loaded"></iframe>
+            </div>
+        </div>
+    </div>
+</div>

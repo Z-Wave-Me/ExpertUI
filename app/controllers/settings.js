@@ -1,18 +1,15 @@
 /**
- * @overview This controller renders and handles settings.
+ * @overview This controller renders and handles settings and configuration.
  * @author Martin Vach
  */
 
 /**
- * This controller renders and handles settings.
- * @class SettingsController
+ * This controller renders and handles language settings.
+ * @class SettingsLangController
  *
  */
-appController.controller('SettingsController', function ($scope, $filter, $timeout,$interval,$window,$cookies,dataService,deviceService, cfg,_) {
-    $scope.settings = {
-        input: {}
-    };
-    /**
+appController.controller('SettingsLangController', function ($scope, $timeout,$window,$cookies) {
+   /**
      * Set app language
      * @param {string} lang
      */
@@ -25,6 +22,17 @@ appController.controller('SettingsController', function ($scope, $filter, $timeo
             $window.location.reload();
         }, 1000);
 
+    };
+});
+
+/**
+ * This controller renders and handles app settings.
+ * @class SettingsAppController
+ *
+ */
+appController.controller('SettingsAppController', function ($scope, $timeout,$interval, cfg) {
+    $scope.settings = {
+        input: {}
     };
 
     /**
@@ -52,4 +60,57 @@ appController.controller('SettingsController', function ($scope, $filter, $timeo
             alertify.alertError($scope._t('error_update_data'));
         });
     };
+});
+
+/**
+ * The controller that handles firmware update process.
+ * @class SettingsFirmwareController
+ *
+ */
+appController.controller('SettingsFirmwareController', function ($scope, $sce, $timeout, $location,dataService) {
+    $scope.firmwareUpdate = {
+        show: false,
+        loaded: false,
+        url: $sce.trustAsResourceUrl('http://' + $location.host() + ':8084/cgi-bin/main.cgi'),
+        softwareCurrentVersion: $scope.boxData.controller.softwareRevisionVersion,
+        softwareLatestVersion: false,
+        isUpToDate: false
+    };
+    /**
+     * Load latest version
+     */
+    $scope.loadRazLatest = function () {
+        dataService.getRemoteData($scope.cfg.raz_latest_version_url).then(function (response) {
+            $scope.firmwareUpdate.softwareLatestVersion = response.data;
+            if(response.data === $scope.boxData.controller.softwareRevisionVersion){
+                $scope.firmwareUpdate.isUpToDate = true;
+            }
+
+        }, function (error) {
+        });
+    };
+    $scope.loadRazLatest();
+    /**
+     * Set access
+     */
+    $scope.setAccess = function (param, loader) {
+        if (loader) {
+            $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin', message: $scope._t('loading')};
+        }
+        dataService.getApi('firmwareupdate', param, true).then(function (response) {
+            if (loader) {
+                $scope.firmwareUpdate.show = true;
+                $timeout(function () {
+                    $scope.loading = false;
+                    $scope.firmwareUpdate.loaded = true;
+                }, 5000);
+            }
+
+        }, function (error) {
+            $scope.loading = false;
+            alertify.alertError($scope._t('error_load_data'));
+
+        });
+    };
+
 });

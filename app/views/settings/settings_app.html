@@ -1,0 +1,49 @@
+<!-- Settings app  -->
+<h2 class="accordion-entry-title" ng-click="expandElement('settingsApp')">
+    <i class="fa fa-cogs"></i> {{_t('app_settings')}}
+    <i class="fa accordion-arrow" ng-class="expand.settingsApp ? 'fa-chevron-up':'fa-chevron-down'"></i>
+</h2>
+<div class="accordion-entry-ctrl" ng-class="" ng-if="expand.settingsApp" ng-controller="SettingsAppController">
+    <bb-loader></bb-loader>
+    <form name="form_settings" id="form_settings" class="form form-page"
+          ng-if_="cfg.app_type === 'installer'"
+          ng-submit="storeSettings(settings.input)" novalidate>
+        <fieldset>
+            <!-- network name -->
+            <div class="form-group form-inline">
+                <label for="network_name">{{_t('network_name')}}: </label>
+                <input name="network_name" id="network_name" type="text"
+                       class="form-control"
+                       placeholder="{{_t('network_name')}}"
+                       value="{{settings.input.network_name}}"
+                       ng-model="settings.input.network_name"/>
+            </div>
+            <!-- date format -->
+            <div class="form-group form-inline">
+                <label>{{_t('date_format')}}: </label>
+                <select name="date_format" name="date_format" class="form-control"
+                        ng-model="settings.input.date_format">
+                    <option ng-repeat="v in cfg.date_format_list" value="{{v}}"
+                            ng-selected="v === cfg.zwavecfg.date_format">{{v}}
+                    </option>
+                </select>
+            </div>
+            <!-- time format -->
+            <div class="form-group form-inline">
+                <label>{{_t('time_format')}}: </label>
+                <select name="time_format" name="time_format" class="form-control"
+                        ng-model="settings.input.time_format">
+                    <option ng-repeat="v in cfg.time_format_list" value="{{v}}"
+                            ng-selected="v === cfg.zwavecfg.time_format">{{v}} {{_t('hours')}}
+                    </option>
+                </select>
+            </div>
+        </fieldset>
+        <fieldset class="submit-entry">
+            <!-- Save -->
+            <button type="submit" class="btn btn-submit" title="{{_t('btn_save')}}">
+                <i class="fa fa-check"></i> <span class="btn-name">{{_t('btn_save')}}</span>
+            </button>
+        </fieldset>
+    </form>
+</div>

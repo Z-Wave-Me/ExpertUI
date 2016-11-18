@@ -68,6 +68,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         runZwaveCmd: runZwaveCmd,
         getApi: getApi,
         postApi: postApi,
+        getRemoteData: getRemoteData,
         xmlToJson: xmlToJson,
         getTextFile: getTextFile,
         storeTextToFile: storeTextToFile
@@ -851,6 +852,37 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             return response;
         }, function (response) {// something went wrong
             return $q.reject(response);
+        });
+    }
+
+    /**
+     * Get data from the remote resource
+     * @param {string} url
+     * @param {boolean} noCache
+     * @returns {unresolved}
+     */
+    function getRemoteData(url, noCache) {
+        // Cached data
+        var cacheName = 'cache_' + url;
+        var cached = myCache.get(cacheName);
+
+        if (!noCache && cached) {
+            var deferred = $q.defer();
+            deferred.resolve(cached);
+            return deferred.promise;
+        }
+        // NOT Cached data
+        return $http({
+            method: 'get',
+            url: url
+            /*headers: {
+             'Accept-Language': lang
+             }*/
+        }).then(function (response) {
+            return response;
+        }, function (error) {// something went wrong
+
+            return $q.reject(error);
         });
     }
     

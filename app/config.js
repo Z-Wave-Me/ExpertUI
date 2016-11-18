@@ -30,8 +30,7 @@ var config_data = {
         'postfixget_url': '/ZWaveAPI/PostfixGet', // Postfix GET
         'postfixadd_url': '/ZWaveAPI/PostfixAdd', // Postfix Add
         'postfixremove_url': '/ZWaveAPI/PostfixRemove', // Postfix Remove
-        //'incoming_packet_url': '/ZWaveAPI/Run/controller.data.incomingPacket', // Url to incoming packet
-        //'outgoing_packet_url': '/ZWaveAPI/Run/controller.data.outgoingPacket', // Url to outgoing packet
+        'firmwareupdate': '/ZAutomation/api/v1/system/webif-access',
         'zniffer_url': '/ZWaveAPI/Zniffer', // Zniffer
         'communication_history_url': '/ZWaveAPI/CommunicationHistory', // Communication History
         'rssi_chart': '/ZWaveAPI/RSSIGet', // chart of rssi channels 1 and 2
@@ -49,6 +48,7 @@ var config_data = {
         'uzb_url': 'https://www.zwave.eu/api/expertui/uzb/', // Url for uzb data
         'license_url': 'https://store.zwaveeurope.com/license/utility_uzb.php', // Url for license key
         'buy_licence_key': 'https://www.z-wave.me/index.php?id=41', // Buy licence key url
+        'raz_latest_version_url': 'https://razberry.z-wave.me/z-way/razberry/latest/VERSION', // Raz latest version
         'smarthome_login': '/smarthome/#/?fromexpert', // Smarthome login page 
          'smarthome_logout': '/smarthome/#/logout', // Smarthome login page 
         'lang_dir': 'app/lang/', // Language directory
