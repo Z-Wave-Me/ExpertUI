@@ -107,6 +107,18 @@ $alliance-orange: #F89847;
     .cfg-block {
         border-color: $alliance-green-border;
     }
+
+    .form-page{
+        border-color: $alliance-green-border;
+        .form-group{
+            border-color: $alliance-green-border;
+
+        }
+    }
+    .submit-entry{
+        border-color: $alliance-green-border;
+        background-color: lighten($alliance-green-border,20%);
+    }
     /* Tabs */
     .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
         background-color: $alliance-green-bcg;
@@ -149,4 +161,9 @@ $alliance-orange: #F89847;
         border-color: $alliance-green-border;
 
     }
+    /* Accordion */
+    .accordion-entry{
+        border-color: $alliance-green-border;
+    }
+
 }

@@ -1,7 +1,6 @@
 <!-- notesModal -->
 <div id="notesModal" class="appmodal" ng-if="modalArr.notesModal" ng-controller="NoteController">
     <div class="appmodal-in">
-        {{note.input.notes}}
         <form name="form_notes" id="form_notes" class="form"
               ng-model="notes.input"
               ng-submit="handleModal('notesModal', $event);storeSettings(note.input)" novalidate>

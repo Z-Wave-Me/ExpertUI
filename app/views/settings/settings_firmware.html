@@ -3,7 +3,7 @@
     <i class="fa fa-level-up"></i> {{_t('nav_firmware_update')}}
     <i class="fa accordion-arrow" ng-class="expand.settingsFirmware  ? 'fa-chevron-up':'fa-chevron-down'"></i>
 </h2>
-<div class="accordion-entry-ctrl" ng-class="" ng-if_="expand.settingsFirmware" ng-controller="SettingsFirmwareController">
+<div class="accordion-entry-ctrl" ng-class="" ng-if="expand.settingsFirmware" ng-controller="SettingsFirmwareController">
     <bb-loader></bb-loader>
     <div class="alert alert-success" ng-if="firmwareUpdate.isUpToDate">
         <i class="fa fa-smile-o fa-lg"></i> {{_t('firmware_uptodate')}} ({{firmwareUpdate.softwareCurrentVersion}})

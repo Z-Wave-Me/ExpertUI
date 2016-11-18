@@ -15372,6 +15372,7 @@ http://codepen.io/MattIn4D/pen/LiKFC
   /* List group */
   /* Welll */
   /* footer */
+  /* Accordion */
 }
 /* line 9, ../sass/skins/installer/_main.scss */
 .app-type-installer #main_navigation {
@@ -15475,47 +15476,64 @@ http://codepen.io/MattIn4D/pen/LiKFC
   border-color: #87cf83;
 }
 /* line 111, ../sass/skins/installer/_main.scss */
+.app-type-installer .form-page {
+  border-color: #87cf83;
+}
+/* line 113, ../sass/skins/installer/_main.scss */
+.app-type-installer .form-page .form-group {
+  border-color: #87cf83;
+}
+/* line 118, ../sass/skins/installer/_main.scss */
+.app-type-installer .submit-entry {
+  border-color: #87cf83;
+  background-color: #ceebcd;
+}
+/* line 123, ../sass/skins/installer/_main.scss */
 .app-type-installer .nav-tabs > li.active > a, .app-type-installer .nav-tabs > li.active > a:hover, .app-type-installer .nav-tabs > li.active > a:focus {
   background-color: #ceebcd;
   border-color: #87cf83;
 }
-/* line 115, ../sass/skins/installer/_main.scss */
+/* line 127, ../sass/skins/installer/_main.scss */
 .app-type-installer .tab-content {
   border-color: transparent #87cf83 #87cf83;
 }
-/* line 118, ../sass/skins/installer/_main.scss */
+/* line 130, ../sass/skins/installer/_main.scss */
 .app-type-installer .nav-tabs {
   border-color: #87cf83;
 }
-/* line 122, ../sass/skins/installer/_main.scss */
+/* line 134, ../sass/skins/installer/_main.scss */
 .app-type-installer .panel {
   border-color: #87cf83;
 }
-/* line 125, ../sass/skins/installer/_main.scss */
+/* line 137, ../sass/skins/installer/_main.scss */
 .app-type-installer .panel-default > .panel-heading {
   background-color: #ceebcd;
   border-color: #87cf83;
 }
-/* line 129, ../sass/skins/installer/_main.scss */
+/* line 141, ../sass/skins/installer/_main.scss */
 .app-type-installer .panel-default > .panel-footer {
   background-color: #f2faf1;
   border-color: #87cf83;
 }
-/* line 134, ../sass/skins/installer/_main.scss */
+/* line 146, ../sass/skins/installer/_main.scss */
 .app-type-installer .list-group-item {
   border-color: #87cf83;
 }
-/* line 138, ../sass/skins/installer/_main.scss */
+/* line 150, ../sass/skins/installer/_main.scss */
 .app-type-installer .list-report li {
   border-top: solid 1px #87cf83;
 }
-/* line 143, ../sass/skins/installer/_main.scss */
+/* line 155, ../sass/skins/installer/_main.scss */
 .app-type-installer .well {
   background-color: #ceebcd;
   border-color: #87cf83;
 }
-/* line 148, ../sass/skins/installer/_main.scss */
+/* line 160, ../sass/skins/installer/_main.scss */
 .app-type-installer #footer {
+  border-color: #87cf83;
+}
+/* line 165, ../sass/skins/installer/_main.scss */
+.app-type-installer .accordion-entry {
   border-color: #87cf83;
 }
 

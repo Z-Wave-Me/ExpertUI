@@ -30,7 +30,7 @@ appController.controller('SettingsLangController', function ($scope, $timeout,$w
  * @class SettingsAppController
  *
  */
-appController.controller('SettingsAppController', function ($scope, $timeout,$interval, cfg) {
+appController.controller('SettingsAppController', function ($scope, $timeout,$interval, cfg,dataService,deviceService) {
     $scope.settings = {
         input: {}
     };

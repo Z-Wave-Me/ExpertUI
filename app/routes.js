@@ -101,7 +101,7 @@ angApp.config(['$routeProvider',
             appTypeBanned: ['default']
         }).// Settings
         when('/settings', {
-            templateUrl: 'app/views/settings/settings.html'
+            templateUrl: 'app/views/settings/settings_' + config_data.cfg.app_type + '.html'
         }).// Error page
         when('/error/:code?', {
             templateUrl: 'app/views/error.html'
