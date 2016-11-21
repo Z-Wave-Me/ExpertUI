@@ -32629,7 +32629,7 @@ angApp.config(['$routeProvider',
             appTypeBanned: ['default']
         }).// Settings
         when('/settings', {
-            templateUrl: 'app/views/settings/settings.html'
+            templateUrl: 'app/views/settings/settings_' + config_data.cfg.app_type + '.html'
         }).// Error page
         when('/error/:code?', {
             templateUrl: 'app/views/error.html'
@@ -32708,7 +32708,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/controll/switch.html',
-    "<div ng-controller=SwitchController><div class=page-header><h1>{{_t('nav_switch')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=switches.show><table class=\"table table-striped table-condensed table-hover\"><thead class=cf><tr><th><a href=\"\" ng-click=\"orderBy('id')\"># <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th class=text-right><a href=\"\" ng-click=\"orderBy('level')\">{{ _t('th_level')}} <span ng-show=\"predicate == 'level'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('switchAllValue')\">{{ _t('th_switchall')}} <span ng-show=\"predicate == 'switchAllValue'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th class=mobile-show><button class=\"btn btn-info\" id=btn_update_all_1 ng-click=\"updateAllSwitches('all_1','urlToStore')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner spinner=\"rowSpinner['all_1']\" label=\"_t('switches_update_all')\" icon=\"'fa-check'\"></bb-row-spinner></button></th><th class=mobile-show><div class=btn-group style=\"min-width: 150px !important\"><button class=\"btn btn-info\" id=btn_all_of ng-click=\"updateAllSwitches('btn_all_of','urlToOff')\" ng-disabled=\"rowSpinner['btn_all_of']\"><bb-row-spinner spinner=\"rowSpinner['btn_all_of']\" label=\" _t('btn_all_off')\" icon=\"'fa-toggle-off'\"></bb-row-spinner></button> <button class=\"btn btn-info\" id=btn_all_on ng-click=\"updateAllSwitches('btn_all_on','urlToOn')\" ng-disabled=\"rowSpinner['btn_all_on']\"><bb-row-spinner spinner=\"rowSpinner['btn_all_on']\" label=\"_t('btn_all_on')\" icon=\"'fa-toggle-on'\"></bb-row-spinner></button></div></th><th class=\"th-slider td-action\">&nbsp;</th></tr></thead><tbody><tr ng-repeat=\"v in switches.all| orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\" ng-init=\"range.maxs = v.levelVal\"><td data-title=#>{{ v.id}}<span ng-show=\"v.multiChannel || v.iId > 0\">.{{v.iId}}</span></td><td data-title=\"{{ _t('device_name')}}\"><switch-type-icon generic=\"{{ v.genericType}}\" specific=\"{{ v.specificType}}\"></switch-type-icon>{{ v.name}}</td><td data-title=\"{{ _t('th_level')}}\"><strong class=\"row-level text-right\" style=\"color: {{ v.levelColor}}\">{{ v.level}}</strong></td><td data-title=\"{{ _t('datetime')}}\" lass=\"row-time is-updated-{{v.isUpdated}}\" title=\"{{v.dateTime.date}} {{v.dateTime.time}}\">{{v.dateTime.today}}</td><td data-title=\"{{ _t('th_switchall')}}\"><switch-all-icon hasall=\"{{ v.switchAllValue}}\" ng-if=\"v.switchAllValue !== null\"></switch-all-icon>&nbsp;</td><td data-title=\"\"><button class=\"btn btn-default\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateSwitch(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] label=\" _t('update')\" icon=\"'fa-check text-success'\"></bb-row-spinner></button></td><td data-title=\"\" ng-switch on=v.deviceType><div ng-switch-when=multilevel><div class=btn-group style=\"min-width: 110px !important\"><label class=switch title=\"v.levelStatus === 'on' ? v.btnOff : v.btnOn\" ng-hide=\"rowSpinner['btn_all_of'] || rowSpinner['btn_all_on']\"><input type=checkbox ng-disabled=rowSpinner[v.urlToOn] ng-checked=\"v.levelStatus === 'on'\" ng-model=switches.switchButton[v.id] ng-change=\"updateSwitch(switches.switchButton[v.id] ? v.urlToOn : v.urlToOff)\"><div class=\"slider round\"></div></label><i class=\"fa fa-spinner fa-spin fa-lg\" ng-if=\"rowSpinner['btn_all_of'] || rowSpinner['btn_all_on'] \"></i></div><button class=\"btn btn-default\" id=\"btn_full_{{ v.rowId}}\" ng-show_=!v.hasMotor ng-disabled=rowSpinner[v.urlToFull] ng-click=updateSwitch(v.urlToFull)><bb-row-spinner spinner=rowSpinner[v.urlToFull] label=v.btnFull icon=\"'fa-circle-o-notch text-success'\"></bb-row-spinner></button></div><div class=btn-group ng-switch-when=binary><label class=switch title=\"v.levelStatus === 'on' ? v.btnOff : v.btnOn\" ng-hide=\"rowSpinner['btn_all_of'] || rowSpinner['btn_all_on']\"><input type=checkbox ng-disabled=rowSpinner[v.urlToOn] ng-checked=\"v.levelStatus === 'on'\" ng-model=switches.switchButton[v.id] ng-change=\"updateSwitch(switches.switchButton[v.id] ? v.urlToOn : v.urlToOff)\"><div class=\"slider round\"></div></label><i class=\"fa fa-spinner fa-spin fa-lg\" ng-if=\"rowSpinner['btn_all_of'] || rowSpinner['btn_all_on'] \"></i></div><div ng-switch-default>&nbsp;</div></td><td class=td-action data-title=\"\" ng-switch on=v.deviceType><div ng-switch-when=multilevel id=range_slider_{{$index}} class=app-range-slider range-slider min=0 max=v.levelMax model-max=switches.rangeSlider[$index] pin-handle=min on-handle-down=sliderOnHandleDown() on-handle-up=sliderOnHandleUp(v.urlToSlide,$index)></div><div ng-switch-default>&nbsp;</div></td></tr></tbody></table></div></div>"
+    "<div ng-controller=SwitchController><div class=page-header><h1>{{_t('nav_switch')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=switches.show><table class=\"table table-striped table-condensed table-hover\"><thead class=cf><tr><th><a href=\"\" ng-click=\"orderBy('id')\"># <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th class=text-right><a href=\"\" ng-click=\"orderBy('level')\">{{ _t('th_level')}} <span ng-show=\"predicate == 'level'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('switchAllValue')\">{{ _t('th_switchall')}} <span ng-show=\"predicate == 'switchAllValue'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th class=mobile-show><button class=\"btn btn-info\" id=btn_update_all_1 ng-click=\"updateAllSwitches('all_1','urlToStore')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner spinner=\"rowSpinner['all_1']\" label=\"_t('switches_update_all')\" icon=\"'fa-check'\"></bb-row-spinner></button></th><th class=mobile-show><div class=btn-group style=\"min-width: 150px !important\"><button class=\"btn btn-info\" id=btn_all_of ng-click=\"updateAllSwitches('btn_all_of','urlToOff')\" ng-disabled=\"rowSpinner['btn_all_of']\"><bb-row-spinner spinner=\"rowSpinner['btn_all_of']\" label=\" _t('btn_all_off')\" icon=\"'fa-toggle-off'\"></bb-row-spinner></button> <button class=\"btn btn-info\" id=btn_all_on ng-click=\"updateAllSwitches('btn_all_on','urlToOn')\" ng-disabled=\"rowSpinner['btn_all_on']\"><bb-row-spinner spinner=\"rowSpinner['btn_all_on']\" label=\"_t('btn_all_on')\" icon=\"'fa-toggle-on'\"></bb-row-spinner></button></div></th><th class=\"th-slider td-action\">&nbsp;</th></tr></thead><tbody><tr ng-repeat=\"v in switches.all| orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\" ng-init=\"range.maxs = v.levelVal\"><td data-title=#>{{ v.id}}<span ng-show=\"v.multiChannel || v.iId > 0\">.{{v.iId}}</span></td><td data-title=\"{{ _t('device_name')}}\"><switch-type-icon generic=\"{{ v.genericType}}\" specific=\"{{ v.specificType}}\"></switch-type-icon>{{ v.name}}</td><td data-title=\"{{ _t('th_level')}}\"><strong class=\"row-level text-right\" style=\"color: {{ v.levelColor}}\">{{ v.level}}</strong></td><td data-title=\"{{ _t('datetime')}}\" lass=\"row-time is-updated-{{v.isUpdated}}\" title=\"{{v.dateTime.date}} {{v.dateTime.time}}\">{{v.dateTime.today}}</td><td data-title=\"{{ _t('th_switchall')}}\"><switch-all-icon hasall=\"{{ v.switchAllValue}}\" ng-if=\"v.switchAllValue !== null\"></switch-all-icon>&nbsp;</td><td data-title=\"\"><button class=\"btn btn-default\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateSwitch(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] label=\" _t('update')\" icon=\"'fa-check text-success'\"></bb-row-spinner></button></td><td data-title=\"\" ng-switch on=v.deviceType><div ng-switch-when=multilevel><div class=btn-group style=\"min-width: 110px !important\"><label class=switch title=\"v.levelStatus === 'on' ? v.btnOff : v.btnOn\" ng-hide=\"rowSpinner['btn_all_of'] || rowSpinner['btn_all_on']\"><input type=checkbox ng-disabled=rowSpinner[v.urlToOn] ng-checked=\"v.levelStatus === 'on'\" ng-model=switches.switchButton[v.rowId] ng-change=\"updateSwitch(switches.switchButton[v.rowId] ? v.urlToOn : v.urlToOff)\"><div class=\"slider round\"></div></label><i class=\"fa fa-spinner fa-spin fa-lg\" ng-if=\"rowSpinner['btn_all_of'] || rowSpinner['btn_all_on'] \"></i></div><button class=\"btn btn-default\" id=\"btn_full_{{ v.rowId}}\" ng-show_=!v.hasMotor ng-disabled=rowSpinner[v.urlToFull] ng-click=updateSwitch(v.urlToFull)><bb-row-spinner spinner=rowSpinner[v.urlToFull] label=v.btnFull icon=\"'fa-circle-o-notch text-success'\"></bb-row-spinner></button></div><div class=btn-group ng-switch-when=binary><label class=switch title=\"v.levelStatus === 'on' ? v.btnOff : v.btnOn\" ng-hide=\"rowSpinner['btn_all_of'] || rowSpinner['btn_all_on']\"><input type=checkbox ng-disabled=rowSpinner[v.urlToOn] ng-checked=\"v.levelStatus === 'on'\" ng-model=switches.switchButton[v.id] ng-change=\"updateSwitch(switches.switchButton[v.id] ? v.urlToOn : v.urlToOff)\"><div class=\"slider round\"></div></label><i class=\"fa fa-spinner fa-spin fa-lg\" ng-if=\"rowSpinner['btn_all_of'] || rowSpinner['btn_all_on'] \"></i></div><div ng-switch-default>&nbsp;</div></td><td class=td-action data-title=\"\" ng-switch on=v.deviceType><div ng-switch-when=multilevel id=range_slider_{{$index}} class=app-range-slider range-slider min=0 max=v.levelMax model-max=switches.rangeSlider[$index] pin-handle=min on-handle-down=sliderOnHandleDown() on-handle-up=sliderOnHandleUp(v.urlToSlide,$index)></div><div ng-switch-default>&nbsp;</div></td></tr></tbody></table></div></div>"
   );
 
 
@@ -32792,7 +32792,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/home/modal_notes.html',
-    "<div id=notesModal class=appmodal ng-if=modalArr.notesModal ng-controller=SettingsController><div class=appmodal-in><form name=form_notes id=form_notes class=form ng-model=notes.input ng-submit=\"handleModal('notesModal', $event);storeSettings(settings.input)\" novalidate><div class=appmodal-header><span class=appmodal-close ng-click=\"handleModal('notesModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{_t('txt_notes')}}</h3></div><div class=appmodal-body><textarea id=notes name=notes class=form-control rows=20 ng-model=settings.input.notes>{{settings.input.notes}}</textarea></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleModal('notesModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button> <button type=submit class=\"btn btn-submit\" title=\"{{_t('btn_save')}}\"><i class=\"fa fa-check\"></i> <span class=btn-name>{{_t('btn_save')}}</span></button></div></form></div></div>"
+    "<div id=notesModal class=appmodal ng-if=modalArr.notesModal ng-controller=NoteController><div class=appmodal-in><form name=form_notes id=form_notes class=form ng-model=notes.input ng-submit=\"handleModal('notesModal', $event);storeSettings(note.input)\" novalidate><div class=appmodal-header><span class=appmodal-close ng-click=\"handleModal('notesModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{_t('txt_notes')}}</h3></div><div class=appmodal-body><textarea id=notes name=notes class=form-control rows=20 ng-model=note.input.notes>{{note.input.notes}}</textarea></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleModal('notesModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button> <button type=submit class=\"btn btn-submit\" title=\"{{_t('btn_save')}}\"><i class=\"fa fa-check\"></i> <span class=btn-name>{{_t('btn_save')}}</span></button></div></form></div></div>"
   );
 
 
@@ -32817,7 +32817,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/home/notes.html',
-    "<div class=\"panel panel-default\" ng-controller=SettingsController><div class=panel-heading><i class=\"fa fa-list text-info\"></i> {{_t('txt_notes')}}</div><div class=\"panel-body newlines\" ng-if=settings.input.notes>{{settings.input.notes|stripTags}}</div><div class=\"panel-footer text-right\"><button class=\"btn btn-default\" ng-click=\"handleModal('notesModal', $event)\"><i class=\"fa fa-pencil text-info\"></i> {{_t('edit')}}</button></div></div>"
+    "<div class=\"panel panel-default\" ng-controller=NoteController><div class=panel-heading><i class=\"fa fa-list text-info\"></i> {{_t('txt_notes')}}</div><div class=\"panel-body newlines\" ng-if=note.input.notes>{{note.input.notes|stripTags}}</div><div class=\"panel-footer text-right\"><button class=\"btn btn-default\" ng-click=\"handleModal('notesModal', $event)\"><i class=\"fa fa-pencil text-info\"></i> {{_t('edit')}}</button></div></div>"
   );
 
 
@@ -33013,8 +33013,28 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
   );
 
 
-  $templateCache.put('app/views/settings/settings.html',
-    "<div ng-controller=SettingsController><div class=page-header><h1>{{_t('settings')}}</h1></div><bb-loader></bb-loader><div class=\"form form-inline form-page\"><div class=\"fieldset settings-lang\"><h3>{{_t('language')}}</h3><a href=\"\" title={{v}} ng-repeat=\"v in lang_list\" ng-click=setLang(v) ng-class=\"v === lang ? 'active': ''\"><img ng-src=app/images/flags/{{v}}.png alt=\"{{ v }}\"></a></div></div><form name=form_settings id=form_nsettings class=\"form form-page\" ng-if=\"cfg.app_type === 'installer'\" ng-submit=\"handleModal('settingsModal', $event);storeSettings(settings.input)\" novalidate><fieldset><div class=\"form-group form-inline\"><label for=network_name>{{_t('network_name')}}:</label><input name=network_name id=network_name class=form-control placeholder=\"{{_t('network_name')}}\" value={{settings.input.network_name}} ng-model=settings.input.network_name></div><div class=\"form-group form-inline\"><label>{{_t('date_format')}}:</label><select name=date_format name=date_format class=form-control ng-model=settings.input.date_format><option ng-repeat=\"v in cfg.date_format_list\" value={{v}} ng-selected=\"v === cfg.zwavecfg.date_format\">{{v}}</option></select></div><div class=\"form-group form-inline\"><label>{{_t('time_format')}}:</label><select name=time_format name=time_format class=form-control ng-model=settings.input.time_format><option ng-repeat=\"v in cfg.time_format_list\" value={{v}} ng-selected=\"v === cfg.zwavecfg.time_format\">{{v}} {{_t('hours')}}</option></select></div></fieldset><fieldset class=submit-entry><button type=button class=\"btn btn-default\" title=\"{{_t('btn_cancel')}}\" bb-go-back><i class=\"fa fa-reply\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button> <button type=submit class=\"btn btn-submit\" title=\"{{_t('btn_save')}}\"><i class=\"fa fa-check\"></i> <span class=btn-name>{{_t('btn_save')}}</span></button></fieldset></form></div>"
+  $templateCache.put('app/views/settings/settings_app.html',
+    "<h2 class=accordion-entry-title ng-click=\"expandElement('settingsApp')\"><i class=\"fa fa-cogs\"></i> {{_t('app_settings')}} <i class=\"fa accordion-arrow\" ng-class=\"expand.settingsApp ? 'fa-chevron-up':'fa-chevron-down'\"></i></h2><div class=accordion-entry-ctrl ng-class=\"\" ng-if=expand.settingsApp ng-controller=SettingsAppController><bb-loader></bb-loader><form name=form_settings id=form_settings class=\"form form-page\" ng-if_=\"cfg.app_type === 'installer'\" ng-submit=storeSettings(settings.input) novalidate><fieldset><div class=\"form-group form-inline\"><label for=network_name>{{_t('network_name')}}:</label><input name=network_name id=network_name class=form-control placeholder=\"{{_t('network_name')}}\" value={{settings.input.network_name}} ng-model=settings.input.network_name></div><div class=\"form-group form-inline\"><label>{{_t('date_format')}}:</label><select name=date_format name=date_format class=form-control ng-model=settings.input.date_format><option ng-repeat=\"v in cfg.date_format_list\" value={{v}} ng-selected=\"v === cfg.zwavecfg.date_format\">{{v}}</option></select></div><div class=\"form-group form-inline\"><label>{{_t('time_format')}}:</label><select name=time_format name=time_format class=form-control ng-model=settings.input.time_format><option ng-repeat=\"v in cfg.time_format_list\" value={{v}} ng-selected=\"v === cfg.zwavecfg.time_format\">{{v}} {{_t('hours')}}</option></select></div></fieldset><fieldset class=submit-entry><button type=submit class=\"btn btn-submit\" title=\"{{_t('btn_save')}}\"><i class=\"fa fa-check\"></i> <span class=btn-name>{{_t('btn_save')}}</span></button></fieldset></form></div>"
+  );
+
+
+  $templateCache.put('app/views/settings/settings_default.html',
+    "<div class=page-header><h1>{{_t('settings')}}</h1></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_lang.html'\"></div>"
+  );
+
+
+  $templateCache.put('app/views/settings/settings_firmware.html',
+    "<h2 class=accordion-entry-title ng-click=\"expandElement('settingsFirmware')\"><i class=\"fa fa-level-up\"></i> {{_t('nav_firmware_update')}} <i class=\"fa accordion-arrow\" ng-class=\"expand.settingsFirmware  ? 'fa-chevron-up':'fa-chevron-down'\"></i></h2><div class=accordion-entry-ctrl ng-class=\"\" ng-if=expand.settingsFirmware ng-controller=SettingsFirmwareController><bb-loader></bb-loader><div class=\"alert alert-success\" ng-if=firmwareUpdate.isUpToDate><i class=\"fa fa-smile-o fa-lg\"></i> {{_t('firmware_uptodate')}} ({{firmwareUpdate.softwareCurrentVersion}})</div><form name=form_firmware id=form_firmware class=\"form form-page\" ng-submit=updateFirmware() ng-if=!firmwareUpdate.isUpToDate><fieldset><p class=form-control-static><span ng-bind=\"_t('current_firmware')\"></span>: {{firmwareUpdate.softwareCurrentVersion}}</p><div class=form-group><bb-help-text trans=\"_t('firmware_update_info')\"></bb-help-text></div></fieldset><fieldset class=submit-entry><button type=button class=\"btn btn-submit\" title=\"{{_t('update_to_latest')}}\" ng-click=\"setAccess('?allow_access=1',true);handleModal('firmwareUpdateModal', $event)\"><i class=\"fa fa-level-up\"></i> <span class=btn-name>{{_t('update_to_latest')}} ({{firmwareUpdate.softwareLatestVersion}})</span></button></fieldset></form><div id=firmwareUpdateModal class=\"appmodal appmodal-100\" ng-if=\"modalArr.firmwareUpdateModal && firmwareUpdate.show\"><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"setAccess('?allow_access=0');handleModal('firmwareUpdateModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{_t('nav_firmware_update')}}</h3></div><div class=\"appmodal-body text-center\"><iframe ng-src={{firmwareUpdate.url}} height=600 style=\"width: 100%\" ng-if=firmwareUpdate.loaded></iframe></div></div></div></div>"
+  );
+
+
+  $templateCache.put('app/views/settings/settings_installer.html',
+    "<div class=page-header><h1>{{_t('settings')}}</h1></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_lang.html'\"></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_app.html'\"></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_firmware.html'\"></div>"
+  );
+
+
+  $templateCache.put('app/views/settings/settings_lang.html',
+    "<h2 class=\"accordion-entry-title expanded-only_\" ng-init_=\"expandElement('settingsLang')\" ng-click=\"expandElement('settingsLang')\"><i class=\"fa fa-globe\"></i> {{_t('language')}}</h2><div class=accordion-entry-ctrl ng-class=\"\" ng-if=expand.settingsLang ng-controller=SettingsLangController><div class=form-page><div class=\"fieldset settings-lang\"><a href=\"\" title={{v}} ng-repeat=\"v in lang_list\" ng-click=setLang(v) ng-class=\"v === lang ? 'active': ''\"><img ng-src=app/images/flags/{{v}}.png alt=\"{{ v }}\"></a></div></div></div>"
   );
 
 
@@ -33096,6 +33116,22 @@ angApp.directive('sortBy', function () {
             // this is link function
             var col_name = scope.$eval(attr.col_name);
         }
+    };
+});
+/**
+ * Displays a help text
+ * @class bbHelpText
+ */
+angApp.directive('bbHelpText', function () {
+    return {
+        restrict: "E",
+        replace: true,
+        scope: {
+            trans: '=',
+            display: '=',
+            icon: '='
+        },
+        template: '<span class="help-text" ng-class="display"><i class="fa text-info" ng-class="icon ? icon : \' fa-info-circle\'"></i> {{trans}}</span>'
     };
 });
 
@@ -35587,6 +35623,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         runZwaveCmd: runZwaveCmd,
         getApi: getApi,
         postApi: postApi,
+        getRemoteData: getRemoteData,
         xmlToJson: xmlToJson,
         getTextFile: getTextFile,
         storeTextToFile: storeTextToFile
@@ -36370,6 +36407,37 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             return response;
         }, function (response) {// something went wrong
             return $q.reject(response);
+        });
+    }
+
+    /**
+     * Get data from the remote resource
+     * @param {string} url
+     * @param {boolean} noCache
+     * @returns {unresolved}
+     */
+    function getRemoteData(url, noCache) {
+        // Cached data
+        var cacheName = 'cache_' + url;
+        var cached = myCache.get(cacheName);
+
+        if (!noCache && cached) {
+            var deferred = $q.defer();
+            deferred.resolve(cached);
+            return deferred.promise;
+        }
+        // NOT Cached data
+        return $http({
+            method: 'get',
+            url: url
+            /*headers: {
+             'Accept-Language': lang
+             }*/
+        }).then(function (response) {
+            return response;
+        }, function (error) {// something went wrong
+
+            return $q.reject(error);
         });
     }
     
@@ -37992,6 +38060,16 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
         $event.stopPropagation();
     };
 
+    $scope.expand = {};
+    /**
+     * Expand/collapse an element
+     * @param {string} key
+     * @returns {undefined}
+     */
+    $scope.expandElement = function (key) {
+        $scope.expand[key] = !($scope.expand[key]);
+    };
+
     $scope.rowSpinner = [];
     /**
      * Toggle row spinner
@@ -38055,10 +38133,11 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
     /**
      * Load Box API data
      */
+    $scope.boxData = {
+        controller: {}
+    };
     $scope.loadBoxApiData = function () {
-        $scope.boxData = {
-            controller: {}
-        };
+
         dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
              var hasDevices = Object.keys(ZWaveAPIData.devices).length;
              var homeId = ZWaveAPIData.controller.data.homeId.value;
@@ -38066,6 +38145,7 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
             $scope.boxData.controller.isRealPrimary = ZWaveAPIData.controller.data.isRealPrimary.value;
             $scope.boxData.controller.hasDevices =  hasDevices < 2 ? false : true;
             $scope.boxData.controller.homeId =   '0x' + ('00000000' + (homeId + (homeId < 0 ? 0x100000000 : 0)).toString(16)).slice(-8);
+            $scope.boxData.controller.softwareRevisionVersion = ZWaveAPIData.controller.data.softwareRevisionVersion.value;
             // Changes MK
             $scope.boxData.controller.controllerState = ZWaveAPIData.controller.data.controllerState.value;
         }, function (error) {
@@ -38073,11 +38153,7 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
 
         });
     };
-    if(cfg.app_type === 'installer'){
-         $scope.loadBoxApiData();
-     }
-   
-
+    $scope.loadBoxApiData();
 });
 
 /**
@@ -38246,20 +38322,59 @@ appController.controller('AuthInstallerController', function($scope, $location,c
 
 });
 /**
- * @overview This controller renders and handles settings.
+ * @overview This controller renders and handles notes.
  * @author Martin Vach
  */
 
 /**
- * This controller renders and handles settings.
- * @class SettingsController
+ * This controller renders and handles notes.
+ * @class NoteController
  *
  */
-appController.controller('SettingsController', function ($scope, $filter, $timeout,$interval,$window,$cookies,dataService,deviceService, cfg,_) {
-    $scope.settings = {
-        input: {}
+appController.controller('NoteController', function ($scope, $timeout,$interval, cfg, dataService, deviceService) {
+    $scope.note = {
+        input: { }
     };
+
     /**
+     * Load settings
+     */
+    $scope.loadSettings = function() {
+        $scope.note.input= cfg.zwavecfg;
+    };
+    $scope.loadSettings();
+
+    /**
+     * Store settings
+     * @param {object} input
+     */
+    $scope.storeSettings = function(input) {
+        $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin', message: $scope._t('updating')};
+        dataService.postApi('configupdate_url', input).then(function (response) {
+            cfg.zwavecfg = input;
+            //$scope.reloadData();
+            deviceService.showNotifier({message: $scope._t('update_successful')});
+            //$window.location.reload();
+            $scope.reloadData();
+            $scope.loading = false;
+        }, function (error) {
+            $scope.loading = false;
+            alertify.alertError($scope._t('error_update_data'));
+        });
+    };
+});
+/**
+ * @overview This controller renders and handles settings and configuration.
+ * @author Martin Vach
+ */
+
+/**
+ * This controller renders and handles language settings.
+ * @class SettingsLangController
+ *
+ */
+appController.controller('SettingsLangController', function ($scope, $timeout,$window,$cookies) {
+   /**
      * Set app language
      * @param {string} lang
      */
@@ -38272,6 +38387,17 @@ appController.controller('SettingsController', function ($scope, $filter, $timeo
             $window.location.reload();
         }, 1000);
 
+    };
+});
+
+/**
+ * This controller renders and handles app settings.
+ * @class SettingsAppController
+ *
+ */
+appController.controller('SettingsAppController', function ($scope, $timeout,$interval, cfg,dataService,deviceService) {
+    $scope.settings = {
+        input: {}
     };
 
     /**
@@ -38299,6 +38425,59 @@ appController.controller('SettingsController', function ($scope, $filter, $timeo
             alertify.alertError($scope._t('error_update_data'));
         });
     };
+});
+
+/**
+ * The controller that handles firmware update process.
+ * @class SettingsFirmwareController
+ *
+ */
+appController.controller('SettingsFirmwareController', function ($scope, $sce, $timeout, $location,dataService) {
+    $scope.firmwareUpdate = {
+        show: false,
+        loaded: false,
+        url: $sce.trustAsResourceUrl('http://' + $location.host() + ':8084/cgi-bin/main.cgi'),
+        softwareCurrentVersion: $scope.boxData.controller.softwareRevisionVersion,
+        softwareLatestVersion: false,
+        isUpToDate: false
+    };
+    /**
+     * Load latest version
+     */
+    $scope.loadRazLatest = function () {
+        dataService.getRemoteData($scope.cfg.raz_latest_version_url).then(function (response) {
+            $scope.firmwareUpdate.softwareLatestVersion = response.data;
+            if(response.data === $scope.boxData.controller.softwareRevisionVersion){
+                $scope.firmwareUpdate.isUpToDate = true;
+            }
+
+        }, function (error) {
+        });
+    };
+    $scope.loadRazLatest();
+    /**
+     * Set access
+     */
+    $scope.setAccess = function (param, loader) {
+        if (loader) {
+            $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin', message: $scope._t('loading')};
+        }
+        dataService.getApi('firmwareupdate', param, true).then(function (response) {
+            if (loader) {
+                $scope.firmwareUpdate.show = true;
+                $timeout(function () {
+                    $scope.loading = false;
+                    $scope.firmwareUpdate.loaded = true;
+                }, 5000);
+            }
+
+        }, function (error) {
+            $scope.loading = false;
+            alertify.alertError($scope._t('error_load_data'));
+
+        });
+    };
+
 });
 /**
  * @overview This controller renders and handles switches.
