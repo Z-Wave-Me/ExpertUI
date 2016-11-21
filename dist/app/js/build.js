@@ -33034,7 +33034,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/settings/settings_lang.html',
-    "<h2 class=\"accordion-entry-title expanded-only_\" ng-init_=\"expandElement('settingsLang')\" ng-click=\"expandElement('settingsLang')\"><i class=\"fa fa-globe\"></i> {{_t('language')}}</h2><div class=accordion-entry-ctrl ng-class=\"\" ng-if=expand.settingsLang ng-controller=SettingsLangController><div class=form-page><div class=\"fieldset settings-lang\"><a href=\"\" title={{v}} ng-repeat=\"v in lang_list\" ng-click=setLang(v) ng-class=\"v === lang ? 'active': ''\"><img ng-src=app/images/flags/{{v}}.png alt=\"{{ v }}\"></a></div></div></div>"
+    "<h2 class=\"accordion-entry-title expanded-only_\" ng-init_=\"expandElement('settingsLang')\" ng-click=\"expandElement('settingsLang')\"><i class=\"fa fa-globe\"></i> {{_t('language')}} <i class=\"fa accordion-arrow\" ng-class=\"expand.settingsLang  ? 'fa-chevron-up':'fa-chevron-down'\"></i></h2><div class=accordion-entry-ctrl ng-class=\"\" ng-if=expand.settingsLang ng-controller=SettingsLangController><div class=form-page><div class=\"fieldset settings-lang\"><a href=\"\" title={{v}} ng-repeat=\"v in lang_list\" ng-click=setLang(v) ng-class=\"v === lang ? 'active': ''\"><img ng-src=app/images/flags/{{v}}.png alt=\"{{ v }}\"></a></div></div></div>"
   );
 
 
