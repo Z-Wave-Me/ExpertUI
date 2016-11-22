@@ -71,7 +71,9 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         getRemoteData: getRemoteData,
         xmlToJson: xmlToJson,
         getTextFile: getTextFile,
-        storeTextToFile: storeTextToFile
+        storeTextToFile: storeTextToFile,
+        updateDeviceFirmware: updateDeviceFirmware,
+        uploadApiFile: uploadApiFile
     });
     /**
      * Get IP
@@ -957,6 +959,47 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         }, function (response) {// something went wrong
             return $q.reject(response);
         });
+    }
+
+    /**
+     * Run Firmware Update
+     */
+    function updateDeviceFirmware(nodeId, data) {
+        var uploadUrl = cfg.server_url + cfg.fw_update_url + '/' + nodeId;
+        var fd = new FormData();
+        fd.append('file', data.file);
+        fd.append('url', data.url);
+        fd.append('targetId', data.targetId);
+        $http.post(uploadUrl, fd, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        }).success(function () {
+            handleSuccess(data);
+        }).error(function () {
+            handleError();
+        });
+
+    }
+
+    /**
+     * Upload a file to ZAutomation
+     * @param {type} cmd
+     * @param {type} data
+     * @returns {unresolved}
+     */
+    function uploadApiFile(cmd, data) {
+        var uploadUrl = cfg.server_url + cmd;
+        return  $http.post(uploadUrl, data, {
+            transformRequest: angular.identity,
+            headers: {
+                'Content-Type': undefined
+            }
+        }).then(function (response) {
+            return response;
+        }, function (response) {// something went wrong
+            return $q.reject(response);
+        });
+
     }
 });
 

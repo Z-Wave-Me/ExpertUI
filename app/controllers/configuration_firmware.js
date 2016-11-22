@@ -8,7 +8,7 @@
  * @class ConfigFirmwareController
  *
  */
-appController.controller('ConfigFirmwareController', function ($scope, $routeParams, $location, $cookies, dataService, deviceService) {
+appController.controller('ConfigFirmwareController', function ($scope, $routeParams, $location, $cookies, cfg, dataService, deviceService) {
     $scope.devices = [];
     $scope.deviceId = 0;
     $scope.activeTab = 'firmware';
@@ -16,6 +16,13 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
     $scope.showForm = false;
     $scope.formFirmware = {};
     $scope.firmwareProgress = 0;
+
+    $scope.firmware = {
+        input:{
+            url: '',
+            targetId: ''
+        }
+    };
 
     $cookies.tab_config = $scope.activeTab;
 
@@ -45,6 +52,28 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
             $location.path($scope.activeUrl + deviceId);
         }
     };
+
+    $scope.updateDeviceFirmware = function (input) {
+        $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin', message: $scope._t('initiating_device_firmware_update')};
+        var cmd = cfg.server_url + cfg.fw_update_url + '/' + $scope.deviceId
+        var fd = new FormData();
+
+        fd.append('file',$scope.myFile);
+        fd.append('url', input.url);
+        fd.append('targetId', input.targetId);
+        dataService.uploadApiFile(cmd, fd).then(function (response) {
+            $scope.loading = false;
+            deviceService.showNotifier({message: $scope._t('success_device_firmware_update')});
+            /*$timeout(function () {
+                alertify.dismissAll();
+                $window.location.reload();
+            }, 2000);*/
+        }, function (error) {
+            $scope.loading = false;
+            alertify.alertError($scope._t('error_device_firmware_update'));
+        });
+    };
+    $scope.load($routeParams.nodeId);
     /**
      * update Firmware
      * todo: complete this function

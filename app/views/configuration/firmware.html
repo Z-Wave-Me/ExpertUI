@@ -2,14 +2,23 @@
 <div ng-controller="ConfigFirmwareController">
     <!-- Config navigation -->
     <div ng-include="'app/views/configuration/header.html'"></div>
+    <bb-loader></bb-loader>
 
     <div class="tab-content" ng-show="deviceId">
-        <form name="form_firmware" id="form_firmware" class="form form-inline" ng-show="showForm" ng-submit="updateFirmware(deviceId)" novalidate>
+        <form name="form_firmware_update" id="form_firmware_update" class="form form-inline"
+              ng-submit="updateDeviceFirmware(firmware.input)" novalidate>
             <!--<label>{{_t('nav_firmware_update')}}:</label>-->
+            <input id="url" type="text" value="" name="url" class="form-control" ng-model="firmware.input.url" placeholder="URL" title="please use format http:// ...... " />
+            <input type="file" class="form-control" file-model="myFile" />
+            <input id="targetId" type="text" value="" name="targetId" class="form-control" ng-model="firmware.input.targetId" placeholder="Target" title="For Z-Wave Target is 0" />
+            <button type="submit" class="btn btn-primary" id="btn_save_note">{{ _t('update')}} </button> <span ng-show="firmwareProgress" ng-bind="firmwareProgress"></span>
+        </form>
+       <!-- <form name="form_firmware" id="form_firmware" class="form form-inline" ng-show="showForm" ng-submit="updateFirmware(deviceId)" novalidate>
+            &lt;!&ndash;<label>{{_t('nav_firmware_update')}}:</label>&ndash;&gt;
             <input id="url" type="text" value="" name="url" class="form-control" ng-model="formFirmware.url" placeholder="URL" title="please use format http:// ...... " data-toggle="tooltip" data-position="top" tooltip />
             <input type="file" class="form-control" file-model="myFile" />
             <input id="targetId" type="text" value="" name="targetId" class="form-control" ng-model="formFirmware.targetId" placeholder="Target" title="For Z-Wave Target is 0" data-toggle="tooltip" data-position="top" tooltip />
             <button type="submit" class="btn btn-primary" id="btn_save_note">{{ _t('update')}} </button> <span ng-show="firmwareProgress" ng-bind="firmwareProgress"></span>
-        </form>
+        </form>-->
     </div> 
 </div><!-- /ng-controler -->
