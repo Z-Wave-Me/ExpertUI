@@ -5,13 +5,12 @@
 </h2>
 <div class="accordion-entry-ctrl" ng-class="" ng-if="expand.settingsFirmware" ng-controller="SettingsFirmwareController">
     <bb-loader></bb-loader>
-    <div class="alert alert-success" ng-if="firmwareUpdate.isUpToDate">
+    <!--<div class="alert alert-success" ng-if="firmwareUpdate.isUpToDate">
         <i class="fa fa-smile-o fa-lg"></i> {{_t('firmware_uptodate')}} ({{firmwareUpdate.softwareCurrentVersion}})
-    </div>
+    </div>-->
     <form name="form_firmware" id="form_firmware" class="form form-page" ng-submit="updateFirmware()"
-          ng-if="!firmwareUpdate.isUpToDate">
+          ng-if_="!firmwareUpdate.isUpToDate">
         <fieldset>
-            <!-- Currentt version -->
 
             <p class="form-control-static">
                 <span ng-bind="_t('current_firmware')"></span>: {{firmwareUpdate.softwareCurrentVersion}}
@@ -30,7 +29,6 @@
         </fieldset>
 
     </form>
-
     <!-- firmwareUpdateModal -->
     <div id="firmwareUpdateModal" class="appmodal appmodal-100" ng-if="modalArr.firmwareUpdateModal && firmwareUpdate.show">
         <div class="appmodal-in">
