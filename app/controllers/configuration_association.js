@@ -1,8 +1,13 @@
 /**
- * Device configuration Association controller - new version
+ * @overview This controller renders and handles device association stuff.
  * @author Martin Vach
  */
-// Device configuration Association controller - new version
+
+/**
+ * Device configuration Association controller
+ * @class ConfigAssocController
+ *
+ */
 appController.controller('ConfigAssocController', function($scope, $filter, $routeParams, $location, $cookies, $timeout, $window, dataService, deviceService, myCache, cfg, _) {
     $scope.devices = [];
     $scope.deviceId = 0;

@@ -80,7 +80,7 @@ appController.controller('ControllerController', function($scope, $window, $filt
                 var fcIndex = ZWaveAPIData.controller.data.functionClasses.value.indexOf(func);
                 var capIndex = ZWaveAPIData.controller.data.capabilities.value.indexOf(func);
                 var fcName = (fcIndex != -1) ? ZWaveAPIData.controller.data.functionClassesNames.value[fcIndex] : 'Not implemented';
-                funcList += '<span style="color: ' + ((capIndex != -1) ? ((fcIndex != -1) ? '' : 'gray') : 'red') + '">' + fcName + ' (0x' + ('00' + func.toString(16)).slice(-2) + ')</span>, ';
+                funcList += '<span style="color: ' + ((capIndex != -1) ? ((fcIndex != -1) ? '' : 'gray') : 'red') + '">' + fcName + ' (0x' + ('00' + func.toString(16)).slice(-2) + ')</span>  &#8226; ';
             });
             $scope.funcList = funcList;
         });

@@ -32666,7 +32666,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/configuration/firmware.html',
-    "<div ng-controller=ConfigFirmwareController><div ng-include=\"'app/views/configuration/header.html'\"></div><div class=tab-content ng-show=deviceId><form name=form_firmware id=form_firmware class=\"form form-inline\" ng-show=showForm ng-submit=updateFirmware(deviceId) novalidate><input id=url name=url class=form-control ng-model=formFirmware.url placeholder=URL title=\"please use format http:// ...... \" data-toggle=tooltip data-position=top tooltip> <input type=file class=form-control file-model=myFile> <input id=targetId name=targetId class=form-control ng-model=formFirmware.targetId placeholder=Target title=\"For Z-Wave Target is 0\" data-toggle=tooltip data-position=top tooltip> <button type=submit class=\"btn btn-primary\" id=btn_save_note>{{ _t('update')}}</button> <span ng-show=firmwareProgress ng-bind=firmwareProgress></span></form></div></div>"
+    "<div ng-controller=ConfigFirmwareController><div ng-include=\"'app/views/configuration/header.html'\"></div><div class=tab-content ng-show=deviceId><form name=form_firmware_update id=form_firmware_update class=\"form form-inline\" ng-submit=\"updateDeviceFirmware(firmware.input,'btn_update')\" novalidate><input id=url name=url class=form-control ng-model=firmware.input.url placeholder=URL title=\"please use format http:// ...... \"> <input type=file class=form-control file-model=myFile><select name=devices class=form-control ng-model=firmware.input.targetId><option value=\"\" ng-selected=\"v.id != deviceId\">--- {{_t('Target')}} ---</option><option value={{k}} ng-repeat=\"(k,v) in ['Z-Wave','EnOcean']\" ng-selected=\"k === 0\">{{v}}</option></select><button type=submit class=\"btn btn-info\" id=btn_update ng-disabled=\"rowSpinner['btn_update']\"><bb-row-spinner spinner=\"rowSpinner['btn_update']\" label=\"_t('update')\" icon=\"'fa-check'\"></bb-row-spinner></button></form></div></div>"
   );
 
 
@@ -32681,14 +32681,14 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/configuration/interview.html',
-    "<div ng-controller=ConfigInterviewController><div ng-include=\"'app/views/configuration/header.html'\"></div><div class=tab-content ng-show=deviceId><div class=cfg-block id=rename_cont><h4><a href=\"\" ng-click=\"goRename = !goRename\">{{_t('device_rename_tooltip')}} <i class=\"fa fa-pencil\"></i></a></h4><div ng-show=goRename><form name=form_rename id=form_rename ng-model=form_rename class=\"form form-inline\" ng-submit=\"renameDevice('form_rename')\" novalidate><input name=device_name id=device_name class=form-control value={{deviceName}}> <button type=submit class=\"btn btn-primary\" id=btn_update>{{_t('btn_save_name')}}</button></form></div></div><div class=cfg-block><div class=row><div class=col-md-8><div class=table-responsive_><table class=\"table table-striped table-condensed table-cfg-interview\"><tbody><tr ng-repeat=\"v in descriptionCont\" ng-show=\"v.val || v.val != ''\"><th>{{_t(v.key)}}</th><td id={{v.key}}><div ng-switch on=v.key><div ng-switch-when=command_class><span ng-repeat=\"cc in interviewCommands\"><a href=\"\" ng-click=\"showModalCommandClass('#modal_command_class',cc.iId,cc.ccId, 'cmdData')\">{{cc.ccName}}</a>,</span></div><p class=config-interview-val ng-switch-default ng-bind-html=\"v.val | toTrusted\"></p></div></td></tr></tbody></table></div></div><div class=col-md-4><img src={{deviceImage}} class=config-device-img alt=Image></div></div></div><div class=cfg-block><button data-ng-click=\"runCmd('devices[' + deviceId + '].RequestNodeInformation()')\" class=\"btn btn-primary btn-spinner\" id=btn_request_nif>{{_t('config_ui_request_node_info')}}</button> <button data-ng-click=\"runCmd('devices[' + deviceId + '].InterviewForce()')\" data-redirect={{deviceId}} class=\"btn btn-primary btn-spinner\" id=btn_interview_force>{{_t('config_ui_force_interview')}}</button> <button data-ng-click=\"showModalInterview('#modal_interview', null)\" class=\"btn btn-primary btn-spinner\" id=btn_request_nif>{{_t('config_ui_show_interview_results')}}</button> <button data-ng-click=\"showModalDeviceSelect('#modal_device_select', deviceId, '#modal_device_select .allert-hidden')\" class=\"btn btn-primary\" id=btn_show_description>{{_t('config_ui_select_xml')}}</button> <a href=\"{{cfg.server_url + cfg.zddx_create_url + deviceId}}\" class=\"btn btn-primary\" id=btn_create_zddx target=_blank>{{_t('btn_zddx_create')}}</a></div></div><div class=\"modal fade\" id=modal_interview tabindex=-1 role=dialog aria-labelledby=myModalLabel aria-hidden=true><div class=modal-dialog><div class=modal-content><div class=modal-header><button type=button class=close data-dismiss=modal aria-hidden=true>&times;</button><h4 class=modal-title>{{_t('interview_results_dialog_title')}}</h4></div><div class=modal-body><p>{{_t('interview_results_title')}} <a href=\"\" ng-click=\"showModalCommandClass('#modal_command_class')\">{{deviceName}}</a></p><div id=table_mobile_modal_1><table class=\"table table-condensed\"><thead><tr><th>{{_t('th_instance')}}</th><th>{{_t('th_command_class')}}</th><th>{{_t('th_result')}}</th></tr></thead><tbody><tr ng-repeat=\"v in interviewCommands\" id={{v.ccId}}><td data-title=\"{{_t('th_instance')}}\" ng-class=\"($index == 0 ? 'no-class' : 'mobile-hide')\"><a href=\"\" ng-click=\"showModalCommandClass('#modal_command_class',v.iId,v.ccId, 'cmdDataIn')\">{{v.iId}}</a> &nbsp;</td><td data-title=\"{{_t('th_command_class')}}\"><a href=\"\" ng-click=\"showModalCommandClass('#modal_command_class',v.iId,v.ccId, 'cmdData')\">{{v.ccName}}</a></td><td data-title=\"{{_t('th_result')}}\"><span ng-if=v.interviewDone><i class=\"fa fa-check text-success\"></i></span> <button ng-if=!v.interviewDone data-store-url=devices[{{deviceId}}].instances[{{v.iId}}].commandClasses[{{v.ccId}}].Interview() data-ng-click=store(v) class=\"btn btn-primary btn-sm\" id=btn_force_interview_{{v.ccId}}>{{_t('config_ui_force_interview')}}</button> &nbsp;</td></tr></tbody></table></div></div><div class=modal-footer><button type=button class=\"btn btn-default\" data-dismiss=modal>{{_t('btn_cancel')}}</button></div></div></div></div><div class=\"modal fade\" id=modal_command tabindex=-1 role=dialog aria-labelledby=myModalLabel aria-hidden=true><div class=modal-dialog><div class=modal-content><div class=modal-header><button type=button class=close data-dismiss=modal aria-hidden=true>&times;</button><h4 class=modal-title>{{_t('th_command_class')}}</h4></div><div class=modal-body></div><div class=modal-footer><button type=button class=\"btn btn-default\" data-dismiss=modal>{{_t('btn_cancel')}}</button></div></div></div></div><div class=\"modal fade\" id=modal_device_select tabindex=-1 role=dialog aria-labelledby=myModalLabel aria-hidden=true><div class=modal-dialog><div class=modal-content><div class=modal-header><button type=button class=close data-dismiss=modal aria-hidden=true>&times;</button><h4 class=modal-title>{{_t('config_ui_select_xml')}}</h4></div><div class=modal-body><div ng-if=\"deviceZddx.length > 0\"><p ng-bind-html=\"_t('select_zddx_help') | toTrusted\"></p><select name=select_zddx_help id=select_zddx_help class=form-control ng-change=\"changeDeviceSelect('#select_zddx_help', '#device_select_image',modelSelectZddx)\" ng-model=modelSelectZddx><option value=\"\">---</option><option ng-init=\"selectCfg = {\r" +
+    "<div ng-controller=ConfigInterviewController><div ng-include=\"'app/views/configuration/header.html'\"></div><div class=tab-content ng-show=deviceId><div class=cfg-block id=rename_cont><h4><a href=\"\" ng-click=\"goRename = !goRename\">{{_t('device_rename_tooltip')}} <i class=\"fa fa-pencil\"></i></a></h4><div ng-show=goRename><form name=form_rename id=form_rename ng-model=form_rename class=\"form form-inline\" ng-submit=\"renameDevice('form_rename')\" novalidate><input name=device_name id=device_name class=form-control value={{deviceName}}> <button type=submit class=\"btn btn-primary\" id=btn_update>{{_t('btn_save_name')}}</button></form></div></div><div class=cfg-block><div class=row><div class=col-md-8><div class=table-responsive_><table class=\"table table-striped table-condensed table-cfg-interview\"><tbody><tr ng-repeat=\"v in descriptionCont\" ng-show=\"v.val || v.val != ''\"><th>{{_t(v.key)}}</th><td id={{v.key}}><div ng-switch on=v.key><div ng-switch-when=command_class><span ng-repeat=\"cc in interviewCommands\"><a href=\"\" ng-click=\"showModalCommandClass('#modal_command_class',cc.iId,cc.ccId, 'cmdData')\">{{cc.ccName}}</a> &#8226;</span></div><p class=config-interview-val ng-switch-default ng-bind-html=\"v.val | toTrusted\"></p></div></td></tr></tbody></table></div></div><div class=col-md-4><img src={{deviceImage}} class=config-device-img alt=Image></div></div></div><div class=cfg-block><button data-ng-click=\"runCmd('devices[' + deviceId + '].RequestNodeInformation()')\" class=\"btn btn-primary btn-spinner\" id=btn_request_nif>{{_t('config_ui_request_node_info')}}</button> <button data-ng-click=\"runCmd('devices[' + deviceId + '].InterviewForce()')\" data-redirect={{deviceId}} class=\"btn btn-primary btn-spinner\" id=btn_interview_force>{{_t('config_ui_force_interview')}}</button> <button data-ng-click=\"showModalInterview('#modal_interview', null)\" class=\"btn btn-primary btn-spinner\" id=btn_request_nif>{{_t('config_ui_show_interview_results')}}</button> <button data-ng-click=\"showModalDeviceSelect('#modal_device_select', deviceId, '#modal_device_select .allert-hidden')\" class=\"btn btn-primary\" id=btn_show_description>{{_t('config_ui_select_xml')}}</button> <a href=\"{{cfg.server_url + cfg.zddx_create_url + deviceId}}\" class=\"btn btn-primary\" id=btn_create_zddx target=_blank>{{_t('btn_zddx_create')}}</a></div></div><div class=\"modal fade\" id=modal_interview tabindex=-1 role=dialog aria-labelledby=myModalLabel aria-hidden=true><div class=modal-dialog><div class=modal-content><div class=modal-header><button type=button class=close data-dismiss=modal aria-hidden=true>&times;</button><h4 class=modal-title>{{_t('interview_results_dialog_title')}}</h4></div><div class=modal-body><p>{{_t('interview_results_title')}} <a href=\"\" ng-click=\"showModalCommandClass('#modal_command_class')\">{{deviceName}}</a></p><div id=table_mobile_modal_1><table class=\"table table-condensed\"><thead><tr><th>{{_t('th_instance')}}</th><th>{{_t('th_command_class')}}</th><th>{{_t('th_result')}}</th></tr></thead><tbody><tr ng-repeat=\"v in interviewCommands\" id={{v.ccId}}><td data-title=\"{{_t('th_instance')}}\" ng-class=\"($index == 0 ? 'no-class' : 'mobile-hide')\"><a href=\"\" ng-click=\"showModalCommandClass('#modal_command_class',v.iId,v.ccId, 'cmdDataIn')\">{{v.iId}}</a> &nbsp;</td><td data-title=\"{{_t('th_command_class')}}\"><a href=\"\" ng-click=\"showModalCommandClass('#modal_command_class',v.iId,v.ccId, 'cmdData')\">{{v.ccName}}</a></td><td data-title=\"{{_t('th_result')}}\"><span ng-if=v.interviewDone><i class=\"fa fa-check text-success\"></i></span> <button ng-if=!v.interviewDone data-store-url=devices[{{deviceId}}].instances[{{v.iId}}].commandClasses[{{v.ccId}}].Interview() data-ng-click=store(v) class=\"btn btn-primary btn-sm\" id=btn_force_interview_{{v.ccId}}>{{_t('config_ui_force_interview')}}</button> &nbsp;</td></tr></tbody></table></div></div><div class=modal-footer><button type=button class=\"btn btn-default\" data-dismiss=modal>{{_t('btn_cancel')}}</button></div></div></div></div><div class=\"modal fade\" id=modal_command tabindex=-1 role=dialog aria-labelledby=myModalLabel aria-hidden=true><div class=modal-dialog><div class=modal-content><div class=modal-header><button type=button class=close data-dismiss=modal aria-hidden=true>&times;</button><h4 class=modal-title>{{_t('th_command_class')}}</h4></div><div class=modal-body></div><div class=modal-footer><button type=button class=\"btn btn-default\" data-dismiss=modal>{{_t('btn_cancel')}}</button></div></div></div></div><div class=\"modal fade\" id=modal_device_select tabindex=-1 role=dialog aria-labelledby=myModalLabel aria-hidden=true><div class=modal-dialog><div class=modal-content><div class=modal-header><button type=button class=close data-dismiss=modal aria-hidden=true>&times;</button><h4 class=modal-title>{{_t('config_ui_select_xml')}}</h4></div><div class=modal-body><div ng-if=\"deviceZddx.length > 0\"><p ng-bind-html=\"_t('select_zddx_help') | toTrusted\"></p><select name=select_zddx_help id=select_zddx_help class=form-control ng-change=\"changeDeviceSelect('#select_zddx_help', '#device_select_image',modelSelectZddx)\" ng-model=modelSelectZddx><option value=\"\">---</option><option ng-init=\"selectCfg = {\r" +
     "\n" +
     "                                'name':((v.brandName == '' && v.productName == '')?('Unnamed ZDDX: ' + v.fileName):(v.brandName + ' ' + v.productName))}\" ng-repeat=\"v in deviceZddx | orderBy:'brandName':false\" ng-selected=\"deviceZddxFile == v.fileName\" value={{v.fileName}} data-image={{v.deviceImage}}>{{selectCfg.name}}</option></select><div id=device_select_image_container><div id=device_select_image></div></div></div></div><div class=modal-footer><button type=button class=\"btn btn-primary\" data-dismiss=modal ng-click=runCmdDeviceSelect(deviceId)>{{_t('btn_select')}}</button> <button type=button class=\"btn btn-default\" data-dismiss=modal>{{_t('btn_cancel')}}</button></div></div></div></div><div class=\"modal fade\" id=modal_command_class tabindex=-1 role=dialog aria-labelledby=myModalLabel aria-hidden=true><div class=modal-dialog><div class=modal-content><div class=modal-header><button type=button class=close data-dismiss=modal aria-hidden=true ng-click=hideModal()>&times;</button><h4 class=modal-title>{{_t('commandClass')}}</h4></div><div class=modal-body ng-bind-html=commandClass|toTrusted></div><div class=modal-footer><button type=button class=\"btn btn-default\" data-dismiss=modal ng-click=hideModal()>{{_t('btn_cancel')}}</button></div></div></div></div></div>"
   );
 
 
   $templateCache.put('app/views/configuration/postfix.html',
-    "<div ng-controller=PostfixController><div ng-include=\"'app/views/configuration/header.html'\"></div><div class=tab-content ng-show=deviceId><div class=\"alert alert-warning\" ng-if=!postfix.model.p_id><i class=\"fa fa-exclamation-circle\"></i> {{_t('postfix_missingid')}}</div><form id=postfix_form name=postfix_form role=form class=form novalidate ng-if=postfix.model.p_id ng-submit=updatePostfix()><div class=cfg-block><table class=\"table table-striped table-condensed table-cfg-interview\"><tbody><tr><th>{{_t('p_id')}}</th><td>{{postfix.model.p_id}}</td><td>&nbsp;</td></tr><tr><th>{{_t('product')}}</th><td><input name=product id=product class=form-control ng-model=postfix.model.product></td><td>&nbsp;</td></tr><tr><th>{{_t('preInterview')}}</th><td><input name=preInterview id=preInterview class=form-control ng-model=postfix.interview.preInterview><div ng-repeat=\"v in postfix.model.preInterview track by $index\">{{v}} <span class=clickable ng-click=\"removeInterview('preInterview',$index)\"><i class=\"fa fa-times text-danger\"></i></span></div></td><td><button type=button class=\"btn btn-default\" ng-click=\"addInterview('preInterview')\"><i class=\"fa fa-plus text-success\"></i></button></td></tr><tr><th>{{_t('postInterview')}}</th><td><input name=postInterview id=postInterview class=form-control ng-model=postfix.interview.postInterview><div ng-repeat=\"v in postfix.model.postInterview\">{{v}} <span class=clickable ng-click=\"removeInterview('postInterview',$index)\"><i class=\"fa fa-times text-danger\"></i></span></div></td><td><button type=button class=\"btn btn-default\" ng-click=\"addInterview('postInterview')\"><i class=\"fa fa-plus text-success\"></i></button></td></tr><tr><th>{{_t('tester')}}</th><td><input name=tester id=tester class=form-control ng-model=postfix.model.tester></td><td>&nbsp;</td></tr><tr><th>{{_t('commentary')}}</th><td><input name=commentary id=commentary class=form-control ng-model=postfix.model.commentary></td><td>&nbsp;</td></tr></tbody></table></div><div class=\"cfg-block text-right\"><button type=button class=\"btn btn-default\" ng-click=\"deletePostfix(_t('lb_delete_confirm'))\" ng-if=postfix.find><i class=\"fa fa-times text-danger\"></i> {{_t('dialog_remove')}}</button> <button type=submit class=\"btn btn-primary\"><i class=\"fa fa-check\"></i> {{_t('btn_save')}}</button> <a class=\"btn btn-info\" href=\"{{cfg.postfixget_url + '/' + postfix.model.p_id}}\" target=blank ng-if=postfix.find><i class=\"fa fa-file-code-o\"></i> {{_t('show_json')}}</a></div></form></div></div>"
+    "<div ng-controller=ConfigPostfixController><div ng-include=\"'app/views/configuration/header.html'\"></div><div class=tab-content ng-show=deviceId><div class=\"alert alert-warning\" ng-if=!postfix.model.p_id><i class=\"fa fa-exclamation-circle\"></i> {{_t('postfix_missingid')}}</div><form id=postfix_form name=postfix_form role=form class=form novalidate ng-if=postfix.model.p_id ng-submit=updatePostfix()><div class=cfg-block><table class=\"table table-striped table-condensed table-cfg-interview\"><tbody><tr><th>{{_t('p_id')}}</th><td>{{postfix.model.p_id}}</td><td>&nbsp;</td></tr><tr><th>{{_t('product')}}</th><td><input name=product id=product class=form-control ng-model=postfix.model.product></td><td>&nbsp;</td></tr><tr><th>{{_t('preInterview')}}</th><td><input name=preInterview id=preInterview class=form-control ng-model=postfix.interview.preInterview><div ng-repeat=\"v in postfix.model.preInterview track by $index\">{{v}} <span class=clickable ng-click=\"removeInterview('preInterview',$index)\"><i class=\"fa fa-times text-danger\"></i></span></div></td><td><button type=button class=\"btn btn-default\" ng-click=\"addInterview('preInterview')\"><i class=\"fa fa-plus text-success\"></i></button></td></tr><tr><th>{{_t('postInterview')}}</th><td><input name=postInterview id=postInterview class=form-control ng-model=postfix.interview.postInterview><div ng-repeat=\"v in postfix.model.postInterview\">{{v}} <span class=clickable ng-click=\"removeInterview('postInterview',$index)\"><i class=\"fa fa-times text-danger\"></i></span></div></td><td><button type=button class=\"btn btn-default\" ng-click=\"addInterview('postInterview')\"><i class=\"fa fa-plus text-success\"></i></button></td></tr><tr><th>{{_t('tester')}}</th><td><input name=tester id=tester class=form-control ng-model=postfix.model.tester></td><td>&nbsp;</td></tr><tr><th>{{_t('commentary')}}</th><td><input name=commentary id=commentary class=form-control ng-model=postfix.model.commentary></td><td>&nbsp;</td></tr></tbody></table></div><div class=\"cfg-block text-right\"><button type=button class=\"btn btn-default\" ng-click=\"deletePostfix(_t('lb_delete_confirm'))\" ng-if=postfix.find><i class=\"fa fa-times text-danger\"></i> {{_t('dialog_remove')}}</button> <a class=\"btn btn-default\" href=\"{{cfg.postfixget_url + '/' + postfix.model.p_id}}\" target=blank ng-if=postfix.find><i class=\"fa fa-file-code-o text-success\"></i> {{_t('show_json')}} </a><button type=submit class=\"btn btn-info\"><i class=\"fa fa-check\"></i> {{_t('btn_save')}}</button></div></form></div></div>"
   );
 
 
@@ -35626,7 +35626,9 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         getRemoteData: getRemoteData,
         xmlToJson: xmlToJson,
         getTextFile: getTextFile,
-        storeTextToFile: storeTextToFile
+        storeTextToFile: storeTextToFile,
+        updateDeviceFirmware: updateDeviceFirmware,
+        uploadApiFile: uploadApiFile
     });
     /**
      * Get IP
@@ -36512,6 +36514,47 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         }, function (response) {// something went wrong
             return $q.reject(response);
         });
+    }
+
+    /**
+     * Run Firmware Update
+     */
+    function updateDeviceFirmware(nodeId, data) {
+        var uploadUrl = cfg.server_url + cfg.fw_update_url + '/' + nodeId;
+        var fd = new FormData();
+        fd.append('file', data.file);
+        fd.append('url', data.url);
+        fd.append('targetId', data.targetId);
+        $http.post(uploadUrl, fd, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        }).success(function () {
+            handleSuccess(data);
+        }).error(function () {
+            handleError();
+        });
+
+    }
+
+    /**
+     * Upload a file to ZAutomation
+     * @param {type} cmd
+     * @param {type} data
+     * @returns {unresolved}
+     */
+    function uploadApiFile(cmd, data) {
+        var uploadUrl = cfg.server_url + cmd;
+        return  $http.post(uploadUrl, data, {
+            transformRequest: angular.identity,
+            headers: {
+                'Content-Type': undefined
+            }
+        }).then(function (response) {
+            return response;
+        }, function (response) {// something went wrong
+            return $q.reject(response);
+        });
+
     }
 });
 
@@ -42271,7 +42314,7 @@ appController.controller('ControllerController', function($scope, $window, $filt
                 var fcIndex = ZWaveAPIData.controller.data.functionClasses.value.indexOf(func);
                 var capIndex = ZWaveAPIData.controller.data.capabilities.value.indexOf(func);
                 var fcName = (fcIndex != -1) ? ZWaveAPIData.controller.data.functionClassesNames.value[fcIndex] : 'Not implemented';
-                funcList += '<span style="color: ' + ((capIndex != -1) ? ((fcIndex != -1) ? '' : 'gray') : 'red') + '">' + fcName + ' (0x' + ('00' + func.toString(16)).slice(-2) + ')</span>, ';
+                funcList += '<span style="color: ' + ((capIndex != -1) ? ((fcIndex != -1) ? '' : 'gray') : 'red') + '">' + fcName + ' (0x' + ('00' + func.toString(16)).slice(-2) + ')</span>  &#8226; ';
             });
             $scope.funcList = funcList;
         });
@@ -44250,7 +44293,17 @@ appController.controller('ConfigRedirectController', function ($routeParams, $lo
 //    return;
     $location.path(configUrl);
 });
-// Device configuration Interview controller
+
+/**
+ * @overview This controller renders and handles device interview stuff.
+ * @author Martin Vach
+ */
+
+/**
+ * Device interview controller
+ * @class ConfigInterviewController
+ *
+ */
 appController.controller('ConfigInterviewController', function ($scope, $routeParams, $route, $location, $cookies, $filter, $http, dataService, deviceService, myCache) {
     $scope.devices = [];
     $scope.deviceId = 0;
@@ -44537,7 +44590,17 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         $('#device_description_interview .config-interview-val').html(deviceService.configInterviewStage(ZWaveAPIData, nodeId, $scope.languages));
     }
 });
-// Device configuration Configuration controller
+
+/**
+ * @overview This controller renders and handles device configuration stuff.
+ * @author Martin Vach
+ */
+
+/**
+ * Device configuration configuration controller
+ * @class ConfigConfigurationController
+ *
+ */
 appController.controller('ConfigConfigurationController', function ($scope, $routeParams, $location, $cookies, $filter, $http, $timeout, $route, cfg, dataService, deviceService, myCache, _) {
     $scope.devices = [];
     $scope.deviceId = 0;
@@ -44629,7 +44692,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             //setData(data.joined, nodeId, true);
         });
     };
-    //$scope.refresh($routeParams.nodeId); 
+    //$scope.refresh($routeParams.nodeId);
 
     // Redirect to detail page
     $scope.changeDevice = function (deviceId) {
@@ -44693,7 +44756,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             dataArray[v.confNum] = {
                 value: $filter('setConfigValue')(v.showDefaultValue),
                 name: v.name
-                        //cfg: v
+                //cfg: v
             };
         });
         //console.log(dataArray)
@@ -44745,7 +44808,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                     }
                     /*else if('enumof' in cfg.type){
                      var enumof = _.findWhere(cfg.type.enumof,{name: v.name});
-                     
+
                      }*/
                 }
                 if (dataArray[inputConfNum]) {
@@ -44754,7 +44817,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                     dataArray[inputConfNum] = {
                         value: value,
                         name: v.name
-                                //cfg: cfg
+                        //cfg: cfg
                     };
 
 
@@ -44919,7 +44982,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             // Loop throught instances
             angular.forEach(node.instances, function (instance, instanceId) {
                 if (instance.commandClasses[112]) {
-                   
+
                     $scope.hasConfigurationCc =  configurationCc(instance.commandClasses[112], instanceId,nodeId, ZWaveAPIData);
                     return;
                 }
@@ -44941,7 +45004,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
     }
     function configurationCc(commandClass, instanceId,nodeId, ZWaveAPIData) {
         //console.log(node);
-        
+
         var ccId = 112;
         var methods = getMethodSpec(ZWaveAPIData, nodeId, instanceId, ccId, null);
         var command = deviceService.configGetCommands(methods, ZWaveAPIData);
@@ -44962,7 +45025,17 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
 
 
 });
-// Device configuration commands controller
+
+/**
+ * @overview This controller renders and handles device expert commands stuff.
+ * @author Martin Vach
+ */
+
+/**
+ * Device expert commands controller
+ * @class ConfigCommandsController
+ *
+ */
 appController.controller('ConfigCommandsController', function ($scope, $routeParams, $location, $cookies, $timeout, $filter, dataService, deviceService, _) {
     $scope.devices = [];
     $scope.commands = [];
@@ -45112,504 +45185,17 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
 
 
 });
-// Device configuration firmware controller
-appController.controller('ConfigFirmwareController', function ($scope, $routeParams, $location, $cookies, dataService, deviceService) {
-    $scope.devices = [];
-    $scope.deviceId = 0;
-    $scope.activeTab = 'firmware';
-    $scope.activeUrl = 'configuration/firmware/';
-    $scope.showForm = false;
-    $scope.formFirmware = {};
-    $scope.firmwareProgress = 0;
-
-    $cookies.tab_config = $scope.activeTab;
-
-    // Load data
-    $scope.load = function (nodeId) {
-        dataService.getZwaveData(function (ZWaveAPIData) {
-            $scope.devices = deviceService.configGetNav(ZWaveAPIData);
-            var node = ZWaveAPIData.devices[nodeId];
-            if (!node || deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
-                return;
-            }
-            // Remember device id
-            $cookies.configuration_id = nodeId;
-            $cookies.config_url = $scope.activeUrl + nodeId;
-            $scope.deviceId = nodeId;
-
-            if (0x7a in node.instances[0].commandClasses) {
-                $scope.showForm = true;
-            }
-        });
-    };
-    $scope.load($routeParams.nodeId);
-
-    // Redirect to detail page
-    $scope.changeDevice = function (deviceId) {
-        if (deviceId > 0) {
-            $location.path($scope.activeUrl + deviceId);
-        }
-    };
-    /**
-     * update Firmware
-     * todo: complete this function
-     */
-    $scope.updateFirmware = function (nodeId) {
-        if (!$scope.formFirmware.url && !$scope.formFirmware.targetId) {
-            return;
-        }
-        // $('.fa-spin').show();
-
-        // File upload test
-        var data = {
-            'url': $scope.formFirmware.url,
-            'file': $scope.myFile,
-            'targetId': $scope.formFirmware.targetId
-        };
-
-//        dataService.joinedZwaveData(function(data) {
-//            $scope.firmwareProgress++;
-//            console.log($filter('hasNode')(data.update,'FirmwareUpdate.data.fragmentTransmitted.value'));
-//            
-////                refresh(data.update);
-//        });
-
-        // Watch for progress change
-        $scope.$watch('firmwareProgress', function () {
-            if ($scope.firmwareProgress >= 100) {
-                $('.fa-spin').fadeOut();
-                dataService.cancelZwaveDataInterval();
-            }
-
-        });
-        // Cancel interval on page destroy
-        $scope.$on('$destroy', function () {
-            dataService.cancelZwaveDataInterval();
-        });
-
-        dataService.fwUpdate(nodeId, data);
-        return;
-    };
-
-});
-
-// Configuration link health controller
-appController.controller('ConfigHealthController', function ($scope, $routeParams, $location, $cookies, $filter, $interval, cfg, deviceService, dataService) {
-    $scope.apiDataInterval;
-    $scope.devices = [];
-    $scope.deviceId = 0;
-    $scope.activeTab = 'health';
-    $scope.activeUrl = 'configuration/health/';
-    $cookies.tab_config = $scope.activeTab;
-    $cookies.interval = $scope.activeTab;
-    $scope.health = {
-        ctrlNodeId: 1,
-        alert: {message: false, status: 'is-hidden', icon: false},
-        device: {
-            neighbours: [],
-            node: {},
-            find: {},
-            hasPowerLevel: false,
-            commandClass: false
-        },
-        cmd: {
-            testNodeInstance: 0
-        },
-        neighbours: [],
-        timing: {
-            all: {},
-            indicator: {},
-            find: {
-            }
-        }
-    };
-    // Cancel interval on page destroy
-    $scope.$on('$destroy', function () {
-        $interval.cancel($scope.apiDataInterval);
-    });
-
-    // Redirect to detail page
-    $scope.changeDevice = function (deviceId) {
-        if (deviceId > 0) {
-            $location.path($scope.activeUrl + deviceId);
-        }
-    };
-
-    // Load timing data
-    $scope.loadTiming = function () {
-        //$scope.health.alert = {message: $scope._t('not_linked_devices'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
-        dataService.getApi('stat_url', null, true).then(function (response) {
-            $scope.health.timing.all = response.data;
-            $scope.health.timing.indicator.color = setTimingIndicatorColor(response.data[$routeParams.nodeId]);
-        }, function (error) {
-            alertify.alertError($scope._t('error_load_data'));
-            return;
-        });
-    };
-    $scope.loadTiming();
-
-    // Load data
-    $scope.load = function () {
-        //$scope.health.alert = {message: $scope._t('not_linked_devices'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
-
-        dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
-            $scope.devices = deviceService.configGetNav(ZWaveAPIData);
-            $scope.health.ctrlNodeId = ZWaveAPIData.controller.data.nodeId.value;
-            var node = ZWaveAPIData.devices[$routeParams.nodeId];
-            if (!node || deviceService.notDevice(ZWaveAPIData, node, $routeParams.nodeId)) {
-                return;
-            }
-            var neighbours = $filter('hasNode')(node.data, 'neighbours.value');
-            $scope.health.device.neighbours = $filter('hasNode')(node.data, 'neighbours.value');
-
-            // Remember device id   
-            $cookies.configuration_id = $routeParams.nodeId;
-            $cookies.config_url = $scope.activeUrl + $routeParams.nodeId;
-            $scope.deviceId = $routeParams.nodeId;
-            $scope.health.device.node = node;
-            setDevice(node);
-            setData(ZWaveAPIData, neighbours);
-            $scope.refreshData(ZWaveAPIData);
-
-        }, function (error) {
-            alertify.alertError($scope._t('error_load_data'));
-            return;
-        });
-    };
-    $scope.load();
-
-    /**
-     * Refresh data
-     */
-    $scope.refreshData = function (ZWaveAPIData) {
-        var refresh = function () {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function (response) {
-                setData(ZWaveAPIData);
-            }, function (error) {
-                return;
-            });
-        };
-        $scope.apiDataInterval = $interval(refresh, $scope.cfg.interval);
-    };
-
-    // Run Zwave Command
-    $scope.runZwaveCmd = function (cmd) {
-        dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
-        }, function (error) {
-            alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
-            //$window.alert($scope._t('error_handling_data') + '\n' + cmd);
-        });
-    };
-    // Run Zwave NOP Command
-    $scope.runZwaveNopCmd = function (cmd) {
-        for (i = 0; i < 21; i++) {
-            $scope.runZwaveCmd(cmd);
-        }
-    };
-
-    // Handle power level modal window
-    $scope.handlePowerLevelModal = function (name, event, device) {
-        $scope.handleModal(name, event);
-        $scope.health.device.find = device;
-        if (!device) {
-            $scope.health.device.commandClass = {};
-            return;
-        }
-        var cc = deviceService.configGetCommandClass($scope.health.device.hasPowerLevel[device.id], '/', '');
-        $scope.health.device.commandClass = deviceService.configSetCommandClass(cc);
-    };
-
-    // Handle timing modal window
-    $scope.handleTimingModal = function (name, event, device) {
-        $scope.handleModal(name, event);
-        $scope.health.device.find = device;
-        if (!device) {
-            $scope.health.timing.find = {};
-            return;
-        }
-        $scope.loadTiming();
-        var timingItems = $scope.health.timing.all[$routeParams.nodeId];
-        if (!timingItems || _.isEmpty(timingItems)) {
-            return;
-        }
-        $scope.health.timing.find = {
-            totalPackets: timingItems.length,
-            okPackets: deviceService.getOkPackets(timingItems),
-            lastPackets: deviceService.getLastPackets(timingItems)
-        };
-    };
-
-    /// --- Private functions --- ///
-    /**
-     * Set configuration device
-     * @param {object} node
-     * @returns {undefined}
-     */
-    function setDevice(node) {
-        angular.forEach(node.instances, function (instance, instanceId) {
-            if (instance.commandClasses[115]) {
-                $scope.health.device.hasPowerLevel = instance.commandClasses[115].data;
-                $scope.health.cmd.testNodeInstance = instanceId;
-            }
-
-
-        });
-    }
-
-    /**
-     * Set list of the linked devices
-     * @param {object} ZWaveAPIData
-     * @returns {undefined}
-     */
-    function setData(ZWaveAPIData, neighbours) {
-        angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
-            if (nodeId === $routeParams.nodeId) {
-                $scope.health.timing.indicator.updateTime = node.data.lastReceived.updateTime;
-                $scope.health.timing.indicator.updateTimeColor = (node.data.lastReceived.updateTime > node.data.lastReceived.invalidateTime ? '' : 'red');
-            }
-
-            nodeId = parseInt(nodeId);
-            if ($scope.health.device.neighbours.indexOf(nodeId) === -1) {
-                return;
-            }
-            //console.log(node)
-            var isListening = node.data.isListening.value;
-            var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
-            var hasWakeup = 0x84 in node.instances[0].commandClasses;
-            var centralController = true;
-            var type;
-            var indicator;
-            var powerLevel = $scope.health.device.hasPowerLevel[nodeId];
-            if (powerLevel) {
-                indicator = setPowerLevelIndicator(powerLevel);
-            }
-            if (node.data.genericType.value === 1) {
-                type = 'portable';
-            } else if (node.data.genericType.value === 2) {
-                type = 'static';
-            } else if (isFLiRS) {
-                type = 'flirs';
-            } else if (hasWakeup) {
-                type = node.data.isAwake.value ? 'battery' : 'sleep';
-            } else if (isListening) {
-                type = 'mains';
-            } else {
-                type = 'error';
-            }
-            var obj = {
-                id: nodeId,
-                name: $filter('deviceName')(nodeId, node),
-                updateTime: node.data.updateTime,
-                type: type,
-                icon: $filter('getDeviceTypeIcon')(type),
-                centralController: centralController,
-                powerLevel: powerLevel,
-                indicator: indicator,
-                cmdTestNode: 'devices[' + $routeParams.nodeId + '].instances[' + $scope.health.cmd.testNodeInstance + '].commandClasses[115].TestNodeSet(' + nodeId + ',6,20)',
-                cmdNop: 'devices[' + $routeParams.nodeId + '].instances[' + $scope.health.cmd.testNodeInstance + '].commandClasses[32].Get()'
-            };
-            var index = _.findIndex($scope.health.neighbours, {id: nodeId});
-            if ($scope.health.neighbours[index]) {
-                angular.extend($scope.health.neighbours[index], obj);
-            } else {
-                $scope.health.neighbours.push(obj);
-            }
-
-        });
-    }
-    /**
-     * Set power level indicator
-     * @param {object} data
-     * @returns {object}
-     */
-    function setPowerLevelIndicator(data) {
-        var indicator = {
-            color: 'gray',
-            updateTime: false,
-            updateTimeColor: ''
-        };
-        var traffic = 'gray';
-        if (!data || _.isEmpty(data) || data.acknowledgedFrames.value === null) {
-            return indicator;
-        }
-        if (data.acknowledgedFrames.value > -1 && data.acknowledgedFrames.value < 6) {
-            indicator.color = 'red';
-        } else if (data.acknowledgedFrames.value > 5 && data.acknowledgedFrames.value < 18) {
-            indicator.color = 'orange';
-        } else if (data.acknowledgedFrames.value > 17) {
-            indicator.color = 'green';
-        }
-        indicator.updateTime = data.acknowledgedFrames.updateTime;
-        indicator.updateTimeColor = (data.acknowledgedFrames.updateTime > data.acknowledgedFrames.invalidateTime ? '' : 'red');
-        return  indicator;
-    }
-    /**
-     * Set power level indicator
-     * @param {int} nodeId
-     * @returns {object}
-     */
-    function setTimingIndicatorColor(data) {
-        var color = 'gray';
-        if (!data || _.isEmpty(data)) {
-            return color;
-        }
-        //console.log(data)
-        //return;
-
-        var cnt = 0;
-        var sum = 0;
-        var avg;
-        angular.forEach(data.slice(-20), function (v, k) {
-            var val = 0;
-            if (v.delivered) {
-                val = parseInt(v.deliveryTime);
-                sum += val;
-            }
-            cnt++;
-        });
-        avg = (sum / cnt).toFixed();
-        if (avg > 0) {
-            color = (avg > 100 ? 'black' : 'green');
-        } else {
-            color = 'red';
-        }
-        return color;
-    }
-});
-
-// Device configuration Postfix controller
-appController.controller('PostfixController', function ($scope, $routeParams, $location, $cookies, $filter, $timeout, $window, dataService, deviceService) {
-    $scope.devices = [];
-    $scope.deviceId = 0;
-    $scope.activeTab = 'postfix';
-    $scope.activeUrl = 'configuration/postfix/';
-    $cookies.tab_config = $scope.activeTab;
-    $scope.postfix = {
-        find: false,
-        interview: {
-            preInterview: '',
-            postInterview: '',
-        },
-        model: {
-            p_id: false,
-            product: '',
-            preInterview: [],
-            postInterview: [],
-            last_update: '',
-            tester: '',
-            commentary: ''
-        }
-    };
-    // Interview data
-    $scope.descriptionCont;
-    $scope.deviceZddx = [];
-    // Redirect to detail page
-    $scope.changeDevice = function (deviceId) {
-        if (deviceId > 0) {
-            $location.path($scope.activeUrl + deviceId);
-        }
-    };
-    // Load data
-    $scope.loadData = function (nodeId) {
-        dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
-            $scope.devices = deviceService.configGetNav(ZWaveAPIData);
-            var node = ZWaveAPIData.devices[nodeId];
-            if (!node || deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
-                return;
-            }
-
-            $cookies.configuration_id = nodeId;
-            $cookies.config_url = $scope.activeUrl + nodeId;
-            $scope.deviceId = nodeId;
-
-            $scope.postfix.model.p_id = getPId(node);
-            $scope.loadPostfix($scope.postfix.model.p_id);
-        }, function (error) {
-            $location.path('/error/' + error.status);
-            return;
-        });
-    };
-    $scope.loadData($routeParams.nodeId);
-
-    // Load postfix
-    $scope.loadPostfix = function (p_id) {
-        if (!p_id) {
-            return;
-        }
-        dataService.getApi('postfixget_url', '/' + p_id, false).then(function (response) {
-            $scope.postfix.find = response.data;
-            angular.extend($scope.postfix.model, _.omit(response.data, 'p_id'));
-        }, function (error) {});
-    };
-
-    // Add interview
-    $scope.addInterview = function (key) {
-        var source = $scope.postfix.interview[key];
-        if (key && source) {
-            $scope.postfix.model[key].push(source);
-            $scope.postfix.interview[key] = '';
-        }
-    };
-    // Remove interview
-    $scope.removeInterview = function (key, index) {
-        $scope.postfix.model[key].splice(index, 1);
-        return;
-    };
-
-
-    // Update a postfix
-    $scope.updatePostfix = function () {
-        $scope.postfix.model.last_update = $filter('getMysqlFromNow')('');
-        dataService.postApi('postfixadd_url', $scope.postfix.model).then(function (response) {
-            deviceService.showNotifier({message: $scope._t('zwave_reinstalled')});
-            $timeout(function () {
-                alertify.dismissAll();
-                $window.location.reload();
-            }, 5000);
-        }, function (error) {
-            alertify.alertError($scope._t('error_update_data'));
-            return;
-        });
-    };
-    // Delete postfix
-    $scope.deletePostfix = function (message) {
-        alertify.confirm(message, function () {
-            var input = {p_id: $scope.postfix.model.p_id};
-            dataService.postApi('postfixremove_url', input).then(function (response) {
-                deviceService.showNotifier({message: $scope._t('delete_successful') + ' ' + $scope._t('zwave_reinstalled')});
-                $scope.postfix.model = {p_id: $scope.postfix.model.p_id};
-                $timeout(function () {
-                    alertify.dismissAll();
-                    $window.location.reload();
-                }, 5000);
-            }, function (error) {
-                alertify.alertError($scope._t('error_delete_data'));
-                return;
-            });
-        });
-
-
-    };
-
-    /// --- Private functions --- ///
-
-    function getPId(node) {
-
-        var mId = node.data.manufacturerId.value ? node.data.manufacturerId.value : null;
-        var mPT = node.data.manufacturerProductType.value ? node.data.manufacturerProductType.value : null;
-        var mPId = node.data.manufacturerProductId.value ? node.data.manufacturerProductId.value : null;
-
-        var p_id = mId + "." + mPT + "." + mPId;
-
-        return (p_id !== 'null.null.null' ? p_id : false);
-    }
-});
 
 /**
- * Device configuration Association controller - new version
+ * @overview This controller renders and handles device association stuff.
  * @author Martin Vach
  */
-// Device configuration Association controller - new version
+
+/**
+ * Device configuration Association controller
+ * @class ConfigAssocController
+ *
+ */
 appController.controller('ConfigAssocController', function($scope, $filter, $routeParams, $location, $cookies, $timeout, $window, dataService, deviceService, myCache, cfg, _) {
     $scope.devices = [];
     $scope.deviceId = 0;
@@ -46175,6 +45761,517 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
     ;
 
 });
+/**
+ * @overview This controller renders and handles device firmware update stuff.
+ * @author Martin Vach
+ */
+
+/**
+ * Device configuration firmware controller
+ * @class ConfigFirmwareController
+ *
+ */
+appController.controller('ConfigFirmwareController', function ($scope, $routeParams, $location, $cookies, $timeout,cfg, dataService, deviceService) {
+    $scope.devices = [];
+    $scope.deviceId = 0;
+    $scope.activeTab = 'firmware';
+    $scope.activeUrl = 'configuration/firmware/';
+    $scope.showForm = false;
+    $scope.formFirmware = {};
+    $scope.firmwareProgress = 0;
+
+    $scope.firmware = {
+        input:{
+            url: '',
+            targetId: ''
+        }
+    };
+
+    $cookies.tab_config = $scope.activeTab;
+
+    // Load data
+    $scope.load = function (nodeId) {
+        dataService.getZwaveData(function (ZWaveAPIData) {
+            $scope.devices = deviceService.configGetNav(ZWaveAPIData);
+            var node = ZWaveAPIData.devices[nodeId];
+            if (!node || deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
+                return;
+            }
+            // Remember device id
+            $cookies.configuration_id = nodeId;
+            $cookies.config_url = $scope.activeUrl + nodeId;
+            $scope.deviceId = nodeId;
+
+            if (0x7a in node.instances[0].commandClasses) {
+                $scope.showForm = true;
+            }
+        });
+    };
+    $scope.load($routeParams.nodeId);
+
+    // Redirect to detail page
+    $scope.changeDevice = function (deviceId) {
+        if (deviceId > 0) {
+            $location.path($scope.activeUrl + deviceId);
+        }
+    };
+    /**
+     * Handles device firmware update
+     * @param {object} input
+     * @param {string} id
+     */
+    $scope.updateDeviceFirmware = function (input,id) {
+        $scope.toggleRowSpinner(id);
+        var cmd = cfg.server_url + cfg.fw_update_url + '/' + $scope.deviceId
+        var fd = new FormData();
+
+        fd.append('file',$scope.myFile);
+        fd.append('url', input.url);
+        fd.append('targetId', input.targetId|| '0');
+        dataService.uploadApiFile(cmd, fd).then(function (response) {
+            $timeout($scope.toggleRowSpinner, 1000);
+            deviceService.showNotifier({message: $scope._t('success_device_firmware_update')});
+            /*$timeout(function () {
+                alertify.dismissAll();
+                $window.location.reload();
+            }, 2000);*/
+        }, function (error) {
+            $timeout($scope.toggleRowSpinner, 1000);
+            alertify.alertError($scope._t('error_device_firmware_update'));
+        });
+    };
+
+
+});
+/**
+ * @overview This controller renders and handles device link health stuff.
+ * @author Martin Vach
+ */
+
+/**
+ * Configuration link health controller
+ * @class ConfigHealthController
+ *
+ */
+appController.controller('ConfigHealthController', function ($scope, $routeParams, $location, $cookies, $filter, $interval, cfg, deviceService, dataService) {
+    $scope.apiDataInterval;
+    $scope.devices = [];
+    $scope.deviceId = 0;
+    $scope.activeTab = 'health';
+    $scope.activeUrl = 'configuration/health/';
+    $cookies.tab_config = $scope.activeTab;
+    $cookies.interval = $scope.activeTab;
+    $scope.health = {
+        ctrlNodeId: 1,
+        alert: {message: false, status: 'is-hidden', icon: false},
+        device: {
+            neighbours: [],
+            node: {},
+            find: {},
+            hasPowerLevel: false,
+            commandClass: false
+        },
+        cmd: {
+            testNodeInstance: 0
+        },
+        neighbours: [],
+        timing: {
+            all: {},
+            indicator: {},
+            find: {
+            }
+        }
+    };
+    // Cancel interval on page destroy
+    $scope.$on('$destroy', function () {
+        $interval.cancel($scope.apiDataInterval);
+    });
+
+    // Redirect to detail page
+    $scope.changeDevice = function (deviceId) {
+        if (deviceId > 0) {
+            $location.path($scope.activeUrl + deviceId);
+        }
+    };
+
+    // Load timing data
+    $scope.loadTiming = function () {
+        //$scope.health.alert = {message: $scope._t('not_linked_devices'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+        dataService.getApi('stat_url', null, true).then(function (response) {
+            $scope.health.timing.all = response.data;
+            $scope.health.timing.indicator.color = setTimingIndicatorColor(response.data[$routeParams.nodeId]);
+        }, function (error) {
+            alertify.alertError($scope._t('error_load_data'));
+            return;
+        });
+    };
+    $scope.loadTiming();
+
+    // Load data
+    $scope.load = function () {
+        //$scope.health.alert = {message: $scope._t('not_linked_devices'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+
+        dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
+            $scope.devices = deviceService.configGetNav(ZWaveAPIData);
+            $scope.health.ctrlNodeId = ZWaveAPIData.controller.data.nodeId.value;
+            var node = ZWaveAPIData.devices[$routeParams.nodeId];
+            if (!node || deviceService.notDevice(ZWaveAPIData, node, $routeParams.nodeId)) {
+                return;
+            }
+            var neighbours = $filter('hasNode')(node.data, 'neighbours.value');
+            $scope.health.device.neighbours = $filter('hasNode')(node.data, 'neighbours.value');
+
+            // Remember device id
+            $cookies.configuration_id = $routeParams.nodeId;
+            $cookies.config_url = $scope.activeUrl + $routeParams.nodeId;
+            $scope.deviceId = $routeParams.nodeId;
+            $scope.health.device.node = node;
+            setDevice(node);
+            setData(ZWaveAPIData, neighbours);
+            $scope.refreshData(ZWaveAPIData);
+
+        }, function (error) {
+            alertify.alertError($scope._t('error_load_data'));
+            return;
+        });
+    };
+    $scope.load();
+
+    /**
+     * Refresh data
+     */
+    $scope.refreshData = function (ZWaveAPIData) {
+        var refresh = function () {
+            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function (response) {
+                setData(ZWaveAPIData);
+            }, function (error) {
+                return;
+            });
+        };
+        $scope.apiDataInterval = $interval(refresh, $scope.cfg.interval);
+    };
+
+    // Run Zwave Command
+    $scope.runZwaveCmd = function (cmd) {
+        dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
+        }, function (error) {
+            alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
+            //$window.alert($scope._t('error_handling_data') + '\n' + cmd);
+        });
+    };
+    // Run Zwave NOP Command
+    $scope.runZwaveNopCmd = function (cmd) {
+        for (i = 0; i < 21; i++) {
+            $scope.runZwaveCmd(cmd);
+        }
+    };
+
+    // Handle power level modal window
+    $scope.handlePowerLevelModal = function (name, event, device) {
+        $scope.handleModal(name, event);
+        $scope.health.device.find = device;
+        if (!device) {
+            $scope.health.device.commandClass = {};
+            return;
+        }
+        var cc = deviceService.configGetCommandClass($scope.health.device.hasPowerLevel[device.id], '/', '');
+        $scope.health.device.commandClass = deviceService.configSetCommandClass(cc);
+    };
+
+    // Handle timing modal window
+    $scope.handleTimingModal = function (name, event, device) {
+        $scope.handleModal(name, event);
+        $scope.health.device.find = device;
+        if (!device) {
+            $scope.health.timing.find = {};
+            return;
+        }
+        $scope.loadTiming();
+        var timingItems = $scope.health.timing.all[$routeParams.nodeId];
+        if (!timingItems || _.isEmpty(timingItems)) {
+            return;
+        }
+        $scope.health.timing.find = {
+            totalPackets: timingItems.length,
+            okPackets: deviceService.getOkPackets(timingItems),
+            lastPackets: deviceService.getLastPackets(timingItems)
+        };
+    };
+
+    /// --- Private functions --- ///
+    /**
+     * Set configuration device
+     * @param {object} node
+     * @returns {undefined}
+     */
+    function setDevice(node) {
+        angular.forEach(node.instances, function (instance, instanceId) {
+            if (instance.commandClasses[115]) {
+                $scope.health.device.hasPowerLevel = instance.commandClasses[115].data;
+                $scope.health.cmd.testNodeInstance = instanceId;
+            }
+
+
+        });
+    }
+
+    /**
+     * Set list of the linked devices
+     * @param {object} ZWaveAPIData
+     * @returns {undefined}
+     */
+    function setData(ZWaveAPIData, neighbours) {
+        angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
+            if (nodeId === $routeParams.nodeId) {
+                $scope.health.timing.indicator.updateTime = node.data.lastReceived.updateTime;
+                $scope.health.timing.indicator.updateTimeColor = (node.data.lastReceived.updateTime > node.data.lastReceived.invalidateTime ? '' : 'red');
+            }
+
+            nodeId = parseInt(nodeId);
+            if ($scope.health.device.neighbours.indexOf(nodeId) === -1) {
+                return;
+            }
+            //console.log(node)
+            var isListening = node.data.isListening.value;
+            var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
+            var hasWakeup = 0x84 in node.instances[0].commandClasses;
+            var centralController = true;
+            var type;
+            var indicator;
+            var powerLevel = $scope.health.device.hasPowerLevel[nodeId];
+            if (powerLevel) {
+                indicator = setPowerLevelIndicator(powerLevel);
+            }
+            if (node.data.genericType.value === 1) {
+                type = 'portable';
+            } else if (node.data.genericType.value === 2) {
+                type = 'static';
+            } else if (isFLiRS) {
+                type = 'flirs';
+            } else if (hasWakeup) {
+                type = node.data.isAwake.value ? 'battery' : 'sleep';
+            } else if (isListening) {
+                type = 'mains';
+            } else {
+                type = 'error';
+            }
+            var obj = {
+                id: nodeId,
+                name: $filter('deviceName')(nodeId, node),
+                updateTime: node.data.updateTime,
+                type: type,
+                icon: $filter('getDeviceTypeIcon')(type),
+                centralController: centralController,
+                powerLevel: powerLevel,
+                indicator: indicator,
+                cmdTestNode: 'devices[' + $routeParams.nodeId + '].instances[' + $scope.health.cmd.testNodeInstance + '].commandClasses[115].TestNodeSet(' + nodeId + ',6,20)',
+                cmdNop: 'devices[' + $routeParams.nodeId + '].instances[' + $scope.health.cmd.testNodeInstance + '].commandClasses[32].Get()'
+            };
+            var index = _.findIndex($scope.health.neighbours, {id: nodeId});
+            if ($scope.health.neighbours[index]) {
+                angular.extend($scope.health.neighbours[index], obj);
+            } else {
+                $scope.health.neighbours.push(obj);
+            }
+
+        });
+    }
+    /**
+     * Set power level indicator
+     * @param {object} data
+     * @returns {object}
+     */
+    function setPowerLevelIndicator(data) {
+        var indicator = {
+            color: 'gray',
+            updateTime: false,
+            updateTimeColor: ''
+        };
+        var traffic = 'gray';
+        if (!data || _.isEmpty(data) || data.acknowledgedFrames.value === null) {
+            return indicator;
+        }
+        if (data.acknowledgedFrames.value > -1 && data.acknowledgedFrames.value < 6) {
+            indicator.color = 'red';
+        } else if (data.acknowledgedFrames.value > 5 && data.acknowledgedFrames.value < 18) {
+            indicator.color = 'orange';
+        } else if (data.acknowledgedFrames.value > 17) {
+            indicator.color = 'green';
+        }
+        indicator.updateTime = data.acknowledgedFrames.updateTime;
+        indicator.updateTimeColor = (data.acknowledgedFrames.updateTime > data.acknowledgedFrames.invalidateTime ? '' : 'red');
+        return  indicator;
+    }
+    /**
+     * Set power level indicator
+     * @param {int} nodeId
+     * @returns {object}
+     */
+    function setTimingIndicatorColor(data) {
+        var color = 'gray';
+        if (!data || _.isEmpty(data)) {
+            return color;
+        }
+        //console.log(data)
+        //return;
+
+        var cnt = 0;
+        var sum = 0;
+        var avg;
+        angular.forEach(data.slice(-20), function (v, k) {
+            var val = 0;
+            if (v.delivered) {
+                val = parseInt(v.deliveryTime);
+                sum += val;
+            }
+            cnt++;
+        });
+        avg = (sum / cnt).toFixed();
+        if (avg > 0) {
+            color = (avg > 100 ? 'black' : 'green');
+        } else {
+            color = 'red';
+        }
+        return color;
+    }
+});
+/**
+ * @overview This controller renders and handles device postfix stuff.
+ * @author Martin Vach
+ */
+
+/**
+ * Device configuration Postfix controller
+ * @class ConfigPostfixController
+ *
+ */
+appController.controller('ConfigPostfixController', function ($scope, $routeParams, $location, $cookies, $filter, $timeout, $window, dataService, deviceService) {
+    $scope.devices = [];
+    $scope.deviceId = 0;
+    $scope.activeTab = 'postfix';
+    $scope.activeUrl = 'configuration/postfix/';
+    $cookies.tab_config = $scope.activeTab;
+    $scope.postfix = {
+        find: false,
+        interview: {
+            preInterview: '',
+            postInterview: '',
+        },
+        model: {
+            p_id: false,
+            product: '',
+            preInterview: [],
+            postInterview: [],
+            last_update: '',
+            tester: '',
+            commentary: ''
+        }
+    };
+    // Interview data
+    $scope.descriptionCont;
+    $scope.deviceZddx = [];
+    // Redirect to detail page
+    $scope.changeDevice = function (deviceId) {
+        if (deviceId > 0) {
+            $location.path($scope.activeUrl + deviceId);
+        }
+    };
+    // Load data
+    $scope.loadData = function (nodeId) {
+        dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
+            $scope.devices = deviceService.configGetNav(ZWaveAPIData);
+            var node = ZWaveAPIData.devices[nodeId];
+            if (!node || deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
+                return;
+            }
+
+            $cookies.configuration_id = nodeId;
+            $cookies.config_url = $scope.activeUrl + nodeId;
+            $scope.deviceId = nodeId;
+
+            $scope.postfix.model.p_id = getPId(node);
+            $scope.loadPostfix($scope.postfix.model.p_id);
+        }, function (error) {
+            $location.path('/error/' + error.status);
+            return;
+        });
+    };
+    $scope.loadData($routeParams.nodeId);
+
+    // Load postfix
+    $scope.loadPostfix = function (p_id) {
+        if (!p_id) {
+            return;
+        }
+        dataService.getApi('postfixget_url', '/' + p_id, false).then(function (response) {
+            $scope.postfix.find = response.data;
+            angular.extend($scope.postfix.model, _.omit(response.data, 'p_id'));
+        }, function (error) {});
+    };
+
+    // Add interview
+    $scope.addInterview = function (key) {
+        var source = $scope.postfix.interview[key];
+        if (key && source) {
+            $scope.postfix.model[key].push(source);
+            $scope.postfix.interview[key] = '';
+        }
+    };
+    // Remove interview
+    $scope.removeInterview = function (key, index) {
+        $scope.postfix.model[key].splice(index, 1);
+        return;
+    };
+
+
+    // Update a postfix
+    $scope.updatePostfix = function () {
+        $scope.postfix.model.last_update = $filter('getMysqlFromNow')('');
+        dataService.postApi('postfixadd_url', $scope.postfix.model).then(function (response) {
+            deviceService.showNotifier({message: $scope._t('zwave_reinstalled')});
+            $timeout(function () {
+                alertify.dismissAll();
+                $window.location.reload();
+            }, 5000);
+        }, function (error) {
+            alertify.alertError($scope._t('error_update_data'));
+            return;
+        });
+    };
+    // Delete postfix
+    $scope.deletePostfix = function (message) {
+        alertify.confirm(message, function () {
+            var input = {p_id: $scope.postfix.model.p_id};
+            dataService.postApi('postfixremove_url', input).then(function (response) {
+                deviceService.showNotifier({message: $scope._t('delete_successful') + ' ' + $scope._t('zwave_reinstalled')});
+                $scope.postfix.model = {p_id: $scope.postfix.model.p_id};
+                $timeout(function () {
+                    alertify.dismissAll();
+                    $window.location.reload();
+                }, 5000);
+            }, function (error) {
+                alertify.alertError($scope._t('error_delete_data'));
+                return;
+            });
+        });
+
+
+    };
+
+    /// --- Private functions --- ///
+
+    function getPId(node) {
+
+        var mId = node.data.manufacturerId.value ? node.data.manufacturerId.value : null;
+        var mPT = node.data.manufacturerProductType.value ? node.data.manufacturerProductType.value : null;
+        var mPId = node.data.manufacturerProductId.value ? node.data.manufacturerProductId.value : null;
+
+        var p_id = mId + "." + mPT + "." + mPId;
+
+        return (p_id !== 'null.null.null' ? p_id : false);
+    }
+});
+
 /**
  * Common app functions
  * author Martin Vach

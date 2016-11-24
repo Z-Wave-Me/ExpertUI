@@ -104,7 +104,13 @@ module.exports = function (grunt) {
                     'app/controllers/networkmap.js',
                     'app/controllers/home.js',
                     'app/controllers/configuration.js',
-                    'app/controllers/assoc.js',
+                    'app/controllers/configuration_interview.js',
+                    'app/controllers/configuration_configuration.js',
+                    'app/controllers/configuration_commands.js',
+                    'app/controllers/configuration_association.js',
+                    'app/controllers/configuration_firmware.js',
+                    'app/controllers/configuration_health.js',
+                    'app/controllers/configuration_postfix.js',
                     'app/jquery/jquery-app.js'
 
                 ],
