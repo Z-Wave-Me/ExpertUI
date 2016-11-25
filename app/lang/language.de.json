@@ -18,6 +18,7 @@
   "settings": "Settings",
   "date_format": "Date format",
   "network_name": "Network name",
+  "timezone": "Zeitzone",
   "edit": "Edit",
   "device_not_included_info": "Start the inclusion or learning mode on the customer's primary controller and click the button below.",
   "device_included_info": "Start the exclusion mode on the customer's primary controller and click the button below.",

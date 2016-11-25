@@ -68,6 +68,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         runZwaveCmd: runZwaveCmd,
         getApi: getApi,
         postApi: postApi,
+        postToRemote: postToRemote,
         getRemoteData: getRemoteData,
         xmlToJson: xmlToJson,
         getTextFile: getTextFile,
@@ -880,6 +881,27 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             /*headers: {
              'Accept-Language': lang
              }*/
+        }).then(function (response) {
+            return response;
+        }, function (error) {// something went wrong
+
+            return $q.reject(error);
+        });
+    }
+
+    /**
+     * Post on the remote server
+     * @param {string} url
+     * @param {object} data
+     * @returns {unresolved}
+     */
+    function postToRemote(url, data, headers) {
+
+        return $http({
+            method: 'POST',
+            url: url,
+            data: data,
+            headers: headers
         }).then(function (response) {
             return response;
         }, function (error) {// something went wrong
