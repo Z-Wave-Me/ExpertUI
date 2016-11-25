@@ -252,7 +252,7 @@
 
 <!-- Ang Container -->
 <div class="container-installer" ng-if="cfg.app_type === 'installer' && getBodyId()">
-    <div class="alert alert-danger" ng-if="boxData.controller.isRealPrimary && !boxData.controller.hasDevices"><i
+    <div class="alert alert-success" ng-if="boxData.controller.isRealPrimary && !boxData.controller.hasDevices"><i
             class="fa fa-info-circle"></i> {{_t('ready_to_network')}}
     </div>
     <div class="alert alert-success" ng-if="boxData.controller.isRealPrimary && boxData.controller.hasDevices"><i

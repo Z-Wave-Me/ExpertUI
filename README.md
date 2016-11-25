@@ -7,7 +7,6 @@ This User Interfaces allows to operate a Smart Home Network based on Z-Wave devi
 #### New features
 - IMA: network name, time format, firmware update.
 - Icons in the menu.
-- Edit notes in the modal window.
 - Enhanced display on mobile devices and tablets.
 - Spinner indicators.
 

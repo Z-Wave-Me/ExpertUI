@@ -58,9 +58,10 @@
                                     <li><a href="#device/status" ng-class="isActive('status',2)">{{ _t('nav_status') }}</a></li>
                                     <li><a href="#device/type" ng-class="isActive('type',2)">{{ _t('nav_type_info') }}</a></li>
                                     <li><a href="#device/battery" ng-class="isActive('battery',2)">{{ _t('nav_battery') }}</a></li>
-                                    <li><a href="#config/configuration"
-                                           ng-if="cfg.app_type === 'installer'"
-                                           ng-class="isActive('configuration',2)">{{ _t('nav_configuration') }}</a></li>
+                                    <li ng-if="cfg.app_type === 'installer'">
+                                        <a href="#config/configuration"
+                                           ng-class="isActive('configuration',2)">{{ _t('nav_configuration') }}</a>
+                                    </li>
                                     <li><a href="#device/associations" ng-class="isActive('associations',2)">{{ _t('nav_active_associations') }}</a></li>
                                     <!--  <li><a href="#device/security"{{ _t('nav_security_status') }}</a></li>-->
                                 </ul>
@@ -173,7 +174,7 @@
 
     <!-- Ang Container -->
     <div class="container-installer" ng-if="cfg.app_type === 'installer' && getBodyId()">
-        <div class="alert alert-danger" ng-if="boxData.controller.isRealPrimary && !boxData.controller.hasDevices"><i
+        <div class="alert alert-success" ng-if="boxData.controller.isRealPrimary && !boxData.controller.hasDevices"><i
                 class="fa fa-info-circle"></i> {{_t('ready_to_network')}}
         </div>
         <div class="alert alert-success" ng-if="boxData.controller.isRealPrimary && boxData.controller.hasDevices"><i
@@ -207,4 +208,6 @@
 
         </div>
     </div>
+
+    </body>
 </html>
