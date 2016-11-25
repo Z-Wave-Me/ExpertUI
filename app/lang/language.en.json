@@ -19,6 +19,7 @@
  "logout": "Logout",
  "network_name": "Network name",
  "time_format": "Time format",
+ "timezone": "Time zone",
  "hours": "Hours",
  "settings": "Settings",
  "date_format": "Date format",

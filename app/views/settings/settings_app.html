@@ -28,6 +28,7 @@
                     </option>
                 </select>
             </div>
+
             <!-- time format -->
             <div class="form-group form-inline">
                 <label>{{_t('time_format')}}: </label>
@@ -35,6 +36,16 @@
                         ng-model="settings.input.time_format">
                     <option ng-repeat="v in cfg.time_format_list" value="{{v}}"
                             ng-selected="v === cfg.zwavecfg.time_format">{{v}} {{_t('hours')}}
+                    </option>
+                </select>
+            </div>
+            <!-- timezone -->
+            <div class="form-group form-inline">
+                <label>{{_t('timezone')}}: </label>
+                <select name="timezone" name="timezone" class="form-control"
+                        ng-model="settings.input.timezone">
+                    <option ng-repeat="v in cfg.timezone_list" value="{{v}}"
+                            ng-selected="v === cfg.zwavecfg.timezone">{{v}}
                     </option>
                 </select>
             </div>
