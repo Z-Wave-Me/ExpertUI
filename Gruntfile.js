@@ -78,8 +78,8 @@ module.exports = function (grunt) {
                     // Controllers
                     'app/controllers/base.js',
                     'app/controllers/controllers.js',
+                    'app/controllers/expert_config.js',
                     'app/controllers/auth.js',
-                    'app/controllers/note.js',
                     'app/controllers/settings.js',
                     'app/controllers/settings.js',
                     'app/controllers/switch.js',
