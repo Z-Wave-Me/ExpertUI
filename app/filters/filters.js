@@ -242,7 +242,9 @@ angApp.filter('isTodayFromUnix', function (cfg, $filter) {
             return '-';
         }
         var d = new Date(input * 1000);
+
         if (d.toDateString() == (new Date()).toDateString()) {
+
             return $filter('getFormattedTime')(
                 d.toISOString().substring(11, d.toISOString().indexOf('.')),
                 'hh:mm',
@@ -261,6 +263,7 @@ angApp.filter('isTodayFromUnix', function (cfg, $filter) {
  */
 angApp.filter('getFormattedTime', function () {
     return function (time,stringFormat,timeFormat) {
+
         var str = '';
         var suffix = '';
         var arr = time.split(':').map(function (x) {
