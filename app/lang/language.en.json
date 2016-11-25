@@ -42,7 +42,7 @@
   "iam_in_my_network": "I am in my Network",
   "include_into_network": "Include into Network",
   "iam_in_network_homeid": "I am in Network",
-  "leave_network": "Exclude from Network",
+  "leave_network": "Leave customer network",
   "nav_history": "Zniffer History",
   "enter_value": "Enter a value",
   "use_charcter_delimit": "Use character \",\" to delimit values",

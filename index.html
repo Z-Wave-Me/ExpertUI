@@ -258,7 +258,7 @@
     <div class="alert alert-success" ng-if="boxData.controller.isRealPrimary && boxData.controller.hasDevices"><i
             class="fa fa-check"></i> {{_t('iam_in_my_network')}}
     </div>
-    <div class="alert alert-warning" ng-if="!boxData.controller.isRealPrimary"><i class="fa fa-info-circle"></i>
+    <div class="alert alert-danger" ng-if="!boxData.controller.isRealPrimary"><i class="fa fa-info-circle"></i>
         {{_t('iam_in_network_homeid')}}: {{boxData.controller.homeId}}
     </div>
 </div>
