@@ -33,7 +33,7 @@ appController.controller('RoutingController', function($scope, $filter, $timeout
             setNodes(ZWaveAPIData);
             setData(ZWaveAPIData);
             if(_.isEmpty($scope.routings.all)){
-                $scope.alert = {message: $scope._t('error_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
                 return;
             }
             $scope.routings.show = true;

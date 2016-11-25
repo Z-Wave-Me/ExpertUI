@@ -34,7 +34,7 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
             $scope.ZWaveAPIData = ZWaveAPIData;
             setData(ZWaveAPIData);
             if(_.isEmpty($scope.statuses.all)){
-                $scope.alert = {message: $scope._t('error_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
                 return;
             }
             $scope.statuses.show = true;

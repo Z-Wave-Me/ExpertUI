@@ -60,7 +60,7 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
             if (zwaveData.state === 'fulfilled') {
                 setData(zwaveData.value);
                 if(_.isEmpty($scope.devices.all)){
-                    $scope.alert = {message: $scope._t('error_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                    $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
                     return;
                 }
                 $scope.devices.show = true;

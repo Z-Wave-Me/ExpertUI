@@ -30,7 +30,7 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
         dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
             setData(ZWaveAPIData);
              if(_.isEmpty($scope.switches.all)){
-                $scope.alert = {message: $scope._t('error_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
                 return;
             }
             $scope.switches.show = true;
