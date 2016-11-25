@@ -19,8 +19,6 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
      * Load zwave dongles
      */
     $scope.setDongle = function () {
-        //angular.extend(cfg.route,{dongle_list: ['zway','newdongle','mydongle']});
-        //dataService.getZwaveList().then(function (response) {
         dataService.getApi('zwave_list').then(function (response) {
             if (response.length === 1) {
                 angular.extend(cfg, {dongle: response[0]});
@@ -48,6 +46,9 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
         }, function (error) {
             if (error.status === 401) {
                 //var redirectTo = $location.$$protocol+'://' + $location.$$host + ':' + $location.$$port + cfg.smarthome_login
+                if( cfg.app_type === 'installer'){
+                    return;
+                }
                 window.location.href = cfg.smarthome_login;
             }
         });
