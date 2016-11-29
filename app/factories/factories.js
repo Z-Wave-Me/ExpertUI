@@ -62,6 +62,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         zmeCapabilities: zmeCapabilities,
         getLanguageFile: getLanguageFile,
         //Test New functions
+        logInApi:  logInApi,
         getApiLocal: getApiLocal,
         loadZwaveApiData: loadZwaveApiData,
         loadJoinedZwaveData: loadJoinedZwaveData,
@@ -697,6 +698,23 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
     }
 
     ///////////////////////////////////////////////////////////// Test - new functions /////////////////////////////////////////////////////////////////////
+    /**
+     * Handles login process
+     * @param {object} data
+     * @returns {unresolved}
+     */
+    function logInApi(data) {
+        return $http({
+            method: "post",
+            data: data,
+            url: cfg.server_url + cfg['login']
+        }).then(function (response) {
+            return response;
+        }, function (response) {// something went wrong
+            //return response;
+            return $q.reject(response);
+        });
+    }
     /**
      * Get local data from the storage directory
      * @param {string} file

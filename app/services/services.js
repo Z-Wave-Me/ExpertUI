@@ -7,7 +7,7 @@ var appService = angular.module('appService', []);
 /**
  * Device service
  */
-appService.service('deviceService', function($filter, $log, _) {
+appService.service('deviceService', function($filter, $log, $cookies,_) {
     /// --- Public functions --- ///
     /**
      * Mobile device detect
@@ -59,6 +59,58 @@ appService.service('deviceService', function($filter, $log, _) {
     this.logError = function(error, message) {
         message = message || 'ERROR:';
         $log.error('---------- ' + message + ' ----------', error);
+    };
+
+    /**
+     * Get user data from cookies
+     * @returns {Array|Boolean}
+     */
+    this.getUser = function () {
+        var user = ($cookies.user !== 'undefined' ? angular.fromJson($cookies.user) : false);
+        return user;
+    };
+
+    /**
+     * Set user data
+     * @param {object} data
+     * @returns {Boolean|Object}
+     */
+    this.setUser = function (data) {
+        if (!data) {
+            delete $cookies['user'];
+            return false;
+        }
+        $cookies.user = angular.toJson(data);
+        return data;
+    };
+
+    /**
+     * Unset user data - delete user cookies
+     * @returns {undefined}
+     */
+    this.unsetUser = function () {
+        this.setUser(null);
+        this.setZWAYSession(null);
+    };
+
+    /**
+     * Get ZWAY session
+     * @returns {string}
+     */
+    this.getZWAYSession = function () {
+        return $cookies.ZWAYSession;
+    };
+    /**
+     * Set ZWAY session
+     * @param {string} sid
+     * @returns {Boolean|Object}
+     */
+    this.setZWAYSession = function (sid) {
+        if (!sid) {
+            delete $cookies['ZWAYSession'];
+            return false;
+        }
+        $cookies.ZWAYSession = sid;
     };
 
     /**
