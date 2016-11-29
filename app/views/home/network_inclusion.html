@@ -8,8 +8,7 @@
                     class="btn btn-primary"
                     id="btn_learn_start"
                     ng-click="runZwaveCmd('controller.SetLearnMode(1)')"
-                    onClick="refreshPage()"
-
+                    onClick=""
             >{{_t('include_into_network')}}
             </button>
         </div>
@@ -33,14 +32,51 @@
             <button
                     class="btn btn-danger"
                     id="btn_learn_stop"
-                    ng-click="runZwaveCmd('controller._SetLearnMode(0)',_t('before_leaving_network'))"
+                    ng-click="runZwaveCmd('controller.SetLearnMode(0)',_t('before_leaving_network'))"
 
             > {{_t('leave_network')}}
             </button>
         </div>
 
-
         <!-- stop inclusion -->
+        <div ng-if="boxData.controller.controllerState == 9 && boxData.controller.isPrimary">
+            <p class="input-help">{{_t('device_included_info')}}</p>
+            <button
+                    class="btn btn-danger"
+                    id="btn_learn_stop_2"
+                    ng-click="runZwaveCmd('controller.SetLearnMode(0)')"
+                    ng-show="[8, 9, 10, 11, 12].indexOf(controllerState) > -1"
+            > {{_t('Stop inclusion')}}
+            </button>
+        </div>
+
+        <!-- included in network
+        <div ng-if="boxData.controller.isRealPrimary && (boxData.controller.hasDevices)">
+            <p class="input-help">{{_t('device_included_info')}}</p>
+            <button
+                    class="btn btn-primary"
+                    id="btn_learn_start_2"
+                    ng-click="runZwaveCmd('controller.SetLearnMode(1)')"
+                    style="background-color: grey;"
+                    disabled
+            >{{_t('leave_network')}}
+            </button>
+        </div>-->
+
+        <!-- included in network
+        <div ng-if="!boxData.controller.isRealPrimary">
+            <p class="input-help">{{_t('device_included_info')}}</p>
+            <button
+                    class="btn btn-danger"
+                    id="btn_learn_stop"
+                    ng-click="runZwaveCmd('controller.SetLearnMode(0)',_t('before_leaving_network'))"
+
+            > {{_t('leave_network')}}
+            </button>
+        </div>-->
+
+
+        <!-- stop inclusion
         <button
                 class="btn btn-danger"
                 id="btn_learn_stop_2"
@@ -48,6 +84,6 @@
                 ng-if="boxData.controller.controllerState == 9 && boxData.controller.isPrimary"
                 onClick="refreshPage()"
         > {{_t('Stop inclusion')}}
-        </button>
+        </button>-->
     </div>
 </div>

@@ -149,6 +149,7 @@ appController.controller('ControllController', function($scope, $filter, $upload
                 case 'reset_controller':
                     $("#reset_confirm").attr('checked', false);
                     $scope.goReset = false;
+                    $window.location.reload();
                     break;
             }
         }

@@ -28,7 +28,7 @@
         <p class="input-help"  ng-show="isSIS || isPrimary">{{_t('nm_learn_mode_you_are_primary_no_sis')}}</p>
         <p class="input-help"  ng-show="!isSIS && !isPrimary">{{_t('nm_learn_mode_you_are_secondary_can_not_add')}}</p>
 
-        <div class="alert nm-response"  ng-class="controllerState == 0 ? 'alert-info' : 'alert-danger'">{{_t('nm_controller_state_' + controllerState)}}</div>
+        <div class="alert nm-response"  ng-class="controllerState == 0 ? 'alert-info' : 'alert-success'">{{_t('nm_controller_state_' + controllerState)}}</div>
         <div ng-show="controllerState == 1">
             <div class="alert alert-success" ng-show="isSIS || isPrimary">{{_t('nm_controller_sis_or_primary')}}</div>
             <div class="alert alert-danger" ng-show="!isSIS && !isPrimary">{{_t('nm_controller_not_sis_or_primary')}}</div>

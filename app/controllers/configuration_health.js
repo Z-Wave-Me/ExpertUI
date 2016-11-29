@@ -8,7 +8,7 @@
  * @class ConfigHealthController
  *
  */
-appController.controller('ConfigHealthController', function ($scope, $routeParams, $location, $cookies, $filter, $interval, cfg, deviceService, dataService) {
+appController.controller('ConfigHealthController', function ($scope, $routeParams, $timeout, $location, $cookies, $filter, $interval, cfg, deviceService, dataService) {
     $scope.apiDataInterval;
     $scope.devices = [];
     $scope.deviceId = 0;
@@ -108,8 +108,11 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
 
     // Run Zwave Command
     $scope.runZwaveCmd = function (cmd) {
+        $scope.toggleRowSpinner(cmd);
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
+            $timeout($scope.toggleRowSpinner, 1000);
         }, function (error) {
+            $scope.toggleRowSpinner();
             alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
             //$window.alert($scope._t('error_handling_data') + '\n' + cmd);
         });
@@ -153,6 +156,30 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
         };
     };
 
+    /**
+     * Test all links
+     * @param {string} id
+     * @param {string} urlType
+     */
+    $scope.testAllLinks = function(id) {
+        var lastItem = _.last($scope.health.neighbours);
+        $scope.toggleRowSpinner(id);
+        angular.forEach($scope.health.neighbours, function(v, k) {
+            $scope.toggleRowSpinner(v.cmdTestNode);
+            dataService.runZwaveCmd(cfg.store_url + v.cmdTestNode).then(function (response) {
+                alertify.dismissAll();
+            }, function (error) {
+                alertify.dismissAll();
+                alertify.alertError($scope._t('error_update_data') + '\n' +  v[urlType]);
+            });
+
+            if(lastItem.id === v.id){
+                $timeout($scope.toggleRowSpinner, 1000);
+            }
+        });
+
+    };
+
     /// --- Private functions --- ///
     /**
      * Set configuration device
@@ -165,8 +192,6 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
                 $scope.health.device.hasPowerLevel = instance.commandClasses[115].data;
                 $scope.health.cmd.testNodeInstance = instanceId;
             }
-
-
         });
     }
 

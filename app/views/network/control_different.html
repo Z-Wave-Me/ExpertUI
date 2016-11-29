@@ -11,14 +11,14 @@
                 class="btn btn-danger"
                 id="btn_learn_stop"
                 ng-click="runZwaveCmd('controller.SetLearnMode(0)')"
-                ng-if="!boxData.controller.isPrimary"
+                ng-if="!boxData.controller.isRealPrimary"
         > {{_t('leave_network')}}</button>
 
         <button
                 class="btn btn-primary"
                 id="btn_learn_start"
                 ng-click="runZwaveCmd('controller.SetLearnMode(1)')"
-                ng-if="boxData.controller.isPrimary && (boxData.controller.hasDevices)"
+                ng-if="boxData.controller.isRealPrimary && (boxData.controller.hasDevices)"
                 style="background-color: grey;"
                 disabled
         >{{_t('include_into_network')}}</button>
@@ -27,14 +27,14 @@
                 class="btn btn-primary"
                 id="btn_learn_start"
                 ng-click="runCmd('controller.SetLearnMode(1)')"
-                ng-if="boxData.controller.isPrimary && (!boxData.controller.hasDevices)"
+                ng-if="boxData.controller.isRealPrimary && (!boxData.controller.hasDevices)"
                 ng-show="[8, 9, 10, 11, 12].indexOf(controllerState) == -1"
         >{{_t('nm_learn_start')}}</button>
         <button
                 class="btn btn-danger"
                 id="btn_learn_stop"
                 ng-show="[8, 9, 10, 11, 12].indexOf(controllerState) > -1"
-                ng-if="boxData.controller.isPrimary && (!boxData.controller.hasDevices)"
+                ng-if="boxData.controller.isRealPrimary && (!boxData.controller.hasDevices)"
                 ng-click="runCmd('controller.SetLearnMode(0)')"
         > {{_t('nm_learn_stop')}}</button>
 

@@ -176,7 +176,7 @@
                         </div>
                     </li>
 
-                    <!-- Zniffer -->
+                    <!-- Analytics -->
                     <li class="navibar-divider" ng-if="cfg.app_type === 'installer'"> </li>
                     <li class="navibar-item" ng-click="expandNavi('naviInstaller', $event)"  ng-if="cfg.app_type === 'installer'">
                         <a class="navibar-item-root" href="" title="{{_t('installer')}}" ng-class="isActive('installer',1)">
@@ -255,7 +255,7 @@
     <div class="alert alert-success" ng-if="boxData.controller.isRealPrimary && !boxData.controller.hasDevices"><i
             class="fa fa-info-circle"></i> {{_t('ready_to_network')}}
     </div>
-    <div class="alert alert-success" ng-if="boxData.controller.isRealPrimary && boxData.controller.hasDevices"><i
+    <div class="alert alert-warning" ng-if="boxData.controller.isRealPrimary && boxData.controller.hasDevices"><i
             class="fa fa-check"></i> {{_t('iam_in_my_network')}}
     </div>
     <div class="alert alert-danger" ng-if="!boxData.controller.isRealPrimary"><i class="fa fa-info-circle"></i>
