@@ -55,7 +55,7 @@
   "nav_spectrum_analyzer": "Spectrum analyzer",
   "data": "Data",
   "application": "Application",
- "encapsulation": "encapsulation",
+  "encapsulation": "encaps.",
   "error_xml_load": "Unable to load a XML file",
   "date": "Date",
   "time": "Time",

@@ -255,6 +255,10 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
             }
 
         });
+
+        if($scope.health.neighbours.length == 0) {
+            $scope.alert = {message: $scope._t('not_linked_devices'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+        }
     }
     /**
      * Set power level indicator

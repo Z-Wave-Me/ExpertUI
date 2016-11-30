@@ -2,7 +2,7 @@
  * ControllController
  * @author Martin Vach
  */
-appController.controller('ControllController', function($scope, $filter, $upload, $interval, $location, cfg, dataService, deviceService) {
+appController.controller('ControllController', function($scope, $filter, $window, $upload, $interval, $location, cfg, dataService, deviceService) {
     $scope.apiDataInterval;
     $scope.devices = {};
     $scope.sucNodes = {};
@@ -129,7 +129,8 @@ appController.controller('ControllController', function($scope, $filter, $upload
      *
      * @returns {void}
      */
-    $scope.runCmd = function(cmd, hideModal, url, action) {
+    $scope.runCmd = function(cmd, hideModal, url, id, action) {
+        //$scope.toggleRowSpinner(id);
         var folder = (url ? url : cfg.store_url);
         if (angular.isArray(cmd)) {
             angular.forEach(cmd, function(v, k) {
@@ -149,15 +150,16 @@ appController.controller('ControllController', function($scope, $filter, $upload
                 case 'reset_controller':
                     $("#reset_confirm").attr('checked', false);
                     $scope.goReset = false;
-                    $window.location.reload();
                     break;
             }
         }
-
         if (hideModal) {
             $(hideModal).modal('hide');
+            deviceService.showNotifier({message: $scope._t('reloading')});
+            $timeout( function() {
+                $window.location.reload();
+            }, 1000);
         }
-
         return;
     };
     

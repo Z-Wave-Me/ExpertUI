@@ -30,7 +30,7 @@ appController.controller('SettingsLangController', function ($scope, $timeout,$w
  * @class SettingsAppController
  *
  */
-appController.controller('SettingsAppController', function ($scope, $timeout,$interval, $location, cfg,dataService,deviceService) {
+appController.controller('SettingsAppController', function ($scope, $timeout, $window, $interval, $location, cfg,dataService,deviceService) {
     $scope.settings = {
         input: {}
     };
@@ -48,32 +48,33 @@ appController.controller('SettingsAppController', function ($scope, $timeout,$in
      * @param {object} input
      */
     $scope.storeSettings = function(input) {
-        console.log(input);
         $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin', message: $scope._t('updating')};
+        /*
+        console.log(input);
+        var tz_changed = false;
+        console.log(cfg.zwavecfg.time_zone);
+        if(input.time_zone != cfg.zwavecfg.time_zone) {
+            tz_changed = true;
+        }*/
+
         dataService.postApi('configupdate_url', input).then(function (response) {
             //$scope.reloadData();
 
-            //set Access
-            dataService.getApi('firmwareupdate', '?allow_access=1', true).then(function (response) {
-                var data = {
-                    "act": "set",
-                    "tz": input.timezone
-                };
-                //console.log("firmwareupdate", response);
+                    var data = {
+                        "time_zone": input.time_zone
+                    };
 
-                dataService.postToRemote('http://' + $location.host() + ':8084/cgi-bin/main.cgi' , data).then(function(response) {
-                    console.log("cgi success");
-                    //console.log("cgi success", response);
-                } , function(error) {
-                    console.log("cgi error");
-                    //console.log("cgi error", error);
-                });
+                    dataService.postApi('time_zone', data, null).then(function (response) {
+                        $timeout( function() {
+                            //console.log("reloading");
+                            $window.location.reload();
+                        }, 10000);
+                    }, function (error) {
 
-            }, function (error) {
-                $scope.loading = false;
-                alertify.alertError($scope._t('error_load_data'));
+                        $scope.loading = false;
+                        alertify.alertError($scope._t('error_load_data'));
+                    });
 
-            });
 
             deviceService.showNotifier({message: $scope._t('update_successful')});
             //$window.location.reload();

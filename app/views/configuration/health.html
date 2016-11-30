@@ -2,7 +2,7 @@
 <div ng-controller="ConfigHealthController">
     <!-- Config navigation -->
     <div ng-include="'app/views/configuration/header.html'"></div>
-    <bb-alert alert="health.alert"></bb-alert>
+    <bb-alert alert="alert"></bb-alert>
     <div class="tab-content" ng-show="deviceId && !_.isEmpty(health.neighbours)">
         <div id="table_mobile">
             <div class="alert ng-scope alert-warning" ng-if="!health.device.hasPowerLevel">
