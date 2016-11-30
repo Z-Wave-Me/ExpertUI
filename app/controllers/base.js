@@ -15,45 +15,7 @@ var appController = angular.module('appController', []);
 appController.controller('BaseController', function ($scope, $cookies, $filter, $location, $anchorScroll, $window, $route, $interval,cfg, dataService, deviceService, myCache) {
     $scope.loading = false;
     $scope.alert = {message: false, status: 'is-hidden', icon: false};
-    /**
-     * Load zwave dongles
-     */
-    $scope.setDongle = function () {
-        dataService.getApi('zwave_list').then(function (response) {
-            if (response.length === 1) {
-                angular.extend(cfg, {dongle: response[0]});
-                $cookies.dongle = response[0];
-                angular.extend(cfg,{dongle_list: response});
 
-                angular.extend(cfg, {
-                    update_url: '/ZWave.' + cfg.dongle + '/Data/',
-                    store_url: '/ZWave.' + cfg.dongle + '/Run/',
-                    restore_url: '/ZWave.' + cfg.dongle + '/Restore',
-                    queue_url: '/ZWave.' + cfg.dongle + '/InspectQueue',
-                    fw_update_url: '/ZWave.' + cfg.dongle + '/FirmwareUpdate',
-                    license_load_url: '/ZWave.' + cfg.dongle + '/ZMELicense',
-                    zddx_create_url: '/ZWave.' + cfg.dongle + '/CreateZDDX/',
-                    'stat_url': '/ZWave.' + cfg.dongle + '/CommunicationStatistics',
-                    'postfixget_url': '/ZWave.' + cfg.dongle + '/PostfixGet',
-                    'postfixadd_url': '/ZWave.' + cfg.dongle + '/PostfixAdd',
-                    'postfixremove_url': '/ZWave.' + cfg.dongle + '/PostfixRemove',
-                    //'communication_history_url': '/ZWave.' + cfg.dongle + '/CommunicationHistory',
-                    'configget_url': '/ZWave.' + cfg.dongle + '/ExpertConfigGet',
-                    'configupdate_url': '/ZWave.' + cfg.dongle + '/ExpertConfigUpdate'
-
-                });
-            }
-        }, function (error) {
-            if (error.status === 401) {
-                //var redirectTo = $location.$$protocol+'://' + $location.$$host + ':' + $location.$$port + cfg.smarthome_login
-                if( cfg.app_type === 'installer'){
-                    return;
-                }
-                window.location.href = cfg.smarthome_login;
-            }
-        });
-    };
-    $scope.setDongle();
     // Custom IP
     $scope.customIP = {
         'url': cfg.server_url,
@@ -73,40 +35,8 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
     $scope.showContent = false;
     // Global config
     $scope.cfg = cfg;
-    /**
-     * Set zwave configuration
-     * @returns {undefined}
-     */
-    $scope.loadZwaveConfig = function (nocache) {
-        // Set config
-        dataService.getApi('configget_url', null, nocache).then(function (response) {
-            //angular.extend(cfg.zwavecfg, {debug: response.data.debug});
-            //angular.extend(cfg.zwavecfg, {notes: response.data.notes});
-            angular.extend(cfg.zwavecfg, response.data);
-        }, function (error) {});
-    };
-    $scope.loadZwaveConfig();
 
-    /**
-     * Set timestamp and ping server if request fails
-     * @returns {undefined}
-     */
-    $scope.setTimeStamp = function () {
-       dataService.getApi('time', null, true).then(function (response) {
-            $interval.cancel($scope.timeZoneInterval);
-            angular.extend(cfg.route.time, {string: $filter('setTimeFromBox')(response.data.data.localTimeUT)},
-                {timestamp: response.data.data.localTimeUT});
-            var refresh = function () {
-                cfg.route.time.timestamp += (cfg.interval < 1000 ? 1 : cfg.interval/1000)
-                cfg.route.time.string = $filter('setTimeFromBox')(cfg.route.time.timestamp)
-            };
-            $scope.timeZoneInterval = $interval(refresh, $scope.cfg.interval);
-        }, function (error) {});
-
-    };
-    $scope.setTimeStamp();
-
-    // Lang settings
+// Lang settings
     $scope.lang_list = cfg.lang_list;
     // Set language
     $scope.lang = (angular.isDefined($cookies.lang) ? $cookies.lang : cfg.lang);
@@ -338,7 +268,84 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
             };
         }, true, 'alert');
     }
-    
+
+    /// --- Common APIs  --- ///
+    /**
+     * Set zwave configuration
+     * @returns {undefined}
+     */
+    $scope.loadZwaveConfig = function (nocache) {
+        // Set config
+        dataService.getApi('configget_url', null, nocache).then(function (response) {
+            //angular.extend(cfg.zwavecfg, {debug: response.data.debug});
+            //angular.extend(cfg.zwavecfg, {notes: response.data.notes});
+            angular.extend(cfg.zwavecfg, response.data);
+        }, function (error) {});
+    };
+
+    /**
+     * Load zwave dongles
+     */
+    $scope.setDongle = function () {
+        dataService.getApi('zwave_list').then(function (response) {
+            if (response.length === 1) {
+                angular.extend(cfg, {dongle: response[0]});
+                $cookies.dongle = response[0];
+                angular.extend(cfg,{dongle_list: response});
+
+                angular.extend(cfg, {
+                    update_url: '/ZWave.' + cfg.dongle + '/Data/',
+                    store_url: '/ZWave.' + cfg.dongle + '/Run/',
+                    restore_url: '/ZWave.' + cfg.dongle + '/Restore',
+                    queue_url: '/ZWave.' + cfg.dongle + '/InspectQueue',
+                    fw_update_url: '/ZWave.' + cfg.dongle + '/FirmwareUpdate',
+                    license_load_url: '/ZWave.' + cfg.dongle + '/ZMELicense',
+                    zddx_create_url: '/ZWave.' + cfg.dongle + '/CreateZDDX/',
+                    'stat_url': '/ZWave.' + cfg.dongle + '/CommunicationStatistics',
+                    'postfixget_url': '/ZWave.' + cfg.dongle + '/PostfixGet',
+                    'postfixadd_url': '/ZWave.' + cfg.dongle + '/PostfixAdd',
+                    'postfixremove_url': '/ZWave.' + cfg.dongle + '/PostfixRemove',
+                    //'communication_history_url': '/ZWave.' + cfg.dongle + '/CommunicationHistory',
+                    'configget_url': '/ZWave.' + cfg.dongle + '/ExpertConfigGet',
+                    'configupdate_url': '/ZWave.' + cfg.dongle + '/ExpertConfigUpdate'
+
+                });
+            }
+        }, function (error) {
+            if (error.status === 401 && cfg.app_type !== 'installer') {
+                window.location.href = cfg.smarthome_login;
+            }
+            /*if (error.status === 401) {
+             //var redirectTo = $location.$$protocol+'://' + $location.$$host + ':' + $location.$$port + cfg.smarthome_login
+             //if( cfg.app_type === 'installer'){
+             //deviceService.logOut();
+             return;
+             //}
+             //window.location.href = cfg.smarthome_login;
+             }*/
+        });
+    };
+
+
+    /**
+     * Set timestamp and ping server if request fails
+     * @returns {undefined}
+     */
+    $scope.setTimeStamp = function () {
+        dataService.getApi('time', null, true).then(function (response) {
+            $interval.cancel($scope.timeZoneInterval);
+            angular.extend(cfg.route.time, {string: $filter('setTimeFromBox')(response.data.data.localTimeUT)},
+                {timestamp: response.data.data.localTimeUT});
+            var refresh = function () {
+                cfg.route.time.timestamp += (cfg.interval < 1000 ? 1 : cfg.interval/1000)
+                cfg.route.time.string = $filter('setTimeFromBox')(cfg.route.time.timestamp)
+            };
+            $scope.timeZoneInterval = $interval(refresh, $scope.cfg.interval);
+        }, function (error) {});
+
+    };
+
+
     /**
      * Load Box API data
      */
@@ -362,5 +369,15 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
 
         });
     };
-    $scope.loadBoxApiData();
+   // console.log($location.path().split('/'))
+    /**
+     * Load common APIs
+     */
+    if($scope.getBodyId() !== ''){
+        $scope.loadZwaveConfig();
+        $scope.setDongle();
+        $scope.setTimeStamp();
+        $scope.loadBoxApiData();
+    }
+
 });

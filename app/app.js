@@ -49,16 +49,26 @@ angular.forEach(config_data, function (key, value) {
  * Angular run function
  * @function run
  */
-angApp.run(function ($rootScope, $location, dataService, cfg) {
+angApp.run(function ($rootScope, $location, deviceService, cfg) {
     // Run ubderscore js in views
     $rootScope._ = _;
 
-    $rootScope.$on("$routeChangeStart", function (event, next, current) {
+    $rootScope.$on("$routeChangeStart", function (event, next) {
         /**
          * Check if page access is banned for the app type
          */
         if (next.appTypeBanned && next.appTypeBanned.indexOf(cfg.app_type) > -1) {
             $location.path( '/error/404');
+        }
+        /**
+        * Check if access is allowed for the page
+        */
+        if (next.requireLogin) {
+            var user = deviceService.getUser();
+            if (!user) {
+                $location.path('/');
+                return;
+            }
         }
 
     });
@@ -92,6 +102,17 @@ angApp.config(function ($provide, $httpProvider, cfg) {
             // On response failture
             responseError: function (rejection) {
                 deviceService.logError(rejection);
+                /*switch(rejection.status){
+                    case 401:
+                        if (path[1] !== '') {
+                            deviceService.logOut();
+                            break;
+
+                        }
+                    default:
+                        break;
+
+                }*/
                 // Return the promise rejection.
                 return $q.reject(rejection);
             }

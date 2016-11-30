@@ -50,8 +50,7 @@ var config_data = {
         'license_url': 'https://store.zwaveeurope.com/license/utility_uzb.php', // Url for license key
         'buy_licence_key': 'https://www.z-wave.me/index.php?id=41', // Buy licence key url
         'raz_latest_version_url': 'https://razberry.z-wave.me/z-way/razberry/latest/VERSION', // Raz latest version
-        'smarthome_login': '/smarthome/#/?fromexpert', // Smarthome login page 
-         'smarthome_logout': '/smarthome/#/logout', // Smarthome login page 
+        'smarthome_login': '/smarthome/#/?fromexpert', // Smarthome login page
         'lang_dir': 'app/lang/', // Language directory
         'lang': 'en', // Default language
         'lang_list': ['en','de','fr','es','ru','cz','sk','sv','cn'], // List of languages
@@ -118,11 +117,13 @@ var config_data = {
          'custom_cfg': {
              'default':{
                  'logo': 'app/images/zplus.jpg',
-                  'footer_text': '&COPY; 2014 by Z-Wave.Me'
+                  'footer_text': '&COPY; 2014 by Z-Wave.Me',
+                 'logout': '/smarthome/#/logout'
              },
               'installer':{
                   'logo': 'app/images/z-wave-aliance-logo.png',
-                   'footer_text': '&COPY; 2016 Z-Wave Alliance'
+                   'footer_text': '&COPY; 2016 Z-Wave Alliance',
+                  'logout': '#/logout'
               }
          }
 

@@ -7,7 +7,7 @@ var appService = angular.module('appService', []);
 /**
  * Device service
  */
-appService.service('deviceService', function($filter, $log, $cookies,_) {
+appService.service('deviceService', function($filter, $log, $cookies,$window,_) {
     /// --- Public functions --- ///
     /**
      * Mobile device detect
@@ -111,6 +111,18 @@ appService.service('deviceService', function($filter, $log, $cookies,_) {
             return false;
         }
         $cookies.ZWAYSession = sid;
+    };
+
+    /**
+     * Logout from the system
+     * @returns {undefined}
+     */
+    this.logOut = function () {
+        this.setUser(null);
+        this.setZWAYSession(null);
+        $window.location.href = '#/';
+        $window.location.reload();
+
     };
 
     /**

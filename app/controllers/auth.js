@@ -30,7 +30,6 @@ appController.controller('AuthInstallerController', function($scope, $location,c
         $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin', message: $scope._t('loading')};
         dataService.logInApi(input).then(function (response) {
             var user = response.data.data;
-            console.log(user)
             deviceService.setZWAYSession(user.sid);
             deviceService.setUser(user);
             //window.location = location;
@@ -60,5 +59,15 @@ appController.controller('AuthInstallerController', function($scope, $location,c
         }
         $location.path('/home');
     };
+
+});
+
+/**
+ * Logout installer controller
+ * @class LogoutInstallerController
+ *
+ */
+appController.controller('LogoutInstallerController', function(deviceService) {
+    deviceService.logOut();
 
 });
