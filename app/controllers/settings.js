@@ -8,7 +8,7 @@
  * @class SettingsLangController
  *
  */
-appController.controller('SettingsLangController', function ($scope, $timeout,$window,$cookies) {
+appController.controller('SettingsLangController', function ($scope, $timeout,$window,$cookies,deviceService) {
    /**
      * Set app language
      * @param {string} lang
