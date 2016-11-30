@@ -30,7 +30,7 @@
   "other_network": "Anderes Netzwerk",
   "secondary_inclusion_controller": "Secondary Inclusion Controller",
   "before_leaving_network": "Bevor Sie das Netzwerk verlassen, sollten Sie ein Backup Ihrer Netzwerkinformationen anlegen. Haben Sie bereits ein Backup der Netzwerkinformationen angelegt?",
-  "nm_chip_reset_war_ima": "Dieser Befehl ist mit äußerster Sorgfalt zu behandeln. Diese Funktion setzt das Certified Installer Toolkit auf den werkseitigen Auslieferungszustand zurück. Wenn das CIT in ein Kundennetzwerks inkludiert ist, sendet es einen 'Device Reset Local'-Befehl, um den primären Controller des Kunden zu benachrichtigen, dass es das Netzwerk verlässt. Bitte verwenden Sie den Controller des Kunden, um dieses Gerät unter normalen Umständen zu exkludieren, anstatt diesen Befehl zu verwenden.",
+  "nm_chip_reset_war_ima": "Dieser Befehl ist mit äußerster Sorgfalt zu behandeln. Diese Funktion setzt das Certified Installer Toolkit auf den werkseitigen Auslieferungszustand zurück. Wenn das CIT in ein Kundennetzwerk inkludiert ist, sendet es einen 'Device Reset Local'-Befehl, um den primären Controller des Kunden zu benachrichtigen, dass es das Netzwerk verlässt. Bitte verwenden Sie den Controller des Kunden, um dieses Gerät über die normale Exklusion zu exkludieren, anstatt diesen Befehl zu verwenden.",
   "nav_rssi": "Hintergrundrauschen",
   "hops": "Hops",
   "ready_to_network": "Bereit für die Inklusion in ein Netzwerk",
