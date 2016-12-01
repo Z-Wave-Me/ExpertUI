@@ -369,6 +369,19 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
 
         });
     };
+    /**
+     * Load queue data
+     */
+    $scope.loadBusyIndicator = function () {
+        var refresh = function() {
+            dataService.getApi('queue_url',null,true).then(function (response) {
+                setBusyIndicator(response.data);
+            }, function (error) {});
+
+        };
+        $interval(refresh, 3000);
+    };
+    //$scope.loadBusyIndicator();
    // console.log($location.path().split('/'))
     /**
      * Load common APIs
@@ -378,6 +391,46 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
         $scope.setDongle();
         $scope.setTimeStamp();
         $scope.loadBoxApiData();
+    }
+
+    /// --- Private functions --- ///
+    /**
+     * Set zwave data
+     * @param {object} ZWaveAPIData
+     */
+    function setBusyIndicator(data) {
+        var queueLength = data.length;
+        var jobLength = 0;
+        var jobLength = 0;
+        var arr = {
+            v: [],
+            s: [],
+            d: []
+        }
+        var arrCnt = {
+            v: 0,
+            s: 0,
+            d: 0
+        }
+
+        //console.log(data);
+        angular.forEach(data, function(job, jobIndex) {
+            arr.v.push(job[1][1]);
+            if(job[1][2] !== 0){
+                arr.s.push(job[1][2]);
+            }
+
+            arr.d.push(job[1][4]);
+
+            console.log(job[2])
+            arrCnt.v += job[1][1];
+            arrCnt.s += job[1][2];
+            arrCnt.d += job[1][4];
+        });
+        jobLength = (arrCnt.v + arrCnt.s + arrCnt.d);
+        console.log(arrCnt)
+        console.log('queueLength: ', queueLength);
+        console.log('jobLength: ', jobLength);
     }
 
 });
