@@ -54,7 +54,7 @@
   "txt_homepage_promo_installer": "<h1>Provided by Z-Wave Alliance</h1>",
   "data": "Data",
   "application": "Application",
- "encapsulation": "encapsulation",
+  "encapsulation": "encaps.",
   "error_xml_load": "Unable to load a XML file",
   "date": "Date",
   "time": "Time",

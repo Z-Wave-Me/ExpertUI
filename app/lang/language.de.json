@@ -1,6 +1,8 @@
 {
   "device_404": "There are no devices available",
  "initiating_device_firmware_update":"Leite Firmwareupdate ein",
+  "device_404": "Es sind keine Geräte verfügbar.",
+  "initiating_device_firmware_update":"Leite Firmwareupdate ein",
   "success_device_firmware_update":"Firmwareupdate erfolgreich",
   "error_device_firmware_update":"Fehler beim Firmwareupdate",
   "firmware_uptodate": "Ihre Firmware ist aktuell",
@@ -63,6 +65,7 @@
   "hexdata": "HEX",
   "nav_zniffer": "Zniffer",
   "nav_installer": "Installer",
+  "nav_installer": "Installateur",
   "postfix_missingid": "Die Produkt-ID des Geräts fehlt",
   "update_successful": "Daten wurden erfolgreich geupdatet",
   "link_health": "Link Gesundheit",

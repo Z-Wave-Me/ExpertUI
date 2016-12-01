@@ -19,8 +19,14 @@
                         class="btn btn-danger"
                         id="btn_reset_controller"
                         ng-show="goReset"
-                        ng-click="runCmd('controller.SetDefault()', '#modal_reset_controller', null, {'name': 'reset_controller'})"
-                ><i class="fa fa-exclamation-triangle"></i> {{_t('nm_reset_controller')}}</button>
+                        ng-click="runCmd('controller.SetDefault()', '#modal_reset_controller', null, 'btn_reset_controller',{'name': 'reset_controller'})"
+                        ng-disabled="rowSpinner['btn_reset_controller']">
+                        <bb-row-spinner
+                                spinner="rowSpinner['btn_reset_controller']"
+                                label="_t('nm_reset_controller')"
+                                icon="'fa-exclamation-triangle'">
+                        </bb-row-spinner>
+                </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closeResetController('#modal_reset_controller')">{{_t('btn_cancel')}}</button>
             </div>
         </div>

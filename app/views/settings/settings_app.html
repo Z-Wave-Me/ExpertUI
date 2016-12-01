@@ -42,10 +42,10 @@
             <!-- timezone -->
             <div class="form-group form-inline">
                 <label>{{_t('timezone')}}: </label>
-                <select name="timezone" name="timezone" class="form-control"
-                        ng-model="settings.input.timezone">
-                    <option ng-repeat="v in cfg.timezone_list" value="{{v}}"
-                            ng-selected="v === cfg.zwavecfg.timezone">{{v}}
+                <select name="time_zone" name="time_zone" class="form-control"
+                        ng-model="settings.input.time_zone">
+                    <option ng-repeat="v in cfg.time_zone_list" value="{{v}}"
+                            ng-selected="v === cfg.zwavecfg.time_zone">{{v}}
                     </option>
                 </select>
             </div>
