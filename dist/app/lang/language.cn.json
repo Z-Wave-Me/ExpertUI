@@ -1,4 +1,6 @@
 {
+  "leave": "Leave",
+  "iam_in":"I am in",
   "device_404": "There are no devices available",
   "initiating_device_firmware_update":"Initiating firmware update",
   "success_device_firmware_update":"Firmware update successful",
@@ -48,7 +50,7 @@
   "nav_network_map": "Network map",
   "txt_homepage_promo_installer": "<h1>Provided by Z-Wave Alliance</h1>",
   "data": "Data",
-  "encapsulation": "encaps.",
+  "encapsulation": "Encaps",
   "application": "Application",
   "error_xml_load": "Unable to load a XML file",
   "date": "Date",

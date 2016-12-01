@@ -32707,7 +32707,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/auth/auth_installer.html',
-    "<div ng-controller=AuthInstallerController><div class=text-center><img class=product-logo ng-src=\"{{getCustomCfgArr('logo')}}\" alt=Logo></div><form name=form_login id=form_login class=\"form form-page container-500\" ng-submit=login(input) novalidate><fieldset><h3><span ng-bind=\"_t('nav_login')\"></span></h3><div class=form-group><input name=login id=login class=form-control placeholder=\"{{_t('lb_login')}}\" value={{input.login}} ng-model=input.login></div><div class=form-group><input name=password id=password type=password class=form-control placeholder=\"{{_t('lb_password')}}\" ng-model=input.password></div></fieldset><fieldset class=submit-entry><button type=submit class=\"btn btn-submit\" title=\"{{_t('lb_enter')}}\"><i class=\"fa fa-sign-in\"></i> {{_t('lb_enter')}}</button></fieldset></form></div>"
+    "<div ng-controller=AuthInstallerController></div>"
   );
 
 
@@ -32873,7 +32873,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/home/network_inclusion.html',
-    "<div class=\"panel panel-default\"><div class=panel-body><div ng-if=\"boxData.controller.isRealPrimary && (!boxData.controller.hasDevices && boxData.controller.controllerState == 0)\"><p class=input-help>{{_t('device_not_included_info')}}</p><button class=\"btn btn-primary\" id=btn_learn_start ng-click=\"runZwaveCmd('controller.SetLearnMode(1)')\">{{_t('include_into_network')}}</button></div><div ng-if=\"boxData.controller.isRealPrimary && (boxData.controller.hasDevices)\"><p class=input-help>{{_t('device_included_info')}}</p><button class=\"btn btn-primary\" id=btn_learn_start_2 ng-click=\"runZwaveCmd('controller.SetLearnMode(1)')\" style=\"background-color: grey\" disabled>{{_t('leave_network')}}</button></div><div ng-if=!boxData.controller.isRealPrimary><p class=input-help>{{_t('device_included_info')}}</p><button class=\"btn btn-danger\" id=btn_learn_stop ng-click=\"runZwaveCmd('controller.SetLearnMode(0)',_t('before_leaving_network'))\">{{_t('leave_network')}}</button></div><div ng-if=\"[8, 9, 10, 11, 12].indexOf(boxData.controller.controllerState) > -1 && boxData.controller.isRealPrimary\"><p class=input-help>{{_t('device_included_info')}}</p><button class=\"btn btn-danger\" id=btn_learn_stop_2 ng-click=\"runZwaveCmd('controller.SetLearnMode(0)')\">{{_t('Stop inclusion')}}</button></div></div></div>"
+    "<div class=\"panel panel-default\" ng-controller=IncludeNetworkController><div class=panel-heading><i class=\"fa fa-sitemap\"></i> {{_t('nm_inc_into_nw')}}</div><div class=panel-body><div ng-if=\"boxData.controller.isRealPrimary && (!boxData.controller.hasDevices && boxData.controller.controllerState == 0)\"><p class=input-help>{{_t('device_not_included_info')}}</p><button class=\"btn btn-primary\" id=btn_learn_start ng-disabled=\"rowSpinner['controller.SetLearnMode(1)']\" ng-click=\"includeToNetwork('controller.SetLearnMode(1)')\"><bb-row-spinner spinner=\"rowSpinner['controller.SetLearnMode(1)']\" label=\"_t('include_into_network')\" icon=\"'fa-check'\"></bb-row-spinner></button></div><div ng-if=\"boxData.controller.isRealPrimary && (boxData.controller.hasDevices)\"><p class=input-help>{{_t('device_included_info')}}</p><button class=\"btn btn-primary\" id=btn_learn_start_2 ng-click=\"runZwaveCmd('controller.SetLearnMode(1)')\" style=\"background-color: grey\" disabled>{{_t('leave')}} {{boxData.controller.homeName}}</button></div><div ng-if=!boxData.controller.isRealPrimary><p class=input-help>{{_t('device_included_info')}}</p><button class=\"btn btn-danger\" id=btn_learn_stop ng-disabled=\"rowSpinner['controller.SetLearnMode(1)']\" ng-click=\"excludeFromNetwork('controller.SetLearnMode(1)',_t('before_leaving_network'))\"><bb-row-spinner spinner=\"rowSpinner['controller.SetLearnMode(1)']\" label=\"_t('leave') + ' ' + boxData.controller.homeName\" icon=\"'fa-check'\"></bb-row-spinner></button></div></div></div>"
   );
 
 
@@ -32883,12 +32883,12 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/home/network_name.html',
-    "<div class=\"panel panel-default\" ng-controller=ExpertConfigController><div class=panel-heading><i class=\"fa fa-code-fork\"></i> {{_t('network_name')}}</div><div class=panel-body ng-hide=goNetworkName>{{expertConfig.input.network_name}} <button type=button class=\"btn btn-default\" ng-class=\"goNetworkName ? 'active' : ''\" ng-click=\"goNetworkName = !goNetworkName\"><i class=\"fa fa-pencil\"></i></button></div><form name=form_network_name id=form_network_name class=\"form form-inline\" ng-show=goNetworkName ng-submit=\"storeSettings(expertConfig.input,'spinNetworkName')\" novalidate><div class=panel-body><input name=network_name class=form-control placeholder=\"{{_t('network_name')}}\" ng-model=expertConfig.input.network_name value={expertConfig.input.network_name}}></div><div class=\"panel-footer text-right\"><button type=button class=\"btn btn-default\" title=\"{{_t('btn_cancel')}}\" ng-click=\"goNetworkName = !goNetworkName\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button> <button class=\"btn btn-info\" title=\"{{_t('btn_save')}}\" ng-disabled=\"rowSpinner['spinNetworkName']\"><bb-row-spinner spinner=\"rowSpinner['spinNetworkName']\" label=\" _t('btn_save')\" icon=\"'fa-check'\"></bb-row-spinner></button></div></form></div>"
+    "<div class=\"panel panel-default\" ng-controller=DataHolderController><div class=panel-heading><i class=\"fa fa-code-fork\"></i> {{_t('network_name')}}</div><div class=panel-body ng-hide=goNetworkName>{{boxData.controller.homeName}} <button type=button class=\"btn btn-default\" ng-class=\"goNetworkName ? 'active' : ''\" ng-click=\"goNetworkName = !goNetworkName\"><i class=\"fa fa-pencil\"></i></button></div><form name=form_network_name id=form_network_name class=\"form form-inline\" ng-show=goNetworkName ng-submit=\"storeNetworkName(boxData.controller.homeName,'spinNetworkName')\" novalidate><div class=panel-body><input name=network_name class=form-control placeholder=\"{{_t('network_name')}}\" ng-model=boxData.controller.homeName value={{boxData.controller.homeName}}></div><div class=\"panel-footer text-right\"><button type=button class=\"btn btn-default\" title=\"{{_t('btn_cancel')}}\" ng-click=\"goNetworkName = !goNetworkName\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button> <button class=\"btn btn-info\" title=\"{{_t('btn_save')}}\" ng-disabled=\"rowSpinner['spinNetworkName']\"><bb-row-spinner spinner=\"rowSpinner['spinNetworkName']\" label=\" _t('btn_save')\" icon=\"'fa-check'\"></bb-row-spinner></button></div></form></div>"
   );
 
 
   $templateCache.put('app/views/home/notes.html',
-    "<div class=\"panel panel-default\" ng-controller=ExpertConfigController><div class=panel-heading><i class=\"fa fa-list text-info\"></i> {{_t('txt_notes')}}</div><div class=\"panel-body newlines\" ng-hide=goNotes><span ng-if=expertConfig.input.notes>{{expertConfig.input.notes|stripTags}} </span><button type=button class=\"btn btn-default\" ng-class=\"goNotes ? 'active' : ''\" ng-click=\"goNotes = !goNotes\"><i class=\"fa fa-pencil\"></i></button></div><form name=form_notes id=form_notes class=form ng-show=goNotes ng-submit=\"storeSettings(expertConfig.input,'spinNotes')\" novalidate><div class=panel-body><textarea id=notes class=form-control rows=10 ng-model=expertConfig.input.notes>{{expertConfig.input.notes}}\r" +
+    "<div class=\"panel panel-default\" ng-controller=DataHolderController><div class=panel-heading><i class=\"fa fa-list text-info\"></i> {{_t('txt_notes')}}</div><div class=\"panel-body newlines\" ng-hide=goNotes><span ng-if=boxData.controller.homeNotes>{{boxData.controller.homeNotes|stripTags}} </span><button type=button class=\"btn btn-default\" ng-class=\"goNotes ? 'active' : ''\" ng-click=\"goNotes = !goNotes\"><i class=\"fa fa-pencil\"></i></button></div><form name=form_notes id=form_notes class=form ng-show=goNotes ng-submit=\"storeNotes(boxData.controller.homeNotes,'spinNotes')\" novalidate><div class=panel-body><textarea id=notes class=form-control rows=10 ng-model=boxData.controller.homeNotes>{{boxData.controller.homeNotes}}\r" +
     "\n" +
     "            </textarea></div><div class=\"panel-footer text-right\"><button type=button class=\"btn btn-default\" title=\"{{_t('btn_cancel')}}\" ng-click=\"goNotes = !goNotes\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button> <button class=\"btn btn-info\" title=\"{{_t('btn_save')}}\" ng-disabled=\"rowSpinner['spinNotes']\"><bb-row-spinner spinner=\"rowSpinner['spinNotes']\" label=\" _t('btn_save')\" icon=\"'fa-check'\"></bb-row-spinner></button></div></form></div>"
   );
@@ -32970,7 +32970,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/network/control_different.html',
-    "<div class=\"panel panel-default\"><div class=panel-heading><i class=\"fa fa-sitemap\"></i> {{_t('nm_inc_into_nw')}}</div><div class=panel-body><p class=input-help>{{_t('nm_inc_into_nw_desc')}}</p><button class=\"btn btn-danger\" id=btn_learn_stop ng-click=\"runZwaveCmd('controller.SetLearnMode(0)')\" ng-if=!boxData.controller.isRealPrimary>{{_t('leave_network')}}</button> <button class=\"btn btn-primary\" id=btn_learn_start ng-click=\"runZwaveCmd('controller.SetLearnMode(1)')\" ng-if=\"boxData.controller.isRealPrimary && (boxData.controller.hasDevices)\" style=\"background-color: grey\" disabled>{{_t('include_into_network')}}</button> <button class=\"btn btn-primary\" id=btn_learn_start ng-click=\"runCmd('controller.SetLearnMode(1)')\" ng-if=\"boxData.controller.isRealPrimary && (!boxData.controller.hasDevices)\" ng-show=\"[8, 9, 10, 11, 12].indexOf(controllerState) == -1\">{{_t('nm_learn_start')}}</button> <button class=\"btn btn-danger\" id=btn_learn_stop ng-show=\"[8, 9, 10, 11, 12].indexOf(controllerState) > -1\" ng-if=\"boxData.controller.isRealPrimary && (!boxData.controller.hasDevices)\" ng-click=\"runCmd('controller.SetLearnMode(0)')\">{{_t('nm_learn_stop')}}</button></div></div>"
+    "<div class=\"panel panel-default\"><div class=panel-heading><i class=\"fa fa-sitemap\"></i> {{_t('nm_inc_into_nw')}}</div><div class=panel-body><p class=input-help>{{_t('nm_inc_into_nw_desc')}}</p><button class=\"btn btn-danger\" id=btn_learn_stop ng-click=\"runZwaveCmd('controller.SetLearnMode(1)')\" ng-if=!boxData.controller.isRealPrimary>{{_t('leave_network')}}</button> <button class=\"btn btn-primary\" id=btn_learn_start ng-click=\"runZwaveCmd('controller.SetLearnMode(1)')\" ng-if=\"boxData.controller.isRealPrimary && (boxData.controller.hasDevices)\" style=\"background-color: grey\" disabled>{{_t('include_into_network')}}</button> <button class=\"btn btn-primary\" id=btn_learn_start ng-click=\"runCmd('controller.SetLearnMode(1)')\" ng-if=\"boxData.controller.isRealPrimary && (!boxData.controller.hasDevices)\" ng-show=\"[8, 9, 10, 11, 12].indexOf(controllerState) == -1\">{{_t('nm_learn_start')}}</button> <button class=\"btn btn-danger\" id=btn_learn_stop ng-show=\"[8, 9, 10, 11, 12].indexOf(controllerState) > -1\" ng-if=\"boxData.controller.isRealPrimary && (!boxData.controller.hasDevices)\" ng-click=\"runCmd('controller.SetLearnMode(0)')\">{{_t('nm_learn_stop')}}</button></div></div>"
   );
 
 
@@ -38368,7 +38368,6 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
         controller: {}
     };
     $scope.loadBoxApiData = function () {
-
         dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
              var hasDevices = Object.keys(ZWaveAPIData.devices).length;
              var homeId = ZWaveAPIData.controller.data.homeId.value;
@@ -38377,6 +38376,8 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
             $scope.boxData.controller.hasDevices =  hasDevices < 2 ? false : true;
             $scope.boxData.controller.homeId =   '0x' + ('00000000' + (homeId + (homeId < 0 ? 0x100000000 : 0)).toString(16)).slice(-8);
             $scope.boxData.controller.softwareRevisionVersion = ZWaveAPIData.controller.data.softwareRevisionVersion.value;
+            $scope.boxData.controller.homeNotes = ZWaveAPIData.controller.data.homeNotes.value[0];
+            $scope.boxData.controller.homeName = ZWaveAPIData.controller.data.homeName.value[0];
             // Changes MK
             $scope.boxData.controller.controllerState = ZWaveAPIData.controller.data.controllerState.value;
         }, function (error) {
@@ -38384,6 +38385,19 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
 
         });
     };
+    /**
+     * Load queue data
+     */
+    $scope.loadBusyIndicator = function () {
+        var refresh = function() {
+            dataService.getApi('queue_url',null,true).then(function (response) {
+                setBusyIndicator(response.data);
+            }, function (error) {});
+
+        };
+        $interval(refresh, 1000);
+    };
+    $scope.loadBusyIndicator();
    // console.log($location.path().split('/'))
     /**
      * Load common APIs
@@ -38393,6 +38407,40 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
         $scope.setDongle();
         $scope.setTimeStamp();
         $scope.loadBoxApiData();
+    }
+
+    /// --- Private functions --- ///
+    /**
+     * Set busy indicator
+     * @param {object} ZWaveAPIData
+     */
+    function setBusyIndicator(data) {
+        var ret = {
+            queueLength: data.length,
+            noJobLength: 0,
+            result: 0,
+            arrCnt: {
+            v: 0,
+            s: 0,
+            d: 0
+        }
+        }
+        var arrCnt = {
+            v: 0,
+            s: 0,
+            d: 0
+        }
+
+        //console.log(data);
+        angular.forEach(data, function(job, jobIndex) {
+            ret.arrCnt.v += job[1][1];
+            ret.arrCnt.s += job[1][2];
+            ret.arrCnt.d += job[1][4];
+        });
+        ret.noJobLength = (ret.arrCnt.v + ret.arrCnt.s + ret.arrCnt.d);
+        ret.result = (ret.queueLength - ret.noJobLength);
+        //console.log(ret);
+        angular.extend(cfg.busy_indicator, ret);
     }
 
 });
@@ -38485,7 +38533,54 @@ appController.controller('RestoreController', function ($scope, $upload, $window
     };
 });
 
+/**
+ * This controller handles network inclusion.
+ * @class IncludeNetworkController
+ *
+ */
+appController.controller('IncludeNetworkController', function($scope, $window,$cookies,$timeout,cfg,dataService) {
+    // Controller vars
+    $scope.includeNetwork ={
+        controllerState: 0
+    };
 
+    /**
+     * Include to network
+     */
+    $scope.includeToNetwork = function(cmd) {
+        $scope.toggleRowSpinner(cmd);
+        $timeout($scope.toggleRowSpinner, 1000);
+        runZwaveCmd(cmd);
+    };
+
+    /**
+     * Exclude form to network
+     */
+    $scope.excludeFromNetwork = function(cmd,confirm) {
+        alertify.confirm(confirm, function () {
+            $scope.toggleRowSpinner(cmd);
+            $timeout($scope.toggleRowSpinner, 1000);
+            runZwaveCmd(cmd);
+        });
+
+    };
+
+    /// --- Private functions --- ///
+
+    /**
+     * Run zwave cmd
+     * @param {string} cmd
+     */
+    function runZwaveCmd(cmd) {
+        dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
+        }, function (error) {
+            alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
+        });
+    }
+    ;
+
+
+});
 
 /**
  * This controller handles dongles.
@@ -38559,6 +38654,40 @@ appController.controller('ExpertConfigController', function ($scope, $timeout,$i
         });
     };
 });
+
+appController.controller('DataHolderController', function ($scope, $timeout,$interval, $location, cfg,dataService,deviceService) {
+
+    /**
+     * Store networkname
+     * @param {object} input
+     */
+    $scope.storeNetworkName = function(input,spin) {
+        $scope.toggleRowSpinner(spin);
+        dataService.postApi('store_url', null, 'controller.data.homeName.value=["'+input+'"]').then(function (response) {
+            deviceService.showNotifier({message: $scope._t('update_successful')});
+            $timeout($scope.toggleRowSpinner, 1000);
+        }, function (error) {
+            $scope.toggleRowSpinner();
+            alertify.alertError($scope._t('error_update_data'));
+        });
+    };
+
+    /**
+     * Store notes
+     * @param {object} input
+     */
+    $scope.storeNotes = function(input,spin) {
+        $scope.toggleRowSpinner(spin);
+
+        dataService.postApi('store_url', null, 'controller.data.homeNotes.value=["'+input+'"]').then(function (response) {
+            deviceService.showNotifier({message: $scope._t('update_successful')});
+            $timeout($scope.toggleRowSpinner, 1000);
+        }, function (error) {
+            $scope.toggleRowSpinner();
+            alertify.alertError($scope._t('error_update_data'));
+        });
+    };
+});
 /**
  * @overview This controller handles authentication process.
  * @author Martin Vach
@@ -38580,8 +38709,8 @@ appController.controller('AuthController', function($location) {
  */
 appController.controller('AuthInstallerController', function($scope, $location,cfg, $window,dataService,deviceService) {
     $scope.input = {
-        login: '',
-        password: ''
+        login: 'admin',
+        password: 'admin1'
     };
 
     /**
@@ -38605,6 +38734,8 @@ appController.controller('AuthInstallerController', function($scope, $location,c
             alertify.alertError(message);
         });
     };
+
+    $scope.login($scope.input);
     /**
      * Login proccess
      */
@@ -42490,12 +42621,15 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
  * Application ControllerInfo controller
  * @author Martin Vach
  */
-appController.controller('ControllerController', function($scope, $window, $filter, cfg,dataService,deviceService) {
+appController.controller('ControllerController', function($scope, $window, $filter, $interval,cfg,dataService,deviceService) {
     $scope.funcList;
     $scope.ZWaveAPIData;
     $scope.info = {};
     $scope.master = {};
     $scope.runQueue = false;
+    $scope.controllerInfo = {
+        interval: null
+    }
 
     // Cancel interval on page destroy
     $scope.$on('$destroy', function() {
@@ -42504,82 +42638,51 @@ appController.controller('ControllerController', function($scope, $window, $filt
     });
 
     /**
+     * Load zwave data
+     */
+    $scope.loadZwaveData = function() {
+        dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
+            setData(ZWaveAPIData);
+            $scope.refreshZwaveData(ZWaveAPIData);
+        }, function(error) {
+            alertify.alertError($scope._t('error_load_data'));
+        });
+    };
+    $scope.loadZwaveData();
+
+    /**
+     * Refresh zwave data
+     * @param {object} ZWaveAPIData
+     */
+    $scope.refreshZwaveData = function(ZWaveAPIData) {
+        var refresh = function() {
+            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+                setData(response.data.joined);
+            }, function(error) {});
+        };
+        $scope.controllerInfo.interval = $interval(refresh, $scope.cfg.interval);
+    };
+
+    /**
+     * TODO: deprecated
      * Load data
      *
      */
-    $scope.loadData = function() {
-        var nodeLimit = function(str) {
-            return str === 'ff' ? $scope._t('unlimited') : str;
-        };
-        var caps = function(arr) {
-           var cap = '';
-           if (angular.isArray(arr)) {
-            cap += (arr[3] & 0x01 ? 'S' : 's');
-            cap += (arr[3] & 0x02 ? 'L' : 'l');
-            cap += (arr[3] & 0x04 ? 'M' : 'm');
-           }
-           return cap;
+   /* $scope.loadData = function() {
 
-        };
+
         dataService.getZwaveData(function(ZWaveAPIData) {
-            $scope.ZWaveAPIData = ZWaveAPIData;
-            $scope.master['controller.data.nodeId'] = ZWaveAPIData.controller.data.nodeId.value;
-            $scope.master['controller.data.homeId'] = ZWaveAPIData.controller.data.homeId.value;
-            $scope.master['controller.data.isPrimary'] = ZWaveAPIData.controller.data.isPrimary.value;
-            $scope.master['controller.data.isRealPrimary'] = ZWaveAPIData.controller.data.isRealPrimary.value;
-            $scope.master['controller.data.SUCNodeId'] = ZWaveAPIData.controller.data.SUCNodeId.value;
-            $scope.master['controller.data.SISPresent'] = ZWaveAPIData.controller.data.SISPresent.value;
-            $scope.master['controller.data.vendor'] = ZWaveAPIData.controller.data.vendor.value;
-            $scope.master['controller.data.manufacturerProductType'] = ZWaveAPIData.controller.data.manufacturerProductType.value;
-            $scope.master['controller.data.manufacturerProductId'] = ZWaveAPIData.controller.data.manufacturerProductId.value;
-            $scope.master['controller.data.manufacturerId'] = ZWaveAPIData.controller.data.manufacturerId.value;
-            $scope.master['controller.data.ZWaveChip'] = ZWaveAPIData.controller.data.ZWaveChip.value;
-            $scope.master['controller.data.libType'] = ZWaveAPIData.controller.data.libType.value;
-            $scope.master['controller.data.SDK'] = ZWaveAPIData.controller.data.SDK.value;
-            $scope.master['controller.data.APIVersion'] = ZWaveAPIData.controller.data.APIVersion.value;
-            $scope.master['controller.data.uuid'] = ZWaveAPIData.controller.data.uuid.value;
-            if (ZWaveAPIData.controller.data.caps.value) {
-                $scope.master['controller.data.caps.subvendor'] = '0x' + dec2hex((ZWaveAPIData.controller.data.caps.value[0] << 8) + ZWaveAPIData.controller.data.caps.value[1]);
-                $scope.master['controller.data.caps.nodes'] = nodeLimit(dec2hex(ZWaveAPIData.controller.data.caps.value[2]).slice(-2));
-                $scope.master['controller.data.caps.cap'] = caps(ZWaveAPIData.controller.data.caps.value);
-            } else {
-                $scope.master['controller.data.caps.subvendor'] = '';
-                $scope.master['controller.data.caps.nodes'] = '';
-                $scope.master['controller.data.caps.cap'] = '';
-            }
-            $scope.master['controller.data.softwareRevisionVersion'] = ZWaveAPIData.controller.data.softwareRevisionVersion.value;
-            $scope.master['controller.data.softwareRevisionId'] = ZWaveAPIData.controller.data.softwareRevisionId.value;
-            $scope.master['controller.data.softwareRevisionDate'] = ZWaveAPIData.controller.data.softwareRevisionDate.value;
-            $scope.master['controller.data.softwareRevisionDate'] = ZWaveAPIData.controller.data.softwareRevisionDate.value;
-            $scope.master['controller.data.frequency'] = ZWaveAPIData.controller.data.frequency.value;
-            // Texts
-            $scope.master['txtHomeId'] = '';
-            $scope.master['txtSucSis'] = '';
-            setText($scope.master);
-
-            // Function list
-            var funcList = '';
-            var _fc = array_unique(ZWaveAPIData.controller.data.capabilities.value.concat(ZWaveAPIData.controller.data.functionClasses.value));
-            _fc.sort(function(a, b) {
-                return a - b
-            });
-
-            angular.forEach(_fc, function(func, index) {
-                var fcIndex = ZWaveAPIData.controller.data.functionClasses.value.indexOf(func);
-                var capIndex = ZWaveAPIData.controller.data.capabilities.value.indexOf(func);
-                var fcName = (fcIndex != -1) ? ZWaveAPIData.controller.data.functionClassesNames.value[fcIndex] : 'Not implemented';
-                funcList += '<span style="color: ' + ((capIndex != -1) ? ((fcIndex != -1) ? '' : 'gray') : 'red') + '">' + fcName + ' (0x' + ('00' + func.toString(16)).slice(-2) + ')</span>  &#8226; ';
-            });
-            $scope.funcList = funcList;
+            setData(ZWaveAPIData);
         });
     };
-    $scope.loadData();
+    $scope.loadData();*/
 
     /**
+     * TODO: deprecated
      * Refresh data
      *
      */
-    $scope.refresh = function() {
+    /*$scope.refresh = function() {
         dataService.joinedZwaveData(function(data) {
             var src = {};
             angular.forEach(data.update, function(v, k) {
@@ -42590,8 +42693,8 @@ appController.controller('ControllerController', function($scope, $window, $filt
             });
             setText($scope.master);
         });
-    };
-    $scope.refresh();
+    };*/
+    //$scope.refresh();
     /**
      *
      * Run cmd
@@ -42645,6 +42748,75 @@ appController.controller('ControllerController', function($scope, $window, $filt
     };
 
     /// --- Private functions --- ///
+    /**
+     * Set zwave data
+     * @param {object} ZWaveAPIData
+     */
+    function setData(ZWaveAPIData) {
+        var nodeLimit = function(str) {
+            return str === 'ff' ? $scope._t('unlimited') : str;
+        };
+        var caps = function(arr) {
+            var cap = '';
+            if (angular.isArray(arr)) {
+                cap += (arr[3] & 0x01 ? 'S' : 's');
+                cap += (arr[3] & 0x02 ? 'L' : 'l');
+                cap += (arr[3] & 0x04 ? 'M' : 'm');
+            }
+            return cap;
+
+        };
+        $scope.ZWaveAPIData = ZWaveAPIData;
+        $scope.master['controller.data.nodeId'] = ZWaveAPIData.controller.data.nodeId.value;
+        $scope.master['controller.data.homeId'] = ZWaveAPIData.controller.data.homeId.value;
+        $scope.master['controller.data.isPrimary'] = ZWaveAPIData.controller.data.isPrimary.value;
+        $scope.master['controller.data.isRealPrimary'] = ZWaveAPIData.controller.data.isRealPrimary.value;
+        $scope.master['controller.data.SUCNodeId'] = ZWaveAPIData.controller.data.SUCNodeId.value;
+        $scope.master['controller.data.SISPresent'] = ZWaveAPIData.controller.data.SISPresent.value;
+        $scope.master['controller.data.vendor'] = ZWaveAPIData.controller.data.vendor.value;
+        $scope.master['controller.data.manufacturerProductType'] = ZWaveAPIData.controller.data.manufacturerProductType.value;
+        $scope.master['controller.data.manufacturerProductId'] = ZWaveAPIData.controller.data.manufacturerProductId.value;
+        $scope.master['controller.data.manufacturerId'] = ZWaveAPIData.controller.data.manufacturerId.value;
+        $scope.master['controller.data.ZWaveChip'] = ZWaveAPIData.controller.data.ZWaveChip.value;
+        $scope.master['controller.data.libType'] = ZWaveAPIData.controller.data.libType.value;
+        $scope.master['controller.data.SDK'] = ZWaveAPIData.controller.data.SDK.value;
+        $scope.master['controller.data.APIVersion'] = ZWaveAPIData.controller.data.APIVersion.value;
+        $scope.master['controller.data.uuid'] = ZWaveAPIData.controller.data.uuid.value;
+        if (ZWaveAPIData.controller.data.caps.value) {
+            $scope.master['controller.data.caps.subvendor'] = '0x' + dec2hex((ZWaveAPIData.controller.data.caps.value[0] << 8) + ZWaveAPIData.controller.data.caps.value[1]);
+            $scope.master['controller.data.caps.nodes'] = nodeLimit(dec2hex(ZWaveAPIData.controller.data.caps.value[2]).slice(-2));
+            $scope.master['controller.data.caps.cap'] = caps(ZWaveAPIData.controller.data.caps.value);
+        } else {
+            $scope.master['controller.data.caps.subvendor'] = '';
+            $scope.master['controller.data.caps.nodes'] = '';
+            $scope.master['controller.data.caps.cap'] = '';
+        }
+        $scope.master['controller.data.softwareRevisionVersion'] = ZWaveAPIData.controller.data.softwareRevisionVersion.value;
+        $scope.master['controller.data.softwareRevisionId'] = ZWaveAPIData.controller.data.softwareRevisionId.value;
+        $scope.master['controller.data.softwareRevisionDate'] = ZWaveAPIData.controller.data.softwareRevisionDate.value;
+        $scope.master['controller.data.softwareRevisionDate'] = ZWaveAPIData.controller.data.softwareRevisionDate.value;
+        $scope.master['controller.data.frequency'] = ZWaveAPIData.controller.data.frequency.value;
+        // Texts
+        $scope.master['txtHomeId'] = '';
+        $scope.master['txtSucSis'] = '';
+        setText($scope.master);
+
+        // Function list
+        var funcList = '';
+        var _fc = array_unique(ZWaveAPIData.controller.data.capabilities.value.concat(ZWaveAPIData.controller.data.functionClasses.value));
+        _fc.sort(function(a, b) {
+            return a - b
+        });
+
+        angular.forEach(_fc, function(func, index) {
+            var fcIndex = ZWaveAPIData.controller.data.functionClasses.value.indexOf(func);
+            var capIndex = ZWaveAPIData.controller.data.capabilities.value.indexOf(func);
+            var fcName = (fcIndex != -1) ? ZWaveAPIData.controller.data.functionClassesNames.value[fcIndex] : 'Not implemented';
+            funcList += '<span style="color: ' + ((capIndex != -1) ? ((fcIndex != -1) ? '' : 'gray') : 'red') + '">' + fcName + ' (0x' + ('00' + func.toString(16)).slice(-2) + ')</span>  &#8226; ';
+        });
+        $scope.funcList = funcList;
+
+    }
     function dec2hex(i)
     {
         //return  ("0"+(Number(i).toString(16))).slice(-2).toUpperCase()

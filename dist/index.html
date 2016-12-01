@@ -162,11 +162,30 @@
                         </li>-->
 
                         <!-- Logout -->
-                        <li class="navibar-divider"> </li>
+                        <!--<li class="navibar-divider"> </li>
                         <li class="navibar-item">
                             <a class="navibar-item-root" ng-href="{{getCustomCfgArr('logout')}}">
                                 <i class="fa fa-sign-out fa-lg"></i>
                             </a>
+                        </li>
+                        <!-- Busy indicator -->
+                        <li class="navibar-divider" ng-if="cfg.app_type === 'installer'"> </li>
+                        <li class="navibar-item" ng-if="cfg.app_type === 'installer'">
+                        <span class="timestamp" ng-if="cfg.busy_indicator.queueLength > 0">
+                        <span>Q: {{cfg.busy_indicator.result}}</span>
+                            <!-- 0 -->
+                            <span class="text-success" ng-if="cfg.busy_indicator.result <= 0">
+                                <i class="fa fa-stop"></i>
+                            </span>
+                            <!-- 1-20 -->
+                             <span class="text-warning" ng-if="cfg.busy_indicator.result > 0 && cfg.busy_indicator.result < 20 ">
+                                 <i class="fa fa-stop"></i><i class="fa fa-stop"></i>
+                             </span>
+                            <!-- great 10 -->
+                             <span class="text-danger" ng-if="cfg.busy_indicator.result > 19">
+                                 <i class="fa fa-stop"></i><i class="fa fa-stop"></i><i class="fa fa-stop"></i>
+                             </span>
+                    </span>
                         </li>
                     </ul>
                 </div>
@@ -180,7 +199,7 @@
                 class="fa fa-info-circle"></i> {{_t('ready_to_network')}}
         </div>
         <div class="alert alert-warning" ng-if="boxData.controller.isRealPrimary && boxData.controller.hasDevices"><i
-                class="fa fa-check"></i> {{_t('iam_in_my_network')}}
+                class="fa fa-check"></i> {{_t('iam_in')}} {{boxData.controller.homeName}}
         </div>
         <div class="alert alert-danger" ng-if="!boxData.controller.isRealPrimary"><i class="fa fa-info-circle"></i>
             {{_t('iam_in_network_homeid')}}: {{boxData.controller.homeId}}

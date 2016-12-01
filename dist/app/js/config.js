@@ -10,7 +10,7 @@ var config_data = {
         'custom_ip': false,
         'user_field': 'USERXXXX',
         'pass_field': 'PSWDXXXX',
-        'interval': 1000, // Set interval in miliseconds to refresh data
+        'interval': 3000, // Set interval in miliseconds to refresh data
         'zniffer_interval': 3000, // Set interval in milisecondsfor zniffer
         'queue_interval': 1000, // Set interval in miliseconds to refresh queue data 
         'route_update_timeout': 15000, // Maximum time in miliseconds to wait for an update-route
@@ -92,6 +92,16 @@ var config_data = {
             //Notes
             'notes': ''
 
+        },
+        // busy_indicator
+        'busy_indicator': {
+            queueLength: 0,
+            noJobLength: 0,
+            arrCnt: {
+                v: 0,
+                s: 0,
+                d: 0
+            }
         },
         // Auth
         'auth': {
