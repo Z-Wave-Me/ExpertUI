@@ -1,5 +1,7 @@
 {
-  "device_404": "There are no devices available",
+ "leave": "Leave",
+ "iam_in":"I am in",
+ "device_404": "There are no devices available",
  "initiating_device_firmware_update":"Leite Firmwareupdate ein",
   "device_404": "Es sind keine Geräte verfügbar.",
   "initiating_device_firmware_update":"Leite Firmwareupdate ein",

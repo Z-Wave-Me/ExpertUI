@@ -1,8 +1,8 @@
 {
   "--- newtrans": "---",
+ "---": "---",
  "leave": "Leave",
  "iam_in":"I am in",
- "---": "---",
  "device_404": "There are no devices available",
  "initiating_device_firmware_update":"Initiating firmware update",
  "success_device_firmware_update":"Firmware update successful",
