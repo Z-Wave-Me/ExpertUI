@@ -20,7 +20,7 @@
                     ng-click="runZwaveCmd('controller.SetLearnMode(1)')"
                     style="background-color: grey;"
                     disabled
-            >{{_t('leave_network')}}
+            >{{_t('leave')}} {{boxData.controller.homeName}}
             </button>
         </div>
 
@@ -32,7 +32,7 @@
                     id="btn_learn_stop"
                     ng-click="runZwaveCmd('controller.SetLearnMode(0)',_t('before_leaving_network'))"
 
-            > {{_t('leave_network')}}
+            > {{_t('leave')}} {{boxData.controller.homeName}}
             </button>
         </div>
 
