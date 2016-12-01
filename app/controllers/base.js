@@ -421,7 +421,7 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
             ret.arrCnt.d += job[1][4];
         });
         ret.noJobLength = (ret.arrCnt.v + ret.arrCnt.s + ret.arrCnt.d);
-        console.log(ret);
+        //console.log(ret);
         angular.extend(cfg.busy_indicator, ret);
     }
 
