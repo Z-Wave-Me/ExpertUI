@@ -19,8 +19,8 @@ appController.controller('AuthController', function($location) {
  */
 appController.controller('AuthInstallerController', function($scope, $location,cfg, $window,dataService,deviceService) {
     $scope.input = {
-        login: '',
-        password: ''
+        login: 'admin',
+        password: 'admin1'
     };
 
     /**
@@ -44,6 +44,8 @@ appController.controller('AuthInstallerController', function($scope, $location,c
             alertify.alertError(message);
         });
     };
+
+    $scope.login($scope.input);
     /**
      * Login proccess
      */

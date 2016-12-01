@@ -1,5 +1,5 @@
 <!-- Network name -->
-<div class="panel panel-default" ng-controller="ExpertConfigController">
+<div class="panel panel-default" ng-controller="DataHolderController">
     <!-- Heading -->
     <div class="panel-heading">
         <i class="fa fa-code-fork"></i> {{_t('network_name')}}
@@ -7,7 +7,7 @@
     </div>
     <!-- Text mode -->
     <div class="panel-body" ng-hide="goNetworkName">
-        {{expertConfig.input.network_name}}
+        {{boxData.controller.homeName}}
         <button type="button" class="btn btn-default"
                 ng-class="goNetworkName ? 'active' : ''"
                 ng-click="goNetworkName = !goNetworkName">
@@ -18,13 +18,12 @@
     <!-- Edit mode -->
     <form name="form_network_name" id="form_network_name" class="form form-inline"
           ng-show="goNetworkName"
-          ng-submit="storeSettings(expertConfig.input,'spinNetworkName')" novalidate>
+          ng-submit="storeNetworkName(boxData.controller.homeName,'spinNetworkName')" novalidate>
         <div class="panel-body">
             <input name="network_name" type="text" class="form-control"
                    placeholder="{{_t('network_name')}}"
-                   ng-model="expertConfig.input.network_name"
-                   value="{expertConfig.input.network_name}}"/>
-
+                   ng-model="boxData.controller.homeName"
+                   value="{{boxData.controller.homeName}}"/>
         </div>
         <!-- Footer -->
         <div class="panel-footer text-right">

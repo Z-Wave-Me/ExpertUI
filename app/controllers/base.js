@@ -362,6 +362,8 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
             $scope.boxData.controller.hasDevices =  hasDevices < 2 ? false : true;
             $scope.boxData.controller.homeId =   '0x' + ('00000000' + (homeId + (homeId < 0 ? 0x100000000 : 0)).toString(16)).slice(-8);
             $scope.boxData.controller.softwareRevisionVersion = ZWaveAPIData.controller.data.softwareRevisionVersion.value;
+            $scope.boxData.controller.homeNotes = ZWaveAPIData.controller.data.homeNotes.value[0];
+            $scope.boxData.controller.homeName = ZWaveAPIData.controller.data.homeName.value[0];
             // Changes MK
             $scope.boxData.controller.controllerState = ZWaveAPIData.controller.data.controllerState.value;
         }, function (error) {

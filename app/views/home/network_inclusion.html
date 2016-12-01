@@ -30,14 +30,14 @@
             <button
                     class="btn btn-danger"
                     id="btn_learn_stop"
-                    ng-click="runZwaveCmd('controller.SetLearnMode(0)',_t('before_leaving_network'))"
+                    ng-click="runZwaveCmd('controller.SetLearnMode(1)',_t('before_leaving_network'))"
 
             > {{_t('leave_network')}}
             </button>
         </div>
 
         <!-- stop inclusion -->
-        <div ng-if="[8, 9, 10, 11, 12].indexOf(boxData.controller.controllerState) > -1 && boxData.controller.isRealPrimary">
+        <div ng-if="[8, 9, 10, 11, 12].indexOf(boxData.controller.controllerState) > -1 ">
             <p class="input-help">{{_t('device_included_info')}}</p>
             <button
                     class="btn btn-danger"

@@ -1,5 +1,5 @@
 <!-- Notes -->
-<div class="panel panel-default" ng-controller="ExpertConfigController">
+<div class="panel panel-default" ng-controller="DataHolderController">
     <!-- Heading -->
     <div class="panel-heading">
         <i class="fa fa-list text-info"></i> {{_t('txt_notes')}}
@@ -7,8 +7,8 @@
     <!-- Text mode -->
 
     <div class="panel-body newlines" ng-hide="goNotes">
-        <span ng-if="expertConfig.input.notes">
-            {{expertConfig.input.notes|stripTags}}
+        <span ng-if="boxData.controller.homeNotes">
+            {{boxData.controller.homeNotes|stripTags}}
             </span>
         <button type="button" class="btn btn-default"
                 ng-class="goNotes ? 'active' : ''"
@@ -20,10 +20,10 @@
     <!-- Edit mode -->
     <form name="form_notes" id="form_notes" class="form"
           ng-show="goNotes"
-          ng-submit="storeSettings(expertConfig.input,'spinNotes')" novalidate>
+          ng-submit="storeNotes(boxData.controller.homeNotes,'spinNotes')" novalidate>
         <div class="panel-body">
             <textarea id="notes" class="form-control" rows="10"
-                      ng-model="expertConfig.input.notes">{{expertConfig.input.notes}}
+                      ng-model="boxData.controller.homeNotes">{{boxData.controller.homeNotes}}
             </textarea>
 
         </div>

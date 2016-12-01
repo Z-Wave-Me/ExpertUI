@@ -36,3 +36,37 @@ appController.controller('ExpertConfigController', function ($scope, $timeout,$i
         });
     };
 });
+
+appController.controller('DataHolderController', function ($scope, $timeout,$interval, $location, cfg,dataService,deviceService) {
+
+    /**
+     * Store networkname
+     * @param {object} input
+     */
+    $scope.storeNetworkName = function(input,spin) {
+        $scope.toggleRowSpinner(spin);
+        dataService.postApi('store_url', null, 'controller.data.homeName.value=["'+input+'"]').then(function (response) {
+            deviceService.showNotifier({message: $scope._t('update_successful')});
+            $timeout($scope.toggleRowSpinner, 1000);
+        }, function (error) {
+            $scope.toggleRowSpinner();
+            alertify.alertError($scope._t('error_update_data'));
+        });
+    };
+
+    /**
+     * Store notes
+     * @param {object} input
+     */
+    $scope.storeNotes = function(input,spin) {
+        $scope.toggleRowSpinner(spin);
+
+        dataService.postApi('store_url', null, 'controller.data.homeNotes.value=["'+input+'"]').then(function (response) {
+            deviceService.showNotifier({message: $scope._t('update_successful')});
+            $timeout($scope.toggleRowSpinner, 1000);
+        }, function (error) {
+            $scope.toggleRowSpinner();
+            alertify.alertError($scope._t('error_update_data'));
+        });
+    };
+});
