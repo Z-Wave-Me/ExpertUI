@@ -353,7 +353,6 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
         controller: {}
     };
     $scope.loadBoxApiData = function () {
-
         dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
              var hasDevices = Object.keys(ZWaveAPIData.devices).length;
              var homeId = ZWaveAPIData.controller.data.homeId.value;
@@ -404,6 +403,7 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
         var ret = {
             queueLength: data.length,
             noJobLength: 0,
+            result: 0,
             arrCnt: {
             v: 0,
             s: 0,
@@ -423,6 +423,7 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
             ret.arrCnt.d += job[1][4];
         });
         ret.noJobLength = (ret.arrCnt.v + ret.arrCnt.s + ret.arrCnt.d);
+        ret.result = (ret.queueLength - ret.noJobLength);
         //console.log(ret);
         angular.extend(cfg.busy_indicator, ret);
     }
