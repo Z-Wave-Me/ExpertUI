@@ -379,9 +379,9 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
             }, function (error) {});
 
         };
-        $interval(refresh, 3000);
+        $interval(refresh, 1000);
     };
-    //$scope.loadBusyIndicator();
+    $scope.loadBusyIndicator();
    // console.log($location.path().split('/'))
     /**
      * Load common APIs
@@ -395,17 +395,18 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
 
     /// --- Private functions --- ///
     /**
-     * Set zwave data
+     * Set busy indicator
      * @param {object} ZWaveAPIData
      */
     function setBusyIndicator(data) {
-        var queueLength = data.length;
-        var jobLength = 0;
-        var jobLength = 0;
-        var arr = {
-            v: [],
-            s: [],
-            d: []
+        var ret = {
+            queueLength: data.length,
+            noJobLength: 0,
+            arrCnt: {
+            v: 0,
+            s: 0,
+            d: 0
+        }
         }
         var arrCnt = {
             v: 0,
@@ -415,22 +416,13 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
 
         //console.log(data);
         angular.forEach(data, function(job, jobIndex) {
-            arr.v.push(job[1][1]);
-            if(job[1][2] !== 0){
-                arr.s.push(job[1][2]);
-            }
-
-            arr.d.push(job[1][4]);
-
-            console.log(job[2])
-            arrCnt.v += job[1][1];
-            arrCnt.s += job[1][2];
-            arrCnt.d += job[1][4];
+            ret.arrCnt.v += job[1][1];
+            ret.arrCnt.s += job[1][2];
+            ret.arrCnt.d += job[1][4];
         });
-        jobLength = (arrCnt.v + arrCnt.s + arrCnt.d);
-        console.log(arrCnt)
-        console.log('queueLength: ', queueLength);
-        console.log('jobLength: ', jobLength);
+        ret.noJobLength = (ret.arrCnt.v + ret.arrCnt.s + ret.arrCnt.d);
+        console.log(ret);
+        angular.extend(cfg.busy_indicator, ret);
     }
 
 });

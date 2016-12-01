@@ -246,6 +246,25 @@
                             <i class="fa fa-sign-out fa-lg"></i>
                         </a>
                     </li>
+                    <!-- Busy indicator -->
+                    <li class="navibar-divider" ng-if="cfg.app_type === 'installer'"> </li>
+                    <li class="navibar-item navi-timestamp_" ng-if="cfg.app_type === 'installer'">
+                        <span class="timestamp" ng-if="cfg.busy_indicator.queueLength > 0">
+                        <span>Q: {{cfg.busy_indicator.queueLength}}</span>
+                            <!-- 0 -->
+                            <span class="text-success" ng-if="cfg.busy_indicator.noJobLength === 0">
+                                <i class="fa fa-stop"></i>
+                            </span>
+                            <!-- 1-10 -->
+                             <span class="text-warning" ng-if="cfg.busy_indicator.noJobLength > 0 && cfg.busy_indicator.noJobLength < 10 ">
+                                 <i class="fa fa-stop"></i><i class="fa fa-stop"></i>
+                             </span>
+                            <!-- great 10 -->
+                             <span class="text-danger" ng-if="cfg.busy_indicator.noJobLength > 9">
+                                 <i class="fa fa-stop"></i><i class="fa fa-stop"></i><i class="fa fa-stop"></i>
+                             </span>
+                    </span>
+                    </li>
                 </ul>
             </div>
         </div><!-- /#navigation -->

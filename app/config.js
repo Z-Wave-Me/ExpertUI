@@ -93,6 +93,16 @@ var config_data = {
             'notes': ''
 
         },
+        // busy_indicator
+        'busy_indicator': {
+            queueLength: 0,
+            noJobLength: 0,
+            arrCnt: {
+                v: 0,
+                s: 0,
+                d: 0
+            }
+        },
         // Auth
         'auth': {
             'login': 'admin',
