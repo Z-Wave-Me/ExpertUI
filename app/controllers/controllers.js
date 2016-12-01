@@ -86,7 +86,54 @@ appController.controller('RestoreController', function ($scope, $upload, $window
     };
 });
 
+/**
+ * This controller handles network inclusion.
+ * @class IncludeNetworkController
+ *
+ */
+appController.controller('IncludeNetworkController', function($scope, $window,$cookies,$timeout,cfg,dataService) {
+    // Controller vars
+    $scope.includeNetwork ={
+        controllerState: 0
+    };
 
+    /**
+     * Include to network
+     */
+    $scope.includeToNetwork = function(cmd) {
+        $scope.toggleRowSpinner(cmd);
+        $timeout($scope.toggleRowSpinner, 1000);
+        runZwaveCmd(cmd);
+    };
+
+    /**
+     * Exclude form to network
+     */
+    $scope.excludeFromNetwork = function(cmd,confirm) {
+        alertify.confirm(confirm, function () {
+            $scope.toggleRowSpinner(cmd);
+            $timeout($scope.toggleRowSpinner, 1000);
+            runZwaveCmd(cmd);
+        });
+
+    };
+
+    /// --- Private functions --- ///
+
+    /**
+     * Run zwave cmd
+     * @param {string} cmd
+     */
+    function runZwaveCmd(cmd) {
+        dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
+        }, function (error) {
+            alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
+        });
+    }
+    ;
+
+
+});
 
 /**
  * This controller handles dongles.

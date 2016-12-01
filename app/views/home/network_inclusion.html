@@ -1,5 +1,6 @@
 <!-- Inclusion -->
-<div class="panel panel-default">
+<div class="panel panel-default" ng-controller="IncludeNetworkController">
+    <div class="panel-heading"><i class="fa fa-sitemap"></i> {{_t('nm_inc_into_nw')}}</div>
     <div class="panel-body">
         <!-- Not included in network -->
         <div ng-if="boxData.controller.isRealPrimary && (!boxData.controller.hasDevices && boxData.controller.controllerState == 0)">
@@ -7,8 +8,12 @@
         <button
                 class="btn btn-primary"
                 id="btn_learn_start"
-                ng-click="runZwaveCmd('controller.SetLearnMode(1)')"
-        >{{_t('include_into_network')}}
+                ng-disabled="rowSpinner['controller.SetLearnMode(1)']"
+                ng-click="includeToNetwork('controller.SetLearnMode(1)')"
+        > <bb-row-spinner
+                    spinner="rowSpinner['controller.SetLearnMode(1)']"
+                    label="_t('include_into_network')"
+                    icon="'fa-check'"></bb-row-spinner>
         </button>
     </div>
         <!-- included in network -->
@@ -20,32 +25,40 @@
                     ng-click="runZwaveCmd('controller.SetLearnMode(1)')"
                     style="background-color: grey;"
                     disabled
-            >{{_t('leave_network')}}
+            >{{_t('leave')}} {{boxData.controller.homeName}}
             </button>
         </div>
 
-        <!-- included in network -->
+        <!-- already included in network - displays include from network -->
         <div ng-if="!boxData.controller.isRealPrimary">
             <p class="input-help">{{_t('device_included_info')}}</p>
             <button
                     class="btn btn-danger"
                     id="btn_learn_stop"
-                    ng-click="runZwaveCmd('controller.SetLearnMode(1)',_t('before_leaving_network'))"
+                    ng-disabled="rowSpinner['controller.SetLearnMode(1)']"
+                    ng-click="excludeFromNetwork('controller.SetLearnMode(1)',_t('before_leaving_network'))"
 
-            > {{_t('leave_network')}}
+            >  <bb-row-spinner
+                    spinner="rowSpinner['controller.SetLearnMode(1)']"
+                    label="_t('leave') + ' ' + boxData.controller.homeName"
+                    icon="'fa-check'"></bb-row-spinner>
             </button>
         </div>
 
         <!-- stop inclusion -->
-        <div ng-if="[8, 9, 10, 11, 12].indexOf(boxData.controller.controllerState) > -1 ">
+        <!--<div ng-if="[8, 9, 10, 11, 12].indexOf(boxData.controller.controllerState) > -1 && boxData.controller.isRealPrimary">
             <p class="input-help">{{_t('device_included_info')}}</p>
             <button
                     class="btn btn-danger"
                     id="btn_learn_stop_2"
-                    ng-click="runZwaveCmd('controller.SetLearnMode(0)')"
-            > {{_t('Stop inclusion')}}
+                    ng-disabled="rowSpinner['controller.SetLearnMode(0)']"
+                    ng-click="includeToNetwork('controller.SetLearnMode(0)')"
+            > <bb-row-spinner
+                    spinner="rowSpinner['controller.SetLearnMode(0)']"
+                    label="_t('Stop inclusion')"
+                    icon="'fa-check'"></bb-row-spinner>
             </button>
-        </div>
+        </div>-->
 
         <!-- included in network
         <div ng-if="boxData.controller.isRealPrimary && (boxData.controller.hasDevices)">

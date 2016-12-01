@@ -353,7 +353,6 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
         controller: {}
     };
     $scope.loadBoxApiData = function () {
-
         dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
              var hasDevices = Object.keys(ZWaveAPIData.devices).length;
              var homeId = ZWaveAPIData.controller.data.homeId.value;
@@ -371,6 +370,19 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
 
         });
     };
+    /**
+     * Load queue data
+     */
+    $scope.loadBusyIndicator = function () {
+        var refresh = function() {
+            dataService.getApi('queue_url',null,true).then(function (response) {
+                setBusyIndicator(response.data);
+            }, function (error) {});
+
+        };
+        $interval(refresh, 1000);
+    };
+    $scope.loadBusyIndicator();
    // console.log($location.path().split('/'))
     /**
      * Load common APIs
@@ -380,6 +392,40 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
         $scope.setDongle();
         $scope.setTimeStamp();
         $scope.loadBoxApiData();
+    }
+
+    /// --- Private functions --- ///
+    /**
+     * Set busy indicator
+     * @param {object} ZWaveAPIData
+     */
+    function setBusyIndicator(data) {
+        var ret = {
+            queueLength: data.length,
+            noJobLength: 0,
+            result: 0,
+            arrCnt: {
+            v: 0,
+            s: 0,
+            d: 0
+        }
+        }
+        var arrCnt = {
+            v: 0,
+            s: 0,
+            d: 0
+        }
+
+        //console.log(data);
+        angular.forEach(data, function(job, jobIndex) {
+            ret.arrCnt.v += job[1][1];
+            ret.arrCnt.s += job[1][2];
+            ret.arrCnt.d += job[1][4];
+        });
+        ret.noJobLength = (ret.arrCnt.v + ret.arrCnt.s + ret.arrCnt.d);
+        ret.result = (ret.queueLength - ret.noJobLength);
+        //console.log(ret);
+        angular.extend(cfg.busy_indicator, ret);
     }
 
 });
