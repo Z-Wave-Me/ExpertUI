@@ -1,0 +1,29 @@
+/* Tabs - old bootstrap tabs
+-------------------------------------------------- */
+.nav-tabs {
+    border-bottom: 1px solid #9fd8ef;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    color: #555;
+    cursor: default;
+    background-color: #fff;
+    border: 1px solid $app-border-color;
+    border-bottom-color: transparent;
+}
+
+.nav > li > a:hover, .nav > li > a:focus {
+    text-decoration: none;
+    background-color: #e4f5fc;
+}
+
+.nav-tabs > li > a:hover {
+    border-color: $app-border-color;
+}
+
+.tab-content{
+    padding: 20px;
+    margin: 0 0 20px 0;
+    border: solid 1px $app-border-color;
+    border-top-color: transparent;
+}

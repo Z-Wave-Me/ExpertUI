@@ -1,6 +1,5 @@
 <!--Zniffer view -->
 <div ng-controller="ZnifferHistoryController">
-    <bb-loader></bb-loader>
     <div class="page-header"><h1>{{ _t('nav_history')}}</h1></div>
     <!-- Table -->
     <table class="table table-condensed table-hover">
@@ -106,6 +105,8 @@
                 <th>{{ _t('rssi')}}</th>
                 <!-- hops --> 
                 <th>{{ _t('hops')}}</th>
+                <!-- encapsulation -->
+                <th>{{ _t('encapsulation')}}</th>
                 <!-- application --> 
                 <th>{{ _t('application')}}</th>
                 <!--<th>Packet</th>--> 
@@ -126,13 +127,14 @@
                     <i title="{{v.type}}" class="fa fa-long-arrow-right" ng-if="v.type === 'incoming'"></i>
                     <i title="{{v.type}}" class="fa fa-long-arrow-left" ng-if="v.type === 'outgoing'"></i> 
                 </td>
-                <td>{{v.dateTime.day + '.' + v.dateTime.mon + '.' + v.dateTime.year}}</td>
-                <td>{{v.dateTime.hrs + ':' + v.dateTime.min + ':' + v.dateTime.sec}}</td>
+                <td>{{v.dateTime.date}}</td>
+                <td>{{v.dateTime.time}}</td>
                 <td ng-class="zniffer.filter.model['src'].value !== '' ? 'bcg-success' : ''">{{v.src}}</td>
                 <td ng-class="zniffer.filter.model['dest'].value !== '' ? 'bcg-success' : ''">{{v.dest}}</td>
                 <td>{{v.speed||'-'}}</td>
                 <td>{{v.rssi||'-'}}</td>
                 <td>{{v.hops||'-'}}</td>
+                <td>{{v.encaps||'-'}}</td>
                 <td title="{{v.bytes}}">{{v.application}} ({{v.bytes|cutText:tue:20}})</td>
                 <td>&nbsp;</td>
             </tr>

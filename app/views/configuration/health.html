@@ -47,16 +47,7 @@
                             {{ v.name}}
                         </td>
                         <td data-title="{{ _t('type')}}">
-                            <span ng-switch="v.type" title="{{v.type}}">
-                                <i class="fa fa-cog" ng-switch-when="static"></i>
-                                <i class="fa fa-fire text-info" ng-switch-when="flirs"></i>
-                                <i class="fa fa-bolt text-warning" ng-switch-when="mains"></i>
-                                <i class="fa fa-battery-full text-danger" ng-switch-when="sleep"></i>
-                                <i class="fa fa-battery-full text-success" ng-switch-when="battery"></i>
-                                <i class="fa fa-feed text-primary" ng-switch-when="portable"></i>
-                                <i ng-switch-default></i>
-                               
-                            </span>
+                            <i class="fa" ng-class="v.icon"></i>
                         </td>
                         <td data-title="{{ _t('datetime')}}">
                             <span class="row-time {{v.indicator.updateTimeColor}}" ng-if="v.powerLevel">

@@ -2,14 +2,30 @@
 <div ng-controller="ConfigFirmwareController">
     <!-- Config navigation -->
     <div ng-include="'app/views/configuration/header.html'"></div>
-
     <div class="tab-content" ng-show="deviceId">
-        <form name="form_firmware" id="form_firmware" class="form form-inline" ng-show="showForm" ng-submit="updateFirmware(deviceId)" novalidate>
-            <!--<label>{{_t('nav_firmware_update')}}:</label>-->
-            <input id="url" type="text" value="" name="url" class="form-control" ng-model="formFirmware.url" placeholder="URL" title="please use format http:// ...... " data-toggle="tooltip" data-position="top" tooltip />
+        <form name="form_firmware_update" id="form_firmware_update" class="form form-inline"
+              ng-submit="updateDeviceFirmware(firmware.input,'btn_update')" novalidate>
+            <!-- Url -->
+            <input id="url" type="text" value="" name="url" class="form-control" ng-model="firmware.input.url" placeholder="URL" title="please use format http:// ...... " />
+            <!-- File -->
             <input type="file" class="form-control" file-model="myFile" />
-            <input id="targetId" type="text" value="" name="targetId" class="form-control" ng-model="formFirmware.targetId" placeholder="Target" title="For Z-Wave Target is 0" data-toggle="tooltip" data-position="top" tooltip />
-            <button type="submit" class="btn btn-primary" id="btn_save_note">{{ _t('update')}} <i class="fa fa-spinner fa-spin"></i></button> <span ng-show="firmwareProgress" ng-bind="firmwareProgress"></span>
+            <!-- Target -->
+            <select name="devices" class="form-control" ng-model="firmware.input.targetId">
+                <option value="" ng-selected="v.id != deviceId">--- {{_t('Target')}} ---</option>
+                <option value="{{k}}"
+                        ng-repeat="(k,v) in ['Z-Wave','EnOcean']"
+                        ng-selected="k === 0">{{v}}</option>
+            </select>
+
+            <!-- Submit -->
+            <button type="submit" class="btn btn-info" id="btn_update"
+                    ng-disabled="rowSpinner['btn_update']">
+                <bb-row-spinner
+                        spinner="rowSpinner['btn_update']"
+                        label="_t('update')"
+                        icon="'fa-check'">
+                </bb-row-spinner>
+            </button>
         </form>
     </div> 
 </div><!-- /ng-controler -->

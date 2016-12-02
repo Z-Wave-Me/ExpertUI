@@ -1,0 +1,28 @@
+/* Link health
+-------------------------------------------------- */
+/* ID buttons */
+.btn-mains {
+  color: $app-brand-warning;
+  background-color: $app-bcg-warning;
+  border-color: $app-brand-warning;
+}
+.btn-sleep {
+  color: $app-brand-danger;
+  background-color: $app-bcg-danger;
+  border-color: $app-brand-danger;
+}
+.btn-flirs {
+  color: $app-brand-info;
+  background-color: $app-bcg-info;
+  border-color: $app-brand-info;
+}
+.btn-battery {
+  color: $app-brand-success;
+  background-color: $app-bcg-success;
+  border-color: $app-brand-success
+}
+
+/* Traffic indicator */
+.traffic-default {
+  color: $app-brand-success;
+}

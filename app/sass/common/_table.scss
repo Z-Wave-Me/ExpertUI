@@ -1,19 +1,51 @@
 /* Table
 -------------------------------------------------- */
 .table{
-    .td-action{
-        text-align: right;
+  .td-action{
+    text-align: right;
+  }
+  margin-bottom: 0;
+    thead{
+        tr{
+            th{
+                border-bottom: 2px solid $table-border-color;
+            }
+        }
     }
     tbody{
         tr{
             td{
-                border-top: 1px solid $app-border-color; 
+                border-top: 1px solid $table-border-color;
             }
-
+        }
+    }
+    tbody{
+        tr{
+            td{
+                border-top: 1px solid $table-border-color;
+            }
         }
     }
 
 }
+
+.table-hover > tbody > tr:hover > td, .table-hover > tbody > tr:hover > th {
+
+    background-color: #e4f5fc;
+}
+#inspect_queue_table{
+    font-size: 12px;
+    width: 100%;
+}
+.th-slider{
+    min-width: 100px;
+}
+
+.table-condensed td p{
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
 .table-report{
     border: 0 !important;
     margin-bottom: 0 !important;

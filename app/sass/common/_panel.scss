@@ -1,0 +1,36 @@
+/* Panel CSS
+-------------------------------------------------- */
+.panel {
+    border: 1px solid $app-border-color;
+    -webkit-box-shadow: 0;
+    box-shadow: 0;
+}
+.panel-highlighted{
+    border: 4px solid darken($app-border-color,20%);
+    -webkit-box-shadow: 0px 0px 6px 0px rgba(50, 50, 50, 0.43);
+    -moz-box-shadow:    0px 0px 6px 0px rgba(50, 50, 50, 0.43);
+    box-shadow:         0px 0px 6px 0px rgba(50, 50, 50, 0.43);
+}
+.panel-default > .panel-heading {
+    color: #2A6496;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: $app-color-secondary;
+    border-color: $app-border-color;
+}
+
+.panel-default > .panel-footer {
+    background-color: lighten($app-color-secondary,5%);
+    border-color: $app-border-color;
+}
+
+/* Well CSS
+-------------------------------------------------- */
+.well {
+
+    background-color: $app-color-secondary;
+    border: 1px solid $app-border-color;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+}

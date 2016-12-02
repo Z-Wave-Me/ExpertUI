@@ -1,109 +1,27 @@
-/* Skin default main css
--------------------------------------------------- */
-/* Mixins
--------------------------------------------------- */
-// Profile colors
-@mixin appProfileColors($color) {
-    #main_navigation_wrap{
-        border-color: $color;
-    }
-    #main_navigation{
-        a:hover{
-            background-color: $color;
-        }
-        .active{
-            background-color: $color;
-            color: #FFFFFF;
-        }
-    }
-}
-
 /* Main navigation
 -------------------------------------------------- */
-#main_navigation_wrap{
-    border-width: 4px;
+
+
+#main_navigation_wrap {
+    /*background-color: $header-bcg-color;
+    border-bottom: solid 1px $header-border-color;
+    height: $header-h;*/
+    background: #1f355e; /* Old browsers */
+    background: -moz-linear-gradient(top,  #1f355e 0%, #174a7c 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#1f355e), color-stop(100%,#174a7c)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #1f355e 0%,#174a7c 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #1f355e 0%,#174a7c 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #1f355e 0%,#174a7c 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #1f355e 0%,#174a7c 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1f355e', endColorstr='#174a7c',GradientType=0 ); /* IE6-9 */
+    border-bottom: solid 4px $header-border-color;
 }
 
-/** Profile colors */
-.profile-dddddd{
-    @include appProfileColors(#dddddd);
-}
-.profile-6c7a89{
-    @include appProfileColors(#6c7a89);
-}
-.profile-6494bc{
-    @include appProfileColors(#6494bc);
-}
-.profile-80ad80{
-    @include appProfileColors(#80ad80);
-}
-.profile-31b0d5{
-    @include appProfileColors(#31b0d5);
-}
-.profile-f0aD4e{
-    @include appProfileColors(#f0aD4e);
-}
-.profile-d9534f{
-    @include appProfileColors(#d9534f);
-}
-.profile-dd976e{
-    @include appProfileColors(#dd976e);
-}
+
 
 /* Form
 -------------------------------------------------- */
-.form-page{
+/*.form-page{
     border-width: 4px;
-}
+}*/
 
-/* My settings / Management - User account
--------------------------------------------------- */
-.profile-color{
-    display: inline-block;
-    width: 32px;
-    height: 32px;
-    margin: 0 10px 0 0;
-
-}
-.profile-color:hover{
-    text-decoration: none;
-
-}
-.profile-color.active{
-    border: solid 2px #000000;
-
-}
-/* Widget
--------------------------------------------------- */
- .widget-entry{
-        .widget-entry-in{
-            border-color: $app-border-color;
-        }
-    }
-
-/* Responsive
--------------------------------------------------- */
-
-/* Medium Devices, Desktops */
-@media only screen and (min-width : 992px) and (orientation:landscape) {
-    .widget-entry{
-        .widget-entry-in{
-            border: solid 4px #FFFFFF;
-            @include appGradient();
-            @include appBoxShadow(1px 1px 5px 0px rgba(50, 50, 50, 0.29))
-        }
- .widget-entry-in{
-                 border-width: 4px !important;
-                //@include appGradientSuccess();
-              }
-        
-    }
-    .widget-entry.widget-zwave-ctrl{
-        .widget-entry-in{
-            border: 0 none;
-            background-image: none;
-    background-color:none;
-           box-shadow: none;
-        }
-    }
-}

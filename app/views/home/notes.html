@@ -1,0 +1,49 @@
+<!-- Notes -->
+<div class="panel panel-default" ng-controller="ExpertConfigController">
+    <!-- Heading -->
+    <div class="panel-heading">
+        <i class="fa fa-list text-info"></i> {{_t('txt_notes')}}
+    </div>
+    <!-- Text mode -->
+
+    <div class="panel-body newlines" ng-hide="goNotes">
+        <span ng-if="expertConfig.input.notes">
+            {{expertConfig.input.notes|stripTags}}
+            </span>
+        <button type="button" class="btn btn-default"
+                ng-class="goNotes ? 'active' : ''"
+                ng-click="goNotes = !goNotes">
+            <i class="fa fa-pencil"></i>
+        </button>
+    </div>
+
+    <!-- Edit mode -->
+    <form name="form_notes" id="form_notes" class="form"
+          ng-show="goNotes"
+          ng-submit="storeSettings(expertConfig.input,'spinNotes')" novalidate>
+        <div class="panel-body">
+            <textarea id="notes" class="form-control" rows="10"
+                      ng-model="expertConfig.input.notes">{{expertConfig.input.notes}}
+            </textarea>
+
+        </div>
+        <!-- Footer -->
+        <div class="panel-footer text-right">
+            <!-- Close -->
+            <button type="button" class="btn btn-default" title="{{_t('btn_cancel')}}"
+                    ng-click="goNotes = !goNotes">
+                <i class="fa fa-times text-danger"></i> <span class="btn-name">{{_t('btn_cancel')}}</span>
+            </button>
+            <!-- Save -->
+            <button class="btn btn-info" title="{{_t('btn_save')}}" ng-disabled="rowSpinner['spinNotes']">
+                <bb-row-spinner
+                        spinner="rowSpinner['spinNotes']"
+                        label=" _t('btn_save')"
+                        icon="'fa-check'">
+
+                </bb-row-spinner>
+            </button>
+
+        </div>
+    </form>
+</div>

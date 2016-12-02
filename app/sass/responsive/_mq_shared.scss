@@ -3,26 +3,26 @@
 
 /* Body reset
 -------------------------------------------------- */
-/*html {
+html {
     font-size: $app-body-font-size;
-}*/
+}
 
-/*body {
+body {
     font-size: $app-body-font-size;
     line-height: $app-line-height-base;
-}*/
+}
 
 /* Header
 -------------------------------------------------- */
-/*#header{
+#header{
     .divider-vertical {
         height: $header-h;
     }
-}*/
+}
 
 /* Main navigation
 -------------------------------------------------- */
-/*#main_navigation_wrap{
+#main_navigation_wrap{
     height: $header-h;
 }
 
@@ -31,25 +31,32 @@
     a{
         line-height: $header-h;
     }
-}*/
+    ul.navibar {
+        .navibar-item{
+            position: relative;
+        }
+    }
+}
 
 /* Subnavigation
 -------------------------------------------------- */
-/*#sub_navigation_in{
+.sub-navigation{
+  min-width: $subnavigation-w;
     ul{
-        margin: $subnavigation-margin;
+        //margin: $subnavigation-margin;
         li{
+          padding: 0;
             a{
                 padding: 0 $spacing;
             }
 
         }
     }
-}*/
+}
 /* Gird
 -------------------------------------------------- */
-/*#main_content {
-    margin-top: $header-h + $spacing-double; 
+#main_content {
+    //margin-top: $header-h + $spacing-double;
     margin-bottom: $footer-h + $spacing-double;
 }
 .container{
@@ -59,7 +66,7 @@
 .block-50{
     @include appFloat(left);
     width: 50%; 
-}*/
+}
 /* Page navigation
 -------------------------------------------------- */
 .page-navi{
@@ -85,14 +92,14 @@
 
 /* Input
 -------------------------------------------------- */
-/*.form-control {
+.form-control {
     padding: $app-input-padding;
 }
 input[type=checkbox]{
-    -ms-transform: scale($checkbox-scale);  IE 
-    -moz-transform: scale($checkbox-scale);  FF 
-    -webkit-transform: scale($checkbox-scale);  Safari and Chrome 
-    -o-transform: scale($checkbox-scale);  Opera 
+    -ms-transform: scale($checkbox-scale);  //IE
+    -moz-transform: scale($checkbox-scale); // FF
+    -webkit-transform: scale($checkbox-scale);  //Safari and Chrome
+    -o-transform: scale($checkbox-scale);  //Opera
 }
 input[type=radio] { 
     transform: scale($radio-scale, $radio-scale); 
@@ -100,23 +107,23 @@ input[type=radio] {
     -ms-transform: scale($radio-scale, $radio-scale); 
     -webkit-transform: scale($radio-scale, $radio-scale); 
     -o-transform: scale($radio-scale, $radio-scale); 
-}*/
+}
 
 /* Button
 -------------------------------------------------- */
-/*.btn,.btn-device-admin {
+.btn,.btn-device-admin {
     .fa{
         font-size: $app-btn-icon-size; 
     }
-}*/
-/*.btn-goup-block{
+}
+.btn-goup-block{
     width: auto !important;
     display: inline-block;
     margin: 0;
     .btn{
         width: auto !important;
     }
-}*/
+}
 .btn-tag{
     display: inline-block;
     position: static;
@@ -130,7 +137,7 @@ input[type=radio] {
 }
 /* Modal
 -------------------------------------------------- */
-/*.appmodal { 
+.appmodal {
     .appmodal-in{
         width: $modal-w;
     }
@@ -140,7 +147,7 @@ input[type=radio] {
     .appmodal-close{
         font-size: $modal-close-size;
     }
-}*/
+}
 
 /* Dropdown
 -------------------------------------------------- */
@@ -163,36 +170,26 @@ input[type=radio] {
 
 /* Report
 -------------------------------------------------- */
-/*.report-img{
+.report-img{
     max-width: $report-img;
     max-height: $report-img;
 }
-.app-row-zwave{
-    .report-entry {
-        .report-ctrl{
-            vertical-align: top !important;
-        }
-    }
-}*/
 
 /* Footer
 -------------------------------------------------- */
-/*#footer{
+#footer{
     #footer_in{
         height: $footer-h;
         line-height: $footer-h;
     }
 }
-#footer{
-    display: none; 
-}*/
 
 /* Others
 -------------------------------------------------- */
-/*.timestamp{
+.timestamp{
     font-size: $app-updatetime-font-size !important;
     .fa{
         font-size: $app-updatetime-icon-size !important; 
     }
-}*/
+}
 

@@ -1,7 +1,7 @@
 /* Gird
 -------------------------------------------------- */
 #main_content {
-    margin-top: $header-h + $spacing; 
+    margin-top: $header-h + $spacing;
     margin-bottom: $footer-h + $spacing;
 }
 
@@ -21,4 +21,10 @@
     .page-header{
         padding: 0;
     }
+}
+
+.container-500{
+    margin: 0 auto;
+    max-width:500px !important;
+
 }

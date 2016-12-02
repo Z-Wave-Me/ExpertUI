@@ -1,7 +1,8 @@
 <!-- Dimmer view -->
 <div ng-controller="MetersController">
     <div class="page-header"><h1>{{_t('nav_meters')}}</h1></div>
-    <div id="table_mobile">
+    <bb-alert alert="alert"></bb-alert>
+    <div id="table_mobile" ng-if="meters.show">
         <table class="table table-striped table-condensed table-hover">
             <thead>
                 <tr>
@@ -35,36 +36,53 @@
                             <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
-                    <th class="mobile-show">
-                        <button class="btn btn-success spin-true" 
-                                data-ng-click="storeAll('all_1')" 
-                                id="btn_update_all_1"
-                                >
-                            {{ _t('switches_update_all')}} <i class="fa fa-spinner fa-spin"></i></button></th>
+                    <th class="mobile-show td-action">
+                        <button class="btn btn-info" id="btn_update_all_1"
+                                ng-click="updateAllMeters('all_1','urlToStore')"
+                                ng-disabled="rowSpinner['all_1']">
+                            <bb-row-spinner
+                                    spinner="rowSpinner['all_1']"
+                                    label="_t('switches_update_all')"
+                                    icon="'fa-check'">
+                            </bb-row-spinner>
+                        </button>
+                    </th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="v in meters| orderBy:predicate:reverse" id="{{ v.rowId}}">
+                <tr ng-repeat="v in meters.all | orderBy:predicate:reverse track by $index" id="{{ v.rowId}}">
                     <td data-title="#">{{ v.id}}<span ng-show="v.iId != 0">.{{v.iId}}</span></td>
                     <td data-title="{{ _t('device_name')}}"><i class="fa fa-lightbulb-o fa-lg"></i> {{ v.name}}</td>
                     <td data-title="{{ _t('device_description_device_type')}}">{{ v.purpose}} &nbsp;</td>
                     <td data-title="{{ _t('th_level')}}" class="row-level text-right">{{ v.level}} &nbsp;</td>
                     <td data-title="{{ _t('th_scale')}}" class="row-level-ext">{{ v.levelExt}} &nbsp;</td>
-                    <td data-title="{{ _t('datetime')}}" class="row-time is-updated-{{v.isUpdated}}">{{ v.updateTime | isTodayFromUnix }} &nbsp;</td>
-                    <td>
-                        <button 
-                            data-ng-click="store(v.urlToStore, 'update')" 
-                            data-action="update" 
-                            data-store-url="{{ v.urlToStore}}" 
-                            class="btn btn-primary spin-true" 
-                            id="btn_update_{{ v.rowId}}">{{ _t('update')}} <i class="fa fa-spinner fa-spin"></i> 
+                    <td data-title="{{ _t('datetime')}}"
+                        class="row-time is-updated-{{v.isUpdated}}"
+                        title="{{v.dateTime.date}} {{v.dateTime.time}}">
+                        {{v.dateTime.today}}
+                    </td>
+                    <td class="td-action" data-title="">
+                        <button class="btn btn-default" id="btn_update_{{ v.rowId}}"
+                                ng-click="updateMeter(v.urlToStore)"
+                                ng-disabled="rowSpinner[v.urlToStore]">
+                            <bb-row-spinner
+                                    spinner="rowSpinner[v.urlToStore]"
+                                    label=" _t('update')"
+                                    icon="'fa-check text-success'">
+
+                            </bb-row-spinner>
                         </button>
-                        <button 
-                            ng-if="v.urlToReset"
-                            data-ng-click="store(v.urlToReset, 'reset')"
-                            data-action="reset" 
-                            class="btn btn-primary spin-true" 
-                            id="btn_reset_{{ v.rowId}}">{{ _t('reset')}} <i class="fa fa-spinner fa-spin"></i> 
+
+                        <button class="btn btn-default" id="btn_reset_{{ v.rowId}}"
+                                ng-if="v.urlToReset"
+                                ng-click="updateMeter(v.urlToReset)"
+                                ng-disabled="rowSpinner[v.urlToReset]">
+                            <bb-row-spinner
+                                    spinner="rowSpinner[v.urlToReset]"
+                                    label=" _t('reset')"
+                                    icon="'fa-refresh text-success'">
+
+                            </bb-row-spinner>
                         </button>
                     </td>
                 </tr>

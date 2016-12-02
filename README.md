@@ -3,6 +3,29 @@ zwave-expertui
 
 This User Interfaces allows to operate a Smart Home Network based on Z-Wave devices. It utilizes the software architecture "Z-Way", certified as Z-Wave Plus Controller.
 
+## v1.2.0
+#### New features
+- IMA: network name, time format, firmware update.
+- Icons in the menu.
+- Enhanced display on mobile devices and tablets.
+- Spinner indicators.
+
+#### Changes
+- Configuration/Firmware refactored.
+- Languages moved to settings.
+- New page "Settings" added.
+- Network/Control divided into views.
+- Homepage divided into views.
+- Notes saved into /ZWaveAPI/ExpertConfigGet.
+- Function runCmd() replaced with the new fn runZwaveCmd().
+- Completely refactored CSS for simpler customizations.
+- Configuration controllers divided in separate files.
+- Folder app/core removed.
+
+#### Fixes
+- Device counter on the homepage.
+- Disappeared temperature slider #146.
+
 ## v1.1.0
 #### New features
 - Network map. 

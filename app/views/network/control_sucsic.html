@@ -1,0 +1,39 @@
+<!-- SUC/SIS management -->
+<div class="panel panel-default">
+    <div class="panel-heading"><i class="fa fa-share-alt"></i> {{_t('nm_suc_sis_title')}}</div>
+    <div class="panel-body">
+
+        <div class="cfg-block form-inline">
+            <button class="btn btn-primary"
+                    data-ng-click="runCmd('controller.GetSUCNodeId()')"
+            >{{_t('nm_get_suc_nodeid')}}</button>
+
+            <button class="btn btn-primary"
+                    ng-disabled="disableSUCRequest"
+                    data-ng-click="runCmd('controller.RequestNetworkUpdate()')"
+            >{{_t('nm_request_network_update')}}</button>
+        </div>
+
+        <div class="cfg-block form-inline">
+            <button class="btn btn-primary"
+                    data-ng-click="runCmd('controller.SetSUCNodeId(' + modelSucSicNode + ')')"
+            >{{_t('nm_start_suc')}}</button>
+
+            <button class="btn btn-primary"
+                    data-ng-click="runCmd('controller.SetSISNodeId(' + modelSucSicNode + ')')"
+            >{{_t('nm_start_sis')}}</button>
+
+            <button class="btn btn-primary"
+                    data-ng-click="runCmd('controller.DisableSUCNodeId(' + modelSucSicNode + ')')"
+            >{{_t('nm_stop_suc_sis')}}</button>
+            <p>
+                <br />{{_t('nm_start_suc_on_node')}} <select name="suc_sic_node" id="suc_sic_node" class="form-control"
+                                                             ng-model="modelSucSicNode">
+                <option value="1">1</option>
+                <option ng-repeat="v in sucNodes" value="{{v.id}}">{{v.id}}</option>
+            </select>
+            <p>
+        </div>
+    </div>
+</div>
+

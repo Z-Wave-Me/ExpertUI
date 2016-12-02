@@ -1,0 +1,568 @@
+<!-- Controll view -->
+
+<script>
+    function refreshPage(){
+        window.location.reload();
+    }
+</script>
+
+<div ng-controller="ControllController" ng-show="showContent">
+    <div class="page-header"><h1>{{_t('nav_control')}}</h1></div>
+    <div class="row" id="row_controll">
+        <div class="col-md-6 col-lg-6">
+            <div class="panel panel-default panel-highlighted">
+                <div class="panel-heading"><i class="fa fa-cubes"></i> {{_t('nm_device_management')}}</div>
+                <div class="panel-body">
+                    <div class="cfg-block">
+                        {{_t('nm_force_unsecure')}}
+                        <div class="btn-group">
+                            <button 
+                                type="button" 
+                                class="btn btn-primary"
+                                id="btn_force_unsecure_lock"
+                                ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controllerState) > -1"
+                                ng-click="runCmd('controller.data.secureInclusion=true');
+                                            secureInclusion = true"
+                                ng-class="secureInclusion ? 'active' : 'inactive'"
+                                ><i class="fa fa-lock"></i> {{_t('btn_secure')}}</button>
+                            <button 
+                                type="button" 
+                                class="btn btn-primary"
+                                id="btn_force_unsecure_unlock"
+                                ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controllerState) > -1"
+                                ng-class="!secureInclusion ? 'active' : 'inactive'"
+                                ng-click="runCmd('controller.data.secureInclusion=false');
+                                            secureInclusion = false"
+                                ><i class="fa fa-unlock"></i> {{_t('btn_unsecure')}}</button>
+                        </div>
+                    </div>
+                    <p class="input-help"  ng-show="isSIS || isPrimary">{{_t('nm_learn_mode_you_are_primary_no_sis')}}</p>
+                    <p class="input-help"  ng-show="!isSIS && !isPrimary">{{_t('nm_learn_mode_you_are_secondary_can_not_add')}}</p>
+                   
+                    <div class="alert nm-response"  ng-class="controllerState == 0 ? 'alert-info' : 'alert-danger'">{{_t('nm_controller_state_' + controllerState)}}</div>
+                    <div ng-show="controllerState == 1">
+                        <div class="alert alert-success" ng-show="isSIS || isPrimary">{{_t('nm_controller_sis_or_primary')}}</div>
+                        <div class="alert alert-danger" ng-show="!isSIS && !isPrimary">{{_t('nm_controller_not_sis_or_primary')}}</div>
+                        
+                    </div>
+                    <div class="alert alert-success" ng-show="lastIncludedDevice != null"><p ng-bind-html="lastIncludedDevice | toTrusted"></p></div>
+                    <div class="alert alert-success" ng-show="lastExcludedDevice != null"><p ng-bind-html="lastExcludedDevice | toTrusted"></p></div>
+                    <!-- include -->
+                    <button 
+                        class="btn btn-info"
+                        id="btn_nm_include_start"
+                        title="{{_t('nm_include_start_tooltip')}}"
+                        ng-disabled="[5, 6, 7, 20].indexOf(controllerState) > -1"
+                        ng-show="[1, 2, 3, 4].indexOf(controllerState) == -1"
+                        ng-click="runCmd('controller.AddNodeToNetwork(1)')"
+                        >{{_t('nm_include_start')}}</button>
+                    <button 
+                        class="btn btn-danger"
+                        id="btn_nm_include_stop"
+                        ng-show="[1, 2, 3, 4].indexOf(controllerState) > -1"
+                        ng-click="runCmd('controller.AddNodeToNetwork(0)')"
+                        > {{_t('nm_include_stop')}}</button>
+
+                    <!-- exclude -->
+                    <button
+                        class="btn btn-primary"
+                        id="nm_exclude_start"
+                        title="{{_t('nm_exclude_start_tooltip')}}"
+                        ng-disabled="[1, 2, 3, 4, 20].indexOf(controllerState) > -1"
+                        ng-show="[5, 6, 7].indexOf(controllerState) == -1"
+                        ng-click="runCmd('controller.RemoveNodeFromNetwork(1)')"
+                        >{{_t('nm_exclude_start')}}</button>
+                    <button 
+                        class="btn btn-danger"
+                        id="nm_exclude_stop"
+                        ng-show="[5, 6, 7].indexOf(controllerState) > -1"
+                        ng-click="runCmd('controller.RemoveNodeFromNetwork(0)')"
+                        > {{_t('nm_exclude_stop')}}</button>
+                </div>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading"><i class="fa fa-sitemap"></i> {{_t('nm_inc_into_nw')}}</div>
+                <div class="panel-body">
+                <p class="input-help">{{_t('nm_inc_into_nw_desc')}}</p>
+
+
+                        <button
+                                class="btn btn-danger"
+                                id="btn_learn_stop"
+                                ng-click="runZwaveCmd('controller.SetLearnMode(0)')"
+                                ng-if="!boxData.controller.isPrimary"
+                        > {{_t('leave_network')}}</button>
+
+                    <button
+                            class="btn btn-primary"
+                            id="btn_learn_start"
+                            ng-click="runZwaveCmd('controller.SetLearnMode(1)')"
+                            ng-if="boxData.controller.isPrimary && (boxData.controller.hasDevices)"
+                            style="background-color: grey;"
+                            disabled
+                    >{{_t('include_into_network')}}</button>
+
+                        <button
+                                class="btn btn-primary"
+                                id="btn_learn_start"
+                                ng-click="runCmd('controller.SetLearnMode(1)')"
+                                ng-if="boxData.controller.isPrimary && (!boxData.controller.hasDevices)"
+                                ng-show="[8, 9, 10, 11, 12].indexOf(controllerState) == -1"
+                        >{{_t('nm_learn_start')}}</button>
+                        <button
+                                class="btn btn-danger"
+                                id="btn_learn_stop"
+                                ng-show="[8, 9, 10, 11, 12].indexOf(controllerState) > -1"
+                                ng-if="boxData.controller.isPrimary && (!boxData.controller.hasDevices)"
+                                ng-click="runCmd('controller.SetLearnMode(0)')"
+                        > {{_t('nm_learn_stop')}}</button>
+
+            </div>
+
+
+
+            </div>
+
+
+            <div class="panel panel-default" ng-if="cfg.app_type !== 'installer'">
+                <div class="panel-heading"><i class="fa fa-download"></i> {{_t('nm_backup_title')}}</div>
+                <div class="panel-body">
+                    <!-- backup -->
+                    <a class="btn btn-primary" href="{{cfg.server_url}}/ZWaveAPI/Backup">{{_t('nm_backup_download')}}</a>
+                    <button 
+                        class="btn btn-primary"
+                        ng-disabled="[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controllerState) > -1"
+                        data-ng-click="showModal('#modal_restore_backup')"
+                        >{{_t('nm_restore_backup_upload')}}</button>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading"><i class="fa fa-gear"></i> {{_t('nm_ctrl_maintance')}}</div>
+                <div class="panel-body">
+                    <!-- soft_reset_controller -->
+                    <div class="cfg-block form-inline">
+                        <p class="input-help">{{_t('nm_chip_reboot_war')}}</p>
+                        <button class="btn btn-primary"
+                                id="btn_chip_reboot"
+                                ng-disabled="[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controllerState) > -1"
+                                ng-click="runCmd('SerialAPISoftReset()')"
+                                >{{_t('nm_soft_reset_controller')}}</button>
+                    </div>
+                    <!-- reset_controller -->
+                    <div class="cfg-block form-inline">
+                        <p class="input-help" ng-hide="cfg.app_type === 'installer'">{{_t('nm_chip_reset_war')}}</p>
+                        <p class="input-help" ng-if="cfg.app_type === 'installer'">{{_t('nm_chip_reset_war_ima')}}</p>
+
+                        <button 
+                            class="btn btn-primary"
+                            ng-disabled="[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controllerState) > -1"
+                            data-ng-click="showModal('#modal_reset_controller')"
+                            >{{_t('nm_reset_controller')}}</button>
+                    </div>
+                </div>
+            </div>
+            
+             <div class="panel panel-default" ng-if="frequency && cfg.app_type !== 'installer'">
+                <div class="panel-heading"><i class="fa fa-map-marker"></i> {{_t('nm_frequency_title')}}</div>
+                <div class="panel-body">
+                    <div>{{_t('current_frequency')}}: <strong>{{frequency}}</strong></div>
+                    <div class="text-alert-list">
+                        <i class="fa fa-info-circle text-info"></i> {{_t('frequency_info')}}
+                    </div>
+                    <!--<div class="cfg-block form-inline block-frequency">
+                       <button class="btn" 
+                                id="btn_nm_freq_change_{{k}}"
+                                ng-class="k == frequency ? 'btn-info' : 'btn-primary'"
+                                ng-click="runCmd('ZMEFreqChange(' + k +')')"
+                                ng-if="k > -1"
+                                ng-repeat="(k,v) in cfg.frequency">{{v}}</button>
+                         
+                    </div> -->
+                   
+                    
+                    <div class="cfg-block form-inline block-frequency">
+                        <button 
+                            class="btn"
+                            id="btn_nm_freq_change_eu"
+                            ng-class="frequency == 0 ? 'btn-info' : 'btn-primary'"
+                            ng-click="runCmd('ZMEFreqChange(0)')"
+                            >EU</button>
+                        <button 
+                            class="btn"
+                            id="btn_nm_freq_change_ru"
+                            ng-class="frequency == 1 ? 'btn-info' : 'btn-primary'"
+                            ng-click="runCmd('ZMEFreqChange(1)')"
+                            >RU</button>
+                        <button 
+                            class="btn"
+                            id="btn_nm_freq_change_in"
+                            ng-class="frequency == 2 ? 'btn-info' : 'btn-primary'"
+                            ng-click="runCmd('ZMEFreqChange(2)')"
+                            >IN</button>
+                        <button 
+                            class="btn"
+                            id="btn_nm_freq_change_cn"
+                            ng-class="frequency == 6 ? 'btn-info' : 'btn-primary'"
+                            ng-click="runCmd('ZMEFreqChange(6)')"
+                            >CN</button>
+                        <button 
+                            class="btn"
+                            id="btn_nm_freq_change_my"
+                            ng-class="frequency == 10 ? 'btn-info' : 'btn-primary'"
+                            ng-click="runCmd('ZMEFreqChange(10)')"
+                            >MY</button>
+                    </div>
+                    <div class="cfg-block form-inline">
+                        <button 
+                            class="btn"
+                            id="btn_nm_freq_change_anz"
+                            ng-class="frequency == 4 ? 'btn-info' : 'btn-primary'"
+                            ng-click="runCmd('ZMEFreqChange(4)')"
+                            >ANZ/BR</button>
+                        <button 
+                            class="btn"
+                            id="btn_nm_freq_change_hk"
+                            ng-class="frequency == 5 ? 'btn-info' : 'btn-primary'"
+                            ng-click="runCmd('ZMEFreqChange(5)')"
+                            >HK</button>
+                        <button 
+                            class="btn"
+                            id="btn_nm_freq_change_kr"
+                            ng-class="frequency == 8 ? 'btn-info' : 'btn-primary'"
+                            ng-click="runCmd('ZMEFreqChange(8)')"
+                            >KR</button>
+                        <button 
+                            class="btn"
+                            id="btn_nm_freq_change_jp"
+                            ng-class="frequency == 7 ? 'btn-info' : 'btn-primary'"
+                            ng-click="runCmd('ZMEFreqChange(7)')"
+                            >JP</button>
+                    </div>
+                    <div class="cfg-block form-inline">
+                        <button 
+                            class="btn"
+                            id="btn_nm_freq_change_us"
+                            ng-click="runCmd('ZMEFreqChange(3)')"
+                            ng-class="frequency == 3 ? 'btn-info' : 'btn-primary'"
+                            >US</button>
+                        <button 
+                            class="btn"
+                            id="btn_nm_freq_change_il"
+                            ng-class="frequency == 9 ? 'btn-info' : 'btn-primary'"
+                            ng-click="runCmd('ZMEFreqChange(9)')"
+                            >IL</button>
+                    </div>
+                     
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-6">
+            <div class="panel panel-default" ng-if="cfg.app_type === 'installer'">
+                <div class="panel-heading">
+                    <a href="#network/controller">
+                        <i class="fa fa-info-circle"></i>
+                        {{_t('nav_controller_info')}}
+                    </a>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading"><i class="fa fa-sitemap"></i> {{_t('nm_net_maintance')}}</div>
+                <div class="panel-body">
+                    <div>
+                        <!-- remove_failed_node -->
+                        <div class="cfg-block form-inline">
+                            <p class="input-help">{{_t('nm_remove_node_war')}}</p>
+                            <select 
+                                name="remove_failed_node" 
+                                id="remove_failed_node" 
+                                class="form-control" 
+                                ng-disabled="[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controllerState) > -1"
+                                ng-change="changeSelectNode(modelNodeFailed)" 
+                                ng-model="modelNodeFailed">
+                                <option value="">---</option>
+                                <option ng-repeat="v in failedNodes" value="{{v.id}}">{{v.id}}</option>
+                            </select>
+                            <button 
+                                class="btn btn-primary" 
+                                id="btn_remove_failed_mode"
+                                ng-click="showModal('#modal_failed_node', modelNodeFailed)"
+                                ng-disabled="!modelNodeFailed"
+                                >{{_t('nm_remove_failed')}}</button> 
+
+                        </div>
+
+                        <!-- replace_failed_node -->
+                        <div class="cfg-block form-inline">
+                            <p class="input-help">{{_t('nm_replace_node_war')}}</p>
+                            <div class="alert nm-response alert-danger" ng-show="[17, 18].indexOf(controllerState) != -1">{{_t('nm_controller_state_' + controllerState)}}</div>
+                            <select 
+                                name="replace_failed_node" 
+                                id="replace_failed_node" 
+                                class="form-control" 
+                                ng-disabled="[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controllerState) > -1"
+                                ng-change="changeSelectNode(modelReplaceNode)" 
+                                ng-model="modelReplaceNode">
+                                <option value="">---</option>
+                                <option ng-repeat="v in replaceNodes" value="{{v.id}}">{{v.id}}</option>
+                            </select>
+                            <button 
+                                class="btn btn-primary"
+                                id="btn_replace_failed_node"
+                                ng-disabled="!modelReplaceNode"
+                                ng-click="runCmd('ReplaceFailedNode(' + modelReplaceNode + ')', null, null, {'name': 'remove_option', 'id': '#replace_failed_node', 'value': modelReplaceNode})"
+                                >{{_t('nm_replace_node')}}</button>
+
+                        </div>
+
+                        <!-- mark_battery_failed -->
+                        <div class="cfg-block form-inline">
+                            <p class="input-help">{{_t('nm_mark_node_war')}}</p>
+                            <select 
+                                name="mark_battery_failed" 
+                                id="mark_battery_failed" 
+                                class="form-control" 
+                                ng-disabled="[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controllerState) > -1"
+                                ng-change="changeSelectNode(modelBatteryFailed)" 
+                                ng-model="modelBatteryFailed">
+                                <option value="">---</option>
+                                <option ng-repeat="v in failedBatteries" value="{{v.id}}">{{v.id}}</option>
+                            </select>
+                            <button 
+                                class="btn btn-primary" 
+                                ng-disabled="!modelBatteryFailed"
+                                ng-click="showModal('#modal_battery_node')"
+                                >{{_t('nm_mark_battery_as_failed')}}</button>
+
+                        </div>
+                    </div>
+                    <div>
+                        <!-- controller_change_start -->
+                        <div class="cfg-block form-inline">
+                            <p class="input-help">{{_t('nm_change_controller_war')}}</p>
+                            <div class="nm-response"  ng-class="controllerState == 0 ? 'text-info' : 'text - danger'" ng-show="[13, 14, 15, 16].indexOf(controllerState) > -1">
+                                {{_t('nm_controller_state_' + controllerState)}}
+                            </div>
+                            <button class="btn btn-primary"
+                                    id="btn_controller_change_start"
+                                    ng-disabled="[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controllerState) > -1 || isPrimary == false"
+                                    ng-show="[13, 14, 15, 16].indexOf(controllerState) == -1"
+                                    ng-click="runCmd('controller.ControllerChange(1)')"
+                                    >{{_t('nm_controller_change_start')}}</button>
+                            <button class="btn btn-danger"
+                                    id="btn_controller_change_stop"
+                                    ng-show="[13, 14, 15, 16].indexOf(controllerState) > -1"
+                                    ng-click="runCmd('controller.ControllerChange(0)')"
+                                    > {{_t('nm_controller_change_stop')}}</button>
+                        </div>
+
+                        <!-- learn_start -->
+                        <div class="cfg-block form-inline" ng-if="cfg.app_type === 'default'">
+                            <p class="input-help">{{_t('nm_learn_mode_war')}}</p>
+                            <div class="nm-response"  ng-class="controllerState == 0 ? 'text-info' : 'text - danger'" ng-show="[8, 9, 10, 11, 12].indexOf(controllerState) > -1">
+                                {{_t('nm_controller_state_' + controllerState)}}
+                            </div>
+                            <button 
+                                class="btn btn-primary"
+                                id="btn_learn_start"
+                                ng-disabled="[20].indexOf(controllerState) > -1 || startLearnMode == false"
+                                ng-click="runCmd('controller.SetLearnMode(1)')"
+                                ng-show="[8, 9, 10, 11, 12].indexOf(controllerState) == -1"
+                                >{{_t('nm_learn_start')}}</button>
+                            <button 
+                                class="btn btn-danger"
+                                id="btn_learn_stop"
+                                ng-show="[8, 9, 10, 11, 12].indexOf(controllerState) > -1"
+                                ng-click="runCmd('controller.SetLearnMode(0)')"
+                                > {{_t('nm_learn_stop')}}</button>
+                        </div>
+
+                        <!-- request_nif -->
+                        <div class="cfg-block form-inline">
+                            <p class="input-help">{{_t('nm_nif_all_war')}}</p>
+                            <button class="btn btn-primary"
+                                    id="btn_request_nif"
+                                    ng-disabled="[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controllerState) > -1"
+                                    ng-click="requestNifAll('#btn_request_nif')"
+                                    >{{_t('nm_request_all_node_information')}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+             <div class="panel panel-default">
+                <div class="panel-heading"><i class="fa fa-share-alt"></i> {{_t('nm_suc_sis_title')}}</div>
+                <div class="panel-body">
+                    
+                    <div class="cfg-block form-inline">
+                        <button class="btn btn-primary"
+                        data-ng-click="runCmd('controller.GetSUCNodeId()')"
+                        >{{_t('nm_get_suc_nodeid')}}</button>
+                         
+                        <button class="btn btn-primary"
+                        ng-disabled="disableSUCRequest"
+                        data-ng-click="runCmd('controller.RequestNetworkUpdate()')"
+                        >{{_t('nm_request_network_update')}}</button>
+                     </div>
+                    
+                    <div class="cfg-block form-inline">
+                        <button class="btn btn-primary"
+                        data-ng-click="runCmd('controller.SetSUCNodeId(' + modelSucSicNode + ')')"
+                        >{{_t('nm_start_suc')}}</button>
+                         
+                        <button class="btn btn-primary"
+                        data-ng-click="runCmd('controller.SetSISNodeId(' + modelSucSicNode + ')')"
+                        >{{_t('nm_start_sis')}}</button>
+                        
+                         <button class="btn btn-primary"
+                        data-ng-click="runCmd('controller.DisableSUCNodeId(' + modelSucSicNode + ')')"
+                        >{{_t('nm_stop_suc_sis')}}</button>
+                        <p>
+                            <br />{{_t('nm_start_suc_on_node')}} <select name="suc_sic_node" id="suc_sic_node" class="form-control" 
+                                ng-model="modelSucSicNode">
+                                <option value="1">1</option>
+                                <option ng-repeat="v in sucNodes" value="{{v.id}}">{{v.id}}</option>
+                            </select>
+                             <p>
+                     </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal reset controller -->
+    <div class="modal fade" id="modal_reset_controller" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{_t('nm_reset_controller')}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-warning">
+                        <p>{{_t('nm_controller_reset_war')}}<p>
+                        <p><input type="checkbox" name="reset_confirm" id="reset_confirm" value="1" ng-click="goReset = !goReset" /> {{_t('yes')}}<p>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button 
+                        type="button" 
+                        class="btn btn-danger" 
+                        id="btn_reset_controller"
+                        ng-show="goReset"
+                        ng-click="runCmd('controller.SetDefault()', '#modal_reset_controller', null, {'name': 'reset_controller'})"
+                        ><i class="fa fa-exclamation-triangle"></i> {{_t('nm_reset_controller')}}</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closeResetController('#modal_reset_controller')">{{_t('btn_cancel')}}</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.Modal -->
+
+    <!-- Modal restore backup -->
+    <div class="modal fade" id="modal_restore_backup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{_t('nm_restore_backup_upload')}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="restore-backup-control" ng-show="restoreBackupStatus == 0">
+                        <div class="alert alert-warning">
+                            <input type="checkbox" name="restore_confirm" value="1" id="restore_confirm" ng-click="goRestore = !goRestore" /> <span ng-bind-html="_t('are_you_sure_restore') | toTrusted"></span>
+                        </div>
+                        <div ng-show="goRestore">
+                            <input 
+                                type="checkbox" 
+                                name="restore_chip_info"
+                                id="restore_chip_info" 
+                                value="1" 
+                                ng-true-value="1" 
+                                ng-false-value="0" 
+                                ng-model="modelRestoreChipInfo" /> {{_t('restore_backup_chip')}}
+
+                        </div>
+                        <p class="text-center">
+                             <!--<button 
+                        ng-show="goRestore"
+                        ng-file-select="restoreBackup($files,modelRestoreChipInfo,'.btn-spinner-hidden','#btn_upload')" 
+                        data-multiple="true"
+                        onclick="this.value = null" 
+                        id="btn_upload"
+                        class="btn btn-primary" 
+                        ><i class="fa fa-download"></i> {{_t('nm_restore_pick_up')}}<input type="file" ng-file-select="restoreBackup($files,modelRestoreChipInfo,'.btn-spinner-hidden','#btn_upload')" data-multiple="true" title="select file" onclick="this.value = null" class="upload-button" multiple="multiple" style="top: 0px; bottom: 0px; left: 0px; right: 0px; width: 100%; opacity: 0; position: absolute;"></button>-->
+                        
+                        <input id="btn_upload" ng-show="goRestore" type="file" name="file" onchange="angular.element(this).scope().restoreFromFile(this.files,'.btn-spinner-hidden','#btn_upload')" />
+                           </p>  
+                       
+                    </div>
+                    <div class="alert alert-info" ng-show="restoreBackupStatus == 1"> {{_t('restore_wait')}}</div>
+                    <div class="alert alert-success" ng-show="restoreBackupStatus == 2">{{_t('restore_done_reload_ui')}}</div>
+                    <div class="alert alert-danger" ng-show="restoreBackupStatus == 3">{{_t('restore_backup_failed')}}</div>
+                </div>
+                <div class="modal-footer">
+                    
+                    <button type="button" class="btn btn-default" ng-click="closeBackup('#modal_restore_backup')" data-dismiss="modal">{{_t('btn_cancel')}}</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.Modal -->
+
+    <!-- Modal failed battery node -->
+    <div class="modal fade" id="modal_battery_node" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{_t('nm_mark_battery_as_failed') + ' #' + modelBatteryFailed}}</h4>
+
+                </div>
+                <div class="modal-body">
+                    {{_t('nm_mark_node_war_modal')}}
+                </div>
+                <div class="modal-footer">
+                    <button 
+                        type="button" 
+                        class="btn btn-primary" 
+                        ng-click="runCmd(['devices[' + modelBatteryFailed + '].SendNoOperation()', 'devices[' + modelBatteryFailed + '].WakeupQueue()'], '#modal_battery_node', null, {'name': 'remove_option', 'id': '#mark_battery_failed', 'value': modelBatteryFailed})"
+                        >{{_t('nm_mark_battery_as_failed')}}</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{_t('btn_cancel')}}</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.Modal -->
+
+    <!-- Modal failed node -->
+    <div class="modal fade" id="modal_failed_node" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{_t('nm_remove_failed') + ' #' + modelNodeFailed}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-warning">
+                        <input type="checkbox" name="remove_node_confirm" id="remove_node_confirm" value="1" ng-click="goFailedNode = !goFailedNode" /> <span ng-bind-html="_t('are_you_sure_remove_node') | toTrusted"></span> <strong>{{deviceInfo.name}}</strong>
+                        <p>{{_t('txt_controller_delete_node')}}</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button 
+                        type="button" 
+                        class="btn btn-danger" 
+                        id="btn_reset_controller"
+                        ng-show="goFailedNode"
+                        ng-click="runCmd('devices[' + modelNodeFailed + '].RemoveFailedNode()', '#modal_failed_node', null, {'name': 'remove_option', 'id': '#remove_failed_node', 'value': modelNodeFailed});
+                                    goFailedInfo = !goFailedInfo"
+                        ><i class="fa fa-exclamation-triangle"></i> {{_t('nm_remove_failed')}}</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closeFailedNode('#modal_failed_node')">{{_t('btn_cancel')}}</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.Modal -->
+
+</div><!-- /ng-controller -->

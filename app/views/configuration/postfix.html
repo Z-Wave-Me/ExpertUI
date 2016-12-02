@@ -1,5 +1,5 @@
-<!-- Interview view -->
-<div ng-controller="PostfixController">
+<!-- ConfigPostfixController view -->
+<div ng-controller="ConfigPostfixController">
     <!-- Config navigation -->
     <div ng-include="'app/views/configuration/header.html'"></div>
     <div class="tab-content" ng-show="deviceId">
@@ -83,14 +83,15 @@
                  <button type="button" class="btn btn-default" ng-click="deletePostfix(_t('lb_delete_confirm'))" ng-if="postfix.find">
                      <i class="fa fa-times text-danger"></i> {{_t('dialog_remove')}}
                  </button>
+                <!-- Show -->
+                <a class="btn btn-default" href="{{cfg.postfixget_url + '/' + postfix.model.p_id}}" target="blank" ng-if="postfix.find">
+                    <i class="fa fa-file-code-o text-success"></i> {{_t('show_json')}}
+                </a>
                 <!-- Save -->
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-info">
                     <i class="fa fa-check"></i> {{_t('btn_save')}}
                 </button>
-                <!-- Show -->
-                <a class="btn btn-info" href="{{cfg.postfixget_url + '/' + postfix.model.p_id}}" target="blank" ng-if="postfix.find">
-                    <i class="fa fa-file-code-o"></i> {{_t('show_json')}}
-                </a>
+
                
             </div>
         </form>
