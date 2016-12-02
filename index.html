@@ -249,7 +249,7 @@
                     <!-- Busy indicator -->
                     <li class="navibar-divider" ng-if="cfg.app_type === 'installer'"> </li>
                     <li class="navibar-item" ng-if="cfg.app_type === 'installer'">
-                        <span class="timestamp" ng-if="cfg.busy_indicator.queueLength > 0">
+                        <span class="timestamp">
                         <span>Q: {{cfg.busy_indicator.result}}</span>
                             <!-- 0 -->
                             <span class="text-success" ng-if="cfg.busy_indicator.result <= 0">

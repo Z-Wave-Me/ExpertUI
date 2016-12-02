@@ -96,17 +96,14 @@ var config_data = {
         // busy_indicator
         'busy_indicator': {
             queueLength: 0,
-            noJobLength: 0,
-            arrCnt: {
-                v: 0,
-                s: 0,
-                d: 0
-            }
+            busyLength: 0,
+            result: 0,
+            arrCnt: {}
         },
         // Auth
         'auth': {
             'login': 'admin',
-            'password': 'installer'
+            'password': 'admin1'
         },
         // Date format list
         'date_format_list': ['dd.mm.yyyy','dd-mm-yyyy','yyyy-mm-dd','yyyy/mm/dd','mm/dd/yyyy'],

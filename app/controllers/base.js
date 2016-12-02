@@ -402,7 +402,7 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
     function setBusyIndicator(data) {
         var ret = {
             queueLength: data.length,
-            noJobLength: 0,
+            busyLength: 0,
             result: 0,
             arrCnt: {
             v: 0,
@@ -418,12 +418,15 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
 
         //console.log(data);
         angular.forEach(data, function(job, jobIndex) {
+            if(job[1][1] === 1 || job[1][2] === 1 || job[1][4] === 1){
+                ret.busyLength += 1;
+            }
             ret.arrCnt.v += job[1][1];
             ret.arrCnt.s += job[1][2];
             ret.arrCnt.d += job[1][4];
         });
-        ret.noJobLength = (ret.arrCnt.v + ret.arrCnt.s + ret.arrCnt.d);
-        ret.result = (ret.queueLength - ret.noJobLength);
+        //ret.busyLength = (ret.arrCnt.v + ret.arrCnt.s + ret.arrCnt.d);
+        ret.result = (ret.queueLength - ret.busyLength);
         //console.log(ret);
         angular.extend(cfg.busy_indicator, ret);
     }

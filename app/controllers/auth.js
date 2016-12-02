@@ -17,11 +17,8 @@ appController.controller('AuthController', function($location) {
  * @class AuthInstallerController
  *
  */
-appController.controller('AuthInstallerController', function($scope, $location,cfg, $window,dataService,deviceService) {
-    $scope.input = {
-        login: 'admin',
-        password: 'admin1'
-    };
+appController.controller('AuthInstallerController', function($scope, $location,cfg, $window,cfg,dataService,deviceService) {
+    $scope.input = cfg.auth;
 
     /**
      * Login proccess
