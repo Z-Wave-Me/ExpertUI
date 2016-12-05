@@ -1,0 +1,23 @@
+<!-- Modal reset controller -->
+<div class="modal fade" id="modal_battery_node" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">{{_t('nm_mark_battery_as_failed') + ' #' + modelBatteryFailed}}</h4>
+
+        </div>
+        <div class="modal-body">
+            {{_t('nm_mark_node_war_modal')}}
+        </div>
+        <div class="modal-footer">
+            <button
+                    type="button"
+                    class="btn btn-primary"
+                    ng-click="runCmd(['devices[' + modelBatteryFailed + '].SendNoOperation()', 'devices[' + modelBatteryFailed + '].WakeupQueue()'], '#modal_battery_node', null, {'name': 'remove_option', 'id': '#mark_battery_failed', 'value': modelBatteryFailed})"
+            >{{_t('nm_mark_battery_as_failed')}}</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">{{_t('btn_cancel')}}</button>
+        </div>
+    </div>
+</div>
+</div><!-- /.Modal -->

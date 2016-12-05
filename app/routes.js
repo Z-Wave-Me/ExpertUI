@@ -74,6 +74,9 @@ angApp.config(['$routeProvider',
         }).// Network
         when('/network/control', {
             templateUrl: 'app/views/network/control_' + config_data.cfg.app_type + '.html'
+        }).// Network control new
+        when('/network/controlnew', {
+            templateUrl: 'app/views/network/control/control_' + config_data.cfg.app_type + '.html'
         }).when('/network/routing', {
             templateUrl: 'app/views/network/routing.html'
         }).//                when('/network/reorganization', {
