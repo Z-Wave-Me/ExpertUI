@@ -147,13 +147,6 @@ appController.controller('ExcludeDeviceController', function($scope) {
  *
  */
 appController.controller('IncludeDifferentNetworkController', function($scope,$timeout,cfg,dataService) {
-
-    // Controller vars
-    $scope.includeNetwork ={
-        controllerState: 0
-    };
-    console.log($scope.controlDh)
-
     /**
      * Include to network
      * @param {string} cmd
@@ -228,30 +221,27 @@ appController.controller('BackupRestoreController', function($scope, $upload, $w
 });
 
 /**
- * This controller will perform a soft restart of the firmware of the Z-Wave controller chip
- * without deleting any network information or setting.
- * @class ZwaveChipRebootController
+ * This controller will perform a soft restart and a reset of the Z-Wave controller chip.
+ * @class ZwaveChipRebootResetController
  *
  */
-appController.controller('ZwaveChipRebootController', function($scope) {
+appController.controller('ZwaveChipRebootResetController', function($scope) {
     /**
-     * The reboot function - restarts Z-Wave chip
+     * This function will perform a soft restart of the firmware of the Z-Wave controller chip
+     * without deleting any network information or setting.
+     * @param {string} cmd
      */
-    $scope.serialAPISoftReset = function() {
+    $scope.serialAPISoftReset = function(cmd) {
+        $scope.runZwaveCmd(cmd);
     };
-});
 
-/**
- * Erases all values stored in the Z-Wave chip and sent the chip back to factory defaults.
- * This means that all network information will be lost without recovery option.
- * @class ZwaveChipResetController
- *
- */
-appController.controller('ZwaveChipResetController', function($scope) {
     /**
-     * Send Configuration SetDefault
+     * This function erases all values stored in the Z-Wave chip and sent the chip back to factory defaults.
+     * This means that all network information will be lost without recovery option.
+     *  @param {string} cmd
      */
-    $scope.setDefault = function() {
+    $scope.setDefault = function(cmd) {
+        $scope.runZwaveCmd(cmd);
     };
 });
 

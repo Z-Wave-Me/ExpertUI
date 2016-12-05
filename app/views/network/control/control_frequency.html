@@ -6,94 +6,110 @@
         <div class="text-alert-list">
             <i class="fa fa-info-circle text-info"></i> {{_t('frequency_info')}}
         </div>
-        <!--<div class="cfg-block form-inline block-frequency">
-           <button class="btn"
-                    id="btn_nm_freq_change_{{k}}"
-                    ng-class="k == frequency ? 'btn-info' : 'btn-primary'"
-                    ng-click="runCmd('ZMEFreqChange(' + k +')')"
-                    ng-if="k > -1"
-                    ng-repeat="(k,v) in cfg.frequency">{{v}}</button>
-
-        </div> -->
-
-
         <div class="cfg-block form-inline block-frequency">
+            <!-- EU -->
             <button
                     class="btn"
                     id="btn_nm_freq_change_eu"
-                    ng-class="frequency == 0 ? 'btn-info' : 'btn-primary'"
-                    ng-disabled="rowSpinner['controller.SetLearnMode(1)']"
-                    ng-click="zmeFreqChange('ZMEFreqChange(0)')"
-            >
-                <bb-row-spinner
-                        spinner="rowSpinner['ZMEFreqChange(0)']"
-                        label="EU"></bb-row-spinner>
+                    ng-class="controlDh.controller.frequency === cfg.frequency[0] ? 'btn-default' : 'btn-primary'"
+                    ng-disabled="rowSpinner['ZMEFreqChange(0)']"
+                    ng-click="zmeFreqChange('ZMEFreqChange(0)')">
+                <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(0)']"></bb-row-spinner>EU
             </button>
-
+            <!-- RU -->
             <button
                     class="btn"
                     id="btn_nm_freq_change_ru"
-                    ng-class="frequency == 1 ? 'btn-info' : 'btn-primary'"
-                    ng-click="runCmd('ZMEFreqChange(1)')"
-            >RU</button>
+                    ng-class="controlDh.controller.frequency === cfg.frequency[1] ? 'btn-default' : 'btn-primary'"
+                    ng-disabled="rowSpinner['ZMEFreqChange(1)']"
+                    ng-click="zmeFreqChange('ZMEFreqChange(1)')">
+                <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(1)']"></bb-row-spinner>RU
+            </button>
+            <!-- IN -->
             <button
                     class="btn"
                     id="btn_nm_freq_change_in"
-                    ng-class="frequency == 2 ? 'btn-info' : 'btn-primary'"
-                    ng-click="runCmd('ZMEFreqChange(2)')"
-            >IN</button>
+                    ng-class="controlDh.controller.frequency === cfg.frequency[2] ? 'btn-default' : 'btn-primary'"
+                    ng-disabled="rowSpinner['ZMEFreqChange(2)']"
+                    ng-click="zmeFreqChange('ZMEFreqChange(2)')">
+                <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(2)']"></bb-row-spinner>IN
+            </button>
+            <!-- CN -->
             <button
                     class="btn"
                     id="btn_nm_freq_change_cn"
-                    ng-class="frequency == 6 ? 'btn-info' : 'btn-primary'"
-                    ng-click="runCmd('ZMEFreqChange(6)')"
-            >CN</button>
+                    ng-class="controlDh.controller.frequency === cfg.frequency[6] ? 'btn-default' : 'btn-primary'"
+                    ng-disabled="rowSpinner['ZMEFreqChange(6)']"
+                    ng-click="zmeFreqChange('ZMEFreqChange(6)')">
+                <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(6)']"></bb-row-spinner>CN
+            </button>
+            <!-- MY -->
             <button
                     class="btn"
                     id="btn_nm_freq_change_my"
-                    ng-class="frequency == 10 ? 'btn-info' : 'btn-primary'"
-                    ng-click="runCmd('ZMEFreqChange(10)')"
-            >MY</button>
+                    ng-class="controlDh.controller.frequency === cfg.frequency[10] ? 'btn-default' : 'btn-primary'"
+                    ng-disabled="rowSpinner['ZMEFreqChange(10)']"
+                    ng-click="zmeFreqChange('ZMEFreqChange(10)')">
+                <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(10)']"></bb-row-spinner>MY
+            </button>
         </div>
         <div class="cfg-block form-inline">
+            <!-- ANZ/BR -->
             <button
                     class="btn"
                     id="btn_nm_freq_change_anz"
-                    ng-class="frequency == 4 ? 'btn-info' : 'btn-primary'"
-                    ng-click="runCmd('ZMEFreqChange(4)')"
-            >ANZ/BR</button>
+                    ng-class="controlDh.controller.frequency === cfg.frequency[4] ? 'btn-default' : 'btn-primary'"
+                    ng-disabled="rowSpinner['ZMEFreqChange(4)']"
+                    ng-click="zmeFreqChange('ZMEFreqChange(4)')">
+                <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(4)']"></bb-row-spinner>ANZ/BR
+            </button>
+            <!-- HK -->
             <button
                     class="btn"
                     id="btn_nm_freq_change_hk"
-                    ng-class="frequency == 5 ? 'btn-info' : 'btn-primary'"
-                    ng-click="runCmd('ZMEFreqChange(5)')"
-            >HK</button>
+                    ng-class="controlDh.controller.frequency === cfg.frequency[5] ? 'btn-default' : 'btn-primary'"
+                    ng-disabled="rowSpinner['ZMEFreqChange(5)']"
+                    ng-click="zmeFreqChange('ZMEFreqChange(5)')">
+                <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(5)']"></bb-row-spinner>HK
+            </button>
+            <!-- KR -->
             <button
                     class="btn"
                     id="btn_nm_freq_change_kr"
-                    ng-class="frequency == 8 ? 'btn-info' : 'btn-primary'"
-                    ng-click="runCmd('ZMEFreqChange(8)')"
-            >KR</button>
+                    ng-class="controlDh.controller.frequency === cfg.frequency[8] ? 'btn-default' : 'btn-primary'"
+                    ng-disabled="rowSpinner['ZMEFreqChange(8)']"
+                    ng-click="zmeFreqChange('ZMEFreqChange(8)')">
+                <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(8)']"></bb-row-spinner>KR
+            </button>
+            <!-- JP -->
             <button
                     class="btn"
                     id="btn_nm_freq_change_jp"
-                    ng-class="frequency == 7 ? 'btn-info' : 'btn-primary'"
-                    ng-click="runCmd('ZMEFreqChange(7)')"
-            >JP</button>
+                    ng-class="controlDh.controller.frequency === cfg.frequency[7] ? 'btn-default' : 'btn-primary'"
+                    ng-disabled="rowSpinner['ZMEFreqChange(7)']"
+                    ng-click="zmeFreqChange('ZMEFreqChange(7)')">
+                <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(7)']"></bb-row-spinner>JP
+            </button>
         </div>
         <div class="cfg-block form-inline">
+            <!-- US -->
             <button
                     class="btn"
                     id="btn_nm_freq_change_us"
-                    ng-click="runCmd('ZMEFreqChange(3)')"
-                    ng-class="frequency == 3 ? 'btn-info' : 'btn-primary'"
-            >US</button>
+                    ng-class="controlDh.controller.frequency === cfg.frequency[3] ? 'btn-default' : 'btn-primary'"
+                    ng-disabled="rowSpinner['ZMEFreqChange(3)']"
+                    ng-click="zmeFreqChange('ZMEFreqChange(3)')">
+                <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(3)']"></bb-row-spinner>US
+            </button>
+            <!-- IL -->
             <button
                     class="btn"
                     id="btn_nm_freq_change_il"
-                    ng-class="frequency == 9 ? 'btn-info' : 'btn-primary'"
-                    ng-click="runCmd('ZMEFreqChange(9)')"
-            >IL</button>
+                    ng-class="controlDh.controller.frequency === cfg.frequency[9] ? 'btn-default' : 'btn-primary'"
+                    ng-disabled="rowSpinner['ZMEFreqChange(9)']"
+                    ng-click="zmeFreqChange('ZMEFreqChange(9)')">
+                <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(9)']"></bb-row-spinner>IL
+            </button>
         </div>
 
     </div>

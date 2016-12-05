@@ -57,11 +57,11 @@ var config_data = {
         'page_results_history': 20, // List of languages
         'frequency': {
             0: 'EU',
-           1:' RU',
+            1:'RU',
             2:'IN',
             6: 'CN',
             10: 'MY',
-            4: 'ANZ_BR',
+            4: 'ANZ',
             5: 'HK',
             8: 'KR',
             7: 'JP',
