@@ -318,9 +318,10 @@ appController.controller('ControllerChangeController', function($scope) {
     /**
      * Set new primary controller
      * Start controller shift mode if 1 (True), stop if 0 (False)
-     * @param {int} mode
+     *  @param {string} cmd
      */
-    $scope.controllerChange = function(mode) {
+    $scope.controllerChange = function(cmd) {
+        $scope.runZwaveCmd(cmd);
     };
 });
 

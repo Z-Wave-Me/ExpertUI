@@ -71,53 +71,55 @@
         </div>
         <div>
             <!-- controller_change_start -->
-            <div class="cfg-block form-inline">
+            <div class="cfg-block form-inline" ng-controller="ControllerChangeController">
                 <p class="input-help">{{_t('nm_change_controller_war')}}</p>
                 <div class="nm-response"  ng-class="controllerState == 0 ? 'text-info' : 'text - danger'" ng-show="[13, 14, 15, 16].indexOf(controllerState) > -1">
                     {{_t('nm_controller_state_' + controllerState)}}
                 </div>
+                <!--  ControllerChange start -->
                 <button class="btn btn-primary"
                         id="btn_controller_change_start"
-                        ng-disabled="[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controllerState) > -1 || isPrimary == false"
-                        ng-show="[13, 14, 15, 16].indexOf(controllerState) == -1"
-                        ng-click="runCmd('controller.ControllerChange(1)')"
-                >{{_t('nm_controller_change_start')}}</button>
+                        ng-show="[13, 14, 15, 16].indexOf(controlDh.controller.controllerState) == -1"
+                        ng-click="controllerChange('controller.ControllerChange(1)')"
+                        ng-disabled="[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controlDh.controller.controllerState) > -1 || isPrimary == false || rowSpinner['controller.ControllerChange(1)']">
+
+                    <bb-row-spinner
+                            spinner="rowSpinner['controller.ControllerChange(1)']"
+                            label="_t('nm_controller_change_start')"
+                            icon="'fa-check'">
+                    </bb-row-spinner>
+                </button>
+
+                <!--  ControllerChange stop -->
                 <button class="btn btn-danger"
                         id="btn_controller_change_stop"
-                        ng-show="[13, 14, 15, 16].indexOf(controllerState) > -1"
-                        ng-click="runCmd('controller.ControllerChange(0)')"
-                > {{_t('nm_controller_change_stop')}}</button>
-            </div>
+                        ng-show="[13, 14, 15, 16].indexOf(controlDh.controller.controllerState) > -1"
+                        ng-click="controllerChange('controller.ControllerChange(0)')"
+                        ng-disabled="rowSpinner['controller.ControllerChange(0)']">
 
-            <!-- learn_start -->
-            <div class="cfg-block form-inline" ng-if="cfg.app_type === 'default'">
-                <p class="input-help">{{_t('nm_learn_mode_war')}}</p>
-                <div class="nm-response"  ng-class="controllerState == 0 ? 'text-info' : 'text - danger'" ng-show="[8, 9, 10, 11, 12].indexOf(controllerState) > -1">
-                    {{_t('nm_controller_state_' + controllerState)}}
-                </div>
-                <button
-                        class="btn btn-primary"
-                        id="btn_learn_start"
-                        ng-disabled="[20].indexOf(controllerState) > -1 || startLearnMode == false"
-                        ng-click="runCmd('controller.SetLearnMode(1)')"
-                        ng-show="[8, 9, 10, 11, 12].indexOf(controllerState) == -1"
-                >{{_t('nm_learn_start')}}</button>
-                <button
-                        class="btn btn-danger"
-                        id="btn_learn_stop"
-                        ng-show="[8, 9, 10, 11, 12].indexOf(controllerState) > -1"
-                        ng-click="runCmd('controller.SetLearnMode(0)')"
-                > {{_t('nm_learn_stop')}}</button>
+                    <bb-row-spinner
+                            spinner="rowSpinner['controller.ControllerChange(0)']"
+                            label="_t('nm_controller_change_stop')"
+                            icon="'fa-check'">
+                    </bb-row-spinner>
+                </button>
             </div>
 
             <!-- request_nif -->
-            <div class="cfg-block form-inline">
+            <div class="cfg-block form-inline" ng-controller="ControllerChangeController">
                 <p class="input-help">{{_t('nm_nif_all_war')}}</p>
                 <button class="btn btn-primary"
                         id="btn_request_nif"
-                        ng-disabled="[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controllerState) > -1"
-                        ng-click="requestNifAll('#btn_request_nif')"
-                >{{_t('nm_request_all_node_information')}}</button>
+                        ng-disabled___="[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controllerState) > -1"
+                        ng-click="controllerChange()"
+                        ng-disabled="rowSpinner['requestNodeInformation']">
+
+                    <bb-row-spinner
+                            spinner="rowSpinner['requestNodeInformation']"
+                            label="_t('nm_request_all_node_information')"
+                            icon="'fa-check'">
+                    </bb-row-spinner>
+                </button>
             </div>
         </div>
     </div>
