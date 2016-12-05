@@ -77,7 +77,8 @@ appController.controller('ControlController', function($scope, $interval,$timeou
         }
 
         // Default controller settings
-        $scope.controlDh.controller.frequency = $filter('hasNode')(ZWaveAPIData, 'controller.data.frequency.value');;
+        $scope.controlDh.controller.nodeId = ZWaveAPIData.controller.data.nodeId.value;
+        $scope.controlDh.controller.frequency = $filter('hasNode')(ZWaveAPIData, 'controller.data.frequency.value');
         $scope.controlDh.controller.controllerState = ZWaveAPIData.controller.data.controllerState.value;
         $scope.controlDh.controller.secureInclusion = ZWaveAPIData.controller.data.secureInclusion.value;
         $scope.controlDh.controller.isPrimary = ZWaveAPIData.controller.data.isPrimary.value;
@@ -340,83 +341,56 @@ appController.controller('RequestNifAllController', function($scope) {
 
 /**
  * This controller allows controlling the SUC/SIS function for the Z-Wave network.
+ * @todo: Add select for SUC nodes
  * @class SucSisController
  *
  */
 appController.controller('SucSisController', function($scope) {
     /**
      * Get the SUC Node ID from the network.
+     *  @param {string} cmd
      */
-    $scope.getSUCNodeId = function() {
+    $scope.getSUCNodeId = function(cmd) {
+        $scope.runZwaveCmd(cmd);
     };
 
     /**
      * Request network topology update from SUC/SIS.
+     *  @param {string} cmd
      */
-    $scope.requestNetworkUpdate = function() {
+    $scope.requestNetworkUpdate = function(cmd) {
+        $scope.runZwaveCmd(cmd);
     };
 
     /**
      * Assign SUC function to a node in the network that is capable of running there SUC function
      * nodeId=x Node id to be assigned as SUC
-     * @param {int} nodeId
+     *  @param {string} cmd
      */
-    $scope.setSUCNodeId = function(nodeId) {
-    };
-
-
-    /**
-     * Revoke SUC/SIS role from a device
-     * nodeId=x Node id to be disabled as SUC
-     * @param {int} nodeId
-     */
-    $scope.disableSUCNodeId = function(nodeId) {
+    $scope.setSUCNodeId = function(cmd) {
+        $scope.runZwaveCmd(cmd);
     };
 
     /**
      * Assign SIS role to a device
      * nodeId=x Node id to be assigned as SIS
-     * @param {int} nodeId
+     * @param {string} cmd
      */
-    $scope.disableSUCNodeId = function(nodeId) {
+    $scope.setSISNodeId = function(cmd) {
+        $scope.runZwaveCmd(cmd);
+    };
+
+    /**
+     * Revoke SUC/SIS role from a device
+     * nodeId=x Node id to be disabled as SUC
+     *  @param {string} cmd
+     */
+    $scope.disableSUCNodeId = function(cmd) {
+        $scope.runZwaveCmd(cmd);
     };
 
 
 
-});
 
-/**
- * ???
- * @class ???
- *
- */
-appController.controller('???Controller', function($scope) {
-
-});
-
-/**
- * ???
- * @class ???
- *
- */
-appController.controller('???Controller', function($scope) {
-
-});
-
-/**
- * ???
- * @class ???
- *
- */
-appController.controller('???Controller', function($scope) {
-
-});
-
-/**
- * ???
- * @class ???
- *
- */
-appController.controller('???Controller', function($scope) {
 
 });

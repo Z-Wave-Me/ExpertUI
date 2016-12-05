@@ -1,38 +1,75 @@
 <!-- SUC/SIS management -->
-<div class="panel panel-default">
+<div class="panel panel-default" ng-controller="SucSisController">
     <div class="panel-heading"><i class="fa fa-share-alt"></i> {{_t('nm_suc_sis_title')}}</div>
     <div class="panel-body">
 
         <div class="cfg-block form-inline">
+            <!-- GetSUCNodeId -->
             <button class="btn btn-primary"
-                    data-ng-click="runCmd('controller.GetSUCNodeId()')"
-            >{{_t('nm_get_suc_nodeid')}}</button>
+                    ng-click="getSUCNodeId('controller.GetSUCNodeId()')"
+                    ng-disabled="rowSpinner['controller.GetSUCNodeId()']">
 
+                <bb-row-spinner
+                        spinner="rowSpinner['controller.GetSUCNodeId()']"
+                        label="_t('nm_get_suc_nodeid')"
+                        icon="'fa-check'">
+                </bb-row-spinner>
+            </button>
+
+            <!-- RequestNetworkUpdate -->
             <button class="btn btn-primary"
-                    ng-disabled="disableSUCRequest"
-                    data-ng-click="runCmd('controller.RequestNetworkUpdate()')"
-            >{{_t('nm_request_network_update')}}</button>
+                   ng-click="requestNetworkUpdate('controller.RequestNetworkUpdate()')"
+                    ng-disabled="controlDh.controller.disableSUCRequest || rowSpinner['controller.RequestNetworkUpdate()']">
+
+                <bb-row-spinner
+                        spinner="rowSpinner['controller.RequestNetworkUpdate()']"
+                        label="_t('nm_request_network_update')"
+                        icon="'fa-check'">
+                </bb-row-spinner>
+            </button>
         </div>
 
         <div class="cfg-block form-inline">
+            <!-- SetSUCNodeId -->
             <button class="btn btn-primary"
-                    data-ng-click="runCmd('controller.SetSUCNodeId(' + modelSucSicNode + ')')"
-            >{{_t('nm_start_suc')}}</button>
+                    data-ng-click="setSUCNodeId('controller.SetSUCNodeId(' + controlDh.controller.nodeId + ')')"
+                    ng-disabled="rowSpinner['controller.SetSUCNodeId(' + controlDh.controller.nodeId + ')']">
 
+                <bb-row-spinner
+                        spinner="rowSpinner['controller.SetSUCNodeId(' + controlDh.controller.nodeId + ')']"
+                        label="_t('nm_start_suc')"
+                        icon="'fa-check'">
+                </bb-row-spinner>
+            </button>
+            <!-- SetSISNodeId -->
             <button class="btn btn-primary"
-                    data-ng-click="runCmd('controller.SetSISNodeId(' + modelSucSicNode + ')')"
-            >{{_t('nm_start_sis')}}</button>
+                    data-ng-click="setSISNodeId('controller.SetSISNodeId(' + controlDh.controller.nodeId + ')')"
+                    ng-disabled="rowSpinner['controller.SetSISNodeId(' + controlDh.controller.nodeId + ')']">
 
+                <bb-row-spinner
+                        spinner="rowSpinner['controller.SetSISNodeId(' + controlDh.controller.nodeId + ')']"
+                        label="_t('nm_start_sis')"
+                        icon="'fa-check'">
+                </bb-row-spinner>
+            </button>
+            <!-- DisableSUCNodeId -->
             <button class="btn btn-primary"
-                    data-ng-click="runCmd('controller.DisableSUCNodeId(' + modelSucSicNode + ')')"
-            >{{_t('nm_stop_suc_sis')}}</button>
-            <p>
+                    data-ng-click="disableSUCNodeId('controller.DisableSUCNodeId(' + controlDh.controller.nodeId + ')')"
+                    ng-disabled="rowSpinner['controller.DisableSUCNodeId(' + controlDh.controller.nodeId + ')']">
+
+                <bb-row-spinner
+                        spinner="rowSpinner['controller.DisableSUCNodeId(' + controlDh.controller.nodeId + ')']"
+                        label="_t('nm_stop_suc_sis')"
+                        icon="'fa-check'">
+                </bb-row-spinner>
+            </button>
+            <!--<p>
                 <br />{{_t('nm_start_suc_on_node')}} <select name="suc_sic_node" id="suc_sic_node" class="form-control"
-                                                             ng-model="modelSucSicNode">
+                                                             ng-model="controlDh.controller.nodeId">
                 <option value="1">1</option>
                 <option ng-repeat="v in sucNodes" value="{{v.id}}">{{v.id}}</option>
             </select>
-            <p>
+            <p>-->
         </div>
     </div>
 </div>
