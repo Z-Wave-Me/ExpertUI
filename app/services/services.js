@@ -18,8 +18,8 @@ appService.service('deviceService', function($filter, $log, _) {
     /**
      * Get language line by key
      */
-    this.getLangLine = function(key, languages) {
-        return getLangLine(key, languages);
+    this.getLangLine = function(key, languages,replacement) {
+        return getLangLine(key, languages,replacement);
     };
     
     /**
@@ -301,15 +301,26 @@ appService.service('deviceService', function($filter, $log, _) {
     /**
      * Get language line by key
      */
-    function getLangLine(key, languages) {
+    function getLangLine(key, languages,replacement) {
+        var line = key;
         if (angular.isObject(languages)) {
             if (angular.isDefined(languages[key])) {
-                return languages[key] !== '' ? languages[key] : key;
+                line = (languages[key] !== '' ? languages[key] : key);
             }
         }
-        return key;
+        return setLangLine(line, replacement,key);
     }
     ;
+
+    /**
+     * Set lang line params
+     */
+    function setLangLine(line, replacement,key) {
+        for (var val in replacement) {
+            line = line.split(val).join(replacement[val]);
+        }
+        return line;
+    }
 
     /**
      * isLocalyReset

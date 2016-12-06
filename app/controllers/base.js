@@ -127,8 +127,8 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
 
     };
     // Get language lines
-    $scope._t = function (key) {
-        return deviceService.getLangLine(key, $scope.languages);
+    $scope._t = function (key, replacement) {
+        return deviceService.getLangLine(key, $scope.languages, replacement);
     };
 
     // Watch for lang change

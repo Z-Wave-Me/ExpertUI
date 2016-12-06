@@ -106,16 +106,16 @@
             </div>
 
             <!-- request_nif -->
-            <div class="cfg-block form-inline" ng-controller="ControllerChangeController">
+            <div class="cfg-block form-inline" ng-controller="RequestNifAllController">
                 <p class="input-help">{{_t('nm_nif_all_war')}}</p>
                 <button class="btn btn-primary"
                         id="btn_request_nif"
                         ng-disabled___="[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controllerState) > -1"
-                        ng-click="controllerChange()"
-                        ng-disabled="rowSpinner['requestNodeInformation']">
+                        ng-click="requestNifAll('requestNifAll')"
+                        ng-disabled="rowSpinner['requestNifAll']">
 
                     <bb-row-spinner
-                            spinner="rowSpinner['requestNodeInformation']"
+                            spinner="rowSpinner['requestNifAll']"
                             label="_t('nm_request_all_node_information')"
                             icon="'fa-check'">
                     </bb-row-spinner>

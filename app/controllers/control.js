@@ -326,17 +326,26 @@ appController.controller('ControllerChangeController', function($scope) {
 });
 
 /**
- * This will call the Node Information Frame from all devices in the network.
+ * This will call the Node Information Frame (NIF) from all devices in the network.
  * @class RequestNifAllController
  *
  */
-appController.controller('RequestNifAllController', function($scope) {
+appController.controller('RequestNifAllController', function($scope,$timeout,cfg,dataService) {
     /**
-     * Request Node Information Frame (NIF) of a device
-     * nodeId=x Node Id to be requested for a NIF
-     * @param {int} nodeId
+     * Request NIF from all devices
      */
-    $scope.requestNodeInformation = function(nodeId) {
+    $scope.requestNifAll = function(spin) {
+        $scope.toggleRowSpinner(spin);
+        var cmd = 'devices[2].RequestNodeInformation()';
+        var timeout = 1000;
+        dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
+            timeout *= 40;
+            alertify.alertWarning($scope._t('proccess_take',{__val__:timeout/1000,__level__:$scope._t('seconds')}));
+            $timeout($scope.toggleRowSpinner, timeout);
+        }, function (error) {
+            $scope.toggleRowSpinner();
+            alertify.alertError($scope._t('error_nif_request'));
+        });
     };
 });
 
