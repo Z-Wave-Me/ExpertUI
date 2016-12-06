@@ -12,7 +12,7 @@ var appController = angular.module('appController', []);
  * The app base controller.
  * @class BaseController
  */
-appController.controller('BaseController', function ($scope, $cookies, $filter, $location, $anchorScroll, $window, $route, $interval,cfg, dataService, deviceService, myCache) {
+appController.controller('BaseController', function ($scope, $rootScope, $cookies, $filter, $location, $anchorScroll, $window, $route, $interval,cfg, dataService, deviceService, myCache) {
     $scope.loading = false;
     $scope.alert = {message: false, status: 'is-hidden', icon: false};
 
@@ -115,9 +115,36 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
      *Reload data
      */
     $scope.reloadData = function () {
+
         myCache.removeAll();
         $route.reload();
     };
+
+    /**
+     * Route on change start
+     */
+    $rootScope.$on("$routeChangeStart", function(event, next, current) {
+        if(config_data.cfg.app_type == "installer") {
+            /*var input = config_data.cfg.auth;
+            dataService.logInApi(input).then(function (response) {
+             var user = response.data.data;
+             deviceService.setZWAYSession(user.sid);
+             deviceService.setUser(user);
+             $window.location.reload();
+             }, function (error) {
+             $scope.loading = false;
+             var message = $scope._t('error_load_data');
+             if (error.status == 401) {
+             message = $scope._t('error_load_user');
+             }
+             alertify.alertError(message);
+             });*/
+        }
+        console.log("event",event);
+        console.log("next",next);
+        console.log("current",current);
+
+    });
 
     $scope.naviExpanded = {};
     /**
@@ -361,8 +388,8 @@ appController.controller('BaseController', function ($scope, $cookies, $filter, 
             $scope.boxData.controller.hasDevices =  hasDevices < 2 ? false : true;
             $scope.boxData.controller.homeId =   '0x' + ('00000000' + (homeId + (homeId < 0 ? 0x100000000 : 0)).toString(16)).slice(-8);
             $scope.boxData.controller.softwareRevisionVersion = ZWaveAPIData.controller.data.softwareRevisionVersion.value;
-            $scope.boxData.controller.homeNotes = ZWaveAPIData.controller.data.homeNotes.value[0];
-            $scope.boxData.controller.homeName = ZWaveAPIData.controller.data.homeName.value[0];
+            $scope.boxData.controller.homeNotes = ZWaveAPIData.controller.data.homeNotes.value ;
+            $scope.boxData.controller.homeName = ZWaveAPIData.controller.data.homeName.value || cfg.zwavecfg.network_name;
             // Changes MK
             $scope.boxData.controller.controllerState = ZWaveAPIData.controller.data.controllerState.value;
         }, function (error) {

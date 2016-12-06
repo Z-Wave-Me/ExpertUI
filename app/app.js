@@ -81,7 +81,7 @@ angApp.run(function ($rootScope, $location, deviceService, cfg) {
 angApp.config(function ($provide, $httpProvider, cfg) {
     $httpProvider.defaults.timeout = 5000;
     // Intercept http calls.
-    $provide.factory('MyHttpInterceptor', function ($q, $location, deviceService) {
+    $provide.factory('MyHttpInterceptor', function ($q, $location, $window, deviceService) {
         var path = $location.path().split('/');
         return {
             // On request success

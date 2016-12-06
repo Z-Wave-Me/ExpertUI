@@ -162,22 +162,17 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
      * @param {string} urlType
      */
     $scope.testAllLinks = function(id) {
-        var lastItem = _.last($scope.health.neighbours);
         $scope.toggleRowSpinner(id);
-        angular.forEach($scope.health.neighbours, function(v, k) {
-            $scope.toggleRowSpinner(v.cmdTestNode);
-            dataService.runZwaveCmd(cfg.store_url + v.cmdTestNode).then(function (response) {
-                alertify.dismissAll();
-            }, function (error) {
-                alertify.dismissAll();
-                alertify.alertError($scope._t('error_update_data') + '\n' +  v[urlType]);
-            });
-
-            if(lastItem.id === v.id){
-                $timeout($scope.toggleRowSpinner, 1000);
-            }
+        var data = {"nodeId": $scope.deviceId};
+        dataService.postApi('checklinks', data).then(function (response) {
+            var runtime = parseInt(response.data.data.runtime) * 1000;
+            alertify.alertWarning($scope._t('proccess_take',{__val__:runtime,__level__:$scope._t('seconds')}));
+            $timeout($scope.toggleRowSpinner, runtime);
+        }, function (error) {
+            alertify.alertError($scope._t('error_update_data'));
+            alertify.dismissAll();
+            $scope.toggleRowSpinner();
         });
-
     };
 
     /// --- Private functions --- ///

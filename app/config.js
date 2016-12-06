@@ -31,6 +31,7 @@ var config_data = {
         'postfixadd_url': '/ZWaveAPI/PostfixAdd', // Postfix Add
         'postfixremove_url': '/ZWaveAPI/PostfixRemove', // Postfix Remove
         'firmwareupdate': '/ZAutomation/api/v1/system/webif-access',
+        'checklinks': '/ZWaveAPI/CheckAllLinks', // check link health
         'zniffer_url': '/ZWaveAPI/Zniffer', // Zniffer
         'communication_history_url': '/ZWaveAPI/CommunicationHistory', // Communication History
         'rssi_chart': '/ZWaveAPI/RSSIGet', // chart of rssi channels 1 and 2

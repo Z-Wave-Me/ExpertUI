@@ -45,9 +45,8 @@ appController.controller('DataHolderController', function ($scope, $timeout,$int
      */
     $scope.storeNetworkName = function(input,spin) {
         $scope.toggleRowSpinner(spin);
-        dataService.postApi('store_url', null, 'controller.data.homeName.value=["'+input+'"]').then(function (response) {
-            deviceService.showNotifier({message: $scope._t('update_successful')});
-            $timeout($scope.toggleRowSpinner, 1000);
+        dataService.postApi('store_url', null, 'controller.data.homeName.value="'+input+'"').then(function (response) {
+            $scope.save();
         }, function (error) {
             $scope.toggleRowSpinner();
             alertify.alertError($scope._t('error_update_data'));
@@ -60,13 +59,24 @@ appController.controller('DataHolderController', function ($scope, $timeout,$int
      */
     $scope.storeNotes = function(input,spin) {
         $scope.toggleRowSpinner(spin);
-
-        dataService.postApi('store_url', null, 'controller.data.homeNotes.value=["'+input+'"]').then(function (response) {
-            deviceService.showNotifier({message: $scope._t('update_successful')});
-            $timeout($scope.toggleRowSpinner, 1000);
+        dataService.postApi('store_url', null, 'controller.data.homeNotes.value="'+input+'"').then(function (response) {
+            $scope.save();
         }, function (error) {
             $scope.toggleRowSpinner();
             alertify.alertError($scope._t('error_update_data'));
         });
     };
+
+    /**
+     * Save dataholder
+     */
+    $scope.save = function(){
+        dataService.postApi('store_url', null, 'devices.SaveData()').then(function (response) {
+            deviceService.showNotifier({message: $scope._t('update_successful')});
+            $timeout($scope.toggleRowSpinner, 1000);
+        }, function (error) {
+            alertify.alertError($scope._t('error_update_data'));
+        });
+    };
+
 });
