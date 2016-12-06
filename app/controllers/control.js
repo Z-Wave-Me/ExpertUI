@@ -13,7 +13,16 @@ appController.controller('ControlController', function($scope, $interval,$timeou
         interval: null,
         show: false,
         controller:{},
-        nodes:{}
+        nodes:{
+            all: [],
+            failedNodes: [],
+            failedBatteries: []
+        },
+        input:{
+            failedNodes: 0,
+            replaceNodes:0,
+            failedBatteries: 0
+        }
     };
     /**
      * Load zwave data
@@ -21,6 +30,7 @@ appController.controller('ControlController', function($scope, $interval,$timeou
     $scope.loadZwaveData = function() {
         dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
             setControllerData(ZWaveAPIData);
+            setDeviceData(ZWaveAPIData);
             $scope.controlDh.show = true;
             $scope.refreshZwaveData(ZWaveAPIData);
         }, function(error) {
@@ -48,8 +58,8 @@ appController.controller('ControlController', function($scope, $interval,$timeou
      */
     $scope.runZwaveCmd = function(cmd) {
         $scope.toggleRowSpinner(cmd);
-        /*alertify.alertError('Running command ' + '\n' + cmd);
-        return;*/
+        alertify.alertError('Running command ' + '\n' + cmd);
+        return;
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
             $timeout($scope.toggleRowSpinner, 1000);
         }, function (error) {
@@ -84,7 +94,36 @@ appController.controller('ControlController', function($scope, $interval,$timeou
         $scope.controlDh.controller.isPrimary = ZWaveAPIData.controller.data.isPrimary.value;
         $scope.controlDh.controller.isRealPrimary = ZWaveAPIData.controller.data.isRealPrimary.value;
         $scope.controlDh.controller.isSIS = ZWaveAPIData.controller.data.SISPresent.value;
+    }
+    /**
+     * Set device data
+     * @param {object} ZWaveAPIData
+     */
+    function setDeviceData(ZWaveAPIData) {
+        angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+            if (nodeId == 255 || nodeId == ZWaveAPIData.controller.data.nodeId.value || node.data.isVirtual.value) {
+                return;
+            }
+            if(!$scope.controlDh.nodes.all[nodeId]){
+                $scope.controlDh.nodes.all[nodeId] = $filter('deviceName')(nodeId, node);
+            }
+            // Failed and Batteries nodes
+            if (ZWaveAPIData.controller.data.isPrimary.value) {
+                //obj = {id: nodeId, name: $filter('deviceName')(nodeId, node)};
+                if (node.data.isFailed.value) {
+                    if ($scope.controlDh.nodes.failedNodes.indexOf(nodeId) === -1) {
+                        $scope.controlDh.nodes.failedNodes.push(nodeId);
+                    }
+                }
+                if (!node.data.isListening.value && !node.data.isFailed.value) {
+                    if ($scope.controlDh.nodes.failedBatteries.indexOf(nodeId) === -1) {
+                        $scope.controlDh.nodes.failedBatteries.push(nodeId);
+                    }
+                }
+            }
+            ;
 
+        });
     }
 
 });
@@ -271,9 +310,10 @@ appController.controller('RemoveFailedNodeController', function($scope) {
     /**
      * Remove failed node from network.
      * nodeId=x Node id of the device to be removed
-     * @param {int} nodeId
+     * @param {string} cmd
      */
-    $scope.removeFailedNode = function(nodeId) {
+    $scope.removeFailedNode = function(cmd) {
+        $scope.runZwaveCmd(cmd);
     };
 });
 
@@ -297,13 +337,19 @@ appController.controller('ReplaceFailedNodeController', function($scope) {
  * @class BatteryDeviceFailedController
  *
  */
-appController.controller('BatteryDeviceFailedController', function($scope) {
+appController.controller('BatteryDeviceFailedController', function($scope,$timeout) {
     /**
      * Sets the internal 'failed' variable of the device object.
      * nodeId=x Node Id to be marked as failed.
-     * @param {int} nodeId
+     * @param {array} cmdArr
      */
-    $scope.markFailedNode = function(nodeId) {
+    $scope.markFailedNode = function(cmdArr) {
+        angular.forEach(cmdArr, function(v, k) {
+            $scope.runZwaveCmd(v);
+
+        });
+        //$timeout(function(){$scope.controlDh.input.failedBatteries = 0;}, 1000);
+
     };
 });
 

@@ -8,7 +8,7 @@
             </div>
             <div class="modal-body">
                 <div class="alert alert-warning">
-                    <input type="checkbox" name="remove_node_confirm" id="remove_node_confirm" value="1" ng-click="goFailedNode = !goFailedNode" /> <span ng-bind-html="_t('are_you_sure_remove_node') | toTrusted"></span> <strong>{{deviceInfo.name}}</strong>
+                    <input type="checkbox" name="remove_node_confirm" id="remove_node_confirm" value="1" ng-click="goFailedNode = !goFailedNode" /> {{are_you_sure_remove_node}} <span ng-bind-html="_t('are_you_sure_remove_node') | toTrusted"></span> <strong>{{deviceInfo.name}}</strong>
                     <p>{{_t('txt_controller_delete_node')}}</p>
                 </div>
             </div>
