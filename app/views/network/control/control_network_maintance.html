@@ -7,9 +7,11 @@
             <div class="cfg-block form-inline">
                 <p class="input-help">{{_t('nm_remove_node_war')}}</p>
                 <select name="remove_failed_node" id="remove_failed_node" class="form-control"
+                        ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
                         ng-hide="_.isEmpty(controlDh.nodes.failedNodes)"
                         ng-model="controlDh.input.failedNodes">
-                    <option ng-repeat="v in controlDh.nodes.failedNodes track by $index" value="{{v}}">{{v}}</option>
+                    <option ng-hide="controlDh.removed.failedNodes.indexOf(v) > -1"
+                            ng-repeat="v in controlDh.nodes.failedNodes track by $index" value="{{v}}">{{v}}</option>
                 </select>
                 <button
                         class="btn btn-primary"
@@ -30,11 +32,14 @@
                 <p class="input-help">{{_t('nm_replace_node_war')}}</p>
                  <div class="alert nm-response alert-danger" ng-show="[17, 18].indexOf(controllerState) != -1">{{_t('nm_controller_state_' + controllerState)}}</div>
                 <select name="replace_failed_node" id="replace_failed_node" class="form-control"
+                        ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
                         ng-hide="_.isEmpty(controlDh.nodes.failedNodes)"
                         ng-model="controlDh.input.replaceNodes">
-                    <option ng-repeat="v in controlDh.nodes.failedNodes track by $index" value="{{v}}">{{v}}</option>
+                    <option ng-hide="controlDh.removed.replaceNodes.indexOf(v) > -1"
+                            ng-repeat="v in controlDh.nodes.failedNodes track by $index" value="{{v}}">{{v}}</option>
                 </select>
                 <button class="btn btn-primary" id="btn_replace_failed_node"
+                        ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
                         ng-click="replaceFailedNode('ReplaceFailedNode(' + controlDh.input.replaceNodes + ')')"
                         ng-disabled="!controlDh.input.replaceNodes">
                     <bb-row-spinner
@@ -51,10 +56,12 @@
             <div class="cfg-block form-inline">
                 <p class="input-help">{{_t('nm_mark_node_war')}}</p>
                 <select name="mark_battery_failed" id="mark_battery_failed" class="form-control"
+                        ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
                         ng-hide="_.isEmpty(controlDh.nodes.failedBatteries)"
                         ng-change="changeSelectNode(modelBatteryFailed)"
                         ng-model="controlDh.input.failedBatteries">
-                    <option ng-repeat="v in controlDh.nodes.failedBatteries track by $index" value="{{v}}">{{v}}</option>
+                    <option ng-hide="controlDh.removed.failedBatteries.indexOf(v) > -1"
+                            ng-repeat="v in controlDh.nodes.failedBatteries track by $index" value="{{v}}">{{v}}</option>
                 </select>
                 <button class="btn btn-primary"
                         ng-click="handleModal('failedBatteryModal', $event)"
@@ -109,7 +116,7 @@
                 <p class="input-help">{{_t('nm_nif_all_war')}}</p>
                 <button class="btn btn-primary"
                         id="btn_request_nif"
-                        ng-disabled___="[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controllerState) > -1"
+                        ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
                         ng-click="requestNifAll('requestNifAll')"
                         ng-disabled="rowSpinner['requestNifAll']">
 
@@ -128,7 +135,7 @@
 <div id="failedNodeModal" class="appmodal" ng-if="modalArr.failedNodeModal" ng-controller="RemoveFailedNodeController">
     <div class="appmodal-in">
         <div class="appmodal-header">
-                <span class="appmodal-close" ng-click="handleModal('failedNodeModal', $event)"><i
+                <span class="appmodal-close" ng-click="handleModal('failedNodeModal', $event);controlDh.input.failedNodes = 0"><i
                         class="fa fa-times"></i></span>
             <h3>{{_t('nm_remove_failed') + ' #' + controlDh.input.failedNodes}}</h3>
         </div>
@@ -141,7 +148,7 @@
         </div>
         <div class="appmodal-footer">
             <!-- Close -->
-            <button type="button" class="btn btn-default" ng-click="handleModal('failedNodeModal', $event)">
+            <button type="button" class="btn btn-default" ng-click="handleModal('failedNodeModal', $event);controlDh.input.failedNodes = 0">
                 <i class="fa fa-times text-danger"></i> <span class="btn-name">{{_t('btn_cancel')}}</span>
             </button>
             <!-- Set Default -->
@@ -158,7 +165,7 @@
 <div id="failedBatteryModal" class="appmodal" ng-if="modalArr.failedBatteryModal" ng-controller="BatteryDeviceFailedController">
     <div class="appmodal-in">
         <div class="appmodal-header">
-                <span class="appmodal-close" ng-click="handleModal('failedBatteryModal', $event)"><i
+                <span class="appmodal-close" ng-click="handleModal('failedBatteryModal', $event);controlDh.input.failedBatteries = 0"><i
                         class="fa fa-times"></i></span>
             <h3>{{_t('nm_mark_battery_as_failed') + ' #' + controlDh.input.failedBatteries}}</h3>
         </div>
@@ -168,7 +175,7 @@
         </div>
         <div class="appmodal-footer">
             <!-- Close -->
-            <button type="button" class="btn btn-default" ng-click="handleModal('failedBatteryModal', $event)">
+            <button type="button" class="btn btn-default" ng-click="handleModal('failedBatteryModal', $event);controlDh.input.failedBatteries = 0">
                 <i class="fa fa-times text-danger"></i> <span class="btn-name">{{_t('btn_cancel')}}</span>
             </button>
             <!-- Set Default -->

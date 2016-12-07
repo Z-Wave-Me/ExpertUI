@@ -7,7 +7,7 @@
             <p class="input-help">{{_t('nm_chip_reboot_war')}}</p>
             <button class="btn btn-primary"
                     id="btn_chip_reboot"
-                    ng-disabled_="[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controllerState) > -1"
+                    ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
                     ng-click="serialAPISoftReset('SerialAPISoftReset()')"
                     ng-disabled="rowSpinner['SerialAPISoftReset()']">
                 <bb-row-spinner
@@ -24,7 +24,7 @@
 
             <button
                     class="btn btn-danger"
-                    ng-disabled_="[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controllerState) > -1"
+                    ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
                     ng-click="handleModal('rebootResetModal', $event)">
                 <i class="fa fa-exclamation-triangle"></i> {{_t('nm_reset_controller')}}</button>
         </div>

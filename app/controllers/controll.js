@@ -412,8 +412,7 @@ appController.controller('ControllController', function($scope, $filter, $upload
                 $scope.lastExcludedDevice = txt + ' (' + updateTime + ')';
             }
         }
-    }
-    ;
+    };
     /**
      * DEPRECATED
      * Set zwave data

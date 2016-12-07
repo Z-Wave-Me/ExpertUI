@@ -2,71 +2,91 @@
 <div class="panel panel-default panel-highlighted">
     <div class="panel-heading"><i class="fa fa-cubes"></i> {{_t('nm_device_management')}}</div>
     <div class="panel-body">
-        <div class="cfg-block">
+        <!-- Secure/Unsecure  -->
+        <div class="cfg-block" ng-controller="SetSecureInclusionController">
             {{_t('nm_force_unsecure')}}
             <div class="btn-group">
-                <button
-                        type="button"
-                        class="btn btn-primary"
-                        id="btn_force_unsecure_lock"
-                        ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controllerState) > -1"
-                        ng-click="runCmd('controller.data.secureInclusion=true');
-                                            secureInclusion = true"
-                        ng-class="secureInclusion ? 'active' : 'inactive'"
-                ><i class="fa fa-lock"></i> {{_t('btn_secure')}}</button>
-                <button
-                        type="button"
-                        class="btn btn-primary"
-                        id="btn_force_unsecure_unlock"
-                        ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controllerState) > -1"
-                        ng-class="!secureInclusion ? 'active' : 'inactive'"
-                        ng-click="runCmd('controller.data.secureInclusion=false');
-                                            secureInclusion = false"
-                ><i class="fa fa-unlock"></i> {{_t('btn_unsecure')}}</button>
+                <!-- Secure -->
+                <button type="button" class="btn btn-primary" id="btn_force_secure_lock"
+                        ng-class="controlDh.controller.secureInclusion ? 'active' : ''"
+                        ng-click="setSecureInclusion('controller.data.secureInclusion=true')"
+                        ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || rowSpinner['controller.data.secureInclusion=true']">
+                    <bb-row-spinner
+                            spinner="rowSpinner['controller.data.secureInclusion=true']"
+                            label="_t('btn_secure')"
+                            icon="'fa-lock'">
+                    </bb-row-spinner>
+                </button>
+                <!-- Unsecure -->
+                <button type="button" class="btn btn-primary" id="btn_force_unsecure_lock"
+                        ng-class="!controlDh.controller.secureInclusion ? 'active' : ''"
+                        ng-click="setSecureInclusion('controller.data.secureInclusion=false')"
+                        ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || rowSpinner['controller.data.secureInclusion=false']">
+                    <bb-row-spinner
+                            spinner="rowSpinner['controller.data.secureInclusion=false']"
+                            label="_t('btn_unsecure')"
+                            icon="'fa-unlock'">
+                    </bb-row-spinner>
+                </button>
             </div>
         </div>
-        <p class="input-help"  ng-show="isSIS || isPrimary">{{_t('nm_learn_mode_you_are_primary_no_sis')}}</p>
-        <p class="input-help"  ng-show="!isSIS && !isPrimary">{{_t('nm_learn_mode_you_are_secondary_can_not_add')}}</p>
 
-        <div class="alert nm-response"  ng-class="controllerState == 0 ? 'alert-info' : 'alert-danger'">{{_t('nm_controller_state_' + controllerState)}}</div>
-        <div ng-show="controllerState == 1">
-            <div class="alert alert-success" ng-show="isSIS || isPrimary">{{_t('nm_controller_sis_or_primary')}}</div>
-            <div class="alert alert-danger" ng-show="!isSIS && !isPrimary">{{_t('nm_controller_not_sis_or_primary')}}</div>
+        <!-- Include/Exclude  -->
+        <div class="cfg-block" ng-controller="IncludeExcludeDeviceController">
+            <!--<p>Controller state: {{controlDh.controller.controllerState}}</p>
+            <p>Last included: {{controlDh.inclusion.lastIncludedDevice}}</p>
+            <p>Last excluded: {{controlDh.inclusion.lastExcludedDevice}}</p>-->
 
+            <p class="input-help" ng-show="controlDh.controller.isSIS || controlDh.controller.isPrimary">{{_t('nm_learn_mode_you_are_primary_no_sis')}}</p>
+            <p class="input-help" ng-show="!controlDh.controller.isSIS && !controlDh.controller.isPrimary">
+                {{_t('nm_learn_mode_you_are_secondary_can_not_add')}}</p>
+
+            <div class="alert nm-response" ng-class="controlDh.controller.controllerState == 0 ? 'alert-info' : 'alert-danger'">
+                {{_t('nm_controller_state_' + controlDh.controller.controllerState)}}
+            </div>
+            <div ng-show="controlDh.controller.controllerState == 1">
+                <div class="alert alert-success" ng-show="controlDh.controller.isSIS || controlDh.controller.isPrimary">{{_t('nm_controller_sis_or_primary')}}
+                </div>
+                <div class="alert alert-danger" ng-show="!controlDh.controller.isSIS && !controlDh.controller.isPrimary">
+                    {{_t('nm_controller_not_sis_or_primary')}}
+                </div>
+
+            </div>
+            <div class="alert alert-success" ng-if="controlDh.inclusion.lastIncludedDevice">
+                <p ng-bind-html="controlDh.inclusion.lastIncludedDevice | toTrusted"></p>
+            </div>
+            <div class="alert alert-success" ng-if="controlDh.inclusion.lastExcludedDevice">
+                <p ng-bind-html="controlDh.inclusion.lastExcludedDevice | toTrusted"></p>
+            </div>
+            <!-- include start -->
+            <button class="btn btn-info" id="btn_nm_include_start" title="{{_t('nm_include_start_tooltip')}}"
+                    ng-disabled="[5, 6, 7, 20].indexOf(controlDh.controller.controllerState) > -1"
+                    ng-show="[1, 2, 3, 4].indexOf(controlDh.controller.controllerState) == -1"
+                    ng-click="addNodeToNetwork('controller.AddNodeToNetwork(1)')">
+                <i class="fa fa-arrow-circle-right"></i> {{_t('nm_include_start')}}
+            </button>
+            <!-- include stop -->
+            <button
+                    class="btn btn-danger"
+                    id="btn_nm_include_stop"
+                    ng-show="[1, 2, 3, 4].indexOf(controlDh.controller.controllerState) > -1"
+                    ng-click="addNodeToNetwork('controller.AddNodeToNetwork(0)')">
+                <i class="fa fa-spinner fa-spin"></i> {{_t('nm_include_stop')}}
+            </button>
+            <!-- exclude start -->
+            <button class="btn btn-primary" id="nm_exclude_start" title="{{_t('nm_exclude_start_tooltip')}}"
+                    ng-disabled="[1, 2, 3, 4, 20].indexOf(controlDh.controller.controllerState) > -1"
+                    ng-show="[5, 6, 7].indexOf(controlDh.controller.controllerState) == -1"
+                    ng-click="removeNodeToNetwork('controller.RemoveNodeFromNetwork(1)')">
+                <i class="fa fa-arrow-circle-left"></i> {{_t('nm_exclude_start')}}
+            </button>
+            <!-- exclude stop -->
+            <button class="btn btn-danger" id="nm_exclude_stop"
+                    ng-show="[5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
+                    ng-click="removeNodeToNetwork('controller.RemoveNodeFromNetwork(0)')">
+                <i class="fa fa-spinner fa-spin"></i> {{_t('nm_exclude_stop')}}
+            </button>
         </div>
-        <div class="alert alert-success" ng-show="lastIncludedDevice != null"><p ng-bind-html="lastIncludedDevice | toTrusted"></p></div>
-        <div class="alert alert-success" ng-show="lastExcludedDevice != null"><p ng-bind-html="lastExcludedDevice | toTrusted"></p></div>
-        <!-- include -->
-        <button
-                class="btn btn-info"
-                id="btn_nm_include_start"
-                title="{{_t('nm_include_start_tooltip')}}"
-                ng-disabled="[5, 6, 7, 20].indexOf(controllerState) > -1"
-                ng-show="[1, 2, 3, 4].indexOf(controllerState) == -1"
-                ng-click="runCmd('controller.AddNodeToNetwork(1)')"
-        >{{_t('nm_include_start')}}</button>
-        <button
-                class="btn btn-danger"
-                id="btn_nm_include_stop"
-                ng-show="[1, 2, 3, 4].indexOf(controllerState) > -1"
-                ng-click="runCmd('controller.AddNodeToNetwork(0)')"
-        > {{_t('nm_include_stop')}}</button>
-
-        <!-- exclude -->
-        <button
-                class="btn btn-primary"
-                id="nm_exclude_start"
-                title="{{_t('nm_exclude_start_tooltip')}}"
-                ng-disabled="[1, 2, 3, 4, 20].indexOf(controllerState) > -1"
-                ng-show="[5, 6, 7].indexOf(controllerState) == -1"
-                ng-click="runCmd('controller.RemoveNodeFromNetwork(1)')"
-        >{{_t('nm_exclude_start')}}</button>
-        <button
-                class="btn btn-danger"
-                id="nm_exclude_stop"
-                ng-show="[5, 6, 7].indexOf(controllerState) > -1"
-                ng-click="runCmd('controller.RemoveNodeFromNetwork(0)')"
-        > {{_t('nm_exclude_stop')}}</button>
     </div>
 </div>
 
