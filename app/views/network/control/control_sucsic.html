@@ -32,44 +32,46 @@
         <div class="cfg-block form-inline">
             <!-- SetSUCNodeId -->
             <button class="btn btn-primary"
-                    data-ng-click="setSUCNodeId('controller.SetSUCNodeId(' + controlDh.controller.nodeId + ')')"
-                    ng-disabled="rowSpinner['controller.SetSUCNodeId(' + controlDh.controller.nodeId + ')']">
+                    data-ng-click="setSUCNodeId('controller.SetSUCNodeId(' + controlDh.input.sucSis + ')')"
+                    ng-disabled="rowSpinner['controller.SetSUCNodeId(' + controlDh.input.sucSis + ')']">
 
                 <bb-row-spinner
-                        spinner="rowSpinner['controller.SetSUCNodeId(' + controlDh.controller.nodeId + ')']"
+                        spinner="rowSpinner['controller.SetSUCNodeId(' + controlDh.input.sucSis + ')']"
                         label="_t('nm_start_suc')"
                         icon="'fa-check'">
                 </bb-row-spinner>
             </button>
             <!-- SetSISNodeId -->
             <button class="btn btn-primary"
-                    data-ng-click="setSISNodeId('controller.SetSISNodeId(' + controlDh.controller.nodeId + ')')"
-                    ng-disabled="rowSpinner['controller.SetSISNodeId(' + controlDh.controller.nodeId + ')']">
+                    data-ng-click="setSISNodeId('controller.SetSISNodeId(' + controlDh.input.sucSis + ')')"
+                    ng-disabled="rowSpinner['controller.SetSISNodeId(' + controlDh.input.sucSis + ')']">
 
                 <bb-row-spinner
-                        spinner="rowSpinner['controller.SetSISNodeId(' + controlDh.controller.nodeId + ')']"
+                        spinner="rowSpinner['controller.SetSISNodeId(' + controlDh.input.sucSis + ')']"
                         label="_t('nm_start_sis')"
                         icon="'fa-check'">
                 </bb-row-spinner>
             </button>
             <!-- DisableSUCNodeId -->
             <button class="btn btn-primary"
-                    data-ng-click="disableSUCNodeId('controller.DisableSUCNodeId(' + controlDh.controller.nodeId + ')')"
-                    ng-disabled="rowSpinner['controller.DisableSUCNodeId(' + controlDh.controller.nodeId + ')']">
+                    data-ng-click="disableSUCNodeId('controller.DisableSUCNodeId(' + controlDh.input.sucSis + ')')"
+                    ng-disabled="rowSpinner['controller.DisableSUCNodeId(' + controlDh.input.sucSis + ')']">
 
                 <bb-row-spinner
-                        spinner="rowSpinner['controller.DisableSUCNodeId(' + controlDh.controller.nodeId + ')']"
+                        spinner="rowSpinner['controller.DisableSUCNodeId(' + controlDh.input.sucSis + ')']"
                         label="_t('nm_stop_suc_sis')"
                         icon="'fa-check'">
                 </bb-row-spinner>
             </button>
-            <!--<p>
-                <br />{{_t('nm_start_suc_on_node')}} <select name="suc_sic_node" id="suc_sic_node" class="form-control"
-                                                             ng-model="controlDh.controller.nodeId">
-                <option value="1">1</option>
-                <option ng-repeat="v in sucNodes" value="{{v.id}}">{{v.id}}</option>
+
+            <p>
+                <br />{{_t('nm_start_suc_on_node')}}
+                <select name="suc_sic_node" id="suc_sic_node" class="form-control"
+                  ng-model="controlDh.input.sucSis">
+                    <option ng-repeat="v in controlDh.nodes.sucSis track by $index" value="{{v}}"
+                    ng-selected="v == controlDh.controller.nodeId">{{v}}</option>
             </select>
-            <p>-->
+            <p>
         </div>
     </div>
 </div>

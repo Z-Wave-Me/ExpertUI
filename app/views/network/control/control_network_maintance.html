@@ -7,45 +7,43 @@
             <div class="cfg-block form-inline">
                 <p class="input-help">{{_t('nm_remove_node_war')}}</p>
                 <select name="remove_failed_node" id="remove_failed_node" class="form-control"
+                        ng-hide="_.isEmpty(controlDh.nodes.failedNodes)"
                         ng-model="controlDh.input.failedNodes">
-                    <option value="">---</option>
                     <option ng-repeat="v in controlDh.nodes.failedNodes track by $index" value="{{v}}">{{v}}</option>
                 </select>
                 <button
                         class="btn btn-primary"
                         id="btn_remove_failed_mode"
                         ng-click="handleModal('failedNodeModal', $event)"
-                        ng-disabled="!controlDh.input.failedNodes || rowSpinner['devices[' + controlDh.input.failedNodes + '].RemoveFailedNode()']">
+                        ng-disabled="!controlDh.input.failedNodes">
                     <bb-row-spinner
                             spinner="rowSpinner['devices[' + controlDh.input.failedNodes + '].RemoveFailedNode()']"
                             label="_t('nm_remove_failed')"
-                            icon="'fa-check'">
+                            icon="'fa-minus-circle'">
                     </bb-row-spinner>
                 </button>
 
             </div>
 
             <!-- replace_failed_node -->
-            <div class="cfg-block form-inline">
+            <div class="cfg-block form-inline" ng-controller="ReplaceFailedNodeController">
                 <p class="input-help">{{_t('nm_replace_node_war')}}</p>
-                {{controlDh.nodes.failedNodes}}
-                <div class="alert nm-response alert-danger" ng-show="[17, 18].indexOf(controllerState) != -1">{{_t('nm_controller_state_' + controllerState)}}</div>
-                <select
-                        name="replace_failed_node"
-                        id="replace_failed_node"
-                        class="form-control"
-                        ng-disabled="[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controllerState) > -1"
-                        ng-change="changeSelectNode(modelReplaceNode)"
-                        ng-model="modelReplaceNode">
-                    <option value="">---</option>
-                    <option ng-repeat="v in replaceNodes" value="{{v.id}}">{{v.id}}</option>
+                 <div class="alert nm-response alert-danger" ng-show="[17, 18].indexOf(controllerState) != -1">{{_t('nm_controller_state_' + controllerState)}}</div>
+                <select name="replace_failed_node" id="replace_failed_node" class="form-control"
+                        ng-hide="_.isEmpty(controlDh.nodes.failedNodes)"
+                        ng-model="controlDh.input.replaceNodes">
+                    <option ng-repeat="v in controlDh.nodes.failedNodes track by $index" value="{{v}}">{{v}}</option>
                 </select>
-                <button
-                        class="btn btn-primary"
-                        id="btn_replace_failed_node"
-                        ng-disabled="!modelReplaceNode"
-                        ng-click="runCmd('ReplaceFailedNode(' + modelReplaceNode + ')', null, null, {'name': 'remove_option', 'id': '#replace_failed_node', 'value': modelReplaceNode})"
-                >{{_t('nm_replace_node')}}</button>
+                <button class="btn btn-primary" id="btn_replace_failed_node"
+                        ng-click="replaceFailedNode('ReplaceFailedNode(' + controlDh.input.replaceNodes + ')')"
+                        ng-disabled="!controlDh.input.replaceNodes">
+                    <bb-row-spinner
+                            spinner="rowSpinner['ReplaceFailedNode(' + controlDh.input.replaceNodes + ')']"
+                            label="_t('nm_replace_node')"
+                            icon="'fa-exchange'">
+                    </bb-row-spinner>
+                    {{_t('')}}
+                </button>
 
             </div>
 
@@ -53,18 +51,18 @@
             <div class="cfg-block form-inline">
                 <p class="input-help">{{_t('nm_mark_node_war')}}</p>
                 <select name="mark_battery_failed" id="mark_battery_failed" class="form-control"
+                        ng-hide="_.isEmpty(controlDh.nodes.failedBatteries)"
                         ng-change="changeSelectNode(modelBatteryFailed)"
                         ng-model="controlDh.input.failedBatteries">
-                    <option value="">---</option>
                     <option ng-repeat="v in controlDh.nodes.failedBatteries track by $index" value="{{v}}">{{v}}</option>
                 </select>
                 <button class="btn btn-primary"
                         ng-click="handleModal('failedBatteryModal', $event)"
-                        ng-disabled="!controlDh.input.failedBatteries || rowSpinner['devices[' + controlDh.input.failedBatteries + '].SendNoOperation()']">
+                        ng-disabled="!controlDh.input.failedBatteries">
                     <bb-row-spinner
                             spinner="rowSpinner['devices[' + controlDh.input.failedBatteries + '].SendNoOperation()']"
                             label="_t('nm_mark_battery_as_failed')"
-                            icon="'fa-check'">
+                            icon="'fa-thumb-tack'">
                     </bb-row-spinner>
                 </button>
 
@@ -87,7 +85,7 @@
                     <bb-row-spinner
                             spinner="rowSpinner['controller.ControllerChange(1)']"
                             label="_t('nm_controller_change_start')"
-                            icon="'fa-check'">
+                            icon="'fa-database'">
                     </bb-row-spinner>
                 </button>
 
@@ -101,7 +99,7 @@
                     <bb-row-spinner
                             spinner="rowSpinner['controller.ControllerChange(0)']"
                             label="_t('nm_controller_change_stop')"
-                            icon="'fa-check'">
+                            icon="'fa-database'">
                     </bb-row-spinner>
                 </button>
             </div>
@@ -118,7 +116,7 @@
                     <bb-row-spinner
                             spinner="rowSpinner['requestNifAll']"
                             label="_t('nm_request_all_node_information')"
-                            icon="'fa-check'">
+                            icon="'fa-bullhorn'">
                     </bb-row-spinner>
                 </button>
             </div>

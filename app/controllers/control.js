@@ -16,12 +16,14 @@ appController.controller('ControlController', function($scope, $interval,$timeou
         nodes:{
             all: [],
             failedNodes: [],
-            failedBatteries: []
+            failedBatteries: [],
+            sucSis: []
         },
         input:{
             failedNodes: 0,
             replaceNodes:0,
-            failedBatteries: 0
+            failedBatteries: 0,
+            sucSis: 0
         }
     };
     /**
@@ -47,6 +49,7 @@ appController.controller('ControlController', function($scope, $interval,$timeou
         var refresh = function() {
             dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
                 setControllerData(response.data.joined);
+                setDeviceData(ZWaveAPIData);
             }, function(error) {});
         };
         $scope.controlDh.interval = $interval(refresh, $scope.cfg.interval);
@@ -55,13 +58,15 @@ appController.controller('ControlController', function($scope, $interval,$timeou
     /**
      * Run zwave command
      * @param {string} cmd
+     * @param {int} timeout
      */
-    $scope.runZwaveCmd = function(cmd) {
+    $scope.runZwaveCmd = function(cmd, timeout) {
+        timeout = timeout||1000;
         $scope.toggleRowSpinner(cmd);
-        alertify.alertError('Running command ' + '\n' + cmd);
-        return;
+        /*alertify.alertError('Running command ' + '\n' + cmd);
+        return;*/
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
-            $timeout($scope.toggleRowSpinner, 1000);
+            $timeout($scope.toggleRowSpinner, timeout);
         }, function (error) {
             $scope.toggleRowSpinner();
             alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
@@ -101,15 +106,22 @@ appController.controller('ControlController', function($scope, $interval,$timeou
      */
     function setDeviceData(ZWaveAPIData) {
         angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+            // SUC/SIS nodes
+            if (node.data.basicType.value == 2) {
+                if ($scope.controlDh.nodes.sucSis.indexOf(nodeId) === -1) {
+                    $scope.controlDh.nodes.sucSis.push(nodeId);
+                }
+            }
             if (nodeId == 255 || nodeId == ZWaveAPIData.controller.data.nodeId.value || node.data.isVirtual.value) {
                 return;
             }
+            // Devices
             if(!$scope.controlDh.nodes.all[nodeId]){
                 $scope.controlDh.nodes.all[nodeId] = $filter('deviceName')(nodeId, node);
             }
+
             // Failed and Batteries nodes
             if (ZWaveAPIData.controller.data.isPrimary.value) {
-                //obj = {id: nodeId, name: $filter('deviceName')(nodeId, node)};
                 if (node.data.isFailed.value) {
                     if ($scope.controlDh.nodes.failedNodes.indexOf(nodeId) === -1) {
                         $scope.controlDh.nodes.failedNodes.push(nodeId);
@@ -306,7 +318,7 @@ appController.controller('ChangeFrequencyController', function($scope) {
  * @class RemoveFailedNodeController
  *
  */
-appController.controller('RemoveFailedNodeController', function($scope) {
+appController.controller('RemoveFailedNodeController', function($scope, $timeout) {
     /**
      * Remove failed node from network.
      * nodeId=x Node id of the device to be removed
@@ -314,6 +326,7 @@ appController.controller('RemoveFailedNodeController', function($scope) {
      */
     $scope.removeFailedNode = function(cmd) {
         $scope.runZwaveCmd(cmd);
+        $timeout(function(){$scope.controlDh.input.failedNodes = 0;}, 1000);
     };
 });
 
@@ -322,13 +335,15 @@ appController.controller('RemoveFailedNodeController', function($scope) {
  * @class ReplaceFailedNodeController
  *
  */
-appController.controller('ReplaceFailedNodeController', function($scope) {
+appController.controller('ReplaceFailedNodeController', function($scope,$timeout) {
     /**
      * Replace failed node with a new one.
      * nodeId=x Node Id to be replaced by new one
-     * @param {int} nodeId
+     * @param {string} cmd
      */
-    $scope.replaceFailedNode = function(nodeId) {
+    $scope.replaceFailedNode = function(cmd) {
+        $scope.runZwaveCmd(cmd);
+        $timeout(function(){$scope.controlDh.input.replaceNodes = 0;}, 1000);
     };
 });
 
@@ -348,7 +363,8 @@ appController.controller('BatteryDeviceFailedController', function($scope,$timeo
             $scope.runZwaveCmd(v);
 
         });
-        //$timeout(function(){$scope.controlDh.input.failedBatteries = 0;}, 1000);
+        //$scope.controlDh.input.failedBatteries = 0;
+        $timeout(function(){$scope.controlDh.input.failedBatteries = 0;}, 1000);
 
     };
 });
@@ -397,7 +413,6 @@ appController.controller('RequestNifAllController', function($scope,$timeout,cfg
 
 /**
  * This controller allows controlling the SUC/SIS function for the Z-Wave network.
- * @todo: Add select for SUC nodes
  * @class SucSisController
  *
  */
