@@ -123,28 +123,28 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     /**
      * Route on change start
      */
-    $rootScope.$on("$routeChangeStart", function(event, next, current) {
-        if(config_data.cfg.app_type == "installer") {
-            /*var input = config_data.cfg.auth;
+    /*$rootScope.$on("$routeChangeStart", function(event, next, current) {
+        if(config_data.cfg.app_type === "installer") {
+            console.log(event);
+            console.log(current);
+            var input = config_data.cfg.auth;
             dataService.logInApi(input).then(function (response) {
-             var user = response.data.data;
-             deviceService.setZWAYSession(user.sid);
-             deviceService.setUser(user);
-             $window.location.reload();
-             }, function (error) {
-             $scope.loading = false;
-             var message = $scope._t('error_load_data');
-             if (error.status == 401) {
-             message = $scope._t('error_load_user');
-             }
-             alertify.alertError(message);
-             });*/
+                var user = response.data.data;
+                deviceService.setZWAYSession(user.sid);
+                deviceService.setUser(user);
+                //$window.location.reload();
+            }, function (error) {
+                $scope.loading = false;
+                var message = $scope._t('error_load_data');
+                if (error.status == 401) {
+                    message = $scope._t('error_load_user');
+                }
+                alertify.alertError(message);
+            });
         }
-        console.log("event",event);
-        console.log("next",next);
-        console.log("current",current);
-
-    });
+        console.log(event);
+        console.log(current);
+    });*/
 
     $scope.naviExpanded = {};
     /**
@@ -367,6 +367,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
                 cfg.route.time.timestamp += (cfg.interval < 1000 ? 1 : cfg.interval/1000)
                 cfg.route.time.string = $filter('setTimeFromBox')(cfg.route.time.timestamp)
             };
+            cfg.zwavecfg.time_zone = response.data.data.localTimeZone;
             $scope.timeZoneInterval = $interval(refresh, $scope.cfg.interval);
         }, function (error) {});
 

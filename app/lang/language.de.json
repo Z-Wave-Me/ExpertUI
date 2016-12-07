@@ -1,4 +1,8 @@
 {
+ "proccess_take":"Please be patient. This process will take __val__ __level__ to complete.",
+ "nif_request_info":"NIF request info",
+ "error_nif_request":"Unable to send a NIF request",
+ "seconds":"Sekunden",
  "leave": "Leave",
  "iam_in":"I am in",
  "device_404": "There are no devices available",

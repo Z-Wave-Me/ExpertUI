@@ -45,7 +45,7 @@ appController.controller('DataHolderController', function ($scope, $timeout,$int
      */
     $scope.storeNetworkName = function(input,spin) {
         $scope.toggleRowSpinner(spin);
-        dataService.postApi('store_url', null, 'controller.data.homeName.value="'+input+'"').then(function (response) {
+        dataService.postApi('store_url', null, 'controller.data.homeName.value="'+input.replace(/\"/g, '\'')+'"').then(function (response) {
             $scope.save();
         }, function (error) {
             $scope.toggleRowSpinner();
@@ -59,7 +59,7 @@ appController.controller('DataHolderController', function ($scope, $timeout,$int
      */
     $scope.storeNotes = function(input,spin) {
         $scope.toggleRowSpinner(spin);
-        dataService.postApi('store_url', null, 'controller.data.homeNotes.value="'+input+'"').then(function (response) {
+        dataService.postApi('store_url', null, 'controller.data.homeNotes.value="'+input.replace(/\"/g, '\'')+'"').then(function (response) {
             $scope.save();
         }, function (error) {
             $scope.toggleRowSpinner();

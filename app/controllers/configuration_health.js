@@ -165,7 +165,7 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
         $scope.toggleRowSpinner(id);
         var data = {"nodeId": $scope.deviceId};
         dataService.postApi('checklinks', data).then(function (response) {
-            var runtime = parseInt(response.data.data.runtime) * 1000;
+            var runtime = parseInt(response.data.runtime) * 1000;
             alertify.alertWarning($scope._t('proccess_take',{__val__:runtime,__level__:$scope._t('seconds')}));
             $timeout($scope.toggleRowSpinner, runtime);
         }, function (error) {

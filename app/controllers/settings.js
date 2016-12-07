@@ -49,37 +49,27 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
      */
     $scope.storeSettings = function(input) {
         $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin', message: $scope._t('updating')};
-        /*
-        console.log(input);
-        var tz_changed = false;
-        console.log(cfg.zwavecfg.time_zone);
-        if(input.time_zone != cfg.zwavecfg.time_zone) {
-            tz_changed = true;
-        }*/
 
         dataService.postApi('configupdate_url', input).then(function (response) {
             //$scope.reloadData();
+            var data = {
+                "time_zone": input.time_zone
+            };
+            dataService.postApi('time_zone', data, null).then(function (response) {
+                $timeout( function() {
+                    $window.location.reload();
+                }, 10000);
 
-                    var data = {
-                        "time_zone": input.time_zone
-                    };
+                deviceService.showNotifier({message: $scope._t('update_successful')});
+                deviceService.showNotifier({message: $scope._t('reloading')});
+                $scope.loading = false;
 
-                    dataService.postApi('time_zone', data, null).then(function (response) {
-                        $timeout( function() {
-                            //console.log("reloading");
-                            $window.location.reload();
-                        }, 10000);
-                    }, function (error) {
-
-                        $scope.loading = false;
-                        alertify.alertError($scope._t('error_load_data'));
-                    });
-
-
-            deviceService.showNotifier({message: $scope._t('update_successful')});
-            //$window.location.reload();
-            $scope.reloadData();
+            }, function (error) {
+                $scope.loading = false;
+                alertify.alertError($scope._t('error_load_data'));
+            });
             $scope.loading = false;
+
         }, function (error) {
             $scope.loading = false;
             alertify.alertError($scope._t('error_update_data'));

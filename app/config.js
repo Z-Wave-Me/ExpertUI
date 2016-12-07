@@ -89,7 +89,7 @@ var config_data = {
             //Time format
             'time_format': '24',
             //Timezone
-            'time_zone': 'UTC',
+            'time_zone': '',
             //Notes
             'notes': ''
 
