@@ -119,6 +119,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
         $scope.controlDh.controller.isRealPrimary = ZWaveAPIData.controller.data.isRealPrimary.value;
         $scope.controlDh.controller.isSIS = ZWaveAPIData.controller.data.SISPresent.value;
         $scope.controlDh.controller.secureInclusion = ZWaveAPIData.controller.data.secureInclusion.value;
+        $scope.controlDh.input.sucSis = $scope.controlDh.input.sucSis || ZWaveAPIData.controller.data.nodeId.value;
     }
 
     /**
@@ -157,6 +158,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
             ;
 
         });
+
     }
 
     /**
