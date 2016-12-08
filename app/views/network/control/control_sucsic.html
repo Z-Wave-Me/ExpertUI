@@ -68,8 +68,7 @@
                 <select name="suc_sic_node" id="suc_sic_node" class="form-control"
                         ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
                   ng-model="controlDh.input.sucSis">
-                    <option ng-repeat="v in controlDh.nodes.sucSis track by $index" value="{{v}}"
-                    ng-selected="v == controlDh.controller.nodeId">{{v}}</option>
+                    <option ng-repeat="v in controlDh.nodes.sucSis track by $index" value="{{v}}">{{v}}</option>
             </select>
             <p>
         </div>
