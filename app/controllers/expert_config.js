@@ -38,14 +38,30 @@ appController.controller('ExpertConfigController', function ($scope, $timeout,$i
 });
 
 appController.controller('DataHolderController', function ($scope, $timeout,$interval, $location, cfg,dataService,deviceService) {
+    $scope.dataHolder = {
+        controller: {}
+    };
+    /**
+     * Load zwave data
+     */
+    $scope.loadZwaveData = function () {
+        dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
+            setControllerData(ZWaveAPIData);
+        }, function (error) {
+            alertify.alertError($scope._t('error_load_data'));
+        });
+    };
+    $scope.loadZwaveData();
 
     /**
      * Store networkname
      * @param {object} input
      */
     $scope.storeNetworkName = function(input,spin) {
+        var homeName = input.replace(/\"/g, '\'');
         $scope.toggleRowSpinner(spin);
-        dataService.postApi('store_url', null, 'controller.data.homeName.value="'+input.replace(/\"/g, '\'')+'"').then(function (response) {
+        dataService.postApi('store_url', null, 'controller.data.homeName.value="'+ homeName +'"').then(function (response) {
+            cfg.controller.homeName = homeName;
             $scope.save();
         }, function (error) {
             $scope.toggleRowSpinner();
@@ -78,5 +94,16 @@ appController.controller('DataHolderController', function ($scope, $timeout,$int
             alertify.alertError($scope._t('error_update_data'));
         });
     };
+
+    /// --- Private functions --- ///
+    /**
+     * Set controller data
+     * @param {object} ZWaveAPIData
+     */
+    function setControllerData(ZWaveAPIData) {
+       $scope.dataHolder.controller.homeName = ZWaveAPIData.controller.data.homeName.value || cfg.controller.homeName;
+        $scope.dataHolder.controller.homeNotes = ZWaveAPIData.controller.data.homeNotes;
+
+    }
 
 });

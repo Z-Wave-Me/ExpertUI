@@ -119,7 +119,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
         $scope.controlDh.controller.isRealPrimary = ZWaveAPIData.controller.data.isRealPrimary.value;
         $scope.controlDh.controller.isSIS = ZWaveAPIData.controller.data.SISPresent.value;
         $scope.controlDh.controller.secureInclusion = ZWaveAPIData.controller.data.secureInclusion.value;
-        $scope.controlDh.controller.homeName = ZWaveAPIData.controller.data.homeName.value || cfg.zwavecfg.network_name;
+        $scope.controlDh.controller.homeName = ZWaveAPIData.controller.data.homeName.value || cfg.controller.homeName;
         $scope.controlDh.input.sucSis = $scope.controlDh.input.sucSis || ZWaveAPIData.controller.data.nodeId.value;
     }
 
