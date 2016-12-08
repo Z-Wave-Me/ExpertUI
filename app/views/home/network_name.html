@@ -7,7 +7,7 @@
     </div>
     <!-- Text mode -->
     <div class="panel-body" ng-hide="goNetworkName">
-        {{boxData.controller.homeName}}
+        {{dataHolder.controller.homeName}}
         <button type="button" class="btn btn-default"
                 ng-class="goNetworkName ? 'active' : ''"
                 ng-click="goNetworkName = !goNetworkName">
@@ -18,12 +18,12 @@
     <!-- Edit mode -->
     <form name="form_network_name" id="form_network_name" class="form form-inline"
           ng-show="goNetworkName"
-          ng-submit="storeNetworkName(boxData.controller.homeName,'spinNetworkName')" novalidate>
+          ng-submit="storeNetworkName(dataHolder.controller.homeName,'spinNetworkName')" novalidate>
         <div class="panel-body">
             <input name="network_name" type="text" class="form-control"
                    placeholder="{{_t('network_name')}}"
-                   ng-model="boxData.controller.homeName"
-                   value="{{boxData.controller.homeName}}"/>
+                   ng-model="dataHolder.controller.homeName"
+                   value="{{dataHolder.controller.homeName}}"/>
         </div>
         <!-- Footer -->
         <div class="panel-footer text-right">
