@@ -1,19 +1,26 @@
 <!-- Enter / Leave different Networks -->
 <div class="panel panel-default" ng-controller="IncludeDifferentNetworkController">
+    <!--<pre>{{controlDh.controller|json}}</pre>-->
+
     <div class="panel-heading"><i class="fa fa-sitemap"></i> {{_t('nm_inc_into_nw')}}</div>
     <div class="panel-body">
         <!-- Not included in network -->
-        <div ng-if="controlDh.controller.isRealPrimary && (!controlDh.controller.hasDevices && controlDh.controller.controllerState == 0)">
+        <div ng-if="controlDh.controller.isRealPrimary && (!controlDh.controller.hasDevices)">
             <p class="input-help">{{_t('device_not_included_info')}}</p>
             <button
                     class="btn btn-primary"
                     id="btn_learn_start"
                     ng-disabled="rowSpinner['controller.SetLearnMode(1)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
-                    ng-click="includeToNetwork('controller.SetLearnMode(1)')"
-            > <bb-row-spinner
-                    spinner="rowSpinner['controller.SetLearnMode(1)']"
-                    label="_t('include_into_network')"
-                    icon="'fa-check'"></bb-row-spinner>
+                    ng-show="[9].indexOf(controlDh.controller.controllerState) == -1"
+                    ng-click="includeToNetwork('controller.SetLearnMode(1)')">
+                <i class="fa fa-check"></i> {{_t('include_into_network')}}
+            </button>
+            <button
+                    class="btn btn-danger"
+                    id="btn_learn_stop"
+                    ng-show="[9].indexOf(controlDh.controller.controllerState) > -1"
+                    ng-click="includeToNetwork('controller.SetLearnMode(0)')">
+                <i class="fa fa-spinner fa-spin"></i> {{_t('leave_network_stop')}}
             </button>
         </div>
         <!-- included in network - disabled-->
@@ -34,7 +41,7 @@
                     class="btn btn-danger"
                     id="btn_learn_stop"
                     ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
-                    ng-show="[9].indexOf(controlDh.controller.controllerState) == -1"
+                    ng-hide="[9].indexOf(controlDh.controller.controllerState) == -1"
                     ng-click="excludeFromNetwork('controller.SetLearnMode(1)',_t('before_leaving_network'))">
                 <i class="fa fa-check"></i> {{_t('leave_network') + ' ' + controlDh.controller.homeName}}
             </button>
