@@ -119,7 +119,18 @@ var config_data = {
             time: {
                 string: false,
                 timestamp: false
-            }
+            },
+
+
+        },
+        // Controller
+        controller: {
+            homeName: 'My DEFAULT network',
+            isRealPrimary: false,
+            homeId: 1,
+            homeIdHex: '#',
+            hasDevices: false
+
         },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer
