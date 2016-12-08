@@ -484,10 +484,10 @@ appController.controller('RequestNifAllController', function ($scope, $timeout, 
         $scope.toggleRowSpinner(spin);
         var cmd = 'devices[2].RequestNodeInformation()';
         var timeout = 1000;
-        dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
-            timeout *= 40;
+        dataService.runZwaveCmd(cfg.call_all_nif).then(function (response) {
+            timeout *= response.data.runtime;
             alertify.alertWarning($scope._t('proccess_take', {
-                __val__: timeout / 1000,
+                __val__: response.data.runtime,
                 __level__: $scope._t('seconds')
             }));
             $timeout($scope.toggleRowSpinner, timeout);
