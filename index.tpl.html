@@ -193,22 +193,22 @@
         </div><!-- /#main_navigation_wrap -->
     </div><!-- /#header -->
 
-    <!-- Installer Container -->
+    <!-- Ang Container -->
     <div class="container-installer" ng-if="cfg.app_type === 'installer' && getBodyId()">
-        <div class="alert alert-success" ng-if="cfg.controller.isRealPrimary && !cfg.controller.hasDevices"><i
+        <div class="alert alert-success" ng-if="boxData.controller.isRealPrimary && !boxData.controller.hasDevices"><i
                 class="fa fa-info-circle"></i> {{_t('ready_to_network')}}
         </div>
-        <div class="alert alert-warning" ng-if="cfg.controller.isRealPrimary && cfg.controller.hasDevices"><i
-                class="fa fa-check"></i> {{_t('iam_in')}} {{cfg.controller.homeName}}
+        <div class="alert alert-warning" ng-if="boxData.controller.isRealPrimary && boxData.controller.hasDevices"><i
+                class="fa fa-check"></i> {{_t('iam_in')}} {{boxData.controller.homeName}}
         </div>
-        <div class="alert alert-danger" ng-if="!cfg.controller.isRealPrimary"><i class="fa fa-info-circle"></i>
-            {{_t('iam_in_network_homeid')}}: {{cfg.controller.homeName}}
+        <div class="alert alert-danger" ng-if="!boxData.controller.isRealPrimary"><i class="fa fa-info-circle"></i>
+            {{_t('iam_in_network_homeid')}}: {{boxData.controller.homeName}}
         </div>
     </div>
     <!--<div id="respone_container" class="container">
         <div id="respone_container_inner"></div>
     </div>-->
-    <!-- Ang Container -->
+
     <div id="main_content" class="container">
         <div ng-if="cfg.route.fatalError.message">
             <div class="app-fatal-error">

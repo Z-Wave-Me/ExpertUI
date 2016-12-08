@@ -18,11 +18,11 @@
     <!-- Edit mode -->
     <form name="form_network_name" id="form_network_name" class="form form-inline"
           ng-show="goNetworkName"
-          ng-submit="storeNetworkName(cfg.controller.homeName,'spinNetworkName')" novalidate>
+          ng-submit="storeNetworkName(boxData.controller.homeName,'spinNetworkName')" novalidate>
         <div class="panel-body">
             <input name="network_name" type="text" class="form-control"
                    placeholder="{{_t('network_name')}}"
-                   ng-model="cfg.controller.homeName"
+                   ng-model="boxData.controller.homeName"
                    value="{{boxData.controller.homeName}}"/>
         </div>
         <!-- Footer -->
