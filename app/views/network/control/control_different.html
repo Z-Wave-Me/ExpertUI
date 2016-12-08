@@ -33,13 +33,17 @@
             <button
                     class="btn btn-danger"
                     id="btn_learn_stop"
-                    ng-disabled="rowSpinner['controller.SetLearnMode(1)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
-                    ng-click="excludeFromNetwork('controller.SetLearnMode(1)',_t('before_leaving_network'))"
-
-            >  <bb-row-spinner
-                    spinner="rowSpinner['controller.SetLearnMode(1)']"
-                    label="_t('leave_network') + ' ' + controlDh.controller.homeName"
-                    icon="'fa-check'"></bb-row-spinner>
+                    ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
+                    ng-show="[9].indexOf(controlDh.controller.controllerState) == -1"
+                    ng-click="excludeFromNetwork('controller.SetLearnMode(1)',_t('before_leaving_network'))">
+                <i class="fa fa-check"></i> {{_t('leave_network') + ' ' + controlDh.controller.homeName}}
+            </button>
+            <button
+                    class="btn btn-danger"
+                    id="btn_learn_stop"
+                    ng-show="[9].indexOf(controlDh.controller.controllerState) > -1"
+                    ng-click="includeToNetwork('controller.SetLearnMode(0)')">
+                <i class="fa fa-spinner fa-spin"></i> {{_t('leave_network_stop') + ' ' + controlDh.controller.homeName}}
             </button>
         </div>
     </div>

@@ -41,6 +41,7 @@
   "include_into_network": "Include into Network",
   "iam_in_network_homeid": "I am in Network",
   "leave_network": "Leave Network",
+  "leave_network_stop": "Stop leaving network",
   "nav_history": "Zniffer History",
   "enter_value": "Enter a value",
   "use_charcter_delimit": "Use character \",\" to delimit values",
