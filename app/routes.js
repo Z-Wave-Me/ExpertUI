@@ -99,7 +99,7 @@ angApp.config(['$routeProvider',
         }).// Network
         when('/network/control', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/network/control_' + config_data.cfg.app_type + '.html'
+            templateUrl: 'app/views/network/control/control_' + config_data.cfg.app_type + '.html'
         }).when('/network/routing', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/network/routing.html'

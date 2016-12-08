@@ -70,7 +70,6 @@
   "pakettype": "Pakettyp",
   "hexdata": "HEX",
   "nav_zniffer": "Zniffer",
-  "nav_installer": "Installer",
   "nav_installer": "Installateur",
   "postfix_missingid": "Die Produkt-ID des Geräts fehlt",
   "update_successful": "Daten wurden erfolgreich geupdatet",

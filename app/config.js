@@ -37,6 +37,7 @@ var config_data = {
         'rssi_chart': '/ZWaveAPI/RSSIGet', // chart of rssi channels 1 and 2
         'configget_url': '/ZWaveAPI/ExpertConfigGet', // Config get
         'configupdate_url': '/ZWaveAPI/ExpertConfigUpdate', // Config update
+        'call_all_nif': '/ZWaveAPI/CallForAllNIF', // Call niff for all devices
         'time': '/ZAutomation/api/v1/system/time/get',// Get time
         'time_zone': '/ZAutomation/api/v1/system/timezone', // Set time zone
         'login': '/ZAutomation/api/v1/login',// Get time
@@ -59,11 +60,11 @@ var config_data = {
         'page_results_history': 20, // List of languages
         'frequency': {
             0: 'EU',
-           1:' RU',
+            1:'RU',
             2:'IN',
             6: 'CN',
             10: 'MY',
-            4: 'ANZ_BR',
+            4: 'ANZ',
             5: 'HK',
             8: 'KR',
             7: 'JP',
