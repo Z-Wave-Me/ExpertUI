@@ -99,19 +99,25 @@ appController.controller('ControlController', function ($scope, $interval, $time
      */
     function setControllerData(ZWaveAPIData) {
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
-        var isRealPrimary = ZWaveAPIData.controller.data.isRealPrimary.value;
+        var nodeId = ZWaveAPIData.controller.data.nodeId.value;
         var hasSUC = ZWaveAPIData.controller.data.SUCNodeId.value;
         var hasDevices = Object.keys(ZWaveAPIData.devices).length;
 
-        // Custom controller settings
+
+
+        // Customsettings
         $scope.controlDh.controller.hasDevices = hasDevices < 2 ? false : true;
         $scope.controlDh.controller.disableSUCRequest = true;
         if (hasSUC && hasSUC != controllerNodeId) {
             $scope.controlDh.controller.disableSUCRequest = false;
         }
+        if ($scope.controlDh.nodes.sucSis.indexOf(nodeId) === -1) {
+            $scope.controlDh.input.sucSis = $scope.controlDh.input.sucSis || ZWaveAPIData.controller.data.nodeId.value;
+            $scope.controlDh.nodes.sucSis.push(nodeId);
+        }
 
         // Default controller settings
-        $scope.controlDh.controller.nodeId = ZWaveAPIData.controller.data.nodeId.value;
+        $scope.controlDh.controller.nodeId = nodeId;
         $scope.controlDh.controller.frequency = $filter('hasNode')(ZWaveAPIData, 'controller.data.frequency.value');
         $scope.controlDh.controller.controllerState = ZWaveAPIData.controller.data.controllerState.value;
         $scope.controlDh.controller.secureInclusion = ZWaveAPIData.controller.data.secureInclusion.value;
@@ -120,7 +126,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
         $scope.controlDh.controller.isSIS = ZWaveAPIData.controller.data.SISPresent.value;
         $scope.controlDh.controller.secureInclusion = ZWaveAPIData.controller.data.secureInclusion.value;
         $scope.controlDh.controller.homeName = ZWaveAPIData.controller.data.homeName.value || cfg.controller.homeName;
-        $scope.controlDh.input.sucSis = $scope.controlDh.input.sucSis || ZWaveAPIData.controller.data.nodeId.value;
+
     }
 
     /**
@@ -129,14 +135,14 @@ appController.controller('ControlController', function ($scope, $interval, $time
      */
     function setDeviceData(ZWaveAPIData) {
         angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
+            if (nodeId == 255 || nodeId == ZWaveAPIData.controller.data.nodeId.value || node.data.isVirtual.value) {
+                return;
+            }
             // SUC/SIS nodes
             if (node.data.basicType.value == 2) {
                 if ($scope.controlDh.nodes.sucSis.indexOf(nodeId) === -1) {
                     $scope.controlDh.nodes.sucSis.push(nodeId);
                 }
-            }
-            if (nodeId == 255 || nodeId == ZWaveAPIData.controller.data.nodeId.value || node.data.isVirtual.value) {
-                return;
             }
             // Devices
             if (!$scope.controlDh.nodes.all[nodeId]) {

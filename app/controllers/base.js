@@ -421,8 +421,6 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
         };
         $interval(refresh, 1000);
     };
-    $scope.loadBusyIndicator();
-   // console.log($location.path().split('/'))
     /**
      * Load common APIs
      */
@@ -430,7 +428,11 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
         $scope.loadZwaveConfig();
         $scope.setDongle();
         $scope.setTimeStamp();
-        $scope.loadBoxApiData();
+        if(cfg.app_type === 'installer'){
+            $scope.loadBusyIndicator();
+            $scope.loadBoxApiData();
+        }
+
     }
 
     /// --- Private functions --- ///
