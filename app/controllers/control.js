@@ -354,7 +354,7 @@ appController.controller('BackupRestoreController', function ($scope, $upload, $
  * @class ZwaveChipRebootResetController
  *
  */
-appController.controller('ZwaveChipRebootResetController', function ($scope) {
+appController.controller('ZwaveChipRebootResetController', function ($scope,$window) {
     /**
      * This function will perform a soft restart of the  firmware of the Z-Wave controller chip
      * without deleting any network information or setting.
@@ -371,6 +371,8 @@ appController.controller('ZwaveChipRebootResetController', function ($scope) {
      */
     $scope.setDefault = function (cmd) {
         $scope.runZwaveCmd(cmd);
+       // $scope.handleModal('restoreModal');
+        $window.location.reload();
     };
 });
 

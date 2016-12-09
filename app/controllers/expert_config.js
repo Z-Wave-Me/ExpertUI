@@ -105,7 +105,7 @@ appController.controller('DataHolderController', function ($scope, $timeout,$int
      */
     function setControllerData(ZWaveAPIData) {
        $scope.dataHolder.controller.homeName = ZWaveAPIData.controller.data.homeName.value || cfg.controller.homeName;
-        $scope.dataHolder.controller.homeNotes = ZWaveAPIData.controller.data.homeNotes;
+        $scope.dataHolder.controller.homeNotes = ZWaveAPIData.controller.data.homeNotes.value;
 
     }
 

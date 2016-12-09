@@ -10,7 +10,7 @@ var config_data = {
         'custom_ip': false,
         'user_field': 'USERXXXX',
         'pass_field': 'PSWDXXXX',
-        'interval': 3000, // Set interval in miliseconds to refresh data
+        'interval': 1000, // Set interval in miliseconds to refresh data
         'zniffer_interval': 3000, // Set interval in milisecondsfor zniffer
         'queue_interval': 1000, // Set interval in miliseconds to refresh queue data 
         'route_update_timeout': 15000, // Maximum time in miliseconds to wait for an update-route
@@ -31,11 +31,13 @@ var config_data = {
         'postfixadd_url': '/ZWaveAPI/PostfixAdd', // Postfix Add
         'postfixremove_url': '/ZWaveAPI/PostfixRemove', // Postfix Remove
         'firmwareupdate': '/ZAutomation/api/v1/system/webif-access',
+        'checklinks': '/ZWaveAPI/CheckAllLinks', // check link health
         'zniffer_url': '/ZWaveAPI/Zniffer', // Zniffer
         'communication_history_url': '/ZWaveAPI/CommunicationHistory', // Communication History
         'rssi_chart': '/ZWaveAPI/RSSIGet', // chart of rssi channels 1 and 2
         'configget_url': '/ZWaveAPI/ExpertConfigGet', // Config get
         'configupdate_url': '/ZWaveAPI/ExpertConfigUpdate', // Config update
+        'call_all_nif': '/ZWaveAPI/CallForAllNIF', // Call niff for all devices
         'time': '/ZAutomation/api/v1/system/time/get',// Get time
         'time_zone': '/ZAutomation/api/v1/system/timezone', // Set time zone
         'login': '/ZAutomation/api/v1/login',// Get time
@@ -58,11 +60,11 @@ var config_data = {
         'page_results_history': 20, // List of languages
         'frequency': {
             0: 'EU',
-           1:' RU',
+            1:'RU',
             2:'IN',
             6: 'CN',
             10: 'MY',
-            4: 'ANZ_BR',
+            4: 'ANZ',
             5: 'HK',
             8: 'KR',
             7: 'JP',
@@ -88,7 +90,7 @@ var config_data = {
             //Time format
             'time_format': '24',
             //Timezone
-            'time_zone': 'UTC',
+            'time_zone': '',
             //Notes
             'notes': ''
 
@@ -96,17 +98,14 @@ var config_data = {
         // busy_indicator
         'busy_indicator': {
             queueLength: 0,
-            noJobLength: 0,
-            arrCnt: {
-                v: 0,
-                s: 0,
-                d: 0
-            }
+            busyLength: 0,
+            result: 0,
+            arrCnt: {}
         },
         // Auth
         'auth': {
             'login': 'admin',
-            'password': 'installer'
+            'password': 'admin1'
         },
         // Date format list
         'date_format_list': ['dd.mm.yyyy','dd-mm-yyyy','yyyy-mm-dd','yyyy/mm/dd','mm/dd/yyyy'],
@@ -122,6 +121,14 @@ var config_data = {
                 timestamp: false
             }
         },
+    // Controller
+   controller: {
+     homeName: 'My network',
+     isRealPrimary: false,
+     homeId: 1,
+     homeIdHex: '#',
+     hasDevices: false
+   },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer
         'app_type': 'installer',

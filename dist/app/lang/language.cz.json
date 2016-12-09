@@ -1,4 +1,8 @@
 {
+  "proccess_take":"Please be patient. This process will take __val__ __level__ to complete.",
+  "nif_request_info":"NIF request info",
+  "error_nif_request":"Unable to send a NIF request",
+  "seconds":"seconds",
   "leave": "Leave",
   "iam_in":"I am in",
   "device_404": "There are no devices available",
@@ -40,6 +44,7 @@
   "include_into_network": "Include into Network",
   "iam_in_network_homeid": "I am in Network",
   "leave_network": "Leave Network",
+  "leave_network_stop": "Stop leaving Network",
   "nav_history": "Zniffer History",
   "enter_value": "Enter a value",
   "use_charcter_delimit": "Use character \",\" to delimit values",

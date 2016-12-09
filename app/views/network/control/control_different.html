@@ -39,7 +39,7 @@
                     class="btn btn-danger"
                     id="btn_learn_stop"
                     ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
-                    ng-hide="[9].indexOf(controlDh.controller.controllerState) == -1"
+                    ng-hide="[9].indexOf(controlDh.controller.controllerState) > -1"
                     ng-click="excludeFromNetwork('controller.SetLearnMode(1)',_t('before_leaving_network'))">
                 <i class="fa fa-check"></i> {{_t('leave_network') + ' ' + controlDh.controller.homeName}}
             </button>
