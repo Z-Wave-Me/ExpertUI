@@ -12,7 +12,7 @@ var appController = angular.module('appController', []);
  * The app base controller.
  * @class BaseController
  */
-appController.controller('BaseController', function ($scope, $rootScope, $cookies, $filter, $location, $anchorScroll, $window, $route, $interval,cfg, dataService, deviceService, myCache) {
+appController.controller('BaseController', function ($scope, $rootScope, $cookies, $filter, $location, $anchorScroll, $window, $route, $interval, $timeout, cfg, dataService, deviceService, myCache) {
     $scope.loading = false;
     $scope.alert = {message: false, status: 'is-hidden', icon: false};
 
@@ -297,6 +297,24 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     }
 
     /// --- Common APIs  --- ///
+    /**
+     * Run zwave command
+     * @param {string} cmd
+     * @param {int} timeout
+     */
+    $scope.runZwaveCmd = function (cmd, timeout) {
+        timeout = timeout || 1000;
+        $scope.toggleRowSpinner(cmd);
+        /*alertify.alertError('Running command ' + '\n' + cmd);
+         return;*/
+        dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
+            $timeout($scope.toggleRowSpinner, timeout);
+        }, function (error) {
+            $scope.toggleRowSpinner();
+            alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
+        });
+    };
+
     /**
      * Set zwave configuration
      * @returns {undefined}

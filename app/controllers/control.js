@@ -74,24 +74,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
         $scope.controlDh.interval = $interval(refresh, $scope.cfg.interval);
     };
 
-    /**
-     * Run zwave command
-     * @param {string} cmd
-     * @param {int} timeout
-     */
-    $scope.runZwaveCmd = function (cmd, timeout) {
-        timeout = timeout || 1000;
-        $scope.toggleRowSpinner(cmd);
-        /*alertify.alertError('Running command ' + '\n' + cmd);
-         return;*/
-        dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
-            $timeout($scope.toggleRowSpinner, timeout);
-        }, function (error) {
-            $scope.toggleRowSpinner();
-            alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
-        });
-    }
-    ;
+
     /// --- Private functions --- ///
     /**
      * Set controller data
@@ -503,6 +486,22 @@ appController.controller('RequestNifAllController', function ($scope, $timeout, 
             $scope.toggleRowSpinner();
             alertify.alertError($scope._t('error_nif_request'));
         });
+    };
+});
+
+/**
+ * This will call the Node Information Frame (NIF) from the controller.
+ * @class SendNodeInformationController
+ *
+ */
+appController.controller('SendNodeInformationController', function ($scope) {
+    /**
+     * Send NIF of the stick
+     * Parameter nodeId: Destination Node Id (NODE BROADCAST to send non-routed broadcast packet)
+     * @param {string} cmd
+     */
+    $scope.sendNodeInformation = function (cmd) {
+        $scope.runZwaveCmd(cmd);
     };
 });
 
