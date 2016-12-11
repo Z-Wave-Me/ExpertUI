@@ -109,13 +109,17 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             }
             if (0x85 in instance.commandClasses) {
                 for (var group = 0; group < instance.commandClasses[0x85].data.groups.value; group++) {
-                    dataService.runCmd('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x85].Get(' + (group + 1) + ')', false, $scope._t('error_handling_data'), true);
+                    if (instance.commandClasses[0x85].data[group + 1].max.value > 0) {
+                        dataService.runCmd('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x85].Get(' + (group + 1) + ')', false, $scope._t('error_handling_data'), true);    
+                    }
+                    
                 }
             }
             if (0x8e in instance.commandClasses) {
                 for (var group = 0; group < instance.commandClasses[0x8e].data.groups.value; group++) {
-                    dataService.runCmd('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x8e].Get(' + (group + 1) + ')', false, $scope._t('error_handling_data'), true);
-
+                    if (instance.commandClasses[0x8e].data[group + 1].max.value) {
+                        dataService.runCmd('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x8e].Get(' + (group + 1) + ')', false, $scope._t('error_handling_data'), true);
+                    }
                 }
             }
             $timeout(function() {
@@ -132,8 +136,8 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
     $scope.modalAssocAdd = function(group) {
         $scope.input.groupCfg = group;
         $scope.input.groupId = group.groupId;
-        $scope.assocAddDevices = [];
         // Prepare devices and nodes
+
         angular.forEach($scope.ZWaveAPIData.devices, function(node, nodeId) {
             if (nodeId == 255 || node.data.isVirtual.value || nodeId == $scope.deviceId) {
                 return;
@@ -515,7 +519,13 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                         timeClass: timeClass,
                         remaining: (data.max.value - $filter('unique')(nodeIds).length)
                     };
-                    assocGroups.push(obj);
+                    
+                    // Don't return groups that have 0 max nodes. Happens with Aspire RF devices
+                    // like the RFWC5
+                    if (max || data.max.value) {
+                        assocGroups.push(obj);
+                    }
+                    
                 }
             }
 
