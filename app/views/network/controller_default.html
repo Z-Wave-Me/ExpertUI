@@ -146,7 +146,7 @@
 
             <bb-row-spinner
                     spinner="rowSpinner['debugMode']"
-                    label="_t('Debug mode')"
+                    label="_t('debug_mode')"
                     icon="'fa-bug'">
             </bb-row-spinner>
             <!--<i class="fa fa-bug"></i> {{_t('Debug mode')}}-->
@@ -154,15 +154,15 @@
 
         <!-- ctrl_info_data  -->
         <button class="btn btn-default"
-                ng-controller="InterviewCommandController"
-                ng-click="showModal('#modal_controller', ZWaveAPIData.controller.data)">
+                ng-controller="DataHolderInfoController"
+                ng-click="dataHolderModal('dataHolderModal',$event, ZWaveAPIData.controller.data)">
             <i class="fa fa-clone"></i> {{_t('ctrl_info_data')}}
         </button>
 
         <!-- ctrl_info_device_data  -->
         <button class="btn btn-default"
-                ng-controller="InterviewCommandController"
-                ng-click="showModal('#modal_controller', ZWaveAPIData.devices[ZWaveAPIData.controller.data.nodeId.value].data)">
+                ng-controller="DataHolderInfoController"
+                ng-click="dataHolderModal('dataHolderModal',$event, ZWaveAPIData.devices[ZWaveAPIData.controller.data.nodeId.value].data)">
             <i class="fa fa-clone"></i> {{_t('ctrl_info_device_data')}}
         </button>
 
@@ -185,6 +185,26 @@
         </div>
         <div class="panel-body" ng-bind-html="funcList | toTrusted"></div>
     </div>
+
+    <!-- dataHolderModal -->
+    <div id="dataHolderModal" class="appmodal appmodal-100" ng-show="modalArr.dataHolderModal">
+        <div class="appmodal-in">
+            <div class="appmodal-header">
+                <span class="appmodal-close" ng-click="handleModal('dataHolderModal', $event)"><i
+                        class="fa fa-times"></i></span>
+                    <h3>{{_t('th_command_class')}}</h3>
+                </div>
+                <div class="appmodal-body modal-h-400">
+                    {{dataHolderInfo.all}}
+                </div>
+                <div class="appmodal-footer">
+                    <!-- Close -->
+                    <button type="button" class="btn btn-default" ng-click="handleModal('dataHolderModal', $event)">
+                        <i class="fa fa-times text-danger"></i> <span class="btn-name">{{_t('btn_cancel')}}</span>
+                    </button>
+                </div>
+        </div>
+    </div><!-- /#modal dataHolderModal -->
 
     <!-- Modal command -->
     <div class="modal fade" id="modal_controller" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"

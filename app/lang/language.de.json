@@ -1,4 +1,5 @@
 {
+ "debug_mode":"Debug mode",
  "proccess_take":"Please be patient. This process will take __val__ __level__ to complete.",
  "nif_request_info":"NIF request info",
  "error_nif_request":"Unable to send a NIF request",
