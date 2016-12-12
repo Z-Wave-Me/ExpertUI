@@ -1,4 +1,8 @@
 {
+  "make_restore":"Make restore from a previous backup",
+  "just_proceed":"Just proceed",
+  "detect_all_nodes":"Detect all nodes ( may take some minutes)",
+  "success_controller_include":"The controller was successfully included. Please select what do you want to do?",
   "debug_mode":"Debug mode",
   "proccess_take":"Please be patient. This process will take __val__ __level__ to complete.",
   "nif_request_info":"NIF request info",

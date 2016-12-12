@@ -35,11 +35,12 @@
                             {{ _t('linkquality')}}
                         </th>
                         <th class="mobile-show">
-                            <button class="btn btn-info" id="btn_test_all_1"
+                            <button class="btn btn-primary" id="btn_test_all_1"
                                     ng-if="health.device.hasPowerLevel"
                                     ng-click="testAllLinks('all_1')"
                                     ng-disabled="rowSpinner['all_1']">
                                 <bb-row-spinner
+                                        icon="'fa-check'"
                                         spinner="rowSpinner['all_1']"
                                         label="_t('test_all_links')">
                                 </bb-row-spinner>
@@ -76,21 +77,23 @@
                         </td>
                         <td data-title="" ng-switch on="v.deviceType">
                             <!-- Test node -->
-                            <button class="btn btn-primary" id="btn_test_{{ v.id}}"
+                            <button class="btn btn-default" id="btn_test_{{ v.id}}"
                                     ng-if="health.device.hasPowerLevel"
                                     ng-click="runZwaveCmd(v.cmdTestNode)"
                                     ng-disabled="rowSpinner[v.cmdTestNode]">
                                 <bb-row-spinner
+                                        icon="'fa-check text-success'"
                                         spinner="rowSpinner[v.cmdTestNode]"
                                         label="_t('test_link')">
                                 </bb-row-spinner>
                             </button>
                             <!-- NOP -->
-                            <button class="btn btn-info" id="btn_nop_{{ v.id}}"
+                            <button class="btn btn-default" id="btn_nop_{{ v.id}}"
                                     ng-if="!health.device.hasPowerLevel && v.type === 'static'" 
                                     ng-click="runZwaveNopCmd(v.cmdNop)"
                                     ng-disabled="rowSpinner[v.cmdNop]">
                                 <bb-row-spinner
+                                        icon="'fa-check text-success'"
                                         spinner="rowSpinner[v.cmdNop]"
                                         label="_t('nop')">
                                 </bb-row-spinner>
