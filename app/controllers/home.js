@@ -157,7 +157,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
     });*/
     
      // Run Zwave Command
-    $scope.runZwaveCmd = function (cmd,confirm) {
+    $scope.runZwaveCmdConfirm = function (cmd,confirm) {
         if(confirm){
             alertify.confirm(confirm, function () {
                 _runZwaveCmd(cmd);

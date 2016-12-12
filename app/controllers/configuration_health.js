@@ -107,7 +107,7 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
     };
 
     // Run Zwave Command
-    $scope.runZwaveCmd = function (cmd) {
+    /*$scope.runZwaveCmd = function (cmd) {
         $scope.toggleRowSpinner(cmd);
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
             $timeout($scope.toggleRowSpinner, 1000);
@@ -116,7 +116,7 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
             alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
             //$window.alert($scope._t('error_handling_data') + '\n' + cmd);
         });
-    };
+    };*/
     // Run Zwave NOP Command
     $scope.runZwaveNopCmd = function (cmd) {
         for (i = 0; i < 21; i++) {
