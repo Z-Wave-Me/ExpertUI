@@ -185,10 +185,15 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
      * @returns {undefined}
      */
     $scope.handleModal = function (key, $event, status) {
-        if (typeof status === 'boolean') {
+       if (typeof status === 'boolean') {
             $scope.modalArr[key] = status;
         } else {
-            $scope.modalArr[key] = !($scope.modalArr[key]);
+           if(key){
+               $scope.modalArr[key] = !($scope.modalArr[key]);
+           }else{
+               $scope.modalArr = {};
+           }
+
         }
         if($event){
             $event.stopPropagation();

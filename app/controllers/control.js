@@ -269,8 +269,22 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
      * Include to network
      * @param {string} cmd
      */
-    $scope.includeToNetwork = function (cmd) {
-        $scope.runZwaveCmd(cmd);
+    $scope.includeToNetwork = function (cmd,modal,$event) {
+        //$scope.runZwaveCmd(cmd);
+        var timeout = 1000;
+        $scope.toggleRowSpinner(cmd);
+        /*alertify.alertError('Running command ' + '\n' + cmd);
+         return;*/
+        dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
+            if(modal){
+                $scope.handleModal(modal, $event);
+            }
+            $timeout($scope.toggleRowSpinner, timeout);
+        }, function (error) {
+            $scope.toggleRowSpinner();
+            alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
+        });
+
     };
 
     /**
@@ -319,7 +333,8 @@ appController.controller('BackupRestoreController', function ($scope, $upload, $
             }).progress(function (evt) {
                 //$scope.restoreBackupStatus = 1;
             }).success(function (data, status, headers, config) {
-                $scope.handleModal('restoreModal');
+                //$scope.handleModal('restoreModal');
+                $scope.handleModal();
                 if (data && data.replace(/(<([^>]+)>)/ig, "") !== "null") {//Error
                     alertify.alertError($scope._t('restore_backup_failed'));
                     //$scope.restoreBackupStatus = 3;
@@ -329,7 +344,8 @@ appController.controller('BackupRestoreController', function ($scope, $upload, $
                     //$scope.restoreBackupStatus = 2;
                 }
             }).error(function (data, status) {
-                $scope.handleModal('restoreModal');
+                //$scope.handleModal('restoreModal');
+                $scope.handleModal();
                 alertify.alertError($scope._t('restore_backup_failed'));
                 //$scope.restoreBackupStatus = 3;
             });
