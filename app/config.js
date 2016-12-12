@@ -86,14 +86,51 @@ var config_data = {
             //Network name
             'network_name': 'My network',
             //Date format
-            'date_format': 'dd.mm.yyyy',
+            'date_format': 'yyyy-mm-dd',
             //Time format
-            'time_format': '24',
+            'time_format': '12',
             //Timezone
             'time_zone': '',
             //Notes
             'notes': ''
-
+        },
+        'lang_date_time_format': {
+            'en': {
+                'date_format': 'yyyy-mm-dd',
+                'time_format': '12'
+            },
+            'de': {
+                'date_format': 'dd.mm.yyyy',
+                'time_format': '24'
+            },
+            'fr': {
+                'date_format': 'dd/mm/yyyy',
+                'time_format': '24'
+            },
+            'es': {
+                'date_format': 'dd/mm/yyyy',
+                'time_format': '24'
+            },
+            'ru': {
+                'date_format': 'dd.mm.yyyy',
+                'time_format': '24'
+            },
+            'cz': {
+                'date_format': 'dd.mm.yyyy',
+                'time_format': '24'
+            },
+            'sk': {
+                'date_format': 'dd.mm.yyyy',
+                'time_format': '24'
+            },
+            'sv': {
+                'date_format': 'yyyy-mm-dd',
+                'time_format': '24'
+            },
+            'cn': {
+                'date_format': 'yyyy-mm-dd',
+                'time_format': '24'
+            }
         },
         // busy_indicator
         'busy_indicator': {
@@ -108,7 +145,7 @@ var config_data = {
             'password': 'admin1'
         },
         // Date format list
-        'date_format_list': ['dd.mm.yyyy','dd-mm-yyyy','yyyy-mm-dd','yyyy/mm/dd','mm/dd/yyyy'],
+        'date_format_list': ['dd.mm.yyyy','dd-mm-yyyy','yyyy-mm-dd','yyyy/mm/dd','mm/dd/yyyy', 'dd/mm/yyyy'],
         // Time format list
         'time_format_list': ['24','12'],
         // Timezone
