@@ -52,5 +52,57 @@
             </button>
         </div>
     </div>
+
+    <!-- successNetworkIncludeModal -->
+    <div id="successNetworkIncludeModal" class="appmodal" ng-if_="modalArr.successNetworkIncludeModal">
+        <div class="appmodal-in">
+            <div class="appmodal-header">
+                <span class="appmodal-close" ng-click="handleModal('successNetworkIncludeModal', $event);controlDh.input.failedBatteries = 0"><i
+                        class="fa fa-times"></i></span>
+                <h3>{{_t('include_into_network')}}</h3>
+            </div>
+            <div class="appmodal-body">
+                <div class="alert alert-success">
+                    <i class="fa fa-smile-o"></i> {{_t('success_controller_include')}}
+
+                </div>
+                <div class="cfg-block">
+                    <!-- restore -->
+                    <button class="btn btn-primary"
+                            ng-click="handleModal('restoreModal', $event)">
+                        <i class="fa fa-repeat"></i> {{_t('make_restore')}}
+                    </button>
+                </div>
+                <div class="cfg-block"  ng-controller="RequestNifAllController">
+                    <button class="btn btn-primary"
+                            id="btn_request_nif"
+                            ng-click="requestNifAll('requestNifAll')"
+                            ng-disabled="rowSpinner['requestNifAll']">
+
+                        <bb-row-spinner
+                                spinner="rowSpinner['requestNifAll']"
+                                label="_t('detect_all_nodes')"
+                                icon="'fa-search-plus'">
+                        </bb-row-spinner>
+                    </button>
+                </div>
+                <div class="cfg-block">
+                    <button type="button" class="btn btn-default" ng-click="handleModal('successNetworkIncludeModal', $event)">
+                        <i class="fa fa-times text-danger"></i> <span class="btn-name">{{_t('just_proceed')}}</span>
+                    </button>
+                </div>
+
+            </div>
+           <!-- <div class="appmodal-footer">
+                &lt;!&ndash; Close &ndash;&gt;
+                <button type="button" class="btn btn-default" ng-click="handleModal('successNetworkIncludeModal', $event)">
+                    <i class="fa fa-times text-danger"></i> <span class="btn-name">{{_t('btn_cancel')}}</span>
+                </button>
+            </div>-->
+        </div>
+    </div><!-- /#modal successNetworkIncludeModal -->
 </div>
+
+<!-- Backup and Restore -->
+<div ng-include="'app/views/network/control/control_restore_modal.html'"></div>
 

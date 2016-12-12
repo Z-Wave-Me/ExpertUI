@@ -330,7 +330,8 @@ appController.controller('BackupRestoreController', function ($scope, $upload, $
             }).progress(function (evt) {
                 //$scope.restoreBackupStatus = 1;
             }).success(function (data, status, headers, config) {
-                $scope.handleModal('restoreModal');
+                //$scope.handleModal('restoreModal');
+                $scope.handleModal();
                 if (data && data.replace(/(<([^>]+)>)/ig, "") !== "null") {//Error
                     alertify.alertError($scope._t('restore_backup_failed'));
                     //$scope.restoreBackupStatus = 3;
@@ -340,7 +341,8 @@ appController.controller('BackupRestoreController', function ($scope, $upload, $
                     //$scope.restoreBackupStatus = 2;
                 }
             }).error(function (data, status) {
-                $scope.handleModal('restoreModal');
+                //$scope.handleModal('restoreModal');
+                $scope.handleModal();
                 alertify.alertError($scope._t('restore_backup_failed'));
                 //$scope.restoreBackupStatus = 3;
             });
