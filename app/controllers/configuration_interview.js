@@ -8,8 +8,9 @@
  * @class ConfigInterviewController
  *
  */
-appController.controller('ConfigInterviewController', function ($scope, $routeParams, $route, $location, $cookies, $filter, $http, dataService, deviceService, myCache) {
+appController.controller('ConfigInterviewController', function ($scope, $routeParams, $route, $location, $cookies, $filter, $http,  $timeout,cfg,dataService, deviceService, myCache) {
     $scope.devices = [];
+    $scope.deviceName = '';
     $scope.deviceId = 0;
     $scope.activeTab = 'interview';
     $scope.activeUrl = 'configuration/interview/';
@@ -58,17 +59,43 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
     });
 
     /**
+     * Request NIF of a device
+     * Node Id to be requested for a NIF
+     * @param {string} cmd
+     */
+    $scope.requestNodeInformation = function (cmd) {
+        $scope.runZwaveCmd(cmd);
+    };
+
+    /**
+     * Purge all command classes and start interview based on device's NIF
+     * @param {string} cmd
+     */
+    $scope.interviewForce = function (cmd) {
+        $scope.runZwaveCmd(cmd);
+    };
+
+    /**
      * Rename Device action
      */
-    $scope.renameDevice = function (form) {
-        var deviceId = $scope.deviceId;
-        var givenName = $('#' + form + ' #device_name').val();
-        var cmd = 'devices[' + deviceId + '].data.givenName.value=\'' + givenName + '\'';
-        dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
-        $('#config_device_name').html(givenName);
-        $('#device_node_name').html(givenName);
-        $route.reload();
-        return;
+    $scope.renameDevice = function (deviceName,spin) {
+        var timeout = 1000;
+        //var deviceId = $scope.deviceId;
+        //var givenName = $('#' + form + ' #device_name').val();
+        var cmd = 'devices[' + $scope.deviceId + '].data.givenName.value=\'' + deviceName + '\'';
+        $scope.toggleRowSpinner(spin);
+        dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
+            $timeout(function(){
+                $scope.toggleRowSpinner();
+                $route.reload();
+
+            }, timeout);
+        }, function (error) {
+            $scope.toggleRowSpinner();
+            alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
+        });
+        /*$('#config_device_name').html(deviceName);
+        $('#device_node_name').html(deviceName);*/
     };
 
     // Store data on remote server

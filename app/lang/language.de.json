@@ -1,4 +1,8 @@
 {
+ "make_restore":"Make restore from a previous backup",
+ "just_proceed":"Just proceed",
+ "detect_all_nodes":"Detect all nodes ( may take some minutes)",
+ "success_controller_include":"The controller was successfully included. Please select what do you want to do?",
  "debug_mode":"Debug mode",
  "change_date_time_format": "Change date and time format to chosen language or keep current settings?",
  "z_way_restart": "Z-Way is restarted! Page will reload in __val__ __level__.",
