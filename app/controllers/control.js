@@ -269,8 +269,22 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
      * Include to network
      * @param {string} cmd
      */
-    $scope.includeToNetwork = function (cmd) {
-        $scope.runZwaveCmd(cmd);
+    $scope.includeToNetwork = function (cmd,modal,$event) {
+        //$scope.runZwaveCmd(cmd);
+        var timeout = 1000;
+        $scope.toggleRowSpinner(cmd);
+        /*alertify.alertError('Running command ' + '\n' + cmd);
+         return;*/
+        dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
+            if(modal){
+                $scope.handleModal(modal, $event);
+            }
+            $timeout($scope.toggleRowSpinner, timeout);
+        }, function (error) {
+            $scope.toggleRowSpinner();
+            alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
+        });
+
     };
 
     /**
