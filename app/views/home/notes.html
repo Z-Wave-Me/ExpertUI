@@ -20,7 +20,7 @@
     <!-- Edit mode -->
     <form name="form_notes" id="form_notes" class="form"
           ng-show="goNotes"
-          ng-submit="storeNotes(dataHolder.controller.homeNotes,'spinNotes')" novalidate>
+          ng-submit="storeNotes(dataHolder.controller.homeNotes,'spinNotes');goNotes = !goNotes" novalidate>
         <div class="panel-body">
             <textarea id="notes" class="form-control" rows="10"
                       ng-model="dataHolder.controller.homeNotes">{{dataHolder.controller.homeNotes}}

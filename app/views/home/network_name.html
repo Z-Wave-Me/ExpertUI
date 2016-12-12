@@ -18,7 +18,7 @@
     <!-- Edit mode -->
     <form name="form_network_name" id="form_network_name" class="form form-inline"
           ng-show="goNetworkName"
-          ng-submit="storeNetworkName(dataHolder.controller.homeName,'spinNetworkName')" novalidate>
+          ng-submit="storeNetworkName(dataHolder.controller.homeName,'spinNetworkName');goNetworkName = !goNetworkName" novalidate>
         <div class="panel-body">
             <input name="network_name" type="text" class="form-control"
                    placeholder="{{_t('network_name')}}"

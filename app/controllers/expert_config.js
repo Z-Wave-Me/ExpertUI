@@ -1,5 +1,5 @@
 /**
- * @overview This controller handles expert config data.
+ * @overview This controller handles data holder and expert config data.
  * @author Martin Vach
  */
 
@@ -37,6 +37,11 @@ appController.controller('ExpertConfigController', function ($scope, $timeout,$i
     };
 });
 
+/**
+ * Handles data holder.
+ * @class DataHolderController
+ *
+ */
 appController.controller('DataHolderController', function ($scope, $timeout,$interval, $location, cfg,dataService,deviceService) {
     $scope.dataHolder = {
         controller: {}
@@ -108,4 +113,67 @@ appController.controller('DataHolderController', function ($scope, $timeout,$int
         $scope.dataHolder.controller.homeNotes = ZWaveAPIData.controller.data.homeNotes.value.replace(/<br>/g, '\n' );
     }
 
+});
+
+/**
+ * Displays data holder info.
+ * @class DataHolderInfoController
+ *
+ */
+appController.controller('DataHolderInfoController', function($scope, $filter, deviceService) {
+    $scope.dataHolderInfo = {
+        all: {}
+    }
+    // Show modal dialog
+    $scope.dataHolderModal = function(target, $event, interviewCommands, ccId, type) {
+        var imodalId = '#' + target;
+        var interviewData = {};
+        var updateTime;
+        //$(target).modal();
+        if (type) {
+            angular.forEach(interviewCommands, function(v, k) {
+                if (v.ccId == ccId) {
+                    interviewData = v[type];
+                    updateTime = v.updateTime;
+                    return;
+                }
+            });
+        } else {
+            interviewData = interviewCommands;
+        }
+
+        // Get data
+        var html = deviceService.configGetCommandClass(interviewData, '/', '');
+
+        //$scope.dataHolderInfo.all =  deviceService.configGetCommandClass(interviewData, '/', '');
+        //console.log(html)
+        // Fill modal with data
+        $scope.handleModal(target, $event);
+        $(imodalId + ' .appmodal-body').html(html);
+    };
+
+    // Show modal dialog
+    $scope.showModal = function(target, interviewCommands, ccId, type) {
+        var interviewData = {};
+        var updateTime;
+        $(target).modal();
+        if (type) {
+            angular.forEach(interviewCommands, function(v, k) {
+                if (v.ccId == ccId) {
+                    interviewData = v[type];
+                    updateTime = v.updateTime;
+                    return;
+                }
+            });
+        } else {
+            interviewData = interviewCommands;
+        }
+        // Get data
+        var html = deviceService.configGetCommandClass(interviewData, '/', '');
+
+        // Fill modal with data
+        $(target).on('shown.bs.modal', function() {
+            $(target + ' .modal-body').html(html);
+        });
+    };
 });
