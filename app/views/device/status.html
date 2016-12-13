@@ -56,7 +56,7 @@
                         <bb-row-spinner
                                 spinner="rowSpinner['btn_ping_all_1']"
                                 label="_t('btn_checkall')"
-                                icon="'fa-check'">
+                                icon="'fa-circle-o'">
                         </bb-row-spinner>
                     </button>
                 </th>
@@ -94,7 +94,7 @@
                             ng-disabled="rowSpinner[v.urlToStore]">
                         <bb-row-spinner
                                 spinner="rowSpinner[v.urlToStore]"
-                                icon="'fa-check text-success'">
+                                icon="'fa-circle-o text-success'">
 
                         </bb-row-spinner>
                     </button>
@@ -139,7 +139,7 @@
                                 </td>
                                 <td data-title="{{_t('th_result')}}"
                                     ng-init="urlToForce = 'devices[' + deviceInfo.id + '].instances[' + v.iId + '].commandClasses[' +v.ccId+ '].Interview()'">
-                                    <span ng-if="v.interviewDone"><i class="fa fa-check text-success"></i></span>
+                                    <span ng-if="v.interviewDone"><i class="fa fa-circle-o text-success"></i></span>
                                     <button class="btn btn-default" id="btn_force_interview_{{v.ccId}}"
                                             ng-if="!v.interviewDone"
                                             ng-click="pingDevice(urlToForce)"

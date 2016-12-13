@@ -14860,14 +14860,22 @@ http://codepen.io/MattIn4D/pen/LiKFC
   overflow: auto;
 }
 
+/* Modal with 600 px h
+-------------------------------------------------- */
+/* line 90, ../sass/common/_modal.scss */
+.modal-h-600 {
+  max-height: 600px;
+  overflow: auto;
+}
+
 /* Modals - old bootstrap modal - will be removed
 -------------------------------------------------- */
-/* line 91, ../sass/common/_modal.scss */
+/* line 97, ../sass/common/_modal.scss */
 .modal-body {
   padding: 10px 10px 0 10px;
 }
 
-/* line 94, ../sass/common/_modal.scss */
+/* line 100, ../sass/common/_modal.scss */
 .cc-data-element {
   white-space: -moz-pre-wrap;
   /* Mozilla */
@@ -14886,7 +14894,7 @@ http://codepen.io/MattIn4D/pen/LiKFC
   word-break: break-all;
 }
 
-/* line 104, ../sass/common/_modal.scss */
+/* line 110, ../sass/common/_modal.scss */
 #modal_queue .modal-dialog {
   width: 60%;
 }

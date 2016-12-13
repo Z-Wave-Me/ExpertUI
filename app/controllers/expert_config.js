@@ -152,28 +152,4 @@ appController.controller('DataHolderInfoController', function($scope, $filter, d
         $(imodalId + ' .appmodal-body').html(html);
     };
 
-    // Show modal dialog
-    $scope.showModal = function(target, interviewCommands, ccId, type) {
-        var interviewData = {};
-        var updateTime;
-        $(target).modal();
-        if (type) {
-            angular.forEach(interviewCommands, function(v, k) {
-                if (v.ccId == ccId) {
-                    interviewData = v[type];
-                    updateTime = v.updateTime;
-                    return;
-                }
-            });
-        } else {
-            interviewData = interviewCommands;
-        }
-        // Get data
-        var html = deviceService.configGetCommandClass(interviewData, '/', '');
-
-        // Fill modal with data
-        $(target).on('shown.bs.modal', function() {
-            $(target + ' .modal-body').html(html);
-        });
-    };
 });
