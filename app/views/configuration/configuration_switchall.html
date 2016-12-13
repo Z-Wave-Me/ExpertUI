@@ -1,0 +1,38 @@
+<!-- switchall_cont -->
+<div class="cfg-block" id="switchall_cont" ng-if="switchAllCont">
+    <h4>{{_t('switchall_list')}}</h4>
+    <div class="cfg-block-content" ng-init="formName = 'form_switch_all'">
+        <form
+                name="{{formName}}"
+                id="{{formName}}"
+                class="form"
+                role="form"
+                ng-submit="submitApplyConfigCfg(formName,{'id': deviceId,'instance': '0','commandclass': '27','command': 'Set'}, switchAllCont, hasBattery)"
+                novalidate>
+            <a
+                    class="btn btn-primary spin-true"
+                    ng-click="updateFromDevice(switchAllCont.cmd + '.Get()', hasBattery, deviceId, formName)"
+            >{{_t('btn_update_from_device')}} </a>
+            <button
+                    type="submit"
+                    class="btn btn-info spin-true"
+            >{{_t('apply_config')}} </button>
+            <div class="cfg-control-content" ng-repeat="v in switchAllCont.params">
+                <div class="form-inline" >
+                    <expert-command-input
+                            collection='v'
+                            values='switchAllCont.values[0]'
+                            default_value='switchAllCont.defaultValue'
+                            curr_value='switchAllCont.configCconfigValue'
+                            name='switchAllCont.name'
+                            is_dropdown='1'
+                    ></expert-command-input>
+                </div>
+                <p class="cfg-info">
+                    <span class="is-updated-{{switchAllCont.isUpdated}}">{{_t('updated')}}: {{switchAllCont.updateTime}} </span>
+                    <span> | {{_t('default_value_is')}}: <config-default-value  collection='v' show_default_value='switchAllCont.showDefaultValue' default_value='switchAllCont.defaultValue'></config-default-value></span>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>

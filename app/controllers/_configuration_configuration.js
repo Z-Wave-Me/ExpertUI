@@ -62,6 +62,37 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
     };
     $scope.load($routeParams.nodeId);
 
+    // Load device description
+    $scope.loadDeviceDescription = function (nodeId) {
+        dataService.getSelectZDDX(nodeId, function (data) {
+            $scope.deviceZddx = data;
+        });
+
+    };
+    $scope.loadDeviceDescription($routeParams.nodeId);
+
+    // Change device select
+    $scope.changeDeviceSelect = function (selector, target, file) {
+        var imageFile = $(selector).find(':selected').data('image');
+        var image;
+        if (imageFile == undefined) {
+            image = $scope._t('no_device_image');
+        } else {
+            image = '<img src="' + imageFile + '" />';
+        }
+        $scope.modelSelectZddx = file;
+        $(target).html(image);
+    };
+
+    // Update device zddx file
+    $scope.runCmdDeviceSelect = function (nodeId) {
+        var cmd = 'devices[' + nodeId + '].LoadXMLFile("' + $scope.modelSelectZddx + '")';
+        dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
+        //$window.location.reload();
+        dataService.purgeCache();
+        $route.reload();
+    };
+
     // Refresh data
     $scope.refresh = function (nodeId) {
         dataService.joinedZwaveData(function (data) {

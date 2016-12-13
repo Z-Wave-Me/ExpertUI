@@ -1,0 +1,38 @@
+<!-- Generic configuration fom expert commands -->
+<div class="cfg-block"  ng-if="hasConfigurationCc.command" ng-controller="ConfigCommandsController">
+    <h4>{{hasConfigurationCc.commandClass}}</h4>
+    <div class="commands-data"
+         ng-repeat="c in hasConfigurationCc.command| orderBy:predicate:reverse"
+         ng-init="formName = 'form_' + c.data.method + '_' + v.rowId">
+
+        <form
+                name="{{formName}}"
+                id="{{formName}}"
+                class="form form_commands"
+                role="form"
+                ng-submit="submitExpertCommndsForm(formName, hasConfigurationCc.cmd + '.' + c.data.method)"
+                novalidate>
+            <div class="commands-data-control">
+                <div class="form-inline" ng-repeat="(pk,p) in c.data.params">
+                    <expert-command-input
+                            collection='p'
+                            values='c.data.values[pk]'
+                            devices='devices'
+                            name='c.data.method'
+                            get-node-devices='getNodeDevices'
+                    ></expert-command-input>
+                    <!-- {{pk}} {{p}}
+                    {{c.data.values[pk]}}-->
+
+                </div>
+                <button
+                        type="submit"
+                        class="btn btn-primary"
+                        id="btn_update_{{ v.rowId}}"
+                >{{c.data.method}}</button>
+            </div>
+
+
+        </form>
+    </div>
+</div>
