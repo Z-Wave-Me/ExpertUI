@@ -7,7 +7,7 @@
     <bb-loader></bb-loader>
     <form name="form_settings" id="form_settings" class="form form-page"
           ng-if_="cfg.app_type === 'installer'"
-          ng-submit="storeSettings(settings.input)" novalidate>
+          ng-submit="storeSettings(settings.input, cfg.zwavecfg)" novalidate>
         <fieldset>
             <!-- network name -->
             <div class="form-group form-inline">

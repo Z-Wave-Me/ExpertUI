@@ -49,8 +49,8 @@ var config_data = {
         'zddx_url': '/ZDDX/', // Url for zddx xml files
         'zddx_create_url': '/ZWaveAPI/CreateZDDX/', // Create zddx file
         'notes_url': '/config/notes.log', // Url for store notes data
-        'uzb_url': 'https://www.zwave.eu/api/expertui/uzb/', // Url for uzb data
-        'license_url': 'https://store.zwaveeurope.com/license/utility_uzb.php', // Url for license key
+        'uzb_url': 'https://service.z-wave.me/expertui/uzb/', // Url for uzb data
+		'license_url': 'https://service.z-wave.me/licence/upgrade.php', // Url for license key
         'buy_licence_key': 'https://www.z-wave.me/index.php?id=41', // Buy licence key url
         'raz_latest_version_url': 'https://razberry.z-wave.me/z-way/razberry/latest/VERSION', // Raz latest version
         'smarthome_login': '/smarthome/#/?fromexpert', // Smarthome login page
@@ -86,14 +86,51 @@ var config_data = {
             //Network name
             'network_name': 'My network',
             //Date format
-            'date_format': 'dd.mm.yyyy',
+            'date_format': 'yyyy-mm-dd',
             //Time format
-            'time_format': '24',
+            'time_format': '12',
             //Timezone
             'time_zone': '',
             //Notes
             'notes': ''
-
+        },
+        'lang_date_time_format': {
+            'en': {
+                'date_format': 'yyyy-mm-dd',
+                'time_format': '12'
+            },
+            'de': {
+                'date_format': 'dd.mm.yyyy',
+                'time_format': '24'
+            },
+            'fr': {
+                'date_format': 'dd/mm/yyyy',
+                'time_format': '24'
+            },
+            'es': {
+                'date_format': 'dd/mm/yyyy',
+                'time_format': '24'
+            },
+            'ru': {
+                'date_format': 'dd.mm.yyyy',
+                'time_format': '24'
+            },
+            'cz': {
+                'date_format': 'dd.mm.yyyy',
+                'time_format': '24'
+            },
+            'sk': {
+                'date_format': 'dd.mm.yyyy',
+                'time_format': '24'
+            },
+            'sv': {
+                'date_format': 'yyyy-mm-dd',
+                'time_format': '24'
+            },
+            'cn': {
+                'date_format': 'yyyy-mm-dd',
+                'time_format': '24'
+            }
         },
         // busy_indicator
         'busy_indicator': {
@@ -108,7 +145,7 @@ var config_data = {
             'password': 'admin1'
         },
         // Date format list
-        'date_format_list': ['dd.mm.yyyy','dd-mm-yyyy','yyyy-mm-dd','yyyy/mm/dd','mm/dd/yyyy'],
+        'date_format_list': ['dd.mm.yyyy','dd-mm-yyyy','yyyy-mm-dd','yyyy/mm/dd','mm/dd/yyyy', 'dd/mm/yyyy'],
         // Time format list
         'time_format_list': ['24','12'],
         // Timezone

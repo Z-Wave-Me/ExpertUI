@@ -6,7 +6,7 @@
  "success_controller_include":"The controller was successfully included. Please select what do you want to do?",
   "---": "---",
  "change_date_time_format": "Change date and time format to chosen language or keep current settings?",
- "z_way_restart": "Z-Way is restarted! Page will reload in __val__ __level__.",
+ "z_way_restart": "Z-Way is restarted! Redirect to homesite in __val__ __level__.",
  "proccess_take":"Please be patient. This process will take __val__ __level__ to complete.",
  "nif_request_info":"NIF request info",
  "error_nif_request":"Unable to send a NIF request",
