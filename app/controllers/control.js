@@ -164,7 +164,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
             deviceExcId = update['controller.data.lastExcludedDevice'].value;
         }
         if(!deviceIncId && !deviceExcId){
-            console.log('Not Exclude/Include')
+            //console.log('Not Exclude/Include')
             return;
         }
         /**

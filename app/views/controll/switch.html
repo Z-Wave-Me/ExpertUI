@@ -38,19 +38,19 @@
                     </a>
                 </th>
                 <th class="mobile-show">
-                    <button class="btn btn-info" id="btn_update_all_1"
+                    <button class="btn btn-primary" id="btn_update_all_1"
                             ng-click="updateAllSwitches('all_1','urlToStore')"
                             ng-disabled="rowSpinner['all_1']">
                         <bb-row-spinner
                                 spinner="rowSpinner['all_1']"
                                 label="_t('switches_update_all')"
-                                icon="'fa-check'">
+                                icon="'fa-circle-o'">
                         </bb-row-spinner>
                     </button>
                 </th>
                 <th class="mobile-show">
                     <div class="btn-group" style="min-width: 150px !important;">
-                        <button class="btn btn-info" id="btn_all_of"
+                        <button class="btn btn-primary" id="btn_all_of"
                                 ng-click="updateAllSwitches('btn_all_of','urlToOff')"
                                 ng-disabled="rowSpinner['btn_all_of']">
                             <bb-row-spinner
@@ -60,7 +60,7 @@
 
                             </bb-row-spinner>
                         </button>
-                        <button class="btn btn-info" id="btn_all_on"
+                        <button class="btn btn-primary" id="btn_all_on"
                                 ng-click="updateAllSwitches('btn_all_on','urlToOn')"
                                 ng-disabled="rowSpinner['btn_all_on']">
                             <bb-row-spinner
@@ -100,7 +100,7 @@
                         <bb-row-spinner
                                 spinner="rowSpinner[v.urlToStore]"
                                 label=" _t('update')"
-                                icon="'fa-check text-success'">
+                                icon="'fa-circle-o text-success'">
 
                         </bb-row-spinner>
                     </button>

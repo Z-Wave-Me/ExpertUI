@@ -8,8 +8,9 @@
  * @class ConfigInterviewController
  *
  */
-appController.controller('ConfigInterviewController', function ($scope, $routeParams, $route, $location, $cookies, $filter, $http, dataService, deviceService, myCache) {
+appController.controller('ConfigInterviewController', function ($scope, $routeParams, $route, $location, $cookies, $filter, $http,  $timeout,cfg,dataService, deviceService, myCache) {
     $scope.devices = [];
+    $scope.deviceName = '';
     $scope.deviceId = 0;
     $scope.activeTab = 'interview';
     $scope.activeUrl = 'configuration/interview/';
@@ -25,6 +26,10 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         dataService.getZwaveData(function (ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
+            if(_.isEmpty($scope.devices)){
+                $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                return;
+            }
             var node = ZWaveAPIData.devices[nodeId];
             if (!node || deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
@@ -58,27 +63,94 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
     });
 
     /**
+     * Request NIF of a device
+     * Node Id to be requested for a NIF
+     * @param {string} cmd
+     */
+    $scope.requestNodeInformation = function (cmd) {
+        $scope.runZwaveCmd(cmd);
+    };
+
+    /**
+     * Purge all command classes and start interview based on device's NIF
+     * @param {string} cmd
+     */
+    $scope.interviewForce = function (cmd) {
+        $scope.runZwaveCmd(cmd);
+    };
+
+    /**
+     * Purge all command classes and start interview for a device
+     * @param {string} cmd
+     */
+    $scope.interviewForceDevice = function (cmd) {
+        $scope.runZwaveCmd(cmd);
+    };
+
+    /**
+     * Show modal CommandClass dialog
+     * @param target
+     * @param $event
+     * @param instanceId
+     * @param ccId
+     * @param type
+     */
+    $scope.handleCmdClassModal= function (target, $event,instanceId, ccId, type) {
+        var node = $scope.ZWaveAPIData.devices[$routeParams.nodeId];
+        var ccData;
+        switch (type) {
+            case 'cmdData':
+                ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.commandClasses.' + ccId + '.data');
+                break;
+            case 'cmdDataIn':
+                ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.data');
+                break;
+            default:
+                ccData = $filter('hasNode')(node, 'data');
+                break;
+        }
+        var cc = deviceService.configGetCommandClass(ccData, '/', '');
+
+        $scope.commandClass = deviceService.configSetCommandClass(cc);
+        $scope.handleModal(target, $event);
+        //$(target).modal();
+    };
+
+    /**
      * Rename Device action
      */
-    $scope.renameDevice = function (form) {
-        var deviceId = $scope.deviceId;
-        var givenName = $('#' + form + ' #device_name').val();
-        var cmd = 'devices[' + deviceId + '].data.givenName.value=\'' + givenName + '\'';
-        dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
-        $('#config_device_name').html(givenName);
-        $('#device_node_name').html(givenName);
-        $route.reload();
-        return;
+    $scope.renameDevice = function (deviceName,spin) {
+        var timeout = 1000;
+        //var deviceId = $scope.deviceId;
+        //var givenName = $('#' + form + ' #device_name').val();
+        var cmd = 'devices[' + $scope.deviceId + '].data.givenName.value=\'' + deviceName + '\'';
+        $scope.toggleRowSpinner(spin);
+        dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
+            $timeout(function(){
+                $scope.toggleRowSpinner();
+                $route.reload();
+
+            }, timeout);
+        }, function (error) {
+            $scope.toggleRowSpinner();
+            alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
+        });
+        /*$('#config_device_name').html(deviceName);
+        $('#device_node_name').html(deviceName);*/
     };
 
+
+
+    // todo: DEPRECATED
     // Store data on remote server
-    $scope.store = function (v) {
+    /*$scope.store = function (v) {
         var url = 'devices[' + $scope.deviceId + '].instances[' + v.iId + '].commandClasses[' + v.ccId + '].Interview()';
         dataService.runCmd(url);
-    };
+    };*/
 
+    // todo: DEPRECATED
     // Show modal CommandClass dialog
-    $scope.showModalCommandClass = function (target, instanceId, ccId, type) {
+    /*$scope.showModalCommandClass = function (target, instanceId, ccId, type) {
         var node = $scope.ZWaveAPIData.devices[$routeParams.nodeId];
         var ccData;
         switch (type) {
@@ -96,24 +168,27 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
 
         $scope.commandClass = deviceService.configSetCommandClass(cc);
         $(target).modal();
-    };
+    };*/
 
+    // todo: deprecated
     // Show modal dialog
-    $scope.showModalInterview = function (target) {
+    /*$scope.showModalInterview = function (target) {
         $(target).modal();
-    };
+    };*/
 
+    // todo: deprecated
     // Show modal device select dialog
-    $scope.showModalDeviceSelect = function (target, nodeId, alert) {
+    /*$scope.showModalDeviceSelect = function (target, nodeId, alert) {
         dataService.getSelectZDDX(nodeId, function (data) {
             $scope.deviceZddx = data;
         }, alert);
         $(target).modal();
 
-    };
+    };*/
 
+    // todo: deprecated
     // Change device select
-    $scope.changeDeviceSelect = function (selector, target, file) {
+   /* $scope.changeDeviceSelect = function (selector, target, file) {
         var imageFile = $(selector).find(':selected').data('image');
         var image;
         if (imageFile == undefined) {
@@ -123,21 +198,23 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         }
         $scope.modelSelectZddx = file;
         $(target).html(image);
-    };
+    };*/
 
+    // todo: deprecated
     // Run cmd
-    $scope.runCmd = function (cmd) {
+   /* $scope.runCmd = function (cmd) {
         dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
-    };
+    };*/
 
+    // todo: deprecated
     // Update device zddx file
-    $scope.runCmdDeviceSelect = function (nodeId) {
+    /*$scope.runCmdDeviceSelect = function (nodeId) {
         var cmd = 'devices[' + nodeId + '].LoadXMLFile("' + $scope.modelSelectZddx + '")';
         dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
         dataService.purgeCache();
         dataService.cancelZwaveDataInterval();
         $scope.load(nodeId);
-    };
+    };*/
 
     /// --- Private functions --- ///
     /**

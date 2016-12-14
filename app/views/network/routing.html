@@ -12,13 +12,13 @@
                 <th ng-repeat="v in routings.all" style="text-align:center;">{{v.id}}</th>
 
                 <th class="mobile-show td-action">
-                    <button class="btn btn-info" id="btn_update_all_1"
+                    <button class="btn btn-primary" id="btn_update_all_1"
                             ng-click="updateAllRoutess('all_1','urlToStore')"
                             ng-disabled="rowSpinner['all_1']">
                         <bb-row-spinner
                                 spinner="rowSpinner['all_1']"
                                 label="_t('switches_update_all')"
-                                icon="'fa-check'">
+                                icon="'fa-circle-o'">
                         </bb-row-spinner>
                     </button>
                 </th>
@@ -54,7 +54,7 @@
                         <bb-row-spinner
                                 spinner="rowSpinner[v.urlToStore]"
                                 label=" _t('update')"
-                                icon="'fa-check text-success'">
+                                icon="'fa-circle-o text-success'">
 
                         </bb-row-spinner>
                     </button>

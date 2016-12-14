@@ -58,7 +58,7 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
 
             // Success - zwaveData
             if (zwaveData.state === 'fulfilled') {
-                console.log(zwaveData.value)
+                //console.log(zwaveData.value)
                 setData(zwaveData.value);
                 if(_.isEmpty($scope.devices.all)){
                     $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};

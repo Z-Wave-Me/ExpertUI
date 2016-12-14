@@ -1,0 +1,19 @@
+<!-- interviewModal -->
+<div id="cmdClassModal" class="appmodal" ng-show="modalArr.cmdClassModal">
+    <div class="appmodal-in">
+        <div class="appmodal-header">
+                <span class="appmodal-close" ng-click="handleModal('cmdClassModal', $event)"><i
+                        class="fa fa-times"></i></span>
+            <h3>{{_t('th_command_class')}}</h3>
+        </div>
+        <div class="appmodal-body modal-h-600">
+            <div ng-bind-html="commandClass|toTrusted"></div>
+        </div>
+        <div class="appmodal-footer">
+            <!-- Close -->
+            <button type="button" class="btn btn-default" ng-click="handleModal('cmdClassModal', $event)">
+                <i class="fa fa-times text-danger"></i> <span class="btn-name">{{_t('btn_cancel')}}</span>
+            </button>
+        </div>
+    </div>
+</div><!-- /#modal cmdClassModal -->
