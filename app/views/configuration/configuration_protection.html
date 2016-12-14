@@ -2,21 +2,32 @@
 <div class="cfg-block" id="protection_cont" ng-if="protectionCont">
     <h4>{{_t('protection_list')}}</h4>
     <div class="cfg-block-content" ng-init="formName = 'form_protection_list'">
-        <form
-                name="{{formName}}"
-                id="{{formName}}"
-                class="form"
-                role="form"
-                ng-submit="submitApplyConfigCfg(formName,{'id': deviceId,'instance': '0','commandclass': '75','command': 'Set'}, protectionCont, hasBattery)"
+        <form name="{{formName}}" id="{{formName}}" class="form"
+                ng-submit="submitApplyConfigCfg(formName,{'id': deviceId,'instance': '0','commandclass': '75','command': 'Set'}, protectionCont, hasBattery,false,false,false,'saveIntoDeviceProtection')"
                 novalidate>
-            <a
-                    class="btn btn-primary spin-true"
-                    ng-click="updateFromDevice(protectionCont.cmd + '.Get()', hasBattery, deviceId, formName)"
-            >{{_t('btn_update_from_device')}} </a>
-            <button
-                    type="submit"
-                    class="btn btn-info spin-true"
-            >{{_t('apply_config')}} </button>
+
+            <div class="text-right">
+                <!-- update from device -->
+                <button class="btn btn-primary" type="button"
+                        ng-click="uupdateFromDevice(protectionCont.cmd + '.Get()', hasBattery, deviceId, formName,'updateFromDeviceProtection')"
+                        ng-disabled="rowSpinner['updateFromDeviceProtection']">
+                    <bb-row-spinner
+                            spinner="rowSpinner['updateFromDeviceProtection']"
+                            label="_t('btn_update_from_device')"
+                            icon="'fa-files-o'">
+                    </bb-row-spinner>
+                </button>
+
+                <!-- save into device -->
+                <button class="btn btn-primary" type="submit"
+                        ng-disabled="rowSpinner['saveIntoDeviceProtection']">
+                    <bb-row-spinner
+                            spinner="rowSpinner['saveIntoDeviceProtection']"
+                            label="_t('apply_config')"
+                            icon="'fa-save'">
+                    </bb-row-spinner>
+                </button>
+            </div>
             <div class="cfg-control-content" ng-repeat="v in protectionCont.params">
                 <div class="form-inline" >
                     <expert-command-input

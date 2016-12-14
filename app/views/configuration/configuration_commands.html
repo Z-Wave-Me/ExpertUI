@@ -10,7 +10,7 @@
                 id="{{formName}}"
                 class="form form_commands"
                 role="form"
-                ng-submit="submitExpertCommndsForm(formName, hasConfigurationCc.cmd + '.' + c.data.method)"
+                ng-submit="storeExpertCommnds(formName, hasConfigurationCc.cmd + '.' + c.data.method)"
                 novalidate>
             <div class="commands-data-control">
                 <div class="form-inline" ng-repeat="(pk,p) in c.data.params">
@@ -25,11 +25,14 @@
                     {{c.data.values[pk]}}-->
 
                 </div>
-                <button
-                        type="submit"
-                        class="btn btn-primary"
-                        id="btn_update_{{ v.rowId}}"
-                >{{c.data.method}}</button>
+                <button class="btn btn-primary" type="submit"
+                        ng-disabled="rowSpinner[hasConfigurationCc.cmd + '.' + c.data.method]">
+                    <bb-row-spinner
+                            spinner="rowSpinner[hasConfigurationCc.cmd + '.' + c.data.method]"
+                            label="c.data.method"
+                            icon="'fa-circle-o'">
+                    </bb-row-spinner>
+                </button>
             </div>
 
 
