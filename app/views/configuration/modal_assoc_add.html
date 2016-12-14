@@ -1,0 +1,40 @@
+<!-- assocAddModal -->
+<div id="assocAddModal" class="appmodal" ng-show="modalArr.assocAddModal">
+    <div class="appmodal-in">
+        <div class="appmodal-header">
+                <span class="appmodal-close" ng-click="closeAssocModal()"><i
+                        class="fa fa-times"></i></span>
+            <h3>{{_t('th_command_class')}}</h3>
+        </div>
+        <div class="appmodal-body modal-h-600" style="white-space: normal;">
+            <div class="form-inline">
+                {{ _t('fro')}} {{nodeCfg.name}} {{ _t('to_locate')}} <br/>
+                <div class="form-group">
+                    <select class="form-control" ng-model="input.toNode"  ng-change="showAssocNodeInstance(input.toNode,nodeCfg.hasMca)">
+                        <option value=""  ng-selected="true">&lt; {{ _t('assoc_select_to_node')}} &gt;</option>
+                        <option ng-repeat="v in assocAddDevices track by $index" value="{{v.id}}">(#{{v.id}}) {{v.name}}</option>
+                    </select>
+                </div>
+                <div class="form-group" ng-if="nodeCfg.hasMca && assocAddInstances">
+                    <select class="form-control" ng-model="input.toInstance">
+                        <option value="" ng-selected="true">&lt; {{ _t('assoc_select_to_instance')}} &gt;</option>
+                        <option value="plain" ng-selected="true">{{ _t('plain_association')}}</option>
+                        <option ng-repeat="v in assocAddInstances track by $index" value="{{v.key}}">{{v.val}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="appmodal-footer">
+            <!-- Close -->
+            <button type="button" class="btn btn-default" ng-click="closeAssocModal()">
+                <i class="fa fa-times text-danger"></i> <span class="btn-name">{{_t('btn_cancel')}}</span>
+            </button>
+            <!-- Add  -->
+            <button type="submit" class="btn btn-primary"
+                    ng-click="storeAssoc(input)"
+                    ng-disabled="!input.toNode || ((assocAddInstances) && !input.toInstance)">
+                <i class="fa fa-circle-o"></i> <span class="btn-name">{{ _t('dialog_add')}}</span>
+            </button>
+        </div>
+    </div>
+</div><!-- /#modal assocAddModal -->

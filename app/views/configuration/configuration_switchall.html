@@ -5,7 +5,7 @@
         <form name="{{formName}}" id="{{formName}}" class="form"
                 ng-submit="submitApplyConfigCfg(formName,{'id': deviceId,'instance': '0','commandclass': '27','command': 'Set'}, switchAllCont, hasBattery,false,false,false,'saveIntoDeviceSwitchall')" novalidate>
 
-            <div class="text-right">
+            <div>
                 <!-- update from device -->
                 <button class="btn btn-primary" type="button"
                         ng-click="updateFromDevice(switchAllCont.cmd + '.Get()', hasBattery, deviceId, formName,'updateFromDeviceSwitchall')"

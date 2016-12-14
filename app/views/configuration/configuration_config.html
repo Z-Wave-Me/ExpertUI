@@ -9,7 +9,7 @@
     <form name="{{formName}}" id="{{formName}}" class="form"
             ng-submit="submitApplyConfigCfg(formName,{'id': deviceId,'instance': '0','commandclass': '70','command': 'Set'}, configCont, hasBattery,false,false,false,'saveIntoDevice')"
             novalidate>
-        <div class="cfg-block text-right">
+        <div class="cfg-block">
             <!-- update from device -->
             <button class="btn btn-primary" type="button"
                     ng-click="updateFromDeviceCfg('devices[' + deviceId + '].instances[0].commandClasses[0x70].Get', configCont, deviceId, formName,'updateFromDevice')"
@@ -67,7 +67,7 @@
             <p ng-if="v.description">
                 <i class="fa fa-info-circle fa-lg text-primary"></i> <em>{{v.description}}</em>
             </p>
-            <div class="text-right">
+            <div>
             <!-- set this param -->
             <button class="btn btn-default" type="button"
                     ng-click="submitApplyConfigCfg(formName, {'id': deviceId, 'instance': '0', 'commandclass': '70', 'command': 'Set'}, configCont, hasBattery, v.confNum,false,false,'save_' + v.confNum)"

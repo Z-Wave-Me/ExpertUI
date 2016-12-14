@@ -4,23 +4,31 @@
     <div ng-include="'app/views/configuration/header.html'"></div>
 
     <div class="tab-content" ng-show="deviceId">
-        <div class="page-header"><h1 class="text-danger">{{ _t('associations_list')}}</h1></div>
+        <div class="page-header"><h1>{{ _t('associations_list')}}</h1></div>
         <div class="alert" ng-if="alert.message" ng-class="alert.status">
         <i class="fa fa-lg" ng-class="alert.icon"></i> <span ng-bind="alert.message"></span>
     </div>
        <!-- ////////////////////////////////////////////////////////////////////////////////////// -->
         <!-- Assoc design -->
         <div class="table-responsive" ng-if="assocGroups.length > 0">
-            <button 
-            type="button" 
-            class="btn btn-primary spin-true"
-            id="btn_update_from_device"
-            ng-click="updateFromDevice('#btn_update_from_device')" 
-            >{{_t('update_from_device')}} </button>
+            <!-- update from device -->
+            <button class="btn btn-primary" type="button"
+                    ng-click="updateFromDevice('updateFromDevice')"
+                    ng-disabled="rowSpinner['updateFromDevice']">
+                <bb-row-spinner
+                        spinner="rowSpinner['updateFromDevice']"
+                        label="_t('btn_update_from_device')"
+                        icon="'fa-files-o'">
+                </bb-row-spinner>
+            </button>
+            <!--<button type="button" class="btn btn-primary spin-true" id="btn_update_from_device"
+            ng-click="updateFromDevice('#btn_update_from_device')">
+                {{_t('update_from_device')}}
+            </button>-->
         <br/><br/>
-        <div class="alert alert-warning" ng-if="nodeCfg.hasBattery && nodeCfg.notAwake.length > 0"><i class="fa fa-info-circle text-warning"></i> {{_t('conf_apply_battery')}}</div>
-          <!--<p class="text-alert-list" ng-if="nodeCfg.hasBattery"><i class="fa fa-exclamation-triangle text-danger"></i>  {{_t('device_changed_configuration_battery')}}</p>-->
-        <!--<p class="text-alert-list" ng-if="!nodeCfg.hasBattery"><i class="fa fa-exclamation-triangle text-danger"></i>  {{_t('device_changed_configuration')}}</p>-->
+        <div class="alert alert-warning" ng-if="nodeCfg.hasBattery && nodeCfg.notAwake.length > 0">
+            <i class="fa fa-info-circle text-warning"></i> {{_t('conf_apply_battery')}}
+        </div>
         <table class="table table-striped_ table-condensed">
                 <tbody>
                     <tr ng-repeat="v in assocGroups track by $index">
@@ -47,13 +55,16 @@
                             <p class="text-alert-list" ng-if="v.remaining < 1"><i class="fa fa-exclamation-circle text-warning"></i>  {{_t('assoc_max_nodes_reached')}}</p>
                             
                         </td>
-                        <td  class="association-action" style="text-align: right; width: 20%;"> 
-                            <button type="button" 
-                                    class="btn btn-primary" id="myId"
-                                    data-toggle="modal" 
-                                    ng-click="modalAssocAdd(v)" 
-                                    data-target="#modal_assoc_add" 
-                                    ng-if="v.remaining > 0"><span>+</span></button>
+                        <td class="association-action" style="text-align: right; width: 20%;">
+                            <button class="btn btn-primary" type="button"
+                                    ng-if="v.remaining > 0"
+                                    ng-click="handleAssocModal('assocAddModal',$event,v)"
+                                    ng-disabled="rowSpinner['group_' + v.groupId]">
+                                <bb-row-spinner
+                                        spinner="rowSpinner['group_' + v.groupId]"
+                                        icon="'fa-plus'">
+                                </bb-row-spinner>
+                            </button>
                         </td>
                     </tr>
                     <tr>
@@ -70,7 +81,8 @@
             </table>
         </div>
         <!-- ////////////////////////////////////////////////////////////////////////////////////// -->
-
+        <!-- assocAddModal -->
+        <div ng-include="'app/views/configuration/modal_assoc_add.html'"></div>
         <!-- Modal add -->
         <div class="modal fade" id="modal_assoc_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">

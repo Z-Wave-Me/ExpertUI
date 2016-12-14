@@ -4,7 +4,7 @@
     <div class="cfg-block-content" ng-init="formName = 'form_wakeup'">
         <form name="{{formName}}" id="{{formName}}" class="form"
                 ng-submit="submitApplyConfigCfg(formName,{'id': deviceId,'instance': '0','commandclass': '84','command': 'Set'}, wakeupCont, hasBattery,false,false,false,'saveIntoDeviceWakeup')" novalidate>
-            <div class="text-right">
+            <div>
                <!-- update from device -->
                 <button class="btn btn-primary" type="button"
                         ng-click="updateFromDevice(wakeupCont.cmd + '.Get()', hasBattery, deviceId, formName,'updateFromDeviceWakeup')"
