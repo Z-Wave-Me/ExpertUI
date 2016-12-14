@@ -15,12 +15,11 @@
             <tbody>
                 <tr ng-repeat="(k,v) in commands | orderBy:predicate:reverse" id="{{ v.nodeId}}">
                     <td data-title="{{_t('th_instance')}}" ng-class="($index == 0 ? 'no-class' : 'mobile-hide')">
-                        <!--<a href="" ng-controller="InterviewCommandController" ng-click="showModal('#modal_expert_commands', interviewCommands, v.ccId, 'cmdDataIn')">{{v.instanceId}}</a> &nbsp;-->
-                         <a href="" ng-click="showModal('#modal_command_class',v.instanceId, $index, v.ccId, 'cmdDataIn')">{{v.instanceId}}</a> &nbsp;
+                        <button class="btn btn-default" ng-click="handleCmdClassModal('cmdClassModal',$event,v.instanceId, $index, v.ccId, 'cmdDataIn')">{{v.instanceId}}</button> &nbsp;
+
                     </td>
                     <td data-title="{{_t('th_command_class')}}">
-                         <!--<a class="btn btn-info" href="" ng-controller="InterviewCommandController" ng-click="showModal('#modal_expert_commands', interviewCommands, v.ccId, 'cmdData')">{{v.commandClass}}</a> &nbsp;-->
-                        <a class="btn btn-info" href="" ng-click="showModal('#modal_command_class',v.instanceId,$index,v.ccId, 'cmdData')">{{v.commandClass}}</a>&nbsp;
+                        <button class="btn btn-default" href="" ng-click="handleCmdClassModal('cmdClassModal',$event,v.instanceId,$index,v.ccId, 'cmdData')">{{v.commandClass}}</button>&nbsp;
                     </td>
                     <td data-title="{{_t('th_command_param')}}">
                         <div class="commands-data" ng-repeat="c in v.command| orderBy:predicate:reverse" ng-init="formName = 'form_' + c.data.method + '_' + v.rowId">
@@ -29,7 +28,7 @@
                                 id="{{formName}}"
                                 class="form form_commands" 
                                 role="form"
-                                ng-submit="submitExpertCommndsForm(formName, v.cmd + '.' + c.data.method)" 
+                                ng-submit="storeExpertCommnds(formName, v.cmd + '.' + c.data.method)"
                                 novalidate>
                                 <div class="commands-data-control">
                                     <div class="form-inline" ng-repeat="(pk,p) in c.data.params">
@@ -44,11 +43,14 @@
                                         {{c.data.values[pk]}}-->
 
                                     </div>
-                                    <button
-                                        type="submit"
-                                        class="btn btn-primary" 
-                                        id="btn_update_{{ v.rowId}}"
-                                        >{{c.data.method}}</button>
+                                    <button class="btn btn-primary" type="submit"
+                                            ng-disabled="rowSpinner[v.cmd + '.' + c.data.method]">
+                                        <bb-row-spinner
+                                                spinner="rowSpinner[v.cmd + '.' + c.data.method]"
+                                                label="c.data.method"
+                                                icon="'fa-circle-o'">
+                                        </bb-row-spinner>
+                                    </button>
                                 </div>
 
 
@@ -60,6 +62,9 @@
             </tbody>
         </table>
     </div>
+
+    <!-- Modal Command class -->
+    <div ng-include="'app/views/configuration/modal_cmdclass.html'"></div>
     
      <!-- Modal CommandClass -->
     <div class="modal fade" id="modal_command_class" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

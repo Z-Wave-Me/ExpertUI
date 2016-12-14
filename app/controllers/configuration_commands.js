@@ -19,6 +19,13 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
 
     $cookies.tab_config = $scope.activeTab;
 
+    /**
+     * Cancel interval on page destroy
+     */
+    $scope.$on('$destroy', function() {
+        dataService.cancelZwaveDataInterval();
+    });
+
     // Load data
     $scope.load = function (nodeId) {
         dataService.getZwaveData(function (ZWaveAPIData) {
@@ -114,9 +121,10 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
     };
 
     /**
+     * todo: deprecated
      * Submit expert commands form
      */
-    $scope.submitExpertCommndsForm = function (form, cmd) {
+    /*$scope.submitExpertCommndsForm = function (form, cmd) {
         var data = $('#' + form).serializeArray();
         var dataJoined = [];
         angular.forEach(data, function (v, k) {
@@ -136,11 +144,12 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
             //$scope.refresh = false;
         }, 10000);
         return;
-    };
+    };*/
 
-    // Show modal dialog
-    $scope.showModal = function (target, instanceId, index, ccId, type) {
-        console.log('Showing modal')
+    /**
+     * Show modal CommandClass dialog
+     */
+    $scope.handleCmdClassModal= function (target, $event,instanceId, index, ccId, type) {
         var node = $scope.ZWaveAPIData.devices[$routeParams.nodeId];
         var ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.data');
 
@@ -168,13 +177,58 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
                 $scope.commandClass = deviceService.configSetCommandClass(deviceService.configGetCommandClass(newCc, '/', ''), data.joined.updateTime);
             }
         });
+        $scope.handleModal(target, $event);
+        //$(target).modal();
+    };
+    /**
+     * Watch for the modal closing
+     */
+    $scope.$watchCollection('modalArr', function (modalArr) {
+        if(_.has(modalArr, 'cmdClassModal') && !modalArr['cmdClassModal']){
+            dataService.cancelZwaveDataInterval();
+            console.log(modalArr['cmdClassModal'])
+        }
+
+    });
+
+    // todo: deprecated
+    // Show modal dialog
+    /*$scope.showModal = function (target, instanceId, index, ccId, type) {
+        console.log('Showing modal')
+        var node = $scope.ZWaveAPIData.devices[$routeParams.nodeId];
+        var ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.data');
+
+        if (type == 'cmdData') {
+            ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.commandClasses.' + ccId + '.data');
+        }
+        var cc = deviceService.configGetCommandClass(ccData, '/', '');
+
+        $scope.commandClass = deviceService.configSetCommandClass(cc, $scope.commands[index]['updateTime']);
+        /!**
+         * Refresh data
+         *!/
+        dataService.joinedZwaveData(function (data) {
+            node = data.joined.devices[$routeParams.nodeId];
+            //console.log(node.instances)
+            var newCc = $filter('hasNode')(node, 'instances.' + instanceId + '.data');
+            if (type == 'cmdData') {
+                newCc = $filter('hasNode')(node, 'instances.' + instanceId + '.commandClasses.' + ccId + '.data');
+            }
+
+            if (newCc) {
+                if (JSON.stringify(ccData) === JSON.stringify(newCc)) {
+                    return;
+                }
+                $scope.commandClass = deviceService.configSetCommandClass(deviceService.configGetCommandClass(newCc, '/', ''), data.joined.updateTime);
+            }
+        });
         $(target).modal();
     };
     // Show modal dialog
     $scope.hideModal = function () {
         dataService.cancelZwaveDataInterval();
 
-    };
+    };*/
 
     /// --- Private functions --- ///
 
