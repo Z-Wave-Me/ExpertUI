@@ -1,0 +1,50 @@
+<!-- protection_cont -->
+<div class="cfg-block" id="protection_cont" ng-if="protectionCont">
+    <h4>{{_t('protection_list')}}</h4>
+    <div class="cfg-block-content" ng-init="formName = 'form_protection_list'">
+        <form name="{{formName}}" id="{{formName}}" class="form"
+                ng-submit="submitApplyConfigCfg(formName,{'id': deviceId,'instance': '0','commandclass': '75','command': 'Set'}, protectionCont, hasBattery,false,false,false,'saveIntoDeviceProtection')"
+                novalidate>
+
+            <div class="text-right">
+                <!-- update from device -->
+                <button class="btn btn-primary" type="button"
+                        ng-click="uupdateFromDevice(protectionCont.cmd + '.Get()', hasBattery, deviceId, formName,'updateFromDeviceProtection')"
+                        ng-disabled="rowSpinner['updateFromDeviceProtection']">
+                    <bb-row-spinner
+                            spinner="rowSpinner['updateFromDeviceProtection']"
+                            label="_t('btn_update_from_device')"
+                            icon="'fa-files-o'">
+                    </bb-row-spinner>
+                </button>
+
+                <!-- save into device -->
+                <button class="btn btn-primary" type="submit"
+                        ng-disabled="rowSpinner['saveIntoDeviceProtection']">
+                    <bb-row-spinner
+                            spinner="rowSpinner['saveIntoDeviceProtection']"
+                            label="_t('apply_config')"
+                            icon="'fa-save'">
+                    </bb-row-spinner>
+                </button>
+            </div>
+            <div class="cfg-control-content" ng-repeat="v in protectionCont.params">
+                <div class="form-inline" >
+                    <expert-command-input
+                            collection='v'
+                            values='protectionCont.values[0]'
+                            default_value='protectionCont.defaultValue'
+                            curr_value='protectionCont.configCconfigValue'
+                            name='protectionCont.name'
+                            is_dropdown='1'
+                    ></expert-command-input>
+                </div>
+                <p class="cfg-info">
+                    <span class="is-updated-{{protectionCont.isUpdated}}">{{_t('updated')}}: {{protectionCont.updateTime}} </span>
+                    <span> | {{_t('default_value_is')}}: <config-default-value  collection='v' show_default_value='protectionCont.showDefaultValue' default_value='protectionCont.defaultValue'></config-default-value></span>
+                </p>
+            </div>
+        </form>
+
+    </div>
+</div>

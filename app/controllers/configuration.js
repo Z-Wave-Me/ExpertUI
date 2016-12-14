@@ -33,7 +33,7 @@ appController.controller('ConfigRedirectController', function ($routeParams, $lo
  * @class LoadDeviceXmlController
  *
  */
-appController.controller('LoadDeviceXmlController', function($scope,$routeParams, $timeout,cfg, dataService) {
+appController.controller('LoadDeviceXmlController', function($scope,$routeParams, $timeout,$window,cfg, dataService) {
     $scope.deviceXml = {
         all: [],
         find: [],
@@ -81,7 +81,8 @@ appController.controller('LoadDeviceXmlController', function($scope,$routeParams
             $timeout(function(){
                 $scope.toggleRowSpinner();
                 $scope.handleModal();
-                $scope.reloadData();
+                //$scope.reloadData();
+                $window.location.reload();
             }, timeout);
         }, function (error) {
             $scope.toggleRowSpinner();

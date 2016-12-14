@@ -1,0 +1,95 @@
+<!-- config_cont -->
+<!--<div class="cfg-block" id="config_cont" ng-if="configCont">
+
+           <h4>{{_t('configurations_list')}}</h4>
+           <div class="alert-list">
+       <p class="text-danger text-alert-list" ng-repeat="v in configCont" ng-if="v.configCconfigValue != v.configZwaveValue">{{v.label}}: {{_t('value_changed_to')}} <strong config-value-title collection='v' show_value='v.configCconfigValue'></strong> {{_t('value_not_stored_indevice')}}</p>
+   </div> -->
+<div class="cfg-block-content"  ng-if="configCont" ng-init="formName = 'form_config'">
+    <form name="{{formName}}" id="{{formName}}" class="form"
+            ng-submit="submitApplyConfigCfg(formName,{'id': deviceId,'instance': '0','commandclass': '70','command': 'Set'}, configCont, hasBattery,false,false,false,'saveIntoDevice')"
+            novalidate>
+        <div class="cfg-block text-right">
+            <!-- update from device -->
+            <button class="btn btn-primary" type="button"
+                    ng-click="updateFromDeviceCfg('devices[' + deviceId + '].instances[0].commandClasses[0x70].Get', configCont, deviceId, formName,'updateFromDevice')"
+                    ng-disabled="rowSpinner['updateFromDevice']">
+                <bb-row-spinner
+                        spinner="rowSpinner['updateFromDevice']"
+                        label="_t('btn_update_from_device')"
+                        icon="'fa-files-o'">
+                </bb-row-spinner>
+            </button>
+
+            <!-- save into device -->
+            <button class="btn btn-primary" type="submit"
+                    ng-disabled="rowSpinner['saveIntoDevice']">
+                <bb-row-spinner
+                        spinner="rowSpinner['saveIntoDevice']"
+                        label="_t('apply_config')"
+                        icon="'fa-save'">
+                </bb-row-spinner>
+            </button>
+
+            <!-- set all to default -->
+            <button class="btn btn-primary" type="button"
+                    ng-click="setAllToDefault({'id': deviceId, 'instance': '0', 'commandclass': '70', 'command': 'Set'}, configCont, hasBattery, formName,'allToDefault')"
+                    ng-disabled="rowSpinner['allToDefault']">
+                <bb-row-spinner
+                        spinner="rowSpinner['allToDefault']"
+                        label="_t('set_all_default')"
+                        icon="'fa-undo'">
+                </bb-row-spinner>
+            </button>
+        </div>
+        <div class="cfg-control-content" id="cfg_control_{{v.confNum}}" ng-repeat="v in configCont">
+
+            <div class="form-inline">
+                <expert-command-input
+                        collection='v'
+                        div_id='$index'
+                        default_value='v.defaultValue'
+                        show_default_value='v.showDefaultValue'
+                        curr_value='v.configCconfigValue'
+                ></expert-command-input>
+            </div>
+            <div class="text-danger text-alert" ng-if="v.configCconfigValue != v.configZwaveValue" title="Val: {{v.configCconfigValue}} | Device: {{v.configZwaveValue}}"><i class="fa fa-exclamation-triangle"></i> {{_t('value_changed_to')}} <strong>{{v.configCconfigValue}}</strong> {{_t('value_not_stored_indevice')}}</div>
+            <p class="cfg-info">
+
+                <span class="is-updated-{{v.isUpdated}}">{{_t('rt_header_update_time')}}: {{v.updateTime}}</span>
+
+                <span> | {{_t('set_value')}}: {{v.configCconfigValue}}</span>
+
+                <span> | {{_t('default_value_is')}}: <config-default-value collection='v' show_default_value='v.showDefaultValue' default_value='v.defaultValue'></config-default-value>
+                        </span>
+            </p>
+            <br />
+            <p ng-if="v.description">
+                <i class="fa fa-info-circle fa-lg text-primary"></i> <em>{{v.description}}</em>
+            </p>
+            <div class="text-right">
+            <!-- set this param -->
+            <button class="btn btn-default" type="button"
+                    ng-click="submitApplyConfigCfg(formName, {'id': deviceId, 'instance': '0', 'commandclass': '70', 'command': 'Set'}, configCont, hasBattery, v.confNum,false,false,'save_' + v.confNum)"
+                    ng-disabled="rowSpinner['save_' + v.confNum]">
+                <bb-row-spinner
+                        spinner="rowSpinner['save_' + v.confNum]"
+                        label="_t('apply_config_into_device')"
+                        icon="'fa-save text-success'">
+                </bb-row-spinner>
+            </button>
+
+            <!-- set to default -->
+            <button class="btn btn-default" type="button"
+                    ng-click="submitApplyConfigCfg(formName, {'id': deviceId, 'instance': '0', 'commandclass': '70', 'command': 'Set'}, configCont, hasBattery, v.confNum, {confNum: v.confNum, showDefaultValue: v.showDefaultValue},false,'default_' + v.confNum)"
+                    ng-disabled="rowSpinner['default_' + v.confNum]">
+                <bb-row-spinner
+                        spinner="rowSpinner['default_' + v.confNum]"
+                        label="_t('set_to_default')"
+                        icon="'fa-undo text-success'">
+                </bb-row-spinner>
+            </button>
+            </div>
+        </div>
+    </form>
+</div>

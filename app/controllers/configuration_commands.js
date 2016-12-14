@@ -8,7 +8,7 @@
  * @class ConfigCommandsController
  *
  */
-appController.controller('ConfigCommandsController', function ($scope, $routeParams, $location, $cookies, $timeout, $filter, dataService, deviceService, _) {
+appController.controller('ConfigCommandsController', function ($scope, $routeParams, $location, $cookies, $timeout, $filter, cfg,dataService, deviceService, _) {
     $scope.devices = [];
     $scope.commands = [];
     $scope.interviewCommands;
@@ -89,6 +89,29 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
         });
     };
     $scope.refresh();
+
+    /**
+     * Store expert commands
+     */
+    $scope.storeExpertCommnds = function (form, cmd) {
+        $scope.toggleRowSpinner(cmd);
+        var data = $('#' + form).serializeArray();
+        var dataJoined = [];
+        angular.forEach(data, function (v, k) {
+            if (v.value === 'N/A') {
+                return;
+            }
+            dataJoined.push($filter('setConfigValue')(v.value));
+
+        });
+        var request = cmd + '(' + dataJoined.join() + ')';
+         dataService.runZwaveCmd(cfg.store_url + request).then(function (response) {
+            $timeout($scope.toggleRowSpinner, 3000);
+        }, function (error) {
+            alertify.alertError($scope._t('error_update_data') + '\n' + cmd);
+            $scope.toggleRowSpinner();
+        });
+    };
 
     /**
      * Submit expert commands form
