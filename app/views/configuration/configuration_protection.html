@@ -6,7 +6,7 @@
                 ng-submit="submitApplyConfigCfg(formName,{'id': deviceId,'instance': '0','commandclass': '75','command': 'Set'}, protectionCont, hasBattery,false,false,false,'saveIntoDeviceProtection')"
                 novalidate>
 
-            <div class="text-right">
+            <div>
                 <!-- update from device -->
                 <button class="btn btn-primary" type="button"
                         ng-click="uupdateFromDevice(protectionCont.cmd + '.Get()', hasBattery, deviceId, formName,'updateFromDeviceProtection')"

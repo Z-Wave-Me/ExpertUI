@@ -65,39 +65,4 @@
 
     <!-- Modal Command class -->
     <div ng-include="'app/views/configuration/modal_cmdclass.html'"></div>
-    
-     <!-- Modal CommandClass -->
-    <div class="modal fade" id="modal_command_class" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="hideModal()">&times;</button>
-                    <h4 class="modal-title">{{_t('commandClass')}}</h4>
-                </div>
-                <div class="modal-body" ng-bind-html="commandClass|toTrusted">
-                    <p>{{interviewCommands[0].updateTime}}</p>
-                    {{commandClass}}
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="hideModal()">{{_t('btn_cancel')}}</button>
-                </div>
-            </div>
-        </div>
-    </div><!-- /.Modal -->
-
-    <!-- Modal debugging -->
-    <div class="modal fade" id="modal_expert_commands" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">{{_t('commandClass')}}</h4>
-                </div>
-                <div class="modal-body"></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{{_t('btn_cancel')}}</button>
-                </div>
-            </div>
-        </div>
-    </div><!-- /.Modal -->
 </div><!-- /ng-controler -->
