@@ -13375,6 +13375,13 @@ a:focus {
   width: 100%;
 }
 
+/* Progress bar
+-------------------------------------------------- */
+/* line 289, ../sass/common/_body.scss */
+.progress {
+  margin-bottom: 0;
+}
+
 /* Header
 -------------------------------------------------- */
 /* line 3, ../sass/common/_header.scss */

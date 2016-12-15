@@ -273,13 +273,10 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
         //$scope.runZwaveCmd(cmd);
         var timeout = 1000;
         $scope.toggleRowSpinner(cmd);
-        /*alertify.alertError('Running command ' + '\n' + cmd);
-         return;*/
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
             $timeout($scope.toggleRowSpinner, timeout);
             if(modal){
                 $scope.handleModal(modal, $event);
-                //$window.location.reload();
             }
         }, function (error) {
             $scope.toggleRowSpinner();

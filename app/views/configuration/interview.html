@@ -30,10 +30,11 @@
                     <div class="table-responsive_">
                         <table class="table table-striped table-condensed table-cfg-interview">
                             <tbody>
-                            <tr ng-repeat="v in descriptionCont" ng-show="v.val || v.val != ''">
+                            <tr ng-repeat="v in descriptionCont" ng-hide="v.val === '' || v.val === false || v.val === null">
                                 <th>{{_t(v.key)}}</th>
                                 <td id="{{v.key}}">
                                     <div ng-switch on="v.key">
+                                        <!-- command_class -->
                                         <div ng-switch-when="command_class">
                                          <span ng-repeat="cc in interviewCommands">
                                              <a href=""
@@ -43,10 +44,27 @@
                                          </span>
 
                                         </div>
-                                        <p class="config-interview-val" ng-switch-default
-                                           ng-bind-html="v.val | toTrusted"></p>
+                                        <!-- default -->
+                                        <div class="config-interview-val" ng-switch-default
+                                           ng-bind-html="v.val | toTrusted"></div>
                                     </div>
                                 </td>
+                            </tr>
+                            <tr>
+                                <th>{{_t('device_interview_indicator')}}</th>
+                                <td>
+                                    <!--<div class="text-danger" ng-if="zwaveInterview.progress < 1">
+                                        {{_t('device_interview_stage_failed')}}
+                                    </div>-->
+                                    <div class="progress" ng-if_="zwaveInterview.progress > 0 && zwaveInterview.progress < 101">
+                                        <div class="progress-bar"
+                                             style="min-height:40px;min-width: 2em; width: {{zwaveInterview.progress}}%;"
+                                             ng-class="zwaveInterview.progress < 100 ? 'progress-bar-danger progress-bar-striped active' : 'progress-bar-success'">
+                                            {{zwaveInterview.progress}}%
+                                        </div>
+                                    </div>
+                                </td>
+
                             </tr>
 
                             </tbody>

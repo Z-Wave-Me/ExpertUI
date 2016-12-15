@@ -16,6 +16,12 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
     $scope.activeUrl = 'configuration/interview/';
     $cookies.tab_config = $scope.activeTab;
     $scope.modelSelectZddx = false;
+    $scope.zwaveInterview = {
+        process: false,
+        commandClassesCnt: 0,
+        interviewDoneCnt: 0,
+        interviewNotDone: {}
+    };
 
     // Interview data
     $scope.descriptionCont;
@@ -39,7 +45,7 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
             $cookies.config_url = $scope.activeUrl + nodeId;
             $scope.deviceId = nodeId;
             $scope.deviceName = $filter('deviceName')(nodeId, node);
-
+            checkInterview(node);
             setData(ZWaveAPIData, nodeId);
             dataService.joinedZwaveData(function (data) {
                 node = data.joined.devices[nodeId];
@@ -260,6 +266,64 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
     }
 
     /**
+     * Check interview
+     */
+    function checkInterview(node) {
+        $scope.zwaveInterview.commandClassesCnt = 0;
+        $scope.zwaveInterview.interviewDoneCnt = 0;
+        console.log(node)
+        //return;
+
+            if (!node) {
+                return;
+            }
+            if (!node.data.nodeInfoFrame.value) {
+                return;
+            }
+            for (var iId in node.instances) {
+                if (Object.keys(node.instances[iId].commandClasses).length < 1) {
+                    return;
+                }
+                angular.extend($scope.zwaveInterview, {commandClassesCnt: Object.keys(node.instances[iId].commandClasses).length});
+                for (var ccId in node.instances[iId].commandClasses) {
+                    var cmdClass = node.instances[iId].commandClasses[ccId];
+                    //var id = node.instances[iId].commandClasses[ccId].name;
+                    //var iData = 'devices[' + $routeParams.nodeId + '].instances[' + iId + '].commandClasses[' + ccId + '].Interview()';
+
+                    // Is interview done?
+                    if (cmdClass.data.interviewDone.value) {
+
+                        // If an interview is done deleting from interviewNotDone
+                        //delete $scope.zwaveInterview.interviewNotDone[id];
+                        // Extending an interview counter
+                        angular.extend($scope.zwaveInterview,
+                            {interviewDoneCnt: $scope.zwaveInterview.interviewDoneCnt + 1}
+                        );
+                    } /*else { // An interview is not done
+                        // Extending interviewNotDone
+                        $scope.zwaveInterview.interviewNotDone[id] = iData;
+                    }*/
+                }
+            }
+
+            var commandClassesCnt = $scope.zwaveInterview.commandClassesCnt;
+            var intervewDoneCnt = $scope.zwaveInterview.interviewDoneCnt;
+            var progress = ((intervewDoneCnt / commandClassesCnt) * 100).toFixed();
+            console.log('commandClassesCnt: ', commandClassesCnt);
+            console.log('intervewDoneCnt: ', intervewDoneCnt);
+            console.log('Percent %: ', progress);
+            $scope.zwaveInterview.progress = (progress >= 100 ? 100 : progress);
+
+            // If interview is complete
+            /*if (progress >= 100) {
+                $scope.zwaveInterview.progress = 100;
+
+            }*/
+
+    }
+    ;
+
+    /**
      * Device description
      */
     function setCont(node, nodeId, zddXml, ZWaveAPIData, refresh) {
@@ -347,8 +411,8 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         obj["h"] = {"key": "device_description_inclusion_note", "val": inclusionNote};
         obj["i"] = {"key": "device_description_wakeup_note", "val": wakeupNote};
         obj["j"] = {"key": "device_description_interview", "val": deviceService.configInterviewStage(ZWaveAPIData, nodeId, $scope.languages)};
-        obj["k"] = {"key": "device_sleep_state", "val": deviceService.configDeviceState(node, $scope.languages)};
-        //obj["l"] = {"key": "device_queue_length", "val": queueLength(ZWaveAPIData, node)};
+        //obj["k"] = {"key": "device_interview_indicator", "val": interviewDone};
+        obj["l"] = {"key": "device_sleep_state", "val": deviceService.configDeviceState(node, $scope.languages)};
         obj["m"] = {"key": "device_description_app_version", "val": deviceDescriptionAppVersion + '.' + deviceDescriptionAppSubVersion};
         obj["o"] = {"key": "device_description_sdk_version", "val": sdk};
         obj["p"] = {"key": "command_class", "val": ccNames};
@@ -366,6 +430,7 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
      * Refresh description cont
      */
     function refreshData(node, nodeId, ZWaveAPIData) {
+        checkInterview(node);
         $scope.interviewCommands = deviceService.configGetInterviewCommands(node, ZWaveAPIData.updateTime);
         $('#device_sleep_state .config-interview-val').html(deviceService.configDeviceState(node, $scope.languages));
         $('#device_description_interview .config-interview-val').html(deviceService.configInterviewStage(ZWaveAPIData, nodeId, $scope.languages));
