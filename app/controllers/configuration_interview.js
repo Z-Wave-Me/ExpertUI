@@ -17,10 +17,9 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
     $cookies.tab_config = $scope.activeTab;
     $scope.modelSelectZddx = false;
     $scope.zwaveInterview = {
-        process: false,
+        progress: 0,
         commandClassesCnt: 0,
-        interviewDoneCnt: 0,
-        interviewNotDone: {}
+        interviewDoneCnt: 0
     };
 
     // Interview data
@@ -271,7 +270,7 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
     function checkInterview(node) {
         $scope.zwaveInterview.commandClassesCnt = 0;
         $scope.zwaveInterview.interviewDoneCnt = 0;
-        console.log(node)
+        //console.log(node)
         //return;
 
             if (!node) {
@@ -287,38 +286,25 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
                 angular.extend($scope.zwaveInterview, {commandClassesCnt: Object.keys(node.instances[iId].commandClasses).length});
                 for (var ccId in node.instances[iId].commandClasses) {
                     var cmdClass = node.instances[iId].commandClasses[ccId];
-                    //var id = node.instances[iId].commandClasses[ccId].name;
-                    //var iData = 'devices[' + $routeParams.nodeId + '].instances[' + iId + '].commandClasses[' + ccId + '].Interview()';
-
                     // Is interview done?
                     if (cmdClass.data.interviewDone.value) {
 
                         // If an interview is done deleting from interviewNotDone
-                        //delete $scope.zwaveInterview.interviewNotDone[id];
                         // Extending an interview counter
                         angular.extend($scope.zwaveInterview,
                             {interviewDoneCnt: $scope.zwaveInterview.interviewDoneCnt + 1}
                         );
-                    } /*else { // An interview is not done
-                        // Extending interviewNotDone
-                        $scope.zwaveInterview.interviewNotDone[id] = iData;
-                    }*/
+                    }
                 }
             }
 
             var commandClassesCnt = $scope.zwaveInterview.commandClassesCnt;
             var intervewDoneCnt = $scope.zwaveInterview.interviewDoneCnt;
             var progress = ((intervewDoneCnt / commandClassesCnt) * 100).toFixed();
-            console.log('commandClassesCnt: ', commandClassesCnt);
+            /*console.log('commandClassesCnt: ', commandClassesCnt);
             console.log('intervewDoneCnt: ', intervewDoneCnt);
-            console.log('Percent %: ', progress);
+            console.log('Percent %: ', progress);*/
             $scope.zwaveInterview.progress = (progress >= 100 ? 100 : progress);
-
-            // If interview is complete
-            /*if (progress >= 100) {
-                $scope.zwaveInterview.progress = 100;
-
-            }*/
 
     }
     ;
