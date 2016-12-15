@@ -92,7 +92,7 @@ module.exports = function (grunt) {
                     'app/controllers/type.js',
                     'app/controllers/association.js',
                     'app/controllers/control.js',
-                    'app/controllers/controll.js',
+                    //'app/controllers/controll.js',
                     'app/controllers/routing.js',
                     'app/controllers/reorganization.js',
                     'app/controllers/timing.js',

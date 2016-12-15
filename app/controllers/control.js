@@ -264,7 +264,7 @@ appController.controller('IncludeExcludeDeviceController', function ($scope,$rou
  * @class IncludeNetworkController
  *
  */
-appController.controller('IncludeDifferentNetworkController', function ($scope, $timeout, cfg, dataService) {
+appController.controller('IncludeDifferentNetworkController', function ($scope, $timeout, $window,cfg, dataService) {
     /**
      * Include to network
      * @param {string} cmd
@@ -276,10 +276,11 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
         /*alertify.alertError('Running command ' + '\n' + cmd);
          return;*/
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
+            $timeout($scope.toggleRowSpinner, timeout);
             if(modal){
                 $scope.handleModal(modal, $event);
+                $window.location.reload();
             }
-            $timeout($scope.toggleRowSpinner, timeout);
         }, function (error) {
             $scope.toggleRowSpinner();
             alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
