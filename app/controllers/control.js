@@ -279,7 +279,7 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
             $timeout($scope.toggleRowSpinner, timeout);
             if(modal){
                 $scope.handleModal(modal, $event);
-                $window.location.reload();
+                //$window.location.reload();
             }
         }, function (error) {
             $scope.toggleRowSpinner();
@@ -296,6 +296,17 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
         alertify.confirm(confirm, function () {
             $scope.runZwaveCmd(cmd);
         });
+
+    };
+
+    /**
+     * Close network modal
+     * @param {string} modal
+     * @param $event
+     */
+    $scope.closeNetworkModal = function (modal,$event) {
+        $scope.handleModal(modal, $event);
+            $window.location.reload();
 
     };
 
