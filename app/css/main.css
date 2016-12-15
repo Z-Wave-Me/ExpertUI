@@ -14148,50 +14148,71 @@ img {
 /* Button tabs
 -------------------------------------------------- */
 /* line 94, ../sass/common/_button.scss */
+.tabs-wrap {
+  margin: 0 0 10px 0;
+}
+
+/* line 97, ../sass/common/_button.scss */
 .btn-goup-tabs {
   display: table;
   width: 100%;
   margin: 0 0 10px 0;
 }
-/* line 98, ../sass/common/_button.scss */
+/* line 101, ../sass/common/_button.scss */
 .btn-goup-tabs .btn {
   padding: 10px;
-  font-size: 120%;
+  font-size: 105%;
   background-color: #FFFFFF;
+  border-color: #9fd8ef;
 }
-/* line 102, ../sass/common/_button.scss */
+/* line 106, ../sass/common/_button.scss */
 .btn-goup-tabs .btn.active {
   background-color: #f2f2f2;
 }
-/* line 105, ../sass/common/_button.scss */
+/* line 109, ../sass/common/_button.scss */
 .btn-goup-tabs .btn .fa {
-  font-size: 130%;
+  font-size: 110%;
   color: #404040;
 }
-/* line 110, ../sass/common/_button.scss */
+/* line 114, ../sass/common/_button.scss */
 .btn-goup-tabs .active .fa {
-  color: #80AD80;
+  color: #6494BC;
 }
 
-/* line 115, ../sass/common/_button.scss */
+/* line 119, ../sass/common/_button.scss */
 .btn-tabs-2 .btn {
   width: 50%;
 }
 
-/* line 120, ../sass/common/_button.scss */
+/* line 124, ../sass/common/_button.scss */
 .btn-tabs-3 .btn {
   width: 33.33333%;
 }
 
-/* line 125, ../sass/common/_button.scss */
+/* line 129, ../sass/common/_button.scss */
 .btn-tabs-4 .btn {
   width: 25%;
+}
+
+/* line 134, ../sass/common/_button.scss */
+.btn-tabs-5 .btn {
+  width: 20%;
+}
+
+/* line 139, ../sass/common/_button.scss */
+.btn-tabs-6 .btn {
+  width: 16.66666%;
+}
+
+/* line 144, ../sass/common/_button.scss */
+.btn-tabs-7 .btn {
+  width: 14.2857%;
 }
 
 /* Switch button
 ---------- http://www.w3schools.com/howto/howto_css_switch.asp
 -------------------------------------------------- */
-/* line 133, ../sass/common/_button.scss */
+/* line 153, ../sass/common/_button.scss */
 .switch {
   position: relative;
   display: inline-block;
@@ -14200,13 +14221,13 @@ img {
 }
 
 /* Hide default HTML checkbox */
-/* line 143, ../sass/common/_button.scss */
+/* line 163, ../sass/common/_button.scss */
 .switch input {
   display: none;
 }
 
 /* The slider */
-/* line 146, ../sass/common/_button.scss */
+/* line 166, ../sass/common/_button.scss */
 .slider {
   position: absolute;
   cursor: pointer;
@@ -14220,7 +14241,7 @@ img {
   transition: .4s;
 }
 
-/* line 161, ../sass/common/_button.scss */
+/* line 181, ../sass/common/_button.scss */
 .slider:before {
   position: absolute;
   content: "";
@@ -14235,17 +14256,17 @@ img {
   transition: .4s;
 }
 
-/* line 178, ../sass/common/_button.scss */
+/* line 198, ../sass/common/_button.scss */
 input:checked + .slider:before {
   background-color: #80AD80;
 }
 
-/* line 183, ../sass/common/_button.scss */
+/* line 203, ../sass/common/_button.scss */
 input:focus + .slider {
   box-shadow: 0 0 1px #80AD80;
 }
 
-/* line 187, ../sass/common/_button.scss */
+/* line 207, ../sass/common/_button.scss */
 input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
@@ -14253,12 +14274,12 @@ input:checked + .slider:before {
 }
 
 /* Rounded sliders */
-/* line 194, ../sass/common/_button.scss */
+/* line 214, ../sass/common/_button.scss */
 .slider.round {
   border-radius: 4px;
 }
 
-/* line 198, ../sass/common/_button.scss */
+/* line 218, ../sass/common/_button.scss */
 .slider.round:before {
   border-radius: 4px;
 }
@@ -15389,7 +15410,9 @@ http://codepen.io/MattIn4D/pen/LiKFC
           color: $alliance-green;
       }*/
   /* Table  */
+  /* Config */
   /*Form */
+  /* Tabs new */
   /* Tabs */
   /* Panel */
   /* List group */
@@ -15483,79 +15506,91 @@ http://codepen.io/MattIn4D/pen/LiKFC
   border-color: #87cf83;
 }
 /* line 98, ../sass/skins/installer/_main.scss */
+.app-type-installer .cfg-control-content {
+  background-color: #ceebcd;
+}
+/* line 103, ../sass/skins/installer/_main.scss */
 .app-type-installer .form-control {
   border-color: #87cf83;
 }
-/* line 101, ../sass/skins/installer/_main.scss */
+/* line 106, ../sass/skins/installer/_main.scss */
 .app-type-installer .commands-data-control {
   background-color: #ceebcd;
 }
-/* line 104, ../sass/skins/installer/_main.scss */
+/* line 109, ../sass/skins/installer/_main.scss */
 .app-type-installer .commands-data {
   border-color: #87cf83;
 }
-/* line 107, ../sass/skins/installer/_main.scss */
+/* line 112, ../sass/skins/installer/_main.scss */
 .app-type-installer .cfg-block {
   border-color: #87cf83;
 }
-/* line 111, ../sass/skins/installer/_main.scss */
+/* line 116, ../sass/skins/installer/_main.scss */
 .app-type-installer .form-page {
   border-color: #87cf83;
 }
-/* line 113, ../sass/skins/installer/_main.scss */
+/* line 118, ../sass/skins/installer/_main.scss */
 .app-type-installer .form-page .form-group {
   border-color: #87cf83;
 }
-/* line 118, ../sass/skins/installer/_main.scss */
+/* line 123, ../sass/skins/installer/_main.scss */
 .app-type-installer .submit-entry {
   border-color: #87cf83;
   background-color: #ceebcd;
 }
-/* line 123, ../sass/skins/installer/_main.scss */
+/* line 129, ../sass/skins/installer/_main.scss */
+.app-type-installer .btn-goup-tabs .btn {
+  border-color: #87cf83;
+}
+/* line 132, ../sass/skins/installer/_main.scss */
+.app-type-installer .btn-goup-tabs .active .fa {
+  color: #47AA42;
+}
+/* line 137, ../sass/skins/installer/_main.scss */
 .app-type-installer .nav-tabs > li.active > a, .app-type-installer .nav-tabs > li.active > a:hover, .app-type-installer .nav-tabs > li.active > a:focus {
   background-color: #ceebcd;
   border-color: #87cf83;
 }
-/* line 127, ../sass/skins/installer/_main.scss */
+/* line 141, ../sass/skins/installer/_main.scss */
 .app-type-installer .tab-content {
   border-color: transparent #87cf83 #87cf83;
 }
-/* line 130, ../sass/skins/installer/_main.scss */
+/* line 144, ../sass/skins/installer/_main.scss */
 .app-type-installer .nav-tabs {
   border-color: #87cf83;
 }
-/* line 134, ../sass/skins/installer/_main.scss */
+/* line 148, ../sass/skins/installer/_main.scss */
 .app-type-installer .panel {
   border-color: #87cf83;
 }
-/* line 137, ../sass/skins/installer/_main.scss */
+/* line 151, ../sass/skins/installer/_main.scss */
 .app-type-installer .panel-default > .panel-heading {
   background-color: #ceebcd;
   border-color: #87cf83;
 }
-/* line 141, ../sass/skins/installer/_main.scss */
+/* line 155, ../sass/skins/installer/_main.scss */
 .app-type-installer .panel-default > .panel-footer {
   background-color: #f2faf1;
   border-color: #87cf83;
 }
-/* line 146, ../sass/skins/installer/_main.scss */
+/* line 160, ../sass/skins/installer/_main.scss */
 .app-type-installer .list-group-item {
   border-color: #87cf83;
 }
-/* line 150, ../sass/skins/installer/_main.scss */
+/* line 164, ../sass/skins/installer/_main.scss */
 .app-type-installer .list-report li {
   border-top: solid 1px #87cf83;
 }
-/* line 155, ../sass/skins/installer/_main.scss */
+/* line 169, ../sass/skins/installer/_main.scss */
 .app-type-installer .well {
   background-color: #ceebcd;
   border-color: #87cf83;
 }
-/* line 160, ../sass/skins/installer/_main.scss */
+/* line 174, ../sass/skins/installer/_main.scss */
 .app-type-installer #footer {
   border-color: #87cf83;
 }
-/* line 165, ../sass/skins/installer/_main.scss */
+/* line 179, ../sass/skins/installer/_main.scss */
 .app-type-installer .accordion-entry {
   border-color: #87cf83;
 }

@@ -1,9 +1,8 @@
 <!-- Link health -->
 <div ng-controller="ConfigHealthController">
     <!-- Config navigation -->
-    <div ng-include="'app/views/configuration/header.html'"></div>
-    <bb-alert alert="alert"></bb-alert>
-    <div class="tab-content" ng-show="deviceId && !_.isEmpty(health.neighbours)">
+    <div ng-include="'app/views/configuration/navi.html'"></div>
+    <div ng-show="deviceId && !_.isEmpty(health.neighbours)">
         <div id="table_mobile">
             <div class="alert ng-scope alert-warning" ng-if="!health.device.hasPowerLevel">
                 <i class="fa fa-exclamation-circle"></i> {{_t('link_health_no_powerlevel')}}

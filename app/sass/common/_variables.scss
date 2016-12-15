@@ -133,8 +133,8 @@ $dropdown-font-size: 110%;
 $dropdown-icon-size: 120%;
 $accordion-heading-font-size: 120%;
 $accordion-icon-size: 130%;
-$tab-font-size: 120%;
-$tab-icon-size: 130%;
+$tab-font-size: 105%;
+$tab-icon-size: 110%;
 $helptext-font-size: 95%;
 $widget-heading-font-size: 115%;
 $widget-icon-size: 180%;
@@ -235,7 +235,7 @@ $tabs-bcg-color: #FFFFFF;
 $tabs-color: $app-body-color;
 $tabs-border-color: $app-border-color;
 $tabs-icon-color: lighten($tabs-color, 20%);
-$tabs-icon-active-color: $app-brand-success;
+$tabs-icon-active-color: $app-brand-primary;
 $tabs-active-bcg-color: darken($tabs-bcg-color, 5%);
 
 // Modal

@@ -94,6 +94,11 @@ $alliance-orange: #F89847;
         border-color: $alliance-green-border;
     }
 
+    /* Config */
+    .cfg-control-content {
+        background-color: $alliance-green-bcg;
+    }
+
     /*Form */
     .form-control {
         border-color: $alliance-green-border;
@@ -118,6 +123,15 @@ $alliance-orange: #F89847;
     .submit-entry{
         border-color: $alliance-green-border;
         background-color: lighten($alliance-green-border,20%);
+    }
+    /* Tabs new */
+    .btn-goup-tabs{
+        .btn{
+            border-color:$alliance-green-border;
+        }
+        .active .fa{
+            color: $alliance-green;
+        }
     }
     /* Tabs */
     .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {

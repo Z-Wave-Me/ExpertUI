@@ -1,9 +1,8 @@
 <!-- Commands view -->
 <div ng-controller="ConfigCommandsController">
     <!-- Config navigation -->
-    <div ng-include="'app/views/configuration/header.html'"></div>
-
-    <div id="table_mobile" class="tab-content" ng-show="deviceId">
+    <div ng-include="'app/views/configuration/navi.html'"></div>
+    <div id="table_mobile" ng-show="deviceId">
         <table class="table">
             <thead>
                 <tr>

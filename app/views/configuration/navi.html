@@ -1,0 +1,53 @@
+<bb-alert alert="alert"></bb-alert>
+<div class="tabs-wrap form-inline" ng-show="deviceId > 0">
+    <div class="btn-group btn-goup-tabs" ng-class="cfg.zwavecfg.debug ? 'btn-tabs-7': 'btn-tabs-6'">
+        <!-- Interview -->
+        <a class="btn btn-default" title="{{_t('nav_device_interview')}}" href="#configuration/interview/{{deviceId}}"
+           ng-class="activeTab == 'interview' ? 'active' : ''">
+            <i class="fa fa-commenting"></i> <span class="btn-name">{{_t('nav_device_interview')}}</span>
+        </a>
+
+        <!-- Config -->
+        <a class="btn btn-default" title="{{_t('nav_device_configuration')}}" href="#configuration/configuration/{{deviceId}}"
+           ng-class="activeTab == 'configuration' ? 'active' : ''">
+            <i class="fa fa-cogs"></i> <span class="btn-name">{{_t('nav_device_configuration')}}</span>
+        </a>
+
+        <!-- Assoc -->
+        <a class="btn btn-default" title="{{_t('nav_device_assoc')}}" href="#configuration/association/{{deviceId}}"
+           ng-class="activeTab == 'association' ? 'active' : ''">
+            <i class="fa fa-share-alt"></i> <span class="btn-name">{{_t('nav_device_assoc')}}
+        </a>
+
+        <!-- Health -->
+        <a class="btn btn-default" title="{{_t('link_health')}}" href="#configuration/health/{{deviceId}}"
+           ng-class="activeTab == 'health' ? 'active' : ''">
+            <i class="fa fa-unlink"></i> <span class="btn-name">{{_t('link_health')}}</span>
+        </a>
+
+        <!-- Expert -->
+        <a class="btn btn-default" title="{{_t('nav_expert_commands')}}" href="#configuration/commands/{{deviceId}}"
+           ng-class="activeTab == 'commands' ? 'active' : ''">
+            <i class="fa fa-file-code-o"></i> <span class="btn-name">{{_t('nav_expert_commands')}}</span>
+        </a>
+
+        <!-- Firmware -->
+        <a class="btn btn-default" title="{{_t('nav_firmware_update')}}" href="#configuration/firmware/{{deviceId}}"
+           ng-class="activeTab == 'firmware' ? 'active' : ''">
+            <i class="fa fa-upload"></i> <span class="btn-name">{{_t('nav_firmware_update')}}</span>
+        </a>
+
+        <!-- Postfix -->
+        <a class="btn btn-default" title="{{_t('nav_postfix_update')}}" href="#configuration/postfix/{{deviceId}}"
+           ng-class="activeTab == 'postfix' ? 'active' : ''" ng-if="cfg.zwavecfg.debug">
+            <i class="fa fa-tasks"></i> <span class="btn-name">{{_t('nav_postfix_update')}}</span>
+        </a>
+    </div>
+</div>
+<div class="page-header form-inline" ng-if="_.size(devices) > 0">
+    <label>{{_t('h1_configuration_for')}}</label>
+    <select name="devices" class="form-control" ng-model="deviceId" ng-change="changeDevice(deviceId)">
+        <option value="" ng-selected="v.id != deviceId">--- {{_t('select_device')}} ---</option>
+        <option ng-repeat="v in devices| orderBy:predicate:reverse" value="{{v.id}}" ng-selected="v.id == deviceId">(#{{v.id}}) {{v.name}}</option>
+    </select>
+</div>

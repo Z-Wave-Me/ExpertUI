@@ -1,9 +1,7 @@
 <!-- Configuration view -->
 <div ng-controller="ConfigConfigurationController">
-    <!-- Config navigation -->
-    <div ng-include="'app/views/configuration/header.html'"></div>
-
-    <div class="tab-content" ng-show="deviceId">
+    <div ng-include="'app/views/configuration/navi.html'"></div>
+    <div ng-show="deviceId">
         <!-- Generic configuration fom expert commands -->
         <div ng-include="'app/views/configuration/configuration_commands.html'"></div>
          <!-- Device description -->

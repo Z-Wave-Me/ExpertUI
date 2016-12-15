@@ -91,6 +91,9 @@
 
 /* Button tabs
 -------------------------------------------------- */
+.tabs-wrap{
+    margin: 0 0 $spacing 0;
+}
 .btn-goup-tabs{
     display: table;
     width: 100%;
@@ -99,6 +102,7 @@
         padding: $spacing;
         font-size: $tab-font-size;
         background-color: $tabs-bcg-color;
+        border-color: $app-border-color;
         &.active {
             background-color: $tabs-active-bcg-color;
         }
@@ -126,6 +130,22 @@
         width: 25%;
     }
 }
+.btn-tabs-5{
+    .btn{
+        width: 20%;
+    }
+}
+.btn-tabs-6{
+    .btn{
+        width: 16.66666%;
+    }
+}
+.btn-tabs-7{
+    .btn{
+        width: 14.2857%;
+    }
+}
+
 
 /* Switch button
 ---------- http://www.w3schools.com/howto/howto_css_switch.asp
