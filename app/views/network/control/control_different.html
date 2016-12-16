@@ -5,29 +5,23 @@
         <!-- Not included in network -->
         <div ng-if="controlDh.controller.isRealPrimary && (!controlDh.controller.hasDevices)">
             <p class="input-help">{{_t('device_not_included_info')}}</p>
-            <button
-                    class="btn btn-primary"
-                    id="btn_learn_start"
+            <bb-alert alert="controlDh.network.alert"></bb-alert>
+            <button class="btn btn-primary" id="btn_learn_start"
                     ng-disabled="rowSpinner['controller.SetLearnMode(1)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
                     ng-show="[9].indexOf(controlDh.controller.controllerState) == -1"
                     ng-click="includeToNetwork('controller.SetLearnMode(1)','successNetworkIncludeModal',$event)">
-                <i class="fa fa-check"></i> {{_t('include_into_network')}}
+                <i class="fa fa-play-circle"></i> {{_t('include_into_network')}}
             </button>
-            <button
-                    class="btn btn-danger"
-                    id="btn_learn_stop"
+            <button class="btn btn-danger" id="btn_learn_stop"
                     ng-show="[9].indexOf(controlDh.controller.controllerState) > -1"
                     ng-click="includeToNetwork('controller.SetLearnMode(0)')">
-                <i class="fa fa-spinner fa-spin"></i> {{_t('include_into_network_stop')}}
+                <i class="fa fa-stop-circle"></i> {{_t('include_into_network_stop')}}
             </button>
         </div>
         <!-- included in network - disabled-->
         <div ng-if="controlDh.controller.isRealPrimary && (controlDh.controller.hasDevices)">
             <p class="input-help">{{_t('device_included_info')}}</p>
-            <button
-                    class="btn btn-primary"
-                    id="btn_learn_start_2"
-                    disabled
+            <button class="btn btn-primary" id="btn_learn_start_2" disabled
             >{{_t('leave_network')}} {{controlDh.controller.homeName}}
             </button>
         </div>
@@ -35,26 +29,22 @@
         <!-- already included in network - displays include from network -->
         <div ng-if="!controlDh.controller.isRealPrimary">
             <p class="input-help">{{_t('device_included_info')}}</p>
-            <button
-                    class="btn btn-danger"
-                    id="btn_learn_stop"
+            <button class="btn btn-danger" id="btn_learn_stop"
                     ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
                     ng-hide="[9].indexOf(controlDh.controller.controllerState) > -1"
                     ng-click="excludeFromNetwork('controller.SetLearnMode(1)',_t('before_leaving_network'))">
                 <i class="fa fa-check"></i> {{_t('leave_network') + ' ' + controlDh.controller.homeName}}
             </button>
-            <button
-                    class="btn btn-danger"
-                    id="btn_learn_stop"
+            <button class="btn btn-danger" id="btn_learn_stop"
                     ng-show="[9].indexOf(controlDh.controller.controllerState) > -1"
                     ng-click="includeToNetwork('controller.SetLearnMode(0)')">
-                <i class="fa fa-spinner fa-spin"></i> {{_t('leave_network_stop') + ' ' + controlDh.controller.homeName}}
+                <i class="fa fa-stop-circle"></i> {{_t('leave_network_stop') + ' ' + controlDh.controller.homeName}}
             </button>
         </div>
     </div>
 
     <!-- successNetworkIncludeModal -->
-    <div id="successNetworkIncludeModal" class="appmodal" ng-if="modalArr.successNetworkIncludeModal">
+    <div id="successNetworkIncludeModal" class="appmodal" ng-if="controlDh.network.modal">
         <div class="appmodal-in">
             <div class="appmodal-header">
                 <span class="appmodal-close" ng-click="closeNetworkModal('successNetworkIncludeModal', $event)"><i

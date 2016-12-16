@@ -30,6 +30,10 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
     $scope.load = function (nodeId) {
         dataService.getZwaveData(function (ZWaveAPIData) {
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
+            if(_.isEmpty($scope.devices)){
+                $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                return;
+            }
             var node = ZWaveAPIData.devices[nodeId];
             if (!node || deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;

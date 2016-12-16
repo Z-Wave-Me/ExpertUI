@@ -68,6 +68,10 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
 
         dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
+            if(_.isEmpty($scope.devices)){
+                $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                return;
+            }
             $scope.health.ctrlNodeId = ZWaveAPIData.controller.data.nodeId.value;
             var node = ZWaveAPIData.devices[$routeParams.nodeId];
             if (!node || deviceService.notDevice(ZWaveAPIData, node, $routeParams.nodeId)) {
