@@ -89,6 +89,7 @@
                 </td>
                 <td class="row-ping td-action">
                     <button class="btn btn-default" id="btn_ping_{{ v.rowId}}" title="{{_t('pingDevice')}}"
+                            title="{{ _t('pingDevice')}}"
                             ng-if="v.urlToStore"
                             ng-click="pingDevice(v.urlToStore)"
                             ng-disabled="rowSpinner[v.urlToStore]">
