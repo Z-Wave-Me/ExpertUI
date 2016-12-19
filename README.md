@@ -5,7 +5,8 @@ This User Interfaces allows to operate a Smart Home Network based on Z-Wave devi
 
 ## v1.2.0
 #### New features
-- IMA: network name, time format, firmware update, time zone, busy indicator, interview progressbar.
+- Interview progress bar.
+- CIT: network name, time format, firmware update, time zone, busy indicator, interview progressbar.
 - Icons in the menu.
 - Enhanced display on mobile devices and tablets.
 - Spinner indicators.
@@ -16,7 +17,7 @@ This User Interfaces allows to operate a Smart Home Network based on Z-Wave devi
 - New page "Settings" added.
 - Network/Control divided into views.
 - Homepage divided into views.
-- Notes saved into /ZWaveAPI/ExpertConfigGet.
+- Notes saved into data holder.
 - Function runCmd() replaced with the new fn runZwaveCmd().
 - Completely refactored CSS for simpler customizations.
 - Configuration controllers divided in separate files.

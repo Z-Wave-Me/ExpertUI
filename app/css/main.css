@@ -8004,15 +8004,15 @@ button.close {
 /* Font Awesome files
 -------------------------------------------------- */
 /*!
- *  Font Awesome 4.6.3 by @davegandy - http://fontawesome.io - @fontawesome
+ *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
  */
 /* FONT PATH
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url("../fonts/fontawesome-webfont.eot?v=4.6.3");
-  src: url("../fonts/fontawesome-webfont.eot?#iefix&v=4.6.3") format("embedded-opentype"), url("../fonts/fontawesome-webfont.woff2?v=4.6.3") format("woff2"), url("../fonts/fontawesome-webfont.woff?v=4.6.3") format("woff"), url("../fonts/fontawesome-webfont.ttf?v=4.6.3") format("truetype"), url("../fonts/fontawesome-webfont.svg?v=4.6.3#fontawesomeregular") format("svg");
+  src: url("../fonts/fontawesome-webfont.eot?v=4.7.0");
+  src: url("../fonts/fontawesome-webfont.eot?#iefix&v=4.7.0") format("embedded-opentype"), url("../fonts/fontawesome-webfont.woff2?v=4.7.0") format("woff2"), url("../fonts/fontawesome-webfont.woff?v=4.7.0") format("woff"), url("../fonts/fontawesome-webfont.ttf?v=4.7.0") format("truetype"), url("../fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular") format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -10947,569 +10947,789 @@ button.close {
 
 /* line 607, ../sass/vendor/fontawesome/_icons.scss */
 .fa-battery-4:before,
+.fa-battery:before,
 .fa-battery-full:before {
   content: "";
 }
 
-/* line 609, ../sass/vendor/fontawesome/_icons.scss */
+/* line 610, ../sass/vendor/fontawesome/_icons.scss */
 .fa-battery-3:before,
 .fa-battery-three-quarters:before {
   content: "";
 }
 
-/* line 611, ../sass/vendor/fontawesome/_icons.scss */
+/* line 612, ../sass/vendor/fontawesome/_icons.scss */
 .fa-battery-2:before,
 .fa-battery-half:before {
   content: "";
 }
 
-/* line 613, ../sass/vendor/fontawesome/_icons.scss */
+/* line 614, ../sass/vendor/fontawesome/_icons.scss */
 .fa-battery-1:before,
 .fa-battery-quarter:before {
   content: "";
 }
 
-/* line 615, ../sass/vendor/fontawesome/_icons.scss */
+/* line 616, ../sass/vendor/fontawesome/_icons.scss */
 .fa-battery-0:before,
 .fa-battery-empty:before {
   content: "";
 }
 
-/* line 617, ../sass/vendor/fontawesome/_icons.scss */
+/* line 618, ../sass/vendor/fontawesome/_icons.scss */
 .fa-mouse-pointer:before {
   content: "";
 }
 
-/* line 618, ../sass/vendor/fontawesome/_icons.scss */
+/* line 619, ../sass/vendor/fontawesome/_icons.scss */
 .fa-i-cursor:before {
   content: "";
 }
 
-/* line 619, ../sass/vendor/fontawesome/_icons.scss */
+/* line 620, ../sass/vendor/fontawesome/_icons.scss */
 .fa-object-group:before {
   content: "";
 }
 
-/* line 620, ../sass/vendor/fontawesome/_icons.scss */
+/* line 621, ../sass/vendor/fontawesome/_icons.scss */
 .fa-object-ungroup:before {
   content: "";
 }
 
-/* line 621, ../sass/vendor/fontawesome/_icons.scss */
+/* line 622, ../sass/vendor/fontawesome/_icons.scss */
 .fa-sticky-note:before {
   content: "";
 }
 
-/* line 622, ../sass/vendor/fontawesome/_icons.scss */
+/* line 623, ../sass/vendor/fontawesome/_icons.scss */
 .fa-sticky-note-o:before {
   content: "";
 }
 
-/* line 623, ../sass/vendor/fontawesome/_icons.scss */
+/* line 624, ../sass/vendor/fontawesome/_icons.scss */
 .fa-cc-jcb:before {
   content: "";
 }
 
-/* line 624, ../sass/vendor/fontawesome/_icons.scss */
+/* line 625, ../sass/vendor/fontawesome/_icons.scss */
 .fa-cc-diners-club:before {
   content: "";
 }
 
-/* line 625, ../sass/vendor/fontawesome/_icons.scss */
+/* line 626, ../sass/vendor/fontawesome/_icons.scss */
 .fa-clone:before {
   content: "";
 }
 
-/* line 626, ../sass/vendor/fontawesome/_icons.scss */
+/* line 627, ../sass/vendor/fontawesome/_icons.scss */
 .fa-balance-scale:before {
   content: "";
 }
 
-/* line 627, ../sass/vendor/fontawesome/_icons.scss */
+/* line 628, ../sass/vendor/fontawesome/_icons.scss */
 .fa-hourglass-o:before {
   content: "";
 }
 
-/* line 628, ../sass/vendor/fontawesome/_icons.scss */
+/* line 629, ../sass/vendor/fontawesome/_icons.scss */
 .fa-hourglass-1:before,
 .fa-hourglass-start:before {
   content: "";
 }
 
-/* line 630, ../sass/vendor/fontawesome/_icons.scss */
+/* line 631, ../sass/vendor/fontawesome/_icons.scss */
 .fa-hourglass-2:before,
 .fa-hourglass-half:before {
   content: "";
 }
 
-/* line 632, ../sass/vendor/fontawesome/_icons.scss */
+/* line 633, ../sass/vendor/fontawesome/_icons.scss */
 .fa-hourglass-3:before,
 .fa-hourglass-end:before {
   content: "";
 }
 
-/* line 634, ../sass/vendor/fontawesome/_icons.scss */
+/* line 635, ../sass/vendor/fontawesome/_icons.scss */
 .fa-hourglass:before {
   content: "";
 }
 
-/* line 635, ../sass/vendor/fontawesome/_icons.scss */
+/* line 636, ../sass/vendor/fontawesome/_icons.scss */
 .fa-hand-grab-o:before,
 .fa-hand-rock-o:before {
   content: "";
 }
 
-/* line 637, ../sass/vendor/fontawesome/_icons.scss */
+/* line 638, ../sass/vendor/fontawesome/_icons.scss */
 .fa-hand-stop-o:before,
 .fa-hand-paper-o:before {
   content: "";
 }
 
-/* line 639, ../sass/vendor/fontawesome/_icons.scss */
+/* line 640, ../sass/vendor/fontawesome/_icons.scss */
 .fa-hand-scissors-o:before {
   content: "";
 }
 
-/* line 640, ../sass/vendor/fontawesome/_icons.scss */
+/* line 641, ../sass/vendor/fontawesome/_icons.scss */
 .fa-hand-lizard-o:before {
   content: "";
 }
 
-/* line 641, ../sass/vendor/fontawesome/_icons.scss */
+/* line 642, ../sass/vendor/fontawesome/_icons.scss */
 .fa-hand-spock-o:before {
   content: "";
 }
 
-/* line 642, ../sass/vendor/fontawesome/_icons.scss */
+/* line 643, ../sass/vendor/fontawesome/_icons.scss */
 .fa-hand-pointer-o:before {
   content: "";
 }
 
-/* line 643, ../sass/vendor/fontawesome/_icons.scss */
+/* line 644, ../sass/vendor/fontawesome/_icons.scss */
 .fa-hand-peace-o:before {
   content: "";
 }
 
-/* line 644, ../sass/vendor/fontawesome/_icons.scss */
+/* line 645, ../sass/vendor/fontawesome/_icons.scss */
 .fa-trademark:before {
   content: "";
 }
 
-/* line 645, ../sass/vendor/fontawesome/_icons.scss */
+/* line 646, ../sass/vendor/fontawesome/_icons.scss */
 .fa-registered:before {
   content: "";
 }
 
-/* line 646, ../sass/vendor/fontawesome/_icons.scss */
+/* line 647, ../sass/vendor/fontawesome/_icons.scss */
 .fa-creative-commons:before {
   content: "";
 }
 
-/* line 647, ../sass/vendor/fontawesome/_icons.scss */
+/* line 648, ../sass/vendor/fontawesome/_icons.scss */
 .fa-gg:before {
   content: "";
 }
 
-/* line 648, ../sass/vendor/fontawesome/_icons.scss */
+/* line 649, ../sass/vendor/fontawesome/_icons.scss */
 .fa-gg-circle:before {
   content: "";
 }
 
-/* line 649, ../sass/vendor/fontawesome/_icons.scss */
+/* line 650, ../sass/vendor/fontawesome/_icons.scss */
 .fa-tripadvisor:before {
   content: "";
 }
 
-/* line 650, ../sass/vendor/fontawesome/_icons.scss */
+/* line 651, ../sass/vendor/fontawesome/_icons.scss */
 .fa-odnoklassniki:before {
   content: "";
 }
 
-/* line 651, ../sass/vendor/fontawesome/_icons.scss */
+/* line 652, ../sass/vendor/fontawesome/_icons.scss */
 .fa-odnoklassniki-square:before {
   content: "";
 }
 
-/* line 652, ../sass/vendor/fontawesome/_icons.scss */
+/* line 653, ../sass/vendor/fontawesome/_icons.scss */
 .fa-get-pocket:before {
   content: "";
 }
 
-/* line 653, ../sass/vendor/fontawesome/_icons.scss */
+/* line 654, ../sass/vendor/fontawesome/_icons.scss */
 .fa-wikipedia-w:before {
   content: "";
 }
 
-/* line 654, ../sass/vendor/fontawesome/_icons.scss */
+/* line 655, ../sass/vendor/fontawesome/_icons.scss */
 .fa-safari:before {
   content: "";
 }
 
-/* line 655, ../sass/vendor/fontawesome/_icons.scss */
+/* line 656, ../sass/vendor/fontawesome/_icons.scss */
 .fa-chrome:before {
   content: "";
 }
 
-/* line 656, ../sass/vendor/fontawesome/_icons.scss */
+/* line 657, ../sass/vendor/fontawesome/_icons.scss */
 .fa-firefox:before {
   content: "";
 }
 
-/* line 657, ../sass/vendor/fontawesome/_icons.scss */
+/* line 658, ../sass/vendor/fontawesome/_icons.scss */
 .fa-opera:before {
   content: "";
 }
 
-/* line 658, ../sass/vendor/fontawesome/_icons.scss */
+/* line 659, ../sass/vendor/fontawesome/_icons.scss */
 .fa-internet-explorer:before {
   content: "";
 }
 
-/* line 659, ../sass/vendor/fontawesome/_icons.scss */
+/* line 660, ../sass/vendor/fontawesome/_icons.scss */
 .fa-tv:before,
 .fa-television:before {
   content: "";
 }
 
-/* line 661, ../sass/vendor/fontawesome/_icons.scss */
+/* line 662, ../sass/vendor/fontawesome/_icons.scss */
 .fa-contao:before {
   content: "";
 }
 
-/* line 662, ../sass/vendor/fontawesome/_icons.scss */
+/* line 663, ../sass/vendor/fontawesome/_icons.scss */
 .fa-500px:before {
   content: "";
 }
 
-/* line 663, ../sass/vendor/fontawesome/_icons.scss */
+/* line 664, ../sass/vendor/fontawesome/_icons.scss */
 .fa-amazon:before {
   content: "";
 }
 
-/* line 664, ../sass/vendor/fontawesome/_icons.scss */
+/* line 665, ../sass/vendor/fontawesome/_icons.scss */
 .fa-calendar-plus-o:before {
   content: "";
 }
 
-/* line 665, ../sass/vendor/fontawesome/_icons.scss */
+/* line 666, ../sass/vendor/fontawesome/_icons.scss */
 .fa-calendar-minus-o:before {
   content: "";
 }
 
-/* line 666, ../sass/vendor/fontawesome/_icons.scss */
+/* line 667, ../sass/vendor/fontawesome/_icons.scss */
 .fa-calendar-times-o:before {
   content: "";
 }
 
-/* line 667, ../sass/vendor/fontawesome/_icons.scss */
+/* line 668, ../sass/vendor/fontawesome/_icons.scss */
 .fa-calendar-check-o:before {
   content: "";
 }
 
-/* line 668, ../sass/vendor/fontawesome/_icons.scss */
+/* line 669, ../sass/vendor/fontawesome/_icons.scss */
 .fa-industry:before {
   content: "";
 }
 
-/* line 669, ../sass/vendor/fontawesome/_icons.scss */
+/* line 670, ../sass/vendor/fontawesome/_icons.scss */
 .fa-map-pin:before {
   content: "";
 }
 
-/* line 670, ../sass/vendor/fontawesome/_icons.scss */
+/* line 671, ../sass/vendor/fontawesome/_icons.scss */
 .fa-map-signs:before {
   content: "";
 }
 
-/* line 671, ../sass/vendor/fontawesome/_icons.scss */
+/* line 672, ../sass/vendor/fontawesome/_icons.scss */
 .fa-map-o:before {
   content: "";
 }
 
-/* line 672, ../sass/vendor/fontawesome/_icons.scss */
+/* line 673, ../sass/vendor/fontawesome/_icons.scss */
 .fa-map:before {
   content: "";
 }
 
-/* line 673, ../sass/vendor/fontawesome/_icons.scss */
+/* line 674, ../sass/vendor/fontawesome/_icons.scss */
 .fa-commenting:before {
   content: "";
 }
 
-/* line 674, ../sass/vendor/fontawesome/_icons.scss */
+/* line 675, ../sass/vendor/fontawesome/_icons.scss */
 .fa-commenting-o:before {
   content: "";
 }
 
-/* line 675, ../sass/vendor/fontawesome/_icons.scss */
+/* line 676, ../sass/vendor/fontawesome/_icons.scss */
 .fa-houzz:before {
   content: "";
 }
 
-/* line 676, ../sass/vendor/fontawesome/_icons.scss */
+/* line 677, ../sass/vendor/fontawesome/_icons.scss */
 .fa-vimeo:before {
   content: "";
 }
 
-/* line 677, ../sass/vendor/fontawesome/_icons.scss */
+/* line 678, ../sass/vendor/fontawesome/_icons.scss */
 .fa-black-tie:before {
   content: "";
 }
 
-/* line 678, ../sass/vendor/fontawesome/_icons.scss */
+/* line 679, ../sass/vendor/fontawesome/_icons.scss */
 .fa-fonticons:before {
   content: "";
 }
 
-/* line 679, ../sass/vendor/fontawesome/_icons.scss */
+/* line 680, ../sass/vendor/fontawesome/_icons.scss */
 .fa-reddit-alien:before {
   content: "";
 }
 
-/* line 680, ../sass/vendor/fontawesome/_icons.scss */
+/* line 681, ../sass/vendor/fontawesome/_icons.scss */
 .fa-edge:before {
   content: "";
 }
 
-/* line 681, ../sass/vendor/fontawesome/_icons.scss */
+/* line 682, ../sass/vendor/fontawesome/_icons.scss */
 .fa-credit-card-alt:before {
   content: "";
 }
 
-/* line 682, ../sass/vendor/fontawesome/_icons.scss */
+/* line 683, ../sass/vendor/fontawesome/_icons.scss */
 .fa-codiepie:before {
   content: "";
 }
 
-/* line 683, ../sass/vendor/fontawesome/_icons.scss */
+/* line 684, ../sass/vendor/fontawesome/_icons.scss */
 .fa-modx:before {
   content: "";
 }
 
-/* line 684, ../sass/vendor/fontawesome/_icons.scss */
+/* line 685, ../sass/vendor/fontawesome/_icons.scss */
 .fa-fort-awesome:before {
   content: "";
 }
 
-/* line 685, ../sass/vendor/fontawesome/_icons.scss */
+/* line 686, ../sass/vendor/fontawesome/_icons.scss */
 .fa-usb:before {
   content: "";
 }
 
-/* line 686, ../sass/vendor/fontawesome/_icons.scss */
+/* line 687, ../sass/vendor/fontawesome/_icons.scss */
 .fa-product-hunt:before {
   content: "";
 }
 
-/* line 687, ../sass/vendor/fontawesome/_icons.scss */
+/* line 688, ../sass/vendor/fontawesome/_icons.scss */
 .fa-mixcloud:before {
   content: "";
 }
 
-/* line 688, ../sass/vendor/fontawesome/_icons.scss */
+/* line 689, ../sass/vendor/fontawesome/_icons.scss */
 .fa-scribd:before {
   content: "";
 }
 
-/* line 689, ../sass/vendor/fontawesome/_icons.scss */
+/* line 690, ../sass/vendor/fontawesome/_icons.scss */
 .fa-pause-circle:before {
   content: "";
 }
 
-/* line 690, ../sass/vendor/fontawesome/_icons.scss */
+/* line 691, ../sass/vendor/fontawesome/_icons.scss */
 .fa-pause-circle-o:before {
   content: "";
 }
 
-/* line 691, ../sass/vendor/fontawesome/_icons.scss */
+/* line 692, ../sass/vendor/fontawesome/_icons.scss */
 .fa-stop-circle:before {
   content: "";
 }
 
-/* line 692, ../sass/vendor/fontawesome/_icons.scss */
+/* line 693, ../sass/vendor/fontawesome/_icons.scss */
 .fa-stop-circle-o:before {
   content: "";
 }
 
-/* line 693, ../sass/vendor/fontawesome/_icons.scss */
+/* line 694, ../sass/vendor/fontawesome/_icons.scss */
 .fa-shopping-bag:before {
   content: "";
 }
 
-/* line 694, ../sass/vendor/fontawesome/_icons.scss */
+/* line 695, ../sass/vendor/fontawesome/_icons.scss */
 .fa-shopping-basket:before {
   content: "";
 }
 
-/* line 695, ../sass/vendor/fontawesome/_icons.scss */
+/* line 696, ../sass/vendor/fontawesome/_icons.scss */
 .fa-hashtag:before {
   content: "";
 }
 
-/* line 696, ../sass/vendor/fontawesome/_icons.scss */
+/* line 697, ../sass/vendor/fontawesome/_icons.scss */
 .fa-bluetooth:before {
   content: "";
 }
 
-/* line 697, ../sass/vendor/fontawesome/_icons.scss */
+/* line 698, ../sass/vendor/fontawesome/_icons.scss */
 .fa-bluetooth-b:before {
   content: "";
 }
 
-/* line 698, ../sass/vendor/fontawesome/_icons.scss */
+/* line 699, ../sass/vendor/fontawesome/_icons.scss */
 .fa-percent:before {
   content: "";
 }
 
-/* line 699, ../sass/vendor/fontawesome/_icons.scss */
+/* line 700, ../sass/vendor/fontawesome/_icons.scss */
 .fa-gitlab:before {
   content: "";
 }
 
-/* line 700, ../sass/vendor/fontawesome/_icons.scss */
+/* line 701, ../sass/vendor/fontawesome/_icons.scss */
 .fa-wpbeginner:before {
   content: "";
 }
 
-/* line 701, ../sass/vendor/fontawesome/_icons.scss */
+/* line 702, ../sass/vendor/fontawesome/_icons.scss */
 .fa-wpforms:before {
   content: "";
 }
 
-/* line 702, ../sass/vendor/fontawesome/_icons.scss */
+/* line 703, ../sass/vendor/fontawesome/_icons.scss */
 .fa-envira:before {
   content: "";
 }
 
-/* line 703, ../sass/vendor/fontawesome/_icons.scss */
+/* line 704, ../sass/vendor/fontawesome/_icons.scss */
 .fa-universal-access:before {
   content: "";
 }
 
-/* line 704, ../sass/vendor/fontawesome/_icons.scss */
+/* line 705, ../sass/vendor/fontawesome/_icons.scss */
 .fa-wheelchair-alt:before {
   content: "";
 }
 
-/* line 705, ../sass/vendor/fontawesome/_icons.scss */
+/* line 706, ../sass/vendor/fontawesome/_icons.scss */
 .fa-question-circle-o:before {
   content: "";
 }
 
-/* line 706, ../sass/vendor/fontawesome/_icons.scss */
+/* line 707, ../sass/vendor/fontawesome/_icons.scss */
 .fa-blind:before {
   content: "";
 }
 
-/* line 707, ../sass/vendor/fontawesome/_icons.scss */
+/* line 708, ../sass/vendor/fontawesome/_icons.scss */
 .fa-audio-description:before {
   content: "";
 }
 
-/* line 708, ../sass/vendor/fontawesome/_icons.scss */
+/* line 709, ../sass/vendor/fontawesome/_icons.scss */
 .fa-volume-control-phone:before {
   content: "";
 }
 
-/* line 709, ../sass/vendor/fontawesome/_icons.scss */
+/* line 710, ../sass/vendor/fontawesome/_icons.scss */
 .fa-braille:before {
   content: "";
 }
 
-/* line 710, ../sass/vendor/fontawesome/_icons.scss */
+/* line 711, ../sass/vendor/fontawesome/_icons.scss */
 .fa-assistive-listening-systems:before {
   content: "";
 }
 
-/* line 711, ../sass/vendor/fontawesome/_icons.scss */
+/* line 712, ../sass/vendor/fontawesome/_icons.scss */
 .fa-asl-interpreting:before,
 .fa-american-sign-language-interpreting:before {
   content: "";
 }
 
-/* line 713, ../sass/vendor/fontawesome/_icons.scss */
+/* line 714, ../sass/vendor/fontawesome/_icons.scss */
 .fa-deafness:before,
 .fa-hard-of-hearing:before,
 .fa-deaf:before {
   content: "";
 }
 
-/* line 716, ../sass/vendor/fontawesome/_icons.scss */
+/* line 717, ../sass/vendor/fontawesome/_icons.scss */
 .fa-glide:before {
   content: "";
 }
 
-/* line 717, ../sass/vendor/fontawesome/_icons.scss */
+/* line 718, ../sass/vendor/fontawesome/_icons.scss */
 .fa-glide-g:before {
   content: "";
 }
 
-/* line 718, ../sass/vendor/fontawesome/_icons.scss */
+/* line 719, ../sass/vendor/fontawesome/_icons.scss */
 .fa-signing:before,
 .fa-sign-language:before {
   content: "";
 }
 
-/* line 720, ../sass/vendor/fontawesome/_icons.scss */
+/* line 721, ../sass/vendor/fontawesome/_icons.scss */
 .fa-low-vision:before {
   content: "";
 }
 
-/* line 721, ../sass/vendor/fontawesome/_icons.scss */
+/* line 722, ../sass/vendor/fontawesome/_icons.scss */
 .fa-viadeo:before {
   content: "";
 }
 
-/* line 722, ../sass/vendor/fontawesome/_icons.scss */
+/* line 723, ../sass/vendor/fontawesome/_icons.scss */
 .fa-viadeo-square:before {
   content: "";
 }
 
-/* line 723, ../sass/vendor/fontawesome/_icons.scss */
+/* line 724, ../sass/vendor/fontawesome/_icons.scss */
 .fa-snapchat:before {
   content: "";
 }
 
-/* line 724, ../sass/vendor/fontawesome/_icons.scss */
+/* line 725, ../sass/vendor/fontawesome/_icons.scss */
 .fa-snapchat-ghost:before {
   content: "";
 }
 
-/* line 725, ../sass/vendor/fontawesome/_icons.scss */
+/* line 726, ../sass/vendor/fontawesome/_icons.scss */
 .fa-snapchat-square:before {
   content: "";
 }
 
-/* line 726, ../sass/vendor/fontawesome/_icons.scss */
+/* line 727, ../sass/vendor/fontawesome/_icons.scss */
 .fa-pied-piper:before {
   content: "";
 }
 
-/* line 727, ../sass/vendor/fontawesome/_icons.scss */
+/* line 728, ../sass/vendor/fontawesome/_icons.scss */
 .fa-first-order:before {
   content: "";
 }
 
-/* line 728, ../sass/vendor/fontawesome/_icons.scss */
+/* line 729, ../sass/vendor/fontawesome/_icons.scss */
 .fa-yoast:before {
   content: "";
 }
 
-/* line 729, ../sass/vendor/fontawesome/_icons.scss */
+/* line 730, ../sass/vendor/fontawesome/_icons.scss */
 .fa-themeisle:before {
   content: "";
 }
 
-/* line 730, ../sass/vendor/fontawesome/_icons.scss */
+/* line 731, ../sass/vendor/fontawesome/_icons.scss */
 .fa-google-plus-circle:before,
 .fa-google-plus-official:before {
   content: "";
 }
 
-/* line 732, ../sass/vendor/fontawesome/_icons.scss */
+/* line 733, ../sass/vendor/fontawesome/_icons.scss */
 .fa-fa:before,
 .fa-font-awesome:before {
   content: "";
+}
+
+/* line 735, ../sass/vendor/fontawesome/_icons.scss */
+.fa-handshake-o:before {
+  content: "";
+}
+
+/* line 736, ../sass/vendor/fontawesome/_icons.scss */
+.fa-envelope-open:before {
+  content: "";
+}
+
+/* line 737, ../sass/vendor/fontawesome/_icons.scss */
+.fa-envelope-open-o:before {
+  content: "";
+}
+
+/* line 738, ../sass/vendor/fontawesome/_icons.scss */
+.fa-linode:before {
+  content: "";
+}
+
+/* line 739, ../sass/vendor/fontawesome/_icons.scss */
+.fa-address-book:before {
+  content: "";
+}
+
+/* line 740, ../sass/vendor/fontawesome/_icons.scss */
+.fa-address-book-o:before {
+  content: "";
+}
+
+/* line 741, ../sass/vendor/fontawesome/_icons.scss */
+.fa-vcard:before,
+.fa-address-card:before {
+  content: "";
+}
+
+/* line 743, ../sass/vendor/fontawesome/_icons.scss */
+.fa-vcard-o:before,
+.fa-address-card-o:before {
+  content: "";
+}
+
+/* line 745, ../sass/vendor/fontawesome/_icons.scss */
+.fa-user-circle:before {
+  content: "";
+}
+
+/* line 746, ../sass/vendor/fontawesome/_icons.scss */
+.fa-user-circle-o:before {
+  content: "";
+}
+
+/* line 747, ../sass/vendor/fontawesome/_icons.scss */
+.fa-user-o:before {
+  content: "";
+}
+
+/* line 748, ../sass/vendor/fontawesome/_icons.scss */
+.fa-id-badge:before {
+  content: "";
+}
+
+/* line 749, ../sass/vendor/fontawesome/_icons.scss */
+.fa-drivers-license:before,
+.fa-id-card:before {
+  content: "";
+}
+
+/* line 751, ../sass/vendor/fontawesome/_icons.scss */
+.fa-drivers-license-o:before,
+.fa-id-card-o:before {
+  content: "";
+}
+
+/* line 753, ../sass/vendor/fontawesome/_icons.scss */
+.fa-quora:before {
+  content: "";
+}
+
+/* line 754, ../sass/vendor/fontawesome/_icons.scss */
+.fa-free-code-camp:before {
+  content: "";
+}
+
+/* line 755, ../sass/vendor/fontawesome/_icons.scss */
+.fa-telegram:before {
+  content: "";
+}
+
+/* line 756, ../sass/vendor/fontawesome/_icons.scss */
+.fa-thermometer-4:before,
+.fa-thermometer:before,
+.fa-thermometer-full:before {
+  content: "";
+}
+
+/* line 759, ../sass/vendor/fontawesome/_icons.scss */
+.fa-thermometer-3:before,
+.fa-thermometer-three-quarters:before {
+  content: "";
+}
+
+/* line 761, ../sass/vendor/fontawesome/_icons.scss */
+.fa-thermometer-2:before,
+.fa-thermometer-half:before {
+  content: "";
+}
+
+/* line 763, ../sass/vendor/fontawesome/_icons.scss */
+.fa-thermometer-1:before,
+.fa-thermometer-quarter:before {
+  content: "";
+}
+
+/* line 765, ../sass/vendor/fontawesome/_icons.scss */
+.fa-thermometer-0:before,
+.fa-thermometer-empty:before {
+  content: "";
+}
+
+/* line 767, ../sass/vendor/fontawesome/_icons.scss */
+.fa-shower:before {
+  content: "";
+}
+
+/* line 768, ../sass/vendor/fontawesome/_icons.scss */
+.fa-bathtub:before,
+.fa-s15:before,
+.fa-bath:before {
+  content: "";
+}
+
+/* line 771, ../sass/vendor/fontawesome/_icons.scss */
+.fa-podcast:before {
+  content: "";
+}
+
+/* line 772, ../sass/vendor/fontawesome/_icons.scss */
+.fa-window-maximize:before {
+  content: "";
+}
+
+/* line 773, ../sass/vendor/fontawesome/_icons.scss */
+.fa-window-minimize:before {
+  content: "";
+}
+
+/* line 774, ../sass/vendor/fontawesome/_icons.scss */
+.fa-window-restore:before {
+  content: "";
+}
+
+/* line 775, ../sass/vendor/fontawesome/_icons.scss */
+.fa-times-rectangle:before,
+.fa-window-close:before {
+  content: "";
+}
+
+/* line 777, ../sass/vendor/fontawesome/_icons.scss */
+.fa-times-rectangle-o:before,
+.fa-window-close-o:before {
+  content: "";
+}
+
+/* line 779, ../sass/vendor/fontawesome/_icons.scss */
+.fa-bandcamp:before {
+  content: "";
+}
+
+/* line 780, ../sass/vendor/fontawesome/_icons.scss */
+.fa-grav:before {
+  content: "";
+}
+
+/* line 781, ../sass/vendor/fontawesome/_icons.scss */
+.fa-etsy:before {
+  content: "";
+}
+
+/* line 782, ../sass/vendor/fontawesome/_icons.scss */
+.fa-imdb:before {
+  content: "";
+}
+
+/* line 783, ../sass/vendor/fontawesome/_icons.scss */
+.fa-ravelry:before {
+  content: "";
+}
+
+/* line 784, ../sass/vendor/fontawesome/_icons.scss */
+.fa-eercast:before {
+  content: "";
+}
+
+/* line 785, ../sass/vendor/fontawesome/_icons.scss */
+.fa-microchip:before {
+  content: "";
+}
+
+/* line 786, ../sass/vendor/fontawesome/_icons.scss */
+.fa-snowflake-o:before {
+  content: "";
+}
+
+/* line 787, ../sass/vendor/fontawesome/_icons.scss */
+.fa-superpowers:before {
+  content: "";
+}
+
+/* line 788, ../sass/vendor/fontawesome/_icons.scss */
+.fa-wpexplorer:before {
+  content: "";
+}
+
+/* line 789, ../sass/vendor/fontawesome/_icons.scss */
+.fa-meetup:before {
+  content: "";
 }
 
 /* line 4, ../sass/vendor/fontawesome/_screen-reader.scss */
@@ -14212,7 +14432,73 @@ img {
 /* Switch button
 ---------- http://www.w3schools.com/howto/howto_css_switch.asp
 -------------------------------------------------- */
-/* line 153, ../sass/common/_button.scss */
+/* NEW - without checkbox */
+/* line 155, ../sass/common/_button.scss */
+.switcher {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* The slider */
+/* line 164, ../sass/common/_button.scss */
+.switcher-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  border: solid 1px #CCCCCC;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+/* line 179, ../sass/common/_button.scss */
+.switcher-slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  /* height: 26px;
+   width: 26px;*/
+  left: 4px;
+  bottom: 3px;
+  background-color: #d9534f;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+/* line 192, ../sass/common/_button.scss */
+.ison .switcher-slider:before {
+  background-color: #80AD80;
+}
+
+/*input:focus + .switcher-slider {
+    box-shadow: 0 0 1px $app-brand-success;
+}*/
+/* line 201, ../sass/common/_button.scss */
+.ison .switcher-slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+/* line 208, ../sass/common/_button.scss */
+.switcher-slider.round {
+  border-radius: 4px;
+}
+
+/* line 212, ../sass/common/_button.scss */
+.switcher-slider.round:before {
+  border-radius: 4px;
+}
+
+/* OLD - with checkbox */
+/* line 217, ../sass/common/_button.scss */
 .switch {
   position: relative;
   display: inline-block;
@@ -14221,13 +14507,13 @@ img {
 }
 
 /* Hide default HTML checkbox */
-/* line 163, ../sass/common/_button.scss */
+/* line 227, ../sass/common/_button.scss */
 .switch input {
   display: none;
 }
 
 /* The slider */
-/* line 166, ../sass/common/_button.scss */
+/* line 230, ../sass/common/_button.scss */
 .slider {
   position: absolute;
   cursor: pointer;
@@ -14241,7 +14527,7 @@ img {
   transition: .4s;
 }
 
-/* line 181, ../sass/common/_button.scss */
+/* line 245, ../sass/common/_button.scss */
 .slider:before {
   position: absolute;
   content: "";
@@ -14256,17 +14542,17 @@ img {
   transition: .4s;
 }
 
-/* line 198, ../sass/common/_button.scss */
+/* line 262, ../sass/common/_button.scss */
 input:checked + .slider:before {
   background-color: #80AD80;
 }
 
-/* line 203, ../sass/common/_button.scss */
+/* line 267, ../sass/common/_button.scss */
 input:focus + .slider {
   box-shadow: 0 0 1px #80AD80;
 }
 
-/* line 207, ../sass/common/_button.scss */
+/* line 271, ../sass/common/_button.scss */
 input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
@@ -14274,12 +14560,12 @@ input:checked + .slider:before {
 }
 
 /* Rounded sliders */
-/* line 214, ../sass/common/_button.scss */
+/* line 278, ../sass/common/_button.scss */
 .slider.round {
   border-radius: 4px;
 }
 
-/* line 218, ../sass/common/_button.scss */
+/* line 282, ../sass/common/_button.scss */
 .slider.round:before {
   border-radius: 4px;
 }

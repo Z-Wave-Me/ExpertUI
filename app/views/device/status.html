@@ -83,9 +83,15 @@
                 <td class="row-interview">
                     <button class="btn btn-default"
                             ng-if="v.interview"
-                       ng-click="showModalInterview('#modal_interview', $index,v.id,v.name)" title="{{v.interview}}">
+                            ng-click="handleModalInterview('interviewModal',$event,$index,v.id,v.name)" title="{{v.interview}}">
                         <i class="fa fa-search-minus fa-lg text-danger"></i>
                     </button> &nbsp;
+
+                   <!-- <button class="btn btn-default"
+                            ng-if="v.interview"
+                       ng-click="showModalInterview('#modal_interview', $index,v.id,v.name)" title="{{v.interview}}">
+                        <i class="fa fa-search-minus fa-lg text-danger"></i>
+                    </button> &nbsp;-->
                 </td>
                 <td class="row-ping td-action">
                     <button class="btn btn-default" id="btn_ping_{{ v.rowId}}" title="{{_t('pingDevice')}}"
@@ -106,6 +112,9 @@
     </div>
 
     <!-- Modal interview -->
+    <div ng-include="'app/views/device/modal_status_interview.html'"></div>
+
+    <!-- Modal interview
     <div class="modal fade" id="modal_interview" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
@@ -166,9 +175,9 @@
                 </div>
             </div>
         </div>
-    </div><!-- /.Modal -->
+    </div> /.Modal -->
 
-    <!-- Modal CommandClass -->
+    <!-- Modal CommandClass
     <div class="modal fade" id="modal_command_class" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
@@ -186,5 +195,5 @@
                 </div>
             </div>
         </div>
-    </div><!-- /.Modal -->
-</div>
+    </div> /.Modal -->
+</div><!-- /ng-controler -->
