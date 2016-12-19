@@ -58,7 +58,7 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
      * Update switch
      * @param {string} url
      */
-    $scope.updateSwitch = function(url) {
+    $scope.updateSwitch = function(url,$index) {
         $scope.toggleRowSpinner(url);
         dataService.runZwaveCmd(cfg.store_url + url).then(function (response) {
             $timeout($scope.toggleRowSpinner, 1000);

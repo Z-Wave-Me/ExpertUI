@@ -106,9 +106,10 @@
                     </button>
                 </td>
                 <td data-title="" ng-switch on="v.deviceType">
+                    <!-- multilevel -->
                     <div ng-switch-when="multilevel">
                         <div class="btn-group" style="min-width: 110px !important;">
-                            <label class="switch" title="v.levelStatus === 'on' ? v.btnOff : v.btnOn"
+                            <!--<label class="switch" title="v.levelStatus === 'on' ? v.btnOff : v.btnOn"
                                    ng-hide="rowSpinner['btn_all_of'] || rowSpinner['btn_all_on']">
                                 <input type="checkbox"
                                        ng-disabled="rowSpinner[v.urlToOn]"
@@ -117,6 +118,17 @@
                                        ng-change="updateSwitch(switches.switchButton[v.rowId] ? v.urlToOn : v.urlToOff)"
                                 >
                                 <div class="slider round"></div>
+                            </label>-->
+
+                            <!-- NEW -->
+                            <label class="switcher" title="{{v.levelStatus}}"
+                                   ng-class="v.levelStatus === 'on' ? 'ison':'isoff'"
+                                   ng-hide="rowSpinner['btn_all_of'] || rowSpinner['btn_all_on']"
+                                   ng-click="updateSwitch(
+                               v.levelStatus === 'on' ?  v.urlToOff : v.urlToOn);
+                               v.levelStatus = (v.levelStatus === 'on' ?  'off' : 'on')">
+
+                                <div class="switcher-slider round"></div>
                             </label>
 
                             <i class="fa fa-spinner fa-spin fa-lg" ng-if="rowSpinner['btn_all_of'] || rowSpinner['btn_all_on'] "></i>
@@ -149,9 +161,9 @@
                         </button>
 
                     </div>
-
+                    <!-- binary -->
                     <div class="btn-group" ng-switch-when="binary">
-                        <label class="switch" title="v.levelStatus === 'on' ? v.btnOff : v.btnOn"
+                        <!--<label class="switch" title="v.levelStatus === 'on' ? v.btnOff : v.btnOn"
                         ng-hide="rowSpinner['btn_all_of'] || rowSpinner['btn_all_on']">
                             <input type="checkbox"
                                    ng-disabled="rowSpinner[v.urlToOn]"
@@ -160,6 +172,16 @@
                                    ng-change="updateSwitch(switches.switchButton[v.id] ? v.urlToOn : v.urlToOff)"
                             >
                             <div class="slider round"></div>
+                        </label>-->
+                        <!-- NEW -->
+                         <label class="switcher" title="{{v.levelStatus}}"
+                               ng-class="v.levelStatus === 'on' ? 'ison':'isoff'"
+                               ng-hide="rowSpinner['btn_all_of'] || rowSpinner['btn_all_on']"
+                               ng-click="updateSwitch(
+                               v.levelStatus === 'on' ?  v.urlToOff : v.urlToOn);
+                               v.levelStatus = (v.levelStatus === 'on' ?  'off' : 'on')">
+
+                            <div class="switcher-slider round"></div>
                         </label>
 
                         <i class="fa fa-spinner fa-spin fa-lg" ng-if="rowSpinner['btn_all_of'] || rowSpinner['btn_all_on'] "></i>
@@ -182,6 +204,7 @@
                         </button>-->
 
                     </div>
+                    <!-- mdefault -->
                     <div ng-switch-default>&nbsp;</div>
                 </td>
                 <td class="td-action" data-title="" ng-switch on="v.deviceType">
