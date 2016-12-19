@@ -346,9 +346,6 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
         }
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
             $timeout($scope.toggleRowSpinner, timeout);
-            /*if(modal){
-                $scope.handleModal(modal, $event);
-            }*/
         }, function (error) {
             $scope.toggleRowSpinner();
             alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
@@ -357,7 +354,7 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
     };
 
     /**
-     * Exclude form to network
+     * Exclude form network
      * @param {string} cmd
      */
     $scope.excludeFromNetwork = function (cmd, confirm) {
@@ -366,6 +363,7 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
                 $scope.controlDh.network.inclusionProcess = false;
             }
             $scope.runZwaveCmd(cmd);
+            $window.location.reload();
         });
 
     };
