@@ -5,7 +5,7 @@
         <!-- backup -->
         <a class="btn btn-primary" href="{{cfg.server_url}}/ZWaveAPI/Backup" ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1">
             <i class="fa fa-download"></i> {{_t('nm_backup_download')}}
-        </a>
+        </a>&nbsp;
         <!-- restore -->
         <button class="btn btn-primary"
                 ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"

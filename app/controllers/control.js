@@ -20,6 +20,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
             alertPrimary: $scope.alert
         },
         network: {
+            include: false,
             inclusionProcess: false,
             alert: $scope.alert,
             modal: false
@@ -137,10 +138,14 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 $scope.controlDh.inclusion.alertPrimary = $scope.alert;
                 // Network inclusion
                 if($scope.controlDh.network.inclusionProcess){
-                    $scope.controlDh.network.modal = true;
-                    $scope.controlDh.network.alert = {message: $scope._t('success_controller_include'), status: 'alert-success', icon: 'fa-smile-o'};
+                    if($scope.controlDh.network.include){
+                        $scope.controlDh.network.modal = true;
+                        $scope.controlDh.network.alert = {message: $scope._t('success_controller_include'), status: 'alert-success', icon: 'fa-smile-o'};
+                   }
+
                 }else{
                     $scope.controlDh.network.alert = $scope.alert;
+
                 }
                 break;
             case 1:
@@ -341,7 +346,11 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
         //$scope.runZwaveCmd(cmd);
         var timeout = 1000;
         $scope.toggleRowSpinner(cmd);
-        if(cmd === 'controller.SetLearnMode(0)'){
+        if(cmd === 'controller.SetLearnMode(1)'){
+            $scope.controlDh.network.include = true;
+
+        }else{
+            $scope.controlDh.network.include = false;
             $scope.controlDh.network.inclusionProcess = false;
         }
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
@@ -358,12 +367,18 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
      * @param {string} cmd
      */
     $scope.excludeFromNetwork = function (cmd, confirm) {
+        console.log(cmd)
+       // return;
         alertify.confirm(confirm, function () {
-            if(cmd === 'controller.SetLearnMode(0)'){
-                $scope.controlDh.network.inclusionProcess = false;
-            }
+            $scope.controlDh.network.inclusionProcess = false;
+            $scope.controlDh.network.include = false;
             $scope.runZwaveCmd(cmd);
-            $window.location.reload();
+            if(cmd === 'controller.SetLearnMode(1)') {
+                $timeout(function () {
+                    $window.location.reload();
+                }, 5000);
+            }
+
         });
 
     };

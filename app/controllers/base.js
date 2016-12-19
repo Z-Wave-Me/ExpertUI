@@ -16,6 +16,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     $scope.loading = false;
     $scope.alert = {message: false, status: 'is-hidden', icon: false};
 
+
     // Custom IP
     $scope.customIP = {
         'url': cfg.server_url,

@@ -32726,65 +32726,123 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
   );
 
 
+  $templateCache.put('app/views/configuration/_header.html',
+    "<div class=\"page-header form-inline\" ng-if=\"_.size(devices) > 0\"><label>{{_t('h1_configuration_for')}}</label><select name=devices class=form-control ng-model=deviceId ng-change=changeDevice(deviceId)><option value=\"\" ng-selected=\"v.id != deviceId\">--- {{_t('select_device')}} ---</option><option ng-repeat=\"v in devices| orderBy:predicate:reverse\" value={{v.id}} ng-selected=\"v.id == deviceId\">(#{{v.id}}) {{v.name}}</option></select></div><bb-alert alert=alert></bb-alert><ul class=\"nav nav-tabs\" role=tablist ng-show=\"deviceId > 0\"><li ng-class=\"activeTab == 'interview' ? 'active' : ''\"><a href=#configuration/interview/{{deviceId}}>{{_t('nav_device_interview')}}</a></li><li ng-class=\"activeTab == 'configuration' ? 'active' : ''\"><a href=#configuration/configuration/{{deviceId}}>{{_t('nav_device_configuration')}}</a></li><li ng-class=\"activeTab == 'association' ? 'active' : ''\"><a href=#configuration/association/{{deviceId}}>{{_t('nav_device_assoc')}}</a></li><li ng-class=\"activeTab == 'health' ? 'active' : ''\"><a href=#configuration/health/{{deviceId}}>{{_t('link_health')}}</a></li><li ng-class=\"activeTab == 'commands' ? 'active' : ''\"><a href=#configuration/commands/{{deviceId}}>{{_t('nav_expert_commands')}}</a></li><li ng-class=\"activeTab == 'firmware' ? 'active' : ''\"><a href=#configuration/firmware/{{deviceId}}>{{_t('nav_firmware_update')}}</a></li><li ng-class=\"activeTab == 'postfix' ? 'active' : ''\" ng-if=cfg.zwavecfg.debug><a href=#configuration/postfix/{{deviceId}}>{{_t('nav_postfix_update')}}</a></li></ul>"
+  );
+
+
   $templateCache.put('app/views/configuration/assoc.html',
-    "<div id=AssociationTable ng-controller=ConfigAssocController><div ng-include=\"'app/views/configuration/header.html'\"></div><div class=tab-content ng-show=deviceId><div class=page-header><h1 class=text-danger>{{ _t('associations_list')}}</h1></div><div class=alert ng-if=alert.message ng-class=alert.status><i class=\"fa fa-lg\" ng-class=alert.icon></i> <span ng-bind=alert.message></span></div><div class=table-responsive ng-if=\"assocGroups.length > 0\"><button type=button class=\"btn btn-primary spin-true\" id=btn_update_from_device ng-click=\"updateFromDevice('#btn_update_from_device')\">{{_t('update_from_device')}}</button><br><br><div class=\"alert alert-warning\" ng-if=\"nodeCfg.hasBattery && nodeCfg.notAwake.length > 0\"><i class=\"fa fa-info-circle text-warning\"></i> {{_t('conf_apply_battery')}}</div><table class=\"table table-striped_ table-condensed\"><tbody><tr ng-repeat=\"v in assocGroups track by $index\"><td class=association-text><h5>{{v.label}} ({{ _t('assoc_max')}} {{v.max}} {{ _t('assoc_nodes')}}) <span>| <i class=\"fa fa-clock-o\"></i> <span class={{v.timeClass}}>{{v.updateTime| isTodayFromUnix}}</span></span></h5><div><div class=\"btn-group btn-group-assoc-devices {{d.status}}\" role=group ng-repeat=\"d in assocGroupsDevices[v.groupId] track by d.elId\" id={{d.elId}}><button type=button class=\"btn btn-info\"><i class=\"fa fa-exclamation-triangle text-danger\" ng-if=\"d.status !== 'true-true'\"></i>(#{{d.id}}<span ng-if=nodeCfg.hasMca>.{{d.instance}}</span>) {{d.name|cutText:true:20}}</button> <button type=button class=\"btn btn-primary\" ng-click=deleteAssoc(d) ng-if=!d.isNew><i class=\"fa fa-times text-danger\"></i></button></div></div><p class=text-alert-list ng-if=\"v.remaining < 1\"><i class=\"fa fa-exclamation-circle text-warning\"></i> {{_t('assoc_max_nodes_reached')}}</p></td><td class=association-action style=\"text-align: right; width: 20%\"><button type=button class=\"btn btn-primary\" id=myId data-toggle=modal ng-click=modalAssocAdd(v) data-target=#modal_assoc_add ng-if=\"v.remaining > 0\"><span>+</span></button></td></tr><tr><td class=association-text colspan=2><h3>{{_t('legend')}}</h3><div><i class=\"fa fa-square fa-lg\" style=\"color: #f0ad4e\"></i> {{_t('assoc_legend_2')}}</div><div><i class=\"fa fa-square fa-lg\" style=\"color: #ccc\"></i> {{_t('assoc_legend_3')}}</div><div><i class=\"fa fa-square fa-lg\" style=\"color: #5bc0de;\"></i> {{_t('assoc_legend_4')}}</div></td></tr></tbody></table></div><div class=\"modal fade\" id=modal_assoc_add tabindex=-1 role=dialog aria-labelledby=myModalLabel aria-hidden=true><div class=modal-dialog><div class=modal-content><form name=form_assoc id=form_assoc ng-submit_=storeAssoc(input) novalidate><div class=modal-header><button type=button class=close data-dismiss=modal aria-hidden=true>&times;</button><h4 class=modal-title>{{ _t('assoc_add_title')}}</h4></div><div class=modal-body style=\"white-space: normal\"><div class=form-inline>{{ _t('fro')}} {{nodeCfg.name}} {{ _t('to_locate')}}<br><div class=form-group><select class=form-control ng-model=input.toNode ng-change=showAssocNodeInstance(input.toNode,nodeCfg.hasMca)><option value=\"\" ng-selected=true>&lt; {{ _t('assoc_select_to_node')}} &gt;</option><option ng-repeat=\"v in assocAddDevices\" value={{v.id}}>(#{{v.id}}) {{v.name}}</option></select></div><div class=form-group ng-if=\"nodeCfg.hasMca && assocAddInstances\"><select class=form-control ng-model=input.toInstance><option value=\"\" ng-selected=true>&lt; {{ _t('assoc_select_to_instance')}} &gt;</option><option value=plain ng-selected=true>{{ _t('plain_association')}}</option><option ng-repeat=\"v in assocAddInstances\" value={{v.key}}>{{v.val}}</option></select></div></div></div><div class=modal-footer><button type=button class=\"btn btn-default\" data-dismiss=modal ng-click=modalAssocHide()>{{ _t('dialog_abort')}}</button> <button type=submit class=\"btn btn-primary\" data-dismiss=modal ng-click=storeAssoc(input) ng-disabled=\"!input.toNode || ((assocAddInstances) && !input.toInstance)\">{{ _t('dialog_add')}}</button></div></form></div></div></div></div></div>"
+    "<div id=AssociationTable ng-controller=ConfigAssocController><div ng-include=\"'app/views/configuration/navi.html'\"></div><div ng-show=deviceId><div class=table-responsive ng-if=\"assocGroups.length > 0\"><button class=\"btn btn-primary\" type=button ng-click=\"updateFromDevice('updateFromDevice')\" ng-disabled=\"rowSpinner['updateFromDevice']\"><bb-row-spinner spinner=\"rowSpinner['updateFromDevice']\" label=\"_t('btn_update_from_device')\" icon=\"'fa-files-o'\"></bb-row-spinner></button><br><br><div class=\"alert alert-warning\" ng-if=\"nodeCfg.hasBattery && nodeCfg.notAwake.length > 0\"><i class=\"fa fa-info-circle text-warning\"></i> {{_t('conf_apply_battery')}}</div><table class=\"table table-striped_ table-condensed\"><tbody><tr ng-repeat=\"v in assocGroups track by $index\"><td class=association-text><h5>{{v.label}} ({{ _t('assoc_max')}} {{v.max}} {{ _t('assoc_nodes')}}) <span>| <i class=\"fa fa-clock-o\"></i> <span class={{v.timeClass}}>{{v.updateTime| isTodayFromUnix}}</span></span></h5><div><div class=\"btn-group btn-group-assoc-devices {{d.status}}\" role=group ng-repeat=\"d in assocGroupsDevices[v.groupId] track by d.elId\" id={{d.elId}}><button type=button class=\"btn btn-info\"><i class=\"fa fa-exclamation-triangle text-danger\" ng-if=\"d.status !== 'true-true'\"></i>(#{{d.id}}<span ng-if=nodeCfg.hasMca>.{{d.instance}}</span>) {{d.name|cutText:true:20}}</button> <button type=button class=\"btn btn-primary\" ng-click=deleteAssoc(d) ng-if=!d.isNew><i class=\"fa fa-times text-danger\"></i></button></div></div><p class=text-alert-list ng-if=\"v.remaining < 1\"><i class=\"fa fa-exclamation-circle text-warning\"></i> {{_t('assoc_max_nodes_reached')}}</p></td><td class=association-action style=\"text-align: right; width: 20%\"><button class=\"btn btn-primary\" type=button ng-if=\"v.remaining > 0\" ng-click=\"handleAssocModal('assocAddModal',$event,v)\" ng-disabled=\"rowSpinner['group_' + v.groupId]\"><bb-row-spinner spinner=\"rowSpinner['group_' + v.groupId]\" icon=\"'fa-plus'\"></bb-row-spinner></button></td></tr><tr><td class=association-text colspan=2><h3>{{_t('legend')}}</h3><div><i class=\"fa fa-square fa-lg\" style=\"color: #f0ad4e\"></i> {{_t('assoc_legend_2')}}</div><div><i class=\"fa fa-square fa-lg\" style=\"color: #ccc\"></i> {{_t('assoc_legend_3')}}</div><div><i class=\"fa fa-square fa-lg\" style=\"color: #5bc0de;\"></i> {{_t('assoc_legend_4')}}</div></td></tr></tbody></table></div><div ng-include=\"'app/views/configuration/modal_assoc_add.html'\"></div><div class=\"modal fade\" id=modal_assoc_add tabindex=-1 role=dialog aria-labelledby=myModalLabel aria-hidden=true><div class=modal-dialog><div class=modal-content><form name=form_assoc id=form_assoc ng-submit_=storeAssoc(input) novalidate><div class=modal-header><button type=button class=close data-dismiss=modal aria-hidden=true>&times;</button><h4 class=modal-title>{{ _t('assoc_add_title')}}</h4></div><div class=modal-body style=\"white-space: normal\"><div class=form-inline>{{ _t('fro')}} {{nodeCfg.name}} {{ _t('to_locate')}}<br><div class=form-group><select class=form-control ng-model=input.toNode ng-change=showAssocNodeInstance(input.toNode,nodeCfg.hasMca)><option value=\"\" ng-selected=true>&lt; {{ _t('assoc_select_to_node')}} &gt;</option><option ng-repeat=\"v in assocAddDevices\" value={{v.id}}>(#{{v.id}}) {{v.name}}</option></select></div><div class=form-group ng-if=\"nodeCfg.hasMca && assocAddInstances\"><select class=form-control ng-model=input.toInstance><option value=\"\" ng-selected=true>&lt; {{ _t('assoc_select_to_instance')}} &gt;</option><option value=plain ng-selected=true>{{ _t('plain_association')}}</option><option ng-repeat=\"v in assocAddInstances\" value={{v.key}}>{{v.val}}</option></select></div></div></div><div class=modal-footer><button type=button class=\"btn btn-default\" data-dismiss=modal ng-click=modalAssocHide()>{{ _t('dialog_abort')}}</button> <button type=submit class=\"btn btn-primary\" data-dismiss=modal ng-click=storeAssoc(input) ng-disabled=\"!input.toNode || ((assocAddInstances) && !input.toInstance)\">{{ _t('dialog_add')}}</button></div></form></div></div></div></div></div>"
   );
 
 
   $templateCache.put('app/views/configuration/commands.html',
-    "<div ng-controller=ConfigCommandsController><div ng-include=\"'app/views/configuration/header.html'\"></div><div id=table_mobile class=tab-content ng-show=deviceId><table class=table><thead><tr><th>{{_t('th_instance')}}</th><th>{{_t('th_command_class')}}</th><th>{{_t('th_command_param')}}</th></tr></thead><tbody><tr ng-repeat=\"(k,v) in commands | orderBy:predicate:reverse\" id=\"{{ v.nodeId}}\"><td data-title=\"{{_t('th_instance')}}\" ng-class=\"($index == 0 ? 'no-class' : 'mobile-hide')\"><a href=\"\" ng-click=\"showModal('#modal_command_class',v.instanceId, $index, v.ccId, 'cmdDataIn')\">{{v.instanceId}}</a> &nbsp;</td><td data-title=\"{{_t('th_command_class')}}\"><a class=\"btn btn-info\" href=\"\" ng-click=\"showModal('#modal_command_class',v.instanceId,$index,v.ccId, 'cmdData')\">{{v.commandClass}}</a>&nbsp;</td><td data-title=\"{{_t('th_command_param')}}\"><div class=commands-data ng-repeat=\"c in v.command| orderBy:predicate:reverse\" ng-init=\"formName = 'form_' + c.data.method + '_' + v.rowId\"><form name={{formName}} id={{formName}} class=\"form form_commands\" role=form ng-submit=\"submitExpertCommndsForm(formName, v.cmd + '.' + c.data.method)\" novalidate><div class=commands-data-control><div class=form-inline ng-repeat=\"(pk,p) in c.data.params\"><expert-command-input collection=p values=c.data.values[pk] devices=devices name=c.data.method get-node-devices=getNodeDevices></expert-command-input></div><button type=submit class=\"btn btn-primary\" id=\"btn_update_{{ v.rowId}}\">{{c.data.method}}</button></div></form></div>&nbsp;</td></tr></tbody></table></div><div class=\"modal fade\" id=modal_command_class tabindex=-1 role=dialog aria-labelledby=myModalLabel aria-hidden=true><div class=modal-dialog><div class=modal-content><div class=modal-header><button type=button class=close data-dismiss=modal aria-hidden=true ng-click=hideModal()>&times;</button><h4 class=modal-title>{{_t('commandClass')}}</h4></div><div class=modal-body ng-bind-html=commandClass|toTrusted><p>{{interviewCommands[0].updateTime}}</p>{{commandClass}}</div><div class=modal-footer><button type=button class=\"btn btn-default\" data-dismiss=modal ng-click=hideModal()>{{_t('btn_cancel')}}</button></div></div></div></div><div class=\"modal fade\" id=modal_expert_commands tabindex=-1 role=dialog aria-labelledby=myModalLabel aria-hidden=true><div class=modal-dialog><div class=modal-content><div class=modal-header><button type=button class=close data-dismiss=modal aria-hidden=true>&times;</button><h4 class=modal-title>{{_t('commandClass')}}</h4></div><div class=modal-body></div><div class=modal-footer><button type=button class=\"btn btn-default\" data-dismiss=modal>{{_t('btn_cancel')}}</button></div></div></div></div></div>"
+    "<div ng-controller=ConfigCommandsController><div ng-include=\"'app/views/configuration/navi.html'\"></div><div id=table_mobile ng-show=deviceId><table class=table><thead><tr><th>{{_t('th_instance')}}</th><th>{{_t('th_command_class')}}</th><th>{{_t('th_command_param')}}</th></tr></thead><tbody><tr ng-repeat=\"(k,v) in commands | orderBy:predicate:reverse\" id=\"{{ v.nodeId}}\"><td data-title=\"{{_t('th_instance')}}\" ng-class=\"($index == 0 ? 'no-class' : 'mobile-hide')\"><button class=\"btn btn-default\" ng-click=\"handleCmdClassModal('cmdClassModal',$event,v.instanceId, $index, v.ccId, 'cmdDataIn')\">{{v.instanceId}}</button> &nbsp;</td><td data-title=\"{{_t('th_command_class')}}\"><button class=\"btn btn-default\" href=\"\" ng-click=\"handleCmdClassModal('cmdClassModal',$event,v.instanceId,$index,v.ccId, 'cmdData')\">{{v.commandClass}}</button>&nbsp;</td><td data-title=\"{{_t('th_command_param')}}\"><div class=commands-data ng-repeat=\"c in v.command| orderBy:predicate:reverse\" ng-init=\"formName = 'form_' + c.data.method + '_' + v.rowId\"><form name={{formName}} id={{formName}} class=\"form form_commands\" role=form ng-submit=\"storeExpertCommnds(formName, v.cmd + '.' + c.data.method)\" novalidate><div class=commands-data-control><div class=form-inline ng-repeat=\"(pk,p) in c.data.params\"><expert-command-input collection=p values=c.data.values[pk] devices=devices name=c.data.method get-node-devices=getNodeDevices></expert-command-input></div><button class=\"btn btn-primary\" type=submit ng-disabled=\"rowSpinner[v.cmd + '.' + c.data.method]\"><bb-row-spinner spinner=\"rowSpinner[v.cmd + '.' + c.data.method]\" label=c.data.method icon=\"'fa-circle-o'\"></bb-row-spinner></button></div></form></div>&nbsp;</td></tr></tbody></table></div><div ng-include=\"'app/views/configuration/modal_cmdclass.html'\"></div></div>"
   );
 
 
   $templateCache.put('app/views/configuration/configuration.html',
-    "<div ng-controller=ConfigConfigurationController><div ng-include=\"'app/views/configuration/header.html'\"></div><div class=tab-content ng-show=deviceId><div class=cfg-block ng-if=hasConfigurationCc.command ng-controller=ConfigCommandsController><h4>{{hasConfigurationCc.commandClass}}</h4><div class=commands-data ng-repeat=\"c in hasConfigurationCc.command| orderBy:predicate:reverse\" ng-init=\"formName = 'form_' + c.data.method + '_' + v.rowId\"><form name={{formName}} id={{formName}} class=\"form form_commands\" role=form ng-submit=\"submitExpertCommndsForm(formName, hasConfigurationCc.cmd + '.' + c.data.method)\" novalidate><div class=commands-data-control><div class=form-inline ng-repeat=\"(pk,p) in c.data.params\"><expert-command-input collection=p values=c.data.values[pk] devices=devices name=c.data.method get-node-devices=getNodeDevices></expert-command-input></div><button type=submit class=\"btn btn-primary\" id=\"btn_update_{{ v.rowId}}\">{{c.data.method}}</button></div></form></div></div><div ng-if=\"!configCont && deviceZddx.length > 0\"><p ng-bind-html=\"_t('select_zddx_help') | toTrusted\"></p><select name=select_zddx_help id=select_zddx_help class=form-control ng-change=\"changeDeviceSelect('#select_zddx_help', '#device_select_image', modelSelectZddx)\" ng-model=modelSelectZddx><option value=\"\">---</option><option ng-repeat=\"v in deviceZddx| orderBy:'brandName':false\" value={{v.fileName}} data-image={{v.deviceImage}}>{{((v.brandName == '' && v.productName == '')?('Unnamed ZDDX: ' + v.fileName):(v.brandName + ' ' + v.productName))}}</option></select><div id=device_select_image_container><div id=device_select_image></div></div><div class=text-right ng-if=modelSelectZddx><button type=button class=\"btn btn-primary\" data-dismiss=modal ng-click=runCmdDeviceSelect(deviceId)>{{_t('btn_save')}}</button></div></div><div class=cfg-block-content ng-if=configCont ng-init=\"formName = 'form_config'\"><form name={{formName}} id={{formName}} class=form role=form ng-submit=\"submitApplyConfigCfg(formName,{'id': deviceId,'instance': '0','commandclass': '70','command': 'Set'}, configCont, hasBattery)\" novalidate><div class=cfg-block><a class=\"btn btn-primary spin-true\" ng-click=\"updateFromDeviceCfg('devices[' + deviceId + '].instances[0].commandClasses[0x70].Get', configCont, deviceId, formName)\">{{_t('btn_update_from_device')}} </a><button type=submit class=\"btn btn-info spin-true\">{{_t('apply_config')}}</button> <button type=button class=\"btn btn-info spin-true\" ng-click=\"setAllToDefault({'id': deviceId, 'instance': '0', 'commandclass': '70', 'command': 'Set'}, configCont, hasBattery, formName)\">{{_t('set_all_default')}}</button></div><div class=cfg-control-content id=cfg_control_{{v.confNum}} ng-repeat=\"v in configCont\"><div class=form-inline><expert-command-input collection=v div_id=$index default_value=v.defaultValue show_default_value=v.showDefaultValue curr_value=v.configCconfigValue></expert-command-input></div><div class=\"text-danger text-alert\" ng-if=\"v.configCconfigValue != v.configZwaveValue\" title=\"Val: {{v.configCconfigValue}} | Device: {{v.configZwaveValue}}\"><i class=\"fa fa-exclamation-triangle\"></i> {{_t('value_changed_to')}} <strong>{{v.configCconfigValue}}</strong> {{_t('value_not_stored_indevice')}}</div><p class=cfg-info><span class=is-updated-{{v.isUpdated}}>{{_t('rt_header_update_time')}}: {{v.updateTime}}</span> <span>| {{_t('set_value')}}: {{v.configCconfigValue}}</span> <span>| {{_t('default_value_is')}}:<config-default-value collection=v show_default_value=v.showDefaultValue default_value=v.defaultValue></config-default-value></span></p><br><p ng-if=v.description><i class=\"fa fa-info-circle fa-lg text-primary\"></i> <em>{{v.description}}</em></p><button type=button class=\"btn btn-primary spin-true\" ng-click=\"submitApplyConfigCfg(formName, {'id': deviceId, 'instance': '0', 'commandclass': '70', 'command': 'Set'}, configCont, hasBattery, v.confNum)\">{{_t('apply_config_into_device')}}</button> <button type=button class=\"btn btn-info spin-true\" ng-click=\"submitApplyConfigCfg(formName, {'id': deviceId, 'instance': '0', 'commandclass': '70', 'command': 'Set'}, configCont, hasBattery, v.confNum, {confNum: v.confNum, showDefaultValue: v.showDefaultValue})\">{{_t('set_to_default')}}</button></div></form></div><div class=cfg-block id=wakeup_cont ng-if=wakeupCont><h4>{{_t('wakeup_list')}}</h4><div class=cfg-block-content ng-init=\"formName = 'form_wakeup'\"><form name={{formName}} id={{formName}} class=form role=form ng-submit=\"submitApplyConfigCfg(formName,{'id': deviceId,'instance': '0','commandclass': '84','command': 'Set'}, wakeupCont, hasBattery)\" novalidate><a href=\"\" class=\"btn btn-primary spin-true\" ng-click=\"updateFromDevice(wakeupCont.cmd + '.Get()', hasBattery, deviceId, formName)\">{{_t('btn_update_from_device')}} </a><button type=submit class=\"btn btn-info spin-true\">{{_t('apply_config')}}</button><div class=clearfix></div><div class=cfg-control-content><div ng-repeat=\"v in wakeupCont.params\"><div class=form-inline><expert-command-input collection=v values=wakeupCont.values[0] devices=devices get-node-devices=getNodeDevices curr_value=wakeupCont.configCconfigValue curr_node_value=wakeupCont.configCconfigNodeValue name=wakeupCont.name></expert-command-input></div></div><div class=clearfix></div><p class=cfg-info><span class=is-updated-{{wakeupCont.isUpdated}}>{{_t('updated')}}: {{wakeupCont.updateTime}} </span><span>| {{_t('default_value_is')}}:<config-default-value collection=v show_default_value=wakeupCont.showDefaultValue default_value=wakeupCont.defaultValue></config-default-value></span></p></div></form></div></div><div class=cfg-block id=switchall_cont ng-if=switchAllCont><h4>{{_t('switchall_list')}}</h4><div class=cfg-block-content ng-init=\"formName = 'form_switch_all'\"><form name={{formName}} id={{formName}} class=form role=form ng-submit=\"submitApplyConfigCfg(formName,{'id': deviceId,'instance': '0','commandclass': '27','command': 'Set'}, switchAllCont, hasBattery)\" novalidate><a class=\"btn btn-primary spin-true\" ng-click=\"updateFromDevice(switchAllCont.cmd + '.Get()', hasBattery, deviceId, formName)\">{{_t('btn_update_from_device')}} </a><button type=submit class=\"btn btn-info spin-true\">{{_t('apply_config')}}</button><div class=cfg-control-content ng-repeat=\"v in switchAllCont.params\"><div class=form-inline><expert-command-input collection=v values=switchAllCont.values[0] default_value=switchAllCont.defaultValue curr_value=switchAllCont.configCconfigValue name=switchAllCont.name is_dropdown=1></expert-command-input></div><p class=cfg-info><span class=is-updated-{{switchAllCont.isUpdated}}>{{_t('updated')}}: {{switchAllCont.updateTime}} </span><span>| {{_t('default_value_is')}}:<config-default-value collection=v show_default_value=switchAllCont.showDefaultValue default_value=switchAllCont.defaultValue></config-default-value></span></p></div></form></div></div><div class=cfg-block id=protection_cont ng-if=protectionCont><h4>{{_t('protection_list')}}</h4><div class=cfg-block-content ng-init=\"formName = 'form_protection_list'\"><form name={{formName}} id={{formName}} class=form role=form ng-submit=\"submitApplyConfigCfg(formName,{'id': deviceId,'instance': '0','commandclass': '75','command': 'Set'}, protectionCont, hasBattery)\" novalidate><a class=\"btn btn-primary spin-true\" ng-click=\"updateFromDevice(protectionCont.cmd + '.Get()', hasBattery, deviceId, formName)\">{{_t('btn_update_from_device')}} </a><button type=submit class=\"btn btn-info spin-true\">{{_t('apply_config')}}</button><div class=cfg-control-content ng-repeat=\"v in protectionCont.params\"><div class=form-inline><expert-command-input collection=v values=protectionCont.values[0] default_value=protectionCont.defaultValue curr_value=protectionCont.configCconfigValue name=protectionCont.name is_dropdown=1></expert-command-input></div><p class=cfg-info><span class=is-updated-{{protectionCont.isUpdated}}>{{_t('updated')}}: {{protectionCont.updateTime}} </span><span>| {{_t('default_value_is')}}:<config-default-value collection=v show_default_value=protectionCont.showDefaultValue default_value=protectionCont.defaultValue></config-default-value></span></p></div></form></div></div></div></div>"
+    "<div ng-controller=ConfigConfigurationController><div ng-include=\"'app/views/configuration/navi.html'\"></div><div ng-show=deviceId><div ng-include=\"'app/views/configuration/configuration_commands.html'\"></div><div ng-if=\"!configCont && deviceZddx.length > 0\"><button id=btn_show_description class=\"btn btn-default\" ng-click=\"handleModal('loadXmlModal', $event)\"><i class=\"fa fa-clone\"></i> {{_t('select_zddx_help')}}</button><div ng-include=\"'app/views/configuration/modal_loadxml.html'\"></div></div><div ng-include=\"'app/views/configuration/configuration_config.html'\"></div><div ng-include=\"'app/views/configuration/configuration_wakeup.html'\"></div><div ng-include=\"'app/views/configuration/configuration_switchall.html'\"></div><div ng-include=\"'app/views/configuration/configuration_protection.html'\"></div></div></div>"
+  );
+
+
+  $templateCache.put('app/views/configuration/configuration_commands.html',
+    "<div class=cfg-block ng-if=hasConfigurationCc.command ng-controller=ConfigCommandsController><h4>{{hasConfigurationCc.commandClass}}</h4><div class=commands-data ng-repeat=\"c in hasConfigurationCc.command| orderBy:predicate:reverse\" ng-init=\"formName = 'form_' + c.data.method + '_' + v.rowId\"><form name={{formName}} id={{formName}} class=\"form form_commands\" role=form ng-submit=\"storeExpertCommnds(formName, hasConfigurationCc.cmd + '.' + c.data.method)\" novalidate><div class=commands-data-control><div class=form-inline ng-repeat=\"(pk,p) in c.data.params\"><expert-command-input collection=p values=c.data.values[pk] devices=devices name=c.data.method get-node-devices=getNodeDevices></expert-command-input></div><button class=\"btn btn-primary\" type=submit ng-disabled=\"rowSpinner[hasConfigurationCc.cmd + '.' + c.data.method]\"><bb-row-spinner spinner=\"rowSpinner[hasConfigurationCc.cmd + '.' + c.data.method]\" label=c.data.method icon=\"'fa-circle-o'\"></bb-row-spinner></button></div></form></div></div>"
+  );
+
+
+  $templateCache.put('app/views/configuration/configuration_config.html',
+    "<div class=cfg-block-content ng-if=configCont ng-init=\"formName = 'form_config'\"><form name={{formName}} id={{formName}} class=form ng-submit=\"submitApplyConfigCfg(formName,{'id': deviceId,'instance': '0','commandclass': '70','command': 'Set'}, configCont, hasBattery,false,false,false,'saveIntoDevice')\" novalidate><div class=cfg-block><button class=\"btn btn-primary\" type=button ng-click=\"updateFromDeviceCfg('devices[' + deviceId + '].instances[0].commandClasses[0x70].Get', configCont, deviceId, formName,'updateFromDevice')\" ng-disabled=\"rowSpinner['updateFromDevice']\"><bb-row-spinner spinner=\"rowSpinner['updateFromDevice']\" label=\"_t('btn_update_from_device')\" icon=\"'fa-files-o'\"></bb-row-spinner></button> <button class=\"btn btn-primary\" type=submit ng-disabled=\"rowSpinner['saveIntoDevice']\"><bb-row-spinner spinner=\"rowSpinner['saveIntoDevice']\" label=\"_t('apply_config')\" icon=\"'fa-save'\"></bb-row-spinner></button> <button class=\"btn btn-primary\" type=button ng-click=\"setAllToDefault({'id': deviceId, 'instance': '0', 'commandclass': '70', 'command': 'Set'}, configCont, hasBattery, formName,'allToDefault')\" ng-disabled=\"rowSpinner['allToDefault']\"><bb-row-spinner spinner=\"rowSpinner['allToDefault']\" label=\"_t('set_all_default')\" icon=\"'fa-undo'\"></bb-row-spinner></button></div><div class=cfg-control-content id=cfg_control_{{v.confNum}} ng-repeat=\"v in configCont\"><div class=form-inline><expert-command-input collection=v div_id=$index default_value=v.defaultValue show_default_value=v.showDefaultValue curr_value=v.configCconfigValue></expert-command-input></div><div class=\"text-danger text-alert\" ng-if=\"v.configCconfigValue != v.configZwaveValue\" title=\"Val: {{v.configCconfigValue}} | Device: {{v.configZwaveValue}}\"><i class=\"fa fa-exclamation-triangle\"></i> {{_t('value_changed_to')}} <strong>{{v.configCconfigValue}}</strong> {{_t('value_not_stored_indevice')}}</div><p class=cfg-info><span class=is-updated-{{v.isUpdated}}>{{_t('rt_header_update_time')}}: {{v.updateTime}}</span> <span>| {{_t('set_value')}}: {{v.configCconfigValue}}</span> <span>| {{_t('default_value_is')}}:<config-default-value collection=v show_default_value=v.showDefaultValue default_value=v.defaultValue></config-default-value></span></p><br><p ng-if=v.description><i class=\"fa fa-info-circle fa-lg text-primary\"></i> <em>{{v.description}}</em></p><div><button class=\"btn btn-default\" type=button ng-click=\"submitApplyConfigCfg(formName, {'id': deviceId, 'instance': '0', 'commandclass': '70', 'command': 'Set'}, configCont, hasBattery, v.confNum,false,false,'save_' + v.confNum)\" ng-disabled=\"rowSpinner['save_' + v.confNum]\"><bb-row-spinner spinner=\"rowSpinner['save_' + v.confNum]\" label=\"_t('apply_config_into_device')\" icon=\"'fa-save text-success'\"></bb-row-spinner></button> <button class=\"btn btn-default\" type=button ng-click=\"submitApplyConfigCfg(formName, {'id': deviceId, 'instance': '0', 'commandclass': '70', 'command': 'Set'}, configCont, hasBattery, v.confNum, {confNum: v.confNum, showDefaultValue: v.showDefaultValue},false,'default_' + v.confNum)\" ng-disabled=\"rowSpinner['default_' + v.confNum]\"><bb-row-spinner spinner=\"rowSpinner['default_' + v.confNum]\" label=\"_t('set_to_default')\" icon=\"'fa-undo text-success'\"></bb-row-spinner></button></div></div></form></div>"
+  );
+
+
+  $templateCache.put('app/views/configuration/configuration_protection.html',
+    "<div class=cfg-block id=protection_cont ng-if=protectionCont><h4>{{_t('protection_list')}}</h4><div class=cfg-block-content ng-init=\"formName = 'form_protection_list'\"><form name={{formName}} id={{formName}} class=form ng-submit=\"submitApplyConfigCfg(formName,{'id': deviceId,'instance': '0','commandclass': '75','command': 'Set'}, protectionCont, hasBattery,false,false,false,'saveIntoDeviceProtection')\" novalidate><div><button class=\"btn btn-primary\" type=button ng-click=\"uupdateFromDevice(protectionCont.cmd + '.Get()', hasBattery, deviceId, formName,'updateFromDeviceProtection')\" ng-disabled=\"rowSpinner['updateFromDeviceProtection']\"><bb-row-spinner spinner=\"rowSpinner['updateFromDeviceProtection']\" label=\"_t('btn_update_from_device')\" icon=\"'fa-files-o'\"></bb-row-spinner></button> <button class=\"btn btn-primary\" type=submit ng-disabled=\"rowSpinner['saveIntoDeviceProtection']\"><bb-row-spinner spinner=\"rowSpinner['saveIntoDeviceProtection']\" label=\"_t('apply_config')\" icon=\"'fa-save'\"></bb-row-spinner></button></div><div class=cfg-control-content ng-repeat=\"v in protectionCont.params\"><div class=form-inline><expert-command-input collection=v values=protectionCont.values[0] default_value=protectionCont.defaultValue curr_value=protectionCont.configCconfigValue name=protectionCont.name is_dropdown=1></expert-command-input></div><p class=cfg-info><span class=is-updated-{{protectionCont.isUpdated}}>{{_t('updated')}}: {{protectionCont.updateTime}} </span><span>| {{_t('default_value_is')}}:<config-default-value collection=v show_default_value=protectionCont.showDefaultValue default_value=protectionCont.defaultValue></config-default-value></span></p></div></form></div></div>"
+  );
+
+
+  $templateCache.put('app/views/configuration/configuration_switchall.html',
+    "<div class=cfg-block id=switchall_cont ng-if=switchAllCont><h4>{{_t('switchall_list')}}</h4><div class=cfg-block-content ng-init=\"formName = 'form_switch_all'\"><form name={{formName}} id={{formName}} class=form ng-submit=\"submitApplyConfigCfg(formName,{'id': deviceId,'instance': '0','commandclass': '27','command': 'Set'}, switchAllCont, hasBattery,false,false,false,'saveIntoDeviceSwitchall')\" novalidate><div><button class=\"btn btn-primary\" type=button ng-click=\"updateFromDevice(switchAllCont.cmd + '.Get()', hasBattery, deviceId, formName,'updateFromDeviceSwitchall')\" ng-disabled=\"rowSpinner['updateFromDeviceSwitchall']\"><bb-row-spinner spinner=\"rowSpinner['updateFromDeviceSwitchall']\" label=\"_t('btn_update_from_device')\" icon=\"'fa-files-o'\"></bb-row-spinner></button> <button class=\"btn btn-primary\" type=submit ng-disabled=\"rowSpinner['saveIntoDeviceSwitchall']\"><bb-row-spinner spinner=\"rowSpinner['saveIntoDeviceSwitchall']\" label=\"_t('apply_config')\" icon=\"'fa-save'\"></bb-row-spinner></button></div><div class=cfg-control-content ng-repeat=\"v in switchAllCont.params\"><div class=form-inline><expert-command-input collection=v values=switchAllCont.values[0] default_value=switchAllCont.defaultValue curr_value=switchAllCont.configCconfigValue name=switchAllCont.name is_dropdown=1></expert-command-input></div><p class=cfg-info><span class=is-updated-{{switchAllCont.isUpdated}}>{{_t('updated')}}: {{switchAllCont.updateTime}} </span><span>| {{_t('default_value_is')}}:<config-default-value collection=v show_default_value=switchAllCont.showDefaultValue default_value=switchAllCont.defaultValue></config-default-value></span></p></div></form></div></div>"
+  );
+
+
+  $templateCache.put('app/views/configuration/configuration_wakeup.html',
+    "<div class=cfg-block id=wakeup_cont ng-if=wakeupCont><h4>{{_t('wakeup_list')}}</h4><div class=cfg-block-content ng-init=\"formName = 'form_wakeup'\"><form name={{formName}} id={{formName}} class=form ng-submit=\"submitApplyConfigCfg(formName,{'id': deviceId,'instance': '0','commandclass': '84','command': 'Set'}, wakeupCont, hasBattery,false,false,false,'saveIntoDeviceWakeup')\" novalidate><div><button class=\"btn btn-primary\" type=button ng-click=\"updateFromDevice(wakeupCont.cmd + '.Get()', hasBattery, deviceId, formName,'updateFromDeviceWakeup')\" ng-disabled=\"rowSpinner['updateFromDeviceWakeup']\"><bb-row-spinner spinner=\"rowSpinner['updateFromDeviceWakeup']\" label=\"_t('btn_update_from_device')\" icon=\"'fa-files-o'\"></bb-row-spinner></button> <button class=\"btn btn-primary\" type=submit ng-disabled=\"rowSpinner['saveIntoDeviceWakeup']\"><bb-row-spinner spinner=\"rowSpinner['saveIntoDeviceWakeup']\" label=\"_t('apply_config')\" icon=\"'fa-save'\"></bb-row-spinner></button></div><div class=clearfix></div><div class=cfg-control-content><div ng-repeat=\"v in wakeupCont.params\"><div class=form-inline><expert-command-input collection=v values=wakeupCont.values[0] devices=devices get-node-devices=getNodeDevices curr_value=wakeupCont.configCconfigValue curr_node_value=wakeupCont.configCconfigNodeValue name=wakeupCont.name></expert-command-input></div></div><div class=clearfix></div><p class=cfg-info><span class=is-updated-{{wakeupCont.isUpdated}}>{{_t('updated')}}: {{wakeupCont.updateTime}} </span><span>| {{_t('default_value_is')}}:<config-default-value collection=v show_default_value=wakeupCont.showDefaultValue default_value=wakeupCont.defaultValue></config-default-value></span></p></div></form></div></div>"
   );
 
 
   $templateCache.put('app/views/configuration/firmware.html',
-    "<div ng-controller=ConfigFirmwareController><div ng-include=\"'app/views/configuration/header.html'\"></div><div class=tab-content ng-show=deviceId><form name=form_firmware_update id=form_firmware_update class=\"form form-inline\" ng-submit=\"updateDeviceFirmware(firmware.input,'btn_update')\" novalidate><input id=url name=url class=form-control ng-model=firmware.input.url placeholder=URL title=\"please use format http:// ...... \"> <input type=file class=form-control file-model=myFile><select name=devices class=form-control ng-model=firmware.input.targetId><option value=\"\" ng-selected=\"v.id != deviceId\">--- {{_t('Target')}} ---</option><option value={{k}} ng-repeat=\"(k,v) in ['Z-Wave','EnOcean']\" ng-selected=\"k === 0\">{{v}}</option></select><button type=submit class=\"btn btn-info\" id=btn_update ng-disabled=\"rowSpinner['btn_update']\"><bb-row-spinner spinner=\"rowSpinner['btn_update']\" label=\"_t('update')\" icon=\"'fa-check'\"></bb-row-spinner></button></form></div></div>"
-  );
-
-
-  $templateCache.put('app/views/configuration/header.html',
-    "<div class=\"page-header form-inline\" ng-if=\"_.size(devices) > 0\"><label>{{_t('h1_configuration_for')}}</label><select name=devices class=form-control ng-model=deviceId ng-change=changeDevice(deviceId)><option value=\"\" ng-selected=\"v.id != deviceId\">--- {{_t('select_device')}} ---</option><option ng-repeat=\"v in devices| orderBy:predicate:reverse\" value={{v.id}} ng-selected=\"v.id == deviceId\">(#{{v.id}}) {{v.name}}</option></select></div><ul class=\"nav nav-tabs\" role=tablist ng-show=\"deviceId > 0\"><li ng-class=\"activeTab == 'interview' ? 'active' : ''\"><a href=#configuration/interview/{{deviceId}}>{{_t('nav_device_interview')}}</a></li><li ng-class=\"activeTab == 'configuration' ? 'active' : ''\"><a href=#configuration/configuration/{{deviceId}}>{{_t('nav_device_configuration')}}</a></li><li ng-class=\"activeTab == 'association' ? 'active' : ''\"><a href=#configuration/association/{{deviceId}}>{{_t('nav_device_assoc')}}</a></li><li ng-class=\"activeTab == 'health' ? 'active' : ''\"><a href=#configuration/health/{{deviceId}}>{{_t('link_health')}}</a></li><li ng-class=\"activeTab == 'commands' ? 'active' : ''\"><a href=#configuration/commands/{{deviceId}}>{{_t('nav_expert_commands')}}</a></li><li ng-class=\"activeTab == 'firmware' ? 'active' : ''\"><a href=#configuration/firmware/{{deviceId}}>{{_t('nav_firmware_update')}}</a></li><li ng-class=\"activeTab == 'postfix' ? 'active' : ''\" ng-if=cfg.zwavecfg.debug><a href=#configuration/postfix/{{deviceId}}>{{_t('nav_postfix_update')}}</a></li></ul>"
+    "<div ng-controller=ConfigFirmwareController><div ng-include=\"'app/views/configuration/navi.html'\"></div><div ng-show=deviceId><form name=form_firmware_update id=form_firmware_update class=\"form form-inline\" ng-submit=\"updateDeviceFirmware(firmware.input,'btn_update')\" novalidate><input id=url name=url class=form-control ng-model=firmware.input.url placeholder=URL title=\"please use format http:// ...... \"> <input type=file class=form-control file-model=myFile><select name=devices class=form-control ng-model=firmware.input.targetId><option value=\"\" ng-selected=\"v.id != deviceId\">--- {{_t('Target')}} ---</option><option value={{k}} ng-repeat=\"(k,v) in ['Z-Wave','EnOcean']\" ng-selected=\"k === 0\">{{v}}</option></select><button type=submit class=\"btn btn-primary\" id=btn_update ng-disabled=\"rowSpinner['btn_update']\"><bb-row-spinner spinner=\"rowSpinner['btn_update']\" label=\"_t('update')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></form></div></div>"
   );
 
 
   $templateCache.put('app/views/configuration/health.html',
-    "<div ng-controller=ConfigHealthController><div ng-include=\"'app/views/configuration/header.html'\"></div><bb-alert alert=alert></bb-alert><div class=tab-content ng-show=\"deviceId && !_.isEmpty(health.neighbours)\"><div id=table_mobile><div class=\"alert ng-scope alert-warning\" ng-if=!health.device.hasPowerLevel><i class=\"fa fa-exclamation-circle\"></i> {{_t('link_health_no_powerlevel')}}</div><table class=\"table table-striped table-condensed table-hover\"><thead class=cf><tr><th><a href=\"\" ng-click=\"orderBy('id')\">{{ _t('link_to_node')}} <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('type')\">{{_t('device_description_device_type')}} <span ng-show=\"predicate == 'type'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th>{{ _t('linkquality')}}</th><th class=mobile-show><button class=\"btn btn-info\" id=btn_test_all_1 ng-if=health.device.hasPowerLevel ng-click=\"testAllLinks('all_1')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner spinner=\"rowSpinner['all_1']\" label=\"_t('test_all_links')\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in health.neighbours| orderBy:predicate:reverse track by $index\" id={{v.rowId}}><td data-title=#><button class=\"btn btn-default btn-{{v.type}}\">{{ v.id}}</button></td><td data-title=\"{{ _t('device_description_device_type')}}\">{{ v.name}}</td><td data-title=\"{{ _t('type')}}\"><i class=fa ng-class=v.icon></i></td><td data-title=\"{{ _t('datetime')}}\"><span class=\"row-time {{v.indicator.updateTimeColor}}\" ng-if=v.powerLevel>{{ v.indicator.updateTime | isTodayFromUnix }} </span><span class=\"row-time {{health.timing.indicator.updateTimeColor}}\" ng-if=\"!v.powerLevel && v.id === health.ctrlNodeId\">{{ health.timing.indicator.updateTime | isTodayFromUnix }}</span></td><td data-title=\"{{ _t('linkquality')}}\"><i class=\"fa fa-circle fa-2x clickable {{v.indicator.color}}\" ng-if=v.powerLevel ng-click=\"handlePowerLevelModal('healthPowerLevelModal', $event, v)\"></i> <i class=\"fa fa-circle fa-2x clickable {{health.timing.indicator.color}}\" ng-if=\"!v.powerLevel && v.id === health.ctrlNodeId\" ng-click=\"handleTimingModal('healthTimingModal', $event, v)\"></i></td><td data-title=\"\" ng-switch on=v.deviceType><button class=\"btn btn-primary\" id=\"btn_test_{{ v.id}}\" ng-if=health.device.hasPowerLevel ng-click=runZwaveCmd(v.cmdTestNode) ng-disabled=rowSpinner[v.cmdTestNode]><bb-row-spinner spinner=rowSpinner[v.cmdTestNode] label=\"_t('test_link')\"></bb-row-spinner></button> <button class=\"btn btn-info\" id=\"btn_nop_{{ v.id}}\" ng-if=\"!health.device.hasPowerLevel && v.type === 'static'\" ng-click=runZwaveNopCmd(v.cmdNop) ng-disabled=rowSpinner[v.cmdNop]><bb-row-spinner spinner=rowSpinner[v.cmdNop] label=\"_t('nop')\"></bb-row-spinner></button></td></tr></tbody></table></div></div><div id=healthPowerLevelModal class=appmodal ng-if=modalArr.healthPowerLevelModal><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handlePowerLevelModal('healthPowerLevelModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{health.device.find.name|cutText:true:30}}</h3></div><div class=appmodal-body ng-bind-html=\"health.device.commandClass | toTrusted\"></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handlePowerLevelModal('healthPowerLevelModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_close')}}</span></button></div></div></div><div id=healthTimingModal class=appmodal ng-if=modalArr.healthTimingModal><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handleTimingModal('healthTimingModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{health.device.find.name|cutText:true:30}}</h3></div><div class=appmodal-body><p><strong>{{_t('th_total')}} (pkts)</strong>: {{health.timing.find.totalPackets}}</p><p><strong>{{_t('th_ok')}}</strong>: {{health.timing.find.okPackets}}%</p><p><strong>{{_t('th_lastpackets')}}</strong>: <span ng-bind-html=\"health.timing.find.lastPackets | toTrusted\"></span></p><p><strong>{{_t('timing_color_description')}}:</strong><br><i class=\"fa fa-square fa-lg\" style=\"color: green\"></i> {{_t('timing_green')}}<br><i class=\"fa fa-square fa-lg\" style=\"color: black\"></i> {{_t('timing_black')}}<br><i class=\"fa fa-square fa-lg\" style=\"color: red\"></i> {{_t('timing_red')}}.<br></p></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleTimingModal('healthTimingModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_close')}}</span></button></div></div></div></div>"
+    "<div ng-controller=ConfigHealthController><div ng-include=\"'app/views/configuration/navi.html'\"></div><div ng-show=\"deviceId && !_.isEmpty(health.neighbours)\"><div id=table_mobile><div class=\"alert ng-scope alert-warning\" ng-if=!health.device.hasPowerLevel><i class=\"fa fa-exclamation-circle\"></i> {{_t('link_health_no_powerlevel')}}</div><table class=\"table table-striped table-condensed table-hover\"><thead class=cf><tr><th><a href=\"\" ng-click=\"orderBy('id')\">{{ _t('link_to_node')}} <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('type')\">{{_t('device_description_device_type')}} <span ng-show=\"predicate == 'type'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th>{{ _t('linkquality')}}</th><th class=mobile-show><button class=\"btn btn-primary\" id=btn_test_all_1 ng-if=health.device.hasPowerLevel ng-click=\"testAllLinks('all_1')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner icon=\"'fa-circle-o'\" spinner=\"rowSpinner['all_1']\" label=\"_t('test_all_links')\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in health.neighbours| orderBy:predicate:reverse track by $index\" id={{v.rowId}}><td data-title=#><button class=\"btn btn-default btn-{{v.type}}\">{{ v.id}}</button></td><td data-title=\"{{ _t('device_description_device_type')}}\">{{ v.name}}</td><td data-title=\"{{ _t('type')}}\"><i class=fa ng-class=v.icon></i></td><td data-title=\"{{ _t('datetime')}}\"><span class=\"row-time {{v.indicator.updateTimeColor}}\" ng-if=v.powerLevel>{{ v.indicator.updateTime | isTodayFromUnix }} </span><span class=\"row-time {{health.timing.indicator.updateTimeColor}}\" ng-if=\"!v.powerLevel && v.id === health.ctrlNodeId\">{{ health.timing.indicator.updateTime | isTodayFromUnix }}</span></td><td data-title=\"{{ _t('linkquality')}}\"><i class=\"fa fa-circle fa-2x clickable {{v.indicator.color}}\" ng-if=v.powerLevel ng-click=\"handlePowerLevelModal('healthPowerLevelModal', $event, v)\"></i> <i class=\"fa fa-circle fa-2x clickable {{health.timing.indicator.color}}\" ng-if=\"!v.powerLevel && v.id === health.ctrlNodeId\" ng-click=\"handleTimingModal('healthTimingModal', $event, v)\"></i></td><td data-title=\"\" ng-switch on=v.deviceType><button class=\"btn btn-default\" id=\"btn_test_{{ v.id}}\" ng-if=health.device.hasPowerLevel ng-click=runZwaveCmd(v.cmdTestNode) ng-disabled=rowSpinner[v.cmdTestNode]><bb-row-spinner icon=\"'fa-circle-o text-success'\" spinner=rowSpinner[v.cmdTestNode] label=\"_t('test_link')\"></bb-row-spinner></button> <button class=\"btn btn-default\" id=\"btn_nop_{{ v.id}}\" ng-if=\"!health.device.hasPowerLevel && v.type === 'static'\" ng-click=runZwaveNopCmd(v.cmdNop) ng-disabled=rowSpinner[v.cmdNop]><bb-row-spinner icon=\"'fa-circle-o text-success'\" spinner=rowSpinner[v.cmdNop] label=\"_t('nop')\"></bb-row-spinner></button></td></tr></tbody></table></div></div><div id=healthPowerLevelModal class=appmodal ng-if=modalArr.healthPowerLevelModal><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handlePowerLevelModal('healthPowerLevelModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{health.device.find.name|cutText:true:30}}</h3></div><div class=appmodal-body ng-bind-html=\"health.device.commandClass | toTrusted\"></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handlePowerLevelModal('healthPowerLevelModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_close')}}</span></button></div></div></div><div id=healthTimingModal class=appmodal ng-if=modalArr.healthTimingModal><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handleTimingModal('healthTimingModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{health.device.find.name|cutText:true:30}}</h3></div><div class=appmodal-body><p><strong>{{_t('th_total')}} (pkts)</strong>: {{health.timing.find.totalPackets}}</p><p><strong>{{_t('th_ok')}}</strong>: {{health.timing.find.okPackets}}%</p><p><strong>{{_t('th_lastpackets')}}</strong>: <span ng-bind-html=\"health.timing.find.lastPackets | toTrusted\"></span></p><p><strong>{{_t('timing_color_description')}}:</strong><br><i class=\"fa fa-square fa-lg\" style=\"color: green\"></i> {{_t('timing_green')}}<br><i class=\"fa fa-square fa-lg\" style=\"color: black\"></i> {{_t('timing_black')}}<br><i class=\"fa fa-square fa-lg\" style=\"color: red\"></i> {{_t('timing_red')}}.<br></p></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleTimingModal('healthTimingModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_close')}}</span></button></div></div></div></div>"
   );
 
 
   $templateCache.put('app/views/configuration/interview.html',
-    "<div ng-controller=ConfigInterviewController><div ng-include=\"'app/views/configuration/header.html'\"></div><div class=tab-content ng-show=deviceId><div class=cfg-block id=rename_cont><h4><a href=\"\" ng-click=\"goRename = !goRename\">{{_t('device_rename_tooltip')}} <i class=\"fa fa-pencil\"></i></a></h4><div ng-show=goRename><form name=form_rename id=form_rename ng-model=form_rename class=\"form form-inline\" ng-submit=\"renameDevice('form_rename')\" novalidate><input name=device_name id=device_name class=form-control value={{deviceName}}> <button type=submit class=\"btn btn-primary\" id=btn_update>{{_t('btn_save_name')}}</button></form></div></div><div class=cfg-block><div class=row><div class=col-md-8><div class=table-responsive_><table class=\"table table-striped table-condensed table-cfg-interview\"><tbody><tr ng-repeat=\"v in descriptionCont\" ng-show=\"v.val || v.val != ''\"><th>{{_t(v.key)}}</th><td id={{v.key}}><div ng-switch on=v.key><div ng-switch-when=command_class><span ng-repeat=\"cc in interviewCommands\"><a href=\"\" ng-click=\"showModalCommandClass('#modal_command_class',cc.iId,cc.ccId, 'cmdData')\">{{cc.ccName}}</a> &#8226;&nbsp;</span></div><p class=config-interview-val ng-switch-default ng-bind-html=\"v.val | toTrusted\"></p></div></td></tr></tbody></table></div></div><div class=col-md-4><img src={{deviceImage}} class=config-device-img alt=Image></div></div></div><div class=cfg-block><button data-ng-click=\"runCmd('devices[' + deviceId + '].RequestNodeInformation()')\" class=\"btn btn-primary btn-spinner\" id=btn_request_nif>{{_t('config_ui_request_node_info')}}</button> <button data-ng-click=\"runCmd('devices[' + deviceId + '].InterviewForce()')\" data-redirect={{deviceId}} class=\"btn btn-primary btn-spinner\" id=btn_interview_force>{{_t('config_ui_force_interview')}}</button> <button data-ng-click=\"showModalInterview('#modal_interview', null)\" class=\"btn btn-primary btn-spinner\" id=btn_request_nif>{{_t('config_ui_show_interview_results')}}</button> <button data-ng-click=\"showModalDeviceSelect('#modal_device_select', deviceId, '#modal_device_select .allert-hidden')\" class=\"btn btn-primary\" id=btn_show_description>{{_t('config_ui_select_xml')}}</button> <a href=\"{{cfg.server_url + cfg.zddx_create_url + deviceId}}\" class=\"btn btn-primary\" id=btn_create_zddx target=_blank>{{_t('btn_zddx_create')}}</a></div></div><div class=\"modal fade\" id=modal_interview tabindex=-1 role=dialog aria-labelledby=myModalLabel aria-hidden=true><div class=modal-dialog><div class=modal-content><div class=modal-header><button type=button class=close data-dismiss=modal aria-hidden=true>&times;</button><h4 class=modal-title>{{_t('interview_results_dialog_title')}}</h4></div><div class=modal-body><p>{{_t('interview_results_title')}} <a href=\"\" ng-click=\"showModalCommandClass('#modal_command_class')\">{{deviceName}}</a></p><div id=table_mobile_modal_1><table class=\"table table-condensed\"><thead><tr><th>{{_t('th_instance')}}</th><th>{{_t('th_command_class')}}</th><th>{{_t('th_result')}}</th></tr></thead><tbody><tr ng-repeat=\"v in interviewCommands\" id={{v.ccId}}><td data-title=\"{{_t('th_instance')}}\" ng-class=\"($index == 0 ? 'no-class' : 'mobile-hide')\"><a href=\"\" ng-click=\"showModalCommandClass('#modal_command_class',v.iId,v.ccId, 'cmdDataIn')\">{{v.iId}}</a> &nbsp;</td><td data-title=\"{{_t('th_command_class')}}\"><a href=\"\" ng-click=\"showModalCommandClass('#modal_command_class',v.iId,v.ccId, 'cmdData')\">{{v.ccName}}</a></td><td data-title=\"{{_t('th_result')}}\"><span ng-if=v.interviewDone><i class=\"fa fa-check text-success\"></i></span> <button ng-if=!v.interviewDone data-store-url=devices[{{deviceId}}].instances[{{v.iId}}].commandClasses[{{v.ccId}}].Interview() data-ng-click=store(v) class=\"btn btn-primary btn-sm\" id=btn_force_interview_{{v.ccId}}>{{_t('config_ui_force_interview')}}</button> &nbsp;</td></tr></tbody></table></div></div><div class=modal-footer><button type=button class=\"btn btn-default\" data-dismiss=modal>{{_t('btn_cancel')}}</button></div></div></div></div><div class=\"modal fade\" id=modal_command tabindex=-1 role=dialog aria-labelledby=myModalLabel aria-hidden=true><div class=modal-dialog><div class=modal-content><div class=modal-header><button type=button class=close data-dismiss=modal aria-hidden=true>&times;</button><h4 class=modal-title>{{_t('th_command_class')}}</h4></div><div class=modal-body></div><div class=modal-footer><button type=button class=\"btn btn-default\" data-dismiss=modal>{{_t('btn_cancel')}}</button></div></div></div></div><div class=\"modal fade\" id=modal_device_select tabindex=-1 role=dialog aria-labelledby=myModalLabel aria-hidden=true><div class=modal-dialog><div class=modal-content><div class=modal-header><button type=button class=close data-dismiss=modal aria-hidden=true>&times;</button><h4 class=modal-title>{{_t('config_ui_select_xml')}}</h4></div><div class=modal-body><div ng-if=\"deviceZddx.length > 0\"><p ng-bind-html=\"_t('select_zddx_help') | toTrusted\"></p><select name=select_zddx_help id=select_zddx_help class=form-control ng-change=\"changeDeviceSelect('#select_zddx_help', '#device_select_image',modelSelectZddx)\" ng-model=modelSelectZddx><option value=\"\">---</option><option ng-init=\"selectCfg = {\r" +
+    "<div ng-controller=ConfigInterviewController><div ng-include=\"'app/views/configuration/navi.html'\"></div><div ng-show=deviceId><div class=cfg-block id=rename_cont><h4><a href=\"\" ng-click=\"goRename = !goRename\">{{_t('device_rename_tooltip')}} <i class=\"fa fa-pencil\"></i></a></h4><div ng-show=goRename><form name=form_rename id=form_rename ng-model=form_rename class=\"form form-inline\" ng-submit=\"renameDevice(deviceName,'deviceName')\" novalidate><input name=device_name id=device_name class=form-control value={{deviceName}} ng-model=deviceName> <button type=submit class=\"btn btn-primary\" id=btn_update ng-disabled=\"rowSpinner['deviceName']\"><bb-row-spinner spinner=\"rowSpinner['deviceName']\" label=\"_t('btn_save_name')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></form></div></div><div class=cfg-block><div class=row><div class=col-md-8><div class=table-responsive_><table class=\"table table-striped table-condensed table-cfg-interview\"><tbody><tr ng-repeat=\"v in descriptionCont\" ng-hide=\"v.val === '' || v.val === false || v.val === null\"><th>{{_t(v.key)}}</th><td id={{v.key}}><div ng-switch on=v.key><div ng-switch-when=command_class><span ng-repeat=\"cc in interviewCommands\"><a href=\"\" ng-click=\"handleCmdClassModal('cmdClassModal',$event,cc.iId,cc.ccId, 'cmdData')\">{{cc.ccName}} </a>&#8226;&nbsp;</span></div><div class=config-interview-val ng-switch-default ng-bind-html=\"v.val | toTrusted\"></div></div></td></tr><tr><th>{{_t('device_interview_indicator')}}</th><td><div class=progress ng-if_=\"zwaveInterview.progress > 0 && zwaveInterview.progress < 101\"><div class=progress-bar style=\"min-height:40px;min-width: 2em; width: {{zwaveInterview.progress}}%\" ng-class=\"zwaveInterview.progress < 100 ? 'progress-bar-danger progress-bar-striped active' : 'progress-bar-success'\">{{zwaveInterview.progress}}%</div></div></td></tr></tbody></table></div></div><div class=col-md-4><img src={{deviceImage}} class=config-device-img alt=Image></div></div></div><div class=cfg-block><button id=btn_request_nif class=\"btn btn-primary\" ng-click=\"requestNodeInformation('devices[' + deviceId + '].RequestNodeInformation()')\" ng-disabled=\"rowSpinner['devices[' + deviceId + '].RequestNodeInformation()']\"><bb-row-spinner spinner=\"rowSpinner['devices[' + deviceId + '].RequestNodeInformation()']\" label=\"_t('config_ui_request_node_info')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button> <button class=\"btn btn-primary\" id=btn_interview_force ng-click=\"interviewForce('devices[' + deviceId + '].InterviewForce()')\" ng-disabled=\"rowSpinner['devices[' + deviceId + '].InterviewForce()']\"><bb-row-spinner spinner=\"rowSpinner['devices[' + deviceId + '].InterviewForce()']\" label=\"_t('config_ui_force_interview')\" icon=\"'fa-fire'\"></bb-row-spinner></button> <button id=btn_show_interview_result class=\"btn btn-default\" ng-click=\"handleModal('interviewModal',$event)\"><i class=\"fa fa-clone\"></i> {{_t('config_ui_show_interview_results')}}</button> <button id=btn_show_description class=\"btn btn-default\" ng-click=\"handleModal('loadXmlModal', $event)\"><i class=\"fa fa-clone\"></i> {{_t('config_ui_select_xml')}}</button> <a href=\"{{cfg.server_url + cfg.zddx_create_url + deviceId}}\" class=\"btn btn-default\" id=btn_create_zddx target=_blank><i class=\"fa fa-clone\"></i> {{_t('btn_zddx_create')}}</a></div></div><div ng-include=\"'app/views/configuration/modal_interview.html'\"></div><div ng-include=\"'app/views/configuration/modal_cmdclass.html'\"></div><div ng-include=\"'app/views/configuration/modal_loadxml.html'\"></div></div>"
+  );
+
+
+  $templateCache.put('app/views/configuration/modal_assoc_add.html',
+    "<div id=assocAddModal class=appmodal ng-show=modalArr.assocAddModal><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=closeAssocModal()><i class=\"fa fa-times\"></i></span><h3>{{_t('th_command_class')}}</h3></div><div class=\"appmodal-body modal-h-600\" style=\"white-space: normal\"><div class=form-inline>{{ _t('fro')}} {{nodeCfg.name}} {{ _t('to_locate')}}<br><div class=form-group><select class=form-control ng-model=input.toNode ng-change=showAssocNodeInstance(input.toNode,nodeCfg.hasMca)><option value=\"\" ng-selected=true>&lt; {{ _t('assoc_select_to_node')}} &gt;</option><option ng-repeat=\"v in assocAddDevices track by $index\" value={{v.id}}>(#{{v.id}}) {{v.name}}</option></select></div><div class=form-group ng-if=\"nodeCfg.hasMca && assocAddInstances\"><select class=form-control ng-model=input.toInstance><option value=\"\" ng-selected=true>&lt; {{ _t('assoc_select_to_instance')}} &gt;</option><option value=plain ng-selected=true>{{ _t('plain_association')}}</option><option ng-repeat=\"v in assocAddInstances track by $index\" value={{v.key}}>{{v.val}}</option></select></div></div></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=closeAssocModal()><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button> <button type=submit class=\"btn btn-primary\" ng-click=storeAssoc(input) ng-disabled=\"!input.toNode || ((assocAddInstances) && !input.toInstance)\"><i class=\"fa fa-circle-o\"></i> <span class=btn-name>{{ _t('dialog_add')}}</span></button></div></div></div>"
+  );
+
+
+  $templateCache.put('app/views/configuration/modal_cmdclass.html',
+    "<div id=cmdClassModal class=appmodal ng-show=modalArr.cmdClassModal><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handleModal('cmdClassModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{_t('th_command_class')}}</h3></div><div class=\"appmodal-body modal-h-600\"><div ng-bind-html=commandClass|toTrusted></div></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleModal('cmdClassModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button></div></div></div>"
+  );
+
+
+  $templateCache.put('app/views/configuration/modal_interview.html',
+    "<div id=interviewModal class=appmodal ng-show=modalArr.interviewModal><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handleModal('interviewModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{_t('interview_results_dialog_title')}}</h3></div><div class=\"appmodal-body modal-h-600\"><p>{{_t('interview_results_title')}} <button class=\"btn btn-default\" ng-click=\"handleCmdClassModal('cmdClassModal',$event)\"><i class=\"fa fa-clone\"></i> {{deviceName}}</button></p><div id=table_mobile_modal_1><table class=\"table table-condensed\"><thead><tr><th>{{_t('th_instance')}}</th><th>{{_t('th_command_class')}}</th><th>{{_t('th_result')}}</th></tr></thead><tbody><tr ng-repeat=\"v in interviewCommands\" id={{v.ccId}}><td data-title=\"{{_t('th_instance')}}\" ng-class=\"($index == 0 ? 'no-class' : 'mobile-hide')\"><a href=\"\" ng-click=\"handleCmdClassModal('cmdClassModal',$event,v.iId,v.ccId, 'cmdDataIn')\">{{v.iId}}</a> &nbsp;</td><td data-title=\"{{_t('th_command_class')}}\"><a href=\"\" ng-click=\"handleCmdClassModal('cmdClassModal',$event,v.iId,v.ccId, 'cmdData')\">{{v.ccName}}</a></td><td data-title=\"{{_t('th_result')}}\"><span ng-if=v.interviewDone><i class=\"fa fa-check text-success\"></i></span> <button id=btn_force_interview_{{v.ccId}} class=\"btn btn-primary btn-sm\" ng-init=\"apiUrl = 'devices[' +deviceId + '].instances[' + v.iId+'].commandClasses[' + v.ccId + '].Interview()'\" ng-if=!v.interviewDone ng-click=interviewForceDevice(apiUrl) ng-disabled=rowSpinner[apiUrl]><bb-row-spinner spinner=rowSpinner[apiUrl] label=\"_t('config_ui_force_interview')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button> &nbsp;</td></tr></tbody></table></div></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleModal('interviewModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button></div></div></div>"
+  );
+
+
+  $templateCache.put('app/views/configuration/modal_loadxml.html',
+    "<div id=loadXmlModa class=appmodal ng-if=modalArr.loadXmlModal><div class=appmodal-in ng-controller=LoadDeviceXmlController><div class=appmodal-header><span class=appmodal-close ng-click=\"handleModal('loadXmlModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{_t('config_ui_select_xml')}}</h3></div><div class=\"appmodal-body modal-h-600\"><p ng-bind-html=\"_t('select_zddx_help') | toTrusted\"></p><select id=select_zddx_help class=form-control ng-change=changeDeviceXml(deviceXml.input) ng-model=deviceXml.input.fileName><option value=\"\">---</option><option ng-init=\"selectCfg = {\r" +
     "\n" +
-    "                                'name':((v.brandName == '' && v.productName == '')?('Unnamed ZDDX: ' + v.fileName):(v.brandName + ' ' + v.productName))}\" ng-repeat=\"v in deviceZddx | orderBy:'brandName':false\" ng-selected=\"deviceZddxFile == v.fileName\" value={{v.fileName}} data-image={{v.deviceImage}}>{{selectCfg.name}}</option></select><div id=device_select_image_container><div id=device_select_image></div></div></div></div><div class=modal-footer><button type=button class=\"btn btn-primary\" data-dismiss=modal ng-click=runCmdDeviceSelect(deviceId)>{{_t('btn_select')}}</button> <button type=button class=\"btn btn-default\" data-dismiss=modal>{{_t('btn_cancel')}}</button></div></div></div></div><div class=\"modal fade\" id=modal_command_class tabindex=-1 role=dialog aria-labelledby=myModalLabel aria-hidden=true><div class=modal-dialog><div class=modal-content><div class=modal-header><button type=button class=close data-dismiss=modal aria-hidden=true ng-click=hideModal()>&times;</button><h4 class=modal-title>{{_t('commandClass')}}</h4></div><div class=modal-body ng-bind-html=commandClass|toTrusted></div><div class=modal-footer><button type=button class=\"btn btn-default\" data-dismiss=modal ng-click=hideModal()>{{_t('btn_cancel')}}</button></div></div></div></div></div>"
+    "                                'name':((v.brandName == '' && v.productName == '')?('Unnamed ZDDX: ' + v.fileName):(v.brandName + ' ' + v.productName))}\" ng-repeat=\"v in deviceXml.all | orderBy:'brandName':false track by $index\" ng-selected=\"deviceZddxFile == v.fileName\" value={{v.fileName}}>{{selectCfg.name}}</option></select><div id=device_select_image_container ng-if=\"!_.isEmpty(deviceXml.find) && deviceXml.find.deviceImage\"><div id=device_select_image><img ng-src={{deviceXml.find.deviceImage}}></div></div></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleModal('loadXmlModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button> <button class=\"btn btn-primary\" ng-if=!_.isEmpty(deviceXml.find) ng-click=\"storeDeviceXml(deviceXml.input,'storeDeviceXml')\" ng-disabled=\"rowSpinner['storeDeviceXml']\"><bb-row-spinner spinner=\"rowSpinner['storeDeviceXml']\" label=\"_t('btn_save')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></div></div></div>"
+  );
+
+
+  $templateCache.put('app/views/configuration/navi.html',
+    "<div class=\"tabs-wrap form-inline\" ng-show=\"deviceId > 0\"><div class=\"btn-group btn-goup-tabs\" ng-class=\"cfg.zwavecfg.debug ? 'btn-tabs-7': 'btn-tabs-6'\"><a class=\"btn btn-default\" title=\"{{_t('nav_device_interview')}}\" href=#configuration/interview/{{deviceId}} ng-class=\"activeTab == 'interview' ? 'active' : ''\"><i class=\"fa fa-commenting\"></i> <span class=btn-name>{{_t('nav_device_interview')}}</span> </a><a class=\"btn btn-default\" title=\"{{_t('nav_device_configuration')}}\" href=#configuration/configuration/{{deviceId}} ng-class=\"activeTab == 'configuration' ? 'active' : ''\"><i class=\"fa fa-cogs\"></i> <span class=btn-name>{{_t('nav_device_configuration')}}</span> </a><a class=\"btn btn-default\" title=\"{{_t('nav_device_assoc')}}\" href=#configuration/association/{{deviceId}} ng-class=\"activeTab == 'association' ? 'active' : ''\"><i class=\"fa fa-share-alt\"></i> <span class=btn-name>{{_t('nav_device_assoc')}} </span></a><a class=\"btn btn-default\" title=\"{{_t('link_health')}}\" href=#configuration/health/{{deviceId}} ng-class=\"activeTab == 'health' ? 'active' : ''\"><i class=\"fa fa-unlink\"></i> <span class=btn-name>{{_t('link_health')}}</span> </a><a class=\"btn btn-default\" title=\"{{_t('nav_expert_commands')}}\" href=#configuration/commands/{{deviceId}} ng-class=\"activeTab == 'commands' ? 'active' : ''\"><i class=\"fa fa-file-code-o\"></i> <span class=btn-name>{{_t('nav_expert_commands')}}</span> </a><a class=\"btn btn-default\" title=\"{{_t('nav_firmware_update')}}\" href=#configuration/firmware/{{deviceId}} ng-class=\"activeTab == 'firmware' ? 'active' : ''\"><i class=\"fa fa-upload\"></i> <span class=btn-name>{{_t('nav_firmware_update')}}</span> </a><a class=\"btn btn-default\" title=\"{{_t('nav_postfix_update')}}\" href=#configuration/postfix/{{deviceId}} ng-class=\"activeTab == 'postfix' ? 'active' : ''\" ng-if=cfg.zwavecfg.debug><i class=\"fa fa-tasks\"></i> <span class=btn-name>{{_t('nav_postfix_update')}}</span></a></div></div><div class=\"page-header form-inline\" ng-if=\"_.size(devices) > 0\"><label>{{_t('h1_configuration_for')}}</label><select name=devices class=form-control ng-model=deviceId ng-change=changeDevice(deviceId)><option value=\"\" ng-selected=\"v.id != deviceId\">--- {{_t('select_device')}} ---</option><option ng-repeat=\"v in devices| orderBy:predicate:reverse\" value={{v.id}} ng-selected=\"v.id == deviceId\">(#{{v.id}}) {{v.name}}</option></select></div><bb-alert alert=alert></bb-alert>"
   );
 
 
   $templateCache.put('app/views/configuration/postfix.html',
-    "<div ng-controller=ConfigPostfixController><div ng-include=\"'app/views/configuration/header.html'\"></div><div class=tab-content ng-show=deviceId><div class=\"alert alert-warning\" ng-if=!postfix.model.p_id><i class=\"fa fa-exclamation-circle\"></i> {{_t('postfix_missingid')}}</div><form id=postfix_form name=postfix_form role=form class=form novalidate ng-if=postfix.model.p_id ng-submit=updatePostfix()><div class=cfg-block><table class=\"table table-striped table-condensed table-cfg-interview\"><tbody><tr><th>{{_t('p_id')}}</th><td>{{postfix.model.p_id}}</td><td>&nbsp;</td></tr><tr><th>{{_t('product')}}</th><td><input name=product id=product class=form-control ng-model=postfix.model.product></td><td>&nbsp;</td></tr><tr><th>{{_t('preInterview')}}</th><td><input name=preInterview id=preInterview class=form-control ng-model=postfix.interview.preInterview><div ng-repeat=\"v in postfix.model.preInterview track by $index\">{{v}} <span class=clickable ng-click=\"removeInterview('preInterview',$index)\"><i class=\"fa fa-times text-danger\"></i></span></div></td><td><button type=button class=\"btn btn-default\" ng-click=\"addInterview('preInterview')\"><i class=\"fa fa-plus text-success\"></i></button></td></tr><tr><th>{{_t('postInterview')}}</th><td><input name=postInterview id=postInterview class=form-control ng-model=postfix.interview.postInterview><div ng-repeat=\"v in postfix.model.postInterview\">{{v}} <span class=clickable ng-click=\"removeInterview('postInterview',$index)\"><i class=\"fa fa-times text-danger\"></i></span></div></td><td><button type=button class=\"btn btn-default\" ng-click=\"addInterview('postInterview')\"><i class=\"fa fa-plus text-success\"></i></button></td></tr><tr><th>{{_t('tester')}}</th><td><input name=tester id=tester class=form-control ng-model=postfix.model.tester></td><td>&nbsp;</td></tr><tr><th>{{_t('commentary')}}</th><td><input name=commentary id=commentary class=form-control ng-model=postfix.model.commentary></td><td>&nbsp;</td></tr></tbody></table></div><div class=\"cfg-block text-right\"><button type=button class=\"btn btn-default\" ng-click=\"deletePostfix(_t('lb_delete_confirm'))\" ng-if=postfix.find><i class=\"fa fa-times text-danger\"></i> {{_t('dialog_remove')}}</button> <a class=\"btn btn-default\" href=\"{{cfg.postfixget_url + '/' + postfix.model.p_id}}\" target=blank ng-if=postfix.find><i class=\"fa fa-file-code-o text-success\"></i> {{_t('show_json')}} </a><button type=submit class=\"btn btn-info\"><i class=\"fa fa-check\"></i> {{_t('btn_save')}}</button></div></form></div></div>"
+    "<div ng-controller=ConfigPostfixController><div ng-include=\"'app/views/configuration/navi.html'\"></div><div ng-show=deviceId><div class=\"alert alert-warning\" ng-if=!postfix.model.p_id><i class=\"fa fa-exclamation-circle\"></i> {{_t('postfix_missingid')}}</div><form id=postfix_form name=postfix_form role=form class=form novalidate ng-if=postfix.model.p_id ng-submit=updatePostfix()><div class=cfg-block><table class=\"table table-striped table-condensed table-cfg-interview\"><tbody><tr><th>{{_t('p_id')}}</th><td>{{postfix.model.p_id}}</td><td>&nbsp;</td></tr><tr><th>{{_t('product')}}</th><td><input name=product id=product class=form-control ng-model=postfix.model.product></td><td>&nbsp;</td></tr><tr><th>{{_t('preInterview')}}</th><td><input name=preInterview id=preInterview class=form-control ng-model=postfix.interview.preInterview><div ng-repeat=\"v in postfix.model.preInterview track by $index\">{{v}} <span class=clickable ng-click=\"removeInterview('preInterview',$index)\"><i class=\"fa fa-times text-danger\"></i></span></div></td><td><button type=button class=\"btn btn-default\" ng-click=\"addInterview('preInterview')\"><i class=\"fa fa-plus text-success\"></i></button></td></tr><tr><th>{{_t('postInterview')}}</th><td><input name=postInterview id=postInterview class=form-control ng-model=postfix.interview.postInterview><div ng-repeat=\"v in postfix.model.postInterview\">{{v}} <span class=clickable ng-click=\"removeInterview('postInterview',$index)\"><i class=\"fa fa-times text-danger\"></i></span></div></td><td><button type=button class=\"btn btn-default\" ng-click=\"addInterview('postInterview')\"><i class=\"fa fa-plus text-success\"></i></button></td></tr><tr><th>{{_t('tester')}}</th><td><input name=tester id=tester class=form-control ng-model=postfix.model.tester></td><td>&nbsp;</td></tr><tr><th>{{_t('commentary')}}</th><td><input name=commentary id=commentary class=form-control ng-model=postfix.model.commentary></td><td>&nbsp;</td></tr></tbody></table></div><div class=\"cfg-block text-right\"><button type=button class=\"btn btn-default\" ng-click=\"deletePostfix(_t('lb_delete_confirm'))\" ng-if=postfix.find><i class=\"fa fa-times text-danger\"></i> {{_t('dialog_remove')}}</button> <a class=\"btn btn-default\" href=\"{{cfg.postfixget_url + '/' + postfix.model.p_id}}\" target=blank ng-if=postfix.find><i class=\"fa fa-file-code-o text-success\"></i> {{_t('show_json')}} </a><button type=submit class=\"btn btn-primary\"><i class=\"fa fa-circle-o\"></i> {{_t('btn_save')}}</button></div></form></div></div>"
   );
 
 
   $templateCache.put('app/views/controll/locks.html',
-    "<div ng-controller=LocksController><div class=page-header><h1>{{_t('nav_locks')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=locks.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><a href=\"\" ng-click=\"orderBy('id')\"># <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('level')\">{{ _t('th_level')}} <span ng-show=\"predicate == 'status'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th>&nbsp;</th><th>&nbsp;</th></tr></thead><tbody><tr ng-repeat=\"v in locks.all | orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=#>{{ v.id}}</td><td data-title=\"{{ _t('device_name')}}\">{{ v.name}}</td><td data-title=\"{{ _t('th_level')}}\" class=row-level>{{ v.level |lockStatus }} &nbsp;</td><td data-title=\"{{ _t('datetime')}}\" class=\"row-time is-updated-{{v.isUpdated}}\">{{ v.updateTime | isTodayFromUnix }} &nbsp;</td><td class=td-action data-title=\"\"><button class=\"btn btn-default\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateLock(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] label=\" _t('update')\" icon=\"'fa-check text-success'\"></bb-row-spinner></button></td><td class=\"lock-controll td-action\" data-title=\"\"><div class=\"btn-group btn-group-lock\"><button type=button class=\"btn btn-default btn-lock\" id=\"btn_lock_{{ v.rowId}}\" title=\"{{_t('btn_close')}}\" ng-class=\"{active: v.level=='255'}\" ng-click=updateLock(v.urlToOn) ng-disabled=rowSpinner[v.urlToOn]><bb-row-spinner spinner=rowSpinner[v.urlToOn] icon=\"'fa-lock text-success'\"></bb-row-spinner></button> <button type=button class=\"btn btn-default btn-unlock\" id=\"btn_unlock_{{ v.rowId}}\" title=\"{{_t('btn_open')}}\" ng-class=\"{active: v.level=='0'}\" ng-click=updateLock(v.urlToOff) ng-disabled=rowSpinner[v.urlToOff]><bb-row-spinner spinner=rowSpinner[v.urlToOff] icon=\"'fa-unlock text-danger'\"></bb-row-spinner></button></div></td></tr></tbody></table></div></div>"
+    "<div ng-controller=LocksController><div class=page-header><h1>{{_t('nav_locks')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=locks.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><a href=\"\" ng-click=\"orderBy('id')\"># <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('level')\">{{ _t('th_level')}} <span ng-show=\"predicate == 'status'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th>&nbsp;</th><th>&nbsp;</th></tr></thead><tbody><tr ng-repeat=\"v in locks.all | orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=#>{{ v.id}}</td><td data-title=\"{{ _t('device_name')}}\">{{ v.name}}</td><td data-title=\"{{ _t('th_level')}}\" class=row-level>{{ v.level |lockStatus }} &nbsp;</td><td data-title=\"{{ _t('datetime')}}\" class=\"row-time is-updated-{{v.isUpdated}}\">{{ v.updateTime | isTodayFromUnix }} &nbsp;</td><td class=td-action data-title=\"\"><button class=\"btn btn-default\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateLock(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] label=\" _t('update')\" icon=\"'fa-circle-o text-success'\"></bb-row-spinner></button></td><td class=\"lock-controll td-action\" data-title=\"\"><div class=\"btn-group btn-group-lock\"><button type=button class=\"btn btn-default btn-lock\" id=\"btn_lock_{{ v.rowId}}\" title=\"{{_t('btn_close')}}\" ng-class=\"{active: v.level=='255'}\" ng-click=updateLock(v.urlToOn) ng-disabled=rowSpinner[v.urlToOn]><bb-row-spinner spinner=rowSpinner[v.urlToOn] icon=\"'fa-lock text-success'\"></bb-row-spinner></button> <button type=button class=\"btn btn-default btn-unlock\" id=\"btn_unlock_{{ v.rowId}}\" title=\"{{_t('btn_open')}}\" ng-class=\"{active: v.level=='0'}\" ng-click=updateLock(v.urlToOff) ng-disabled=rowSpinner[v.urlToOff]><bb-row-spinner spinner=rowSpinner[v.urlToOff] icon=\"'fa-unlock text-danger'\"></bb-row-spinner></button></div></td></tr></tbody></table></div></div>"
   );
 
 
   $templateCache.put('app/views/controll/meters.html',
-    "<div ng-controller=MetersController><div class=page-header><h1>{{_t('nav_meters')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=meters.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><a href=\"\" ng-click=\"orderBy('id')\"># <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('purpose')\">{{ _t('device_description_device_type')}} <span ng-show=\"predicate == 'purpose'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th class=text-right><a href=\"\" ng-click=\"orderBy('level')\">{{ _t('th_level')}} <span ng-show=\"predicate == 'level'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('levelExt')\">{{ _t('th_scale')}} <span ng-show=\"predicate == 'levelExt'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th class=\"mobile-show td-action\"><button class=\"btn btn-info\" id=btn_update_all_1 ng-click=\"updateAllMeters('all_1','urlToStore')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner spinner=\"rowSpinner['all_1']\" label=\"_t('switches_update_all')\" icon=\"'fa-check'\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in meters.all | orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=#>{{ v.id}}<span ng-show=\"v.iId != 0\">.{{v.iId}}</span></td><td data-title=\"{{ _t('device_name')}}\"><i class=\"fa fa-lightbulb-o fa-lg\"></i> {{ v.name}}</td><td data-title=\"{{ _t('device_description_device_type')}}\">{{ v.purpose}} &nbsp;</td><td data-title=\"{{ _t('th_level')}}\" class=\"row-level text-right\">{{ v.level}} &nbsp;</td><td data-title=\"{{ _t('th_scale')}}\" class=row-level-ext>{{ v.levelExt}} &nbsp;</td><td data-title=\"{{ _t('datetime')}}\" class=\"row-time is-updated-{{v.isUpdated}}\" title=\"{{v.dateTime.date}} {{v.dateTime.time}}\">{{v.dateTime.today}}</td><td class=td-action data-title=\"\"><button class=\"btn btn-default\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateMeter(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] label=\" _t('update')\" icon=\"'fa-check text-success'\"></bb-row-spinner></button> <button class=\"btn btn-default\" id=\"btn_reset_{{ v.rowId}}\" ng-if=v.urlToReset ng-click=updateMeter(v.urlToReset) ng-disabled=rowSpinner[v.urlToReset]><bb-row-spinner spinner=rowSpinner[v.urlToReset] label=\" _t('reset')\" icon=\"'fa-refresh text-success'\"></bb-row-spinner></button></td></tr></tbody></table></div></div>"
+    "<div ng-controller=MetersController><div class=page-header><h1>{{_t('nav_meters')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=meters.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><a href=\"\" ng-click=\"orderBy('id')\"># <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('purpose')\">{{ _t('device_description_device_type')}} <span ng-show=\"predicate == 'purpose'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th class=text-right><a href=\"\" ng-click=\"orderBy('level')\">{{ _t('th_level')}} <span ng-show=\"predicate == 'level'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('levelExt')\">{{ _t('th_scale')}} <span ng-show=\"predicate == 'levelExt'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th class=\"mobile-show td-action\"><button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=\"updateAllMeters('all_1','urlToStore')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner spinner=\"rowSpinner['all_1']\" label=\"_t('switches_update_all')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in meters.all | orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=#>{{ v.id}}<span ng-show=\"v.iId != 0\">.{{v.iId}}</span></td><td data-title=\"{{ _t('device_name')}}\"><i class=\"fa fa-lightbulb-o fa-lg\"></i> {{ v.name}}</td><td data-title=\"{{ _t('device_description_device_type')}}\">{{ v.purpose}} &nbsp;</td><td data-title=\"{{ _t('th_level')}}\" class=\"row-level text-right\">{{ v.level}} &nbsp;</td><td data-title=\"{{ _t('th_scale')}}\" class=row-level-ext>{{ v.levelExt}} &nbsp;</td><td data-title=\"{{ _t('datetime')}}\" class=\"row-time is-updated-{{v.isUpdated}}\" title=\"{{v.dateTime.date}} {{v.dateTime.time}}\">{{v.dateTime.today}}</td><td class=td-action data-title=\"\"><button class=\"btn btn-default\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateMeter(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] label=\" _t('update')\" icon=\"'fa-circle-o text-success'\"></bb-row-spinner></button> <button class=\"btn btn-default\" id=\"btn_reset_{{ v.rowId}}\" ng-if=v.urlToReset ng-click=updateMeter(v.urlToReset) ng-disabled=rowSpinner[v.urlToReset]><bb-row-spinner spinner=rowSpinner[v.urlToReset] label=\" _t('reset')\" icon=\"'fa-refresh text-success'\"></bb-row-spinner></button></td></tr></tbody></table></div></div>"
   );
 
 
   $templateCache.put('app/views/controll/sensors.html',
-    "<div ng-controller=SensorsController><div class=page-header><h1>{{ _t('h1_sensor')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=sensors.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><a href=\"\" ng-click=\"orderBy('id')\"># <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('purpose')\">{{ _t('device_description_device_type')}} <span ng-show=\"predicate == 'purpose'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th class=text-right><a href=\"\" ng-click=\"orderBy('level')\">{{ _t('th_level')}} <span ng-show=\"predicate == 'level'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('levelExt')\">{{ _t('th_scale')}} <span ng-show=\"predicate == 'levelExt'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th class=\"mobile-show td-action\"><button class=\"btn btn-info\" id=btn_update_all_1 ng-click=\"updateAllSensors('all_1','urlToStore')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner spinner=\"rowSpinner['all_1']\" label=\"_t('switches_update_all')\" icon=\"'fa-check'\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in sensors.all| orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=#>{{ v.id}}<span ng-show=\"v.iId != 0\">.{{v.iId}}</span></td><td data-title=\"{{ _t('device_name')}}\" ng-switch on=v.type><i ng-switch-when=SensorBinary class=\"fa fa-eye fa-lg\"></i> <i ng-switch-when=Meter class=\"fa fa-lightbulb-o fa-lg\"></i> <i ng-switch-default class=\"fa fa-bullseye fa-lg\"></i> {{ v.name}}</td><td data-title=\"{{ _t('device_description_device_type')}}\">{{v.purpose}} &nbsp;</td><td data-title=\"{{ _t('th_level')}}\" class=\"row-level text-right\"><span ng-if=!v.html ng-bind=v.level></span> <span ng-if=v.html ng-bind-html=v.level|toTrusted></span> &nbsp;</td><td data-title=\"{{ _t('th_scale')}}\" class=row-level-ext>{{v.levelExt}} &nbsp;</td><td data-title=\"{{ _t('datetime')}}\" class=\"row-time is-updated-{{v.isUpdated}}\" title=\"{{v.dateTime.date}} {{v.dateTime.time}}\">{{v.dateTime.today}}</td><td class=td-action data-title=\"\"><button class=\"btn btn-default\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateSensor(v.cmdToUpdate,v.urlToStore) ng-disabled=rowSpinner[v.cmdToUpdate]><bb-row-spinner spinner=rowSpinner[v.cmdToUpdate] label=\" _t('update')\" icon=\"'fa-check text-success'\"></bb-row-spinner></button></td></tr></tbody></table></div></div>"
+    "<div ng-controller=SensorsController><div class=page-header><h1>{{ _t('h1_sensor')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=sensors.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><a href=\"\" ng-click=\"orderBy('id')\"># <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('purpose')\">{{ _t('device_description_device_type')}} <span ng-show=\"predicate == 'purpose'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th class=text-right><a href=\"\" ng-click=\"orderBy('level')\">{{ _t('th_level')}} <span ng-show=\"predicate == 'level'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('levelExt')\">{{ _t('th_scale')}} <span ng-show=\"predicate == 'levelExt'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th class=\"mobile-show td-action\"><button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=\"updateAllSensors('all_1','urlToStore')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner spinner=\"rowSpinner['all_1']\" label=\"_t('switches_update_all')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in sensors.all| orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=#>{{ v.id}}<span ng-show=\"v.iId != 0\">.{{v.iId}}</span></td><td data-title=\"{{ _t('device_name')}}\" ng-switch on=v.type><i ng-switch-when=SensorBinary class=\"fa fa-eye fa-lg\"></i> <i ng-switch-when=Meter class=\"fa fa-lightbulb-o fa-lg\"></i> <i ng-switch-default class=\"fa fa-bullseye fa-lg\"></i> {{ v.name}}</td><td data-title=\"{{ _t('device_description_device_type')}}\">{{v.purpose}} &nbsp;</td><td data-title=\"{{ _t('th_level')}}\" class=\"row-level text-right\"><span ng-if=!v.html ng-bind=v.level></span> <span ng-if=v.html ng-bind-html=v.level|toTrusted></span> &nbsp;</td><td data-title=\"{{ _t('th_scale')}}\" class=row-level-ext>{{v.levelExt}} &nbsp;</td><td data-title=\"{{ _t('datetime')}}\" class=\"row-time is-updated-{{v.isUpdated}}\" title=\"{{v.dateTime.date}} {{v.dateTime.time}}\">{{v.dateTime.today}}</td><td class=td-action data-title=\"\"><button class=\"btn btn-default\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateSensor(v.cmdToUpdate,v.urlToStore) ng-disabled=rowSpinner[v.cmdToUpdate]><bb-row-spinner spinner=rowSpinner[v.cmdToUpdate] label=\" _t('update')\" icon=\"'fa-circle-o text-success'\"></bb-row-spinner></button></td></tr></tbody></table></div></div>"
   );
 
 
   $templateCache.put('app/views/controll/switch.html',
-    "<div ng-controller=SwitchController><div class=page-header><h1>{{_t('nav_switch')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=switches.show><table class=\"table table-striped table-condensed table-hover\"><thead class=cf><tr><th><a href=\"\" ng-click=\"orderBy('id')\"># <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th class=text-right><a href=\"\" ng-click=\"orderBy('level')\">{{ _t('th_level')}} <span ng-show=\"predicate == 'level'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('switchAllValue')\">{{ _t('th_switchall')}} <span ng-show=\"predicate == 'switchAllValue'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th class=mobile-show><button class=\"btn btn-info\" id=btn_update_all_1 ng-click=\"updateAllSwitches('all_1','urlToStore')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner spinner=\"rowSpinner['all_1']\" label=\"_t('switches_update_all')\" icon=\"'fa-check'\"></bb-row-spinner></button></th><th class=mobile-show><div class=btn-group style=\"min-width: 150px !important\"><button class=\"btn btn-info\" id=btn_all_of ng-click=\"updateAllSwitches('btn_all_of','urlToOff')\" ng-disabled=\"rowSpinner['btn_all_of']\"><bb-row-spinner spinner=\"rowSpinner['btn_all_of']\" label=\" _t('btn_all_off')\" icon=\"'fa-toggle-off'\"></bb-row-spinner></button> <button class=\"btn btn-info\" id=btn_all_on ng-click=\"updateAllSwitches('btn_all_on','urlToOn')\" ng-disabled=\"rowSpinner['btn_all_on']\"><bb-row-spinner spinner=\"rowSpinner['btn_all_on']\" label=\"_t('btn_all_on')\" icon=\"'fa-toggle-on'\"></bb-row-spinner></button></div></th><th class=\"th-slider td-action\">&nbsp;</th></tr></thead><tbody><tr ng-repeat=\"v in switches.all| orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\" ng-init=\"range.maxs = v.levelVal\"><td data-title=#>{{ v.id}}<span ng-show=\"v.multiChannel || v.iId > 0\">.{{v.iId}}</span></td><td data-title=\"{{ _t('device_name')}}\"><switch-type-icon generic=\"{{ v.genericType}}\" specific=\"{{ v.specificType}}\"></switch-type-icon>{{ v.name}}</td><td data-title=\"{{ _t('th_level')}}\"><strong class=\"row-level text-right\" style=\"color: {{ v.levelColor}}\">{{ v.level}}</strong></td><td data-title=\"{{ _t('datetime')}}\" lass=\"row-time is-updated-{{v.isUpdated}}\" title=\"{{v.dateTime.date}} {{v.dateTime.time}}\">{{v.dateTime.today}}</td><td data-title=\"{{ _t('th_switchall')}}\"><switch-all-icon hasall=\"{{ v.switchAllValue}}\" ng-if=\"v.switchAllValue !== null\"></switch-all-icon>&nbsp;</td><td data-title=\"\"><button class=\"btn btn-default\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateSwitch(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] label=\" _t('update')\" icon=\"'fa-check text-success'\"></bb-row-spinner></button></td><td data-title=\"\" ng-switch on=v.deviceType><div ng-switch-when=multilevel><div class=btn-group style=\"min-width: 110px !important\"><label class=switch title=\"v.levelStatus === 'on' ? v.btnOff : v.btnOn\" ng-hide=\"rowSpinner['btn_all_of'] || rowSpinner['btn_all_on']\"><input type=checkbox ng-disabled=rowSpinner[v.urlToOn] ng-checked=\"v.levelStatus === 'on'\" ng-model=switches.switchButton[v.rowId] ng-change=\"updateSwitch(switches.switchButton[v.rowId] ? v.urlToOn : v.urlToOff)\"><div class=\"slider round\"></div></label><i class=\"fa fa-spinner fa-spin fa-lg\" ng-if=\"rowSpinner['btn_all_of'] || rowSpinner['btn_all_on'] \"></i></div><button class=\"btn btn-default\" id=\"btn_full_{{ v.rowId}}\" ng-show_=!v.hasMotor ng-disabled=rowSpinner[v.urlToFull] ng-click=updateSwitch(v.urlToFull)><bb-row-spinner spinner=rowSpinner[v.urlToFull] label=v.btnFull icon=\"'fa-circle-o-notch text-success'\"></bb-row-spinner></button></div><div class=btn-group ng-switch-when=binary><label class=switch title=\"v.levelStatus === 'on' ? v.btnOff : v.btnOn\" ng-hide=\"rowSpinner['btn_all_of'] || rowSpinner['btn_all_on']\"><input type=checkbox ng-disabled=rowSpinner[v.urlToOn] ng-checked=\"v.levelStatus === 'on'\" ng-model=switches.switchButton[v.id] ng-change=\"updateSwitch(switches.switchButton[v.id] ? v.urlToOn : v.urlToOff)\"><div class=\"slider round\"></div></label><i class=\"fa fa-spinner fa-spin fa-lg\" ng-if=\"rowSpinner['btn_all_of'] || rowSpinner['btn_all_on'] \"></i></div><div ng-switch-default>&nbsp;</div></td><td class=td-action data-title=\"\" ng-switch on=v.deviceType><div ng-switch-when=multilevel id=range_slider_{{$index}} class=app-range-slider range-slider min=0 max=v.levelMax model-max=switches.rangeSlider[$index] pin-handle=min on-handle-down=sliderOnHandleDown() on-handle-up=sliderOnHandleUp(v.urlToSlide,$index)></div><div ng-switch-default>&nbsp;</div></td></tr></tbody></table></div></div>"
+    "<div ng-controller=SwitchController><div class=page-header><h1>{{_t('nav_switch')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=switches.show><table class=\"table table-striped table-condensed table-hover\"><thead class=cf><tr><th><a href=\"\" ng-click=\"orderBy('id')\"># <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th class=text-right><a href=\"\" ng-click=\"orderBy('level')\">{{ _t('th_level')}} <span ng-show=\"predicate == 'level'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('switchAllValue')\">{{ _t('th_switchall')}} <span ng-show=\"predicate == 'switchAllValue'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th class=mobile-show><button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=\"updateAllSwitches('all_1','urlToStore')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner spinner=\"rowSpinner['all_1']\" label=\"_t('switches_update_all')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></th><th class=mobile-show><div class=btn-group style=\"min-width: 150px !important\"><button class=\"btn btn-primary\" id=btn_all_of ng-click=\"updateAllSwitches('btn_all_of','urlToOff')\" ng-disabled=\"rowSpinner['btn_all_of']\"><bb-row-spinner spinner=\"rowSpinner['btn_all_of']\" label=\" _t('btn_all_off')\" icon=\"'fa-toggle-off'\"></bb-row-spinner></button> <button class=\"btn btn-primary\" id=btn_all_on ng-click=\"updateAllSwitches('btn_all_on','urlToOn')\" ng-disabled=\"rowSpinner['btn_all_on']\"><bb-row-spinner spinner=\"rowSpinner['btn_all_on']\" label=\"_t('btn_all_on')\" icon=\"'fa-toggle-on'\"></bb-row-spinner></button></div></th><th class=\"th-slider td-action\">&nbsp;</th></tr></thead><tbody><tr ng-repeat=\"v in switches.all| orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\" ng-init=\"range.maxs = v.levelVal\"><td data-title=#>{{ v.id}}<span ng-show=\"v.multiChannel || v.iId > 0\">.{{v.iId}}</span></td><td data-title=\"{{ _t('device_name')}}\"><switch-type-icon generic=\"{{ v.genericType}}\" specific=\"{{ v.specificType}}\"></switch-type-icon>{{ v.name}}</td><td data-title=\"{{ _t('th_level')}}\"><strong class=\"row-level text-right\" style=\"color: {{ v.levelColor}}\">{{ v.level}}</strong></td><td data-title=\"{{ _t('datetime')}}\" lass=\"row-time is-updated-{{v.isUpdated}}\" title=\"{{v.dateTime.date}} {{v.dateTime.time}}\">{{v.dateTime.today}}</td><td data-title=\"{{ _t('th_switchall')}}\"><switch-all-icon hasall=\"{{ v.switchAllValue}}\" ng-if=\"v.switchAllValue !== null\"></switch-all-icon>&nbsp;</td><td data-title=\"\"><button class=\"btn btn-default\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateSwitch(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] label=\" _t('update')\" icon=\"'fa-circle-o text-success'\"></bb-row-spinner></button></td><td data-title=\"\" ng-switch on=v.deviceType><div ng-switch-when=multilevel><div class=btn-group style=\"min-width: 110px !important\"><label class=switcher title={{v.levelStatus}} ng-class=\"v.levelStatus === 'on' ? 'ison':'isoff'\" ng-hide=\"rowSpinner['btn_all_of'] || rowSpinner['btn_all_on']\" ng-click=\"updateSwitch(\r" +
+    "\n" +
+    "                               v.levelStatus === 'on' ?  v.urlToOff : v.urlToOn);\r" +
+    "\n" +
+    "                               v.levelStatus = (v.levelStatus === 'on' ?  'off' : 'on')\"><div class=\"switcher-slider round\"></div></label><i class=\"fa fa-spinner fa-spin fa-lg\" ng-if=\"rowSpinner['btn_all_of'] || rowSpinner['btn_all_on'] \"></i></div><button class=\"btn btn-default\" id=\"btn_full_{{ v.rowId}}\" ng-show_=!v.hasMotor ng-disabled=rowSpinner[v.urlToFull] ng-click=updateSwitch(v.urlToFull)><bb-row-spinner spinner=rowSpinner[v.urlToFull] label=v.btnFull icon=\"'fa-circle-o-notch text-success'\"></bb-row-spinner></button></div><div class=btn-group ng-switch-when=binary><label class=switcher title={{v.levelStatus}} ng-class=\"v.levelStatus === 'on' ? 'ison':'isoff'\" ng-hide=\"rowSpinner['btn_all_of'] || rowSpinner['btn_all_on']\" ng-click=\"updateSwitch(\r" +
+    "\n" +
+    "                               v.levelStatus === 'on' ?  v.urlToOff : v.urlToOn);\r" +
+    "\n" +
+    "                               v.levelStatus = (v.levelStatus === 'on' ?  'off' : 'on')\"><div class=\"switcher-slider round\"></div></label><i class=\"fa fa-spinner fa-spin fa-lg\" ng-if=\"rowSpinner['btn_all_of'] || rowSpinner['btn_all_on'] \"></i></div><div ng-switch-default>&nbsp;</div></td><td class=td-action data-title=\"\" ng-switch on=v.deviceType><div ng-switch-when=multilevel id=range_slider_{{$index}} class=app-range-slider range-slider min=0 max=v.levelMax model-max=switches.rangeSlider[$index] pin-handle=min on-handle-down=sliderOnHandleDown() on-handle-up=sliderOnHandleUp(v.urlToSlide,$index)></div><div ng-switch-default>&nbsp;</div></td></tr></tbody></table></div></div>"
   );
 
 
@@ -32794,7 +32852,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/device/associations.html',
-    "<div ng-controller=AssociationsController><div class=page-header><h1>{{_t('nav_active_associations')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=devices.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><a href=\"\" ng-click=\"orderBy('id')\"># <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th style=\"width: 20%\"><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th>{{ _t('th_assoc_group_name')}}</th><th class=\"mobile-show td-action\" style=\"width: 20%\"><button class=\"btn btn-info\" ng-show=!hideLifeline ng-click=\"hideLifeline = !hideLifeline;\r" +
+    "<div ng-controller=AssociationsController><div class=page-header><h1>{{_t('nav_active_associations')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=devices.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><a href=\"\" ng-click=\"orderBy('id')\"># <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th style=\"width: 20%\"><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th>{{ _t('th_assoc_group_name')}}</th><th class=\"mobile-show td-action\" style=\"width: 20%\"><button class=\"btn btn-primary\" ng-show=!hideLifeline ng-click=\"hideLifeline = !hideLifeline;\r" +
     "\n" +
     "                                        lifeline(true)\"><i class=\"fa fa-eye\"></i> {{ _t('btn_show_lifeline')}}</button> <button class=\"btn btn-default\" ng-show=hideLifeline ng-click=\"hideLifeline = false;\r" +
     "\n" +
@@ -32803,12 +32861,17 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/device/battery.html',
-    "<div ng-controller=BatteryController><div class=page-header><h1>{{_t('nav_battery')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=batteries.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><a href=\"\" ng-click=\"orderBy('id')\"># <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('batteryType')\">{{ _t('th_battery_type')}} <span ng-show=\"predicate == 'batteryType'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('level')\">{{ _t('th_level')}} <span ng-show=\"predicate == 'level'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th class=\"mobile-show td-action\"><button class=\"btn btn-info\" id=btn_update_all_1 ng-click=\"updateAllBatteries('all_1','urlToStore')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner spinner=\"rowSpinner['all_1']\" label=\"_t('switches_update_all')\" icon=\"'fa-check'\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in batteries.all | orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=#>{{ v.id }}</td><td data-title=\"{{ _t('device_name')}}\"><a href=#configuration/interview/{{v.id}}>{{ v.name}}</a></td><td data-title=\"{{ _t('th_battery_type')}}\">{{ v.batteryCount }}<span ng-show=v.batteryCount>*</span>{{ v.batteryType }} &nbsp;</td><td data-title=\"{{ _t('th_level')}}\"><i class=\"fa fa-lg {{ v.level | getBatteryIcon }}\"></i>&nbsp;<span class=row-level>{{ v.level+v.scale }}</span></td><td data-title=\"{{ _t('datetime')}}\" class=\"row-time is-updated-{{v.isUpdated}}\">{{ v.updateTime | isTodayFromUnix }} &nbsp;</td><td class=td-action><button class=\"btn btn-default\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateBattery(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] label=\" _t('update')\" icon=\"'fa-check text-success'\"></bb-row-spinner></button></td></tr></tbody></table></div></div>"
+    "<div ng-controller=BatteryController><div class=page-header><h1>{{_t('nav_battery')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=batteries.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><a href=\"\" ng-click=\"orderBy('id')\"># <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('batteryType')\">{{ _t('th_battery_type')}} <span ng-show=\"predicate == 'batteryType'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('level')\">{{ _t('th_level')}} <span ng-show=\"predicate == 'level'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th class=\"mobile-show td-action\"><button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=\"updateAllBatteries('all_1','urlToStore')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner spinner=\"rowSpinner['all_1']\" label=\"_t('switches_update_all')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in batteries.all | orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=#>{{ v.id }}</td><td data-title=\"{{ _t('device_name')}}\"><a href=#configuration/interview/{{v.id}}>{{ v.name}}</a></td><td data-title=\"{{ _t('th_battery_type')}}\">{{ v.batteryCount }}<span ng-show=v.batteryCount>*</span>{{ v.batteryType }} &nbsp;</td><td data-title=\"{{ _t('th_level')}}\"><i class=\"fa fa-lg {{ v.level | getBatteryIcon }}\"></i>&nbsp;<span class=row-level>{{ v.level+v.scale }}</span></td><td data-title=\"{{ _t('datetime')}}\" class=\"row-time is-updated-{{v.isUpdated}}\">{{ v.updateTime | isTodayFromUnix }} &nbsp;</td><td class=td-action><button class=\"btn btn-default\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateBattery(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] label=\" _t('update')\" icon=\"'fa-circle-o text-success'\"></bb-row-spinner></button></td></tr></tbody></table></div></div>"
+  );
+
+
+  $templateCache.put('app/views/device/modal_status_interview.html',
+    "<div id=interviewModal class=appmodal ng-show=modalArr.interviewModal><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"interviewDeviceId = null;handleModal('interviewModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{_t('interview_results_dialog_title')}}: {{deviceInfo.name}}</h3></div><div class=\"appmodal-body modal-h-600\"><div id=table_mobile_modal_1><table class=\"table table-condensed\"><thead><tr><th>{{_t('th_command_class')}}</th><th>{{_t('th_result')}}</th></tr></thead><tbody><tr ng-repeat=\"v in interviewCommands\" id={{v.ccId}}><td data-title=\"{{_t('th_command_class')}}\">{{v.ccName}}</td><td data-title=\"{{_t('th_result')}}\"><span ng-if=v.interviewDone><i class=\"fa fa-check text-success\"></i></span> <button id=btn_force_interview_{{v.ccId}} class=\"btn btn-primary btn-sm\" ng-init=\"apiUrl = 'devices[' + deviceInfo.id + '].instances[' + v.iId + '].commandClasses[' +v.ccId+ '].Interview()'\" ng-if=!v.interviewDone ng-click=interviewForceDevice(apiUrl) ng-disabled=rowSpinner[apiUrl]><bb-row-spinner spinner=rowSpinner[apiUrl] label=\"_t('config_ui_force_interview')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button> &nbsp;</td></tr></tbody></table></div></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"interviewDeviceId = null;handleModal('interviewModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button></div></div></div>"
   );
 
 
   $templateCache.put('app/views/device/status.html',
-    "<div ng-controller=StatusController><div class=page-header><h1>{{_t('nav_status')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=statuses.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><a href=\"\" ng-click=\"orderBy('id')\"># <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('sleeping')\">{{ _t('th_sleeping')}} <span ng-show=\"predicate == 'sleeping'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('interval')\">{{ _t('wakeup_interval')}} <span ng-show=\"predicate == 'interval'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('awake')\">{{ _t('th_awake')}} <span ng-show=\"predicate == 'awake'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th>&nbsp;</th><th class=\"mobile-show td-action\"><button class=\"btn btn-info\" id=btn_ping_all_1 ng-click=\"pingAllDevices('btn_ping_all_1','urlToStore')\" ng-disabled=\"rowSpinner['btn_ping_all_1']\"><bb-row-spinner spinner=\"rowSpinner['btn_ping_all_1']\" label=\"_t('btn_checkall')\" icon=\"'fa-check'\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in statuses.all | orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=#>{{ v.id}}</td><td data-title=\"{{ _t('device_name')}}\"><switch-type-icon generic=\"{{ v.genericType}}\" specific=\"{{ v.specificType}}\"></switch-type-icon><a href=#configuration/interview/{{v.id}}>{{ v.name}}</a></td><td data-title=\"{{ _t('th_sleeping')}}\" class=row-sleeping><span ng-bind-html=\"v.sleeping | toTrusted\"></span> &nbsp;</td><td data-title=\"{{ _t('wakeup_interval')}}\" class=row-wakeupint><span ng-if=v.interval>{{v.interval}}s</span> &nbsp;</td><td data-title=\"{{ _t('th_awake')}}\" class=row-awake><span ng-bind-html=\"v.awake | toTrusted\"></span> &nbsp;</td><td data-title=\"{{ _t('datetime')}}\"><span class=row-isfailed ng-bind-html=\"v.isFailed | toTrusted\"></span> <span class=row-time ng-bind-html=\"v.updateTime | toTrusted\"></span> &nbsp;</td><td class=row-interview><button class=\"btn btn-default\" ng-if=v.interview ng-click=\"showModalInterview('#modal_interview', $index,v.id,v.name)\" title={{v.interview}}><i class=\"fa fa-search-minus fa-lg text-danger\"></i></button> &nbsp;</td><td class=\"row-ping td-action\"><button class=\"btn btn-default\" id=\"btn_ping_{{ v.rowId}}\" title=\"{{_t('pingDevice')}}\" ng-if=v.urlToStore ng-click=pingDevice(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] icon=\"'fa-check text-success'\"></bb-row-spinner></button></td></tr></tbody></table></div><div class=\"modal fade\" id=modal_interview tabindex=-1 role=dialog aria-labelledby=myModalLabel aria-hidden=true><div class=modal-dialog><div class=modal-content><div class=modal-header><button type=button class=close data-dismiss=modal aria-hidden=true ng-click=hideModalInterview()>&times;</button><h4 class=modal-title>{{_t('interview_results_dialog_title')}}</h4></div><div class=modal-body><p><a href=\"\" ng-click=\"showModalCommandClass('#modal_command_class')\">{{deviceInfo.name}} (#{{deviceInfo.id}})</a></p><div id=table_mobile_modal_1><table class=\"table table-condensed\"><thead><tr><th>{{_t('th_instance')}}</th><th>{{_t('th_command_class')}}</th><th>{{_t('th_result')}}</th></tr></thead><tbody><tr ng-repeat=\"v in interviewCommands\" id=\"{{ v.ccId}}\"><td data-title=\"{{_t('th_instance')}}\" ng-class=\"($index == 0 ? 'no-class' : 'mobile-hide')\"><a href=\"\" ng-click=\"showModalCommandClass('#modal_command_class',v.iId,v.ccId, 'cmdDataIn')\">{{v.iId}}</a> &nbsp;</td><td data-title=\"{{_t('th_command_class')}}\"><a href=\"\" ng-click=\"showModalCommandClass('#modal_command_class',v.iId,v.ccId, 'cmdData')\">{{v.ccName}}</a></td><td data-title=\"{{_t('th_result')}}\" ng-init=\"urlToForce = 'devices[' + deviceInfo.id + '].instances[' + v.iId + '].commandClasses[' +v.ccId+ '].Interview()'\"><span ng-if=v.interviewDone><i class=\"fa fa-check text-success\"></i></span> <button class=\"btn btn-default\" id=btn_force_interview_{{v.ccId}} ng-if=!v.interviewDone ng-click=pingDevice(urlToForce) ng-disabled=rowSpinner[urlToForce]><bb-row-spinner spinner=rowSpinner[urlToForce] label=\"_t('config_ui_force_interview')\" icon=\"'fa-search-minus text-danger'\"></bb-row-spinner></button> &nbsp;</td></tr></tbody></table></div></div><div class=modal-footer><button type=button class=\"btn btn-default\" data-dismiss=modal ng-click=hideModalInterview()>{{_t('btn_cancel')}}</button></div></div></div></div><div class=\"modal fade\" id=modal_command_class tabindex=-1 role=dialog aria-labelledby=myModalLabel aria-hidden=true><div class=modal-dialog><div class=modal-content><div class=modal-header><button type=button class=close data-dismiss=modal aria-hidden=true ng-click=hideModal()>&times;</button><h4 class=modal-title>{{_t('commandClass')}}</h4></div><div class=modal-body ng-bind-html=commandClass|toTrusted></div><div class=modal-footer><button type=button class=\"btn btn-default\" data-dismiss=modal ng-click=hideModal()>{{_t('btn_cancel')}}</button></div></div></div></div></div>"
+    "<div ng-controller=StatusController><div class=page-header><h1>{{_t('nav_status')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=statuses.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><a href=\"\" ng-click=\"orderBy('id')\"># <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('sleeping')\">{{ _t('th_sleeping')}} <span ng-show=\"predicate == 'sleeping'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('interval')\">{{ _t('wakeup_interval')}} <span ng-show=\"predicate == 'interval'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('awake')\">{{ _t('th_awake')}} <span ng-show=\"predicate == 'awake'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th>&nbsp;</th><th class=\"mobile-show td-action\"><button class=\"btn btn-primary\" id=btn_ping_all_1 ng-click=\"pingAllDevices('btn_ping_all_1','urlToStore')\" ng-disabled=\"rowSpinner['btn_ping_all_1']\"><bb-row-spinner spinner=\"rowSpinner['btn_ping_all_1']\" label=\"_t('btn_checkall')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in statuses.all | orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=#>{{ v.id}}</td><td data-title=\"{{ _t('device_name')}}\"><switch-type-icon generic=\"{{ v.genericType}}\" specific=\"{{ v.specificType}}\"></switch-type-icon><a href=#configuration/interview/{{v.id}}>{{ v.name}}</a></td><td data-title=\"{{ _t('th_sleeping')}}\" class=row-sleeping><span ng-bind-html=\"v.sleeping | toTrusted\"></span> &nbsp;</td><td data-title=\"{{ _t('wakeup_interval')}}\" class=row-wakeupint><span ng-if=v.interval>{{v.interval}}s</span> &nbsp;</td><td data-title=\"{{ _t('th_awake')}}\" class=row-awake><span ng-bind-html=\"v.awake | toTrusted\"></span> &nbsp;</td><td data-title=\"{{ _t('datetime')}}\"><span class=row-isfailed ng-bind-html=\"v.isFailed | toTrusted\"></span> <span class=row-time ng-bind-html=\"v.updateTime | toTrusted\"></span> &nbsp;</td><td class=row-interview><button class=\"btn btn-default\" ng-if=v.interview ng-click=\"handleModalInterview('interviewModal',$event,$index,v.id,v.name)\" title={{v.interview}}><i class=\"fa fa-search-minus fa-lg text-danger\"></i></button> &nbsp;</td><td class=\"row-ping td-action\"><button class=\"btn btn-default\" id=\"btn_ping_{{ v.rowId}}\" title=\"{{_t('pingDevice')}}\" title=\"{{ _t('pingDevice')}}\" ng-if=v.urlToStore ng-click=pingDevice(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] icon=\"'fa-circle-o text-success'\"></bb-row-spinner></button></td></tr></tbody></table></div><div ng-include=\"'app/views/device/modal_status_interview.html'\"></div></div>"
   );
 
 
@@ -32893,14 +32956,14 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/home/network_name.html',
-    "<div class=\"panel panel-default\" ng-controller=DataHolderController><div class=panel-heading><i class=\"fa fa-code-fork\"></i> {{_t('network_name')}}</div><div class=panel-body ng-hide=goNetworkName>{{dataHolder.controller.homeName}} <button type=button class=\"btn btn-default\" ng-class=\"goNetworkName ? 'active' : ''\" ng-click=\"goNetworkName = !goNetworkName\"><i class=\"fa fa-pencil\"></i></button></div><form name=form_network_name id=form_network_name class=\"form form-inline\" ng-show=goNetworkName ng-submit=\"storeNetworkName(dataHolder.controller.homeName,'spinNetworkName');goNetworkName = !goNetworkName\" novalidate><div class=panel-body><input name=network_name class=form-control placeholder=\"{{_t('network_name')}}\" ng-model=dataHolder.controller.homeName value={{dataHolder.controller.homeName}}></div><div class=\"panel-footer text-right\"><button type=button class=\"btn btn-default\" title=\"{{_t('btn_cancel')}}\" ng-click=\"goNetworkName = !goNetworkName\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button> <button class=\"btn btn-info\" title=\"{{_t('btn_save')}}\" ng-disabled=\"rowSpinner['spinNetworkName']\"><bb-row-spinner spinner=\"rowSpinner['spinNetworkName']\" label=\" _t('btn_save')\" icon=\"'fa-check'\"></bb-row-spinner></button></div></form></div>"
+    "<div class=\"panel panel-default\" ng-controller=DataHolderController><div class=panel-heading><i class=\"fa fa-code-fork\"></i> {{_t('network_name')}}</div><div class=panel-body ng-hide=goNetworkName>{{dataHolder.controller.homeName}} <button type=button class=\"btn btn-default\" ng-class=\"goNetworkName ? 'active' : ''\" ng-click=\"goNetworkName = !goNetworkName\"><i class=\"fa fa-pencil\"></i></button></div><form name=form_network_name id=form_network_name class=\"form form-inline\" ng-show=goNetworkName ng-submit=\"storeNetworkName(dataHolder.controller.homeName,'spinNetworkName');goNetworkName = !goNetworkName\" novalidate><div class=panel-body><input name=network_name class=form-control placeholder=\"{{_t('network_name')}}\" ng-model=dataHolder.controller.homeName value={{dataHolder.controller.homeName}}></div><div class=\"panel-footer text-right\"><button type=button class=\"btn btn-default\" title=\"{{_t('btn_cancel')}}\" ng-click=\"goNetworkName = !goNetworkName\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button> <button class=\"btn btn-primary\" title=\"{{_t('btn_save')}}\" ng-disabled=\"rowSpinner['spinNetworkName']\"><bb-row-spinner spinner=\"rowSpinner['spinNetworkName']\" label=\" _t('btn_save')\" icon=\"'fa-check'\"></bb-row-spinner></button></div></form></div>"
   );
 
 
   $templateCache.put('app/views/home/notes.html',
     "<div class=\"panel panel-default\" ng-controller=DataHolderController><div class=panel-heading><i class=\"fa fa-list text-info\"></i> {{_t('txt_notes')}}</div><div class=\"panel-body newlines\" ng-hide=goNotes><span ng-if=dataHolder.controller.homeNotes>{{dataHolder.controller.homeNotes|stripTags}} </span><button type=button class=\"btn btn-default\" ng-class=\"goNotes ? 'active' : ''\" ng-click=\"goNotes = !goNotes\"><i class=\"fa fa-pencil\"></i></button></div><form name=form_notes id=form_notes class=form ng-show=goNotes ng-submit=\"storeNotes(dataHolder.controller.homeNotes,'spinNotes');goNotes = !goNotes\" novalidate><div class=panel-body><textarea id=notes class=form-control rows=10 ng-model=dataHolder.controller.homeNotes>{{dataHolder.controller.homeNotes}}\r" +
     "\n" +
-    "            </textarea></div><div class=\"panel-footer text-right\"><button type=button class=\"btn btn-default\" title=\"{{_t('btn_cancel')}}\" ng-click=\"goNotes = !goNotes\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button> <button class=\"btn btn-info\" title=\"{{_t('btn_save')}}\" ng-disabled=\"rowSpinner['spinNotes']\"><bb-row-spinner spinner=\"rowSpinner['spinNotes']\" label=\" _t('btn_save')\" icon=\"'fa-check'\"></bb-row-spinner></button></div></form></div>"
+    "            </textarea></div><div class=\"panel-footer text-right\"><button type=button class=\"btn btn-default\" title=\"{{_t('btn_cancel')}}\" ng-click=\"goNotes = !goNotes\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button> <button class=\"btn btn-primary\" title=\"{{_t('btn_save')}}\" ng-disabled=\"rowSpinner['spinNotes']\"><bb-row-spinner spinner=\"rowSpinner['spinNotes']\" label=\" _t('btn_save')\" icon=\"'fa-check'\"></bb-row-spinner></button></div></form></div>"
   );
 
 
@@ -32950,7 +33013,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/network/control/control_different.html',
-    "<div class=\"panel panel-default\" ng-controller=IncludeDifferentNetworkController><div class=panel-heading><i class=\"fa fa-sitemap\"></i> {{_t('nm_inc_into_nw')}}</div><div class=panel-body><div ng-if=\"controlDh.controller.isRealPrimary && (!controlDh.controller.hasDevices)\"><p class=input-help>{{_t('device_not_included_info')}}</p><button class=\"btn btn-primary\" id=btn_learn_start ng-disabled=\"rowSpinner['controller.SetLearnMode(1)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-show=\"[9].indexOf(controlDh.controller.controllerState) == -1\" ng-click=\"includeToNetwork('controller.SetLearnMode(1)','successNetworkIncludeModal',$event)\"><i class=\"fa fa-check\"></i> {{_t('include_into_network')}}</button> <button class=\"btn btn-danger\" id=btn_learn_stop ng-show=\"[9].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"includeToNetwork('controller.SetLearnMode(0)')\"><i class=\"fa fa-spinner fa-spin\"></i> {{_t('include_into_network_stop')}}</button></div><div ng-if=\"controlDh.controller.isRealPrimary && (controlDh.controller.hasDevices)\"><p class=input-help>{{_t('device_included_info')}}</p><button class=\"btn btn-primary\" id=btn_learn_start_2 disabled>{{_t('leave_network')}} {{controlDh.controller.homeName}}</button></div><div ng-if=!controlDh.controller.isRealPrimary><p class=input-help>{{_t('device_included_info')}}</p><button class=\"btn btn-danger\" id=btn_learn_stop ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-hide=\"[9].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"excludeFromNetwork('controller.SetLearnMode(1)',_t('before_leaving_network'))\"><i class=\"fa fa-check\"></i> {{_t('leave_network') + ' ' + controlDh.controller.homeName}}</button> <button class=\"btn btn-danger\" id=btn_learn_stop ng-show=\"[9].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"includeToNetwork('controller.SetLearnMode(0)')\"><i class=\"fa fa-spinner fa-spin\"></i> {{_t('leave_network_stop') + ' ' + controlDh.controller.homeName}}</button></div></div><div id=successNetworkIncludeModal class=appmodal ng-if=modalArr.successNetworkIncludeModal><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handleModal('successNetworkIncludeModal', $event);controlDh.input.failedBatteries = 0\"><i class=\"fa fa-times\"></i></span><h3>{{_t('include_into_network')}}</h3></div><div class=appmodal-body><div class=\"alert alert-success\"><i class=\"fa fa-smile-o\"></i> {{_t('success_controller_include')}}</div><div class=cfg-block><button class=\"btn btn-primary\" ng-click=\"handleModal('restoreModal', $event);handleModal('successNetworkIncludeModal', $event)\"><i class=\"fa fa-repeat\"></i> {{_t('make_restore')}}</button></div><div class=cfg-block ng-controller=RequestNifAllController><button class=\"btn btn-primary\" id=btn_request_nif ng-click=\"requestNifAll('requestNifAll');handleModal('successNetworkIncludeModal', $event)\" ng-disabled=\"rowSpinner['requestNifAll']\"><bb-row-spinner spinner=\"rowSpinner['requestNifAll']\" label=\"_t('detect_all_nodes')\" icon=\"'fa-search-plus'\"></bb-row-spinner></button></div><div class=cfg-block><button type=button class=\"btn btn-default\" ng-click=\"handleModal('successNetworkIncludeModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('just_proceed')}}</span></button></div></div></div></div></div><div ng-include=\"'app/views/network/control/control_restore_modal.html'\"></div>"
+    "<div class=\"panel panel-default\" ng-controller=IncludeDifferentNetworkController><div class=panel-heading><i class=\"fa fa-sitemap\"></i> {{_t('nm_inc_into_nw')}}</div><div class=panel-body><div ng-if=\"controlDh.controller.isRealPrimary && (!controlDh.controller.hasDevices)\"><p class=input-help>{{_t('device_not_included_info')}}</p><bb-alert alert=controlDh.network.alert></bb-alert><button class=\"btn btn-primary\" id=btn_learn_start ng-disabled=\"rowSpinner['controller.SetLearnMode(1)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-show=\"[9].indexOf(controlDh.controller.controllerState) == -1\" ng-click=\"includeToNetwork('controller.SetLearnMode(1)','successNetworkIncludeModal',$event)\"><i class=\"fa fa-play-circle\"></i> {{_t('include_into_network')}}</button> <button class=\"btn btn-danger\" id=btn_learn_stop ng-show=\"[9].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"includeToNetwork('controller.SetLearnMode(0)')\"><i class=\"fa fa-stop-circle\"></i> {{_t('include_into_network_stop')}}</button></div><div ng-if=\"controlDh.controller.isRealPrimary && (controlDh.controller.hasDevices)\"><p class=input-help>{{_t('device_included_info')}}</p><button class=\"btn btn-primary\" id=btn_learn_start_2 disabled>{{_t('leave_network')}} {{controlDh.controller.homeName}}</button></div><div ng-if=!controlDh.controller.isRealPrimary><p class=input-help>{{_t('device_included_info')}}</p><div ng-hide=\"[0].indexOf(controlDh.controller.controllerState) > -1\"><bb-alert alert=controlDh.network.alert></bb-alert></div><button class=\"btn btn-info\" id=btn_learn_stop ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-hide=\"[9].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"excludeFromNetwork('controller.SetLearnMode(1)',_t('before_leaving_network'))\"><i class=\"fa fa-play-circle\"></i> {{_t('leave_network') + ' ' + controlDh.controller.homeName}}</button> <button class=\"btn btn-danger\" id=btn_learn_stop ng-show=\"[9].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"includeToNetwork('controller.SetLearnMode(0)')\"><i class=\"fa fa-stop-circle\"></i> {{_t('leave_network_stop') + ' ' + controlDh.controller.homeName}}</button></div></div><div id=successNetworkIncludeModal class=appmodal ng-if=\"controlDh.network.modal && !controlDh.controller.isRealPrimary\"><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"closeNetworkModal('successNetworkIncludeModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{_t('include_into_network')}}</h3></div><div class=appmodal-body><div class=\"alert alert-success\"><i class=\"fa fa-smile-o\"></i> {{_t('success_controller_include')}}</div><div class=cfg-block><button class=\"btn btn-primary\" ng-click=\"handleModal('restoreModal', $event);handleModal('successNetworkIncludeModal', $event)\"><i class=\"fa fa-repeat\"></i> {{_t('make_restore')}}</button></div><div class=cfg-block ng-controller=RequestNifAllController><button class=\"btn btn-primary\" id=btn_request_nif ng-click=\"requestNifAll('requestNifAll');handleModal('successNetworkIncludeModal', $event)\" ng-disabled=\"rowSpinner['requestNifAll']\"><bb-row-spinner spinner=\"rowSpinner['requestNifAll']\" label=\"_t('detect_all_nodes')\" icon=\"'fa-search-plus'\"></bb-row-spinner></button></div><div class=cfg-block><button type=button class=\"btn btn-default\" ng-click=\"closeNetworkModal('successNetworkIncludeModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('just_proceed')}}</span></button></div></div></div></div></div><div ng-include=\"'app/views/network/control/control_restore_modal.html'\"></div>"
   );
 
 
@@ -32970,7 +33033,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/network/control/control_management.html',
-    "<div class=\"panel panel-default panel-highlighted\"><div class=panel-heading><i class=\"fa fa-cubes\"></i> {{_t('nm_device_management')}}</div><div class=panel-body><div class=cfg-block ng-controller=SetSecureInclusionController>{{_t('nm_force_unsecure')}}<div class=btn-group><button type=button class=\"btn btn-primary\" id=btn_force_secure_lock ng-class=\"controlDh.controller.secureInclusion ? 'active' : ''\" ng-click=\"setSecureInclusion('controller.data.secureInclusion=true')\" ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || rowSpinner['controller.data.secureInclusion=true']\"><bb-row-spinner spinner=\"rowSpinner['controller.data.secureInclusion=true']\" label=\"_t('btn_secure')\" icon=\"'fa-lock'\"></bb-row-spinner></button> <button type=button class=\"btn btn-primary\" id=btn_force_unsecure_lock ng-class=\"!controlDh.controller.secureInclusion ? 'active' : ''\" ng-click=\"setSecureInclusion('controller.data.secureInclusion=false')\" ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || rowSpinner['controller.data.secureInclusion=false']\"><bb-row-spinner spinner=\"rowSpinner['controller.data.secureInclusion=false']\" label=\"_t('btn_unsecure')\" icon=\"'fa-unlock'\"></bb-row-spinner></button></div></div><div class=cfg-block ng-controller=IncludeExcludeDeviceController><p class=input-help ng-show=\"controlDh.controller.isSIS || controlDh.controller.isPrimary\">{{_t('nm_learn_mode_you_are_primary_no_sis')}}</p><p class=input-help ng-show=\"!controlDh.controller.isSIS && !controlDh.controller.isPrimary\">{{_t('nm_learn_mode_you_are_secondary_can_not_add')}}</p><div class=\"alert nm-response\" ng-class=\"controlDh.controller.controllerState == 0 ? 'alert-info' : 'alert-danger'\">{{_t('nm_controller_state_' + controlDh.controller.controllerState)}}</div><div ng-show=\"controlDh.controller.controllerState == 1\"><div class=\"alert alert-success\" ng-show=\"controlDh.controller.isSIS || controlDh.controller.isPrimary\">{{_t('nm_controller_sis_or_primary')}}</div><div class=\"alert alert-danger\" ng-show=\"!controlDh.controller.isSIS && !controlDh.controller.isPrimary\">{{_t('nm_controller_not_sis_or_primary')}}</div></div><div class=\"alert alert-success\" ng-if=controlDh.inclusion.lastIncludedDevice><p ng-bind-html=\"controlDh.inclusion.lastIncludedDevice | toTrusted\"></p></div><div class=\"alert alert-success\" ng-if=controlDh.inclusion.lastExcludedDevice><p ng-bind-html=\"controlDh.inclusion.lastExcludedDevice | toTrusted\"></p></div><button class=\"btn btn-info\" id=btn_nm_include_start title=\"{{_t('nm_include_start_tooltip')}}\" ng-disabled=\"[5, 6, 7, 20].indexOf(controlDh.controller.controllerState) > -1\" ng-show=\"[1, 2, 3, 4].indexOf(controlDh.controller.controllerState) == -1\" ng-click=\"addNodeToNetwork('controller.AddNodeToNetwork(1)')\"><i class=\"fa fa-arrow-circle-right\"></i> {{_t('nm_include_start')}}</button> <button class=\"btn btn-danger\" id=btn_nm_include_stop ng-show=\"[1, 2, 3, 4].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"addNodeToNetwork('controller.AddNodeToNetwork(0)')\"><i class=\"fa fa-spinner fa-spin\"></i> {{_t('nm_include_stop')}}</button> <button class=\"btn btn-primary\" id=nm_exclude_start title=\"{{_t('nm_exclude_start_tooltip')}}\" ng-disabled=\"[1, 2, 3, 4, 20].indexOf(controlDh.controller.controllerState) > -1\" ng-show=\"[5, 6, 7].indexOf(controlDh.controller.controllerState) == -1\" ng-click=\"removeNodeToNetwork('controller.RemoveNodeFromNetwork(1)')\"><i class=\"fa fa-arrow-circle-left\"></i> {{_t('nm_exclude_start')}}</button> <button class=\"btn btn-danger\" id=nm_exclude_stop ng-show=\"[5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"removeNodeToNetwork('controller.RemoveNodeFromNetwork(0)')\"><i class=\"fa fa-spinner fa-spin\"></i> {{_t('nm_exclude_stop')}}</button></div></div></div>"
+    "<div class=\"panel panel-default panel-highlighted\"><div class=panel-heading><i class=\"fa fa-cubes\"></i> {{_t('nm_device_management')}}</div><div class=panel-body><div class=cfg-block ng-controller=SetSecureInclusionController>{{_t('nm_force_unsecure')}}<div class=btn-group><button type=button class=\"btn btn-primary\" id=btn_force_secure_lock ng-class=\"controlDh.controller.secureInclusion ? 'active' : ''\" ng-click=\"setSecureInclusion('controller.data.secureInclusion=true')\" ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || rowSpinner['controller.data.secureInclusion=true']\"><bb-row-spinner spinner=\"rowSpinner['controller.data.secureInclusion=true']\" label=\"_t('btn_secure')\" icon=\"'fa-lock'\"></bb-row-spinner></button> <button type=button class=\"btn btn-primary\" id=btn_force_unsecure_lock ng-class=\"!controlDh.controller.secureInclusion ? 'active' : ''\" ng-click=\"setSecureInclusion('controller.data.secureInclusion=false')\" ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || rowSpinner['controller.data.secureInclusion=false']\"><bb-row-spinner spinner=\"rowSpinner['controller.data.secureInclusion=false']\" label=\"_t('btn_unsecure')\" icon=\"'fa-unlock'\"></bb-row-spinner></button></div></div><div class=cfg-block ng-controller=IncludeExcludeDeviceController><p class=input-help ng-show=\"controlDh.controller.isSIS || controlDh.controller.isPrimary\">{{_t('nm_learn_mode_you_are_primary_no_sis')}}</p><p class=input-help ng-show=\"!controlDh.controller.isSIS && !controlDh.controller.isPrimary\">{{_t('nm_learn_mode_you_are_secondary_can_not_add')}}</p><div ng-hide=\"controlDh.inclusion.lastIncludedDevice.message || controlDh.inclusion.lastExcludedDevice.message\"><bb-alert alert=controlDh.inclusion.alertPrimary></bb-alert><bb-alert alert=controlDh.inclusion.alert></bb-alert></div><bb-alert alert=controlDh.inclusion.lastIncludedDevice></bb-alert><bb-alert alert=controlDh.inclusion.lastExcludedDevice></bb-alert><button class=\"btn btn-primary\" id=btn_nm_include_start title=\"{{_t('nm_include_start_tooltip')}}\" ng-disabled=\"[5, 6, 7, 20].indexOf(controlDh.controller.controllerState) > -1\" ng-show=\"[1, 2, 3, 4].indexOf(controlDh.controller.controllerState) == -1\" ng-click=\"addNodeToNetwork('controller.AddNodeToNetwork(1)')\"><i class=\"fa fa-play-circle\"></i> {{_t('nm_include_start')}}</button> <button class=\"btn btn-danger\" id=btn_nm_include_stop ng-show=\"[1, 2, 3, 4].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"addNodeToNetwork('controller.AddNodeToNetwork(0)')\"><i class=\"fa fa-stop-circle\"></i> {{_t('nm_include_stop')}}</button> <button class=\"btn btn-info\" id=nm_exclude_start title=\"{{_t('nm_exclude_start_tooltip')}}\" ng-disabled=\"[1, 2, 3, 4, 20].indexOf(controlDh.controller.controllerState) > -1\" ng-show=\"[5, 6, 7].indexOf(controlDh.controller.controllerState) == -1\" ng-click=\"removeNodeToNetwork('controller.RemoveNodeFromNetwork(1)')\"><i class=\"fa fa-play-circle\"></i> {{_t('nm_exclude_start')}}</button> <button class=\"btn btn-danger\" id=nm_exclude_stop ng-show=\"[5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"removeNodeToNetwork('controller.RemoveNodeFromNetwork(0)')\"><i class=\"fa fa-stop-circle\"></i> {{_t('nm_exclude_stop')}}</button></div></div></div>"
   );
 
 
@@ -32984,7 +33047,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/network/control/control_restore.html',
-    "<div class=\"panel panel-default\"><div class=panel-heading><i class=\"fa fa-download\"></i> {{_t('nm_backup_title')}}</div><div class=panel-body><a class=\"btn btn-primary\" href={{cfg.server_url}}/ZWaveAPI/Backup ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\"><i class=\"fa fa-download\"></i> {{_t('nm_backup_download')}} </a><button class=\"btn btn-primary\" ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"handleModal('restoreModal', $event)\"><i class=\"fa fa-repeat\"></i> {{_t('nm_restore_backup_upload')}}</button></div></div><div ng-include=\"'app/views/network/control/control_restore_modal.html'\"></div>"
+    "<div class=\"panel panel-default\"><div class=panel-heading><i class=\"fa fa-download\"></i> {{_t('nm_backup_title')}}</div><div class=panel-body><a class=\"btn btn-primary\" href={{cfg.server_url}}/ZWaveAPI/Backup ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\"><i class=\"fa fa-download\"></i> {{_t('nm_backup_download')}} </a>&nbsp; <button class=\"btn btn-primary\" ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"handleModal('restoreModal', $event)\"><i class=\"fa fa-repeat\"></i> {{_t('nm_restore_backup_upload')}}</button></div></div><div ng-include=\"'app/views/network/control/control_restore_modal.html'\"></div>"
   );
 
 
@@ -32994,83 +33057,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/network/control/control_sucsic.html',
-    "<div class=\"panel panel-default\" ng-controller=SucSisController><div class=panel-heading><i class=\"fa fa-share-alt\"></i> {{_t('nm_suc_sis_title')}}</div><div class=panel-body><div class=\"cfg-block form-inline\"><button class=\"btn btn-primary\" ng-click=\"getSUCNodeId('controller.GetSUCNodeId()')\" ng-disabled=\"rowSpinner['controller.GetSUCNodeId()'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\"><bb-row-spinner spinner=\"rowSpinner['controller.GetSUCNodeId()']\" label=\"_t('nm_get_suc_nodeid')\" icon=\"'fa-check'\"></bb-row-spinner></button> <button class=\"btn btn-primary\" ng-click=\"requestNetworkUpdate('controller.RequestNetworkUpdate()')\" ng-disabled=\"controlDh.controller.disableSUCRequest || rowSpinner['controller.RequestNetworkUpdate()'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\"><bb-row-spinner spinner=\"rowSpinner['controller.RequestNetworkUpdate()']\" label=\"_t('nm_request_network_update')\" icon=\"'fa-check'\"></bb-row-spinner></button></div><div class=\"cfg-block form-inline\"><button class=\"btn btn-primary\" data-ng-click=\"setSUCNodeId('controller.SetSUCNodeId(' + controlDh.input.sucSis + ')')\" ng-disabled=\"rowSpinner['controller.SetSUCNodeId(' + controlDh.input.sucSis + ')'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\"><bb-row-spinner spinner=\"rowSpinner['controller.SetSUCNodeId(' + controlDh.input.sucSis + ')']\" label=\"_t('nm_start_suc')\" icon=\"'fa-check'\"></bb-row-spinner></button> <button class=\"btn btn-primary\" data-ng-click=\"setSISNodeId('controller.SetSISNodeId(' + controlDh.input.sucSis + ')')\" ng-disabled=\"rowSpinner['controller.SetSISNodeId(' + controlDh.input.sucSis + ')']|| [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\"><bb-row-spinner spinner=\"rowSpinner['controller.SetSISNodeId(' + controlDh.input.sucSis + ')']\" label=\"_t('nm_start_sis')\" icon=\"'fa-check'\"></bb-row-spinner></button> <button class=\"btn btn-primary\" data-ng-click=\"disableSUCNodeId('controller.DisableSUCNodeId(' + controlDh.input.sucSis + ')')\" ng-disabled=\"rowSpinner['controller.DisableSUCNodeId(' + controlDh.input.sucSis + ')'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\"><bb-row-spinner spinner=\"rowSpinner['controller.DisableSUCNodeId(' + controlDh.input.sucSis + ')']\" label=\"_t('nm_stop_suc_sis')\" icon=\"'fa-check'\"></bb-row-spinner></button><p><br>{{_t('nm_start_suc_on_node')}}<select name=suc_sic_node id=suc_sic_node class=form-control ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-model=controlDh.input.sucSis><option ng-repeat=\"v in controlDh.nodes.sucSis track by $index\" value={{v}} ng-selected=\"v == controlDh.controller.nodeId\">{{v}}</option></select></p><p></p></div></div></div>"
-  );
-
-
-  $templateCache.put('app/views/network/control_controller_maintance.html',
-    "<div class=\"panel panel-default\"><div class=panel-heading><i class=\"fa fa-gear\"></i> {{_t('nm_ctrl_maintance')}}</div><div class=panel-body><div class=\"cfg-block form-inline\"><p class=input-help>{{_t('nm_chip_reboot_war')}}</p><button class=\"btn btn-primary\" id=btn_chip_reboot ng-disabled=\"[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controllerState) > -1\" ng-click=\"runCmd('SerialAPISoftReset()')\">{{_t('nm_soft_reset_controller')}}</button></div><div class=\"cfg-block form-inline\"><p class=input-help ng-hide=\"cfg.app_type === 'installer'\">{{_t('nm_chip_reset_war')}}</p><p class=input-help ng-if=\"cfg.app_type === 'installer'\">{{_t('nm_chip_reset_war_ima')}}</p><button class=\"btn btn-primary\" ng-disabled=\"[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controllerState) > -1\" data-ng-click=\"showModal('#modal_reset_controller')\">{{_t('nm_reset_controller')}}</button></div></div></div>"
-  );
-
-
-  $templateCache.put('app/views/network/control_default.html',
-    "<div ng-controller=ControllController ng-show=showContent><div class=page-header><h1>{{_t('nav_control')}}</h1></div><div class=row id=row_controll><div class=\"col-md-6 col-lg-6\"><div ng-include=\"'app/views/network/control_management.html'\"></div><div ng-include=\"'app/views/network/control_different.html'\"></div><div ng-include=\"'app/views/network/control_restore.html'\"></div><div ng-include=\"'app/views/network/control_controller_maintance.html'\"></div><div ng-include=\"'app/views/network/control_frequency.html'\"></div></div><div class=\"col-md-6 col-lg-6\"><div ng-include=\"'app/views/network/control_network_maintance.html'\"></div><div ng-include=\"'app/views/network/control_sucsic.html'\"></div></div></div><div ng-include=\"'app/views/network/control_modal_reset_controler.html'\"></div><div ng-include=\"'app/views/network/control_modal_restore_backup.html'\"></div><div ng-include=\"'app/views/network/control_modal_battery_node.html'\"></div><div ng-include=\"'app/views/network/control_modal_failed_node.html'\"></div></div>"
-  );
-
-
-  $templateCache.put('app/views/network/control_different.html',
-    "<div class=\"panel panel-default\"><div class=panel-heading><i class=\"fa fa-sitemap\"></i> {{_t('nm_inc_into_nw')}}</div><div class=panel-body><p class=input-help>{{_t('nm_inc_into_nw_desc')}}</p><button class=\"btn btn-danger\" id=btn_learn_stop ng-click=\"runZwaveCmd('controller.SetLearnMode(1)')\" ng-if=!boxData.controller.isRealPrimary>{{_t('leave_network')}}</button> <button class=\"btn btn-primary\" id=btn_learn_start ng-click=\"runZwaveCmd('controller.SetLearnMode(1)')\" ng-if=\"boxData.controller.isRealPrimary && (boxData.controller.hasDevices)\" style=\"background-color: grey\" disabled>{{_t('include_into_network')}}</button> <button class=\"btn btn-primary\" id=btn_learn_start ng-click=\"runCmd('controller.SetLearnMode(1)')\" ng-if=\"boxData.controller.isRealPrimary && (!boxData.controller.hasDevices)\" ng-show=\"[8, 9, 10, 11, 12].indexOf(controllerState) == -1\">{{_t('nm_learn_start')}}</button> <button class=\"btn btn-danger\" id=btn_learn_stop ng-show=\"[8, 9, 10, 11, 12].indexOf(controllerState) > -1\" ng-if=\"boxData.controller.isRealPrimary && (!boxData.controller.hasDevices)\" ng-click=\"runCmd('controller.SetLearnMode(0)')\">{{_t('nm_learn_stop')}}</button></div></div>"
-  );
-
-
-  $templateCache.put('app/views/network/control_frequency.html',
-    "<div class=\"panel panel-default\" ng-if=frequency><div class=panel-heading><i class=\"fa fa-map-marker\"></i> {{_t('nm_frequency_title')}}</div><div class=panel-body><div>{{_t('current_frequency')}}: <strong>{{frequency}}</strong></div><div class=text-alert-list><i class=\"fa fa-info-circle text-info\"></i> {{_t('frequency_info')}}</div><div class=\"cfg-block form-inline block-frequency\"><button class=btn id=btn_nm_freq_change_eu ng-class=\"frequency == 0 ? 'btn-info' : 'btn-primary'\" ng-click=\"runCmd('ZMEFreqChange(0)')\">EU</button> <button class=btn id=btn_nm_freq_change_ru ng-class=\"frequency == 1 ? 'btn-info' : 'btn-primary'\" ng-click=\"runCmd('ZMEFreqChange(1)')\">RU</button> <button class=btn id=btn_nm_freq_change_in ng-class=\"frequency == 2 ? 'btn-info' : 'btn-primary'\" ng-click=\"runCmd('ZMEFreqChange(2)')\">IN</button> <button class=btn id=btn_nm_freq_change_cn ng-class=\"frequency == 6 ? 'btn-info' : 'btn-primary'\" ng-click=\"runCmd('ZMEFreqChange(6)')\">CN</button> <button class=btn id=btn_nm_freq_change_my ng-class=\"frequency == 10 ? 'btn-info' : 'btn-primary'\" ng-click=\"runCmd('ZMEFreqChange(10)')\">MY</button></div><div class=\"cfg-block form-inline\"><button class=btn id=btn_nm_freq_change_anz ng-class=\"frequency == 4 ? 'btn-info' : 'btn-primary'\" ng-click=\"runCmd('ZMEFreqChange(4)')\">ANZ/BR</button> <button class=btn id=btn_nm_freq_change_hk ng-class=\"frequency == 5 ? 'btn-info' : 'btn-primary'\" ng-click=\"runCmd('ZMEFreqChange(5)')\">HK</button> <button class=btn id=btn_nm_freq_change_kr ng-class=\"frequency == 8 ? 'btn-info' : 'btn-primary'\" ng-click=\"runCmd('ZMEFreqChange(8)')\">KR</button> <button class=btn id=btn_nm_freq_change_jp ng-class=\"frequency == 7 ? 'btn-info' : 'btn-primary'\" ng-click=\"runCmd('ZMEFreqChange(7)')\">JP</button></div><div class=\"cfg-block form-inline\"><button class=btn id=btn_nm_freq_change_us ng-click=\"runCmd('ZMEFreqChange(3)')\" ng-class=\"frequency == 3 ? 'btn-info' : 'btn-primary'\">US</button> <button class=btn id=btn_nm_freq_change_il ng-class=\"frequency == 9 ? 'btn-info' : 'btn-primary'\" ng-click=\"runCmd('ZMEFreqChange(9)')\">IL</button></div></div></div>"
-  );
-
-
-  $templateCache.put('app/views/network/control_installer.html',
-    "<div ng-controller=ControllController ng-show=showContent><div class=page-header><h1>{{_t('nav_control')}}</h1></div><div class=row id=row_controll><div class=\"col-md-6 col-lg-6\"><div ng-include=\"'app/views/network/control_management.html'\"></div><div ng-include=\"'app/views/network/control_different.html'\"></div><div ng-include=\"'app/views/network/control_controller_maintance.html'\"></div></div><div class=\"col-md-6 col-lg-6\"><div ng-include=\"'app/views/network/control_link_controller.html'\"></div><div ng-include=\"'app/views/network/control_network_maintance.html'\"></div><div ng-include=\"'app/views/network/control_sucsic.html'\"></div></div></div><div ng-include=\"'app/views/network/control_modal_reset_controler.html'\"></div><div ng-include=\"'app/views/network/control_modal_battery_node.html'\"></div><div ng-include=\"'app/views/network/control_modal_failed_node.html'\"></div></div>"
-  );
-
-
-  $templateCache.put('app/views/network/control_link_controller.html',
-    "<div class=\"panel panel-default\"><div class=panel-heading><a href=#network/controller><i class=\"fa fa-info-circle\"></i> {{_t('nav_controller_info')}}</a></div></div>"
-  );
-
-
-  $templateCache.put('app/views/network/control_management.html',
-    "<div class=\"panel panel-default panel-highlighted\"><div class=panel-heading><i class=\"fa fa-cubes\"></i> {{_t('nm_device_management')}}</div><div class=panel-body><div class=cfg-block>{{_t('nm_force_unsecure')}}<div class=btn-group><button type=button class=\"btn btn-primary\" id=btn_force_unsecure_lock ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controllerState) > -1\" ng-click=\"runCmd('controller.data.secureInclusion=true');\r" +
-    "\n" +
-    "                                            secureInclusion = true\" ng-class=\"secureInclusion ? 'active' : 'inactive'\"><i class=\"fa fa-lock\"></i> {{_t('btn_secure')}}</button> <button type=button class=\"btn btn-primary\" id=btn_force_unsecure_unlock ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controllerState) > -1\" ng-class=\"!secureInclusion ? 'active' : 'inactive'\" ng-click=\"runCmd('controller.data.secureInclusion=false');\r" +
-    "\n" +
-    "                                            secureInclusion = false\"><i class=\"fa fa-unlock\"></i> {{_t('btn_unsecure')}}</button></div></div><p class=input-help ng-show=\"isSIS || isPrimary\">{{_t('nm_learn_mode_you_are_primary_no_sis')}}</p><p class=input-help ng-show=\"!isSIS && !isPrimary\">{{_t('nm_learn_mode_you_are_secondary_can_not_add')}}</p><div class=\"alert nm-response\" ng-class=\"controllerState == 0 ? 'alert-info' : 'alert-success'\">{{_t('nm_controller_state_' + controllerState)}}</div><div ng-show=\"controllerState == 1\"><div class=\"alert alert-success\" ng-show=\"isSIS || isPrimary\">{{_t('nm_controller_sis_or_primary')}}</div><div class=\"alert alert-danger\" ng-show=\"!isSIS && !isPrimary\">{{_t('nm_controller_not_sis_or_primary')}}</div></div><div class=\"alert alert-success\" ng-show=\"lastIncludedDevice != null\"><p ng-bind-html=\"lastIncludedDevice | toTrusted\"></p></div><div class=\"alert alert-success\" ng-show=\"lastExcludedDevice != null\"><p ng-bind-html=\"lastExcludedDevice | toTrusted\"></p></div><button class=\"btn btn-info\" id=btn_nm_include_start title=\"{{_t('nm_include_start_tooltip')}}\" ng-disabled=\"[5, 6, 7, 20].indexOf(controllerState) > -1\" ng-show=\"[1, 2, 3, 4].indexOf(controllerState) == -1\" ng-click=\"runCmd('controller.AddNodeToNetwork(1)')\">{{_t('nm_include_start')}}</button> <button class=\"btn btn-danger\" id=btn_nm_include_stop ng-show=\"[1, 2, 3, 4].indexOf(controllerState) > -1\" ng-click=\"runCmd('controller.AddNodeToNetwork(0)')\">{{_t('nm_include_stop')}}</button> <button class=\"btn btn-primary\" id=nm_exclude_start title=\"{{_t('nm_exclude_start_tooltip')}}\" ng-disabled=\"[1, 2, 3, 4, 20].indexOf(controllerState) > -1\" ng-show=\"[5, 6, 7].indexOf(controllerState) == -1\" ng-click=\"runCmd('controller.RemoveNodeFromNetwork(1)')\">{{_t('nm_exclude_start')}}</button> <button class=\"btn btn-danger\" id=nm_exclude_stop ng-show=\"[5, 6, 7].indexOf(controllerState) > -1\" ng-click=\"runCmd('controller.RemoveNodeFromNetwork(0)')\">{{_t('nm_exclude_stop')}}</button></div></div>"
-  );
-
-
-  $templateCache.put('app/views/network/control_modal_battery_node.html',
-    "<div class=\"modal fade\" id=modal_battery_node tabindex=-1 role=dialog aria-labelledby=myModalLabel3 aria-hidden=true><div class=modal-dialog><div class=modal-content><div class=modal-header><button type=button class=close data-dismiss=modal aria-hidden=true>&times;</button><h4 class=modal-title>{{_t('nm_mark_battery_as_failed') + ' #' + modelBatteryFailed}}</h4></div><div class=modal-body>{{_t('nm_mark_node_war_modal')}}</div><div class=modal-footer><button type=button class=\"btn btn-primary\" ng-click=\"runCmd(['devices[' + modelBatteryFailed + '].SendNoOperation()', 'devices[' + modelBatteryFailed + '].WakeupQueue()'], '#modal_battery_node', null, {'name': 'remove_option', 'id': '#mark_battery_failed', 'value': modelBatteryFailed})\">{{_t('nm_mark_battery_as_failed')}}</button> <button type=button class=\"btn btn-default\" data-dismiss=modal>{{_t('btn_cancel')}}</button></div></div></div></div>"
-  );
-
-
-  $templateCache.put('app/views/network/control_modal_failed_node.html',
-    "<div class=\"modal fade\" id=modal_failed_node tabindex=-1 role=dialog aria-labelledby=myModalLabel3 aria-hidden=true><div class=modal-dialog><div class=modal-content><div class=modal-header><button type=button class=close data-dismiss=modal aria-hidden=true>&times;</button><h4 class=modal-title>{{_t('nm_remove_failed') + ' #' + modelNodeFailed}}</h4></div><div class=modal-body><div class=\"alert alert-warning\"><input type=checkbox name=remove_node_confirm id=remove_node_confirm value=1 ng-click=\"goFailedNode = !goFailedNode\"> <span ng-bind-html=\"_t('are_you_sure_remove_node') | toTrusted\"></span> <strong>{{deviceInfo.name}}</strong><p>{{_t('txt_controller_delete_node')}}</p></div></div><div class=modal-footer><button type=button class=\"btn btn-danger\" id=btn_reset_controller ng-show=goFailedNode ng-click=\"runCmd('devices[' + modelNodeFailed + '].RemoveFailedNode()', '#modal_failed_node', null, {'name': 'remove_option', 'id': '#remove_failed_node', 'value': modelNodeFailed});\r" +
-    "\n" +
-    "                                    goFailedInfo = !goFailedInfo\"><i class=\"fa fa-exclamation-triangle\"></i> {{_t('nm_remove_failed')}}</button> <button type=button class=\"btn btn-default\" data-dismiss=modal ng-click=\"closeFailedNode('#modal_failed_node')\">{{_t('btn_cancel')}}</button></div></div></div></div>"
-  );
-
-
-  $templateCache.put('app/views/network/control_modal_reset_controler.html',
-    "<div class=\"modal fade\" id=modal_reset_controller tabindex=-1 role=dialog aria-labelledby=myModalLabel1 aria-hidden=true><div class=modal-dialog><div class=modal-content><div class=modal-header><button type=button class=close data-dismiss=modal aria-hidden=true>&times;</button><h4 class=modal-title>{{_t('nm_reset_controller')}}</h4></div><div class=modal-body><div class=\"alert alert-warning\"><p>{{_t('nm_controller_reset_war')}}</p><p></p><p><input type=checkbox name=reset_confirm id=reset_confirm value=1 ng-click=\"goReset = !goReset\"> {{_t('yes')}}</p><p></p></div></div><div class=modal-footer><button type=button class=\"btn btn-danger\" id=btn_reset_controller ng-show=goReset ng-click=\"runCmd('controller.SetDefault()', '#modal_reset_controller', null, 'btn_reset_controller',{'name': 'reset_controller'})\" ng-disabled=\"rowSpinner['btn_reset_controller']\"><bb-row-spinner spinner=\"rowSpinner['btn_reset_controller']\" label=\"_t('nm_reset_controller')\" icon=\"'fa-exclamation-triangle'\"></bb-row-spinner></button> <button type=button class=\"btn btn-default\" data-dismiss=modal ng-click=\"closeResetController('#modal_reset_controller')\">{{_t('btn_cancel')}}</button></div></div></div></div>"
-  );
-
-
-  $templateCache.put('app/views/network/control_modal_restore_backup.html',
-    "<div class=\"modal fade\" id=modal_restore_backup tabindex=-1 role=dialog aria-labelledby=myModalLabel2 aria-hidden=true><div class=modal-dialog><div class=modal-content><div class=modal-header><button type=button class=close data-dismiss=modal aria-hidden=true>&times;</button><h4 class=modal-title>{{_t('nm_restore_backup_upload')}}</h4></div><div class=modal-body><div class=restore-backup-control ng-show=\"restoreBackupStatus == 0\"><div class=\"alert alert-warning\"><input type=checkbox name=restore_confirm value=1 id=restore_confirm ng-click=\"goRestore = !goRestore\"> <span ng-bind-html=\"_t('are_you_sure_restore') | toTrusted\"></span></div><div ng-show=goRestore><input type=checkbox name=restore_chip_info id=restore_chip_info value=1 ng-true-value=1 ng-false-value=0 ng-model=modelRestoreChipInfo> {{_t('restore_backup_chip')}}</div><p class=text-center><input id=btn_upload ng-show=goRestore type=file name=file onchange=\"angular.element(this).scope().restoreFromFile(this.files,'.btn-spinner-hidden','#btn_upload')\"></p></div><div class=\"alert alert-info\" ng-show=\"restoreBackupStatus == 1\">{{_t('restore_wait')}}</div><div class=\"alert alert-success\" ng-show=\"restoreBackupStatus == 2\">{{_t('restore_done_reload_ui')}}</div><div class=\"alert alert-danger\" ng-show=\"restoreBackupStatus == 3\">{{_t('restore_backup_failed')}}</div></div><div class=modal-footer><button type=button class=\"btn btn-default\" ng-click=\"closeBackup('#modal_restore_backup')\" data-dismiss=modal>{{_t('btn_cancel')}}</button></div></div></div></div>"
-  );
-
-
-  $templateCache.put('app/views/network/control_network_maintance.html',
-    "<div class=\"panel panel-default\"><div class=panel-heading><i class=\"fa fa-sitemap\"></i> {{_t('nm_net_maintance')}}</div><div class=panel-body><div><div class=\"cfg-block form-inline\"><p class=input-help>{{_t('nm_remove_node_war')}}</p><select name=remove_failed_node id=remove_failed_node class=form-control ng-disabled=\"[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controllerState) > -1\" ng-change=changeSelectNode(modelNodeFailed) ng-model=modelNodeFailed><option value=\"\">---</option><option ng-repeat=\"v in failedNodes\" value={{v.id}}>{{v.id}}</option></select><button class=\"btn btn-primary\" id=btn_remove_failed_mode ng-click=\"showModal('#modal_failed_node', modelNodeFailed)\" ng-disabled=!modelNodeFailed>{{_t('nm_remove_failed')}}</button></div><div class=\"cfg-block form-inline\"><p class=input-help>{{_t('nm_replace_node_war')}}</p><div class=\"alert nm-response alert-danger\" ng-show=\"[17, 18].indexOf(controllerState) != -1\">{{_t('nm_controller_state_' + controllerState)}}</div><select name=replace_failed_node id=replace_failed_node class=form-control ng-disabled=\"[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controllerState) > -1\" ng-change=changeSelectNode(modelReplaceNode) ng-model=modelReplaceNode><option value=\"\">---</option><option ng-repeat=\"v in replaceNodes\" value={{v.id}}>{{v.id}}</option></select><button class=\"btn btn-primary\" id=btn_replace_failed_node ng-disabled=!modelReplaceNode ng-click=\"runCmd('ReplaceFailedNode(' + modelReplaceNode + ')', null, null, {'name': 'remove_option', 'id': '#replace_failed_node', 'value': modelReplaceNode})\">{{_t('nm_replace_node')}}</button></div><div class=\"cfg-block form-inline\"><p class=input-help>{{_t('nm_mark_node_war')}}</p><select name=mark_battery_failed id=mark_battery_failed class=form-control ng-disabled=\"[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controllerState) > -1\" ng-change=changeSelectNode(modelBatteryFailed) ng-model=modelBatteryFailed><option value=\"\">---</option><option ng-repeat=\"v in failedBatteries\" value={{v.id}}>{{v.id}}</option></select><button class=\"btn btn-primary\" ng-disabled=!modelBatteryFailed ng-click=\"showModal('#modal_battery_node')\">{{_t('nm_mark_battery_as_failed')}}</button></div></div><div><div class=\"cfg-block form-inline\"><p class=input-help>{{_t('nm_change_controller_war')}}</p><div class=nm-response ng-class=\"controllerState == 0 ? 'text-info' : 'text - danger'\" ng-show=\"[13, 14, 15, 16].indexOf(controllerState) > -1\">{{_t('nm_controller_state_' + controllerState)}}</div><button class=\"btn btn-primary\" id=btn_controller_change_start ng-disabled=\"[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controllerState) > -1 || isPrimary == false\" ng-show=\"[13, 14, 15, 16].indexOf(controllerState) == -1\" ng-click=\"runCmd('controller.ControllerChange(1)')\">{{_t('nm_controller_change_start')}}</button> <button class=\"btn btn-danger\" id=btn_controller_change_stop ng-show=\"[13, 14, 15, 16].indexOf(controllerState) > -1\" ng-click=\"runCmd('controller.ControllerChange(0)')\">{{_t('nm_controller_change_stop')}}</button></div><div class=\"cfg-block form-inline\" ng-if=\"cfg.app_type === 'default'\"><p class=input-help>{{_t('nm_learn_mode_war')}}</p><div class=nm-response ng-class=\"controllerState == 0 ? 'text-info' : 'text - danger'\" ng-show=\"[8, 9, 10, 11, 12].indexOf(controllerState) > -1\">{{_t('nm_controller_state_' + controllerState)}}</div><button class=\"btn btn-primary\" id=btn_learn_start ng-disabled=\"[20].indexOf(controllerState) > -1 || startLearnMode == false\" ng-click=\"runCmd('controller.SetLearnMode(1)')\" ng-show=\"[8, 9, 10, 11, 12].indexOf(controllerState) == -1\">{{_t('nm_learn_start')}}</button> <button class=\"btn btn-danger\" id=btn_learn_stop ng-show=\"[8, 9, 10, 11, 12].indexOf(controllerState) > -1\" ng-click=\"runCmd('controller.SetLearnMode(0)')\">{{_t('nm_learn_stop')}}</button></div><div class=\"cfg-block form-inline\"><p class=input-help>{{_t('nm_nif_all_war')}}</p><button class=\"btn btn-primary\" id=btn_request_nif ng-disabled=\"[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controllerState) > -1\" ng-click=\"requestNifAll('#btn_request_nif')\">{{_t('nm_request_all_node_information')}}</button></div></div></div></div>"
-  );
-
-
-  $templateCache.put('app/views/network/control_restore.html',
-    "<div class=\"panel panel-default\"><div class=panel-heading><i class=\"fa fa-download\"></i> {{_t('nm_backup_title')}}</div><div class=panel-body><a class=\"btn btn-primary\" href={{cfg.server_url}}/ZWaveAPI/Backup>{{_t('nm_backup_download')}}</a> <button class=\"btn btn-primary\" ng-disabled=\"[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controllerState) > -1\" data-ng-click=\"showModal('#modal_restore_backup')\">{{_t('nm_restore_backup_upload')}}</button></div></div>"
-  );
-
-
-  $templateCache.put('app/views/network/control_sucsic.html',
-    "<div class=\"panel panel-default\"><div class=panel-heading><i class=\"fa fa-share-alt\"></i> {{_t('nm_suc_sis_title')}}</div><div class=panel-body><div class=\"cfg-block form-inline\"><button class=\"btn btn-primary\" data-ng-click=\"runCmd('controller.GetSUCNodeId()')\">{{_t('nm_get_suc_nodeid')}}</button> <button class=\"btn btn-primary\" ng-disabled=disableSUCRequest data-ng-click=\"runCmd('controller.RequestNetworkUpdate()')\">{{_t('nm_request_network_update')}}</button></div><div class=\"cfg-block form-inline\"><button class=\"btn btn-primary\" data-ng-click=\"runCmd('controller.SetSUCNodeId(' + modelSucSicNode + ')')\">{{_t('nm_start_suc')}}</button> <button class=\"btn btn-primary\" data-ng-click=\"runCmd('controller.SetSISNodeId(' + modelSucSicNode + ')')\">{{_t('nm_start_sis')}}</button> <button class=\"btn btn-primary\" data-ng-click=\"runCmd('controller.DisableSUCNodeId(' + modelSucSicNode + ')')\">{{_t('nm_stop_suc_sis')}}</button><p><br>{{_t('nm_start_suc_on_node')}}<select name=suc_sic_node id=suc_sic_node class=form-control ng-model=modelSucSicNode><option value=1>1</option><option ng-repeat=\"v in sucNodes\" value={{v.id}}>{{v.id}}</option></select></p><p></p></div></div></div>"
+    "<div class=\"panel panel-default\" ng-controller=SucSisController><div class=panel-heading><i class=\"fa fa-share-alt\"></i> {{_t('nm_suc_sis_title')}}</div><div class=panel-body><div class=\"cfg-block form-inline\"><button class=\"btn btn-primary\" ng-click=\"getSUCNodeId('controller.GetSUCNodeId()')\" ng-disabled=\"rowSpinner['controller.GetSUCNodeId()'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\"><bb-row-spinner spinner=\"rowSpinner['controller.GetSUCNodeId()']\" label=\"_t('nm_get_suc_nodeid')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button> <button class=\"btn btn-primary\" ng-click=\"requestNetworkUpdate('controller.RequestNetworkUpdate()')\" ng-disabled=\"controlDh.controller.disableSUCRequest || rowSpinner['controller.RequestNetworkUpdate()'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\"><bb-row-spinner spinner=\"rowSpinner['controller.RequestNetworkUpdate()']\" label=\"_t('nm_request_network_update')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></div><div class=\"cfg-block form-inline\"><button class=\"btn btn-primary\" data-ng-click=\"setSUCNodeId('controller.SetSUCNodeId(' + controlDh.input.sucSis + ')')\" ng-disabled=\"rowSpinner['controller.SetSUCNodeId(' + controlDh.input.sucSis + ')'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\"><bb-row-spinner spinner=\"rowSpinner['controller.SetSUCNodeId(' + controlDh.input.sucSis + ')']\" label=\"_t('nm_start_suc')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button> <button class=\"btn btn-primary\" data-ng-click=\"setSISNodeId('controller.SetSISNodeId(' + controlDh.input.sucSis + ')')\" ng-disabled=\"rowSpinner['controller.SetSISNodeId(' + controlDh.input.sucSis + ')']|| [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\"><bb-row-spinner spinner=\"rowSpinner['controller.SetSISNodeId(' + controlDh.input.sucSis + ')']\" label=\"_t('nm_start_sis')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button> <button class=\"btn btn-primary\" data-ng-click=\"disableSUCNodeId('controller.DisableSUCNodeId(' + controlDh.input.sucSis + ')')\" ng-disabled=\"rowSpinner['controller.DisableSUCNodeId(' + controlDh.input.sucSis + ')'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\"><bb-row-spinner spinner=\"rowSpinner['controller.DisableSUCNodeId(' + controlDh.input.sucSis + ')']\" label=\"_t('nm_stop_suc_sis')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button><p><br>{{_t('nm_start_suc_on_node')}}<select name=suc_sic_node id=suc_sic_node class=form-control ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-model=controlDh.input.sucSis><option ng-repeat=\"v in controlDh.nodes.sucSis track by $index\" value={{v}} ng-selected=\"v == controlDh.controller.nodeId\">{{v}}</option></select></p><p></p></div></div></div>"
   );
 
 
@@ -33345,7 +33332,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
     "\n" +
     "                    label=\"_t('nm_send_node_information')\"\r" +
     "\n" +
-    "                    icon=\"'fa-check'\">\r" +
+    "                    icon=\"'fa-circle-o'\">\r" +
     "\n" +
     "            </bb-row-spinner>\r" +
     "\n" +
@@ -33655,7 +33642,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/network/routing.html',
-    "<div ng-controller=RoutingController><div class=page-header><h1>{{ _t('tab_routing_table_title')}}</h1></div><div class=table-responsive ng-if=routings.show><table id=RoutingTable class=\"table table-striped table-condensed table-hover\"><thead><tr><th>#</th><th>{{ _t('device_name')}}</th><th>{{ _t('nav_type_info')}}</th><th>{{ _t('rt_header_update_time')}}</th><th ng-repeat=\"v in routings.all\" style=text-align:center>{{v.id}}</th><th class=\"mobile-show td-action\"><button class=\"btn btn-info\" id=btn_update_all_1 ng-click=\"updateAllRoutess('all_1','urlToStore')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner spinner=\"rowSpinner['all_1']\" label=\"_t('switches_update_all')\" icon=\"'fa-check'\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in routings.all track by $index\"><td>{{v.id}}</td><td>{{v.name}}</td><td><i class=fa ng-class=v.icon></i></td><td class=\"row-time is-updated-{{v.isUpdated}}\">{{ v.updateTime | isTodayFromUnix }} &nbsp;</td><td ng-repeat=\"n in devices\" class=rtCell><div id=cell{{nodeId}}-{{n}} class={{data[nodeId][n].clazz}} title={{data[nodeId][n].tooltip}} data-toggle=tooltip data-position=top tooltip_><span class=info>{{data[nodeId][n].info}}</span></div></td><td class=rtCell ng-repeat=\"n in v.cellState\"><div class={{n.cssClass}} title={{n.tooltip}}><span class=info ng-if=n.hasAssoc>*</span> <span class=info ng-if=!n.hasAssoc>&nbsp;</span></div></td><td class=td-action><button class=\"btn btn-default\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateRoute(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] label=\" _t('update')\" icon=\"'fa-check text-success'\"></bb-row-spinner></button></td></tr></tbody></table></div><div id=RoutingComments><i class=\"fa fa-square fa-lg\" style=\"color: green\"></i> {{_t('direct')}}<br><i class=\"fa fa-square fa-lg\" style=\"color: #8C0\"></i> {{_t('routed')}}<br><i class=\"fa fa-square fa-lg\" style=\"color: yellow\"></i> {{_t('badly_routed')}}<br><i class=\"fa fa-square fa-lg\" style=\"color: red\"></i> {{_t('not_linked')}}<br><i class=\"fa fa-square fa-lg\" style=\"color: gray\"></i> {{_t('unavailable')}}<br></div></div>"
+    "<div ng-controller=RoutingController><div class=page-header><h1>{{ _t('tab_routing_table_title')}}</h1></div><div class=table-responsive ng-if=routings.show><table id=RoutingTable class=\"table table-striped table-condensed table-hover\"><thead><tr><th>#</th><th>{{ _t('device_name')}}</th><th>{{ _t('nav_type_info')}}</th><th>{{ _t('rt_header_update_time')}}</th><th ng-repeat=\"v in routings.all\" style=text-align:center>{{v.id}}</th><th class=\"mobile-show td-action\"><button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=\"updateAllRoutess('all_1','urlToStore')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner spinner=\"rowSpinner['all_1']\" label=\"_t('switches_update_all')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in routings.all track by $index\"><td>{{v.id}}</td><td>{{v.name}}</td><td><i class=fa ng-class=v.icon></i></td><td class=\"row-time is-updated-{{v.isUpdated}}\">{{ v.updateTime | isTodayFromUnix }} &nbsp;</td><td ng-repeat=\"n in devices\" class=rtCell><div id=cell{{nodeId}}-{{n}} class={{data[nodeId][n].clazz}} title={{data[nodeId][n].tooltip}} data-toggle=tooltip data-position=top tooltip_><span class=info>{{data[nodeId][n].info}}</span></div></td><td class=rtCell ng-repeat=\"n in v.cellState\"><div class={{n.cssClass}} title={{n.tooltip}}><span class=info ng-if=n.hasAssoc>*</span> <span class=info ng-if=!n.hasAssoc>&nbsp;</span></div></td><td class=td-action><button class=\"btn btn-default\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateRoute(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] label=\" _t('update')\" icon=\"'fa-circle-o text-success'\"></bb-row-spinner></button></td></tr></tbody></table></div><div id=RoutingComments><i class=\"fa fa-square fa-lg\" style=\"color: green\"></i> {{_t('direct')}}<br><i class=\"fa fa-square fa-lg\" style=\"color: #8C0\"></i> {{_t('routed')}}<br><i class=\"fa fa-square fa-lg\" style=\"color: yellow\"></i> {{_t('badly_routed')}}<br><i class=\"fa fa-square fa-lg\" style=\"color: red\"></i> {{_t('not_linked')}}<br><i class=\"fa fa-square fa-lg\" style=\"color: gray\"></i> {{_t('unavailable')}}<br></div></div>"
   );
 
 
@@ -33675,7 +33662,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/settings/settings_app.html',
-    "<h2 class=accordion-entry-title ng-click=\"expandElement('settingsApp')\"><i class=\"fa fa-cogs\"></i> {{_t('app_settings')}} <i class=\"fa accordion-arrow\" ng-class=\"expand.settingsApp ? 'fa-chevron-up':'fa-chevron-down'\"></i></h2><div class=accordion-entry-ctrl ng-class=\"\" ng-if=expand.settingsApp ng-controller=SettingsAppController><bb-loader></bb-loader><form name=form_settings id=form_settings class=\"form form-page\" ng-if_=\"cfg.app_type === 'installer'\" ng-submit=storeSettings(settings.input) novalidate><fieldset><div class=\"form-group form-inline\"><label for=network_name>{{_t('network_name')}}:</label><input name=network_name id=network_name class=form-control placeholder=\"{{_t('network_name')}}\" value={{settings.input.network_name}} ng-model=settings.input.network_name></div><div class=\"form-group form-inline\"><label>{{_t('date_format')}}:</label><select name=date_format name=date_format class=form-control ng-model=settings.input.date_format><option ng-repeat=\"v in cfg.date_format_list\" value={{v}} ng-selected=\"v === cfg.zwavecfg.date_format\">{{v}}</option></select></div><div class=\"form-group form-inline\"><label>{{_t('time_format')}}:</label><select name=time_format name=time_format class=form-control ng-model=settings.input.time_format><option ng-repeat=\"v in cfg.time_format_list\" value={{v}} ng-selected=\"v === cfg.zwavecfg.time_format\">{{v}} {{_t('hours')}}</option></select></div><div class=\"form-group form-inline\"><label>{{_t('timezone')}}:</label><select name=time_zone name=time_zone class=form-control ng-model=settings.input.time_zone><option ng-repeat=\"v in cfg.time_zone_list\" value={{v}} ng-selected=\"v === cfg.zwavecfg.time_zone\">{{v}}</option></select></div></fieldset><fieldset class=submit-entry><button type=submit class=\"btn btn-submit\" title=\"{{_t('btn_save')}}\"><i class=\"fa fa-check\"></i> <span class=btn-name>{{_t('btn_save')}}</span></button></fieldset></form></div>"
+    "<h2 class=accordion-entry-title ng-click=\"expandElement('settingsApp')\"><i class=\"fa fa-cogs\"></i> {{_t('app_settings')}} <i class=\"fa accordion-arrow\" ng-class=\"expand.settingsApp ? 'fa-chevron-up':'fa-chevron-down'\"></i></h2><div class=accordion-entry-ctrl ng-class=\"\" ng-if=expand.settingsApp ng-controller=SettingsAppController><bb-loader></bb-loader><form name=form_settings id=form_settings class=\"form form-page\" ng-if_=\"cfg.app_type === 'installer'\" ng-submit=\"storeSettings(settings.input, cfg.zwavecfg)\" novalidate><fieldset><div class=\"form-group form-inline\"><label for=network_name>{{_t('network_name')}}:</label><input name=network_name id=network_name class=form-control placeholder=\"{{_t('network_name')}}\" value={{settings.input.network_name}} ng-model=settings.input.network_name></div><div class=\"form-group form-inline\"><label>{{_t('date_format')}}:</label><select name=date_format name=date_format class=form-control ng-model=settings.input.date_format><option ng-repeat=\"v in cfg.date_format_list\" value={{v}} ng-selected=\"v === cfg.zwavecfg.date_format\">{{v}}</option></select></div><div class=\"form-group form-inline\"><label>{{_t('time_format')}}:</label><select name=time_format name=time_format class=form-control ng-model=settings.input.time_format><option ng-repeat=\"v in cfg.time_format_list\" value={{v}} ng-selected=\"v === cfg.zwavecfg.time_format\">{{v}} {{_t('hours')}}</option></select></div><div class=\"form-group form-inline\"><label>{{_t('timezone')}}:</label><select name=time_zone name=time_zone class=form-control ng-model=settings.input.time_zone><option ng-repeat=\"v in cfg.time_zone_list\" value={{v}} ng-selected=\"v === cfg.zwavecfg.time_zone\">{{v}}</option></select></div></fieldset><fieldset class=submit-entry><button type=submit class=\"btn btn-submit\" title=\"{{_t('btn_save')}}\"><i class=\"fa fa-check\"></i> <span class=btn-name>{{_t('btn_save')}}</span></button></fieldset></form></div>"
   );
 
 
@@ -38650,6 +38637,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     $scope.loading = false;
     $scope.alert = {message: false, status: 'is-hidden', icon: false};
 
+
     // Custom IP
     $scope.customIP = {
         'url': cfg.server_url,
@@ -39456,30 +39444,6 @@ appController.controller('DataHolderInfoController', function($scope, $filter, d
         $(imodalId + ' .appmodal-body').html(html);
     };
 
-    // Show modal dialog
-    $scope.showModal = function(target, interviewCommands, ccId, type) {
-        var interviewData = {};
-        var updateTime;
-        $(target).modal();
-        if (type) {
-            angular.forEach(interviewCommands, function(v, k) {
-                if (v.ccId == ccId) {
-                    interviewData = v[type];
-                    updateTime = v.updateTime;
-                    return;
-                }
-            });
-        } else {
-            interviewData = interviewCommands;
-        }
-        // Get data
-        var html = deviceService.configGetCommandClass(interviewData, '/', '');
-
-        // Fill modal with data
-        $(target).on('shown.bs.modal', function() {
-            $(target + ' .modal-body').html(html);
-        });
-    };
 });
 /**
  * @overview This controller handles authentication process.
@@ -39608,7 +39572,8 @@ appController.controller('SettingsLangController', function ($scope, $timeout,$w
  */
 appController.controller('SettingsAppController', function ($scope, $timeout, $window, $interval, $location, cfg,dataService,deviceService) {
     $scope.settings = {
-        input: {}
+        input: {},
+        lastTZ: ""
     };
 
     /**
@@ -39616,6 +39581,7 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
      */
     $scope.loadSettings = function() {
         $scope.settings.input = cfg.zwavecfg;
+        $scope.settings.lastTZ = cfg.zwavecfg.time_zone;
     };
     $scope.loadSettings();
 
@@ -39629,28 +39595,33 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
         dataService.postApi('configupdate_url', input).then(function (response) {
             //$scope.reloadData();
 
-            var data = {
-                    "time_zone": input.time_zone
-                },
-                timeout = 15000;
+            if(input.time_zone !== $scope.settings.lastTZ) {
+                var data = {
+                        "time_zone": input.time_zone
+                    },
+                    timeout = 15000;
 
-            dataService.postApi('time_zone', data, null).then(function (response) {
-                $timeout(function() {
-                    $window.location.reload();
-                }, timeout);
+                    dataService.postApi('time_zone', data, null).then(function (response) {
+                        $timeout(function() {
+                            $location.path('/');
+                        }, timeout);
 
-                alertify.alertWarning($scope._t('z_way_restart', {
-                    __val__: timeout/1000,
-                    __level__: $scope._t('seconds')
-                }));
+                        $scope.settings.lastTZ = input.time_zone;
+                        alertify.alertWarning($scope._t('z_way_restart', {
+                            __val__: timeout/1000,
+                            __level__: $scope._t('seconds')
+                        }));
 
+                        deviceService.showNotifier({message: $scope._t('update_successful')});
+                        $scope.loading = false;
+
+                    }, function (error) {
+                        $scope.loading = false;
+                        alertify.alertError($scope._t('error_load_data'));
+                    });
+            } else {
                 deviceService.showNotifier({message: $scope._t('update_successful')});
-                $scope.loading = false;
-
-            }, function (error) {
-                $scope.loading = false;
-                alertify.alertError($scope._t('error_load_data'));
-            });
+            }
             $scope.loading = false;
 
         }, function (error) {
@@ -39772,7 +39743,7 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
      * Update switch
      * @param {string} url
      */
-    $scope.updateSwitch = function(url) {
+    $scope.updateSwitch = function(url,$index) {
         $scope.toggleRowSpinner(url);
         dataService.runZwaveCmd(cfg.store_url + url).then(function (response) {
             $timeout($scope.toggleRowSpinner, 1000);
@@ -40986,6 +40957,27 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
 
     };
 
+    // Handle modal interview
+    $scope.handleModalInterview = function (target, $event,index, id, name) {
+        $scope.deviceInfo = {
+            "index": index,
+            "id": id,
+            "name": name
+        };
+        $scope.interviewDeviceId = id;
+        var node = $scope.ZWaveAPIData.devices[id];
+        $scope.interviewCommands = deviceService.configGetInterviewCommands(node);
+        $scope.handleModal(target,$event)
+
+    };
+    /**
+     * Purge all command classes and start interview for a device
+     * @param {string} cmd
+     */
+    $scope.interviewForceDevice = function (cmd) {
+        $scope.runZwaveCmd(cmd);
+    };
+
     // Load data
     /*$scope.load = function () {
         dataService.getZwaveData(function (ZWaveAPIData) {
@@ -41024,7 +41016,9 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
             }
         });
     };*/
-    $scope.showModalInterview = function (target, index, id, name) {
+
+    //todo: deprecated
+   /* $scope.showModalInterview = function (target, index, id, name) {
         $scope.deviceInfo = {
             "index": index,
             "id": id,
@@ -41035,14 +41029,17 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
         $scope.interviewCommands = deviceService.configGetInterviewCommands(node);
         //$scope.interviewCommands.push(deviceService.configGetInterviewCommands(node));
         $(target).modal();
-    };
+    };*/
+    //todo: deprecated
     // Show modal dialog
-    $scope.hideModalInterview = function () {
+    /*$scope.hideModalInterview = function () {
         $scope.interviewDeviceId = null;
-    };
+    };*/
 
+
+    //todo: deprecated
     // Show modal CommandClass dialog
-    $scope.showModalCommandClass = function (target, instanceId, ccId, type) {
+    /*$scope.showModalCommandClass = function (target, instanceId, ccId, type) {
         var node = $scope.ZWaveAPIData.devices[$scope.interviewDeviceId];
         if (!node) {
             return;
@@ -41063,7 +41060,7 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
 
         $scope.commandClass = deviceService.configSetCommandClass(cc);
         $(target).modal();
-    };
+    };*/
     /// --- Private functions --- ///
 
     /**
@@ -41173,8 +41170,9 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
     }
     ;
 
+    // todo: deprecated
     // Refresh data
-    function refreshData(data) {
+    /*function refreshData(data) {
         angular.forEach($scope.statuses.all, function (v, k) {
             angular.forEach(v.cmd, function (ccId, key) {
                 if (ccId in data) {
@@ -41232,7 +41230,7 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
 
         });
     }
-    ;
+    ;*/
 
     // Refresh Modal Interview data
     function refreshModalInterview(oldCc, newCc) {
@@ -42020,8 +42018,16 @@ appController.controller('ControlController', function ($scope, $interval, $time
         show: false,
         controller: {},
         inclusion: {
-            lastIncludedDevice: false,
-            lastExcludedDevice: false
+            lastIncludedDevice: $scope.alert,
+            lastExcludedDevice: $scope.alert,
+            alert: $scope.alert,
+            alertPrimary: $scope.alert
+        },
+        network: {
+            include: false,
+            inclusionProcess: false,
+            alert: $scope.alert,
+            modal: false
         },
         nodes: {
             all: [],
@@ -42091,6 +42097,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
         var nodeId = ZWaveAPIData.controller.data.nodeId.value;
         var hasSUC = ZWaveAPIData.controller.data.SUCNodeId.value;
         var hasDevices = Object.keys(ZWaveAPIData.devices).length;
+        var controllerState = ZWaveAPIData.controller.data.controllerState.value;
 
 
 
@@ -42108,7 +42115,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
         // Default controller settings
         $scope.controlDh.controller.nodeId = nodeId;
         $scope.controlDh.controller.frequency = $filter('hasNode')(ZWaveAPIData, 'controller.data.frequency.value');
-        $scope.controlDh.controller.controllerState = ZWaveAPIData.controller.data.controllerState.value;
+        $scope.controlDh.controller.controllerState = controllerState;
         $scope.controlDh.controller.secureInclusion = ZWaveAPIData.controller.data.secureInclusion.value;
         $scope.controlDh.controller.isPrimary = ZWaveAPIData.controller.data.isPrimary.value;
         $scope.controlDh.controller.isRealPrimary = ZWaveAPIData.controller.data.isRealPrimary.value;
@@ -42116,6 +42123,67 @@ appController.controller('ControlController', function ($scope, $interval, $time
         $scope.controlDh.controller.secureInclusion = ZWaveAPIData.controller.data.secureInclusion.value;
         $scope.controlDh.controller.homeName = ZWaveAPIData.controller.data.homeName.value || cfg.controller.homeName;
 
+
+        $scope.controlDh.inclusion.alert = {
+            message: $scope._t('nm_controller_state_' + controllerState),
+            status: 'alert-warning',
+            icon: 'fa-spinner fa-spin'
+        };
+
+        // Controller state switch
+        switch(controllerState){
+            case 0:
+                // Device inclusion
+                $scope.controlDh.inclusion.alert = {
+                    message: $scope._t('nm_controller_state_' + controllerState),
+                    status: 'alert-info',
+                    icon: false
+                };
+                $scope.controlDh.inclusion.alertPrimary = $scope.alert;
+                // Network inclusion
+                if($scope.controlDh.network.inclusionProcess){
+                    if($scope.controlDh.network.include){
+                        $scope.controlDh.network.modal = true;
+                        $scope.controlDh.network.alert = {message: $scope._t('success_controller_include'), status: 'alert-success', icon: 'fa-smile-o'};
+                   }
+
+                }else{
+                    $scope.controlDh.network.alert = $scope.alert;
+
+                }
+                break;
+            case 1:
+                // Device inclusion
+                if($scope.controlDh.controller.isSIS || $scope.controlDh.controller.isPrimary){
+                    $scope.controlDh.inclusion.alertPrimary = {
+                        message: $scope._t('nm_controller_sis_or_primary'),
+                        status: 'alert-info',
+                        icon: false
+                    };
+                }
+                if(!$scope.controlDh.controller.isSIS && !$scope.controlDh.controller.isPrimary){
+                    $scope.controlDh.inclusion.alertPrimary = {
+                        message: $scope._t('nm_controller_not_sis_or_primary'),
+                        status: 'alert-danger',
+                        icon: false
+                    };
+                }
+
+                break;
+            case 9:
+                // Network inclusion
+                $scope.controlDh.network.alert = {message: $scope._t('nm_controller_state_11'), status: 'alert-warning', icon: 'fa-spinner fa-spin'};
+                $scope.controlDh.network.inclusionProcess = 'processing';
+                break;
+            case 17:
+                // Network inclusion
+                $scope.controlDh.network.alert = {message: $scope._t('nm_controller_state_17'), status: 'alert-danger', icon: 'fa-exclamation-triangle'};
+                $scope.controlDh.network.inclusionProcess = 'error';
+                break;
+
+            default:
+               break;
+        }
     }
 
     /**
@@ -42170,7 +42238,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
             deviceExcId = update['controller.data.lastExcludedDevice'].value;
         }
         if(!deviceIncId && !deviceExcId){
-            console.log('Not Exclude/Include')
+            //console.log('Not Exclude/Include')
             return;
         }
         /**
@@ -42184,7 +42252,12 @@ appController.controller('ControlController', function ($scope, $interval, $time
             //Run CMD
             var cmd = 'devices[' + deviceIncId + '].data.givenName.value=\'' + givenName + '\'';
             dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
-            $scope.controlDh.inclusion.lastIncludedDevice = $scope._t('nm_last_included_device') + '  (' + updateTime + ')  <a href="#configuration/interview/' + deviceIncId + '"><strong>' + givenName + '</strong></a>';
+            //$scope.controlDh.inclusion.lastIncludedDevice = $scope._t('nm_last_included_device') + '  (' + updateTime + ')  <a href="#configuration/interview/' + deviceIncId + '"><strong>' + givenName + '</strong></a>';
+            $scope.controlDh.inclusion.lastIncludedDevice = {
+                message: $scope._t('nm_last_included_device') + '  (' + updateTime + ')  <a href="#configuration/interview/' + deviceIncId + '"><strong>' + givenName + '</strong></a>',
+                status: 'alert-success',
+                icon: 'fa-smile-o'
+            };
         }
 
         /**
@@ -42195,18 +42268,16 @@ appController.controller('ControlController', function ($scope, $interval, $time
             var updateTime = $filter('isTodayFromUnix')(data.controller.data.lastExcludedDevice.updateTime);
             if (deviceExcId != 0) {
                 var txt = $scope._t('txt_device') + ' # ' + deviceExcId + ' ' + $scope._t('nm_excluded_from_network');
-                //Remove failed/battery/replace nodes
-                /* $scope.failedNodes[deviceExcId] = null;
-                 delete $scope.failedNodes[deviceExcId];
-                 $scope.replaceNodes[deviceExcId] = null;
-                 delete $scope.replaceNodes[deviceExcId];
-                 $scope.failedBatteries[deviceExcId] = null;
-                 delete $scope.failedBatteries[deviceExcId];*/
             } else {
                 var txt = $scope._t('nm_last_excluded_device_from_foreign_network');
             }
 
-            $scope.controlDh.inclusion.lastExcludedDevice = txt + ' (' + updateTime + ')';
+            //$scope.controlDh.inclusion.lastExcludedDevice = txt + ' (' + updateTime + ')';
+           $scope.controlDh.inclusion.lastExcludedDevice = {
+               message: txt + ' (' + updateTime + ')',
+               status: 'alert-success',
+               icon: 'fa-smile-o'
+           };
         }
     };
 
@@ -42270,21 +42341,23 @@ appController.controller('IncludeExcludeDeviceController', function ($scope,$rou
  * @class IncludeNetworkController
  *
  */
-appController.controller('IncludeDifferentNetworkController', function ($scope, $timeout, cfg, dataService) {
+appController.controller('IncludeDifferentNetworkController', function ($scope, $timeout, $window,cfg, dataService) {
     /**
      * Include to network
      * @param {string} cmd
      */
-    $scope.includeToNetwork = function (cmd,modal,$event) {
+    $scope.includeToNetwork = function (cmd) {
         //$scope.runZwaveCmd(cmd);
         var timeout = 1000;
         $scope.toggleRowSpinner(cmd);
-        /*alertify.alertError('Running command ' + '\n' + cmd);
-         return;*/
+        if(cmd === 'controller.SetLearnMode(1)'){
+            $scope.controlDh.network.include = true;
+
+        }else{
+            $scope.controlDh.network.include = false;
+            $scope.controlDh.network.inclusionProcess = false;
+        }
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
-            if(modal){
-                $scope.handleModal(modal, $event);
-            }
             $timeout($scope.toggleRowSpinner, timeout);
         }, function (error) {
             $scope.toggleRowSpinner();
@@ -42294,13 +42367,35 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
     };
 
     /**
-     * Exclude form to network
+     * Exclude form network
      * @param {string} cmd
      */
     $scope.excludeFromNetwork = function (cmd, confirm) {
+        console.log(cmd)
+       // return;
         alertify.confirm(confirm, function () {
+            $scope.controlDh.network.inclusionProcess = false;
+            $scope.controlDh.network.include = false;
             $scope.runZwaveCmd(cmd);
+            if(cmd === 'controller.SetLearnMode(1)') {
+                $timeout(function () {
+                    $window.location.reload();
+                }, 5000);
+            }
+
         });
+
+    };
+
+    /**
+     * Close network modal
+     * @param {string} modal
+     * @param $event
+     */
+    $scope.closeNetworkModal = function (modal,$event) {
+       $scope.controlDh.network.inclusionProcess = false;
+        $scope.controlDh.network.modal = false;
+        $window.location.reload();
 
     };
 
@@ -42579,557 +42674,6 @@ appController.controller('SucSisController', function ($scope) {
     };
 
 
-});
-/**
- * ControllController
- * @author Martin Vach
- */
-appController.controller('ControllController', function($scope, $filter, $window, $upload, $interval, $location, cfg, dataService, deviceService) {
-    $scope.apiDataInterval;
-    $scope.devices = {};
-    $scope.sucNodes = {};
-    $scope.failedNodes = {};
-    $scope.replaceNodes = {};
-    $scope.failedBatteries = {};
-    $scope.modelSucSicNode = 1;
-    //$scope.sucNodes = [];
-    $scope.frequency = false;
-    $scope.disableSUCRequest = true;
-    $scope.controllerState = 0;
-    $scope.secureInclusion;
-    $scope.lastExcludedDevice;
-    $scope.lastIncludedDevice;
-    $scope.startLearnMode;
-    $scope.lastIncludedDevice = null;
-    $scope.lastExcludedDevice = null;
-    $scope.restoreBackupStatus = 0;
-    $scope.deviceInfo = {
-        "id": null,
-        "name": null
-    };
-    $scope.deviceClasses = [];
-    $scope.goReset = false;
-    $scope.refresh = true;
-    $scope.modelRestoreChipInfo = 0;
-    // Cancel interval on page destroy
-    $scope.$on('$destroy', function() {
-        //dataService.cancelZwaveDataInterval();
-        $interval.cancel($scope.apiDataInterval);
-    });
-    // DEPRECATED
-//    $scope.reset = function(refresh) {
-//        $scope.devices = angular.copy([]);
-//        if (refresh) {
-//            $scope.failedNodes = angular.copy([]);
-//            $scope.replaceNodes = angular.copy([]);
-//            $scope.failedBatteries = angular.copy([]);
-//        }
-//
-//    };
-
-    // Load  device classes xml data
-    $scope.loadDeviceClasses = function() {
-        dataService.getDeviceClasses(function(data) {
-            var lang = 'en';
-            angular.forEach(data.DeviceClasses.Generic, function(val, key) {
-                var obj = {};
-                var langs = {
-                    "en": "0",
-                    "de": "1",
-                    "ru": "2"
-                };
-                if (angular.isDefined(langs[$scope.lang])) {
-                    lang = $scope.lang;
-                }
-                var langId = 0;
-                obj['id'] = parseInt(val._id);
-                obj['generic'] = val.name.lang[langId].__text;
-                obj['specific'] = val.Specific;
-                obj['langId'] = langId;
-                $scope.deviceClasses.push(obj);
-            });
-        });
-    };
-    $scope.loadDeviceClasses();
-
-    /**
-     * Load data
-     */
-    $scope.loadData = function() {
-        dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
-            setControllerData(ZWaveAPIData);
-            setDevicesData(ZWaveAPIData);
-            $scope.refreshData(ZWaveAPIData);
-        }, function(error) {
-            $location.path('/error/' + error.status);
-            return;
-        });
-        return;
-    };
-    $scope.loadData();
-
-    /**
-     * Refresh data
-     */
-    $scope.refreshData = function(ZWaveAPIData) {
-        $scope.failedBatteries;
-        var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
-                setControllerData(response.data.joined);
-                setDevicesData(response.data.joined);
-                setInclusionData(response.data.update);
-            }, function(error) {
-                deviceService.showConnectionError(error);
-                return;
-            });
-        };
-        $scope.apiDataInterval = $interval(refresh, $scope.cfg.interval);
-    };
-
-
-    /**
-     * Show modal window
-     *
-     * @returns {void}
-     */
-    $scope.showModal = function(target, id) {
-
-        var obj = $filter('filter')($scope.devices, function(d) {
-            return d.id == id;
-        })[0];
-        if (obj) {
-            $scope.deviceInfo = {
-                "id": obj.id,
-                "name": obj.name
-            };
-        }
-        $(target).modal();
-        return;
-    };
-    /**
-     * Run command
-     *
-     * @returns {void}
-     */
-    $scope.runCmd = function(cmd, hideModal, url, id, action) {
-        //$scope.toggleRowSpinner(id);
-        var folder = (url ? url : cfg.store_url);
-        if (angular.isArray(cmd)) {
-            angular.forEach(cmd, function(v, k) {
-                dataService.runCmd(null, folder + v);
-                //console.log(folder + v);
-
-            });
-        } else {
-            dataService.runCmd(null, folder + cmd, $scope._t('error_handling_data'));
-            //console.log(folder + cmd);
-        }
-        if (action) {
-            switch (action.name) {
-                case 'remove_option':
-                    $(action.id + ' option[value=' + action.value + ']').remove();
-                    break;
-                case 'reset_controller':
-                    $("#reset_confirm").attr('checked', false);
-                    $scope.goReset = false;
-                    break;
-            }
-        }
-        if (hideModal) {
-            $(hideModal).modal('hide');
-            deviceService.showNotifier({message: $scope._t('reloading')});
-            $timeout( function() {
-                $window.location.reload();
-            }, 1000);
-        }
-        return;
-    };
-    
-     /**
-     * Send request restore backup
-     * @returns {void}
-     */
-    $scope.restoreFromFile = function($files, show, hide) {
-        var chip = (!$scope.modelRestoreChipInfo ? 0 : $scope.modelRestoreChipInfo);
-        //var url = 'upload.php?restore_chip_info=' + chip;
-        var url = cfg.server_url + cfg.restore_url + '?restore_chip_info=' + chip;
-        //$files: an array of files selected, each file has name, size, and type.
-        
-        $(show).show();
-        $(hide).hide();
-        for (var i = 0; i < $files.length; i++) {
-            var $file = $files[i];
-            $upload.upload({
-                url: url,
-                fileFormDataName: 'config_backup',
-                file: $file
-            }).progress(function(evt) {
-                $scope.restoreBackupStatus = 1;
-                //console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
-            }).success(function(data, status, headers, config) {
-                if (data && data.replace(/(<([^>]+)>)/ig, "") !== "null") {//Error
-                    $scope.restoreBackupStatus = 3;
-                } else {// Success
-                    $scope.restoreBackupStatus = 2;
-                }
-
-                // file is uploaded successfully
-                //console.log(data, status);
-            }).error(function(data, status) {
-                $scope.restoreBackupStatus = 3;
-                //console.log(data, status);
-            });
-
-        }
-    };
-
-    /**
-     * Close reset controller modal window
-     *
-     * @returns {void}
-     */
-    $scope.changeSelectNode = function(val) {
-        if (val > 0) {
-            $scope.refresh = false;
-        } else {
-            $scope.refresh = true;
-        }
-
-    };
-
-    /**
-     * Close failed node modal window
-     */
-    $scope.closeFailedNode = function(modal) {
-        $("#remove_node_confirm").attr('checked', false);
-        $scope.goFailedNode = false;
-        $(modal).modal('hide');
-
-    };
-    /**
-     * Close reset controller modal window
-     *
-     * @returns {void}
-     */
-    $scope.closeResetController = function(modal) {
-        $("#reset_confirm").attr('checked', false);
-        $scope.goReset = false;
-        $(modal).modal('hide');
-
-    };
-    /**
-     * Close restore modal window
-     *
-     * @returns {void}
-     */
-    $scope.closeBackup = function(modal) {
-        $('#btn_upload').show();
-        $('.btn-spinner').hide();
-        $("#restore_confirm").attr('checked', false);
-        $("#restore_chip_info").attr('checked', false);
-        $scope.goRestore = false;
-        $scope.restoreBackupStatus = 0;
-        $(modal).modal('hide');
-
-        // $route.reload();
-        //window.location.reload();
-
-    };
-    /**
-     * Send request NIF from all devices
-     *
-     * @returns {void}
-     */
-    $scope.requestNifAll = function(btn) {
-        angular.forEach($scope.devices, function(v, k) {
-            var url = 'devices[' + v.id + '].RequestNodeInformation()';
-            dataService.runCmd(url, false, $scope._t('error_handling_data'));
-        });
-        return;
-    };
-
-    /// --- Private functions --- ///
-
-    /**
-     * Set controller data
-     */
-    function setControllerData(ZWaveAPIData) {
-        $scope.showContent = true;
-        var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
-        var isPrimary = ZWaveAPIData.controller.data.isPrimary.value;
-        var isRealPrimary = ZWaveAPIData.controller.data.isRealPrimary.value;
-        var isSIS = ZWaveAPIData.controller.data.SISPresent.value;
-        var hasSUC = ZWaveAPIData.controller.data.SUCNodeId.value;
-        var hasDevices = Object.keys(ZWaveAPIData.devices).length;
-        $scope.frequency = $filter('hasNode')(ZWaveAPIData, 'controller.data.frequency.value');
-        $scope.controllerState = ZWaveAPIData.controller.data.controllerState.value;
-        $scope.secureInclusion = ZWaveAPIData.controller.data.secureInclusion.value;
-        $scope.startLearnMode = !isRealPrimary || hasDevices < 2 ? true : false;
-        $scope.isPrimary = isPrimary;
-        $scope.isSIS = isSIS;
-        if (hasSUC && hasSUC != controllerNodeId) {
-            $scope.disableSUCRequest = false;
-        }
-        //console.log($scope.frequency)
-
-        /* console.log('Controller isPrimary: ' + isPrimary);
-         console.log('Controller isSIS: ' + isSIS);
-         console.log('and there are other devices: ' + hasDevices + ' - ' + (hasDevices > 1 ? 'true' : 'false'));
-         console.log('Learn mode: ' + $scope.startLearnMode);*/
-
-    }
-    /**
-     * Set devices data
-     */
-    function setDevicesData(ZWaveAPIData) {
-        var obj;
-        angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-            obj = {id: nodeId, name: $filter('deviceName')(nodeId, node)}
-            if (nodeId == 255 || nodeId == ZWaveAPIData.controller.data.nodeId.value || node.data.isVirtual.value) {
-                return;
-            }
-
-            // Devices
-            if (!$scope.devices[nodeId]) {
-                $scope.devices[nodeId] = obj;
-            }
-
-            // SUC
-            if (node.data.basicType.value == 2) {
-                if (!$scope.sucNodes[nodeId]) {
-                    $scope.sucNodes[nodeId] = obj;
-                }
-            }
-
-            // Failed and Batteries nodes
-            if (ZWaveAPIData.controller.data.isPrimary.value) {
-                if (node.data.isFailed.value) {
-                    if (!$scope.failedNodes[nodeId]) {
-                        $scope.failedNodes[nodeId] = obj;
-                    }
-                    if (!$scope.replaceNodes[nodeId]) {
-                        $scope.replaceNodes[nodeId] = obj;
-                    }
-                }
-                if (!node.data.isListening.value && !node.data.isFailed.value) {
-                    if (!$scope.failedBatteries[nodeId]) {
-                        $scope.failedBatteries[nodeId] = obj;
-                    }
-                }
-            }
-            ;
-        });
-    }
-
-    /**
-     * Set inclusion data
-     */
-    function setInclusionData(data) {
-        if ('controller.data.controllerState' in data) {
-            $scope.controllerState = data['controller.data.controllerState'].value;
-        }
-
-        // console.log('Learn mode 2: ' + $scope.learnMode);
-        if ('controller.data.lastExcludedDevice' in data) {
-            $scope.lastExcludedDevice = data['controller.data.lastExcludedDevice'].value;
-        }
-
-        if ('controller.data.lastIncludedDevice' in data) {
-            $scope.lastIncludedDevice = data['controller.data.lastIncludedDevice'].value;
-        }
-        if ('controller.data.secureInclusion' in data) {
-            $scope.secureInclusion = data['controller.data.secureInclusion'].value;
-        }
-        if ('controller.data.lastIncludedDevice' in data) {
-            var deviceIncId = data['controller.data.lastIncludedDevice'].value;
-
-            if (deviceIncId != null) {
-
-                var givenName = 'Device_' + deviceIncId;
-                var node = data.devices[deviceIncId];
-                // Device type
-                var deviceXml = $scope.deviceClasses;
-                if (angular.isDefined(data.devices[deviceIncId])) {
-                    var genericType = node.data.genericType.value;
-                    var specificType = node.data.specificType.value;
-                    angular.forEach(deviceXml, function(v, k) {
-                        if (genericType == v.id) {
-                            var deviceType = v.generic;
-                            angular.forEach(v.specific, function(s, sk) {
-                                if (specificType == s._id) {
-                                    if (angular.isDefined(s.name.lang[v.langId].__text)) {
-                                        deviceType = s.name.lang[v.langId].__text;
-                                    }
-                                }
-                            });
-                            givenName = deviceType + '_' + deviceIncId;
-                            return;
-                        }
-                    });
-                }
-                var updateTime = $filter('isTodayFromUnix')(data['controller.data.lastIncludedDevice'].updateTime);
-                //Run CMD
-                var cmd = 'devices[' + deviceIncId + '].data.givenName.value=\'' + givenName + '\'';
-                dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
-                $scope.lastIncludedDevice = $scope._t('nm_last_included_device') + '  (' + updateTime + ')  <a href="#configuration/interview/' + deviceIncId + '"><strong>' + givenName + '</strong></a>';
-            }
-
-
-        }
-        if ('controller.data.lastExcludedDevice' in data) {
-            var deviceExcId = data['controller.data.lastExcludedDevice'].value;
-            if (deviceExcId != null) {
-                var updateTime = $filter('isTodayFromUnix')(data['controller.data.lastExcludedDevice'].updateTime);
-                //var txt = $scope._t('nm_last_excluded_device') + ' ' + (deviceExcId != 0 ? deviceExcId : $scope._t('nm_last_excluded_device_from_foreign_network'));
-                if (deviceExcId != 0) {
-                    var txt = $scope._t('txt_device') + ' # ' + deviceExcId + ' ' + $scope._t('nm_excluded_from_network');
-                    //Remove failed/battery/replace nodes
-                    $scope.failedNodes[deviceExcId] = null;
-                    delete $scope.failedNodes[deviceExcId];
-                    $scope.replaceNodes[deviceExcId] = null;
-                    delete $scope.replaceNodes[deviceExcId];
-                    $scope.failedBatteries[deviceExcId] = null;
-                    delete $scope.failedBatteries[deviceExcId];
-                } else {
-                    var txt = $scope._t('nm_last_excluded_device_from_foreign_network');
-                }
-
-                $scope.lastExcludedDevice = txt + ' (' + updateTime + ')';
-            }
-        }
-    };
-    /**
-     * DEPRECATED
-     * Set zwave data
-     */
-//    function setData(ZWaveAPIData, refresh) {
-//        console.log(ZWaveAPIData.controller.data);
-//        $scope.showContent = true;
-//        var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
-//        var isPrimary = ZWaveAPIData.controller.data.isPrimary.value;
-//        var isRealPrimary = ZWaveAPIData.controller.data.isRealPrimary.value;
-//        var isSIS = ZWaveAPIData.controller.data.SISPresent.value;
-//        var hasSUC = ZWaveAPIData.controller.data.SUCNodeId.value;
-//        var hasDevices = Object.keys(ZWaveAPIData.devices).length;
-//        $scope.controllerState = ZWaveAPIData.controller.data.controllerState.value;
-//        $scope.secureInclusion = ZWaveAPIData.controller.data.secureInclusion.value;
-//        $scope.startLearnMode = !isRealPrimary || hasDevices < 2 ? true : false;
-//        $scope.isPrimary = isPrimary;
-//        $scope.isSIS = isSIS;
-//        if (hasSUC && hasSUC != controllerNodeId) {
-//            $scope.disableSUCRequest = false;
-//        }
-//
-//        console.log('Controller isPrimary: ' + isPrimary);
-//        console.log('Controller isSIS: ' + isSIS);
-//        console.log('and there are other devices: ' + hasDevices + ' - ' + (hasDevices > 1 ? 'true' : 'false'));
-//        console.log('Learn mode: ' + $scope.startLearnMode);
-//        /**
-//         * Loop throught devices
-//         */
-//        angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-//            if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
-//                return;
-//            }
-//            $scope.devices.push({"id": nodeId, "name": $filter('deviceName')(nodeId, node)});
-//            if (node.data.basicType.value == 2) {
-//                $scope.sucNodes.push({"id": nodeId, "name": $filter('deviceName')(nodeId, node)});
-//            }
-//        });
-//        /**
-//         * Loop throught failed nodes
-//         */
-//        if (refresh) {
-//            if (ZWaveAPIData.controller.data.isPrimary.value) {
-//                angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-//                    if (node.data.isFailed.value) {
-//                        $scope.failedNodes.push({"id": nodeId, "name": $filter('deviceName')(nodeId, node)});
-//                        $scope.replaceNodes.push({"id": nodeId, "name": $filter('deviceName')(nodeId, node)});
-//                    }
-//                    //if (dev.data.isFailed.value || (!dev.data.isListening.value && !dev.data.isFailed.value)) {
-//                    if (!node.data.isListening.value && !node.data.isFailed.value) {
-//                        $scope.failedBatteries.push({"id": nodeId, "name": $filter('deviceName')(nodeId, node)});
-//                    }
-//                });
-//            }
-//            ;
-//        }
-//
-//    }
-
-
-    /**
-     * DEPRECATED
-     * Refresh data
-     */
-//    function refresh(data) {
-//        if ('controller.data.controllerState' in data) {
-//            $scope.controllerState = data['controller.data.controllerState'].value;
-//        }
-//        console.log('Controller state: ' + $scope.controllerState);
-//
-//        // console.log('Learn mode 2: ' + $scope.learnMode);
-//        if ('controller.data.lastExcludedDevice' in data) {
-//            $scope.lastExcludedDevice = data['controller.data.lastExcludedDevice'].value;
-//        }
-//
-//        if ('controller.data.lastIncludedDevice' in data) {
-//            $scope.lastIncludedDevice = data['controller.data.lastIncludedDevice'].value;
-//        }
-//        if ('controller.data.secureInclusion' in data) {
-//            $scope.secureInclusion = data['controller.data.secureInclusion'].value;
-//        }
-//        if ('controller.data.lastIncludedDevice' in data) {
-//            var deviceIncId = data['controller.data.lastIncludedDevice'].value;
-//
-//            if (deviceIncId != null) {
-//
-//                var givenName = 'Device_' + deviceIncId;
-//                var node = data.devices[deviceIncId];
-//                // Device type
-//                var deviceXml = $scope.deviceClasses;
-//                if (angular.isDefined(data.devices[deviceIncId])) {
-//                    var genericType = node.data.genericType.value;
-//                    var specificType = node.data.specificType.value;
-//                    angular.forEach(deviceXml, function(v, k) {
-//                        if (genericType == v.id) {
-//                            var deviceType = v.generic;
-//                            angular.forEach(v.specific, function(s, sk) {
-//                                if (specificType == s._id) {
-//                                    if (angular.isDefined(s.name.lang[v.langId].__text)) {
-//                                        deviceType = s.name.lang[v.langId].__text;
-//                                    }
-//                                }
-//                            });
-//                            givenName = deviceType + '_' + deviceIncId;
-//                            return;
-//                        }
-//                    });
-//                }
-//                var updateTime = $filter('isTodayFromUnix')(data['controller.data.lastIncludedDevice'].updateTime);
-//                //Run CMD
-//                var cmd = 'devices[' + deviceIncId + '].data.givenName.value=\'' + givenName + '\'';
-//                dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
-//                $scope.lastIncludedDevice = $scope._t('nm_last_included_device') + '  (' + updateTime + ')  <a href="#configuration/interview/' + deviceIncId + '"><strong>' + givenName + '</strong></a>';
-//            }
-//
-//
-//        }
-//        if ('controller.data.lastExcludedDevice' in data) {
-//            var deviceExcId = data['controller.data.lastExcludedDevice'].value;
-//            if (deviceExcId != null) {
-//                var updateTime = $filter('isTodayFromUnix')(data['controller.data.lastExcludedDevice'].updateTime);
-//                //var txt = $scope._t('nm_last_excluded_device') + ' ' + (deviceExcId != 0 ? deviceExcId : $scope._t('nm_last_excluded_device_from_foreign_network'));
-//                if (deviceExcId != 0) {
-//                    var txt = $scope._t('txt_device') + ' # ' + deviceExcId + ' ' + $scope._t('nm_excluded_from_network');
-//                } else {
-//                    var txt = $scope._t('nm_last_excluded_device_from_foreign_network');
-//                }
-//                $scope.lastExcludedDevice = txt + ' (' + updateTime + ')';
-//            }
-//        }
-//    }
-//    ;
 });
 /**
  * @overview This controller renders and handles routing table.
@@ -43829,7 +43373,7 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
 
             // Success - zwaveData
             if (zwaveData.state === 'fulfilled') {
-                console.log(zwaveData.value)
+                //console.log(zwaveData.value)
                 setData(zwaveData.value);
                 if(_.isEmpty($scope.devices.all)){
                     $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
@@ -46105,6 +45649,69 @@ appController.controller('ConfigRedirectController', function ($routeParams, $lo
 });
 
 /**
+ * Load device XML file
+ * @class LoadDeviceXmlController
+ *
+ */
+appController.controller('LoadDeviceXmlController', function($scope,$routeParams, $timeout,$window,cfg, dataService) {
+    $scope.deviceXml = {
+        all: [],
+        find: [],
+        input: {
+            fileName: 0
+        }
+    };
+    /**
+     * Load devices descriptions
+     * @param {int} nodeId
+     */
+    $scope.loadDeviceXml = function (nodeId) {
+        var cmd = 'devices[' + nodeId + '].GuessXML()';
+       dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
+           $scope.deviceXml.all = response.data;
+        }, function (error) {
+            $scope.toggleRowSpinner();
+            alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
+        });
+    };
+    $scope.loadDeviceXml($routeParams.nodeId);
+
+    /**
+     * Change device XML
+     * @param {object} input
+     */
+    $scope.changeDeviceXml = function (input) {
+        var find = _.findWhere($scope.deviceXml.all, {fileName: input.fileName});
+        if(find){
+            $scope.deviceXml.find = find;
+        }else{
+            $scope.deviceXml.find = {};
+        }
+    };
+
+    /**
+     * Store device XML
+     * @param {object} input
+     */
+    $scope.storeDeviceXml = function (input,modal) {
+        var timeout = 1000;
+        var cmd = 'devices[' + $routeParams.nodeId + '].LoadXMLFile("' + input.fileName + '")';
+        $scope.toggleRowSpinner(modal);
+        dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
+            $timeout(function(){
+                $scope.toggleRowSpinner();
+                $scope.handleModal();
+                //$scope.reloadData();
+                $window.location.reload();
+            }, timeout);
+        }, function (error) {
+            $scope.toggleRowSpinner();
+            alertify.alertError($scope._t('error_update_data') + '\n' + cmd);
+        });
+    };
+});
+
+/**
  * @overview This controller renders and handles device interview stuff.
  * @author Martin Vach
  */
@@ -46114,13 +45721,19 @@ appController.controller('ConfigRedirectController', function ($routeParams, $lo
  * @class ConfigInterviewController
  *
  */
-appController.controller('ConfigInterviewController', function ($scope, $routeParams, $route, $location, $cookies, $filter, $http, dataService, deviceService, myCache) {
+appController.controller('ConfigInterviewController', function ($scope, $routeParams, $route, $location, $cookies, $filter, $http,  $timeout,cfg,dataService, deviceService, myCache) {
     $scope.devices = [];
+    $scope.deviceName = '';
     $scope.deviceId = 0;
     $scope.activeTab = 'interview';
     $scope.activeUrl = 'configuration/interview/';
     $cookies.tab_config = $scope.activeTab;
     $scope.modelSelectZddx = false;
+    $scope.zwaveInterview = {
+        progress: 0,
+        commandClassesCnt: 0,
+        interviewDoneCnt: 0
+    };
 
     // Interview data
     $scope.descriptionCont;
@@ -46131,6 +45744,10 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         dataService.getZwaveData(function (ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
+            if(_.isEmpty($scope.devices)){
+                $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                return;
+            }
             var node = ZWaveAPIData.devices[nodeId];
             if (!node || deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
@@ -46140,7 +45757,7 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
             $cookies.config_url = $scope.activeUrl + nodeId;
             $scope.deviceId = nodeId;
             $scope.deviceName = $filter('deviceName')(nodeId, node);
-
+            checkInterview(node);
             setData(ZWaveAPIData, nodeId);
             dataService.joinedZwaveData(function (data) {
                 node = data.joined.devices[nodeId];
@@ -46164,27 +45781,94 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
     });
 
     /**
+     * Request NIF of a device
+     * Node Id to be requested for a NIF
+     * @param {string} cmd
+     */
+    $scope.requestNodeInformation = function (cmd) {
+        $scope.runZwaveCmd(cmd);
+    };
+
+    /**
+     * Purge all command classes and start interview based on device's NIF
+     * @param {string} cmd
+     */
+    $scope.interviewForce = function (cmd) {
+        $scope.runZwaveCmd(cmd);
+    };
+
+    /**
+     * Purge all command classes and start interview for a device
+     * @param {string} cmd
+     */
+    $scope.interviewForceDevice = function (cmd) {
+        $scope.runZwaveCmd(cmd);
+    };
+
+    /**
+     * Show modal CommandClass dialog
+     * @param target
+     * @param $event
+     * @param instanceId
+     * @param ccId
+     * @param type
+     */
+    $scope.handleCmdClassModal= function (target, $event,instanceId, ccId, type) {
+        var node = $scope.ZWaveAPIData.devices[$routeParams.nodeId];
+        var ccData;
+        switch (type) {
+            case 'cmdData':
+                ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.commandClasses.' + ccId + '.data');
+                break;
+            case 'cmdDataIn':
+                ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.data');
+                break;
+            default:
+                ccData = $filter('hasNode')(node, 'data');
+                break;
+        }
+        var cc = deviceService.configGetCommandClass(ccData, '/', '');
+
+        $scope.commandClass = deviceService.configSetCommandClass(cc);
+        $scope.handleModal(target, $event);
+        //$(target).modal();
+    };
+
+    /**
      * Rename Device action
      */
-    $scope.renameDevice = function (form) {
-        var deviceId = $scope.deviceId;
-        var givenName = $('#' + form + ' #device_name').val();
-        var cmd = 'devices[' + deviceId + '].data.givenName.value=\'' + givenName + '\'';
-        dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
-        $('#config_device_name').html(givenName);
-        $('#device_node_name').html(givenName);
-        $route.reload();
-        return;
+    $scope.renameDevice = function (deviceName,spin) {
+        var timeout = 1000;
+        //var deviceId = $scope.deviceId;
+        //var givenName = $('#' + form + ' #device_name').val();
+        var cmd = 'devices[' + $scope.deviceId + '].data.givenName.value=\'' + deviceName + '\'';
+        $scope.toggleRowSpinner(spin);
+        dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
+            $timeout(function(){
+                $scope.toggleRowSpinner();
+                $route.reload();
+
+            }, timeout);
+        }, function (error) {
+            $scope.toggleRowSpinner();
+            alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
+        });
+        /*$('#config_device_name').html(deviceName);
+        $('#device_node_name').html(deviceName);*/
     };
 
+
+
+    // todo: DEPRECATED
     // Store data on remote server
-    $scope.store = function (v) {
+    /*$scope.store = function (v) {
         var url = 'devices[' + $scope.deviceId + '].instances[' + v.iId + '].commandClasses[' + v.ccId + '].Interview()';
         dataService.runCmd(url);
-    };
+    };*/
 
+    // todo: DEPRECATED
     // Show modal CommandClass dialog
-    $scope.showModalCommandClass = function (target, instanceId, ccId, type) {
+    /*$scope.showModalCommandClass = function (target, instanceId, ccId, type) {
         var node = $scope.ZWaveAPIData.devices[$routeParams.nodeId];
         var ccData;
         switch (type) {
@@ -46202,24 +45886,27 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
 
         $scope.commandClass = deviceService.configSetCommandClass(cc);
         $(target).modal();
-    };
+    };*/
 
+    // todo: deprecated
     // Show modal dialog
-    $scope.showModalInterview = function (target) {
+    /*$scope.showModalInterview = function (target) {
         $(target).modal();
-    };
+    };*/
 
+    // todo: deprecated
     // Show modal device select dialog
-    $scope.showModalDeviceSelect = function (target, nodeId, alert) {
+    /*$scope.showModalDeviceSelect = function (target, nodeId, alert) {
         dataService.getSelectZDDX(nodeId, function (data) {
             $scope.deviceZddx = data;
         }, alert);
         $(target).modal();
 
-    };
+    };*/
 
+    // todo: deprecated
     // Change device select
-    $scope.changeDeviceSelect = function (selector, target, file) {
+   /* $scope.changeDeviceSelect = function (selector, target, file) {
         var imageFile = $(selector).find(':selected').data('image');
         var image;
         if (imageFile == undefined) {
@@ -46229,21 +45916,23 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         }
         $scope.modelSelectZddx = file;
         $(target).html(image);
-    };
+    };*/
 
+    // todo: deprecated
     // Run cmd
-    $scope.runCmd = function (cmd) {
+   /* $scope.runCmd = function (cmd) {
         dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
-    };
+    };*/
 
+    // todo: deprecated
     // Update device zddx file
-    $scope.runCmdDeviceSelect = function (nodeId) {
+    /*$scope.runCmdDeviceSelect = function (nodeId) {
         var cmd = 'devices[' + nodeId + '].LoadXMLFile("' + $scope.modelSelectZddx + '")';
         dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
         dataService.purgeCache();
         dataService.cancelZwaveDataInterval();
         $scope.load(nodeId);
-    };
+    };*/
 
     /// --- Private functions --- ///
     /**
@@ -46287,6 +45976,51 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
             $scope.descriptionCont = setCont(node, nodeId, null, ZWaveAPIData, refresh);
         }
     }
+
+    /**
+     * Check interview
+     */
+    function checkInterview(node) {
+        $scope.zwaveInterview.commandClassesCnt = 0;
+        $scope.zwaveInterview.interviewDoneCnt = 0;
+        //console.log(node)
+        //return;
+
+            if (!node) {
+                return;
+            }
+            if (!node.data.nodeInfoFrame.value) {
+                return;
+            }
+            for (var iId in node.instances) {
+                if (Object.keys(node.instances[iId].commandClasses).length < 1) {
+                    return;
+                }
+                angular.extend($scope.zwaveInterview, {commandClassesCnt: Object.keys(node.instances[iId].commandClasses).length});
+                for (var ccId in node.instances[iId].commandClasses) {
+                    var cmdClass = node.instances[iId].commandClasses[ccId];
+                    // Is interview done?
+                    if (cmdClass.data.interviewDone.value) {
+
+                        // If an interview is done deleting from interviewNotDone
+                        // Extending an interview counter
+                        angular.extend($scope.zwaveInterview,
+                            {interviewDoneCnt: $scope.zwaveInterview.interviewDoneCnt + 1}
+                        );
+                    }
+                }
+            }
+
+            var commandClassesCnt = $scope.zwaveInterview.commandClassesCnt;
+            var intervewDoneCnt = $scope.zwaveInterview.interviewDoneCnt;
+            var progress = ((intervewDoneCnt / commandClassesCnt) * 100).toFixed();
+            /*console.log('commandClassesCnt: ', commandClassesCnt);
+            console.log('intervewDoneCnt: ', intervewDoneCnt);
+            console.log('Percent %: ', progress);*/
+            $scope.zwaveInterview.progress = (progress >= 100 ? 100 : progress);
+
+    }
+    ;
 
     /**
      * Device description
@@ -46375,9 +46109,9 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         obj["g"] = {"key": "device_description_description", "val": deviceDescription};
         obj["h"] = {"key": "device_description_inclusion_note", "val": inclusionNote};
         obj["i"] = {"key": "device_description_wakeup_note", "val": wakeupNote};
-        obj["j"] = {"key": "device_description_interview", "val": deviceService.configInterviewStage(ZWaveAPIData, nodeId, $scope.languages)};
-        obj["k"] = {"key": "device_sleep_state", "val": deviceService.configDeviceState(node, $scope.languages)};
-        //obj["l"] = {"key": "device_queue_length", "val": queueLength(ZWaveAPIData, node)};
+       // obj["j"] = {"key": "device_description_interview", "val": deviceService.configInterviewStage(ZWaveAPIData, nodeId, $scope.languages)};
+        //obj["k"] = {"key": "device_interview_indicator", "val": interviewDone};
+        obj["l"] = {"key": "device_sleep_state", "val": deviceService.configDeviceState(node, $scope.languages)};
         obj["m"] = {"key": "device_description_app_version", "val": deviceDescriptionAppVersion + '.' + deviceDescriptionAppSubVersion};
         obj["o"] = {"key": "device_description_sdk_version", "val": sdk};
         obj["p"] = {"key": "command_class", "val": ccNames};
@@ -46395,6 +46129,7 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
      * Refresh description cont
      */
     function refreshData(node, nodeId, ZWaveAPIData) {
+        checkInterview(node);
         $scope.interviewCommands = deviceService.configGetInterviewCommands(node, ZWaveAPIData.updateTime);
         $('#device_sleep_state .config-interview-val').html(deviceService.configDeviceState(node, $scope.languages));
         $('#device_description_interview .config-interview-val').html(deviceService.configInterviewStage(ZWaveAPIData, nodeId, $scope.languages));
@@ -46434,6 +46169,10 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         dataService.getZwaveData(function (ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
+            if(_.isEmpty($scope.devices)){
+                $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                return;
+            }
             var node = ZWaveAPIData.devices[nodeId];
             if (!node || deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
@@ -46465,37 +46204,6 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
     };
     $scope.load($routeParams.nodeId);
 
-    // Load device description
-    $scope.loadDeviceDescription = function (nodeId) {
-        dataService.getSelectZDDX(nodeId, function (data) {
-            $scope.deviceZddx = data;
-        });
-
-    };
-    $scope.loadDeviceDescription($routeParams.nodeId);
-
-    // Change device select
-    $scope.changeDeviceSelect = function (selector, target, file) {
-        var imageFile = $(selector).find(':selected').data('image');
-        var image;
-        if (imageFile == undefined) {
-            image = $scope._t('no_device_image');
-        } else {
-            image = '<img src="' + imageFile + '" />';
-        }
-        $scope.modelSelectZddx = file;
-        $(target).html(image);
-    };
-
-    // Update device zddx file
-    $scope.runCmdDeviceSelect = function (nodeId) {
-        var cmd = 'devices[' + nodeId + '].LoadXMLFile("' + $scope.modelSelectZddx + '")';
-        dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
-        //$window.location.reload();
-        dataService.purgeCache();
-        $route.reload();
-    };
-
     // Refresh data
     $scope.refresh = function (nodeId) {
         dataService.joinedZwaveData(function (data) {
@@ -46522,30 +46230,33 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
      * @param {string} cmd
      * @returns {undefined}
      */
-    $scope.updateFromDevice = function (cmd, hasBattery, deviceId, form) {
+    $scope.updateFromDevice = function (cmd, hasBattery, deviceId, form,spin) {
         if (hasBattery) {
-            alert($scope._t('conf_apply_battery'));
+            deviceService.showNotifier({message: $scope._t('conf_apply_battery'),type: 'warning'});
         }
-        dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
+        $scope.toggleRowSpinner(spin);
+        dataService.runZwaveCmd(cfg.store_url + cmd);
         $scope.refresh(deviceId);
 
         $('#' + form + ' .cfg-control-content :input').prop('disabled', true);
         $timeout(function () {
+            $scope.toggleRowSpinner();
             dataService.cancelZwaveDataInterval();
             $scope.load($routeParams.nodeId);
             $('#' + form + ' .cfg-control-content :input').prop('disabled', false);
-        }, 5000);
+        }, 3000);
         return;
     };
 
     /**
      * Update from device - configuration section
      */
-    $scope.updateFromDeviceCfg = function (cmd, cfg, deviceId, form) {
-        angular.forEach(cfg, function (v, k) {
+    $scope.updateFromDeviceCfg = function (cmd, config, deviceId, form,spin) {
+        var request = cfg.store_url + cmd;
+        $scope.toggleRowSpinner(spin);
+        angular.forEach(config, function (v, k) {
             if (v.confNum) {
-                var request = cmd + '(' + v.confNum + ')';
-                dataService.runCmd(request);
+                dataService.runZwaveCmd(request + '(' + v.confNum + ')');
             }
         });
         $scope.refresh(deviceId);
@@ -46553,6 +46264,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         $timeout(function () {
             dataService.cancelZwaveDataInterval();
             $scope.load($routeParams.nodeId);
+            $scope.toggleRowSpinner();
         }, 3000);
         return;
     };
@@ -46560,7 +46272,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
     /**
      * Set all values to default
      */
-    $scope.setAllToDefault = function (cmd, cfgValues, hasBattery, form) {
+    $scope.setAllToDefault = function (cmd, cfgValues, hasBattery, form,spin) {
         var dataArray = {};
         angular.forEach(cfgValues, function (v, k) {
             dataArray[v.confNum] = {
@@ -46570,7 +46282,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             };
         });
         //console.log(dataArray)
-        $scope.submitApplyConfigCfg(form, cmd, cfgValues, hasBattery, null, false, dataArray);
+        $scope.submitApplyConfigCfg(form, cmd, cfgValues, hasBattery, false, false, dataArray,spin);
 
     };
 
@@ -46578,15 +46290,16 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
     /**
      * Apply Config action
      */
-    $scope.submitApplyConfigCfg = function (form, cmd, cfgValues, hasBattery, confNum, setDefault, hasData) {
+    $scope.submitApplyConfigCfg = function (form, cmd, cfgValues, hasBattery, confNum, setDefault, hasData,spin) {
         var xmlData = [];
         var configValues = [];
         if (hasBattery) {
-            alert($scope._t('conf_apply_battery'));
+            //alert($scope._t('conf_apply_battery'));
+            deviceService.showNotifier({message: $scope._t('conf_apply_battery'),type: 'warning'});
         }
 
         var dataArray = _.isObject(hasData) ? hasData : {};
-
+        $scope.toggleRowSpinner(spin);
         if (!_.isObject(hasData)) {
             data = $('#' + form).serializeArray();
             angular.forEach(data, function (v, k) {
@@ -46693,25 +46406,30 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                     configRequest += cmd.command + '(' + v.parameterValues + ')';
                     if (confNum) {
                         if (confNum == v.confNum) {
-                            dataService.runCmd(configRequest, false, $scope._t('error_handling_data'));
+                            //dataService.runCmd(configRequest, false, $scope._t('error_handling_data'));
+                            dataService.runZwaveCmd(cfg.store_url + configRequest);
                         }
                     } else {
-                        dataService.runCmd(configRequest, false, $scope._t('error_handling_data'));
+                        //dataService.runCmd(configRequest, false, $scope._t('error_handling_data'));
+                        dataService.runZwaveCmd(cfg.store_url + configRequest);
                     }
 
                 });
                 break;
             case '75':// Protection
                 request += cmd.command + '(' + configValues.join(",") + ')';
-                dataService.runCmd(request, false, $scope._t('error_handling_data'));
+                //dataService.runCmd(request, false, $scope._t('error_handling_data'));
+                dataService.runZwaveCmd(cfg.store_url + request);
                 break;
             case '84':// Wakeup
                 request += cmd.command + '(' + configValues.join(",") + ')';
-                dataService.runCmd(request, false, $scope._t('error_handling_data'));
+                //dataService.runCmd(request, false, $scope._t('error_handling_data'));
+                dataService.runZwaveCmd(cfg.store_url + request);
                 break;
             case '27':// Switch all
                 request += cmd.command + '(' + configValues.join(",") + ')';
-                dataService.runCmd(request, false, $scope._t('error_handling_data'));
+                //dataService.runCmd(request, false, $scope._t('error_handling_data'));
+                dataService.runZwaveCmd(cfg.store_url + request);
                 break;
             default:
                 break;
@@ -46723,7 +46441,6 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         });
 
 
-        //debugger;
         $scope.refresh(cmd['id']);
         if (confNum) {
             $('#cfg_control_' + confNum + ' :input').prop('disabled', true);
@@ -46732,9 +46449,9 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         }
         $timeout(function () {
             $scope.load($routeParams.nodeId);
-            $('button .fa-spin,a .fa-spin').fadeOut(1000);
             $('#' + form + ' .cfg-control-content :input').prop('disabled', false);
             dataService.cancelZwaveDataInterval();
+            $scope.toggleRowSpinner();
         }, 3000);
         return;
     };
@@ -46846,7 +46563,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
  * @class ConfigCommandsController
  *
  */
-appController.controller('ConfigCommandsController', function ($scope, $routeParams, $location, $cookies, $timeout, $filter, dataService, deviceService, _) {
+appController.controller('ConfigCommandsController', function ($scope, $routeParams, $location, $cookies, $timeout, $filter, cfg,dataService, deviceService, _) {
     $scope.devices = [];
     $scope.commands = [];
     $scope.interviewCommands;
@@ -46857,11 +46574,22 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
 
     $cookies.tab_config = $scope.activeTab;
 
+    /**
+     * Cancel interval on page destroy
+     */
+    $scope.$on('$destroy', function() {
+        dataService.cancelZwaveDataInterval();
+    });
+
     // Load data
     $scope.load = function (nodeId) {
         dataService.getZwaveData(function (ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
+            if(_.isEmpty($scope.devices)){
+                $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                return;
+            }
             var node = ZWaveAPIData.devices[nodeId];
             if (!node || deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
@@ -46929,9 +46657,33 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
     $scope.refresh();
 
     /**
+     * Store expert commands
+     */
+    $scope.storeExpertCommnds = function (form, cmd) {
+        $scope.toggleRowSpinner(cmd);
+        var data = $('#' + form).serializeArray();
+        var dataJoined = [];
+        angular.forEach(data, function (v, k) {
+            if (v.value === 'N/A') {
+                return;
+            }
+            dataJoined.push($filter('setConfigValue')(v.value));
+
+        });
+        var request = cmd + '(' + dataJoined.join() + ')';
+         dataService.runZwaveCmd(cfg.store_url + request).then(function (response) {
+            $timeout($scope.toggleRowSpinner, 3000);
+        }, function (error) {
+            alertify.alertError($scope._t('error_update_data') + '\n' + cmd);
+            $scope.toggleRowSpinner();
+        });
+    };
+
+    /**
+     * todo: deprecated
      * Submit expert commands form
      */
-    $scope.submitExpertCommndsForm = function (form, cmd) {
+    /*$scope.submitExpertCommndsForm = function (form, cmd) {
         var data = $('#' + form).serializeArray();
         var dataJoined = [];
         angular.forEach(data, function (v, k) {
@@ -46951,11 +46703,12 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
             //$scope.refresh = false;
         }, 10000);
         return;
-    };
+    };*/
 
-    // Show modal dialog
-    $scope.showModal = function (target, instanceId, index, ccId, type) {
-        console.log('Showing modal')
+    /**
+     * Show modal CommandClass dialog
+     */
+    $scope.handleCmdClassModal= function (target, $event,instanceId, index, ccId, type) {
         var node = $scope.ZWaveAPIData.devices[$routeParams.nodeId];
         var ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.data');
 
@@ -46983,13 +46736,58 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
                 $scope.commandClass = deviceService.configSetCommandClass(deviceService.configGetCommandClass(newCc, '/', ''), data.joined.updateTime);
             }
         });
+        $scope.handleModal(target, $event);
+        //$(target).modal();
+    };
+    /**
+     * Watch for the modal closing
+     */
+    $scope.$watchCollection('modalArr', function (modalArr) {
+        if(_.has(modalArr, 'cmdClassModal') && !modalArr['cmdClassModal']){
+            dataService.cancelZwaveDataInterval();
+            //console.log(modalArr['cmdClassModal'])
+        }
+
+    });
+
+    // todo: deprecated
+    // Show modal dialog
+    /*$scope.showModal = function (target, instanceId, index, ccId, type) {
+        console.log('Showing modal')
+        var node = $scope.ZWaveAPIData.devices[$routeParams.nodeId];
+        var ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.data');
+
+        if (type == 'cmdData') {
+            ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.commandClasses.' + ccId + '.data');
+        }
+        var cc = deviceService.configGetCommandClass(ccData, '/', '');
+
+        $scope.commandClass = deviceService.configSetCommandClass(cc, $scope.commands[index]['updateTime']);
+        /!**
+         * Refresh data
+         *!/
+        dataService.joinedZwaveData(function (data) {
+            node = data.joined.devices[$routeParams.nodeId];
+            //console.log(node.instances)
+            var newCc = $filter('hasNode')(node, 'instances.' + instanceId + '.data');
+            if (type == 'cmdData') {
+                newCc = $filter('hasNode')(node, 'instances.' + instanceId + '.commandClasses.' + ccId + '.data');
+            }
+
+            if (newCc) {
+                if (JSON.stringify(ccData) === JSON.stringify(newCc)) {
+                    return;
+                }
+                $scope.commandClass = deviceService.configSetCommandClass(deviceService.configGetCommandClass(newCc, '/', ''), data.joined.updateTime);
+            }
+        });
         $(target).modal();
     };
     // Show modal dialog
     $scope.hideModal = function () {
         dataService.cancelZwaveDataInterval();
 
-    };
+    };*/
 
     /// --- Private functions --- ///
 
@@ -47075,6 +46873,10 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
         dataService.getZwaveData(function(ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
+            if(_.isEmpty($scope.devices)){
+                $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                return;
+            }
             var node = ZWaveAPIData.devices[nodeId];
             if (!node || deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
@@ -47102,37 +46904,86 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
     $scope.load($routeParams.nodeId);
 
     // Update data from device
-    $scope.updateFromDevice = function(elId) {
+    $scope.updateFromDevice = function(spin) {
+
         var nodeId = $scope.deviceId;
         var node = $scope.node;
-
+        $scope.toggleRowSpinner(spin);
         angular.forEach(node.instances, function(instance, index) {
             if (!("commandClasses" in instance)) {
                 return;
             }
             if (0x85 in instance.commandClasses) {
                 for (var group = 0; group < instance.commandClasses[0x85].data.groups.value; group++) {
-                    dataService.runCmd('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x85].Get(' + (group + 1) + ')', false, $scope._t('error_handling_data'), true);
+                   dataService.runZwaveCmd(cfg.store_url + 'devices[' + nodeId + '].instances[' + index + '].commandClasses[0x85].Get(' + (group + 1) + ')', false, $scope._t('error_handling_data'), true);
                 }
             }
             if (0x8e in instance.commandClasses) {
                 for (var group = 0; group < instance.commandClasses[0x8e].data.groups.value; group++) {
-                    dataService.runCmd('devices[' + nodeId + '].instances[' + index + '].commandClasses[0x8e].Get(' + (group + 1) + ')', false, $scope._t('error_handling_data'), true);
+                    dataService.runZwaveCmd(cfg.store_url + 'devices[' + nodeId + '].instances[' + index + '].commandClasses[0x8e].Get(' + (group + 1) + ')', false, $scope._t('error_handling_data'), true);
 
                 }
             }
             $timeout(function() {
-                $(elId + ' .fa-spin').fadeOut(1000);
-                //$scope.load(nodeId, true);
-            }, 5000);
+                $scope.toggleRowSpinner();
+            }, 3000);
             return;
 
 
         });
     };
 
-    //Show list of the devices to assocciate
-    $scope.modalAssocAdd = function(group) {
+    //Show modal window with a list of the devices to assocciate
+    $scope.handleAssocModal = function(modal,$event,group) {
+        $scope.input.groupCfg = group;
+        $scope.input.groupId = group.groupId;
+        $scope.assocAddDevices = [];
+        // Prepare devices and nodes
+        angular.forEach($scope.ZWaveAPIData.devices, function(node, nodeId) {
+            if (nodeId == 255 || node.data.isVirtual.value || nodeId == $scope.deviceId) {
+                return;
+            }
+            var obj = {};
+            obj['id'] = nodeId;
+            obj['name'] = $filter('deviceName')(nodeId, node);
+            obj['hasMca'] = 142 in node.instances[0].commandClasses;
+            obj['instances'] = getNodeInstances(node, nodeId);
+            if ($scope.nodeCfg.hasMca) {
+                if (obj['hasMca']) {
+                    $scope.assocAddDevices.push(obj);
+                } else {
+                    if (group.nodeIds.indexOf(parseInt(nodeId)) === -1) {
+                        $scope.assocAddDevices.push(obj);
+                    }
+                }
+            } else {
+                if (group.nodeIds.indexOf(parseInt(nodeId)) === -1) {
+                    $scope.assocAddDevices.push(obj);
+                }
+            }
+        });
+        $scope.handleModal(modal,$event);
+
+    };
+    //Close  assoc  modal window
+    $scope.closeAssocModal = function() {
+        $scope.handleModal();
+
+        $scope.input.toNode = false;
+        $scope.input.toInstance = false;
+        $scope.input.groupId = 0;
+        $scope.assocAddInstances = false;
+        $scope.assocAddDevices = angular.copy([]);
+        $timeout(function() {
+            $scope.toggleRowSpinner();
+            $scope.load($scope.nodeCfg.id);
+        }, 3000);
+
+    };
+
+    //todo: deprecated
+    // Show list of the devices to assocciate
+    /*$scope.modalAssocAdd = function(group) {
         $scope.input.groupCfg = group;
         $scope.input.groupId = group.groupId;
         $scope.assocAddDevices = [];
@@ -47161,9 +47012,10 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             }
         });
 
-    };
-    //Hide  assoc  modal window
-    $scope.modalAssocHide = function() {
+    };*/
+    //todo: deprecated
+    // Hide  assoc  modal window
+   /* $scope.modalAssocHide = function() {
         $scope.input.toNode = false;
         $scope.input.toInstance = false;
         $scope.input.groupId = 0;
@@ -47173,7 +47025,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             $scope.load($scope.nodeCfg.id);
         }, 3000);
 
-    };
+    };*/
     //Show node instances (if any)
     $scope.showAssocNodeInstance = function(nodeId, hasMca) {
         if (!hasMca) {
@@ -47190,6 +47042,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
     
     //Store assoc device from group
     $scope.storeAssoc = function(input) {
+        $scope.toggleRowSpinner('group_' + input.groupCfg.groupId);
         var addDevice = {};
         var instances = '0';
         var commandClasses = '85';
@@ -47221,6 +47074,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
        
         dataService.getCfgXml(function(cfgXml) {
             dataService.runZwaveCmd(cfg.store_url + cmd).then(function(response) {
+                $scope.closeAssocModal();
                 var xmlFile = deviceService.buildCfgXmlAssoc(data, cfgXml);
                 dataService.putCfgXml(xmlFile);
             }, function(error) {
@@ -47603,6 +47457,10 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
     $scope.load = function (nodeId) {
         dataService.getZwaveData(function (ZWaveAPIData) {
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
+            if(_.isEmpty($scope.devices)){
+                $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                return;
+            }
             var node = ZWaveAPIData.devices[nodeId];
             if (!node || deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
@@ -47723,6 +47581,10 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
 
         dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
+            if(_.isEmpty($scope.devices)){
+                $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                return;
+            }
             $scope.health.ctrlNodeId = ZWaveAPIData.controller.data.nodeId.value;
             var node = ZWaveAPIData.devices[$routeParams.nodeId];
             if (!node || deviceService.notDevice(ZWaveAPIData, node, $routeParams.nodeId)) {
@@ -48014,6 +47876,10 @@ appController.controller('ConfigPostfixController', function ($scope, $routePara
     $scope.loadData = function (nodeId) {
         dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
+            if(_.isEmpty($scope.devices)){
+                $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                return;
+            }
             var node = ZWaveAPIData.devices[nodeId];
             if (!node || deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
