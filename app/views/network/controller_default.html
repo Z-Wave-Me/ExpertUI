@@ -168,7 +168,7 @@
 
         <!-- Update fitmware  -->
         <a href="#uzb" class="btn btn-default"
-           ng-if_"master['controller.data.manufacturerProductId'] == 1 && (master['controller.data.manufacturerId'] == 277 || master['controller.data.manufacturerId'] == 327)&& master['controller.data.manufacturerProductType'] == 1024 && master['controller.data.ZWaveChip'] == 'ZW0500'">
+           ng-if_="master['controller.data.manufacturerProductId'] == 1 && (master['controller.data.manufacturerId'] == 277 || master['controller.data.manufacturerId'] == 327)&& master['controller.data.manufacturerProductType'] == 1024 && master['controller.data.ZWaveChip'] == 'ZW0500'">
             <i class="fa fa-long-arrow-up"></i> {{_t('upgrade_bootloader_firmware')}}
         </a>
 
@@ -205,71 +205,4 @@
                 </div>
         </div>
     </div><!-- /#modal dataHolderModal -->
-
-    <!-- Modal command -->
-    <div class="modal fade" id="modal_controller" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">{{_t('th_command_class')}}</h4>
-                </div>
-                <div class="modal-body"></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{{_t('btn_cancel')}}</button>
-                </div>
-            </div>
-        </div>
-    </div><!-- /.Modal -->
-
-    <!-- Modal debugging -->
-    <div class="modal fade modal_wide" id="modal_queue" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">{{_t('nm_inspect_queue_title')}}</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="table-responsive">
-                        <table id="inspect_queue_table" class="table-striped">
-                            <thead>
-                            <tr>
-                                <th>n</th>
-                                <th>U</th>
-                                <th>W</th>
-                                <th>S</th>
-                                <th>E</th>
-                                <th>D</th>
-                                <th>Ack</th>
-                                <th>Resp</th>
-                                <th>Cbk</th>
-                                <th>Timeout</th>
-                                <th>NodeId</th>
-                                <th>Description</th>
-                                <th>Progress</th>
-                                <th>Buffer</th>
-                            </tr>
-                            </thead>
-                            <tbody id="inspect_queue_table_body"></tbody>
-                        </table>
-                        <div>
-                            <div id="inspect_queue_len"></div>
-                            <br/>
-                            <div><strong>{{_t('inspect_queue_legend_title')}}</strong>
-                                <p ng-bind-html="_t('inspect_queue_legend_help') | toTrusted"></p>
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal"
-                                    ng-click="inspectQueue('#modal_queue',true)">{{_t('btn_cancel')}}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- /.Modal -->
-
-        </div><!-- /ng-controler -->
+</div><!-- /ng-controler -->
