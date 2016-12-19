@@ -55,7 +55,7 @@
                 <p ng-bind-html="controlDh.inclusion.lastExcludedDevice | toTrusted"></p>
             </div>-->
             <!-- include start -->
-            <button class="btn btn-info" id="btn_nm_include_start" title="{{_t('nm_include_start_tooltip')}}"
+            <button class="btn btn-primary" id="btn_nm_include_start" title="{{_t('nm_include_start_tooltip')}}"
                     ng-disabled="[5, 6, 7, 20].indexOf(controlDh.controller.controllerState) > -1"
                     ng-show="[1, 2, 3, 4].indexOf(controlDh.controller.controllerState) == -1"
                     ng-click="addNodeToNetwork('controller.AddNodeToNetwork(1)')">
@@ -70,7 +70,7 @@
                 <i class="fa fa-stop-circle"></i> {{_t('nm_include_stop')}}
             </button>
             <!-- exclude start -->
-            <button class="btn btn-primary" id="nm_exclude_start" title="{{_t('nm_exclude_start_tooltip')}}"
+            <button class="btn btn-info" id="nm_exclude_start" title="{{_t('nm_exclude_start_tooltip')}}"
                     ng-disabled="[1, 2, 3, 4, 20].indexOf(controlDh.controller.controllerState) > -1"
                     ng-show="[5, 6, 7].indexOf(controlDh.controller.controllerState) == -1"
                     ng-click="removeNodeToNetwork('controller.RemoveNodeFromNetwork(1)')">
