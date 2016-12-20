@@ -161,7 +161,7 @@ var config_data = {
         },
     // Controller
    controller: {
-     homeName: 'My network',
+     homeName: 'MY NETWORK',
      isRealPrimary: false,
      homeId: 1,
      homeIdHex: '#',
