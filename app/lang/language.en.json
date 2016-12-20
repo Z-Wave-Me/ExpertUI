@@ -1,7 +1,9 @@
 {
   "--- newtrans": "---",
- "device_interview_indicator":"Interview",
  "---": "---",
+ "name":"Name",
+ "statistics":"Statistics",
+ "device_interview_indicator":"Interview",
  "make_restore":"Make restore from a previous backup",
  "just_proceed":"Just proceed",
  "detect_all_nodes":"Detect all nodes ( may take some minutes)",
