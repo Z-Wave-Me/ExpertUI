@@ -32676,6 +32676,10 @@ angApp.config(['$routeProvider',
             templateUrl: 'app/views/network/queue.html'
         }).when('/network/map', {
             templateUrl: 'app/views/network/map.html'
+        }).when('/network/statistics', {
+            requireLogin: requireLogin,
+            templateUrl: 'app/views/network/statistics.html',
+            appTypeBanned: ['default']
         }).// Installer - zniffer
         when('/installer/zniffer', {
             requireLogin: requireLogin,
@@ -33094,6 +33098,11 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
   $templateCache.put('app/views/network/routing.html',
     "<div ng-controller=RoutingController><div class=page-header><h1>{{ _t('tab_routing_table_title')}}</h1></div><div class=table-responsive ng-if=routings.show><table id=RoutingTable class=\"table table-striped table-condensed table-hover\"><thead><tr><th>#</th><th>{{ _t('device_name')}}</th><th>{{ _t('nav_type_info')}}</th><th>{{ _t('rt_header_update_time')}}</th><th ng-repeat=\"v in routings.all\" style=text-align:center>{{v.id}}</th><th class=\"mobile-show td-action\"><button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=\"updateAllRoutess('all_1','urlToStore')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner spinner=\"rowSpinner['all_1']\" label=\"_t('switches_update_all')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in routings.all track by $index\"><td>{{v.id}}</td><td>{{v.name}}</td><td><i class=fa ng-class=v.icon></i></td><td class=\"row-time is-updated-{{v.isUpdated}}\">{{ v.updateTime | isTodayFromUnix }} &nbsp;</td><td ng-repeat=\"n in devices\" class=rtCell><div id=cell{{nodeId}}-{{n}} class={{data[nodeId][n].clazz}} title={{data[nodeId][n].tooltip}} data-toggle=tooltip data-position=top tooltip_><span class=info>{{data[nodeId][n].info}}</span></div></td><td class=rtCell ng-repeat=\"n in v.cellState\"><div class={{n.cssClass}} title={{n.tooltip}}><span class=info ng-if=n.hasAssoc>*</span> <span class=info ng-if=!n.hasAssoc>&nbsp;</span></div></td><td class=td-action><button class=\"btn btn-default\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateRoute(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] label=\" _t('update')\" icon=\"'fa-circle-o text-success'\"></bb-row-spinner></button></td></tr></tbody></table></div><div id=RoutingComments><i class=\"fa fa-square fa-lg\" style=\"color: green\"></i> {{_t('direct')}}<br><i class=\"fa fa-square fa-lg\" style=\"color: #8C0\"></i> {{_t('routed')}}<br><i class=\"fa fa-square fa-lg\" style=\"color: yellow\"></i> {{_t('badly_routed')}}<br><i class=\"fa fa-square fa-lg\" style=\"color: red\"></i> {{_t('not_linked')}}<br><i class=\"fa fa-square fa-lg\" style=\"color: gray\"></i> {{_t('unavailable')}}<br></div></div>"
+  );
+
+
+  $templateCache.put('app/views/network/statistics.html',
+    "<div ng-controller=NetworkStatisticsController><div class=page-header><h1>{{_t('statistics')}}</h1></div><bb-alert alert=alert></bb-alert><div class=table-responsive ng-if=networkStatistics.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th style=\"width: 30%\">{{ _t('name')}}</th><th>{{ _t('datetime')}}</th><th class=\"mobile-show td-action\"><button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=\"updateNetworkStatistics('GetNetworkStats()')\" ng-disabled=\"rowSpinner['GetNetworkStats()']\"><bb-row-spinner spinner=\"rowSpinner['GetNetworkStats()']\" label=\"_t('update')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in networkStatistics.all track by $index\"><td>{{v.name}}</td><td class=\"row-time is-updated-{{v.isUpdated}}\">{{ v.dateTime.today }}</td><td class=text-right>{{v.value}}</td></tr></tbody></table></div></div>"
   );
 
 
@@ -42124,6 +42133,65 @@ appController.controller('SucSisController', function ($scope) {
         $scope.runZwaveCmd(cmd);
     };
 
+
+});
+/**
+ * @overview This controller renders and handles network statistics.
+ * @author Martin Vach
+ */
+
+/**
+ * Network statistics controller
+ * @class NetworkStatisticsController
+ *
+ */
+appController.controller('NetworkStatisticsController', function ($scope, $filter, $timeout, $interval, dataService, cfg, _, deviceService) {
+    $scope.networkStatistics = {
+        all: [],
+        show: false,
+        whiteList: ['RFRxCRC16Errors', 'RFRxForeignHomeID', 'RFRxFrames', 'RFRxLRCErrors', 'RFTxFrames', 'RFTxLBTBackOffs']
+    };
+
+
+    /**
+     * Load network statistics
+     */
+    $scope.loadNetworkStatistics = function () {
+        var cmd = cfg.store_url + 'controller.data.statistics';
+        dataService.runZwaveCmd(cmd).then(function (response) {
+           // console.log(response.data)
+            $scope.networkStatistics.all = _.chain(response.data)
+                .filter(function (v,k) {
+                    if($scope.networkStatistics.whiteList.indexOf(k) > -1){
+                        v.name = k;
+                        v.isUpdated = (v.updateTime > v.invalidateTime ? true : false);
+                        v.dateTime = $filter('getDateTimeObj')(v.updateTime);
+                        return v;
+                    }
+
+                }).value();
+            if(_.isEmpty($scope.networkStatistics.all)){
+                $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                return;
+            }
+            $scope.networkStatistics.show = true;
+        }, function (error) {
+            alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
+        });
+    };
+    $scope.loadNetworkStatistics();
+
+    /**
+     * Update network statistics
+     * @param {string} cmd
+     */
+    $scope.updateNetworkStatistics = function (cmd) {
+        var timeout = 1000;
+        $scope.runZwaveCmd(cmd, timeout);
+        $timeout(function () {
+            $scope.loadNetworkStatistics()
+        }, timeout);
+    };
 
 });
 /**
