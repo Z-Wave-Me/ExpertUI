@@ -3,6 +3,8 @@ module.exports = function (grunt) {
 // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        // Banner
+        banner: 'Copyright:  Z-Wave Europe, Created: <%= grunt.template.today("dd-mm-yyyy HH:MM:ss") %>',
         // Clean dir
         clean: {
             options: {force: true},
@@ -154,7 +156,7 @@ module.exports = function (grunt) {
         cssmin: {
             my_target: {
                 options: {
-                    banner: '/* Minified css file */',
+                    banner: '/* <%= banner %> */',
                     keepSpecialComments: 0
                 },
                 files: [
@@ -166,6 +168,26 @@ module.exports = function (grunt) {
                         ext: '.css'
                     }
                 ]
+            }
+        },
+        usebanner: {
+            jscss: {
+                options: {
+                    position: 'top',
+                    banner: '/* <%= banner %> */'
+                },
+                files: {
+                    src: [ 'dist/app/js/templates.js','dist/app/js/config.js','dist/app/js/build.js']
+                }
+            },
+            html: {
+                options: {
+                    position: 'top',
+                    banner: '<!-- <%= banner %> -->'
+                },
+                files: {
+                    src: [ 'dist/index.html']
+                }
             }
         }
     });
@@ -180,7 +202,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
     grunt.loadNpmTasks('grunt-string-replace');
+    grunt.loadNpmTasks('grunt-banner');
     // Default task(s).
     //grunt.registerTask('default', ['clean','concat','copy','cssmin','string-replace']);
-    grunt.registerTask('default', ['clean', 'ngtemplates','concat', 'copy', 'cssmin']);
+    grunt.registerTask('default', ['clean', 'ngtemplates','concat', 'copy', 'cssmin','usebanner']);
 };
