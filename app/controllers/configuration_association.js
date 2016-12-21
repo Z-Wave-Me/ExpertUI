@@ -97,7 +97,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             $cookies.configuration_id = nodeId;
             $cookies.config_url = $scope.activeUrl + nodeId;
             $scope.deviceId = nodeId;
-            dataService.getCfgXml(function(cfgXml) {
+            dataService.getCfgXml().then(function (cfgXml) {
                 //console.log(node)
                 setData(node, ZWaveAPIData, nodeId, cfgXml);
             });
@@ -275,8 +275,8 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             name: _.findWhere($scope.assocAddDevices, {id: input.toNode}).name
         };
          angular.extend($scope.assocGroupsDevices[input.groupId], addDevice);
-       
-        dataService.getCfgXml(function(cfgXml) {
+
+        dataService.getCfgXml().then(function (cfgXml) {
             dataService.runZwaveCmd(cfg.store_url + cmd).then(function(response) {
                 $scope.closeAssocModal();
                 var xmlFile = deviceService.buildCfgXmlAssoc(data, cfgXml);
@@ -308,7 +308,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             'parameter': '[' + params + ']'
 
         };
-        dataService.getCfgXml(function(cfgXml) {
+        dataService.getCfgXml().then(function (cfgXml) {
             dataService.runZwaveCmd(cfg.store_url + cmd).then(function(response) {
                 var xmlFile = deviceService.deleteCfgXmlAssoc(data, cfgXml);
                 dataService.putCfgXml(xmlFile);
@@ -353,14 +353,24 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             return;
         }
 
-        dataService.getZddXml(zddXmlFile, function(zddXmlData) {
+        dataService.xmlToJson(cfg.server_url + cfg.zddx_url + zddXmlFile).then(function (zddXmlData) {
             var zdd = $filter('hasNode')(zddXmlData, 'ZWaveDevice.assocGroups');
             $scope.assocGroups = getAssocGroups(node, zdd, nodeId, ZWaveAPIData, cfgXml);
             if ($scope.assocGroups.length < 1) {
                 $scope.alert = {message: $scope._t('no_association_groups_found'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
             }
-
         });
+        /**
+         * todo: deprecated
+         */
+
+       /* dataService.getZddXml(zddXmlFile, function(zddXmlData) {
+            var zdd = $filter('hasNode')(zddXmlData, 'ZWaveDevice.assocGroups');
+            $scope.assocGroups = getAssocGroups(node, zdd, nodeId, ZWaveAPIData, cfgXml);
+            if ($scope.assocGroups.length < 1) {
+                $scope.alert = {message: $scope._t('no_association_groups_found'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+            }
+        });*/
 
     }
 

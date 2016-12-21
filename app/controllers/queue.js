@@ -2,7 +2,40 @@
  * QueueController
  * @author Martin Vach
  */
-appController.controller('QueueController', function($scope, dataService) {
+appController.controller('QueueController', function($scope, $interval,cfg,dataService) {
+    $scope.queueData = {
+        all: [],
+        interval: null,
+        show: false
+    };
+
+    /**
+     * Load Queue
+     */
+    $scope.loadQueueData = function() {
+        // Load queue
+        dataService.getApi('queue_url', null, true).then(function (response) {
+            getQueueUpdate(response.data);
+            $scope.refreshQueueData()
+        }, function (error) {
+            alertify.alertError($scope._t('error_load_data'));
+            return;
+        });
+    };
+    $scope.loadQueueData();
+
+    /**
+     * Refresh Queue data
+     * @param {object} ZWaveAPIData
+     */
+    $scope.refreshQueueData = function() {
+        var refresh = function() {
+            dataService.getApi('queue_url', null, true).then(function (response) {
+                getQueueUpdate(response.data);
+            });
+        };
+        $scope.queueData.interval = $interval(refresh, $scope.cfg.queue_interval);
+    };
     /**
      * Inspect Queue
      */
@@ -18,13 +51,14 @@ appController.controller('QueueController', function($scope, dataService) {
         return;
     };
 
-    $scope.inspectQueue();
+   // $scope.inspectQueue();
 
     /// --- Private functions --- ///
 
 
     // Get Queue updates
     function getQueueUpdate(data) {
+        console.log(data)
         var trs = '';
         angular.forEach(data, function(job, jobIndex) {
             var buff = '';

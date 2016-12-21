@@ -143,20 +143,7 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
     /*$scope.$on('$destroy', function () {
         dataService.cancelZwaveDataInterval();
     });*/
-    /*// Store data from on remote server
-    $scope.store = function (btn) {
-        var url = $(btn).attr('data-store-url');
-        dataService.runCmd(url, false, $scope._t('error_handling_data'));
-    };*/
 
-    // Store all data on remote server
-    /*$scope.storeAll = function (btn) {
-        angular.forEach($scope.statuses.all, function (v, k) {
-            if (v.urlToStore) {
-                dataService.runCmd(v.urlToStore);
-            }
-        });
-    };*/
 
     //todo: deprecated
    /* $scope.showModalInterview = function (target, index, id, name) {

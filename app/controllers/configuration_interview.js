@@ -140,18 +140,7 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
             $scope.toggleRowSpinner();
             alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
         });
-        /*$('#config_device_name').html(deviceName);
-        $('#device_node_name').html(deviceName);*/
     };
-
-
-
-    // todo: DEPRECATED
-    // Store data on remote server
-    /*$scope.store = function (v) {
-        var url = 'devices[' + $scope.deviceId + '].instances[' + v.iId + '].commandClasses[' + v.ccId + '].Interview()';
-        dataService.runCmd(url);
-    };*/
 
     // todo: DEPRECATED
     // Show modal CommandClass dialog
@@ -205,21 +194,7 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         $(target).html(image);
     };*/
 
-    // todo: deprecated
-    // Run cmd
-   /* $scope.runCmd = function (cmd) {
-        dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
-    };*/
 
-    // todo: deprecated
-    // Update device zddx file
-    /*$scope.runCmdDeviceSelect = function (nodeId) {
-        var cmd = 'devices[' + nodeId + '].LoadXMLFile("' + $scope.modelSelectZddx + '")';
-        dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
-        dataService.purgeCache();
-        dataService.cancelZwaveDataInterval();
-        $scope.load(nodeId);
-    };*/
 
     /// --- Private functions --- ///
     /**

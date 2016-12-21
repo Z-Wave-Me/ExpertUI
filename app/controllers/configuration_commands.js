@@ -125,32 +125,6 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
     };
 
     /**
-     * todo: deprecated
-     * Submit expert commands form
-     */
-    /*$scope.submitExpertCommndsForm = function (form, cmd) {
-        var data = $('#' + form).serializeArray();
-        var dataJoined = [];
-        angular.forEach(data, function (v, k) {
-            if (v.value === 'N/A') {
-                return;
-            }
-
-            dataJoined.push($filter('setConfigValue')(v.value));
-
-        });
-        var request = cmd + '(' + dataJoined.join() + ')';
-        dataService.runCmd(request, false, $scope._t('error_handling_data'));
-        //$scope.refresh = true;
-        var timeOut;
-        timeOut = $timeout(function () {
-            $('button .fa-spin,a .fa-spin').fadeOut(1000);
-            //$scope.refresh = false;
-        }, 10000);
-        return;
-    };*/
-
-    /**
      * Show modal CommandClass dialog
      */
     $scope.handleCmdClassModal= function (target, $event,instanceId, index, ccId, type) {
