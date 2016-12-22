@@ -41,8 +41,6 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         store: store,
         getCfgXml: getCfgXml,
         putCfgXml: putCfgXml,
-        getQueueData: getQueueData,
-        updateQueueData: updateQueueData,
         cancelQueueDataInterval: cancelQueueDataInterval,
         runJs: runJs,
         fwUpdate: fwUpdate,
@@ -324,9 +322,10 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
 
 
     /**
+     * todo: deprecated
      * Load Queue data
      */
-    function getQueueData(callback) {
+    /*function getQueueData(callback) {
         if (typeof (callback) != 'function') {
             return;
         }
@@ -341,17 +340,18 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             handleError();
 
         });
-    }
+    }*/
 
     /**
+     * todo: deprecated
      * Load and update Queue data
      */
-    function updateQueueData(callback) {
+    /*function updateQueueData(callback) {
         var refresh = function () {
             getQueueData(callback);
         };
         queueDataInterval = $interval(refresh, cfg.queue_interval);
-    }
+    }*/
     /**
      * Cancel Queue interval
      */
