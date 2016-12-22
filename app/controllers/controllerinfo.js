@@ -14,7 +14,6 @@ appController.controller('ControllerController', function($scope, $window, $filt
 
     // Cancel interval on page destroy
     $scope.$on('$destroy', function() {
-        dataService.cancelQueueDataInterval();
         dataService.cancelZwaveDataInterval();
     });
 

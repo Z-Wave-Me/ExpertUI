@@ -15,6 +15,7 @@ var appController = angular.module('appController', []);
 appController.controller('BaseController', function ($scope, $rootScope, $cookies, $filter, $location, $anchorScroll, $window, $route, $interval, $timeout, cfg, dataService, deviceService, myCache) {
     $scope.loading = false;
     $scope.alert = {message: false, status: 'is-hidden', icon: false};
+    $scope.languages = {};
 
 
     // Custom IP
@@ -51,10 +52,17 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     $scope.loadLang = function (lang) {
         // Is lang in language list?
         var lang = (cfg.lang_list.indexOf(lang) > -1 ? lang : cfg.lang);
+        dataService.getLanguageFile(lang).then(function (response) {
+            angular.extend($scope.languages, response.data);
+        }, function (error) {
+        });
+
+        /*// Is lang in language list?
+        var lang = (cfg.lang_list.indexOf(lang) > -1 ? lang : cfg.lang);
         dataService.getLanguageFile(function (data) {
             $cookies.langFile = {'ab': 25};
             $scope.languages = data;
-        }, lang);
+        }, lang);*/
 
 
     };
