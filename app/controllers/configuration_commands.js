@@ -10,6 +10,7 @@
  */
 appController.controller('ConfigCommandsController', function ($scope, $routeParams, $location, $cookies, $timeout, $filter, cfg,dataService, deviceService, _) {
     $scope.devices = [];
+    $scope.deviceName = '';
     $scope.commands = [];
     $scope.interviewCommands;
 
@@ -57,6 +58,7 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
             $cookies.configuration_id = nodeId;
             $cookies.config_url = $scope.activeUrl + nodeId;
             $scope.deviceId = nodeId;
+            $scope.deviceName = $filter('deviceName')(nodeId, node);
 
             /**
              * Expert commands

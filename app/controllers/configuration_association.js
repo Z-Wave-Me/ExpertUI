@@ -10,6 +10,7 @@
  */
 appController.controller('ConfigAssocController', function($scope, $filter, $routeParams, $location, $cookies, $timeout, $window, dataService, deviceService, myCache, cfg, _) {
     $scope.devices = [];
+    $scope.deviceName = '';
     $scope.deviceId = 0;
     $scope.activeTab = 'association';
     $scope.activeUrl = 'configuration/assoc/';
@@ -97,6 +98,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             $cookies.configuration_id = nodeId;
             $cookies.config_url = $scope.activeUrl + nodeId;
             $scope.deviceId = nodeId;
+            $scope.deviceName = $filter('deviceName')(nodeId, node);
             dataService.getCfgXml().then(function (cfgXml) {
                 //console.log(node)
                 setData(node, ZWaveAPIData, nodeId, cfgXml);

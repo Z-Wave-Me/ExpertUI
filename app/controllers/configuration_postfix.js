@@ -11,6 +11,7 @@
 appController.controller('ConfigPostfixController', function ($scope, $routeParams, $location, $cookies, $filter, $timeout, $window, dataService, deviceService) {
     $scope.devices = [];
     $scope.deviceId = 0;
+    $scope.deviceName = '';
     $scope.activeTab = 'postfix';
     $scope.activeUrl = 'configuration/postfix/';
     $cookies.tab_config = $scope.activeTab;
@@ -55,7 +56,7 @@ appController.controller('ConfigPostfixController', function ($scope, $routePara
             $cookies.configuration_id = nodeId;
             $cookies.config_url = $scope.activeUrl + nodeId;
             $scope.deviceId = nodeId;
-
+            $scope.deviceName = $filter('deviceName')(nodeId, node);
             $scope.postfix.model.p_id = getPId(node);
             $scope.loadPostfix($scope.postfix.model.p_id);
         }, function (error) {

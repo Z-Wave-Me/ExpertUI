@@ -85,6 +85,9 @@
         right: $spacing;
         font-size: $app-btn-tag-icon-size;
     }
+    &.active {
+        background-color: $tabs-active-bcg-color;
+    }
 }
 
 
