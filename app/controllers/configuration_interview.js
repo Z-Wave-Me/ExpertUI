@@ -160,7 +160,7 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
             $timeout(function(){
                 $scope.toggleRowSpinner();
-                $route.reload();
+                //$route.reload();
 
             }, timeout);
         }, function (error) {
