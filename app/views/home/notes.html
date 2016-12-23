@@ -4,46 +4,47 @@
     <div class="panel-heading">
         <i class="fa fa-list text-info"></i> {{_t('txt_notes')}}
     </div>
-    <!-- Text mode -->
 
-    <div class="panel-body newlines" ng-hide="goNotes">
-        <span ng-if="dataHolder.controller.homeNotes">
-            {{dataHolder.controller.homeNotes|stripTags}}
-            </span>
-        <button type="button" class="btn btn-default"
-                ng-class="goNotes ? 'active' : ''"
-                ng-click="goNotes = !goNotes">
-            <i class="fa fa-pencil"></i>
-        </button>
-    </div>
+    <div class="panel-body">
+        <!-- Text mode -->
+        <div class="newlines" ng-hide="goNotes">
+            <span ng-if="dataHolder.controller.homeNotes">
+                {{dataHolder.controller.homeNotes|stripTags}}
+                </span>
 
-    <!-- Edit mode -->
-    <form name="form_notes" id="form_notes" class="form"
-          ng-show="goNotes"
-          ng-submit="storeNotes(dataHolder.controller.homeNotes,'spinNotes');goNotes = !goNotes" novalidate>
-        <div class="panel-body">
+            <button type="button" class="btn btn-default"
+                    ng-click="goNotes = !goNotes"
+                    ng-disabled="rowSpinner['spinNotes']">
+
+                <bb-row-spinner
+                        spinner="rowSpinner['spinNotes']"
+                        icon="'fa-pencil'">
+                </bb-row-spinner>
+            </button>
+        </div>
+
+        <!-- Edit mode -->
+        <form name="form_notes" id="form_notes" class="form"
+              ng-show="goNotes"
+              ng-submit="storeNotes(form_notes,dataHolder.controller.homeNotes,'spinNotes');goNotes = !goNotes" novalidate>
+            <!-- Text area -->
             <textarea id="notes" class="form-control" rows="10"
                       ng-model="dataHolder.controller.homeNotes">{{dataHolder.controller.homeNotes}}
             </textarea>
+            <!-- Button -->
+            <div class="text-right">
+                <button class="btn btn-primary" title="{{_t('btn_save')}}" ng-disabled="rowSpinner['spinNotes']">
+                    <bb-row-spinner
+                            spinner="rowSpinner['spinNotes']"
+                            label=" _t('btn_save')"
+                            icon="'fa-circle-o'">
 
-        </div>
-        <!-- Footer -->
-        <div class="panel-footer text-right">
-            <!-- Close -->
-            <button type="button" class="btn btn-default" title="{{_t('btn_cancel')}}"
-                    ng-click="goNotes = !goNotes">
-                <i class="fa fa-times text-danger"></i> <span class="btn-name">{{_t('btn_cancel')}}</span>
-            </button>
-            <!-- Save -->
-            <button class="btn btn-primary" title="{{_t('btn_save')}}" ng-disabled="rowSpinner['spinNotes']">
-                <bb-row-spinner
-                        spinner="rowSpinner['spinNotes']"
-                        label=" _t('btn_save')"
-                        icon="'fa-circle-o'">
+                    </bb-row-spinner>
+                </button>
 
-                </bb-row-spinner>
-            </button>
+            </div>
+        </form>
+    </div>
 
-        </div>
-    </form>
+
 </div>
