@@ -151,15 +151,19 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
     /**
      * Rename Device action
      */
-    $scope.renameDevice = function (deviceName,spin) {
+    $scope.renameDevice = function (form,deviceName,spin) {
+       if(!form.$dirty){
+            return;
+        }
         var timeout = 1000;
-        //var deviceId = $scope.deviceId;
-        //var givenName = $('#' + form + ' #device_name').val();
         var cmd = 'devices[' + $scope.deviceId + '].data.givenName.value=\'' + deviceName + '\'';
         $scope.toggleRowSpinner(spin);
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
+
             $timeout(function(){
+                form.$setPristine();
                 $scope.toggleRowSpinner();
+                //$scope.form_rename.$dirty = !$scope.form_rename.$dirty;
                 //$route.reload();
 
             }, timeout);

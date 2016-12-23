@@ -49,16 +49,21 @@
 
                                     </div>
                                     <!-- Edit mode -->
-                                    <form name="form_rename" id="form_rename" ng-model="form_rename" class="form form-inline"
+                                    <form name="form_rename" id="form_rename" ng-model="form_rename" class="form _form-inline"
                                           ng-show="goDeviceName"
-                                          ng-submit="renameDevice(deviceName,'deviceName');goDeviceName = !goDeviceName" novalidate>
-                                        <!-- Texfield -->
-                                        <input name="device_name" id="device_name" type="text" class="form-control"
-                                               value="{{deviceName}}" ng-model="deviceName"/>
-                                        <!-- Button -->
-                                        <button type="submit" class="btn btn-primary" title="{{_t('btn_save')}}">
-                                            <i class="fa fa-circle-o"></i> <span class="btn-name">{{_t('btn_save')}}</span>
-                                        </button>
+                                          ng-submit="renameDevice(form_rename,deviceName,'deviceName');goDeviceName = !goDeviceName" novalidate>
+                                        <div class="input-group">
+                                            <!-- Texfield -->
+                                            <input name="device_name" id="device_name" type="text" class="form-control"
+                                                   value="{{deviceName}}" ng-model="deviceName"/>
+                                            <!-- Button -->
+                                            <div class="input-group-btn">
+                                                <button type="submit" class="btn btn-primary" title="{{_t('btn_save')}}">
+                                                    <i class="fa fa-circle-o"></i> <span class="btn-name">{{_t('btn_save')}}</span>
+                                                </button>
+                                            </div>
+
+                                        </div>
                                     </form>
 
                                 </td>
