@@ -10,6 +10,7 @@
  */
 appController.controller('ConfigCommandsController', function ($scope, $routeParams, $location, $cookies, $timeout, $filter, cfg,dataService, deviceService, _) {
     $scope.devices = [];
+    $scope.deviceName = '';
     $scope.commands = [];
     $scope.interviewCommands;
 
@@ -57,6 +58,7 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
             $cookies.configuration_id = nodeId;
             $cookies.config_url = $scope.activeUrl + nodeId;
             $scope.deviceId = nodeId;
+            $scope.deviceName = $filter('deviceName')(nodeId, node);
 
             /**
              * Expert commands
@@ -123,32 +125,6 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
             $scope.toggleRowSpinner();
         });
     };
-
-    /**
-     * todo: deprecated
-     * Submit expert commands form
-     */
-    /*$scope.submitExpertCommndsForm = function (form, cmd) {
-        var data = $('#' + form).serializeArray();
-        var dataJoined = [];
-        angular.forEach(data, function (v, k) {
-            if (v.value === 'N/A') {
-                return;
-            }
-
-            dataJoined.push($filter('setConfigValue')(v.value));
-
-        });
-        var request = cmd + '(' + dataJoined.join() + ')';
-        dataService.runCmd(request, false, $scope._t('error_handling_data'));
-        //$scope.refresh = true;
-        var timeOut;
-        timeOut = $timeout(function () {
-            $('button .fa-spin,a .fa-spin').fadeOut(1000);
-            //$scope.refresh = false;
-        }, 10000);
-        return;
-    };*/
 
     /**
      * Show modal CommandClass dialog

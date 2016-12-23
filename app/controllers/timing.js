@@ -86,33 +86,6 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
         $scope.devices.interval = $interval(refresh, $scope.cfg.interval);
     };
 
-    // Load timing data
-    $scope.loadTiming = function() {
-        dataService.getTiming(function(data) {
-            dataService.getZwaveData(function(ZWaveAPIData) {
-                setData(data, ZWaveAPIData);
-//            dataService.joinedZwaveData(function(data) {
-//                $scope.reset();
-//                //$scope.loadTiming();
-//                setData(data,data.joined);
-//            });
-            });
-            $scope.timing = data;
-        });
-    };
-    //$scope.loadTiming();
-    // Cancel interval on page destroy
-    $scope.$on('$destroy', function() {
-        dataService.cancelZwaveDataInterval();
-    });
-
-    // Reset statistics
-    $scope.resetTiming = function(cmd) {
-        console.log(cmd);
-        //dataService.runCmd(cmd);
-    };
-
-
     /// --- Private functions --- ///
     /**
      * Set zwave data

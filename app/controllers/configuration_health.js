@@ -11,6 +11,7 @@
 appController.controller('ConfigHealthController', function ($scope, $routeParams, $timeout, $location, $cookies, $filter, $interval, cfg, deviceService, dataService) {
     $scope.apiDataInterval;
     $scope.devices = [];
+    $scope.deviceName = '';
     $scope.deviceId = 0;
     $scope.activeTab = 'health';
     $scope.activeUrl = 'configuration/health/';
@@ -85,6 +86,7 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
             $cookies.config_url = $scope.activeUrl + $routeParams.nodeId;
             $scope.deviceId = $routeParams.nodeId;
             $scope.health.device.node = node;
+            $scope.deviceName = $filter('deviceName')($routeParams.nodeId, node);
             setDevice(node);
             setData(ZWaveAPIData, neighbours);
             $scope.refreshData(ZWaveAPIData);

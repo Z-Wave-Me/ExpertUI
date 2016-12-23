@@ -28,40 +28,23 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
     var updatedTime = Math.round(+new Date() / 1000);
     var apiData;
     var apiDataInterval;
-    var deviceClasses;
     var queueDataInterval;
     /**
      * Public functions
      */
     return({
         getZwaveData: getZwaveData,
-        getZwaveDataQuietly: getZwaveDataQuietly,
-        updateZwaveData: updateZwaveData,
-        updateZwaveDataSince: updateZwaveDataSince,
         joinedZwaveData: joinedZwaveData,
         cancelZwaveDataInterval: cancelZwaveDataInterval,
-        runCmd: runCmd,
-        store: store,
-        getDeviceClasses: getDeviceClasses,
-        getSelectZDDX: getSelectZDDX,
-        getZddXml: getZddXml,
+        purgeCache: purgeCache,
+        // With promises
         getCfgXml: getCfgXml,
         putCfgXml: putCfgXml,
-        getTiming: getTiming,
-        getQueueData: getQueueData,
-        updateQueueData: updateQueueData,
-        cancelQueueDataInterval: cancelQueueDataInterval,
-        runJs: runJs,
-        fwUpdate: fwUpdate,
-        getReorgLog: getReorgLog,
-        putReorgLog: putReorgLog,
-        purgeCache: purgeCache,
         getUzb: getUzb,
         updateUzb: updateUzb,
         getLicense: getLicense,
         zmeCapabilities: zmeCapabilities,
         getLanguageFile: getLanguageFile,
-        //Test New functions
         logInApi:  logInApi,
         getApiLocal: getApiLocal,
         loadZwaveApiData: loadZwaveApiData,
@@ -75,7 +58,12 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         getTextFile: getTextFile,
         storeTextToFile: storeTextToFile,
         updateDeviceFirmware: updateDeviceFirmware,
-        uploadApiFile: uploadApiFile
+        uploadApiFile: uploadApiFile,
+        // Probably remove
+        store: store,
+        updateZwaveDataSince: updateZwaveDataSince,
+        getReorgLog: getReorgLog,
+        putReorgLog: putReorgLog
     });
     /**
      * Get IP
@@ -108,10 +96,10 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             });
             request.success(function (data) {
                 apiData = data;
-                pageLoader(true);
+                //pageLoader(true);
                 return callback(data);
             }).error(function () {
-                pageLoader(true);
+                //pageLoader(true);
                 handleError(false, true, false);
 
 
@@ -119,71 +107,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         }
     }
 
-    /**
-     * Gets all of the data in the remote collection without a "Loading data..." notification.
-     */
-    function getZwaveDataQuietly(callback) {
-        var time = Math.round(+new Date() / 1000);
-        if (apiData) {
-            return callback(apiData);
-        } else {
 
-            var request = $http({
-                method: "POST",
-                url: cfg.server_url + cfg.update_url + "0"
-            });
-            request.success(function (data) {
-                apiData = data;
-                return callback(data);
-            }).error(function () {
-                handleError(false, true, true);
-
-            });
-        }
-    }
-
-    /**
-     * Gets updated data in the remote collection.
-     */
-    function  updateZwaveData(callback) {
-        var time = Math.round(+new Date() / 1000);
-        var refresh = function () {
-            var request = $http({
-                method: "POST",
-                url: cfg.server_url + cfg.update_url + time
-            });
-            request.success(function (data) {
-                time = data.updateTime;
-                return callback(data);
-            }).error(function () {
-                handleError();
-
-            });
-        };
-        apiDataInterval = $interval(refresh, cfg.interval);
-    }
-
-    /**
-     * Gets one update of data in the remote collection since a specific time.
-     * @param since the time (in seconds) to update from.
-     * @param callback called in case of successful data reception.
-     * @param errorCallback called in case of error.
-     */
-    function updateZwaveDataSince(since, callback, errorCallback) {
-        var time = since;
-        var request = $http({
-            method: "POST",
-            url: cfg.server_url + cfg.update_url + time
-        });
-        request.success(function (data) {
-            time = data.updateTime;
-            return callback(data);
-        }).error(function (error) {
-            handleError();
-            if (errorCallback !== undefined)
-                errorCallback(error);
-        });
-    }
 
     /**
      * Get updated data and join with ZwaveData
@@ -240,131 +164,23 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
     }
 
     /**
-     * Run api cmd
-     */
-    function runCmd(param, request, error, noFade) {
-        var url = (request ? cfg.server_url + request : cfg.server_url + cfg.store_url + param);
-        var request = $http({
-            method: 'POST',
-            url: url
-        });
-        request.success(function (data) {
-            if (!noFade) {
-                $('button .fa-spin,a .fa-spin').fadeOut(1000);
-            }
-
-            handleSuccess(data);
-        }).error(function () {
-            if (!noFade) {
-                $('button .fa-spin,a .fa-spin').fadeOut(1000);
-            }
-            if (error) {
-                $window.alert(error + '\n' + url);
-            }
-
-        });
-
-    }
-
-    /**
-     * Run store api cmd
-     */
-    function store(param, success, error) {
-        var url = cfg.server_url + cfg.store_url + param;
-        var request = $http({
-            method: 'POST',
-            url: url
-        });
-        request.success(function (data) {
-            handleSuccess(data);
-            if (success)
-                success();
-        }).error(function (err) {
-            handleError();
-            if (error)
-                error(err);
-        });
-
-    }
-
-    /**
-     * Get device classes from XML file
-     */
-    function getDeviceClasses(callback) {
-        if (deviceClasses) {
-            return callback(deviceClasses);
-        } else {
-            var request = $http({
-                method: "get",
-                url: cfg.server_url + cfg.device_classes_url
-            });
-            request.success(function (data) {
-                var x2js = new X2JS();
-                var json = x2js.xml_str2json(data);
-                deviceClasses = json;
-                return callback(deviceClasses);
-            }).error(function () {
-                handleError();
-
-            });
-        }
-    }
-
-    /**
-     * Get zddx device selection
-     */
-    function getSelectZDDX(nodeId, callback, alert) {
-        var request = $http({
-            method: "POST",
-            url: cfg.server_url + cfg.store_url + 'devices[' + nodeId + '].GuessXML()'
-        });
-        request.success(function (data) {
-            return callback(data);
-        }).error(function () {
-            $(alert).removeClass('allert-hidden');
-
-        });
-    }
-
-    /**
-     * Get ZddXml file
-     */
-    function getZddXml(file, callback) {
-        var cachedZddXml = myCache.get(file);
-        if (cachedZddXml) {
-            return callback(cachedZddXml);
-        } else {
-            var request = $http({
-                method: "get",
-                url: cfg.server_url + cfg.zddx_url + file
-            });
-            request.success(function (data) {
-                var x2js = new X2JS();
-                var json = x2js.xml_str2json(data);
-                myCache.put(file, json);
-                return callback(json);
-            }).error(function () {
-                handleError();
-
-            });
-        }
-    }
-
-    /**
      * Get config XML file
      */
-    function getCfgXml(callback) {
-        var request = $http({
-            method: "get",
+    function getCfgXml() {
+        // NOT Cached data
+        return $http({
+            method: 'get',
             url: cfg.server_url + '/config/Configuration.xml'
-        });
-        request.success(function (data) {
+        }).then(function (response) {
             var x2js = new X2JS();
-            var json = x2js.xml_str2json(data);
-            return callback(json);
-        }).error(function () {
-            return callback(null);
-
+            var json = x2js.xml_str2json(response.data);
+            if (json) {
+                return json;
+            } else {// invalid response
+                return $q.reject(response);
+            }
+        }, function (response) {// something went wrong
+            return $q.reject(response);
         });
     }
 
@@ -372,122 +188,20 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
      * Put config XML file
      */
     function putCfgXml(data) {
-        var request = $http({
+        return $http({
             method: "POST",
-            //dataType: "text", 
+            //dataType: "text",
             url: cfg.server_url + '/config/Configuration.xml',
             data: data,
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
+        }).then(function (response) {
+            return response;
+        }, function (error) {// something went wrong
+
+            return $q.reject(error);
         });
-        request.success(function (data) {
-            handleSuccess(data);
-        }).error(function (error) {
-            $('button .fa-spin,a .fa-spin').fadeOut(1000);
-            handleError();
-
-        });
-    }
-
-
-    /**
-     * Get timing (statistics) data
-     */
-    function  getTiming(callback) {
-        getAppIp();
-        var request = $http({
-            method: "POST",
-            //url: 'storage/timing.json'
-            url: cfg.server_url + cfg.stat_url
-        });
-        request.success(function (data) {
-            return callback(data);
-        }).error(function () {
-            console.log('Error: CommunicationStatistics');
-            handleError(false, true);
-
-        });
-    }
-
-
-
-    /**
-     * Load Queue data
-     */
-    function getQueueData(callback) {
-        if (typeof (callback) != 'function') {
-            return;
-        }
-        ;
-        var request = $http({
-            method: "POST",
-            url: cfg.server_url + cfg.queue_url
-        });
-        request.success(function (data) {
-            return callback(data);
-        }).error(function () {
-            handleError();
-
-        });
-    }
-
-    /**
-     * Load and update Queue data
-     */
-    function updateQueueData(callback) {
-        var refresh = function () {
-            getQueueData(callback);
-        };
-        queueDataInterval = $interval(refresh, cfg.queue_interval);
-    }
-    /**
-     * Cancel Queue interval
-     */
-    function cancelQueueDataInterval() {
-        if (angular.isDefined(queueDataInterval)) {
-            $interval.cancel(queueDataInterval);
-            queueDataInterval = undefined;
-        }
-        return;
-    }
-
-    /**
-     * Run JavaScript cmd
-     */
-    function runJs(param) {
-        var request = $http({
-            method: 'POST',
-            dataType: "json",
-            url: cfg.server_url + cfg.runjs_url + param
-        });
-        request.success(function (data) {
-            handleSuccess(data);
-        }).error(function () {
-            handleError();
-
-        });
-
-    }
-
-    /**
-     * Run Firmware Update
-     */
-    function fwUpdate(nodeId, data) {
-        var uploadUrl = cfg.server_url + cfg.fw_update_url + '/' + nodeId;
-        var fd = new FormData();
-        fd.append('file', data.file);
-        fd.append('url', data.url);
-        fd.append('targetId', data.targetId);
-        $http.post(uploadUrl, fd, {
-            transformRequest: angular.identity,
-            headers: {'Content-Type': undefined}
-        }).success(function () {
-            handleSuccess(data);
-        }).error(function () {
-            handleError();
-        });
-
     }
     /**
      * Update Uzb
@@ -581,123 +295,38 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
 
 
     /**
-     * Gets reorg log from remote text file
+     * Get a file with language keys values from the app/lang directory
+     * @param {string} lang
+     * @returns {unresolved}
      */
-    function getReorgLog(callback) {
-        return $http({method: 'GET', url: cfg.server_url + cfg.reorg_log_url + '?at=' + (new Date()).getTime()}).success(function (data, status, headers, config) {
-            callback(data);
-        });
-    }
-
-    /**
-     * Put reorg log in remote text file
-     */
-    function putReorgLog(log) {
-        return $.ajax({
-            type: "PUT",
-            dataType: "text",
-            url: cfg.server_url + cfg.reorg_log_url,
-            contentType: "text/plain",
-            data: log
-        });
-    }
-
-    /**
-     * Clear the cached ZWaveData.
-     */
-    function purgeCache() {
-        apiData = undefined;
-    }
-
-    /**
-     * Load language file
-     */
-    function getLanguageFile(callback, lang) {
+    function getLanguageFile(lang) {
         var langFile = 'language.' + lang + '.json';
         var cached = myCache.get(langFile);
-        if (cached) {
-            return callback(cached);
-        }
-        var request = {
-            method: "get",
-            url: cfg.lang_dir + langFile
-        };
-        return $http(request).success(function (data) {
-            myCache.put(langFile, data);
-            return callback(data);
-        }).error(function () {
-            handleError(false, true);
 
+        if (cached) {
+            var deferred = $q.defer();
+            deferred.resolve(cached);
+            return deferred.promise;
+        }
+        return $http({
+            method: 'get',
+            url: cfg.lang_dir + langFile
+        }).then(function (response) {
+            if (typeof response.data === 'object') {
+                myCache.put(langFile, response);
+                return response;
+            } else {
+                return $q.reject(response);
+            }
+        }, function (response) {// something went wrong
+            return $q.reject(response);
         });
     }
 
-    /**
-     * 
-     * Handle errors
-     */
-    function handleError(message, showResponse, hideContent) {
-        // Custom IP show/hide
-        $('.custom-ip-error').show();
-        $('.custom-ip-success').hide();
 
-        var msg = (message ? message : 'Error handling data from server');
-        if (showResponse) {
-            $('#respone_container').show();
-            $('#respone_container_inner').html('<div class="alert alert-danger alert-dismissable response-message"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <i class="icon-ban-circle"></i> ' + msg + '</div>');
-        }
-        $('.error-hide').hide();
 
-        if (hideContent) {
-            $('#main_content').hide();
-        }
 
-        console.log('Error');
 
-    }
-
-    /**
-     * 
-     * Handle cmd errors
-     */
-    function handleCmdError(message) {
-        var msg = (message ? message : 'Error handling data from server');
-        $('#respone_container').show();
-        $('#respone_container_inner').html('<div class="alert alert-danger alert-dismissable response-message"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <i class="icon-ban-circle"></i> ' + msg + '</div>');
-        console.log('Error');
-
-    }
-
-    /**
-     * Handle success response
-     */
-    function handleSuccess(response) {
-        console.log('Success');
-        return;
-
-    }
-
-    /**
-     * Show / Hide page loader
-     */
-    function pageLoader(hide) {
-        // Custom IP show/hide
-        $('.custom-ip-error').hide();
-        $('.custom-ip-success').show();
-
-        if (hide) {
-            $('#respone_container').hide();
-            $('#main_content').show();
-            $('.error-hide').show();
-            return;
-        }
-        //$('#main_content').hide();
-        $('#respone_container').show();
-        $('#respone_container_inner').html('<div class="alert alert-warning page-load-spinner"><i class="fa fa-spinner fa-lg fa-spin"></i><br /> Loading data....</div>');
-        return;
-
-    }
-
-    ///////////////////////////////////////////////////////////// Test - new functions /////////////////////////////////////////////////////////////////////
     /**
      * Handles login process
      * @param {object} data
@@ -1061,6 +690,302 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         });
 
     }
+
+    /* /////////////////////////////////////// Probably remove /////////////////////////////////////////////// */
+    /**
+     *
+     * Handle errors
+     */
+    function handleError(message, showResponse, hideContent) {
+        // Custom IP show/hide
+        $('.custom-ip-error').show();
+        $('.custom-ip-success').hide();
+
+        var msg = (message ? message : 'Error handling data from server');
+        if (showResponse) {
+            $('#respone_container').show();
+            $('#respone_container_inner').html('<div class="alert alert-danger alert-dismissable response-message"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <i class="icon-ban-circle"></i> ' + msg + '</div>');
+        }
+        $('.error-hide').hide();
+
+        if (hideContent) {
+            $('#main_content').hide();
+        }
+
+        console.log('Error');
+
+    }
+
+    /**
+     *
+     * Handle cmd errors
+     */
+    function handleCmdError(message) {
+        var msg = (message ? message : 'Error handling data from server');
+        $('#respone_container').show();
+        $('#respone_container_inner').html('<div class="alert alert-danger alert-dismissable response-message"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <i class="icon-ban-circle"></i> ' + msg + '</div>');
+        console.log('Error');
+
+    }
+
+    /**
+     * Handle success response
+     */
+    function handleSuccess(response) {
+        console.log('Success');
+        return;
+
+    }
+
+    /**
+     * Clear the cached ZWaveData.
+     */
+    function purgeCache() {
+        apiData = undefined;
+    }
+    /**
+     * todo: Deprecated (used only in ReorganizationController)
+     * Gets one update of data in the remote collection since a specific time.
+     * @param since the time (in seconds) to update from.
+     * @param callback called in case of successful data reception.
+     * @param errorCallback called in case of error.
+     */
+    function updateZwaveDataSince(since, callback, errorCallback) {
+        var time = since;
+        var request = $http({
+            method: "POST",
+            url: cfg.server_url + cfg.update_url + time
+        });
+        request.success(function (data) {
+            time = data.updateTime;
+            return callback(data);
+        }).error(function (error) {
+            handleError();
+            if (errorCallback !== undefined)
+                errorCallback(error);
+        });
+    }
+    /**
+     * todo: Deprecated (used only in ReorganizationController)
+     * Run store api cmd
+     */
+    function store(param, success, error) {
+        var url = cfg.server_url + cfg.store_url + param;
+        var request = $http({
+            method: 'POST',
+            url: url
+        });
+        request.success(function (data) {
+            handleSuccess(data);
+            if (success)
+                success();
+        }).error(function (err) {
+            handleError();
+            if (error)
+                error(err);
+        });
+
+    }
+
+    /**
+     * todo: Deprecated (used only in ReorganizationController)
+     * Gets reorg log from remote text file
+     */
+    function getReorgLog(callback) {
+        return $http({method: 'GET', url: cfg.server_url + cfg.reorg_log_url + '?at=' + (new Date()).getTime()}).success(function (data, status, headers, config) {
+            callback(data);
+        });
+    }
+
+    /**
+     * todo: Deprecated (used only in ReorganizationController)
+     * Put reorg log in remote text file
+     */
+    function putReorgLog(log) {
+        return $.ajax({
+            type: "PUT",
+            dataType: "text",
+            url: cfg.server_url + cfg.reorg_log_url,
+            contentType: "text/plain",
+            data: log
+        });
+    }
+
+
+
+    /* /////////////////////////////////////// Remove /////////////////////////////////////////////// */
+
+
+    /**
+     * todo: deprecated
+     * Run api cmd
+     */
+    /*function runCmd(param, request, error, noFade) {
+     var url = (request ? cfg.server_url + request : cfg.server_url + cfg.store_url + param);
+     var request = $http({
+     method: 'POST',
+     url: url
+     });
+     request.success(function (data) {
+     if (!noFade) {
+     $('button .fa-spin,a .fa-spin').fadeOut(1000);
+     }
+
+     handleSuccess(data);
+     }).error(function () {
+     if (!noFade) {
+     $('button .fa-spin,a .fa-spin').fadeOut(1000);
+     }
+     if (error) {
+     $window.alert(error + '\n' + url);
+     }
+
+     });
+
+     }*/
+
+
+    /**
+     * todo: deprecated
+     * Get zddx device selection
+     */
+    /*function getSelectZDDX(nodeId, callback, alert) {
+     var request = $http({
+     method: "POST",
+     url: cfg.server_url + cfg.store_url + 'devices[' + nodeId + '].GuessXML()'
+     });
+     request.success(function (data) {
+     return callback(data);
+     }).error(function () {
+     $(alert).removeClass('allert-hidden');
+
+     });
+     }*/
+
+    /**
+     * todo: deprecated
+     * Get ZddXml file
+     */
+    /*function getZddXml(file, callback) {
+     var cachedZddXml = myCache.get(file);
+     if (cachedZddXml) {
+     return callback(cachedZddXml);
+     } else {
+     var request = $http({
+     method: "get",
+     url: cfg.server_url + cfg.zddx_url + file
+     });
+     request.success(function (data) {
+     var x2js = new X2JS();
+     var json = x2js.xml_str2json(data);
+     myCache.put(file, json);
+     return callback(json);
+     }).error(function () {
+     handleError();
+
+     });
+     }
+     }*/
+
+
+
+    /**
+     * todo: deprecated
+     * Run JavaScript cmd
+     */
+    /*function runJs(param) {
+     var request = $http({
+     method: 'POST',
+     dataType: "json",
+     url: cfg.server_url + cfg.runjs_url + param
+     });
+     request.success(function (data) {
+     handleSuccess(data);
+     }).error(function () {
+     handleError();
+
+     });
+
+     }*/
+
+    /**
+     * todo: deprecated
+     * Run Firmware Update
+     */
+    /*function fwUpdate(nodeId, data) {
+     var uploadUrl = cfg.server_url + cfg.fw_update_url + '/' + nodeId;
+     var fd = new FormData();
+     fd.append('file', data.file);
+     fd.append('url', data.url);
+     fd.append('targetId', data.targetId);
+     $http.post(uploadUrl, fd, {
+     transformRequest: angular.identity,
+     headers: {'Content-Type': undefined}
+     }).success(function () {
+     handleSuccess(data);
+     }).error(function () {
+     handleError();
+     });
+
+     }*/
+
+
+
+
+
+    /**
+     * todo: deprecated
+     * Load Queue data
+     */
+    /*function getQueueData(callback) {
+     if (typeof (callback) != 'function') {
+     return;
+     }
+     ;
+     var request = $http({
+     method: "POST",
+     url: cfg.server_url + cfg.queue_url
+     });
+     request.success(function (data) {
+     return callback(data);
+     }).error(function () {
+     handleError();
+
+     });
+     }*/
+
+    /**
+     * todo: deprecated
+     * Load and update Queue data
+     */
+    /*function updateQueueData(callback) {
+     var refresh = function () {
+     getQueueData(callback);
+     };
+     queueDataInterval = $interval(refresh, cfg.queue_interval);
+     }*/
+
+    /**
+     * todo: deprecated
+     * Show / Hide page loader
+     */
+   /* function pageLoader(hide) {
+        // Custom IP show/hide
+        $('.custom-ip-error').hide();
+        $('.custom-ip-success').show();
+
+        if (hide) {
+            $('#respone_container').hide();
+            $('#main_content').show();
+            $('.error-hide').show();
+            return;
+        }
+        //$('#main_content').hide();
+        $('#respone_container').show();
+        $('#respone_container_inner').html('<div class="alert alert-warning page-load-spinner"><i class="fa fa-spinner fa-lg fa-spin"></i><br /> Loading data....</div>');
+        return;
+
+    }*/
 });
 
 

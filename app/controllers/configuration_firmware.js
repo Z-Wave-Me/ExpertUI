@@ -8,8 +8,9 @@
  * @class ConfigFirmwareController
  *
  */
-appController.controller('ConfigFirmwareController', function ($scope, $routeParams, $location, $cookies, $timeout,cfg, dataService, deviceService) {
+appController.controller('ConfigFirmwareController', function ($scope, $routeParams, $location, $cookies, $timeout,$filter,cfg, dataService, deviceService) {
     $scope.devices = [];
+    $scope.deviceName = '';
     $scope.deviceId = 0;
     $scope.activeTab = 'firmware';
     $scope.activeUrl = 'configuration/firmware/';
@@ -28,7 +29,7 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
 
     // Load data
     $scope.load = function (nodeId) {
-        dataService.getZwaveData(function (ZWaveAPIData) {
+        dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
             if(_.isEmpty($scope.devices)){
                 $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
@@ -42,10 +43,13 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
             $cookies.configuration_id = nodeId;
             $cookies.config_url = $scope.activeUrl + nodeId;
             $scope.deviceId = nodeId;
+            $scope.deviceName = $filter('deviceName')(nodeId, node);
 
             if (0x7a in node.instances[0].commandClasses) {
                 $scope.showForm = true;
             }
+        }, function(error) {
+            alertify.alertError($scope._t('error_load_data'));
         });
     };
     $scope.load($routeParams.nodeId);

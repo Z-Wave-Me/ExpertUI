@@ -268,11 +268,9 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                     configRequest += cmd.command + '(' + v.parameterValues + ')';
                     if (confNum) {
                         if (confNum == v.confNum) {
-                            //dataService.runCmd(configRequest, false, $scope._t('error_handling_data'));
                             dataService.runZwaveCmd(cfg.store_url + configRequest);
                         }
                     } else {
-                        //dataService.runCmd(configRequest, false, $scope._t('error_handling_data'));
                         dataService.runZwaveCmd(cfg.store_url + configRequest);
                     }
 
@@ -280,24 +278,21 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                 break;
             case '75':// Protection
                 request += cmd.command + '(' + configValues.join(",") + ')';
-                //dataService.runCmd(request, false, $scope._t('error_handling_data'));
                 dataService.runZwaveCmd(cfg.store_url + request);
                 break;
             case '84':// Wakeup
                 request += cmd.command + '(' + configValues.join(",") + ')';
-                //dataService.runCmd(request, false, $scope._t('error_handling_data'));
                 dataService.runZwaveCmd(cfg.store_url + request);
                 break;
             case '27':// Switch all
                 request += cmd.command + '(' + configValues.join(",") + ')';
-                //dataService.runCmd(request, false, $scope._t('error_handling_data'));
                 dataService.runZwaveCmd(cfg.store_url + request);
                 break;
             default:
                 break;
         }
 
-        dataService.getCfgXml(function (cfgXml) {
+        dataService.getCfgXml().then(function (cfgXml) {
             var xmlFile = deviceService.buildCfgXml(xmlData, cfgXml, cmd['id'], cmd['commandclass']);
             dataService.putCfgXml(xmlFile);
         });
@@ -377,7 +372,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                 }
             });
         }
-        dataService.getCfgXml(function (cfgXml) {
+        dataService.getCfgXml().then(function (cfgXml) {
             $scope.configCont = deviceService.configConfigCont(node, nodeId, zddXml, cfgXml, $scope.lang, $scope.languages);
             $scope.wakeupCont = deviceService.configWakeupCont(node, nodeId, ZWaveAPIData, cfgXml);
             $scope.protectionCont = deviceService.configProtectionCont(node, nodeId, ZWaveAPIData, cfgXml);

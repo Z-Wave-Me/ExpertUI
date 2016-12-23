@@ -33,6 +33,21 @@ angApp.directive('bbAlert', function () {
     };
 });
 
+/**
+ * Displays an alert message within the span
+ * @class bbAlertText
+ */
+angApp.directive('bbAlertText', function () {
+    return {
+        restrict: "E",
+        replace: true,
+        scope: {alert: '='},
+        template: '<span class="alert-text" ng-if="alert.message" ng-class="alert.status">'
+        + '<i class="fa" ng-class="alert.icon"></i> <span ng-bind-html="alert.message|toTrusted"></span>'
+        + '</span>'
+    };
+});
+
 angApp.directive('sortBy', function () {
     return {
         restrict: "E",

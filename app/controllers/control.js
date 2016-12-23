@@ -242,13 +242,11 @@ appController.controller('ControlController', function ($scope, $interval, $time
          */
 
         if (deviceIncId) {
-            console.log('Include: ' + deviceIncId)
             var givenName = 'Device_' + deviceIncId;
             var updateTime = $filter('isTodayFromUnix')(data.controller.data.lastIncludedDevice.updateTime);
             //Run CMD
             var cmd = 'devices[' + deviceIncId + '].data.givenName.value=\'' + givenName + '\'';
-            dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
-            //$scope.controlDh.inclusion.lastIncludedDevice = $scope._t('nm_last_included_device') + '  (' + updateTime + ')  <a href="#configuration/interview/' + deviceIncId + '"><strong>' + givenName + '</strong></a>';
+            dataService.runZwaveCmd(cfg.store_url + cmd);
             $scope.controlDh.inclusion.lastIncludedDevice = {
                 message: $scope._t('nm_last_included_device') + '  (' + updateTime + ')  <a href="#configuration/interview/' + deviceIncId + '"><strong>' + givenName + '</strong></a>',
                 status: 'alert-success',
@@ -260,8 +258,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
          * Last excluded device
          */
        if (deviceExcId) {
-           console.log('Exclude: ' + deviceExcId)
-            var updateTime = $filter('isTodayFromUnix')(data.controller.data.lastExcludedDevice.updateTime);
+           var updateTime = $filter('isTodayFromUnix')(data.controller.data.lastExcludedDevice.updateTime);
             if (deviceExcId != 0) {
                 var txt = $scope._t('txt_device') + ' # ' + deviceExcId + ' ' + $scope._t('nm_excluded_from_network');
             } else {

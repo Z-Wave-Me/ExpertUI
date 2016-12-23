@@ -7,7 +7,8 @@
         </a>
 
         <!-- Config -->
-        <a class="btn btn-default" title="{{_t('nav_device_configuration')}}" href="#configuration/configuration/{{deviceId}}"
+        <a class="btn btn-default" title="{{_t('nav_device_configuration')}}"
+           href="#configuration/configuration/{{deviceId}}"
            ng-class="activeTab == 'configuration' ? 'active' : ''">
             <i class="fa fa-cogs"></i> <span class="btn-name">{{_t('nav_device_configuration')}}</span>
         </a>
@@ -44,10 +45,35 @@
     </div>
 </div>
 <div class="page-header form-inline" ng-if="_.size(devices) > 0">
-    <label>{{_t('h1_configuration_for')}}</label>
+    <!-- Device name and select -->
+    <div class="btn-group btn-goup-block_ btn-goup-2_" ng-click="expandNavi('configDevices', $event)">
+        <button class="btn btn-default">
+            (#{{deviceId}}) {{deviceName | cutText:true:40}}
+        </button>
+        <button class="btn btn-default">
+            <i class="fa fa-chevron-down"></i>
+        </button>
+    </div>
+
+    <!-- todo: deprecated <label>{{_t('h1_configuration_for')}}</label>
     <select name="devices" class="form-control" ng-model="deviceId" ng-change="changeDevice(deviceId)">
-        <option value="" ng-selected="v.id != deviceId">--- {{_t('select_device')}} ---</option>
-        <option ng-repeat="v in devices| orderBy:predicate:reverse" value="{{v.id}}" ng-selected="v.id == deviceId">(#{{v.id}}) {{v.name}}</option>
-    </select>
+        <option value="" ng-selected="v.id != deviceId">-&#45;&#45; {{_t('select_device')}} -&#45;&#45;</option>
+        <option ng-repeat="v in devices| orderBy:predicate:reverse" value="{{v.id}}" ng-selected="v.id == deviceId">
+            (#{{v.id}}) {{v.name}}
+        </option>
+    </select>-->
+</div>
+<!-- Page subnavi  categories -->
+<div class="page-navi" ng-if="naviExpanded.configDevices">
+    <div class="page-navi-in">
+        <div class="page-navi-content">
+            <a class="btn btn-default btn-tag" title="{{v.name}}"
+               ng-repeat="v in devices| orderBy:predicate:reverse"
+               ng-click="changeDevice(v.id)"
+               ng-class="v.id == deviceId ? 'active': ''">
+                (#{{v.id}}) {{v.name | cutText:true:30}}
+            </a>
+        </div>
+    </div>
 </div>
 <bb-alert alert="alert"></bb-alert>

@@ -4,7 +4,7 @@
     <div ng-include="'app/views/configuration/navi.html'"></div>
     <div ng-show="deviceId">
         <!-- rename_cont -->
-        <div class="cfg-block" id="rename_cont">
+        <!-- todo: deprecated  <div class="cfg-block" id="rename_cont">
             <h4><a href="" ng-click="goRename = !goRename">{{_t('device_rename_tooltip')}} <i class="fa fa-pencil"></i>
             </a></h4>
             <div ng-show="goRename">
@@ -23,13 +23,52 @@
                     </button>
                 </form>
             </div>
-        </div>
+        </div>-->
         <div class="cfg-block">
             <div class="row">
                 <div class="col-md-8">
                     <div class="table-responsive_">
                         <table class="table table-striped table-condensed table-cfg-interview">
                             <tbody>
+                            <!-- device_node_name -->
+                            <tr>
+                                <th>{{_t('device_node_name')}}</th>
+                                <td>
+                                    <!-- Text mode -->
+                                    <div ng-hide="goDeviceName">
+                                        {{deviceName}}
+                                        <button type="button" class="btn btn-default"
+                                                ng-click="goDeviceName = !goDeviceName"
+                                                ng-disabled="rowSpinner['deviceName']">
+
+                                            <bb-row-spinner
+                                                    spinner="rowSpinner['deviceName']"
+                                                    icon="'fa-pencil'">
+                                            </bb-row-spinner>
+                                        </button>
+
+                                    </div>
+                                    <!-- Edit mode -->
+                                    <form name="form_rename" id="form_rename" ng-model="form_rename" class="form _form-inline"
+                                          ng-show="goDeviceName"
+                                          ng-submit="renameDevice(form_rename,deviceName,'deviceName');goDeviceName = !goDeviceName" novalidate>
+                                        <div class="input-group">
+                                            <!-- Texfield -->
+                                            <input name="device_name" id="device_name" type="text" class="form-control"
+                                                   value="{{deviceName}}" ng-model="deviceName"/>
+                                            <!-- Button -->
+                                            <div class="input-group-btn">
+                                                <button type="submit" class="btn btn-primary" title="{{_t('btn_save')}}">
+                                                    <i class="fa fa-circle-o"></i> <span class="btn-name">{{_t('btn_save')}}</span>
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                    </form>
+
+                                </td>
+                            </tr>
+                            <!-- list -->
                             <tr ng-repeat="v in descriptionCont" ng-hide="v.val === '' || v.val === false || v.val === null">
                                 <th>{{_t(v.key)}}</th>
                                 <td id="{{v.key}}">
@@ -50,6 +89,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            <!-- device_interview_indicator -->
                             <tr>
                                 <th>{{_t('device_interview_indicator')}}</th>
                                 <td>
