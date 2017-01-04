@@ -50,13 +50,13 @@
                 <th>&nbsp;</th>
 
                 <th class="mobile-show td-action">
-                    <button class="btn btn-info" id="btn_ping_all_1"
+                    <button class="btn btn-primary" id="btn_ping_all_1"
                             ng-click="pingAllDevices('btn_ping_all_1','urlToStore')"
                             ng-disabled="rowSpinner['btn_ping_all_1']">
                         <bb-row-spinner
                                 spinner="rowSpinner['btn_ping_all_1']"
                                 label="_t('btn_checkall')"
-                                icon="'fa-check'">
+                                icon="'fa-circle-o'">
                         </bb-row-spinner>
                     </button>
                 </th>
@@ -83,18 +83,25 @@
                 <td class="row-interview">
                     <button class="btn btn-default"
                             ng-if="v.interview"
-                       ng-click="showModalInterview('#modal_interview', $index,v.id,v.name)" title="{{v.interview}}">
+                            ng-click="handleModalInterview('interviewModal',$event,$index,v.id,v.name)" title="{{v.interview}}">
                         <i class="fa fa-search-minus fa-lg text-danger"></i>
                     </button> &nbsp;
+
+                   <!-- <button class="btn btn-default"
+                            ng-if="v.interview"
+                       ng-click="showModalInterview('#modal_interview', $index,v.id,v.name)" title="{{v.interview}}">
+                        <i class="fa fa-search-minus fa-lg text-danger"></i>
+                    </button> &nbsp;-->
                 </td>
                 <td class="row-ping td-action">
                     <button class="btn btn-default" id="btn_ping_{{ v.rowId}}" title="{{_t('pingDevice')}}"
+                            title="{{ _t('pingDevice')}}"
                             ng-if="v.urlToStore"
                             ng-click="pingDevice(v.urlToStore)"
                             ng-disabled="rowSpinner[v.urlToStore]">
                         <bb-row-spinner
                                 spinner="rowSpinner[v.urlToStore]"
-                                icon="'fa-check text-success'">
+                                icon="'fa-circle-o text-success'">
 
                         </bb-row-spinner>
                     </button>
@@ -105,6 +112,9 @@
     </div>
 
     <!-- Modal interview -->
+    <div ng-include="'app/views/device/modal_status_interview.html'"></div>
+
+    <!-- Modal interview
     <div class="modal fade" id="modal_interview" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
@@ -139,7 +149,7 @@
                                 </td>
                                 <td data-title="{{_t('th_result')}}"
                                     ng-init="urlToForce = 'devices[' + deviceInfo.id + '].instances[' + v.iId + '].commandClasses[' +v.ccId+ '].Interview()'">
-                                    <span ng-if="v.interviewDone"><i class="fa fa-check text-success"></i></span>
+                                    <span ng-if="v.interviewDone"><i class="fa fa-circle-o text-success"></i></span>
                                     <button class="btn btn-default" id="btn_force_interview_{{v.ccId}}"
                                             ng-if="!v.interviewDone"
                                             ng-click="pingDevice(urlToForce)"
@@ -165,9 +175,9 @@
                 </div>
             </div>
         </div>
-    </div><!-- /.Modal -->
+    </div> /.Modal -->
 
-    <!-- Modal CommandClass -->
+    <!-- Modal CommandClass
     <div class="modal fade" id="modal_command_class" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
@@ -185,5 +195,5 @@
                 </div>
             </div>
         </div>
-    </div><!-- /.Modal -->
-</div>
+    </div> /.Modal -->
+</div><!-- /ng-controler -->

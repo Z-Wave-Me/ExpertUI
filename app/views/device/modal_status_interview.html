@@ -1,0 +1,52 @@
+<!-- interviewModal -->
+<div id="interviewModal" class="appmodal" ng-show="modalArr.interviewModal">
+    <div class="appmodal-in">
+        <div class="appmodal-header">
+                <span class="appmodal-close" ng-click="interviewDeviceId = null;handleModal('interviewModal', $event)"><i
+                        class="fa fa-times"></i></span>
+            <h3>{{_t('interview_results_dialog_title')}}: {{deviceInfo.name}}</h3>
+        </div>
+        <div class="appmodal-body modal-h-600">
+
+            <div id="table_mobile_modal_1">
+                <table class="table table-condensed">
+                    <thead>
+                    <tr>
+                        <th>{{_t('th_command_class')}}</th>
+                        <th>{{_t('th_result')}}</th>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="v in interviewCommands" id="{{v.ccId}}">
+
+                        <td data-title="{{_t('th_command_class')}}">
+                            {{v.ccName}}
+                        </td>
+                        <td data-title="{{_t('th_result')}}">
+                            <span ng-if="v.interviewDone"><i class="fa fa-check text-success"></i></span>
+                            <button id="btn_force_interview_{{v.ccId}}" class="btn btn-primary btn-sm"
+                                    ng-init="apiUrl = 'devices[' + deviceInfo.id + '].instances[' + v.iId + '].commandClasses[' +v.ccId+ '].Interview()'""
+                                    ng-if="!v.interviewDone"
+                                    ng-click="interviewForceDevice(apiUrl)"
+                                    ng-disabled="rowSpinner[apiUrl]">
+
+                                <bb-row-spinner
+                                        spinner="rowSpinner[apiUrl]"
+                                        label="_t('config_ui_force_interview')"
+                                        icon="'fa-circle-o'">
+                                </bb-row-spinner>
+                            </button>
+                            &nbsp;
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="appmodal-footer">
+            <!-- Close -->
+            <button type="button" class="btn btn-default" ng-click="interviewDeviceId = null;handleModal('interviewModal', $event)">
+                <i class="fa fa-times text-danger"></i> <span class="btn-name">{{_t('btn_cancel')}}</span>
+            </button>
+        </div>
+    </div>
+</div><!-- /#modal interviewModal -->

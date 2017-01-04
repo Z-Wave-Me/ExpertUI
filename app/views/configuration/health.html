@@ -1,9 +1,8 @@
 <!-- Link health -->
 <div ng-controller="ConfigHealthController">
     <!-- Config navigation -->
-    <div ng-include="'app/views/configuration/header.html'"></div>
-    <bb-alert alert="alert"></bb-alert>
-    <div class="tab-content" ng-show="deviceId && !_.isEmpty(health.neighbours)">
+    <div ng-include="'app/views/configuration/navi.html'"></div>
+    <div ng-show="deviceId && !_.isEmpty(health.neighbours)">
         <div id="table_mobile">
             <div class="alert ng-scope alert-warning" ng-if="!health.device.hasPowerLevel">
                 <i class="fa fa-exclamation-circle"></i> {{_t('link_health_no_powerlevel')}}
@@ -35,11 +34,12 @@
                             {{ _t('linkquality')}}
                         </th>
                         <th class="mobile-show">
-                            <button class="btn btn-info" id="btn_test_all_1"
+                            <button class="btn btn-primary" id="btn_test_all_1"
                                     ng-if="health.device.hasPowerLevel"
                                     ng-click="testAllLinks('all_1')"
                                     ng-disabled="rowSpinner['all_1']">
                                 <bb-row-spinner
+                                        icon="'fa-circle-o'"
                                         spinner="rowSpinner['all_1']"
                                         label="_t('test_all_links')">
                                 </bb-row-spinner>
@@ -76,21 +76,23 @@
                         </td>
                         <td data-title="" ng-switch on="v.deviceType">
                             <!-- Test node -->
-                            <button class="btn btn-primary" id="btn_test_{{ v.id}}"
+                            <button class="btn btn-default" id="btn_test_{{ v.id}}"
                                     ng-if="health.device.hasPowerLevel"
                                     ng-click="runZwaveCmd(v.cmdTestNode)"
                                     ng-disabled="rowSpinner[v.cmdTestNode]">
                                 <bb-row-spinner
+                                        icon="'fa-circle-o text-success'"
                                         spinner="rowSpinner[v.cmdTestNode]"
                                         label="_t('test_link')">
                                 </bb-row-spinner>
                             </button>
                             <!-- NOP -->
-                            <button class="btn btn-info" id="btn_nop_{{ v.id}}"
+                            <button class="btn btn-default" id="btn_nop_{{ v.id}}"
                                     ng-if="!health.device.hasPowerLevel && v.type === 'static'" 
                                     ng-click="runZwaveNopCmd(v.cmdNop)"
                                     ng-disabled="rowSpinner[v.cmdNop]">
                                 <bb-row-spinner
+                                        icon="'fa-circle-o text-success'"
                                         spinner="rowSpinner[v.cmdNop]"
                                         label="_t('nop')">
                                 </bb-row-spinner>

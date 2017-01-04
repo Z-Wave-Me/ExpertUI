@@ -1,0 +1,53 @@
+<!-- wakeup_cont -->
+<div class="cfg-block" id="wakeup_cont" ng-if="wakeupCont">
+    <h4>{{_t('wakeup_list')}}</h4>
+    <div class="cfg-block-content" ng-init="formName = 'form_wakeup'">
+        <form name="{{formName}}" id="{{formName}}" class="form"
+                ng-submit="submitApplyConfigCfg(formName,{'id': deviceId,'instance': '0','commandclass': '84','command': 'Set'}, wakeupCont, hasBattery,false,false,false,'saveIntoDeviceWakeup')" novalidate>
+            <div>
+               <!-- update from device -->
+                <button class="btn btn-primary" type="button"
+                        ng-click="updateFromDevice(wakeupCont.cmd + '.Get()', hasBattery, deviceId, formName,'updateFromDeviceWakeup')"
+                        ng-disabled="rowSpinner['updateFromDeviceWakeup']">
+                    <bb-row-spinner
+                            spinner="rowSpinner['updateFromDeviceWakeup']"
+                            label="_t('btn_update_from_device')"
+                            icon="'fa-files-o'">
+                    </bb-row-spinner>
+                </button>
+
+                <!-- save into device -->
+                <button class="btn btn-primary" type="submit"
+                        ng-disabled="rowSpinner['saveIntoDeviceWakeup']">
+                    <bb-row-spinner
+                            spinner="rowSpinner['saveIntoDeviceWakeup']"
+                            label="_t('apply_config')"
+                            icon="'fa-save'">
+                    </bb-row-spinner>
+                </button>
+            </div>
+            <div class="clearfix"></div>
+            <div class="cfg-control-content">
+                <div ng-repeat="v in wakeupCont.params">
+                    <div class="form-inline" >
+                        <expert-command-input
+                                collection='v'
+                                values='wakeupCont.values[0]'
+                                devices='devices'
+                                get-node-devices='getNodeDevices'
+                                curr_value='wakeupCont.configCconfigValue'
+                                curr_node_value='wakeupCont.configCconfigNodeValue'
+                                name='wakeupCont.name'
+                        ></expert-command-input>
+                    </div>
+
+                </div>
+                <div class="clearfix"></div>
+                <p class="cfg-info">
+                    <span class="is-updated-{{wakeupCont.isUpdated}}">{{_t('updated')}}: {{wakeupCont.updateTime}} </span>
+                    <span> | {{_t('default_value_is')}}: <config-default-value  collection='v' show_default_value='wakeupCont.showDefaultValue' default_value='wakeupCont.defaultValue'></config-default-value></span>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>

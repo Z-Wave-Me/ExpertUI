@@ -1,270 +1,29 @@
 <!-- Configuration view -->
 <div ng-controller="ConfigConfigurationController">
-    <!-- Config navigation -->
-    <div ng-include="'app/views/configuration/header.html'"></div>
-
-    <div class="tab-content" ng-show="deviceId">
-        <!--<div class="text-alert-list" ng-if="!configCont && deviceZddx.length < 1">
-          <i class="fa fa-info-circle text-info"></i> {{_t('no_zddx_file')}} <a href="#configuration/interview/{{deviceId}}"><strong>{{_t('link_to_device_description')}}</strong></a>
-       </div>-->
+    <div ng-include="'app/views/configuration/navi.html'"></div>
+    <div ng-show="deviceId">
         <!-- Generic configuration fom expert commands -->
-        <div class="cfg-block"  ng-if="hasConfigurationCc.command" ng-controller="ConfigCommandsController">
-            <h4>{{hasConfigurationCc.commandClass}}</h4>
-            <div class="commands-data" 
-                ng-repeat="c in hasConfigurationCc.command| orderBy:predicate:reverse" 
-                 ng-init="formName = 'form_' + c.data.method + '_' + v.rowId">
-
-                <form 
-                    name="{{formName}}" 
-                    id="{{formName}}"
-                    class="form form_commands" 
-                    role="form"
-                    ng-submit="submitExpertCommndsForm(formName, hasConfigurationCc.cmd + '.' + c.data.method)" 
-                    novalidate>
-                    <div class="commands-data-control">
-                        <div class="form-inline" ng-repeat="(pk,p) in c.data.params">
-                            <expert-command-input 
-                                collection='p' 
-                                values='c.data.values[pk]'
-                                devices='devices'
-                                name='c.data.method'
-                                get-node-devices='getNodeDevices'
-                                ></expert-command-input>
-                            <!-- {{pk}} {{p}} 
-                            {{c.data.values[pk]}}-->
-
-                        </div>
-                        <button
-                            type="submit"
-                            class="btn btn-primary" 
-                            id="btn_update_{{ v.rowId}}"
-                            >{{c.data.method}}</button>
-                    </div>
-
-
-                </form>
-            </div>
-        </div>
-        
+        <div ng-include="'app/views/configuration/configuration_commands.html'"></div>
          <!-- Device description -->
         <div ng-if="!configCont && deviceZddx.length > 0">
-            <p ng-bind-html="_t('select_zddx_help') | toTrusted"></p>
-            <select 
-                name="select_zddx_help" 
-                id="select_zddx_help" 
-                class="form-control" 
-                ng-change="changeDeviceSelect('#select_zddx_help', '#device_select_image', modelSelectZddx)" 
-                ng-model="modelSelectZddx">
-                <option value="">---</option>
-                <option
-                    ng-repeat="v in deviceZddx| orderBy:'brandName':false"
-                    value="{{v.fileName}}" 
-                    data-image="{{v.deviceImage}}">{{((v.brandName == '' && v.productName == '')?('Unnamed ZDDX: ' + v.fileName):(v.brandName + ' ' + v.productName))}}</option>
-            </select>
-            <div id="device_select_image_container">
-                <div id="device_select_image">
-                </div>
-            </div>
-            <div class="text-right" ng-if="modelSelectZddx">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="runCmdDeviceSelect(deviceId)">{{_t('btn_save')}}</button>
-            </div>
-
+            <button id="btn_show_description" class="btn btn-default"
+                    ng-click="handleModal('loadXmlModal', $event)">
+                <i class="fa fa-clone"></i> {{_t('select_zddx_help')}}
+            </button>
+            <!-- Modal load xml -->
+            <div ng-include="'app/views/configuration/modal_loadxml.html'"></div>
         </div>
 
          <!-- config_cont -->
-        <!--<div class="cfg-block" id="config_cont" ng-if="configCont">
+        <div ng-include="'app/views/configuration/configuration_config.html'"></div>
 
-           <h4>{{_t('configurations_list')}}</h4>
-           <div class="alert-list">
-       <p class="text-danger text-alert-list" ng-repeat="v in configCont" ng-if="v.configCconfigValue != v.configZwaveValue">{{v.label}}: {{_t('value_changed_to')}} <strong config-value-title collection='v' show_value='v.configCconfigValue'></strong> {{_t('value_not_stored_indevice')}}</p>
-   </div> -->
-        <div class="cfg-block-content"  ng-if="configCont" ng-init="formName = 'form_config'">
-            <form 
-                name="{{formName}}" 
-                id="{{formName}}"
-                class="form" 
-                role="form"
-                ng-submit="submitApplyConfigCfg(formName,{'id': deviceId,'instance': '0','commandclass': '70','command': 'Set'}, configCont, hasBattery)" 
-                novalidate>
-                <div class="cfg-block">
-
-                    <a
-                        class="btn btn-primary spin-true"
-                        ng-click="updateFromDeviceCfg('devices[' + deviceId + '].instances[0].commandClasses[0x70].Get', configCont, deviceId, formName)" 
-                        >{{_t('btn_update_from_device')}}
-                    </a>
-                    <button 
-                        type="submit" 
-                        class="btn btn-info spin-true">
-                        {{_t('apply_config')}}
-                    </button> 
-                    <button 
-                        type="button" 
-                        class="btn btn-info spin-true"
-                        ng-click="setAllToDefault({'id': deviceId, 'instance': '0', 'commandclass': '70', 'command': 'Set'}, configCont, hasBattery, formName)" >
-                        {{_t('set_all_default')}}
-                    </button> 
-                </div>
-                <div class="cfg-control-content" id="cfg_control_{{v.confNum}}" ng-repeat="v in configCont">
-
-                    <div class="form-inline">
-                        <expert-command-input
-                            collection='v'
-                            div_id='$index'
-                            default_value='v.defaultValue'
-                            show_default_value='v.showDefaultValue'
-                            curr_value='v.configCconfigValue'
-                            ></expert-command-input>
-                    </div>
-                    <!-- <div class="text-danger text-alert" ng-if="v.configCconfigValue != v.configZwaveValue" title="Val: {{v.configCconfigValue}} | Device: {{v.configZwaveValue}}"><i class="fa fa-exclamation-triangle"></i> {{_t('value_changed_to')}} <strong config-value-title collection='v' show_value='v.configCconfigValue'></strong> {{_t('value_not_stored_indevice')}}</div> -->
-                    <div class="text-danger text-alert" ng-if="v.configCconfigValue != v.configZwaveValue" title="Val: {{v.configCconfigValue}} | Device: {{v.configZwaveValue}}"><i class="fa fa-exclamation-triangle"></i> {{_t('value_changed_to')}} <strong>{{v.configCconfigValue}}</strong> {{_t('value_not_stored_indevice')}}</div>
-                    <p class="cfg-info">
-
-                        <span class="is-updated-{{v.isUpdated}}">{{_t('rt_header_update_time')}}: {{v.updateTime}}</span>
-
-                        <span> | {{_t('set_value')}}: {{v.configCconfigValue}}</span>
-
-                        <span> | {{_t('default_value_is')}}: <config-default-value collection='v' show_default_value='v.showDefaultValue' default_value='v.defaultValue'></config-default-value>
-                        </span>
-                    </p>
-                    <br />
-                    <p ng-if="v.description">
-                        <i class="fa fa-info-circle fa-lg text-primary"></i> <em>{{v.description}}</em>
-                    </p>
-                    <button 
-                        type="button" 
-                        class="btn btn-primary spin-true"
-                        ng-click="submitApplyConfigCfg(formName, {'id': deviceId, 'instance': '0', 'commandclass': '70', 'command': 'Set'}, configCont, hasBattery, v.confNum)"
-                        >{{_t('apply_config_into_device')}} </button>
-                    <button 
-                        type="button" 
-                        class="btn btn-info spin-true"
-                        ng-click="submitApplyConfigCfg(formName, {'id': deviceId, 'instance': '0', 'commandclass': '70', 'command': 'Set'}, configCont, hasBattery, v.confNum, {confNum: v.confNum, showDefaultValue: v.showDefaultValue})"
-                        >{{_t('set_to_default')}} </button>
-                </div>
-            </form>
-        </div>
         <!-- wakeup_cont -->
-        <div class="cfg-block" id="wakeup_cont" ng-if="wakeupCont">
-            <h4>{{_t('wakeup_list')}}</h4>
-            <div class="cfg-block-content" ng-init="formName = 'form_wakeup'">
-                <form 
-                    name="{{formName}}" 
-                    id="{{formName}}"
-                    class="form" 
-                    role="form"
-                    ng-submit="submitApplyConfigCfg(formName,{'id': deviceId,'instance': '0','commandclass': '84','command': 'Set'}, wakeupCont, hasBattery)" 
-                    novalidate>
-                    <a
-                        href="" 
-                        class="btn btn-primary spin-true"
-                        ng-click="updateFromDevice(wakeupCont.cmd + '.Get()', hasBattery, deviceId, formName)"
-                        >{{_t('btn_update_from_device')}} </a>
-                    <button 
-                        type="submit" 
-                        class="btn btn-info spin-true" 
-                        >{{_t('apply_config')}} </button>
-                    <div class="clearfix"></div>
-                    <div class="cfg-control-content">
-                        <div ng-repeat="v in wakeupCont.params">
-                            <div class="form-inline" >
-                                <expert-command-input 
-                                    collection='v'
-                                    values='wakeupCont.values[0]'
-                                    devices='devices'
-                                    get-node-devices='getNodeDevices'
-                                    curr_value='wakeupCont.configCconfigValue'
-                                    curr_node_value='wakeupCont.configCconfigNodeValue'
-                                    name='wakeupCont.name'
-                                    ></expert-command-input>
-                            </div>
+        <div ng-include="'app/views/configuration/configuration_wakeup.html'"></div>
 
-                        </div>
-                        <div class="clearfix"></div>
-                        <p class="cfg-info">
-                            <span class="is-updated-{{wakeupCont.isUpdated}}">{{_t('updated')}}: {{wakeupCont.updateTime}} </span>
-                            <span> | {{_t('default_value_is')}}: <config-default-value  collection='v' show_default_value='wakeupCont.showDefaultValue' default_value='wakeupCont.defaultValue'></config-default-value></span>
-                        </p>
-                    </div>
-                </form>
-            </div>
-        </div>
         <!-- switchall_cont -->
-        <div class="cfg-block" id="switchall_cont" ng-if="switchAllCont">
-            <h4>{{_t('switchall_list')}}</h4>
-            <div class="cfg-block-content" ng-init="formName = 'form_switch_all'">
-                <form 
-                    name="{{formName}}" 
-                    id="{{formName}}"
-                    class="form" 
-                    role="form"
-                    ng-submit="submitApplyConfigCfg(formName,{'id': deviceId,'instance': '0','commandclass': '27','command': 'Set'}, switchAllCont, hasBattery)" 
-                    novalidate>
-                    <a
-                        class="btn btn-primary spin-true"
-                        ng-click="updateFromDevice(switchAllCont.cmd + '.Get()', hasBattery, deviceId, formName)"
-                        >{{_t('btn_update_from_device')}} </a>
-                    <button 
-                        type="submit" 
-                        class="btn btn-info spin-true" 
-                        >{{_t('apply_config')}} </button>
-                    <div class="cfg-control-content" ng-repeat="v in switchAllCont.params">
-                        <div class="form-inline" >
-                            <expert-command-input 
-                                collection='v'
-                                values='switchAllCont.values[0]'
-                                default_value='switchAllCont.defaultValue'
-                                curr_value='switchAllCont.configCconfigValue'
-                                name='switchAllCont.name'
-                                is_dropdown='1'
-                                ></expert-command-input>
-                        </div>
-                        <p class="cfg-info">
-                            <span class="is-updated-{{switchAllCont.isUpdated}}">{{_t('updated')}}: {{switchAllCont.updateTime}} </span>
-                            <span> | {{_t('default_value_is')}}: <config-default-value  collection='v' show_default_value='switchAllCont.showDefaultValue' default_value='switchAllCont.defaultValue'></config-default-value></span>
-                        </p>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <!-- protection_cont -->
-        <div class="cfg-block" id="protection_cont" ng-if="protectionCont">
-            <h4>{{_t('protection_list')}}</h4>
-            <div class="cfg-block-content" ng-init="formName = 'form_protection_list'">
-                <form 
-                    name="{{formName}}" 
-                    id="{{formName}}"
-                    class="form" 
-                    role="form"
-                    ng-submit="submitApplyConfigCfg(formName,{'id': deviceId,'instance': '0','commandclass': '75','command': 'Set'}, protectionCont, hasBattery)" 
-                    novalidate>
-                    <a
-                        class="btn btn-primary spin-true"
-                        ng-click="updateFromDevice(protectionCont.cmd + '.Get()', hasBattery, deviceId, formName)"
-                        >{{_t('btn_update_from_device')}} </a>
-                    <button 
-                        type="submit" 
-                        class="btn btn-info spin-true"
-                        >{{_t('apply_config')}} </button>
-                    <div class="cfg-control-content" ng-repeat="v in protectionCont.params">
-                        <div class="form-inline" >
-                            <expert-command-input 
-                                collection='v'
-                                values='protectionCont.values[0]'
-                                default_value='protectionCont.defaultValue'
-                                curr_value='protectionCont.configCconfigValue'
-                                name='protectionCont.name'
-                                is_dropdown='1'
-                                ></expert-command-input>
-                        </div>
-                        <p class="cfg-info">
-                            <span class="is-updated-{{protectionCont.isUpdated}}">{{_t('updated')}}: {{protectionCont.updateTime}} </span>
-                            <span> | {{_t('default_value_is')}}: <config-default-value  collection='v' show_default_value='protectionCont.showDefaultValue' default_value='protectionCont.defaultValue'></config-default-value></span>
-                        </p>
-                    </div>
-                </form>      
+        <div ng-include="'app/views/configuration/configuration_switchall.html'"></div>
 
-            </div>
-        </div>
+        <!-- protection_cont -->
+        <div ng-include="'app/views/configuration/configuration_protection.html'"></div>
     </div> 
 </div><!-- /ng-controler -->

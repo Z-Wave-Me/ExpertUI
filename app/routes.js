@@ -117,6 +117,10 @@ angApp.config(['$routeProvider',
             templateUrl: 'app/views/network/queue.html'
         }).when('/network/map', {
             templateUrl: 'app/views/network/map.html'
+        }).when('/network/statistics', {
+            requireLogin: requireLogin,
+            templateUrl: 'app/views/network/statistics.html',
+            appTypeBanned: ['default']
         }).// Installer - zniffer
         when('/installer/zniffer', {
             requireLogin: requireLogin,

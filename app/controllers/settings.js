@@ -8,19 +8,40 @@
  * @class SettingsLangController
  *
  */
-appController.controller('SettingsLangController', function ($scope, $timeout,$window,$cookies,deviceService) {
+appController.controller('SettingsLangController', function ($scope, $timeout,$window,$cookies,dataService,deviceService) {
    /**
      * Set app language
      * @param {string} lang
      */
     $scope.setLang = function (lang) {
         //$window.alert($scope._t('language_select_reload_interface'));
-        deviceService.showNotifier({message: $scope._t('reloading')});
-        $cookies.lang = lang;
-        $scope.lang = lang;
-        $timeout( function() {
-            $window.location.reload();
-        }, 1000);
+
+        alertify.confirm($scope._t('change_date_time_format'))
+            .setting('labels', {'ok': $scope._t('yes'),'cancel': $scope._t('no')})
+            .set('onok', function (closeEvent) {//after clicking OK
+                var input = $scope.cfg.lang_date_time_format[lang]
+                dataService.postApi('configupdate_url', input).then(function (response) {
+                    deviceService.showNotifier({message: $scope._t('reloading')});
+                    deviceService.showNotifier({message: $scope._t('update_successful')});
+                    $cookies.lang = lang;
+                    $scope.lang = lang;
+                    $timeout( function() {
+                        $window.location.reload();
+                    }, 1000);
+
+                }, function (error) {
+                    alertify.alertError($scope._t('error_update_data'));
+                });
+            })
+            .set('oncancel', function (closeEvent) {
+                deviceService.showNotifier({message: $scope._t('reloading')});
+                $cookies.lang = lang;
+                $scope.lang = lang;
+                $timeout( function() {
+                    $window.location.reload();
+                }, 1000);
+            });
+
 
     };
 });
@@ -32,7 +53,8 @@ appController.controller('SettingsLangController', function ($scope, $timeout,$w
  */
 appController.controller('SettingsAppController', function ($scope, $timeout, $window, $interval, $location, cfg,dataService,deviceService) {
     $scope.settings = {
-        input: {}
+        input: {},
+        lastTZ: ""
     };
 
     /**
@@ -40,6 +62,7 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
      */
     $scope.loadSettings = function() {
         $scope.settings.input = cfg.zwavecfg;
+        $scope.settings.lastTZ = cfg.zwavecfg.time_zone;
     };
     $scope.loadSettings();
 
@@ -52,22 +75,34 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
 
         dataService.postApi('configupdate_url', input).then(function (response) {
             //$scope.reloadData();
-            var data = {
-                "time_zone": input.time_zone
-            };
-            dataService.postApi('time_zone', data, null).then(function (response) {
-                $timeout( function() {
-                    $window.location.reload();
-                }, 10000);
 
+            if(input.time_zone !== $scope.settings.lastTZ) {
+                var data = {
+                        "time_zone": input.time_zone
+                    },
+                    timeout = 15000;
+
+                    dataService.postApi('time_zone', data, null).then(function (response) {
+                        $timeout(function() {
+                            $location.path('/');
+                        }, timeout);
+
+                        $scope.settings.lastTZ = input.time_zone;
+                        alertify.alertWarning($scope._t('z_way_restart', {
+                            __val__: timeout/1000,
+                            __level__: $scope._t('seconds')
+                        }));
+
+                        deviceService.showNotifier({message: $scope._t('update_successful')});
+                        $scope.loading = false;
+
+                    }, function (error) {
+                        $scope.loading = false;
+                        alertify.alertError($scope._t('error_load_data'));
+                    });
+            } else {
                 deviceService.showNotifier({message: $scope._t('update_successful')});
-                deviceService.showNotifier({message: $scope._t('reloading')});
-                $scope.loading = false;
-
-            }, function (error) {
-                $scope.loading = false;
-                alertify.alertError($scope._t('error_load_data'));
-            });
+            }
             $scope.loading = false;
 
         }, function (error) {

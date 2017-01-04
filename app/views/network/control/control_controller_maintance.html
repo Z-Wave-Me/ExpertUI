@@ -54,7 +54,7 @@
                 <!-- Set Default -->
                 <button type="button" class="btn btn-danger" id="btn_reset_controller"
                         ng-show="goSetDefault"
-                        ng-click="setDefault('controller.SetDefault()')"
+                        ng-click="setDefault('controller.SetDefault()');handleModal('rebootResetModal', $event)"
                         ng-disabled="rowSpinner['controller.SetDefault()']">
                     <bb-row-spinner
                             spinner="rowSpinner['controller.SetDefault()']"

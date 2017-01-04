@@ -1,3 +1,4 @@
+<!-- Copyright:  Z-Wave Europe, Created: 20-12-2016 15:48:45 -->
 <!doctype html>
 <html lang="en">
     <head>
@@ -85,8 +86,11 @@
                             <div class="sub-navigation sub-navigation-left" ng-if="naviExpanded.naviNetwork">
                                 <ul>
                                     <li><a href="#network/control" ng-class="isActive('control',2)">{{ _t('nav_control') }}</a></li>
+                                    <li ng-if="cfg.app_type === 'installer'">
+                                        <a href="#network/statistics" ng-class="isActive('statistics',2)">{{ _t('statistics') }}</a>
+                                    </li>
                                     <li><a href="#network/routing" ng-class="isActive('routing',2)">{{ _t('nav_routing') }}</a></li>
-                                    <li><a class="a-disabled" title="Temporary disabled. Will be back in the next release." ng-class="isActive('reorganization',2)">{{ _t('nav_reorganization') }}</a></li>
+                                    <!-- <li><a class="a-disabled" title="Temporary disabled. Will be back in the next release." ng-class="isActive('reorganization',2)">{{ _t('nav_reorganization') }}</a></li>-->
                                     <!--<li><a href="#network/reorganization" ng-class="isActive('reorganization',2)">{{ _t('nav_reorganization') }}</a></li>-->
                                     <li><a href="#network/timing" ng-class="isActive('timing',2)">{{ _t('nav_timing_info') }}</a></li>
                                     <!--<li><a class="a-disabled" title="Temporary disabled. Will be back in the next release." ng-class="isActive('timing',2)">{{ _t('nav_timing_info') }}</a></li>-->
@@ -171,7 +175,7 @@
                         <!-- Busy indicator -->
                         <li class="navibar-divider" ng-if="cfg.app_type === 'installer'"> </li>
                         <li class="navibar-item" ng-if="cfg.app_type === 'installer'">
-                        <span class="timestamp" ng-if="cfg.busy_indicator.queueLength > 0">
+                        <span class="timestamp">
                         <span>Q: {{cfg.busy_indicator.result}}</span>
                             <!-- 0 -->
                             <span class="text-success" ng-if="cfg.busy_indicator.result <= 0">
@@ -193,22 +197,22 @@
         </div><!-- /#main_navigation_wrap -->
     </div><!-- /#header -->
 
-    <!-- Ang Container -->
+    <!-- Installer Container -->
     <div class="container-installer" ng-if="cfg.app_type === 'installer' && getBodyId()">
-        <div class="alert alert-success" ng-if="boxData.controller.isRealPrimary && !boxData.controller.hasDevices"><i
+        <div class="alert alert-success" ng-if="cfg.controller.isRealPrimary && !cfg.controller.hasDevices"><i
                 class="fa fa-info-circle"></i> {{_t('ready_to_network')}}
         </div>
-        <div class="alert alert-warning" ng-if="boxData.controller.isRealPrimary && boxData.controller.hasDevices"><i
-                class="fa fa-check"></i> {{_t('iam_in')}} {{boxData.controller.homeName}}
+        <div class="alert alert-warning" ng-if="cfg.controller.isRealPrimary && cfg.controller.hasDevices"><i
+                class="fa fa-check"></i> {{_t('iam_in')}} {{cfg.controller.homeName}}
         </div>
-        <div class="alert alert-danger" ng-if="!boxData.controller.isRealPrimary"><i class="fa fa-info-circle"></i>
-            {{_t('iam_in_network_homeid')}}: {{boxData.controller.homeId}}
+        <div class="alert alert-danger" ng-if="!cfg.controller.isRealPrimary"><i class="fa fa-info-circle"></i>
+            {{_t('iam_in_network_homeid')}}: {{cfg.controller.homeName}}
         </div>
     </div>
     <!--<div id="respone_container" class="container">
         <div id="respone_container_inner"></div>
     </div>-->
-
+    <!-- Ang Container -->
     <div id="main_content" class="container">
         <div ng-if="cfg.route.fatalError.message">
             <div class="app-fatal-error">
@@ -229,6 +233,4 @@
 
         </div>
     </div>
-
-    </body>
 </html>

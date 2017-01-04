@@ -10,7 +10,7 @@ var config_data = {
         'custom_ip': false,
         'user_field': 'USERXXXX',
         'pass_field': 'PSWDXXXX',
-        'interval': 3000, // Set interval in miliseconds to refresh data
+        'interval': 1000, // Set interval in miliseconds to refresh data
         'zniffer_interval': 3000, // Set interval in milisecondsfor zniffer
         'queue_interval': 1000, // Set interval in miliseconds to refresh queue data 
         'route_update_timeout': 15000, // Maximum time in miliseconds to wait for an update-route
@@ -40,6 +40,7 @@ var config_data = {
         'call_all_nif': '/ZWaveAPI/CallForAllNIF', // Call niff for all devices
         'time': '/ZAutomation/api/v1/system/time/get',// Get time
         'time_zone': '/ZAutomation/api/v1/system/timezone', // Set time zone
+        'network_statistics': '/ZWaveAPI/Run/', // Set time zone
         'login': '/ZAutomation/api/v1/login',// Get time
         'runjs_url': '/JS/Run/', // Url for running JS
         'device_classes_url': '/translations/DeviceClasses.xml', // Url to Device Classes
@@ -86,14 +87,51 @@ var config_data = {
             //Network name
             'network_name': 'My network',
             //Date format
-            'date_format': 'dd.mm.yyyy',
+            'date_format': 'yyyy-mm-dd',
             //Time format
-            'time_format': '24',
+            'time_format': '12',
             //Timezone
             'time_zone': '',
             //Notes
             'notes': ''
-
+        },
+        'lang_date_time_format': {
+            'en': {
+                'date_format': 'yyyy-mm-dd',
+                'time_format': '12'
+            },
+            'de': {
+                'date_format': 'dd.mm.yyyy',
+                'time_format': '24'
+            },
+            'fr': {
+                'date_format': 'dd/mm/yyyy',
+                'time_format': '24'
+            },
+            'es': {
+                'date_format': 'dd/mm/yyyy',
+                'time_format': '24'
+            },
+            'ru': {
+                'date_format': 'dd.mm.yyyy',
+                'time_format': '24'
+            },
+            'cz': {
+                'date_format': 'dd.mm.yyyy',
+                'time_format': '24'
+            },
+            'sk': {
+                'date_format': 'dd.mm.yyyy',
+                'time_format': '24'
+            },
+            'sv': {
+                'date_format': 'yyyy-mm-dd',
+                'time_format': '24'
+            },
+            'cn': {
+                'date_format': 'yyyy-mm-dd',
+                'time_format': '24'
+            }
         },
         // busy_indicator
         'busy_indicator': {
@@ -108,7 +146,7 @@ var config_data = {
             'password': 'admin1'
         },
         // Date format list
-        'date_format_list': ['dd.mm.yyyy','dd-mm-yyyy','yyyy-mm-dd','yyyy/mm/dd','mm/dd/yyyy'],
+        'date_format_list': ['dd.mm.yyyy','dd-mm-yyyy','yyyy-mm-dd','yyyy/mm/dd','mm/dd/yyyy', 'dd/mm/yyyy'],
         // Time format list
         'time_format_list': ['24','12'],
         // Timezone
@@ -119,19 +157,16 @@ var config_data = {
             time: {
                 string: false,
                 timestamp: false
-            },
-
-
+            }
         },
-        // Controller
-        controller: {
-            homeName: 'My DEFAULT network',
-            isRealPrimary: false,
-            homeId: 1,
-            homeIdHex: '#',
-            hasDevices: false
-
-        },
+    // Controller
+   controller: {
+     homeName: 'My network',
+     isRealPrimary: false,
+     homeId: 1,
+     homeIdHex: '#',
+     hasDevices: false
+   },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer
         'app_type': 'default',

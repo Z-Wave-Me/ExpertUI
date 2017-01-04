@@ -98,6 +98,27 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
 
     };
 
+    // Handle modal interview
+    $scope.handleModalInterview = function (target, $event,index, id, name) {
+        $scope.deviceInfo = {
+            "index": index,
+            "id": id,
+            "name": name
+        };
+        $scope.interviewDeviceId = id;
+        var node = $scope.ZWaveAPIData.devices[id];
+        $scope.interviewCommands = deviceService.configGetInterviewCommands(node);
+        $scope.handleModal(target,$event)
+
+    };
+    /**
+     * Purge all command classes and start interview for a device
+     * @param {string} cmd
+     */
+    $scope.interviewForceDevice = function (cmd) {
+        $scope.runZwaveCmd(cmd);
+    };
+
     // Load data
     /*$scope.load = function () {
         dataService.getZwaveData(function (ZWaveAPIData) {
@@ -122,21 +143,10 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
     /*$scope.$on('$destroy', function () {
         dataService.cancelZwaveDataInterval();
     });*/
-    /*// Store data from on remote server
-    $scope.store = function (btn) {
-        var url = $(btn).attr('data-store-url');
-        dataService.runCmd(url, false, $scope._t('error_handling_data'));
-    };*/
 
-    // Store all data on remote server
-    /*$scope.storeAll = function (btn) {
-        angular.forEach($scope.statuses.all, function (v, k) {
-            if (v.urlToStore) {
-                dataService.runCmd(v.urlToStore);
-            }
-        });
-    };*/
-    $scope.showModalInterview = function (target, index, id, name) {
+
+    //todo: deprecated
+   /* $scope.showModalInterview = function (target, index, id, name) {
         $scope.deviceInfo = {
             "index": index,
             "id": id,
@@ -147,14 +157,17 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
         $scope.interviewCommands = deviceService.configGetInterviewCommands(node);
         //$scope.interviewCommands.push(deviceService.configGetInterviewCommands(node));
         $(target).modal();
-    };
+    };*/
+    //todo: deprecated
     // Show modal dialog
-    $scope.hideModalInterview = function () {
+    /*$scope.hideModalInterview = function () {
         $scope.interviewDeviceId = null;
-    };
+    };*/
 
+
+    //todo: deprecated
     // Show modal CommandClass dialog
-    $scope.showModalCommandClass = function (target, instanceId, ccId, type) {
+    /*$scope.showModalCommandClass = function (target, instanceId, ccId, type) {
         var node = $scope.ZWaveAPIData.devices[$scope.interviewDeviceId];
         if (!node) {
             return;
@@ -175,7 +188,7 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
 
         $scope.commandClass = deviceService.configSetCommandClass(cc);
         $(target).modal();
-    };
+    };*/
     /// --- Private functions --- ///
 
     /**
@@ -285,8 +298,9 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
     }
     ;
 
+    // todo: deprecated
     // Refresh data
-    function refreshData(data) {
+    /*function refreshData(data) {
         angular.forEach($scope.statuses.all, function (v, k) {
             angular.forEach(v.cmd, function (ccId, key) {
                 if (ccId in data) {
@@ -344,7 +358,7 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
 
         });
     }
-    ;
+    ;*/
 
     // Refresh Modal Interview data
     function refreshModalInterview(oldCc, newCc) {

@@ -11,6 +11,7 @@
 appController.controller('ConfigHealthController', function ($scope, $routeParams, $timeout, $location, $cookies, $filter, $interval, cfg, deviceService, dataService) {
     $scope.apiDataInterval;
     $scope.devices = [];
+    $scope.deviceName = '';
     $scope.deviceId = 0;
     $scope.activeTab = 'health';
     $scope.activeUrl = 'configuration/health/';
@@ -68,6 +69,10 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
 
         dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
+            if(_.isEmpty($scope.devices)){
+                $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                return;
+            }
             $scope.health.ctrlNodeId = ZWaveAPIData.controller.data.nodeId.value;
             var node = ZWaveAPIData.devices[$routeParams.nodeId];
             if (!node || deviceService.notDevice(ZWaveAPIData, node, $routeParams.nodeId)) {
@@ -81,6 +86,7 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
             $cookies.config_url = $scope.activeUrl + $routeParams.nodeId;
             $scope.deviceId = $routeParams.nodeId;
             $scope.health.device.node = node;
+            $scope.deviceName = $filter('deviceName')($routeParams.nodeId, node);
             setDevice(node);
             setData(ZWaveAPIData, neighbours);
             $scope.refreshData(ZWaveAPIData);
@@ -107,7 +113,7 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
     };
 
     // Run Zwave Command
-    $scope.runZwaveCmd = function (cmd) {
+    /*$scope.runZwaveCmd = function (cmd) {
         $scope.toggleRowSpinner(cmd);
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
             $timeout($scope.toggleRowSpinner, 1000);
@@ -116,7 +122,7 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
             alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
             //$window.alert($scope._t('error_handling_data') + '\n' + cmd);
         });
-    };
+    };*/
     // Run Zwave NOP Command
     $scope.runZwaveNopCmd = function (cmd) {
         for (i = 0; i < 21; i++) {
@@ -166,7 +172,7 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
         var data = {"nodeId": $scope.deviceId};
         dataService.postApi('checklinks', data).then(function (response) {
             var runtime = parseInt(response.data.runtime) * 1000;
-            alertify.alertWarning($scope._t('proccess_take',{__val__:runtime,__level__:$scope._t('seconds')}));
+            alertify.alertWarning($scope._t('proccess_take',{__val__:response.data.runtime,__level__:$scope._t('seconds')}));
             $timeout($scope.toggleRowSpinner, runtime);
         }, function (error) {
             alertify.alertError($scope._t('error_update_data'));

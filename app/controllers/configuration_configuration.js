@@ -31,6 +31,10 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         dataService.getZwaveData(function (ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
+            if(_.isEmpty($scope.devices)){
+                $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                return;
+            }
             var node = ZWaveAPIData.devices[nodeId];
             if (!node || deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
@@ -62,37 +66,6 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
     };
     $scope.load($routeParams.nodeId);
 
-    // Load device description
-    $scope.loadDeviceDescription = function (nodeId) {
-        dataService.getSelectZDDX(nodeId, function (data) {
-            $scope.deviceZddx = data;
-        });
-
-    };
-    $scope.loadDeviceDescription($routeParams.nodeId);
-
-    // Change device select
-    $scope.changeDeviceSelect = function (selector, target, file) {
-        var imageFile = $(selector).find(':selected').data('image');
-        var image;
-        if (imageFile == undefined) {
-            image = $scope._t('no_device_image');
-        } else {
-            image = '<img src="' + imageFile + '" />';
-        }
-        $scope.modelSelectZddx = file;
-        $(target).html(image);
-    };
-
-    // Update device zddx file
-    $scope.runCmdDeviceSelect = function (nodeId) {
-        var cmd = 'devices[' + nodeId + '].LoadXMLFile("' + $scope.modelSelectZddx + '")';
-        dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
-        //$window.location.reload();
-        dataService.purgeCache();
-        $route.reload();
-    };
-
     // Refresh data
     $scope.refresh = function (nodeId) {
         dataService.joinedZwaveData(function (data) {
@@ -119,30 +92,33 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
      * @param {string} cmd
      * @returns {undefined}
      */
-    $scope.updateFromDevice = function (cmd, hasBattery, deviceId, form) {
+    $scope.updateFromDevice = function (cmd, hasBattery, deviceId, form,spin) {
         if (hasBattery) {
-            alert($scope._t('conf_apply_battery'));
+            deviceService.showNotifier({message: $scope._t('conf_apply_battery'),type: 'warning'});
         }
-        dataService.runCmd(cmd, false, $scope._t('error_handling_data'));
+        $scope.toggleRowSpinner(spin);
+        dataService.runZwaveCmd(cfg.store_url + cmd);
         $scope.refresh(deviceId);
 
         $('#' + form + ' .cfg-control-content :input').prop('disabled', true);
         $timeout(function () {
+            $scope.toggleRowSpinner();
             dataService.cancelZwaveDataInterval();
             $scope.load($routeParams.nodeId);
             $('#' + form + ' .cfg-control-content :input').prop('disabled', false);
-        }, 5000);
+        }, 3000);
         return;
     };
 
     /**
      * Update from device - configuration section
      */
-    $scope.updateFromDeviceCfg = function (cmd, cfg, deviceId, form) {
-        angular.forEach(cfg, function (v, k) {
+    $scope.updateFromDeviceCfg = function (cmd, config, deviceId, form,spin) {
+        var request = cfg.store_url + cmd;
+        $scope.toggleRowSpinner(spin);
+        angular.forEach(config, function (v, k) {
             if (v.confNum) {
-                var request = cmd + '(' + v.confNum + ')';
-                dataService.runCmd(request);
+                dataService.runZwaveCmd(request + '(' + v.confNum + ')');
             }
         });
         $scope.refresh(deviceId);
@@ -150,6 +126,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         $timeout(function () {
             dataService.cancelZwaveDataInterval();
             $scope.load($routeParams.nodeId);
+            $scope.toggleRowSpinner();
         }, 3000);
         return;
     };
@@ -157,7 +134,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
     /**
      * Set all values to default
      */
-    $scope.setAllToDefault = function (cmd, cfgValues, hasBattery, form) {
+    $scope.setAllToDefault = function (cmd, cfgValues, hasBattery, form,spin) {
         var dataArray = {};
         angular.forEach(cfgValues, function (v, k) {
             dataArray[v.confNum] = {
@@ -167,7 +144,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             };
         });
         //console.log(dataArray)
-        $scope.submitApplyConfigCfg(form, cmd, cfgValues, hasBattery, null, false, dataArray);
+        $scope.submitApplyConfigCfg(form, cmd, cfgValues, hasBattery, false, false, dataArray,spin);
 
     };
 
@@ -175,15 +152,16 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
     /**
      * Apply Config action
      */
-    $scope.submitApplyConfigCfg = function (form, cmd, cfgValues, hasBattery, confNum, setDefault, hasData) {
+    $scope.submitApplyConfigCfg = function (form, cmd, cfgValues, hasBattery, confNum, setDefault, hasData,spin) {
         var xmlData = [];
         var configValues = [];
         if (hasBattery) {
-            alert($scope._t('conf_apply_battery'));
+            //alert($scope._t('conf_apply_battery'));
+            deviceService.showNotifier({message: $scope._t('conf_apply_battery'),type: 'warning'});
         }
 
         var dataArray = _.isObject(hasData) ? hasData : {};
-
+        $scope.toggleRowSpinner(spin);
         if (!_.isObject(hasData)) {
             data = $('#' + form).serializeArray();
             angular.forEach(data, function (v, k) {
@@ -290,37 +268,36 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                     configRequest += cmd.command + '(' + v.parameterValues + ')';
                     if (confNum) {
                         if (confNum == v.confNum) {
-                            dataService.runCmd(configRequest, false, $scope._t('error_handling_data'));
+                            dataService.runZwaveCmd(cfg.store_url + configRequest);
                         }
                     } else {
-                        dataService.runCmd(configRequest, false, $scope._t('error_handling_data'));
+                        dataService.runZwaveCmd(cfg.store_url + configRequest);
                     }
 
                 });
                 break;
             case '75':// Protection
                 request += cmd.command + '(' + configValues.join(",") + ')';
-                dataService.runCmd(request, false, $scope._t('error_handling_data'));
+                dataService.runZwaveCmd(cfg.store_url + request);
                 break;
             case '84':// Wakeup
                 request += cmd.command + '(' + configValues.join(",") + ')';
-                dataService.runCmd(request, false, $scope._t('error_handling_data'));
+                dataService.runZwaveCmd(cfg.store_url + request);
                 break;
             case '27':// Switch all
                 request += cmd.command + '(' + configValues.join(",") + ')';
-                dataService.runCmd(request, false, $scope._t('error_handling_data'));
+                dataService.runZwaveCmd(cfg.store_url + request);
                 break;
             default:
                 break;
         }
 
-        dataService.getCfgXml(function (cfgXml) {
+        dataService.getCfgXml().then(function (cfgXml) {
             var xmlFile = deviceService.buildCfgXml(xmlData, cfgXml, cmd['id'], cmd['commandclass']);
             dataService.putCfgXml(xmlFile);
         });
 
 
-        //debugger;
         $scope.refresh(cmd['id']);
         if (confNum) {
             $('#cfg_control_' + confNum + ' :input').prop('disabled', true);
@@ -329,9 +306,9 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         }
         $timeout(function () {
             $scope.load($routeParams.nodeId);
-            $('button .fa-spin,a .fa-spin').fadeOut(1000);
             $('#' + form + ' .cfg-control-content :input').prop('disabled', false);
             dataService.cancelZwaveDataInterval();
+            $scope.toggleRowSpinner();
         }, 3000);
         return;
     };
@@ -395,7 +372,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                 }
             });
         }
-        dataService.getCfgXml(function (cfgXml) {
+        dataService.getCfgXml().then(function (cfgXml) {
             $scope.configCont = deviceService.configConfigCont(node, nodeId, zddXml, cfgXml, $scope.lang, $scope.languages);
             $scope.wakeupCont = deviceService.configWakeupCont(node, nodeId, ZWaveAPIData, cfgXml);
             $scope.protectionCont = deviceService.configProtectionCont(node, nodeId, ZWaveAPIData, cfgXml);

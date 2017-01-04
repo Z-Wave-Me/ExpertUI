@@ -1,5 +1,5 @@
 /**
- * @overview This controller handles expert config data.
+ * @overview This controller handles data holder and expert config data.
  * @author Martin Vach
  */
 
@@ -37,6 +37,11 @@ appController.controller('ExpertConfigController', function ($scope, $timeout,$i
     };
 });
 
+/**
+ * Handles data holder.
+ * @class DataHolderController
+ *
+ */
 appController.controller('DataHolderController', function ($scope, $timeout,$interval, $location, cfg,dataService,deviceService) {
     $scope.dataHolder = {
         controller: {}
@@ -57,12 +62,16 @@ appController.controller('DataHolderController', function ($scope, $timeout,$int
      * Store networkname
      * @param {object} input
      */
-    $scope.storeNetworkName = function(input,spin) {
+    $scope.storeNetworkName = function(form,input,spin) {
+        if(!form.$dirty){
+            return;
+        }
         var homeName = input.replace(/\"/g, '\'');
         $scope.toggleRowSpinner(spin);
         dataService.postApi('store_url', null, 'controller.data.homeName.value="'+ homeName +'"').then(function (response) {
             cfg.controller.homeName = homeName;
             $scope.save();
+            form.$setPristine();
         }, function (error) {
             $scope.toggleRowSpinner();
             alertify.alertError($scope._t('error_update_data'));
@@ -73,10 +82,17 @@ appController.controller('DataHolderController', function ($scope, $timeout,$int
      * Store notes
      * @param {object} input
      */
-    $scope.storeNotes = function(input,spin) {
+    $scope.storeNotes = function(form,input,spin) {
+        if(!form.$dirty){
+            return;
+        }
         $scope.toggleRowSpinner(spin);
-        dataService.postApi('store_url', null, 'controller.data.homeNotes.value="'+input.replace(/\"/g, '\'')+'"').then(function (response) {
+
+        input = input.replace(/\"/g, '\'');
+        input = input.replace(/\n/g, '<br>');
+        dataService.postApi('store_url', null, 'controller.data.homeNotes.value="'+input+'"').then(function (response) {
             $scope.save();
+            form.$setPristine();
         }, function (error) {
             $scope.toggleRowSpinner();
             alertify.alertError($scope._t('error_update_data'));
@@ -88,7 +104,7 @@ appController.controller('DataHolderController', function ($scope, $timeout,$int
      */
     $scope.save = function(){
         dataService.postApi('store_url', null, 'devices.SaveData()').then(function (response) {
-            deviceService.showNotifier({message: $scope._t('update_successful')});
+            //deviceService.showNotifier({message: $scope._t('update_successful')});
             $timeout($scope.toggleRowSpinner, 1000);
         }, function (error) {
             alertify.alertError($scope._t('error_update_data'));
@@ -102,8 +118,46 @@ appController.controller('DataHolderController', function ($scope, $timeout,$int
      */
     function setControllerData(ZWaveAPIData) {
        $scope.dataHolder.controller.homeName = ZWaveAPIData.controller.data.homeName.value || cfg.controller.homeName;
-        $scope.dataHolder.controller.homeNotes = ZWaveAPIData.controller.data.homeNotes;
-
+        $scope.dataHolder.controller.homeNotes = ZWaveAPIData.controller.data.homeNotes.value.replace(/<br>/g, '\n' );
     }
+
+});
+
+/**
+ * Displays data holder info.
+ * @class DataHolderInfoController
+ *
+ */
+appController.controller('DataHolderInfoController', function($scope, $filter, deviceService) {
+    $scope.dataHolderInfo = {
+        all: {}
+    }
+    // Show modal dialog
+    $scope.dataHolderModal = function(target, $event, interviewCommands, ccId, type) {
+        var imodalId = '#' + target;
+        var interviewData = {};
+        var updateTime;
+        //$(target).modal();
+        if (type) {
+            angular.forEach(interviewCommands, function(v, k) {
+                if (v.ccId == ccId) {
+                    interviewData = v[type];
+                    updateTime = v.updateTime;
+                    return;
+                }
+            });
+        } else {
+            interviewData = interviewCommands;
+        }
+
+        // Get data
+        var html = deviceService.configGetCommandClass(interviewData, '/', '');
+
+        //$scope.dataHolderInfo.all =  deviceService.configGetCommandClass(interviewData, '/', '');
+        //console.log(html)
+        // Fill modal with data
+        $scope.handleModal(target, $event);
+        $(imodalId + ' .appmodal-body').html(html);
+    };
 
 });

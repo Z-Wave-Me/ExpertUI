@@ -1,8 +1,8 @@
 <!-- ConfigPostfixController view -->
 <div ng-controller="ConfigPostfixController">
     <!-- Config navigation -->
-    <div ng-include="'app/views/configuration/header.html'"></div>
-    <div class="tab-content" ng-show="deviceId">
+    <div ng-include="'app/views/configuration/navi.html'"></div>
+    <div ng-show="deviceId">
         <div class="alert alert-warning" ng-if="!postfix.model.p_id"><i class="fa fa-exclamation-circle"></i> {{_t('postfix_missingid')}}</div>
         <form id="postfix_form" name="postfix_form" role="form" class="form" novalidate ng-if="postfix.model.p_id" ng-submit="updatePostfix()">
             <div class="cfg-block">
@@ -88,8 +88,8 @@
                     <i class="fa fa-file-code-o text-success"></i> {{_t('show_json')}}
                 </a>
                 <!-- Save -->
-                <button type="submit" class="btn btn-info">
-                    <i class="fa fa-check"></i> {{_t('btn_save')}}
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-circle-o"></i> {{_t('btn_save')}}
                 </button>
 
                

@@ -11,6 +11,7 @@
 appController.controller('ConfigPostfixController', function ($scope, $routeParams, $location, $cookies, $filter, $timeout, $window, dataService, deviceService) {
     $scope.devices = [];
     $scope.deviceId = 0;
+    $scope.deviceName = '';
     $scope.activeTab = 'postfix';
     $scope.activeUrl = 'configuration/postfix/';
     $cookies.tab_config = $scope.activeTab;
@@ -43,6 +44,10 @@ appController.controller('ConfigPostfixController', function ($scope, $routePara
     $scope.loadData = function (nodeId) {
         dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
+            if(_.isEmpty($scope.devices)){
+                $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                return;
+            }
             var node = ZWaveAPIData.devices[nodeId];
             if (!node || deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
@@ -51,7 +56,7 @@ appController.controller('ConfigPostfixController', function ($scope, $routePara
             $cookies.configuration_id = nodeId;
             $cookies.config_url = $scope.activeUrl + nodeId;
             $scope.deviceId = nodeId;
-
+            $scope.deviceName = $filter('deviceName')(nodeId, node);
             $scope.postfix.model.p_id = getPId(node);
             $scope.loadPostfix($scope.postfix.model.p_id);
         }, function (error) {

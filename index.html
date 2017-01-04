@@ -66,7 +66,7 @@
     <script src="app/controllers/type.js"></script>
     <script src="app/controllers/association.js"></script>
     <script src="app/controllers/control.js"></script>
-    <script src="app/controllers/controll.js"></script>
+    <script src="app/controllers/statistics.js"></script>
     <script src="app/controllers/routing.js"></script>
     <script src="app/controllers/reorganization.js"></script>
     <script src="app/controllers/timing.js"></script>
@@ -164,8 +164,11 @@
                         <div class="sub-navigation sub-navigation-left" ng-if="naviExpanded.naviNetwork">
                             <ul>
                                 <li><a href="#network/control" ng-class="isActive('control',2)">{{ _t('nav_control') }}</a></li>
+                                <li ng-if="cfg.app_type === 'installer'">
+                                    <a href="#network/statistics" ng-class="isActive('statistics',2)">{{ _t('statistics') }}</a>
+                                </li>
                                 <li><a href="#network/routing" ng-class="isActive('routing',2)">{{ _t('nav_routing') }}</a></li>
-                                <li><a class="a-disabled" title="Temporary disabled. Will be back in the next release." ng-class="isActive('reorganization',2)">{{ _t('nav_reorganization') }}</a></li>
+                               <!-- <li><a class="a-disabled" title="Temporary disabled. Will be back in the next release." ng-class="isActive('reorganization',2)">{{ _t('nav_reorganization') }}</a></li>-->
                                 <!--<li><a href="#network/reorganization" ng-class="isActive('reorganization',2)">{{ _t('nav_reorganization') }}</a></li>-->
                                 <li><a href="#network/timing" ng-class="isActive('timing',2)">{{ _t('nav_timing_info') }}</a></li>
                                 <!--<li><a class="a-disabled" title="Temporary disabled. Will be back in the next release." ng-class="isActive('timing',2)">{{ _t('nav_timing_info') }}</a></li>-->
@@ -251,7 +254,7 @@
                     <li class="navibar-divider" ng-if="cfg.app_type === 'installer'"> </li>
                     <li class="navibar-item" ng-if="cfg.app_type === 'installer'">
                         <span class="timestamp">
-                        <span>Q: {{cfg.busy_indicator.result}}</span>
+                        <span>{{_t('jobs')}}: {{cfg.busy_indicator.result}}</span>
                             <!-- 0 -->
                             <span class="text-success" ng-if="cfg.busy_indicator.result <= 0">
                                 <i class="fa fa-stop"></i>
