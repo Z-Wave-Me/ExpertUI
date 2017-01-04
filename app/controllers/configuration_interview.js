@@ -156,7 +156,7 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
             return;
         }
         var timeout = 1000;
-        var cmd = 'devices[' + $scope.deviceId + '].data.givenName.value=\'' + deviceName + '\'';
+        var cmd = 'devices[' + $scope.deviceId + '].data.givenName.value="' + escape(deviceName) + '"';
         $scope.toggleRowSpinner(spin);
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
 
