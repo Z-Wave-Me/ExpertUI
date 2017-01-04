@@ -33,9 +33,17 @@ angApp.run(function run($cookies, $rootScope) {
             restore_url: '/ZWave.' + config_data.cfg.dongle + '/Restore',
             queue_url: '/ZWave.' + config_data.cfg.dongle + '/InspectQueue',
             fw_update_url: '/ZWave.' + config_data.cfg.dongle + '/FirmwareUpdate',
-            stat_url: '/ZWave.' + config_data.cfg.dongle + '/CommunicationStatistics',
+            zme_bootloader_upgrade: '/ZWave.' + config_data.cfg.dongle + '/ZMEBootloaderUpgrade',
+            zme_firmware_upgrade: '/ZWave.' + config_data.cfg.dongle + '/ZMEFirmwareUpgrade',
             license_load_url: '/ZWave.' + config_data.cfg.dongle + '/ZMELicense',
-            zddx_create_url: '/ZWave.' + config_data.cfg.dongle + '/CreateZDDX/'
+            zddx_create_url: '/ZWave.' + config_data.cfg.dongle + '/CreateZDDX/',
+            'stat_url': '/ZWave.' + config_data.cfg.dongle + '/CommunicationStatistics',
+            'postfixget_url': '/ZWave.' + config_data.cfg.dongle + '/PostfixGet',
+            'postfixadd_url': '/ZWave.' + config_data.cfg.dongle + '/PostfixAdd',
+            'postfixremove_url': '/ZWave.' + config_data.cfg.dongle + '/PostfixRemove',
+            //'communication_history_url': '/ZWave.' + config_data.cfg.dongle + '/CommunicationHistory',
+            'configget_url': '/ZWave.' + config_data.cfg.dongle + '/ExpertConfigGet',
+            'configupdate_url': '/ZWave.' + config_data.cfg.dongle + '/ExpertConfigUpdate'
 
         });
     }

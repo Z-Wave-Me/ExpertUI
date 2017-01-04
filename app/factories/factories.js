@@ -272,11 +272,6 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
      * Set ZME Capabilities
      */
     function zmeCapabilities(data) {
-//        return $q.reject(data); // Test error response
-//        var deferred = $q.defer();
-//        deferred.resolve(data);
-//        return deferred.promise;// Test success response
-
         return $http({
             method: 'POST',
             url: cfg.server_url + cfg.license_load_url,

@@ -347,9 +347,9 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
      */
     $scope.setDongle = function () {
         dataService.getApi('zwave_list').then(function (response) {
-            if (response.length === 1) {
-                angular.extend(cfg, {dongle: response[0]});
-                $cookies.dongle = response[0];
+            if (response.data.length === 1) {
+                angular.extend(cfg, {dongle: response.data[0]});
+                $cookies.dongle = response.data[0];
                 angular.extend(cfg,{dongle_list: response});
 
                 angular.extend(cfg, {
@@ -358,6 +358,8 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
                     restore_url: '/ZWave.' + cfg.dongle + '/Restore',
                     queue_url: '/ZWave.' + cfg.dongle + '/InspectQueue',
                     fw_update_url: '/ZWave.' + cfg.dongle + '/FirmwareUpdate',
+                    zme_bootloader_upgrade: '/ZWave.' + cfg.dongle + '/ZMEBootloaderUpgrade',
+                    zme_firmware_upgrade: '/ZWave.' + cfg.dongle + '/ZMEFirmwareUpgrade',
                     license_load_url: '/ZWave.' + cfg.dongle + '/ZMELicense',
                     zddx_create_url: '/ZWave.' + cfg.dongle + '/CreateZDDX/',
                     'stat_url': '/ZWave.' + cfg.dongle + '/CommunicationStatistics',
