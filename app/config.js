@@ -5,7 +5,7 @@
  */
 var config_data = {
     'cfg': {
-        'app_name': 'Z-Wave Alliance',
+        'app_name': 'Z-Wave ExpertUI',
         'app_version': '1.2.0',
         'custom_ip': false,
         'user_field': 'USERXXXX',

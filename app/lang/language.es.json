@@ -1,4 +1,7 @@
 {
+  "on":"ON",
+  "off":"OFF",
+  "promiscuous_mode":"Promiscuous mode",
   "jobs":"Jobs",
   "name":"Name",
   "statistics":"Statistics",
