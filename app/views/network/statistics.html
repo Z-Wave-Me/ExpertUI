@@ -18,6 +18,15 @@
                                 icon="'fa-circle-o'">
                         </bb-row-spinner>
                     </button>
+                    <button class="btn btn-primary" id="btn_update_all_1"
+                            ng-click="updateNetworkStatistics('ClearNetworkStats()')"
+                            ng-disabled="rowSpinner['ClearNetworkStats()']">
+                        <bb-row-spinner
+                                spinner="rowSpinner['ClearNetworkStats()']"
+                                label="_t('reset')"
+                                icon="'fa-circle-o'">
+                        </bb-row-spinner>
+                    </button>
                 </th>
             </tr>
             </thead>
