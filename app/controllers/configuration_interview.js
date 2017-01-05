@@ -156,7 +156,7 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
             return;
         }
         var timeout = 1000;
-        var cmd = 'devices[' + $scope.deviceId + '].data.givenName.value=\'' + deviceName + '\'';
+        var cmd = 'devices[' + $scope.deviceId + '].data.givenName.value="' + escape(deviceName) + '"';
         $scope.toggleRowSpinner(spin);
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
 
@@ -260,6 +260,7 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
 
 
             });
+            // todo: deprecated
             //} else {
             //$scope.descriptionCont = setCont(node, nodeId, cachedZddXml, ZWaveAPIData, refresh);
             //}
@@ -276,9 +277,6 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
     function checkInterview(node) {
         $scope.zwaveInterview.commandClassesCnt = 0;
         $scope.zwaveInterview.interviewDoneCnt = 0;
-        //console.log(node)
-        //return;
-
             if (!node) {
                 return;
             }
@@ -424,7 +422,8 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
     function refreshData(node, nodeId, ZWaveAPIData) {
         checkInterview(node);
         $scope.interviewCommands = deviceService.configGetInterviewCommands(node, ZWaveAPIData.updateTime);
-        $('#device_sleep_state .config-interview-val').html(deviceService.configDeviceState(node, $scope.languages));
-        $('#device_description_interview .config-interview-val').html(deviceService.configInterviewStage(ZWaveAPIData, nodeId, $scope.languages));
+        // todo: deprecated
+        //$('#device_sleep_state .config-interview-val').html(deviceService.configDeviceState(node, $scope.languages));
+        //$('#device_description_interview .config-interview-val').html(deviceService.configInterviewStage(ZWaveAPIData, nodeId, $scope.languages));
     }
 });

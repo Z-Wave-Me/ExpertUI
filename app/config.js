@@ -25,6 +25,8 @@ var config_data = {
         'restore_url': '/ZWaveAPI/Restore', // Url to restore backup
         'queue_url': '/ZWaveAPI/InspectQueue', // Url for inspect queue
         'fw_update_url': '/ZWaveAPI/FirmwareUpdate', // Url for Firmware Update
+        'zme_bootloader_upgrade': '/ZWaveAPI/ZMEBootloaderUpgrade', // ZME Bootloader upgrade url
+        'zme_firmware_upgrade': '/ZWaveAPI/ZMEFirmwareUpgrade', // ZME Firmware upgrade url
         'license_load_url': '/ZWaveAPI/ZMELicense', // Url to load new license
         'stat_url': '/ZWaveAPI/CommunicationStatistics', // Url to statistics
         'postfixget_url': '/ZWaveAPI/PostfixGet', // Postfix GET

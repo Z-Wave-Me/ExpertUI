@@ -16,17 +16,18 @@
                     <td>{{v.comment}}</td>
                    
                     <td class="update-ctrl">
-                        <button 
-                            data-ng-click="upgrade('#row_' + v.id,'/ZWaveAPI/ZMEBootloaderUpgrade', cfg.uzb_url + v.fileURL)" 
-                            class="btn btn-primary spin-true" 
-                            id="btn_boot_{{v.id}}"
-                            ng-show="v.type == 'bootloader'">{{_t('upgrade_bootloader')}}</button>
-                        <button 
-                            data-ng-click="upgrade('#btn_firmware_' + v.id, '/ZWaveAPI/ZMEFirmwareUpgrade', cfg.uzb_url + v.fileURL)"
-                            data-action="reset" 
-                            class="btn btn-info spin-true" 
-                            id="btn_firmware_{{v.id}}"
-                            ng-show="v.type=='firmware'">{{_t('upgrade_firmware')}}</button> 
+                        <!-- upgrade_bootloader -->
+                        <button class="btn btn-primary spin-true"  id="btn_boot_{{v.id}}"
+                                  ng-click="upgrade('zme_bootloader_upgrade', cfg.uzb_url + v.fileURL)"
+                                  ng-show="v.type == 'bootloader'">
+                            <i class="fa fa-circle-o"></i> {{_t('upgrade_bootloader')}}
+                        </button>
+                        <!-- upgrade_firmware -->
+                        <button class="btn btn-info spin-true"  id="btn_firmware_{{v.id}}"
+                                 ng-click="upgrade('zme_firmware_upgrade', cfg.uzb_url + v.fileURL)"
+                                 ng-show="v.type=='firmware'">
+                            <i class="fa fa-circle-o"></i> {{_t('upgrade_firmware')}}
+                        </button>
                     </td>
                 </tr>
             </tbody>

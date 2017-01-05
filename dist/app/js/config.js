@@ -1,4 +1,4 @@
-/* Copyright:  Z-Wave Europe, Created: 23-12-2016 15:28:43 */
+/* Copyright:  Z-Wave Europe, Created: 04-01-2017 10:13:06 */
 /**
  * App configuration
  * @author Martin Vach
@@ -162,7 +162,7 @@ var config_data = {
         },
     // Controller
    controller: {
-     homeName: 'MY NETWORK',
+     homeName: 'My network',
      isRealPrimary: false,
      homeId: 1,
      homeIdHex: '#',
@@ -170,7 +170,7 @@ var config_data = {
    },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer
-        'app_type': 'installer',
+        'app_type': 'default',
          'custom_cfg': {
              'default':{
                  'logo': 'app/images/zplus.jpg',

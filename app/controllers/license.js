@@ -88,27 +88,5 @@ appController.controller('LicenseController', function($scope, $timeout, dataSer
             $scope.proccessUpdate = {'message': $scope._t('error_no_capabilities'), 'status': 'fa fa-exclamation-triangle text-danger'};
             console.log('2. ---------- ERROR updateCapabilities ----------', error);
         });
-    }
-    ;
-    /**
-     * DEPRECATED
-     * Update Proccess capabilities
-     */
-//    function proccessCapabilities(response) {
-//        $('.verify-ctrl').attr('disabled', true);
-//        return;
-//        $timeout(function() {
-//            if ('do something to check when update is complete') {
-//                $scope.proccessUpdate = {'message': $scope._t('success_capabilities'), 'status': 'fa fa-check text-success'};
-//                console.log('3. ---------- SUCCESS proccessCapabilities ----------', response);
-//            } else {// Otherwise show error message
-//                $scope.proccessUpdate = {'message': $scope._t('error_no_capabilities'), 'status': 'fa fa-exclamation-triangle text-danger'};
-//                console.log('3. ---------- ERROR proccessCapabilities ----------');
-//            }
-//            $('.verify-ctrl').attr('disabled', false);
-//            return;
-//
-//        }, 3000);
-//
-//    };
+    };
 });

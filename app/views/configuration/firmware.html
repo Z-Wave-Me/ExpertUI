@@ -3,6 +3,7 @@
     <!-- Config navigation -->
     <div ng-include="'app/views/configuration/navi.html'"></div>
     <div ng-show="deviceId">
+        <!-- <pre>{{firmware.update|json}}</pre> -->
         <form name="form_firmware_update" id="form_firmware_update" class="form form-inline"
               ng-submit="updateDeviceFirmware(firmware.input,'btn_update')" novalidate>
             <!-- Url -->

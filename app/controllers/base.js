@@ -56,7 +56,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
             angular.extend($scope.languages, response.data);
         }, function (error) {
         });
-
+        // todo: deprecated
         /*// Is lang in language list?
         var lang = (cfg.lang_list.indexOf(lang) > -1 ? lang : cfg.lang);
         dataService.getLanguageFile(function (data) {
@@ -129,6 +129,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
         $route.reload();
     };
 
+    // todo: deprecated
     /**
      * Route on change start
      */
@@ -319,8 +320,6 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     $scope.runZwaveCmd = function (cmd, timeout) {
         timeout = timeout || 1000;
         $scope.toggleRowSpinner(cmd);
-        /*alertify.alertError('Running command ' + '\n' + cmd);
-         return;*/
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
             $timeout($scope.toggleRowSpinner, timeout);
         }, function (error) {
@@ -336,6 +335,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     $scope.loadZwaveConfig = function (nocache) {
         // Set config
         dataService.getApi('configget_url', null, nocache).then(function (response) {
+            // todo: deprecated
             //angular.extend(cfg.zwavecfg, {debug: response.data.debug});
             //angular.extend(cfg.zwavecfg, {notes: response.data.notes});
             angular.extend(cfg.zwavecfg, response.data);
@@ -347,9 +347,9 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
      */
     $scope.setDongle = function () {
         dataService.getApi('zwave_list').then(function (response) {
-            if (response.length === 1) {
-                angular.extend(cfg, {dongle: response[0]});
-                $cookies.dongle = response[0];
+            if (response.data.length === 1) {
+                angular.extend(cfg, {dongle: response.data[0]});
+                $cookies.dongle = response.data[0];
                 angular.extend(cfg,{dongle_list: response});
 
                 angular.extend(cfg, {
@@ -358,6 +358,8 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
                     restore_url: '/ZWave.' + cfg.dongle + '/Restore',
                     queue_url: '/ZWave.' + cfg.dongle + '/InspectQueue',
                     fw_update_url: '/ZWave.' + cfg.dongle + '/FirmwareUpdate',
+                    zme_bootloader_upgrade: '/ZWave.' + cfg.dongle + '/ZMEBootloaderUpgrade',
+                    zme_firmware_upgrade: '/ZWave.' + cfg.dongle + '/ZMEFirmwareUpgrade',
                     license_load_url: '/ZWave.' + cfg.dongle + '/ZMELicense',
                     zddx_create_url: '/ZWave.' + cfg.dongle + '/CreateZDDX/',
                     'stat_url': '/ZWave.' + cfg.dongle + '/CommunicationStatistics',
@@ -374,6 +376,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
             if (error.status === 401 && cfg.app_type !== 'installer') {
                 window.location.href = cfg.smarthome_login;
             }
+            // todo: deprecated
             /*if (error.status === 401) {
              //var redirectTo = $location.$$protocol+'://' + $location.$$host + ':' + $location.$$port + cfg.smarthome_login
              //if( cfg.app_type === 'installer'){
@@ -417,6 +420,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
              var hasDevices = Object.keys(ZWaveAPIData.devices).length;
              var homeId = ZWaveAPIData.controller.data.homeId.value;
 
+            // todo: deprecated
             //$scope.boxData.controller.isPrimary = ZWaveAPIData.controller.data.isPrimary.value;
             //$scope.boxData.controller.isRealPrimary = ZWaveAPIData.controller.data.isRealPrimary.value;
             //$scope.boxData.controller.hasDevices =  hasDevices < 2 ? false : true;
@@ -489,7 +493,6 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
             d: 0
         }
 
-        //console.log(data);
         angular.forEach(data, function(job, jobIndex) {
             if(job[1][1] === 1 || job[1][2] === 1 || job[1][4] === 1){
                 ret.busyLength += 1;
@@ -498,9 +501,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
             ret.arrCnt.s += job[1][2];
             ret.arrCnt.d += job[1][4];
         });
-        //ret.busyLength = (ret.arrCnt.v + ret.arrCnt.s + ret.arrCnt.d);
         ret.result = (ret.queueLength - ret.busyLength);
-        //console.log(ret);
         angular.extend(cfg.busy_indicator, ret);
     }
 

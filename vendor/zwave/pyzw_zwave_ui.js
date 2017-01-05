@@ -912,74 +912,6 @@ function renderMethodSpec(ccId, data) {
 								}
 							]
 						}
-					}
-				],
-				"StartLevelChange": [
-					{
-						"label": "Direction",
-						"type": {
-							"enumof": [
-								{
-									"label": "Up",
-									"type": {
-										"fix": 	{
-											"value": 0
-										}
-									}
-								},
-								{
-									"label": "Down",
-									"type": {
-										"fix": 	{
-											"value": 1
-										}
-									}
-								}
-							]
-						}
-					},
-				],
-				"StopLevelChange": [],
-				"SetWithDuration": [
-					{
-						"label": "Dimmer level",
-						"type": {
-							"enumof": [
-								{
-									"label": "Off",
-									"type": {
-										"fix": 	{
-											"value": 0
-										}
-									}
-								},
-								{
-									"label": "%",
-									"type": {
-										"range": {
-											"min": 0,
-											"max": 99
-										}
-									}
-								},
-								{
-									"label": "Full",
-									"type": {
-										"fix": 	{
-											"value": 99
-										}
-									}
-								},
-								{
-									"label": "On",
-									"type": {
-										"fix": 	{
-											"value": 255
-										}
-									}
-								}
-							]
-						}
 					},
 					{
 						"label": "Duration",
@@ -1024,7 +956,7 @@ function renderMethodSpec(ccId, data) {
 						}
 					}
 				],
-				"StartLevelChangeWithDurationV2": [
+				"StartLevelChange": [
 					{
 						"label": "Direction",
 						"type": {
@@ -1084,116 +1016,6 @@ function renderMethodSpec(ccId, data) {
 									"type": {
 										"fix": 	{
 											"value": 255
-										}
-									}
-								}
-							]
-						}
-					}
-				],
-				"SetMotorA": [
-					{
-						"label": "Status",
-						"type": {
-							"enumof": [
-								{
-									"label": "Close",
-									"type": {
-										"fix": 	{
-											"value": 0
-										}
-									}
-								},
-								{
-									"label": "Open",
-									"type": {
-										"fix": 	{
-											"value": 255
-										}
-									}
-								}
-							]
-						}
-					}
-				],
-				"StartLevelChangeMotorA": [
-					{
-						"label": "Start Move",
-						"type": {
-							"enumof": [
-								{
-									"label": "Up",
-									"type": {
-										"fix": 	{
-											"value": 0
-										}
-									}
-								},
-								{
-									"label": "Down",
-									"type": {
-										"fix": 	{
-											"value": 1
-										}
-									}
-								}
-							]
-						}
-					}
-				],
-				"StopLevelChangeMotorA": [],
-				"SetMotorB": [
-					{
-						"label": "Blind Position",
-						"type": {
-							"enumof": [
-								{
-									"label": "Close",
-									"type": {
-										"fix": 	{
-											"value": 0
-										}
-									}
-								},
-								{
-									"label": "%",
-									"type": {
-										"range": {
-											"min": 0,
-											"max": 99
-										}
-									}
-								},
-								{
-									"label": "Open",
-									"type": {
-										"fix": 	{
-											"value": 255
-										}
-									}
-								},
-								]
-						}
-					}
-				],
-				"StartLevelChangeMotorB": [
-					{
-						"label": "Start Move",
-						"type": {
-							"enumof": [
-								{
-									"label": "Up",
-									"type": {
-										"fix": 	{
-											"value": 0
-										}
-									}
-								},
-								{
-									"label": "Down",
-									"type": {
-										"fix": 	{
-											"value": 1
 										}
 									}
 								}

@@ -15392,8 +15392,7 @@ http://codepen.io/MattIn4D/pen/LiKFC
 
 /* line 18, ../sass/modules/_commands.scss */
 .commands-data {
-  padding: 10px 0;
-  border-top: solid 1px #9fd8ef;
+  padding: 0 0 5px 0;
 }
 
 /* line 23, ../sass/modules/_commands.scss */
