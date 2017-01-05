@@ -1,0 +1,14 @@
+<!-- Test view -->
+<span>{{_t('jobs')}}: {{cfg.busy_indicator.result}}</span>
+<!-- 0 -->
+<span class="text-success" ng-if="cfg.busy_indicator.result <= 0">
+<i class="fa fa-stop"></i>
+</span>
+<!-- 1-20 -->
+<span class="text-warning" ng-if="cfg.busy_indicator.result > 0 && cfg.busy_indicator.result < 20 ">
+<i class="fa fa-stop"></i><i class="fa fa-stop"></i>
+</span>
+<!-- great 10 -->
+<span class="text-danger" ng-if="cfg.busy_indicator.result > 19">
+<i class="fa fa-stop"></i><i class="fa fa-stop"></i><i class="fa fa-stop"></i>
+</span>
