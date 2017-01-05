@@ -5,7 +5,7 @@
  */
 var config_data = {
     'cfg': {
-        'app_name': 'Z-Wave Alliance',
+        'app_name': 'Z-Wave ExpertUI',
         'app_version': '1.2.0',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -171,7 +171,7 @@ var config_data = {
    },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer
-        'app_type': 'installer',
+        'app_type': 'default',
          'custom_cfg': {
              'default':{
                  'logo': 'app/images/zplus.jpg',

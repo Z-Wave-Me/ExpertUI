@@ -148,15 +148,16 @@
 
     <!-- Installer Container -->
     <div class="container-installer" ng-if="cfg.app_type === 'installer' && getBodyId()">
-        <div class="alert alert-success" ng-if="cfg.controller.isRealPrimary && !cfg.controller.hasDevices"><i
-                class="fa fa-info-circle"></i> {{_t('ready_to_network')}}
+        <div class="alert alert-success" ng-if="cfg.controller.isRealPrimary && !cfg.controller.hasDevices">
+            <div class="container"><i class="fa fa-info-circle"></i> {{_t('ready_to_network')}}</div>
         </div>
-        <div class="alert alert-warning" ng-if="cfg.controller.isRealPrimary && cfg.controller.hasDevices"><i
-                class="fa fa-check"></i> {{_t('iam_in')}} {{cfg.controller.homeName}}
+        <div class="alert alert-warning" ng-if="cfg.controller.isRealPrimary && cfg.controller.hasDevices">
+            <div class="container"><i class="fa fa-check"></i> {{_t('iam_in')}} {{cfg.controller.homeName}}</div>
         </div>
-        <div class="alert alert-danger" ng-if="!cfg.controller.isRealPrimary"><i class="fa fa-info-circle"></i>
-            {{_t('iam_in_network_homeid')}}: {{cfg.controller.homeName}}
+        <div class="alert alert-danger" ng-if="!cfg.controller.isRealPrimary">
+            <div class="container"><i class="fa fa-info-circle"></i> {{_t('iam_in_network_homeid')}}: {{cfg.controller.homeName}}</div>
         </div>
+
     </div>
     <!-- Ang Container -->
     <div id="main_content" class="container">
