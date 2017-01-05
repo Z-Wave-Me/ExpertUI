@@ -9,7 +9,7 @@ appController.controller('ZnifferController', function ($scope, $interval, $time
         run: true,
         spin: true,
         updateTime: Math.round(+new Date() / 1000),
-        trace: 'start',
+        trace: 'stop',
         interval: null,
         all: []
 
