@@ -9,10 +9,12 @@ $alliance-orange: #F89847;
     #main_navigation{
         margin-bottom: 0;
     }
+    /* Content */
     .container-installer{
         margin: $header-h 0 0 0;
         width: 100%;
         .alert{
+            text-align: left !important;
             font-size: 120%;
             text-align: center;
             padding: 10px 15px;
