@@ -120,6 +120,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
         $scope.controlDh.controller.homeName = ZWaveAPIData.controller.data.homeName.value || cfg.controller.homeName;
 
 
+
         $scope.controlDh.inclusion.alert = {
             message: $scope._t('nm_controller_state_' + controllerState),
             status: 'alert-warning',
@@ -667,4 +668,19 @@ appController.controller('SucSisController', function ($scope) {
     };
 
 
+});
+
+/**
+ * This sets Promiscuous mode to true/false.
+ * @class SetPromiscuousModeController
+ *
+ */
+appController.controller('SetPromiscuousModeController', function ($scope) {
+    /**
+     * Sets promiscuous mode
+     * @param {string} cmd
+     */
+    $scope.setPromiscuousMode = function (cmd) {
+        $scope.runZwaveCmd(cmd);
+    };
 });

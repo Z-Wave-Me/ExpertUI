@@ -1,0 +1,30 @@
+<!-- Promiscuous Mode -->
+<div class="panel panel-default" ng-controller="SetPromiscuousModeController">
+    <div class="panel-heading"><i class="fa fa-files-o"></i> {{_t('promiscuous_mode')}}</div>
+    <div class="panel-body">
+        <p class="input-help">{{_t('Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. ')}}</p>
+        <div class="btn-group">
+            <!-- ON -->
+            <button type="button" class="btn btn-primary active" id="btn_promi_on"
+                    ng-click="setPromiscuousMode('SetPromiscuousMode(true)')"
+                    ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || rowSpinner['SetPromiscuousMode(true)']">
+                <bb-row-spinner
+                        spinner="rowSpinner['SetPromiscuousMode(true)']"
+                        label="_t('on')"
+                        icon="'fa-toggle-on'">
+                </bb-row-spinner>
+            </button>
+            <!-- OFF -->
+            <button type="button" class="btn btn-default" id="btn_promi_off"
+                    ng-click="setPromiscuousMode('SetPromiscuousMode(false)')"
+                    ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || rowSpinner['SetPromiscuousMode(false)']">
+                <bb-row-spinner
+                        spinner="rowSpinner['SetPromiscuousMode(false)']"
+                        label="_t('off')"
+                        icon="'fa-toggle-off'">
+                </bb-row-spinner>
+            </button>
+        </div>
+    </div>
+</div>
+
