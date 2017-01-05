@@ -1,4 +1,9 @@
 {
+  "RFTxFrames":"Total Number of Frames Sent",
+  "RFTxLBTBackOffs":"Frames with Frequency Backoff (in % of frames sent)",
+  "RFRxFrames":"Number of correct Frames received",
+  "RFRxLRCErrors":"Number of corrupted CRC8 Frames received (in % of correct frames received)",
+  "RFRxCRC16Errors":"Number of corrupted CRC16 Frames received (in % of correct frames received)",
   "jobs":"Jobs",
   "name":"Name",
   "statistics":"Statistics",

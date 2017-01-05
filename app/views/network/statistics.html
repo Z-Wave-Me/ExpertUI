@@ -3,10 +3,10 @@
     <div class="page-header"><h1>{{_t('statistics')}}</h1></div>
     <bb-alert alert="alert"></bb-alert>
     <div class="table-responsive" ng-if="networkStatistics.show">
-        <table class="table table-striped table-condensed table-hover">
+        <table class="table table-striped table-condensed table-hover table-statistics">
             <thead>
             <tr>
-                <th style="width: 30%">{{ _t('name')}}</th>
+                <th style="width: 50%">{{ _t('name')}}</th>
                 <th>{{ _t('datetime')}}</th>
                 <th class="mobile-show td-action">
                     <button class="btn btn-primary" id="btn_update_all_1"
@@ -32,7 +32,7 @@
             </thead>
             <tbody>
             <tr ng-repeat="v in networkStatistics.all track by $index">
-                <td>{{v.name}}</td>
+                <td>{{_t(v.name)}}</td>
                 <td class="row-time is-updated-{{v.isUpdated}}">{{ v.dateTime.today }}</td>
                 <td class="text-right">{{v.value}}</td>
             </tr>
