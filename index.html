@@ -197,6 +197,14 @@
                         </div>
                     </li>
 
+                    <!-- Settings -->
+                    <li class="navibar-divider"></li>
+                    <li class="navibar-item">
+                        <a class="navibar-item-root" ng-href="#settings" ng-class="isActive('settings',1)">
+                            <i class="fa fa-cog"></i>
+                        </a>
+                    </li>
+
                    <!-- Time -->
                     <li class="navibar-divider navi-timestamp"></li>
                     <li class="navibar-item navi-timestamp">
@@ -205,69 +213,11 @@
                     </span>
                     </li>
 
-                    <!-- Settings -->
-                    <li class="navibar-divider"></li>
-                    <li class="navibar-item">
-                        <a class="navibar-item-root" ng-href="#settings" ng-class="isActive('settings',1)">
-                            <i class="fa fa-cog"></i>
-                        </a>
-                    </li>
-                    <!--<li class="navibar-item" ng-click="expandNavi('naviSettings', $event)">
-                        <a class="navibar-item-root" href="" title="{{_t('settings')}}" ng-class="isActive('settings',1)">
-                            <i class="fa fa-cog"></i> &lt;!&ndash;<span class="main-nav-name">{{ _t('settings')}}</span>&ndash;&gt;
-                        </a>
-                        <div class="sub-navigation sub-navigation-left" ng-if="naviExpanded.naviSettings">
-                            <ul>
-                                <li><a href="#settings" ng-class="isActive('settings',1)">{{ _t('settings') }}</a></li>
-                                <li ng-if="cfg.app_type !== 'installer'">
-                                    <a ng-href="{{cfg.smarthome_logout}}">{{_t('logout')}}</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>-->
-
-                    <!-- lang -->
-                    <!--<li class="navibar-divider"> </li>
-                    <li class="navibar-item" ng-click="expandNavi('naviLang', $event)">
-                        <a class="navibar-item-root" href="" title="{{lang}}">
-                            <i class="fa fa-globe fa-lg"></i>
-                        </a>
-                        <div class="sub-navigation sub-navigation-left" ng-if="naviExpanded.naviLang">
-                            <ul>
-                                <li ng-repeat="v in lang_list" class="lang-switch">
-                                    <a href="" ng-click="changeLang(v)" ng-class="v === lang ? 'active': ''">
-                                        <img ng-src="app/images/{{v}}.png" alt="{{ v }}"/> {{ v }}
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>-->
-
-                    <!-- Logout -->
-                    <!--<li class="navibar-divider"> </li>
-                    <li class="navibar-item">
-                        <a class="navibar-item-root" ng-href="{{getCustomCfgArr('logout')}}">
-                            <i class="fa fa-sign-out fa-lg"></i>
-                        </a>
-                    </li>
                     <!-- Busy indicator -->
-                    <li class="navibar-divider" ng-if="cfg.app_type === 'installer'"> </li>
-                    <li class="navibar-item" ng-if="cfg.app_type === 'installer'">
-                        <span class="timestamp">
-                        <span>{{_t('jobs')}}: {{cfg.busy_indicator.result}}</span>
-                            <!-- 0 -->
-                            <span class="text-success" ng-if="cfg.busy_indicator.result <= 0">
-                                <i class="fa fa-stop"></i>
-                            </span>
-                            <!-- 1-20 -->
-                             <span class="text-warning" ng-if="cfg.busy_indicator.result > 0 && cfg.busy_indicator.result < 20 ">
-                                 <i class="fa fa-stop"></i><i class="fa fa-stop"></i>
-                             </span>
-                            <!-- great 10 -->
-                             <span class="text-danger" ng-if="cfg.busy_indicator.result > 19">
-                                 <i class="fa fa-stop"></i><i class="fa fa-stop"></i><i class="fa fa-stop"></i>
-                             </span>
-                    </span>
+                    <li class="navibar-divider navi-timestamp" ng-if="cfg.app_type === 'installer'"> </li>
+                    <li class="navibar-item navi-timestamp" ng-if="cfg.app_type === 'installer'">
+                         <span class="timestamp" ng-if="cfg.app_type === 'installer'"
+                               ng-include="'app/views/indicator.html'"></span>
                     </li>
                 </ul>
             </div>
@@ -287,9 +237,6 @@
         {{_t('iam_in_network_homeid')}}: {{cfg.controller.homeName}}
     </div>
 </div>
-<!--<div id="respone_container" class="container">
-    <div id="respone_container_inner"></div>
-</div>-->
 <!-- Ang Container -->
 <div id="main_content" class="container">
     <div ng-if="cfg.route.fatalError.message">
@@ -307,6 +254,9 @@
         <div class="container">
             <span class="copyright" ng-bind-html="getCustomCfgArr('footer_text') | toTrusted"></span>
             <span class="timestamp" ng-if="cfg.route.time.string"><i class="fa fa-clock-o"></i> {{cfg.route.time.string}}</span>
+            <span class="timestamp" ng-if="cfg.app_type === 'installer'"> | </span>
+            <span class="timestamp" ng-if="cfg.app_type === 'installer'"
+                  ng-include="'app/views/indicator.html'"></span>
         </div>
 
     </div>
