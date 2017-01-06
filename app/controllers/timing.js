@@ -86,6 +86,17 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
         $scope.devices.interval = $interval(refresh, $scope.cfg.interval);
     };
 
+    /**
+     * Update timing info
+     * @param {text} spin
+     */
+    $scope.updateTimingInfo = function(spin) {
+        $scope.toggleRowSpinner(spin);
+        $interval.cancel($scope.devices.interval);
+        $scope.allSettled();
+        $timeout($scope.toggleRowSpinner, 1000);
+    };
+
     /// --- Private functions --- ///
     /**
      * Set zwave data
