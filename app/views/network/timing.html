@@ -34,7 +34,21 @@
                             <span ng-show="predicate == 'okPackets'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
-                    <th>{{_t('th_lastpackets')}}</th>
+                    <th>
+                        {{_t('th_lastpackets')}}&nbsp;
+                    </th>
+                    <th class="mobile-show text-right">
+                        <button class="btn btn-primary"
+                                 ng-click="updateTimingInfo('updateTimingInfo')"
+                                 ng-disabled="rowSpinner['updateTimingInfo']">
+                        <bb-row-spinner
+                                spinner="rowSpinner['updateTimingInfo']"
+                                label=" _t('update')"
+                                icon="'fa-circle-o'">
+
+                        </bb-row-spinner>
+                    </button>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -47,6 +61,7 @@
                    <td data-title="{{_t('th_total')}}">{{ v.totalPackets}} &nbsp;</td>
                     <td data-title="{{_t('th_ok')}}">{{ v.okPackets}}% &nbsp;</td>
                     <td data-title="{{_t('th_lastpackets')}}"><span ng-bind-html="v.lastPackets | toTrusted"></span> &nbsp;</td>
+                    <td>&nbsp;</td>
                 </tr>
             </tbody>
         </table>
