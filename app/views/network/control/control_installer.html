@@ -12,7 +12,8 @@
             <!-- Controller Maintenance -->
             <div ng-include="'app/views/network/control/control_controller_maintance.html'"></div>
             <!-- Promiscuous Mode -->
-            <!-- <div ng-include="'app/views/network/control/control_promiscuous.html'"></div>-->
+            <div ng-include="'app/views/network/control/control_promiscuous.html'"
+            ng-if="controlDh.controller.SetPromiscuousMode"></div>
             <!-- Operating frequency Change -->
             <!--<div ng-include="'app/views/network/control/control_frequency.html'"></div>-->
         </div>

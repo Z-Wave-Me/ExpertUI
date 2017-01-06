@@ -6,7 +6,7 @@ This User Interfaces allows to operate a Smart Home Network based on Z-Wave devi
 ## v1.2.0
 #### New features
 - Interview progress bar.
-- CIT: network name, time format, firmware update, time zone, busy indicator, interview progressbar, network statitstics.
+- CIT: network name, time format, firmware update, time zone, busy indicator, interview progressbar, network statitstics, primiscuous mode.
 - Icons in the menu.
 - Enhanced display on mobile devices and tablets.
 - Spinner indicators.
