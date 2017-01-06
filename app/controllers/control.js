@@ -118,10 +118,9 @@ appController.controller('ControlController', function ($scope, $interval, $time
         $scope.controlDh.controller.isSIS = ZWaveAPIData.controller.data.SISPresent.value;
         $scope.controlDh.controller.secureInclusion = ZWaveAPIData.controller.data.secureInclusion.value;
         $scope.controlDh.controller.homeName = ZWaveAPIData.controller.data.homeName.value || cfg.controller.homeName;
+        $scope.controlDh.controller.SetPromiscuousMode = (ZWaveAPIData.controller.data.functionClassesNames.value.indexOf('SetPromiscuousMode') > -1 ? true: false);
 
-
-
-        $scope.controlDh.inclusion.alert = {
+         $scope.controlDh.inclusion.alert = {
             message: $scope._t('nm_controller_state_' + controllerState),
             status: 'alert-warning',
             icon: 'fa-spinner fa-spin'

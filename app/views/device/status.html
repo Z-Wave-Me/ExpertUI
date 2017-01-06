@@ -66,7 +66,7 @@
             <tr ng-repeat="v in statuses.all | orderBy:predicate:reverse track by $index" id="{{ v.rowId}}">
                 <td data-title="#">{{ v.id}}</td>
                 <td data-title="{{ _t('device_name')}}">
-                    <switch-type-icon generic="{{ v.genericType}}" specific="{{ v.specificType}}"></switch-type-icon>
+                    <!--<switch-type-icon generic="{{ v.genericType}}" specific="{{ v.specificType}}"></switch-type-icon>-->
                     <a href="#configuration/interview/{{v.id}}">{{ v.name}}</a>
                 </td>
                 <td data-title="{{ _t('th_sleeping')}}" class="row-sleeping"><span

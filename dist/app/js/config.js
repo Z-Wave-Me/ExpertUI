@@ -1,4 +1,4 @@
-/* Copyright:  Z-Wave Europe, Created: 04-01-2017 10:13:06 */
+/* Copyright:  Z-Wave Europe, Created: 05-01-2017 14:42:57 */
 /**
  * App configuration
  * @author Martin Vach
@@ -6,7 +6,7 @@
  */
 var config_data = {
     'cfg': {
-        'app_name': 'Z-Wave Alliance',
+        'app_name': 'Z-Wave ExpertUI',
         'app_version': '1.2.0',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -26,6 +26,8 @@ var config_data = {
         'restore_url': '/ZWaveAPI/Restore', // Url to restore backup
         'queue_url': '/ZWaveAPI/InspectQueue', // Url for inspect queue
         'fw_update_url': '/ZWaveAPI/FirmwareUpdate', // Url for Firmware Update
+        'zme_bootloader_upgrade': '/ZWaveAPI/ZMEBootloaderUpgrade', // ZME Bootloader upgrade url
+        'zme_firmware_upgrade': '/ZWaveAPI/ZMEFirmwareUpgrade', // ZME Firmware upgrade url
         'license_load_url': '/ZWaveAPI/ZMELicense', // Url to load new license
         'stat_url': '/ZWaveAPI/CommunicationStatistics', // Url to statistics
         'postfixget_url': '/ZWaveAPI/PostfixGet', // Postfix GET
@@ -162,7 +164,7 @@ var config_data = {
         },
     // Controller
    controller: {
-     homeName: 'My network',
+     homeName: 'MY NETWORK',
      isRealPrimary: false,
      homeId: 1,
      homeIdHex: '#',
@@ -170,7 +172,7 @@ var config_data = {
    },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer
-        'app_type': 'default',
+        'app_type': 'installer',
          'custom_cfg': {
              'default':{
                  'logo': 'app/images/zplus.jpg',

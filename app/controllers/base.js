@@ -324,7 +324,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
             $timeout($scope.toggleRowSpinner, timeout);
         }, function (error) {
             $scope.toggleRowSpinner();
-            alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
+            alertify.alertError($scope._t('error_update_data') + '\n' + cmd);
         });
     };
 
