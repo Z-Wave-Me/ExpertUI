@@ -392,7 +392,7 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         // OBJ
         var obj = {};
         obj["a"] = {"key": "device_node_id", "val": nodeId};
-        obj["b"] = {"key": "device_node_name", "val": $filter('deviceName')(nodeId, node)};
+        //obj["b"] = {"key": "device_node_name", "val": $filter('deviceName')(nodeId, node)};
         obj["c"] = {"key": "device_node_type", "val": ''};
         obj["d"] = {"key": "device_description_brand", "val": brandName};
         obj["e"] = {"key": "device_description_device_type", "val": node.data.deviceTypeString.value};
