@@ -1,4 +1,4 @@
-/* Copyright:  Z-Wave Europe, Created: 06-01-2017 08:53:23 */
+/* Copyright:  Z-Wave Europe, Created: 06-01-2017 09:11:33 */
 /**
  * App configuration
  * @author Martin Vach
@@ -172,7 +172,7 @@ var config_data = {
    },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer
-        'app_type': 'default',
+        'app_type': 'installer',
          'custom_cfg': {
              'default':{
                  'logo': 'app/images/zplus.jpg',
