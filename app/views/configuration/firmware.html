@@ -7,16 +7,18 @@
         <form name="form_firmware_update" id="form_firmware_update" class="form form-inline"
               ng-submit="updateDeviceFirmware(firmware.input,'btn_update')" novalidate>
             <!-- Url -->
-            <input id="url" type="text" value="" name="url" class="form-control" ng-model="firmware.input.url" placeholder="URL" title="please use format http:// ...... " />
+            <input id="url" type="text" value="" name="url" class="form-control" ng-model="firmware.input.url" placeholder="{{_t('firmware_url')}}" title="{{_t('firmware_url')}}" />
+            <!-- Target -->
+            <input id="targetId" type="text" value="" name="url" class="form-control" ng-model="firmware.input.targetId" placeholder="{{_t('target_id')}}" title="_t('target_id')" />
             <!-- File -->
             <input type="file" class="form-control" file-model="myFile" />
             <!-- Target -->
-            <select name="devices" class="form-control" ng-model="firmware.input.targetId">
-                <option value="" ng-selected="v.id != deviceId">--- {{_t('Target')}} ---</option>
+            <!--<select name="devices" class="form-control" ng-model="firmware.input.targetId">
+                <option value="" ng-selected="v.id != deviceId">-&#45;&#45; {{_t('Target')}} -&#45;&#45;</option>
                 <option value="{{k}}"
                         ng-repeat="(k,v) in ['Z-Wave','EnOcean']"
                         ng-selected="k === 0">{{v}}</option>
-            </select>
+            </select>-->
 
             <!-- Submit -->
             <button type="submit" class="btn btn-primary" id="btn_update"

@@ -16,7 +16,7 @@
                         <th>{{_t('th_result')}}</th>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="v in interviewCommands" id="{{v.ccId}}">
+                    <tr ng-repeat="v in interviewCommands track by $index" id="{{v.ccId}}">
 
                         <td data-title="{{_t('th_command_class')}}">
                             {{v.ccName}}
