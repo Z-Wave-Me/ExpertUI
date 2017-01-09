@@ -165,6 +165,11 @@ module.exports = function (grunt) {
                     {expand: true, src: ['vendor/angular/angular-1.2.14/angular.min.js.map'], dest: 'dist/app/js/', flatten: true},
                     {expand: true, src: ['vendor/angular/angular-1.2.14/angular-route.min.js.map'], dest: 'dist/app/js/', flatten: true}
                 ]
+            },
+            licence: {
+                files: [
+                    {src: ['LICENCE.md'], dest: 'dist/LICENCE.md'}
+                ]
             }
         },
         //CSSS min
