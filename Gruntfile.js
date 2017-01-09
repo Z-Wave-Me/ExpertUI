@@ -121,6 +121,16 @@ module.exports = function (grunt) {
                 dest: 'dist/app/js/build.js'
             }
         },
+        json_generator: {
+            target: {
+                dest: "app/info.json",
+                options: {
+                    name: 'Expert UI',
+                    built: '<%= grunt.template.today("dd-mm-yyyy HH:MM:ss") %>',
+                    timestamp: '<%= Math.floor(Date.now() / 1000) %>'
+                }
+            }
+        },
         // Copy
         copy: {
             main: {
@@ -137,6 +147,11 @@ module.exports = function (grunt) {
                     /*{src: ['storage/img/**'], dest: 'dist/'},
                      {src: ['storage/demo/**'], dest: 'dist/'},
                      {src: ['storage/data/**'], dest: 'dist/'}*/
+                ]
+            },
+            info: {
+                files: [
+                    {src: ['app/info.json'], dest: 'dist/app/info.json'}
                 ]
             },
             fonts: {
@@ -203,7 +218,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
     grunt.loadNpmTasks('grunt-string-replace');
     grunt.loadNpmTasks('grunt-banner');
+    grunt.loadNpmTasks('grunt-json-generator');
+
     // Default task(s).
     //grunt.registerTask('default', ['clean','concat','copy','cssmin','string-replace']);
-    grunt.registerTask('default', ['clean', 'ngtemplates','concat', 'copy', 'cssmin','usebanner']);
+    grunt.registerTask('default', ['clean', 'ngtemplates','concat', 'json_generator','copy', 'cssmin','usebanner']);
 };
