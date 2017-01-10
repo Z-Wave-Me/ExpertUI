@@ -48,7 +48,8 @@
     <!-- Device name and select -->
     <div class="btn-group btn-goup-block_ btn-goup-2_" ng-click="expandNavi('configDevices', $event)">
         <button class="btn btn-default">
-            (#{{deviceId}}) {{deviceName | cutText:true:40}}
+            <span ng-if="deviceId > 0">(#{{deviceId}}) {{deviceName | cutText:true:40}}</span>
+            <span ng-if="!deviceId > 0">{{_t('select_device')}}</span>
         </button>
         <button class="btn btn-default">
             <i class="fa fa-chevron-down"></i>
