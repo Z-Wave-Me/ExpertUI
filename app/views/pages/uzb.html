@@ -29,6 +29,29 @@
                             <i class="fa fa-circle-o"></i> {{_t('upgrade_firmware')}}
                         </button>
                     </td>
+                    <td>
+                        <!--upload_bootloader -->
+                        <div ng-if="v.type === 'bootloader'">
+                            <input class="inputfile" type="file" name="file" id="file{{v.id}}"
+                                   ng-click="icons.find = v"
+                                   onchange="angular.element(this).scope().uploadFile(this.files)" />
+                            <label for="file{{v.id}}" class="btn btn-primary" title="{{_t('upload_bootloader')}}"
+                                   ng-click="icons.find = v">
+                                <i class="fa fa-upload"></i> {{_t('upload_bootloader')}}
+                            </label>
+                        </div>
+
+                        <!--upload_firmware -->
+                        <div ng-if="v.type === 'firmware'">
+                            <input class="inputfile" type="file" name="file" id="file{{v.id}}"
+                                   ng-click="icons.find = v"
+                                   onchange="angular.element(this).scope().uploadFile(this.files)" />
+                            <label for="file{{v.id}}" class="btn btn-primary" title="{{_t('upload_firmware')}}"
+                                   ng-click="icons.find = v">
+                                <i class="fa fa-upload"></i> {{_t('upload_firmware')}}
+                            </label>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
