@@ -167,6 +167,10 @@
         </button>
 
         <!-- Update fitmware  -->
+       <!-- manufacturerProductId: {{master['controller.data.manufacturerProductId']}}<br />
+        manufacturerId: {{master['controller.data.manufacturerId']}}<br />
+        manufacturerProductType: {{master['controller.data.manufacturerProductType']}}<br />
+        ZWaveChip: {{master['controller.data.ZWaveChip']}}<br />-->
         <a href="#uzb" class="btn btn-default"
            ng-if="master['controller.data.manufacturerProductId'] == 1 && (master['controller.data.manufacturerId'] == 277 || master['controller.data.manufacturerId'] == 327)&& master['controller.data.manufacturerProductType'] == 1024 && master['controller.data.ZWaveChip'] == 'ZW0500'">
             <i class="fa fa-long-arrow-up"></i> {{_t('upgrade_bootloader_firmware')}}

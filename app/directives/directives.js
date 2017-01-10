@@ -27,7 +27,7 @@ angApp.directive('bbAlert', function () {
         restrict: "E",
         replace: true,
         scope: {alert: '='},
-        template: '<div class="alert" ng-if="alert.message" ng-class="alert.status">'
+        template: '<div class="alert" ng-if="alert.message" ng-class="alert.status" ng-cloak>'
                 + '<i class="fa fa-lg" ng-class="alert.icon"></i> <span ng-bind-html="alert.message|toTrusted"></span>'
                 + '</div>'
     };
