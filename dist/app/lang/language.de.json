@@ -1,6 +1,4 @@
 {
- "target_id":"Target ID",
- "firmware_url":"Firmware URL",
  "RFTxFrames":"Anzahl gesendeter Frames",
  "RFTxLBTBackOffs":"Frames mit Frequenz-Backoff (von allen gesendeten Frames in %)",
  "RFRxFrames":"Anzahl korrekt empfangener Frames",

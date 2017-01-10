@@ -1,13 +1,10 @@
 <!-- Uzb view -->
 <div data-ng-controller="UzbController">
+    <bb-loader></bb-loader>
     <div class="page-header"><h1>{{_t('upgrade_bootloader_firmware')}}</h1></div>
     <p>{{_t('txt_uzb_info')}}</p>
-    <div class="alert alert-dismissible" ng-if="alert.message" ng-class="alert.status">
-        <!--<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
-        <i class="fa fa-lg" ng-class="alert.icon"></i> <span ng-bind="alert.message"></span>
-    </div>
+    <bb-alert alert="alert"></bb-alert>
     <div class="">
-        <p class="text-info" ng-if="noData" ng-bind="noData"></p>
         <table class="table table-striped table-condensed table-hover" ng-if="uzbUpgrade.length > 0">
             <tbody>
                 <tr ng-repeat="v in uzbUpgrade| orderBy:predicate:reverse" id="row_{{v.id}}" ngif="v.file == 'bin'">
@@ -17,17 +14,59 @@
                    
                     <td class="update-ctrl">
                         <!-- upgrade_bootloader -->
-                        <button class="btn btn-primary spin-true"  id="btn_boot_{{v.id}}"
+                        <button class="btn btn-primary"  id="btn_boot_{{v.id}}"
                                   ng-click="upgrade('zme_bootloader_upgrade', cfg.uzb_url + v.fileURL)"
-                                  ng-show="v.type == 'bootloader'">
-                            <i class="fa fa-circle-o"></i> {{_t('upgrade_bootloader')}}
+                                  ng-if="v.type == 'bootloader'"
+                                ng-disabled="rowSpinner['zme_bootloader_upgrade']">
+                             <bb-row-spinner
+                                    spinner="rowSpinner['zme_bootloader_upgrade']"
+                                    label="_t('upgrade_bootloader')"
+                                    icon="'fa-circle-o'">
+                            </bb-row-spinner>
                         </button>
                         <!-- upgrade_firmware -->
-                        <button class="btn btn-info spin-true"  id="btn_firmware_{{v.id}}"
+                        <button class="btn btn-info"  id="btn_firmware_{{v.id}}"
                                  ng-click="upgrade('zme_firmware_upgrade', cfg.uzb_url + v.fileURL)"
-                                 ng-show="v.type=='firmware'">
-                            <i class="fa fa-circle-o"></i> {{_t('upgrade_firmware')}}
+                                 ng-if="v.type=='firmware'"
+                                ng-disabled="rowSpinner['zme_firmware_upgrade']">
+                            <bb-row-spinner
+                                    spinner="rowSpinner['zme_firmware_upgrade']"
+                                    label="_t('upgrade_firmware')"
+                                    icon="'fa-circle-o'">
+                            </bb-row-spinner>
+
                         </button>
+                    </td>
+                    <td>
+                        <!--upload_bootloader -->
+                        <div ng-if="v.type === 'bootloader'">
+                            <input class="inputfile" type="file" name="file" id="file{{v.id}}"
+                                   ng-click="icons.find = v"
+                                   onchange="angular.element(this).scope().uploadFile('zme_bootloader_upgrade',this.files)"
+                                   ng-disabled="rowSpinner['zme_bootloader_upgrade']" />
+                            <label for="file{{v.id}}" class="btn btn-primary" title="{{_t('upload_bootloader')}}">
+                                <bb-row-spinner
+                                        spinner="rowSpinner['zme_bootloader_upgrade']"
+                                        label="_t('upload_bootloader')"
+                                        icon="'fa-upload'">
+                                </bb-row-spinner>
+                            </label>
+                        </div>
+
+                        <!--upload_firmware -->
+                        <div ng-if="v.type === 'firmware'">
+                            <input class="inputfile" type="file" name="file" id="file{{v.id}}"
+                                   ng-click="icons.find = v"
+                                   onchange="angular.element(this).scope().uploadFile('zme_firmware_upgrade',this.files)"
+                                   ng-disabled="rowSpinner['zme_firmware_upgrade']" />
+                            <label for="file{{v.id}}" class="btn btn-info" title="{{_t('upload_firmware')}}">
+                                <bb-row-spinner
+                                        spinner="rowSpinner['zme_firmware_upgrade']"
+                                        label="_t('upload_firmware')"
+                                        icon="'fa-upload'">
+                                </bb-row-spinner>
+                            </label>
+                        </div>
                     </td>
                 </tr>
             </tbody>
