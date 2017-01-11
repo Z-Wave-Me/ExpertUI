@@ -5,6 +5,7 @@ This User Interfaces allows to operate a Smart Home Network based on Z-Wave devi
 
 ## v1.2.0
 #### New features
+- Notifications page.
 - UZB: Button for uploading bootloader/firmware.
 - Interview progress bar.
 - CIT: network name, time format, firmware update, time zone, busy indicator, interview progressbar, network statitstics, primiscuous mode.
