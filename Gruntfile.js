@@ -89,6 +89,7 @@ module.exports = function (grunt) {
                     'app/controllers/meter.js',
                     'app/controllers/thermostat.js',
                     'app/controllers/lock.js',
+                    'app/controllers/notification.js',
                     'app/controllers/status.js',
                     'app/controllers/battery.js',
                     'app/controllers/type.js',
