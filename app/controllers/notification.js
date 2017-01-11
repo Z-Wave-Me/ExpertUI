@@ -48,7 +48,7 @@ appController.controller('NotificationController', function ($scope, $filter, $t
                 return;
             }
             $scope.notifications.show = true;
-            //$scope.refreshZwaveData(ZWaveAPIData,alarms);
+            $scope.refreshZwaveData(ZWaveAPIData,alarms);
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
         });
