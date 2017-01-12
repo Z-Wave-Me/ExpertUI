@@ -17,20 +17,12 @@
                     </a>
                 </th>
                 <th>
-                    <a href="" ng-click="orderBy('type')">{{ _t('notification')}}
-                        <span ng-show="predicate == 'type'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                    </a>
-                </th>
-                <th>
-                    <a href="" ng-click="orderBy('status')">{{ _t('nav_status')}}
-                        <span ng-show="predicate == 'status'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                    </a>
-                </th>
-                <th>
                     <a href="" ng-click="orderBy('updateTime')">{{ _t('datetime')}}
                         <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                     </a>
                 </th>
+                <th>{{ _t('notification')}}</th>
+
                 <th class="mobile-show td-action">
                     <button class="btn btn-primary" id="btn_update_all_1"
                             ng-click="updateAllNotifications('all_1','urlToStore')"
@@ -48,9 +40,16 @@
             <tr ng-repeat="v in notifications.all | orderBy:predicate:reverse track by $index" id="{{ v.rowId}}">
                 <td data-title="#">{{ v.id}}</td>
                 <td data-title="{{ _t('device_name')}}">{{ v.name}}</td>
-                <td data-title="{{ _t('notification')}}" class="row-level">{{v.type}} &nbsp;</td>
-                <td data-title="{{ _t('nav_status')}}" class="row-level">{{v.status}} &nbsp;</td>
-                <td data-title="{{ _t('datetime')}}" class="row-time is-updated-{{v.isUpdated}}">{{ v.updateTime | isTodayFromUnix }} &nbsp;</td>
+                <td data-title="{{ _t('datetime')}}" class="row-time is-updated-{{v.isUpdated}}">{{ v.updateTime | isTodayFromUnix }}</td>
+                <td data-title="{{ _t('notification')}}" class="row-level">
+                    <div ng-repeat="n in v.notification" ng-if="v.version === 1">
+                        {{n.typeString}},{{n.eventString}}
+                    </div>
+                    <div ng-repeat="n in v.notification" ng-if="v.version === 2">
+                        <strong>{{n.typeString}}</strong> <em>{{n.eventString}}</em>
+                    </div>
+                </td>
+
                 <td class="td-action" data-title="">
                     <button class="btn btn-default" id="btn_update_{{ v.rowId}}"
                             ng-click="updateNotification(v.urlToStore)"
