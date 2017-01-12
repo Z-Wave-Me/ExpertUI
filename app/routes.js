@@ -47,6 +47,10 @@ angApp.config(['$routeProvider',
             requireLogin: requireLogin,
             templateUrl: 'app/views/controll/locks.html',
             appTypeBanned: ['installer']
+        }).when('/control/notifications', {
+            requireLogin: requireLogin,
+            templateUrl: 'app/views/controll/notifications.html',
+            appTypeBanned: ['installer']
         }).// Device
         when('/device/status', {
             requireLogin: requireLogin,

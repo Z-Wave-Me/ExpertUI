@@ -1,6 +1,8 @@
 {
   "--- newtrans": "---",
-  "---": "---",
+ "---": "---",
+ "notification":"Notification",
+ "notifications":"Notifications",
  "upload_bootloader":"Upload bootloader",
  "upload_firmware":"Upload firmware",
  "target_id":"Target ID",

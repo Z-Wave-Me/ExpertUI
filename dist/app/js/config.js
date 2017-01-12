@@ -1,4 +1,4 @@
-/* Copyright:  Z-Wave Europe, Created: 10-01-2017 14:20:05 */
+/* Copyright:  Z-Wave Europe, Created: 12-01-2017 09:51:34 */
 /**
  * App configuration
  * @author Martin Vach
@@ -47,6 +47,7 @@ var config_data = {
         'login': '/ZAutomation/api/v1/login',// Get time
         'runjs_url': '/JS/Run/', // Url for running JS
         'device_classes_url': '/translations/DeviceClasses.xml', // Url to Device Classes
+        'alarms_url': '/translations/Alarms.xml', // Url to Alarms
         'zwave_classes_url': 'storage/data/ZWave_cmd_classes.xml', // Url to Zwave Classes
         'config_url': '/config/', // Url for store config data
         'reorg_log_url': '/config/reorg.log', // Url for store reorg log data

@@ -52,10 +52,7 @@
             <tbody>
                 <tr ng-repeat="v in sensors.all| orderBy:predicate:reverse track by $index" id="{{ v.rowId}}">
                     <td data-title="#">{{ v.id}}<span ng-show="v.iId != 0">.{{v.iId}}</span></td>
-                    <td data-title="{{ _t('device_name')}}" ng-switch on="v.type">
-                        <i ng-switch-when="SensorBinary" class="fa fa-eye fa-lg"></i>
-                        <i ng-switch-when="Meter" class="fa fa-lightbulb-o fa-lg"></i> 
-                        <i ng-switch-default class="fa fa-bullseye fa-lg"></i>
+                    <td data-title="{{ _t('device_name')}}">
                         {{ v.name}}
                     </td>
                     <td data-title="{{ _t('device_description_device_type')}}">{{v.purpose}} &nbsp;</td>

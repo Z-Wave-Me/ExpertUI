@@ -122,9 +122,9 @@ appController.controller('MetersController', function($scope, $filter, $timeout,
                         if (meter.sensorType.value == 1 && realEMeterScales.indexOf(scaleId) === -1) {
                             return; // filter only for eMeters
                         }
-                        if (meter.sensorType.value > 1) {
+                        /*if (meter.sensorType.value > 1) {
                             return; //  gas and water have real meter scales
-                        }
+                        }*/
                         var obj = {};
                         obj['id'] = k;
                         obj['iId'] = instanceId;

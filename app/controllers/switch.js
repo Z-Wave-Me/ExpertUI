@@ -143,7 +143,6 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
             if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
                 return;
             }
-
             // Loop throught instances
             var cnt = 1;
             angular.forEach(node.instances, function(instance, instanceId) {
@@ -157,8 +156,8 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
 
                     var deviceType = ccId == 0x25 ? 'binary' : 'multilevel';
                     
-                    var genericType = ZWaveAPIData.devices[nodeId].data.genericType.value;
-                    var specificType = ZWaveAPIData.devices[nodeId].data.specificType.value;
+                    var genericType = node.data.genericType.value;
+                    var specificType = node.data.specificType.value;
                     var genspecType = genericType + '/' + specificType;
 
                     // Set object
@@ -214,6 +213,7 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
                     obj['btnOff'] = btnOff;
                     obj['btnFull'] = btnFull;
                     obj['cmdToUpdate'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.level';
+                   // obj['deviceIcon'] = $filter('deviceIcon')(obj);
                     var findIndex = _.findIndex($scope.switches.all, {rowId: obj.rowId});
                     if(findIndex > -1){
                         angular.extend($scope.switches.all[findIndex],obj);

@@ -34,7 +34,7 @@
             <tbody>
                 <tr ng-repeat="v in thermostats.all| orderBy:predicate:reverse track by v.id" id="{{ v.rowId}}">
                     <td data-title="#">{{ v.id}}</td>
-                    <td data-title="{{ _t('device_name')}}"><i class="fa fa-sort-amount-asc fa-lg"></i> {{ v.name}}</td>
+                    <td data-title="{{ _t('device_name')}}">{{v.name}}</td>
                     <td data-title="{{ _t('switch_point_temp')}}" class="row-level">
                         <span class="level-val" ng-show="v.level != null">{{ v.level}}</span>&nbsp;<span  ng-show="v.hasExt">{{ v.scale}}</span>
                     </td>

@@ -844,3 +844,23 @@ angApp.filter('zWavePlusIcon', function () {
         return icon;
     };
 });
+
+/**
+ * todo: finish this filter
+ * Set device icon
+ */
+angApp.filter('deviceIcon', function () {
+    return function (input) {
+        //var icon = 'fa fa-minus';
+        var icon = 'fa-circle';
+        switch (parseInt(input.genericType, 10)) {
+            case 1:
+                icon = 'fa-wifi';
+                break;
+
+            default:
+                break;
+        }
+        return icon;
+    };
+});
