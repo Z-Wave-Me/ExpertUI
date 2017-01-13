@@ -8,20 +8,41 @@
             <tr>
                 <th>
                     <a href="" ng-click="orderBy('id')">#
-                        <span ng-show="predicate == 'id'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        <span ng-show="predicate == 'id'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i
+                                ng-show="reverse" class="fa fa-sort-desc"></i></span>
                     </a>
                 </th>
                 <th>
                     <a href="" ng-click="orderBy('name')">{{ _t('device_name')}}
-                        <span ng-show="predicate == 'name'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        <span ng-show="predicate == 'name'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i
+                                ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                    </a>
+                </th>
+                <th>
+                    <a href="" ng-click="orderBy('typeString')">{{ _t('notification')}}
+                        <span ng-show="predicate == 'typeString'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i
+                                ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                    </a>
+                </th>
+                <th>
+                    <a href="" ng-click="orderBy('eventString')">{{ _t('event')}}
+                        <span ng-show="predicate == 'eventString'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i
+                                ng-show="reverse" class="fa fa-sort-desc"></i></span>
                     </a>
                 </th>
                 <th>
                     <a href="" ng-click="orderBy('updateTime')">{{ _t('datetime')}}
-                        <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i
+                                ng-show="reverse" class="fa fa-sort-desc"></i></span>
                     </a>
                 </th>
-                <th>{{ _t('notification')}}</th>
+                <th>
+                    <a href="" ng-click="orderBy('status')">{{ _t('nav_status')}}
+                        <span ng-show="predicate == 'status'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i
+                                ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                    </a>
+                </th>
+
 
                 <th class="mobile-show td-action">
                     <button class="btn btn-primary" id="btn_update_all_1"
@@ -40,14 +61,49 @@
             <tr ng-repeat="v in notifications.all | orderBy:predicate:reverse track by $index" id="{{ v.rowId}}">
                 <td data-title="#">{{ v.id}}</td>
                 <td data-title="{{ _t('device_name')}}">{{ v.name}}</td>
-                <td data-title="{{ _t('datetime')}}" class="row-time is-updated-{{v.isUpdated}}">{{ v.updateTime | isTodayFromUnix }}</td>
-                <td data-title="{{ _t('notification')}}" class="row-level">
-                    <div ng-repeat="n in v.notification" ng-if="v.version === 1">
-                        {{n.typeString}},{{n.eventString}}
+                <td data-title="{{ _t('notification')}}" title="{{v.typeId}}">{{v.typeString}}</td>
+                <td data-title="{{ _t('event')}}" title="{{v.event}}">{{v.eventString}}</td>
+                <td data-title="{{ _t('datetime')}}" class="row-time is-updated-{{v.isUpdated}}"
+                    title="{{v.dateTime.date}} {{v.dateTime.time}}">
+                    {{ v.dateTime.today }}
+                </td>
+                <td data-title="{{ _t('nav_status')}}">
+                    <div class="btn-group" ng-if="v.version > 10">
+                        <button class="btn btn-default" id="btn_off_{{ v.rowId}}"
+                                ng-class="v.status === 0 ? 'active':''"
+                                ng-click="setStatus(v.urlToOff)">
+                            <bb-row-spinner spinner="rowSpinner[v.urlToOff]"
+                                            label="_t('off')"
+                                            icon="'fa-circle-o text-danger'">
+                            </bb-row-spinner>
+                        </button>
+                        <button class="btn btn-default" id="btn_on_{{ v.rowId}}"
+                                ng-class="v.status === 255 ? 'active':''"
+                                ng-disabled="rowSpinner[v.urlToOn]"
+                                ng-click="setStatus(v.urlToOn)">
+                            <bb-row-spinner spinner="rowSpinner[v.urlToOn]"
+                                            label="_t('on')"
+                                            icon="'fa-circle-o text-success'">
+                            </bb-row-spinner>
+                        </button>
                     </div>
-                    <div ng-repeat="n in v.notification" ng-if="v.version === 2">
-                        <strong>{{n.typeString}}</strong> <em>{{n.eventString}}</em>
+                    <div ng-if="v.version >1">
+                        <label class="switcher" title="{{v.levelStatus}}"
+                               ng-class="v.status === 255 ? 'ison':'isoff'"
+                               ng-hide="rowSpinner['btn_all_of'] || rowSpinner['btn_all_on']"
+                               ng-click="setStatus(
+                               v.status === 255?  v.urlToOff : v.urlToOn);
+                               v.status = (v.status === 255 ?  0 : 255)">
+
+                            <div class="switcher-slider round"></div>
+                        </label>
+
+                        <i class="fa fa-spinner fa-spin fa-lg"
+                           ng-if="rowSpinner['btn_all_of'] || rowSpinner['btn_all_on'] "></i>
                     </div>
+
+                    <span ng-if="v.version === 1">{{_t(v.statusString)}}</span>
+
                 </td>
 
                 <td class="td-action" data-title="">
