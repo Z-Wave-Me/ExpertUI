@@ -1,6 +1,7 @@
 {
   "--- newtrans": "---",
  "---": "---",
+ "event":"Event",
  "notification":"Notification",
  "notifications":"Notifications",
  "upload_bootloader":"Upload bootloader",
