@@ -14468,9 +14468,12 @@ img {
   border: solid 1px #CCCCCC;
   -webkit-transition: .4s;
   transition: .4s;
+  -webkit-box-shadow: inset 2px 2px 4px 0px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: inset 2px 2px 4px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 2px 2px 4px 0px rgba(0, 0, 0, 0.1);
 }
 
-/* line 182, ../sass/common/_button.scss */
+/* line 185, ../sass/common/_button.scss */
 .switcher-slider:before {
   position: absolute;
   content: "";
@@ -14480,12 +14483,29 @@ img {
    width: 26px;*/
   left: 4px;
   bottom: 3px;
-  background-color: #d9534f;
+  border: solid 1px #CCCCCC;
+  background-color: #fff;
+  -webkit-transition: .4s;
+  transition: .4s;
+  -webkit-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+}
+
+/* line 203, ../sass/common/_button.scss */
+.switcher-slider .switcher-slider-in {
+  display: none;
+  color: #d9d9d9;
+  position: absolute;
+  height: 26px;
+  width: 26px;
+  left: 13px;
+  bottom: 0;
   -webkit-transition: .4s;
   transition: .4s;
 }
 
-/* line 195, ../sass/common/_button.scss */
+/* line 215, ../sass/common/_button.scss */
 .ison .switcher-slider:before {
   background-color: #80AD80;
 }
@@ -14493,26 +14513,35 @@ img {
 /*input:focus + .switcher-slider {
     box-shadow: 0 0 1px $app-brand-success;
 }*/
-/* line 204, ../sass/common/_button.scss */
+/* line 224, ../sass/common/_button.scss */
 .ison .switcher-slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
 }
 
+/* line 230, ../sass/common/_button.scss */
+.ison .switcher-slider .switcher-slider-in {
+  color: #bed5be;
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+  left: 15px;
+}
+
 /* Rounded sliders */
-/* line 211, ../sass/common/_button.scss */
+/* line 239, ../sass/common/_button.scss */
 .switcher-slider.round {
   border-radius: 4px;
 }
 
-/* line 215, ../sass/common/_button.scss */
+/* line 243, ../sass/common/_button.scss */
 .switcher-slider.round:before {
   border-radius: 4px;
 }
 
 /* OLD - with checkbox */
-/* line 220, ../sass/common/_button.scss */
+/* line 248, ../sass/common/_button.scss */
 .switch {
   position: relative;
   display: inline-block;
@@ -14521,13 +14550,13 @@ img {
 }
 
 /* Hide default HTML checkbox */
-/* line 230, ../sass/common/_button.scss */
+/* line 258, ../sass/common/_button.scss */
 .switch input {
   display: none;
 }
 
 /* The slider */
-/* line 233, ../sass/common/_button.scss */
+/* line 261, ../sass/common/_button.scss */
 .slider {
   position: absolute;
   cursor: pointer;
@@ -14541,7 +14570,7 @@ img {
   transition: .4s;
 }
 
-/* line 248, ../sass/common/_button.scss */
+/* line 276, ../sass/common/_button.scss */
 .slider:before {
   position: absolute;
   content: "";
@@ -14556,17 +14585,17 @@ img {
   transition: .4s;
 }
 
-/* line 265, ../sass/common/_button.scss */
+/* line 293, ../sass/common/_button.scss */
 input:checked + .slider:before {
   background-color: #80AD80;
 }
 
-/* line 270, ../sass/common/_button.scss */
+/* line 298, ../sass/common/_button.scss */
 input:focus + .slider {
   box-shadow: 0 0 1px #80AD80;
 }
 
-/* line 274, ../sass/common/_button.scss */
+/* line 302, ../sass/common/_button.scss */
 input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
@@ -14574,12 +14603,12 @@ input:checked + .slider:before {
 }
 
 /* Rounded sliders */
-/* line 281, ../sass/common/_button.scss */
+/* line 309, ../sass/common/_button.scss */
 .slider.round {
   border-radius: 4px;
 }
 
-/* line 285, ../sass/common/_button.scss */
+/* line 313, ../sass/common/_button.scss */
 .slider.round:before {
   border-radius: 4px;
 }

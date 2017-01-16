@@ -68,7 +68,7 @@
                     {{ v.dateTime.today }}
                 </td>
                 <td data-title="{{ _t('nav_status')}}">
-                    <div class="btn-group" ng-if="v.version > 10">
+                   <!-- <div class="btn-group" ng-if="v.version > 1">
                         <button class="btn btn-default" id="btn_off_{{ v.rowId}}"
                                 ng-class="v.status === 0 ? 'active':''"
                                 ng-click="setStatus(v.urlToOff)">
@@ -86,16 +86,18 @@
                                             icon="'fa-circle-o text-success'">
                             </bb-row-spinner>
                         </button>
-                    </div>
+                    </div>-->
                     <div ng-if="v.version >1">
-                        <label class="switcher" title="{{v.levelStatus}}"
+                        <label class="switcher" title="{{_t(v.statusString)}}"
                                ng-class="v.status === 255 ? 'ison':'isoff'"
                                ng-hide="rowSpinner['btn_all_of'] || rowSpinner['btn_all_on']"
                                ng-click="setStatus(
                                v.status === 255?  v.urlToOff : v.urlToOn);
                                v.status = (v.status === 255 ?  0 : 255)">
 
-                            <div class="switcher-slider round"></div>
+                            <div class="switcher-slider round">
+                                <span class="switcher-slider-in">{{v.status === 255 ? 'I':'0'}}</span>
+                            </div>
                         </label>
 
                         <i class="fa fa-spinner fa-spin fa-lg"
