@@ -15656,16 +15656,22 @@ http://codepen.io/MattIn4D/pen/LiKFC
 
 /* line 10, ../sass/modules/_routemap.scss */
 #controlPanel {
-  position: absolute;
+  padding: 10px;
+  margin: 10px 0;
+  background-color: #e4f5fc;
+  border: solid 1px #9fd8ef;
+}
+/* line 16, ../sass/modules/_routemap.scss */
+#controlPanel label {
+  font-weight: normal;
 }
 
-/* line 13, ../sass/modules/_routemap.scss */
+/* line 20, ../sass/modules/_routemap.scss */
 #annotationPanel {
-  position: absolute;
   right: 0;
 }
 
-/* line 17, ../sass/modules/_routemap.scss */
+/* line 24, ../sass/modules/_routemap.scss */
 #plan {
   margin-left: auto;
   margin-right: auto;
@@ -15676,9 +15682,10 @@ http://codepen.io/MattIn4D/pen/LiKFC
   z-index: -1;
 }
 
-/* line 26, ../sass/modules/_routemap.scss */
+/* line 33, ../sass/modules/_routemap.scss */
 #svg {
-  margin: 0 0 0 0;
+  padding: 20px;
+  margin: 0;
   width: 100%;
   height: 100%;
 }

@@ -8,10 +8,17 @@
     font-weight: bold;
 }
 #controlPanel {
-    position: absolute;
+    //position: absolute;
+    padding: $spacing;
+    margin: $spacing 0;
+    background-color: #e4f5fc;
+    border: solid 1px $app-border-color;
+    label{
+        font-weight: normal;
+    }
 }
 #annotationPanel {
-    position: absolute;
+    //position: absolute;
     right: 0;
 }
 #plan {
@@ -24,7 +31,8 @@
     z-index: -1;
 }
 #svg {
-    margin: 0 0 0 0;
+    padding: $spacing-double;
+    margin: 0;
     width: 100%;
     height: 100%;
 }
