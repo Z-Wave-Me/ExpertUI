@@ -121,9 +121,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
         $scope.controlDh.controller.SetPromiscuousMode = (ZWaveAPIData.controller.data.functionClassesNames.value.indexOf('SetPromiscuousMode') > -1 ? true: false);
         $scope.controlDh.controller.SUCNodeId = ZWaveAPIData.controller.data.SUCNodeId.value;
 
-        console.log($scope.controlDh.controller)
-
-         $scope.controlDh.inclusion.alert = {
+        $scope.controlDh.inclusion.alert = {
             message: $scope._t('nm_controller_state_' + controllerState),
             status: 'alert-warning',
             icon: 'fa-spinner fa-spin'

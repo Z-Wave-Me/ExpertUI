@@ -14,6 +14,7 @@ This User Interfaces allows to operate a Smart Home Network based on Z-Wave devi
 - Spinner indicators.
 
 #### Changes
+- Disabling Include into network if SIS.
 - Configuration/Firmware refactored.
 - Languages moved to settings.
 - New page "Settings" added.
