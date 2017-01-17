@@ -13283,100 +13283,110 @@ textarea {
   line-height: inherit;
 }
 
+/*
+  Allow angular.js to be loaded in body, hiding cloaked elements until
+  templates compile.  The !important is important given that there may be
+  other selectors that are more specific or come later and might alter display.
+ -------------------------------------------------- */
+/* line 48, ../sass/common/_body.scss */
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
 /* Typo
 -------------------------------------------------- */
-/* line 45, ../sass/common/_body.scss */
+/* line 54, ../sass/common/_body.scss */
 h1, h2, h3, h4 {
   margin-top: 0;
   color: #357fbe;
 }
 
-/* line 49, ../sass/common/_body.scss */
+/* line 58, ../sass/common/_body.scss */
 h1 {
   font-size: 160%;
 }
 
-/* line 52, ../sass/common/_body.scss */
+/* line 61, ../sass/common/_body.scss */
 h1.btn-group {
   margin: 0 20px 0 0;
 }
 
-/* line 56, ../sass/common/_body.scss */
+/* line 65, ../sass/common/_body.scss */
 h2 {
   font-size: 140%;
   margin: 10px 0 5px 0;
 }
 
-/* line 61, ../sass/common/_body.scss */
+/* line 70, ../sass/common/_body.scss */
 h3 {
   font-size: 120%;
 }
 
-/* line 65, ../sass/common/_body.scss */
+/* line 74, ../sass/common/_body.scss */
 h4 {
   font-size: 110%;
 }
 
-/* line 69, ../sass/common/_body.scss */
+/* line 78, ../sass/common/_body.scss */
 .item-cnt {
   font-size: 80%;
 }
 
-/* line 72, ../sass/common/_body.scss */
+/* line 81, ../sass/common/_body.scss */
 .page-header {
   padding: 0 0 10px 0;
   margin: 0;
   border: 0;
 }
-/* line 76, ../sass/common/_body.scss */
+/* line 85, ../sass/common/_body.scss */
 .page-header h1 {
   font-size: 110%;
   font-weight: bold;
 }
 
-/* line 82, ../sass/common/_body.scss */
+/* line 91, ../sass/common/_body.scss */
 .perex {
   margin: 20px 0;
   padding: 20px 0 0 0;
   border-top: 1px dotted #9fd8ef;
 }
 
-/* line 88, ../sass/common/_body.scss */
+/* line 97, ../sass/common/_body.scss */
 .input-help {
   color: #666666;
   font-size: 13px;
   line-height: 1.2em;
 }
 
-/* line 93, ../sass/common/_body.scss */
+/* line 102, ../sass/common/_body.scss */
 .input-help:hover {
   color: #333;
   cursor: help;
 }
 
-/* line 99, ../sass/common/_body.scss */
+/* line 108, ../sass/common/_body.scss */
 .tooltip-inner {
   background-color: #1f355e;
 }
 
-/* line 103, ../sass/common/_body.scss */
+/* line 112, ../sass/common/_body.scss */
 .dropdown-menu {
   border-color: #9fd8ef;
 }
 
-/* line 106, ../sass/common/_body.scss */
+/* line 115, ../sass/common/_body.scss */
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
   color: #262626;
   text-decoration: none;
   background-color: #e4f5fc;
 }
 
-/* line 112, ../sass/common/_body.scss */
+/* line 121, ../sass/common/_body.scss */
 .custom-ip-message {
   display: none;
 }
 
-/* line 116, ../sass/common/_body.scss */
+/* line 125, ../sass/common/_body.scss */
 .newlines {
   margin-top: -40px;
   white-space: pre-line;
@@ -13384,65 +13394,65 @@ h4 {
 
 /* Colors
 -------------------------------------------------- */
-/* line 124, ../sass/common/_body.scss */
+/* line 133, ../sass/common/_body.scss */
 .bcg-success {
   background-color: #dde9dd;
 }
 
-/* line 128, ../sass/common/_body.scss */
+/* line 137, ../sass/common/_body.scss */
 .red, .is-updated-false {
   color: red;
 }
 
-/* line 132, ../sass/common/_body.scss */
+/* line 141, ../sass/common/_body.scss */
 .green, .is-rfreshed {
   color: green;
 }
 
-/* line 135, ../sass/common/_body.scss */
+/* line 144, ../sass/common/_body.scss */
 .yellow {
   color: yellow;
 }
 
-/* line 138, ../sass/common/_body.scss */
+/* line 147, ../sass/common/_body.scss */
 .gray {
   color: gray;
 }
 
-/* line 141, ../sass/common/_body.scss */
+/* line 150, ../sass/common/_body.scss */
 .orange {
   color: orange;
 }
 
-/* line 145, ../sass/common/_body.scss */
+/* line 154, ../sass/common/_body.scss */
 .main_spinner {
   font-size: 14px;
   color: #555;
 }
 
-/* line 150, ../sass/common/_body.scss */
+/* line 159, ../sass/common/_body.scss */
 .text-yellow {
   color: yellow;
 }
 
-/* line 153, ../sass/common/_body.scss */
+/* line 162, ../sass/common/_body.scss */
 .text-orange {
   color: orange;
 }
 
 /* Links
 -------------------------------------------------- */
-/* line 158, ../sass/common/_body.scss */
+/* line 167, ../sass/common/_body.scss */
 a {
   color: #5698d0;
   text-decoration: none;
 }
-/* line 162, ../sass/common/_body.scss */
+/* line 171, ../sass/common/_body.scss */
 a:hover, a:focus {
   color: #357fbe;
   text-decoration: underline;
 }
-/* line 167, ../sass/common/_body.scss */
+/* line 176, ../sass/common/_body.scss */
 a:focus {
   outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
@@ -13451,7 +13461,7 @@ a:focus {
 
 /* Fatal error
 -------------------------------------------------- */
-/* line 177, ../sass/common/_body.scss */
+/* line 186, ../sass/common/_body.scss */
 .app-fatal-error {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -13461,13 +13471,13 @@ a:focus {
   background-color: #FFFFFF;
   border: solid 1px #d9534f;
 }
-/* line 184, ../sass/common/_body.scss */
+/* line 193, ../sass/common/_body.scss */
 .app-fatal-error .fatal-error-message {
   color: #d9534f;
   font-weight: bold;
   font-size: 120%;
 }
-/* line 189, ../sass/common/_body.scss */
+/* line 198, ../sass/common/_body.scss */
 .app-fatal-error .fatal-error-info {
   margin: 10px 0 0 0;
   color: #000000;
@@ -13476,44 +13486,44 @@ a:focus {
 
 /* Others
 -------------------------------------------------- */
-/* line 198, ../sass/common/_body.scss */
+/* line 207, ../sass/common/_body.scss */
 .timestamp {
   color: #333333;
   font-size: 17px;
 }
-/* line 201, ../sass/common/_body.scss */
+/* line 210, ../sass/common/_body.scss */
 .timestamp .fa {
   font-size: 110%;
 }
 
-/* line 205, ../sass/common/_body.scss */
+/* line 214, ../sass/common/_body.scss */
 .bcg-success {
   background-color: #dff0d8;
 }
 
-/* line 208, ../sass/common/_body.scss */
+/* line 217, ../sass/common/_body.scss */
 .bcg-active.false, .bcg-danger {
   background-color: #f2dede;
 }
 
-/* line 212, ../sass/common/_body.scss */
+/* line 221, ../sass/common/_body.scss */
 .clickable {
   cursor: pointer;
 }
 
-/* line 216, ../sass/common/_body.scss */
+/* line 225, ../sass/common/_body.scss */
 .text-supp {
   font-style: italic;
   color: #595959;
 }
 
-/* line 221, ../sass/common/_body.scss */
+/* line 230, ../sass/common/_body.scss */
 .badge {
   padding: 5px;
   margin-right: 5px;
 }
 
-/* line 225, ../sass/common/_body.scss */
+/* line 234, ../sass/common/_body.scss */
 .help-text {
   display: block;
   font-size: 95%;
@@ -13521,63 +13531,63 @@ a:focus {
   margin: 5px 0;
 }
 
-/* line 231, ../sass/common/_body.scss */
+/* line 240, ../sass/common/_body.scss */
 .help-text.inline {
   display: inline;
 }
 
-/* line 235, ../sass/common/_body.scss */
+/* line 244, ../sass/common/_body.scss */
 .display-block {
   display: block;
 }
 
-/* line 239, ../sass/common/_body.scss */
+/* line 248, ../sass/common/_body.scss */
 .is-hidden, .alert-hidden, .alert- {
   display: none !important;
 }
 
-/* line 243, ../sass/common/_body.scss */
+/* line 252, ../sass/common/_body.scss */
 .alert-list {
   margin: 8px 0;
 }
 
-/* line 247, ../sass/common/_body.scss */
+/* line 256, ../sass/common/_body.scss */
 .text-alert, .text-alert-list {
   font-size: 85%;
   margin: 0 0 0 7px;
 }
 
-/* line 251, ../sass/common/_body.scss */
+/* line 260, ../sass/common/_body.scss */
 .text-alert {
   margin: 7px 0;
 }
 
-/* line 254, ../sass/common/_body.scss */
+/* line 263, ../sass/common/_body.scss */
 .report-img {
   display: inline-block;
   max-width: 32px;
 }
 
-/* line 258, ../sass/common/_body.scss */
+/* line 267, ../sass/common/_body.scss */
 .hidden-selectopt {
   display: none !important;
 }
 
 /* Response
 -------------------------------------------------- */
-/* line 264, ../sass/common/_body.scss */
+/* line 273, ../sass/common/_body.scss */
 #respone_container {
   display: none;
 }
 
-/* line 268, ../sass/common/_body.scss */
+/* line 277, ../sass/common/_body.scss */
 #respone_container_inner {
   margin: 0 auto;
   text-align: center;
   /*position: relative;*/
 }
 
-/* line 273, ../sass/common/_body.scss */
+/* line 282, ../sass/common/_body.scss */
 .page-load-spinner {
   z-index: 1000;
   text-align: center;
@@ -13587,7 +13597,7 @@ a:focus {
   width: 150px;
 }
 
-/* line 282, ../sass/common/_body.scss */
+/* line 291, ../sass/common/_body.scss */
 .response-message {
   z-index: 1000;
   text-align: center;
@@ -13597,7 +13607,7 @@ a:focus {
 
 /* Progress bar
 -------------------------------------------------- */
-/* line 290, ../sass/common/_body.scss */
+/* line 299, ../sass/common/_body.scss */
 .progress {
   margin-bottom: 0;
 }
@@ -14458,9 +14468,12 @@ img {
   border: solid 1px #CCCCCC;
   -webkit-transition: .4s;
   transition: .4s;
+  -webkit-box-shadow: inset 2px 2px 4px 0px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: inset 2px 2px 4px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 2px 2px 4px 0px rgba(0, 0, 0, 0.1);
 }
 
-/* line 182, ../sass/common/_button.scss */
+/* line 185, ../sass/common/_button.scss */
 .switcher-slider:before {
   position: absolute;
   content: "";
@@ -14470,12 +14483,29 @@ img {
    width: 26px;*/
   left: 4px;
   bottom: 3px;
-  background-color: #d9534f;
+  border: solid 1px #CCCCCC;
+  background-color: #fff;
+  -webkit-transition: .4s;
+  transition: .4s;
+  -webkit-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+}
+
+/* line 203, ../sass/common/_button.scss */
+.switcher-slider .switcher-slider-in {
+  display: none;
+  color: #d9d9d9;
+  position: absolute;
+  height: 26px;
+  width: 26px;
+  left: 13px;
+  bottom: 0;
   -webkit-transition: .4s;
   transition: .4s;
 }
 
-/* line 195, ../sass/common/_button.scss */
+/* line 215, ../sass/common/_button.scss */
 .ison .switcher-slider:before {
   background-color: #80AD80;
 }
@@ -14483,26 +14513,35 @@ img {
 /*input:focus + .switcher-slider {
     box-shadow: 0 0 1px $app-brand-success;
 }*/
-/* line 204, ../sass/common/_button.scss */
+/* line 224, ../sass/common/_button.scss */
 .ison .switcher-slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
 }
 
+/* line 230, ../sass/common/_button.scss */
+.ison .switcher-slider .switcher-slider-in {
+  color: #bed5be;
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+  left: 15px;
+}
+
 /* Rounded sliders */
-/* line 211, ../sass/common/_button.scss */
+/* line 239, ../sass/common/_button.scss */
 .switcher-slider.round {
   border-radius: 4px;
 }
 
-/* line 215, ../sass/common/_button.scss */
+/* line 243, ../sass/common/_button.scss */
 .switcher-slider.round:before {
   border-radius: 4px;
 }
 
 /* OLD - with checkbox */
-/* line 220, ../sass/common/_button.scss */
+/* line 248, ../sass/common/_button.scss */
 .switch {
   position: relative;
   display: inline-block;
@@ -14511,13 +14550,13 @@ img {
 }
 
 /* Hide default HTML checkbox */
-/* line 230, ../sass/common/_button.scss */
+/* line 258, ../sass/common/_button.scss */
 .switch input {
   display: none;
 }
 
 /* The slider */
-/* line 233, ../sass/common/_button.scss */
+/* line 261, ../sass/common/_button.scss */
 .slider {
   position: absolute;
   cursor: pointer;
@@ -14531,7 +14570,7 @@ img {
   transition: .4s;
 }
 
-/* line 248, ../sass/common/_button.scss */
+/* line 276, ../sass/common/_button.scss */
 .slider:before {
   position: absolute;
   content: "";
@@ -14546,17 +14585,17 @@ img {
   transition: .4s;
 }
 
-/* line 265, ../sass/common/_button.scss */
+/* line 293, ../sass/common/_button.scss */
 input:checked + .slider:before {
   background-color: #80AD80;
 }
 
-/* line 270, ../sass/common/_button.scss */
+/* line 298, ../sass/common/_button.scss */
 input:focus + .slider {
   box-shadow: 0 0 1px #80AD80;
 }
 
-/* line 274, ../sass/common/_button.scss */
+/* line 302, ../sass/common/_button.scss */
 input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
@@ -14564,12 +14603,12 @@ input:checked + .slider:before {
 }
 
 /* Rounded sliders */
-/* line 281, ../sass/common/_button.scss */
+/* line 309, ../sass/common/_button.scss */
 .slider.round {
   border-radius: 4px;
 }
 
-/* line 285, ../sass/common/_button.scss */
+/* line 313, ../sass/common/_button.scss */
 .slider.round:before {
   border-radius: 4px;
 }

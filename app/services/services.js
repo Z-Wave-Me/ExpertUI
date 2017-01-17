@@ -44,16 +44,6 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
     };
 
     /**
-     * @todo: Deprecated
-     * Update time tick
-     */
-    /*this.updateTimeTick = function(time) {
-
-        time = (time || Math.round(+new Date() / 1000));
-        $('#update_time_tick').html($filter('getCurrentTime')(time));
-    };*/
-
-    /**
      * Log error
      */
     this.logError = function(error, message) {

@@ -27,7 +27,7 @@ angApp.directive('bbAlert', function () {
         restrict: "E",
         replace: true,
         scope: {alert: '='},
-        template: '<div class="alert" ng-if="alert.message" ng-class="alert.status">'
+        template: '<div class="alert" ng-if="alert.message" ng-class="alert.status" ng-cloak>'
                 + '<i class="fa fa-lg" ng-class="alert.icon"></i> <span ng-bind-html="alert.message|toTrusted"></span>'
                 + '</div>'
     };
@@ -183,60 +183,6 @@ angApp.directive('draggable', ['$document', function ($document) {
         };
     }]);
 
-/**
- *  Switches directives
- *  @todo: move to filters
- */
-
-// Switch type
-angApp.directive('switchTypeIcon', function () {
-    return {
-        restrict: "E",
-        replace: true,
-        template: ' <i class="fa {{icon}} fa-lg"></i> ',
-        link: function (scope, elem, attr) {
-            var icon;
-            scope.generic = attr.generic;
-            scope.specific = attr.specific;
-            switch (parseInt(attr.generic, 10)) {
-                case 1:
-                    icon = 'fa-eye';
-                    break;
-                case 17:
-                    icon = 'fa-lightbulb-o';
-                    break;
-
-                case 16:
-                    icon = 'fa-power-off';
-                    break;
-
-                case 8:
-                    icon = 'fa-sort-amount-desc';
-                    break;
-
-                case 9:
-                    icon = 'fa-bullseye fa-lg';
-                    break;
-                case 32:
-                    icon = 'fa-eye';
-                    break;
-
-                case 64:
-                    icon = 'fa-lock fa-lg';
-                    break;
-
-
-
-                default:
-                    icon = '';
-                    break;
-            }
-
-            scope.icon = icon;
-        }
-    };
-});
-
 // Switch all icons
 //@todo: move to filters
 angApp.directive('switchAllIcon', function () {
@@ -319,45 +265,6 @@ angApp.directive('routingTypeIcon', function () {
         }
     };
 });
-/*angApp.directive('routingTypeIcon', function () {
-    return {
-        restrict: "E",
-        replace: true,
-        template: '<img src="{{src}}" title="{{title}}" />',
-        link: function ($scope, elem, attr) {
-            var src;
-            var title;
-            if (attr.nodeId !== null && $scope.ZWaveAPIData) {
-                var node = $scope.ZWaveAPIData.devices[attr.nodeId];
-
-                var isListening = node.data.isListening.value;
-                var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
-                var hasWakeup = 0x84 in node.instances[0].commandClasses;
-                var hasBattery = 0x80 in node.instances[0].commandClasses;
-                var isPortableRemoteControl = (node.data.deviceTypeString.value == "Portable Remote Controller");
-
-                if (isListening) { // mains powered
-                    src = 'app/images/icons/type_Mains-Powered.png';
-                    title = $scope._t('conf_apply_mains');
-                } else if (hasWakeup) {
-                    src = 'app/images/icons/type_Battery-Wakeup.png';
-                    title = $scope._t('battery_powered_device');
-                } else if (isFLiRS) {
-                    src = 'app/images/icons/type_FLIRS2.png';
-                    title = $scope._t('FLiRS_device');
-                } else if (isPortableRemoteControl) {
-                    src = 'app/images/icons/type_Remote-Control.png';
-                    title = $scope._t('battery_operated_remote_control');
-                } else {
-                    src = 'app/images/icons/1x1.png';
-                    title = "";
-                }
-            }
-            $scope.src = src;
-            $scope.title = title;
-        }
-    };
-});*/
 
 angApp.directive('expertCommandInput', function ($filter) {
     // Get text input

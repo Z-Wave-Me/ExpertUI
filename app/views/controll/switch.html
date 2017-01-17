@@ -77,16 +77,17 @@
             <tbody>
             <tr ng-repeat="v in switches.all| orderBy:predicate:reverse track by $index" id="{{ v.rowId}}"
                 ng-init="range.maxs = v.levelVal">
-                <td data-title="#">{{ v.id}}<span ng-show="v.multiChannel || v.iId > 0">.{{v.iId}}</span></td>
+                <td data-title="#">
+                    {{ v.id}}<span ng-show="v.multiChannel || v.iId > 0">.{{v.iId}}</span>
+                </td>
                 <td data-title="{{ _t('device_name')}}">
-                    <switch-type-icon generic="{{ v.genericType}}" specific="{{ v.specificType}}"></switch-type-icon>
-                    {{ v.name}}
+                    {{v.name}}
                 </td>
                 <td data-title="{{ _t('th_level')}}">
                     <strong class="row-level text-right" style="color: {{ v.levelColor}};">{{ v.level}}</strong>
 
                 </td>
-                <td data-title="{{ _t('datetime')}}" lass="row-time is-updated-{{v.isUpdated}}" title="{{v.dateTime.date}} {{v.dateTime.time}}">
+                <td data-title="{{ _t('datetime')}}" class="row-time is-updated-{{v.isUpdated}}" title="{{v.dateTime.date}} {{v.dateTime.time}}">
                     {{v.dateTime.today}}
                 </td>
                 <td data-title="{{ _t('th_switchall')}}">

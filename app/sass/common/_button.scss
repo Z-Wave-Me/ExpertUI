@@ -177,6 +177,9 @@
     //@include appGradientDanger();
     -webkit-transition: .4s;
     transition: .4s;
+    -webkit-box-shadow: inset 2px 2px 4px 0px rgba(0,0,0,0.1);
+    -moz-box-shadow: inset 2px 2px 4px 0px rgba(0,0,0,0.1);
+    box-shadow: inset 2px 2px 4px 0px rgba(0,0,0,0.1);
 }
 
 .switcher-slider:before {
@@ -188,7 +191,24 @@
      width: 26px;*/
     left: 4px;
     bottom: 3px;
-    background-color: $app-brand-danger;
+    //background-color: $app-brand-danger;
+    border: solid 1px $btn-border-color;
+    background-color: #fff;
+    -webkit-transition: .4s;
+    transition: .4s;
+    -webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.15);
+    -moz-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.15);
+    box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.15);
+}
+.switcher-slider .switcher-slider-in{
+    display: none;
+    color: lighten($btn-border-color, 5%);
+    //color: $app-brand-danger;
+    position: absolute;
+    height: $switch-btn-slider;
+    width:$switch-btn-slider;
+    left: 13px;
+    bottom: 0;
     -webkit-transition: .4s;
     transition: .4s;
 }
@@ -205,6 +225,14 @@
     -webkit-transform: translateX(26px);
     -ms-transform: translateX(26px);
     transform: translateX(26px);
+}
+
+.ison .switcher-slider .switcher-slider-in{
+    color: lighten($app-brand-success, 20%);
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+    left: 15px;
 }
 
 /* Rounded sliders */

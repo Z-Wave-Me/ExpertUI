@@ -52,7 +52,7 @@
             <tbody>
                 <tr ng-repeat="v in meters.all | orderBy:predicate:reverse track by $index" id="{{ v.rowId}}">
                     <td data-title="#">{{ v.id}}<span ng-show="v.iId != 0">.{{v.iId}}</span></td>
-                    <td data-title="{{ _t('device_name')}}"><i class="fa fa-lightbulb-o fa-lg"></i> {{ v.name}}</td>
+                    <td data-title="{{ _t('device_name')}}">{{ v.name}}</td>
                     <td data-title="{{ _t('device_description_device_type')}}">{{ v.purpose}} &nbsp;</td>
                     <td data-title="{{ _t('th_level')}}" class="row-level text-right">{{ v.level}} &nbsp;</td>
                     <td data-title="{{ _t('th_scale')}}" class="row-level-ext">{{ v.levelExt}} &nbsp;</td>

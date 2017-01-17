@@ -89,6 +89,7 @@ module.exports = function (grunt) {
                     'app/controllers/meter.js',
                     'app/controllers/thermostat.js',
                     'app/controllers/lock.js',
+                    'app/controllers/notification.js',
                     'app/controllers/status.js',
                     'app/controllers/battery.js',
                     'app/controllers/type.js',
@@ -121,6 +122,16 @@ module.exports = function (grunt) {
                 dest: 'dist/app/js/build.js'
             }
         },
+        json_generator: {
+            target: {
+                dest: "app/info.json",
+                options: {
+                    name: 'Expert UI',
+                    built: '<%= grunt.template.today("dd-mm-yyyy HH:MM:ss") %>',
+                    timestamp: '<%= Math.floor(Date.now() / 1000) %>'
+                }
+            }
+        },
         // Copy
         copy: {
             main: {
@@ -139,6 +150,11 @@ module.exports = function (grunt) {
                      {src: ['storage/data/**'], dest: 'dist/'}*/
                 ]
             },
+            info: {
+                files: [
+                    {src: ['app/info.json'], dest: 'dist/app/info.json'}
+                ]
+            },
             fonts: {
                 files: [
                     {expand: true, src: ['app/fonts/*'], dest: 'dist/app/fonts/', flatten: true}
@@ -149,6 +165,11 @@ module.exports = function (grunt) {
                     {expand: true, src: ['vendor/angular/angular-1.2.14/angular-cookies.min.js.map'], dest: 'dist/app/js/', flatten: true},
                     {expand: true, src: ['vendor/angular/angular-1.2.14/angular.min.js.map'], dest: 'dist/app/js/', flatten: true},
                     {expand: true, src: ['vendor/angular/angular-1.2.14/angular-route.min.js.map'], dest: 'dist/app/js/', flatten: true}
+                ]
+            },
+            licence: {
+                files: [
+                    {src: ['LICENCE.md'], dest: 'dist/LICENCE.md'}
                 ]
             }
         },
@@ -203,7 +224,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
     grunt.loadNpmTasks('grunt-string-replace');
     grunt.loadNpmTasks('grunt-banner');
+    grunt.loadNpmTasks('grunt-json-generator');
+
     // Default task(s).
     //grunt.registerTask('default', ['clean','concat','copy','cssmin','string-replace']);
-    grunt.registerTask('default', ['clean', 'ngtemplates','concat', 'copy', 'cssmin','usebanner']);
+    grunt.registerTask('default', ['clean', 'ngtemplates','concat', 'json_generator','copy', 'cssmin','usebanner']);
 };
