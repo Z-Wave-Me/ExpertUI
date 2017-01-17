@@ -48,6 +48,10 @@ module.exports = function (grunt) {
                     // Vendors
                     'vendor/jquery/jquery-1.11.1.min.js',
                     'vendor/underscore/underscore-1.8.3/underscore-min.js',
+                    'vendor/routemap/d3.v4.min.js',
+                    'vendor/routemap/data.js',
+                    'vendor/routemap/ZWaveAnalytics.min.js',
+                    'vendor/routemap/ZWaveRouteMapDraw.min.js',
                     'vendor/cytoscape/cytoscape.js',
                     'vendor/upload/angular-file-upload-shim.js',
                     'vendor/alertify/alertify.min.js',
@@ -106,6 +110,7 @@ module.exports = function (grunt) {
                     'app/controllers/uzb.js',
                     'app/controllers/zniffer.js',
                     'app/controllers/spectrum.js',
+                    'app/controllers/routemap.js',
                     'app/controllers/networkmap.js',
                     'app/controllers/home.js',
                     'app/controllers/configuration.js',

@@ -42,7 +42,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     $scope.lang_list = cfg.lang_list;
     // Set language
     $scope.lang = (angular.isDefined($cookies.lang) ? $cookies.lang : cfg.lang);
-    $('.current-lang').html($scope.lang);
+    //$('.current-lang').html($scope.lang);
     $scope.changeLang = function (lang) {
         $window.alert($scope._t('language_select_reload_interface'));
         $cookies.lang = lang;
@@ -74,7 +74,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     // Watch for lang change
     //TODO: display a dialog "Page will be reloaded..." and auto reload page
     $scope.$watch('lang', function () {
-        $('.current-lang').html($scope.lang);
+        //$('.current-lang').html($scope.lang);
         $scope.loadLang($scope.lang);
     });
     // Order by

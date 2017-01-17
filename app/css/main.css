@@ -15641,6 +15641,48 @@ http://codepen.io/MattIn4D/pen/LiKFC
   color: #80AD80;
 }
 
+/* Route map
+-------------------------------------------------- */
+/* line 3, ../sass/modules/_routemap.scss */
+#graph {
+  width: 99%;
+  height: 99%;
+}
+
+/* line 7, ../sass/modules/_routemap.scss */
+.annotation-title {
+  font-weight: bold;
+}
+
+/* line 10, ../sass/modules/_routemap.scss */
+#controlPanel {
+  position: absolute;
+}
+
+/* line 13, ../sass/modules/_routemap.scss */
+#annotationPanel {
+  position: absolute;
+  right: 0;
+}
+
+/* line 17, ../sass/modules/_routemap.scss */
+#plan {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -1;
+}
+
+/* line 26, ../sass/modules/_routemap.scss */
+#svg {
+  margin: 0 0 0 0;
+  width: 100%;
+  height: 100%;
+}
+
 /* Network map / cytoscype
 -------------------------------------------------- */
 /* line 3, ../sass/modules/_networkmap.scss */
