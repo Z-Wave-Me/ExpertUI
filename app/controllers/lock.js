@@ -109,6 +109,7 @@ appController.controller('LocksController', function($scope, $filter, $timeout,$
                 obj['level'] = mode;
                 obj['updateTime'] = instance.commandClasses[ccId].data.mode.updateTime;
                 obj['invalidateTime'] = instance.commandClasses[ccId].data.mode.invalidateTime;
+                obj['dateTime'] = $filter('getDateTimeObj')(obj['updateTime'],obj['invalidateTime']);
                 obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
                 obj['urlToStore'] = apiUrl + '.Get()';
                 obj['urlToOff'] =  apiUrl + '.Set(0)';

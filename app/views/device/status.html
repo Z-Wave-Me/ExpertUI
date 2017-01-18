@@ -76,9 +76,10 @@
                 </td>
                 <td data-title="{{ _t('th_awake')}}" class="row-awake"><span ng-bind-html="v.awake | toTrusted"></span>
                     &nbsp;</td>
-                <td data-title="{{ _t('datetime')}}"><span class="row-isfailed"
-                                                           ng-bind-html="v.isFailed | toTrusted"></span> <span
-                        class="row-time" ng-bind-html="v.updateTime | toTrusted"></span> &nbsp;</td>
+                <td data-title="{{ _t('datetime')}}">
+                    <span class="row-isfailed" ng-bind-html="v.isFailed | toTrusted"></span>
+                    <span class="row-time" ng-bind-html="v.updateTime | toTrusted"></span> &nbsp;
+                </td>
                 <!--<td data-title="{{ _t('th_ddr')}}" class="row-ddr"><span ng-bind-html="v.ddr | toTrusted"></span> &nbsp;</td>-->
                 <td class="row-interview">
                     <button class="btn btn-default"

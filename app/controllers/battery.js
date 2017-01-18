@@ -111,6 +111,7 @@ appController.controller('BatteryController', function($scope, $filter, $timeout
             var node = ZWaveAPIData.devices[nodeId];
             var battery_charge = parseInt(node.instances[0].commandClasses[0x80].data.last.value);
             var battery_updateTime = node.instances[0].commandClasses[0x80].data.last.updateTime;
+            var battery_invalidateTime = node.instances[0].commandClasses[0x80].data.last.invalidateTime;
 
 //            var info = loadZDD(nodeId, ZWaveAPIData);
 //            console.log(info);
@@ -123,6 +124,9 @@ appController.controller('BatteryController', function($scope, $filter, $timeout
             obj['level'] = battery_charge;
             obj['scale'] = '%';
             obj['updateTime'] = battery_updateTime;
+            obj['invalidateTime'] = battery_invalidateTime;
+            obj['dateTime'] = $filter('getDateTimeObj')(obj['updateTime'] ,obj['invalidateTime']);
+            obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
             obj['urlToStore'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Get()';
             obj['cmdToUpdate'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data';
             obj['batteryCount'] = null;

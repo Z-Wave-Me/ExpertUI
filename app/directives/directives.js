@@ -91,6 +91,24 @@ angApp.directive('bbLoader', function () {
 });
 
 /**
+ * Displays a dta/time in the table row
+ * @class bbRowSpinner
+ */
+angApp.directive('bbDateTime', function () {
+    return {
+        restrict: "E",
+        replace: true,
+        scope: {
+            obj: '=',
+            updated: '='
+        },
+        template: '<span class="is-updated-{{updated}}" title="Update: {{obj.date}} {{obj.time}}, invalid: {{obj.invalidateTime}}">' +
+        '{{obj.today}}' +
+        '</span>'
+    };
+});
+
+/**
  * Displays a spinner in the table row
  * @class bbRowSpinner
  */
