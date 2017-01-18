@@ -192,7 +192,7 @@ appController.controller('NotificationController', function ($scope, $filter, $t
         obj['invalidateTime'] = data.V1event.alarmType.invalidateTime;
         obj['updateTime'] = data.V1event.alarmType.updateTime;
         obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
-        obj['dateTime'] = $filter('getDateTimeObj')(data.V1event.alarmType.updateTime);
+        obj['dateTime'] = $filter('getDateTimeObj')(data.V1event.alarmType.updateTime,obj['updateTime']);
         obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[' + obj['instanceId'] + '].commandClasses[113].Get(' + typeId + ')';
         //console.log(obj)
         var findIndex = _.findIndex($scope.notifications.all, {rowId: obj.rowId});
@@ -245,7 +245,7 @@ appController.controller('NotificationController', function ($scope, $filter, $t
             obj['invalidateTime'] = v.invalidateTime;
             obj['updateTime'] = v.updateTime;
             obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
-            obj['dateTime'] = $filter('getDateTimeObj')(v.updateTime);
+            obj['dateTime'] = $filter('getDateTimeObj')(obj['updateTime'],obj['invalidateTime']);
             obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[' + obj['instanceId'] + '].commandClasses[113].Get(' + typeId + ')';
             obj['urlToOn'] = 'devices[' + obj['id'] + '].instances[' + obj['instanceId'] + '].commandClasses[113].Set(' + typeId + ',255)';
             obj['urlToOff'] = 'devices[' + obj['id'] + '].instances[' + obj['instanceId'] + '].commandClasses[113].Set(' + typeId + ',0)';

@@ -56,10 +56,8 @@
                     <td data-title="{{ _t('device_description_device_type')}}">{{ v.purpose}} &nbsp;</td>
                     <td data-title="{{ _t('th_level')}}" class="row-level text-right">{{ v.level}} &nbsp;</td>
                     <td data-title="{{ _t('th_scale')}}" class="row-level-ext">{{ v.levelExt}} &nbsp;</td>
-                    <td data-title="{{ _t('datetime')}}"
-                        class="row-time is-updated-{{v.isUpdated}}"
-                        title="{{v.dateTime.date}} {{v.dateTime.time}}">
-                        {{v.dateTime.today}}
+                    <td data-title="{{ _t('datetime')}}">
+                        <bb-date-time obj="v.dateTime" updated="v.isUpdated"></bb-date-time>
                     </td>
                     <td class="td-action" data-title="">
                         <button class="btn btn-default" id="btn_update_{{ v.rowId}}"
