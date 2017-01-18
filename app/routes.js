@@ -107,10 +107,9 @@ angApp.config(['$routeProvider',
         }).when('/network/routing', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/network/routing.html'
-        }).//                when('/network/reorganization', {
-        //                    templateUrl: 'app/views/network/reorganization.html'
-        //                }).
-        when('/network/timing', {
+        }).when('/network/reorganization', {
+            templateUrl: 'app/views/network/reorganization.html'
+        }).when('/network/timing', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/network/timing.html'
         }).when('/network/controller', {

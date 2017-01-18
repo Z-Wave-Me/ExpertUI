@@ -1,8 +1,95 @@
 /**
- * ReorganizationController
+ * @overview This controller renders and handles reorganizations.
  * @author Martin Vach
  */
-appController.controller('ReorganizationController', function($scope, $filter, $interval, $timeout, dataService, cfg) {
+/**
+ * Reorganization root controller
+ * @class ReorganizationController
+ *
+ */
+appController.controller('ReorganizationController', function($scope, $filter, $timeout,$interval,cfg,dataService,_) {
+    $scope.reorganizations = {
+        all: [],
+        interval: null,
+        show: false
+    };
+
+    /**
+     * Cancel interval on page destroy
+     */
+    $scope.$on('$destroy', function() {
+        $interval.cancel($scope.reorganizations.interval);
+    });
+
+    /**
+     * Load zwave data
+     */
+    $scope.loadZwaveData = function() {
+        dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
+            setData(ZWaveAPIData);
+            if(_.isEmpty($scope.reorganizations.all)){
+                $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                return;
+            }
+            $scope.reorganizations.show = true;
+            //$scope.refreshZwaveData(ZWaveAPIData);
+        }, function(error) {
+            alertify.alertError($scope._t('error_load_data'));
+        });
+    };
+    $scope.loadZwaveData();
+
+    /**
+     * Refresh zwave data
+     * @param {object} ZWaveAPIData
+     */
+    $scope.refreshZwaveData = function(ZWaveAPIData) {
+        var refresh = function() {
+            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+                setData(response.data.joined);
+            }, function(error) {});
+        };
+        $scope.reorganizations.interval = $interval(refresh, $scope.cfg.interval);
+    };
+
+    /// --- Private functions --- ///
+
+    /**
+     * Set zwave data
+     * @param {object} ZWaveAPIData
+     */
+    function setData(ZWaveAPIData) {
+        var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
+        // Loop throught devices
+        angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+            console.log(node)
+            if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+                return;
+            }
+            // Set object
+            var obj = {};
+            obj['id'] = nodeId;
+            obj['rowId'] = 'row_' + nodeId + '_';
+            obj['name'] = $filter('deviceName')(nodeId, node);
+            obj['updateTime'] = node.data.updateTime;
+            obj['invalidateTime'] = node.data.invalidateTime;
+            obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
+            obj['dateTime'] = $filter('getDateTimeObj')(obj['updateTime'], obj['invalidateTime']);
+            var findIndex = _.findIndex($scope.reorganizations.all, {rowId: obj.rowId});
+            if(findIndex > -1){
+                angular.extend($scope.reorganizations.all[findIndex],obj);
+
+            }else{
+                $scope.reorganizations.all.push(obj);
+            }
+        });
+    }
+});
+/**
+ * OLD ReorganizationController
+ * @author Martin Vach
+ */
+appController.controller('ReorganizationOldController', function($scope, $filter, $interval, $timeout, dataService, cfg) {
 
     $scope.mainsPowered = true;
     $scope.batteryPowered = false;

@@ -207,8 +207,9 @@ angApp.filter('setTimeFromBox', function (cfg, $filter) {
  * @function getDateTimeObj
  */
 angApp.filter('getDateTimeObj', function ($filter, cfg) {
-    return function (timestamp) {
+    return function (timestamp,invalidateTime) {
         var d = (timestamp ? new Date(timestamp * 1000) : new Date());
+        var di = (invalidateTime ? new Date(invalidateTime * 1000) : null);
         var obj = {
             date: $filter('getFormattedDate')(d),
             time: $filter('getFormattedTime')(
@@ -216,6 +217,10 @@ angApp.filter('getDateTimeObj', function ($filter, cfg) {
                 false,
                 cfg.zwavecfg.time_format
             ),
+            invalidateTime: (di ?
+            $filter('getFormattedDate')(di) + ' '
+            + $filter('getFormattedTime')(di.toISOString().substring(11, di.toISOString().indexOf('.')),false,cfg.zwavecfg.time_format)
+            : ''),
             today: (d.toDateString() === (new Date()).toDateString()
                 ? $filter('getFormattedTime')(
                     d.toISOString().substring(11, d.toISOString().indexOf('.')),
