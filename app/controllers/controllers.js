@@ -36,12 +36,12 @@ appController.controller('ErrorController', function($scope, $routeParams, devic
 });
 
 /**
- * todo: Replace $upload vith version from the SmartHome
+ * todo: deprecated
  * This controller handles restoring process from a backup file.
  * @class RestoreController
  *
  */
-appController.controller('RestoreController', function ($scope, $upload, $window,deviceService,cfg,_) {
+/*appController.controller('RestoreController', function ($scope, $upload, $window,deviceService,cfg,_) {
     $scope.restore = {
         allow: false,
         input: {
@@ -49,10 +49,10 @@ appController.controller('RestoreController', function ($scope, $upload, $window
         }
     };
 
-    /**
+    /!**
      * Send request to restore from backup
      * @returns {void}
-     */
+     *!/
     $scope.restoreFromBackup = function($files) {
         $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin', message: $scope._t('restore_wait')};
         var chip = $scope.restore.input.restore_chip_info;
@@ -84,31 +84,32 @@ appController.controller('RestoreController', function ($scope, $upload, $window
 
         }
     };
-});
+});*/
 
 /**
+ * todo: deprecated
  * This controller handles network inclusion.
  * @class IncludeNetworkController
  *
  */
-appController.controller('IncludeNetworkController', function($scope, $window,$cookies,$timeout,cfg,dataService) {
+/*appController.controller('IncludeNetworkController', function($scope, $window,$cookies,$timeout,cfg,dataService) {
     // Controller vars
     $scope.includeNetwork ={
         controllerState: 0
     };
 
-    /**
+    /!**
      * Include to network
-     */
+     *!/
     $scope.includeToNetwork = function(cmd) {
         $scope.toggleRowSpinner(cmd);
         $timeout($scope.toggleRowSpinner, 1000);
         runZwaveCmd(cmd);
     };
 
-    /**
+    /!**
      * Exclude form to network
-     */
+     *!/
     $scope.excludeFromNetwork = function(cmd,confirm) {
         alertify.confirm(confirm, function () {
             $scope.toggleRowSpinner(cmd);
@@ -120,10 +121,10 @@ appController.controller('IncludeNetworkController', function($scope, $window,$c
 
     /// --- Private functions --- ///
 
-    /**
+    /!**
      * Run zwave cmd
      * @param {string} cmd
-     */
+     *!/
     function runZwaveCmd(cmd) {
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
         }, function (error) {
@@ -133,37 +134,9 @@ appController.controller('IncludeNetworkController', function($scope, $window,$c
     ;
 
 
-});
+});*/
 
-/**
- * This controller handles dongles.
- * @class DongleController'
- *
- */
-appController.controller('DongleController', function($scope, $window,$cookies,cfg,dataService) {
-    // Controller vars
-    $scope.homeDongle ={
-        model: {
-            current: $scope.cfg.dongle,
-            dongle: ''
-        },
-        //data: ['zway','newdongle','mydongle'],
-        data: cfg.dongle_list
-    };
 
-    /**
-     * Set dongle
-     */
-    $scope.setHomeDongle = function() {
-        if($scope.homeDongle.model.dongle === ''){
-            return;
-        }
-        angular.extend($scope.cfg,{dongle: $scope.homeDongle.model.dongle});
-        $cookies.dongle = $scope.homeDongle.model.dongle;
-        dataService.purgeCache();
-        $window.location.reload();
-    };
-});
 
 
 

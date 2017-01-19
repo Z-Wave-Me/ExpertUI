@@ -332,7 +332,7 @@ appController.controller('IncludeExcludeDeviceController', function ($scope,$rou
  * and it will learn all network information from the including controller of the new network.
  * All existing relationships to existing nodes will get lost
  * when the Z-Way controller joins a dierent network
- * @class IncludeNetworkController
+ * @class IncludeDifferentNetworkController
  *
  */
 appController.controller('IncludeDifferentNetworkController', function ($scope, $timeout, $window,cfg, dataService) {
