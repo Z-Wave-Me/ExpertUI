@@ -13,7 +13,7 @@
   "RFRxCRC16Errors":"Number of corrupted CRC16 Frames received (in % of correct frames received)",
   "on":"ON",
   "off":"OFF",
-  "promiscuous_mode":"Promiscuous mode",
+  "promiscuous_mode":"Eavesdrop",
   "jobs":"Jobs",
   "name":"Name",
   "statistics":"Statistics",
