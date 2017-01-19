@@ -15643,35 +15643,41 @@ http://codepen.io/MattIn4D/pen/LiKFC
 
 /* Route map
 -------------------------------------------------- */
-/* line 3, ../sass/modules/_routemap.scss */
+/* line 4, ../sass/modules/_routemap.scss */
+#page_routemap #main_content.container {
+  max-width: 100%;
+  width: 100%;
+}
+
+/* line 9, ../sass/modules/_routemap.scss */
 #graph {
   width: 99%;
   height: 99%;
 }
 
-/* line 7, ../sass/modules/_routemap.scss */
+/* line 13, ../sass/modules/_routemap.scss */
 .annotation-title {
   font-weight: bold;
 }
 
-/* line 10, ../sass/modules/_routemap.scss */
+/* line 16, ../sass/modules/_routemap.scss */
 #controlPanel {
   padding: 10px;
   margin: 10px 0;
   background-color: #e4f5fc;
   border: solid 1px #9fd8ef;
 }
-/* line 16, ../sass/modules/_routemap.scss */
+/* line 22, ../sass/modules/_routemap.scss */
 #controlPanel label {
   font-weight: normal;
 }
 
-/* line 20, ../sass/modules/_routemap.scss */
+/* line 26, ../sass/modules/_routemap.scss */
 #annotationPanel {
   right: 0;
 }
 
-/* line 24, ../sass/modules/_routemap.scss */
+/* line 30, ../sass/modules/_routemap.scss */
 #plan {
   margin-left: auto;
   margin-right: auto;
@@ -15682,7 +15688,7 @@ http://codepen.io/MattIn4D/pen/LiKFC
   z-index: -1;
 }
 
-/* line 33, ../sass/modules/_routemap.scss */
+/* line 39, ../sass/modules/_routemap.scss */
 #svg {
   padding: 20px;
   margin: 0;

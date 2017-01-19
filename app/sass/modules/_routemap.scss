@@ -1,5 +1,11 @@
 /* Route map
 -------------------------------------------------- */
+#page_routemap{
+    #main_content.container {
+        max-width: 100%;
+        width: 100%;
+    }
+}
 #graph {
     width:99%;
     height: 99%;
