@@ -5,11 +5,11 @@
     </div>
     <div class="panel-body">
         <!-- Text only -->
-        <div ng-if="homeDongle.data.length < 1">
+        <div ng-if="homeDongle.data.length < 2">
             <strong>{{cfg.dongle}}</strong>
         </div>
         <!-- Drop down -->
-        <div ng-if="homeDongle.data.length > 0">
+        <div ng-if="homeDongle.data.length > 1">
             <select class="form-control" ng-model="homeDongle.model.dongle" ng-change="setHomeDongle()">
                 <option value="" class="hidden-selectopt">--- Select one ---</option>
                 <option ng-repeat="v in homeDongle.data" ng-selected="homeDongle.model.current == v"

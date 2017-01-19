@@ -350,7 +350,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
             if (response.data.length === 1) {
                 angular.extend(cfg, {dongle: response.data[0]});
                 $cookies.dongle = response.data[0];
-                angular.extend(cfg,{dongle_list: response});
+                angular.extend(cfg,{dongle_list: response.data});
 
                 angular.extend(cfg, {
                     update_url: '/ZWave.' + cfg.dongle + '/Data/',
