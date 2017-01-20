@@ -45,6 +45,9 @@ var config_data = {
         'time_zone': '/ZAutomation/api/v1/system/timezone', // Set time zone
         'network_statistics': '/ZWaveAPI/Run/', // Set time zone
         'login': '/ZAutomation/api/v1/login',// Get time
+        'instances': '/ZAutomation/api/v1/instances',
+        'app_built_info': 'app/info.json',// App build info
+        'post_report_url': 'https://service.z-wave.me/report/', // Post report url
         'runjs_url': '/JS/Run/', // Url for running JS
         'device_classes_url': '/translations/DeviceClasses.xml', // Url to Device Classes
         'alarms_url': '/translations/Alarms.xml', // Url to Alarms

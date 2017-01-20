@@ -166,6 +166,23 @@ angApp.directive('collapseNavbar', function () {
     };
 });
 
+/**
+ * Displays a validation error
+ * @class bbValidator
+ */
+angApp.directive('bbValidator', function ($window) {
+    return {
+        restrict: "E",
+        replace: true,
+        scope: {
+            inputName: '=',
+            trans: '=',
+            hasBlur: '='
+        },
+        template: '<div class="valid-error text-danger" ng-if="inputName && !inputName.$pristine && hasBlur">*{{trans}}</div>'
+    };
+});
+
 angApp.directive('draggable', ['$document', function ($document) {
         return {
             restrict: 'A',

@@ -272,9 +272,9 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
      */
     $scope.getCustomCfgArr = function (key) {
         if (cfg.custom_cfg[cfg.app_type]) {
-            return cfg.custom_cfg[cfg.app_type][key] || [];
+            return cfg.custom_cfg[cfg.app_type][key] || '';
         }
-        return [];
+        return '';
     };
 
     // Alertify defaults
