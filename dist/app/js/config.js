@@ -1,4 +1,4 @@
-/* Copyright:  Z-Wave Europe, Created: 20-01-2017 09:43:51 */
+/* Copyright:  Z-Wave Europe, Created: 20-01-2017 13:41:35 */
 /**
  * App configuration
  * @author Martin Vach
@@ -8,6 +8,7 @@ var config_data = {
     'cfg': {
         'app_name': 'Z-Wave ExpertUI',
         'app_version': '1.2.0',
+        'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
         'pass_field': 'PSWDXXXX',
@@ -45,6 +46,9 @@ var config_data = {
         'time_zone': '/ZAutomation/api/v1/system/timezone', // Set time zone
         'network_statistics': '/ZWaveAPI/Run/', // Set time zone
         'login': '/ZAutomation/api/v1/login',// Get time
+        'instances': '/ZAutomation/api/v1/instances',
+        'app_built_info': 'app/info.json',// App build info
+        'post_report_url': 'https://service.z-wave.me/report/', // Post report url
         'runjs_url': '/JS/Run/', // Url for running JS
         'device_classes_url': '/translations/DeviceClasses.xml', // Url to Device Classes
         'alarms_url': '/translations/Alarms.xml', // Url to Alarms
@@ -178,12 +182,14 @@ var config_data = {
              'default':{
                  'logo': 'app/images/zplus.jpg',
                   'footer_text': '&COPY; 2014 by Z-Wave.Me',
-                 'logout': '/smarthome/#/logout'
+                 'logout': '/smarthome/#/logout',
+                 'version_type': '',
              },
               'installer':{
                   'logo': 'app/images/z-wave-aliance-logo.png',
                    'footer_text': '&COPY; 2016 Z-Wave Alliance',
-                  'logout': '#/logout'
+                  'logout': '#/logout',
+                  'version_type': '- version BETA',
               }
          }
 

@@ -63,9 +63,8 @@
                 <td data-title="{{ _t('device_name')}}">{{ v.name}}</td>
                 <td data-title="{{ _t('notification')}}" title="{{v.typeId}}">{{v.typeString}}</td>
                 <td data-title="{{ _t('event')}}" title="{{v.event}}">{{v.eventString}}</td>
-                <td data-title="{{ _t('datetime')}}" class="row-time is-updated-{{v.isUpdated}}"
-                    title="{{v.dateTime.date}} {{v.dateTime.time}}">
-                    {{ v.dateTime.today }}
+                <td data-title="{{ _t('datetime')}}">
+                    <bb-date-time obj="v.dateTime" updated="v.isUpdated"></bb-date-time>
                 </td>
                 <td data-title="{{ _t('nav_status')}}">
                    <!-- <div class="btn-group" ng-if="v.version > 1">

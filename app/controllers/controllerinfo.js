@@ -5,6 +5,7 @@
 appController.controller('ControllerController', function($scope, $window, $filter, $interval,$timeout,cfg,dataService,deviceService) {
     $scope.funcList;
     $scope.ZWaveAPIData;
+    $scope.builtInfo = '';
     $scope.info = {};
     $scope.master = {};
     $scope.runQueue = false;
@@ -16,6 +17,16 @@ appController.controller('ControllerController', function($scope, $window, $filt
     $scope.$on('$destroy', function() {
         dataService.cancelZwaveDataInterval();
     });
+
+    /**
+     * Load app built info
+     */
+    $scope.loadAppBuiltInfo = function() {
+        dataService.getAppBuiltInfo().then(function(response) {
+            $scope.builtInfo = response.data;
+        }, function(error) {});
+    };
+    $scope.loadAppBuiltInfo();
 
     /**
      * Load zwave data

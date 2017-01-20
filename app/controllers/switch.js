@@ -196,7 +196,7 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
                     obj['name'] = $filter('deviceName')(nodeId, node);
                     obj['updateTime'] = instance.commandClasses[ccId].data.level.updateTime;
                     obj['invalidateTime'] = instance.commandClasses[ccId].data.level.invalidateTime;
-                    obj['dateTime'] = $filter('getDateTimeObj')(instance.commandClasses[ccId].data.level.updateTime);
+                    obj['dateTime'] = $filter('getDateTimeObj')(instance.commandClasses[ccId].data.level.updateTime,obj['invalidateTime']);
                     obj['urlToStore'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Get()';
                     obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
                     //obj['level'] = ZWaveAPIData.devices[nodeId].instances[instanceId].commandClasses[ccId].data.level;

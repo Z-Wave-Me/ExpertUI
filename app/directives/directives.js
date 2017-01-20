@@ -91,6 +91,24 @@ angApp.directive('bbLoader', function () {
 });
 
 /**
+ * Displays a dta/time in the table row
+ * @class bbRowSpinner
+ */
+angApp.directive('bbDateTime', function () {
+    return {
+        restrict: "E",
+        replace: true,
+        scope: {
+            obj: '=',
+            updated: '='
+        },
+        template: '<span class="is-updated-{{updated}}" title="Update: {{obj.date}} {{obj.time}}, invalid: {{obj.invalidateTime}}">' +
+        '{{obj.today}}' +
+        '</span>'
+    };
+});
+
+/**
  * Displays a spinner in the table row
  * @class bbRowSpinner
  */
@@ -145,6 +163,23 @@ angApp.directive('collapseNavbar', function () {
                 $("#nav_collapse").removeClass("in").addClass("collapse");
             });
         }
+    };
+});
+
+/**
+ * Displays a validation error
+ * @class bbValidator
+ */
+angApp.directive('bbValidator', function ($window) {
+    return {
+        restrict: "E",
+        replace: true,
+        scope: {
+            inputName: '=',
+            trans: '=',
+            hasBlur: '='
+        },
+        template: '<div class="valid-error text-danger" ng-if="inputName && !inputName.$pristine && hasBlur">*{{trans}}</div>'
     };
 });
 

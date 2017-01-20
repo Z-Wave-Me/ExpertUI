@@ -59,6 +59,8 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         storeTextToFile: storeTextToFile,
         updateDeviceFirmware: updateDeviceFirmware,
         uploadApiFile: uploadApiFile,
+        postReport: postReport,
+        getAppBuiltInfo: getAppBuiltInfo,
         // Probably remove
         store: store,
         updateZwaveDataSince: updateZwaveDataSince,
@@ -680,6 +682,47 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             }
         }).then(function (response) {
             return response;
+        }, function (response) {// something went wrong
+            return $q.reject(response);
+        });
+
+    }
+
+    /**
+     * Post a bug report on the remote server
+     * @param {object} data
+     * @returns {unresolved}
+     */
+    function postReport(data) {
+        return $http({
+            method: "POST",
+            url: cfg.post_report_url,
+            data: $.param(data),
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+        }).then(function (response) {
+            return response;
+        }, function (response) {// something went wrong
+            return $q.reject(response);
+        });
+    }
+
+    /**
+     * Get app built info
+     * @param {string} file
+     * @returns {unresolved}
+     */
+    function getAppBuiltInfo() {
+        return $http({
+            method: 'get',
+            url: cfg.app_built_info
+        }).then(function (response) {
+            if (typeof response.data === 'object') {
+                return response;
+            } else {// invalid response
+                return $q.reject(response);
+            }
         }, function (response) {// something went wrong
             return $q.reject(response);
         });

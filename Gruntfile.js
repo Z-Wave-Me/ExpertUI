@@ -84,6 +84,7 @@ module.exports = function (grunt) {
                     'app/controllers/auth.js',
                     'app/controllers/settings.js',
                     'app/controllers/settings.js',
+                    'app/controllers/dongle.js',
                     'app/controllers/switch.js',
                     'app/controllers/sensor.js',
                     'app/controllers/meter.js',

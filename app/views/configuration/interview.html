@@ -3,27 +3,7 @@
     <!-- Config navigation -->
     <div ng-include="'app/views/configuration/navi.html'"></div>
     <div ng-show="deviceId">
-        <!-- rename_cont -->
-        <!-- todo: deprecated  <div class="cfg-block" id="rename_cont">
-            <h4><a href="" ng-click="goRename = !goRename">{{_t('device_rename_tooltip')}} <i class="fa fa-pencil"></i>
-            </a></h4>
-            <div ng-show="goRename">
-                <form name="form_rename" id="form_rename" ng-model="form_rename" class="form form-inline"
-                      ng-submit="renameDevice(deviceName,'deviceName')" novalidate>
-                    <input name="device_name" id="device_name" type="text" class="form-control"
-                           value="{{deviceName}}" ng-model="deviceName"/>
-                    <button type="submit" class="btn btn-primary" id="btn_update"
-                            ng-disabled="rowSpinner['deviceName']">
 
-                        <bb-row-spinner
-                                spinner="rowSpinner['deviceName']"
-                                label="_t('btn_save_name')"
-                                icon="'fa-circle-o'">
-                        </bb-row-spinner>
-                    </button>
-                </form>
-            </div>
-        </div>-->
         <div class="cfg-block">
             <div class="row">
                 <div class="col-md-8">
@@ -35,10 +15,10 @@
                                 <th>{{_t('device_node_name')}}</th>
                                 <td>
                                     <!-- Text mode -->
-                                    <div ng-hide="goDeviceName">
+                                    <div ng-hide="goDeviceName" ng-click="goDeviceName = true">
                                         {{deviceName}}
                                         <button type="button" class="btn btn-default"
-                                                ng-click="goDeviceName = !goDeviceName"
+                                                ng-click="goDeviceName = true"
                                                 ng-disabled="rowSpinner['deviceName']">
 
                                             <bb-row-spinner

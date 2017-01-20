@@ -272,9 +272,9 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
      */
     $scope.getCustomCfgArr = function (key) {
         if (cfg.custom_cfg[cfg.app_type]) {
-            return cfg.custom_cfg[cfg.app_type][key] || [];
+            return cfg.custom_cfg[cfg.app_type][key] || '';
         }
-        return [];
+        return '';
     };
 
     // Alertify defaults
@@ -350,7 +350,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
             if (response.data.length === 1) {
                 angular.extend(cfg, {dongle: response.data[0]});
                 $cookies.dongle = response.data[0];
-                angular.extend(cfg,{dongle_list: response});
+                angular.extend(cfg,{dongle_list: response.data});
 
                 angular.extend(cfg, {
                     update_url: '/ZWave.' + cfg.dongle + '/Data/',
