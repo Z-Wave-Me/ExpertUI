@@ -1,4 +1,4 @@
-<!-- Copyright:  Z-Wave Europe, Created: 17-01-2017 15:28:53 -->
+<!-- Copyright:  Z-Wave Europe, Created: 20-01-2017 15:04:59 -->
 <!doctype html>
 <html lang="en">
     <head>
@@ -177,6 +177,7 @@
         <div id="footer_in">
             <div class="container">
                 <span class="copyright" ng-bind-html="getCustomCfgArr('footer_text') | toTrusted"></span>
+                <span class="copyright">{{getCustomCfgArr('version_type')}}</span>
                 <span class="timestamp" ng-if="cfg.route.time.string"><i class="fa fa-clock-o"></i> {{cfg.route.time.string}}</span>
                 <span class="timestamp" ng-if="cfg.app_type === 'installer'"> | </span>
                 <span class="timestamp" ng-if="cfg.app_type === 'installer'"
