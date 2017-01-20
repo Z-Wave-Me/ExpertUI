@@ -7,6 +7,7 @@ var config_data = {
     'cfg': {
         'app_name': 'Z-Wave ExpertUI',
         'app_version': '1.2.0',
+        'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
         'pass_field': 'PSWDXXXX',
@@ -177,12 +178,14 @@ var config_data = {
              'default':{
                  'logo': 'app/images/zplus.jpg',
                   'footer_text': '&COPY; 2014 by Z-Wave.Me',
-                 'logout': '/smarthome/#/logout'
+                 'logout': '/smarthome/#/logout',
+                 'version_type': '',
              },
               'installer':{
                   'logo': 'app/images/z-wave-aliance-logo.png',
                    'footer_text': '&COPY; 2016 Z-Wave Alliance',
-                  'logout': '#/logout'
+                  'logout': '#/logout',
+                  'version_type': '- version BETA',
               }
          }
 
