@@ -176,7 +176,7 @@
         <div id="footer_in">
             <div class="container">
                 <span class="copyright" ng-bind-html="getCustomCfgArr('footer_text') | toTrusted"></span>
-                <span class="copyright" ng-bind-html="getCustomCfgArr('version_type') | toTrusted"></span>
+                <span class="copyright">{{getCustomCfgArr('version_type')}}</span>
                 <span class="timestamp" ng-if="cfg.route.time.string"><i class="fa fa-clock-o"></i> {{cfg.route.time.string}}</span>
                 <span class="timestamp" ng-if="cfg.app_type === 'installer'"> | </span>
                 <span class="timestamp" ng-if="cfg.app_type === 'installer'"
