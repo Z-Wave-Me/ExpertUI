@@ -1059,18 +1059,12 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
      * Get xml config param
      */
     function getCfgXmlParam(cfgXml, nodeId, instance, commandClass, command) {
-        var cfg = $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration');
-        if (!cfg) {
-            return [];
-        }
-        // Get data for given device by id
+        console.log(cfgXml)
         var collection = [];
-        angular.forEach(cfg, function(v, k) {
-            //if (v['_id'] == nodeId && v['_instance'] == instance && v['_commandClass'] == commandClass && v['_command'] == command) {
+        var cfg = $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration');
+        var parseParam = function(v,nodeId, instance, commandClass, command){
             if (v['_id'] == nodeId && v['_instance'] == instance && v['_commandclass'] == commandClass && v['_command'] == command) {
-//                if(!angular.isArray(v['_parameter'])){
-//                    return;
-//                }
+
                 var array = JSON.parse(v['_parameter']);
                 if (array.length > 2) {
                     collection[array[0]] = array[1];
@@ -1084,8 +1078,20 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
                     return;
                 }
             }
+        }
+        if (!cfg) {
+            return [];
+        }
+        // Get data for given device by id
+        if(_.isArray(cfg) ){
+            angular.forEach(cfg, function(v, k) {
+                parseParam(v,nodeId, instance, commandClass, command);
 
-        });
+            });
+        }else{
+           parseParam(cfg,nodeId, instance, commandClass, command);
+        }
+
         return collection;
 
     }

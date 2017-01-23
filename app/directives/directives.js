@@ -121,10 +121,9 @@ angApp.directive('bbRowSpinner', function () {
             spinner: '=',
             icon: '='
         },
-        template: '<span title="{{label}}"><span class="btn-spin" ng-if_="spinner">' +
+        template: '<span title="{{label}}">' +
         '<i class="fa " ng-class="spinner ? \'fa-spinner fa-spin\':icon"></i>' +
-        '</span> ' +
-        '<span class="btn-label">' +
+        '&nbsp;<span class="btn-label">' +
         '{{label}}' +
         '</span></span>'
     };
