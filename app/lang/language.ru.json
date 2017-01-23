@@ -512,5 +512,8 @@
   "wakeup_list": "Wakeup Settings",
   "yes": "Да",
   "zwave_role_type": "Тип роли Z-Wave Plus",
-  "ie_last_element": "just to remember, that IE do not like trailing comma (,) at the end the list of associative array elements"
+  "ie_last_element": "just to remember, that IE do not like trailing comma (,) at the end the list of associative array elements",
+  "wifi_password_valid": "Password must between 8 and 63 characters long.",
+  "wifi_password": "WIFI Password",
+  "ssid_name": "SSID"
 }

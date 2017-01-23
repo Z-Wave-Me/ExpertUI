@@ -499,5 +499,8 @@
   "ie_last_element": "Kom ihåg att IE inte gillar avslutande komma (,) i slutet av en array",
   "switch_point_temp": "Temperatur",
   "device_is_not_fully_interviewed": "Enhetsintervju är inte färdig",
-  "restore_backup_chip": "Återställ även information om nätverkstopologin (Läs manualen först!)"
+  "restore_backup_chip": "Återställ även information om nätverkstopologin (Läs manualen först!)",
+  "wifi_password_valid": "Password must between 8 and 63 characters long.",
+  "wifi_password": "WIFI Password",
+  "ssid_name": "SSID"
 }

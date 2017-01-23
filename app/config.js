@@ -43,6 +43,7 @@ var config_data = {
         'call_all_nif': '/ZWaveAPI/CallForAllNIF', // Call niff for all devices
         'time': '/ZAutomation/api/v1/system/time/get',// Get time
         'time_zone': '/ZAutomation/api/v1/system/timezone', // Set time zone
+        'wifi_settings': '/ZAutomation/api/v1/system/wifi/settings', // Set wifi settings ssid and password
         'network_statistics': '/ZWaveAPI/Run/', // Set time zone
         'login': '/ZAutomation/api/v1/login',// Get time
         'instances': '/ZAutomation/api/v1/instances',
@@ -100,7 +101,11 @@ var config_data = {
             //Timezone
             'time_zone': '',
             //Notes
-            'notes': ''
+            'notes': '',
+            //wifi password
+            'wifi_password': '',
+            //ssid name
+            'ssid_name': ''
         },
         'lang_date_time_format': {
             'en': {
