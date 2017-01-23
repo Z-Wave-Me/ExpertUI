@@ -1059,7 +1059,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
      * Get xml config param
      */
     function getCfgXmlParam(cfgXml, nodeId, instance, commandClass, command) {
-        console.log(cfgXml)
+        //console.log(cfgXml)
         var collection = [];
         var cfg = $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration');
         var parseParam = function(v,nodeId, instance, commandClass, command){
