@@ -14447,7 +14447,7 @@ img {
 ---------- http://www.w3schools.com/howto/howto_css_switch.asp
 -------------------------------------------------- */
 /* NEW - without checkbox */
-/* line 158, ../sass/common/_button.scss */
+/* line 7, ../sass/common/_switcher.scss */
 .switcher {
   position: relative;
   display: inline-block;
@@ -14456,7 +14456,7 @@ img {
 }
 
 /* The slider */
-/* line 167, ../sass/common/_button.scss */
+/* line 16, ../sass/common/_switcher.scss */
 .switcher-slider {
   position: absolute;
   cursor: pointer;
@@ -14464,7 +14464,7 @@ img {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #fff;
+  background-color: #f9f9f9;
   border: solid 1px #CCCCCC;
   -webkit-transition: .4s;
   transition: .4s;
@@ -14473,7 +14473,7 @@ img {
   box-shadow: inset 2px 2px 4px 0px rgba(0, 0, 0, 0.1);
 }
 
-/* line 185, ../sass/common/_button.scss */
+/* line 34, ../sass/common/_switcher.scss */
 .switcher-slider:before {
   position: absolute;
   content: "";
@@ -14484,7 +14484,7 @@ img {
   left: 4px;
   bottom: 3px;
   border: solid 1px #CCCCCC;
-  background-color: #fff;
+  background-color: #ffffff;
   -webkit-transition: .4s;
   transition: .4s;
   -webkit-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
@@ -14492,7 +14492,7 @@ img {
   box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
 }
 
-/* line 203, ../sass/common/_button.scss */
+/* line 52, ../sass/common/_switcher.scss */
 .switcher-slider .switcher-slider-in {
   display: none;
   color: #d9d9d9;
@@ -14505,22 +14505,22 @@ img {
   transition: .4s;
 }
 
-/* line 215, ../sass/common/_button.scss */
-.ison .switcher-slider:before {
-  background-color: #80AD80;
+/* line 64, ../sass/common/_switcher.scss */
+.ison .switcher-slider {
+  background-color: #5bc0de;
 }
 
 /*input:focus + .switcher-slider {
     box-shadow: 0 0 1px $app-brand-success;
 }*/
-/* line 224, ../sass/common/_button.scss */
+/* line 77, ../sass/common/_switcher.scss */
 .ison .switcher-slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
 }
 
-/* line 230, ../sass/common/_button.scss */
+/* line 83, ../sass/common/_switcher.scss */
 .ison .switcher-slider .switcher-slider-in {
   color: #bed5be;
   -webkit-transform: translateX(26px);
@@ -14530,18 +14530,18 @@ img {
 }
 
 /* Rounded sliders */
-/* line 239, ../sass/common/_button.scss */
+/* line 92, ../sass/common/_switcher.scss */
 .switcher-slider.round {
   border-radius: 4px;
 }
 
-/* line 243, ../sass/common/_button.scss */
+/* line 96, ../sass/common/_switcher.scss */
 .switcher-slider.round:before {
   border-radius: 4px;
 }
 
 /* OLD - with checkbox */
-/* line 248, ../sass/common/_button.scss */
+/* line 101, ../sass/common/_switcher.scss */
 .switch {
   position: relative;
   display: inline-block;
@@ -14550,13 +14550,13 @@ img {
 }
 
 /* Hide default HTML checkbox */
-/* line 258, ../sass/common/_button.scss */
+/* line 111, ../sass/common/_switcher.scss */
 .switch input {
   display: none;
 }
 
 /* The slider */
-/* line 261, ../sass/common/_button.scss */
+/* line 114, ../sass/common/_switcher.scss */
 .slider {
   position: absolute;
   cursor: pointer;
@@ -14570,7 +14570,7 @@ img {
   transition: .4s;
 }
 
-/* line 276, ../sass/common/_button.scss */
+/* line 129, ../sass/common/_switcher.scss */
 .slider:before {
   position: absolute;
   content: "";
@@ -14585,17 +14585,17 @@ img {
   transition: .4s;
 }
 
-/* line 293, ../sass/common/_button.scss */
+/* line 146, ../sass/common/_switcher.scss */
 input:checked + .slider:before {
   background-color: #80AD80;
 }
 
-/* line 298, ../sass/common/_button.scss */
+/* line 151, ../sass/common/_switcher.scss */
 input:focus + .slider {
   box-shadow: 0 0 1px #80AD80;
 }
 
-/* line 302, ../sass/common/_button.scss */
+/* line 155, ../sass/common/_switcher.scss */
 input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
@@ -14603,12 +14603,12 @@ input:checked + .slider:before {
 }
 
 /* Rounded sliders */
-/* line 309, ../sass/common/_button.scss */
+/* line 162, ../sass/common/_switcher.scss */
 .slider.round {
   border-radius: 4px;
 }
 
-/* line 313, ../sass/common/_button.scss */
+/* line 166, ../sass/common/_switcher.scss */
 .slider.round:before {
   border-radius: 4px;
 }
