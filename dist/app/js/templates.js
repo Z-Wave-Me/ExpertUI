@@ -1,4 +1,4 @@
-/* Copyright:  Z-Wave Europe, Created: 20-01-2017 15:04:59 */
+/* Copyright:  Z-Wave Europe, Created: 23-01-2017 09:29:53 */
 angular.module('myAppTemplates', []).run(['$templateCache', function($templateCache) {
   'use strict';
 
@@ -236,7 +236,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/home/notes.html',
-    "<div class=\"panel panel-default\" ng-controller=DataHolderController><div class=panel-heading><i class=\"fa fa-list text-info\"></i> {{_t('txt_notes')}}</div><div class=panel-body><div class=newlines ng-hide=goNotes ng-click=\"goNotes = true\"><span ng-if=dataHolder.controller.homeNotes>{{dataHolder.controller.homeNotes|stripTags}} </span><button type=button class=\"btn btn-default\" ng-click=\"goNotes = true\" ng-disabled=\"rowSpinner['spinNotes']\"><bb-row-spinner spinner=\"rowSpinner['spinNotes']\" icon=\"'fa-pencil'\"></bb-row-spinner></button></div><form name=form_notes id=form_notes class=form ng-show=goNotes ng-submit=\"storeNotes(form_notes,dataHolder.controller.homeNotes,'spinNotes');goNotes = !goNotes\" novalidate><textarea id=notes class=form-control rows=10 ng-model=dataHolder.controller.homeNotes>{{dataHolder.controller.homeNotes}}\r" +
+    "<div class=\"panel panel-default\" ng-controller=DataHolderController><div class=panel-heading><i class=\"fa fa-list text-info\"></i> {{_t('txt_notes')}}</div><div class=panel-body><div ng-hide=goNotes ng-click=\"goNotes = true\"><span class=newlines ng-if=dataHolder.controller.homeNotes>{{dataHolder.controller.homeNotes|stripTags}} </span>&nbsp; <button type=button class=\"btn btn-default\" ng-click=\"goNotes = true\" ng-disabled=\"rowSpinner['spinNotes']\"><bb-row-spinner spinner=\"rowSpinner['spinNotes']\" icon=\"'fa-pencil'\"></bb-row-spinner></button></div><form name=form_notes id=form_notes class=form ng-show=goNotes ng-submit=\"storeNotes(form_notes,dataHolder.controller.homeNotes,'spinNotes');goNotes = !goNotes\" novalidate><textarea id=notes class=form-control rows=10 ng-model=dataHolder.controller.homeNotes>{{dataHolder.controller.homeNotes}}\r" +
     "\n" +
     "            </textarea><div class=text-right><button class=\"btn btn-primary\" title=\"{{_t('btn_save')}}\" ng-disabled=\"rowSpinner['spinNotes']\"><bb-row-spinner spinner=\"rowSpinner['spinNotes']\" label=\" _t('btn_save')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></div></form></div></div>"
   );

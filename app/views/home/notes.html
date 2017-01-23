@@ -7,12 +7,12 @@
 
     <div class="panel-body">
         <!-- Text mode -->
-        <div class="newlines" ng-hide="goNotes" ng-click="goNotes = true">
-            <span ng-if="dataHolder.controller.homeNotes">
+        <div ng-hide="goNotes" ng-click="goNotes = true">
+            <span class="newlines" ng-if="dataHolder.controller.homeNotes">
                 {{dataHolder.controller.homeNotes|stripTags}}
-                </span>
+                </span>&nbsp;
 
-            <button type="button" class="btn btn-default"
+           <button type="button" class="btn btn-default"
                     ng-click="goNotes = true"
                     ng-disabled="rowSpinner['spinNotes']">
 
