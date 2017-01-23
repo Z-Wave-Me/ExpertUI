@@ -19,7 +19,7 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
      $scope.firmwareProgress = 0;*/
 
     $scope.firmware = {
-        show: true,
+        show: false,
         input: {
             url: '',
             targetId: ''
@@ -61,8 +61,12 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
             $scope.deviceName = $filter('deviceName')(nodeId, node);
 
             if ('122' in node.instances[0].commandClasses) {
-                setFirmwareData(node);
+                $scope.firmware.show = true;
+                //setFirmwareData(node);
                 //$scope.refreshZwaveData(ZWaveAPIData, nodeId);
+            }else{
+                $scope.alert = {message: $scope._t('no_device_service'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                return;
             }
 
         }, function (error) {
