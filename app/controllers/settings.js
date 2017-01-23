@@ -54,7 +54,8 @@ appController.controller('SettingsLangController', function ($scope, $timeout,$w
 appController.controller('SettingsAppController', function ($scope, $timeout, $window, $interval, $location, cfg,dataService,deviceService) {
     $scope.settings = {
         input: {},
-        lastTZ: ""
+        lastTZ: "",
+        lastSsid: ""
     };
 
     /**
@@ -63,6 +64,14 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
     $scope.loadSettings = function() {
         $scope.settings.input = cfg.zwavecfg;
         $scope.settings.lastTZ = cfg.zwavecfg.time_zone;
+
+        dataService.getApi('wifi_settings').then(function (response) {
+            $scope.settings.input.ssid_name = response.data.data.ssid;
+            $scope.settings.lastSsid = response.data.data.ssid;
+        }, function (error) {
+            $scope.loading = false;
+            alertify.alertError($scope._t('error_load_data'));
+        });
     };
     $scope.loadSettings();
 
@@ -75,6 +84,30 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
 
         dataService.postApi('configupdate_url', input).then(function (response) {
             //$scope.reloadData();
+
+            if(input.wifi_password !== '' || input.ssid_name !== $scope.settings.lastSsid) {
+
+                var data = {
+                    "password": input.wifi_password,
+                    "ssid": input.ssid_name === $scope.settings.lastSsid ? "" : input.ssid_name
+                };
+
+                dataService.postApi('wifi_settings', data, null).then(function(response) {
+                    $scope.input.wifi_password = '';
+                    deviceService.showNotifier({message: $scope._t('update_successful')});
+                    $timeout( function() {
+                        $window.location.reload();
+                    }, 1000);
+                    $scope.loading = false;
+                }, function(error) {
+                    $scope.input.ssid_name = $scope.settings.lastSsid;
+                    $scope.input.wifi_password = '';
+                    $scope.loading = false;
+                    alertify.alertError($scope._t('error_load_data'));
+                });
+
+            }
+
 
             if(input.time_zone !== $scope.settings.lastTZ) {
                 var data = {

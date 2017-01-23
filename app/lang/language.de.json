@@ -1,4 +1,5 @@
 {
+ "no_device_service": "This device doesn't have the necessary service",
  "nav_report": "Report Problem",
  "bugreport_info": "This form is dedicated to report bugs in the UI please do not provide any response. If you need support please consult the support forums or email addresses provided.",
  "field_required": "This field is required",
@@ -511,5 +512,8 @@
   "rt_associated": "Direct association",
   "ie_last_element": "Nur zur Erinnerung: IE mag keine Kommas (,) am Ende einer Liste von assoziativen Arrayelementen",
   "nm_inc_into_nw": "Verbinde / Verlasse anderes Netzwerk",
-  "nm_inc_into_nw_desc": "Diese Modus ermöglicht dem Controller sich mit einem anderem Netzwerk als normale Node zu verbinden bzw. es wieder zu verlassen."
+  "nm_inc_into_nw_desc": "Diese Modus ermöglicht dem Controller sich mit einem anderem Netzwerk als normale Node zu verbinden bzw. es wieder zu verlassen.",
+  "wifi_password_valid": "Passwort muss zwischen 8 und 63 Zeichen lang sein.",
+ "wifi_password": "WIFI Passwort",
+ "ssid_name": "SSID"
 }
