@@ -319,7 +319,8 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
           //dataService.getCfgXml(function(cfgXml) {
             angular.forEach(response.config.devices.deviceconfiguration, function(cfg, cfgId) {
                 var node = ZWaveAPIData.devices[cfg['_id']];
-                if (!node) {
+
+                if (!node || !$filter('hasNode')(node,'instances.0.commandClasses.112')) {
                     return;
                 }
                 var array = JSON.parse(cfg['_parameter']);
@@ -329,7 +330,6 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
                 if (array.length > 2) {
                     cfgNum = array[0];
                     cfgVal = array[1];
-                    if (node.instances[0].commandClasses[0x70].val) {
                         devVal = node.instances[0].commandClasses[0x70].data[cfgNum].val.value;
                         if (cfgVal != devVal) {
                             var obj = {};
@@ -344,8 +344,6 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
                                 $scope.notConfigDevices.push(obj);
                             }
                         }
-                    }
-
 
                 }
             });
