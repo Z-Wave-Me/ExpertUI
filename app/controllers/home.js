@@ -110,11 +110,10 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
             $('.custom-ip-error').show();
             return;
         }
-        dataService.cancelZwaveDataInterval();
+        $interval.cancel($scope.home.interval);
         $('.custom-ip-success,.custom-ip-true .home-page').hide();
         var setIp = 'http://' + ip + ':8083';
         cfg.server_url = setIp;
-        dataService.purgeCache();
         $scope.loadHomeData = true;
         $route.reload();
     };

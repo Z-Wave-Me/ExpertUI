@@ -145,7 +145,7 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
      */
     $scope.$watchCollection('modalArr', function (modalArr) {
         if(_.has(modalArr, 'cmdClassModal') && !modalArr['cmdClassModal']){
-            dataService.cancelZwaveDataInterval();
+            $interval.cancel($scope.commandsInterval);
             //console.log(modalArr['cmdClassModal'])
         }
 

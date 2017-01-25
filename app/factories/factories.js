@@ -27,15 +27,13 @@ appFactory.factory('_', function () {
 appFactory.factory('dataService', function ($http, $q, $interval, $filter, $location, $window, deviceService, myCache, cfg) {
     var updatedTime = Math.round(+new Date() / 1000);
     var apiData;
-    var apiDataInterval;
-    var queueDataInterval;
+    // todo: deprecated
+    //var apiDataInterval;
+    //var queueDataInterval;
     /**
      * Public functions
      */
     return({
-        joinedZwaveData: joinedZwaveData,
-        cancelZwaveDataInterval: cancelZwaveDataInterval,
-        purgeCache: purgeCache,
         // With promises
         getCfgXml: getCfgXml,
         putCfgXml: putCfgXml,
@@ -76,60 +74,6 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             }
         }
 
-    }
-
-    /**
-     * Get updated data and join with ZwaveData
-     */
-    function  joinedZwaveData(callback) {
-        var time = Math.round(+new Date() / 1000);
-
-        var result = {};
-        var refresh = function () {
-            //console.log(apiData);
-            var request = $http({
-                method: "POST",
-                //url: "storage/updated.json"
-                url: cfg.server_url + cfg.update_url + time
-            });
-            request.success(function (data) {
-                if (!apiData || !data)
-                    return;
-                time = data.updateTime;
-                angular.forEach(data, function (obj, path) {
-                    if (!angular.isString(path)) {
-                        return;
-                    }
-                    var pobj = apiData;
-                    var pe_arr = path.split('.');
-                    for (var pe in pe_arr.slice(0, -1)) {
-                        pobj = pobj[pe_arr[pe]];
-                    }
-                    pobj[pe_arr.slice(-1)] = obj;
-                });
-                result = {
-                    "joined": apiData,
-                    "update": data
-                };
-                return callback(result);
-            }).error(function () {
-                handleError();
-
-            });
-        };
-        apiDataInterval = $interval(refresh, cfg.interval);
-    }
-
-
-    /**
-     * Cancel data interval
-     */
-    function cancelZwaveDataInterval() {
-        if (angular.isDefined(apiDataInterval)) {
-            $interval.cancel(apiDataInterval);
-            apiDataInterval = undefined;
-        }
-        return;
     }
 
     /**
@@ -821,6 +765,66 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
      });
      }
      }*/
+
+
+
+    /**
+     * todo: deprecated
+     * Get updated data and join with ZwaveData
+     */
+    /*
+    function  joinedZwaveData(callback) {
+        var time = Math.round(+new Date() / 1000);
+
+        var result = {};
+        var refresh = function () {
+            //console.log(apiData);
+            var request = $http({
+                method: "POST",
+                //url: "storage/updated.json"
+                url: cfg.server_url + cfg.update_url + time
+            });
+            request.success(function (data) {
+                if (!apiData || !data)
+                    return;
+                time = data.updateTime;
+                angular.forEach(data, function (obj, path) {
+                    if (!angular.isString(path)) {
+                        return;
+                    }
+                    var pobj = apiData;
+                    var pe_arr = path.split('.');
+                    for (var pe in pe_arr.slice(0, -1)) {
+                        pobj = pobj[pe_arr[pe]];
+                    }
+                    pobj[pe_arr.slice(-1)] = obj;
+                });
+                result = {
+                    "joined": apiData,
+                    "update": data
+                };
+                return callback(result);
+            }).error(function () {
+                handleError();
+
+            });
+        };
+        apiDataInterval = $interval(refresh, cfg.interval);
+    }*/
+
+
+
+    /**
+     * todo: deprecated
+     * Cancel data interval
+     */
+    /*function cancelZwaveDataInterval() {
+        if (angular.isDefined(apiDataInterval)) {
+            $interval.cancel(apiDataInterval);
+            apiDataInterval = undefined;
+        }
+        return;
+    }*/
 
 
     /**

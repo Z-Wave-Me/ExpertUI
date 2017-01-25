@@ -8,7 +8,7 @@
  * @class ConfigAssocController
  *
  */
-appController.controller('ConfigAssocController', function($scope, $filter, $routeParams, $location, $cookies, $timeout, $window, dataService, deviceService, myCache, cfg, _) {
+appController.controller('ConfigAssocController', function($scope, $filter, $routeParams, $location, $cookies, $timeout, $window,$interval, dataService, deviceService, myCache, cfg, _) {
     $scope.devices = [];
     $scope.deviceName = '';
     $scope.deviceId = 0;
@@ -41,37 +41,22 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
         toNode: false,
         toInstance: false
     };
+    $scope.assocInterval = false;
+
+
+    /**
+     * Cancel interval on page destroy
+     */
+    $scope.$on('$destroy', function() {
+        $interval.cancel($scope.assocInterval);
+    });
+
     // Redirect to detail page
     $scope.changeDevice = function(deviceId) {
         if (deviceId > 0) {
             $location.path($scope.activeUrl + deviceId);
         }
     };
-
-    // Refresh data
-    $scope.refresh = function() {
-        dataService.joinedZwaveData(function(data) {
-            var updateData = false;
-            var searchStr = 'devices.' + $routeParams.nodeId + '.'
-            angular.forEach(data.update, function(v, k) {
-                if (k.indexOf(searchStr) !== -1) {
-                    updateData = true;
-                    return;
-                }
-            });
-            if (updateData) {
-                $scope.load($routeParams.nodeId, true);
-            }
-
-
-        });
-    };
-    $scope.refresh();
-
-    // Cancel interval on page destroy
-    $scope.$on('$destroy', function() {
-        dataService.cancelZwaveDataInterval();
-    });
 
     // Load data
     $scope.loadZwaveData = function(nodeId, noCache) {
@@ -108,6 +93,53 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
         }, noCache);
     };
     $scope.loadZwaveData($routeParams.nodeId);
+
+    /**
+     * Refresh zwave data
+     * @param {object} ZWaveAPIData
+     */
+    $scope.refreshZwaveData = function(ZWaveAPIData) {
+        var refresh = function() {
+            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+                var updateData = false;
+                var searchStr = 'devices.' + $routeParams.nodeId + '.'
+                angular.forEach(response.data.update, function(v, k) {
+                    if (k.indexOf(searchStr) !== -1) {
+                        updateData = true;
+                        return;
+                    }
+                });
+                if (updateData) {
+                    $scope.loadZwaveData($routeParams.nodeId, false);
+                }
+            }, function(error) {});
+        };
+        $scope.assocInterval = $interval(refresh, cfg.interval);
+    };
+
+    $scope.refreshZwaveData();
+
+    /**
+     * todo: deprecated
+     */
+    /*$scope.refresh = function() {
+        dataService.joinedZwaveData(function(data) {
+            var updateData = false;
+            var searchStr = 'devices.' + $routeParams.nodeId + '.'
+            angular.forEach(data.update, function(v, k) {
+                if (k.indexOf(searchStr) !== -1) {
+                    updateData = true;
+                    return;
+                }
+            });
+            if (updateData) {
+                $scope.load($routeParams.nodeId, true);
+            }
+
+
+        });
+    };*/
+    //$scope.refresh();
 
     // Update data from device
     $scope.updateFromDevice = function(spin) {

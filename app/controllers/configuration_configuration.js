@@ -8,7 +8,7 @@
  * @class ConfigConfigurationController
  *
  */
-appController.controller('ConfigConfigurationController', function ($scope, $routeParams, $location, $cookies, $filter, $http, $timeout, $route, cfg, dataService, deviceService, myCache, _) {
+appController.controller('ConfigConfigurationController', function ($scope, $routeParams, $location, $cookies, $filter, $http, $timeout, $route, $interval,cfg, dataService, deviceService, myCache, _) {
     $scope.devices = [];
     $scope.deviceId = 0;
     $scope.activeTab = 'configuration';
@@ -25,6 +25,22 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
     $scope.switchAllCont;
     $scope.protectionCont;
     $scope.wakeupCont;
+
+    $scope.configInterval = null;
+
+    /**
+     * Cancel interval on page destroy
+     */
+    $scope.$on('$destroy', function() {
+        $interval.cancel($scope.configInterval);
+    });
+
+    // Redirect to detail page
+    $scope.changeDevice = function (deviceId) {
+        if (deviceId > 0) {
+            $location.path($scope.activeUrl + deviceId);
+        }
+    };
 
     // Load data
     $scope.loadZwaveData = function (nodeId) {
@@ -66,25 +82,23 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
     };
     $scope.loadZwaveData($routeParams.nodeId);
 
-    // Refresh data
-    $scope.refresh = function (nodeId) {
-        dataService.joinedZwaveData(function (data) {
-            //setData(data.joined, nodeId, true);
-        });
+    /**
+     * Refresh zwave data
+     */
+    $scope.refreshZwaveData = function (nodeId) {
+        var refresh = function() {
+            dataService.loadJoinedZwaveData(null).then(function(response) {
+                setData(response.data.joined,nodeId);
+            }, function(error) {});
+        };
+        $scope.configInterval = $interval(refresh, $scope.cfg.interval);
+       /* dataService.joinedZwaveData(function (data) {
+            setData(data.joined, nodeId);
+        });*/
     };
-    //$scope.refresh($routeParams.nodeId);
+    //$scope.refreshZwaveData($routeParams.nodeId);
 
-    // Redirect to detail page
-    $scope.changeDevice = function (deviceId) {
-        if (deviceId > 0) {
-            $location.path($scope.activeUrl + deviceId);
-        }
-    };
 
-    // Cancel interval on page destroy
-    $scope.$on('$destroy', function () {
-        dataService.cancelZwaveDataInterval();
-    });
 
     /**
      * Update from device action
@@ -98,12 +112,12 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         }
         $scope.toggleRowSpinner(spin);
         dataService.runZwaveCmd(cfg.store_url + cmd);
-        $scope.refresh(deviceId);
+        $scope.refreshZwaveData(deviceId);
 
         $('#' + form + ' .cfg-control-content :input').prop('disabled', true);
         $timeout(function () {
             $scope.toggleRowSpinner();
-            dataService.cancelZwaveDataInterval();
+           $interval.cancel($scope.configInterval);
             $scope.loadZwaveData($routeParams.nodeId);
             $('#' + form + ' .cfg-control-content :input').prop('disabled', false);
         }, 3000);
@@ -121,10 +135,10 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                 dataService.runZwaveCmd(request + '(' + v.confNum + ')');
             }
         });
-        $scope.refresh(deviceId);
+        $scope.refreshZwaveData(deviceId);
         $('#' + form + ' .cfg-control-content :input').prop('disabled', true);
         $timeout(function () {
-            dataService.cancelZwaveDataInterval();
+           $interval.cancel($scope.configInterval);
             $scope.loadZwaveData($routeParams.nodeId);
             $scope.toggleRowSpinner();
         }, 3000);
@@ -298,7 +312,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         });
 
 
-        $scope.refresh(cmd['id']);
+        $scope.refreshZwaveData(cmd['id']);
         if (confNum) {
             $('#cfg_control_' + confNum + ' :input').prop('disabled', true);
         } else {
@@ -307,7 +321,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         $timeout(function () {
             $scope.loadZwaveData($routeParams.nodeId);
             $('#' + form + ' .cfg-control-content :input').prop('disabled', false);
-            dataService.cancelZwaveDataInterval();
+           $interval.cancel($scope.configInterval);
             $scope.toggleRowSpinner();
         }, 3000);
         return;
@@ -343,24 +357,24 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                     var x2js = new X2JS();
                     var zddXml = x2js.xml_str2json(response.data);
                     myCache.put(zddXmlFile, zddXml);
-                    setCont(node, nodeId, zddXml, ZWaveAPIData, refresh);
+                    setCont(node, nodeId, zddXml, ZWaveAPIData);
 
 
                 });
             } else {
-                setCont(node, nodeId, cachedZddXml, ZWaveAPIData, refresh);
+                setCont(node, nodeId, cachedZddXml, ZWaveAPIData);
             }
 
         } else {
 
-            setCont(node, nodeId, null, ZWaveAPIData, refresh);
+            setCont(node, nodeId, null, ZWaveAPIData);
         }
     }
 
     /**
      * Set all conts
      */
-    function setCont(node, nodeId, zddXml, ZWaveAPIData, refresh) {
+    function setCont(node, nodeId, zddXml, ZWaveAPIData) {
         if (!zddXml) {
             $scope.noZddx = true;
             // Loop throught instances
