@@ -104,7 +104,6 @@ appController.controller('LocksController', function($scope, $filter, $timeout,$
                 obj['rowId'] = 'row_' + nodeId + '_' + cnt;
                 obj['name'] = $filter('deviceName')(nodeId, node);
                 obj['status'] = $filter('lockStatus')(mode);
-
                 obj['level'] = mode;
                 obj['updateTime'] = instance.commandClasses[ccId].data.mode.updateTime;
                 obj['invalidateTime'] = instance.commandClasses[ccId].data.mode.invalidateTime;

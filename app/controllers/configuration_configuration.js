@@ -408,6 +408,11 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                     $location.path('/configuration/commands/' + $routeParams.nodeId);
                     return;
                 }
+            }else{
+                if (!$scope.configCont && !$scope.wakeupCont && !$scope.protectionCont && !$scope.switchAllCont) {
+                    $scope.alert = {message: $scope._t('no_device_service'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                    return;
+                }
             }
 
         });
