@@ -27,6 +27,7 @@ This User Interfaces allows to operate a Smart Home Network based on Z-Wave devi
 - Folder app/core removed.
 
 #### Fixes
+- Fixing not configured devices on the homepage.
 - Can't configure second parameter #174
 - In routing table timestamps are not updated #161
 - LICENSE file missing #213
