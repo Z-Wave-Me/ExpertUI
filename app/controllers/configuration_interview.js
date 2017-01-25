@@ -88,12 +88,6 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         }
     };
 
-    // todo: deprecated
-    // Cancel interval on page destroy
-   /* $scope.$on('$destroy', function () {
-        dataService.cancelZwaveDataInterval();
-    });*/
-
     /**
      * Request NIF of a device
      * Node Id to be requested for a NIF
@@ -172,60 +166,6 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
             alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
         });
     };
-
-    // todo: DEPRECATED
-    // Show modal CommandClass dialog
-    /*$scope.showModalCommandClass = function (target, instanceId, ccId, type) {
-        var node = $scope.ZWaveAPIData.devices[$routeParams.nodeId];
-        var ccData;
-        switch (type) {
-            case 'cmdData':
-                ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.commandClasses.' + ccId + '.data');
-                break;
-            case 'cmdDataIn':
-                ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.data');
-                break;
-            default:
-                ccData = $filter('hasNode')(node, 'data');
-                break;
-        }
-        var cc = deviceService.configGetCommandClass(ccData, '/', '');
-
-        $scope.commandClass = deviceService.configSetCommandClass(cc);
-        $(target).modal();
-    };*/
-
-    // todo: deprecated
-    // Show modal dialog
-    /*$scope.showModalInterview = function (target) {
-        $(target).modal();
-    };*/
-
-    // todo: deprecated
-    // Show modal device select dialog
-    /*$scope.showModalDeviceSelect = function (target, nodeId, alert) {
-        dataService.getSelectZDDX(nodeId, function (data) {
-            $scope.deviceZddx = data;
-        }, alert);
-        $(target).modal();
-
-    };*/
-
-    // todo: deprecated
-    // Change device select
-   /* $scope.changeDeviceSelect = function (selector, target, file) {
-        var imageFile = $(selector).find(':selected').data('image');
-        var image;
-        if (imageFile == undefined) {
-            image = $scope._t('no_device_image');
-        } else {
-            image = '<img src="' + imageFile + '" />';
-        }
-        $scope.modelSelectZddx = file;
-        $(target).html(image);
-    };*/
-
-
 
     /// --- Private functions --- ///
     /**

@@ -27,8 +27,8 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
     $scope.wakeupCont;
 
     // Load data
-    $scope.load = function (nodeId) {
-        dataService.getZwaveData(function (ZWaveAPIData) {
+    $scope.loadZwaveData = function (nodeId) {
+        dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
             if(_.isEmpty($scope.devices)){
@@ -64,7 +64,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
 
         });
     };
-    $scope.load($routeParams.nodeId);
+    $scope.loadZwaveData($routeParams.nodeId);
 
     // Refresh data
     $scope.refresh = function (nodeId) {
@@ -104,7 +104,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         $timeout(function () {
             $scope.toggleRowSpinner();
             dataService.cancelZwaveDataInterval();
-            $scope.load($routeParams.nodeId);
+            $scope.loadZwaveData($routeParams.nodeId);
             $('#' + form + ' .cfg-control-content :input').prop('disabled', false);
         }, 3000);
         return;
@@ -125,7 +125,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         $('#' + form + ' .cfg-control-content :input').prop('disabled', true);
         $timeout(function () {
             dataService.cancelZwaveDataInterval();
-            $scope.load($routeParams.nodeId);
+            $scope.loadZwaveData($routeParams.nodeId);
             $scope.toggleRowSpinner();
         }, 3000);
         return;
@@ -305,7 +305,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             $('#' + form + ' .cfg-control-content :input').prop('disabled', true);
         }
         $timeout(function () {
-            $scope.load($routeParams.nodeId);
+            $scope.loadZwaveData($routeParams.nodeId);
             $('#' + form + ' .cfg-control-content :input').prop('disabled', false);
             dataService.cancelZwaveDataInterval();
             $scope.toggleRowSpinner();

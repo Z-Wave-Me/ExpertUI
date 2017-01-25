@@ -49,7 +49,7 @@
                                 </td>
                             </tr>
                             <!-- list -->
-                            <tr ng-repeat="v in descriptionCont" ng-hide="v.val === '' || v.val === false || v.val === null">
+                            <tr ng-repeat="v in descriptionCont track by $index" ng-hide="v.val === '' || v.val === false || v.val === null">
                                 <th>{{_t(v.key)}}</th>
                                 <td id="{{v.key}}">
                                     <div ng-switch on="v.key">

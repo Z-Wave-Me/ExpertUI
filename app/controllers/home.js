@@ -91,38 +91,6 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
         };
         $scope.home.interval = $interval(refresh, $scope.cfg.interval);
     };
-
-
-    /**
-     * Load data
-     *
-     */
-    /*$scope.loadData = function() {
-        dataService.getZwaveData(function(ZWaveAPIData) {
-            var isRealPrimary = ZWaveAPIData.controller.data.isRealPrimary.value;
-            var hasDevices = Object.keys(ZWaveAPIData.devices).length;
-            $scope.ZWaveAPIData = ZWaveAPIData;
-            notInterviewDevices(ZWaveAPIData);
-            countDevices(ZWaveAPIData);
-            assocRemovedDevices(ZWaveAPIData);
-            notConfigDevices(ZWaveAPIData);
-            batteryDevices(ZWaveAPIData);
-            $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
-            $scope.controller.controllerState = ZWaveAPIData.controller.data.controllerState.value;
-            $scope.controller.startLearnMode = !isRealPrimary || hasDevices < 2 ? true : false;
-            dataService.joinedZwaveData(function(data) {
-                $scope.reset();
-                notInterviewDevices(data.joined);
-                countDevices(data.joined);
-                assocRemovedDevices(data.joined);
-                //notConfigDevices(ZWaveAPIData);
-                batteryDevices(data.joined);
-                $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
-                $scope.controller.controllerState = data.joined.controller.data.controllerState.value;
-
-            });
-        });
-    };*/
     if (!cfg.custom_ip) {
         //$scope.loadData();
         $scope.loadZwaveData();
@@ -150,11 +118,6 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
         $scope.loadHomeData = true;
         $route.reload();
     };
-
-    // Cancel interval on page destroy
-    /*$scope.$on('$destroy', function() {
-        dataService.cancelZwaveDataInterval();
-    });*/
     
      // Run Zwave Command
     $scope.runZwaveCmdConfirm = function (cmd,confirm) {
