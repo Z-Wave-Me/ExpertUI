@@ -88,7 +88,19 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
     $scope.refreshZwaveData = function (nodeId) {
         var refresh = function() {
             dataService.loadJoinedZwaveData(null).then(function(response) {
-                setData(response.data.joined,nodeId);
+                var updateData = false;
+                var searchStr = 'devices.' + $routeParams.nodeId + '.'
+                angular.forEach(response.data.update, function(v, k) {
+                    if (k.indexOf(searchStr) !== -1) {
+                        updateData = true;
+                        return;
+                    }
+                });
+                if (updateData) {
+                    //$scope.loadZwaveData($routeParams.nodeId, false);
+                    setData(response.data.joined,nodeId);
+                }
+                //setData(response.data.joined,nodeId);
             }, function(error) {});
         };
         $scope.configInterval = $interval(refresh, $scope.cfg.interval);
@@ -96,7 +108,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             setData(data.joined, nodeId);
         });*/
     };
-    //$scope.refreshZwaveData($routeParams.nodeId);
+    $scope.refreshZwaveData($routeParams.nodeId);
 
 
 
@@ -112,12 +124,12 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         }
         $scope.toggleRowSpinner(spin);
         dataService.runZwaveCmd(cfg.store_url + cmd);
-        $scope.refreshZwaveData(deviceId);
+        //$scope.refreshZwaveData(deviceId);
 
         $('#' + form + ' .cfg-control-content :input').prop('disabled', true);
         $timeout(function () {
             $scope.toggleRowSpinner();
-           $interval.cancel($scope.configInterval);
+           //$interval.cancel($scope.configInterval);
             $scope.loadZwaveData($routeParams.nodeId);
             $('#' + form + ' .cfg-control-content :input').prop('disabled', false);
         }, 3000);
@@ -135,10 +147,10 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                 dataService.runZwaveCmd(request + '(' + v.confNum + ')');
             }
         });
-        $scope.refreshZwaveData(deviceId);
+        //$scope.refreshZwaveData(deviceId);
         $('#' + form + ' .cfg-control-content :input').prop('disabled', true);
         $timeout(function () {
-           $interval.cancel($scope.configInterval);
+           //$interval.cancel($scope.configInterval);
             $scope.loadZwaveData($routeParams.nodeId);
             $scope.toggleRowSpinner();
         }, 3000);
@@ -312,7 +324,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         });
 
 
-        $scope.refreshZwaveData(cmd['id']);
+        //$scope.refreshZwaveData(cmd['id']);
         if (confNum) {
             $('#cfg_control_' + confNum + ' :input').prop('disabled', true);
         } else {
@@ -321,7 +333,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         $timeout(function () {
             $scope.loadZwaveData($routeParams.nodeId);
             $('#' + form + ' .cfg-control-content :input').prop('disabled', false);
-           $interval.cancel($scope.configInterval);
+           //$interval.cancel($scope.configInterval);
             $scope.toggleRowSpinner();
         }, 3000);
         return;
@@ -332,7 +344,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
     /**
      * Set zwave data
      */
-    function setData(ZWaveAPIData, nodeId, refresh) {
+    function setData(ZWaveAPIData, nodeId) {
         var node = ZWaveAPIData.devices[nodeId];
         if (!node) {
             return;
