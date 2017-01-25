@@ -169,7 +169,7 @@
     "btn_show_lifeline": "Lifeline zeigen",
     "btn_hide_lifeline": "Lifeline verbergen",
     "btn_change": "Ändern",
-    "txt_homepage_promo_default": "<p>Dies ist ein statischer Z-Wave Plus Controller. Die Z-Wave Plus Zertifizierung (Zert.Nr: ZC10-14110009 vom November 2014) erstreckt sich auf das Z-Wave Netzverhalten sowie diese Nutzerschnittstelle. Es werden alle zertifizierten Z-Wave Geräte unterstützt. Bei Geräten aus der Datenbank <a href=\"http://pepper1.net/zwavedb/\">http://pepper1.net/zwavedb/</a> werden Zusatzinformationen wie Beschreibung der Konfigurationsparameter oder ein Produktbild verwendet; alle anderen zertifizierten Geräte können jedoch ebenfalls genutzt und gesteuert werden.</p><p>Das komplette Handbuch zu dieser Software kann unter <a href=\"http://razberry.z-wave.me\">www.z-wave.me</a> heruntergeladen werden.</p>",
+    "txt_homepage_promo_default": "<p>Dies ist ein statischer Z-Wave Plus Controller. Die Z-Wave Plus Zertifizierung (Zert.Nr: ZC10-14110009 vom November 2014) erstreckt sich auf das Z-Wave Netzverhalten sowie diese Nutzerschnittstelle. Es werden alle zertifizierten Z-Wave Geräte unterstützt. Bei Geräten aus der Datenbank <a href=\"http://products.z-wavealliance.org/\">http://products.z-wavealliance.org/</a> werden Zusatzinformationen wie Beschreibung der Konfigurationsparameter oder ein Produktbild verwendet; alle anderen zertifizierten Geräte können jedoch ebenfalls genutzt und gesteuert werden.</p><p>Das komplette Handbuch zu dieser Software kann unter <a href=\"http://razberry.z-wave.me\">www.z-wave.me</a> heruntergeladen werden.</p>",
     "txt_devices_present": "Geräte im Netzwerk",
     "txt_network_info": "Netzwerk Informationen",
     "txt_devices_mains": "Geräte sind netzgespeist",
