@@ -1,4 +1,4 @@
-/* Copyright:  Z-Wave Europe, Created: 23-01-2017 14:56:15 */
+/* Copyright:  Z-Wave Europe, Created: 27-01-2017 16:22:31 */
 /*! jQuery v1.11.1 | (c) 2005, 2014 jQuery Foundation, Inc. | jquery.org/license */
 !function(a,b){"object"==typeof module&&"object"==typeof module.exports?module.exports=a.document?b(a,!0):function(a){if(!a.document)throw new Error("jQuery requires a window with a document");return b(a)}:b(a)}("undefined"!=typeof window?window:this,function(a,b){var c=[],d=c.slice,e=c.concat,f=c.push,g=c.indexOf,h={},i=h.toString,j=h.hasOwnProperty,k={},l="1.11.1",m=function(a,b){return new m.fn.init(a,b)},n=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,o=/^-ms-/,p=/-([\da-z])/gi,q=function(a,b){return b.toUpperCase()};m.fn=m.prototype={jquery:l,constructor:m,selector:"",length:0,toArray:function(){return d.call(this)},get:function(a){return null!=a?0>a?this[a+this.length]:this[a]:d.call(this)},pushStack:function(a){var b=m.merge(this.constructor(),a);return b.prevObject=this,b.context=this.context,b},each:function(a,b){return m.each(this,a,b)},map:function(a){return this.pushStack(m.map(this,function(b,c){return a.call(b,c,b)}))},slice:function(){return this.pushStack(d.apply(this,arguments))},first:function(){return this.eq(0)},last:function(){return this.eq(-1)},eq:function(a){var b=this.length,c=+a+(0>a?b:0);return this.pushStack(c>=0&&b>c?[this[c]]:[])},end:function(){return this.prevObject||this.constructor(null)},push:f,sort:c.sort,splice:c.splice},m.extend=m.fn.extend=function(){var a,b,c,d,e,f,g=arguments[0]||{},h=1,i=arguments.length,j=!1;for("boolean"==typeof g&&(j=g,g=arguments[h]||{},h++),"object"==typeof g||m.isFunction(g)||(g={}),h===i&&(g=this,h--);i>h;h++)if(null!=(e=arguments[h]))for(d in e)a=g[d],c=e[d],g!==c&&(j&&c&&(m.isPlainObject(c)||(b=m.isArray(c)))?(b?(b=!1,f=a&&m.isArray(a)?a:[]):f=a&&m.isPlainObject(a)?a:{},g[d]=m.extend(j,f,c)):void 0!==c&&(g[d]=c));return g},m.extend({expando:"jQuery"+(l+Math.random()).replace(/\D/g,""),isReady:!0,error:function(a){throw new Error(a)},noop:function(){},isFunction:function(a){return"function"===m.type(a)},isArray:Array.isArray||function(a){return"array"===m.type(a)},isWindow:function(a){return null!=a&&a==a.window},isNumeric:function(a){return!m.isArray(a)&&a-parseFloat(a)>=0},isEmptyObject:function(a){var b;for(b in a)return!1;return!0},isPlainObject:function(a){var b;if(!a||"object"!==m.type(a)||a.nodeType||m.isWindow(a))return!1;try{if(a.constructor&&!j.call(a,"constructor")&&!j.call(a.constructor.prototype,"isPrototypeOf"))return!1}catch(c){return!1}if(k.ownLast)for(b in a)return j.call(a,b);for(b in a);return void 0===b||j.call(a,b)},type:function(a){return null==a?a+"":"object"==typeof a||"function"==typeof a?h[i.call(a)]||"object":typeof a},globalEval:function(b){b&&m.trim(b)&&(a.execScript||function(b){a.eval.call(a,b)})(b)},camelCase:function(a){return a.replace(o,"ms-").replace(p,q)},nodeName:function(a,b){return a.nodeName&&a.nodeName.toLowerCase()===b.toLowerCase()},each:function(a,b,c){var d,e=0,f=a.length,g=r(a);if(c){if(g){for(;f>e;e++)if(d=b.apply(a[e],c),d===!1)break}else for(e in a)if(d=b.apply(a[e],c),d===!1)break}else if(g){for(;f>e;e++)if(d=b.call(a[e],e,a[e]),d===!1)break}else for(e in a)if(d=b.call(a[e],e,a[e]),d===!1)break;return a},trim:function(a){return null==a?"":(a+"").replace(n,"")},makeArray:function(a,b){var c=b||[];return null!=a&&(r(Object(a))?m.merge(c,"string"==typeof a?[a]:a):f.call(c,a)),c},inArray:function(a,b,c){var d;if(b){if(g)return g.call(b,a,c);for(d=b.length,c=c?0>c?Math.max(0,d+c):c:0;d>c;c++)if(c in b&&b[c]===a)return c}return-1},merge:function(a,b){var c=+b.length,d=0,e=a.length;while(c>d)a[e++]=b[d++];if(c!==c)while(void 0!==b[d])a[e++]=b[d++];return a.length=e,a},grep:function(a,b,c){for(var d,e=[],f=0,g=a.length,h=!c;g>f;f++)d=!b(a[f],f),d!==h&&e.push(a[f]);return e},map:function(a,b,c){var d,f=0,g=a.length,h=r(a),i=[];if(h)for(;g>f;f++)d=b(a[f],f,c),null!=d&&i.push(d);else for(f in a)d=b(a[f],f,c),null!=d&&i.push(d);return e.apply([],i)},guid:1,proxy:function(a,b){var c,e,f;return"string"==typeof b&&(f=a[b],b=a,a=f),m.isFunction(a)?(c=d.call(arguments,2),e=function(){return a.apply(b||this,c.concat(d.call(arguments)))},e.guid=a.guid=a.guid||m.guid++,e):void 0},now:function(){return+new Date},support:k}),m.each("Boolean Number String Function Array Date RegExp Object Error".split(" "),function(a,b){h["[object "+b+"]"]=b.toLowerCase()});function r(a){var b=a.length,c=m.type(a);return"function"===c||m.isWindow(a)?!1:1===a.nodeType&&b?!0:"array"===c||0===b||"number"==typeof b&&b>0&&b-1 in a}var s=function(a){var b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u="sizzle"+-new Date,v=a.document,w=0,x=0,y=gb(),z=gb(),A=gb(),B=function(a,b){return a===b&&(l=!0),0},C="undefined",D=1<<31,E={}.hasOwnProperty,F=[],G=F.pop,H=F.push,I=F.push,J=F.slice,K=F.indexOf||function(a){for(var b=0,c=this.length;c>b;b++)if(this[b]===a)return b;return-1},L="checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|ismap|loop|multiple|open|readonly|required|scoped",M="[\\x20\\t\\r\\n\\f]",N="(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+",O=N.replace("w","w#"),P="\\["+M+"*("+N+")(?:"+M+"*([*^$|!~]?=)"+M+"*(?:'((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\"|("+O+"))|)"+M+"*\\]",Q=":("+N+")(?:\\((('((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\")|((?:\\\\.|[^\\\\()[\\]]|"+P+")*)|.*)\\)|)",R=new RegExp("^"+M+"+|((?:^|[^\\\\])(?:\\\\.)*)"+M+"+$","g"),S=new RegExp("^"+M+"*,"+M+"*"),T=new RegExp("^"+M+"*([>+~]|"+M+")"+M+"*"),U=new RegExp("="+M+"*([^\\]'\"]*?)"+M+"*\\]","g"),V=new RegExp(Q),W=new RegExp("^"+O+"$"),X={ID:new RegExp("^#("+N+")"),CLASS:new RegExp("^\\.("+N+")"),TAG:new RegExp("^("+N.replace("w","w*")+")"),ATTR:new RegExp("^"+P),PSEUDO:new RegExp("^"+Q),CHILD:new RegExp("^:(only|first|last|nth|nth-last)-(child|of-type)(?:\\("+M+"*(even|odd|(([+-]|)(\\d*)n|)"+M+"*(?:([+-]|)"+M+"*(\\d+)|))"+M+"*\\)|)","i"),bool:new RegExp("^(?:"+L+")$","i"),needsContext:new RegExp("^"+M+"*[>+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\\("+M+"*((?:-\\d)?\\d*)"+M+"*\\)|)(?=[^-]|$)","i")},Y=/^(?:input|select|textarea|button)$/i,Z=/^h\d$/i,$=/^[^{]+\{\s*\[native \w/,_=/^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/,ab=/[+~]/,bb=/'|\\/g,cb=new RegExp("\\\\([\\da-f]{1,6}"+M+"?|("+M+")|.)","ig"),db=function(a,b,c){var d="0x"+b-65536;return d!==d||c?b:0>d?String.fromCharCode(d+65536):String.fromCharCode(d>>10|55296,1023&d|56320)};try{I.apply(F=J.call(v.childNodes),v.childNodes),F[v.childNodes.length].nodeType}catch(eb){I={apply:F.length?function(a,b){H.apply(a,J.call(b))}:function(a,b){var c=a.length,d=0;while(a[c++]=b[d++]);a.length=c-1}}}function fb(a,b,d,e){var f,h,j,k,l,o,r,s,w,x;if((b?b.ownerDocument||b:v)!==n&&m(b),b=b||n,d=d||[],!a||"string"!=typeof a)return d;if(1!==(k=b.nodeType)&&9!==k)return[];if(p&&!e){if(f=_.exec(a))if(j=f[1]){if(9===k){if(h=b.getElementById(j),!h||!h.parentNode)return d;if(h.id===j)return d.push(h),d}else if(b.ownerDocument&&(h=b.ownerDocument.getElementById(j))&&t(b,h)&&h.id===j)return d.push(h),d}else{if(f[2])return I.apply(d,b.getElementsByTagName(a)),d;if((j=f[3])&&c.getElementsByClassName&&b.getElementsByClassName)return I.apply(d,b.getElementsByClassName(j)),d}if(c.qsa&&(!q||!q.test(a))){if(s=r=u,w=b,x=9===k&&a,1===k&&"object"!==b.nodeName.toLowerCase()){o=g(a),(r=b.getAttribute("id"))?s=r.replace(bb,"\\$&"):b.setAttribute("id",s),s="[id='"+s+"'] ",l=o.length;while(l--)o[l]=s+qb(o[l]);w=ab.test(a)&&ob(b.parentNode)||b,x=o.join(",")}if(x)try{return I.apply(d,w.querySelectorAll(x)),d}catch(y){}finally{r||b.removeAttribute("id")}}}return i(a.replace(R,"$1"),b,d,e)}function gb(){var a=[];function b(c,e){return a.push(c+" ")>d.cacheLength&&delete b[a.shift()],b[c+" "]=e}return b}function hb(a){return a[u]=!0,a}function ib(a){var b=n.createElement("div");try{return!!a(b)}catch(c){return!1}finally{b.parentNode&&b.parentNode.removeChild(b),b=null}}function jb(a,b){var c=a.split("|"),e=a.length;while(e--)d.attrHandle[c[e]]=b}function kb(a,b){var c=b&&a,d=c&&1===a.nodeType&&1===b.nodeType&&(~b.sourceIndex||D)-(~a.sourceIndex||D);if(d)return d;if(c)while(c=c.nextSibling)if(c===b)return-1;return a?1:-1}function lb(a){return function(b){var c=b.nodeName.toLowerCase();return"input"===c&&b.type===a}}function mb(a){return function(b){var c=b.nodeName.toLowerCase();return("input"===c||"button"===c)&&b.type===a}}function nb(a){return hb(function(b){return b=+b,hb(function(c,d){var e,f=a([],c.length,b),g=f.length;while(g--)c[e=f[g]]&&(c[e]=!(d[e]=c[e]))})})}function ob(a){return a&&typeof a.getElementsByTagName!==C&&a}c=fb.support={},f=fb.isXML=function(a){var b=a&&(a.ownerDocument||a).documentElement;return b?"HTML"!==b.nodeName:!1},m=fb.setDocument=function(a){var b,e=a?a.ownerDocument||a:v,g=e.defaultView;return e!==n&&9===e.nodeType&&e.documentElement?(n=e,o=e.documentElement,p=!f(e),g&&g!==g.top&&(g.addEventListener?g.addEventListener("unload",function(){m()},!1):g.attachEvent&&g.attachEvent("onunload",function(){m()})),c.attributes=ib(function(a){return a.className="i",!a.getAttribute("className")}),c.getElementsByTagName=ib(function(a){return a.appendChild(e.createComment("")),!a.getElementsByTagName("*").length}),c.getElementsByClassName=$.test(e.getElementsByClassName)&&ib(function(a){return a.innerHTML="<div class='a'></div><div class='a i'></div>",a.firstChild.className="i",2===a.getElementsByClassName("i").length}),c.getById=ib(function(a){return o.appendChild(a).id=u,!e.getElementsByName||!e.getElementsByName(u).length}),c.getById?(d.find.ID=function(a,b){if(typeof b.getElementById!==C&&p){var c=b.getElementById(a);return c&&c.parentNode?[c]:[]}},d.filter.ID=function(a){var b=a.replace(cb,db);return function(a){return a.getAttribute("id")===b}}):(delete d.find.ID,d.filter.ID=function(a){var b=a.replace(cb,db);return function(a){var c=typeof a.getAttributeNode!==C&&a.getAttributeNode("id");return c&&c.value===b}}),d.find.TAG=c.getElementsByTagName?function(a,b){return typeof b.getElementsByTagName!==C?b.getElementsByTagName(a):void 0}:function(a,b){var c,d=[],e=0,f=b.getElementsByTagName(a);if("*"===a){while(c=f[e++])1===c.nodeType&&d.push(c);return d}return f},d.find.CLASS=c.getElementsByClassName&&function(a,b){return typeof b.getElementsByClassName!==C&&p?b.getElementsByClassName(a):void 0},r=[],q=[],(c.qsa=$.test(e.querySelectorAll))&&(ib(function(a){a.innerHTML="<select msallowclip=''><option selected=''></option></select>",a.querySelectorAll("[msallowclip^='']").length&&q.push("[*^$]="+M+"*(?:''|\"\")"),a.querySelectorAll("[selected]").length||q.push("\\["+M+"*(?:value|"+L+")"),a.querySelectorAll(":checked").length||q.push(":checked")}),ib(function(a){var b=e.createElement("input");b.setAttribute("type","hidden"),a.appendChild(b).setAttribute("name","D"),a.querySelectorAll("[name=d]").length&&q.push("name"+M+"*[*^$|!~]?="),a.querySelectorAll(":enabled").length||q.push(":enabled",":disabled"),a.querySelectorAll("*,:x"),q.push(",.*:")})),(c.matchesSelector=$.test(s=o.matches||o.webkitMatchesSelector||o.mozMatchesSelector||o.oMatchesSelector||o.msMatchesSelector))&&ib(function(a){c.disconnectedMatch=s.call(a,"div"),s.call(a,"[s!='']:x"),r.push("!=",Q)}),q=q.length&&new RegExp(q.join("|")),r=r.length&&new RegExp(r.join("|")),b=$.test(o.compareDocumentPosition),t=b||$.test(o.contains)?function(a,b){var c=9===a.nodeType?a.documentElement:a,d=b&&b.parentNode;return a===d||!(!d||1!==d.nodeType||!(c.contains?c.contains(d):a.compareDocumentPosition&&16&a.compareDocumentPosition(d)))}:function(a,b){if(b)while(b=b.parentNode)if(b===a)return!0;return!1},B=b?function(a,b){if(a===b)return l=!0,0;var d=!a.compareDocumentPosition-!b.compareDocumentPosition;return d?d:(d=(a.ownerDocument||a)===(b.ownerDocument||b)?a.compareDocumentPosition(b):1,1&d||!c.sortDetached&&b.compareDocumentPosition(a)===d?a===e||a.ownerDocument===v&&t(v,a)?-1:b===e||b.ownerDocument===v&&t(v,b)?1:k?K.call(k,a)-K.call(k,b):0:4&d?-1:1)}:function(a,b){if(a===b)return l=!0,0;var c,d=0,f=a.parentNode,g=b.parentNode,h=[a],i=[b];if(!f||!g)return a===e?-1:b===e?1:f?-1:g?1:k?K.call(k,a)-K.call(k,b):0;if(f===g)return kb(a,b);c=a;while(c=c.parentNode)h.unshift(c);c=b;while(c=c.parentNode)i.unshift(c);while(h[d]===i[d])d++;return d?kb(h[d],i[d]):h[d]===v?-1:i[d]===v?1:0},e):n},fb.matches=function(a,b){return fb(a,null,null,b)},fb.matchesSelector=function(a,b){if((a.ownerDocument||a)!==n&&m(a),b=b.replace(U,"='$1']"),!(!c.matchesSelector||!p||r&&r.test(b)||q&&q.test(b)))try{var d=s.call(a,b);if(d||c.disconnectedMatch||a.document&&11!==a.document.nodeType)return d}catch(e){}return fb(b,n,null,[a]).length>0},fb.contains=function(a,b){return(a.ownerDocument||a)!==n&&m(a),t(a,b)},fb.attr=function(a,b){(a.ownerDocument||a)!==n&&m(a);var e=d.attrHandle[b.toLowerCase()],f=e&&E.call(d.attrHandle,b.toLowerCase())?e(a,b,!p):void 0;return void 0!==f?f:c.attributes||!p?a.getAttribute(b):(f=a.getAttributeNode(b))&&f.specified?f.value:null},fb.error=function(a){throw new Error("Syntax error, unrecognized expression: "+a)},fb.uniqueSort=function(a){var b,d=[],e=0,f=0;if(l=!c.detectDuplicates,k=!c.sortStable&&a.slice(0),a.sort(B),l){while(b=a[f++])b===a[f]&&(e=d.push(f));while(e--)a.splice(d[e],1)}return k=null,a},e=fb.getText=function(a){var b,c="",d=0,f=a.nodeType;if(f){if(1===f||9===f||11===f){if("string"==typeof a.textContent)return a.textContent;for(a=a.firstChild;a;a=a.nextSibling)c+=e(a)}else if(3===f||4===f)return a.nodeValue}else while(b=a[d++])c+=e(b);return c},d=fb.selectors={cacheLength:50,createPseudo:hb,match:X,attrHandle:{},find:{},relative:{">":{dir:"parentNode",first:!0}," ":{dir:"parentNode"},"+":{dir:"previousSibling",first:!0},"~":{dir:"previousSibling"}},preFilter:{ATTR:function(a){return a[1]=a[1].replace(cb,db),a[3]=(a[3]||a[4]||a[5]||"").replace(cb,db),"~="===a[2]&&(a[3]=" "+a[3]+" "),a.slice(0,4)},CHILD:function(a){return a[1]=a[1].toLowerCase(),"nth"===a[1].slice(0,3)?(a[3]||fb.error(a[0]),a[4]=+(a[4]?a[5]+(a[6]||1):2*("even"===a[3]||"odd"===a[3])),a[5]=+(a[7]+a[8]||"odd"===a[3])):a[3]&&fb.error(a[0]),a},PSEUDO:function(a){var b,c=!a[6]&&a[2];return X.CHILD.test(a[0])?null:(a[3]?a[2]=a[4]||a[5]||"":c&&V.test(c)&&(b=g(c,!0))&&(b=c.indexOf(")",c.length-b)-c.length)&&(a[0]=a[0].slice(0,b),a[2]=c.slice(0,b)),a.slice(0,3))}},filter:{TAG:function(a){var b=a.replace(cb,db).toLowerCase();return"*"===a?function(){return!0}:function(a){return a.nodeName&&a.nodeName.toLowerCase()===b}},CLASS:function(a){var b=y[a+" "];return b||(b=new RegExp("(^|"+M+")"+a+"("+M+"|$)"))&&y(a,function(a){return b.test("string"==typeof a.className&&a.className||typeof a.getAttribute!==C&&a.getAttribute("class")||"")})},ATTR:function(a,b,c){return function(d){var e=fb.attr(d,a);return null==e?"!="===b:b?(e+="","="===b?e===c:"!="===b?e!==c:"^="===b?c&&0===e.indexOf(c):"*="===b?c&&e.indexOf(c)>-1:"$="===b?c&&e.slice(-c.length)===c:"~="===b?(" "+e+" ").indexOf(c)>-1:"|="===b?e===c||e.slice(0,c.length+1)===c+"-":!1):!0}},CHILD:function(a,b,c,d,e){var f="nth"!==a.slice(0,3),g="last"!==a.slice(-4),h="of-type"===b;return 1===d&&0===e?function(a){return!!a.parentNode}:function(b,c,i){var j,k,l,m,n,o,p=f!==g?"nextSibling":"previousSibling",q=b.parentNode,r=h&&b.nodeName.toLowerCase(),s=!i&&!h;if(q){if(f){while(p){l=b;while(l=l[p])if(h?l.nodeName.toLowerCase()===r:1===l.nodeType)return!1;o=p="only"===a&&!o&&"nextSibling"}return!0}if(o=[g?q.firstChild:q.lastChild],g&&s){k=q[u]||(q[u]={}),j=k[a]||[],n=j[0]===w&&j[1],m=j[0]===w&&j[2],l=n&&q.childNodes[n];while(l=++n&&l&&l[p]||(m=n=0)||o.pop())if(1===l.nodeType&&++m&&l===b){k[a]=[w,n,m];break}}else if(s&&(j=(b[u]||(b[u]={}))[a])&&j[0]===w)m=j[1];else while(l=++n&&l&&l[p]||(m=n=0)||o.pop())if((h?l.nodeName.toLowerCase()===r:1===l.nodeType)&&++m&&(s&&((l[u]||(l[u]={}))[a]=[w,m]),l===b))break;return m-=e,m===d||m%d===0&&m/d>=0}}},PSEUDO:function(a,b){var c,e=d.pseudos[a]||d.setFilters[a.toLowerCase()]||fb.error("unsupported pseudo: "+a);return e[u]?e(b):e.length>1?(c=[a,a,"",b],d.setFilters.hasOwnProperty(a.toLowerCase())?hb(function(a,c){var d,f=e(a,b),g=f.length;while(g--)d=K.call(a,f[g]),a[d]=!(c[d]=f[g])}):function(a){return e(a,0,c)}):e}},pseudos:{not:hb(function(a){var b=[],c=[],d=h(a.replace(R,"$1"));return d[u]?hb(function(a,b,c,e){var f,g=d(a,null,e,[]),h=a.length;while(h--)(f=g[h])&&(a[h]=!(b[h]=f))}):function(a,e,f){return b[0]=a,d(b,null,f,c),!c.pop()}}),has:hb(function(a){return function(b){return fb(a,b).length>0}}),contains:hb(function(a){return function(b){return(b.textContent||b.innerText||e(b)).indexOf(a)>-1}}),lang:hb(function(a){return W.test(a||"")||fb.error("unsupported lang: "+a),a=a.replace(cb,db).toLowerCase(),function(b){var c;do if(c=p?b.lang:b.getAttribute("xml:lang")||b.getAttribute("lang"))return c=c.toLowerCase(),c===a||0===c.indexOf(a+"-");while((b=b.parentNode)&&1===b.nodeType);return!1}}),target:function(b){var c=a.location&&a.location.hash;return c&&c.slice(1)===b.id},root:function(a){return a===o},focus:function(a){return a===n.activeElement&&(!n.hasFocus||n.hasFocus())&&!!(a.type||a.href||~a.tabIndex)},enabled:function(a){return a.disabled===!1},disabled:function(a){return a.disabled===!0},checked:function(a){var b=a.nodeName.toLowerCase();return"input"===b&&!!a.checked||"option"===b&&!!a.selected},selected:function(a){return a.parentNode&&a.parentNode.selectedIndex,a.selected===!0},empty:function(a){for(a=a.firstChild;a;a=a.nextSibling)if(a.nodeType<6)return!1;return!0},parent:function(a){return!d.pseudos.empty(a)},header:function(a){return Z.test(a.nodeName)},input:function(a){return Y.test(a.nodeName)},button:function(a){var b=a.nodeName.toLowerCase();return"input"===b&&"button"===a.type||"button"===b},text:function(a){var b;return"input"===a.nodeName.toLowerCase()&&"text"===a.type&&(null==(b=a.getAttribute("type"))||"text"===b.toLowerCase())},first:nb(function(){return[0]}),last:nb(function(a,b){return[b-1]}),eq:nb(function(a,b,c){return[0>c?c+b:c]}),even:nb(function(a,b){for(var c=0;b>c;c+=2)a.push(c);return a}),odd:nb(function(a,b){for(var c=1;b>c;c+=2)a.push(c);return a}),lt:nb(function(a,b,c){for(var d=0>c?c+b:c;--d>=0;)a.push(d);return a}),gt:nb(function(a,b,c){for(var d=0>c?c+b:c;++d<b;)a.push(d);return a})}},d.pseudos.nth=d.pseudos.eq;for(b in{radio:!0,checkbox:!0,file:!0,password:!0,image:!0})d.pseudos[b]=lb(b);for(b in{submit:!0,reset:!0})d.pseudos[b]=mb(b);function pb(){}pb.prototype=d.filters=d.pseudos,d.setFilters=new pb,g=fb.tokenize=function(a,b){var c,e,f,g,h,i,j,k=z[a+" "];if(k)return b?0:k.slice(0);h=a,i=[],j=d.preFilter;while(h){(!c||(e=S.exec(h)))&&(e&&(h=h.slice(e[0].length)||h),i.push(f=[])),c=!1,(e=T.exec(h))&&(c=e.shift(),f.push({value:c,type:e[0].replace(R," ")}),h=h.slice(c.length));for(g in d.filter)!(e=X[g].exec(h))||j[g]&&!(e=j[g](e))||(c=e.shift(),f.push({value:c,type:g,matches:e}),h=h.slice(c.length));if(!c)break}return b?h.length:h?fb.error(a):z(a,i).slice(0)};function qb(a){for(var b=0,c=a.length,d="";c>b;b++)d+=a[b].value;return d}function rb(a,b,c){var d=b.dir,e=c&&"parentNode"===d,f=x++;return b.first?function(b,c,f){while(b=b[d])if(1===b.nodeType||e)return a(b,c,f)}:function(b,c,g){var h,i,j=[w,f];if(g){while(b=b[d])if((1===b.nodeType||e)&&a(b,c,g))return!0}else while(b=b[d])if(1===b.nodeType||e){if(i=b[u]||(b[u]={}),(h=i[d])&&h[0]===w&&h[1]===f)return j[2]=h[2];if(i[d]=j,j[2]=a(b,c,g))return!0}}}function sb(a){return a.length>1?function(b,c,d){var e=a.length;while(e--)if(!a[e](b,c,d))return!1;return!0}:a[0]}function tb(a,b,c){for(var d=0,e=b.length;e>d;d++)fb(a,b[d],c);return c}function ub(a,b,c,d,e){for(var f,g=[],h=0,i=a.length,j=null!=b;i>h;h++)(f=a[h])&&(!c||c(f,d,e))&&(g.push(f),j&&b.push(h));return g}function vb(a,b,c,d,e,f){return d&&!d[u]&&(d=vb(d)),e&&!e[u]&&(e=vb(e,f)),hb(function(f,g,h,i){var j,k,l,m=[],n=[],o=g.length,p=f||tb(b||"*",h.nodeType?[h]:h,[]),q=!a||!f&&b?p:ub(p,m,a,h,i),r=c?e||(f?a:o||d)?[]:g:q;if(c&&c(q,r,h,i),d){j=ub(r,n),d(j,[],h,i),k=j.length;while(k--)(l=j[k])&&(r[n[k]]=!(q[n[k]]=l))}if(f){if(e||a){if(e){j=[],k=r.length;while(k--)(l=r[k])&&j.push(q[k]=l);e(null,r=[],j,i)}k=r.length;while(k--)(l=r[k])&&(j=e?K.call(f,l):m[k])>-1&&(f[j]=!(g[j]=l))}}else r=ub(r===g?r.splice(o,r.length):r),e?e(null,g,r,i):I.apply(g,r)})}function wb(a){for(var b,c,e,f=a.length,g=d.relative[a[0].type],h=g||d.relative[" "],i=g?1:0,k=rb(function(a){return a===b},h,!0),l=rb(function(a){return K.call(b,a)>-1},h,!0),m=[function(a,c,d){return!g&&(d||c!==j)||((b=c).nodeType?k(a,c,d):l(a,c,d))}];f>i;i++)if(c=d.relative[a[i].type])m=[rb(sb(m),c)];else{if(c=d.filter[a[i].type].apply(null,a[i].matches),c[u]){for(e=++i;f>e;e++)if(d.relative[a[e].type])break;return vb(i>1&&sb(m),i>1&&qb(a.slice(0,i-1).concat({value:" "===a[i-2].type?"*":""})).replace(R,"$1"),c,e>i&&wb(a.slice(i,e)),f>e&&wb(a=a.slice(e)),f>e&&qb(a))}m.push(c)}return sb(m)}function xb(a,b){var c=b.length>0,e=a.length>0,f=function(f,g,h,i,k){var l,m,o,p=0,q="0",r=f&&[],s=[],t=j,u=f||e&&d.find.TAG("*",k),v=w+=null==t?1:Math.random()||.1,x=u.length;for(k&&(j=g!==n&&g);q!==x&&null!=(l=u[q]);q++){if(e&&l){m=0;while(o=a[m++])if(o(l,g,h)){i.push(l);break}k&&(w=v)}c&&((l=!o&&l)&&p--,f&&r.push(l))}if(p+=q,c&&q!==p){m=0;while(o=b[m++])o(r,s,g,h);if(f){if(p>0)while(q--)r[q]||s[q]||(s[q]=G.call(i));s=ub(s)}I.apply(i,s),k&&!f&&s.length>0&&p+b.length>1&&fb.uniqueSort(i)}return k&&(w=v,j=t),r};return c?hb(f):f}return h=fb.compile=function(a,b){var c,d=[],e=[],f=A[a+" "];if(!f){b||(b=g(a)),c=b.length;while(c--)f=wb(b[c]),f[u]?d.push(f):e.push(f);f=A(a,xb(e,d)),f.selector=a}return f},i=fb.select=function(a,b,e,f){var i,j,k,l,m,n="function"==typeof a&&a,o=!f&&g(a=n.selector||a);if(e=e||[],1===o.length){if(j=o[0]=o[0].slice(0),j.length>2&&"ID"===(k=j[0]).type&&c.getById&&9===b.nodeType&&p&&d.relative[j[1].type]){if(b=(d.find.ID(k.matches[0].replace(cb,db),b)||[])[0],!b)return e;n&&(b=b.parentNode),a=a.slice(j.shift().value.length)}i=X.needsContext.test(a)?0:j.length;while(i--){if(k=j[i],d.relative[l=k.type])break;if((m=d.find[l])&&(f=m(k.matches[0].replace(cb,db),ab.test(j[0].type)&&ob(b.parentNode)||b))){if(j.splice(i,1),a=f.length&&qb(j),!a)return I.apply(e,f),e;break}}}return(n||h(a,o))(f,b,!p,e,ab.test(a)&&ob(b.parentNode)||b),e},c.sortStable=u.split("").sort(B).join("")===u,c.detectDuplicates=!!l,m(),c.sortDetached=ib(function(a){return 1&a.compareDocumentPosition(n.createElement("div"))}),ib(function(a){return a.innerHTML="<a href='#'></a>","#"===a.firstChild.getAttribute("href")})||jb("type|href|height|width",function(a,b,c){return c?void 0:a.getAttribute(b,"type"===b.toLowerCase()?1:2)}),c.attributes&&ib(function(a){return a.innerHTML="<input/>",a.firstChild.setAttribute("value",""),""===a.firstChild.getAttribute("value")})||jb("value",function(a,b,c){return c||"input"!==a.nodeName.toLowerCase()?void 0:a.defaultValue}),ib(function(a){return null==a.getAttribute("disabled")})||jb(L,function(a,b,c){var d;return c?void 0:a[b]===!0?b.toLowerCase():(d=a.getAttributeNode(b))&&d.specified?d.value:null}),fb}(a);m.find=s,m.expr=s.selectors,m.expr[":"]=m.expr.pseudos,m.unique=s.uniqueSort,m.text=s.getText,m.isXMLDoc=s.isXML,m.contains=s.contains;var t=m.expr.match.needsContext,u=/^<(\w+)\s*\/?>(?:<\/\1>|)$/,v=/^.[^:#\[\.,]*$/;function w(a,b,c){if(m.isFunction(b))return m.grep(a,function(a,d){return!!b.call(a,d,a)!==c});if(b.nodeType)return m.grep(a,function(a){return a===b!==c});if("string"==typeof b){if(v.test(b))return m.filter(b,a,c);b=m.filter(b,a)}return m.grep(a,function(a){return m.inArray(a,b)>=0!==c})}m.filter=function(a,b,c){var d=b[0];return c&&(a=":not("+a+")"),1===b.length&&1===d.nodeType?m.find.matchesSelector(d,a)?[d]:[]:m.find.matches(a,m.grep(b,function(a){return 1===a.nodeType}))},m.fn.extend({find:function(a){var b,c=[],d=this,e=d.length;if("string"!=typeof a)return this.pushStack(m(a).filter(function(){for(b=0;e>b;b++)if(m.contains(d[b],this))return!0}));for(b=0;e>b;b++)m.find(a,d[b],c);return c=this.pushStack(e>1?m.unique(c):c),c.selector=this.selector?this.selector+" "+a:a,c},filter:function(a){return this.pushStack(w(this,a||[],!1))},not:function(a){return this.pushStack(w(this,a||[],!0))},is:function(a){return!!w(this,"string"==typeof a&&t.test(a)?m(a):a||[],!1).length}});var x,y=a.document,z=/^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]*))$/,A=m.fn.init=function(a,b){var c,d;if(!a)return this;if("string"==typeof a){if(c="<"===a.charAt(0)&&">"===a.charAt(a.length-1)&&a.length>=3?[null,a,null]:z.exec(a),!c||!c[1]&&b)return!b||b.jquery?(b||x).find(a):this.constructor(b).find(a);if(c[1]){if(b=b instanceof m?b[0]:b,m.merge(this,m.parseHTML(c[1],b&&b.nodeType?b.ownerDocument||b:y,!0)),u.test(c[1])&&m.isPlainObject(b))for(c in b)m.isFunction(this[c])?this[c](b[c]):this.attr(c,b[c]);return this}if(d=y.getElementById(c[2]),d&&d.parentNode){if(d.id!==c[2])return x.find(a);this.length=1,this[0]=d}return this.context=y,this.selector=a,this}return a.nodeType?(this.context=this[0]=a,this.length=1,this):m.isFunction(a)?"undefined"!=typeof x.ready?x.ready(a):a(m):(void 0!==a.selector&&(this.selector=a.selector,this.context=a.context),m.makeArray(a,this))};A.prototype=m.fn,x=m(y);var B=/^(?:parents|prev(?:Until|All))/,C={children:!0,contents:!0,next:!0,prev:!0};m.extend({dir:function(a,b,c){var d=[],e=a[b];while(e&&9!==e.nodeType&&(void 0===c||1!==e.nodeType||!m(e).is(c)))1===e.nodeType&&d.push(e),e=e[b];return d},sibling:function(a,b){for(var c=[];a;a=a.nextSibling)1===a.nodeType&&a!==b&&c.push(a);return c}}),m.fn.extend({has:function(a){var b,c=m(a,this),d=c.length;return this.filter(function(){for(b=0;d>b;b++)if(m.contains(this,c[b]))return!0})},closest:function(a,b){for(var c,d=0,e=this.length,f=[],g=t.test(a)||"string"!=typeof a?m(a,b||this.context):0;e>d;d++)for(c=this[d];c&&c!==b;c=c.parentNode)if(c.nodeType<11&&(g?g.index(c)>-1:1===c.nodeType&&m.find.matchesSelector(c,a))){f.push(c);break}return this.pushStack(f.length>1?m.unique(f):f)},index:function(a){return a?"string"==typeof a?m.inArray(this[0],m(a)):m.inArray(a.jquery?a[0]:a,this):this[0]&&this[0].parentNode?this.first().prevAll().length:-1},add:function(a,b){return this.pushStack(m.unique(m.merge(this.get(),m(a,b))))},addBack:function(a){return this.add(null==a?this.prevObject:this.prevObject.filter(a))}});function D(a,b){do a=a[b];while(a&&1!==a.nodeType);return a}m.each({parent:function(a){var b=a.parentNode;return b&&11!==b.nodeType?b:null},parents:function(a){return m.dir(a,"parentNode")},parentsUntil:function(a,b,c){return m.dir(a,"parentNode",c)},next:function(a){return D(a,"nextSibling")},prev:function(a){return D(a,"previousSibling")},nextAll:function(a){return m.dir(a,"nextSibling")},prevAll:function(a){return m.dir(a,"previousSibling")},nextUntil:function(a,b,c){return m.dir(a,"nextSibling",c)},prevUntil:function(a,b,c){return m.dir(a,"previousSibling",c)},siblings:function(a){return m.sibling((a.parentNode||{}).firstChild,a)},children:function(a){return m.sibling(a.firstChild)},contents:function(a){return m.nodeName(a,"iframe")?a.contentDocument||a.contentWindow.document:m.merge([],a.childNodes)}},function(a,b){m.fn[a]=function(c,d){var e=m.map(this,b,c);return"Until"!==a.slice(-5)&&(d=c),d&&"string"==typeof d&&(e=m.filter(d,e)),this.length>1&&(C[a]||(e=m.unique(e)),B.test(a)&&(e=e.reverse())),this.pushStack(e)}});var E=/\S+/g,F={};function G(a){var b=F[a]={};return m.each(a.match(E)||[],function(a,c){b[c]=!0}),b}m.Callbacks=function(a){a="string"==typeof a?F[a]||G(a):m.extend({},a);var b,c,d,e,f,g,h=[],i=!a.once&&[],j=function(l){for(c=a.memory&&l,d=!0,f=g||0,g=0,e=h.length,b=!0;h&&e>f;f++)if(h[f].apply(l[0],l[1])===!1&&a.stopOnFalse){c=!1;break}b=!1,h&&(i?i.length&&j(i.shift()):c?h=[]:k.disable())},k={add:function(){if(h){var d=h.length;!function f(b){m.each(b,function(b,c){var d=m.type(c);"function"===d?a.unique&&k.has(c)||h.push(c):c&&c.length&&"string"!==d&&f(c)})}(arguments),b?e=h.length:c&&(g=d,j(c))}return this},remove:function(){return h&&m.each(arguments,function(a,c){var d;while((d=m.inArray(c,h,d))>-1)h.splice(d,1),b&&(e>=d&&e--,f>=d&&f--)}),this},has:function(a){return a?m.inArray(a,h)>-1:!(!h||!h.length)},empty:function(){return h=[],e=0,this},disable:function(){return h=i=c=void 0,this},disabled:function(){return!h},lock:function(){return i=void 0,c||k.disable(),this},locked:function(){return!i},fireWith:function(a,c){return!h||d&&!i||(c=c||[],c=[a,c.slice?c.slice():c],b?i.push(c):j(c)),this},fire:function(){return k.fireWith(this,arguments),this},fired:function(){return!!d}};return k},m.extend({Deferred:function(a){var b=[["resolve","done",m.Callbacks("once memory"),"resolved"],["reject","fail",m.Callbacks("once memory"),"rejected"],["notify","progress",m.Callbacks("memory")]],c="pending",d={state:function(){return c},always:function(){return e.done(arguments).fail(arguments),this},then:function(){var a=arguments;return m.Deferred(function(c){m.each(b,function(b,f){var g=m.isFunction(a[b])&&a[b];e[f[1]](function(){var a=g&&g.apply(this,arguments);a&&m.isFunction(a.promise)?a.promise().done(c.resolve).fail(c.reject).progress(c.notify):c[f[0]+"With"](this===d?c.promise():this,g?[a]:arguments)})}),a=null}).promise()},promise:function(a){return null!=a?m.extend(a,d):d}},e={};return d.pipe=d.then,m.each(b,function(a,f){var g=f[2],h=f[3];d[f[1]]=g.add,h&&g.add(function(){c=h},b[1^a][2].disable,b[2][2].lock),e[f[0]]=function(){return e[f[0]+"With"](this===e?d:this,arguments),this},e[f[0]+"With"]=g.fireWith}),d.promise(e),a&&a.call(e,e),e},when:function(a){var b=0,c=d.call(arguments),e=c.length,f=1!==e||a&&m.isFunction(a.promise)?e:0,g=1===f?a:m.Deferred(),h=function(a,b,c){return function(e){b[a]=this,c[a]=arguments.length>1?d.call(arguments):e,c===i?g.notifyWith(b,c):--f||g.resolveWith(b,c)}},i,j,k;if(e>1)for(i=new Array(e),j=new Array(e),k=new Array(e);e>b;b++)c[b]&&m.isFunction(c[b].promise)?c[b].promise().done(h(b,k,c)).fail(g.reject).progress(h(b,j,i)):--f;return f||g.resolveWith(k,c),g.promise()}});var H;m.fn.ready=function(a){return m.ready.promise().done(a),this},m.extend({isReady:!1,readyWait:1,holdReady:function(a){a?m.readyWait++:m.ready(!0)},ready:function(a){if(a===!0?!--m.readyWait:!m.isReady){if(!y.body)return setTimeout(m.ready);m.isReady=!0,a!==!0&&--m.readyWait>0||(H.resolveWith(y,[m]),m.fn.triggerHandler&&(m(y).triggerHandler("ready"),m(y).off("ready")))}}});function I(){y.addEventListener?(y.removeEventListener("DOMContentLoaded",J,!1),a.removeEventListener("load",J,!1)):(y.detachEvent("onreadystatechange",J),a.detachEvent("onload",J))}function J(){(y.addEventListener||"load"===event.type||"complete"===y.readyState)&&(I(),m.ready())}m.ready.promise=function(b){if(!H)if(H=m.Deferred(),"complete"===y.readyState)setTimeout(m.ready);else if(y.addEventListener)y.addEventListener("DOMContentLoaded",J,!1),a.addEventListener("load",J,!1);else{y.attachEvent("onreadystatechange",J),a.attachEvent("onload",J);var c=!1;try{c=null==a.frameElement&&y.documentElement}catch(d){}c&&c.doScroll&&!function e(){if(!m.isReady){try{c.doScroll("left")}catch(a){return setTimeout(e,50)}I(),m.ready()}}()}return H.promise(b)};var K="undefined",L;for(L in m(k))break;k.ownLast="0"!==L,k.inlineBlockNeedsLayout=!1,m(function(){var a,b,c,d;c=y.getElementsByTagName("body")[0],c&&c.style&&(b=y.createElement("div"),d=y.createElement("div"),d.style.cssText="position:absolute;border:0;width:0;height:0;top:0;left:-9999px",c.appendChild(d).appendChild(b),typeof b.style.zoom!==K&&(b.style.cssText="display:inline;margin:0;border:0;padding:1px;width:1px;zoom:1",k.inlineBlockNeedsLayout=a=3===b.offsetWidth,a&&(c.style.zoom=1)),c.removeChild(d))}),function(){var a=y.createElement("div");if(null==k.deleteExpando){k.deleteExpando=!0;try{delete a.test}catch(b){k.deleteExpando=!1}}a=null}(),m.acceptData=function(a){var b=m.noData[(a.nodeName+" ").toLowerCase()],c=+a.nodeType||1;return 1!==c&&9!==c?!1:!b||b!==!0&&a.getAttribute("classid")===b};var M=/^(?:\{[\w\W]*\}|\[[\w\W]*\])$/,N=/([A-Z])/g;function O(a,b,c){if(void 0===c&&1===a.nodeType){var d="data-"+b.replace(N,"-$1").toLowerCase();if(c=a.getAttribute(d),"string"==typeof c){try{c="true"===c?!0:"false"===c?!1:"null"===c?null:+c+""===c?+c:M.test(c)?m.parseJSON(c):c}catch(e){}m.data(a,b,c)}else c=void 0}return c}function P(a){var b;for(b in a)if(("data"!==b||!m.isEmptyObject(a[b]))&&"toJSON"!==b)return!1;return!0}function Q(a,b,d,e){if(m.acceptData(a)){var f,g,h=m.expando,i=a.nodeType,j=i?m.cache:a,k=i?a[h]:a[h]&&h;
 if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c.pop()||m.guid++:h),j[k]||(j[k]=i?{}:{toJSON:m.noop}),("object"==typeof b||"function"==typeof b)&&(e?j[k]=m.extend(j[k],b):j[k].data=m.extend(j[k].data,b)),g=j[k],e||(g.data||(g.data={}),g=g.data),void 0!==d&&(g[m.camelCase(b)]=d),"string"==typeof b?(f=g[b],null==f&&(f=g[m.camelCase(b)])):f=g,f}}function R(a,b,c){if(m.acceptData(a)){var d,e,f=a.nodeType,g=f?m.cache:a,h=f?a[m.expando]:m.expando;if(g[h]){if(b&&(d=c?g[h]:g[h].data)){m.isArray(b)?b=b.concat(m.map(b,m.camelCase)):b in d?b=[b]:(b=m.camelCase(b),b=b in d?[b]:b.split(" ")),e=b.length;while(e--)delete d[b[e]];if(c?!P(d):!m.isEmptyObject(d))return}(c||(delete g[h].data,P(g[h])))&&(f?m.cleanData([a],!0):k.deleteExpando||g!=g.window?delete g[h]:g[h]=null)}}}m.extend({cache:{},noData:{"applet ":!0,"embed ":!0,"object ":"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"},hasData:function(a){return a=a.nodeType?m.cache[a[m.expando]]:a[m.expando],!!a&&!P(a)},data:function(a,b,c){return Q(a,b,c)},removeData:function(a,b){return R(a,b)},_data:function(a,b,c){return Q(a,b,c,!0)},_removeData:function(a,b){return R(a,b,!0)}}),m.fn.extend({data:function(a,b){var c,d,e,f=this[0],g=f&&f.attributes;if(void 0===a){if(this.length&&(e=m.data(f),1===f.nodeType&&!m._data(f,"parsedAttrs"))){c=g.length;while(c--)g[c]&&(d=g[c].name,0===d.indexOf("data-")&&(d=m.camelCase(d.slice(5)),O(f,d,e[d])));m._data(f,"parsedAttrs",!0)}return e}return"object"==typeof a?this.each(function(){m.data(this,a)}):arguments.length>1?this.each(function(){m.data(this,a,b)}):f?O(f,a,m.data(f,a)):void 0},removeData:function(a){return this.each(function(){m.removeData(this,a)})}}),m.extend({queue:function(a,b,c){var d;return a?(b=(b||"fx")+"queue",d=m._data(a,b),c&&(!d||m.isArray(c)?d=m._data(a,b,m.makeArray(c)):d.push(c)),d||[]):void 0},dequeue:function(a,b){b=b||"fx";var c=m.queue(a,b),d=c.length,e=c.shift(),f=m._queueHooks(a,b),g=function(){m.dequeue(a,b)};"inprogress"===e&&(e=c.shift(),d--),e&&("fx"===b&&c.unshift("inprogress"),delete f.stop,e.call(a,g,f)),!d&&f&&f.empty.fire()},_queueHooks:function(a,b){var c=b+"queueHooks";return m._data(a,c)||m._data(a,c,{empty:m.Callbacks("once memory").add(function(){m._removeData(a,b+"queue"),m._removeData(a,c)})})}}),m.fn.extend({queue:function(a,b){var c=2;return"string"!=typeof a&&(b=a,a="fx",c--),arguments.length<c?m.queue(this[0],a):void 0===b?this:this.each(function(){var c=m.queue(this,a,b);m._queueHooks(this,a),"fx"===a&&"inprogress"!==c[0]&&m.dequeue(this,a)})},dequeue:function(a){return this.each(function(){m.dequeue(this,a)})},clearQueue:function(a){return this.queue(a||"fx",[])},promise:function(a,b){var c,d=1,e=m.Deferred(),f=this,g=this.length,h=function(){--d||e.resolveWith(f,[f])};"string"!=typeof a&&(b=a,a=void 0),a=a||"fx";while(g--)c=m._data(f[g],a+"queueHooks"),c&&c.empty&&(d++,c.empty.add(h));return h(),e.promise(b)}});var S=/[+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|)/.source,T=["Top","Right","Bottom","Left"],U=function(a,b){return a=b||a,"none"===m.css(a,"display")||!m.contains(a.ownerDocument,a)},V=m.access=function(a,b,c,d,e,f,g){var h=0,i=a.length,j=null==c;if("object"===m.type(c)){e=!0;for(h in c)m.access(a,b,h,c[h],!0,f,g)}else if(void 0!==d&&(e=!0,m.isFunction(d)||(g=!0),j&&(g?(b.call(a,d),b=null):(j=b,b=function(a,b,c){return j.call(m(a),c)})),b))for(;i>h;h++)b(a[h],c,g?d:d.call(a[h],h,b(a[h],c)));return e?a:j?b.call(a):i?b(a[0],c):f},W=/^(?:checkbox|radio)$/i;!function(){var a=y.createElement("input"),b=y.createElement("div"),c=y.createDocumentFragment();if(b.innerHTML="  <link/><table></table><a href='/a'>a</a><input type='checkbox'/>",k.leadingWhitespace=3===b.firstChild.nodeType,k.tbody=!b.getElementsByTagName("tbody").length,k.htmlSerialize=!!b.getElementsByTagName("link").length,k.html5Clone="<:nav></:nav>"!==y.createElement("nav").cloneNode(!0).outerHTML,a.type="checkbox",a.checked=!0,c.appendChild(a),k.appendChecked=a.checked,b.innerHTML="<textarea>x</textarea>",k.noCloneChecked=!!b.cloneNode(!0).lastChild.defaultValue,c.appendChild(b),b.innerHTML="<input type='radio' checked='checked' name='t'/>",k.checkClone=b.cloneNode(!0).cloneNode(!0).lastChild.checked,k.noCloneEvent=!0,b.attachEvent&&(b.attachEvent("onclick",function(){k.noCloneEvent=!1}),b.cloneNode(!0).click()),null==k.deleteExpando){k.deleteExpando=!0;try{delete b.test}catch(d){k.deleteExpando=!1}}}(),function(){var b,c,d=y.createElement("div");for(b in{submit:!0,change:!0,focusin:!0})c="on"+b,(k[b+"Bubbles"]=c in a)||(d.setAttribute(c,"t"),k[b+"Bubbles"]=d.attributes[c].expando===!1);d=null}();var X=/^(?:input|select|textarea)$/i,Y=/^key/,Z=/^(?:mouse|pointer|contextmenu)|click/,$=/^(?:focusinfocus|focusoutblur)$/,_=/^([^.]*)(?:\.(.+)|)$/;function ab(){return!0}function bb(){return!1}function cb(){try{return y.activeElement}catch(a){}}m.event={global:{},add:function(a,b,c,d,e){var f,g,h,i,j,k,l,n,o,p,q,r=m._data(a);if(r){c.handler&&(i=c,c=i.handler,e=i.selector),c.guid||(c.guid=m.guid++),(g=r.events)||(g=r.events={}),(k=r.handle)||(k=r.handle=function(a){return typeof m===K||a&&m.event.triggered===a.type?void 0:m.event.dispatch.apply(k.elem,arguments)},k.elem=a),b=(b||"").match(E)||[""],h=b.length;while(h--)f=_.exec(b[h])||[],o=q=f[1],p=(f[2]||"").split(".").sort(),o&&(j=m.event.special[o]||{},o=(e?j.delegateType:j.bindType)||o,j=m.event.special[o]||{},l=m.extend({type:o,origType:q,data:d,handler:c,guid:c.guid,selector:e,needsContext:e&&m.expr.match.needsContext.test(e),namespace:p.join(".")},i),(n=g[o])||(n=g[o]=[],n.delegateCount=0,j.setup&&j.setup.call(a,d,p,k)!==!1||(a.addEventListener?a.addEventListener(o,k,!1):a.attachEvent&&a.attachEvent("on"+o,k))),j.add&&(j.add.call(a,l),l.handler.guid||(l.handler.guid=c.guid)),e?n.splice(n.delegateCount++,0,l):n.push(l),m.event.global[o]=!0);a=null}},remove:function(a,b,c,d,e){var f,g,h,i,j,k,l,n,o,p,q,r=m.hasData(a)&&m._data(a);if(r&&(k=r.events)){b=(b||"").match(E)||[""],j=b.length;while(j--)if(h=_.exec(b[j])||[],o=q=h[1],p=(h[2]||"").split(".").sort(),o){l=m.event.special[o]||{},o=(d?l.delegateType:l.bindType)||o,n=k[o]||[],h=h[2]&&new RegExp("(^|\\.)"+p.join("\\.(?:.*\\.|)")+"(\\.|$)"),i=f=n.length;while(f--)g=n[f],!e&&q!==g.origType||c&&c.guid!==g.guid||h&&!h.test(g.namespace)||d&&d!==g.selector&&("**"!==d||!g.selector)||(n.splice(f,1),g.selector&&n.delegateCount--,l.remove&&l.remove.call(a,g));i&&!n.length&&(l.teardown&&l.teardown.call(a,p,r.handle)!==!1||m.removeEvent(a,o,r.handle),delete k[o])}else for(o in k)m.event.remove(a,o+b[j],c,d,!0);m.isEmptyObject(k)&&(delete r.handle,m._removeData(a,"events"))}},trigger:function(b,c,d,e){var f,g,h,i,k,l,n,o=[d||y],p=j.call(b,"type")?b.type:b,q=j.call(b,"namespace")?b.namespace.split("."):[];if(h=l=d=d||y,3!==d.nodeType&&8!==d.nodeType&&!$.test(p+m.event.triggered)&&(p.indexOf(".")>=0&&(q=p.split("."),p=q.shift(),q.sort()),g=p.indexOf(":")<0&&"on"+p,b=b[m.expando]?b:new m.Event(p,"object"==typeof b&&b),b.isTrigger=e?2:3,b.namespace=q.join("."),b.namespace_re=b.namespace?new RegExp("(^|\\.)"+q.join("\\.(?:.*\\.|)")+"(\\.|$)"):null,b.result=void 0,b.target||(b.target=d),c=null==c?[b]:m.makeArray(c,[b]),k=m.event.special[p]||{},e||!k.trigger||k.trigger.apply(d,c)!==!1)){if(!e&&!k.noBubble&&!m.isWindow(d)){for(i=k.delegateType||p,$.test(i+p)||(h=h.parentNode);h;h=h.parentNode)o.push(h),l=h;l===(d.ownerDocument||y)&&o.push(l.defaultView||l.parentWindow||a)}n=0;while((h=o[n++])&&!b.isPropagationStopped())b.type=n>1?i:k.bindType||p,f=(m._data(h,"events")||{})[b.type]&&m._data(h,"handle"),f&&f.apply(h,c),f=g&&h[g],f&&f.apply&&m.acceptData(h)&&(b.result=f.apply(h,c),b.result===!1&&b.preventDefault());if(b.type=p,!e&&!b.isDefaultPrevented()&&(!k._default||k._default.apply(o.pop(),c)===!1)&&m.acceptData(d)&&g&&d[p]&&!m.isWindow(d)){l=d[g],l&&(d[g]=null),m.event.triggered=p;try{d[p]()}catch(r){}m.event.triggered=void 0,l&&(d[g]=l)}return b.result}},dispatch:function(a){a=m.event.fix(a);var b,c,e,f,g,h=[],i=d.call(arguments),j=(m._data(this,"events")||{})[a.type]||[],k=m.event.special[a.type]||{};if(i[0]=a,a.delegateTarget=this,!k.preDispatch||k.preDispatch.call(this,a)!==!1){h=m.event.handlers.call(this,a,j),b=0;while((f=h[b++])&&!a.isPropagationStopped()){a.currentTarget=f.elem,g=0;while((e=f.handlers[g++])&&!a.isImmediatePropagationStopped())(!a.namespace_re||a.namespace_re.test(e.namespace))&&(a.handleObj=e,a.data=e.data,c=((m.event.special[e.origType]||{}).handle||e.handler).apply(f.elem,i),void 0!==c&&(a.result=c)===!1&&(a.preventDefault(),a.stopPropagation()))}return k.postDispatch&&k.postDispatch.call(this,a),a.result}},handlers:function(a,b){var c,d,e,f,g=[],h=b.delegateCount,i=a.target;if(h&&i.nodeType&&(!a.button||"click"!==a.type))for(;i!=this;i=i.parentNode||this)if(1===i.nodeType&&(i.disabled!==!0||"click"!==a.type)){for(e=[],f=0;h>f;f++)d=b[f],c=d.selector+" ",void 0===e[c]&&(e[c]=d.needsContext?m(c,this).index(i)>=0:m.find(c,this,null,[i]).length),e[c]&&e.push(d);e.length&&g.push({elem:i,handlers:e})}return h<b.length&&g.push({elem:this,handlers:b.slice(h)}),g},fix:function(a){if(a[m.expando])return a;var b,c,d,e=a.type,f=a,g=this.fixHooks[e];g||(this.fixHooks[e]=g=Z.test(e)?this.mouseHooks:Y.test(e)?this.keyHooks:{}),d=g.props?this.props.concat(g.props):this.props,a=new m.Event(f),b=d.length;while(b--)c=d[b],a[c]=f[c];return a.target||(a.target=f.srcElement||y),3===a.target.nodeType&&(a.target=a.target.parentNode),a.metaKey=!!a.metaKey,g.filter?g.filter(a,f):a},props:"altKey bubbles cancelable ctrlKey currentTarget eventPhase metaKey relatedTarget shiftKey target timeStamp view which".split(" "),fixHooks:{},keyHooks:{props:"char charCode key keyCode".split(" "),filter:function(a,b){return null==a.which&&(a.which=null!=b.charCode?b.charCode:b.keyCode),a}},mouseHooks:{props:"button buttons clientX clientY fromElement offsetX offsetY pageX pageY screenX screenY toElement".split(" "),filter:function(a,b){var c,d,e,f=b.button,g=b.fromElement;return null==a.pageX&&null!=b.clientX&&(d=a.target.ownerDocument||y,e=d.documentElement,c=d.body,a.pageX=b.clientX+(e&&e.scrollLeft||c&&c.scrollLeft||0)-(e&&e.clientLeft||c&&c.clientLeft||0),a.pageY=b.clientY+(e&&e.scrollTop||c&&c.scrollTop||0)-(e&&e.clientTop||c&&c.clientTop||0)),!a.relatedTarget&&g&&(a.relatedTarget=g===a.target?b.toElement:g),a.which||void 0===f||(a.which=1&f?1:2&f?3:4&f?2:0),a}},special:{load:{noBubble:!0},focus:{trigger:function(){if(this!==cb()&&this.focus)try{return this.focus(),!1}catch(a){}},delegateType:"focusin"},blur:{trigger:function(){return this===cb()&&this.blur?(this.blur(),!1):void 0},delegateType:"focusout"},click:{trigger:function(){return m.nodeName(this,"input")&&"checkbox"===this.type&&this.click?(this.click(),!1):void 0},_default:function(a){return m.nodeName(a.target,"a")}},beforeunload:{postDispatch:function(a){void 0!==a.result&&a.originalEvent&&(a.originalEvent.returnValue=a.result)}}},simulate:function(a,b,c,d){var e=m.extend(new m.Event,c,{type:a,isSimulated:!0,originalEvent:{}});d?m.event.trigger(e,null,b):m.event.dispatch.call(b,e),e.isDefaultPrevented()&&c.preventDefault()}},m.removeEvent=y.removeEventListener?function(a,b,c){a.removeEventListener&&a.removeEventListener(b,c,!1)}:function(a,b,c){var d="on"+b;a.detachEvent&&(typeof a[d]===K&&(a[d]=null),a.detachEvent(d,c))},m.Event=function(a,b){return this instanceof m.Event?(a&&a.type?(this.originalEvent=a,this.type=a.type,this.isDefaultPrevented=a.defaultPrevented||void 0===a.defaultPrevented&&a.returnValue===!1?ab:bb):this.type=a,b&&m.extend(this,b),this.timeStamp=a&&a.timeStamp||m.now(),void(this[m.expando]=!0)):new m.Event(a,b)},m.Event.prototype={isDefaultPrevented:bb,isPropagationStopped:bb,isImmediatePropagationStopped:bb,preventDefault:function(){var a=this.originalEvent;this.isDefaultPrevented=ab,a&&(a.preventDefault?a.preventDefault():a.returnValue=!1)},stopPropagation:function(){var a=this.originalEvent;this.isPropagationStopped=ab,a&&(a.stopPropagation&&a.stopPropagation(),a.cancelBubble=!0)},stopImmediatePropagation:function(){var a=this.originalEvent;this.isImmediatePropagationStopped=ab,a&&a.stopImmediatePropagation&&a.stopImmediatePropagation(),this.stopPropagation()}},m.each({mouseenter:"mouseover",mouseleave:"mouseout",pointerenter:"pointerover",pointerleave:"pointerout"},function(a,b){m.event.special[a]={delegateType:b,bindType:b,handle:function(a){var c,d=this,e=a.relatedTarget,f=a.handleObj;return(!e||e!==d&&!m.contains(d,e))&&(a.type=f.origType,c=f.handler.apply(this,arguments),a.type=b),c}}}),k.submitBubbles||(m.event.special.submit={setup:function(){return m.nodeName(this,"form")?!1:void m.event.add(this,"click._submit keypress._submit",function(a){var b=a.target,c=m.nodeName(b,"input")||m.nodeName(b,"button")?b.form:void 0;c&&!m._data(c,"submitBubbles")&&(m.event.add(c,"submit._submit",function(a){a._submit_bubble=!0}),m._data(c,"submitBubbles",!0))})},postDispatch:function(a){a._submit_bubble&&(delete a._submit_bubble,this.parentNode&&!a.isTrigger&&m.event.simulate("submit",this.parentNode,a,!0))},teardown:function(){return m.nodeName(this,"form")?!1:void m.event.remove(this,"._submit")}}),k.changeBubbles||(m.event.special.change={setup:function(){return X.test(this.nodeName)?(("checkbox"===this.type||"radio"===this.type)&&(m.event.add(this,"propertychange._change",function(a){"checked"===a.originalEvent.propertyName&&(this._just_changed=!0)}),m.event.add(this,"click._change",function(a){this._just_changed&&!a.isTrigger&&(this._just_changed=!1),m.event.simulate("change",this,a,!0)})),!1):void m.event.add(this,"beforeactivate._change",function(a){var b=a.target;X.test(b.nodeName)&&!m._data(b,"changeBubbles")&&(m.event.add(b,"change._change",function(a){!this.parentNode||a.isSimulated||a.isTrigger||m.event.simulate("change",this.parentNode,a,!0)}),m._data(b,"changeBubbles",!0))})},handle:function(a){var b=a.target;return this!==b||a.isSimulated||a.isTrigger||"radio"!==b.type&&"checkbox"!==b.type?a.handleObj.handler.apply(this,arguments):void 0},teardown:function(){return m.event.remove(this,"._change"),!X.test(this.nodeName)}}),k.focusinBubbles||m.each({focus:"focusin",blur:"focusout"},function(a,b){var c=function(a){m.event.simulate(b,a.target,m.event.fix(a),!0)};m.event.special[b]={setup:function(){var d=this.ownerDocument||this,e=m._data(d,b);e||d.addEventListener(a,c,!0),m._data(d,b,(e||0)+1)},teardown:function(){var d=this.ownerDocument||this,e=m._data(d,b)-1;e?m._data(d,b,e):(d.removeEventListener(a,c,!0),m._removeData(d,b))}}}),m.fn.extend({on:function(a,b,c,d,e){var f,g;if("object"==typeof a){"string"!=typeof b&&(c=c||b,b=void 0);for(f in a)this.on(f,b,c,a[f],e);return this}if(null==c&&null==d?(d=b,c=b=void 0):null==d&&("string"==typeof b?(d=c,c=void 0):(d=c,c=b,b=void 0)),d===!1)d=bb;else if(!d)return this;return 1===e&&(g=d,d=function(a){return m().off(a),g.apply(this,arguments)},d.guid=g.guid||(g.guid=m.guid++)),this.each(function(){m.event.add(this,a,d,c,b)})},one:function(a,b,c,d){return this.on(a,b,c,d,1)},off:function(a,b,c){var d,e;if(a&&a.preventDefault&&a.handleObj)return d=a.handleObj,m(a.delegateTarget).off(d.namespace?d.origType+"."+d.namespace:d.origType,d.selector,d.handler),this;if("object"==typeof a){for(e in a)this.off(e,b,a[e]);return this}return(b===!1||"function"==typeof b)&&(c=b,b=void 0),c===!1&&(c=bb),this.each(function(){m.event.remove(this,a,c,b)})},trigger:function(a,b){return this.each(function(){m.event.trigger(a,b,this)})},triggerHandler:function(a,b){var c=this[0];return c?m.event.trigger(a,b,c,!0):void 0}});function db(a){var b=eb.split("|"),c=a.createDocumentFragment();if(c.createElement)while(b.length)c.createElement(b.pop());return c}var eb="abbr|article|aside|audio|bdi|canvas|data|datalist|details|figcaption|figure|footer|header|hgroup|mark|meter|nav|output|progress|section|summary|time|video",fb=/ jQuery\d+="(?:null|\d+)"/g,gb=new RegExp("<(?:"+eb+")[\\s/>]","i"),hb=/^\s+/,ib=/<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/gi,jb=/<([\w:]+)/,kb=/<tbody/i,lb=/<|&#?\w+;/,mb=/<(?:script|style|link)/i,nb=/checked\s*(?:[^=]|=\s*.checked.)/i,ob=/^$|\/(?:java|ecma)script/i,pb=/^true\/(.*)/,qb=/^\s*<!(?:\[CDATA\[|--)|(?:\]\]|--)>\s*$/g,rb={option:[1,"<select multiple='multiple'>","</select>"],legend:[1,"<fieldset>","</fieldset>"],area:[1,"<map>","</map>"],param:[1,"<object>","</object>"],thead:[1,"<table>","</table>"],tr:[2,"<table><tbody>","</tbody></table>"],col:[2,"<table><tbody></tbody><colgroup>","</colgroup></table>"],td:[3,"<table><tbody><tr>","</tr></tbody></table>"],_default:k.htmlSerialize?[0,"",""]:[1,"X<div>","</div>"]},sb=db(y),tb=sb.appendChild(y.createElement("div"));rb.optgroup=rb.option,rb.tbody=rb.tfoot=rb.colgroup=rb.caption=rb.thead,rb.th=rb.td;function ub(a,b){var c,d,e=0,f=typeof a.getElementsByTagName!==K?a.getElementsByTagName(b||"*"):typeof a.querySelectorAll!==K?a.querySelectorAll(b||"*"):void 0;if(!f)for(f=[],c=a.childNodes||a;null!=(d=c[e]);e++)!b||m.nodeName(d,b)?f.push(d):m.merge(f,ub(d,b));return void 0===b||b&&m.nodeName(a,b)?m.merge([a],f):f}function vb(a){W.test(a.type)&&(a.defaultChecked=a.checked)}function wb(a,b){return m.nodeName(a,"table")&&m.nodeName(11!==b.nodeType?b:b.firstChild,"tr")?a.getElementsByTagName("tbody")[0]||a.appendChild(a.ownerDocument.createElement("tbody")):a}function xb(a){return a.type=(null!==m.find.attr(a,"type"))+"/"+a.type,a}function yb(a){var b=pb.exec(a.type);return b?a.type=b[1]:a.removeAttribute("type"),a}function zb(a,b){for(var c,d=0;null!=(c=a[d]);d++)m._data(c,"globalEval",!b||m._data(b[d],"globalEval"))}function Ab(a,b){if(1===b.nodeType&&m.hasData(a)){var c,d,e,f=m._data(a),g=m._data(b,f),h=f.events;if(h){delete g.handle,g.events={};for(c in h)for(d=0,e=h[c].length;e>d;d++)m.event.add(b,c,h[c][d])}g.data&&(g.data=m.extend({},g.data))}}function Bb(a,b){var c,d,e;if(1===b.nodeType){if(c=b.nodeName.toLowerCase(),!k.noCloneEvent&&b[m.expando]){e=m._data(b);for(d in e.events)m.removeEvent(b,d,e.handle);b.removeAttribute(m.expando)}"script"===c&&b.text!==a.text?(xb(b).text=a.text,yb(b)):"object"===c?(b.parentNode&&(b.outerHTML=a.outerHTML),k.html5Clone&&a.innerHTML&&!m.trim(b.innerHTML)&&(b.innerHTML=a.innerHTML)):"input"===c&&W.test(a.type)?(b.defaultChecked=b.checked=a.checked,b.value!==a.value&&(b.value=a.value)):"option"===c?b.defaultSelected=b.selected=a.defaultSelected:("input"===c||"textarea"===c)&&(b.defaultValue=a.defaultValue)}}m.extend({clone:function(a,b,c){var d,e,f,g,h,i=m.contains(a.ownerDocument,a);if(k.html5Clone||m.isXMLDoc(a)||!gb.test("<"+a.nodeName+">")?f=a.cloneNode(!0):(tb.innerHTML=a.outerHTML,tb.removeChild(f=tb.firstChild)),!(k.noCloneEvent&&k.noCloneChecked||1!==a.nodeType&&11!==a.nodeType||m.isXMLDoc(a)))for(d=ub(f),h=ub(a),g=0;null!=(e=h[g]);++g)d[g]&&Bb(e,d[g]);if(b)if(c)for(h=h||ub(a),d=d||ub(f),g=0;null!=(e=h[g]);g++)Ab(e,d[g]);else Ab(a,f);return d=ub(f,"script"),d.length>0&&zb(d,!i&&ub(a,"script")),d=h=e=null,f},buildFragment:function(a,b,c,d){for(var e,f,g,h,i,j,l,n=a.length,o=db(b),p=[],q=0;n>q;q++)if(f=a[q],f||0===f)if("object"===m.type(f))m.merge(p,f.nodeType?[f]:f);else if(lb.test(f)){h=h||o.appendChild(b.createElement("div")),i=(jb.exec(f)||["",""])[1].toLowerCase(),l=rb[i]||rb._default,h.innerHTML=l[1]+f.replace(ib,"<$1></$2>")+l[2],e=l[0];while(e--)h=h.lastChild;if(!k.leadingWhitespace&&hb.test(f)&&p.push(b.createTextNode(hb.exec(f)[0])),!k.tbody){f="table"!==i||kb.test(f)?"<table>"!==l[1]||kb.test(f)?0:h:h.firstChild,e=f&&f.childNodes.length;while(e--)m.nodeName(j=f.childNodes[e],"tbody")&&!j.childNodes.length&&f.removeChild(j)}m.merge(p,h.childNodes),h.textContent="";while(h.firstChild)h.removeChild(h.firstChild);h=o.lastChild}else p.push(b.createTextNode(f));h&&o.removeChild(h),k.appendChecked||m.grep(ub(p,"input"),vb),q=0;while(f=p[q++])if((!d||-1===m.inArray(f,d))&&(g=m.contains(f.ownerDocument,f),h=ub(o.appendChild(f),"script"),g&&zb(h),c)){e=0;while(f=h[e++])ob.test(f.type||"")&&c.push(f)}return h=null,o},cleanData:function(a,b){for(var d,e,f,g,h=0,i=m.expando,j=m.cache,l=k.deleteExpando,n=m.event.special;null!=(d=a[h]);h++)if((b||m.acceptData(d))&&(f=d[i],g=f&&j[f])){if(g.events)for(e in g.events)n[e]?m.event.remove(d,e):m.removeEvent(d,e,g.handle);j[f]&&(delete j[f],l?delete d[i]:typeof d.removeAttribute!==K?d.removeAttribute(i):d[i]=null,c.push(f))}}}),m.fn.extend({text:function(a){return V(this,function(a){return void 0===a?m.text(this):this.empty().append((this[0]&&this[0].ownerDocument||y).createTextNode(a))},null,a,arguments.length)},append:function(){return this.domManip(arguments,function(a){if(1===this.nodeType||11===this.nodeType||9===this.nodeType){var b=wb(this,a);b.appendChild(a)}})},prepend:function(){return this.domManip(arguments,function(a){if(1===this.nodeType||11===this.nodeType||9===this.nodeType){var b=wb(this,a);b.insertBefore(a,b.firstChild)}})},before:function(){return this.domManip(arguments,function(a){this.parentNode&&this.parentNode.insertBefore(a,this)})},after:function(){return this.domManip(arguments,function(a){this.parentNode&&this.parentNode.insertBefore(a,this.nextSibling)})},remove:function(a,b){for(var c,d=a?m.filter(a,this):this,e=0;null!=(c=d[e]);e++)b||1!==c.nodeType||m.cleanData(ub(c)),c.parentNode&&(b&&m.contains(c.ownerDocument,c)&&zb(ub(c,"script")),c.parentNode.removeChild(c));return this},empty:function(){for(var a,b=0;null!=(a=this[b]);b++){1===a.nodeType&&m.cleanData(ub(a,!1));while(a.firstChild)a.removeChild(a.firstChild);a.options&&m.nodeName(a,"select")&&(a.options.length=0)}return this},clone:function(a,b){return a=null==a?!1:a,b=null==b?a:b,this.map(function(){return m.clone(this,a,b)})},html:function(a){return V(this,function(a){var b=this[0]||{},c=0,d=this.length;if(void 0===a)return 1===b.nodeType?b.innerHTML.replace(fb,""):void 0;if(!("string"!=typeof a||mb.test(a)||!k.htmlSerialize&&gb.test(a)||!k.leadingWhitespace&&hb.test(a)||rb[(jb.exec(a)||["",""])[1].toLowerCase()])){a=a.replace(ib,"<$1></$2>");try{for(;d>c;c++)b=this[c]||{},1===b.nodeType&&(m.cleanData(ub(b,!1)),b.innerHTML=a);b=0}catch(e){}}b&&this.empty().append(a)},null,a,arguments.length)},replaceWith:function(){var a=arguments[0];return this.domManip(arguments,function(b){a=this.parentNode,m.cleanData(ub(this)),a&&a.replaceChild(b,this)}),a&&(a.length||a.nodeType)?this:this.remove()},detach:function(a){return this.remove(a,!0)},domManip:function(a,b){a=e.apply([],a);var c,d,f,g,h,i,j=0,l=this.length,n=this,o=l-1,p=a[0],q=m.isFunction(p);if(q||l>1&&"string"==typeof p&&!k.checkClone&&nb.test(p))return this.each(function(c){var d=n.eq(c);q&&(a[0]=p.call(this,c,d.html())),d.domManip(a,b)});if(l&&(i=m.buildFragment(a,this[0].ownerDocument,!1,this),c=i.firstChild,1===i.childNodes.length&&(i=c),c)){for(g=m.map(ub(i,"script"),xb),f=g.length;l>j;j++)d=i,j!==o&&(d=m.clone(d,!0,!0),f&&m.merge(g,ub(d,"script"))),b.call(this[j],d,j);if(f)for(h=g[g.length-1].ownerDocument,m.map(g,yb),j=0;f>j;j++)d=g[j],ob.test(d.type||"")&&!m._data(d,"globalEval")&&m.contains(h,d)&&(d.src?m._evalUrl&&m._evalUrl(d.src):m.globalEval((d.text||d.textContent||d.innerHTML||"").replace(qb,"")));i=c=null}return this}}),m.each({appendTo:"append",prependTo:"prepend",insertBefore:"before",insertAfter:"after",replaceAll:"replaceWith"},function(a,b){m.fn[a]=function(a){for(var c,d=0,e=[],g=m(a),h=g.length-1;h>=d;d++)c=d===h?this:this.clone(!0),m(g[d])[b](c),f.apply(e,c.get());return this.pushStack(e)}});var Cb,Db={};function Eb(b,c){var d,e=m(c.createElement(b)).appendTo(c.body),f=a.getDefaultComputedStyle&&(d=a.getDefaultComputedStyle(e[0]))?d.display:m.css(e[0],"display");return e.detach(),f}function Fb(a){var b=y,c=Db[a];return c||(c=Eb(a,b),"none"!==c&&c||(Cb=(Cb||m("<iframe frameborder='0' width='0' height='0'/>")).appendTo(b.documentElement),b=(Cb[0].contentWindow||Cb[0].contentDocument).document,b.write(),b.close(),c=Eb(a,b),Cb.detach()),Db[a]=c),c}!function(){var a;k.shrinkWrapBlocks=function(){if(null!=a)return a;a=!1;var b,c,d;return c=y.getElementsByTagName("body")[0],c&&c.style?(b=y.createElement("div"),d=y.createElement("div"),d.style.cssText="position:absolute;border:0;width:0;height:0;top:0;left:-9999px",c.appendChild(d).appendChild(b),typeof b.style.zoom!==K&&(b.style.cssText="-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;display:block;margin:0;border:0;padding:1px;width:1px;zoom:1",b.appendChild(y.createElement("div")).style.width="5px",a=3!==b.offsetWidth),c.removeChild(d),a):void 0}}();var Gb=/^margin/,Hb=new RegExp("^("+S+")(?!px)[a-z%]+$","i"),Ib,Jb,Kb=/^(top|right|bottom|left)$/;a.getComputedStyle?(Ib=function(a){return a.ownerDocument.defaultView.getComputedStyle(a,null)},Jb=function(a,b,c){var d,e,f,g,h=a.style;return c=c||Ib(a),g=c?c.getPropertyValue(b)||c[b]:void 0,c&&(""!==g||m.contains(a.ownerDocument,a)||(g=m.style(a,b)),Hb.test(g)&&Gb.test(b)&&(d=h.width,e=h.minWidth,f=h.maxWidth,h.minWidth=h.maxWidth=h.width=g,g=c.width,h.width=d,h.minWidth=e,h.maxWidth=f)),void 0===g?g:g+""}):y.documentElement.currentStyle&&(Ib=function(a){return a.currentStyle},Jb=function(a,b,c){var d,e,f,g,h=a.style;return c=c||Ib(a),g=c?c[b]:void 0,null==g&&h&&h[b]&&(g=h[b]),Hb.test(g)&&!Kb.test(b)&&(d=h.left,e=a.runtimeStyle,f=e&&e.left,f&&(e.left=a.currentStyle.left),h.left="fontSize"===b?"1em":g,g=h.pixelLeft+"px",h.left=d,f&&(e.left=f)),void 0===g?g:g+""||"auto"});function Lb(a,b){return{get:function(){var c=a();if(null!=c)return c?void delete this.get:(this.get=b).apply(this,arguments)}}}!function(){var b,c,d,e,f,g,h;if(b=y.createElement("div"),b.innerHTML="  <link/><table></table><a href='/a'>a</a><input type='checkbox'/>",d=b.getElementsByTagName("a")[0],c=d&&d.style){c.cssText="float:left;opacity:.5",k.opacity="0.5"===c.opacity,k.cssFloat=!!c.cssFloat,b.style.backgroundClip="content-box",b.cloneNode(!0).style.backgroundClip="",k.clearCloneStyle="content-box"===b.style.backgroundClip,k.boxSizing=""===c.boxSizing||""===c.MozBoxSizing||""===c.WebkitBoxSizing,m.extend(k,{reliableHiddenOffsets:function(){return null==g&&i(),g},boxSizingReliable:function(){return null==f&&i(),f},pixelPosition:function(){return null==e&&i(),e},reliableMarginRight:function(){return null==h&&i(),h}});function i(){var b,c,d,i;c=y.getElementsByTagName("body")[0],c&&c.style&&(b=y.createElement("div"),d=y.createElement("div"),d.style.cssText="position:absolute;border:0;width:0;height:0;top:0;left:-9999px",c.appendChild(d).appendChild(b),b.style.cssText="-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;display:block;margin-top:1%;top:1%;border:1px;padding:1px;width:4px;position:absolute",e=f=!1,h=!0,a.getComputedStyle&&(e="1%"!==(a.getComputedStyle(b,null)||{}).top,f="4px"===(a.getComputedStyle(b,null)||{width:"4px"}).width,i=b.appendChild(y.createElement("div")),i.style.cssText=b.style.cssText="-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;display:block;margin:0;border:0;padding:0",i.style.marginRight=i.style.width="0",b.style.width="1px",h=!parseFloat((a.getComputedStyle(i,null)||{}).marginRight)),b.innerHTML="<table><tr><td></td><td>t</td></tr></table>",i=b.getElementsByTagName("td"),i[0].style.cssText="margin:0;border:0;padding:0;display:none",g=0===i[0].offsetHeight,g&&(i[0].style.display="",i[1].style.display="none",g=0===i[0].offsetHeight),c.removeChild(d))}}}(),m.swap=function(a,b,c,d){var e,f,g={};for(f in b)g[f]=a.style[f],a.style[f]=b[f];e=c.apply(a,d||[]);for(f in b)a.style[f]=g[f];return e};var Mb=/alpha\([^)]*\)/i,Nb=/opacity\s*=\s*([^)]*)/,Ob=/^(none|table(?!-c[ea]).+)/,Pb=new RegExp("^("+S+")(.*)$","i"),Qb=new RegExp("^([+-])=("+S+")","i"),Rb={position:"absolute",visibility:"hidden",display:"block"},Sb={letterSpacing:"0",fontWeight:"400"},Tb=["Webkit","O","Moz","ms"];function Ub(a,b){if(b in a)return b;var c=b.charAt(0).toUpperCase()+b.slice(1),d=b,e=Tb.length;while(e--)if(b=Tb[e]+c,b in a)return b;return d}function Vb(a,b){for(var c,d,e,f=[],g=0,h=a.length;h>g;g++)d=a[g],d.style&&(f[g]=m._data(d,"olddisplay"),c=d.style.display,b?(f[g]||"none"!==c||(d.style.display=""),""===d.style.display&&U(d)&&(f[g]=m._data(d,"olddisplay",Fb(d.nodeName)))):(e=U(d),(c&&"none"!==c||!e)&&m._data(d,"olddisplay",e?c:m.css(d,"display"))));for(g=0;h>g;g++)d=a[g],d.style&&(b&&"none"!==d.style.display&&""!==d.style.display||(d.style.display=b?f[g]||"":"none"));return a}function Wb(a,b,c){var d=Pb.exec(b);return d?Math.max(0,d[1]-(c||0))+(d[2]||"px"):b}function Xb(a,b,c,d,e){for(var f=c===(d?"border":"content")?4:"width"===b?1:0,g=0;4>f;f+=2)"margin"===c&&(g+=m.css(a,c+T[f],!0,e)),d?("content"===c&&(g-=m.css(a,"padding"+T[f],!0,e)),"margin"!==c&&(g-=m.css(a,"border"+T[f]+"Width",!0,e))):(g+=m.css(a,"padding"+T[f],!0,e),"padding"!==c&&(g+=m.css(a,"border"+T[f]+"Width",!0,e)));return g}function Yb(a,b,c){var d=!0,e="width"===b?a.offsetWidth:a.offsetHeight,f=Ib(a),g=k.boxSizing&&"border-box"===m.css(a,"boxSizing",!1,f);if(0>=e||null==e){if(e=Jb(a,b,f),(0>e||null==e)&&(e=a.style[b]),Hb.test(e))return e;d=g&&(k.boxSizingReliable()||e===a.style[b]),e=parseFloat(e)||0}return e+Xb(a,b,c||(g?"border":"content"),d,f)+"px"}m.extend({cssHooks:{opacity:{get:function(a,b){if(b){var c=Jb(a,"opacity");return""===c?"1":c}}}},cssNumber:{columnCount:!0,fillOpacity:!0,flexGrow:!0,flexShrink:!0,fontWeight:!0,lineHeight:!0,opacity:!0,order:!0,orphans:!0,widows:!0,zIndex:!0,zoom:!0},cssProps:{"float":k.cssFloat?"cssFloat":"styleFloat"},style:function(a,b,c,d){if(a&&3!==a.nodeType&&8!==a.nodeType&&a.style){var e,f,g,h=m.camelCase(b),i=a.style;if(b=m.cssProps[h]||(m.cssProps[h]=Ub(i,h)),g=m.cssHooks[b]||m.cssHooks[h],void 0===c)return g&&"get"in g&&void 0!==(e=g.get(a,!1,d))?e:i[b];if(f=typeof c,"string"===f&&(e=Qb.exec(c))&&(c=(e[1]+1)*e[2]+parseFloat(m.css(a,b)),f="number"),null!=c&&c===c&&("number"!==f||m.cssNumber[h]||(c+="px"),k.clearCloneStyle||""!==c||0!==b.indexOf("background")||(i[b]="inherit"),!(g&&"set"in g&&void 0===(c=g.set(a,c,d)))))try{i[b]=c}catch(j){}}},css:function(a,b,c,d){var e,f,g,h=m.camelCase(b);return b=m.cssProps[h]||(m.cssProps[h]=Ub(a.style,h)),g=m.cssHooks[b]||m.cssHooks[h],g&&"get"in g&&(f=g.get(a,!0,c)),void 0===f&&(f=Jb(a,b,d)),"normal"===f&&b in Sb&&(f=Sb[b]),""===c||c?(e=parseFloat(f),c===!0||m.isNumeric(e)?e||0:f):f}}),m.each(["height","width"],function(a,b){m.cssHooks[b]={get:function(a,c,d){return c?Ob.test(m.css(a,"display"))&&0===a.offsetWidth?m.swap(a,Rb,function(){return Yb(a,b,d)}):Yb(a,b,d):void 0},set:function(a,c,d){var e=d&&Ib(a);return Wb(a,c,d?Xb(a,b,d,k.boxSizing&&"border-box"===m.css(a,"boxSizing",!1,e),e):0)}}}),k.opacity||(m.cssHooks.opacity={get:function(a,b){return Nb.test((b&&a.currentStyle?a.currentStyle.filter:a.style.filter)||"")?.01*parseFloat(RegExp.$1)+"":b?"1":""},set:function(a,b){var c=a.style,d=a.currentStyle,e=m.isNumeric(b)?"alpha(opacity="+100*b+")":"",f=d&&d.filter||c.filter||"";c.zoom=1,(b>=1||""===b)&&""===m.trim(f.replace(Mb,""))&&c.removeAttribute&&(c.removeAttribute("filter"),""===b||d&&!d.filter)||(c.filter=Mb.test(f)?f.replace(Mb,e):f+" "+e)}}),m.cssHooks.marginRight=Lb(k.reliableMarginRight,function(a,b){return b?m.swap(a,{display:"inline-block"},Jb,[a,"marginRight"]):void 0}),m.each({margin:"",padding:"",border:"Width"},function(a,b){m.cssHooks[a+b]={expand:function(c){for(var d=0,e={},f="string"==typeof c?c.split(" "):[c];4>d;d++)e[a+T[d]+b]=f[d]||f[d-2]||f[0];return e}},Gb.test(a)||(m.cssHooks[a+b].set=Wb)}),m.fn.extend({css:function(a,b){return V(this,function(a,b,c){var d,e,f={},g=0;if(m.isArray(b)){for(d=Ib(a),e=b.length;e>g;g++)f[b[g]]=m.css(a,b[g],!1,d);return f}return void 0!==c?m.style(a,b,c):m.css(a,b)},a,b,arguments.length>1)},show:function(){return Vb(this,!0)},hide:function(){return Vb(this)},toggle:function(a){return"boolean"==typeof a?a?this.show():this.hide():this.each(function(){U(this)?m(this).show():m(this).hide()})}});function Zb(a,b,c,d,e){return new Zb.prototype.init(a,b,c,d,e)}m.Tween=Zb,Zb.prototype={constructor:Zb,init:function(a,b,c,d,e,f){this.elem=a,this.prop=c,this.easing=e||"swing",this.options=b,this.start=this.now=this.cur(),this.end=d,this.unit=f||(m.cssNumber[c]?"":"px")
@@ -32616,7 +32616,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/configuration/interview.html',
-    "<div ng-controller=ConfigInterviewController><div ng-include=\"'app/views/configuration/navi.html'\"></div><div ng-show=deviceId><div class=cfg-block><div class=row><div class=col-md-8><div class=table-responsive_><table class=\"table table-striped table-condensed table-cfg-interview\"><tbody><tr><th>{{_t('device_node_name')}}</th><td><div ng-hide=goDeviceName ng-click=\"goDeviceName = true\">{{deviceName}} <button type=button class=\"btn btn-default\" ng-click=\"goDeviceName = true\" ng-disabled=\"rowSpinner['deviceName']\"><bb-row-spinner spinner=\"rowSpinner['deviceName']\" icon=\"'fa-pencil'\"></bb-row-spinner></button></div><form name=form_rename id=form_rename ng-model=form_rename class=\"form _form-inline\" ng-show=goDeviceName ng-submit=\"renameDevice(form_rename,deviceName,'deviceName');goDeviceName = !goDeviceName\" novalidate><div class=input-group><input name=device_name id=device_name class=form-control value={{deviceName}} ng-model=deviceName><div class=input-group-btn><button type=submit class=\"btn btn-primary\" title=\"{{_t('btn_save')}}\"><i class=\"fa fa-circle-o\"></i> <span class=btn-name>{{_t('btn_save')}}</span></button></div></div></form></td></tr><tr ng-repeat=\"v in descriptionCont\" ng-hide=\"v.val === '' || v.val === false || v.val === null\"><th>{{_t(v.key)}}</th><td id={{v.key}}><div ng-switch on=v.key><div ng-switch-when=command_class><span ng-repeat=\"cc in interviewCommands\"><a href=\"\" ng-click=\"handleCmdClassModal('cmdClassModal',$event,cc.iId,cc.ccId, 'cmdData')\">{{cc.ccName}} </a>&#8226;&nbsp;</span></div><div class=config-interview-val ng-switch-default ng-bind-html=\"v.val | toTrusted\"></div></div></td></tr><tr><th>{{_t('device_interview_indicator')}}</th><td><div class=progress ng-if_=\"zwaveInterview.progress > 0 && zwaveInterview.progress < 101\"><div class=progress-bar style=\"min-height:40px;min-width: 2em; width: {{zwaveInterview.progress}}%\" ng-class=\"zwaveInterview.progress < 100 ? 'progress-bar-danger progress-bar-striped active' : 'progress-bar-success'\">{{zwaveInterview.progress}}%</div></div></td></tr></tbody></table></div></div><div class=col-md-4><img src={{deviceImage}} class=config-device-img alt=Image></div></div></div><div class=cfg-block><button id=btn_request_nif class=\"btn btn-primary\" ng-click=\"requestNodeInformation('devices[' + deviceId + '].RequestNodeInformation()')\" ng-disabled=\"rowSpinner['devices[' + deviceId + '].RequestNodeInformation()']\"><bb-row-spinner spinner=\"rowSpinner['devices[' + deviceId + '].RequestNodeInformation()']\" label=\"_t('config_ui_request_node_info')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button> <button class=\"btn btn-primary\" id=btn_interview_force ng-click=\"interviewForce('devices[' + deviceId + '].InterviewForce()')\" ng-disabled=\"rowSpinner['devices[' + deviceId + '].InterviewForce()']\"><bb-row-spinner spinner=\"rowSpinner['devices[' + deviceId + '].InterviewForce()']\" label=\"_t('config_ui_force_interview')\" icon=\"'fa-fire'\"></bb-row-spinner></button> <button id=btn_show_interview_result class=\"btn btn-default\" ng-click=\"handleModal('interviewModal',$event)\"><i class=\"fa fa-clone\"></i> {{_t('config_ui_show_interview_results')}}</button> <button id=btn_show_description class=\"btn btn-default\" ng-click=\"handleModal('loadXmlModal', $event)\"><i class=\"fa fa-clone\"></i> {{_t('config_ui_select_xml')}}</button> <a href=\"{{cfg.server_url + cfg.zddx_create_url + deviceId}}\" class=\"btn btn-default\" id=btn_create_zddx target=_blank><i class=\"fa fa-clone\"></i> {{_t('btn_zddx_create')}}</a></div></div><div ng-include=\"'app/views/configuration/modal_interview.html'\"></div><div ng-include=\"'app/views/configuration/modal_cmdclass.html'\"></div><div ng-include=\"'app/views/configuration/modal_loadxml.html'\"></div></div>"
+    "<div ng-controller=ConfigInterviewController><div ng-include=\"'app/views/configuration/navi.html'\"></div><div ng-show=deviceId><div class=cfg-block><div class=row><div class=col-md-8><div class=table-responsive_><table class=\"table table-striped table-condensed table-cfg-interview\"><tbody><tr><th>{{_t('device_node_name')}}</th><td><div ng-hide=goDeviceName ng-click=\"goDeviceName = true\">{{deviceName}} <button type=button class=\"btn btn-default\" ng-click=\"goDeviceName = true\" ng-disabled=\"rowSpinner['deviceName']\"><bb-row-spinner spinner=\"rowSpinner['deviceName']\" icon=\"'fa-pencil'\"></bb-row-spinner></button></div><form name=form_rename id=form_rename ng-model=form_rename class=\"form _form-inline\" ng-show=goDeviceName ng-submit=\"renameDevice(form_rename,deviceName,'deviceName');goDeviceName = !goDeviceName\" novalidate><div class=input-group><input name=device_name id=device_name class=form-control value={{deviceName}} ng-model=deviceName><div class=input-group-btn><button type=submit class=\"btn btn-primary\" title=\"{{_t('btn_save')}}\"><i class=\"fa fa-circle-o\"></i> <span class=btn-name>{{_t('btn_save')}}</span></button></div></div></form></td></tr><tr ng-repeat=\"v in descriptionCont track by $index\" ng-hide=\"v.val === '' || v.val === false || v.val === null\"><th>{{_t(v.key)}}</th><td id={{v.key}}><div ng-switch on=v.key><div ng-switch-when=command_class><span ng-repeat=\"cc in interviewCommands\"><a href=\"\" ng-click=\"handleCmdClassModal('cmdClassModal',$event,cc.iId,cc.ccId, 'cmdData')\">{{cc.ccName}} </a>&#8226;&nbsp;</span></div><div class=config-interview-val ng-switch-default ng-bind-html=\"v.val | toTrusted\"></div></div></td></tr><tr><th>{{_t('device_interview_indicator')}}</th><td><div class=progress ng-if_=\"zwaveInterview.progress > 0 && zwaveInterview.progress < 101\"><div class=progress-bar style=\"min-height:40px;min-width: 2em; width: {{zwaveInterview.progress}}%\" ng-class=\"zwaveInterview.progress < 100 ? 'progress-bar-danger progress-bar-striped active' : 'progress-bar-success'\">{{zwaveInterview.progress}}%</div></div></td></tr></tbody></table></div></div><div class=col-md-4><img src={{deviceImage}} class=config-device-img alt=Image></div></div></div><div class=cfg-block><button id=btn_request_nif class=\"btn btn-primary\" ng-click=\"requestNodeInformation('devices[' + deviceId + '].RequestNodeInformation()')\" ng-disabled=\"rowSpinner['devices[' + deviceId + '].RequestNodeInformation()']\"><bb-row-spinner spinner=\"rowSpinner['devices[' + deviceId + '].RequestNodeInformation()']\" label=\"_t('config_ui_request_node_info')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button> <button class=\"btn btn-primary\" id=btn_interview_force ng-click=\"interviewForce('devices[' + deviceId + '].InterviewForce()')\" ng-disabled=\"rowSpinner['devices[' + deviceId + '].InterviewForce()']\"><bb-row-spinner spinner=\"rowSpinner['devices[' + deviceId + '].InterviewForce()']\" label=\"_t('config_ui_force_interview')\" icon=\"'fa-fire'\"></bb-row-spinner></button> <button id=btn_show_interview_result class=\"btn btn-default\" ng-click=\"handleModal('interviewModal',$event)\"><i class=\"fa fa-clone\"></i> {{_t('config_ui_show_interview_results')}}</button> <button id=btn_show_description class=\"btn btn-default\" ng-click=\"handleModal('loadXmlModal', $event)\"><i class=\"fa fa-clone\"></i> {{_t('config_ui_select_xml')}}</button> <a href=\"{{cfg.server_url + cfg.zddx_create_url + deviceId}}\" class=\"btn btn-default\" id=btn_create_zddx target=_blank><i class=\"fa fa-clone\"></i> {{_t('btn_zddx_create')}}</a></div></div><div ng-include=\"'app/views/configuration/modal_interview.html'\"></div><div ng-include=\"'app/views/configuration/modal_cmdclass.html'\"></div><div ng-include=\"'app/views/configuration/modal_loadxml.html'\"></div></div>"
   );
 
 
@@ -32653,7 +32653,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/controll/locks.html',
-    "<div ng-controller=LocksController><div class=page-header><h1>{{_t('nav_locks')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=locks.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><a href=\"\" ng-click=\"orderBy('id')\"># <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('level')\">{{ _t('th_level')}} <span ng-show=\"predicate == 'status'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th>&nbsp;</th><th>&nbsp;</th></tr></thead><tbody><tr ng-repeat=\"v in locks.all | orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=#>{{ v.id}}</td><td data-title=\"{{ _t('device_name')}}\">{{ v.name}}</td><td data-title=\"{{ _t('th_level')}}\" class=row-level>{{ v.level |lockStatus }} &nbsp;</td><td data-title=\"{{ _t('datetime')}}\"><bb-date-time obj=v.dateTime updated=v.isUpdated></bb-date-time></td><td class=td-action data-title=\"\"><button class=\"btn btn-default\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateLock(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] label=\" _t('update')\" icon=\"'fa-circle-o text-success'\"></bb-row-spinner></button></td><td class=\"lock-controll td-action\" data-title=\"\"><div class=\"btn-group btn-group-lock\"><button type=button class=\"btn btn-default btn-lock\" id=\"btn_lock_{{ v.rowId}}\" title=\"{{_t('btn_close')}}\" ng-class=\"{active: v.level=='255'}\" ng-click=updateLock(v.urlToOn) ng-disabled=rowSpinner[v.urlToOn]><bb-row-spinner spinner=rowSpinner[v.urlToOn] icon=\"'fa-lock text-success'\"></bb-row-spinner></button> <button type=button class=\"btn btn-default btn-unlock\" id=\"btn_unlock_{{ v.rowId}}\" title=\"{{_t('btn_open')}}\" ng-class=\"{active: v.level=='0'}\" ng-click=updateLock(v.urlToOff) ng-disabled=rowSpinner[v.urlToOff]><bb-row-spinner spinner=rowSpinner[v.urlToOff] icon=\"'fa-unlock text-danger'\"></bb-row-spinner></button></div></td></tr></tbody></table></div></div>"
+    "<div ng-controller=LocksController><div class=page-header><h1>{{_t('nav_locks')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=locks.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><a href=\"\" ng-click=\"orderBy('id')\"># <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('level')\">{{ _t('nav_status')}} <span ng-show=\"predicate == 'status'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th>&nbsp;</th><th>&nbsp;</th></tr></thead><tbody><tr ng-repeat=\"v in locks.all | orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=#>{{ v.id}}</td><td data-title=\"{{ _t('device_name')}}\">{{ v.name}}</td><td data-title=\"{{ _t('nav_status')}}\" class=row-level>{{_t(v.status)}} &nbsp;</td><td data-title=\"{{ _t('datetime')}}\"><bb-date-time obj=v.dateTime updated=v.isUpdated></bb-date-time></td><td class=td-action data-title=\"\"><button class=\"btn btn-default\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateLock(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] label=\" _t('update')\" icon=\"'fa-circle-o text-success'\"></bb-row-spinner></button></td><td class=\"lock-controll td-action\" data-title=\"\"><div class=\"btn-group btn-group-lock\"><button type=button class=\"btn btn-default btn-lock\" id=\"btn_lock_{{ v.rowId}}\" title=\"{{_t('btn_close')}}\" ng-class=\"{active: v.level=='255'}\" ng-click=updateLock(v.urlToOn) ng-disabled=rowSpinner[v.urlToOn]><bb-row-spinner spinner=rowSpinner[v.urlToOn] icon=\"'fa-lock text-success'\"></bb-row-spinner></button> <button type=button class=\"btn btn-default btn-unlock\" id=\"btn_unlock_{{ v.rowId}}\" title=\"{{_t('btn_open')}}\" ng-class=\"{active: v.level=='0'}\" ng-click=updateLock(v.urlToOff) ng-disabled=rowSpinner[v.urlToOff]><bb-row-spinner spinner=rowSpinner[v.urlToOff] icon=\"'fa-unlock text-danger'\"></bb-row-spinner></button></div></td></tr></tbody></table></div></div>"
   );
 
 
@@ -32877,7 +32877,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/network/control/control_network_maintance.html',
-    "<div class=\"panel panel-default\"><div class=panel-heading><i class=\"fa fa-sitemap\"></i> {{_t('nm_net_maintance')}}</div><div class=panel-body><div><div class=\"cfg-block form-inline\"><p class=input-help>{{_t('nm_remove_node_war')}}</p><select name=remove_failed_node id=remove_failed_node class=form-control ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-hide=_.isEmpty(controlDh.nodes.failedNodes) ng-model=controlDh.input.failedNodes><option ng-hide=\"controlDh.removed.failedNodes.indexOf(v) > -1\" ng-repeat=\"v in controlDh.nodes.failedNodes track by $index\" value={{v}}>{{v}}</option></select><button class=\"btn btn-primary\" id=btn_remove_failed_mode ng-click=\"handleModal('failedNodeModal', $event)\" ng-disabled=!controlDh.input.failedNodes><bb-row-spinner spinner=\"rowSpinner['devices[' + controlDh.input.failedNodes + '].RemoveFailedNode()']\" label=\"_t('nm_remove_failed')\" icon=\"'fa-minus-circle'\"></bb-row-spinner></button></div><div class=\"cfg-block form-inline\" ng-controller=ReplaceFailedNodeController><p class=input-help>{{_t('nm_replace_node_war')}}</p><div class=\"alert nm-response alert-danger\" ng-show=\"[17, 18].indexOf(controllerState) != -1\">{{_t('nm_controller_state_' + controllerState)}}</div><select name=replace_failed_node id=replace_failed_node class=form-control ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-hide=_.isEmpty(controlDh.nodes.failedNodes) ng-model=controlDh.input.replaceNodes><option ng-hide=\"controlDh.removed.replaceNodes.indexOf(v) > -1\" ng-repeat=\"v in controlDh.nodes.failedNodes track by $index\" value={{v}}>{{v}}</option></select><button class=\"btn btn-primary\" id=btn_replace_failed_node ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"replaceFailedNode('ReplaceFailedNode(' + controlDh.input.replaceNodes + ')')\" ng-disabled=!controlDh.input.replaceNodes><bb-row-spinner spinner=\"rowSpinner['ReplaceFailedNode(' + controlDh.input.replaceNodes + ')']\" label=\"_t('nm_replace_node')\" icon=\"'fa-exchange'\"></bb-row-spinner>{{_t('')}}</button></div><div class=\"cfg-block form-inline\"><p class=input-help>{{_t('nm_mark_node_war')}}</p><select name=mark_battery_failed id=mark_battery_failed class=form-control ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-hide=_.isEmpty(controlDh.nodes.failedBatteries) ng-change=changeSelectNode(modelBatteryFailed) ng-model=controlDh.input.failedBatteries><option ng-hide=\"controlDh.removed.failedBatteries.indexOf(v) > -1\" ng-repeat=\"v in controlDh.nodes.failedBatteries track by $index\" value={{v}}>{{v}}</option></select><button class=\"btn btn-primary\" ng-click=\"handleModal('failedBatteryModal', $event)\" ng-disabled=!controlDh.input.failedBatteries><bb-row-spinner spinner=\"rowSpinner['devices[' + controlDh.input.failedBatteries + '].SendNoOperation()']\" label=\"_t('nm_mark_battery_as_failed')\" icon=\"'fa-thumb-tack'\"></bb-row-spinner></button></div></div><div><div class=\"cfg-block form-inline\" ng-controller=ControllerChangeController><p class=input-help>{{_t('nm_change_controller_war')}}</p><div class=nm-response ng-class=\"controllerState == 0 ? 'text-info' : 'text - danger'\" ng-show=\"[13, 14, 15, 16].indexOf(controllerState) > -1\">{{_t('nm_controller_state_' + controllerState)}}</div><button class=\"btn btn-primary\" id=btn_controller_change_start ng-show=\"[13, 14, 15, 16].indexOf(controlDh.controller.controllerState) == -1\" ng-click=\"controllerChange('controller.ControllerChange(1)')\" ng-disabled=\"[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controlDh.controller.controllerState) > -1 || isPrimary == false || rowSpinner['controller.ControllerChange(1)']\"><bb-row-spinner spinner=\"rowSpinner['controller.ControllerChange(1)']\" label=\"_t('nm_controller_change_start')\" icon=\"'fa-database'\"></bb-row-spinner></button> <button class=\"btn btn-danger\" id=btn_controller_change_stop ng-show=\"[13, 14, 15, 16].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"controllerChange('controller.ControllerChange(0)')\" ng-disabled=\"rowSpinner['controller.ControllerChange(0)']\"><bb-row-spinner spinner=\"rowSpinner['controller.ControllerChange(0)']\" label=\"_t('nm_controller_change_stop')\" icon=\"'fa-database'\"></bb-row-spinner></button></div><div class=\"cfg-block form-inline\" ng-controller=RequestNifAllController><p class=input-help>{{_t('nm_nif_all_war')}}</p><button class=\"btn btn-primary\" id=btn_request_nif ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"requestNifAll('requestNifAll')\" ng-disabled=\"rowSpinner['requestNifAll']\"><bb-row-spinner spinner=\"rowSpinner['requestNifAll']\" label=\"_t('nm_request_all_node_information')\" icon=\"'fa-search-plus'\"></bb-row-spinner></button></div></div></div></div><div id=failedNodeModal class=appmodal ng-if=modalArr.failedNodeModal ng-controller=RemoveFailedNodeController><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handleModal('failedNodeModal', $event);controlDh.input.failedNodes = 0\"><i class=\"fa fa-times\"></i></span><h3>{{_t('nm_remove_failed') + ' #' + controlDh.input.failedNodes}}</h3></div><div class=appmodal-body><div class=\"alert alert-warning\"><input type=checkbox name=remove_node_confirm id=remove_node_confirm value=1 ng-click=\"goFailedNode = !goFailedNode\"> <span ng-bind-html=\"_t('are_you_sure_remove_node') | toTrusted\"></span> <strong>{{deviceInfo.name}}</strong><p>{{_t('txt_controller_delete_node')}}</p></div></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleModal('failedNodeModal', $event);controlDh.input.failedNodes = 0\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button> <button type=button class=\"btn btn-danger\" id=btn_reset_controller ng-show=goFailedNode ng-click=\"removeFailedNode('devices[' + controlDh.input.failedNodes + '].RemoveFailedNode()',handleModal('failedNodeModal', $event))\"><i class=\"fa fa-exclamation-triangle\"></i> {{_t('nm_remove_failed')}}</button></div></div></div><div id=failedBatteryModal class=appmodal ng-if=modalArr.failedBatteryModal ng-controller=BatteryDeviceFailedController><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handleModal('failedBatteryModal', $event);controlDh.input.failedBatteries = 0\"><i class=\"fa fa-times\"></i></span><h3>{{_t('nm_mark_battery_as_failed') + ' #' + controlDh.input.failedBatteries}}</h3></div><div class=appmodal-body>{{_t('nm_mark_node_war_modal')}}</div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleModal('failedBatteryModal', $event);controlDh.input.failedBatteries = 0\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button> <button type=button class=\"btn btn-primary\" id=btn_reset_controller ng-click=\"markFailedNode(\r" +
+    "<div class=\"panel panel-default\"><div class=panel-heading><i class=\"fa fa-sitemap\"></i> {{_t('nm_net_maintance')}}</div><div class=panel-body><div><div class=\"cfg-block form-inline\"><p class=input-help>{{_t('nm_remove_node_war')}}</p><select name=remove_failed_node id=remove_failed_node class=form-control ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-hide=_.isEmpty(controlDh.nodes.failedNodes) ng-model=controlDh.input.failedNodes><option ng-hide=\"controlDh.removed.failedNodes.indexOf(v) > -1\" ng-repeat=\"v in controlDh.nodes.failedNodes track by $index\" value={{v}}>{{v}}</option></select>&nbsp; <button class=\"btn btn-primary\" id=btn_remove_failed_mode ng-click=\"handleModal('failedNodeModal', $event)\" ng-disabled=!controlDh.input.failedNodes><bb-row-spinner spinner=\"rowSpinner['devices[' + controlDh.input.failedNodes + '].RemoveFailedNode()']\" label=\"_t('nm_remove_failed')\" icon=\"'fa-minus-circle'\"></bb-row-spinner></button></div><div class=\"cfg-block form-inline\" ng-controller=ReplaceFailedNodeController><p class=input-help>{{_t('nm_replace_node_war')}}</p><div class=\"alert nm-response alert-danger\" ng-show=\"[17, 18].indexOf(controllerState) != -1\">{{_t('nm_controller_state_' + controllerState)}}</div><select name=replace_failed_node id=replace_failed_node class=form-control ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-hide=_.isEmpty(controlDh.nodes.failedNodes) ng-model=controlDh.input.replaceNodes><option ng-hide=\"controlDh.removed.replaceNodes.indexOf(v) > -1\" ng-repeat=\"v in controlDh.nodes.failedNodes track by $index\" value={{v}}>{{v}}</option></select>&nbsp; <button class=\"btn btn-primary\" id=btn_replace_failed_node ng-click=\"replaceFailedNode('ReplaceFailedNode(' + controlDh.input.replaceNodes + ')')\" ng-disabled=!controlDh.input.replaceNodes><bb-row-spinner spinner=\"rowSpinner['ReplaceFailedNode(' + controlDh.input.replaceNodes + ')']\" label=\"_t('nm_replace_node')\" icon=\"'fa-exchange'\"></bb-row-spinner>{{_t('')}}</button></div><div class=\"cfg-block form-inline\"><p class=input-help>{{_t('nm_mark_node_war')}}</p><select name=mark_battery_failed id=mark_battery_failed class=form-control ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-hide=_.isEmpty(controlDh.nodes.failedBatteries) ng-change=changeSelectNode(modelBatteryFailed) ng-model=controlDh.input.failedBatteries><option ng-hide=\"controlDh.removed.failedBatteries.indexOf(v) > -1\" ng-repeat=\"v in controlDh.nodes.failedBatteries track by $index\" value={{v}}>{{v}}</option></select>&nbsp; <button class=\"btn btn-primary\" ng-click=\"handleModal('failedBatteryModal', $event)\" ng-disabled=!controlDh.input.failedBatteries><bb-row-spinner spinner=\"rowSpinner['devices[' + controlDh.input.failedBatteries + '].SendNoOperation()']\" label=\"_t('nm_mark_battery_as_failed')\" icon=\"'fa-thumb-tack'\"></bb-row-spinner></button></div></div><div><div class=\"cfg-block form-inline\" ng-controller=ControllerChangeController><p class=input-help>{{_t('nm_change_controller_war')}}</p><div class=nm-response ng-class=\"controllerState == 0 ? 'text-info' : 'text - danger'\" ng-show=\"[13, 14, 15, 16].indexOf(controllerState) > -1\">{{_t('nm_controller_state_' + controllerState)}}</div><button class=\"btn btn-primary\" id=btn_controller_change_start ng-show=\"[13, 14, 15, 16].indexOf(controlDh.controller.controllerState) == -1\" ng-click=\"controllerChange('controller.ControllerChange(1)')\" ng-disabled=\"[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controlDh.controller.controllerState) > -1 || isPrimary == false || rowSpinner['controller.ControllerChange(1)']\"><bb-row-spinner spinner=\"rowSpinner['controller.ControllerChange(1)']\" label=\"_t('nm_controller_change_start')\" icon=\"'fa-database'\"></bb-row-spinner></button> <button class=\"btn btn-danger\" id=btn_controller_change_stop ng-show=\"[13, 14, 15, 16].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"controllerChange('controller.ControllerChange(0)')\" ng-disabled=\"rowSpinner['controller.ControllerChange(0)']\"><bb-row-spinner spinner=\"rowSpinner['controller.ControllerChange(0)']\" label=\"_t('nm_controller_change_stop')\" icon=\"'fa-database'\"></bb-row-spinner></button></div><div class=\"cfg-block form-inline\" ng-controller=RequestNifAllController><p class=input-help>{{_t('nm_nif_all_war')}}</p><button class=\"btn btn-primary\" id=btn_request_nif ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"requestNifAll('requestNifAll')\" ng-disabled=\"rowSpinner['requestNifAll']\"><bb-row-spinner spinner=\"rowSpinner['requestNifAll']\" label=\"_t('nm_request_all_node_information')\" icon=\"'fa-search-plus'\"></bb-row-spinner></button></div></div></div></div><div id=failedNodeModal class=appmodal ng-if=modalArr.failedNodeModal ng-controller=RemoveFailedNodeController><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handleModal('failedNodeModal', $event);controlDh.input.failedNodes = 0\"><i class=\"fa fa-times\"></i></span><h3>{{_t('nm_remove_failed') + ' #' + controlDh.input.failedNodes}}</h3></div><div class=appmodal-body><div class=\"alert alert-warning\"><input type=checkbox name=remove_node_confirm id=remove_node_confirm value=1 ng-click=\"goFailedNode = !goFailedNode\"> <span ng-bind-html=\"_t('are_you_sure_remove_node') | toTrusted\"></span> <strong>{{deviceInfo.name}}</strong><p>{{_t('txt_controller_delete_node')}}</p></div></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleModal('failedNodeModal', $event);controlDh.input.failedNodes = 0\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button> <button type=button class=\"btn btn-danger\" id=btn_reset_controller ng-show=goFailedNode ng-click=\"removeFailedNode('devices[' + controlDh.input.failedNodes + '].RemoveFailedNode()',handleModal('failedNodeModal', $event))\"><i class=\"fa fa-exclamation-triangle\"></i> {{_t('nm_remove_failed')}}</button></div></div></div><div id=failedBatteryModal class=appmodal ng-if=modalArr.failedBatteryModal ng-controller=BatteryDeviceFailedController><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handleModal('failedBatteryModal', $event);controlDh.input.failedBatteries = 0\"><i class=\"fa fa-times\"></i></span><h3>{{_t('nm_mark_battery_as_failed') + ' #' + controlDh.input.failedBatteries}}</h3></div><div class=appmodal-body>{{_t('nm_mark_node_war_modal')}}</div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleModal('failedBatteryModal', $event);controlDh.input.failedBatteries = 0\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button> <button type=button class=\"btn btn-primary\" id=btn_reset_controller ng-click=\"markFailedNode(\r" +
     "\n" +
     "                    ['devices[' + controlDh.input.failedBatteries + '].SendNoOperation()',\r" +
     "\n" +
@@ -35149,28 +35149,25 @@ angApp.filter('decToHex', function () {
  * Replace Lock state with text
  */
 angApp.filter('lockStatus', function () {
-    return function (input) {
-        var mode = input;
+    return function (mode) {
         var mode_lbl;
 
-        if (mode === '' || mode === null) {
-            mode_lbl = '?';
-        } else {
-            switch (mode) {
-                case 0x00:
-                    mode_lbl = 'Open';
-                    break;
-                case 0x10:
-                    mode_lbl = 'Open from inside';
-                    break;
-                case 0x20:
-                    mode_lbl = 'Open from outside';
-                    break;
-                case 0xff:
-                    mode_lbl = 'Closed';
-                    break;
-            }
-            ;
+        switch (mode) {
+            case 0:
+                mode_lbl = 'open';
+                break;
+            case 16:
+                mode_lbl = 'open_from_inside';
+                break;
+            case 32:
+                mode_lbl = 'open_from_outside';
+                break;
+            case 255:
+                mode_lbl = 'closed';
+                break;
+            default:
+                mode_lbl = '-';
+                break;
         }
         ;
         return mode_lbl;
@@ -35516,16 +35513,13 @@ appFactory.factory('_', function () {
 appFactory.factory('dataService', function ($http, $q, $interval, $filter, $location, $window, deviceService, myCache, cfg) {
     var updatedTime = Math.round(+new Date() / 1000);
     var apiData;
-    var apiDataInterval;
-    var queueDataInterval;
+    // todo: deprecated
+    //var apiDataInterval;
+    //var queueDataInterval;
     /**
      * Public functions
      */
     return({
-        getZwaveData: getZwaveData,
-        joinedZwaveData: joinedZwaveData,
-        cancelZwaveDataInterval: cancelZwaveDataInterval,
-        purgeCache: purgeCache,
         // With promises
         getCfgXml: getCfgXml,
         putCfgXml: putCfgXml,
@@ -35546,7 +35540,6 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         xmlToJson: xmlToJson,
         getTextFile: getTextFile,
         storeTextToFile: storeTextToFile,
-        updateDeviceFirmware: updateDeviceFirmware,
         uploadApiFile: uploadApiFile,
         postReport: postReport,
         getAppBuiltInfo: getAppBuiltInfo,
@@ -35567,91 +35560,6 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             }
         }
 
-    }
-
-    /**
-     * Gets all of the data in the remote collection.
-     */
-    function getZwaveData(callback, noCache) {
-        getAppIp();
-        var time = Math.round(+new Date() / 1000);
-        if (apiData && !noCache) {
-            return callback(apiData);
-        } else {
-
-            //pageLoader();
-            var request = $http({
-                method: "POST",
-                url: cfg.server_url + cfg.update_url + "0"
-                        //url: 'storage/all_cp.json'
-            });
-            request.success(function (data) {
-                apiData = data;
-                //pageLoader(true);
-                return callback(data);
-            }).error(function () {
-                //pageLoader(true);
-                handleError(false, true, false);
-
-
-            });
-        }
-    }
-
-
-
-    /**
-     * Get updated data and join with ZwaveData
-     */
-    function  joinedZwaveData(callback) {
-        var time = Math.round(+new Date() / 1000);
-
-        var result = {};
-        var refresh = function () {
-            //console.log(apiData);
-            var request = $http({
-                method: "POST",
-                //url: "storage/updated.json"
-                url: cfg.server_url + cfg.update_url + time
-            });
-            request.success(function (data) {
-                if (!apiData || !data)
-                    return;
-                time = data.updateTime;
-                angular.forEach(data, function (obj, path) {
-                    if (!angular.isString(path)) {
-                        return;
-                    }
-                    var pobj = apiData;
-                    var pe_arr = path.split('.');
-                    for (var pe in pe_arr.slice(0, -1)) {
-                        pobj = pobj[pe_arr[pe]];
-                    }
-                    pobj[pe_arr.slice(-1)] = obj;
-                });
-                result = {
-                    "joined": apiData,
-                    "update": data
-                };
-                return callback(result);
-            }).error(function () {
-                handleError();
-
-            });
-        };
-        apiDataInterval = $interval(refresh, cfg.interval);
-    }
-
-
-    /**
-     * Cancel data interval
-     */
-    function cancelZwaveDataInterval() {
-        if (angular.isDefined(apiDataInterval)) {
-            $interval.cancel(apiDataInterval);
-            apiDataInterval = undefined;
-        }
-        return;
     }
 
     /**
@@ -36136,25 +36044,6 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         });
     }
 
-    /**
-     * Run Firmware Update
-     */
-    function updateDeviceFirmware(nodeId, data) {
-        var uploadUrl = cfg.server_url + cfg.fw_update_url + '/' + nodeId;
-        var fd = new FormData();
-        fd.append('file', data.file);
-        fd.append('url', data.url);
-        fd.append('targetId', data.targetId);
-        $http.post(uploadUrl, fd, {
-            transformRequest: angular.identity,
-            headers: {'Content-Type': undefined}
-        }).success(function () {
-            handleSuccess(data);
-        }).error(function () {
-            handleError();
-        });
-
-    }
 
     /**
      * Upload a file to ZAutomation
@@ -36256,15 +36145,6 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
     }
 
     /**
-     * Handle success response
-     */
-    function handleSuccess(response) {
-        console.log('Success');
-        return;
-
-    }
-
-    /**
      * Clear the cached ZWaveData.
      */
     function purgeCache() {
@@ -36303,7 +36183,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             url: url
         });
         request.success(function (data) {
-            handleSuccess(data);
+            //handleSuccess(data);
             if (success)
                 success();
         }).error(function (err) {
@@ -36341,6 +36221,96 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
 
 
     /* /////////////////////////////////////// Remove /////////////////////////////////////////////// */
+
+    /**
+     * todo: deprecated
+     * Gets all of the data in the remote collection.
+     */
+    /*function getZwaveData(callback, noCache) {
+     getAppIp();
+     var time = Math.round(+new Date() / 1000);
+     if (apiData && !noCache) {
+     return callback(apiData);
+     } else {
+
+     //pageLoader();
+     var request = $http({
+     method: "POST",
+     url: cfg.server_url + cfg.update_url + "0"
+     //url: 'storage/all_cp.json'
+     });
+     request.success(function (data) {
+     apiData = data;
+     //pageLoader(true);
+     return callback(data);
+     }).error(function () {
+     //pageLoader(true);
+     handleError(false, true, false);
+
+
+     });
+     }
+     }*/
+
+
+
+    /**
+     * todo: deprecated
+     * Get updated data and join with ZwaveData
+     */
+    /*
+    function  joinedZwaveData(callback) {
+        var time = Math.round(+new Date() / 1000);
+
+        var result = {};
+        var refresh = function () {
+            //console.log(apiData);
+            var request = $http({
+                method: "POST",
+                //url: "storage/updated.json"
+                url: cfg.server_url + cfg.update_url + time
+            });
+            request.success(function (data) {
+                if (!apiData || !data)
+                    return;
+                time = data.updateTime;
+                angular.forEach(data, function (obj, path) {
+                    if (!angular.isString(path)) {
+                        return;
+                    }
+                    var pobj = apiData;
+                    var pe_arr = path.split('.');
+                    for (var pe in pe_arr.slice(0, -1)) {
+                        pobj = pobj[pe_arr[pe]];
+                    }
+                    pobj[pe_arr.slice(-1)] = obj;
+                });
+                result = {
+                    "joined": apiData,
+                    "update": data
+                };
+                return callback(result);
+            }).error(function () {
+                handleError();
+
+            });
+        };
+        apiDataInterval = $interval(refresh, cfg.interval);
+    }*/
+
+
+
+    /**
+     * todo: deprecated
+     * Cancel data interval
+     */
+    /*function cancelZwaveDataInterval() {
+        if (angular.isDefined(apiDataInterval)) {
+            $interval.cancel(apiDataInterval);
+            apiDataInterval = undefined;
+        }
+        return;
+    }*/
 
 
     /**
@@ -36510,6 +36480,38 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         //$('#main_content').hide();
         $('#respone_container').show();
         $('#respone_container_inner').html('<div class="alert alert-warning page-load-spinner"><i class="fa fa-spinner fa-lg fa-spin"></i><br /> Loading data....</div>');
+        return;
+
+    }*/
+
+
+    /**
+     * todo: deprecated
+     * Run Firmware Update
+     */
+    /*function updateDeviceFirmware(nodeId, data) {
+        var uploadUrl = cfg.server_url + cfg.fw_update_url + '/' + nodeId;
+        var fd = new FormData();
+        fd.append('file', data.file);
+        fd.append('url', data.url);
+        fd.append('targetId', data.targetId);
+        $http.post(uploadUrl, fd, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        }).success(function () {
+            handleSuccess(data);
+        }).error(function () {
+            handleError();
+        });
+
+    }*/
+
+    /**
+     * todo: deprecated
+     * Handle success response
+     */
+    /*function handleSuccess(response) {
+        console.log('Success');
         return;
 
     }*/
@@ -37578,7 +37580,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
      * Get xml config param
      */
     function getCfgXmlParam(cfgXml, nodeId, instance, commandClass, command) {
-        console.log(cfgXml)
+        //console.log(cfgXml)
         var collection = [];
         var cfg = $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration');
         var parseParam = function(v,nodeId, instance, commandClass, command){
@@ -39077,7 +39079,6 @@ appController.controller('DongleController', function($scope, $window,$cookies,c
         }
         angular.extend($scope.cfg,{dongle: $scope.homeDongle.model.dongle});
         $cookies.dongle = $scope.homeDongle.model.dongle;
-        dataService.purgeCache();
         $window.location.reload();
     };
 });
@@ -39391,7 +39392,6 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
      */
     $scope.$on('$destroy', function() {
         $interval.cancel($scope.sensors.interval);
-        //dataService.cancelZwaveDataInterval();
     });
 
     /**
@@ -40217,9 +40217,6 @@ appController.controller('LocksController', function($scope, $filter, $timeout,$
 
                 // CC gui
                 var mode = instance.commandClasses[doorLockCCId].data.mode.value;
-                if (mode === '' || mode === null) {
-                    mode = 0;
-                }
 
                 var ccId = 98;
                 // Set object
@@ -40232,6 +40229,7 @@ appController.controller('LocksController', function($scope, $filter, $timeout,$
                 obj['ccId'] = doorLockCCId;
                 obj['rowId'] = 'row_' + nodeId + '_' + cnt;
                 obj['name'] = $filter('deviceName')(nodeId, node);
+                obj['status'] = $filter('lockStatus')(mode);
                 obj['level'] = mode;
                 obj['updateTime'] = instance.commandClasses[ccId].data.mode.updateTime;
                 obj['invalidateTime'] = instance.commandClasses[ccId].data.mode.invalidateTime;
@@ -40636,77 +40634,6 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
     $scope.interviewForceDevice = function (cmd) {
         $scope.runZwaveCmd(cmd);
     };
-
-    // Load data
-    /*$scope.load = function () {
-        dataService.getZwaveData(function (ZWaveAPIData) {
-            $scope.ZWaveAPIData = ZWaveAPIData;
-            setData($scope.ZWaveAPIData);
-            dataService.joinedZwaveData(function (data) {
-                if ($scope.interviewDeviceId > 1) {
-                    refreshModalInterview($scope.ZWaveAPIData.devices[$scope.interviewDeviceId], data.joined.devices[$scope.interviewDeviceId]);
-                }
-
-//                $scope.reset();
-//                setData(data.joined);
-                refreshData(data.update);
-            });
-        });
-    };
-
-    // Load data
-    $scope.load($scope.lang);*/
-
-    // Cancel interval on page destroy
-    /*$scope.$on('$destroy', function () {
-        dataService.cancelZwaveDataInterval();
-    });*/
-
-
-    //todo: deprecated
-   /* $scope.showModalInterview = function (target, index, id, name) {
-        $scope.deviceInfo = {
-            "index": index,
-            "id": id,
-            "name": name
-        };
-        $scope.interviewDeviceId = id;
-        var node = $scope.ZWaveAPIData.devices[id];
-        $scope.interviewCommands = deviceService.configGetInterviewCommands(node);
-        //$scope.interviewCommands.push(deviceService.configGetInterviewCommands(node));
-        $(target).modal();
-    };*/
-    //todo: deprecated
-    // Show modal dialog
-    /*$scope.hideModalInterview = function () {
-        $scope.interviewDeviceId = null;
-    };*/
-
-
-    //todo: deprecated
-    // Show modal CommandClass dialog
-    /*$scope.showModalCommandClass = function (target, instanceId, ccId, type) {
-        var node = $scope.ZWaveAPIData.devices[$scope.interviewDeviceId];
-        if (!node) {
-            return;
-        }
-        var ccData;
-        switch (type) {
-            case 'cmdData':
-                ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.commandClasses.' + ccId + '.data');
-                break;
-            case 'cmdDataIn':
-                ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.data');
-                break;
-            default:
-                ccData = $filter('hasNode')(node, 'data');
-                break;
-        }
-        var cc = deviceService.configGetCommandClass(ccData, '/', '');
-
-        $scope.commandClass = deviceService.configSetCommandClass(cc);
-        $(target).modal();
-    };*/
     /// --- Private functions --- ///
 
     /**
@@ -40815,68 +40742,6 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
 
     }
     ;
-
-    // todo: deprecated
-    // Refresh data
-    /*function refreshData(data) {
-        angular.forEach($scope.statuses.all, function (v, k) {
-            angular.forEach(v.cmd, function (ccId, key) {
-                if (ccId in data) {
-                    var node = 'devices.' + v.id;
-                    var isAwakeCmd = node + '.data.isAwake';
-                    var isFailedCmd = node + '.data.isFailed';
-                    var lastReceiveCmd = node + '.data.lastReceived';
-                    var lastSendCmd = node + '.data.lastSend';
-                    var lastWakeupCmd = node + '.instances.0.commandClasses.132.data.lastWakeup';
-                    var lastSleepCmd = node + '.instances.0.commandClasses.132.data.lastSleep';
-                    var lastCommunication = v.lastCommunication;
-                    switch (ccId) {
-                        case isAwakeCmd:
-                            var isAwake = data[isAwakeCmd].value;
-                            var awake_cont = awakeCont(isAwake, v.isListening, v.isFLiRS);
-                            $('#' + v.rowId + ' .row-awake').html(awake_cont);
-                            break;
-                        case isFailedCmd:
-                            var isFailed = data[isFailedCmd].value;
-                            if (isFailed) {
-                                $('#' + v.rowId + ' .row-isfailed').html(getIsFailedCont(isFailed));
-                            }
-                            $('#' + v.rowId + ' .row-time').html(operatingCont(lastCommunication));
-                            break;
-                        case lastReceiveCmd:
-                            var lastReceive = data[lastReceiveCmd].updateTime;
-                            lastCommunication = (lastReceive > lastCommunication) ? lastReceive : lastCommunication;
-                            var operating_cont_rec = operatingCont(lastCommunication);
-                            $('#' + v.rowId + ' .row-time').html(operating_cont_rec);
-                            break;
-                        case lastSendCmd:
-                            var lastSend = data[lastSendCmd].updateTime;
-                            lastCommunication = (lastSend > lastCommunication) ? lastSend : lastCommunication;
-                            var operating_cont_send = operatingCont(lastCommunication);
-                            $('#' + v.rowId + ' .row-time').html(operating_cont_send);
-                            break;
-                        case lastWakeupCmd:
-                            var lastWakeup = data[lastWakeupCmd].value;
-                            if (angular.isDefined(data[lastSleepCmd])) {
-                                var sleepingSince = data[lastSleepCmd].value;
-                                var sleeping_cont = sleepingCont(v.isListening, v.hasWakeup, v.isFLiRS, sleepingSince, lastWakeup, v.interval);
-                                $('#' + v.rowId + ' .row-sleeping').html(sleeping_cont);
-
-                            }
-                            break;
-                        case lastSleepCmd:
-                            //console.log(lastSleepCmd);
-                            break;
-                    }
-                    ;
-                    //$('#' + v.rowId + ' .row-time').html(node);
-                }
-
-            });
-
-        });
-    }
-    ;*/
 
     // Refresh Modal Interview data
     function refreshModalInterview(oldCc, newCc) {
@@ -41752,7 +41617,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
 
 
         // Customsettings
-        $scope.controlDh.controller.hasDevices = hasDevices < 2 ? false : true;
+        $scope.controlDh.controller.hasDevices = hasDevices > 1;
         $scope.controlDh.controller.disableSUCRequest = true;
         if (hasSUC && hasSUC != controllerNodeId) {
             $scope.controlDh.controller.disableSUCRequest = false;
@@ -42884,7 +42749,7 @@ appController.controller('ReorganizationController', function($scope, $filter, $
     };
     // Load data
     $scope.load = function(lang) {
-        dataService.getZwaveData(function(ZWaveAPIData) {
+        dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
             // Prepare devices and nodes
             angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
@@ -43128,11 +42993,12 @@ appController.controller('ControllerController', function($scope, $window, $filt
         interval: null
     }
 
-    // Cancel interval on page destroy
+    /**
+     * Cancel interval on page destroy
+     */
     $scope.$on('$destroy', function() {
-        dataService.cancelZwaveDataInterval();
+        $interval.cancel($scope.controllerInfo.interval);
     });
-
     /**
      * Load app built info
      */
@@ -43542,14 +43408,17 @@ appController.controller('LicenseController', function($scope, $timeout, dataSer
         "selldate": null,
         "usedate": null
     };
-    $scope.ZWaveAPIData = function() {
-        dataService.getZwaveData(function(ZWaveAPIData) {
+    /**
+     * Load zwave data
+     */
+    $scope.loadZwaveData = function() {
+        dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
             $scope.controllerUuid = ZWaveAPIData.controller.data.uuid.value;
             $scope.controllerIsZeroUuid = parseInt("0x" + ZWaveAPIData.controller.data.uuid.value, 16) === 0;
 
         });
     };
-    $scope.ZWaveAPIData();
+    $scope.loadZwaveData();
     /**
      * Get license key
      */
@@ -43615,8 +43484,8 @@ appController.controller('UzbController', function ($scope, $timeout, $window, c
      * Load data
      *
      */
-    $scope.load = function () {
-        dataService.getZwaveData(function (ZWaveAPIData) {
+    $scope.loadZwaveData = function () {
+        dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
             var vendorId = parseInt(ZWaveAPIData.controller.data.manufacturerId.value, 10);
             //0x0115 = 277, 0x0147 = 327
             var allowedVendors = [277, 327];
@@ -43637,7 +43506,7 @@ appController.controller('UzbController', function ($scope, $timeout, $window, c
             loadUzb(urlParams);
         });
     };
-    $scope.load();
+    $scope.loadZwaveData();
 
     // Upgrade bootloader/firmware
     $scope.upgrade = function (action, url) {
@@ -44689,7 +44558,7 @@ appController.controller('NetworkMapController', function ($scope, $interval, $f
  * Report controller
  */
 // Home controller
-appController.controller('HomeController', function($scope, $filter, $timeout, $route, $interval,dataService, deviceService, cfg) {
+appController.controller('HomeController', function ($scope, $filter, $timeout, $route, $interval, dataService, deviceService, cfg) {
     $scope.home = {
         show: false,
         interval: null
@@ -44709,33 +44578,33 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
     $scope.notes = [];
     $scope.notesData = '';
     //$scope.updateTime = $filter('getTimestamp');
-     $scope.controller = {
-         controllerState: 0,
-         startLearnMode: false
-     };
+    $scope.controller = {
+        controllerState: 0,
+        startLearnMode: false
+    };
 
     /**
      * Cancel interval on page destroy
      */
-    $scope.$on('$destroy', function() {
+    $scope.$on('$destroy', function () {
         $interval.cancel($scope.home.interval);
     });
 
     /*$scope.reset = function() {
-        $scope.failedDevices = angular.copy([]);
-        $scope.lowBatteryDevices = angular.copy([]);
-        $scope.notInterviewDevices = angular.copy([]);
-        $scope.localyResetDevices = angular.copy([]);
-        $scope.assocRemovedDevices = angular.copy([]);
-        $scope.notConfigDevices = angular.copy([]);
+     $scope.failedDevices = angular.copy([]);
+     $scope.lowBatteryDevices = angular.copy([]);
+     $scope.notInterviewDevices = angular.copy([]);
+     $scope.localyResetDevices = angular.copy([]);
+     $scope.assocRemovedDevices = angular.copy([]);
+     $scope.notConfigDevices = angular.copy([]);
 
-    };*/
+     };*/
 
     /**
      * Load zwave data
      */
-    $scope.loadZwaveData = function() {
-        dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
+    $scope.loadZwaveData = function () {
+        dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
             $scope.home.show = true;
             var isRealPrimary = ZWaveAPIData.controller.data.isRealPrimary.value;
             var hasDevices = Object.keys(ZWaveAPIData.devices).length;
@@ -44749,7 +44618,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
             $scope.controller.controllerState = ZWaveAPIData.controller.data.controllerState.value;
             $scope.controller.startLearnMode = !isRealPrimary || hasDevices < 2 ? true : false;
             $scope.refreshZwaveData(ZWaveAPIData);
-        }, function(error) {
+        }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
         });
     };
@@ -44759,9 +44628,9 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
      * Refresh zwave data
      * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function(ZWaveAPIData) {
-        var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+    $scope.refreshZwaveData = function (ZWaveAPIData) {
+        var refresh = function () {
+            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function (response) {
                 notInterviewDevices(response.data.joined);
                 countDevices(response.data.joined);
                 assocRemovedDevices(response.data.joined);
@@ -44769,42 +44638,11 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
                 batteryDevices(response.data.joined);
                 $scope.mainsDevices = $scope.countDevices - ($scope.batteryDevices + $scope.flirsDevices);
                 $scope.controller.controllerState = response.data.joined.controller.data.controllerState.value;
-            }, function(error) {});
+            }, function (error) {
+            });
         };
         $scope.home.interval = $interval(refresh, $scope.cfg.interval);
     };
-
-
-    /**
-     * Load data
-     *
-     */
-    /*$scope.loadData = function() {
-        dataService.getZwaveData(function(ZWaveAPIData) {
-            var isRealPrimary = ZWaveAPIData.controller.data.isRealPrimary.value;
-            var hasDevices = Object.keys(ZWaveAPIData.devices).length;
-            $scope.ZWaveAPIData = ZWaveAPIData;
-            notInterviewDevices(ZWaveAPIData);
-            countDevices(ZWaveAPIData);
-            assocRemovedDevices(ZWaveAPIData);
-            notConfigDevices(ZWaveAPIData);
-            batteryDevices(ZWaveAPIData);
-            $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
-            $scope.controller.controllerState = ZWaveAPIData.controller.data.controllerState.value;
-            $scope.controller.startLearnMode = !isRealPrimary || hasDevices < 2 ? true : false;
-            dataService.joinedZwaveData(function(data) {
-                $scope.reset();
-                notInterviewDevices(data.joined);
-                countDevices(data.joined);
-                assocRemovedDevices(data.joined);
-                //notConfigDevices(ZWaveAPIData);
-                batteryDevices(data.joined);
-                $scope.mainsDevices = $scope.countDevices - $scope.batteryDevices;
-                $scope.controller.controllerState = data.joined.controller.data.controllerState.value;
-
-            });
-        });
-    };*/
     if (!cfg.custom_ip) {
         //$scope.loadData();
         $scope.loadZwaveData();
@@ -44819,32 +44657,26 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
     /**
      * Set custom IP
      */
-    $scope.setIP = function(ip) {
+    $scope.setIP = function (ip) {
         if (!ip || ip == '') {
             $('.custom-ip-error').show();
             return;
         }
-        dataService.cancelZwaveDataInterval();
+        $interval.cancel($scope.home.interval);
         $('.custom-ip-success,.custom-ip-true .home-page').hide();
         var setIp = 'http://' + ip + ':8083';
         cfg.server_url = setIp;
-        dataService.purgeCache();
         $scope.loadHomeData = true;
         $route.reload();
     };
 
-    // Cancel interval on page destroy
-    /*$scope.$on('$destroy', function() {
-        dataService.cancelZwaveDataInterval();
-    });*/
-    
-     // Run Zwave Command
-    $scope.runZwaveCmdConfirm = function (cmd,confirm) {
-        if(confirm){
+    // Run Zwave Command
+    $scope.runZwaveCmdConfirm = function (cmd, confirm) {
+        if (confirm) {
             alertify.confirm(confirm, function () {
                 _runZwaveCmd(cmd);
             });
-        }else{
+        } else {
             _runZwaveCmd(cmd);
         }
     };
@@ -44854,17 +44686,17 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
      *
      * @returns {void}
      */
-    $scope.showModal = function(target, id) {
+    $scope.showModal = function (target, id) {
 
         /*var obj = $filter('filter')($scope.devices, function(d) {
-            return d.id == id;
-        })[0];
-        if (obj) {
-            $scope.deviceInfo = {
-                "id": obj.id,
-                "name": obj.name
-            };
-        }*/
+         return d.id == id;
+         })[0];
+         if (obj) {
+         $scope.deviceInfo = {
+         "id": obj.id,
+         "name": obj.name
+         };
+         }*/
         $(target).modal();
         return;
     };
@@ -44876,7 +44708,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
      */
     function _runZwaveCmd(cmd) {
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
-            }, function (error) {
+        }, function (error) {
             alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
         });
     }
@@ -44889,7 +44721,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
         var cnt = 0;
         var cntFlirs = 0;
         // Loop throught devices
-        angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+        angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
 
             if (deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
@@ -44908,20 +44740,20 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
             if (isFailed) {
                 //$scope.failedDevices.push(obj);
                 var findIndexF = _.findIndex($scope.failedDevices, {id: obj.id});
-                if(findIndexF > -1){
-                    angular.extend($scope.failedDevices[findIndexF],obj);
+                if (findIndexF > -1) {
+                    angular.extend($scope.failedDevices[findIndexF], obj);
 
-                }else{
+                } else {
                     $scope.failedDevices.push(obj);
                 }
             }
             if (isLocalyReset) {
                 //$scope.localyResetDevices.push(obj);
                 var findIndexR = _.findIndex($scope.localyResetDevices, {id: obj.id});
-                if(findIndexR > -1){
-                    angular.extend($scope.localyResetDevices[findIndexR],obj);
+                if (findIndexR > -1) {
+                    angular.extend($scope.localyResetDevices[findIndexR], obj);
 
-                }else{
+                } else {
                     $scope.localyResetDevices.push(obj);
                 }
             }
@@ -44941,7 +44773,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
         var batteryCnt = 0;
         var batteryWakeupCnt = 0;
         // Loop throught devices
-        angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+        angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
             if (nodeId == 255 || nodeId == controllerId || node.data.isVirtual.value) {
                 return;
             }
@@ -44971,17 +44803,17 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
             if (battery_charge <= 20 && interviewDone) {
                 //$scope.lowBatteryDevices.push(obj);
                 var findIndex = _.findIndex($scope.lowBatteryDevices, {id: obj.id});
-                if(findIndex > -1){
-                    angular.extend($scope.lowBatteryDevices[findIndex],obj);
+                if (findIndex > -1) {
+                    angular.extend($scope.lowBatteryDevices[findIndex], obj);
 
-                }else{
+                } else {
                     $scope.lowBatteryDevices.push(obj);
                 }
             }
-            if(hasBattery){
+            if (hasBattery) {
                 batteryCnt++;
             }
-            if(hasBatteryWakeup){
+            if (hasBatteryWakeup) {
                 batteryWakeupCnt++;
             }
 
@@ -44998,7 +44830,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
         var controllerId = ZWaveAPIData.controller.data.nodeId.value;
         var cnt = 0;
         // Loop throught devices
-        angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+        angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
             if (nodeId == 255 || nodeId == controllerId || node.data.isVirtual.value) {
                 return;
             }
@@ -45011,10 +44843,10 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
                     if (isDone == false) {
                         //$scope.notInterviewDevices.push(obj);
                         var findIndex = _.findIndex($scope.notInterviewDevices, {id: obj.id});
-                        if(findIndex > -1){
-                            angular.extend($scope.notInterviewDevices[findIndex],obj);
+                        if (findIndex > -1) {
+                            angular.extend($scope.notInterviewDevices[findIndex], obj);
 
-                        }else{
+                        } else {
                             $scope.notInterviewDevices.push(obj);
                         }
                         return;
@@ -45031,15 +44863,13 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
      * notInterviewDevices
      */
     function notConfigDevices(ZWaveAPIData) {
-        var controllerId = ZWaveAPIData.controller.data.nodeId.value;
-        var cnt = 0;
-        var cnt = 0;
         // Loop throught devices
         dataService.xmlToJson(cfg.server_url + '/config/Configuration.xml').then(function (response) {
-          //dataService.getCfgXml(function(cfgXml) {
-            angular.forEach(response.config.devices.deviceconfiguration, function(cfg, cfgId) {
+            //dataService.getCfgXml(function(cfgXml) {
+            angular.forEach(response.config.devices.deviceconfiguration, function (cfg, cfgId) {
                 var node = ZWaveAPIData.devices[cfg['_id']];
-                if (!node) {
+
+                if (!node || !$filter('hasNode')(node, 'instances.0.commandClasses.112')) {
                     return;
                 }
                 var array = JSON.parse(cfg['_parameter']);
@@ -45049,23 +44879,20 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
                 if (array.length > 2) {
                     cfgNum = array[0];
                     cfgVal = array[1];
-                    if (node.instances[0].commandClasses[0x70].val) {
-                        devVal = node.instances[0].commandClasses[0x70].data[cfgNum].val.value;
-                        if (cfgVal != devVal) {
-                            var obj = {};
-                            obj['name'] = $filter('deviceName')(cfg['_id'], node);
-                            obj['id'] = cfg['_id'];
-                            //$scope.notConfigDevices.push(obj);
-                            var findIndex = _.findIndex($scope.notConfigDevices, {id: obj.id});
-                            if(findIndex > -1){
-                                angular.extend($scope.notConfigDevices[findIndex],obj);
+                    devVal = node.instances[0].commandClasses[0x70].data[cfgNum].val.value;
+                    if (cfgVal != devVal) {
+                        var obj = {};
+                        obj['name'] = $filter('deviceName')(cfg['_id'], node);
+                        obj['id'] = cfg['_id'];
+                        //$scope.notConfigDevices.push(obj);
+                        var findIndex = _.findIndex($scope.notConfigDevices, {id: obj.id});
+                        if (findIndex > -1) {
+                            angular.extend($scope.notConfigDevices[findIndex], obj);
 
-                            }else{
-                                $scope.notConfigDevices.push(obj);
-                            }
+                        } else {
+                            $scope.notConfigDevices.push(obj);
                         }
                     }
-
 
                 }
             });
@@ -45079,7 +44906,7 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
         var controllerId = ZWaveAPIData.controller.data.nodeId.value;
         var cnt = 0;
         // Loop throught devices
-        angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+        angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
             if (nodeId == 255 || nodeId == controllerId || node.data.isVirtual.value) {
                 return;
             }
@@ -45091,10 +44918,10 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
                 obj['assoc'] = removedDevices;
                 //$scope.assocRemovedDevices.push(obj);
                 var findIndex = _.findIndex($scope.assocRemovedDevices, {id: obj.id});
-                if(findIndex > -1){
-                    angular.extend($scope.assocRemovedDevices[findIndex],obj);
+                if (findIndex > -1) {
+                    angular.extend($scope.assocRemovedDevices[findIndex], obj);
 
-                }else{
+                } else {
                     $scope.assocRemovedDevices.push(obj);
                 }
                 cnt++;
@@ -45118,7 +44945,10 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
                     for (var i = 0; i < data.nodes.value.length; i++) {
                         var targetNodeId = data.nodes.value[i];
                         if (!(targetNodeId in ZWaveAPIData.devices)) {
-                            assocDevices.push({'id': targetNodeId, 'name': '(#' + targetNodeId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId])});
+                            assocDevices.push({
+                                'id': targetNodeId,
+                                'name': '(#' + targetNodeId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId])
+                            });
                         }
                     }
 
@@ -45138,7 +44968,10 @@ appController.controller('HomeController', function($scope, $filter, $timeout, $
                         var targetInstanceId = data.nodesInstances.value[i + 1];
                         var instanceId = (targetInstanceId > 0 ? '.' + targetInstanceId : '');
                         if (!(targetNodeId in ZWaveAPIData.devices)) {
-                            assocDevices.push({'id': targetNodeId, 'name': '(#' + targetNodeId + instanceId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId])});
+                            assocDevices.push({
+                                'id': targetNodeId,
+                                'name': '(#' + targetNodeId + instanceId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId])
+                            });
                         }
 
                     }
@@ -45337,12 +45170,6 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         }
     };
 
-    // todo: deprecated
-    // Cancel interval on page destroy
-   /* $scope.$on('$destroy', function () {
-        dataService.cancelZwaveDataInterval();
-    });*/
-
     /**
      * Request NIF of a device
      * Node Id to be requested for a NIF
@@ -45421,60 +45248,6 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
             alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
         });
     };
-
-    // todo: DEPRECATED
-    // Show modal CommandClass dialog
-    /*$scope.showModalCommandClass = function (target, instanceId, ccId, type) {
-        var node = $scope.ZWaveAPIData.devices[$routeParams.nodeId];
-        var ccData;
-        switch (type) {
-            case 'cmdData':
-                ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.commandClasses.' + ccId + '.data');
-                break;
-            case 'cmdDataIn':
-                ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.data');
-                break;
-            default:
-                ccData = $filter('hasNode')(node, 'data');
-                break;
-        }
-        var cc = deviceService.configGetCommandClass(ccData, '/', '');
-
-        $scope.commandClass = deviceService.configSetCommandClass(cc);
-        $(target).modal();
-    };*/
-
-    // todo: deprecated
-    // Show modal dialog
-    /*$scope.showModalInterview = function (target) {
-        $(target).modal();
-    };*/
-
-    // todo: deprecated
-    // Show modal device select dialog
-    /*$scope.showModalDeviceSelect = function (target, nodeId, alert) {
-        dataService.getSelectZDDX(nodeId, function (data) {
-            $scope.deviceZddx = data;
-        }, alert);
-        $(target).modal();
-
-    };*/
-
-    // todo: deprecated
-    // Change device select
-   /* $scope.changeDeviceSelect = function (selector, target, file) {
-        var imageFile = $(selector).find(':selected').data('image');
-        var image;
-        if (imageFile == undefined) {
-            image = $scope._t('no_device_image');
-        } else {
-            image = '<img src="' + imageFile + '" />';
-        }
-        $scope.modelSelectZddx = file;
-        $(target).html(image);
-    };*/
-
-
 
     /// --- Private functions --- ///
     /**
@@ -45691,7 +45464,7 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
  * @class ConfigConfigurationController
  *
  */
-appController.controller('ConfigConfigurationController', function ($scope, $routeParams, $location, $cookies, $filter, $http, $timeout, $route, cfg, dataService, deviceService, myCache, _) {
+appController.controller('ConfigConfigurationController', function ($scope, $routeParams, $location, $cookies, $filter, $http, $timeout, $route, $interval,cfg, dataService, deviceService, myCache, _) {
     $scope.devices = [];
     $scope.deviceId = 0;
     $scope.activeTab = 'configuration';
@@ -45709,9 +45482,25 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
     $scope.protectionCont;
     $scope.wakeupCont;
 
+    $scope.configInterval = null;
+
+    /**
+     * Cancel interval on page destroy
+     */
+    $scope.$on('$destroy', function() {
+        $interval.cancel($scope.configInterval);
+    });
+
+    // Redirect to detail page
+    $scope.changeDevice = function (deviceId) {
+        if (deviceId > 0) {
+            $location.path($scope.activeUrl + deviceId);
+        }
+    };
+
     // Load data
-    $scope.load = function (nodeId) {
-        dataService.getZwaveData(function (ZWaveAPIData) {
+    $scope.loadZwaveData = function (nodeId) {
+        dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
             if(_.isEmpty($scope.devices)){
@@ -45747,27 +45536,37 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
 
         });
     };
-    $scope.load($routeParams.nodeId);
+    $scope.loadZwaveData($routeParams.nodeId);
 
-    // Refresh data
-    $scope.refresh = function (nodeId) {
-        dataService.joinedZwaveData(function (data) {
-            //setData(data.joined, nodeId, true);
-        });
+    /**
+     * Refresh zwave data
+     */
+    $scope.refreshZwaveData = function (nodeId) {
+        var refresh = function() {
+            dataService.loadJoinedZwaveData(null).then(function(response) {
+                var updateData = false;
+                var searchStr = 'devices.' + $routeParams.nodeId + '.'
+                angular.forEach(response.data.update, function(v, k) {
+                    if (k.indexOf(searchStr) !== -1) {
+                        updateData = true;
+                        return;
+                    }
+                });
+                if (updateData) {
+                    //$scope.loadZwaveData($routeParams.nodeId, false);
+                    setData(response.data.joined,nodeId);
+                }
+                //setData(response.data.joined,nodeId);
+            }, function(error) {});
+        };
+        $scope.configInterval = $interval(refresh, $scope.cfg.interval);
+       /* dataService.joinedZwaveData(function (data) {
+            setData(data.joined, nodeId);
+        });*/
     };
-    //$scope.refresh($routeParams.nodeId);
+    $scope.refreshZwaveData($routeParams.nodeId);
 
-    // Redirect to detail page
-    $scope.changeDevice = function (deviceId) {
-        if (deviceId > 0) {
-            $location.path($scope.activeUrl + deviceId);
-        }
-    };
 
-    // Cancel interval on page destroy
-    $scope.$on('$destroy', function () {
-        dataService.cancelZwaveDataInterval();
-    });
 
     /**
      * Update from device action
@@ -45781,13 +45580,13 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         }
         $scope.toggleRowSpinner(spin);
         dataService.runZwaveCmd(cfg.store_url + cmd);
-        $scope.refresh(deviceId);
+        //$scope.refreshZwaveData(deviceId);
 
         $('#' + form + ' .cfg-control-content :input').prop('disabled', true);
         $timeout(function () {
             $scope.toggleRowSpinner();
-            dataService.cancelZwaveDataInterval();
-            $scope.load($routeParams.nodeId);
+           //$interval.cancel($scope.configInterval);
+            $scope.loadZwaveData($routeParams.nodeId);
             $('#' + form + ' .cfg-control-content :input').prop('disabled', false);
         }, 3000);
         return;
@@ -45804,11 +45603,11 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                 dataService.runZwaveCmd(request + '(' + v.confNum + ')');
             }
         });
-        $scope.refresh(deviceId);
+        //$scope.refreshZwaveData(deviceId);
         $('#' + form + ' .cfg-control-content :input').prop('disabled', true);
         $timeout(function () {
-            dataService.cancelZwaveDataInterval();
-            $scope.load($routeParams.nodeId);
+           //$interval.cancel($scope.configInterval);
+            $scope.loadZwaveData($routeParams.nodeId);
             $scope.toggleRowSpinner();
         }, 3000);
         return;
@@ -45981,16 +45780,16 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         });
 
 
-        $scope.refresh(cmd['id']);
+        //$scope.refreshZwaveData(cmd['id']);
         if (confNum) {
             $('#cfg_control_' + confNum + ' :input').prop('disabled', true);
         } else {
             $('#' + form + ' .cfg-control-content :input').prop('disabled', true);
         }
         $timeout(function () {
-            $scope.load($routeParams.nodeId);
+            $scope.loadZwaveData($routeParams.nodeId);
             $('#' + form + ' .cfg-control-content :input').prop('disabled', false);
-            dataService.cancelZwaveDataInterval();
+           //$interval.cancel($scope.configInterval);
             $scope.toggleRowSpinner();
         }, 3000);
         return;
@@ -46001,7 +45800,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
     /**
      * Set zwave data
      */
-    function setData(ZWaveAPIData, nodeId, refresh) {
+    function setData(ZWaveAPIData, nodeId) {
         var node = ZWaveAPIData.devices[nodeId];
         if (!node) {
             return;
@@ -46026,24 +45825,24 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                     var x2js = new X2JS();
                     var zddXml = x2js.xml_str2json(response.data);
                     myCache.put(zddXmlFile, zddXml);
-                    setCont(node, nodeId, zddXml, ZWaveAPIData, refresh);
+                    setCont(node, nodeId, zddXml, ZWaveAPIData);
 
 
                 });
             } else {
-                setCont(node, nodeId, cachedZddXml, ZWaveAPIData, refresh);
+                setCont(node, nodeId, cachedZddXml, ZWaveAPIData);
             }
 
         } else {
 
-            setCont(node, nodeId, null, ZWaveAPIData, refresh);
+            setCont(node, nodeId, null, ZWaveAPIData);
         }
     }
 
     /**
      * Set all conts
      */
-    function setCont(node, nodeId, zddXml, ZWaveAPIData, refresh) {
+    function setCont(node, nodeId, zddXml, ZWaveAPIData) {
         if (!zddXml) {
             $scope.noZddx = true;
             // Loop throught instances
@@ -46065,8 +45864,30 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                     $location.path('/configuration/commands/' + $routeParams.nodeId);
                     return;
                 }
+            }else{
+                if (!$scope.configCont && !$scope.wakeupCont && !$scope.protectionCont && !$scope.switchAllCont) {
+                    $scope.alert = {message: $scope._t('no_device_service'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                    return;
+                }
             }
 
+        }, function(error) {
+            var cfgXml = {};
+            $scope.configCont = deviceService.configConfigCont(node, nodeId, zddXml, cfgXml, $scope.lang, $scope.languages);
+            $scope.wakeupCont = deviceService.configWakeupCont(node, nodeId, ZWaveAPIData, cfgXml);
+            $scope.protectionCont = deviceService.configProtectionCont(node, nodeId, ZWaveAPIData, cfgXml);
+            $scope.switchAllCont = deviceService.configSwitchAllCont(node, nodeId, ZWaveAPIData, cfgXml);
+            if (cfg.app_type === 'installer') {
+                if (!$scope.configCont && !$scope.wakeupCont && !$scope.protectionCont && !$scope.switchAllCont) {
+                    $location.path('/configuration/commands/' + $routeParams.nodeId);
+                    return;
+                }
+            }else{
+                if (!$scope.configCont && !$scope.wakeupCont && !$scope.protectionCont && !$scope.switchAllCont) {
+                    $scope.alert = {message: $scope._t('no_device_service'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                    return;
+                }
+            }
         });
     }
     function configurationCc(commandClass, instanceId,nodeId, ZWaveAPIData) {
@@ -46103,11 +45924,12 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
  * @class ConfigCommandsController
  *
  */
-appController.controller('ConfigCommandsController', function ($scope, $routeParams, $location, $cookies, $timeout, $filter, cfg,dataService, deviceService, _) {
+appController.controller('ConfigCommandsController', function ($scope, $routeParams, $location, $cookies, $interval,$timeout, $filter, cfg,dataService, deviceService, _) {
     $scope.devices = [];
     $scope.deviceName = '';
     $scope.commands = [];
     $scope.interviewCommands;
+    $scope.commandsInterval = null;
 
     $scope.deviceId = 0;
     $scope.activeTab = 'commands';
@@ -46119,12 +45941,19 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
      * Cancel interval on page destroy
      */
     $scope.$on('$destroy', function() {
-        dataService.cancelZwaveDataInterval();
+        $interval.cancel($scope.commandsInterval);
     });
 
+    // Redirect to detail page
+    $scope.changeDevice = function (deviceId) {
+        if (deviceId > 0) {
+            $location.path($scope.activeUrl + deviceId);
+        }
+    };
+
     // Load data
-    $scope.load = function (nodeId) {
-        dataService.getZwaveData(function (ZWaveAPIData) {
+    $scope.loadData = function (nodeId) {
+        dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
             if(_.isEmpty($scope.devices)){
@@ -46154,49 +45983,23 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
             $cookies.config_url = $scope.activeUrl + nodeId;
             $scope.deviceId = nodeId;
             $scope.deviceName = $filter('deviceName')(nodeId, node);
-
-            /**
-             * Expert commands
-             */
-            angular.forEach(node.instances, function (instance, instanceId) {
-                angular.forEach(instance.commandClasses, function (commandClass, ccId) {
-                    var methods = getMethodSpec(ZWaveAPIData, nodeId, instanceId, ccId, null);
-                    var command = deviceService.configGetCommands(methods, ZWaveAPIData);
-                    var obj = {};
-                    obj['nodeId'] = nodeId;
-                    obj['rowId'] = 'row_' + nodeId + '_' + instanceId + '_' + ccId;
-                    obj['instanceId'] = instanceId;
-                    obj['ccId'] = ccId;
-                    obj['cmd'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']';
-                    obj['cmdData'] = ZWaveAPIData.devices[nodeId].instances[instanceId].commandClasses[ccId].data;
-                    obj['cmdDataIn'] = ZWaveAPIData.devices[nodeId].instances[instanceId].data;
-                    obj['commandClass'] = commandClass.name;
-                    obj['command'] = command;
-                    obj['updateTime'] = ZWaveAPIData.updateTime;
-                    $scope.commands.push(obj);
-                });
-            });
+            setData(ZWaveAPIData,node);
         });
-    };
-    $scope.load($routeParams.nodeId);
 
-    // Redirect to detail page
-    $scope.changeDevice = function (deviceId) {
-        if (deviceId > 0) {
-            $location.path($scope.activeUrl + deviceId);
-        }
-    };
+    }
+    $scope.loadData($routeParams.nodeId);
 
     /**
-     * Refresh data
-     *
+     * Refresh zwave data
+     * @param {object} ZWaveAPIData
      */
-    $scope.refresh = function () {
-        dataService.joinedZwaveData(function (data) {
-
-        });
+    $scope.refreshZwaveData = function(ZWaveAPIData) {
+        var refresh = function() {
+            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+            }, function(error) {});
+        };
+        $scope.commandsInterval = $interval(refresh, $scope.cfg.interval);
     };
-    $scope.refresh();
 
     /**
      * Store expert commands
@@ -46237,9 +46040,8 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
         /**
          * Refresh data
          */
-        dataService.joinedZwaveData(function (data) {
-            node = data.joined.devices[$routeParams.nodeId];
-            //console.log(node.instances)
+        dataService.loadJoinedZwaveData().then(function(response) {
+            node = response.data.joined.devices[$routeParams.nodeId];
             var newCc = $filter('hasNode')(node, 'instances.' + instanceId + '.data');
             if (type == 'cmdData') {
                 newCc = $filter('hasNode')(node, 'instances.' + instanceId + '.commandClasses.' + ccId + '.data');
@@ -46249,63 +46051,51 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
                 if (JSON.stringify(ccData) === JSON.stringify(newCc)) {
                     return;
                 }
-                $scope.commandClass = deviceService.configSetCommandClass(deviceService.configGetCommandClass(newCc, '/', ''), data.joined.updateTime);
+                $scope.commandClass = deviceService.configSetCommandClass(deviceService.configGetCommandClass(newCc, '/', ''), response.data.joined.updateTime);
             }
         });
         $scope.handleModal(target, $event);
-        //$(target).modal();
     };
     /**
      * Watch for the modal closing
      */
     $scope.$watchCollection('modalArr', function (modalArr) {
         if(_.has(modalArr, 'cmdClassModal') && !modalArr['cmdClassModal']){
-            dataService.cancelZwaveDataInterval();
+            $interval.cancel($scope.commandsInterval);
             //console.log(modalArr['cmdClassModal'])
         }
 
     });
 
-    // todo: deprecated
-    // Show modal dialog
-    /*$scope.showModal = function (target, instanceId, index, ccId, type) {
-        console.log('Showing modal')
-        var node = $scope.ZWaveAPIData.devices[$routeParams.nodeId];
-        var ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.data');
-
-        if (type == 'cmdData') {
-            ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.commandClasses.' + ccId + '.data');
-        }
-        var cc = deviceService.configGetCommandClass(ccData, '/', '');
-
-        $scope.commandClass = deviceService.configSetCommandClass(cc, $scope.commands[index]['updateTime']);
-        /!**
-         * Refresh data
-         *!/
-        dataService.joinedZwaveData(function (data) {
-            node = data.joined.devices[$routeParams.nodeId];
-            //console.log(node.instances)
-            var newCc = $filter('hasNode')(node, 'instances.' + instanceId + '.data');
-            if (type == 'cmdData') {
-                newCc = $filter('hasNode')(node, 'instances.' + instanceId + '.commandClasses.' + ccId + '.data');
-            }
-
-            if (newCc) {
-                if (JSON.stringify(ccData) === JSON.stringify(newCc)) {
-                    return;
-                }
-                $scope.commandClass = deviceService.configSetCommandClass(deviceService.configGetCommandClass(newCc, '/', ''), data.joined.updateTime);
-            }
-        });
-        $(target).modal();
-    };
-    // Show modal dialog
-    $scope.hideModal = function () {
-        dataService.cancelZwaveDataInterval();
-
-    };*/
-
     /// --- Private functions --- ///
+    /**
+     * Set zwave data
+     * @param {object} ZWaveAPIData
+     */
+    function setData(ZWaveAPIData,node) {
+        angular.forEach(node.instances, function (instance, instanceId) {
+            angular.forEach(instance.commandClasses, function (commandClass, ccId) {
+                var nodeId = $scope.deviceId;
+                var methods = getMethodSpec(ZWaveAPIData, nodeId, instanceId, ccId, null);
+                var command = deviceService.configGetCommands(methods, ZWaveAPIData);
+                var obj = {};
+                obj['nodeId'] = nodeId;
+                obj['rowId'] = 'row_' + nodeId + '_' + instanceId + '_' + ccId;
+                obj['instanceId'] = instanceId;
+                obj['ccId'] = ccId;
+                obj['cmd'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']';
+                //obj['cmdData'] = ZWaveAPIData.devices[nodeId].instances[instanceId].commandClasses[ccId].data;
+                obj['cmdData'] = instance.commandClasses[ccId].data;
+                //obj['cmdDataIn'] = ZWaveAPIData.devices[nodeId].instances[instanceId].data;
+                obj['cmdDataIn'] = instance.data;
+                obj['commandClass'] = commandClass.name;
+                obj['command'] = command;
+                obj['updateTime'] = ZWaveAPIData.updateTime;
+                //console.log(obj)
+                $scope.commands.push(obj);
+            });
+        });
+    }
 
 
 });
@@ -46320,7 +46110,7 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
  * @class ConfigAssocController
  *
  */
-appController.controller('ConfigAssocController', function($scope, $filter, $routeParams, $location, $cookies, $timeout, $window, dataService, deviceService, myCache, cfg, _) {
+appController.controller('ConfigAssocController', function($scope, $filter, $routeParams, $location, $cookies, $timeout, $window,$interval, dataService, deviceService, myCache, cfg, _) {
     $scope.devices = [];
     $scope.deviceName = '';
     $scope.deviceId = 0;
@@ -46353,6 +46143,16 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
         toNode: false,
         toInstance: false
     };
+    $scope.assocInterval = false;
+
+
+    /**
+     * Cancel interval on page destroy
+     */
+    $scope.$on('$destroy', function() {
+        $interval.cancel($scope.assocInterval);
+    });
+
     // Redirect to detail page
     $scope.changeDevice = function(deviceId) {
         if (deviceId > 0) {
@@ -46360,34 +46160,9 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
         }
     };
 
-    // Refresh data
-    $scope.refresh = function() {
-        dataService.joinedZwaveData(function(data) {
-            var updateData = false;
-            var searchStr = 'devices.' + $routeParams.nodeId + '.'
-            angular.forEach(data.update, function(v, k) {
-                if (k.indexOf(searchStr) !== -1) {
-                    updateData = true;
-                    return;
-                }
-            });
-            if (updateData) {
-                $scope.load($routeParams.nodeId, true);
-            }
-
-
-        });
-    };
-    $scope.refresh();
-
-    // Cancel interval on page destroy
-    $scope.$on('$destroy', function() {
-        dataService.cancelZwaveDataInterval();
-    });
-
     // Load data
-    $scope.load = function(nodeId, noCache) {
-        dataService.getZwaveData(function(ZWaveAPIData) {
+    $scope.loadZwaveData = function(nodeId, noCache) {
+        dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
             if(_.isEmpty($scope.devices)){
@@ -46414,12 +46189,61 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             dataService.getCfgXml().then(function (cfgXml) {
                 //console.log(node)
                 setData(node, ZWaveAPIData, nodeId, cfgXml);
+            }, function(error) {
+                setData(node, ZWaveAPIData, nodeId, {});
             });
 
 
         }, noCache);
     };
-    $scope.load($routeParams.nodeId);
+    $scope.loadZwaveData($routeParams.nodeId);
+
+    /**
+     * Refresh zwave data
+     * @param {object} ZWaveAPIData
+     */
+    $scope.refreshZwaveData = function(ZWaveAPIData) {
+        var refresh = function() {
+            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+                var updateData = false;
+                var searchStr = 'devices.' + $routeParams.nodeId + '.'
+                angular.forEach(response.data.update, function(v, k) {
+                    if (k.indexOf(searchStr) !== -1) {
+                        updateData = true;
+                        return;
+                    }
+                });
+                if (updateData) {
+                    $scope.loadZwaveData($routeParams.nodeId, false);
+                }
+            }, function(error) {});
+        };
+        $scope.assocInterval = $interval(refresh, cfg.interval);
+    };
+
+    $scope.refreshZwaveData();
+
+    /**
+     * todo: deprecated
+     */
+    /*$scope.refresh = function() {
+        dataService.joinedZwaveData(function(data) {
+            var updateData = false;
+            var searchStr = 'devices.' + $routeParams.nodeId + '.'
+            angular.forEach(data.update, function(v, k) {
+                if (k.indexOf(searchStr) !== -1) {
+                    updateData = true;
+                    return;
+                }
+            });
+            if (updateData) {
+                $scope.load($routeParams.nodeId, true);
+            }
+
+
+        });
+    };*/
+    //$scope.refresh();
 
     // Update data from device
     $scope.updateFromDevice = function(spin) {
@@ -46494,56 +46318,10 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
         $scope.assocAddDevices = angular.copy([]);
         $timeout(function() {
             $scope.toggleRowSpinner();
-            $scope.load($scope.nodeCfg.id);
+            $scope.loadZwaveData($scope.nodeCfg.id);
         }, 3000);
 
     };
-
-    //todo: deprecated
-    // Show list of the devices to assocciate
-    /*$scope.modalAssocAdd = function(group) {
-        $scope.input.groupCfg = group;
-        $scope.input.groupId = group.groupId;
-        $scope.assocAddDevices = [];
-        // Prepare devices and nodes
-        angular.forEach($scope.ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255 || node.data.isVirtual.value || nodeId == $scope.deviceId) {
-                return;
-            }
-            var obj = {};
-            obj['id'] = nodeId;
-            obj['name'] = $filter('deviceName')(nodeId, node);
-            obj['hasMca'] = 142 in node.instances[0].commandClasses;
-            obj['instances'] = getNodeInstances(node, nodeId);
-            if ($scope.nodeCfg.hasMca) {
-                if (obj['hasMca']) {
-                    $scope.assocAddDevices.push(obj);
-                } else {
-                    if (group.nodeIds.indexOf(parseInt(nodeId)) === -1) {
-                        $scope.assocAddDevices.push(obj);
-                    }
-                }
-            } else {
-                if (group.nodeIds.indexOf(parseInt(nodeId)) === -1) {
-                    $scope.assocAddDevices.push(obj);
-                }
-            }
-        });
-
-    };*/
-    //todo: deprecated
-    // Hide  assoc  modal window
-   /* $scope.modalAssocHide = function() {
-        $scope.input.toNode = false;
-        $scope.input.toInstance = false;
-        $scope.input.groupId = 0;
-        $scope.assocAddInstances = false;
-        $scope.assocAddDevices = angular.copy([]);
-        $timeout(function() {
-            $scope.load($scope.nodeCfg.id);
-        }, 3000);
-
-    };*/
     //Show node instances (if any)
     $scope.showAssocNodeInstance = function(nodeId, hasMca) {
         if (!hasMca) {
@@ -46597,7 +46375,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                 dataService.putCfgXml(xmlFile);
             }, function(error) {
                 $window.alert($scope._t('error_handling_data') + '\n' + cmd);
-                $scope.load($routeParams.nodeId);
+                $scope.loadZwaveData($routeParams.nodeId);
             });
             $scope.input.toNode = false;
             $scope.input.toInstance = false;
@@ -46674,17 +46452,6 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                 $scope.alert = {message: $scope._t('no_association_groups_found'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
             }
         });
-        /**
-         * todo: deprecated
-         */
-
-       /* dataService.getZddXml(zddXmlFile, function(zddXmlData) {
-            var zdd = $filter('hasNode')(zddXmlData, 'ZWaveDevice.assocGroups');
-            $scope.assocGroups = getAssocGroups(node, zdd, nodeId, ZWaveAPIData, cfgXml);
-            if ($scope.assocGroups.length < 1) {
-                $scope.alert = {message: $scope._t('no_association_groups_found'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
-            }
-        });*/
 
     }
 

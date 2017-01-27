@@ -87,6 +87,8 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             dataService.getCfgXml().then(function (cfgXml) {
                 //console.log(node)
                 setData(node, ZWaveAPIData, nodeId, cfgXml);
+            }, function(error) {
+                setData(node, ZWaveAPIData, nodeId, {});
             });
 
 
