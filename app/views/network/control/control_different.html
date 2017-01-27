@@ -7,7 +7,7 @@
             <p class="input-help">{{_t('device_not_included_info')}}</p>
             <bb-alert alert="controlDh.network.alert"></bb-alert>
             <button class="btn btn-primary" id="btn_learn_start"
-                    ng-disabled="rowSpinner['controller.SetLearnMode(1)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || (controlDh.controller.SUCNodeId ===  controlDh.controller.nodeId && controlDh.controller.isSIS)"
+                    ng-disabled="rowSpinner['controller.SetLearnMode(1)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || ((controlDh.controller.SUCNodeId ===  controlDh.controller.nodeId) && controlDh.controller.isSIS)"
                     ng-show="[9].indexOf(controlDh.controller.controllerState) == -1"
                     ng-click="includeToNetwork('controller.SetLearnMode(1)','successNetworkIncludeModal',$event)">
                 <i class="fa fa-play-circle"></i> {{_t('include_into_network')}}
