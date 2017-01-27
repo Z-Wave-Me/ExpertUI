@@ -1,4 +1,8 @@
 {
+  "open": "Open",
+  "closed": "Closed",
+  "open_from_inside": "Open from inside",
+  "open_from_outside": "Open from outside",
   "no_device_service": "This device doesn't have the necessary service",
   "nav_report": "Report Problem",
   "bugreport_info": "This form is dedicated to report bugs in the UI please do not provide any response. If you need support please consult the support forums or email addresses provided.",

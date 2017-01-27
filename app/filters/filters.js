@@ -534,28 +534,25 @@ angApp.filter('decToHex', function () {
  * Replace Lock state with text
  */
 angApp.filter('lockStatus', function () {
-    return function (input) {
-        var mode = input;
+    return function (mode) {
         var mode_lbl;
 
-        if (mode === '' || mode === null) {
-            mode_lbl = '?';
-        } else {
-            switch (mode) {
-                case 0x00:
-                    mode_lbl = 'Open';
-                    break;
-                case 0x10:
-                    mode_lbl = 'Open from inside';
-                    break;
-                case 0x20:
-                    mode_lbl = 'Open from outside';
-                    break;
-                case 0xff:
-                    mode_lbl = 'Closed';
-                    break;
-            }
-            ;
+        switch (mode) {
+            case 0:
+                mode_lbl = 'open';
+                break;
+            case 16:
+                mode_lbl = 'open_from_inside';
+                break;
+            case 32:
+                mode_lbl = 'open_from_outside';
+                break;
+            case 255:
+                mode_lbl = 'closed';
+                break;
+            default:
+                mode_lbl = '-';
+                break;
         }
         ;
         return mode_lbl;

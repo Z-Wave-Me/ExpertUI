@@ -29,14 +29,17 @@ appController.controller('LicenseController', function($scope, $timeout, dataSer
         "selldate": null,
         "usedate": null
     };
-    $scope.ZWaveAPIData = function() {
-        dataService.getZwaveData(function(ZWaveAPIData) {
+    /**
+     * Load zwave data
+     */
+    $scope.loadZwaveData = function() {
+        dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
             $scope.controllerUuid = ZWaveAPIData.controller.data.uuid.value;
             $scope.controllerIsZeroUuid = parseInt("0x" + ZWaveAPIData.controller.data.uuid.value, 16) === 0;
 
         });
     };
-    $scope.ZWaveAPIData();
+    $scope.loadZwaveData();
     /**
      * Get license key
      */

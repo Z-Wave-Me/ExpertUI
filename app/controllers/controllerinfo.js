@@ -13,11 +13,12 @@ appController.controller('ControllerController', function($scope, $window, $filt
         interval: null
     }
 
-    // Cancel interval on page destroy
+    /**
+     * Cancel interval on page destroy
+     */
     $scope.$on('$destroy', function() {
-        dataService.cancelZwaveDataInterval();
+        $interval.cancel($scope.controllerInfo.interval);
     });
-
     /**
      * Load app built info
      */

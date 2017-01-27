@@ -28,7 +28,6 @@ appController.controller('DongleController', function($scope, $window,$cookies,c
         }
         angular.extend($scope.cfg,{dongle: $scope.homeDongle.model.dongle});
         $cookies.dongle = $scope.homeDongle.model.dongle;
-        dataService.purgeCache();
         $window.location.reload();
     };
 });

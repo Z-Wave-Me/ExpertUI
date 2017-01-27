@@ -19,7 +19,6 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
      */
     $scope.$on('$destroy', function() {
         $interval.cancel($scope.sensors.interval);
-        //dataService.cancelZwaveDataInterval();
     });
 
     /**
