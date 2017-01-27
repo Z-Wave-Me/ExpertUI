@@ -98,7 +98,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
 
 
         // Customsettings
-        $scope.controlDh.controller.hasDevices = hasDevices < 2 ? false : true;
+        $scope.controlDh.controller.hasDevices = hasDevices > 1;
         $scope.controlDh.controller.disableSUCRequest = true;
         if (hasSUC && hasSUC != controllerNodeId) {
             $scope.controlDh.controller.disableSUCRequest = false;

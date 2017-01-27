@@ -17,7 +17,7 @@
                         </a>
                     </th>
                     <th>
-                        <a href="" ng-click="orderBy('level')">{{ _t('th_level')}}
+                        <a href="" ng-click="orderBy('level')">{{ _t('nav_status')}}
                             <span ng-show="predicate == 'status'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
@@ -34,7 +34,7 @@
                 <tr ng-repeat="v in locks.all | orderBy:predicate:reverse track by $index" id="{{ v.rowId}}">
                     <td data-title="#">{{ v.id}}</td>
                     <td data-title="{{ _t('device_name')}}">{{ v.name}}</td>
-                    <td data-title="{{ _t('th_level')}}" class="row-level">{{ v.level |lockStatus }} &nbsp;</td>
+                    <td data-title="{{ _t('nav_status')}}" class="row-level">{{_t(v.status)}} &nbsp;</td>
                     <td data-title="{{ _t('datetime')}}">
                         <bb-date-time obj="v.dateTime" updated="v.isUpdated"></bb-date-time>
                     </td>

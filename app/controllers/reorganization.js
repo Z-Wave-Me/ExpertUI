@@ -258,7 +258,7 @@ appController.controller('ReorganizationController', function($scope, $filter, $
     };
     // Load data
     $scope.load = function(lang) {
-        dataService.getZwaveData(function(ZWaveAPIData) {
+        dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
             // Prepare devices and nodes
             angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
