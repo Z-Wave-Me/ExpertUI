@@ -207,8 +207,9 @@ angApp.filter('setTimeFromBox', function (cfg, $filter) {
  * @function getDateTimeObj
  */
 angApp.filter('getDateTimeObj', function ($filter, cfg) {
-    return function (timestamp) {
+    return function (timestamp,invalidateTime) {
         var d = (timestamp ? new Date(timestamp * 1000) : new Date());
+        var di = (invalidateTime ? new Date(invalidateTime * 1000) : null);
         var obj = {
             date: $filter('getFormattedDate')(d),
             time: $filter('getFormattedTime')(
@@ -216,6 +217,10 @@ angApp.filter('getDateTimeObj', function ($filter, cfg) {
                 false,
                 cfg.zwavecfg.time_format
             ),
+            invalidateTime: (di ?
+            $filter('getFormattedDate')(di) + ' '
+            + $filter('getFormattedTime')(di.toISOString().substring(11, di.toISOString().indexOf('.')),false,cfg.zwavecfg.time_format)
+            : ''),
             today: (d.toDateString() === (new Date()).toDateString()
                 ? $filter('getFormattedTime')(
                     d.toISOString().substring(11, d.toISOString().indexOf('.')),
@@ -529,28 +534,25 @@ angApp.filter('decToHex', function () {
  * Replace Lock state with text
  */
 angApp.filter('lockStatus', function () {
-    return function (input) {
-        var mode = input;
+    return function (mode) {
         var mode_lbl;
 
-        if (mode === '' || mode === null) {
-            mode_lbl = '?';
-        } else {
-            switch (mode) {
-                case 0x00:
-                    mode_lbl = 'Open';
-                    break;
-                case 0x10:
-                    mode_lbl = 'Open from inside';
-                    break;
-                case 0x20:
-                    mode_lbl = 'Open from outside';
-                    break;
-                case 0xff:
-                    mode_lbl = 'Closed';
-                    break;
-            }
-            ;
+        switch (mode) {
+            case 0:
+                mode_lbl = 'open';
+                break;
+            case 16:
+                mode_lbl = 'open_from_inside';
+                break;
+            case 32:
+                mode_lbl = 'open_from_outside';
+                break;
+            case 255:
+                mode_lbl = 'closed';
+                break;
+            default:
+                mode_lbl = '-';
+                break;
         }
         ;
         return mode_lbl;
@@ -602,8 +604,10 @@ angApp.filter('getBatteryIcon', function () {
         if (level >= 95) {
             icon = 'fa-battery-full text-success';
         } else if (level >= 70 && level < 95) {
-            icon = 'fa-battery-3 text-primary';
-        } else if (level > 30 && level <= 50) {
+            icon = 'fa-battery-3 text-success';
+        } else if (level >= 50 && level < 70) {
+            icon = 'fa-battery-2 text-primary';
+        }else if (level > 30 && level <= 50) {
             icon = 'fa-battery-2 text-info';
         } else if (level >= 1 && level <= 30) {
             icon = 'fa-battery-1 text-danger';

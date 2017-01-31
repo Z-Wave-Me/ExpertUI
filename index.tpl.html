@@ -86,9 +86,9 @@
                             <div class="sub-navigation sub-navigation-left" ng-if="naviExpanded.naviNetwork">
                                 <ul>
                                     <li><a href="#network/control" ng-class="isActive('control',2)">{{ _t('nav_control') }}</a></li>
-                                    <li ng-if="cfg.app_type === 'installer'">
+                                    <!--<li ng-if="cfg.app_type === 'installer'">
                                         <a href="#network/statistics" ng-class="isActive('statistics',2)">{{ _t('statistics') }}</a>
-                                    </li>
+                                    </li>-->
                                     <li><a href="#network/routing" ng-class="isActive('routing',2)">{{ _t('nav_routing') }}</a></li>
                                     <!-- <li><a class="a-disabled" title="Temporary disabled. Will be back in the next release." ng-class="isActive('reorganization',2)">{{ _t('nav_reorganization') }}</a></li>-->
                                     <!--<li><a href="#network/reorganization" ng-class="isActive('reorganization',2)">{{ _t('nav_reorganization') }}</a></li>-->
@@ -176,6 +176,7 @@
         <div id="footer_in">
             <div class="container">
                 <span class="copyright" ng-bind-html="getCustomCfgArr('footer_text') | toTrusted"></span>
+                <span class="copyright">{{getCustomCfgArr('version_type')}}</span>
                 <span class="timestamp" ng-if="cfg.route.time.string"><i class="fa fa-clock-o"></i> {{cfg.route.time.string}}</span>
                 <span class="timestamp" ng-if="cfg.app_type === 'installer'"> | </span>
                 <span class="timestamp" ng-if="cfg.app_type === 'installer'"

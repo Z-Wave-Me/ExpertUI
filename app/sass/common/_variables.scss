@@ -292,6 +292,10 @@ $widget-danger-border-color: lighten($app-brand-danger,20%);
 $widget-heading-color: $app-heading-color;
 $widget-icon-color:lighten($widget-color, 40%);
 
+// Switcher button
+$switcher-color: #ffffff;
+$switcher-off-background-color: #f9f9f9;
+$switcher-on-background-color: #5bc0de;
 
 /*-------------------------------------*/
 // EFFECTS

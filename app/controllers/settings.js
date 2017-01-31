@@ -54,7 +54,8 @@ appController.controller('SettingsLangController', function ($scope, $timeout,$w
 appController.controller('SettingsAppController', function ($scope, $timeout, $window, $interval, $location, cfg,dataService,deviceService) {
     $scope.settings = {
         input: {},
-        lastTZ: ""
+        lastTZ: "",
+        lastSsid: ""
     };
 
     /**
@@ -63,6 +64,14 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
     $scope.loadSettings = function() {
         $scope.settings.input = cfg.zwavecfg;
         $scope.settings.lastTZ = cfg.zwavecfg.time_zone;
+
+        dataService.getApi('wifi_settings').then(function (response) {
+            $scope.settings.input.ssid_name = response.data.data.ssid;
+            $scope.settings.lastSsid = response.data.data.ssid;
+        }, function (error) {
+            $scope.loading = false;
+            alertify.alertError($scope._t('error_load_data'));
+        });
     };
     $scope.loadSettings();
 
@@ -75,6 +84,30 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
 
         dataService.postApi('configupdate_url', input).then(function (response) {
             //$scope.reloadData();
+
+            if(input.wifi_password !== '' || input.ssid_name !== $scope.settings.lastSsid) {
+
+                var data = {
+                    "password": input.wifi_password,
+                    "ssid": input.ssid_name === $scope.settings.lastSsid ? "" : input.ssid_name
+                };
+
+                dataService.postApi('wifi_settings', data, null).then(function(response) {
+                    $scope.input.wifi_password = '';
+                    deviceService.showNotifier({message: $scope._t('update_successful')});
+                    $timeout( function() {
+                        $window.location.reload();
+                    }, 1000);
+                    $scope.loading = false;
+                }, function(error) {
+                    $scope.input.ssid_name = $scope.settings.lastSsid;
+                    $scope.input.wifi_password = '';
+                    $scope.loading = false;
+                    alertify.alertError($scope._t('error_load_data'));
+                });
+
+            }
+
 
             if(input.time_zone !== $scope.settings.lastTZ) {
                 var data = {
@@ -163,4 +196,103 @@ appController.controller('SettingsFirmwareController', function ($scope, $sce, $
         });
     };
 
+});
+
+/**
+ * The controller that handles bug report info.
+ * @class SettingsReportController
+ */
+appController.controller('SettingsReportController', function ($scope, $window, $route, cfg,dataService,deviceService) {
+    $scope.ZwaveApiData = false;
+    $scope.remoteAccess = false;
+    $scope.builtInfo = false;
+    $scope.input = {
+        browser_agent: '',
+        browser_version: '',
+        browser_info: '',
+        shui_version: cfg.app_version,
+        zwave_vesion: '',
+        controller_info: '',
+        remote_id: '',
+        remote_activated: 0,
+        remote_support_activated: 0,
+        zwave_binding: 0,
+        email: null,
+        content: null,
+        app_name:  cfg.app_name,
+        app_version: cfg.app_version,
+        app_id: cfg.app_id,
+        app_type: cfg.app_type,
+        app_built_date: '',
+        app_built_timestamp: '',
+    };
+
+    /**
+     * Load zwave data
+     */
+    $scope.loadZwaveData = function() {
+        dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
+            $scope.ZwaveApiData = ZWaveAPIData;
+        }, function(error) {});
+    };
+    $scope.loadZwaveData();
+
+    /**
+     * Load app built info
+     */
+    $scope.loadAppBuiltInfo = function() {
+        dataService.getAppBuiltInfo().then(function(response) {
+            $scope.builtInfo = response.data;
+        }, function(error) {});
+    };
+    $scope.loadAppBuiltInfo();
+    /**
+     * Load Remote access data
+     */
+    $scope.loadRemoteAccess = function () {
+        dataService.getApi('instances', '/RemoteAccess').then(function (response) {
+            $scope.remoteAccess = response.data.data[0];
+        }, function (error) {});
+    };
+
+    $scope.loadRemoteAccess();
+
+    /**
+     * Send and save report
+     */
+    $scope.sendReport = function (form, input) {
+        if (form.$invalid) {
+            return;
+        }
+        $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin', message: $scope._t('sending')};
+        if ($scope.ZwaveApiData) {
+            input.zwave_binding = 1;
+            input.zwave_vesion = $scope.ZwaveApiData.controller.data.softwareRevisionVersion.value;
+            input.controller_info = JSON.stringify($scope.ZwaveApiData.controller.data);
+        }
+        if ($scope.builtInfo) {
+            input.app_built_date = $scope.builtInfo.built;
+            input.app_built_timestamp =  $scope.builtInfo.timestamp;
+        }
+
+        if (Object.keys($scope.remoteAccess).length > 0) {
+            input.remote_activated = $scope.remoteAccess.params.actStatus ? 1 : 0;
+            input.remote_support_activated = $scope.remoteAccess.params.sshStatus ? 1 : 0;
+            input.remote_id = $scope.remoteAccess.params.userId;
+
+        }
+        input.browser_agent = $window.navigator.appCodeName;
+        input.browser_version = $window.navigator.appVersion;
+        input.browser_info = 'PLATFORM: ' + $window.navigator.platform + '\nUSER-AGENT: ' + $window.navigator.userAgent;
+        console.log(input)
+        //return;
+        dataService.postReport(input).then(function (response) {
+            $scope.loading = false;
+            deviceService.showNotifier({message: $scope._t('success_send_report') + ' ' + input.email});
+            $route.reload();
+        }, function (error) {
+            alertify.alertError($scope._t('error_send_report'));
+            $scope.loading = false;
+        });
+    };
 });

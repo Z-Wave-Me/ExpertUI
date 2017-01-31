@@ -1,4 +1,4 @@
-/* Copyright:  Z-Wave Europe, Created: 17-01-2017 14:08:02 */
+/* Copyright:  Z-Wave Europe, Created: 27-01-2017 15:39:24 */
 /**
  * App configuration
  * @author Martin Vach
@@ -8,6 +8,7 @@ var config_data = {
     'cfg': {
         'app_name': 'Z-Wave ExpertUI',
         'app_version': '1.2.0',
+        'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
         'pass_field': 'PSWDXXXX',
@@ -43,8 +44,12 @@ var config_data = {
         'call_all_nif': '/ZWaveAPI/CallForAllNIF', // Call niff for all devices
         'time': '/ZAutomation/api/v1/system/time/get',// Get time
         'time_zone': '/ZAutomation/api/v1/system/timezone', // Set time zone
+        'wifi_settings': '/ZAutomation/api/v1/system/wifi/settings', // Set wifi settings ssid and password
         'network_statistics': '/ZWaveAPI/Run/', // Set time zone
         'login': '/ZAutomation/api/v1/login',// Get time
+        'instances': '/ZAutomation/api/v1/instances',
+        'app_built_info': 'app/info.json',// App build info
+        'post_report_url': 'https://service.z-wave.me/report/', // Post report url
         'runjs_url': '/JS/Run/', // Url for running JS
         'device_classes_url': '/translations/DeviceClasses.xml', // Url to Device Classes
         'alarms_url': '/translations/Alarms.xml', // Url to Alarms
@@ -97,7 +102,11 @@ var config_data = {
             //Timezone
             'time_zone': '',
             //Notes
-            'notes': ''
+            'notes': '',
+            //wifi password
+            'wifi_password': '',
+            //ssid name
+            'ssid_name': ''
         },
         'lang_date_time_format': {
             'en': {
@@ -178,12 +187,14 @@ var config_data = {
              'default':{
                  'logo': 'app/images/zplus.jpg',
                   'footer_text': '&COPY; 2014 by Z-Wave.Me',
-                 'logout': '/smarthome/#/logout'
+                 'logout': '/smarthome/#/logout',
+                 'version_type': '',
              },
               'installer':{
                   'logo': 'app/images/z-wave-aliance-logo.png',
                    'footer_text': '&COPY; 2016 Z-Wave Alliance',
-                  'logout': '#/logout'
+                  'logout': '#/logout',
+                  'version_type': '- version BETA',
               }
          }
 

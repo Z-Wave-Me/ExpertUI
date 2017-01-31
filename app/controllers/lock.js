@@ -91,9 +91,6 @@ appController.controller('LocksController', function($scope, $filter, $timeout,$
 
                 // CC gui
                 var mode = instance.commandClasses[doorLockCCId].data.mode.value;
-                if (mode === '' || mode === null) {
-                    mode = 0;
-                }
 
                 var ccId = 98;
                 // Set object
@@ -106,9 +103,11 @@ appController.controller('LocksController', function($scope, $filter, $timeout,$
                 obj['ccId'] = doorLockCCId;
                 obj['rowId'] = 'row_' + nodeId + '_' + cnt;
                 obj['name'] = $filter('deviceName')(nodeId, node);
+                obj['status'] = $filter('lockStatus')(mode);
                 obj['level'] = mode;
                 obj['updateTime'] = instance.commandClasses[ccId].data.mode.updateTime;
                 obj['invalidateTime'] = instance.commandClasses[ccId].data.mode.invalidateTime;
+                obj['dateTime'] = $filter('getDateTimeObj')(obj['updateTime'],obj['invalidateTime']);
                 obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
                 obj['urlToStore'] = apiUrl + '.Get()';
                 obj['urlToOff'] =  apiUrl + '.Set(0)';

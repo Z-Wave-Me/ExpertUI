@@ -27,16 +27,13 @@ appFactory.factory('_', function () {
 appFactory.factory('dataService', function ($http, $q, $interval, $filter, $location, $window, deviceService, myCache, cfg) {
     var updatedTime = Math.round(+new Date() / 1000);
     var apiData;
-    var apiDataInterval;
-    var queueDataInterval;
+    // todo: deprecated
+    //var apiDataInterval;
+    //var queueDataInterval;
     /**
      * Public functions
      */
     return({
-        getZwaveData: getZwaveData,
-        joinedZwaveData: joinedZwaveData,
-        cancelZwaveDataInterval: cancelZwaveDataInterval,
-        purgeCache: purgeCache,
         // With promises
         getCfgXml: getCfgXml,
         putCfgXml: putCfgXml,
@@ -57,8 +54,9 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         xmlToJson: xmlToJson,
         getTextFile: getTextFile,
         storeTextToFile: storeTextToFile,
-        updateDeviceFirmware: updateDeviceFirmware,
         uploadApiFile: uploadApiFile,
+        postReport: postReport,
+        getAppBuiltInfo: getAppBuiltInfo,
         // Probably remove
         store: store,
         updateZwaveDataSince: updateZwaveDataSince,
@@ -76,91 +74,6 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             }
         }
 
-    }
-
-    /**
-     * Gets all of the data in the remote collection.
-     */
-    function getZwaveData(callback, noCache) {
-        getAppIp();
-        var time = Math.round(+new Date() / 1000);
-        if (apiData && !noCache) {
-            return callback(apiData);
-        } else {
-
-            //pageLoader();
-            var request = $http({
-                method: "POST",
-                url: cfg.server_url + cfg.update_url + "0"
-                        //url: 'storage/all_cp.json'
-            });
-            request.success(function (data) {
-                apiData = data;
-                //pageLoader(true);
-                return callback(data);
-            }).error(function () {
-                //pageLoader(true);
-                handleError(false, true, false);
-
-
-            });
-        }
-    }
-
-
-
-    /**
-     * Get updated data and join with ZwaveData
-     */
-    function  joinedZwaveData(callback) {
-        var time = Math.round(+new Date() / 1000);
-
-        var result = {};
-        var refresh = function () {
-            //console.log(apiData);
-            var request = $http({
-                method: "POST",
-                //url: "storage/updated.json"
-                url: cfg.server_url + cfg.update_url + time
-            });
-            request.success(function (data) {
-                if (!apiData || !data)
-                    return;
-                time = data.updateTime;
-                angular.forEach(data, function (obj, path) {
-                    if (!angular.isString(path)) {
-                        return;
-                    }
-                    var pobj = apiData;
-                    var pe_arr = path.split('.');
-                    for (var pe in pe_arr.slice(0, -1)) {
-                        pobj = pobj[pe_arr[pe]];
-                    }
-                    pobj[pe_arr.slice(-1)] = obj;
-                });
-                result = {
-                    "joined": apiData,
-                    "update": data
-                };
-                return callback(result);
-            }).error(function () {
-                handleError();
-
-            });
-        };
-        apiDataInterval = $interval(refresh, cfg.interval);
-    }
-
-
-    /**
-     * Cancel data interval
-     */
-    function cancelZwaveDataInterval() {
-        if (angular.isDefined(apiDataInterval)) {
-            $interval.cancel(apiDataInterval);
-            apiDataInterval = undefined;
-        }
-        return;
     }
 
     /**
@@ -645,25 +558,6 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         });
     }
 
-    /**
-     * Run Firmware Update
-     */
-    function updateDeviceFirmware(nodeId, data) {
-        var uploadUrl = cfg.server_url + cfg.fw_update_url + '/' + nodeId;
-        var fd = new FormData();
-        fd.append('file', data.file);
-        fd.append('url', data.url);
-        fd.append('targetId', data.targetId);
-        $http.post(uploadUrl, fd, {
-            transformRequest: angular.identity,
-            headers: {'Content-Type': undefined}
-        }).success(function () {
-            handleSuccess(data);
-        }).error(function () {
-            handleError();
-        });
-
-    }
 
     /**
      * Upload a file to ZAutomation
@@ -680,6 +574,47 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             }
         }).then(function (response) {
             return response;
+        }, function (response) {// something went wrong
+            return $q.reject(response);
+        });
+
+    }
+
+    /**
+     * Post a bug report on the remote server
+     * @param {object} data
+     * @returns {unresolved}
+     */
+    function postReport(data) {
+        return $http({
+            method: "POST",
+            url: cfg.post_report_url,
+            data: $.param(data),
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+        }).then(function (response) {
+            return response;
+        }, function (response) {// something went wrong
+            return $q.reject(response);
+        });
+    }
+
+    /**
+     * Get app built info
+     * @param {string} file
+     * @returns {unresolved}
+     */
+    function getAppBuiltInfo() {
+        return $http({
+            method: 'get',
+            url: cfg.app_built_info
+        }).then(function (response) {
+            if (typeof response.data === 'object') {
+                return response;
+            } else {// invalid response
+                return $q.reject(response);
+            }
         }, function (response) {// something went wrong
             return $q.reject(response);
         });
@@ -724,15 +659,6 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
     }
 
     /**
-     * Handle success response
-     */
-    function handleSuccess(response) {
-        console.log('Success');
-        return;
-
-    }
-
-    /**
      * Clear the cached ZWaveData.
      */
     function purgeCache() {
@@ -771,7 +697,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             url: url
         });
         request.success(function (data) {
-            handleSuccess(data);
+            //handleSuccess(data);
             if (success)
                 success();
         }).error(function (err) {
@@ -809,6 +735,96 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
 
 
     /* /////////////////////////////////////// Remove /////////////////////////////////////////////// */
+
+    /**
+     * todo: deprecated
+     * Gets all of the data in the remote collection.
+     */
+    /*function getZwaveData(callback, noCache) {
+     getAppIp();
+     var time = Math.round(+new Date() / 1000);
+     if (apiData && !noCache) {
+     return callback(apiData);
+     } else {
+
+     //pageLoader();
+     var request = $http({
+     method: "POST",
+     url: cfg.server_url + cfg.update_url + "0"
+     //url: 'storage/all_cp.json'
+     });
+     request.success(function (data) {
+     apiData = data;
+     //pageLoader(true);
+     return callback(data);
+     }).error(function () {
+     //pageLoader(true);
+     handleError(false, true, false);
+
+
+     });
+     }
+     }*/
+
+
+
+    /**
+     * todo: deprecated
+     * Get updated data and join with ZwaveData
+     */
+    /*
+    function  joinedZwaveData(callback) {
+        var time = Math.round(+new Date() / 1000);
+
+        var result = {};
+        var refresh = function () {
+            //console.log(apiData);
+            var request = $http({
+                method: "POST",
+                //url: "storage/updated.json"
+                url: cfg.server_url + cfg.update_url + time
+            });
+            request.success(function (data) {
+                if (!apiData || !data)
+                    return;
+                time = data.updateTime;
+                angular.forEach(data, function (obj, path) {
+                    if (!angular.isString(path)) {
+                        return;
+                    }
+                    var pobj = apiData;
+                    var pe_arr = path.split('.');
+                    for (var pe in pe_arr.slice(0, -1)) {
+                        pobj = pobj[pe_arr[pe]];
+                    }
+                    pobj[pe_arr.slice(-1)] = obj;
+                });
+                result = {
+                    "joined": apiData,
+                    "update": data
+                };
+                return callback(result);
+            }).error(function () {
+                handleError();
+
+            });
+        };
+        apiDataInterval = $interval(refresh, cfg.interval);
+    }*/
+
+
+
+    /**
+     * todo: deprecated
+     * Cancel data interval
+     */
+    /*function cancelZwaveDataInterval() {
+        if (angular.isDefined(apiDataInterval)) {
+            $interval.cancel(apiDataInterval);
+            apiDataInterval = undefined;
+        }
+        return;
+    }*/
 
 
     /**
@@ -978,6 +994,38 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         //$('#main_content').hide();
         $('#respone_container').show();
         $('#respone_container_inner').html('<div class="alert alert-warning page-load-spinner"><i class="fa fa-spinner fa-lg fa-spin"></i><br /> Loading data....</div>');
+        return;
+
+    }*/
+
+
+    /**
+     * todo: deprecated
+     * Run Firmware Update
+     */
+    /*function updateDeviceFirmware(nodeId, data) {
+        var uploadUrl = cfg.server_url + cfg.fw_update_url + '/' + nodeId;
+        var fd = new FormData();
+        fd.append('file', data.file);
+        fd.append('url', data.url);
+        fd.append('targetId', data.targetId);
+        $http.post(uploadUrl, fd, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        }).success(function () {
+            handleSuccess(data);
+        }).error(function () {
+            handleError();
+        });
+
+    }*/
+
+    /**
+     * todo: deprecated
+     * Handle success response
+     */
+    /*function handleSuccess(response) {
+        console.log('Success');
         return;
 
     }*/
