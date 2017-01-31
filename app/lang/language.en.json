@@ -507,5 +507,7 @@
   "zwave_role_type": "Z-Wave+ Role Type",
   "ie_last_element": "just to remember, that IE do not like trailing comma (,) at the end the list of associative array elements",
   "nm_inc_into_nw": "Enter / Leave different Networks",
-  "nm_inc_into_nw_desc": "This modes allows this controller to enter and leave a different network as normal node."
+  "nm_inc_into_nw_desc": "This modes allows this controller to enter and leave a different network as normal node.",
+ "use_cit": "Using the Certified Installer Tool",
+ "user_guide": "User Guide"
 }

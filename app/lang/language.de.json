@@ -502,5 +502,7 @@
   "rt_associated": "Direct association",
   "ie_last_element": "Nur zur Erinnerung: IE mag keine Kommas (,) am Ende einer Liste von assoziativen Arrayelementen",
   "nm_inc_into_nw": "Verbinde / Verlasse anderes Netzwerk",
-  "nm_inc_into_nw_desc": "Diese Modus ermöglicht dem Controller sich mit einem anderem Netzwerk als normale Node zu verbinden bzw. es wieder zu verlassen."
+  "nm_inc_into_nw_desc": "Diese Modus ermöglicht dem Controller sich mit einem anderem Netzwerk als normale Node zu verbinden bzw. es wieder zu verlassen.",
+ "use_cit": "Verwenden Sie das Zertifizierte Installer Tools",
+ "user_guide": "Benutzerhandbuch"
 }

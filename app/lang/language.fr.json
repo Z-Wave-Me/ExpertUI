@@ -499,5 +499,7 @@
   "wakeup_list": "Wakeup Settings",
   "yes": "YES",
   "zwave_role_type": "Z-Wave+ Role Type",
-  "ie_last_element": "just to remember, that IE do not like trailing comma (,) at the end the list of associative array elements"
+  "ie_last_element": "just to remember, that IE do not like trailing comma (,) at the end the list of associative array elements",
+  "use_cit": "Using the Certified Installer Tool",
+  "user_guide": "User Guide"
 }
