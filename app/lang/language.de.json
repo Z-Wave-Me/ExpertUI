@@ -519,8 +519,7 @@
   "nm_inc_into_nw_desc": "Diese Modus ermöglicht dem Controller sich mit einem anderem Netzwerk als normale Node zu verbinden bzw. es wieder zu verlassen.",
   "wifi_password_valid": "Passwort muss zwischen 8 und 63 Zeichen lang sein.",
  "wifi_password": "WIFI Passwort",
- "ssid_name": "SSID"
-  "nm_inc_into_nw_desc": "Diese Modus ermöglicht dem Controller sich mit einem anderem Netzwerk als normale Node zu verbinden bzw. es wieder zu verlassen.",
+ "ssid_name": "SSID",
  "use_cit": "Verwenden Sie das Zertifizierte Installer Tools",
  "user_guide": "Benutzerhandbuch"
 }

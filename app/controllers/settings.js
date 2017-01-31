@@ -51,7 +51,7 @@ appController.controller('SettingsLangController', function ($scope, $timeout,$w
  * @class SettingsAppController
  *
  */
-appController.controller('SettingsAppController', function ($scope, $timeout, $window, $interval, $location, cfg,dataService,deviceService) {
+appController.controller('SettingsAppController', function ($scope, $timeout, $window, $interval, $location, $q, cfg,dataService,deviceService) {
     $scope.settings = {
         input: {},
         lastTZ: "",
@@ -62,8 +62,6 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
      * Load settings
      */
     $scope.loadSettings = function() {
-        $scope.settings.input = cfg.zwavecfg;
-        $scope.settings.lastTZ = cfg.zwavecfg.time_zone;
 
         dataService.getApi('wifi_settings').then(function (response) {
             $scope.settings.input.ssid_name = response.data.data.ssid;
@@ -72,7 +70,11 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
             $scope.loading = false;
             alertify.alertError($scope._t('error_load_data'));
         });
+
+        $scope.settings.input = cfg.zwavecfg;
+        $scope.settings.lastTZ = cfg.zwavecfg.time_zone;
     };
+
     $scope.loadSettings();
 
     /**
@@ -82,62 +84,54 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
     $scope.storeSettings = function(input) {
         $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin', message: $scope._t('updating')};
 
-        dataService.postApi('configupdate_url', input).then(function (response) {
-            //$scope.reloadData();
+        if(input.wifi_password !== '' || input.ssid_name !== $scope.settings.lastSsid) {
 
-            if(input.wifi_password !== '' || input.ssid_name !== $scope.settings.lastSsid) {
+            var data = {
+                "password": input.wifi_password,
+                "ssid": input.ssid_name === $scope.settings.lastSsid ? "" : input.ssid_name
+            };
 
-                var data = {
-                    "password": input.wifi_password,
-                    "ssid": input.ssid_name === $scope.settings.lastSsid ? "" : input.ssid_name
-                };
+            dataService.postApi('wifi_settings', data, null).then(function(response) {
+                deviceService.showNotifier({message: $scope._t('update_successful')});
+                $timeout( function() {
+                    $window.location.reload();
+                }, 1000);
+                $scope.loading = false;
+            }, function(error) {
+                $scope.input.ssid_name = $scope.settings.lastSsid;
+                alertify.alertError($scope._t('error_load_data'));
+            });
+        }
 
-                dataService.postApi('wifi_settings', data, null).then(function(response) {
-                    $scope.input.wifi_password = '';
+        if(input.time_zone !== $scope.settings.lastTZ) {
+            var data = {
+                    "time_zone": input.time_zone
+                },
+                timeout = 15000;
+
+                dataService.postApi('time_zone', data, null).then(function (response) {
+                    $timeout(function() {
+                        $location.path('/');
+                    }, timeout);
+
+                    $scope.settings.lastTZ = input.time_zone;
+                    alertify.alertWarning($scope._t('z_way_restart', {
+                        __val__: timeout/1000,
+                        __level__: $scope._t('seconds')
+                    }));
+
                     deviceService.showNotifier({message: $scope._t('update_successful')});
-                    $timeout( function() {
-                        $window.location.reload();
-                    }, 1000);
                     $scope.loading = false;
-                }, function(error) {
-                    $scope.input.ssid_name = $scope.settings.lastSsid;
-                    $scope.input.wifi_password = '';
-                    $scope.loading = false;
+
+                }, function (error) {
                     alertify.alertError($scope._t('error_load_data'));
                 });
+        } else {
+            deviceService.showNotifier({message: $scope._t('update_successful')});
+        }
 
-            }
-
-
-            if(input.time_zone !== $scope.settings.lastTZ) {
-                var data = {
-                        "time_zone": input.time_zone
-                    },
-                    timeout = 15000;
-
-                    dataService.postApi('time_zone', data, null).then(function (response) {
-                        $timeout(function() {
-                            $location.path('/');
-                        }, timeout);
-
-                        $scope.settings.lastTZ = input.time_zone;
-                        alertify.alertWarning($scope._t('z_way_restart', {
-                            __val__: timeout/1000,
-                            __level__: $scope._t('seconds')
-                        }));
-
-                        deviceService.showNotifier({message: $scope._t('update_successful')});
-                        $scope.loading = false;
-
-                    }, function (error) {
-                        $scope.loading = false;
-                        alertify.alertError($scope._t('error_load_data'));
-                    });
-            } else {
-                deviceService.showNotifier({message: $scope._t('update_successful')});
-            }
+        dataService.postApi('configupdate_url', input).then(function (response) {
             $scope.loading = false;
-
         }, function (error) {
             $scope.loading = false;
             alertify.alertError($scope._t('error_update_data'));
