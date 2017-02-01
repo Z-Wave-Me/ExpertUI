@@ -1,4 +1,4 @@
-/* Copyright:  Z-Wave Europe, Created: 27-01-2017 15:39:24 */
+/* Copyright:  Z-Wave Europe, Created: 01-02-2017 10:12:52 */
 angular.module('myAppTemplates', []).run(['$templateCache', function($templateCache) {
   'use strict';
 
@@ -211,7 +211,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/home/home_installer.html',
-    "<div ng-controller=HomeController><div ng-include=\"'app/views/home/ip.html'\"></div><div class=\"row home-page_\" ng-if=home.show><div class=\"col-sm-6 home-page-image\"><div ng-include=\"'app/views/home/promo_installer.html'\"></div><div ng-include=\"'app/views/home/network_name.html'\"></div><div ng-include=\"'app/views/home/notes.html'\"></div></div><div class=\"col-sm-6 product-data-list_ pull-right_\"><div ng-include=\"'app/views/home/network_informations.html'\"></div><div ng-include=\"'app/views/network/control/control_different.html'\" ng-controller=ControlController></div><div ng-include=\"'app/views/network/control/control_restore.html'\"></div></div></div></div>"
+    "<div ng-controller=HomeController><div ng-include=\"'app/views/home/ip.html'\"></div><div class=\"row home-page_\" ng-if=home.show><div class=\"col-sm-6 home-page-image\"><div ng-include=\"'app/views/home/promo_installer.html'\"></div><div ng-include=\"'app/views/home/use_cit.html'\"></div><div ng-include=\"'app/views/home/network_name.html'\"></div><div ng-include=\"'app/views/home/notes.html'\"></div></div><div class=\"col-sm-6 product-data-list_ pull-right_\"><div ng-include=\"'app/views/home/network_informations.html'\"></div><div ng-include=\"'app/views/network/control/control_different.html'\" ng-controller=ControlController></div><div ng-include=\"'app/views/network/control/control_restore.html'\"></div></div></div></div>"
   );
 
 
@@ -252,8 +252,13 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
   );
 
 
+  $templateCache.put('app/views/home/use_cit.html',
+    "<div class=\"panel panel-default\" ng-controller=DataHolderController><div class=panel-heading><i class=\"fa fa-info-circle\"></i> {{_t('use_cit')}}</div><div class=panel-body><a class=\"btn btn-default\" href=\"\"><i class=\"fa fa-book\"></i> {{_t('user_guide')}}</a></div></div>"
+  );
+
+
   $templateCache.put('app/views/indicator.html',
-    "<span><a href=#network/queue target=_blank class=\"btn btn-primary\">{{_t('jobs')}}</a>: {{cfg.busy_indicator.result}}</span><span class=text-success ng-if=\"cfg.busy_indicator.result <= 0\"><i class=\"fa fa-stop\"></i> </span><span class=text-warning ng-if=\"cfg.busy_indicator.result > 0 && cfg.busy_indicator.result < 20 \"><i class=\"fa fa-stop\"></i><i class=\"fa fa-stop\"></i> </span><span class=text-danger ng-if=\"cfg.busy_indicator.result > 19\"><i class=\"fa fa-stop\"></i><i class=\"fa fa-stop\"></i><i class=\"fa fa-stop\"></i></span>"
+    "<span><a href=#network/queue target=_blank class=timestamp>{{_t('jobs')}}</a>: {{cfg.busy_indicator.result}}</span><span class=text-success ng-if=\"cfg.busy_indicator.result <= 0\"><i class=\"fa fa-stop\"></i> </span><span class=text-warning ng-if=\"cfg.busy_indicator.result > 0 && cfg.busy_indicator.result < 20 \"><i class=\"fa fa-stop\"></i><i class=\"fa fa-stop\"></i> </span><span class=text-danger ng-if=\"cfg.busy_indicator.result > 19\"><i class=\"fa fa-stop\"></i><i class=\"fa fa-stop\"></i><i class=\"fa fa-stop\"></i></span>"
   );
 
 

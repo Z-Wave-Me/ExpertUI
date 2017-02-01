@@ -514,6 +514,8 @@
   "yes": "是",
   "zwave_role_type": "Z-Wave+ 类型",
   "ie_last_element": "请记住，IE浏览器不喜欢在清单的队列元素列表结尾出现逗号",
+  "use_cit": "Using the Certified Installer Tool",
+  "user_guide": "User Guide",
   "wifi_password_valid": "Password must between 8 and 63 characters long.",
   "wifi_password": "WIFI Password",
   "ssid_name": "SSID"
