@@ -1,6 +1,7 @@
 {
   "open": "Open",
   "closed": "Closed",
+  "cit_identifier" : "CIT Identifier",
   "open_from_inside": "Open from inside",
   "open_from_outside": "Open from outside",
   "no_device_service": "This device doesn't have the necessary service",

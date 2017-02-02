@@ -1,5 +1,6 @@
 {
  "open": "Open",
+ "cit_identifier" : "CIT Identifier",
  "closed": "Closed",
  "open_from_inside": "Open from inside",
  "open_from_outside": "Open from outside",
