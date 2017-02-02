@@ -675,61 +675,40 @@ appController.controller('ZnifferController_', function ($scope, $interval, $fil
  * @author Niels Roche
  */
 appController.controller('ZnifferRSSIController', function ($scope, $interval, $filter, cfg, dataService, myCache, _) {
+    var cOptions = {
+        title:{
+            text: ""
+        },
+        axisX:{
+            title: "Time",
+            tickColor: "black",
+            tickLength: 5,
+            tickThickness: 2,
+            valueFormatString: "HH:mm"
+        },
+        axisY:{
+            title: "RSSI (dBm)",
+            tickColor: "black",
+            tickLength: 5,
+            tickThickness: 2,
+            includeZero: false
+        },
+        data: [
+            {
+                type: "line",
+                xValueType: "dateTime",
+                xValueFormatString: "HH:mm:ss",
+                connectNullData: true,
+                nullDataLineDashType: "solid",
+                dataPoints: [],
+            }
+        ],
+        zoomEnabled:true
+    };
+
     $scope.rssi = {
-        chartOptions1: {
-            title:{
-                text: ""
-            },
-            axisX:{
-                title: "Time",
-                tickColor: "black",
-                tickLength: 5,
-                tickThickness: 2,
-                valueFormatString: "HH:mm"
-            },
-            axisY:{
-                title: "RSSI (dBm)",
-                tickColor: "black",
-                tickLength: 5,
-                tickThickness: 2
-            },
-            data: [
-                {
-                    type: "line",
-                    xValueType: "dateTime",
-                    xValueFormatString: "HH:mm:ss",
-                    dataPoints: [],
-                }
-            ],
-            zoomEnabled:true
-        },
-        chartOptions2: {
-            title:{
-                text: ""
-            },
-            axisX:{
-                title: "Time",
-                tickColor: "black",
-                tickLength: 5,
-                tickThickness: 2,
-                valueFormatString: "HH:mm"
-            },
-            axisY:{
-                title: "RSSI (dBm)",
-                tickColor: "black",
-                tickLength: 5,
-                tickThickness: 2
-            },
-            data: [
-                {
-                    type: "line",
-                    xValueType: "dateTime",
-                    xValueFormatString: "HH:mm:ss",
-                    dataPoints: [],
-                }
-            ],
-            zoomEnabled:true
-        },
+        chartOptions1: cOptions,
+        chartOptions2: cOptions,
         chartData1: [],
         chartData2: [],
         interval: null
@@ -757,11 +736,11 @@ appController.controller('ZnifferRSSIController', function ($scope, $interval, $
                     if ((entry.time * 1000) > tInterval) {
 
                         if (typeof parseInt(entry.channel1) === 'number') {
-                            chartData1.push({x: timestamp, y: parseInt(entry.channel1)});
+                            chartData1.push({x: timestamp, y: !!entry.channel1? parseInt(entry.channel1) : entry.channel1});
                         }
 
                         if (typeof parseInt(entry.channel2) === 'number') {
-                            chartData2.push({x: timestamp, y: parseInt(entry.channel2)});
+                            chartData2.push({x: timestamp, y: !!entry.channel2? parseInt(entry.channel2) : entry.channel2});
                         }
                     }
                 }
