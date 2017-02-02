@@ -1,5 +1,6 @@
 {
  "open": "Open",
+ "cit_identifier" : "CIT Identifier",
  "closed": "Closed",
  "open_from_inside": "Open from inside",
  "open_from_outside": "Open from outside",
@@ -27,7 +28,7 @@
  "RFRxCRC16Errors":"Anzahl fehlerhaft empfangener CRC16 Frames(von allen empfangenen Frames in %)",
  "on":"ON",
  "off":"OFF",
- "promiscuous_mode":"Promiscuous mode",
+ "promiscuous_mode":"Lauschen",
  "jobs":"Jobs",
  "name":"Name",
  "statistics":"Statistiken",
@@ -519,5 +520,7 @@
   "nm_inc_into_nw_desc": "Diese Modus ermöglicht dem Controller sich mit einem anderem Netzwerk als normale Node zu verbinden bzw. es wieder zu verlassen.",
   "wifi_password_valid": "Passwort muss zwischen 8 und 63 Zeichen lang sein.",
  "wifi_password": "WIFI Passwort",
- "ssid_name": "SSID"
+ "ssid_name": "SSID",
+ "use_cit": "Verwenden Sie das Zertifizierte Installer Tools",
+ "user_guide": "Benutzerhandbuch"
 }
