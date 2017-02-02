@@ -15,6 +15,11 @@ appController.controller('NetworkStatisticsController', function ($scope, $filte
         whiteList: ['RFRxCRC16Errors', 'RFRxForeignHomeID', 'RFRxFrames', 'RFRxLRCErrors', 'RFTxFrames', 'RFTxLBTBackOffs']
     };
 
+    $scope.netStat = {
+        all: {},
+        show: false
+    };
+
 
     /**
      * Load network statistics
@@ -22,7 +27,19 @@ appController.controller('NetworkStatisticsController', function ($scope, $filte
     $scope.loadNetworkStatistics = function () {
         var cmd = cfg.store_url + 'controller.data.statistics';
         dataService.runZwaveCmd(cmd).then(function (response) {
-           // console.log(response.data)
+            var RFTxFrames = parseInt(response.data.RFTxFrames);
+            var RFRxFrames = parseInt(response.data.RFRxFrames);
+            $scope.netStat.all['RFTxLBTBackOffs'] = response.data.RFTxLBTBackOffs;
+            $scope.netStat.all['RFRxLRCErrors'] = response.data.RFRxLRCErrors;
+            $scope.netStat.all['RFRxCRC16Errors'] = response.data.RFRxCRC16Errors;
+            console.log(response.data.RFTxFrames)
+           /* $scope.netStat.all = _.chain(response.data)
+                .filter(function (v,k) {
+
+
+                }).value();*/
+
+           //Old
             $scope.networkStatistics.all = _.chain(response.data)
                 .filter(function (v,k) {
                     if($scope.networkStatistics.whiteList.indexOf(k) > -1){
