@@ -185,13 +185,13 @@ var config_data = {
          'custom_cfg': {
              'default':{
                  'logo': 'app/images/zplus.jpg',
-                  'footer_text': '&COPY; 2014 by Z-Wave.Me',
+                  'footer_text': '&COPY; 2017 by Z-Wave.Me',
                  'logout': '/smarthome/#/logout',
                  'version_type': '',
              },
               'installer':{
                   'logo': 'app/images/z-wave-aliance-logo.png',
-                   'footer_text': '&COPY; 2016 Z-Wave Alliance',
+                   'footer_text': '&COPY; 2017 Z-Wave Alliance',
                   'logout': '#/logout',
                   'version_type': '- version BETA',
               }
