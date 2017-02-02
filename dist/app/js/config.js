@@ -1,4 +1,4 @@
-/* Copyright:  Z-Wave Europe, Created: 02-02-2017 08:37:58 */
+/* Copyright:  Z-Wave Europe, Created: 27-01-2017 17:53:37 */
 /**
  * App configuration
  * @author Martin Vach

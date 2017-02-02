@@ -1,7 +1,6 @@
 {
   "open": "Open",
   "closed": "Closed",
-  "cit_identifier" : "CIT Identifier",
   "open_from_inside": "Open from inside",
   "open_from_outside": "Open from outside",
   "no_device_service": "This device doesn't have the necessary service",
@@ -28,7 +27,7 @@
   "RFRxCRC16Errors":"Number of corrupted CRC16 Frames received (in % of correct frames received)",
   "on":"ON",
   "off":"OFF",
-  "promiscuous_mode":"Eavesdrop",
+  "promiscuous_mode":"Promiscuous mode",
   "jobs":"Jobs",
   "name":"Name",
   "statistics":"Statistics",
@@ -516,7 +515,5 @@
   "ie_last_element": "just to remember, that IE do not like trailing comma (,) at the end the list of Associative array elements",
   "wifi_password_valid": "Password must between 8 and 63 characters long.",
   "wifi_password": "WIFI Password",
-  "ssid_name": "SSID",
-  "use_cit": "Using the Certified Installer Tool",
-  "user_guide": "User Guide"
+  "ssid_name": "SSID"
 }
