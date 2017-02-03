@@ -1,4 +1,5 @@
 {
+  "nav_linkhealth_info":"Link Status",
   "open": "Open",
   "closed": "Closed",
   "cit_identifier" : "CIT Identifier",
@@ -39,8 +40,8 @@
   "success_controller_include":"Controller was (re-)included in network. Please select what do you want to do?",
   "debug_mode":"Debug mode",
   "change_date_time_format": "Change date and time format to chosen language or keep current settings?",
-  "z_way_restart": "Z-Way is restarted! Redirect to homesite in __val__ __level__.",
-  "proccess_take":"Please be patient. This process will take __val__ __level__ to complete.",
+  "z_way_restart": "The system will now be automatically restarted. Redirect to homesite in __val__ __level__.",
+  "proccess_take":"This process took __val__ __level__ to complete.",
   "nif_request_info":"NIF request info",
   "error_nif_request":"Unable to send a NIF request",
   "seconds":"seconds",

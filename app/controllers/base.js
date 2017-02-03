@@ -417,17 +417,9 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     };
     $scope.loadBoxApiData = function () {
         dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
-             var hasDevices = Object.keys(ZWaveAPIData.devices).length;
-             var homeId = ZWaveAPIData.controller.data.homeId.value;
-
-            // todo: deprecated
-            //$scope.boxData.controller.isPrimary = ZWaveAPIData.controller.data.isPrimary.value;
-            //$scope.boxData.controller.isRealPrimary = ZWaveAPIData.controller.data.isRealPrimary.value;
-            //$scope.boxData.controller.hasDevices =  hasDevices < 2 ? false : true;
-            //$scope.boxData.controller.homeId =   '0x' + ('00000000' + (homeId + (homeId < 0 ? 0x100000000 : 0)).toString(16)).slice(-8);
-            //$scope.boxData.controller.softwareRevisionVersion = ZWaveAPIData.controller.data.softwareRevisionVersion.value;
-            //$scope.boxData.controller.homeNotes = ZWaveAPIData.controller.data.homeNotes.value ;
-            //$scope.boxData.controller.homeName = ZWaveAPIData.controller.data.homeName.value || cfg.controller.network_name;
+            var hasDevices = Object.keys(ZWaveAPIData.devices).length;
+            var homeId = ZWaveAPIData.controller.data.homeId.value;
+            var zwayNodeId = ZWaveAPIData.controller.data.nodeId.value;
 
             // Changes MK
             //$scope.boxData.controller.controllerState = ZWaveAPIData.controller.data.controllerState.value;
@@ -437,7 +429,8 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
                 isRealPrimary: ZWaveAPIData.controller.data.isRealPrimary.value,
                 homeId: homeId,
                 homeIdHex: '0x' + ('00000000' + (homeId + (homeId < 0 ? 0x100000000 : 0)).toString(16)).slice(-8),
-                hasDevices: hasDevices < 2 ? false : true
+                hasDevices: hasDevices < 2 ? false : true,
+                zwayNodeId: zwayNodeId
             }
             angular.extend(cfg.controller,cfgController);
         }, function (error) {

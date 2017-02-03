@@ -431,9 +431,9 @@ angApp.filter('toTrusted', ['$sce', function ($sce) {
 /**
  * Display device name
  */
-angApp.filter('deviceName', function () {
+angApp.filter('deviceName', function (cfg) {
     return function (deviceId, device) {
-        var name = (deviceId == 1 ? 'Z-Way' : 'Device ' + '_' + deviceId);
+        var name = (deviceId === cfg.controller.zwayNodeId? 'Z-Way' : 'Device ' + '_' + deviceId);
         if (device === undefined) {
             return name;
         }
