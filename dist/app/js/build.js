@@ -32537,6 +32537,10 @@ angApp.config(['$routeProvider',
         when('/settings', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/settings/settings_' + config_data.cfg.app_type + '.html'
+        }).// Print
+        when('/print', {
+            requireLogin: requireLogin,
+            templateUrl: 'app/views/pages/print.html'
         }).// Error page
         when('/error/:code?', {
             requireLogin: requireLogin,
@@ -32955,7 +32959,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/network/statistics.html',
-    "<div ng-controller=NetworkStatisticsController><div class=page-header><h1>{{_t('statistics')}}</h1></div><bb-alert alert=alert></bb-alert><div class=table-responsive ng-if=networkStatistics.show><table class=\"table table-striped table-condensed table-hover table-statistics\"><thead><tr><th style=\"width: 50%\">{{ _t('name')}}</th><th>{{ _t('datetime')}}</th><th class=\"mobile-show td-action\"><button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=\"updateNetworkStatistics('GetNetworkStats()')\" ng-disabled=\"rowSpinner['GetNetworkStats()']\"><bb-row-spinner spinner=\"rowSpinner['GetNetworkStats()']\" label=\"_t('update')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button> <button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=\"updateNetworkStatistics('ClearNetworkStats()')\" ng-disabled=\"rowSpinner['ClearNetworkStats()']\"><bb-row-spinner spinner=\"rowSpinner['ClearNetworkStats()']\" label=\"_t('reset')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in networkStatistics.all track by $index\"><td>{{_t(v.name)}}</td><td class=\"row-time is-updated-{{v.isUpdated}}\">{{ v.dateTime.today }}</td><td class=text-right>{{v.value}}</td></tr></tbody></table></div></div>"
+    "<div ng-controller=NetworkStatisticsController><div class=page-header><h1>{{_t('statistics')}}</h1></div><bb-alert alert=alert></bb-alert><div class=text-right><button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=\"updateNetworkStatistics('GetNetworkStats()')\" ng-disabled=\"rowSpinner['GetNetworkStats()']\"><bb-row-spinner spinner=\"rowSpinner['GetNetworkStats()']\" label=\"_t('update')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button> <button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=\"updateNetworkStatistics('ClearNetworkStats()')\" ng-disabled=\"rowSpinner['ClearNetworkStats()']\"><bb-row-spinner spinner=\"rowSpinner['ClearNetworkStats()']\" label=\"_t('reset')\" icon=\"'fa-refresh'\"></bb-row-spinner></button></div><div class=statistic-entry ng-repeat=\"v in netStat.all track by $index\"><div class=statistic-title>{{_t(v.name)}} <span class=\"label label-default\">{{v.dateTime.today}}</span></div><div class=progress><div class=\"progress-bar progress-bar-success\" style=\"width: {{v.success}}%\"><span>{{v.success}}% {{_t('ok')}}</span></div><div class=\"progress-bar progress-bar-danger\" style=\"width: {{v.fail}}%\"><span>{{v.fail}}% {{_t('error')}}</span></div></div></div></div>"
   );
 
 
@@ -32966,6 +32970,11 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
   $templateCache.put('app/views/pages/license.html',
     "<div ng-controller=LicenseController><div class=page-header><h1>{{_t('licence_upgrade')}}</h1></div><p>{{_t('licence_upgrade_info')}}</p><div class=\"panel panel-default\"><div class=panel-heading><i class=\"fa fa-sign-in\"></i> {{_t('licence_key_get')}}</div><div class=panel-body><p><a ng-href={{cfg.buy_licence_key}} class=\"btn btn-info btn-lg\">{{_t('btn_licence_buy')}}</a></p></div></div><p>{{_t('licence_upgrade_key')}}</p><div class=\"panel panel-default panel-highlighted\"><div class=panel-heading><i class=\"fa fa-key\"></i> {{_t('licence_key_insert')}}</div><div class=panel-body><div class=\"alert alert-danger\" ng-if=controllerIsZeroUuid><i class=\"fa fa-plug\"></i> {{_t('replug_device')}}</div><div class=cfg-block><div class=form-inline><input class=\"form-control spin-true verify-ctrl\" name=scratch_id id=scratch_id ng-disabled=controllerIsZeroUuid ng-model=formData.scratch_id> <button class=\"btn btn-primary verify-ctrl\" ng-click=getLicense(formData) ng-disabled=controllerIsZeroUuid>{{_t('btn_licence_verify')}}</button></div></div><p ng-if=proccessVerify.message><i class=fa-lg ng-class=proccessVerify.status></i> <span ng-bind=proccessVerify.message></span></p><p ng-if=proccessUpdate.message><i class=fa-lg ng-class=proccessUpdate.status></i> <span ng-bind=proccessUpdate.message></span></p></div></div></div>"
+  );
+
+
+  $templateCache.put('app/views/pages/print.html',
+    "<div class=print-entry><h2>{{_t('nav_status')}}</h2>Device Info und Device Status<br>zeigt die Übersichten Device Status und Information</div><div class=print-entry><h2>{{_t('nav_rssi')}}</h2>zeigt Background Noise</div><div class=print-entry>zeigt die noch zu entwerfende Network Statistik mit Eigene Pakete versus fremde Pakete, ...</div><div class=print-entry>zeigt die aktuelle Routingtabelle</div><div class=print-entry>zeigt die noch zu entwickelnde Übersicht mit den Link status als Zusammenfassung der Einzelseiten aus dem Config-bereich</div><div class=print-entry>Notizen</div>"
   );
 
 
@@ -42215,8 +42224,14 @@ appController.controller('SetPromiscuousModeController', function ($scope) {
 appController.controller('NetworkStatisticsController', function ($scope, $filter, $timeout, $interval, dataService, cfg, _, deviceService) {
     $scope.networkStatistics = {
         all: [],
+        collection: [],
         show: false,
         whiteList: ['RFRxCRC16Errors', 'RFRxForeignHomeID', 'RFRxFrames', 'RFRxLRCErrors', 'RFTxFrames', 'RFTxLBTBackOffs']
+    };
+
+    $scope.netStat = {
+        all: {},
+        show: false
     };
 
 
@@ -42226,10 +42241,75 @@ appController.controller('NetworkStatisticsController', function ($scope, $filte
     $scope.loadNetworkStatistics = function () {
         var cmd = cfg.store_url + 'controller.data.statistics';
         dataService.runZwaveCmd(cmd).then(function (response) {
-           // console.log(response.data)
+            var percentCnt = function (total, num) {
+                if (total === 0 && num === 0) {
+                    return 0;
+                }
+                var out = parseInt(((num / total) * 100).toFixed());
+                // Sets 1 percent if num is not 0 and out is 0
+                return out === 0 && num > 0 ? 1 : out;
+            }
+            // Total Number of Frames Sent RFTxFrames
+            var RFTxFrames = parseInt(response.data.RFTxFrames.value);
+            // Frames with Frequency Backoff (in % of frames sent) RFTxLBTBackOffs
+            var RFTxLBTBackOffs = parseInt(response.data.RFTxLBTBackOffs.value);
+            var objRFTxLBTBackOffs = response.data.RFTxLBTBackOffs;
+
+            objRFTxLBTBackOffs['RFTxFrames'] = RFTxFrames;
+            objRFTxLBTBackOffs['fail'] = percentCnt(RFTxFrames, RFTxLBTBackOffs);
+            objRFTxLBTBackOffs['success'] = (RFTxFrames > 0 ?(100 - objRFTxLBTBackOffs['fail']) : 0);
+            objRFTxLBTBackOffs['RFTxFrames'] = RFTxFrames;
+            objRFTxLBTBackOffs['dateTime'] = $filter('getDateTimeObj')(response.data.RFTxLBTBackOffs.updateTime);
+            $scope.netStat.all[0] = objRFTxLBTBackOffs;
+
+            // Number of correct Frames received RFRxFrames
+            var RFRxFrames = parseInt(response.data.RFRxFrames.value);
+            var RFRxLRCErrors = parseInt(response.data.RFRxLRCErrors.value);
+            var RFRxCRC16Errors = parseInt(response.data.RFRxCRC16Errors.value);
+             var RFRxForeignHomeID = parseInt(response.data.RFRxForeignHomeID.value);
+
+            // Number of corrupted CRC8 Frames received
+            var objRFRxLRCErrors = response.data.RFRxLRCErrors;
+            objRFRxLRCErrors['fail'] = percentCnt(RFRxFrames, RFRxLRCErrors);
+            objRFRxLRCErrors['success'] = (RFRxFrames > 0 ?(100 - objRFRxLRCErrors['fail']) : 0);
+            objRFRxLRCErrors['RFRxFrames'] = RFRxFrames;
+            objRFRxLRCErrors['dateTime'] = $filter('getDateTimeObj')(response.data.RFRxLRCErrors.updateTime);
+            $scope.netStat.all[1] = objRFRxLRCErrors;
+
+            // Number of corrupted CRC16 Frames received
+            var objRFRxCRC16Errors = response.data.RFRxCRC16Errors;
+            objRFRxCRC16Errors['fail'] = percentCnt(RFRxFrames, RFRxCRC16Errors);
+            objRFRxCRC16Errors['success'] = (RFRxFrames > 0 ?(100 - objRFRxCRC16Errors['fail']) : 0);
+            objRFRxCRC16Errors['RFRxFrames'] = RFRxFrames;
+            objRFRxCRC16Errors['dateTime'] = $filter('getDateTimeObj')(response.data.RFRxCRC16Errors.updateTime);
+            $scope.netStat.all[2] = objRFRxCRC16Errors;
+
+            // RFRxForeignHomeID RFRxForeignHomeID
+            var objRFRxForeignHomeID = response.data.RFRxForeignHomeID;
+            objRFRxForeignHomeID['fail'] = percentCnt(RFRxFrames, RFRxForeignHomeID);
+            objRFRxForeignHomeID['success'] =  (RFRxFrames > 0 ?(100 - objRFRxForeignHomeID['fail']) : 0);
+            objRFRxForeignHomeID['RFRxFrames'] = RFRxFrames;
+            objRFRxForeignHomeID['dateTime'] = $filter('getDateTimeObj')(response.data.RFRxForeignHomeID.updateTime);
+            $scope.netStat.all[3] = objRFRxForeignHomeID;
+            //return;
+            /*$scope.netStat.all['RFTxLBTBackOffs'] = response.data.RFTxLBTBackOffs;
+             $scope.netStat.all['RFRxCRC16Errors'] = response.data.RFRxCRC16Errors;
+             $scope.netStat.all['RFRxForeignHomeID'] = response.data.RFRxForeignHomeID;*/
+
+
+            //console.log(response);
+            //return;
+
+            /* $scope.netStat.all = _.chain(response.data)
+             .filter(function (v,k) {
+
+
+             }).value();*/
+
+            //Old
             $scope.networkStatistics.all = _.chain(response.data)
-                .filter(function (v,k) {
-                    if($scope.networkStatistics.whiteList.indexOf(k) > -1){
+                .filter(function (v, k) {
+                    if ($scope.networkStatistics.whiteList.indexOf(k) > -1) {
                         v.name = k;
                         v.isUpdated = (v.updateTime > v.invalidateTime ? true : false);
                         v.dateTime = $filter('getDateTimeObj')(v.updateTime);
@@ -42237,8 +42317,12 @@ appController.controller('NetworkStatisticsController', function ($scope, $filte
                     }
 
                 }).value();
-            if(_.isEmpty($scope.networkStatistics.all)){
-                $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+            if (_.isEmpty($scope.networkStatistics.all)) {
+                $scope.alert = {
+                    message: $scope._t('device_404'),
+                    status: 'alert-warning',
+                    icon: 'fa-exclamation-circle'
+                };
                 return;
             }
             $scope.networkStatistics.show = true;

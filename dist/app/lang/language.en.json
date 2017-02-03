@@ -1,6 +1,8 @@
 {
   "--- newtrans": "---",
  "nav_linkhealth_info":"Link Status",
+ "ok" : "OK",
+ "error" : "Error",
  "cit_identifier" : "CIT Identifier",
  "---": "---",
  "open": "Open",
