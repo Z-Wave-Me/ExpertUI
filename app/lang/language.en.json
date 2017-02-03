@@ -1,5 +1,7 @@
 {
   "--- newtrans": "---",
+ "ok" : "OK",
+ "error" : "Error",
  "cit_identifier" : "CIT Identifier",
  "---": "---",
  "open": "Open",

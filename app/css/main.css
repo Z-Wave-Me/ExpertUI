@@ -15692,6 +15692,26 @@ http://codepen.io/MattIn4D/pen/LiKFC
   border: solid 4px #9fd8ef;
 }
 
+/* Statistics
+-------------------------------------------------- */
+/* line 3, ../sass/modules/_statistics.scss */
+.statistic-entry {
+  margin: 0 0 20px 0;
+}
+/* line 5, ../sass/modules/_statistics.scss */
+.statistic-entry .statistic-title {
+  font-size: 110%;
+  margin: 0 0 5px 0;
+}
+/* line 9, ../sass/modules/_statistics.scss */
+.statistic-entry .progress {
+  height: 30px;
+}
+/* line 11, ../sass/modules/_statistics.scss */
+.statistic-entry .progress .progress-bar {
+  line-height: 30px;
+}
+
 /* Main navigation
 -------------------------------------------------- */
 /* line 5, ../sass/skins/default/_main.scss */

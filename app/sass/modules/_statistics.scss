@@ -1,0 +1,15 @@
+/* Statistics
+-------------------------------------------------- */
+.statistic-entry{
+    margin: 0 0 $spacing-double 0;
+    .statistic-title{
+        font-size: 110%;
+        margin: 0 0 $spacing-half 0;
+    }
+    .progress{
+        height: 30px;
+        .progress-bar{
+            line-height: 30px;
+        }
+    }
+}
