@@ -107,7 +107,7 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
             var data = {
                     "time_zone": input.time_zone
                 },
-                timeout = 15000;
+                timeout = 60000;
 
                 dataService.postApi('time_zone', data, null).then(function (response) {
                     $timeout(function() {
