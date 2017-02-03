@@ -16512,5 +16512,34 @@ http://codepen.io/MattIn4D/pen/LiKFC
 }
 /* Extra Small Devices, Phones */
 /* Custom, iPhone Retina */
+/* Print
+-------------------------------------------------- */
+/* line 4, ../sass/modules/_print.scss */
+#page_print #header, #page_print .container-installer, #page_print #footer {
+  display: none;
+}
+/* line 7, ../sass/modules/_print.scss */
+#page_print #main_content.container {
+  padding: 0;
+  margin: 10px;
+  border: solid 1px red;
+  min-width: 100%;
+}
+
+@media print {
+  /* Print
+  -------------------------------------------------- */
+  /* line 4, ../sass/modules/_print.scss */
+  #page_print #header, #page_print .container-installer, #page_print #footer {
+    display: none;
+  }
+  /* line 7, ../sass/modules/_print.scss */
+  #page_print #main_content.container {
+    padding: 0;
+    margin: 10px;
+    border: solid 1px red;
+    min-width: 100%;
+  }
+}
 
 /*# sourceMappingURL=main.css.map */

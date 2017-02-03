@@ -144,6 +144,10 @@ angApp.config(['$routeProvider',
         when('/settings', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/settings/settings_' + config_data.cfg.app_type + '.html'
+        }).// Print
+        when('/print', {
+            requireLogin: requireLogin,
+            templateUrl: 'app/views/pages/print.html'
         }).// Error page
         when('/error/:code?', {
             requireLogin: requireLogin,

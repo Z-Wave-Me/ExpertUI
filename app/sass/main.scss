@@ -64,4 +64,10 @@
 @import "skins/installer/_main";
 
 // Mobile
-@import "responsive/_responsive"; 
+@import "responsive/_responsive";
+
+// Print
+@import "modules/_print";
+@media print {
+  @import "modules/_print";
+}
