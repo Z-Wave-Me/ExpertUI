@@ -1,9 +1,8 @@
-<!-- Copyright:  Z-Wave Europe, Created: 27-01-2017 17:53:37 -->
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="angApp" ng-controller="BaseController">
     <head>
         <meta charset="utf-8">
-        <title>Z-Wave Expert-UI</title>
+        <title>{{getCustomCfgArr('title')}}</title>
         <!-- CSS -->
         <link media="screen" type="text/css" rel="stylesheet" href="app/css/build.css">
         <!-- App config -->
@@ -11,7 +10,7 @@
         <!-- JS -->
         <script src="app/js/build.js"></script>
     </head>
-    <body ng-app="angApp" ng-controller="BaseController" id="page_{{getBodyId()}}"
+    <body id="page_{{getBodyId()}}"
           class="is-mobile-{{isMobile}} custom-ip-{{cfg.custom_ip}} app-type-{{cfg.app_type}}">
     <!-- Header -->
     <div id="header" ng-if="getBodyId()">
@@ -87,9 +86,9 @@
                             <div class="sub-navigation sub-navigation-left" ng-if="naviExpanded.naviNetwork">
                                 <ul>
                                     <li><a href="#network/control" ng-class="isActive('control',2)">{{ _t('nav_control') }}</a></li>
-                                    <li ng-if="cfg.app_type === 'installer'">
+                                    <!--<li ng-if="cfg.app_type === 'installer'">
                                         <a href="#network/statistics" ng-class="isActive('statistics',2)">{{ _t('statistics') }}</a>
-                                    </li>
+                                    </li>-->
                                     <li><a href="#network/routing" ng-class="isActive('routing',2)">{{ _t('nav_routing') }}</a></li>
                                     <!-- <li><a class="a-disabled" title="Temporary disabled. Will be back in the next release." ng-class="isActive('reorganization',2)">{{ _t('nav_reorganization') }}</a></li>-->
                                     <!--<li><a href="#network/reorganization" ng-class="isActive('reorganization',2)">{{ _t('nav_reorganization') }}</a></li>-->
