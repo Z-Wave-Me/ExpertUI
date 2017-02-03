@@ -43,9 +43,10 @@ appController.controller('NetworkStatisticsController', function ($scope, $filte
             var objRFTxLBTBackOffs = response.data.RFTxLBTBackOffs;
 
             objRFTxLBTBackOffs['RFTxFrames'] = RFTxFrames;
+            objRFTxLBTBackOffs['frameName'] = 'RFTxFrames';
+            objRFTxLBTBackOffs['frameValue'] = RFTxFrames;
             objRFTxLBTBackOffs['fail'] = percentCnt(RFTxFrames, RFTxLBTBackOffs);
             objRFTxLBTBackOffs['success'] = (RFTxFrames > 0 ?(100 - objRFTxLBTBackOffs['fail']) : 0);
-            objRFTxLBTBackOffs['RFTxFrames'] = RFTxFrames;
             objRFTxLBTBackOffs['dateTime'] = $filter('getDateTimeObj')(response.data.RFTxLBTBackOffs.updateTime);
             $scope.netStat.all[0] = objRFTxLBTBackOffs;
 
@@ -58,24 +59,35 @@ appController.controller('NetworkStatisticsController', function ($scope, $filte
             // Number of corrupted CRC8 Frames received
             var objRFRxLRCErrors = response.data.RFRxLRCErrors;
             objRFRxLRCErrors['fail'] = percentCnt(RFRxFrames, RFRxLRCErrors);
-            objRFRxLRCErrors['success'] = (RFRxFrames > 0 ?(100 - objRFRxLRCErrors['fail']) : 0);
+            objRFRxLRCErrors['failCRC8'] = percentCnt(RFRxFrames, RFRxLRCErrors);
+            objRFRxLRCErrors['failCRC16'] = percentCnt(RFRxFrames, RFRxCRC16Errors);
+            objRFRxLRCErrors['success'] = (RFRxFrames > 0 ?(100 - (objRFRxLRCErrors['failCRC8'] + objRFRxLRCErrors['failCRC16'])) : 0);
             objRFRxLRCErrors['RFRxFrames'] = RFRxFrames;
+            objRFRxLRCErrors['frameName'] = 'RFRxFrames';
+            objRFRxLRCErrors['frameValue'] = RFRxFrames;
+            objRFRxLRCErrors['failCRC8Name'] = 'RFRxLRCErrors';
+            objRFRxLRCErrors['failCRC16Name'] = 'RFRxCRC16Errors';
+            objRFRxLRCErrors['failCRC8Value'] = RFRxLRCErrors;
+            objRFRxLRCErrors['failCRC16Value'] = RFRxCRC16Errors;
             objRFRxLRCErrors['dateTime'] = $filter('getDateTimeObj')(response.data.RFRxLRCErrors.updateTime);
             $scope.netStat.all[1] = objRFRxLRCErrors;
 
             // Number of corrupted CRC16 Frames received
-            var objRFRxCRC16Errors = response.data.RFRxCRC16Errors;
+            /*var objRFRxCRC16Errors = response.data.RFRxCRC16Errors;
             objRFRxCRC16Errors['fail'] = percentCnt(RFRxFrames, RFRxCRC16Errors);
             objRFRxCRC16Errors['success'] = (RFRxFrames > 0 ?(100 - objRFRxCRC16Errors['fail']) : 0);
             objRFRxCRC16Errors['RFRxFrames'] = RFRxFrames;
             objRFRxCRC16Errors['dateTime'] = $filter('getDateTimeObj')(response.data.RFRxCRC16Errors.updateTime);
-            $scope.netStat.all[2] = objRFRxCRC16Errors;
+            $scope.netStat.all[2] = objRFRxCRC16Errors;*/
 
             // RFRxForeignHomeID RFRxForeignHomeID
             var objRFRxForeignHomeID = response.data.RFRxForeignHomeID;
             objRFRxForeignHomeID['fail'] = percentCnt(RFRxFrames, RFRxForeignHomeID);
             objRFRxForeignHomeID['success'] =  (RFRxFrames > 0 ?(100 - objRFRxForeignHomeID['fail']) : 0);
             objRFRxForeignHomeID['RFRxFrames'] = RFRxFrames;
+            objRFRxForeignHomeID['frameName'] = 'RFRxFrames';
+            objRFRxForeignHomeID['frameValue'] = RFRxFrames;
+
             objRFRxForeignHomeID['dateTime'] = $filter('getDateTimeObj')(response.data.RFRxForeignHomeID.updateTime);
             $scope.netStat.all[3] = objRFRxForeignHomeID;
             //return;
