@@ -1,0 +1,14 @@
+/* Print
+-------------------------------------------------- */
+#page_print{
+    #header,.container-installer,#footer{
+        display: none;
+    }
+    #main_content.container{
+        padding: 0;
+        margin: 10px;
+        border: solid 1px red;
+        min-width: 100%;
+    }
+
+}

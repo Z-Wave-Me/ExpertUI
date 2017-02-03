@@ -15692,6 +15692,26 @@ http://codepen.io/MattIn4D/pen/LiKFC
   border: solid 4px #9fd8ef;
 }
 
+/* Statistics
+-------------------------------------------------- */
+/* line 3, ../sass/modules/_statistics.scss */
+.statistic-entry {
+  margin: 0 0 20px 0;
+}
+/* line 5, ../sass/modules/_statistics.scss */
+.statistic-entry .statistic-title {
+  font-size: 110%;
+  margin: 0 0 5px 0;
+}
+/* line 9, ../sass/modules/_statistics.scss */
+.statistic-entry .progress {
+  height: 30px;
+}
+/* line 11, ../sass/modules/_statistics.scss */
+.statistic-entry .progress .progress-bar {
+  line-height: 30px;
+}
+
 /* Main navigation
 -------------------------------------------------- */
 /* line 5, ../sass/skins/default/_main.scss */
@@ -16492,5 +16512,34 @@ http://codepen.io/MattIn4D/pen/LiKFC
 }
 /* Extra Small Devices, Phones */
 /* Custom, iPhone Retina */
+/* Print
+-------------------------------------------------- */
+/* line 4, ../sass/modules/_print.scss */
+#page_print #header, #page_print .container-installer, #page_print #footer {
+  display: none;
+}
+/* line 7, ../sass/modules/_print.scss */
+#page_print #main_content.container {
+  padding: 0;
+  margin: 10px;
+  border: solid 1px red;
+  min-width: 100%;
+}
+
+@media print {
+  /* Print
+  -------------------------------------------------- */
+  /* line 4, ../sass/modules/_print.scss */
+  #page_print #header, #page_print .container-installer, #page_print #footer {
+    display: none;
+  }
+  /* line 7, ../sass/modules/_print.scss */
+  #page_print #main_content.container {
+    padding: 0;
+    margin: 10px;
+    border: solid 1px red;
+    min-width: 100%;
+  }
+}
 
 /*# sourceMappingURL=main.css.map */
