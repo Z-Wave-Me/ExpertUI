@@ -7,8 +7,9 @@ var appService = angular.module('appService', []);
 /**
  * Device service
  */
-appService.service('deviceService', function($filter, $log, $cookies,$window,_) {
+appService.service('deviceService', function($filter, $log, $cookies,$window,cfg,_) {
     /// --- Public functions --- ///
+
     /**
      * Mobile device detect
      */
@@ -151,6 +152,18 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
      */
     this.isLocalyReset = function(node) {
         return isLocalyReset(node);
+    };
+
+    /**
+     * Get a value from custom config
+     * @param {string} key
+     * @returns {string}
+     */
+    this.getCustomCfgVal = function (key) {
+        if (cfg.custom_cfg[cfg.app_type]) {
+            return cfg.custom_cfg[cfg.app_type][key] || '';
+        }
+        return '';
     };
     
     /**
