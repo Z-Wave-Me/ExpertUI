@@ -1,0 +1,32 @@
+<!--Print view -->
+<div class="print-entry">
+
+    <div ng-include="'app/views/device/status.html'"></div>
+    zeigt die Übersichten Device Status
+</div>
+<div class="print-entry">
+    <div ng-include="'app/views/device/type.html'"></div>
+    zeigt die Übersichten Device Information
+</div>
+<div class="print-entry">
+    <div ng-include="'app/views/installer/rssi_background.html'"></div>
+    zeigt Background Noise
+
+</div>
+<div class="print-entry">
+    <div ng-include="'app/views/network/statistics.html'"></div>
+    zeigt die noch zu entwerfende Network Statistik mit Eigene Pakete versus fremde Pakete, ...
+</div>
+<div class="print-entry">
+    <h2>{{_t('neighbors')}}</h2>
+    zeigt die aktuelle Routingtabelle
+</div>
+<div class="print-entry">
+    <h2>{{ _t('nav_linkhealth_info') }}</h2>
+    zeigt die noch zu entwickelnde Übersicht mit den Link status als Zusammenfassung der Einzelseiten aus dem
+    Config-bereich
+</div>
+<div class="print-entry">
+    <h2>{{ _t('txt_notes') }}</h2>
+    Notizen
+</div>
