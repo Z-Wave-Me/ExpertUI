@@ -151,7 +151,7 @@ angApp.config(['$routeProvider',
         }).// Print
         when('/print', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/pages/print.html'
+            templateUrl: 'app/views/print/print.html'
         }).// Error page
         when('/error/:code?', {
             requireLogin: requireLogin,
