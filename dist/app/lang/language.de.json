@@ -389,6 +389,7 @@
   "nm_controller_state_7": "Gerät exkludiert.",
   "nm_controller_state_8": "Bereit, inkludiert zu werden.",
   "nm_controller_state_9": "Inklusion gestartet.",
+ "nm_controller_state_9_exclude": "Exklusion gestartet.",
   "nm_controller_state_10": "Controller gefunden, bitte warten...",
   "nm_controller_state_11": "Inkludiere mich selbst ins Netzwerk, bitte warten...",
   "nm_controller_state_12": "Controller wurde in Netz (re)-inkludiert.",
@@ -524,5 +525,9 @@
  "wifi_password": "WIFI Passwort",
  "ssid_name": "SSID",
  "use_cit": "Verwenden Sie das Zertifizierte Installer Tools",
- "user_guide": "Benutzerhandbuch"
+ "user_guide": "Benutzerhandbuch",
+ "replicate_receive_update": "Replicate Receive Update",
+ "request_update": "Request Update",
+ "update_form_primary": "Starting network update from Primary.",
+ "update_form_sis": "Requesting Network Update from SIS."
 }

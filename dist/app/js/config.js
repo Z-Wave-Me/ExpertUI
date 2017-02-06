@@ -1,4 +1,4 @@
-/* Copyright:  Z-Wave Europe, Created: 06-02-2017 14:42:45 */
+/* Copyright:  Z-Wave Europe, Created: 06-02-2017 15:02:12 */
 /**
  * App configuration
  * @author Martin Vach
@@ -190,14 +190,16 @@ var config_data = {
                   'footer_text': '&COPY; 2017 by Z-Wave.Me',
                  'logout': '/smarthome/#/logout',
                  'version_type': '',
-                 'title':'Z-Wave Expert UI'
+                 'title':'Z-Wave Expert UI',
+                 'controller_name':'Z-Way'
              },
               'installer':{
                   'logo': 'app/images/z-wave-aliance-logo.png',
                    'footer_text': '&COPY; 2017 Z-Wave Alliance',
                   'logout': '#/logout',
                   'version_type': '- version BETA',
-                  'title':'Z-Wave CIT'
+                  'title':'Z-Wave CIT',
+                  'controller_name':'CIT'
               }
          }
 
