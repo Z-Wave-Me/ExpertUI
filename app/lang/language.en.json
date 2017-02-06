@@ -62,7 +62,7 @@
  "app_settings": "System settings",
  "current_firmware": "The current firmware version is",
  "firmware_update_info": "This will open new window. To update firmware, click on tab Advanced -> Firmware and continue according to the instruction.",
- "update_to_latest": "Update to latest",
+ "update_to_latest": "Open Updater",
  "error_load_user": "User not found. Please check your  login or password",
  "nav_login": "Login",
  "lb_login": "Login",
