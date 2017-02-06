@@ -13917,7 +13917,6 @@ img {
   position: relative;
   width: 100%;
   height: 100%;
-  color: #5698d0;
 }
 /* line 19, ../sass/common/_navi.scss */
 .page-navi .page-navi-in {
@@ -13926,25 +13925,25 @@ img {
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   -moz-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-  border: 1px solid #9fd8ef;
+  border: 1px solid #CCCCCC;
   width: 100%;
   top: 0;
   left: 0;
   z-index: 1900;
 }
-/* line 29, ../sass/common/_navi.scss */
+/* line 31, ../sass/common/_navi.scss */
 .page-navi ul {
   list-style: none;
   text-align: left;
   padding: 10px;
   margin: 0;
 }
-/* line 34, ../sass/common/_navi.scss */
+/* line 36, ../sass/common/_navi.scss */
 .page-navi ul li {
   padding: 10px;
   border-bottom: solid 1px #9fd8ef;
 }
-/* line 40, ../sass/common/_navi.scss */
+/* line 42, ../sass/common/_navi.scss */
 .page-navi ul li a {
   position: relative;
   min-height: 1px;
@@ -13954,48 +13953,48 @@ img {
   display: block;
   margin: auto;
 }
-/* line 51, ../sass/common/_navi.scss */
+/* line 53, ../sass/common/_navi.scss */
 .page-navi ul li .navi-img {
   display: inline-block;
   margin: 0 10px 0 0;
 }
-/* line 56, ../sass/common/_navi.scss */
+/* line 58, ../sass/common/_navi.scss */
 .page-navi ul li .page-navi-icon {
   position: absolute;
   right: 1%;
   display: inline-block !important;
 }
-/* line 63, ../sass/common/_navi.scss */
+/* line 65, ../sass/common/_navi.scss */
 .page-navi ul .active a {
   color: white;
   font-weight: bold;
   text-decoration: underline;
 }
-/* line 68, ../sass/common/_navi.scss */
+/* line 70, ../sass/common/_navi.scss */
 .page-navi ul .active .fa {
   color: white;
 }
-/* line 73, ../sass/common/_navi.scss */
+/* line 75, ../sass/common/_navi.scss */
 .page-navi ul .fa {
   padding-right: 7px;
   color: #a6c8e6;
 }
-/* line 79, ../sass/common/_navi.scss */
+/* line 81, ../sass/common/_navi.scss */
 .page-navi .fa {
   font-size: 130%;
 }
-/* line 82, ../sass/common/_navi.scss */
+/* line 84, ../sass/common/_navi.scss */
 .page-navi .page-navi-title {
   text-align: left;
   margin: 0;
   padding: 10px 20px;
   color: #357fbe;
 }
-/* line 89, ../sass/common/_navi.scss */
+/* line 91, ../sass/common/_navi.scss */
 .page-navi .page-navi-content {
   padding: 10px;
 }
-/* line 92, ../sass/common/_navi.scss */
+/* line 94, ../sass/common/_navi.scss */
 .page-navi .page-navi-tag {
   border: solid 1px #9fd8ef;
   display: inline-block;
@@ -14006,25 +14005,25 @@ img {
   vertical-align: baseline;
   border-radius: 4px;
 }
-/* line 102, ../sass/common/_navi.scss */
+/* line 104, ../sass/common/_navi.scss */
 .page-navi .page-navi-tag.active {
   background-color: #9fd8ef;
   cursor: text;
 }
 
-/* line 108, ../sass/common/_navi.scss */
+/* line 110, ../sass/common/_navi.scss */
 .page-navi-in ul:before, .page-navi-in ul:after {
   display: table;
   content: "";
   line-height: 0;
 }
 
-/* line 113, ../sass/common/_navi.scss */
+/* line 115, ../sass/common/_navi.scss */
 .page-navi-in ul:after {
   clear: both;
 }
 
-/* line 116, ../sass/common/_navi.scss */
+/* line 118, ../sass/common/_navi.scss */
 .appnavi-footer {
   padding: 10px;
   border-top: solid 1px #9fd8ef;
@@ -14033,7 +14032,7 @@ img {
 
 /* Overflow navi
 -------------------------------------------------- */
-/* line 124, ../sass/common/_navi.scss */
+/* line 126, ../sass/common/_navi.scss */
 .navi-overflow {
   padding: 10px;
   margin: 10px 0;
