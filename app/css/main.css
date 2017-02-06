@@ -16513,31 +16513,89 @@ http://codepen.io/MattIn4D/pen/LiKFC
 /* Custom, iPhone Retina */
 /* Print
 -------------------------------------------------- */
-/* line 4, ../sass/modules/_print.scss */
-#page_print #header, #page_print .container-installer, #page_print #footer {
+/* line 5, ../sass/modules/_print.scss */
+#page_print body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #000000;
+  background-color: #FFFFFF;
+  font-size: 11px;
+  line-height: 1.4em;
+}
+/* line 12, ../sass/modules/_print.scss */
+#page_print #header, #page_print .container-installer, #page_print #footer, #page_print .print-hide, #page_print .fa {
   display: none;
 }
-/* line 7, ../sass/modules/_print.scss */
+/* line 15, ../sass/modules/_print.scss */
 #page_print #main_content.container {
   padding: 0;
-  margin: 10px;
-  border: solid 1px red;
   min-width: 100%;
+}
+/* line 21, ../sass/modules/_print.scss */
+#page_print a, #page_print h1, #page_print h2, #page_print h3, #page_print h4, #page_print h5, #page_print h6 {
+  color: #000000;
+}
+/* line 25, ../sass/modules/_print.scss */
+#page_print a {
+  text-decoration: none;
+}
+/* line 28, ../sass/modules/_print.scss */
+#page_print table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+/* line 32, ../sass/modules/_print.scss */
+#page_print table td, #page_print table th {
+  vertical-align: top;
+  text-align: left;
+  padding: 5px;
+  color: #000000;
+  border: solid 1px #CCCCCC;
+  display: table-cell;
 }
 
 @media print {
   /* Print
   -------------------------------------------------- */
-  /* line 4, ../sass/modules/_print.scss */
-  #page_print #header, #page_print .container-installer, #page_print #footer {
+  /* line 5, ../sass/modules/_print.scss */
+  #page_print body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #000000;
+    background-color: #FFFFFF;
+    font-size: 11px;
+    line-height: 1.4em;
+  }
+  /* line 12, ../sass/modules/_print.scss */
+  #page_print #header, #page_print .container-installer, #page_print #footer, #page_print .print-hide, #page_print .fa {
     display: none;
   }
-  /* line 7, ../sass/modules/_print.scss */
+  /* line 15, ../sass/modules/_print.scss */
   #page_print #main_content.container {
     padding: 0;
-    margin: 10px;
-    border: solid 1px red;
     min-width: 100%;
+  }
+  /* line 21, ../sass/modules/_print.scss */
+  #page_print a, #page_print h1, #page_print h2, #page_print h3, #page_print h4, #page_print h5, #page_print h6 {
+    color: #000000;
+  }
+  /* line 25, ../sass/modules/_print.scss */
+  #page_print a {
+    text-decoration: none;
+  }
+  /* line 28, ../sass/modules/_print.scss */
+  #page_print table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  /* line 32, ../sass/modules/_print.scss */
+  #page_print table td, #page_print table th {
+    vertical-align: top;
+    text-align: left;
+    padding: 5px;
+    color: #000000;
+    border: solid 1px #CCCCCC;
+    display: table-cell;
   }
 }
 

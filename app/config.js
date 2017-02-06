@@ -189,7 +189,7 @@ var config_data = {
                   'footer_text': '&COPY; 2017 by Z-Wave.Me',
                  'logout': '/smarthome/#/logout',
                  'version_type': '',
-                 'title':'Z-Wave Expert-UI'
+                 'title':'Z-Wave Expert UI'
              },
               'installer':{
                   'logo': 'app/images/z-wave-aliance-logo.png',

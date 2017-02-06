@@ -5,6 +5,8 @@
     <title>{{getCustomCfgArr('title')}}</title>
     <!-- Z-Wave css -->
     <link media="screen" type="text/css" rel="stylesheet" href="app/css/main.css">
+    <!-- Z-Wave css -->
+    <link media="print" type="text/css" rel="stylesheet" href="app/css/print.css">
     <!-- App config -->
     <script src="app/config.js"></script>
     <!-- jQuery js -->
@@ -162,7 +164,7 @@
                                 <!--<li ng-if="cfg.app_type === 'installer'">
                                     <a href="#network/statistics" ng-class="isActive('statistics',2)">{{ _t('statistics') }}</a>
                                 </li>-->
-                                <li><a href="#network/routing" ng-class="isActive('routing',2)">{{ _t('nav_routing') }}</a></li>
+                                <li><a href="#network/routing" ng-class="isActive('routing',2)">{{ _t('neighbors') }}</a></li>
                                <!-- <li><a class="a-disabled" title="Temporary disabled. Will be back in the next release." ng-class="isActive('reorganization',2)">{{ _t('nav_reorganization') }}</a></li>-->
                                 <!--<li><a href="#network/reorganization" ng-class="isActive('reorganization',2)">{{ _t('nav_reorganization') }}</a></li>-->
                                 <li><a href="#network/timing" ng-class="isActive('timing',2)">{{ _t('nav_timing_info') }}</a></li>
