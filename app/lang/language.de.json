@@ -56,7 +56,7 @@
   "app_settings": "Systemeinstellungen",
   "current_firmware": "Die aktuelle Firmware-Version ist",
   "firmware_update_info": "Dies öffnet ein neues Fenster. Um die Firmware zu aktualisieren, bitte auf Reiter 'Advanced' klicken und dann 'Firmware Update' wählen.",
-  "update_to_latest": "Auf aktuellste Version updaten",
+  "update_to_latest": "Aktualisierungsmenü öffnen",
   "error_load_user": "Benutzer wurde nihct gefunden. Bitte überprüfen Sie Ihr Login und/oder Passwort",
   "nav_login": "Login",
   "lb_login": "Login",
