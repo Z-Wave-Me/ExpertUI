@@ -32,6 +32,9 @@
             <div ng-hide="[0].indexOf(controlDh.controller.controllerState) > -1">
                 <bb-alert alert="controlDh.network.alert"></bb-alert>
             </div>
+            <div>
+                <bb-alert alert="controlDh.alert"></bb-alert>
+            </div>
 
             <button class="btn btn-info" id="btn_learn_stop"
                     ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
@@ -43,6 +46,27 @@
                     ng-show="[9].indexOf(controlDh.controller.controllerState) > -1"
                     ng-click="includeToNetwork('controller.SetLearnMode(0)')">
                 <i class="fa fa-stop-circle"></i> {{_t('leave_network_stop') + ' ' + controlDh.controller.homeName}}
+            </button>
+
+            <button class="btn btn-primary" id="update_network"
+                    ng-show="!controlDh.controller.isSIS && controlDh.controller.SUCNodeId !== 0"
+                    ng-click="requestNetworkUpdate('controller.RequestNetworkUpdate()', _t('update_form_primary'), 'update_network')"
+                    ng-disabled="rowSpinner['update_network'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1">
+                <bb-row-spinner
+                        spinner="rowSpinner['update_network']"
+                        label="_t('replicate_receive_update')"
+                        icon="'fa-level-up'">
+                </bb-row-spinner>
+            </button>
+            <button class="btn btn-primary" id="update_network2"
+                    ng-show="controlDh.controller.isSIS && controlDh.controller.SUCNodeId !== 0"
+                    ng-click="requestNetworkUpdate('controller.RequestNetworkUpdate()', _t('update_form_sis'), 'update_network2')"
+                    ng-disabled="rowSpinner['update_network2'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1">
+                <bb-row-spinner
+                        spinner="rowSpinner['update_network2']"
+                        label="_t('request_update')"
+                        icon="'fa-level-up'">
+                </bb-row-spinner>
             </button>
         </div>
     </div>
@@ -81,8 +105,8 @@
                     </button>
                 </div>
                 <div class="cfg-block">
-                    <button type="button" class="btn btn-default" ng-click="closeNetworkModal('successNetworkIncludeModal', $event)">
-                        <i class="fa fa-times text-danger"></i> <span class="btn-name">{{_t('just_proceed')}}</span>
+                    <button type="button" class="btn btn-primary" ng-click="closeNetworkModal('successNetworkIncludeModal', $event)">
+                        <i class="fa fa-arrow-right"></i> <span class="btn-name">{{_t('just_proceed')}}</span>
                     </button>
                 </div>
 

@@ -363,6 +363,7 @@
   "nm_controller_state_7": "移除成功.",
   "nm_controller_state_8": "准备好移除/添加到网络中.",
   "nm_controller_state_9": "移除/添加开始.",
+  "nm_controller_state_9_exclude": "Exclusion started.",
   "nm_ctrl_maintance": "遥控器维护",
   "nm_device_management": "设备管理",
   "nm_exclude_start": "开始移除",
@@ -520,5 +521,9 @@
   "user_guide": "User Guide",
   "wifi_password_valid": "Password must between 8 and 63 characters long.",
   "wifi_password": "WIFI Password",
-  "ssid_name": "SSID"
+  "ssid_name": "SSID",
+  "replicate_receive_update": "Replicate Receive Update",
+  "request_update": "Request Update",
+  "update_form_primary": "Starting network update from Primary.",
+  "update_form_sis": "Requesting Network Update from SIS."
 }

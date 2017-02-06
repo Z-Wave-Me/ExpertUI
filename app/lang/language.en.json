@@ -372,6 +372,7 @@
   "nm_controller_state_7": "Device excluded.",
   "nm_controller_state_8": "Ready to be (re-)included in the network.",
   "nm_controller_state_9": "(Re-)inclusion started.",
+  "nm_controller_state_9_exclude": "Exclusion started.",
   "nm_ctrl_maintance": "Controller Maintenance",
   "nm_device_management": "Device Management",
   "nm_exclude_start": "Start Exclusion",
@@ -531,5 +532,9 @@
  "user_guide": "User Guide",
  "wifi_password_valid": "Password must between 8 and 63 characters long.",
  "wifi_password": "WIFI Password",
- "ssid_name": "SSID"
+ "ssid_name": "SSID",
+ "replicate_receive_update": "Replicate Receive Update",
+ "request_update": "Request Update",
+ "update_form_primary": "Starting network update from Primary.",
+ "update_form_sis": "Requesting Network Update from SIS."
 }

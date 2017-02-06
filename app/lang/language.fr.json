@@ -363,6 +363,7 @@
   "nm_controller_state_7": "Device excluded.",
   "nm_controller_state_8": "Ready to be (re-)included in the network.",
   "nm_controller_state_9": "(Re-)inclusion started.",
+  "nm_controller_state_9_exclude": "Exclusion started.",
   "nm_ctrl_maintance": "Controller Maintenance",
   "nm_device_management": "Device Management",
   "nm_exclude_start": "Start Exclusion",
@@ -520,5 +521,9 @@
   "wifi_password": "WIFI Password",
   "ssid_name": "SSID",
   "use_cit": "Using the Certified Installer Tool",
-  "user_guide": "User Guide"
+  "user_guide": "User Guide",
+  "replicate_receive_update": "Replicate Receive Update",
+  "request_update": "Request Update",
+  "update_form_primary": "Starting network update from Primary.",
+  "update_form_sis": "Requesting Network Update from SIS."
 }
