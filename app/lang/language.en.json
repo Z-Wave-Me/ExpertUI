@@ -1,10 +1,11 @@
 {
   "--- newtrans": "---",
+ "---": "---",
+ "neighbors":"Neighbors",
  "nav_linkhealth_info":"Link Status",
  "ok" : "OK",
  "error" : "Error",
  "cit_identifier" : "CIT Identifier",
- "---": "---",
  "open": "Open",
  "closed": "Closed",
  "open_from_inside": "Open from inside",
