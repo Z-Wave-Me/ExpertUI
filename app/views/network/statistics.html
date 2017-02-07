@@ -34,54 +34,45 @@
             <!-- RFRxLRCErrors -->
             <div ng-switch-when="RFRxLRCErrors" ng-click="expandNavi(v.name, $event)">
                 <div class="progress clickable">
-                    <div class="progress-bar progress-bar-success" style="width: {{v.success}}%">
+                    <div class="progress-bar progress-bar-success" title="{{_t('ok')}} {{v.success}}%" style="width: {{v.success}}%">
                         <span>{{v.success}}% {{_t('ok')}}</span>
                     </div>
-                    <div class="progress-bar progress-bar-danger" style="width: {{v.failCRC8}}%">
+                    <div class="progress-bar progress-bar-danger" title="{{_t(v.failCRC8Name)}} {{v.failCRC8}}%" style="width: {{v.failCRC8}}%">
                         <span>{{v.failCRC8}}% {{_t('error')}}</span>
                     </div>
-                    <div class="progress-bar progress-bar-warning" style="width: {{v.failCRC16}}%">
+                    <div class="progress-bar progress-bar-warning" title="{{_t(v.failCRC16Name)}} {{v.failCRC16}}%" style="width: {{v.failCRC16}}%">
                         <span>{{v.failCRC16}}% {{_t('error')}}</span>
                     </div>
                 </div>
                 <div class="page-navi" ng-if="naviExpanded[v.name]">
                     <div class="page-navi-in">
                         <div class="page-navi-content">
-                            {{ _t(v.frameName)}}: <strong>{{v.frameValue}}</strong><br />
-                            {{_t(v.failCRC8Name)}}:  <strong>{{_t(v.failCRC8Value)}}</strong><br />
-                            {{_t(v.failCRC16Name)}}:  <strong>{{_t(v.failCRC16Value)}}</strong>
+                            <span class="text-success">{{ _t(v.frameName)}}: <strong>{{v.frameValue}}</strong></span><br />
+                            <span class="text-danger">{{_t(v.failCRC8Name)}}:  <strong>{{_t(v.failCRC8Value)}}</strong></span><br />
+                            <span class="text-warning">{{_t(v.failCRC16Name)}}:  <strong>{{_t(v.failCRC16Value)}}</strong></span>
                         </div>
                     </div>
                 </div>
-               <!-- <div class="statistic-info" ng-if="expand[v.name]">
-                    {{ _t(v.frameName)}}: <strong>{{v.frameValue}}</strong><br />
-                   {{_t(v.failCRC8Name)}}:  <strong>{{_t(v.failCRC8Value)}}</strong><br />
-                    {{_t(v.failCRC16Name)}}:  <strong>{{_t(v.failCRC16Value)}}</strong>
-                </div>-->
             </div>
             <!-- Default -->
             <div ng-switch-default>
                 <div class="progress clickable" ng-click="expandNavi(v.name, $event)">
-                <div class="progress-bar progress-bar-success" style="width: {{v.success}}%">
+                <div class="progress-bar progress-bar-success" title="{{_t('ok')}} {{v.success}}% " style="width: {{v.success}}%">
                     <span>{{v.success}}% {{_t('ok')}}</span>
                 </div>
 
-                <div class="progress-bar progress-bar-danger" style="width: {{v.fail}}%">
+                <div class="progress-bar progress-bar-danger" title="{{_t(v.name)}} {{v.fail}}%" style="width: {{v.fail}}%">
                     <span>{{v.fail}}% {{_t('error')}}</span>
                 </div>
                 </div>
                 <div class="page-navi" ng-if="naviExpanded[v.name]">
                     <div class="page-navi-in">
                         <div class="page-navi-content">
-                            {{ _t(v.frameName)}}: <strong>{{v.frameValue}}</strong><br />
-                            {{_t(v.name)}}:  <strong>{{_t(v.value)}}</strong>
+                            <span class="text-success">{{ _t(v.frameName)}}: <strong>{{v.frameValue}}</strong></span><br />
+                            <span class="text-danger">{{_t(v.name)}}:  <strong>{{_t(v.value)}}</strong></span>
                         </div>
                     </div>
                 </div>
-                <!--<div class="statistic-info" ng-if="expand[v.name]">
-                    {{ _t(v.frameName)}}: <strong>{{v.frameValue}}</strong><br />
-                    {{_t(v.name)}}:  <strong>{{_t(v.value)}}</strong>
-                </div>-->
             </div>
 
         </div>
