@@ -120,7 +120,7 @@
   "linkquality": "Link Qualität",
   "link_health_no_powerlevel": "Dieses Gerät unterstützt keinen 'Link Health Check' mit Nachbargeräten. Nur die Route-Qualität zum Controller kann getestet werden.",
   "not_linked_devices": "Es gibt keine verknüpften (linked) Geräte.",
-  "error_load_data": "Binding error! Broken communication with the controller",
+  "error_load_data": "Communication or binding error! Please login again or check system connectivity.",
   "test_link": "Teste Link",
   "nop": "NOP",
   "link_to_node": "Link zur Node",

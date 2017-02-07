@@ -128,7 +128,7 @@
   "linkquality": "Link quality",
   "link_health_no_powerlevel": "This device does not allow Link Health Check to Neighbors. Only Route Quality to Controller can be tested.",
   "not_linked_devices": "There are no linked devices",
-  "error_load_data": "Binding error! Broken communication with the controller",
+  "error_load_data": "Communication or binding error! Please login again or check system connectivity.",
   "test_link": "Test link",
   "test_all_links": "Test all links",
   "nop": "NOP",
