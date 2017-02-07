@@ -9,7 +9,7 @@
         font-size: 11px;
         line-height: 1.4em;
     }
-    #header,.container-installer,#footer,.print-hide,.fa{
+    #header,.container-installer,#footer,.print-hide{
         display: none;
     }
     #main_content.container{
@@ -25,6 +25,7 @@
     a{
         text-decoration: none;
     }
+    // Tables
     table{
         width: 100%;
         border-collapse: collapse;
@@ -39,8 +40,24 @@
         }
 
     }
-    #chart1{
-
+    // RSSI graph
+    .rssi-container{
+        page-break-after:auto;
+    }
+    .rssi-entry{
+        //overflow: auto;
+        //zoom: 1;
+        page-break-inside: avoid;
+        height: 150mm;
+        width: auto;
+        max-width: 210mm;
+    }
+    // Statistics
+    .page-navi{
+        position: static;
+        .page-navi-in{
+            position: static;
+        }
     }
 
 }
