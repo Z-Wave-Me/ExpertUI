@@ -55,7 +55,8 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
     $scope.settings = {
         input: {},
         lastTZ: "",
-        lastSsid: ""
+        lastSsid: "",
+        countdown: 60
     };
 
     /**
@@ -81,7 +82,7 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
      * Store settings
      * @param {object} input
      */
-    $scope.storeSettings = function(input) {
+    $scope.storeSettings = function(input,$event) {
         $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin', message: $scope._t('updating')};
 
         if(input.wifi_password !== '' || input.ssid_name !== $scope.settings.lastSsid) {
@@ -108,9 +109,19 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
                     "time_zone": input.time_zone
                 },
                 timeout = 60000;
+            dataService.postApi('time_zone', data, null).then(function (response) {
+                $scope.loading = false;
+                $scope.handleModal('timezoneModal', $event);
+                var myint = $interval(function(){
+                    $scope.settings.countdown--;
+                    if($scope.settings.countdown === 0){
+                        $interval.cancel(myint);
+                        $location.path('/');
+                    }
+                }, 1000);
+                    // todo: deprecated
 
-                dataService.postApi('time_zone', data, null).then(function (response) {
-                    $timeout(function() {
+                    /*$timeout(function() {
                         $location.path('/');
                     }, timeout);
 
@@ -121,10 +132,11 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
                     }));
 
                     deviceService.showNotifier({message: $scope._t('update_successful')});
-                    $scope.loading = false;
+                    $scope.loading = false;*/
 
                 }, function (error) {
-                    alertify.alertError($scope._t('error_load_data'));
+                   alertify.alertError($scope._t('error_load_data'));
+
                 });
         } else {
             deviceService.showNotifier({message: $scope._t('update_successful')});

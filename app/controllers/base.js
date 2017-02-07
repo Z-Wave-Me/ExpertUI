@@ -294,7 +294,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
                 build: function () {
                     var errorHeader = '<span class="fa fa-exclamation-triangle fa-lg text-danger" '
                             + 'style="vertical-align:middle;">'
-                            + '</span> ' + cfg.app_name + ' - ERROR';
+                            + '</span> ' + $scope.getCustomCfgVal('title') + ' - ERROR';
                     this.setHeader(errorHeader);
                 }
             };
@@ -308,7 +308,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
                 build: function () {
                     var errorHeader = '<span class="fa fa-exclamation-circle fa-lg text-warning" '
                             + 'style="vertical-align:middle;">'
-                            + '</span> ' + cfg.app_name + ' - WARNING';
+                            + '</span> ' + $scope.getCustomCfgVal('title') + ' - WARNING';
                     this.setHeader(errorHeader);
                 }
             };

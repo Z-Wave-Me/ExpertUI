@@ -7,7 +7,7 @@
     <bb-loader></bb-loader>
     <form name="form_settings" id="form_settings" class="form form-page"
           ng-if_="cfg.app_type === 'installer'"
-          ng-submit="storeSettings(settings.input, cfg.zwavecfg)" novalidate>
+          ng-submit="storeSettings(settings.input, $event)" novalidate>
         <fieldset>
             <!-- network name -->
             <div class="form-group form-inline">
@@ -80,4 +80,6 @@
             </button>
         </fieldset>
     </form>
+    <!-- assocAddModal -->
+    <div ng-include="'app/views/settings/modal_timezone.html'"></div>
 </div>
