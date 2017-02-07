@@ -13409,49 +13409,54 @@ h4 {
 }
 
 /* line 144, ../sass/common/_body.scss */
+.green-light {
+  color: #8C0;
+}
+
+/* line 148, ../sass/common/_body.scss */
 .yellow {
   color: yellow;
 }
 
-/* line 147, ../sass/common/_body.scss */
+/* line 151, ../sass/common/_body.scss */
 .gray {
   color: gray;
 }
 
-/* line 150, ../sass/common/_body.scss */
+/* line 154, ../sass/common/_body.scss */
 .orange {
   color: orange;
 }
 
-/* line 154, ../sass/common/_body.scss */
+/* line 158, ../sass/common/_body.scss */
 .main_spinner {
   font-size: 14px;
   color: #555;
 }
 
-/* line 159, ../sass/common/_body.scss */
+/* line 163, ../sass/common/_body.scss */
 .text-yellow {
   color: yellow;
 }
 
-/* line 162, ../sass/common/_body.scss */
+/* line 166, ../sass/common/_body.scss */
 .text-orange {
   color: orange;
 }
 
 /* Links
 -------------------------------------------------- */
-/* line 167, ../sass/common/_body.scss */
+/* line 171, ../sass/common/_body.scss */
 a {
   color: #5698d0;
   text-decoration: none;
 }
-/* line 171, ../sass/common/_body.scss */
+/* line 175, ../sass/common/_body.scss */
 a:hover, a:focus {
   color: #357fbe;
   text-decoration: underline;
 }
-/* line 176, ../sass/common/_body.scss */
+/* line 180, ../sass/common/_body.scss */
 a:focus {
   outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
@@ -13460,7 +13465,7 @@ a:focus {
 
 /* Fatal error
 -------------------------------------------------- */
-/* line 186, ../sass/common/_body.scss */
+/* line 190, ../sass/common/_body.scss */
 .app-fatal-error {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -13470,13 +13475,13 @@ a:focus {
   background-color: #FFFFFF;
   border: solid 1px #d9534f;
 }
-/* line 193, ../sass/common/_body.scss */
+/* line 197, ../sass/common/_body.scss */
 .app-fatal-error .fatal-error-message {
   color: #d9534f;
   font-weight: bold;
   font-size: 120%;
 }
-/* line 198, ../sass/common/_body.scss */
+/* line 202, ../sass/common/_body.scss */
 .app-fatal-error .fatal-error-info {
   margin: 10px 0 0 0;
   color: #000000;
@@ -13485,44 +13490,44 @@ a:focus {
 
 /* Others
 -------------------------------------------------- */
-/* line 207, ../sass/common/_body.scss */
+/* line 211, ../sass/common/_body.scss */
 .timestamp {
   color: #333333;
   font-size: 17px;
 }
-/* line 210, ../sass/common/_body.scss */
+/* line 214, ../sass/common/_body.scss */
 .timestamp .fa {
   font-size: 110%;
 }
 
-/* line 214, ../sass/common/_body.scss */
+/* line 218, ../sass/common/_body.scss */
 .bcg-success {
   background-color: #dff0d8;
 }
 
-/* line 217, ../sass/common/_body.scss */
+/* line 221, ../sass/common/_body.scss */
 .bcg-active.false, .bcg-danger {
   background-color: #f2dede;
 }
 
-/* line 221, ../sass/common/_body.scss */
+/* line 225, ../sass/common/_body.scss */
 .clickable {
   cursor: pointer;
 }
 
-/* line 225, ../sass/common/_body.scss */
+/* line 229, ../sass/common/_body.scss */
 .text-supp {
   font-style: italic;
   color: #595959;
 }
 
-/* line 230, ../sass/common/_body.scss */
+/* line 234, ../sass/common/_body.scss */
 .badge {
   padding: 5px;
   margin-right: 5px;
 }
 
-/* line 234, ../sass/common/_body.scss */
+/* line 238, ../sass/common/_body.scss */
 .help-text {
   display: block;
   font-size: 95%;
@@ -13530,63 +13535,63 @@ a:focus {
   margin: 5px 0;
 }
 
-/* line 240, ../sass/common/_body.scss */
+/* line 244, ../sass/common/_body.scss */
 .help-text.inline {
   display: inline;
 }
 
-/* line 244, ../sass/common/_body.scss */
+/* line 248, ../sass/common/_body.scss */
 .display-block {
   display: block;
 }
 
-/* line 248, ../sass/common/_body.scss */
+/* line 252, ../sass/common/_body.scss */
 .is-hidden, .alert-hidden, .alert- {
   display: none !important;
 }
 
-/* line 252, ../sass/common/_body.scss */
+/* line 256, ../sass/common/_body.scss */
 .alert-list {
   margin: 8px 0;
 }
 
-/* line 256, ../sass/common/_body.scss */
+/* line 260, ../sass/common/_body.scss */
 .text-alert, .text-alert-list {
   font-size: 85%;
   margin: 0 0 0 7px;
 }
 
-/* line 260, ../sass/common/_body.scss */
+/* line 264, ../sass/common/_body.scss */
 .text-alert {
   margin: 7px 0;
 }
 
-/* line 263, ../sass/common/_body.scss */
+/* line 267, ../sass/common/_body.scss */
 .report-img {
   display: inline-block;
   max-width: 32px;
 }
 
-/* line 267, ../sass/common/_body.scss */
+/* line 271, ../sass/common/_body.scss */
 .hidden-selectopt {
   display: none !important;
 }
 
 /* Response
 -------------------------------------------------- */
-/* line 273, ../sass/common/_body.scss */
+/* line 277, ../sass/common/_body.scss */
 #respone_container {
   display: none;
 }
 
-/* line 277, ../sass/common/_body.scss */
+/* line 281, ../sass/common/_body.scss */
 #respone_container_inner {
   margin: 0 auto;
   text-align: center;
   /*position: relative;*/
 }
 
-/* line 282, ../sass/common/_body.scss */
+/* line 286, ../sass/common/_body.scss */
 .page-load-spinner {
   z-index: 1000;
   text-align: center;
@@ -13596,7 +13601,7 @@ a:focus {
   width: 150px;
 }
 
-/* line 291, ../sass/common/_body.scss */
+/* line 295, ../sass/common/_body.scss */
 .response-message {
   z-index: 1000;
   text-align: center;
@@ -13606,7 +13611,7 @@ a:focus {
 
 /* Progress bar
 -------------------------------------------------- */
-/* line 299, ../sass/common/_body.scss */
+/* line 303, ../sass/common/_body.scss */
 .progress {
   margin-bottom: 0;
 }
@@ -16524,125 +16529,80 @@ http://codepen.io/MattIn4D/pen/LiKFC
 /* line 5, ../sass/modules/_print.scss */
 #page_print body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #000000;
   background-color: #FFFFFF;
+  -webkit-print-color-adjust: exact;
   font-size: 11px;
   line-height: 1.4em;
 }
-/* line 12, ../sass/modules/_print.scss */
+/* line 14, ../sass/modules/_print.scss */
 #page_print #header, #page_print .container-installer, #page_print #footer, #page_print .print-hide {
   display: none;
 }
-/* line 15, ../sass/modules/_print.scss */
+/* line 17, ../sass/modules/_print.scss */
 #page_print #main_content.container {
   padding: 0;
   min-width: 100%;
 }
-/* line 21, ../sass/modules/_print.scss */
-#page_print a, #page_print h1, #page_print h2, #page_print h3, #page_print h4, #page_print h5, #page_print h6 {
-  color: #000000;
-}
-/* line 25, ../sass/modules/_print.scss */
+/* line 31, ../sass/modules/_print.scss */
 #page_print a {
   text-decoration: none;
 }
-/* line 29, ../sass/modules/_print.scss */
+/* line 35, ../sass/modules/_print.scss */
+#page_print .text-info {
+  color: #5bc0de !important;
+}
+/* line 38, ../sass/modules/_print.scss */
+#page_print .text-primary {
+  color: #6494BC !important;
+}
+/* line 41, ../sass/modules/_print.scss */
+#page_print .text-success {
+  color: #80AD80 !important;
+}
+/* line 44, ../sass/modules/_print.scss */
+#page_print .text-danger {
+  color: #d9534f !important;
+}
+/* line 47, ../sass/modules/_print.scss */
+#page_print .text-warning {
+  color: #f0ad4e !important;
+}
+/* line 51, ../sass/modules/_print.scss */
 #page_print table {
   width: 100%;
   border-collapse: collapse;
   border-spacing: 0;
 }
-/* line 33, ../sass/modules/_print.scss */
+/* line 55, ../sass/modules/_print.scss */
 #page_print table td, #page_print table th {
   vertical-align: top;
   text-align: left;
   padding: 5px;
-  color: #000000;
   border: solid 1px #CCCCCC;
   display: table-cell;
 }
-/* line 44, ../sass/modules/_print.scss */
+/* line 68, ../sass/modules/_print.scss */
 #page_print .rssi-container {
   page-break-after: auto;
 }
-/* line 47, ../sass/modules/_print.scss */
+/* line 71, ../sass/modules/_print.scss */
 #page_print .rssi-entry {
   page-break-inside: avoid;
   height: 150mm;
   width: auto;
   max-width: 210mm;
 }
-/* line 56, ../sass/modules/_print.scss */
+/* line 80, ../sass/modules/_print.scss */
 #page_print .page-navi {
   position: static;
 }
-/* line 58, ../sass/modules/_print.scss */
+/* line 82, ../sass/modules/_print.scss */
 #page_print .page-navi .page-navi-in {
   position: static;
 }
 
-@media print {
-  /* Print
-  -------------------------------------------------- */
-  /* line 5, ../sass/modules/_print.scss */
-  #page_print body {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #000000;
-    background-color: #FFFFFF;
-    font-size: 11px;
-    line-height: 1.4em;
-  }
-  /* line 12, ../sass/modules/_print.scss */
-  #page_print #header, #page_print .container-installer, #page_print #footer, #page_print .print-hide {
-    display: none;
-  }
-  /* line 15, ../sass/modules/_print.scss */
-  #page_print #main_content.container {
-    padding: 0;
-    min-width: 100%;
-  }
-  /* line 21, ../sass/modules/_print.scss */
-  #page_print a, #page_print h1, #page_print h2, #page_print h3, #page_print h4, #page_print h5, #page_print h6 {
-    color: #000000;
-  }
-  /* line 25, ../sass/modules/_print.scss */
-  #page_print a {
-    text-decoration: none;
-  }
-  /* line 29, ../sass/modules/_print.scss */
-  #page_print table {
-    width: 100%;
-    border-collapse: collapse;
-    border-spacing: 0;
-  }
-  /* line 33, ../sass/modules/_print.scss */
-  #page_print table td, #page_print table th {
-    vertical-align: top;
-    text-align: left;
-    padding: 5px;
-    color: #000000;
-    border: solid 1px #CCCCCC;
-    display: table-cell;
-  }
-  /* line 44, ../sass/modules/_print.scss */
-  #page_print .rssi-container {
-    page-break-after: auto;
-  }
-  /* line 47, ../sass/modules/_print.scss */
-  #page_print .rssi-entry {
-    page-break-inside: avoid;
-    height: 150mm;
-    width: auto;
-    max-width: 210mm;
-  }
-  /* line 56, ../sass/modules/_print.scss */
-  #page_print .page-navi {
-    position: static;
-  }
-  /* line 58, ../sass/modules/_print.scss */
-  #page_print .page-navi .page-navi-in {
-    position: static;
-  }
-}
+/*@media print {
+  @import "modules/_print";
+}*/
 
 /*# sourceMappingURL=main.css.map */
