@@ -51,6 +51,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         postApi: postApi,
         postToRemote: postToRemote,
         getRemoteData: getRemoteData,
+        sessionApi: sessionApi,
         xmlToJson: xmlToJson,
         getTextFile: getTextFile,
         storeTextToFile: storeTextToFile,
@@ -484,7 +485,23 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             return $q.reject(error);
         });
     }
-    
+
+    /**
+     * Get Z-Wave session
+     * @returns {unresolved}
+     */
+    function sessionApi() {
+        return $http({
+            method: "get",
+            url: cfg.server_url + cfg['session']
+        }).then(function (response) {
+            return response;
+        }, function (response) {// something went wrong
+            //return response;
+            return $q.reject(response);
+        });
+    }
+
     /**
      * Get XML from url and convert it to JSON
      * @param {string} url

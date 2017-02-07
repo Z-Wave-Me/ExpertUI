@@ -33,7 +33,7 @@
     <div id="firmwareUpdateModal" class="appmodal appmodal-100" ng-if="modalArr.firmwareUpdateModal && firmwareUpdate.show">
         <div class="appmodal-in">
             <div class="appmodal-header">
-                <span class="appmodal-close" ng-click="setAccess('?allow_access=0');handleModal('firmwareUpdateModal', $event)"><i class="fa fa-times"></i></span>
+                <span class="appmodal-close" ng-click="redirectAfterUpdate();setAccess('?allow_access=0');handleModal('firmwareUpdateModal', $event)"><i class="fa fa-times"></i></span>
                 <h3>{{_t('nav_firmware_update')}}</h3>
             </div>
             <div class="appmodal-body text-center">
@@ -41,4 +41,6 @@
             </div>
         </div>
     </div>
+    <!-- assocAddModal -->
+    <div ng-include="'app/views/settings/modal_timezone.html'"></div>
 </div>
