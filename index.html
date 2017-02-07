@@ -2,7 +2,7 @@
 <html lang="en" ng-app="angApp" ng-controller="BaseController">
 <head>
     <meta charset="utf-8">
-    <title>{{getCustomCfgArr('title')}}</title>
+    <title>{{getCustomCfgVal('title')}}</title>
     <!-- Z-Wave css -->
     <link media="screen" type="text/css" rel="stylesheet" href="app/css/main.css">
     <!-- Z-Wave css -->
@@ -253,8 +253,8 @@
 <div id="footer" ng-if="getBodyId()">
     <div id="footer_in">
         <div class="container">
-            <span class="copyright" ng-bind-html="getCustomCfgArr('footer_text') | toTrusted"></span>
-            <span class="copyright">{{getCustomCfgArr('version_type')}}</span>
+            <span class="copyright" ng-bind-html="getCustomCfgVal('footer_text') | toTrusted"></span>
+            <span class="copyright">{{getCustomCfgVal('version_type')}}</span>
             <span class="timestamp" ng-if="cfg.route.time.string"><i class="fa fa-clock-o"></i> {{cfg.route.time.string}}</span>
             <span class="timestamp" ng-if="cfg.app_type === 'installer'"> | </span>
             <span class="timestamp" ng-if="cfg.app_type === 'installer'"

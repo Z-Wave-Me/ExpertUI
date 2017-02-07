@@ -1,4 +1,5 @@
 {
+  "neighbors":"Neighbors",
   "nav_linkhealth_info":"Link Status",
   "open": "Open",
   "closed": "Closed",
@@ -55,7 +56,7 @@
   "app_settings": "System settings",
   "current_firmware": "The current firmware version is",
   "firmware_update_info": "This will open new window. To update firmware, click on tab Advanced -> Firmware and continue according to the instruction.",
-  "update_to_latest": "Update to latest",
+  "update_to_latest": "Open Updater",
   "error_load_user": "User not found. Please check your  login or password",
   "nav_login": "Login",
   "lb_login": "Login",
@@ -118,7 +119,7 @@
   "linkquality": "Link quality",
   "link_health_no_powerlevel": "This device does not allow Link Health Check to Neighbors. Only Route Quality to Controller can be tested.",
   "not_linked_devices": "There are no linked devices",
-  "error_load_data": "Unable to load data",
+  "error_load_data": "Binding error! Broken communication with the controller",
   "test_link": "Test link",
   "test_all_links": "Test all links",
   "nop": "NOP",
@@ -363,6 +364,7 @@
   "nm_controller_state_7": "移除成功.",
   "nm_controller_state_8": "准备好移除/添加到网络中.",
   "nm_controller_state_9": "移除/添加开始.",
+  "nm_controller_state_9_exclude": "Exclusion started.",
   "nm_ctrl_maintance": "遥控器维护",
   "nm_device_management": "设备管理",
   "nm_exclude_start": "开始移除",
@@ -520,5 +522,9 @@
   "user_guide": "User Guide",
   "wifi_password_valid": "Password must between 8 and 63 characters long.",
   "wifi_password": "WIFI Password",
-  "ssid_name": "SSID"
+  "ssid_name": "SSID",
+  "replicate_receive_update": "Replicate Receive Update",
+  "request_update": "Request Update",
+  "update_form_primary": "Starting network update from Primary.",
+  "update_form_sis": "Requesting Network Update from SIS."
 }

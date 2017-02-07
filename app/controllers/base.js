@@ -266,16 +266,20 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     };
 
     /**
-     * Get array from custom config
+     * Get a value from custom config
      * @param {string} key
-     * @returns {Array}
+     * @returns {string}
      */
-    $scope.getCustomCfgArr = function (key) {
+    $scope.getCustomCfgVal = function (key) {
+        return deviceService.getCustomCfgVal(key);
+    };
+    // todo: deprecated
+    /*$scope.getCustomCfgArr = function (key) {
         if (cfg.custom_cfg[cfg.app_type]) {
             return cfg.custom_cfg[cfg.app_type][key] || '';
         }
         return '';
-    };
+    };*/
 
     // Alertify defaults
     alertify.defaults.glossary.title = cfg.app_name;

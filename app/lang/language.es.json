@@ -260,6 +260,7 @@
   "nm_controller_state_14": "Dispositivo no encontrado, por favor espere...",
   "nm_controller_state_15": "Incluyendo nuevo Primario, por favor espere...",
   "nm_controller_state_16": "Dispositivo incluido como principal.",
+  "nm_controller_state_9_exclude": "Exclusion started.",
   "nm_last_included_device": "Ultimo dispositivo incluido",
   "nm_last_excluded_device": "Ultimo dispositivo excluido",
   "nm_last_excluded_device_from_foreign_network": "es de una red exterior",
@@ -728,5 +729,9 @@
   "wifi_password": "WIFI Password",
   "ssid_name": "SSID",
   "use_cit": "Using the Certified Installer Tool",
-  "user_guide": "User Guide"
+  "user_guide": "User Guide",
+  "replicate_receive_update": "Replicate Receive Update",
+  "request_update": "Request Update",
+  "update_form_primary": "Starting network update from Primary.",
+  "update_form_sis": "Requesting Network Update from SIS."
 }

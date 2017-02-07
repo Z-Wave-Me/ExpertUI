@@ -384,6 +384,7 @@
   "nm_controller_state_7": "Enhet exkluderad.",
   "nm_controller_state_8": "Redo att bli (åter-)inkluderad i nätverket.",
   "nm_controller_state_9": "(Åter-)inklusion startad.",
+  "nm_controller_state_9_exclude": "Exclusion started.",
   "nm_controller_state_10": "Kontroller hittad, vänligen vänta...",
   "nm_controller_state_11": "(Åter-)inkluderar mig själv i nätverket, vänligen vänta...",
   "nm_controller_state_12": "Kontrollern (åter-)inkluderades i nätverket.",
@@ -512,5 +513,9 @@
   "user_guide": "User Guide",
   "restore_backup_chip": "Återställ även information om nätverkstopologin (Läs manualen först!)",
   "wifi_password": "WIFI Password",
-  "ssid_name": "SSID"
+  "ssid_name": "SSID",
+  "replicate_receive_update": "Replicate Receive Update",
+  "request_update": "Request Update",
+  "update_form_primary": "Starting network update from Primary.",
+  "update_form_sis": "Requesting Network Update from SIS."
 }

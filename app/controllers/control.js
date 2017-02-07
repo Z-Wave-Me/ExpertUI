@@ -12,6 +12,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
     $scope.controlDh = {
         interval: null,
         show: false,
+        alert: $scope.alert,
         controller: {},
         inclusion: {
             lastIncludedDevice: $scope.alert,
@@ -169,8 +170,13 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 break;
             case 9:
                 // Network inclusion
-                $scope.controlDh.network.alert = {message: $scope._t('nm_controller_state_11'), status: 'alert-warning', icon: 'fa-spinner fa-spin'};
-                $scope.controlDh.network.inclusionProcess = 'processing';
+                if($scope.controlDh.controller.isRealPrimary) {
+                    $scope.controlDh.network.alert = {message: $scope._t('nm_controller_state_11'), status: 'alert-warning', icon: 'fa-spinner fa-spin'};
+                    $scope.controlDh.network.inclusionProcess = 'processing';
+                } else {
+                    $scope.controlDh.network.alert = {message: $scope._t('nm_controller_state_9_exclude'), status: 'alert-warning', icon: 'fa-spinner fa-spin'};
+                    $scope.controlDh.network.inclusionProcess = 'processing';
+                }
                 break;
             case 17:
                 // Network inclusion
@@ -379,6 +385,25 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
 
         });
 
+    };
+
+    $scope.requestNetworkUpdate = function (cmd, message, id) {
+        $scope.controlDh.alert = {
+            message: message,
+            status: 'alert-info',
+            icon: false
+        };
+        $scope.toggleRowSpinner(id);
+        dataService.runZwaveCmd(cfg.store_url + cmd).then(function () {
+            $timeout(function() {
+                $scope.controlDh.alert = false;
+                $scope.toggleRowSpinner();
+            }, 2000);
+        }, function () {
+            $scope.controlDh.alert = false;
+            $scope.toggleRowSpinner();
+            alertify.alertError($scope._t('error_load_data'));
+        });
     };
 
     /**
