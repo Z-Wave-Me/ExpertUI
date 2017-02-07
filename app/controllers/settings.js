@@ -107,8 +107,8 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
         if(input.time_zone !== $scope.settings.lastTZ) {
             var data = {
                     "time_zone": input.time_zone
-                },
-                timeout = 60000;
+                };
+
             dataService.postApi('time_zone', data, null).then(function (response) {
                 $scope.loading = false;
                 $scope.handleModal('timezoneModal', $event);
@@ -156,7 +156,12 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
  * @class SettingsFirmwareController
  *
  */
-appController.controller('SettingsFirmwareController', function ($scope, $sce, $timeout, $location,dataService) {
+appController.controller('SettingsFirmwareController', function ($scope, $sce, $timeout, $location, $interval, dataService) {
+    $scope.settings = {
+        countdown: 60,
+        hasSession: true
+    };
+
     $scope.firmwareUpdate = {
         show: false,
         loaded: false,
@@ -197,8 +202,27 @@ appController.controller('SettingsFirmwareController', function ($scope, $sce, $
 
         }, function (error) {
             $scope.loading = false;
-            alertify.alertError($scope._t('error_load_data'));
+            if($scope.settings.hasSession){
+                alertify.alertError($scope._t('error_load_data'));
+            }
+        });
+    };
 
+    $scope.redirectAfterUpdate = function ($event) {
+        dataService.sessionApi().then(function (sessionRes) {
+            // do nothing
+        }, function (error) {
+            $scope.settings.hasSession = false;
+
+            $scope.loading = false;
+            $scope.handleModal('timezoneModal', $event);
+            var myint = $interval(function(){
+                $scope.settings.countdown--;
+                if($scope.settings.countdown === 0){
+                    $interval.cancel(myint);
+                    $location.path('/');
+                }
+            }, 1000);
         });
     };
 
