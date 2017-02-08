@@ -141,13 +141,20 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 // Network inclusion
                 if($scope.controlDh.network.inclusionProcess){
                     if($scope.controlDh.network.include){
-                        $scope.controlDh.network.modal = true;
-                        $scope.controlDh.network.alert = {message: $scope._t('success_controller_include'), status: 'alert-success', icon: 'fa-smile-o'};
+                        if (!$scope.controlDh.network.modal) {
+                            $scope.controlDh.network.alert = {
+                                message: $scope._t('nm_controller_state_10'),
+                                status: 'alert-warning',
+                                icon: 'fa-spinner fa-spin'
+                            };
+                            $scope.controlDh.network.inclusionProcess = 'processing';
+                        } else {
+                            $scope.controlDh.network.alert = {message: $scope._t('success_controller_include'), status: 'alert-success', icon: 'fa-smile-o'};
+                        }
                    }
 
                 }else{
                     $scope.controlDh.network.alert = $scope.alert;
-
                 }
                 break;
             case 1:
@@ -346,19 +353,21 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
      * Include to network
      * @param {string} cmd
      */
-    $scope.includeToNetwork = function (cmd) {
+    $scope.includeToNetwork = function (cmd, modalId, $event) {
         //$scope.runZwaveCmd(cmd);
-        var timeout = 1000;
+        var timeout = 30000;
         $scope.toggleRowSpinner(cmd);
         if(cmd === 'controller.SetLearnMode(1)'){
             $scope.controlDh.network.include = true;
-
+            $scope.controlDh.network.inclusionProcess = 'processing';
         }else{
             $scope.controlDh.network.include = false;
             $scope.controlDh.network.inclusionProcess = false;
         }
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
-            $timeout($scope.toggleRowSpinner, timeout);
+            $timeout(function() {
+                $scope.controlDh.network.modal = true;
+            }, timeout);
         }, function (error) {
             $scope.toggleRowSpinner();
             alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
