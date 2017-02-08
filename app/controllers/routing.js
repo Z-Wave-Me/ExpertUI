@@ -37,7 +37,7 @@ appController.controller('RoutingController', function($scope, $filter, $timeout
                 return;
             }
             $scope.routings.show = true;
-            $scope.refreshZwaveData(ZWaveAPIData);
+            //$scope.refreshZwaveData(ZWaveAPIData);
         }, function(error) {
             alertify.alertError($scope._t('error_load_data'));
         });

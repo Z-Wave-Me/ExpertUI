@@ -100,6 +100,7 @@ module.exports = function (grunt) {
                     'app/controllers/routing.js',
                     'app/controllers/reorganization.js',
                     'app/controllers/timing.js',
+                    'app/controllers/linkstatus.js',
                     'app/controllers/controllerinfo.js',
                     'app/controllers/queue.js',
                     'app/controllers/interviewcommand.js',

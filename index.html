@@ -66,6 +66,7 @@
     <script src="app/controllers/routing.js"></script>
     <script src="app/controllers/reorganization.js"></script>
     <script src="app/controllers/timing.js"></script>
+    <script src="app/controllers/linkstatus.js"></script>
     <script src="app/controllers/controllerinfo.js"></script>
     <script src="app/controllers/queue.js"></script>
     <script src="app/controllers/interviewcommand.js"></script>
@@ -170,8 +171,8 @@
                                 <li><a href="#network/timing" ng-class="isActive('timing',2)">{{ _t('nav_timing_info') }}</a></li>
                                 <!--<li><a class="a-disabled" title="Temporary disabled. Will be back in the next release." ng-class="isActive('timing',2)">{{ _t('nav_timing_info') }}</a></li>-->
                                 <li><a href="#network/map" dng-class="isActive('map',2)">{{ _t('nav_network_map') }}</a></li>
-                                <li ng-if="cfg.app_type === 'installer' && !cfg.controller.isRealPrimary">
-                                    <a href="#network/linkhealth/1" ng-class="isActive('linkhealth',2)">{{ _t('nav_linkhealth_info') }}</a>
+                                <li ng-if="cfg.app_type === 'installer'">
+                                    <a href="#network/linkstatus" ng-class="isActive('linkstatus',2)">{{ _t('nav_linkhealth_info') }}</a>
                                 </li>
                                 <li ng-if="cfg.app_type !== 'installer'">
                                     <a href="#network/controller" ng-class="isActive('controller',2)">{{ _t('nav_controller_info') }}</a>

@@ -5,6 +5,7 @@ This User Interfaces allows to operate a Smart Home Network based on Z-Wave devi
 
 ## v1.3.0
 #### New features
+- CIT: Link status.
 - CIT: Statistics visualization.
 
 #### Changes

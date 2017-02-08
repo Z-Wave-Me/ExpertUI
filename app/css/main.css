@@ -13400,32 +13400,32 @@ h4 {
 
 /* line 137, ../sass/common/_body.scss */
 .red, .is-updated-false {
-  color: red;
+  color: red !important;
 }
 
 /* line 141, ../sass/common/_body.scss */
 .green, .is-rfreshed {
-  color: green;
+  color: green !important;
 }
 
 /* line 144, ../sass/common/_body.scss */
 .green-light {
-  color: #8C0;
+  color: #8C0 !important;
 }
 
 /* line 148, ../sass/common/_body.scss */
 .yellow {
-  color: yellow;
+  color: yellow !important;
 }
 
 /* line 151, ../sass/common/_body.scss */
 .gray {
-  color: gray;
+  color: gray !important;
 }
 
 /* line 154, ../sass/common/_body.scss */
 .orange {
-  color: orange;
+  color: orange !important;
 }
 
 /* line 158, ../sass/common/_body.scss */
@@ -15562,59 +15562,70 @@ http://codepen.io/MattIn4D/pen/LiKFC
 }
 
 /* line 65, ../sass/modules/_routing.scss */
-#RoutingTable div.rtDirect {
-  background-color: green;
+.rtDirect, .rtGreen {
+  background-color: green !important;
+  -webkit-print-color-adjust: exact;
 }
 
-/* line 69, ../sass/modules/_routing.scss */
-#RoutingTable div.rtRouted {
-  background-color: #8C0;
+/* line 70, ../sass/modules/_routing.scss */
+.rtRouted {
+  background-color: #8C0 !important;
+  -webkit-print-color-adjust: exact;
 }
 
-/* line 73, ../sass/modules/_routing.scss */
-#RoutingTable div.rtBadlyRouted {
-  background-color: yellow;
+/* line 75, ../sass/modules/_routing.scss */
+.rtBadlyRouted {
+  background-color: yellow !important;
+  -webkit-print-color-adjust: exact;
 }
 
-/* line 77, ../sass/modules/_routing.scss */
-#RoutingTable div.rtNotLinked {
-  background-color: red;
-}
-
-/* line 81, ../sass/modules/_routing.scss */
-#RoutingTable div.rtUnavailable {
-  background-color: gray;
+/* line 80, ../sass/modules/_routing.scss */
+.rtNotLinked, .rtRed {
+  background-color: red !important;
+  -webkit-print-color-adjust: exact;
 }
 
 /* line 85, ../sass/modules/_routing.scss */
+.rtUnavailable, .rtGray {
+  background-color: gray !important;
+  -webkit-print-color-adjust: exact;
+}
+
+/* line 89, ../sass/modules/_routing.scss */
+.rtOrange {
+  background-color: orange !important;
+  -webkit-print-color-adjust: exact;
+}
+
+/* line 94, ../sass/modules/_routing.scss */
 #RoutingTable .info {
   font-size: smaller;
 }
 
-/* line 93, ../sass/modules/_routing.scss */
+/* line 102, ../sass/modules/_routing.scss */
 #RoutingComments {
   margin-top: 10px;
 }
 
 /* device not present in config file and not present in Z-Wave assoc group */
-/* line 98, ../sass/modules/_routing.scss */
+/* line 107, ../sass/modules/_routing.scss */
 .dissapeared {
   color: #911;
 }
 
 /* device present in config file but not present in Z-Wave assoc group */
-/* line 103, ../sass/modules/_routing.scss */
+/* line 112, ../sass/modules/_routing.scss */
 .notInZWave {
   color: #955;
 }
 
 /* device present in config file and in Z-Wave assoc group */
-/* line 108, ../sass/modules/_routing.scss */
+/* line 117, ../sass/modules/_routing.scss */
 .inZWave {
   color: #000;
 }
 
-/* line 112, ../sass/modules/_routing.scss */
+/* line 121, ../sass/modules/_routing.scss */
 .assocAdd {
   background-color: #911 !important;
   border-color: #955 !important;
@@ -16568,12 +16579,37 @@ http://codepen.io/MattIn4D/pen/LiKFC
   color: #f0ad4e !important;
 }
 /* line 51, ../sass/modules/_print.scss */
+#page_print .progress-bar-info {
+  background-color: #5bc0de !important;
+  -webkit-print-color-adjust: exact;
+}
+/* line 55, ../sass/modules/_print.scss */
+#page_print .progress-bar-primary {
+  background-color: #6494BC !important;
+  -webkit-print-color-adjust: exact;
+}
+/* line 59, ../sass/modules/_print.scss */
+#page_print .progress-bar-success {
+  background-color: #80AD80 !important;
+  -webkit-print-color-adjust: exact;
+}
+/* line 63, ../sass/modules/_print.scss */
+#page_print .progress-bar-danger {
+  background-color: #d9534f !important;
+  -webkit-print-color-adjust: exact;
+}
+/* line 67, ../sass/modules/_print.scss */
+#page_print .progress-bar-warning {
+  background-color: #f0ad4e !important;
+  -webkit-print-color-adjust: exact;
+}
+/* line 72, ../sass/modules/_print.scss */
 #page_print table {
   width: 100%;
   border-collapse: collapse;
   border-spacing: 0;
 }
-/* line 55, ../sass/modules/_print.scss */
+/* line 76, ../sass/modules/_print.scss */
 #page_print table td, #page_print table th {
   vertical-align: top;
   text-align: left;
@@ -16581,22 +16617,22 @@ http://codepen.io/MattIn4D/pen/LiKFC
   border: solid 1px #CCCCCC;
   display: table-cell;
 }
-/* line 68, ../sass/modules/_print.scss */
+/* line 89, ../sass/modules/_print.scss */
 #page_print .rssi-container {
   page-break-after: auto;
 }
-/* line 71, ../sass/modules/_print.scss */
+/* line 92, ../sass/modules/_print.scss */
 #page_print .rssi-entry {
   page-break-inside: avoid;
   height: 150mm;
   width: auto;
   max-width: 210mm;
 }
-/* line 80, ../sass/modules/_print.scss */
+/* line 101, ../sass/modules/_print.scss */
 #page_print .page-navi {
   position: static;
 }
-/* line 82, ../sass/modules/_print.scss */
+/* line 103, ../sass/modules/_print.scss */
 #page_print .page-navi .page-navi-in {
   position: static;
 }

@@ -62,24 +62,33 @@
     padding: 0px 0px 1px 1px;
 }
 
-#RoutingTable div.rtDirect {
-    background-color: green;
+.rtDirect,.rtGreen {
+    background-color: green !important;
+    -webkit-print-color-adjust: exact;
 }
 
-#RoutingTable div.rtRouted {
-    background-color: #8C0;
+.rtRouted {
+    background-color: #8C0 !important;
+    -webkit-print-color-adjust: exact;
 }
 
-#RoutingTable div.rtBadlyRouted {
-    background-color: yellow;
+.rtBadlyRouted {
+    background-color: yellow !important;
+    -webkit-print-color-adjust: exact;
 }
 
-#RoutingTable div.rtNotLinked {
-    background-color: red;
+.rtNotLinked,.rtRed  {
+    background-color: red !important;
+    -webkit-print-color-adjust: exact;
 }
 
-#RoutingTable div.rtUnavailable {
-    background-color: gray;
+.rtUnavailable,.rtGray {
+    background-color: gray !important;
+    -webkit-print-color-adjust: exact;
+}
+.rtOrange {
+    background-color: orange !important;
+    -webkit-print-color-adjust: exact;
 }
 
 #RoutingTable .info {

@@ -643,7 +643,7 @@ angApp.filter('getDeviceTypeIcon', function () {
                 icon = 'fa-feed text-primary';
                 break;
             default:
-                icon = '';
+                icon = 'fa-ellipsis-h';
                 break;
         }
         return icon;

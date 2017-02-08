@@ -47,6 +47,27 @@
     .text-warning{
         color: $app-brand-warning !important;
     }
+
+    .progress-bar-info{
+        background-color: $app-brand-info !important;
+        -webkit-print-color-adjust: exact;
+    }
+   .progress-bar-primary{
+        background-color: $app-brand-primary !important;
+       -webkit-print-color-adjust: exact;
+    }
+   .progress-bar-success{
+        background-color: $app-brand-success !important;
+       -webkit-print-color-adjust: exact;
+    }
+    .progress-bar-danger{
+        background-color: $app-brand-danger !important;
+        -webkit-print-color-adjust: exact;
+    }
+    .progress-bar-warning{
+        background-color: $app-brand-warning !important;
+        -webkit-print-color-adjust: exact;
+    }
     // Tables
     table{
         width: 100%;
