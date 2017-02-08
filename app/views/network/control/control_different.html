@@ -29,15 +29,15 @@
         <!-- already included in network - displays include from network -->
         <div ng-if="!controlDh.controller.isRealPrimary">
             <p class="input-help">{{_t('device_included_info')}}</p>
-            <div ng-hide="[0].indexOf(controlDh.controller.controllerState) > -1">
+            <div ng-hide="controlDh.network.modal && [0].indexOf(controlDh.controller.controllerState) > -1">
                 <bb-alert alert="controlDh.network.alert"></bb-alert>
             </div>
             <div>
                 <bb-alert alert="controlDh.alert"></bb-alert>
             </div>
 
-            <button class="btn btn-info" id="btn_learn_stop"
-                    ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
+            <button class="btn btn-info" id="btn_learn_start"
+                    ng-disabled="(controlDh.network.inclusionProcess && !controlDh.network.modal) || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
                     ng-hide="[9].indexOf(controlDh.controller.controllerState) > -1"
                     ng-click="excludeFromNetwork('controller.SetLearnMode(1)',_t('before_leaving_network'))">
                 <i class="fa fa-play-circle"></i> {{_t('leave_network') + ' ' + controlDh.controller.homeName}}
@@ -51,7 +51,7 @@
             <button class="btn btn-primary" id="update_network"
                     ng-show="!controlDh.controller.isSIS && controlDh.controller.SUCNodeId !== 0"
                     ng-click="requestNetworkUpdate('controller.RequestNetworkUpdate()', _t('update_form_primary'), 'update_network')"
-                    ng-disabled="rowSpinner['update_network'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1">
+                    ng-disabled="rowSpinner['update_network'] || ([1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || (controlDh.network.inclusionProcess && !controlDh.network.modal)">
                 <bb-row-spinner
                         spinner="rowSpinner['update_network']"
                         label="_t('replicate_receive_update')"
@@ -61,7 +61,7 @@
             <button class="btn btn-primary" id="update_network2"
                     ng-show="controlDh.controller.isSIS && controlDh.controller.SUCNodeId !== 0"
                     ng-click="requestNetworkUpdate('controller.RequestNetworkUpdate()', _t('update_form_sis'), 'update_network2')"
-                    ng-disabled="rowSpinner['update_network2'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1">
+                    ng-disabled="rowSpinner['update_network2'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || (controlDh.network.inclusionProcess && !controlDh.network.modal)">
                 <bb-row-spinner
                         spinner="rowSpinner['update_network2']"
                         label="_t('request_update')"
