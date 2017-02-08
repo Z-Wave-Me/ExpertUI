@@ -3,9 +3,11 @@
 
 #page_print{
     body{
+
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        color: #000000;
+        //color: #000000;
         background-color: #FFFFFF;
+        -webkit-print-color-adjust: exact;
         font-size: 11px;
         line-height: 1.4em;
     }
@@ -19,11 +21,31 @@
         min-width: 100%;
     }
     a,h1,h2,h3,h4,h5,h6{
-        color: #000000;
+        //color: red !important;
+
+    }
+    .fa{
+       //color: blue !important;
     }
     //h1{page-break-before: always;}
     a{
         text-decoration: none;
+    }
+    // Text
+    .text-info{
+        color: $app-brand-info !important;
+    }
+    .text-primary{
+        color: $app-brand-primary !important;
+    }
+    .text-success{
+        color: $app-brand-success !important;
+    }
+    .text-danger{
+        color: $app-brand-danger !important;
+    }
+    .text-warning{
+        color: $app-brand-warning !important;
     }
     // Tables
     table{
@@ -34,9 +56,11 @@
             vertical-align: top;
             text-align: left;
             padding: 5px;
-            color: #000000;
+            //color: red;
             border: solid 1px #CCCCCC;
             display: table-cell;
+            //background-color: #000 !important;
+            //-webkit-print-color-adjust: exact;
         }
 
     }

@@ -1,4 +1,4 @@
-/* Copyright:  Z-Wave Europe, Created: 06-02-2017 16:08:22 */
+/* Copyright:  Z-Wave Europe, Created: 07-02-2017 15:36:01 */
 /**
  * App configuration
  * @author Martin Vach
@@ -21,6 +21,7 @@ var config_data = {
         'server_url': '', // Remote JSON
         'dongle': 'zway', // Default dongle
         'dongle_list': [],// Dongle list
+        'session': '/ZAutomation/api/v1/session',
         'zwave_list': '/ZWave/list', // Zwave list of dongles
         'update_url': '/ZWaveAPI/Data/', // Url for update (refresh data)
         'store_url': '/ZWaveAPI/Run/', // Url for store data
