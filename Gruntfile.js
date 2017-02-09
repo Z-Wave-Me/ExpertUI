@@ -33,10 +33,6 @@ module.exports = function (grunt) {
         },
         // Concat
         concat: {
-            indexhtml: {
-                src: ['index.tpl.html'],
-                dest: 'dist/index.html'
-            },
             css: {
                 src: [
                     'app/css/main.css'
@@ -212,6 +208,18 @@ module.exports = function (grunt) {
                     src: [ 'dist/index.html']
                 }
             }
+        },
+        htmlbuild: {
+            dist: {
+                src: 'index.html',
+                dest: 'dist/',
+                options: {
+                    sections: {
+                        dist_head: 'app/views/dist_head.txt'
+                    }
+                }
+
+            }
         }
     });
     // Load the plugin that provides the "uglify" task.
@@ -227,8 +235,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-string-replace');
     grunt.loadNpmTasks('grunt-banner');
     grunt.loadNpmTasks('grunt-json-generator');
+    grunt.loadNpmTasks('grunt-html-build');
 
     // Default task(s).
     //grunt.registerTask('default', ['clean','concat','copy','cssmin','string-replace']);
-    grunt.registerTask('default', ['clean', 'ngtemplates','concat', 'json_generator','copy', 'cssmin','usebanner']);
+    grunt.registerTask('default', ['clean', 'ngtemplates','concat', 'json_generator','copy', 'cssmin','usebanner','htmlbuild']);
 };

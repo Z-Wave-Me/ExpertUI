@@ -3,6 +3,8 @@
 <head>
     <meta charset="utf-8">
     <title>{{getCustomCfgVal('title')}}</title>
+    <!-- build:section dist_head --><!-- /build -->
+    <!-- build:remove -->
     <!-- Z-Wave css -->
     <link media="screen" type="text/css" rel="stylesheet" href="app/css/main.css">
     <!-- Z-Wave css -->
@@ -85,6 +87,7 @@
     <script src="app/controllers/configuration_health.js"></script>
     <script src="app/controllers/configuration_postfix.js"></script>
     <script src="app/jquery/jquery-app.js"></script>
+    <!-- /build -->
 </head>
 <body id="page_{{getBodyId()}}"
       class="is-mobile-{{isMobile}} custom-ip-{{cfg.custom_ip}} app-type-{{cfg.app_type}}">
