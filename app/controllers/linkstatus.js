@@ -92,11 +92,11 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
             } else if (isFLiRS) {
                 type = 'flirs';
             } else if (hasWakeup) {
-                type = node.data.isAwake.value ? 'battery' : 'sleep';
+                type = 'battery';
             } else if (isListening) {
                 type = 'mains';
             } else {
-                type = 'error';
+                type = 'unknown';
             }
             var obj = {};
             obj['id'] = nodeId;

@@ -52,7 +52,7 @@
                         {{ v.name}}
                     </td>
                     <td data-title="{{ _t('type')}}" title="{{v.type}}">
-                        <i class="fa" ng-class="v.icon"></i>
+                        <i class="fa" ng-class="v.icon" title="{{_t(v.type)}}"></i>
                     </td>
                     <td data-title="{{ _t('datetime')}}">
                         <bb-date-time ng-if="v.dateTime" obj="v.dateTime" updated="v.isUpdated"></bb-date-time>

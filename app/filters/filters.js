@@ -633,9 +633,6 @@ angApp.filter('getDeviceTypeIcon', function () {
             case 'mains':
                 icon = 'fa-bolt text-warning';
                 break;
-            case 'sleep':
-                icon = 'fa-battery-full text-danger';
-                break;
             case 'battery':
                 icon = 'fa-battery-full text-success';
                 break;

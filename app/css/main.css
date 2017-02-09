@@ -15259,6 +15259,19 @@ http://codepen.io/MattIn4D/pen/LiKFC
   width: 60%;
 }
 
+/* Legend
+-------------------------------------------------- */
+/* line 3, ../sass/common/_legend.scss */
+.legend-entry {
+  margin: 10px 0 0 0;
+}
+
+/* line 7, ../sass/common/_legend.scss */
+.legend-inline .legend-row {
+  display: inline-block;
+  margin: 0 10px 0 0;
+}
+
 /* Homepage
 -------------------------------------------------- */
 /* line 3, ../sass/modules/_home.scss */
@@ -15464,10 +15477,10 @@ http://codepen.io/MattIn4D/pen/LiKFC
 }
 
 /* line 9, ../sass/modules/_linkhealth.scss */
-.btn-sleep {
-  color: #d9534f;
-  background-color: #f2dede;
-  border-color: #d9534f;
+.btn-portable {
+  color: #727272;
+  background-color: #efefef;
+  border-color: #727272;
 }
 
 /* line 14, ../sass/modules/_linkhealth.scss */
@@ -15484,8 +15497,15 @@ http://codepen.io/MattIn4D/pen/LiKFC
   border-color: #80AD80;
 }
 
+/* line 24, ../sass/modules/_linkhealth.scss */
+.btn-error, .btn-unknown {
+  color: #d9534f;
+  background-color: #f2dede;
+  border-color: #d9534f;
+}
+
 /* Traffic indicator */
-/* line 26, ../sass/modules/_linkhealth.scss */
+/* line 31, ../sass/modules/_linkhealth.scss */
 .traffic-default {
   color: #80AD80;
 }
