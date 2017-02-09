@@ -129,6 +129,10 @@ angApp.config(['$routeProvider',
             requireLogin: requireLogin,
             templateUrl: 'app/views/network/linkstatus.html',
             appTypeBanned: ['default']
+        }).when('/network/linkhealth/:nodeId?', {
+            requireLogin: requireLogin,
+            templateUrl: 'app/views/network/link_health.html',
+            appTypeBanned: ['default']
         }).// Installer - zniffer
         when('/installer/zniffer', {
             requireLogin: requireLogin,
