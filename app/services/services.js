@@ -31,7 +31,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,cfg
     this.showNotifier = function (notifier) {
         var param = _.defaults(notifier, {position: 'top-right', message: false, type: 'success', wait: 5});
         if (notifier.message) {
-            alertify.set('notifier', 'position', 'top-right');
+            alertify.set('notifier', 'position', param.position);
             alertify.notify(param.message, param.type, param.wait);
         }
     };

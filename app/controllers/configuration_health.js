@@ -171,12 +171,10 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
         $scope.toggleRowSpinner(id);
         var data = {"nodeId": $scope.deviceId};
         dataService.postApi('checklinks', data).then(function (response) {
-            var runtime = parseInt(response.data.runtime) * 1000;
-            alertify.alertWarning($scope._t('proccess_take',{__val__:response.data.runtime,__level__:$scope._t('seconds')}));
-            $timeout($scope.toggleRowSpinner, runtime);
+            deviceService.showNotifier({message: $scope._t('test_all_links_complete')});
+            $scope.toggleRowSpinner();
         }, function (error) {
-            alertify.alertError($scope._t('error_update_data'));
-            alertify.dismissAll();
+            deviceService.showNotifier({message: $scope._t('error_update_data'),type: 'error'});
             $scope.toggleRowSpinner();
         });
     };
