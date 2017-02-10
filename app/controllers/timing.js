@@ -130,11 +130,11 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
             } else if (isFLiRS) {
                 type = 'flirs';
             } else if (hasWakeup) {
-                type = node.data.isAwake.value ? 'battery' : 'sleep';
+                type = 'battery';
             } else if (isListening) {
                 type = 'mains';
             } else {
-                type = 'error';
+                type = 'unknown';
             }
 
             // Packets

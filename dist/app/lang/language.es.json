@@ -1,4 +1,12 @@
 {
+  "sleep": "Sleep",
+  "portable" : "Portable",
+  "static" : "Static",
+  "battery" : "Battery",
+  "flirs" : "FLiRS",
+  "mains" : "Mains",
+  "unknown" : "Unknown",
+  "configuration_not_supported":"Configuration is not supported for this device or the interview has not been completed.",
   "neighbors":"Neighbors",
   "nav_linkhealth_info":"Link Status",
   "open": "Open",

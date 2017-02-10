@@ -56,7 +56,7 @@
                     <td data-title="{{_t('th_node')}}">{{ v.id}}</td>
                     <td data-title="{{ _t('device_name')}}"><!-- <switch-type-icon generic="{{ v.genericType}}" specific="{{ v.specificType}}"></switch-type-icon> -->{{ v.name }}</td>
                     <td data-title="{{_t('th_type')}}">
-                        <i class="fa" ng-class="v.icon"></i>
+                        <i class="fa" ng-class="v.icon" title="{{_t(v.type)}}"></i>
                     </td>
                    <td data-title="{{_t('th_total')}}">{{ v.totalPackets}} &nbsp;</td>
                     <td data-title="{{_t('th_ok')}}">{{ v.okPackets}}% &nbsp;</td>

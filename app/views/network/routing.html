@@ -29,7 +29,7 @@
                 <td>{{v.id}}</td>
                 <td>{{v.name}}</td>
                 <td>
-                    <i class="fa" ng-class="v.icon"></i>
+                    <i class="fa" ng-class="v.icon" title="{{_t(v.type)}}"></i>
                 </td>
                 <td class="row-time is-updated-{{v.isUpdated}}">
                     {{ v.updateTime | isTodayFromUnix }} &nbsp;

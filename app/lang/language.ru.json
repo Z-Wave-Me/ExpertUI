@@ -1,6 +1,13 @@
 {
   "test_all_links_complete":"Link test on all links complete.",
   "nif_request_complete":"Requesting all NIF's complete.",
+  "sleep": "Sleep",
+  "portable" : "Portable",
+  "static" : "Static",
+  "battery" : "Battery",
+  "flirs" : "FLiRS",
+  "mains" : "Mains",
+  "unknown" : "Unknown",
   "configuration_not_supported":"Configuration is not supported for this device or the interview has not been completed.",
   "neighbors":"Neighbors",
   "nav_linkhealth_info":"Link Status",

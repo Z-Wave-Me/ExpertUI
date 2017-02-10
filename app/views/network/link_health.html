@@ -51,7 +51,7 @@
                         {{ v.name}}
                     </td>
                     <td data-title="{{ _t('type')}}">
-                        <i class="fa" ng-class="v.icon"></i>
+                        <i class="fa" ng-class="v.icon" title="{{_t(v.type)}}"></i>
                     </td>
                     <td data-title="{{ _t('datetime')}}">
                             <span class="row-time {{v.indicator.updateTimeColor}}" ng-if="v.powerLevel">
@@ -96,6 +96,38 @@
                 </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="legend-entry legend-inline">
+            <!-- static -->
+            <div class="legend-row">
+                <button class="btn btn-default btn-sm btn-static">&nbsp;</button>
+                {{_t('static')}}
+            </div class="legend-row">
+            <!-- portable -->
+            <div class="legend-row">
+                <button class="btn btn-default btn-sm btn-portable">&nbsp;</button>
+                {{_t('portable')}}
+            </div>
+            <!-- battery -->
+            <div class="legend-row">
+                <button class="btn btn-default btn-sm btn-battery">&nbsp;</button>
+                {{_t('battery')}}
+            </div>
+            <!-- flirs -->
+            <div class="legend-row">
+                <button class="btn btn-default btn-sm btn-flirs">&nbsp;</button>
+                {{_t('flirs')}}
+            </div class="legend-line">
+            <!-- mains -->
+            <div class="legend-row">
+                <button class="btn btn-default btn-sm btn-mains">&nbsp;</button>
+                {{_t('mains')}}
+            </div>
+            <!-- unknown -->
+            <div class="legend-row">
+                <button class="btn btn-default btn-sm btn-unknown">&nbsp;</button>
+                {{_t('unknown')}}
+            </div>
         </div>
     </div>
     <!-- Modal power level -->
