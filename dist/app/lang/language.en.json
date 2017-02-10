@@ -502,7 +502,7 @@
   "txt_config_select": "Choose Device to configure on dropdown list above",
   "txt_controller_delete_node": "The controller will delete the node from the network without any further action. This process may take up to a minute.",
   "txt_device": "Device",
-  "txt_devices_battery": "devices are battery wakeup powered",
+  "txt_devices_battery": "devices are battery powered",
   "txt_devices_flirs": "devices are FLiRS",
   "txt_devices_mains": "devices are mains powered",
   "txt_devices_present": "devices present",
