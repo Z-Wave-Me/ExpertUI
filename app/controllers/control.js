@@ -614,7 +614,7 @@ appController.controller('ControllerChangeController', function ($scope) {
  * @class RequestNifAllController
  *
  */
-appController.controller('RequestNifAllController', function ($scope, $timeout, cfg, dataService) {
+appController.controller('RequestNifAllController', function ($scope, $timeout, cfg, dataService, deviceService) {
     /**
      * Request NIF from all devices
      */
@@ -622,15 +622,11 @@ appController.controller('RequestNifAllController', function ($scope, $timeout, 
         $scope.toggleRowSpinner(spin);
         var timeout = 1000;
         dataService.runZwaveCmd(cfg.call_all_nif).then(function (response) {
-            //timeout *= response.data.runtime;
-            alertify.alertWarning($scope._t('proccess_take', {
-                __val__: response.data.runtime,
-                __level__: $scope._t('seconds')
-            }));
-            $timeout($scope.toggleRowSpinner, timeout);
+            deviceService.showNotifier({message: $scope._t('nif_request_complete')});
+            $scope.toggleRowSpinner();
         }, function (error) {
             $scope.toggleRowSpinner();
-            alertify.alertError($scope._t('error_nif_request'));
+            deviceService.showNotifier({message: $scope._t('error_nif_request'),type: 'error'});
         });
     };
 });
