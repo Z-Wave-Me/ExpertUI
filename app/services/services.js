@@ -155,6 +155,20 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,cfg
     };
 
     /**
+     * Check if device has a given command class
+     */
+    this.hasCommandClass = function(node,ccId) {
+        var hasCc = false;
+        angular.forEach(node.instances, function(instance, instanceId) {
+        if(instance.commandClasses[ccId]){
+            hasCc = instance.commandClasses[ccId];
+            return;
+           }
+        });
+        return hasCc;
+    };
+
+    /**
      * Get a value from custom config
      * @param {string} key
      * @returns {string}
