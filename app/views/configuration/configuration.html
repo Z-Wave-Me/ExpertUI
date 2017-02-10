@@ -1,11 +1,11 @@
 <!-- Configuration view -->
 <div ng-controller="ConfigConfigurationController">
     <div ng-include="'app/views/configuration/navi.html'"></div>
-    <div class="row">
-        <div class="col-md-3">
+    <div class="row row-configuration">
+        <div class="col-md-3 menu-vertical">
             <div ng-include="'app/views/configuration/menu.html'"></div>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-9 col-content">
             <bb-alert alert="alert"></bb-alert>
             <div ng-show="deviceId">
                 <!-- Generic configuration fom expert commands -->

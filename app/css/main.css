@@ -15037,18 +15037,29 @@ fieldset.submit-entry {
   border-color: #9fd8ef;
 }
 
-/* line 8, ../sass/common/_list-group.scss */
+/* line 9, ../sass/common/_list-group.scss */
+.row-configuration .menu-vertical {
+  height: auto;
+  max-height: 800px;
+  overflow-x: hidden;
+}
+/* line 13, ../sass/common/_list-group.scss */
+.row-configuration .menu-vertical .list-group-item {
+  padding: 5px 7px;
+}
+
+/* line 19, ../sass/common/_list-group.scss */
 .list-report {
   margin: 0;
   padding: 0;
 }
-/* line 11, ../sass/common/_list-group.scss */
+/* line 22, ../sass/common/_list-group.scss */
 .list-report li {
   padding: 10px 0;
   display: block;
   border-top: solid 1px #9fd8ef;
 }
-/* line 16, ../sass/common/_list-group.scss */
+/* line 27, ../sass/common/_list-group.scss */
 .list-report li:first-child {
   border-top: 0 none;
 }
@@ -16038,6 +16049,11 @@ http://codepen.io/MattIn4D/pen/LiKFC
 }
 /* Medium Devices, Desktops */
 @media only screen and (min-width: 992px) and (orientation: landscape) {
+  /* line 65, ../sass/responsive/_responsive.scss */
+  .menu-horizontal {
+    display: none;
+  }
+
   /* Medium Devices, Desktops
   -------------------------------------------------- */
   /*-------------------------------------*/
@@ -16466,21 +16482,21 @@ http://codepen.io/MattIn4D/pen/LiKFC
 /* Large Devices, Wide Screens */
 /* Medium Devices, Desktops */
 @media only screen and (max-width: 992px) {
-  /* line 82, ../sass/responsive/_responsive.scss */
+  /* line 83, ../sass/responsive/_responsive.scss */
   .nav-logo,
   #__header .timestamp,
   #main_navigation .divider-vertical,
-  .main-nav-name, .btn-name {
+  .main-nav-name, .btn-name, .menu-vertical {
     display: none !important;
   }
 
-  /* line 88, ../sass/responsive/_responsive.scss */
+  /* line 89, ../sass/responsive/_responsive.scss */
   .mobile-block {
     margin: 10px 0 0 0;
     display: block;
   }
 
-  /* line 93, ../sass/responsive/_responsive.scss */
+  /* line 94, ../sass/responsive/_responsive.scss */
   #table_mobile {
     /* Force table to not be like tables anymore */
     /* Hide table headers (but not display: none;, for accessibility) */
@@ -16539,16 +16555,16 @@ http://codepen.io/MattIn4D/pen/LiKFC
 }
 /* Small Devices, Tablets */
 @media only screen and (max-width: 768px) {
-  /* line 102, ../sass/responsive/_responsive.scss */
+  /* line 103, ../sass/responsive/_responsive.scss */
   #footer .timestamp {
     display: inline-block !important;
   }
-  /* line 105, ../sass/responsive/_responsive.scss */
+  /* line 106, ../sass/responsive/_responsive.scss */
   #footer .copyright {
     display: none !important;
   }
 
-  /* line 110, ../sass/responsive/_responsive.scss */
+  /* line 111, ../sass/responsive/_responsive.scss */
   .navi-timestamp {
     display: none !important;
   }

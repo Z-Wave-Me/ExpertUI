@@ -2,6 +2,12 @@
 <div ng-controller="ConfigFirmwareController">
     <!-- Config navigation -->
     <div ng-include="'app/views/configuration/navi.html'"></div>
+    <div class="row row-configuration">
+        <div class="col-md-3 menu-vertical">
+            <div ng-include="'app/views/configuration/menu.html'"></div>
+        </div>
+        <div class="col-md-9 col-content">
+            <bb-alert alert="alert"></bb-alert>
     <div ng-show="deviceId">
         <!-- <pre>{{firmware.update|json}}</pre> -->
         <form name="form_firmware_update" id="form_firmware_update" class="form form-inline"
@@ -31,5 +37,7 @@
                 </bb-row-spinner>
             </button>
         </form>
-    </div> 
+    </div>
+</div>
+</div>
 </div><!-- /ng-controler -->
