@@ -208,7 +208,17 @@ angApp.filter('setTimeFromBox', function (cfg, $filter) {
  */
 angApp.filter('getDateTimeObj', function ($filter, cfg) {
     return function (timestamp,invalidateTime) {
-        var d = (timestamp ? new Date(timestamp * 1000) : new Date());
+        // Count time with offset http://stackoverflow.com/questions/7403486/add-or-subtract-timezone-difference-to-javascript-date
+        var targetTime = (timestamp ? new Date(timestamp * 1000) : new Date());
+        //time zone value from config
+        var tzo = cfg.route.time.offset;
+        //get the timezone offset from local time in minutes
+        var tzDifference = tzo * 60 + targetTime.getTimezoneOffset();
+        //convert the offset to milliseconds, add to targetTime, and make a new Date
+        var offsetTime = new Date(targetTime.getTime() + tzDifference * 60 * 1000);
+        //console.log(offsetTime)
+        var d = offsetTime;
+        //var d = (timestamp ? new Date(timestamp * 1000) : new Date());
         var di = (invalidateTime ? new Date(invalidateTime * 1000) : null);
         var obj = {
             date: $filter('getFormattedDate')(d),
