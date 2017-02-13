@@ -26,6 +26,8 @@
                             <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
+                    <th>&nbsp; </a>
+                    </th>
                     <th ng-repeat="v in linkStatus.all" style="text-align:center;">{{v.id}}</th>
                    <!-- <th>
                         {{ _t('linkquality')}}
@@ -57,6 +59,31 @@
                     <td data-title="{{ _t('datetime')}}">
                         <bb-date-time ng-if="v.dateTime" obj="v.dateTime" updated="v.isUpdated"></bb-date-time>
                         <span ng-if="!v.dateTime">-</span>
+                    </td>
+                    <td class="td-action" data-title="">
+                        <!-- Test node -->
+                        <button class="btn btn-default" id="btn_test_{{ v.id}}"
+                                ng-if="v.hasPowerLevel"
+                                ng-click="runZwaveTestNode(v.paramsTestNode)"
+                                ng-disabled="rowSpinner[v.paramsTestNode]">
+                            <bb-row-spinner
+                                    icon="'fa-circle-o text-success'"
+                                    spinner="rowSpinner[v.paramsTestNode]"
+                                    label="_t('test_link')">
+                            </bb-row-spinner>
+                        </button>
+                        <!-- NOP -->
+                        <button class="btn btn-default" id="btn_nop_{{ v.id}}"
+                                ng-if="!v.hasPowerLevel"
+                                ng-click="runZwaveNop(v.cmdNop)"
+                                ng-disabled="rowSpinner[v.cmdNop]">
+                            <bb-row-spinner
+                                    icon="'fa-circle-o text-success'"
+                                    spinner="rowSpinner[v.cmdNop]"
+                                    label="_t('nop')">
+                            </bb-row-spinner>
+                        </button>
+
                     </td>
                     <td class="rtCell" ng-repeat="n in v.indicator">
                         <div class="rtDiv {{n.color}}" title="{{n}}">&nbsp;</div>

@@ -42,6 +42,7 @@ var config_data = {
         'configget_url': '/ZWaveAPI/ExpertConfigGet', // Config get
         'configupdate_url': '/ZWaveAPI/ExpertConfigUpdate', // Config update
         'call_all_nif': '/ZWaveAPI/CallForAllNIF', // Call niff for all devices
+        'test_node': '/ZWaveAPI/TestNode/', // Test node command
         'time': '/ZAutomation/api/v1/system/time/get',// Get time
         'time_zone': '/ZAutomation/api/v1/system/timezone', // Set time zone
         'wifi_settings': '/ZAutomation/api/v1/system/wifi/settings', // Set wifi settings ssid and password
