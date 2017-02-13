@@ -400,15 +400,16 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     $scope.setTimeStamp = function () {
         dataService.getApi('time', null, true).then(function (response) {
             $interval.cancel($scope.timeZoneInterval);
-            angular.extend(cfg.route.time, {string: $filter('setTimeFromBox')(response.data.data.localTimeUT)},
+            angular.extend(cfg.route.time, {string: $filter('setTimeFromBox')(response.data.data.localTimeUT,true)},
                 {timestamp: response.data.data.localTimeUT},
                 {offset: response.data.data.localTimeZoneOffset});
             var refresh = function () {
-                cfg.route.time.timestamp += (cfg.interval < 1000 ? 1 : cfg.interval/1000)
-                cfg.route.time.string = $filter('setTimeFromBox')(cfg.route.time.timestamp)
+                cfg.route.time.timestamp += (cfg.interval < 1000 ? 1 : cfg.interval/1000);
+                cfg.route.time.string = $filter('setTimeFromBox')(cfg.route.time.timestamp);
             };
+
             cfg.zwavecfg.time_zone = response.data.data.localTimeZone;
-            $scope.timeZoneInterval = $interval(refresh, $scope.cfg.interval);
+            $scope.timeZoneInterval = $interval(refresh,cfg.interval);
         }, function (error) {});
 
     };
