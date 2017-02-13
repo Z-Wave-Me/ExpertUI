@@ -188,14 +188,25 @@ angApp.filter('unique', function () {
  * @function setTimeFromBox
  */
 angApp.filter('setTimeFromBox', function (cfg, $filter) {
-    return function (input) {
-        if (input) {
-            var d = new Date(input * 1000);
-        } else {
-            var d = new Date();
+    return function (timestamp,offset) {
+        var d = new Date(timestamp * 1000);
+        //console.log('Date from BAR: ', d )
+
+        if(offset){ // With offset
+            var date = new Date(timestamp * 1000);
+            var targetTime = new Date(timestamp * 1000);
+            //time zone value from dconfig
+            var timeZoneFromDB = cfg.route.time.offset *-1;
+            //get the timezone offset from local time in minutes
+            var tzDifference = timeZoneFromDB * 60 + targetTime.getTimezoneOffset();
+            //convert the offset to milliseconds, add to targetTime, and make a new Date
+            var offsetTime = new Date(targetTime.getTime() + tzDifference * 60 * 1000);
+            d = offsetTime;
+        }else{// Substract offset
+            d.setHours(d.getHours() + cfg.route.time.offset);
         }
         return $filter('getFormattedTime')(
-            d.toISOString().substring(11, d.toISOString().indexOf('.')),
+            d,
             false,
             cfg.zwavecfg.time_format
         );
@@ -208,22 +219,42 @@ angApp.filter('setTimeFromBox', function (cfg, $filter) {
  */
 angApp.filter('getDateTimeObj', function ($filter, cfg) {
     return function (timestamp,invalidateTime) {
-        var d = (timestamp ? new Date(timestamp * 1000) : new Date());
+        // Count time with offset http://stackoverflow.com/questions/7403486/add-or-subtract-timezone-difference-to-javascript-date
+        /* ----------- NEW with time offset ----------- */
+        var targetTime = (timestamp ? new Date(timestamp * 1000) : new Date());
+        //console.log('Date from UPDATE: ', targetTime)
+        //console.log(targetTime)
+        //time zone value from config
+        var tzo = cfg.route.time.offset *-1;
+        //console.log(tzo)
+        //get the timezone offset from local time in minutes
+        var tzDifference = tzo * 60 * 1000;
+        //console.log(tzDifference)
+        //convert the offset to milliseconds, add to targetTime, and make a new Date
+        var offsetTime = new Date(targetTime.getTime() + tzDifference);
+        //console.log(offsetTime)
+        var d = offsetTime;
+        // Substract 1 minute
+        d.setMinutes(d.getMinutes() - 1);
+        /* ----------- OLD without time offset ----------- */
+       //var d = (timestamp ? new Date(timestamp * 1000) : new Date());
+        //console.log(d)
+        //console.log(d.toISOString())
         var di = (invalidateTime ? new Date(invalidateTime * 1000) : null);
         var obj = {
             date: $filter('getFormattedDate')(d),
             time: $filter('getFormattedTime')(
-                d.toISOString().substring(11, d.toISOString().indexOf('.')),
+                d,
                 false,
-                cfg.zwavecfg.time_format
+                cfg.zwavecfg.time_format,d
             ),
             invalidateTime: (di ?
             $filter('getFormattedDate')(di) + ' '
-            + $filter('getFormattedTime')(di.toISOString().substring(11, di.toISOString().indexOf('.')),false,cfg.zwavecfg.time_format)
+            + $filter('getFormattedTime')(di,false,cfg.zwavecfg.time_format)
             : ''),
             today: (d.toDateString() === (new Date()).toDateString()
                 ? $filter('getFormattedTime')(
-                    d.toISOString().substring(11, d.toISOString().indexOf('.')),
+                    d,
                     'hh:mm',
                     cfg.zwavecfg.time_format
             )
@@ -251,7 +282,7 @@ angApp.filter('isTodayFromUnix', function (cfg, $filter) {
         if (d.toDateString() == (new Date()).toDateString()) {
 
             return $filter('getFormattedTime')(
-                d.toISOString().substring(11, d.toISOString().indexOf('.')),
+                d,
                 'hh:mm',
                 cfg.zwavecfg.time_format
             );
@@ -261,14 +292,53 @@ angApp.filter('isTodayFromUnix', function (cfg, $filter) {
         }
     };
 });
-
 /**
  * Get formated date
  * @function getFormattedTime
  */
 angApp.filter('getFormattedTime', function () {
-    return function (time,stringFormat,timeFormat) {
+    return function (date,stringFormat,timeFormat) {
+        var str = '';
+        var suffix = '';
 
+        //var h = (date.getHours() < 10) ? "0" + date.getHours() : date.getHours();
+        var h = date.getHours();
+
+        var m = (date.getMinutes() < 10) ? "0" + date.getMinutes() : date.getMinutes();
+        var s = (date.getSeconds() < 10) ? "0" + date.getSeconds() : date.getSeconds();
+
+        //console.log(h,m)
+
+        // 12 hrs format?
+        if(timeFormat === '12' ){
+            h =  h % 12 || 12;
+            suffix = (h < 12) ? ' AM' : ' PM';
+        }
+        h = (h < 10) ? "0" + h : h;
+
+        switch (stringFormat) {
+            case 'hh:mm':
+                str =  h + ':' + m;
+                break;
+            case 'hh':
+                str =  h;
+                break;
+            default:
+                str =  h + ':' + m + ':' + s;
+                break;
+        }
+        return str + suffix;
+
+    };
+});
+
+/**
+ * TODO: deprecated
+ * Get formated date
+ * @function getFormattedTime
+ */
+angApp.filter('getFormattedTime____', function () {
+    return function (time,stringFormat,timeFormat) {
         var str = '';
         var suffix = '';
         var arr = time.split(':').map(function (x) {

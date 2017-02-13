@@ -72,7 +72,7 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
             //$scope.mainsDevices = $scope.countDevices - ($scope.batteryDevices + $scope.flirsDevices);
             $scope.controller.controllerState = ZWaveAPIData.controller.data.controllerState.value;
             $scope.controller.startLearnMode = !isRealPrimary || hasDevices < 2 ? true : false;
-            //$scope.refreshZwaveData(ZWaveAPIData);
+            $scope.refreshZwaveData(ZWaveAPIData);
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
         });

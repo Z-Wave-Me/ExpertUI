@@ -317,7 +317,7 @@
   "h1_configuration_no_device": "Устройство не выбрано",
   "h1_sensor": "Датчики",
   "inspect_queue_empty": "очередь пуста",
-  "inspect_queue_legend_help": "n = Счётчик попыток отправки<br />W = Ожидание пробуждения<br />S = Ожидание обмена ключами шифрования<br />E = Инкапсулировано<br />D = Отработало<br />U = Срочный",
+  "inspect_queue_legend_help": "n = Счётчик попыток отправки, W = Ожидание пробуждения, S = Ожидание обмена ключами шифрования, E = Инкапсулировано, D = Отработало, U = Срочный",
   "inspect_queue_legend_title": "Обозначения",
   "interview_results_dialog_title": "Результат интервью",
   "interview_results_title": "Результат интервью устройства",
