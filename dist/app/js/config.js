@@ -1,4 +1,4 @@
-/* Copyright:  Z-Wave Europe, Created: 10-02-2017 15:03:03 */
+/* Copyright:  Z-Wave Europe, Created: 13-02-2017 13:28:45 */
 /**
  * App configuration
  * @author Martin Vach
@@ -170,7 +170,8 @@ var config_data = {
             // Time zone
             time: {
                 string: false,
-                timestamp: false
+                timestamp: false,
+                offset: false
             }
         },
     // Controller
