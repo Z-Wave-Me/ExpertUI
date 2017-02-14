@@ -255,6 +255,7 @@ appController.controller('SettingsReportController', function ($scope, $window, 
         app_type: cfg.app_type,
         app_built_date: '',
         app_built_timestamp: '',
+        log: false,
     };
 
     /**
@@ -288,6 +289,16 @@ appController.controller('SettingsReportController', function ($scope, $window, 
     $scope.loadRemoteAccess();
 
     /**
+     * Show log warning
+     */
+    $scope.showLogWarning = function (message) {
+        if(message){
+            alertify.alertWarning(message);
+        }
+
+    };
+
+    /**
      * Send and save report
      */
     $scope.sendReport = function (form, input) {
@@ -314,7 +325,7 @@ appController.controller('SettingsReportController', function ($scope, $window, 
         input.browser_agent = $window.navigator.appCodeName;
         input.browser_version = $window.navigator.appVersion;
         input.browser_info = 'PLATFORM: ' + $window.navigator.platform + '\nUSER-AGENT: ' + $window.navigator.userAgent;
-        console.log(input)
+        //console.log(input)
         //return;
         dataService.postReport(input).then(function (response) {
             $scope.loading = false;
