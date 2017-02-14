@@ -15283,6 +15283,23 @@ http://codepen.io/MattIn4D/pen/LiKFC
   margin: 0 10px 0 0;
 }
 
+/* Progress
+-------------------------------------------------- */
+/* line 3, ../sass/common/_progress.scss */
+.modal-progress {
+  height: 30px;
+  margin: 0 0 10px 0;
+  /*-webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  -o-border-radius: 0px;
+  border-radius: 0px;
+  border: 0px;*/
+}
+/* line 11, ../sass/common/_progress.scss */
+.modal-progress .progress-bar {
+  line-height: 30px;
+}
+
 /* Homepage
 -------------------------------------------------- */
 /* line 3, ../sass/modules/_home.scss */

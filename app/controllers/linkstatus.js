@@ -13,6 +13,11 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
         all: [],
         interval: null,
         show: false
+
+    };
+    $scope.testNode = {
+        name: '',
+            data: []
     };
     // Cancel interval on page destroy
     $scope.$on('$destroy', function () {
@@ -59,11 +64,18 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
      * Run TestNode command
      * @param {string} params
      */
-    $scope.runZwaveTestNode = function (params) {
+    $scope.runZwaveTestNode = function (params,modalId,device, $event) {
        //console.log(params)
         //return;
         $scope.toggleRowSpinner(params);
+        $scope.testNode = {
+            name: device.name,
+            data: [29,35,80,15,99,45,67,100,89,100]
+        };
+        $scope.handleModal(modalId, $event)
         dataService.getApi('test_node', params, true).then(function (response) {
+
+
             $timeout($scope.toggleRowSpinner, 1000);
         }, function (error) {
             $scope.toggleRowSpinner();
@@ -77,9 +89,9 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
      * @param {string} cmd
      */
     $scope.runZwaveNop = function (cmd) {
-        for (i = 0; i < 21; i++) {
+        //for (i = 0; i < 21; i++) {
             $scope.runZwaveCmd(cmd);
-        }
+        //}
     };
 
     /// --- Private functions --- ///
@@ -92,7 +104,7 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
         var controllerNodeId = 1000;//ZWaveAPIData.controller.data.nodeId.value;
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
-            if (nodeId == 255 || node.data.isVirtual.value) {
+            if (nodeId == 255 || nodeId == ZWaveAPIData.controller.data.nodeId.value || node.data.isVirtual.value) {
                 return;
             }
             // Loop throught instances
@@ -141,7 +153,7 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
                 obj['isUpdated'] = isUpdated;
                 obj['paramsTestNode'] = nodeId;//+ '/' + 10;
                 ;
-                obj['cmdNop'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[32].Get()'
+                obj['cmdNop'] = 'devices[' + nodeId + '].SendNoOperation()'
                 var findIndex = _.findIndex($scope.linkStatus.all, {rowId: obj.rowId});
                 if (findIndex > -1) {
                     angular.extend($scope.linkStatus.all[findIndex], obj);
