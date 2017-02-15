@@ -3,7 +3,7 @@ module.exports = function (grunt) {
     var pkg = grunt.file.readJSON('package.json');
     var app_type = pkg.app_type;
     var app_cfg = pkg.type_cfg[pkg.app_type];
-    var app_version = pkg.version;
+    var app_version = pkg.ver;
     var app_rc = pkg.rc;
     if(pkg.rc){
         app_version += '-RC-'+pkg.rc;
