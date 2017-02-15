@@ -1,6 +1,6 @@
 {
   "name": "zwave-catalog",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Z-Wave product catalog",
   "main": "index.html",
   "devDependencies": {
@@ -20,6 +20,9 @@
     "grunt-html-build": "^0.6.2",
     "grunt-json-generator": "^0.1.0",
     "grunt-mkdir": "^0.1.2",
+    "grunt-push-release": "^0.1.1",
+    "grunt-release-it": "^1.0.1",
+    "grunt-replace": "^1.0.1",
     "grunt-string-replace": "^1.0.0"
   },
   "directories": {
@@ -42,5 +45,6 @@
   "bugs": {
     "url": "https://github.com/vades/zwave-catalog/issues"
   },
-  "homepage": "https://github.com/vades/zwave-catalog"
+  "homepage": "https://github.com/vades/zwave-catalog",
+  "dependencies": {}
 }

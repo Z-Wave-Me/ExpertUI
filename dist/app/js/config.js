@@ -1,4 +1,3 @@
-/* Copyright:  Z-Wave Europe, Created: 10-02-2017 14:07:39 */
 /**
  * App configuration
  * @author Martin Vach
@@ -43,6 +42,7 @@ var config_data = {
         'configget_url': '/ZWaveAPI/ExpertConfigGet', // Config get
         'configupdate_url': '/ZWaveAPI/ExpertConfigUpdate', // Config update
         'call_all_nif': '/ZWaveAPI/CallForAllNIF', // Call niff for all devices
+        'test_node': '/ZWaveAPI/TestNode/', // Test node command
         'time': '/ZAutomation/api/v1/system/time/get',// Get time
         'time_zone': '/ZAutomation/api/v1/system/timezone', // Set time zone
         'wifi_settings': '/ZAutomation/api/v1/system/wifi/settings', // Set wifi settings ssid and password
@@ -170,7 +170,8 @@ var config_data = {
             // Time zone
             time: {
                 string: false,
-                timestamp: false
+                timestamp: false,
+                offset: false
             }
         },
     // Controller
@@ -184,7 +185,7 @@ var config_data = {
    },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer
-        'app_type': 'installer',
+        'app_type': 'default',
          'custom_cfg': {
              'default':{
                  'logo': 'app/images/zplus.jpg',

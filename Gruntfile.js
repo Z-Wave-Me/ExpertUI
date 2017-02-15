@@ -1,5 +1,22 @@
 module.exports = function (grunt) {
+    // Application type : default/installer
+    var app_type = 'installer';
 
+    var cfg = {
+        // Dist directory
+        dir: 'dist',
+        // App name
+        name: 'Z-Wave Expert'
+    };
+    // Settings for CIT (installer)
+    if (app_type === 'installer') {
+        cfg = {
+            // Dist directory
+            dir: 'cit',
+            // App name
+            name: 'Z-Wave CIT'
+        };
+    }
 // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -8,7 +25,7 @@ module.exports = function (grunt) {
         // Clean dir
         clean: {
             options: {force: true},
-            build: ["dist/"]
+            build: [cfg.dir + '/']
         },
         // NG templates
         ngtemplates: {
@@ -28,7 +45,7 @@ module.exports = function (grunt) {
                     }
                 },
                 src: 'app/views/**/*.html',
-                dest: 'dist/app/js/templates.js'
+                dest: cfg.dir + '/app/js/templates.js'
             }
         },
         // Concat
@@ -37,7 +54,7 @@ module.exports = function (grunt) {
                 src: [
                     'app/css/main.css'
                 ],
-                dest: 'dist/app/css/build.css'
+                dest: cfg.dir + '/app/css/build.css'
             },
             js: {
                 src: [
@@ -65,7 +82,7 @@ module.exports = function (grunt) {
                     // APP
                     'app/app.js',
                     'app/routes.js',
-                    'dist/app/js/templates.js',
+                    cfg.dir + '/app/js/templates.js',
                     'app/modules/qAllSettled.js',
                     'app/directives/directives.js',
                     'app/directives/angular-slider.js',
@@ -117,14 +134,14 @@ module.exports = function (grunt) {
                     'app/jquery/jquery-app.js'
 
                 ],
-                dest: 'dist/app/js/build.js'
+                dest: cfg.dir + '/app/js/build.js'
             }
         },
         json_generator: {
             target: {
                 dest: "app/info.json",
                 options: {
-                    name: 'Expert UI',
+                    name: cfg.name,
                     built: '<%= grunt.template.today("dd-mm-yyyy HH:MM:ss") %>',
                     timestamp: '<%= Math.floor(Date.now() / 1000) %>'
                 }
@@ -139,35 +156,50 @@ module.exports = function (grunt) {
                             'app/images/**',
                             //'app/views/**',
                             'app/lang/**'
-                        ], dest: 'dist/'
+                        ], dest: cfg.dir + '/'
                     },
-                    {src:[ 'storage/**'],dest: 'dist/'},
-                    {expand: true, src: ['app/config.js'], dest: 'dist/app/js/', flatten: true}
-                    /*{src: ['storage/img/**'], dest: 'dist/'},
-                     {src: ['storage/demo/**'], dest: 'dist/'},
-                     {src: ['storage/data/**'], dest: 'dist/'}*/
+                    {src: ['storage/**'], dest: cfg.dir + '/'},
+                    {expand: true, src: ['app/config.js'], dest: cfg.dir + '/app/js/', flatten: true}
+                    /*{src: ['storage/img/**'], dest: cfg.dir + '/'},
+                     {src: ['storage/demo/**'], dest: cfg.dir + '/'},
+                     {src: ['storage/data/**'], dest: cfg.dir + '/'}*/
                 ]
             },
             info: {
                 files: [
-                    {src: ['app/info.json'], dest: 'dist/app/info.json'}
+                    {src: ['app/info.json'], dest: cfg.dir + '/app/info.json'}
                 ]
             },
             fonts: {
                 files: [
-                    {expand: true, src: ['app/fonts/*'], dest: 'dist/app/fonts/', flatten: true}
+                    {expand: true, src: ['app/fonts/*'], dest: cfg.dir + '/app/fonts/', flatten: true}
                 ]
             },
             angmap: {
                 files: [
-                    {expand: true, src: ['vendor/angular/angular-1.2.14/angular-cookies.min.js.map'], dest: 'dist/app/js/', flatten: true},
-                    {expand: true, src: ['vendor/angular/angular-1.2.14/angular.min.js.map'], dest: 'dist/app/js/', flatten: true},
-                    {expand: true, src: ['vendor/angular/angular-1.2.14/angular-route.min.js.map'], dest: 'dist/app/js/', flatten: true}
+                    {
+                        expand: true,
+                        src: ['vendor/angular/angular-1.2.14/angular-cookies.min.js.map'],
+                        dest: cfg.dir + '/app/js/',
+                        flatten: true
+                    },
+                    {
+                        expand: true,
+                        src: ['vendor/angular/angular-1.2.14/angular.min.js.map'],
+                        dest: cfg.dir + '/app/js/',
+                        flatten: true
+                    },
+                    {
+                        expand: true,
+                        src: ['vendor/angular/angular-1.2.14/angular-route.min.js.map'],
+                        dest: cfg.dir + '/app/js/',
+                        flatten: true
+                    }
                 ]
             },
             licence: {
                 files: [
-                    {src: ['LICENCE.md'], dest: 'dist/LICENCE.md'}
+                    {src: ['LICENCE.md'], dest: cfg.dir + '/LICENCE.md'}
                 ]
             }
         },
@@ -181,9 +213,9 @@ module.exports = function (grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: 'dist/app/css/',
+                        cwd: cfg.dir + '/app/css/',
                         src: ['*.css', '!*.min.css'],
-                        dest: 'dist/app/css/',
+                        dest: cfg.dir + '/app/css/',
                         ext: '.css'
                     }
                 ]
@@ -196,7 +228,7 @@ module.exports = function (grunt) {
                     banner: '/* <%= banner %> */'
                 },
                 files: {
-                    src: [ 'dist/app/js/templates.js','dist/app/js/config.js','dist/app/js/build.js']
+                    src: [cfg.dir + '/app/js/templates.js', cfg.dir + '/app/js/config.js', cfg.dir + '/app/js/build.js']
                 }
             },
             html: {
@@ -205,20 +237,52 @@ module.exports = function (grunt) {
                     banner: '<!-- <%= banner %> -->'
                 },
                 files: {
-                    src: [ 'dist/index.html']
+                    src: [cfg.dir + '/index.html']
                 }
             }
         },
         htmlbuild: {
             dist: {
                 src: 'index.html',
-                dest: 'dist/',
+                dest: cfg.dir + '/',
                 options: {
                     sections: {
                         dist_head: 'app/views/dist_head.txt'
                     }
                 }
 
+            }
+        },
+        replace: {
+            dist: {
+                options: {
+                    patterns: [
+                        {
+                            match: /'app_type': 'default'/g,
+                            replacement: function () {
+                                return '\'app_type\': \''+ app_type + '\'';
+                            }
+                        },
+                        {
+                            match: /'app_type': 'installer'/g,
+                            replacement: function () {
+                                return '\'app_type\': \''+ app_type + '\'';
+                            }
+                        }
+                    ]
+                },
+                files: [
+                    {expand: true, flatten: true, src: ['app/config.js'], dest: cfg.dir + '/app/js/'}
+                ]
+            }
+        },
+        'release-it': {
+            options: {
+                pkgFiles: ['package.json'],
+                commitMessage: 'Release %s',
+                tagName: '%s',
+                tagAnnotation: 'Release %s',
+                buildCommand: false
             }
         }
     });
@@ -236,8 +300,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-banner');
     grunt.loadNpmTasks('grunt-json-generator');
     grunt.loadNpmTasks('grunt-html-build');
+    grunt.loadNpmTasks('grunt-replace');
+    grunt.loadNpmTasks('grunt-release-it');
 
     // Default task(s).
     //grunt.registerTask('default', ['clean','concat','copy','cssmin','string-replace']);
-    grunt.registerTask('default', ['clean', 'ngtemplates','concat', 'json_generator','copy', 'cssmin','usebanner','htmlbuild']);
+    grunt.registerTask('default', ['clean', 'ngtemplates', 'concat', 'json_generator', 'copy', 'cssmin', 'usebanner', 'htmlbuild','replace']);
 };
