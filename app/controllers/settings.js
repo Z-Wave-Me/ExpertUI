@@ -299,7 +299,7 @@ appController.controller('SettingsReportController', function ($scope, $window, 
     };
 
     /**
-     * Send and save report
+     * Send a report
      */
     $scope.sendReport = function (form, input) {
         if (form.$invalid) {
@@ -325,9 +325,39 @@ appController.controller('SettingsReportController', function ($scope, $window, 
         input.browser_agent = $window.navigator.appCodeName;
         input.browser_version = $window.navigator.appVersion;
         input.browser_info = 'PLATFORM: ' + $window.navigator.platform + '\nUSER-AGENT: ' + $window.navigator.userAgent;
+
+        if(input.log){
+            $scope.sendReportLog(input);
+
+        }else{
+            $scope.sendReportNoLog(input);
+        }
         //console.log(input)
         //return;
+
+    };
+
+    /**
+     *  Send a report without log
+     * @param {array}input
+     */
+    $scope.sendReportNoLog = function (input) {
         dataService.postReport(input).then(function (response) {
+            $scope.loading = false;
+            deviceService.showNotifier({message: $scope._t('success_send_report') + ' ' + input.email});
+            $route.reload();
+        }, function (error) {
+            alertify.alertError($scope._t('error_send_report'));
+            $scope.loading = false;
+        });
+    };
+
+    /**
+     *  Send a report with log
+     * @param {array}input
+     */
+    $scope.sendReportLog= function (input) {
+        dataService.postApi('post_report_api', input).then(function (response) {
             $scope.loading = false;
             deviceService.showNotifier({message: $scope._t('success_send_report') + ' ' + input.email});
             $route.reload();
