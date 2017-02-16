@@ -14,7 +14,8 @@ appController.controller('RoutingController', function($scope, $filter, $timeout
         interval: null,
         show: false,
         nodes: {},
-        neighbours: {}
+        neighbours: {},
+        view: 'neighbors'
     };
     $scope.nodes = {};
 
@@ -24,6 +25,14 @@ appController.controller('RoutingController', function($scope, $filter, $timeout
     $scope.$on('$destroy', function() {
         $interval.cancel($scope.routings.interval);
     });
+    /**
+     * Chenge view neighbors/table
+     * @param {string} view
+     */
+    $scope.changeView = function(view) {
+        $scope.routings.view = view;
+        $scope.loadZwaveData();
+    };
 
     /**
      * Load zwave data
