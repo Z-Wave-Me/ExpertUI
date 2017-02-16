@@ -31,7 +31,6 @@ appController.controller('AuthInstallerController', function($scope, $location,c
             deviceService.setUser(user);
             //window.location = location;
             $location.path('/home');
-            $window.location.reload();
         }, function (error) {
             $scope.loading = false;
             var message = $scope._t('error_load_data');
