@@ -1,4 +1,3 @@
-/* Copyright:  Z-Wave Europe, Created: 15-02-2017 15:25:38 */
 /**
  * App configuration
  * @author Martin Vach
@@ -6,8 +5,9 @@
  */
 var config_data = {
     'cfg': {
-        'app_name': 'Z-Wave ExpertUI',
-        'app_version': '1.2.0',
+        'app_name': 'Z-Wave Expert',
+        'app_version': '1.2.0-RC-1',
+        'app_built': '15-02-2017 15:40:31',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -43,6 +43,7 @@ var config_data = {
         'configget_url': '/ZWaveAPI/ExpertConfigGet', // Config get
         'configupdate_url': '/ZWaveAPI/ExpertConfigUpdate', // Config update
         'call_all_nif': '/ZWaveAPI/CallForAllNIF', // Call niff for all devices
+        'test_node': '/ZWaveAPI/TestNode/', // Test node command
         'time': '/ZAutomation/api/v1/system/time/get',// Get time
         'time_zone': '/ZAutomation/api/v1/system/timezone', // Set time zone
         'wifi_settings': '/ZAutomation/api/v1/system/wifi/settings', // Set wifi settings ssid and password
@@ -185,7 +186,7 @@ var config_data = {
    },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer
-        'app_type': 'installer',
+        'app_type': 'default',
          'custom_cfg': {
              'default':{
                  'logo': 'app/images/zplus.jpg',

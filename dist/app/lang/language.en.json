@@ -1,5 +1,8 @@
 {
   "--- newtrans": "---",
+ "---": "---",
+ "include_log":"Include log",
+ "include_log_warning":"This will include information about your Z-Wave network",
  "ok" : "100kbit",
  "error" : "40kbit",
  "success_reception" : "ok",
@@ -21,7 +24,6 @@
  "foreign_frames_desc" : "Foreign Frames",
  "test_all_links_complete":"Link test on all links complete.",
  "nif_request_complete":"Requesting all NIF's complete.",
- "---": "---",
  "sleep": "Sleep",
  "portable" : "Portable",
  "static" : "Static",

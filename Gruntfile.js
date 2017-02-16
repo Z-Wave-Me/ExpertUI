@@ -1,14 +1,22 @@
 module.exports = function (grunt) {
-
+    // Application type : default/installer
+    var pkg = grunt.file.readJSON('package.json');
+    var app_type = pkg.app_type;
+    var app_cfg = pkg.type_cfg[pkg.app_type];
+    var app_version = pkg.ver;
+    var app_rc = pkg.rc;
+    if(pkg.rc){
+        app_version += '-RC-'+pkg.rc;
+    }
 // Project configuration.
     grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
+        //pkg: grunt.file.readJSON('package.json'),
         // Banner
         banner: 'Copyright:  Z-Wave Europe, Created: <%= grunt.template.today("dd-mm-yyyy HH:MM:ss") %>',
         // Clean dir
         clean: {
             options: {force: true},
-            build: ["dist/"]
+            build: [app_cfg.dir + '/']
         },
         // NG templates
         ngtemplates: {
@@ -28,7 +36,7 @@ module.exports = function (grunt) {
                     }
                 },
                 src: 'app/views/**/*.html',
-                dest: 'dist/app/js/templates.js'
+                dest: app_cfg.dir + '/app/js/templates.js'
             }
         },
         // Concat
@@ -37,7 +45,7 @@ module.exports = function (grunt) {
                 src: [
                     'app/css/main.css'
                 ],
-                dest: 'dist/app/css/build.css'
+                dest: app_cfg.dir + '/app/css/build.css'
             },
             js: {
                 src: [
@@ -65,7 +73,7 @@ module.exports = function (grunt) {
                     // APP
                     'app/app.js',
                     'app/routes.js',
-                    'dist/app/js/templates.js',
+                    app_cfg.dir + '/app/js/templates.js',
                     'app/modules/qAllSettled.js',
                     'app/directives/directives.js',
                     'app/directives/angular-slider.js',
@@ -117,14 +125,15 @@ module.exports = function (grunt) {
                     'app/jquery/jquery-app.js'
 
                 ],
-                dest: 'dist/app/js/build.js'
+                dest: app_cfg.dir + '/app/js/build.js'
             }
         },
         json_generator: {
             target: {
                 dest: "app/info.json",
                 options: {
-                    name: 'Expert UI',
+                    name: app_cfg.name,
+                    version: app_version,
                     built: '<%= grunt.template.today("dd-mm-yyyy HH:MM:ss") %>',
                     timestamp: '<%= Math.floor(Date.now() / 1000) %>'
                 }
@@ -139,35 +148,50 @@ module.exports = function (grunt) {
                             'app/images/**',
                             //'app/views/**',
                             'app/lang/**'
-                        ], dest: 'dist/'
+                        ], dest: app_cfg.dir + '/'
                     },
-                    {src:[ 'storage/**'],dest: 'dist/'},
-                    {expand: true, src: ['app/config.js'], dest: 'dist/app/js/', flatten: true}
-                    /*{src: ['storage/img/**'], dest: 'dist/'},
-                     {src: ['storage/demo/**'], dest: 'dist/'},
-                     {src: ['storage/data/**'], dest: 'dist/'}*/
+                    {src: ['storage/**'], dest: app_cfg.dir + '/'},
+                    {expand: true, src: ['app/config.js'], dest: app_cfg.dir + '/app/js/', flatten: true}
+                    /*{src: ['storage/img/**'], dest: app_cfg.dir + '/'},
+                     {src: ['storage/demo/**'], dest: app_cfg.dir + '/'},
+                     {src: ['storage/data/**'], dest: app_cfg.dir + '/'}*/
                 ]
             },
             info: {
                 files: [
-                    {src: ['app/info.json'], dest: 'dist/app/info.json'}
+                    {src: ['app/info.json'], dest: app_cfg.dir + '/app/info.json'}
                 ]
             },
             fonts: {
                 files: [
-                    {expand: true, src: ['app/fonts/*'], dest: 'dist/app/fonts/', flatten: true}
+                    {expand: true, src: ['app/fonts/*'], dest: app_cfg.dir + '/app/fonts/', flatten: true}
                 ]
             },
             angmap: {
                 files: [
-                    {expand: true, src: ['vendor/angular/angular-1.2.14/angular-cookies.min.js.map'], dest: 'dist/app/js/', flatten: true},
-                    {expand: true, src: ['vendor/angular/angular-1.2.14/angular.min.js.map'], dest: 'dist/app/js/', flatten: true},
-                    {expand: true, src: ['vendor/angular/angular-1.2.14/angular-route.min.js.map'], dest: 'dist/app/js/', flatten: true}
+                    {
+                        expand: true,
+                        src: ['vendor/angular/angular-1.2.14/angular-cookies.min.js.map'],
+                        dest: app_cfg.dir + '/app/js/',
+                        flatten: true
+                    },
+                    {
+                        expand: true,
+                        src: ['vendor/angular/angular-1.2.14/angular.min.js.map'],
+                        dest: app_cfg.dir + '/app/js/',
+                        flatten: true
+                    },
+                    {
+                        expand: true,
+                        src: ['vendor/angular/angular-1.2.14/angular-route.min.js.map'],
+                        dest: app_cfg.dir + '/app/js/',
+                        flatten: true
+                    }
                 ]
             },
             licence: {
                 files: [
-                    {src: ['LICENCE.md'], dest: 'dist/LICENCE.md'}
+                    {src: ['LICENCE.md'], dest: app_cfg.dir + '/LICENCE.md'}
                 ]
             }
         },
@@ -181,9 +205,9 @@ module.exports = function (grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: 'dist/app/css/',
+                        cwd: app_cfg.dir + '/app/css/',
                         src: ['*.css', '!*.min.css'],
-                        dest: 'dist/app/css/',
+                        dest: app_cfg.dir + '/app/css/',
                         ext: '.css'
                     }
                 ]
@@ -196,7 +220,7 @@ module.exports = function (grunt) {
                     banner: '/* <%= banner %> */'
                 },
                 files: {
-                    src: [ 'dist/app/js/templates.js','dist/app/js/config.js','dist/app/js/build.js']
+                    src: [app_cfg.dir + '/app/js/templates.js', app_cfg.dir + '/app/js/config.js', app_cfg.dir + '/app/js/build.js']
                 }
             },
             html: {
@@ -205,20 +229,80 @@ module.exports = function (grunt) {
                     banner: '<!-- <%= banner %> -->'
                 },
                 files: {
-                    src: [ 'dist/index.html']
+                    src: [app_cfg.dir + '/index.html']
                 }
             }
         },
         htmlbuild: {
             dist: {
                 src: 'index.html',
-                dest: 'dist/',
+                dest: app_cfg.dir + '/',
                 options: {
                     sections: {
                         dist_head: 'app/views/dist_head.txt'
                     }
                 }
 
+            }
+        },
+        replace: {
+            dist: {
+                options: {
+                    patterns: [
+                        {
+                            match: /'app_type': 'default'/g,
+                            replacement: function () {
+                                return '\'app_type\': \''+ app_type + '\'';
+                            }
+                        },
+                        {
+                            match: /'app_type': 'installer'/g,
+                            replacement: function () {
+                                return '\'app_type\': \''+ app_type + '\'';
+                            }
+                        },
+                        {
+                            match: 'app_name',
+                            replacement: app_cfg.name
+                        },
+                        {
+                            match: 'app_version',
+                            replacement: app_version
+                        },
+                        {
+                            match: 'app_built',
+                            replacement: '<%= grunt.template.today("dd-mm-yyyy HH:MM:ss") %>'
+                        }
+                    ]
+                },
+                files: [
+                    {expand: true, flatten: true, src: ['app/config.js'], dest: app_cfg.dir + '/app/js/'}
+                ]
+            }
+        },
+        modify_json: {
+            file: {
+                expand: true,
+                //cwd: 'test/',
+                src: ['package.json'],
+                options: {
+                    add: true,
+                    fields: {
+                        "rc": (app_rc ? app_rc + 1 : 0),
+                        "built": '<%= grunt.template.today("dd-mm-yyyy HH:MM:ss") %>'
+                    },
+                    indent: 2
+                }
+            }
+        },
+        'release-it': {
+            options: {
+                pkgFiles: ['package.json'],
+                commitMessage: 'Release ' + app_cfg.name + ' ' + app_version,
+                tagName: '%s',
+                tagAnnotation: 'Release ' + app_cfg.name + ' ' + app_version,
+                buildCommand: false,
+                afterRelease: ['modify_json']
             }
         }
     });
@@ -236,8 +320,11 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-banner');
     grunt.loadNpmTasks('grunt-json-generator');
     grunt.loadNpmTasks('grunt-html-build');
+    grunt.loadNpmTasks('grunt-replace');
+    grunt.loadNpmTasks('grunt-release-it');
+    grunt.loadNpmTasks('grunt-modify-json');
 
     // Default task(s).
     //grunt.registerTask('default', ['clean','concat','copy','cssmin','string-replace']);
-    grunt.registerTask('default', ['clean', 'ngtemplates','concat', 'json_generator','copy', 'cssmin','usebanner','htmlbuild']);
+    grunt.registerTask('default', ['clean', 'ngtemplates', 'concat', 'json_generator', 'copy', 'cssmin', 'usebanner', 'htmlbuild','replace']);
 };

@@ -1,4 +1,6 @@
 {
+ "include_log":"Include log",
+ "include_log_warning":"This will include information about your Z-Wave network",
  "ok" : "100kbit",
  "error" : "40kbit",
  "success_reception" : "ok",

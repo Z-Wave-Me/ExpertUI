@@ -125,10 +125,10 @@ angApp.config(['$routeProvider',
             requireLogin: requireLogin,
             templateUrl: 'app/views/network/statistics.html',
             appTypeBanned: ['default']
-        }).when('/network/linkstatus/:nodeId?', {
+        }).when('/network/linkstatus', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/network/linkstatus.html',
-            appTypeBanned: ['default']
+            appTypeBanned: [/*'default'*/]
         }).when('/network/linkhealth/:nodeId?', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/network/link_health.html',

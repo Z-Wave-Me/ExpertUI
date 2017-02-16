@@ -5,8 +5,9 @@
  */
 var config_data = {
     'cfg': {
-        'app_name': 'Z-Wave ExpertUI',
-        'app_version': '1.2.0',
+        'app_name': '@@app_name',
+        'app_version': '@@app_version',
+        'app_built': '@@app_built',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -42,6 +43,7 @@ var config_data = {
         'configget_url': '/ZWaveAPI/ExpertConfigGet', // Config get
         'configupdate_url': '/ZWaveAPI/ExpertConfigUpdate', // Config update
         'call_all_nif': '/ZWaveAPI/CallForAllNIF', // Call niff for all devices
+        'test_node': '/ZWaveAPI/TestNode/', // Test node command
         'time': '/ZAutomation/api/v1/system/time/get',// Get time
         'time_zone': '/ZAutomation/api/v1/system/timezone', // Set time zone
         'wifi_settings': '/ZAutomation/api/v1/system/wifi/settings', // Set wifi settings ssid and password
@@ -50,6 +52,7 @@ var config_data = {
         'instances': '/ZAutomation/api/v1/instances',
         'app_built_info': 'app/info.json',// App build info
         'post_report_url': 'https://service.z-wave.me/report/', // Post report url
+        'post_report_api': '/ZWaveAPI/sendZWayReport', // Post report url
         'runjs_url': '/JS/Run/', // Url for running JS
         'device_classes_url': '/translations/DeviceClasses.xml', // Url to Device Classes
         'alarms_url': '/translations/Alarms.xml', // Url to Alarms
