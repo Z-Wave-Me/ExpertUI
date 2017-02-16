@@ -51,9 +51,7 @@ var config_data = {
         'login': '/ZAutomation/api/v1/login',// Get time
         'instances': '/ZAutomation/api/v1/instances',
         'app_built_info': 'app/info.json',// App build info
-        //'post_report_url': 'http://hrix.net/shuiapi/bugreport/debug.php', // Post report url
-        //'post_report_url': 'https://service.z-wave.me/report/', // Post report url
-        'post_report_url': 'https://service.z-wave.me/bugreport/', // Post report url
+        'post_report_url': 'https://service.z-wave.me/report/', // Post report url
         'post_report_api': '/ZWaveAPI/sendZWayReport', // Post report url
         'runjs_url': '/JS/Run/', // Url for running JS
         'device_classes_url': '/translations/DeviceClasses.xml', // Url to Device Classes
