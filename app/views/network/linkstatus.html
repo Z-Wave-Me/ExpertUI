@@ -26,13 +26,11 @@
                             <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
-                    <th>&nbsp; </a>
-                    </th>
-                    <th ng-repeat="v in linkStatus.all" style="text-align:center;">{{v.id}}</th>
                    <!-- <th>
                         {{ _t('linkquality')}}
                     </th>-->
-                    <!--<th class="mobile-show">
+                    <th ng-repeat="pl in pwLvl" style="text-align:center;">{{pl}}</th>
+                    <th class="mobile-show">
                         <button class="btn btn-primary" id="btn_test_all_1"
                                 ng-click="testAllLinks('all_1')"
                                 ng-disabled="rowSpinner['all_1']">
@@ -42,7 +40,7 @@
                                     label="_t('test_all_links')">
                             </bb-row-spinner>
                         </button>
-                    </th>-->
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -60,10 +58,13 @@
                         <bb-date-time ng-if="v.dateTime" obj="v.dateTime" updated="v.isUpdated"></bb-date-time>
                         <span ng-if="!v.dateTime">-</span>
                     </td>
+                    <td class="rtCell" ng-repeat="n in v.indicator">
+                        <div class="rtDiv {{n.color}}" title="{{n}}">&nbsp;</div>
+                    </td>
                     <td class="td-action" data-title="">
                         <!-- Test node -->
+                        <!--{{v | json}}-->
                         <button class="btn btn-primary" id="btn_test_{{ v.id}}"
-                                ng-if="v.hasPowerLevel"
                                 ng-click="runZwaveTestNode(v.paramsTestNode,'linkStatusModal', v,$event)"
                                 ng-disabled="rowSpinner[v.paramsTestNode]">
                             <bb-row-spinner
@@ -73,7 +74,7 @@
                             </bb-row-spinner>
                         </button>
                         <!-- NOP -->
-                        <button class="btn btn-default" id="btn_nop_{{ v.id}}"
+                        <!--<button class="btn btn-default" id="btn_nop_{{ v.id}}"
                                 ng-if="!v.hasPowerLevel"
                                 ng-click="runZwaveNop(v.cmdNop)"
                                 ng-disabled="rowSpinner[v.cmdNop]">
@@ -82,11 +83,8 @@
                                     spinner="rowSpinner[v.cmdNop]"
                                     label="_t('nop')">
                             </bb-row-spinner>
-                        </button>
+                        </button>-->
 
-                    </td>
-                    <td class="rtCell" ng-repeat="n in v.indicator">
-                        <div class="rtDiv {{n.color}}" title="{{n}}">&nbsp;</div>
                     </td>
                 </tr>
                 </tbody>
