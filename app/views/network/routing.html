@@ -6,17 +6,17 @@
         </div>
         <div class="col-sm-4 text-right">
             <div class="btn-group">
-                <!-- Table view view -->
-                <button class="btn btn-default"
-                ng-class="routings.view === 'neighbors' ? 'active': ''"
-                ng-click="changeView('neighbors')">
-                    <i class="fa fa-th-large"></i> {{_t('Neighbors only')}}
-                </button>
                 <!-- Info view -->
                 <button class="btn btn-default"
                         ng-class="routings.view === 'table' ? 'active': ''"
                         ng-click="changeView('table')">
                     <i class="fa fa-th-list"></i> {{_t('Info and Neighbors')}}
+                </button>
+                <!-- Table view view -->
+                <button class="btn btn-default"
+                ng-class="routings.view === 'neighbors' ? 'active': ''"
+                ng-click="changeView('neighbors')">
+                    <i class="fa fa-th-large"></i> {{_t('Neighbors only')}}
                 </button>
             </div>
 

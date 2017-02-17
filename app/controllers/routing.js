@@ -15,7 +15,7 @@ appController.controller('RoutingController', function($scope, $filter, $timeout
         show: false,
         nodes: {},
         neighbours: {},
-        view: 'neighbors'
+        view: 'table'
     };
     $scope.nodes = {};
 
