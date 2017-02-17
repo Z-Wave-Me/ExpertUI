@@ -174,6 +174,9 @@
                                 <li><a href="#network/timing" ng-class="isActive('timing',2)">{{ _t('nav_timing_info') }}</a></li>
                                 <!--<li><a class="a-disabled" title="Temporary disabled. Will be back in the next release." ng-class="isActive('timing',2)">{{ _t('nav_timing_info') }}</a></li>-->
                                 <li><a href="#network/map" dng-class="isActive('map',2)">{{ _t('nav_network_map') }}</a></li>
+                                <li ng-if="cfg.app_type === 'installer'">
+                                    <a href="#network/linkstatus" ng-class="isActive('linkstatus',2)">{{ _t('nav_linkhealth_info') }}</a>
+                                </li>
                                 <!--
                                 <li ng-if="cfg.app_type === 'installer' && !cfg.controller.isRealPrimary">
                                     <!--<a href="#network/linkstatus" ng-class="isActive('linkstatus',2)">{{ _t('nav_linkhealth_info') }}</a>-->
