@@ -4,9 +4,12 @@ module.exports = function (grunt) {
     var app_type = pkg.app_type;
     var app_cfg = pkg.type_cfg[pkg.app_type];
     var app_version = pkg.v;
+    var git_message = pkg.v;
     var app_rc = (pkg.rc ? pkg.rc + 1 : 0);
+
     if(app_rc){
         app_version += '-RC-'+app_rc;
+        git_message += '-RC-'+pkg.rc;
     }
 // Project configuration.
     grunt.initConfig({
@@ -298,9 +301,9 @@ module.exports = function (grunt) {
         'release-it': {
             options: {
                 pkgFiles: ['package.json'],
-                commitMessage: 'Release ' + app_cfg.name + ' ' + app_version,
+                commitMessage: 'Release ' + app_cfg.name + ' ' + git_message,
                 tagName: '%s',
-                tagAnnotation: 'Release ' + app_cfg.name + ' ' + app_version,
+                tagAnnotation: 'Release ' + app_cfg.name + ' ' + git_message,
                 buildCommand: false
             }
         }
