@@ -128,9 +128,12 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
         var doorLockCCId = 0x62;
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
-            if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+            if (deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
             }
+            /*if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+                return;
+            }*/
 
             var basicType = node.data.basicType.value;
             var genericType = node.data.genericType.value;
