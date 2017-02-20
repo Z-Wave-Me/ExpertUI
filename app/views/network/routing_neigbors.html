@@ -5,11 +5,11 @@
         <thead>
         <tr>
             <td>&nbsp;</td>
-            <td ng-repeat="v in routings.all" style="text-align:center;">{{v.id}}</td>
+            <td ng-repeat="v in routings.all | limitTo:increment" style="text-align:center;">{{v.id}}</td>
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="v in routings.all track by $index">
+        <tr ng-repeat="v in routings.all | limitTo:increment track by $index">
             <td class="rt-node-id">
                 <div class="tool-tip right rt-cell rt-cell-th">
                     {{v.id}}
@@ -31,9 +31,9 @@
                             </button>
                         </div>
                     </div>
-                </div
+                </div>
             </td>
-            <td ng-repeat="n in v.cellState">
+            <td ng-repeat="n in v.cellState | limitTo:increment">
                 <div class="rt-cell {{n.cssClass}}" title="{{n.tooltip}}">
                     <span class="info" ng-if="n.hasAssoc">*</span>
                     <span class="info" ng-if="!n.hasAssoc">&nbsp;</span>

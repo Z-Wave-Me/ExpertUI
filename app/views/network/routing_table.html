@@ -18,11 +18,11 @@
                     </bb-row-spinner>
                 </button>
             </th>
-            <th ng-repeat="v in routings.all" style="text-align:center;">{{v.id}}</th>
+            <th ng-repeat="v in routings.all | limitTo:increment" style="text-align:center;">{{v.id}}</th>
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="v in routings.all track by $index">
+        <tr ng-repeat="v in routings.all  | limitTo:increment track by $index">
             <td>{{v.id}}</td>
             <td>{{v.name}}</td>
             <td>
@@ -43,7 +43,7 @@
                     </bb-row-spinner>
                 </button>&nbsp;
             </td>
-            <td class="rt-cell" ng-repeat="n in v.cellState">
+            <td class="rt-cell" ng-repeat="n in v.cellState | limitTo:increment">
                 <div class="{{n.cssClass}}" title="{{n.tooltip}}">
                     <span class="info" ng-if="n.hasAssoc">*</span>
                     <span class="info" ng-if="!n.hasAssoc">&nbsp;</span>
