@@ -2938,6 +2938,155 @@ function renderMethodSpec(ccId, data) {
 				"ConfigurationGet": [],
 				"ConfigurationSet": [
 					{
+						"label": "Operation Mode",
+						"type": {
+							"enumof": [
+								{
+									"label": "Constant operation",
+									"type": {
+										"fix": 	{
+											"value": 1
+										}
+									}
+								},
+								{
+									"label": "Timed operation",
+									"type": {
+										"fix": 	{
+											"value": 2
+										}
+									}
+								}
+							]
+						}
+					},
+					{
+						"label": "Outside state",
+						"type": {
+							"enumof": [
+								{
+									"label": "Door Unsecured",
+									"type": {
+										"fix": 	{
+											"value": 0
+										}
+									}
+								},
+								{
+									"label": "Door Unsecured with timeout",
+									"type": {
+										"fix": 	{
+											"value": 0x1
+										}
+									}
+								},
+								{
+									"label": "Door Unsecured for inside Door Handles",
+									"type": {
+										"fix": 	{
+											"value": 0x10
+										}
+									}
+								},
+								{
+									"label": "Door Unsecured for inside Door Handles with timeout",
+									"type": {
+										"fix": 	{
+											"value": 0x11
+										}
+									}
+								},
+								{
+									"label": "Door Unsecured for outside Door Handles",
+									"type": {
+										"fix": 	{
+											"value": 0x20
+										}
+									}
+								},
+								{
+									"label": "Door Unsecured for outside Door Handles with timeout",
+									"type": {
+										"fix": 	{
+											"value": 0x21
+										}
+									}
+								},
+								{
+									"label": "Door Secured",
+									"type": {
+										"fix": 	{
+											"value": 0xff
+										}
+									}
+								}
+							]
+						}
+					},
+					{
+						"label": "Inside state",
+						"type": {
+							"enumof": [
+								{
+									"label": "Door Unsecured",
+									"type": {
+										"fix": 	{
+											"value": 0
+										}
+									}
+								},
+								{
+									"label": "Door Unsecured with timeout",
+									"type": {
+										"fix": 	{
+											"value": 0x1
+										}
+									}
+								},
+								{
+									"label": "Door Unsecured for inside Door Handles",
+									"type": {
+										"fix": 	{
+											"value": 0x10
+										}
+									}
+								},
+								{
+									"label": "Door Unsecured for inside Door Handles with timeout",
+									"type": {
+										"fix": 	{
+											"value": 0x11
+										}
+									}
+								},
+								{
+									"label": "Door Unsecured for outside Door Handles",
+									"type": {
+										"fix": 	{
+											"value": 0x20
+										}
+									}
+								},
+								{
+									"label": "Door Unsecured for outside Door Handles with timeout",
+									"type": {
+										"fix": 	{
+											"value": 0x21
+										}
+									}
+								},
+								{
+									"label": "Door Secured",
+									"type": {
+										"fix": 	{
+											"value": 0xff
+										}
+									}
+								}
+							]
+						}
+					},
+					{
 						"label": "Timeout, minutes",
 						"type": {
 							"range": {

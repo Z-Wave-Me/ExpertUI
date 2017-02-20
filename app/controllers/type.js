@@ -109,9 +109,12 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+            if (deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
             }
+            /*if (nodeId == 255 || node.data.isVirtual.value) {
+                return;
+            }*/
             var node = ZWaveAPIData.devices[nodeId];
             var instanceId = 0;
             var ccIds = [32, 34, 37, 38, 43, 70, 91, 94, 96, 114, 119, 129, 134, 138, 143, 152];
