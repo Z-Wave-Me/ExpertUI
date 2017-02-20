@@ -1,0 +1,39 @@
+<!-- Neghbors view -->
+<div ng-controller="NeighborController">
+    <div class="page-header row">
+        <div class="col-sm-8">
+            <h1>{{ _t('neighbors')}}</h1>
+        </div>
+        <div class="col-sm-4 text-right">
+            <div class="btn-group">
+                <!-- Info view -->
+                <button class="btn btn-default"
+                        ng-class="routings.view === 'table' ? 'active': ''"
+                        ng-click="changeView('table')">
+                    <i class="fa fa-th-list"></i> {{_t('Info and Neighbors')}}
+                </button>
+                <!-- Table view view -->
+                <button class="btn btn-default"
+                ng-class="routings.view === 'neighbors' ? 'active': ''"
+                ng-click="changeView('neighbors')">
+                    <i class="fa fa-th-large"></i> {{_t('Neighbors only')}}
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- Neighbors -->
+    <div ng-if="routings.view === 'neighbors'" ng-include="'app/views/network/neighbors_routing.html'"></div>
+    <!-- Table -->
+    <div ng-if="routings.view === 'table'" ng-include="'app/views/network/neighbors_info.html'"></div>
+
+    <!-- Legend -->
+    <div id="RoutingComments">
+        <i class="fa fa-square fa-lg green"></i> {{_t('direct')}}<br/>
+        <i class="fa fa-square fa-lg green-light"></i> {{_t('routed')}}<br/>
+        <i class="fa fa-square fa-lg yellow"></i> {{_t('badly_routed')}}<br/>
+        <i class="fa fa-square fa-lg red"></i> {{_t('not_linked')}}<br/>
+        <i class="fa fa-square fa-lg gray"></i> {{_t('unavailable')}}<br/>
+    </div>
+</div>

@@ -104,6 +104,7 @@ module.exports = function (grunt) {
                     'app/controllers/association.js',
                     'app/controllers/control.js',
                     'app/controllers/statistics.js',
+                    'app/controllers/neighbor.js',
                     'app/controllers/routing.js',
                     'app/controllers/reorganization.js',
                     'app/controllers/timing.js',
