@@ -6,8 +6,8 @@
 var config_data = {
     'cfg': {
         'app_name': 'Z-Wave Expert',
-        'app_version': '1.2.0-RC-1',
-        'app_built': '15-02-2017 15:40:31',
+        'app_version': '1.2.0-RC-47',
+        'app_built': '20-02-2017 09:22:37',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -52,6 +52,7 @@ var config_data = {
         'instances': '/ZAutomation/api/v1/instances',
         'app_built_info': 'app/info.json',// App build info
         'post_report_url': 'https://service.z-wave.me/report/', // Post report url
+        'post_report_api': '/ZWaveAPI/sendZWayReport', // Post report url
         'runjs_url': '/JS/Run/', // Url for running JS
         'device_classes_url': '/translations/DeviceClasses.xml', // Url to Device Classes
         'alarms_url': '/translations/Alarms.xml', // Url to Alarms

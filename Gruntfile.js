@@ -3,10 +3,13 @@ module.exports = function (grunt) {
     var pkg = grunt.file.readJSON('package.json');
     var app_type = pkg.app_type;
     var app_cfg = pkg.type_cfg[pkg.app_type];
-    var app_version = pkg.ver;
-    var app_rc = pkg.rc;
-    if(pkg.rc){
-        app_version += '-RC-'+pkg.rc;
+    var app_version = pkg.v;
+    var git_message = pkg.v;
+    var app_rc = (pkg.rc ? pkg.rc + 1 : 0);
+
+    if(app_rc){
+        app_version += '-RC-'+app_rc;
+        git_message += '-RC-'+pkg.rc;
     }
 // Project configuration.
     grunt.initConfig({
@@ -288,7 +291,7 @@ module.exports = function (grunt) {
                 options: {
                     add: true,
                     fields: {
-                        "rc": (app_rc ? app_rc + 1 : 0),
+                        "rc": app_rc,
                         "built": '<%= grunt.template.today("dd-mm-yyyy HH:MM:ss") %>'
                     },
                     indent: 2
@@ -298,11 +301,10 @@ module.exports = function (grunt) {
         'release-it': {
             options: {
                 pkgFiles: ['package.json'],
-                commitMessage: 'Release ' + app_cfg.name + ' ' + app_version,
+                commitMessage: 'Release ' + app_cfg.name + ' ' + git_message,
                 tagName: '%s',
-                tagAnnotation: 'Release ' + app_cfg.name + ' ' + app_version,
-                buildCommand: false,
-                afterRelease: ['modify_json']
+                tagAnnotation: 'Release ' + app_cfg.name + ' ' + git_message,
+                buildCommand: false
             }
         }
     });
@@ -326,5 +328,5 @@ module.exports = function (grunt) {
 
     // Default task(s).
     //grunt.registerTask('default', ['clean','concat','copy','cssmin','string-replace']);
-    grunt.registerTask('default', ['clean', 'ngtemplates', 'concat', 'json_generator', 'copy', 'cssmin', 'usebanner', 'htmlbuild','replace']);
+    grunt.registerTask('default', ['clean', 'ngtemplates', 'concat', 'json_generator', 'copy', 'cssmin', 'usebanner', 'htmlbuild','replace','modify_json']);
 };

@@ -35,21 +35,21 @@
             <div ng-switch-when="RFRxLRCErrors" ng-click="expandNavi(v.name, $event)">
                 <div class="progress clickable">
                     <div class="progress-bar progress-bar-success" title="{{_t('ok')}} {{v.success}}%" style="width: {{v.success}}%">
-                        <span>{{v.success}}% {{_t('ok')}}</span>
+                        <span>{{v.success}}% {{_t('success_reception')}}</span>
                     </div>
                     <div class="progress-bar progress-bar-danger" title="{{_t(v.failCRC8Name)}} {{v.failCRC8}}%" style="width: {{v.failCRC8}}%">
-                        <span>{{v.failCRC8}}% {{_t('error')}}</span>
+                        <span>{{v.failCRC8}}% {{_t('failCRC8')}}</span>
                     </div>
                     <div class="progress-bar progress-bar-warning" title="{{_t(v.failCRC16Name)}} {{v.failCRC16}}%" style="width: {{v.failCRC16}}%">
-                        <span>{{v.failCRC16}}% {{_t('error')}}</span>
+                        <span>{{v.failCRC16}}% {{_t('failCRC16')}}</span>
                     </div>
                 </div>
                 <div class="page-navi" ng-if="naviExpanded[v.name]">
                     <div class="page-navi-in">
                         <div class="page-navi-content">
-                            <span class="text-success">{{ _t(v.frameName)}}: <strong>{{v.frameValue}}</strong></span><br />
-                            <span class="text-danger">{{_t(v.failCRC8Name)}}:  <strong>{{_t(v.failCRC8Value)}}</strong></span><br />
-                            <span class="text-warning">{{_t(v.failCRC16Name)}}:  <strong>{{_t(v.failCRC16Value)}}</strong></span>
+                            <span class="text-success">{{ _t('success_on_reception')}}: <strong>{{v.frameValue}}</strong></span><br />
+                            <span class="text-danger">{{_t('failCRC8Name')}}:  <strong>{{_t(v.failCRC8Value)}}</strong></span><br />
+                            <span class="text-warning">{{_t('failCRC16Name')}}:  <strong>{{_t(v.failCRC16Value)}}</strong></span>
                         </div>
                     </div>
                 </div>
@@ -57,19 +57,26 @@
             <!-- Default -->
             <div ng-switch-default>
                 <div class="progress clickable" ng-click="expandNavi(v.name, $event)">
-                <div class="progress-bar progress-bar-success" title="{{_t('ok')}} {{v.success}}% " style="width: {{v.success}}%">
-                    <span>{{v.success}}% {{_t('ok')}}</span>
-                </div>
+                    <div class="progress-bar progress-bar-success" title="{{_t('ok')}} {{v.success}}% " style="width: {{v.success}}%">
+                        <span ng-if="v.name == 'RFRxForeignHomeID'">{{v.success}}% {{_t('own')}}</span>
+                        <span ng-if="v.name == 'RFTxLBTBackOffs'">{{v.success}}% {{_t('ok')}}</span>
+                    </div>
 
-                <div class="progress-bar progress-bar-danger" title="{{_t(v.name)}} {{v.fail}}%" style="width: {{v.fail}}%">
-                    <span>{{v.fail}}% {{_t('error')}}</span>
-                </div>
+                    <div class="progress-bar progress-bar-danger" title="{{_t(v.name)}} {{v.fail}}%" style="width: {{v.fail}}%">
+                        <span ng-if="v.name == 'RFRxForeignHomeID'">{{v.fail}}% {{_t('foreign')}}</span>
+                        <span ng-if="v.name == 'RFTxLBTBackOffs'">{{v.fail}}% {{_t('error')}}</span>
+
+                    </div>
                 </div>
                 <div class="page-navi" ng-if="naviExpanded[v.name]">
                     <div class="page-navi-in">
-                        <div class="page-navi-content">
+                        <div ng-if="v.name == 'RFRxForeignHomeID'" class="page-navi-content">
+                            <span class="text-success">{{ _t('own_frames_desc')}}: <strong>{{v.frameValue}}</strong></span><br />
+                            <span class="text-danger">{{_t('foreign_frames_desc')}}:  <strong>{{_t(v.value)}}</strong></span>
+                        </div>
+                        <div ng-if="v.name == 'RFTxLBTBackOffs'" class="page-navi-content">
                             <span class="text-success">{{ _t(v.frameName)}}: <strong>{{v.frameValue}}</strong></span><br />
-                            <span class="text-danger">{{_t(v.name)}}:  <strong>{{_t(v.value)}}</strong></span>
+                            <span class="text-danger">{{_t('RFTxLBTBackOffs_error')}}:  <strong>{{_t(v.value)}}</strong></span>
                         </div>
                     </div>
                 </div>

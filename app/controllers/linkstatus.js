@@ -12,12 +12,12 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
     $scope.linkStatus = {
         all: [],
         interval: null,
-        show: false
+        show: false,
+        pwLvl: [0,-1, -2, -3, -4, -5, -6, -7, -8, -9],
+        pwLvlData: {},
+        pwLvlTested: []
 
-    };
-    $scope.testNode = {
-        name: '',
-            data: []
+
     };
     // Cancel interval on page destroy
     $scope.$on('$destroy', function () {
@@ -64,17 +64,22 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
      * Run TestNode command
      * @param {string} params
      */
-    $scope.runZwaveTestNode = function (params,modalId,device, $event) {
-       //console.log(params)
-        //return;
-        $scope.toggleRowSpinner(params);
-        $scope.testNode = {
-            name: device.name,
-            data: [29,35,80,15,99,45,67,100,89,100]
-        };
-        $scope.handleModal(modalId, $event)
-        dataService.getApi('test_node', params, true).then(function (response) {
+    $scope.runZwaveTestNode = function (v) {
+      // console.log(v.paramsTestNode);
+        //console.log(v);
+        var index = $scope.linkStatus.pwLvlTested.indexOf(v.id);
+        if (index > -1) {
+            $scope.linkStatus.pwLvlTested.splice(index, 1);
+        }/*else{
+            $scope.linkStatus.pwLvlTested.push(v.id);
+        }*/
+        //$scope.linkStatus.pwLvlData[v.id] = [0,5,0,51,0,0,99,0,100,100];
 
+        //return;
+        $scope.toggleRowSpinner(v.paramsTestNode);
+        dataService.getApi('test_node', v.paramsTestNode, true).then(function (response) {
+            $scope.linkStatus.pwLvlData[v.id] = response.data;
+            $scope.linkStatus.pwLvlTested.push(v.id);
 
             $timeout($scope.toggleRowSpinner, 1000);
         }, function (error) {
@@ -84,14 +89,14 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
     };
 
     /**
-     * todo: Whay 21 times?
+     * todo: Why 21 times?
      * Run NOP command
      * @param {string} cmd
      */
     $scope.runZwaveNop = function (cmd) {
-        //for (i = 0; i < 21; i++) {
+        for (i = 0; i < 21; i++) {
             $scope.runZwaveCmd(cmd);
-        //}
+        }
     };
 
     /// --- Private functions --- ///
@@ -101,7 +106,7 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
      * @param {object} ZWaveAPIData
      */
     function setData(ZWaveAPIData) {
-        var controllerNodeId = 1000;//ZWaveAPIData.controller.data.nodeId.value;
+        var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
             if (nodeId == 255 || nodeId == ZWaveAPIData.controller.data.nodeId.value || node.data.isVirtual.value) {
@@ -116,7 +121,7 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
                 var dateTime;
                 var isUpdated;
                 var hasPowerLevel = instance.commandClasses[115];
-                var indicator = getLinkIndicator(ZWaveAPIData.devices, hasPowerLevel);
+                //var indicator = getLinkIndicator(ZWaveAPIData.devices, hasPowerLevel);
                 if (hasPowerLevel) {
                     isUpdated = ((hasPowerLevel.data.updateTime > hasPowerLevel.data.invalidateTime) ? true : false);
                     dateTime = $filter('getDateTimeObj')(hasPowerLevel.data.updateTime, hasPowerLevel.data.invalidateTime);
@@ -160,7 +165,9 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
 
                 } else {
                     $scope.linkStatus.all.push(obj);
+                    $scope.linkStatus.pwLvlData[nodeId] = [0,0,0,0,0,0,0,0,0,0];
                 }
+
             });
         });
     }

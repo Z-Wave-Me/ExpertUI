@@ -189,22 +189,14 @@ angApp.filter('unique', function () {
  */
 angApp.filter('setTimeFromBox', function (cfg, $filter) {
     return function (timestamp,offset) {
+        // time from server comes with correct added timezone offset so it isn't necessary to add it again
         var d = new Date(timestamp * 1000);
-        //console.log('Date from BAR: ', d )
+        // browser add his own tz offset to date object so it is necessary to remove it's offset
+        // because it is already negative we needn't multiplicate it by (-1)
+        var browserTZO = parseInt(d.getTimezoneOffset() * 60 * 1000);
+        // create new date object with correct time
+        d = new Date(d.getTime() + browserTZO);
 
-        if(offset){ // With offset
-            var date = new Date(timestamp * 1000);
-            var targetTime = new Date(timestamp * 1000);
-            //time zone value from dconfig
-            var timeZoneFromDB = cfg.route.time.offset *-1;
-            //get the timezone offset from local time in minutes
-            var tzDifference = timeZoneFromDB * 60 + targetTime.getTimezoneOffset();
-            //convert the offset to milliseconds, add to targetTime, and make a new Date
-            var offsetTime = new Date(targetTime.getTime() + tzDifference * 60 * 1000);
-            d = offsetTime;
-        }else{// Substract offset
-            d.setHours(d.getHours() + cfg.route.time.offset);
-        }
         return $filter('getFormattedTime')(
             d,
             false,
@@ -222,25 +214,19 @@ angApp.filter('getDateTimeObj', function ($filter, cfg) {
         // Count time with offset http://stackoverflow.com/questions/7403486/add-or-subtract-timezone-difference-to-javascript-date
         /* ----------- NEW with time offset ----------- */
         var targetTime = (timestamp ? new Date(timestamp * 1000) : new Date());
-        //console.log('Date from UPDATE: ', targetTime)
-        //console.log(targetTime)
+        var browserTZO = parseInt(targetTime.getTimezoneOffset() * 60 * 1000);
+        console.log('targetTime: ',targetTime);
+        console.log('browserTZO: ', browserTZO);
         //time zone value from config
-        var tzo = cfg.route.time.offset *-1;
-        //console.log(tzo)
+        var tzo = parseInt(cfg.route.time.offset * (-1) * 60 * 60 * 1000, 10);
+        console.log('tzo:',tzo);
         //get the timezone offset from local time in minutes
-        var tzDifference = tzo * 60 * 1000;
+        //var tzDifference = tzo * 60 * 1000;
         //console.log(tzDifference)
         //convert the offset to milliseconds, add to targetTime, and make a new Date
-        var offsetTime = new Date(targetTime.getTime() + tzDifference);
-        //console.log(offsetTime)
-        var d = offsetTime;
-        // Substract 1 minute
-        d.setMinutes(d.getMinutes() - 1);
-        /* ----------- OLD without time offset ----------- */
-       //var d = (timestamp ? new Date(timestamp * 1000) : new Date());
-        //console.log(d)
-        //console.log(d.toISOString())
-        var di = (invalidateTime ? new Date(invalidateTime * 1000) : null);
+        var d = new Date(targetTime.getTime() + tzo + browserTZO);
+
+        var di = (invalidateTime ? new Date(invalidateTime * 1000  + tzo + browserTZO) : null);
         var obj = {
             date: $filter('getFormattedDate')(d),
             time: $filter('getFormattedTime')(
@@ -278,6 +264,12 @@ angApp.filter('isTodayFromUnix', function (cfg, $filter) {
             return '-';
         }
         var d = new Date(input * 1000);
+
+        var browserTZO = parseInt(d.getTimezoneOffset() * 60 * 1000);
+        //time zone value from config
+        var tzo = parseInt(cfg.route.time.offset * (-1) * 60 * 60 * 1000, 10);
+        //convert the offset to milliseconds, add to targetTime, and make a new Date
+        d = new Date(d.getTime() + tzo + browserTZO);
 
         if (d.toDateString() == (new Date()).toDateString()) {
 

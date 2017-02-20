@@ -404,7 +404,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
                 {timestamp: response.data.data.localTimeUT},
                 {offset: response.data.data.localTimeZoneOffset});
             var refresh = function () {
-                cfg.route.time.timestamp += (cfg.interval < 1000 ? 1 : cfg.interval/1000);
+                cfg.route.time.timestamp += (cfg.interval < 1000 ? 1 : Math.floor(cfg.interval/1000));
                 cfg.route.time.string = $filter('setTimeFromBox')(cfg.route.time.timestamp);
             };
 
