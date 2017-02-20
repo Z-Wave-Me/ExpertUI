@@ -120,7 +120,10 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,cfg
      * Check if is not device
      */
     this.notDevice = function(ZWaveAPIData, node, nodeId) {
-        if (nodeId == 255 || nodeId == ZWaveAPIData.controller.data.nodeId.value || node.data.isVirtual.value) {
+        /*if (nodeId == 255 || nodeId == ZWaveAPIData.controller.data.nodeId.value || node.data.isVirtual.value) {
+            return true;
+        }*/
+        if (nodeId == 255 || node.data.isVirtual.value) {
             return true;
         }
         return false;
@@ -449,9 +452,12 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,cfg
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+            if (nodeId == 255 || node.data.isVirtual.value) {
                 return;
             }
+            /*if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+                return;
+            }*/
             var node = ZWaveAPIData.devices[nodeId];
             // Set object
             var obj = {};

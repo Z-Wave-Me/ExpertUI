@@ -8,7 +8,7 @@
  * @class TimingController
  *
  */
-appController.controller('TimingController', function($scope, $filter, $q,$timeout,$interval,dataService, cfg,_) {
+appController.controller('TimingController', function($scope, $filter, $q,$timeout,$interval,dataService,deviceService, cfg,_) {
     $scope.devices = {
         all: [],
         interval: null,
@@ -106,9 +106,12 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+            if (deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
             }
+            /*if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+                return;
+            }*/
             var node = ZWaveAPIData.devices[nodeId];
             var type;
             var isListening = node.data.isListening.value;

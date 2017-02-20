@@ -75,9 +75,9 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
             }
             $scope.health.ctrlNodeId = ZWaveAPIData.controller.data.nodeId.value;
             var node = ZWaveAPIData.devices[$routeParams.nodeId];
-            if (!node || deviceService.notDevice(ZWaveAPIData, node, $routeParams.nodeId)) {
+            /*if (!node || deviceService.notDevice(ZWaveAPIData, node, $routeParams.nodeId)) {
                 return;
-            }
+            }*/
             var neighbours = $filter('hasNode')(node.data, 'neighbours.value');
             $scope.health.device.neighbours = $filter('hasNode')(node.data, 'neighbours.value');
 
