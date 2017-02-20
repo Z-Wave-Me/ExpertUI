@@ -187,16 +187,28 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
             if (deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
             }
-            var isFLiRS = deviceService.isFLiRS(node);
-            var isListening = node.data.isListening.value && node.data.isRouting.value;
+           /* var isListening = node.data.isListening.value || node.data.isRouting.value;
+            var isBattery =
+            var isFLiRS = (node.data.sensor250.value || node.data.sensor1000.value);*/
+            if((node.data.isListening.value && node.data.isRouting.value) || (node.data.isListening.value && !node.data.isRouting.value)){ // Count mains devices
+                networkInformation.mains++;
+            }else if(!node.data.isListening.value && (!node.data.sensor250.value && !node.data.sensor1000.value)){// Count battery devices
+                networkInformation.battery++;
+            }else if(node.data.sensor250.value || node.data.sensor1000.value){// Count flirs devices
+
+                networkInformation.flirs++;
+            }
+
+            //var isFLiRS = !node.data.isListening.value && (node.data.sensor250.value || node.data.sensor1000.value);
+            //var isListening = node.data.isListening.value && node.data.isRouting.value;
             //var hasWakeup = deviceService.hasCommandClass(node, 132);
-            if(isFLiRS){ // Count flirs devices
+            /*if(isFLiRS){ // Count flirs devices
                 networkInformation.flirs++;
             }else if(isListening){// Count mains devices
                 networkInformation.mains++;
             }else{// Count battery devices
                 networkInformation.battery++;
-            }
+            }*/
             networkInformation.sum++;
             var isLocalyReset = deviceService.isLocalyReset(node);
             var isFailed = deviceService.isFailed(node);

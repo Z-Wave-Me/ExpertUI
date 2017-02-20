@@ -197,6 +197,7 @@ appController.controller('RoutingController', function($scope, $filter, $timeout
         var routesCount = $scope.routings.nodes[nodeId].routesCount;
         var state = [];
         angular.forEach($scope.routings.nodes, function(v, k ){
+            console.log(v)
             var tooltip = nodeId + ': ' + nodeName + ' - ' + k + ': ' + v.nodeName  + ' ';
             var hasAssoc = false;
             var cssClass = 'rtDiv line' + nodeId + ' ';
