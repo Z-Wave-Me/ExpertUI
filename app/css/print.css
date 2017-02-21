@@ -12144,7 +12144,51 @@ a:focus {
 
 /* NEW - Routing table cell styles
 -------------------------------------------------- */
-/* line 4, ../sass/modules/_routing.scss */
+/* line 3, ../sass/modules/_routing.scss */
+.overflow {
+  width: 100%;
+  overflow-y: hidden;
+  overflow-x: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  -webkit-overflow-scrolling: touch;
+}
+/* line 11, ../sass/modules/_routing.scss */
+.overflow > table {
+  margin-bottom: 0;
+}
+/* line 19, ../sass/modules/_routing.scss */
+.overflow > table > thead > tr > th,
+.overflow > table > thead > tr > td,
+.overflow > table > tbody > tr > th,
+.overflow > table > tbody > tr > td,
+.overflow > table > tfoot > tr > th,
+.overflow > table > tfoot > tr > td {
+  white-space: nowrap;
+}
+
+/* line 28, ../sass/modules/_routing.scss */
+.table-neighbors .rt-cell {
+  display: inline-block;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  margin: 1px;
+  border: solid 1px #FFFFFF;
+  text-align: center;
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+}
+/* line 37, ../sass/modules/_routing.scss */
+.table-neighbors .rt-cell.rt-cell-th {
+  border-color: #CCCCCC;
+}
+/* line 41, ../sass/modules/_routing.scss */
+.table-neighbors td {
+  vertical-align: middle;
+}
+
+/* line 47, ../sass/modules/_routing.scss */
 .table-routing .rt-cell {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -12156,46 +12200,46 @@ a:focus {
   height: 25px;
   line-height: 25px;
 }
-/* line 12, ../sass/modules/_routing.scss */
+/* line 55, ../sass/modules/_routing.scss */
 .table-routing .rt-cell.rt-cell-th {
   border-color: #CCCCCC;
 }
-/* line 16, ../sass/modules/_routing.scss */
+/* line 59, ../sass/modules/_routing.scss */
 .table-routing td {
   vertical-align: middle;
 }
 
-/* line 22, ../sass/modules/_routing.scss */
+/* line 65, ../sass/modules/_routing.scss */
 .rtDirect, .rtGreen {
   background-color: green !important;
   -webkit-print-color-adjust: exact;
 }
 
-/* line 27, ../sass/modules/_routing.scss */
+/* line 70, ../sass/modules/_routing.scss */
 .rtRouted {
   background-color: #8C0 !important;
   -webkit-print-color-adjust: exact;
 }
 
-/* line 32, ../sass/modules/_routing.scss */
+/* line 75, ../sass/modules/_routing.scss */
 .rtBadlyRouted {
   background-color: yellow !important;
   -webkit-print-color-adjust: exact;
 }
 
-/* line 37, ../sass/modules/_routing.scss */
+/* line 80, ../sass/modules/_routing.scss */
 .rtNotLinked, .rtRed {
   background-color: red !important;
   -webkit-print-color-adjust: exact;
 }
 
-/* line 42, ../sass/modules/_routing.scss */
+/* line 85, ../sass/modules/_routing.scss */
 .rtUnavailable, .rtGray {
   background-color: gray !important;
   -webkit-print-color-adjust: exact;
 }
 
-/* line 47, ../sass/modules/_routing.scss */
+/* line 90, ../sass/modules/_routing.scss */
 .rtOrange {
   background-color: orange !important;
   -webkit-print-color-adjust: exact;
@@ -12203,14 +12247,14 @@ a:focus {
 
 /* OLD - Routing table cell styles
 -------------------------------------------------- */
-/* line 54, ../sass/modules/_routing.scss */
+/* line 97, ../sass/modules/_routing.scss */
 #RoutingTable td.rtCell {
   width: 22px;
   height: 22px;
   vertical-align: middle;
 }
 
-/* line 61, ../sass/modules/_routing.scss */
+/* line 104, ../sass/modules/_routing.scss */
 #RoutingTable div.rtDiv {
   min-width: 20px;
   min-height: 20px;
@@ -12224,83 +12268,83 @@ a:focus {
   vertical-align: middle;
 }
 
-/* line 76, ../sass/modules/_routing.scss */
+/* line 119, ../sass/modules/_routing.scss */
 #RoutingTable span.routeHops {
   display: table-cell;
   vertical-align: middle;
   border: 0;
 }
 
-/* line 82, ../sass/modules/_routing.scss */
+/* line 125, ../sass/modules/_routing.scss */
 #RoutingTable td.rtInfo {
   text-align: left;
   white-space: nowrap;
 }
 
-/* line 87, ../sass/modules/_routing.scss */
+/* line 130, ../sass/modules/_routing.scss */
 #RoutingTable td.rtHeader {
   text-align: center;
   white-space: nowrap;
 }
 
-/* line 92, ../sass/modules/_routing.scss */
+/* line 135, ../sass/modules/_routing.scss */
 #RoutingTable td.rtHeaderNames {
   text-align: left;
   white-space: nowrap;
 }
 
-/* line 97, ../sass/modules/_routing.scss */
+/* line 140, ../sass/modules/_routing.scss */
 #RoutingTable td.rtNodes {
   text-align: right;
 }
 
-/* line 101, ../sass/modules/_routing.scss */
+/* line 144, ../sass/modules/_routing.scss */
 #RoutingTable td.rtNodesNames {
   text-align: left;
   padding: 0 1em 0 0;
 }
 
-/* line 106, ../sass/modules/_routing.scss */
+/* line 149, ../sass/modules/_routing.scss */
 #RoutingTable td {
   white-space: nowrap;
   padding: 0;
 }
 
-/* line 111, ../sass/modules/_routing.scss */
+/* line 154, ../sass/modules/_routing.scss */
 #RoutingTable th {
   white-space: nowrap;
   padding: 0px 0px 1px 1px;
 }
 
-/* line 116, ../sass/modules/_routing.scss */
+/* line 159, ../sass/modules/_routing.scss */
 #RoutingTable .info {
   font-size: smaller;
 }
 
-/* line 124, ../sass/modules/_routing.scss */
+/* line 167, ../sass/modules/_routing.scss */
 #RoutingComments {
   margin-top: 10px;
 }
 
 /* device not present in config file and not present in Z-Wave assoc group */
-/* line 129, ../sass/modules/_routing.scss */
+/* line 172, ../sass/modules/_routing.scss */
 .dissapeared {
   color: #911;
 }
 
 /* device present in config file but not present in Z-Wave assoc group */
-/* line 134, ../sass/modules/_routing.scss */
+/* line 177, ../sass/modules/_routing.scss */
 .notInZWave {
   color: #955;
 }
 
 /* device present in config file and in Z-Wave assoc group */
-/* line 139, ../sass/modules/_routing.scss */
+/* line 182, ../sass/modules/_routing.scss */
 .inZWave {
   color: #000;
 }
 
-/* line 143, ../sass/modules/_routing.scss */
+/* line 186, ../sass/modules/_routing.scss */
 .assocAdd {
   background-color: #911 !important;
   border-color: #955 !important;

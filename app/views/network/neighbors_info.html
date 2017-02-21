@@ -1,6 +1,6 @@
 <!-- Routing table -->
 <div class="table-responsive" ng-if="routings.show">
-    <table id="RoutingTable" class="table table-striped table-condensed table-hover table-routing">
+    <table class="table table-striped table-condensed table-hover table-neighbors">
         <thead>
         <tr>
             <th>#</th>
@@ -18,7 +18,10 @@
                     </bb-row-spinner>
                 </button>
             </th>
-            <th ng-repeat="v in routings.all" style="text-align:center;">{{v.id}}</th>
+            <th>
+                <span class="rt-cell"
+                      ng-repeat="v in routings.all track by $index">{{v.id}}</span>
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -43,13 +46,7 @@
                     </bb-row-spinner>
                 </button>&nbsp;
             </td>
-            <td class="rt-cell" ng-repeat="n in v.cellState">
-                <div class="{{n.cssClass}}" title="{{n.tooltip}}">
-                    <span class="info" ng-if="n.hasAssoc">*</span>
-                    <span class="info" ng-if="!n.hasAssoc">&nbsp;</span>
-                </div>
-
-            </td>
+            <td ng-bind-html="htmlNeighbors[v.id]|toTrusted"></td>
         </tr>
         </tbody>
     </table>

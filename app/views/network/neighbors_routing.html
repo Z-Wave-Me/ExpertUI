@@ -1,11 +1,14 @@
 <!-- Routing neigbors -->
 
-<div class="table-responsive" ng-if="routings.show">
-    <table class="table-routing">
+<div class="overflow" ng-if="routings.show">
+    <table class="table-neighbors">
         <thead>
         <tr>
             <td>&nbsp;</td>
-            <td ng-repeat="v in routings.all" style="text-align:center;">{{v.id}}</td>
+            <td>
+                <span class="rt-cell"
+                      ng-repeat="v in routings.all track by $index">{{v.id}}</span>
+            </td>
         </tr>
         </thead>
         <tbody>
@@ -31,15 +34,9 @@
                             </button>
                         </div>
                     </div>
-                </div
-            </td>
-            <td ng-repeat="n in v.cellState">
-                <div class="rt-cell {{n.cssClass}}" title="{{n.tooltip}}">
-                    <span class="info" ng-if="n.hasAssoc">*</span>
-                    <span class="info" ng-if="!n.hasAssoc">&nbsp;</span>
                 </div>
-
             </td>
+            <td ng-bind-html="htmlNeighbors[v.id]|toTrusted"></td>
         </tr>
         </tbody>
     </table>

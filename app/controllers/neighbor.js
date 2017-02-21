@@ -13,11 +13,10 @@ appController.controller('NeighborController', function($scope, $filter, $timeou
         all: [],
         interval: null,
         show: false,
-        nodes: {},
-        neighbours: {},
-        view: 'table'
+        view: 'neighbors',
+        showInfo: true
     };
-    $scope.nodes = {};
+    $scope.htmlNeighbors = {};
 
     /**
      * Cancel interval on page destroy
@@ -29,9 +28,12 @@ appController.controller('NeighborController', function($scope, $filter, $timeou
      * Chenge view neighbors/table
      * @param {string} view
      */
-    $scope.changeView = function(view) {
-        $scope.routings.view = view;
-        $scope.loadZwaveData();
+    $scope.changeView = function(status) {
+        if (typeof status === 'boolean') {
+            $scope.routings.showInfo = status;
+        } else {
+            $scope.routings.showInfo = !$scope.routings.showInfo;
+        }
     };
 
     /**
@@ -45,6 +47,7 @@ appController.controller('NeighborController', function($scope, $filter, $timeou
                 $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
                 return;
             }
+            setCells($scope.routings.all);
             $scope.routings.show = true;
             //$scope.refreshZwaveData(ZWaveAPIData);
         }, function(error) {
@@ -108,7 +111,7 @@ appController.controller('NeighborController', function($scope, $filter, $timeou
      * Set nodes data
      * @param {object} ZWaveAPIData
      */
-    function setNodes(ZWaveAPIData) {
+   /* function setNodes(ZWaveAPIData) {
         angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
             if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1) {
                 return;
@@ -123,7 +126,7 @@ appController.controller('NeighborController', function($scope, $filter, $timeou
                 "node": node
             };
         });
-    }
+    }*/
 
     /**
      * Set zwave data
@@ -131,19 +134,24 @@ appController.controller('NeighborController', function($scope, $filter, $timeou
     function setData(ZWaveAPIData) {
         //var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         // Loop throught devices
-        angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+        //console.log(Object.keys(ZWaveAPIData.devices))
+       /* var nodeIds = Object.keys(ZWaveAPIData.devices);
+        var nodeArray = _.map(ZWaveAPIData.devices, function(node,nodeId){
             if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1) {
                 return;
             }
-            var nodeName = $filter('deviceName')(nodeId, node);
-            var routesCount = $filter('getRoutesCount')(ZWaveAPIData, nodeId);
-
-            $scope.nodes[nodeId] = {
-                "id": nodeId,
-                "nodeName": nodeName,
-                "routesCount": routesCount,
-                "neighbours": node.data.neighbours.value
+           var obj = {
+                id: nodeId,
+                name: $filter('deviceName')(nodeId, node)
             };
+            return obj;
+        });*/
+        //console.log(nodeArray);
+        angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+
+            if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1) {
+                return;
+            }
 
 
             var node = ZWaveAPIData.devices[nodeId];
@@ -170,6 +178,11 @@ appController.controller('NeighborController', function($scope, $filter, $timeou
             }
              var cellState = [];//setCellState(nodeId, node,name)
 
+            //setCellState(nodeId, node,name);
+
+            // New version
+            var routesCount = $filter('getRoutesCount')(ZWaveAPIData, nodeId);
+            //setCellStateNew(nodeArray,nodeId,node,name,routesCount);
             // Set object
             var obj = {};
             obj['id'] = nodeId;
@@ -177,6 +190,8 @@ appController.controller('NeighborController', function($scope, $filter, $timeou
             obj['name'] = name;
             obj['node'] = node;
             obj['cellState'] = cellState;
+            obj['routesCount'] = routesCount;
+
             obj['type'] = type;
             obj['icon'] = $filter('getDeviceTypeIcon')(type);
             obj['invalidateTime'] = node.data.neighbours.invalidateTime;
@@ -191,9 +206,15 @@ appController.controller('NeighborController', function($scope, $filter, $timeou
             }else{
                 $scope.routings.all.push(obj);
             }
+            /*for (i = 0; i < 40; i++) {
+                $scope.routings.all.push(obj);
+            }*/
+
+
+
 
         });
-        console.log($scope.nodes)
+        //console.log($scope.nodes)
     }
 
     /**
@@ -203,9 +224,92 @@ appController.controller('NeighborController', function($scope, $filter, $timeou
      * @param {string} nodeName
      * @returns {Array}
      */
-    function setCellState(nodeId, node,nodeName) {
+    function setCells(nodes) {
+        angular.forEach(nodes, function(node, i ){
+            $scope.htmlNeighbors[node.id] = '';
+            angular.forEach(nodes, function(v, k ){
+                var tooltip = node.id + ': ' + node.name + ' - ' + v.id + ': ' + v.name  + ' ';
+                //var routesCount = v.routesCount;
+                var hasAssoc = false;
+                var cssClass = 'rtDiv ';
+                //Check for associations
+                if ($filter('associationExists')(node.node,v.id)) {
+                    hasAssoc = true;
+                    tooltip += ' (' + $scope._t('rt_associated') + ')';
+                }
+                if(node.id == v.id){
+                    cssClass += 'rtUnavailable';
+                }else if(v.node.data.neighbours.value.indexOf(parseInt(node.id, 10)) != -1){
+                    cssClass += 'rtDirect';
+                }else if (node.routesCount && node.routesCount.length > 1){
+                    cssClass += 'rtRouted';
+                }else if (node.routesCount && node.routesCount.length == 1){
+                    cssClass += 'rtBadlyRouted';
+                }else{
+                    cssClass += 'rtNotLinked';
+                }
+                var out = '<span class="rt-cell ' + cssClass + '" title="' + tooltip + '">'+ (hasAssoc ? "*": "&nbsp")+'</span>';
+                //console.log(out)
+                $scope.htmlNeighbors[node.id] += out;
+            });
+        });
+
+    }
+
+
+
+    /**
+     * Set table cell state
+     * @param {object} nodeId
+     * @param {number} node
+     * @param {string} nodeName
+     * @returns {Array}
+     */
+   /* function setCellStateNew(nodeArray,nodeId, node,nodeName,routesCount) {
+        //var routesCount = $scope.routings.nodes[nodeId].routesCount;
+        //console.log(routesCount)
+        //console.log($scope.routings.nodes)
+        angular.forEach(nodeArray, function(v, k ){
+            var tooltip = nodeId + ': ' + nodeName + ' - ' + v.id + ': ' + v.name  + ' ';
+            //var tooltip = nodeId + ': ' + nodeName + ' - ' + k ;
+            var hasAssoc = false;
+            var cssClass = 'rtDiv';
+            //Check for associations
+            if ($filter('associationExists')(node, k)) {
+                hasAssoc = true;
+                tooltip += ' (' + $scope._t('rt_associated') + ')';
+            }
+            if(nodeId == v.id){
+                cssClass += 'rtUnavailable';
+            }else if(node.data.neighbours.value.indexOf(parseInt(k, 10)) != -1){
+                cssClass += 'rtDirect';
+            }else if (routesCount[v.id] && routesCount[v.id].length > 1){
+                cssClass += 'rtRouted';
+            }else if (routesCount[v.id] && routesCount[v.id].length == 1){
+                cssClass += 'rtBadlyRouted';
+            }else{
+                cssClass += 'rtNotLinked';
+            }
+            console.log(cssClass)
+            //console.log(cssClass)
+        });
+
+    }*/
+
+    /**
+     * Set table cell state
+     * @param {object} nodeId
+     * @param {number} node
+     * @param {string} nodeName
+     * @returns {Array}
+     */
+    /*function setCellState(nodeId, node,nodeName) {
+        //console.log($scope.routings.nodes)
         var routesCount = $scope.routings.nodes[nodeId].routesCount;
         var state = [];
+       /!* var html = {};
+        html[nodeId] = "";*!/
+        $scope.htmlNeighbors[nodeId] = '';
         angular.forEach($scope.routings.nodes, function(v, k ){
             var tooltip = nodeId + ': ' + nodeName + ' - ' + k + ': ' + v.nodeName  + ' ';
             var hasAssoc = false;
@@ -231,16 +335,24 @@ appController.controller('NeighborController', function($scope, $filter, $timeou
                 cssClass += 'rtNotLinked';
             }
 
-            var obj = {
+           /!* var obj = {
                 nodeId: nodeId,
                 routingId: k,
                 tooltip: tooltip,
                 hasAssoc: hasAssoc,
                 cssClass: cssClass
 
-            };
-            state.push(obj)
+            };*!/
+            var out = '<span class="rt-cell ' + cssClass + '" title="' + tooltip + '">'+ (hasAssoc ? "*": "&nbsp")+'</span>';
+            //html[nodeId] += out;
+           // $scope.htmlNeighbors[nodeId] += out;
+
+            //state.push(html)
         });
-        return state;
-    }
+        //$scope.routings.cellStates.push(state);
+        //console.log($scope.routings.cellStates);
+        //$scope.htmlNeighbors[nodeId] = html[nodeId];
+        //console.log($scope.htmlNeighbors)
+        //return state;
+    }*/
 });
