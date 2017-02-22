@@ -225,6 +225,7 @@ appController.controller('ThermostatController', function($scope, $filter, $time
                 obj['hasExt'] = hasExt;
                 obj['updateTime'] = updateTime;
                 obj['invalidateTime'] = invalidateTime;
+                obj['dateTime'] = $filter('getDateTimeObj')(obj['updateTime'],obj['invalidateTime']);
                 obj['isUpdated'] = (updateTime > invalidateTime ? true : false);
                 obj['urlToStore'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']';
                 obj['urlChangeTemperature'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + 0x43 + ']';
@@ -243,10 +244,6 @@ appController.controller('ThermostatController', function($scope, $filter, $time
                     $scope.thermostats.all.push(obj);
                     $scope.thermostats.rangeSlider.push(obj['range_' + nodeId] = obj['level']);
                 }
-
-                //$scope.thermostats.push(obj);
-               // $scope.thermostats.rangeSlider.push(obj['range_' + nodeId] = obj['level']);
-                //console.log(obj);
                 cnt++;
             });
         });

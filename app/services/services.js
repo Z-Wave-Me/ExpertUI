@@ -7,8 +7,9 @@ var appService = angular.module('appService', []);
 /**
  * Device service
  */
-appService.service('deviceService', function($filter, $log, $cookies,$window,_) {
+appService.service('deviceService', function($filter, $log, $cookies,$window,cfg,_) {
     /// --- Public functions --- ///
+
     /**
      * Mobile device detect
      */
@@ -30,7 +31,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
     this.showNotifier = function (notifier) {
         var param = _.defaults(notifier, {position: 'top-right', message: false, type: 'success', wait: 5});
         if (notifier.message) {
-            alertify.set('notifier', 'position', 'top-right');
+            alertify.set('notifier', 'position', param.position);
             alertify.notify(param.message, param.type, param.wait);
         }
     };
@@ -119,7 +120,10 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
      * Check if is not device
      */
     this.notDevice = function(ZWaveAPIData, node, nodeId) {
-        if (nodeId == 255 || nodeId == ZWaveAPIData.controller.data.nodeId.value || node.data.isVirtual.value) {
+        /*if (nodeId == 255 || nodeId == ZWaveAPIData.controller.data.nodeId.value || node.data.isVirtual.value) {
+            return true;
+        }*/
+        if (nodeId == 255 || node.data.isVirtual.value) {
             return true;
         }
         return false;
@@ -143,7 +147,8 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
      * Check if device isFLiRS
      */
     this.isFLiRS = function(node) {
-        return !node.data.isListening.value && (node.data.sensor250.value || node.data.sensor1000.value);
+        return  (node.data.sensor250.value || node.data.sensor1000.value);
+       // return !node.data.isListening.value && (node.data.sensor250.value || node.data.sensor1000.value);
     };
 
     /**
@@ -151,6 +156,32 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
      */
     this.isLocalyReset = function(node) {
         return isLocalyReset(node);
+    };
+
+    /**
+     * Check if device has a given command class
+     */
+    this.hasCommandClass = function(node,ccId) {
+        var hasCc = false;
+        angular.forEach(node.instances, function(instance, instanceId) {
+        if(instance.commandClasses[ccId]){
+            hasCc = instance.commandClasses[ccId];
+            return;
+           }
+        });
+        return hasCc;
+    };
+
+    /**
+     * Get a value from custom config
+     * @param {string} key
+     * @returns {string}
+     */
+    this.getCustomCfgVal = function (key) {
+        if (cfg.custom_cfg[cfg.app_type]) {
+            return cfg.custom_cfg[cfg.app_type][key] || '';
+        }
+        return '';
     };
     
     /**
@@ -422,9 +453,12 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+            if (nodeId == 255 || node.data.isVirtual.value) {
                 return;
             }
+            /*if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+                return;
+            }*/
             var node = ZWaveAPIData.devices[nodeId];
             // Set object
             var obj = {};
@@ -1059,18 +1093,12 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
      * Get xml config param
      */
     function getCfgXmlParam(cfgXml, nodeId, instance, commandClass, command) {
-        var cfg = $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration');
-        if (!cfg) {
-            return [];
-        }
-        // Get data for given device by id
+        //console.log(cfgXml)
         var collection = [];
-        angular.forEach(cfg, function(v, k) {
-            //if (v['_id'] == nodeId && v['_instance'] == instance && v['_commandClass'] == commandClass && v['_command'] == command) {
+        var cfg = $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration');
+        var parseParam = function(v,nodeId, instance, commandClass, command){
             if (v['_id'] == nodeId && v['_instance'] == instance && v['_commandclass'] == commandClass && v['_command'] == command) {
-//                if(!angular.isArray(v['_parameter'])){
-//                    return;
-//                }
+
                 var array = JSON.parse(v['_parameter']);
                 if (array.length > 2) {
                     collection[array[0]] = array[1];
@@ -1084,8 +1112,20 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
                     return;
                 }
             }
+        }
+        if (!cfg) {
+            return [];
+        }
+        // Get data for given device by id
+        if(_.isArray(cfg) ){
+            angular.forEach(cfg, function(v, k) {
+                parseParam(v,nodeId, instance, commandClass, command);
 
-        });
+            });
+        }else{
+           parseParam(cfg,nodeId, instance, commandClass, command);
+        }
+
         return collection;
 
     }

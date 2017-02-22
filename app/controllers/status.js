@@ -118,77 +118,6 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
     $scope.interviewForceDevice = function (cmd) {
         $scope.runZwaveCmd(cmd);
     };
-
-    // Load data
-    /*$scope.load = function () {
-        dataService.getZwaveData(function (ZWaveAPIData) {
-            $scope.ZWaveAPIData = ZWaveAPIData;
-            setData($scope.ZWaveAPIData);
-            dataService.joinedZwaveData(function (data) {
-                if ($scope.interviewDeviceId > 1) {
-                    refreshModalInterview($scope.ZWaveAPIData.devices[$scope.interviewDeviceId], data.joined.devices[$scope.interviewDeviceId]);
-                }
-
-//                $scope.reset();
-//                setData(data.joined);
-                refreshData(data.update);
-            });
-        });
-    };
-
-    // Load data
-    $scope.load($scope.lang);*/
-
-    // Cancel interval on page destroy
-    /*$scope.$on('$destroy', function () {
-        dataService.cancelZwaveDataInterval();
-    });*/
-
-
-    //todo: deprecated
-   /* $scope.showModalInterview = function (target, index, id, name) {
-        $scope.deviceInfo = {
-            "index": index,
-            "id": id,
-            "name": name
-        };
-        $scope.interviewDeviceId = id;
-        var node = $scope.ZWaveAPIData.devices[id];
-        $scope.interviewCommands = deviceService.configGetInterviewCommands(node);
-        //$scope.interviewCommands.push(deviceService.configGetInterviewCommands(node));
-        $(target).modal();
-    };*/
-    //todo: deprecated
-    // Show modal dialog
-    /*$scope.hideModalInterview = function () {
-        $scope.interviewDeviceId = null;
-    };*/
-
-
-    //todo: deprecated
-    // Show modal CommandClass dialog
-    /*$scope.showModalCommandClass = function (target, instanceId, ccId, type) {
-        var node = $scope.ZWaveAPIData.devices[$scope.interviewDeviceId];
-        if (!node) {
-            return;
-        }
-        var ccData;
-        switch (type) {
-            case 'cmdData':
-                ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.commandClasses.' + ccId + '.data');
-                break;
-            case 'cmdDataIn':
-                ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.data');
-                break;
-            default:
-                ccData = $filter('hasNode')(node, 'data');
-                break;
-        }
-        var cc = deviceService.configGetCommandClass(ccData, '/', '');
-
-        $scope.commandClass = deviceService.configSetCommandClass(cc);
-        $(target).modal();
-    };*/
     /// --- Private functions --- ///
 
     /**
@@ -199,9 +128,12 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
         var doorLockCCId = 0x62;
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
-            if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+            if (deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
             }
+            /*if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+                return;
+            }*/
 
             var basicType = node.data.basicType.value;
             var genericType = node.data.genericType.value;
@@ -297,68 +229,6 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
 
     }
     ;
-
-    // todo: deprecated
-    // Refresh data
-    /*function refreshData(data) {
-        angular.forEach($scope.statuses.all, function (v, k) {
-            angular.forEach(v.cmd, function (ccId, key) {
-                if (ccId in data) {
-                    var node = 'devices.' + v.id;
-                    var isAwakeCmd = node + '.data.isAwake';
-                    var isFailedCmd = node + '.data.isFailed';
-                    var lastReceiveCmd = node + '.data.lastReceived';
-                    var lastSendCmd = node + '.data.lastSend';
-                    var lastWakeupCmd = node + '.instances.0.commandClasses.132.data.lastWakeup';
-                    var lastSleepCmd = node + '.instances.0.commandClasses.132.data.lastSleep';
-                    var lastCommunication = v.lastCommunication;
-                    switch (ccId) {
-                        case isAwakeCmd:
-                            var isAwake = data[isAwakeCmd].value;
-                            var awake_cont = awakeCont(isAwake, v.isListening, v.isFLiRS);
-                            $('#' + v.rowId + ' .row-awake').html(awake_cont);
-                            break;
-                        case isFailedCmd:
-                            var isFailed = data[isFailedCmd].value;
-                            if (isFailed) {
-                                $('#' + v.rowId + ' .row-isfailed').html(getIsFailedCont(isFailed));
-                            }
-                            $('#' + v.rowId + ' .row-time').html(operatingCont(lastCommunication));
-                            break;
-                        case lastReceiveCmd:
-                            var lastReceive = data[lastReceiveCmd].updateTime;
-                            lastCommunication = (lastReceive > lastCommunication) ? lastReceive : lastCommunication;
-                            var operating_cont_rec = operatingCont(lastCommunication);
-                            $('#' + v.rowId + ' .row-time').html(operating_cont_rec);
-                            break;
-                        case lastSendCmd:
-                            var lastSend = data[lastSendCmd].updateTime;
-                            lastCommunication = (lastSend > lastCommunication) ? lastSend : lastCommunication;
-                            var operating_cont_send = operatingCont(lastCommunication);
-                            $('#' + v.rowId + ' .row-time').html(operating_cont_send);
-                            break;
-                        case lastWakeupCmd:
-                            var lastWakeup = data[lastWakeupCmd].value;
-                            if (angular.isDefined(data[lastSleepCmd])) {
-                                var sleepingSince = data[lastSleepCmd].value;
-                                var sleeping_cont = sleepingCont(v.isListening, v.hasWakeup, v.isFLiRS, sleepingSince, lastWakeup, v.interval);
-                                $('#' + v.rowId + ' .row-sleeping').html(sleeping_cont);
-
-                            }
-                            break;
-                        case lastSleepCmd:
-                            //console.log(lastSleepCmd);
-                            break;
-                    }
-                    ;
-                    //$('#' + v.rowId + ' .row-time').html(node);
-                }
-
-            });
-
-        });
-    }
-    ;*/
 
     // Refresh Modal Interview data
     function refreshModalInterview(oldCc, newCc) {

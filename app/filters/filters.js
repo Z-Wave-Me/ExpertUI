@@ -188,14 +188,17 @@ angApp.filter('unique', function () {
  * @function setTimeFromBox
  */
 angApp.filter('setTimeFromBox', function (cfg, $filter) {
-    return function (input) {
-        if (input) {
-            var d = new Date(input * 1000);
-        } else {
-            var d = new Date();
-        }
+    return function (timestamp,offset) {
+        // time from server comes with correct added timezone offset so it isn't necessary to add it again
+        var d = new Date(timestamp * 1000);
+        // browser add his own tz offset to date object so it is necessary to remove it's offset
+        // because it is already negative we needn't multiplicate it by (-1)
+        var browserTZO = parseInt(d.getTimezoneOffset() * 60 * 1000);
+        // create new date object with correct time
+        d = new Date(d.getTime() + browserTZO);
+
         return $filter('getFormattedTime')(
-            d.toISOString().substring(11, d.toISOString().indexOf('.')),
+            d,
             false,
             cfg.zwavecfg.time_format
         );
@@ -208,22 +211,36 @@ angApp.filter('setTimeFromBox', function (cfg, $filter) {
  */
 angApp.filter('getDateTimeObj', function ($filter, cfg) {
     return function (timestamp,invalidateTime) {
-        var d = (timestamp ? new Date(timestamp * 1000) : new Date());
-        var di = (invalidateTime ? new Date(invalidateTime * 1000) : null);
+        // Count time with offset http://stackoverflow.com/questions/7403486/add-or-subtract-timezone-difference-to-javascript-date
+        /* ----------- NEW with time offset ----------- */
+        var targetTime = (timestamp ? new Date(timestamp * 1000) : new Date());
+        var browserTZO = parseInt(targetTime.getTimezoneOffset() * 60 * 1000);
+        //console.log('targetTime: ',targetTime);
+        //console.log('browserTZO: ', browserTZO);
+        //time zone value from config
+        var tzo = parseInt(cfg.route.time.offset * (-1) * 60 * 60 * 1000, 10);
+        //console.log('tzo:',tzo);
+        //get the timezone offset from local time in minutes
+        //var tzDifference = tzo * 60 * 1000;
+        //console.log(tzDifference)
+        //convert the offset to milliseconds, add to targetTime, and make a new Date
+        var d = new Date(targetTime.getTime() + tzo + browserTZO);
+
+        var di = (invalidateTime ? new Date(invalidateTime * 1000  + tzo + browserTZO) : null);
         var obj = {
             date: $filter('getFormattedDate')(d),
             time: $filter('getFormattedTime')(
-                d.toISOString().substring(11, d.toISOString().indexOf('.')),
+                d,
                 false,
-                cfg.zwavecfg.time_format
+                cfg.zwavecfg.time_format,d
             ),
             invalidateTime: (di ?
             $filter('getFormattedDate')(di) + ' '
-            + $filter('getFormattedTime')(di.toISOString().substring(11, di.toISOString().indexOf('.')),false,cfg.zwavecfg.time_format)
+            + $filter('getFormattedTime')(di,false,cfg.zwavecfg.time_format)
             : ''),
             today: (d.toDateString() === (new Date()).toDateString()
                 ? $filter('getFormattedTime')(
-                    d.toISOString().substring(11, d.toISOString().indexOf('.')),
+                    d,
                     'hh:mm',
                     cfg.zwavecfg.time_format
             )
@@ -248,10 +265,16 @@ angApp.filter('isTodayFromUnix', function (cfg, $filter) {
         }
         var d = new Date(input * 1000);
 
+        var browserTZO = parseInt(d.getTimezoneOffset() * 60 * 1000);
+        //time zone value from config
+        var tzo = parseInt(cfg.route.time.offset * (-1) * 60 * 60 * 1000, 10);
+        //convert the offset to milliseconds, add to targetTime, and make a new Date
+        d = new Date(d.getTime() + tzo + browserTZO);
+
         if (d.toDateString() == (new Date()).toDateString()) {
 
             return $filter('getFormattedTime')(
-                d.toISOString().substring(11, d.toISOString().indexOf('.')),
+                d,
                 'hh:mm',
                 cfg.zwavecfg.time_format
             );
@@ -261,14 +284,53 @@ angApp.filter('isTodayFromUnix', function (cfg, $filter) {
         }
     };
 });
-
 /**
  * Get formated date
  * @function getFormattedTime
  */
 angApp.filter('getFormattedTime', function () {
-    return function (time,stringFormat,timeFormat) {
+    return function (date,stringFormat,timeFormat) {
+        var str = '';
+        var suffix = '';
 
+        //var h = (date.getHours() < 10) ? "0" + date.getHours() : date.getHours();
+        var h = date.getHours();
+
+        var m = (date.getMinutes() < 10) ? "0" + date.getMinutes() : date.getMinutes();
+        var s = (date.getSeconds() < 10) ? "0" + date.getSeconds() : date.getSeconds();
+
+        //console.log(h,m)
+
+        // 12 hrs format?
+        if(timeFormat === '12' ){
+            h =  h % 12 || 12;
+            suffix = (h < 12) ? ' AM' : ' PM';
+        }
+        h = (h < 10) ? "0" + h : h;
+
+        switch (stringFormat) {
+            case 'hh:mm':
+                str =  h + ':' + m;
+                break;
+            case 'hh':
+                str =  h;
+                break;
+            default:
+                str =  h + ':' + m + ':' + s;
+                break;
+        }
+        return str + suffix;
+
+    };
+});
+
+/**
+ * TODO: deprecated
+ * Get formated date
+ * @function getFormattedTime
+ */
+angApp.filter('getFormattedTime____', function () {
+    return function (time,stringFormat,timeFormat) {
         var str = '';
         var suffix = '';
         var arr = time.split(':').map(function (x) {
@@ -431,9 +493,9 @@ angApp.filter('toTrusted', ['$sce', function ($sce) {
 /**
  * Display device name
  */
-angApp.filter('deviceName', function () {
+angApp.filter('deviceName', function (cfg,deviceService) {
     return function (deviceId, device) {
-        var name = (deviceId == 1 ? 'Z-Way' : 'Device ' + '_' + deviceId);
+        var name = (deviceId === cfg.controller.zwayNodeId? deviceService.getCustomCfgVal('controller_name') : 'Device ' + '_' + deviceId);
         if (device === undefined) {
             return name;
         }
@@ -534,28 +596,25 @@ angApp.filter('decToHex', function () {
  * Replace Lock state with text
  */
 angApp.filter('lockStatus', function () {
-    return function (input) {
-        var mode = input;
+    return function (mode) {
         var mode_lbl;
 
-        if (mode === '' || mode === null) {
-            mode_lbl = '?';
-        } else {
-            switch (mode) {
-                case 0x00:
-                    mode_lbl = 'Open';
-                    break;
-                case 0x10:
-                    mode_lbl = 'Open from inside';
-                    break;
-                case 0x20:
-                    mode_lbl = 'Open from outside';
-                    break;
-                case 0xff:
-                    mode_lbl = 'Closed';
-                    break;
-            }
-            ;
+        switch (mode) {
+            case 0:
+                mode_lbl = 'open';
+                break;
+            case 16:
+                mode_lbl = 'open_from_inside';
+                break;
+            case 32:
+                mode_lbl = 'open_from_outside';
+                break;
+            case 255:
+                mode_lbl = 'closed';
+                break;
+            default:
+                mode_lbl = '-';
+                break;
         }
         ;
         return mode_lbl;
@@ -607,8 +666,10 @@ angApp.filter('getBatteryIcon', function () {
         if (level >= 95) {
             icon = 'fa-battery-full text-success';
         } else if (level >= 70 && level < 95) {
-            icon = 'fa-battery-3 text-primary';
-        } else if (level > 30 && level <= 50) {
+            icon = 'fa-battery-3 text-success';
+        } else if (level >= 50 && level < 70) {
+            icon = 'fa-battery-2 text-primary';
+        }else if (level > 30 && level <= 50) {
             icon = 'fa-battery-2 text-info';
         } else if (level >= 1 && level <= 30) {
             icon = 'fa-battery-1 text-danger';
@@ -634,9 +695,6 @@ angApp.filter('getDeviceTypeIcon', function () {
             case 'mains':
                 icon = 'fa-bolt text-warning';
                 break;
-            case 'sleep':
-                icon = 'fa-battery-full text-danger';
-                break;
             case 'battery':
                 icon = 'fa-battery-full text-success';
                 break;
@@ -644,7 +702,7 @@ angApp.filter('getDeviceTypeIcon', function () {
                 icon = 'fa-feed text-primary';
                 break;
             default:
-                icon = '';
+                icon = 'fa-ellipsis-h';
                 break;
         }
         return icon;

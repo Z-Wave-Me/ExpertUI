@@ -10,8 +10,8 @@ appController.controller('UzbController', function ($scope, $timeout, $window, c
      * Load data
      *
      */
-    $scope.load = function () {
-        dataService.getZwaveData(function (ZWaveAPIData) {
+    $scope.loadZwaveData = function () {
+        dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
             var vendorId = parseInt(ZWaveAPIData.controller.data.manufacturerId.value, 10);
             //0x0115 = 277, 0x0147 = 327
             var allowedVendors = [277, 327];
@@ -32,7 +32,7 @@ appController.controller('UzbController', function ($scope, $timeout, $window, c
             loadUzb(urlParams);
         });
     };
-    $scope.load();
+    $scope.loadZwaveData();
 
     // Upgrade bootloader/firmware
     $scope.upgrade = function (action, url) {

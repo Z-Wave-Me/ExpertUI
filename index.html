@@ -1,10 +1,14 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="angApp" ng-controller="BaseController">
 <head>
     <meta charset="utf-8">
-    <title>Z-Wave CIT</title>
+    <title>{{getCustomCfgVal('title')}}</title>
+    <!-- build:section dist_head --><!-- /build -->
+    <!-- build:remove -->
     <!-- Z-Wave css -->
     <link media="screen" type="text/css" rel="stylesheet" href="app/css/main.css">
+    <!-- Z-Wave css -->
+    <link media="print" type="text/css" rel="stylesheet" href="app/css/print.css">
     <!-- App config -->
     <script src="app/config.js"></script>
     <!-- jQuery js -->
@@ -39,6 +43,7 @@
     <script src="app/directives/directives.js"></script>
     <script src="app/directives/angular-slider.js"></script>
     <script src="app/directives/dir-pagination.js"></script>
+    <script src="app/directives/double-scroll-bars.min.js"></script>
     <script src="app/filters/filters.js"></script>
     <script src="app/factories/factories.js"></script>
     <script src="app/services/services.js"></script>
@@ -48,6 +53,7 @@
     <script src="app/controllers/auth.js"></script>
     <script src="app/controllers/expert_config.js"></script>
     <script src="app/controllers/settings.js"></script>
+    <script src="app/controllers/dongle.js"></script>
     <script src="app/controllers/switch.js"></script>
     <script src="app/controllers/sensor.js"></script>
     <script src="app/controllers/meter.js"></script>
@@ -61,8 +67,10 @@
     <script src="app/controllers/control.js"></script>
     <script src="app/controllers/statistics.js"></script>
     <script src="app/controllers/routing.js"></script>
+    <script src="app/controllers/neighbor.js"></script>
     <script src="app/controllers/reorganization.js"></script>
     <script src="app/controllers/timing.js"></script>
+    <script src="app/controllers/linkstatus.js"></script>
     <script src="app/controllers/controllerinfo.js"></script>
     <script src="app/controllers/queue.js"></script>
     <script src="app/controllers/interviewcommand.js"></script>
@@ -81,8 +89,9 @@
     <script src="app/controllers/configuration_health.js"></script>
     <script src="app/controllers/configuration_postfix.js"></script>
     <script src="app/jquery/jquery-app.js"></script>
+    <!-- /build -->
 </head>
-<body ng-app="angApp" ng-controller="BaseController" id="page_{{getBodyId()}}"
+<body id="page_{{getBodyId()}}"
       class="is-mobile-{{isMobile}} custom-ip-{{cfg.custom_ip}} app-type-{{cfg.app_type}}">
 <!-- Header -->
 <div id="header" ng-if="getBodyId()">
@@ -130,7 +139,7 @@
                             <ul>
                                 <li><a href="#device/status" ng-class="isActive('status',2)">{{ _t('nav_status') }}</a></li>
                                 <li><a href="#device/type" ng-class="isActive('type',2)">{{ _t('nav_type_info') }}</a></li>
-                                <li><a href="#device/battery" ng-class="isActive('battery',2)">{{ _t('nav_battery') }}</a></li>
+                                <!--<li><a href="#device/battery" ng-class="isActive('battery',2)">{{ _t('nav_battery') }}</a></li>-->
                                 <li ng-if="cfg.app_type === 'installer'">
                                     <a href="#config/configuration"
                                        ng-class="isActive('configuration',2)">{{ _t('nav_configuration') }}</a>
@@ -161,12 +170,20 @@
                                 <li ng-if="cfg.app_type === 'installer'">
                                     <a href="#network/statistics" ng-class="isActive('statistics',2)">{{ _t('statistics') }}</a>
                                 </li>
-                                <li><a href="#network/routing" ng-class="isActive('routing',2)">{{ _t('nav_routing') }}</a></li>
-                               <!-- <li><a class="a-disabled" title="Temporary disabled. Will be back in the next release." ng-class="isActive('reorganization',2)">{{ _t('nav_reorganization') }}</a></li>-->
-                                <li><a href="#network/reorganization" ng-class="isActive('reorganization',2)">{{ _t('nav_reorganization') }}</a></li>
+                                <li><a href="#network/neighbors" ng-class="isActive('neighbors',2)">{{ _t('neighbors') }}</a></li>
+                                <!-- <li><a class="a-disabled" title="Temporary disabled. Will be back in the next release." ng-class="isActive('reorganization',2)">{{ _t('nav_reorganization') }}</a></li>-->
+                                <!--<li><a href="#network/reorganization" ng-class="isActive('reorganization',2)">{{ _t('nav_reorganization') }}</a></li>-->
                                 <li><a href="#network/timing" ng-class="isActive('timing',2)">{{ _t('nav_timing_info') }}</a></li>
                                 <!--<li><a class="a-disabled" title="Temporary disabled. Will be back in the next release." ng-class="isActive('timing',2)">{{ _t('nav_timing_info') }}</a></li>-->
                                 <li><a href="#network/map" dng-class="isActive('map',2)">{{ _t('nav_network_map') }}</a></li>
+                               <!-- <li ng-if="cfg.app_type === 'installer'">
+                                    <a href="#network/linkstatus" ng-class="isActive('linkstatus',2)">{{ _t('nav_linkhealth_info') }}</a>
+                                </li>-->
+                                <!--
+                                <li ng-if="cfg.app_type === 'installer' && !cfg.controller.isRealPrimary">
+                                    <!--<a href="#network/linkstatus" ng-class="isActive('linkstatus',2)">{{ _t('nav_linkhealth_info') }}</a>-->
+                                    <!--<a href="#network/linkhealth/1" ng-class="isActive('linkstatus',2)">{{ _t('nav_linkhealth_info') }}</a>
+                                </li>-->
                                 <li ng-if="cfg.app_type !== 'installer'">
                                     <a href="#network/controller" ng-class="isActive('controller',2)">{{ _t('nav_controller_info') }}</a>
                                 </li>
@@ -199,7 +216,7 @@
                         </a>
                     </li>
 
-                   <!-- Time -->
+                    <!-- Time -->
                     <li class="navibar-divider navi-timestamp"></li>
                     <li class="navibar-item navi-timestamp">
                         <span class="timestamp" ng-if="cfg.route.time.string">
@@ -221,7 +238,7 @@
 
 <!-- Installer Container -->
 <div class="container-installer" ng-if="cfg.app_type === 'installer' && getBodyId()">
-<div class="alert alert-success" ng-if="cfg.controller.isRealPrimary && !cfg.controller.hasDevices">
+    <div class="alert alert-success" ng-if="cfg.controller.isRealPrimary && !cfg.controller.hasDevices">
         <div class="container"><i class="fa fa-info-circle"></i> {{_t('ready_to_network')}}</div>
     </div>
     <div class="alert alert-warning" ng-if="cfg.controller.isRealPrimary && cfg.controller.hasDevices">
@@ -247,7 +264,8 @@
 <div id="footer" ng-if="getBodyId()">
     <div id="footer_in">
         <div class="container">
-            <span class="copyright" ng-bind-html="getCustomCfgArr('footer_text') | toTrusted"></span>
+            <span class="copyright" ng-bind-html="getCustomCfgVal('footer_text') | toTrusted"></span>
+            <span class="copyright">{{getCustomCfgVal('version_type')}}</span>
             <span class="timestamp" ng-if="cfg.route.time.string"><i class="fa fa-clock-o"></i> {{cfg.route.time.string}}</span>
             <span class="timestamp" ng-if="cfg.app_type === 'installer'"> | </span>
             <span class="timestamp" ng-if="cfg.app_type === 'installer'"

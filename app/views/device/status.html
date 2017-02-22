@@ -23,19 +23,18 @@
                         <span ng-show="predicate == 'sleeping'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i
                                 ng-show="reverse" class="fa fa-sort-desc"></i></span>
                     </a>
-                </th>
-                <th>
-                    <a href="" ng-click="orderBy('interval')">{{ _t('wakeup_interval')}}
-                        <span ng-show="predicate == 'interval'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i
-                                ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                    </a>
-                </th>
-                <th>
-                    <a href="" ng-click="orderBy('awake')">{{ _t('th_awake')}}
-                        <span ng-show="predicate == 'awake'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i
-                                ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                    </a>
-                </th>
+                    <!--<th>
+                        <a href="" ng-click="orderBy('interval')">{{ _t('wakeup_interval')}}
+                            <span ng-show="predicate == 'interval'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i
+                                    ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="" ng-click="orderBy('awake')">{{ _t('th_awake')}}
+                            <span ng-show="predicate == 'awake'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i
+                                    ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>-->
                 <th>
                     <a href="" ng-click="orderBy('updateTime')">{{ _t('datetime')}}
                         <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i
@@ -47,9 +46,9 @@
                        <span ng-show="predicate == 'ddr'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                    </a>
                </th>-->
-                <th>&nbsp;</th>
+                <th class="print-hide">&nbsp;</th>
 
-                <th class="mobile-show td-action">
+                <th class="mobile-show td-action print-hide">
                     <button class="btn btn-primary" id="btn_ping_all_1"
                             ng-click="pingAllDevices('btn_ping_all_1','urlToStore')"
                             ng-disabled="rowSpinner['btn_ping_all_1']">
@@ -71,29 +70,30 @@
                 </td>
                 <td data-title="{{ _t('th_sleeping')}}" class="row-sleeping"><span
                         ng-bind-html="v.sleeping | toTrusted"></span> &nbsp;</td>
-                <td data-title="{{ _t('wakeup_interval')}}" class="row-wakeupint">
+                <!--<td data-title="{{ _t('wakeup_interval')}}" class="row-wakeupint">
                     <span ng-if="v.interval">{{v.interval}}s</span> &nbsp;
+                </td>-->
+                <!--<td data-title="{{ _t('th_awake')}}" class="row-awake"><span ng-bind-html="v.awake | toTrusted"></span>
+                    &nbsp;</td>-->
+                <td data-title="{{ _t('datetime')}}">
+                    <span class="row-isfailed" ng-bind-html="v.isFailed | toTrusted"></span>
+                    <span class="row-time" ng-bind-html="v.updateTime | toTrusted"></span> &nbsp;
                 </td>
-                <td data-title="{{ _t('th_awake')}}" class="row-awake"><span ng-bind-html="v.awake | toTrusted"></span>
-                    &nbsp;</td>
-                <td data-title="{{ _t('datetime')}}"><span class="row-isfailed"
-                                                           ng-bind-html="v.isFailed | toTrusted"></span> <span
-                        class="row-time" ng-bind-html="v.updateTime | toTrusted"></span> &nbsp;</td>
                 <!--<td data-title="{{ _t('th_ddr')}}" class="row-ddr"><span ng-bind-html="v.ddr | toTrusted"></span> &nbsp;</td>-->
-                <td class="row-interview">
+                <td class="row-interview print-hide">
                     <button class="btn btn-default"
                             ng-if="v.interview"
                             ng-click="handleModalInterview('interviewModal',$event,$index,v.id,v.name)" title="{{v.interview}}">
                         <i class="fa fa-search-minus fa-lg text-danger"></i>
                     </button> &nbsp;
 
-                   <!-- <button class="btn btn-default"
-                            ng-if="v.interview"
-                       ng-click="showModalInterview('#modal_interview', $index,v.id,v.name)" title="{{v.interview}}">
-                        <i class="fa fa-search-minus fa-lg text-danger"></i>
-                    </button> &nbsp;-->
+                    <!-- <button class="btn btn-default"
+                             ng-if="v.interview"
+                        ng-click="showModalInterview('#modal_interview', $index,v.id,v.name)" title="{{v.interview}}">
+                         <i class="fa fa-search-minus fa-lg text-danger"></i>
+                     </button> &nbsp;-->
                 </td>
-                <td class="row-ping td-action">
+                <td class="row-ping td-action print-hide">
                     <button class="btn btn-default" id="btn_ping_{{ v.rowId}}" title="{{_t('pingDevice')}}"
                             title="{{ _t('pingDevice')}}"
                             ng-if="v.urlToStore"

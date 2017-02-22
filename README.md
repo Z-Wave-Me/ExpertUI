@@ -3,12 +3,24 @@ zwave-expertui
 
 This User Interfaces allows to operate a Smart Home Network based on Z-Wave devices. It utilizes the software architecture "Z-Way", certified as Z-Wave Plus Controller.
 
+## v1.3.0
+#### New features
+- CIT: Link status.
+- CIT: Statistics visualization.
+- CIT: Print page.
+
+#### Changes
+- Neighbors: Completely refactored.
+
+#### Fixes
+-
+
 ## v1.2.0
 #### New features
 - Notifications page.
 - UZB: Button for uploading bootloader/firmware.
 - Interview progress bar.
-- CIT: network name, time format, firmware update, time zone, busy indicator, interview progressbar, network statitstics, primiscuous mode.
+- CIT: network name, time format, firmware update, time zone, busy indicator, interview progressbar, network statitstics, primiscuous mode, bug report.
 - Icons in the menu.
 - Enhanced display on mobile devices and tablets.
 - Spinner indicators.
@@ -27,6 +39,7 @@ This User Interfaces allows to operate a Smart Home Network based on Z-Wave devi
 - Folder app/core removed.
 
 #### Fixes
+- Fixing not configured devices on the homepage.
 - Can't configure second parameter #174
 - In routing table timestamps are not updated #161
 - LICENSE file missing #213

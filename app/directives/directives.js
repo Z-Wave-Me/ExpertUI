@@ -91,6 +91,24 @@ angApp.directive('bbLoader', function () {
 });
 
 /**
+ * Displays a dta/time in the table row
+ * @class bbRowSpinner
+ */
+angApp.directive('bbDateTime', function () {
+    return {
+        restrict: "E",
+        replace: true,
+        scope: {
+            obj: '=',
+            updated: '='
+        },
+        template: '<span class="is-updated-{{updated}}" title="Update: {{obj.date}} {{obj.time}}, invalid: {{obj.invalidateTime}}">' +
+        '{{obj.today}}' +
+        '</span>'
+    };
+});
+
+/**
  * Displays a spinner in the table row
  * @class bbRowSpinner
  */
@@ -103,10 +121,9 @@ angApp.directive('bbRowSpinner', function () {
             spinner: '=',
             icon: '='
         },
-        template: '<span title="{{label}}"><span class="btn-spin" ng-if_="spinner">' +
+        template: '<span title="{{label}}">' +
         '<i class="fa " ng-class="spinner ? \'fa-spinner fa-spin\':icon"></i>' +
-        '</span> ' +
-        '<span class="btn-label">' +
+        '&nbsp;<span class="btn-label">' +
         '{{label}}' +
         '</span></span>'
     };
@@ -145,6 +162,23 @@ angApp.directive('collapseNavbar', function () {
                 $("#nav_collapse").removeClass("in").addClass("collapse");
             });
         }
+    };
+});
+
+/**
+ * Displays a validation error
+ * @class bbValidator
+ */
+angApp.directive('bbValidator', function ($window) {
+    return {
+        restrict: "E",
+        replace: true,
+        scope: {
+            inputName: '=',
+            trans: '=',
+            hasBlur: '='
+        },
+        template: '<div class="valid-error text-danger" ng-if="inputName && !inputName.$pristine && hasBlur">*{{trans}}</div>'
     };
 });
 
@@ -266,7 +300,7 @@ angApp.directive('routingTypeIcon', function () {
     };
 });
 
-angApp.directive('expertCommandInput', function ($filter) {
+angApp.directive('expertCommandInput', function (cfg,$filter) {
     // Get text input
     function getText(label, value, min, max, name) {
         var input = '';
@@ -282,7 +316,7 @@ angApp.directive('expertCommandInput', function ($filter) {
 
         input += '<label>' + label + '</label> ';
         input += '<select name="select_' + inName + '" class="form-control">';
-        input += '<option value="1">Z-Way</option>';
+        input += '<option value="1">' + (cfg.app_type === 'installer' ? 'CIT' : 'Z-Way')+ '</option>';
         angular.forEach(devices, function (v, k) {
             var selected = (v.id == currValue ? ' selected' : '');
             input += '<option value="' + v.id + '"' + selected + '>' + v.name + '</option>';
@@ -307,7 +341,7 @@ angApp.directive('expertCommandInput', function ($filter) {
         var value = (currValue !== undefined ? currValue : defaultValue);
         angular.forEach(enums.enumof, function (v, k) {
             //var inName =  $filter('stringToSlug')(name ? v.name : label);
-            var inName = name ? name : v.name;
+            var inName = (name ? name : v.name) + '_' +label;
             //console.log(inName);
             var title = v.label || '';
             var type = v.type;

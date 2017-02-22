@@ -14,8 +14,14 @@ appController.controller('RoutingController', function($scope, $filter, $timeout
         interval: null,
         show: false,
         nodes: {},
-        neighbours: {}
+        neighbours: {},
+        view: 'table'
     };
+    $scope.loading = false;
+    $scope.increment = 0;
+    $scope.steps = 20;
+    $scope.interval = 2000;
+
     $scope.nodes = {};
 
     /**
@@ -24,6 +30,14 @@ appController.controller('RoutingController', function($scope, $filter, $timeout
     $scope.$on('$destroy', function() {
         $interval.cancel($scope.routings.interval);
     });
+    /**
+     * Chenge view neighbors/table
+     * @param {string} view
+     */
+    $scope.changeView = function(view) {
+        $scope.routings.view = view;
+        $scope.loadZwaveData();
+    };
 
     /**
      * Load zwave data
@@ -37,7 +51,7 @@ appController.controller('RoutingController', function($scope, $filter, $timeout
                 return;
             }
             $scope.routings.show = true;
-            $scope.refreshZwaveData(ZWaveAPIData);
+            //$scope.refreshZwaveData(ZWaveAPIData);
         }, function(error) {
             alertify.alertError($scope._t('error_load_data'));
         });
@@ -94,6 +108,31 @@ appController.controller('RoutingController', function($scope, $filter, $timeout
 
     };
 
+    $scope.loadincremented = function() {
+        $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin', message: $scope._t('loading')};
+        var load = $interval(function() {
+            var cnt = Object.keys($scope.routings.nodes).length;
+            if(cnt < $scope.increment) {
+                $scope.increment = cnt;
+                $scope.loading = false;
+                $interval.cancel(load);
+            }
+
+            if($scope.increment + $scope.steps > cnt) {
+                var rest = cnt % $scope.steps;
+                $scope.increment += rest;
+            } else {
+                $scope.increment += $scope.steps;
+            }
+
+            if(cnt == $scope.increment) {
+                $scope.loading = false;
+                $interval.cancel(load);
+            }
+        }, $scope.interval);
+    };
+
+    $scope.loadincremented();
     /// --- Private functions --- ///
     /**
      * Set nodes data
@@ -144,13 +183,14 @@ appController.controller('RoutingController', function($scope, $filter, $timeout
             } else if (isFLiRS) {
                 type = 'flirs';
             } else if (hasWakeup) {
-                type = node.data.isAwake.value ? 'battery' : 'sleep';
+                type = 'battery';
             } else if (isListening) {
                 type = 'mains';
             } else {
-                type = 'error';
+                type = 'unknown';
             }
-             var cellState = setCellState(nodeId, node,name)
+
+            var cellState = setCellState(nodeId, node,name);
 
             // Set object
             var obj = {};

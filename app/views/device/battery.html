@@ -56,7 +56,9 @@
                      <!--<img class="report-img" ng-src="{{cfg.img.batteries}}{{v.level|getBatteryImg}}" alt="img" />&nbsp;<span class="row-level">{{ v.level+v.scale }}</span>-->
                       
                  </td>
-                  <td data-title="{{ _t('datetime')}}" class="row-time is-updated-{{v.isUpdated}}">{{ v.updateTime | isTodayFromUnix }} &nbsp;</td>
+                 <td data-title="{{ _t('datetime')}}">
+                     <bb-date-time obj="v.dateTime" updated="v.isUpdated"></bb-date-time>
+                 </td>
                   <td class="td-action">
                       <button class="btn btn-default" id="btn_update_{{ v.rowId}}"
                               ng-click="updateBattery(v.urlToStore)"

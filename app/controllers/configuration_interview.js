@@ -88,12 +88,6 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         }
     };
 
-    // todo: deprecated
-    // Cancel interval on page destroy
-   /* $scope.$on('$destroy', function () {
-        dataService.cancelZwaveDataInterval();
-    });*/
-
     /**
      * Request NIF of a device
      * Node Id to be requested for a NIF
@@ -172,60 +166,6 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
             alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
         });
     };
-
-    // todo: DEPRECATED
-    // Show modal CommandClass dialog
-    /*$scope.showModalCommandClass = function (target, instanceId, ccId, type) {
-        var node = $scope.ZWaveAPIData.devices[$routeParams.nodeId];
-        var ccData;
-        switch (type) {
-            case 'cmdData':
-                ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.commandClasses.' + ccId + '.data');
-                break;
-            case 'cmdDataIn':
-                ccData = $filter('hasNode')(node, 'instances.' + instanceId + '.data');
-                break;
-            default:
-                ccData = $filter('hasNode')(node, 'data');
-                break;
-        }
-        var cc = deviceService.configGetCommandClass(ccData, '/', '');
-
-        $scope.commandClass = deviceService.configSetCommandClass(cc);
-        $(target).modal();
-    };*/
-
-    // todo: deprecated
-    // Show modal dialog
-    /*$scope.showModalInterview = function (target) {
-        $(target).modal();
-    };*/
-
-    // todo: deprecated
-    // Show modal device select dialog
-    /*$scope.showModalDeviceSelect = function (target, nodeId, alert) {
-        dataService.getSelectZDDX(nodeId, function (data) {
-            $scope.deviceZddx = data;
-        }, alert);
-        $(target).modal();
-
-    };*/
-
-    // todo: deprecated
-    // Change device select
-   /* $scope.changeDeviceSelect = function (selector, target, file) {
-        var imageFile = $(selector).find(':selected').data('image');
-        var image;
-        if (imageFile == undefined) {
-            image = $scope._t('no_device_image');
-        } else {
-            image = '<img src="' + imageFile + '" />';
-        }
-        $scope.modelSelectZddx = file;
-        $(target).html(image);
-    };*/
-
-
 
     /// --- Private functions --- ///
     /**
@@ -329,6 +269,7 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         var securityInterview = '';
         var deviceDescriptionAppVersion = parseInt(node.data.applicationMajor.value, 10);
         var deviceDescriptionAppSubVersion = parseInt(node.data.applicationMinor.value, 10);
+        var hasWakeup = 0x84 in node.instances[0].commandClasses;
         if (isNaN(deviceDescriptionAppVersion))
             deviceDescriptionAppVersion = '-';
         if (isNaN(deviceDescriptionAppSubVersion))
@@ -399,7 +340,10 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         obj["f"] = {"key": "device_description_product", "val": productName};
         obj["g"] = {"key": "device_description_description", "val": deviceDescription};
         obj["h"] = {"key": "device_description_inclusion_note", "val": inclusionNote};
-        obj["i"] = {"key": "device_description_wakeup_note", "val": wakeupNote};
+        if(hasWakeup){
+            obj["i"] = {"key": "device_description_wakeup_note", "val": wakeupNote};
+        }
+
        // obj["j"] = {"key": "device_description_interview", "val": deviceService.configInterviewStage(ZWaveAPIData, nodeId, $scope.languages)};
         //obj["k"] = {"key": "device_interview_indicator", "val": interviewDone};
         obj["l"] = {"key": "device_sleep_state", "val": deviceService.configDeviceState(node, $scope.languages)};

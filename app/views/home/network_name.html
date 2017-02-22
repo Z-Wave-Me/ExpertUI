@@ -8,10 +8,10 @@
 
     <div class="panel-body">
         <!-- Text mode -->
-        <div ng-hide="goNetworkName">
+        <div ng-hide="goNetworkName" ng-click="goNetworkName = true">
 {{dataHolder.controller.homeName}}
             <button type="button" class="btn btn-default"
-                    ng-click="goNetworkName = !goNetworkName"
+                    ng-click="goNetworkName = true"
                     ng-disabled="rowSpinner['spinNetworkName']">
 
                 <bb-row-spinner

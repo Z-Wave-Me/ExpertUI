@@ -75,9 +75,9 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
             }
             $scope.health.ctrlNodeId = ZWaveAPIData.controller.data.nodeId.value;
             var node = ZWaveAPIData.devices[$routeParams.nodeId];
-            if (!node || deviceService.notDevice(ZWaveAPIData, node, $routeParams.nodeId)) {
+            /*if (!node || deviceService.notDevice(ZWaveAPIData, node, $routeParams.nodeId)) {
                 return;
-            }
+            }*/
             var neighbours = $filter('hasNode')(node.data, 'neighbours.value');
             $scope.health.device.neighbours = $filter('hasNode')(node.data, 'neighbours.value');
 
@@ -171,12 +171,10 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
         $scope.toggleRowSpinner(id);
         var data = {"nodeId": $scope.deviceId};
         dataService.postApi('checklinks', data).then(function (response) {
-            var runtime = parseInt(response.data.runtime) * 1000;
-            alertify.alertWarning($scope._t('proccess_take',{__val__:response.data.runtime,__level__:$scope._t('seconds')}));
-            $timeout($scope.toggleRowSpinner, runtime);
+            deviceService.showNotifier({message: $scope._t('test_all_links_complete')});
+            $scope.toggleRowSpinner();
         }, function (error) {
-            alertify.alertError($scope._t('error_update_data'));
-            alertify.dismissAll();
+            deviceService.showNotifier({message: $scope._t('error_update_data'),type: 'error'});
             $scope.toggleRowSpinner();
         });
     };
@@ -230,11 +228,11 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
             } else if (isFLiRS) {
                 type = 'flirs';
             } else if (hasWakeup) {
-                type = node.data.isAwake.value ? 'battery' : 'sleep';
+                type = 'battery';
             } else if (isListening) {
                 type = 'mains';
             } else {
-                type = 'error';
+                type = 'unknown';
             }
             var obj = {
                 id: nodeId,

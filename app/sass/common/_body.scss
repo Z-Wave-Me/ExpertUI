@@ -86,6 +86,9 @@ h4 {
         font-size:$app-header-h1-font-size;
         font-weight:bold;
     }
+    .header-col{
+        padding: 0;
+    }
 }
 
 .perex{
@@ -124,7 +127,7 @@ h4 {
 
 .newlines{
     //padding-top: 0;
-    margin-top: -40px;
+    //margin-top: -40px;
     white-space: pre-line;
 }
 
@@ -135,20 +138,24 @@ h4 {
 }
 
 .red,.is-updated-false{
-    color: red;
+    color: red !important;
 }
 
 .green,.is-rfreshed{
-    color: green;
+    color: green !important;
 }
+.green-light{
+    color: #8C0 !important;
+}
+
 .yellow{
-    color: yellow;
+    color: yellow !important;
 }
 .gray{
-    color: gray;
+    color: gray !important;
 }
 .orange{
-    color: orange;
+    color: orange !important;
 }
 
 .main_spinner{

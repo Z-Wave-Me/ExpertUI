@@ -6,20 +6,25 @@
   background-color: $app-bcg-warning;
   border-color: $app-brand-warning;
 }
-.btn-sleep {
-  color: $app-brand-danger;
-  background-color: $app-bcg-danger;
-  border-color: $app-brand-danger;
+.btn-portable {
+  color: $app-color-gray;
+  background-color: $app-bcg-gray;
+  border-color: $app-color-gray;
 }
 .btn-flirs {
   color: $app-brand-info;
   background-color: $app-bcg-info;
   border-color: $app-brand-info;
 }
-.btn-battery {
+.btn-battery{
   color: $app-brand-success;
   background-color: $app-bcg-success;
   border-color: $app-brand-success
+}
+.btn-error, .btn-unknown  {
+  color: $app-brand-danger;
+  background-color: $app-bcg-danger;
+  border-color: $app-brand-danger;
 }
 
 /* Traffic indicator */

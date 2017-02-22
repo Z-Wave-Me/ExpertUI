@@ -266,16 +266,20 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     };
 
     /**
-     * Get array from custom config
+     * Get a value from custom config
      * @param {string} key
-     * @returns {Array}
+     * @returns {string}
      */
-    $scope.getCustomCfgArr = function (key) {
-        if (cfg.custom_cfg[cfg.app_type]) {
-            return cfg.custom_cfg[cfg.app_type][key] || [];
-        }
-        return [];
+    $scope.getCustomCfgVal = function (key) {
+        return deviceService.getCustomCfgVal(key);
     };
+    // todo: deprecated
+    /*$scope.getCustomCfgArr = function (key) {
+        if (cfg.custom_cfg[cfg.app_type]) {
+            return cfg.custom_cfg[cfg.app_type][key] || '';
+        }
+        return '';
+    };*/
 
     // Alertify defaults
     alertify.defaults.glossary.title = cfg.app_name;
@@ -290,7 +294,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
                 build: function () {
                     var errorHeader = '<span class="fa fa-exclamation-triangle fa-lg text-danger" '
                             + 'style="vertical-align:middle;">'
-                            + '</span> ' + cfg.app_name + ' - ERROR';
+                            + '</span> ' + $scope.getCustomCfgVal('title') + ' - ERROR';
                     this.setHeader(errorHeader);
                 }
             };
@@ -304,7 +308,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
                 build: function () {
                     var errorHeader = '<span class="fa fa-exclamation-circle fa-lg text-warning" '
                             + 'style="vertical-align:middle;">'
-                            + '</span> ' + cfg.app_name + ' - WARNING';
+                            + '</span> ' + $scope.getCustomCfgVal('title') + ' - WARNING';
                     this.setHeader(errorHeader);
                 }
             };
@@ -350,7 +354,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
             if (response.data.length === 1) {
                 angular.extend(cfg, {dongle: response.data[0]});
                 $cookies.dongle = response.data[0];
-                angular.extend(cfg,{dongle_list: response});
+                angular.extend(cfg,{dongle_list: response.data});
 
                 angular.extend(cfg, {
                     update_url: '/ZWave.' + cfg.dongle + '/Data/',
@@ -396,14 +400,16 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     $scope.setTimeStamp = function () {
         dataService.getApi('time', null, true).then(function (response) {
             $interval.cancel($scope.timeZoneInterval);
-            angular.extend(cfg.route.time, {string: $filter('setTimeFromBox')(response.data.data.localTimeUT)},
-                {timestamp: response.data.data.localTimeUT});
+            angular.extend(cfg.route.time, {string: $filter('setTimeFromBox')(response.data.data.localTimeUT,true)},
+                {timestamp: response.data.data.localTimeUT},
+                {offset: response.data.data.localTimeZoneOffset});
             var refresh = function () {
-                cfg.route.time.timestamp += (cfg.interval < 1000 ? 1 : cfg.interval/1000)
-                cfg.route.time.string = $filter('setTimeFromBox')(cfg.route.time.timestamp)
+                cfg.route.time.timestamp += (cfg.interval < 1000 ? 1 : Math.floor(cfg.interval/1000));
+                cfg.route.time.string = $filter('setTimeFromBox')(cfg.route.time.timestamp);
             };
+
             cfg.zwavecfg.time_zone = response.data.data.localTimeZone;
-            $scope.timeZoneInterval = $interval(refresh, $scope.cfg.interval);
+            $scope.timeZoneInterval = $interval(refresh,cfg.interval);
         }, function (error) {});
 
     };
@@ -417,17 +423,9 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     };
     $scope.loadBoxApiData = function () {
         dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
-             var hasDevices = Object.keys(ZWaveAPIData.devices).length;
-             var homeId = ZWaveAPIData.controller.data.homeId.value;
-
-            // todo: deprecated
-            //$scope.boxData.controller.isPrimary = ZWaveAPIData.controller.data.isPrimary.value;
-            //$scope.boxData.controller.isRealPrimary = ZWaveAPIData.controller.data.isRealPrimary.value;
-            //$scope.boxData.controller.hasDevices =  hasDevices < 2 ? false : true;
-            //$scope.boxData.controller.homeId =   '0x' + ('00000000' + (homeId + (homeId < 0 ? 0x100000000 : 0)).toString(16)).slice(-8);
-            //$scope.boxData.controller.softwareRevisionVersion = ZWaveAPIData.controller.data.softwareRevisionVersion.value;
-            //$scope.boxData.controller.homeNotes = ZWaveAPIData.controller.data.homeNotes.value ;
-            //$scope.boxData.controller.homeName = ZWaveAPIData.controller.data.homeName.value || cfg.controller.network_name;
+            var hasDevices = Object.keys(ZWaveAPIData.devices).length;
+            var homeId = ZWaveAPIData.controller.data.homeId.value;
+            var zwayNodeId = ZWaveAPIData.controller.data.nodeId.value;
 
             // Changes MK
             //$scope.boxData.controller.controllerState = ZWaveAPIData.controller.data.controllerState.value;
@@ -437,7 +435,8 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
                 isRealPrimary: ZWaveAPIData.controller.data.isRealPrimary.value,
                 homeId: homeId,
                 homeIdHex: '0x' + ('00000000' + (homeId + (homeId < 0 ? 0x100000000 : 0)).toString(16)).slice(-8),
-                hasDevices: hasDevices < 2 ? false : true
+                hasDevices: hasDevices < 2 ? false : true,
+                zwayNodeId: zwayNodeId
             }
             angular.extend(cfg.controller,cfgController);
         }, function (error) {

@@ -104,6 +104,9 @@ angApp.config(['$routeProvider',
         when('/network/control', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/network/control/control_' + config_data.cfg.app_type + '.html'
+        }).when('/network/neighbors', {
+            requireLogin: requireLogin,
+            templateUrl: 'app/views/network/neighbors.html'
         }).when('/network/routing', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/network/routing.html'
@@ -124,6 +127,14 @@ angApp.config(['$routeProvider',
             requireLogin: requireLogin,
             templateUrl: 'app/views/network/statistics.html',
             appTypeBanned: ['default']
+        }).when('/network/linkstatus', {
+            requireLogin: requireLogin,
+            templateUrl: 'app/views/network/linkstatus.html',
+            appTypeBanned: [/*'default'*/]
+        }).when('/network/linkhealth/:nodeId?', {
+            requireLogin: requireLogin,
+            templateUrl: 'app/views/network/link_health.html',
+            appTypeBanned: ['default']
         }).// Installer - zniffer
         when('/installer/zniffer', {
             requireLogin: requireLogin,
@@ -143,6 +154,10 @@ angApp.config(['$routeProvider',
         when('/settings', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/settings/settings_' + config_data.cfg.app_type + '.html'
+        }).// Print
+        when('/print', {
+            requireLogin: requireLogin,
+            templateUrl: 'app/views/print/print.html'
         }).// Error page
         when('/error/:code?', {
             requireLogin: requireLogin,

@@ -4,6 +4,17 @@
 .list-group-item {
   border-color: $app-border-color;
 }
+// Configuration menu
+.row-configuration{
+  .menu-vertical{
+    height: auto;
+    max-height: 800px;
+    overflow-x: hidden;
+    .list-group-item {
+      padding: 5px 7px;
+    }
+  }
+}
 
 .list-report{
   margin: 0 ;

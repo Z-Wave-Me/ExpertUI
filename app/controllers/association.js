@@ -8,7 +8,7 @@
  * @class AssociationsController
  *
  */
-appController.controller('AssociationsController', function($scope, $filter, $timeout,$interval,$http,dataService, cfg,_,myCache) {
+appController.controller('AssociationsController', function($scope, $filter, $timeout,$interval,$http,dataService, deviceService,cfg,_,myCache) {
     $scope.devices = {
         all: [],
         show: false,
@@ -79,9 +79,12 @@ appController.controller('AssociationsController', function($scope, $filter, $ti
         // Loop throught devices
         var cnt = 1;
         angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+            if (deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
             }
+            /*if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+                return;
+            }*/
             var zddXmlFile = $filter('hasNode')(node, 'data.ZDDXMLFile.value');
             var zdd = null;
             if (zddXmlFile) {

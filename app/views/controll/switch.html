@@ -87,8 +87,8 @@
                     <strong class="row-level text-right" style="color: {{ v.levelColor}};">{{ v.level}}</strong>
 
                 </td>
-                <td data-title="{{ _t('datetime')}}" class="row-time is-updated-{{v.isUpdated}}" title="{{v.dateTime.date}} {{v.dateTime.time}}">
-                    {{v.dateTime.today}}
+                <td data-title="{{ _t('datetime')}}">
+                    <bb-date-time obj="v.dateTime" updated="v.isUpdated"></bb-date-time>
                 </td>
                 <td data-title="{{ _t('th_switchall')}}">
                     <switch-all-icon hasall="{{ v.switchAllValue}}" ng-if="v.switchAllValue !== null"></switch-all-icon>

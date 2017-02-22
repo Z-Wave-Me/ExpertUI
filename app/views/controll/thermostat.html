@@ -39,7 +39,7 @@
                         <span class="level-val" ng-show="v.level != null">{{ v.level}}</span>&nbsp;<span  ng-show="v.hasExt">{{ v.scale}}</span>
                     </td>
                     <td data-title="{{ _t('datetime')}}" class="row-time">
-                        <span class="is-updated-{{v.isUpdated}}" ng-show="v.level != null">{{ v.updateTime | isTodayFromUnix }}</span>
+                        <bb-date-time obj="v.dateTime" updated="v.isUpdated" ng-if="v.level != null"></bb-date-time>
                     </td>
                     <td>
                         <div class="form-inline" ng-show="v.isThermostatMode">
