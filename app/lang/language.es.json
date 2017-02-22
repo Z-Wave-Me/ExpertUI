@@ -58,7 +58,7 @@
   "firmware_url":"Firmware URL",
   "on":"ON",
   "off":"OFF",
-  "promiscuous_mode":"Eavesdrop",
+  "promiscuous_mode":"Background zNiffer Collection",
   "jobs":"Jobs",
   "name":"Name",
   "statistics":"Statistics",
