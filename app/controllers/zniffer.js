@@ -377,3 +377,131 @@ appController.controller('ZnifferRSSIController', function ($scope, $interval, $
     };
     $scope.initRefresh();
 });
+
+/**
+ * The controller that handles Zniffer Rssi Background Meter.
+ * @class ZnifferRSSIMeterController
+ * @author Michael Hensche
+ */
+appController.controller('ZnifferRSSIMeterController', function ($scope, $interval, $filter, cfg, dataService, myCache, _) {
+
+    var cOptions = {
+        id: "",
+        value: 0,
+        min: -120,
+        max: 0,
+        title: "",
+        label: "RSSI (dBm)",
+        pointer: true,
+        levelColors: [
+            "#d9534f",
+            "#f0ad4e",
+            "#80AD80"
+        ]
+    };
+
+    $scope.rssi = {
+        chartOptions1: cOptions,
+        chartOptions2: cOptions,
+        chartData1: 0,
+        chartData2: 0,
+        interval: null,
+        intervaltime: 2000,
+        trace: 'pause',
+        run: true
+    };
+
+    $scope.loadingRSSIData = function(handleError) {
+
+        dataService.getApi('rssi_chart','/realtime', true).then(function (response) {
+            var rssiData = typeof response === 'string'? JSON.parse(response) : response,
+                chartData1 = 0,
+                chartData2 = 0;
+
+            if (typeof parseInt(rssiData.data.data[0].channel1) === 'number') {
+                chartData1 = _.isNull(rssiData.data.data[0].channel1)? 0 : parseInt(rssiData.data.data[0].channel1);
+            }
+
+            if (typeof parseInt(rssiData.data.data[0].channel2) === 'number') {
+                chartData2 = _.isNull(rssiData.data.data[0].channel2) ? 0 : parseInt(rssiData.data.data[0].channel2);
+            }
+
+            $scope.rssi.chartData1 = chartData1;
+            $scope.rssi.chartData2 = chartData2;
+
+            if (!$scope.rssi['gauge1']) {
+                $scope.createChart('gauge1',$scope.rssi.chartOptions1,$scope.rssi.chartData1, 'Channel 1');
+            }
+
+            if (!$scope.rssi['gauge2']) {
+                $scope.createChart('gauge2',$scope.rssi.chartOptions2,$scope.rssi.chartData2, 'Channel 2');
+            }
+            $scope.rssi.run = true;
+
+        }, function (error) {
+            $scope.rssi.run = false;
+            var message = $scope._t('error_load_data') + ': ' + cfg.rssi_chart;
+            if(handleError){
+                alertify.dismissAll();
+                alertify.alertError(message);
+            }
+        });
+
+
+    };
+    $scope.loadingRSSIData(true);
+
+    if ($scope.rssi.run && $scope.rssi.trace === 'start') {
+        $scope.initRefresh();
+    }
+
+    $scope.createChart = function (elementID,chartOptions,chartData, chartTitle) {
+        chartOptions.id = elementID;
+        chartOptions.value = chartData;
+        chartOptions.title = chartTitle;
+
+        $scope.rssi[elementID] = new JustGage(chartOptions);
+    };
+
+    $scope.updateChart = function(elementID, chartData){
+
+        $scope.rssi[elementID].refresh(chartData);
+
+    };
+
+    /**
+     * Cancel interval on page destroy
+     */
+    $scope.$on('$destroy', function () {
+        $interval.cancel($scope.rssi.interval);
+    });
+
+
+    $scope.initRefresh = function() {
+        var refresh = function () {
+            $scope.loadingRSSIData();
+
+            $scope.updateChart('gauge1', $scope.rssi.chartData1);
+            $scope.updateChart('gauge2', $scope.rssi.chartData2);
+        }
+
+        $scope.rssi.interval = $interval(refresh, $scope.rssi.intervaltime);
+    };
+
+    /**
+     * Set trace
+     */
+    $scope.setTrace = function (trace) {
+        switch (trace) {
+            case 'pause':
+                $scope.rssi.trace = 'pause';
+                $interval.cancel($scope.rssi.interval);
+                break;
+            default:
+                $scope.rssi.trace = 'start';
+                $scope.initRefresh();
+                break;
+        }
+    };
+
+});

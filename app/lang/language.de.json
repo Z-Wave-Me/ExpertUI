@@ -557,5 +557,6 @@
  "replicate_receive_update": "Repliziere angefordertes Update",
  "request_update": "Update anfordern",
  "update_form_primary": "Starte Netzwerkaktualisierung vom Primary Controller.",
- "update_form_sis": "Anfordern der Netzwerkaktualisierung von SIS."
+ "update_form_sis": "Anfordern der Netzwerkaktualisierung von SIS.",
+ "nav_rssimeter": "Noise Meter"
 }

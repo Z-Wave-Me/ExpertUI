@@ -543,5 +543,6 @@
   "replicate_receive_update": "Replicate Receive Update",
   "request_update": "Request Update",
   "update_form_primary": "Starting network update from Primary.",
-  "update_form_sis": "Requesting Network Update from SIS."
+  "update_form_sis": "Requesting Network Update from SIS.",
+  "nav_rssimeter": "Noise Meter"
 }
