@@ -29,8 +29,8 @@ appController.controller('AuthInstallerController', function($scope, $location,c
             var user = response.data.data;
             deviceService.setZWAYSession(user.sid);
             deviceService.setUser(user);
-            //window.location = location;
-            $location.path('/home');
+            window.location = '#/home';
+            $window.location.reload();
         }, function (error) {
             $scope.loading = false;
             var message = $scope._t('error_load_data');
