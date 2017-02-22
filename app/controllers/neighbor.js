@@ -194,7 +194,7 @@ appController.controller('NeighborController', function ($scope, $filter, $timeo
                 $scope.routings.all.push(obj);
                 $scope.routings.updates.push('devices.' + nodeId + '.data.neighbours')
             }
-            /*for (i = 0; i < 40; i++) {
+            /*for (i = 0; i < 10; i++) {
              $scope.routings.all.push(obj);
              }*/
         });

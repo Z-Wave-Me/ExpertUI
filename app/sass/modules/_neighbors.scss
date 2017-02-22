@@ -8,16 +8,16 @@
   -webkit-overflow-scrolling: touch;
 
   // Tighten up spacing
-  > table {
+  table {
     margin-bottom: 0;
 
     // Ensure the content doesn't wrap
-    > thead,
-    > tbody,
-    > tfoot {
-      > tr {
-        > th,
-        > td {
+   thead,
+    tbody,
+    tfoot {
+    tr {
+        th,
+        td {
           white-space: nowrap;
         }
       }
@@ -26,21 +26,34 @@
 }
 
 .table-neighbors {
+  th{
+    border: 0 !important;
+    .rt-cell{
+      font-size: 80%;
+    }
+  }
+  .th-id{
+    border: 0;
+  }
+
   .headcol {
+    border: 0;
     position:absolute;
     background-color: #fff;
-    margin: 0  0 0 -20px;
+    margin: 0  0 0 -10px;
     //border: solid 1px red !important;
   }
   .rt-cell {
     display: inline-block;
     @include appBorderRadius(4px);
-    margin: 1px;
+    margin: 4px;
     border: solid 1px #FFFFFF;
     text-align: center;
     width: 20px;
     height: 20px;
     line-height: 20px;
+    //font-size: 80%;
+    font-weight:normal;
 
   }
 
@@ -51,7 +64,11 @@
 
 }
 .table-neighbors-noinfo{
+  .headcol {
+     margin: 0  0 0 -20px;
+  }
   .rt-cell-th {
+    font-size: 80%;
     border-color: #CCCCCC;
   }
   .neighbor-hide{

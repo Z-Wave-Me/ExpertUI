@@ -215,11 +215,11 @@ angApp.filter('getDateTimeObj', function ($filter, cfg) {
         /* ----------- NEW with time offset ----------- */
         var targetTime = (timestamp ? new Date(timestamp * 1000) : new Date());
         var browserTZO = parseInt(targetTime.getTimezoneOffset() * 60 * 1000);
-        console.log('targetTime: ',targetTime);
-        console.log('browserTZO: ', browserTZO);
+        //console.log('targetTime: ',targetTime);
+        //console.log('browserTZO: ', browserTZO);
         //time zone value from config
         var tzo = parseInt(cfg.route.time.offset * (-1) * 60 * 60 * 1000, 10);
-        console.log('tzo:',tzo);
+        //console.log('tzo:',tzo);
         //get the timezone offset from local time in minutes
         //var tzDifference = tzo * 60 * 1000;
         //console.log(tzDifference)

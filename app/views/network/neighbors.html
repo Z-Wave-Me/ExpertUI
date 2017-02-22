@@ -26,11 +26,12 @@
 
     <!-- Routing table -->
     <div class="table-scroll" ng-if="routings.show">
+        <div data-double-scroll-bar-horizontal>
         <table class="table-neighbors data-size-{{routings.dataSize}}"
                ng-class="routings.showInfo ? 'table table-condensed table-hover ':'table-neighbors-noinfo'">
             <thead>
             <tr>
-                <th>&nbsp;</th>
+                <th class="th-id">&nbsp;</th>
                 <th class="neighbor-hide">{{ _t('device_name')}}</th>
                 <th class="neighbor-hide">{{ _t('nav_type_info')}}</th>
                 <th class="neighbor-hide">{{ _t('rt_header_update_time')}}</th>
@@ -78,7 +79,7 @@
                 <td ng-bind-html="htmlNeighbors[v.id]|toTrusted"></td>
             </tr>
             <tr>
-                <th>&nbsp;</th>
+                <th class="th-id">&nbsp;</th>
                 <th class="neighbor-hide">{{ _t('device_name')}}</th>
                 <th class="neighbor-hide">{{ _t('nav_type_info')}}</th>
                 <th class="neighbor-hide">{{ _t('rt_header_update_time')}}</th>
@@ -100,6 +101,7 @@
             </tr>
             </tbody>
         </table>
+        </div>
     </div>
 
     <!-- Legend -->

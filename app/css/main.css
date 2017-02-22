@@ -15823,83 +15823,102 @@ http://codepen.io/MattIn4D/pen/LiKFC
   -webkit-overflow-scrolling: touch;
 }
 /* line 11, ../sass/modules/_neighbors.scss */
-.table-scroll > table {
+.table-scroll table {
   margin-bottom: 0;
 }
 /* line 19, ../sass/modules/_neighbors.scss */
-.table-scroll > table > thead > tr > th,
-.table-scroll > table > thead > tr > td,
-.table-scroll > table > tbody > tr > th,
-.table-scroll > table > tbody > tr > td,
-.table-scroll > table > tfoot > tr > th,
-.table-scroll > table > tfoot > tr > td {
+.table-scroll table thead tr th,
+.table-scroll table thead tr td,
+.table-scroll table tbody tr th,
+.table-scroll table tbody tr td,
+.table-scroll table tfoot tr th,
+.table-scroll table tfoot tr td {
   white-space: nowrap;
 }
 
 /* line 29, ../sass/modules/_neighbors.scss */
-.table-neighbors .headcol {
-  position: absolute;
-  background-color: #fff;
-  margin: 0  0 0 -20px;
+.table-neighbors th {
+  border: 0 !important;
+}
+/* line 31, ../sass/modules/_neighbors.scss */
+.table-neighbors th .rt-cell {
+  font-size: 80%;
 }
 /* line 35, ../sass/modules/_neighbors.scss */
+.table-neighbors .th-id {
+  border: 0;
+}
+/* line 39, ../sass/modules/_neighbors.scss */
+.table-neighbors .headcol {
+  border: 0;
+  position: absolute;
+  background-color: #fff;
+  margin: 0  0 0 -10px;
+}
+/* line 46, ../sass/modules/_neighbors.scss */
 .table-neighbors .rt-cell {
   display: inline-block;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
-  margin: 1px;
+  margin: 4px;
   border: solid 1px #FFFFFF;
   text-align: center;
   width: 20px;
   height: 20px;
   line-height: 20px;
+  font-weight: normal;
 }
-/* line 47, ../sass/modules/_neighbors.scss */
+/* line 60, ../sass/modules/_neighbors.scss */
 .table-neighbors td {
   vertical-align: middle;
 }
 
-/* line 54, ../sass/modules/_neighbors.scss */
+/* line 67, ../sass/modules/_neighbors.scss */
+.table-neighbors-noinfo .headcol {
+  margin: 0  0 0 -20px;
+}
+/* line 70, ../sass/modules/_neighbors.scss */
 .table-neighbors-noinfo .rt-cell-th {
+  font-size: 80%;
   border-color: #CCCCCC;
 }
-/* line 57, ../sass/modules/_neighbors.scss */
+/* line 74, ../sass/modules/_neighbors.scss */
 .table-neighbors-noinfo .neighbor-hide {
   display: none !important;
 }
 
-/* line 62, ../sass/modules/_neighbors.scss */
+/* line 79, ../sass/modules/_neighbors.scss */
 .rtDirect, .rtGreen {
   background-color: green !important;
   -webkit-print-color-adjust: exact;
 }
 
-/* line 67, ../sass/modules/_neighbors.scss */
+/* line 84, ../sass/modules/_neighbors.scss */
 .rtRouted {
   background-color: #8C0 !important;
   -webkit-print-color-adjust: exact;
 }
 
-/* line 72, ../sass/modules/_neighbors.scss */
+/* line 89, ../sass/modules/_neighbors.scss */
 .rtBadlyRouted {
   background-color: yellow !important;
   -webkit-print-color-adjust: exact;
 }
 
-/* line 77, ../sass/modules/_neighbors.scss */
+/* line 94, ../sass/modules/_neighbors.scss */
 .rtNotLinked, .rtRed {
   background-color: red !important;
   -webkit-print-color-adjust: exact;
 }
 
-/* line 82, ../sass/modules/_neighbors.scss */
+/* line 99, ../sass/modules/_neighbors.scss */
 .rtUnavailable, .rtGray {
   background-color: gray !important;
   -webkit-print-color-adjust: exact;
 }
 
-/* line 87, ../sass/modules/_neighbors.scss */
+/* line 104, ../sass/modules/_neighbors.scss */
 .rtOrange {
   background-color: orange !important;
   -webkit-print-color-adjust: exact;
@@ -16821,7 +16840,7 @@ http://codepen.io/MattIn4D/pen/LiKFC
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-color: #FFFFFF;
   -webkit-print-color-adjust: exact;
-  font-size: 11px;
+  font-size: 11pt;
   line-height: 1.4em;
 }
 /* line 14, ../sass/modules/_print.scss */
@@ -16833,62 +16852,72 @@ http://codepen.io/MattIn4D/pen/LiKFC
   padding: 0;
   min-width: 100%;
 }
+/* line 27, ../sass/modules/_print.scss */
+#page_print h1 {
+  font-size: 16pt;
+}
 /* line 31, ../sass/modules/_print.scss */
+#page_print .print-entry {
+  border-bottom: solid 1px #000000;
+  margin: 0 0 20pt;
+  padding: 0 0 20pt;
+}
+/* line 40, ../sass/modules/_print.scss */
 #page_print a {
   text-decoration: none;
 }
-/* line 35, ../sass/modules/_print.scss */
+/* line 44, ../sass/modules/_print.scss */
 #page_print .text-info {
   color: #5bc0de !important;
 }
-/* line 38, ../sass/modules/_print.scss */
+/* line 47, ../sass/modules/_print.scss */
 #page_print .text-primary {
   color: #6494BC !important;
 }
-/* line 41, ../sass/modules/_print.scss */
+/* line 50, ../sass/modules/_print.scss */
 #page_print .text-success {
   color: #80AD80 !important;
 }
-/* line 44, ../sass/modules/_print.scss */
+/* line 53, ../sass/modules/_print.scss */
 #page_print .text-danger {
   color: #d9534f !important;
 }
-/* line 47, ../sass/modules/_print.scss */
+/* line 56, ../sass/modules/_print.scss */
 #page_print .text-warning {
   color: #f0ad4e !important;
 }
-/* line 51, ../sass/modules/_print.scss */
+/* line 60, ../sass/modules/_print.scss */
 #page_print .progress-bar-info {
   background-color: #5bc0de !important;
   -webkit-print-color-adjust: exact;
 }
-/* line 55, ../sass/modules/_print.scss */
+/* line 64, ../sass/modules/_print.scss */
 #page_print .progress-bar-primary {
   background-color: #6494BC !important;
   -webkit-print-color-adjust: exact;
 }
-/* line 59, ../sass/modules/_print.scss */
+/* line 68, ../sass/modules/_print.scss */
 #page_print .progress-bar-success {
   background-color: #80AD80 !important;
   -webkit-print-color-adjust: exact;
 }
-/* line 63, ../sass/modules/_print.scss */
+/* line 72, ../sass/modules/_print.scss */
 #page_print .progress-bar-danger {
   background-color: #d9534f !important;
   -webkit-print-color-adjust: exact;
 }
-/* line 67, ../sass/modules/_print.scss */
+/* line 76, ../sass/modules/_print.scss */
 #page_print .progress-bar-warning {
   background-color: #f0ad4e !important;
   -webkit-print-color-adjust: exact;
 }
-/* line 72, ../sass/modules/_print.scss */
+/* line 81, ../sass/modules/_print.scss */
 #page_print table {
   width: 100%;
   border-collapse: collapse;
   border-spacing: 0;
 }
-/* line 76, ../sass/modules/_print.scss */
+/* line 85, ../sass/modules/_print.scss */
 #page_print table td, #page_print table th {
   vertical-align: top;
   text-align: left;
@@ -16896,22 +16925,22 @@ http://codepen.io/MattIn4D/pen/LiKFC
   border: solid 1px #CCCCCC;
   display: table-cell;
 }
-/* line 89, ../sass/modules/_print.scss */
+/* line 98, ../sass/modules/_print.scss */
 #page_print .rssi-container {
   page-break-after: auto;
 }
-/* line 92, ../sass/modules/_print.scss */
+/* line 101, ../sass/modules/_print.scss */
 #page_print .rssi-entry {
   page-break-inside: avoid;
   height: 150mm;
   width: auto;
   max-width: 210mm;
 }
-/* line 101, ../sass/modules/_print.scss */
+/* line 110, ../sass/modules/_print.scss */
 #page_print .page-navi {
   position: static;
 }
-/* line 103, ../sass/modules/_print.scss */
+/* line 112, ../sass/modules/_print.scss */
 #page_print .page-navi .page-navi-in {
   position: static;
 }

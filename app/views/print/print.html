@@ -2,20 +2,20 @@
 <div class="print-entry">
 
     <div ng-include="'app/views/device/status.html'"></div>
-    zeigt die Übersichten Device Status
+    <!--zeigt die Übersichten Device Status-->
 </div>
 <div class="print-entry">
     <div ng-include="'app/views/device/type.html'"></div>
-    zeigt die Übersichten Device Information
+    <!--zeigt die Übersichten Device Information-->
 </div>
 <div class="print-entry">
     <div ng-include="'app/views/installer/rssi_background.html'"></div>
-    zeigt Background Noise
+    <!--zeigt Background Noise-->
 
 </div>
 <div class="print-entry">
     <div ng-include="'app/views/network/statistics.html'"></div>
-    zeigt die noch zu entwerfende Network Statistik mit Eigene Pakete versus fremde Pakete, ...
+    <!--zeigt die noch zu entwerfende Network Statistik mit Eigene Pakete versus fremde Pakete, ...-->
 </div>
 <!--<div class="print-entry">
     <div ng-include="'app/views/network/routing.html'"></div>
@@ -27,7 +27,7 @@
     Config-bereich
 </div>-->
 <div class="print-entry" ng-controller="DataHolderController">
-    <h1>{{ _t('txt_notes') }}</h1>
+    <div class="page-header"><h1>{{ _t('txt_notes') }}</h1></div>
     <span class="newlines" ng-if="dataHolder.controller.homeNotes">
                 {{dataHolder.controller.homeNotes|stripTags}}
                 </span>&nbsp;

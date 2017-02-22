@@ -8,7 +8,7 @@
         //color: #000000;
         background-color: #FFFFFF;
         -webkit-print-color-adjust: exact;
-        font-size: 11px;
+        font-size: 11pt;
         line-height: 1.4em;
     }
     #header,.container-installer,#footer,.print-hide{
@@ -24,6 +24,15 @@
         //color: red !important;
 
     }
+  h1{
+    font-size: 16pt;
+
+  }
+  .print-entry{
+    border-bottom: solid 1px #000000;
+    margin: 0 0 20pt;
+    padding: 0 0 20pt;
+  }
     .fa{
        //color: blue !important;
     }
