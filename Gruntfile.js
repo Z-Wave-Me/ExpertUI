@@ -81,6 +81,7 @@ module.exports = function (grunt) {
                     'app/directives/directives.js',
                     'app/directives/angular-slider.js',
                     'app/directives/dir-pagination.js',
+                    'app/directives/double-scroll-bars.min.js',
                     'app/filters/filters.js',
                     'app/factories/factories.js',
                     'app/services/services.js',

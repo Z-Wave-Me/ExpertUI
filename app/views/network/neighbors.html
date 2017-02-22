@@ -1,20 +1,20 @@
 <!-- Neghbors view -->
 <div ng-controller="NeighborController">
     <div class="page-header row">
-        <div class="col-sm-8">
+        <div class="col-sm-8 header-col ">
             <h1>{{ _t('neighbors')}}</h1>
         </div>
-        <div class="col-sm-4 text-right">
+        <div class="col-sm-4 text-right header-col">
             <div class="btn-group">
                 <!-- Info view -->
                 <button class="btn btn-default"
-                        ng-class="routings.view === 'table' ? 'active': ''"
+                        ng-class="routings.showInfo ? 'active': ''"
                         ng-click="changeView('table')">
                     <i class="fa fa-th-list"></i> {{_t('Info and Neighbors')}}
                 </button>
                 <!-- Table view view -->
                 <button class="btn btn-default"
-                ng-class="routings.view === 'neighbors' ? 'active': ''"
+                ng-class="!routings.showInfo ? 'active': ''"
                 ng-click="changeView('neighbors')">
                     <i class="fa fa-th-large"></i> {{_t('Neighbors only')}}
                 </button>
@@ -23,17 +23,93 @@
         </div>
 
     </div>
-    <!-- Neighbors -->
-    <div ng-if="routings.view === 'neighbors'" ng-include="'app/views/network/neighbors_routing.html'"></div>
-    <!-- Table -->
-    <div ng-if="routings.view === 'table'" ng-include="'app/views/network/neighbors_info.html'"></div>
+
+    <!-- Routing table -->
+    <div class="table-scroll" ng-if="routings.show">
+        <div data-double-scroll-bar-horizontal>
+        <table class="table-neighbors data-size-{{routings.dataSize}}"
+               ng-class="routings.showInfo ? 'table table-condensed table-hover ':'table-neighbors-noinfo'">
+            <thead>
+            <tr>
+                <th class="th-id">&nbsp;</th>
+                <th class="neighbor-hide">{{ _t('device_name')}}</th>
+                <th class="neighbor-hide">{{ _t('nav_type_info')}}</th>
+                <th class="neighbor-hide">{{ _t('rt_header_update_time')}}</th>
+                <th class="neighbor-hide mobile-show td-action print-hide">
+                    <button class="btn btn-primary" id="btn_update_all_1"
+                            ng-click="updateAllRoutess('all_1','urlToStore')"
+                            ng-disabled="rowSpinner['all_1']">
+                        <bb-row-spinner
+                                spinner="rowSpinner['all_1']"
+                                label="_t('switches_update_all')"
+                                icon="'fa-circle-o'">
+                        </bb-row-spinner>
+                    </button>
+                </th>
+                <th>
+                <span class="rt-cell"
+                      ng-repeat="v in routings.all track by $index">{{v.id}}</span>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="v in routings.all track by $index">
+                <td class="headcol">
+                    <span class="tool-tip right rt-cell rt-cell-th">{{v.id}}</span>
+                </td>
+                <td class="neighbor-hide">{{v.name}}</td>
+                <td class="neighbor-hide">
+                    <i class="fa" ng-class="v.icon" title="{{_t(v.type)}}"></i>
+                </td>
+                <td class="neighbor-hide row-time is-updated-{{v.isUpdated}}">
+                    {{ v.updateTime | isTodayFromUnix }} &nbsp;
+                </td>
+                <td class="neighbor-hide td-action print-hide">
+                    <button class="btn btn-default" id="btn_update_{{ v.rowId}}"
+                            ng-click="updateRoute(v.urlToStore)"
+                            ng-disabled="rowSpinner[v.urlToStore]">
+                        <bb-row-spinner
+                                spinner="rowSpinner[v.urlToStore]"
+                                label=" _t('update')"
+                                icon="'fa-circle-o text-success'">
+
+                        </bb-row-spinner>
+                    </button>&nbsp;
+                </td>
+                <td ng-bind-html="htmlNeighbors[v.id]|toTrusted"></td>
+            </tr>
+            <tr>
+                <th class="th-id">&nbsp;</th>
+                <th class="neighbor-hide">{{ _t('device_name')}}</th>
+                <th class="neighbor-hide">{{ _t('nav_type_info')}}</th>
+                <th class="neighbor-hide">{{ _t('rt_header_update_time')}}</th>
+                <th class="neighbor-hide mobile-show td-action print-hide">
+                    <button class="btn btn-primary" id="btn_update_all_1"
+                            ng-click="updateAllRoutess('all_1','urlToStore')"
+                            ng-disabled="rowSpinner['all_1']">
+                        <bb-row-spinner
+                                spinner="rowSpinner['all_1']"
+                                label="_t('switches_update_all')"
+                                icon="'fa-circle-o'">
+                        </bb-row-spinner>
+                    </button>
+                </th>
+                <th>
+                <span class="rt-cell"
+                      ng-repeat="v in routings.all track by $index">{{v.id}}</span>
+                </th>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
 
     <!-- Legend -->
     <div id="RoutingComments">
-        <i class="fa fa-square fa-lg green"></i> {{_t('direct')}}<br/>
-        <i class="fa fa-square fa-lg green-light"></i> {{_t('routed')}}<br/>
-        <i class="fa fa-square fa-lg yellow"></i> {{_t('badly_routed')}}<br/>
-        <i class="fa fa-square fa-lg red"></i> {{_t('not_linked')}}<br/>
-        <i class="fa fa-square fa-lg gray"></i> {{_t('unavailable')}}<br/>
+        <i class="fa fa-square fa-lg green"></i> {{_t('in_range')}}<br/>
+        <!--<i class="fa fa-square fa-lg green-light"></i> {{_t('routed')}}<br/>
+        <i class="fa fa-square fa-lg yellow"></i> {{_t('badly_routed')}}<br/>-->
+        <i class="fa fa-square fa-lg red"></i> {{_t('notin_range')}}<br/>
+        <!--<i class="fa fa-square fa-lg gray"></i> {{_t('unavailable')}}<br/>-->
     </div>
 </div>

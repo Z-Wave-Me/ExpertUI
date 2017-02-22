@@ -1,6 +1,8 @@
 {
   "--- newtrans": "---",
  "---": "---",
+ "in_range":"In the Range",
+ "notin_range":"Not in the Range",
  "include_log":"Include log",
  "include_log_warning":"This will include information about your Z-Wave network",
  "ok" : "100kbit",
