@@ -11869,120 +11869,124 @@ h4 {
   font-size: 110%;
   font-weight: bold;
 }
+/* line 89, ../sass/common/_body.scss */
+.page-header .header-col {
+  padding: 0;
+}
 
-/* line 91, ../sass/common/_body.scss */
+/* line 94, ../sass/common/_body.scss */
 .perex {
   margin: 20px 0;
   padding: 20px 0 0 0;
   border-top: 1px dotted #cccccc;
 }
 
-/* line 97, ../sass/common/_body.scss */
+/* line 100, ../sass/common/_body.scss */
 .input-help {
   color: #666666;
   font-size: 13px;
   line-height: 1.2em;
 }
 
-/* line 102, ../sass/common/_body.scss */
+/* line 105, ../sass/common/_body.scss */
 .input-help:hover {
   color: #333;
   cursor: help;
 }
 
-/* line 108, ../sass/common/_body.scss */
+/* line 111, ../sass/common/_body.scss */
 .tooltip-inner {
   background-color: #1f355e;
 }
 
-/* line 112, ../sass/common/_body.scss */
+/* line 115, ../sass/common/_body.scss */
 .dropdown-menu {
   border-color: #9fd8ef;
 }
 
-/* line 115, ../sass/common/_body.scss */
+/* line 118, ../sass/common/_body.scss */
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
   color: #262626;
   text-decoration: none;
   background-color: #e4f5fc;
 }
 
-/* line 121, ../sass/common/_body.scss */
+/* line 124, ../sass/common/_body.scss */
 .custom-ip-message {
   display: none;
 }
 
-/* line 125, ../sass/common/_body.scss */
+/* line 128, ../sass/common/_body.scss */
 .newlines {
   white-space: pre-line;
 }
 
 /* Colors
 -------------------------------------------------- */
-/* line 133, ../sass/common/_body.scss */
+/* line 136, ../sass/common/_body.scss */
 .bcg-success {
   background-color: #dde9dd;
 }
 
-/* line 137, ../sass/common/_body.scss */
+/* line 140, ../sass/common/_body.scss */
 .red, .is-updated-false {
   color: red !important;
 }
 
-/* line 141, ../sass/common/_body.scss */
+/* line 144, ../sass/common/_body.scss */
 .green, .is-rfreshed {
   color: green !important;
 }
 
-/* line 144, ../sass/common/_body.scss */
+/* line 147, ../sass/common/_body.scss */
 .green-light {
   color: #8C0 !important;
 }
 
-/* line 148, ../sass/common/_body.scss */
+/* line 151, ../sass/common/_body.scss */
 .yellow {
   color: yellow !important;
 }
 
-/* line 151, ../sass/common/_body.scss */
+/* line 154, ../sass/common/_body.scss */
 .gray {
   color: gray !important;
 }
 
-/* line 154, ../sass/common/_body.scss */
+/* line 157, ../sass/common/_body.scss */
 .orange {
   color: orange !important;
 }
 
-/* line 158, ../sass/common/_body.scss */
+/* line 161, ../sass/common/_body.scss */
 .main_spinner {
   font-size: 14px;
   color: #555;
 }
 
-/* line 163, ../sass/common/_body.scss */
+/* line 166, ../sass/common/_body.scss */
 .text-yellow {
   color: yellow;
 }
 
-/* line 166, ../sass/common/_body.scss */
+/* line 169, ../sass/common/_body.scss */
 .text-orange {
   color: orange;
 }
 
 /* Links
 -------------------------------------------------- */
-/* line 171, ../sass/common/_body.scss */
+/* line 174, ../sass/common/_body.scss */
 a {
   color: #333333;
   text-decoration: none;
 }
-/* line 175, ../sass/common/_body.scss */
+/* line 178, ../sass/common/_body.scss */
 a:hover, a:focus {
   color: #1a1a1a;
   text-decoration: underline;
 }
-/* line 180, ../sass/common/_body.scss */
+/* line 183, ../sass/common/_body.scss */
 a:focus {
   outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
@@ -11991,7 +11995,7 @@ a:focus {
 
 /* Fatal error
 -------------------------------------------------- */
-/* line 190, ../sass/common/_body.scss */
+/* line 193, ../sass/common/_body.scss */
 .app-fatal-error {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -12001,13 +12005,13 @@ a:focus {
   background-color: #FFFFFF;
   border: solid 1px #d9534f;
 }
-/* line 197, ../sass/common/_body.scss */
+/* line 200, ../sass/common/_body.scss */
 .app-fatal-error .fatal-error-message {
   color: #d9534f;
   font-weight: bold;
   font-size: 120%;
 }
-/* line 202, ../sass/common/_body.scss */
+/* line 205, ../sass/common/_body.scss */
 .app-fatal-error .fatal-error-info {
   margin: 10px 0 0 0;
   color: #000000;
@@ -12016,44 +12020,44 @@ a:focus {
 
 /* Others
 -------------------------------------------------- */
-/* line 211, ../sass/common/_body.scss */
+/* line 214, ../sass/common/_body.scss */
 .timestamp {
   color: #333333;
   font-size: 17px;
 }
-/* line 214, ../sass/common/_body.scss */
+/* line 217, ../sass/common/_body.scss */
 .timestamp .fa {
   font-size: 110%;
 }
 
-/* line 218, ../sass/common/_body.scss */
+/* line 221, ../sass/common/_body.scss */
 .bcg-success {
   background-color: #dff0d8;
 }
 
-/* line 221, ../sass/common/_body.scss */
+/* line 224, ../sass/common/_body.scss */
 .bcg-active.false, .bcg-danger {
   background-color: #f2dede;
 }
 
-/* line 225, ../sass/common/_body.scss */
+/* line 228, ../sass/common/_body.scss */
 .clickable {
   cursor: pointer;
 }
 
-/* line 229, ../sass/common/_body.scss */
+/* line 232, ../sass/common/_body.scss */
 .text-supp {
   font-style: italic;
   color: #595959;
 }
 
-/* line 234, ../sass/common/_body.scss */
+/* line 237, ../sass/common/_body.scss */
 .badge {
   padding: 5px;
   margin-right: 5px;
 }
 
-/* line 238, ../sass/common/_body.scss */
+/* line 241, ../sass/common/_body.scss */
 .help-text {
   display: block;
   font-size: 95%;
@@ -12061,63 +12065,63 @@ a:focus {
   margin: 5px 0;
 }
 
-/* line 244, ../sass/common/_body.scss */
+/* line 247, ../sass/common/_body.scss */
 .help-text.inline {
   display: inline;
 }
 
-/* line 248, ../sass/common/_body.scss */
+/* line 251, ../sass/common/_body.scss */
 .display-block {
   display: block;
 }
 
-/* line 252, ../sass/common/_body.scss */
+/* line 255, ../sass/common/_body.scss */
 .is-hidden, .alert-hidden, .alert- {
   display: none !important;
 }
 
-/* line 256, ../sass/common/_body.scss */
+/* line 259, ../sass/common/_body.scss */
 .alert-list {
   margin: 8px 0;
 }
 
-/* line 260, ../sass/common/_body.scss */
+/* line 263, ../sass/common/_body.scss */
 .text-alert, .text-alert-list {
   font-size: 85%;
   margin: 0 0 0 7px;
 }
 
-/* line 264, ../sass/common/_body.scss */
+/* line 267, ../sass/common/_body.scss */
 .text-alert {
   margin: 7px 0;
 }
 
-/* line 267, ../sass/common/_body.scss */
+/* line 270, ../sass/common/_body.scss */
 .report-img {
   display: inline-block;
   max-width: 32px;
 }
 
-/* line 271, ../sass/common/_body.scss */
+/* line 274, ../sass/common/_body.scss */
 .hidden-selectopt {
   display: none !important;
 }
 
 /* Response
 -------------------------------------------------- */
-/* line 277, ../sass/common/_body.scss */
+/* line 280, ../sass/common/_body.scss */
 #respone_container {
   display: none;
 }
 
-/* line 281, ../sass/common/_body.scss */
+/* line 284, ../sass/common/_body.scss */
 #respone_container_inner {
   margin: 0 auto;
   text-align: center;
   /*position: relative;*/
 }
 
-/* line 286, ../sass/common/_body.scss */
+/* line 289, ../sass/common/_body.scss */
 .page-load-spinner {
   z-index: 1000;
   text-align: center;
@@ -12127,7 +12131,7 @@ a:focus {
   width: 150px;
 }
 
-/* line 295, ../sass/common/_body.scss */
+/* line 298, ../sass/common/_body.scss */
 .response-message {
   z-index: 1000;
   text-align: center;
@@ -12137,58 +12141,14 @@ a:focus {
 
 /* Progress bar
 -------------------------------------------------- */
-/* line 303, ../sass/common/_body.scss */
+/* line 306, ../sass/common/_body.scss */
 .progress {
   margin-bottom: 0;
 }
 
 /* NEW - Routing table cell styles
 -------------------------------------------------- */
-/* line 3, ../sass/modules/_routing.scss */
-.overflow {
-  width: 100%;
-  overflow-y: hidden;
-  overflow-x: auto;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
-  -webkit-overflow-scrolling: touch;
-}
-/* line 11, ../sass/modules/_routing.scss */
-.overflow > table {
-  margin-bottom: 0;
-}
-/* line 19, ../sass/modules/_routing.scss */
-.overflow > table > thead > tr > th,
-.overflow > table > thead > tr > td,
-.overflow > table > tbody > tr > th,
-.overflow > table > tbody > tr > td,
-.overflow > table > tfoot > tr > th,
-.overflow > table > tfoot > tr > td {
-  white-space: nowrap;
-}
-
-/* line 28, ../sass/modules/_routing.scss */
-.table-neighbors .rt-cell {
-  display: inline-block;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-  margin: 1px;
-  border: solid 1px #FFFFFF;
-  text-align: center;
-  width: 25px;
-  height: 25px;
-  line-height: 25px;
-}
-/* line 37, ../sass/modules/_routing.scss */
-.table-neighbors .rt-cell.rt-cell-th {
-  border-color: #CCCCCC;
-}
-/* line 41, ../sass/modules/_routing.scss */
-.table-neighbors td {
-  vertical-align: middle;
-}
-
-/* line 47, ../sass/modules/_routing.scss */
+/* line 7, ../sass/modules/_routing.scss */
 .table-routing .rt-cell {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -12200,46 +12160,46 @@ a:focus {
   height: 25px;
   line-height: 25px;
 }
-/* line 55, ../sass/modules/_routing.scss */
+/* line 15, ../sass/modules/_routing.scss */
 .table-routing .rt-cell.rt-cell-th {
   border-color: #CCCCCC;
 }
-/* line 59, ../sass/modules/_routing.scss */
+/* line 19, ../sass/modules/_routing.scss */
 .table-routing td {
   vertical-align: middle;
 }
 
-/* line 65, ../sass/modules/_routing.scss */
+/* line 25, ../sass/modules/_routing.scss */
 .rtDirect, .rtGreen {
   background-color: green !important;
   -webkit-print-color-adjust: exact;
 }
 
-/* line 70, ../sass/modules/_routing.scss */
+/* line 30, ../sass/modules/_routing.scss */
 .rtRouted {
   background-color: #8C0 !important;
   -webkit-print-color-adjust: exact;
 }
 
-/* line 75, ../sass/modules/_routing.scss */
+/* line 35, ../sass/modules/_routing.scss */
 .rtBadlyRouted {
   background-color: yellow !important;
   -webkit-print-color-adjust: exact;
 }
 
-/* line 80, ../sass/modules/_routing.scss */
+/* line 40, ../sass/modules/_routing.scss */
 .rtNotLinked, .rtRed {
   background-color: red !important;
   -webkit-print-color-adjust: exact;
 }
 
-/* line 85, ../sass/modules/_routing.scss */
+/* line 45, ../sass/modules/_routing.scss */
 .rtUnavailable, .rtGray {
   background-color: gray !important;
   -webkit-print-color-adjust: exact;
 }
 
-/* line 90, ../sass/modules/_routing.scss */
+/* line 50, ../sass/modules/_routing.scss */
 .rtOrange {
   background-color: orange !important;
   -webkit-print-color-adjust: exact;
@@ -12247,14 +12207,14 @@ a:focus {
 
 /* OLD - Routing table cell styles
 -------------------------------------------------- */
-/* line 97, ../sass/modules/_routing.scss */
+/* line 57, ../sass/modules/_routing.scss */
 #RoutingTable td.rtCell {
   width: 22px;
   height: 22px;
   vertical-align: middle;
 }
 
-/* line 104, ../sass/modules/_routing.scss */
+/* line 64, ../sass/modules/_routing.scss */
 #RoutingTable div.rtDiv {
   min-width: 20px;
   min-height: 20px;
@@ -12268,83 +12228,83 @@ a:focus {
   vertical-align: middle;
 }
 
-/* line 119, ../sass/modules/_routing.scss */
+/* line 79, ../sass/modules/_routing.scss */
 #RoutingTable span.routeHops {
   display: table-cell;
   vertical-align: middle;
   border: 0;
 }
 
-/* line 125, ../sass/modules/_routing.scss */
+/* line 85, ../sass/modules/_routing.scss */
 #RoutingTable td.rtInfo {
   text-align: left;
   white-space: nowrap;
 }
 
-/* line 130, ../sass/modules/_routing.scss */
+/* line 90, ../sass/modules/_routing.scss */
 #RoutingTable td.rtHeader {
   text-align: center;
   white-space: nowrap;
 }
 
-/* line 135, ../sass/modules/_routing.scss */
+/* line 95, ../sass/modules/_routing.scss */
 #RoutingTable td.rtHeaderNames {
   text-align: left;
   white-space: nowrap;
 }
 
-/* line 140, ../sass/modules/_routing.scss */
+/* line 100, ../sass/modules/_routing.scss */
 #RoutingTable td.rtNodes {
   text-align: right;
 }
 
-/* line 144, ../sass/modules/_routing.scss */
+/* line 104, ../sass/modules/_routing.scss */
 #RoutingTable td.rtNodesNames {
   text-align: left;
   padding: 0 1em 0 0;
 }
 
-/* line 149, ../sass/modules/_routing.scss */
+/* line 109, ../sass/modules/_routing.scss */
 #RoutingTable td {
   white-space: nowrap;
   padding: 0;
 }
 
-/* line 154, ../sass/modules/_routing.scss */
+/* line 114, ../sass/modules/_routing.scss */
 #RoutingTable th {
   white-space: nowrap;
   padding: 0px 0px 1px 1px;
 }
 
-/* line 159, ../sass/modules/_routing.scss */
+/* line 119, ../sass/modules/_routing.scss */
 #RoutingTable .info {
   font-size: smaller;
 }
 
-/* line 167, ../sass/modules/_routing.scss */
+/* line 127, ../sass/modules/_routing.scss */
 #RoutingComments {
   margin-top: 10px;
 }
 
 /* device not present in config file and not present in Z-Wave assoc group */
-/* line 172, ../sass/modules/_routing.scss */
+/* line 132, ../sass/modules/_routing.scss */
 .dissapeared {
   color: #911;
 }
 
 /* device present in config file but not present in Z-Wave assoc group */
-/* line 177, ../sass/modules/_routing.scss */
+/* line 137, ../sass/modules/_routing.scss */
 .notInZWave {
   color: #955;
 }
 
 /* device present in config file and in Z-Wave assoc group */
-/* line 182, ../sass/modules/_routing.scss */
+/* line 142, ../sass/modules/_routing.scss */
 .inZWave {
   color: #000;
 }
 
-/* line 186, ../sass/modules/_routing.scss */
+/* line 146, ../sass/modules/_routing.scss */
 .assocAdd {
   background-color: #911 !important;
   border-color: #955 !important;

@@ -1,54 +1,8 @@
 /* NEW - Routing table cell styles
 -------------------------------------------------- */
-.overflow{
-      width: 100%;
-      overflow-y: hidden;
-      overflow-x: auto;
-      -ms-overflow-style: -ms-autohiding-scrollbar;
-      -webkit-overflow-scrolling: touch;
 
-      // Tighten up spacing
-      > table {
-        margin-bottom: 0;
 
-        // Ensure the content doesn't wrap
-        > thead,
-        > tbody,
-        > tfoot {
-          > tr {
-            > th,
-            > td {
-              white-space: nowrap;
-            }
-          }
-        }
-      }
-}
-.table-neighbors {
-  .rt-cell {
-    display: inline-block;
-    @include appBorderRadius(4px);
-    margin: 1px;
-    border: solid 1px #FFFFFF;
-    text-align: center;
-    width: 25px;
-    height: 25px;
-    line-height: 25px;
-    &.rt-cell-th {
-      border-color: #CCCCCC;}
-  }
 
-  td {
-    vertical-align: middle;
-
-  }
-
-}
-.table-neighbors-noinfo{
-  .info-hide{
-    display: none !important;
-  }
-}
 .table-routing {
   .rt-cell {
     @include appBorderRadius(4px);

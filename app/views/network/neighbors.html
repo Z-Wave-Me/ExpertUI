@@ -1,10 +1,10 @@
 <!-- Neghbors view -->
 <div ng-controller="NeighborController">
     <div class="page-header row">
-        <div class="col-sm-8">
+        <div class="col-sm-8 header-col ">
             <h1>{{ _t('neighbors')}}</h1>
         </div>
-        <div class="col-sm-4 text-right">
+        <div class="col-sm-4 text-right header-col">
             <div class="btn-group">
                 <!-- Info view -->
                 <button class="btn btn-default"
@@ -23,18 +23,18 @@
         </div>
 
     </div>
-Info status {{routings.showInfo}}
+
     <!-- Routing table -->
-    <div class="table-responsive" ng-if="routings.show">
-        <table class="table-neighbors"
-               ng-class="routings.showInfo ? 'table table-striped table-condensed table-hover ':'table-neighbors-noinfo'">
+    <div class="table-scroll" ng-if="routings.show">
+        <table class="table-neighbors data-size-{{routings.dataSize}}"
+               ng-class="routings.showInfo ? 'table table-condensed table-hover ':'table-neighbors-noinfo'">
             <thead>
             <tr>
-                <th>#</th>
-                <th class="info-hide">{{ _t('device_name')}}</th>
-                <th class="info-hide">{{ _t('nav_type_info')}}</th>
-                <th class="info-hide">{{ _t('rt_header_update_time')}}</th>
-                <th class="info-hide mobile-show td-action print-hide">
+                <th>&nbsp;</th>
+                <th class="neighbor-hide">{{ _t('device_name')}}</th>
+                <th class="neighbor-hide">{{ _t('nav_type_info')}}</th>
+                <th class="neighbor-hide">{{ _t('rt_header_update_time')}}</th>
+                <th class="neighbor-hide mobile-show td-action print-hide">
                     <button class="btn btn-primary" id="btn_update_all_1"
                             ng-click="updateAllRoutess('all_1','urlToStore')"
                             ng-disabled="rowSpinner['all_1']">
@@ -53,15 +53,17 @@ Info status {{routings.showInfo}}
             </thead>
             <tbody>
             <tr ng-repeat="v in routings.all track by $index">
-                <td>{{v.id}}</td>
-                <td class="info-hide">{{v.name}}</td>
-                <td class="info-hide">
+                <td class="headcol">
+                    <span class="tool-tip right rt-cell rt-cell-th">{{v.id}}</span>
+                </td>
+                <td class="neighbor-hide">{{v.name}}</td>
+                <td class="neighbor-hide">
                     <i class="fa" ng-class="v.icon" title="{{_t(v.type)}}"></i>
                 </td>
-                <td class="info-hide row-time is-updated-{{v.isUpdated}}">
+                <td class="neighbor-hide row-time is-updated-{{v.isUpdated}}">
                     {{ v.updateTime | isTodayFromUnix }} &nbsp;
                 </td>
-                <td class="info-hide td-action print-hide">
+                <td class="neighbor-hide td-action print-hide">
                     <button class="btn btn-default" id="btn_update_{{ v.rowId}}"
                             ng-click="updateRoute(v.urlToStore)"
                             ng-disabled="rowSpinner[v.urlToStore]">
@@ -75,16 +77,37 @@ Info status {{routings.showInfo}}
                 </td>
                 <td ng-bind-html="htmlNeighbors[v.id]|toTrusted"></td>
             </tr>
+            <tr>
+                <th>&nbsp;</th>
+                <th class="neighbor-hide">{{ _t('device_name')}}</th>
+                <th class="neighbor-hide">{{ _t('nav_type_info')}}</th>
+                <th class="neighbor-hide">{{ _t('rt_header_update_time')}}</th>
+                <th class="neighbor-hide mobile-show td-action print-hide">
+                    <button class="btn btn-primary" id="btn_update_all_1"
+                            ng-click="updateAllRoutess('all_1','urlToStore')"
+                            ng-disabled="rowSpinner['all_1']">
+                        <bb-row-spinner
+                                spinner="rowSpinner['all_1']"
+                                label="_t('switches_update_all')"
+                                icon="'fa-circle-o'">
+                        </bb-row-spinner>
+                    </button>
+                </th>
+                <th>
+                <span class="rt-cell"
+                      ng-repeat="v in routings.all track by $index">{{v.id}}</span>
+                </th>
+            </tr>
             </tbody>
         </table>
     </div>
 
     <!-- Legend -->
     <div id="RoutingComments">
-        <i class="fa fa-square fa-lg green"></i> {{_t('direct')}}<br/>
-        <i class="fa fa-square fa-lg green-light"></i> {{_t('routed')}}<br/>
-        <i class="fa fa-square fa-lg yellow"></i> {{_t('badly_routed')}}<br/>
-        <i class="fa fa-square fa-lg red"></i> {{_t('not_linked')}}<br/>
-        <i class="fa fa-square fa-lg gray"></i> {{_t('unavailable')}}<br/>
+        <i class="fa fa-square fa-lg green"></i> {{_t('in_range')}}<br/>
+        <!--<i class="fa fa-square fa-lg green-light"></i> {{_t('routed')}}<br/>
+        <i class="fa fa-square fa-lg yellow"></i> {{_t('badly_routed')}}<br/>-->
+        <i class="fa fa-square fa-lg red"></i> {{_t('notin_range')}}<br/>
+        <!--<i class="fa fa-square fa-lg gray"></i> {{_t('unavailable')}}<br/>-->
     </div>
 </div>

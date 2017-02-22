@@ -1,16 +1,46 @@
-/* NEW - Routing table cell styles
+/* Neighbors table styles
 -------------------------------------------------- */
+.table-scroll{
+  width: 100%;
+  overflow-y: hidden;
+  overflow-x: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  -webkit-overflow-scrolling: touch;
+
+  // Tighten up spacing
+  > table {
+    margin-bottom: 0;
+
+    // Ensure the content doesn't wrap
+    > thead,
+    > tbody,
+    > tfoot {
+      > tr {
+        > th,
+        > td {
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+}
 
 .table-neighbors {
+  .headcol {
+    position:absolute;
+    background-color: #fff;
+    margin: 0  0 0 -20px;
+    //border: solid 1px red !important;
+  }
   .rt-cell {
     display: inline-block;
     @include appBorderRadius(4px);
     margin: 1px;
     border: solid 1px #FFFFFF;
     text-align: center;
-    width: 25px;
-    height: 25px;
-    line-height: 25px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
 
   }
 
@@ -26,24 +56,6 @@
   }
   .neighbor-hide{
     display: none !important;
-  }
-}
-.table-routing {
-  .rt-cell {
-    @include appBorderRadius(4px);
-    margin: 1px;
-    border: solid 1px #FFFFFF;
-    text-align: center;
-    width: 25px;
-    height: 25px;
-    line-height: 25px;
-    &.rt-cell-th {
-      border-color: #CCCCCC;}
-  }
-
-  td {
-    vertical-align: middle;
-
   }
 }
 
@@ -75,100 +87,4 @@
 .rtOrange {
   background-color: orange !important;
   -webkit-print-color-adjust: exact;
-}
-
-/* OLD - Routing table cell styles
--------------------------------------------------- */
-#RoutingTable td.rtCell {
-  width: 22px;
-  height: 22px;
-  vertical-align: middle;
-  //padding: 0px 0px 1px 1px;
-}
-
-#RoutingTable div.rtDiv {
-  min-width: 20px;
-  min-height: 20px;
-  //height: 100%;
-  //width: 100%;
-  height: 30px;
-  width: 30px;
-  border-radius: 4px;
-  border-collapse: separate;
-  border: 1px solid white;
-  display: table;
-  text-align: center;
-  vertical-align: middle;
-}
-
-#RoutingTable span.routeHops {
-  display: table-cell;
-  vertical-align: middle;
-  border: 0;
-}
-
-#RoutingTable td.rtInfo {
-  text-align: left;
-  white-space: nowrap;
-}
-
-#RoutingTable td.rtHeader {
-  text-align: center;
-  white-space: nowrap;
-}
-
-#RoutingTable td.rtHeaderNames {
-  text-align: left;
-  white-space: nowrap;
-}
-
-#RoutingTable td.rtNodes {
-  text-align: right;
-}
-
-#RoutingTable td.rtNodesNames {
-  text-align: left;
-  padding: 0 1em 0 0;
-}
-
-#RoutingTable td {
-  white-space: nowrap;
-  padding: 0;
-}
-
-#RoutingTable th {
-  white-space: nowrap;
-  padding: 0px 0px 1px 1px;
-}
-
-#RoutingTable .info {
-  font-size: smaller;
-}
-
-#RoutingTable button {
-  //padding: 0px 6px;
-}
-
-#RoutingComments {
-  margin-top: 10px;
-}
-
-/* device not present in config file and not present in Z-Wave assoc group */
-.dissapeared {
-  color: #911;
-}
-
-/* device present in config file but not present in Z-Wave assoc group */
-.notInZWave {
-  color: #955;
-}
-
-/* device present in config file and in Z-Wave assoc group */
-.inZWave {
-  color: #000;
-}
-
-.assocAdd {
-  background-color: #911 !important;
-  border-color: #955 !important;
 }
