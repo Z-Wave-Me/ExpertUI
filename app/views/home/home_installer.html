@@ -1,5 +1,6 @@
 <!-- Default Installer view -->
 <div ng-controller="HomeController">
+    <div ng-controller="SetPromiscuousModeController" onload="setPromiscuousMode('SetPromiscuousMode(true)')"></div>
     <!-- Custom IP -->
     <div ng-include="'app/views/home/ip.html'"></div>
     <div class="row home-page_" ng-if="home.show">
