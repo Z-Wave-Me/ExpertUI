@@ -1,4 +1,4 @@
-/* Copyright:  Z-Wave Europe, Created: 22-02-2017 18:51:09 */
+/* Copyright:  Z-Wave Europe, Created: 22-02-2017 19:47:40 */
 angular.module('myAppTemplates', []).run(['$templateCache', function($templateCache) {
   'use strict';
 
@@ -207,7 +207,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/home/home_installer.html',
-    "<div ng-controller=HomeController><div ng-controller=SetPromiscuousModeController onload=\"setPromiscuousMode('SetPromiscuousMode(true)')\"></div><div ng-include=\"'app/views/home/ip.html'\"></div><div class=\"row home-page_\" ng-if=home.show><div class=\"col-sm-6 home-page-image\"><div ng-include=\"'app/views/home/promo_installer.html'\"></div><div ng-include=\"'app/views/home/use_cit.html'\"></div><div ng-include=\"'app/views/home/network_name.html'\"></div><div ng-include=\"'app/views/home/notes.html'\"></div></div><div class=\"col-sm-6 product-data-list_ pull-right_\"><div ng-include=\"'app/views/home/network_informations.html'\"></div><div ng-include=\"'app/views/network/control/control_different.html'\" ng-controller=ControlController></div><div ng-include=\"'app/views/network/control/control_restore.html'\" ng-controller=ControlController></div></div></div></div>"
+    "<div ng-controller=HomeController><div ng-controller=SetPromiscuousModeController ng-init=\"setPromiscuousMode('SetPromiscuousMode(true)')\"></div><div ng-include=\"'app/views/home/ip.html'\"></div><div class=\"row home-page_\" ng-if=home.show><div class=\"col-sm-6 home-page-image\"><div ng-include=\"'app/views/home/promo_installer.html'\"></div><div ng-include=\"'app/views/home/use_cit.html'\"></div><div ng-include=\"'app/views/home/network_name.html'\"></div><div ng-include=\"'app/views/home/notes.html'\"></div></div><div class=\"col-sm-6 product-data-list_ pull-right_\"><div ng-include=\"'app/views/home/network_informations.html'\"></div><div ng-include=\"'app/views/network/control/control_different.html'\" ng-controller=ControlController></div><div ng-include=\"'app/views/network/control/control_restore.html'\" ng-controller=ControlController></div></div></div></div>"
   );
 
 
