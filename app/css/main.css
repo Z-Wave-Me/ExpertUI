@@ -1,4 +1,4 @@
-﻿@charset "UTF-8";
+@charset "UTF-8";
 /* Bootstrap files
 -------------------------------------------------- */
 /*$brand-primary:         #428bca !default;
@@ -16026,6 +16026,13 @@ http://codepen.io/MattIn4D/pen/LiKFC
 .rssi-entry {
   height: 400px;
   width: 100%;
+}
+
+/* line 8, ../sass/modules/_rssi.scss */
+.gauge {
+  width: 540px;
+  height: 380px;
+  float: left;
 }
 
 /* Main navigation
