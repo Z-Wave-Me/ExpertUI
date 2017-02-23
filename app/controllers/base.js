@@ -13,6 +13,7 @@ var appController = angular.module('appController', []);
  * @class BaseController
  */
 appController.controller('BaseController', function ($scope, $rootScope, $cookies, $filter, $location, $anchorScroll, $window, $route, $interval, $timeout, cfg, dataService, deviceService, myCache) {
+    $scope.nowDate = new Date();
     $scope.loading = false;
     $scope.alert = {message: false, status: 'is-hidden', icon: false};
     $scope.languages = {};
@@ -457,7 +458,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
             }, function (error) {});
 
         };
-        $interval(refresh, 1000);
+        $interval(refresh, cfg.queue_interval);
     };
     /**
      * Load common APIs
