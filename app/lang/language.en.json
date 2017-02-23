@@ -1,6 +1,7 @@
 {
   "--- newtrans": "---",
  "---": "---",
+ "promiscuous_mode_info":"Important: If this function is inactive the application can not collect packages anymore",
  "in_range":"In the Range",
  "notin_range":"Not in the Range",
  "include_log":"Include log",
@@ -62,7 +63,7 @@
  "jobs":"Jobs",
  "on":"ON",
  "off":"OFF",
- "promiscuous_mode":"Eavesdrop",
+ "promiscuous_mode":"Background zNiffer Collection",
  "name":"Name",
  "statistics":"Statistics",
  "device_interview_indicator":"Interview",
