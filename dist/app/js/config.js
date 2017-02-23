@@ -6,8 +6,8 @@
 var config_data = {
     'cfg': {
         'app_name': 'Z-Wave CIT',
-        'app_version': '1.2.0-RC-63',
-        'app_built': '23-02-2017 10:23:21',
+        'app_version': '1.2.0-RC-64',
+        'app_built': '23-02-2017 15:43:15',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -18,7 +18,6 @@ var config_data = {
         'route_update_timeout': 15000, // Maximum time in miliseconds to wait for an update-route
         //'server_url': 'http://zwave.dyndns.org:8083/', // Remote JSON
         'local_data_url':'app/data/',
-        'doc_dir':'app/docs/',
         'server_url': '', // Remote JSON
         'dongle': 'zway', // Default dongle
         'dongle_list': [],// Dongle list

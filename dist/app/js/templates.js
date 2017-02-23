@@ -1,4 +1,4 @@
-/* Copyright:  Z-Wave Europe, Created: 23-02-2017 10:23:20 */
+/* Copyright:  Z-Wave Europe, Created: 23-02-2017 15:43:15 */
 angular.module('myAppTemplates', []).run(['$templateCache', function($templateCache) {
   'use strict';
 
@@ -258,7 +258,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/home/use_cit.html',
-    "<div class=\"panel panel-default\" ng-controller=DataHolderController><div class=panel-heading><i class=\"fa fa-info-circle\"></i> {{_t('use_cit')}}</div><div class=panel-body><a class=\"btn btn-default\" href=\"{{cfg.doc_dir}}Z-Wave Alliance Certified Installer Toolkit User Guide (v0.4).pdf\" target=_blank><i class=\"fa fa-book\"></i> {{_t('user_guide')}}</a></div></div>"
+    "<div class=\"panel panel-default\" ng-controller=DataHolderController><div class=panel-heading><i class=\"fa fa-info-circle\"></i> {{_t('use_cit')}}</div><div class=panel-body><a class=\"btn btn-default\" href=\"/cit/storage/data/docs/Z-Wave Alliance Certified Installer Toolkit User Guide (v0.4).pdf\" target=_blank><i class=\"fa fa-book\"></i> {{_t('user_guide')}}</a></div></div>"
   );
 
 
@@ -482,7 +482,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/print/print.html',
-    "<div class=print-entry><div ng-include=\"'app/views/device/status.html'\"></div></div><div class=print-entry><div ng-include=\"'app/views/device/type.html'\"></div></div><div class=print-entry><div ng-include=\"'app/views/installer/rssi_background.html'\"></div></div><div class=print-entry><div ng-include=\"'app/views/network/statistics.html'\"></div></div><div class=print-entry ng-controller=DataHolderController><div class=page-header><h1>{{ _t('txt_notes') }}</h1></div><span class=newlines ng-if=dataHolder.controller.homeNotes>{{dataHolder.controller.homeNotes|stripTags}} </span>&nbsp;</div>"
+    "<div class=print-header><p><strong>Network name:</strong> {{cfg.zwavecfg.network_name}}</p><p><strong>Date:</strong> {{ nowDate | date : 'yyyy-MM-dd' }}</p></div><div class=print-section><h2 class=section-title>Device Info und Device Status</h2><div class=print-entry><div ng-include=\"'app/views/device/status.html'\"></div></div><div class=print-entry><div ng-include=\"'app/views/device/type.html'\"></div></div></div><div class=\"print-section page-break\"><h2 class=section-title>Radio Situation</h2><div class=print-entry><div ng-include=\"'app/views/installer/rssi_background.html'\"></div></div><div class=print-entry><div ng-include=\"'app/views/network/statistics.html'\"></div></div></div><div class=\"print-section page-break\"><h2 class=section-title>Link status</h2><div class=print-entry><div ng-include=\"'app/views/network/neighbors.html'\"></div></div></div><div class=\"print-section page-break\"><h2 class=section-title>{{ _t('txt_notes') }}</h2><div class=print-entry ng-controller=DataHolderController><span class=newlines ng-if=dataHolder.controller.homeNotes>{{dataHolder.controller.homeNotes|stripTags}} </span>&nbsp;</div></div>"
   );
 
 

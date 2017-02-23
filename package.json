@@ -1,19 +1,19 @@
 {
   "name": "Z-Wave",
-  "version": "1.2.16",
+  "version": "1.2.17",
   "v": "1.2.0",
-  "rc": 63,
+  "rc": 64,
   "description": "This User Interfaces allows to operate a Smart Home Network based on Z-Wave devices.",
   "main": "index.html",
   "app_type": "installer",
-  "built": "23-02-2017 10:23:21",
+  "built": "23-02-2017 15:43:15",
   "type_cfg": {
     "default": {
       "dir": "dist",
       "name": "Z-Wave Expert"
     },
     "installer": {
-      "dir": "cit",
+      "dir": "dist",
       "name": "Z-Wave CIT"
     }
   },
