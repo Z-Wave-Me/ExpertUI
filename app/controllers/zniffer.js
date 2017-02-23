@@ -427,11 +427,11 @@ appController.controller('ZnifferRSSIMeterController', function ($scope, $interv
                 chartData2 = 0;
 
             if (typeof parseInt(rssiData.data.data[0].channel1) === 'number') {
-                chartData1 = _.isNull(rssiData.data.data[0].channel1)? 0 : parseInt(rssiData.data.data[0].channel1);
+                chartData1 = _.isNull(rssiData.data.data[0].channel1)? $scope.rssi.chartData1 : parseInt(rssiData.data.data[0].channel1);
             }
 
             if (typeof parseInt(rssiData.data.data[0].channel2) === 'number') {
-                chartData2 = _.isNull(rssiData.data.data[0].channel2) ? 0 : parseInt(rssiData.data.data[0].channel2);
+                chartData2 = _.isNull(rssiData.data.data[0].channel2) ? $scope.rssi.chartData2 : parseInt(rssiData.data.data[0].channel2);
             }
 
             $scope.rssi.chartData1 = chartData1;
