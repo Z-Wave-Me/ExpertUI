@@ -1,5 +1,6 @@
 {  
   "in_range":"In the Range",
+  "promiscuous_mode_info":"Important: If this function is inactive the application can not collect packages anymore",
   "notin_range":"Not in the Range",
   "test_all_links_complete":"Link test on all links complete.",
   "nif_request_complete":"Requesting all NIF's complete.",
