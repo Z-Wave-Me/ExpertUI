@@ -56,6 +56,8 @@ module.exports = function (grunt) {
                     'vendor/jquery/jquery-1.11.1.min.js',
                     'vendor/underscore/underscore-1.8.3/underscore-min.js',
                     'vendor/cytoscape/cytoscape.js',
+                    'vendor/justgagejs/raphael-2.1.4.min.js',
+                    'vendor/justgagejs/justgage.js',
                     'vendor/upload/angular-file-upload-shim.js',
                     'vendor/alertify/alertify.min.js',
                     // Angular

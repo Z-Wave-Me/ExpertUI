@@ -321,14 +321,17 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
      * @param {string} cmd
      * @param {int} timeout
      */
-    $scope.runZwaveCmd = function (cmd, timeout) {
+    $scope.runZwaveCmd = function (cmd, timeout,hideError) {
         timeout = timeout || 1000;
         $scope.toggleRowSpinner(cmd);
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
             $timeout($scope.toggleRowSpinner, timeout);
         }, function (error) {
             $scope.toggleRowSpinner();
-            alertify.alertError($scope._t('error_update_data') + '\n' + cmd);
+            if(!hideError){
+                alertify.alertError($scope._t('error_update_data') + '\n' + cmd);
+            }
+
         });
     };
 
