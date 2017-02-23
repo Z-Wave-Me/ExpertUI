@@ -393,11 +393,19 @@ appController.controller('ZnifferRSSIMeterController', function ($scope, $interv
         title: "",
         label: "RSSI (dBm)",
         pointer: true,
-        levelColors: [
-            "#d9534f",
-            "#f0ad4e",
-            "#80AD80"
-        ]
+        customSectors: [{
+            color: "#80AD80",
+            lo: -120,
+            hi: -75
+        },{
+            color: "#f0ad4e",
+            lo: -75,
+            hi: -45
+        },{
+            color: "#d9534f",
+            lo: -45,
+            hi: 0
+        }]
     };
 
     $scope.rssi = {
