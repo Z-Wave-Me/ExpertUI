@@ -21,7 +21,49 @@ appController.controller('NetworkStatisticsController', function ($scope, $filte
         show: false
     };
 
+    var cOptions = {
+        colorSet: "statisticsColors",
+        title:{
+            text: "Success on Reception (% ok versus % corrupted)",
+            fontFamily: "arial",
+            fontSize: 20
+        },
+        legend: {
+            verticalAlign: "bottom",
+            horizontalAlign: "center",
+            fontFamily: "arial",
+            fontSize: 15
+        },
+        theme: "theme2",
+        data: [
+            {
+                //indexLabelFontColor: "MistyRose",
+                //indexLabelLineColor: "darkgrey",
+                type: "pie",
+                indexLabelFontFamily: "arial",
+                indexLabelFontSize: 20,
+                indexLabelFontWeight: "bold",
+                startAngle:0,
+                indexLabelPlacement: "inside",
+                toolTipContent: "{name}: {y}",
+                showInLegend: true,
+                percentFormatString: "#0",
+                indexLabel: "#percent %",
+                dataPoints: [{  y: 100, name: "Not shown",color: '#f5f5f5'}]
+            //{  y: 100, name: "Not shown",color: '#f5f5f5'}
+            }
+        ]
+    };
+    var cColors =  ["#80AD80","#d9534f","#f0ad4e"];
 
+    $scope.testGraph = function(){
+
+        CanvasJS.addColorSet("statisticsColors",cColors);
+        var chart = new CanvasJS.Chart('chartContainer',cOptions);
+        chart.render();
+    };
+
+    //$scope.testGraph();
     /**
      * Load network statistics
      */
@@ -71,6 +113,14 @@ appController.controller('NetworkStatisticsController', function ($scope, $filte
             objRFRxLRCErrors['failCRC16Value'] = RFRxCRC16Errors;
             objRFRxLRCErrors['dateTime'] = $filter('getDateTimeObj')(response.data.RFRxLRCErrors.updateTime);
             $scope.netStat.all[1] = objRFRxLRCErrors;
+            /*console.log($scope.netStat.all[1])
+
+            cOptions.data.dataPoints = [
+                {  y: 100, name: "Not shown",color: '#f5f5f5'}
+            ]
+            CanvasJS.addColorSet("statisticsColors",cColors);
+            var chart = new CanvasJS.Chart('chartContainer',cOptions);
+            chart.render();*/
 
             // Number of corrupted CRC16 Frames received
             /*var objRFRxCRC16Errors = response.data.RFRxCRC16Errors;

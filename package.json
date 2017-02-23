@@ -1,12 +1,12 @@
 {
   "name": "Z-Wave",
-  "version": "1.2.16",
+  "version": "1.2.18",
   "v": "1.2.0",
-  "rc": 64,
+  "rc": 65,
   "description": "This User Interfaces allows to operate a Smart Home Network based on Z-Wave devices.",
   "main": "index.html",
   "app_type": "installer",
-  "built": "23-02-2017 14:00:52",
+  "built": "23-02-2017 15:44:53",
   "type_cfg": {
     "default": {
       "dir": "dist",
