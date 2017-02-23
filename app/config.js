@@ -18,6 +18,7 @@ var config_data = {
         'route_update_timeout': 15000, // Maximum time in miliseconds to wait for an update-route
         //'server_url': 'http://zwave.dyndns.org:8083/', // Remote JSON
         'local_data_url':'app/data/',
+        'doc_dir':'app/docs/',
         'server_url': '', // Remote JSON
         'dongle': 'zway', // Default dongle
         'dongle_list': [],// Dongle list

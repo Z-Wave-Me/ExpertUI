@@ -473,6 +473,8 @@ appController.controller('ZnifferRSSIMeterController', function ($scope, $interv
      * Cancel interval on page destroy
      */
     $scope.$on('$destroy', function () {
+        $scope.rssi["gauge1"] = [];
+        $scope.rssi["gauge2"] = [];
         $interval.cancel($scope.rssi.interval);
     });
 
