@@ -13,6 +13,7 @@ var appController = angular.module('appController', []);
  * @class BaseController
  */
 appController.controller('BaseController', function ($scope, $rootScope, $cookies, $filter, $location, $anchorScroll, $window, $route, $interval, $timeout, cfg, dataService, deviceService, myCache) {
+    $scope.nowDate = new Date();
     $scope.loading = false;
     $scope.alert = {message: false, status: 'is-hidden', icon: false};
     $scope.languages = {};
@@ -321,14 +322,17 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
      * @param {string} cmd
      * @param {int} timeout
      */
-    $scope.runZwaveCmd = function (cmd, timeout) {
+    $scope.runZwaveCmd = function (cmd, timeout,hideError) {
         timeout = timeout || 1000;
         $scope.toggleRowSpinner(cmd);
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
             $timeout($scope.toggleRowSpinner, timeout);
         }, function (error) {
             $scope.toggleRowSpinner();
-            alertify.alertError($scope._t('error_update_data') + '\n' + cmd);
+            if(!hideError){
+                alertify.alertError($scope._t('error_update_data') + '\n' + cmd);
+            }
+
         });
     };
 
@@ -454,7 +458,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
             }, function (error) {});
 
         };
-        $interval(refresh, 1000);
+        $interval(refresh, cfg.queue_interval);
     };
     /**
      * Load common APIs

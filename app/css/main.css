@@ -15853,7 +15853,7 @@ http://codepen.io/MattIn4D/pen/LiKFC
   border: 0;
   position: absolute;
   background-color: #fff;
-  margin: 0  0 0 -10px;
+  margin: 0  0 0 -20px;
 }
 /* line 46, ../sass/modules/_neighbors.scss */
 .table-neighbors .rt-cell {
@@ -16026,6 +16026,13 @@ http://codepen.io/MattIn4D/pen/LiKFC
 .rssi-entry {
   height: 400px;
   width: 100%;
+}
+
+/* line 8, ../sass/modules/_rssi.scss */
+.gauge {
+  width: 540px;
+  height: 380px;
+  float: left;
 }
 
 /* Main navigation
@@ -16853,71 +16860,95 @@ http://codepen.io/MattIn4D/pen/LiKFC
   min-width: 100%;
 }
 /* line 27, ../sass/modules/_print.scss */
+#page_print .page-break {
+  page-break-before: always;
+}
+/* line 30, ../sass/modules/_print.scss */
+#page_print .print-header {
+  margin: 0 0 20pt 0;
+  font-size: 16pt;
+  padding: 16pt;
+  background-color: #CCCCCC !important;
+  -webkit-print-color-adjust: exact;
+}
+/* line 37, ../sass/modules/_print.scss */
+#page_print .print-section {
+  margin: 0 0 20pt 0;
+  padding: 16pt;
+  border: solid 1pt #CCCCCC;
+}
+/* line 42, ../sass/modules/_print.scss */
+#page_print .section-title {
+  font-size: 18pt;
+  font-weight: bold;
+  margin: 0 0 20pt 0;
+}
+/* line 47, ../sass/modules/_print.scss */
 #page_print h1 {
   font-size: 16pt;
+  font-weight: normal;
 }
-/* line 31, ../sass/modules/_print.scss */
+/* line 52, ../sass/modules/_print.scss */
 #page_print .print-entry {
-  border-bottom: solid 1px #000000;
-  margin: 0 0 20pt;
-  padding: 0 0 20pt;
+  margin: 0 0 20pt 0;
+  padding: 0 0 20pt 0;
 }
-/* line 40, ../sass/modules/_print.scss */
+/* line 61, ../sass/modules/_print.scss */
 #page_print a {
   text-decoration: none;
 }
-/* line 44, ../sass/modules/_print.scss */
+/* line 65, ../sass/modules/_print.scss */
 #page_print .text-info {
   color: #5bc0de !important;
 }
-/* line 47, ../sass/modules/_print.scss */
+/* line 68, ../sass/modules/_print.scss */
 #page_print .text-primary {
   color: #6494BC !important;
 }
-/* line 50, ../sass/modules/_print.scss */
+/* line 71, ../sass/modules/_print.scss */
 #page_print .text-success {
   color: #80AD80 !important;
 }
-/* line 53, ../sass/modules/_print.scss */
+/* line 74, ../sass/modules/_print.scss */
 #page_print .text-danger {
   color: #d9534f !important;
 }
-/* line 56, ../sass/modules/_print.scss */
+/* line 77, ../sass/modules/_print.scss */
 #page_print .text-warning {
   color: #f0ad4e !important;
 }
-/* line 60, ../sass/modules/_print.scss */
+/* line 81, ../sass/modules/_print.scss */
 #page_print .progress-bar-info {
   background-color: #5bc0de !important;
   -webkit-print-color-adjust: exact;
 }
-/* line 64, ../sass/modules/_print.scss */
+/* line 85, ../sass/modules/_print.scss */
 #page_print .progress-bar-primary {
   background-color: #6494BC !important;
   -webkit-print-color-adjust: exact;
 }
-/* line 68, ../sass/modules/_print.scss */
+/* line 89, ../sass/modules/_print.scss */
 #page_print .progress-bar-success {
   background-color: #80AD80 !important;
   -webkit-print-color-adjust: exact;
 }
-/* line 72, ../sass/modules/_print.scss */
+/* line 93, ../sass/modules/_print.scss */
 #page_print .progress-bar-danger {
   background-color: #d9534f !important;
   -webkit-print-color-adjust: exact;
 }
-/* line 76, ../sass/modules/_print.scss */
+/* line 97, ../sass/modules/_print.scss */
 #page_print .progress-bar-warning {
   background-color: #f0ad4e !important;
   -webkit-print-color-adjust: exact;
 }
-/* line 81, ../sass/modules/_print.scss */
+/* line 102, ../sass/modules/_print.scss */
 #page_print table {
   width: 100%;
   border-collapse: collapse;
   border-spacing: 0;
 }
-/* line 85, ../sass/modules/_print.scss */
+/* line 106, ../sass/modules/_print.scss */
 #page_print table td, #page_print table th {
   vertical-align: top;
   text-align: left;
@@ -16925,24 +16956,28 @@ http://codepen.io/MattIn4D/pen/LiKFC
   border: solid 1px #CCCCCC;
   display: table-cell;
 }
-/* line 98, ../sass/modules/_print.scss */
+/* line 119, ../sass/modules/_print.scss */
 #page_print .rssi-container {
   page-break-after: auto;
 }
-/* line 101, ../sass/modules/_print.scss */
+/* line 122, ../sass/modules/_print.scss */
 #page_print .rssi-entry {
   page-break-inside: avoid;
   height: 150mm;
   width: auto;
   max-width: 210mm;
 }
-/* line 110, ../sass/modules/_print.scss */
+/* line 131, ../sass/modules/_print.scss */
 #page_print .page-navi {
   position: static;
 }
-/* line 112, ../sass/modules/_print.scss */
+/* line 133, ../sass/modules/_print.scss */
 #page_print .page-navi .page-navi-in {
   position: static;
+}
+/* line 139, ../sass/modules/_print.scss */
+#page_print .page-header .btn-group {
+  display: none;
 }
 
 /*@media print {

@@ -151,6 +151,11 @@ angApp.config(['$routeProvider',
             requireLogin: requireLogin,
             templateUrl: 'app/views/installer/rssi_background.html',
             appTypeBanned: ['default']
+        }).
+        when('/installer/rssimeter', {
+            requireLogin: requireLogin,
+            templateUrl: 'app/views/installer/rssi_meter.html',
+            appTypeBanned: ['default']
         }).// Settings
         when('/settings', {
             requireLogin: requireLogin,

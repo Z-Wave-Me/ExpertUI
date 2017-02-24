@@ -710,6 +710,6 @@ appController.controller('SetPromiscuousModeController', function ($scope) {
      * @param {string} cmd
      */
     $scope.setPromiscuousMode = function (cmd) {
-        $scope.runZwaveCmd(cmd);
+        $scope.runZwaveCmd(cmd,1000,true);
     };
 });

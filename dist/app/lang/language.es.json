@@ -1,5 +1,6 @@
 {
   "in_range":"In the Range",
+  "promiscuous_mode_info":"Important: If this function is inactive the application can not collect packages anymore",
   "notin_range":"Not in the Range",
   "include_log":"Include log",
   "include_log_warning":"This will include information about your Z-Wave network",
@@ -58,7 +59,7 @@
   "firmware_url":"Firmware URL",
   "on":"ON",
   "off":"OFF",
-  "promiscuous_mode":"Eavesdrop",
+  "promiscuous_mode":"Background zNiffer Collection",
   "jobs":"Jobs",
   "name":"Name",
   "statistics":"Statistics",
@@ -761,5 +762,6 @@
   "replicate_receive_update": "Replicate Receive Update",
   "request_update": "Request Update",
   "update_form_primary": "Starting network update from Primary.",
-  "update_form_sis": "Requesting Network Update from SIS."
+  "update_form_sis": "Requesting Network Update from SIS.",
+  "nav_rssimeter": "Noise Meter"
 }
