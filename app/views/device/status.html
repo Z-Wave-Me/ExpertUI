@@ -23,29 +23,13 @@
                         <span ng-show="predicate == 'sleeping'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i
                                 ng-show="reverse" class="fa fa-sort-desc"></i></span>
                     </a>
-                    <!--<th>
-                        <a href="" ng-click="orderBy('interval')">{{ _t('wakeup_interval')}}
-                            <span ng-show="predicate == 'interval'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i
-                                    ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                        </a>
-                    </th>
-                    <th>
-                        <a href="" ng-click="orderBy('awake')">{{ _t('th_awake')}}
-                            <span ng-show="predicate == 'awake'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i
-                                    ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                        </a>
-                    </th>-->
+                <th>&nbsp;</th>
                 <th>
                     <a href="" ng-click="orderBy('updateTime')">{{ _t('datetime')}}
                         <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i
                                 ng-show="reverse" class="fa fa-sort-desc"></i></span>
                     </a>
                 </th>
-                <!--<th>
-                   <a href="" ng-click="orderBy('ddr')" title="{{ _t('th_ddr_tip')}}" tooltip>{{ _t('th_ddr')}}
-                       <span ng-show="predicate == 'ddr'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                   </a>
-               </th>-->
                 <th class="print-hide">&nbsp;</th>
 
                 <th class="mobile-show td-action print-hide">
@@ -65,33 +49,27 @@
             <tr ng-repeat="v in statuses.all | orderBy:predicate:reverse track by $index" id="{{ v.rowId}}">
                 <td data-title="#">{{ v.id}}</td>
                 <td data-title="{{ _t('device_name')}}">
-                    <!--<switch-type-icon generic="{{ v.genericType}}" specific="{{ v.specificType}}"></switch-type-icon>-->
                     <a href="#configuration/interview/{{v.id}}">{{ v.name}}</a>
                 </td>
                 <td data-title="{{ _t('th_sleeping')}}" class="row-sleeping"><span
                         ng-bind-html="v.sleeping | toTrusted"></span> &nbsp;</td>
-                <!--<td data-title="{{ _t('wakeup_interval')}}" class="row-wakeupint">
-                    <span ng-if="v.interval">{{v.interval}}s</span> &nbsp;
-                </td>-->
-                <!--<td data-title="{{ _t('th_awake')}}" class="row-awake"><span ng-bind-html="v.awake | toTrusted"></span>
-                    &nbsp;</td>-->
+                <td>
+                    <i class="fa fa-bell-slash-o text-danger" title="{{_t('device_is_dead')}}"
+                    ng-show="v.isFailed"></i>
+                    <i class="fa fa-bell text-success" title="{{_t('device_is_operating')}}"
+                       ng-hide="v.isFailed"></i>
+                </td>
                 <td data-title="{{ _t('datetime')}}">
-                    <span class="row-isfailed" ng-bind-html="v.isFailed | toTrusted"></span>
+
                     <span class="row-time" ng-bind-html="v.updateTime | toTrusted"></span> &nbsp;
                 </td>
-                <!--<td data-title="{{ _t('th_ddr')}}" class="row-ddr"><span ng-bind-html="v.ddr | toTrusted"></span> &nbsp;</td>-->
                 <td class="row-interview print-hide">
                     <button class="btn btn-default"
-                            ng-if="v.interview"
+                            ng-show="v.interview"
+                            ng-hide="v.isController"
                             ng-click="handleModalInterview('interviewModal',$event,$index,v.id,v.name)" title="{{v.interview}}">
                         <i class="fa fa-search-minus fa-lg text-danger"></i>
                     </button> &nbsp;
-
-                    <!-- <button class="btn btn-default"
-                             ng-if="v.interview"
-                        ng-click="showModalInterview('#modal_interview', $index,v.id,v.name)" title="{{v.interview}}">
-                         <i class="fa fa-search-minus fa-lg text-danger"></i>
-                     </button> &nbsp;-->
                 </td>
                 <td class="row-ping td-action print-hide">
                     <button class="btn btn-default" id="btn_ping_{{ v.rowId}}" title="{{_t('pingDevice')}}"
@@ -113,87 +91,4 @@
 
     <!-- Modal interview -->
     <div ng-include="'app/views/device/modal_status_interview.html'"></div>
-
-    <!-- Modal interview
-    <div class="modal fade" id="modal_interview" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                            ng-click="hideModalInterview()">&times;</button>
-                    <h4 class="modal-title">{{_t('interview_results_dialog_title')}}</h4>
-                </div>
-                <div class="modal-body">
-                    <p><a href="" ng-click="showModalCommandClass('#modal_command_class')">{{deviceInfo.name}}
-                        (#{{deviceInfo.id}})</a></p>
-                    <div id="table_mobile_modal_1">
-                        <table class="table table-condensed">
-                            <thead>
-                            <tr>
-                                <th>{{_t('th_instance')}}</th>
-                                <th>{{_t('th_command_class')}}</th>
-                                <th>{{_t('th_result')}}</th>
-                            </thead>
-                            <tbody>
-                            <tr ng-repeat="v in interviewCommands" id="{{ v.ccId}}">
-                                <td data-title="{{_t('th_instance')}}"
-                                    ng-class="($index == 0 ? 'no-class' : 'mobile-hide')">
-                                    <a href=""
-                                       ng-click="showModalCommandClass('#modal_command_class',v.iId,v.ccId, 'cmdDataIn')">{{v.iId}}</a>
-                                    &nbsp;
-                                </td>
-                                <td data-title="{{_t('th_command_class')}}">
-                                    <a href=""
-                                       ng-click="showModalCommandClass('#modal_command_class',v.iId,v.ccId, 'cmdData')">{{v.ccName}}</a>
-                                </td>
-                                <td data-title="{{_t('th_result')}}"
-                                    ng-init="urlToForce = 'devices[' + deviceInfo.id + '].instances[' + v.iId + '].commandClasses[' +v.ccId+ '].Interview()'">
-                                    <span ng-if="v.interviewDone"><i class="fa fa-circle-o text-success"></i></span>
-                                    <button class="btn btn-default" id="btn_force_interview_{{v.ccId}}"
-                                            ng-if="!v.interviewDone"
-                                            ng-click="pingDevice(urlToForce)"
-                                            ng-disabled="rowSpinner[urlToForce]">
-                                        <bb-row-spinner
-                                                spinner="rowSpinner[urlToForce]"
-                                                label="_t('config_ui_force_interview')"
-                                                icon="'fa-search-minus text-danger'">
-
-                                        </bb-row-spinner>
-                                    </button>
-                                    &nbsp;
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="hideModalInterview()">
-                        {{_t('btn_cancel')}}
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div> /.Modal -->
-
-    <!-- Modal CommandClass
-    <div class="modal fade" id="modal_command_class" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                            ng-click="hideModal()">&times;</button>
-                    <h4 class="modal-title">{{_t('commandClass')}}</h4>
-                </div>
-                <div class="modal-body" ng-bind-html="commandClass|toTrusted"></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="hideModal()">
-                        {{_t('btn_cancel')}}
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div> /.Modal -->
 </div><!-- /ng-controler -->

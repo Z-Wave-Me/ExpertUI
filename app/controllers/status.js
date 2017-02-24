@@ -55,7 +55,7 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
                 setData(response.data.joined);
             }, function(error) {});
         };
-        $scope.statuses.interval = $interval(refresh, $scope.cfg.interval);
+        //$scope.statuses.interval = $interval(refresh, $scope.cfg.interval);
     };
 
     /**
@@ -162,11 +162,10 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
     function updateDeviceInfo(ZWaveAPIData, nodeId, basicType, genericType, specificType, isFLiRS, hasWakeup, hasBattery, isListening, bindPath) {
         //var nodeId = $(this).attr('device');
         var node = ZWaveAPIData.devices[nodeId];
+        var isController = (ZWaveAPIData.controller.data.nodeId.value == nodeId);
         var lastReceive = parseInt(node.data.lastReceived.updateTime, 10) || 0;
         var lastSend = parseInt(node.data.lastSend.updateTime, 10) || 0;
         var lastCommunication = (lastSend > lastReceive) ? lastSend : lastReceive;
-        var isFailed = node.data.isFailed.value;
-        var isAwake = node.data.isAwake.value;
         var sleepingSince = 0;
         var lastWakeup = 0;
         var interval = 0;
@@ -177,10 +176,8 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
         }
         // Conts
         var sleeping_cont = sleepingCont(isListening, hasWakeup, isFLiRS, sleepingSince, lastWakeup, interval);
-        var awake_cont = awakeCont(isAwake, isListening, isFLiRS);
         var operating_cont = operatingCont(lastCommunication);
         var interview_cont = false;
-        //var _interview_cont = '<i class="fa fa-question-circle fa-lg text-info" title="' + $scope._t('device_is_not_fully_interviewed') + '"></i>';
         var _interview_cont = $scope._t('device_is_not_fully_interviewed');
         if (ZWaveAPIData.devices[nodeId].data.nodeInfoFrame.value && ZWaveAPIData.devices[nodeId].data.nodeInfoFrame.value.length) {
             for (var iId in ZWaveAPIData.devices[nodeId].instances)
@@ -192,25 +189,19 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
             interview_cont = _interview_cont;
         }
 
-        // DDR
-        /*var ddr = false;
-         if (angular.isDefined(node.data.ZDDXMLFile)) {
-         ddr = node.data.ZDDXMLFile.value;
-         }*/
-
         var obj = {};
         obj['id'] = nodeId;
         obj['rowId'] = 'row_' + nodeId;
+        obj['isController'] = isController;
         obj['cmd'] = bindPath.split(',');
         obj['genericType'] = genericType;
         obj['specificType'] = specificType;
         obj['name'] = $filter('deviceName')(nodeId, node);
         obj['sleeping'] = sleeping_cont;
-        obj['awake'] = awake_cont;
         obj['updateTime'] = operating_cont;
-        obj['isFailed'] = getIsFailedCont(isFailed);
+        obj['isFailed'] = node.data.isFailed.value;
         // obj['ddr'] = ddrCont(node);
-        obj['urlToStore'] = (isListening || isFLiRS ? 'devices[' + nodeId + '].SendNoOperation()' : false);
+        obj['urlToStore'] = (!isController && (isListening || isFLiRS) ? 'devices[' + nodeId + '].SendNoOperation()' : false);
         obj['interview'] = interview_cont;
         obj['isListening'] = isListening;
         obj['isFLiRS'] = isFLiRS;
@@ -231,54 +222,30 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
     ;
 
     // Refresh Modal Interview data
-    function refreshModalInterview(oldCc, newCc) {
+    /*function refreshModalInterview(oldCc, newCc) {
         var refresh = JSON.stringify(oldCc) !== JSON.stringify(newCc);
         if (refresh) {
             $scope.interviewCommands = deviceService.configGetInterviewCommands(newCc);
         }
 
 
-    }
+    }*/
 
     // Refresh Modal Interview data
-    function refreshModalInterview(oldCc, newCc) {
+    /*function refreshModalInterview(oldCc, newCc) {
         var refresh = JSON.stringify(oldCc) !== JSON.stringify(newCc);
         if (refresh) {
             $scope.interviewCommands = deviceService.configGetInterviewCommands(newCc);
         }
 
 
-    }
-
-
-    // Get Awake HTML
-    function awakeCont(isAwake, isListening, isFLiRS) {
-        var awake_cont = '';
-        if (!isListening && !isFLiRS)
-            awake_cont = isAwake ? ('<i class="fa fa-certificate fa-lg text-orange" title="' + $scope._t('device_is_active') + '"></i>') : ('<i class="fa fa-moon-o fa-lg text-primary" title="' + $scope._t('device_is_sleeping') + '"></i>');
-        return awake_cont;
-    }
+    }*/
 
     // Get operating HTML
     function operatingCont(lastCommunication) {
 //        var operating_cont = (isFailed ? ('<i class="fa fa-ban fa-lg text-danger" title="' + $scope._t('device_is_dead') + '"></i>') : ('<i class="fa fa-check fa-lg text-success" title="' + $scope._t('device_is_operating') + '"></i>')) + ' <span title="' + $scope._t('last_communication') + '" class="not_important">' + $filter('isTodayFromUnix')(lastCommunication) + '</span>';
         var operating_cont = '<span title="' + $scope._t('last_communication') + '" class="not_important">' + $filter('isTodayFromUnix')(lastCommunication) + '</span>';
         return operating_cont;
-    }
-
-    // Get is failed
-    function getIsFailedCont(isFailed) {
-        var failed_cont = (isFailed ? ('<i class="fa fa-ban fa-lg text-danger" title="' + $scope._t('device_is_dead') + '"></i>') : ('<i class="fa fa-check fa-lg text-success" title="' + $scope._t('device_is_operating') + '"></i>'));
-        return failed_cont;
-    }
-
-    // Get ddr
-    function ddrCont(node) {
-        var ddr = '<i class="fa fa-minus"></i>';
-        if (angular.isDefined(node.data.ZDDXMLFile) && node.data.ZDDXMLFile.value) {
-            ddr = '<i class="fa fa-check"></i>';
-        }
-        return ddr;
     }
 
     // Get Sleeping HTML
