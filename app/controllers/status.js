@@ -49,7 +49,7 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
                 return;
             }
             $scope.statuses.show = true;
-            //$scope.refreshZwaveData(ZWaveAPIData);
+            $scope.refreshZwaveData(ZWaveAPIData);
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
         });
