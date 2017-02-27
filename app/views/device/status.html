@@ -54,9 +54,9 @@
                 <td data-title="{{ _t('th_sleeping')}}" class="row-sleeping"><span
                         ng-bind-html="v.sleeping | toTrusted"></span> &nbsp;</td>
                 <td>
-                    <i class="fa fa-bell-slash-o text-danger" title="{{_t('device_is_dead')}}"
+                    <i class="fa fa-ban fa-lg text-danger" title="{{_t('device_is_dead')}}"
                     ng-show="v.isFailed"></i>
-                    <i class="fa fa-bell text-success" title="{{_t('device_is_operating')}}"
+                    <i class="fa fa-check fa-lg text-success" title="{{_t('device_is_operating')}}"
                        ng-hide="v.isFailed"></i>
                 </td>
                 <td data-title="{{ _t('datetime')}}">
