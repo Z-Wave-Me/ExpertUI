@@ -19,6 +19,11 @@
                     </a>
                 </th>
                 <th>
+                    <a href="" ng-click="orderBy('type')">{{_t('th_type')}}
+                        <span ng-show="predicate == 'type'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                    </a>
+                </th>
+                <th>
                     <a href="" ng-click="orderBy('sleeping')">{{ _t('th_sleeping')}}
                         <span ng-show="predicate == 'sleeping'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i
                                 ng-show="reverse" class="fa fa-sort-desc"></i></span>
@@ -52,8 +57,16 @@
                 <td data-title="{{ _t('device_name')}}">
                     <a href="#configuration/interview/{{v.id}}">{{ v.name}}</a>
                 </td>
-                <td data-title="{{ _t('th_sleeping')}}" class="row-sleeping"><span
-                        ng-bind-html="v.sleeping | toTrusted"></span> &nbsp;</td>
+                <td data-title="{{_t('th_type')}}">
+                    <i class="fa" ng-class="v.icon" title="{{_t(v.type)}}"></i>
+                </td>
+                <td data-title="{{ _t('th_sleeping')}}" class="row-sleeping">
+                    <span ng-show="v.hasSleeping">
+                          <i class="fa fa-clock-o fa-lg" title="{{_t('battery_operated_device_with_wakeup')}}"></i>
+                        <span ng-bind-html="v.hasSleeping | toTrusted"></span>
+                    </span> &nbsp;
+
+                </td>
                 <td>
                     <i class="fa fa-ban fa-lg text-danger" title="{{_t('device_is_dead')}}"
                     ng-show="v.isFailed"></i>
@@ -68,8 +81,8 @@
                     <span class="row-time" ng-bind-html="v.updateTime | toTrusted"></span> &nbsp;
                 </td>-->
                 <td class="row-interview print-hide">
-                    <button class="btn btn-default"
-                            ng-show="v.interview"
+                    <button class="btn btn-default" title="{{_t('device_is_not_fully_interviewed')}}"
+                            ng-show="!v.interviewDone"
                             ng-hide="v.isController"
                             ng-click="handleModalInterview('interviewModal',$event,$index,v.id,v.name)" title="{{v.interview}}">
                         <i class="fa fa-search-minus fa-lg text-danger"></i>
