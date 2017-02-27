@@ -1,4 +1,5 @@
 {
+  "last_communication":"Last communication",
   "in_range":"In the Range",
   "promiscuous_mode_info":"Important: If this function is inactive the application can not collect packages anymore",
   "notin_range":"Not in the Range",

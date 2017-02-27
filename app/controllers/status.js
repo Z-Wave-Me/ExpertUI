@@ -198,7 +198,7 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
         obj['specificType'] = specificType;
         obj['name'] = $filter('deviceName')(nodeId, node);
         obj['sleeping'] = sleeping_cont;
-        obj['updateTime'] = operating_cont;
+        obj['dateTime'] = $filter('getDateTimeObj')(lastCommunication);
         obj['isFailed'] = node.data.isFailed.value;
         // obj['ddr'] = ddrCont(node);
         obj['urlToStore'] = (!isController && (isListening || isFLiRS) ? 'devices[' + nodeId + '].SendNoOperation()' : false);
@@ -242,11 +242,11 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
     }*/
 
     // Get operating HTML
-    function operatingCont(lastCommunication) {
+    /*function operatingCont(lastCommunication) {
 //        var operating_cont = (isFailed ? ('<i class="fa fa-ban fa-lg text-danger" title="' + $scope._t('device_is_dead') + '"></i>') : ('<i class="fa fa-check fa-lg text-success" title="' + $scope._t('device_is_operating') + '"></i>')) + ' <span title="' + $scope._t('last_communication') + '" class="not_important">' + $filter('isTodayFromUnix')(lastCommunication) + '</span>';
         var operating_cont = '<span title="' + $scope._t('last_communication') + '" class="not_important">' + $filter('isTodayFromUnix')(lastCommunication) + '</span>';
         return operating_cont;
-    }
+    }*/
 
     // Get Sleeping HTML
     function sleepingCont(isListening, hasWakeup, isFLiRS, sleepingSince, lastWakeup, interval) {

@@ -23,9 +23,10 @@
                         <span ng-show="predicate == 'sleeping'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i
                                 ng-show="reverse" class="fa fa-sort-desc"></i></span>
                     </a>
+                </th>
                 <th>&nbsp;</th>
                 <th>
-                    <a href="" ng-click="orderBy('updateTime')">{{ _t('datetime')}}
+                    <a href="" ng-click="orderBy('updateTime')">{{ _t('last_communication')}}
                         <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i
                                 ng-show="reverse" class="fa fa-sort-desc"></i></span>
                     </a>
@@ -59,10 +60,13 @@
                     <i class="fa fa-check fa-lg text-success" title="{{_t('device_is_operating')}}"
                        ng-hide="v.isFailed"></i>
                 </td>
-                <td data-title="{{ _t('datetime')}}">
+                <td data-title="{{ _t('last_communication')}}">
+                    <bb-date-time obj="v.dateTime" updated="v.isUpdated"></bb-date-time>
+                </td>
+                <!--<td data-title="{{ _t('datetime')}}">
 
                     <span class="row-time" ng-bind-html="v.updateTime | toTrusted"></span> &nbsp;
-                </td>
+                </td>-->
                 <td class="row-interview print-hide">
                     <button class="btn btn-default"
                             ng-show="v.interview"

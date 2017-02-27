@@ -1,6 +1,7 @@
 {
   "--- newtrans": "---",
  "---": "---",
+ "last_communication":"Last communication",
  "promiscuous_mode_info":"Important: If this function is inactive the application can not collect packages anymore",
  "in_range":"In the Range",
  "notin_range":"Not in the Range",
