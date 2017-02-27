@@ -5,16 +5,16 @@
  */
 var config_data = {
     'cfg': {
-        'app_name': 'Z-Wave Expert',
-        'app_version': '1.2.0-RC-59',
-        'app_built': '22-02-2017 15:21:11',
+        'app_name': 'Z-Wave CIT',
+        'app_version': '1.2.0-RC-67',
+        'app_built': '24-02-2017 08:08:09',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
         'pass_field': 'PSWDXXXX',
         'interval': 1000, // Set interval in miliseconds to refresh data
         'zniffer_interval': 3000, // Set interval in milisecondsfor zniffer
-        'queue_interval': 1000, // Set interval in miliseconds to refresh queue data 
+        'queue_interval': 1000, // Set interval in miliseconds to refresh queue data
         'route_update_timeout': 15000, // Maximum time in miliseconds to wait for an update-route
         //'server_url': 'http://zwave.dyndns.org:8083/', // Remote JSON
         'local_data_url':'app/data/',
@@ -187,7 +187,7 @@ var config_data = {
    },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer
-        'app_type': 'default',
+        'app_type': 'installer',
          'custom_cfg': {
              'default':{
                  'logo': 'app/images/zplus.jpg',

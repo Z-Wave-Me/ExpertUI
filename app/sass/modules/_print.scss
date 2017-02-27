@@ -24,14 +24,35 @@
         //color: red !important;
 
     }
+  .page-break{
+    page-break-before:always;
+  }
+  .print-header{
+    margin: 0 0 20pt 0;
+    font-size: 16pt;
+    padding: 16pt;
+    background-color: #CCCCCC !important;
+    -webkit-print-color-adjust: exact;
+  }
+  .print-section{
+    margin: 0 0 20pt 0;
+    padding: 16pt;
+    border: solid 1pt #CCCCCC;
+  }
+  .section-title{
+    font-size: 18pt;
+    font-weight: bold;
+    margin: 0 0 20pt 0;
+  }
   h1{
     font-size: 16pt;
+    font-weight: normal;
 
   }
   .print-entry{
-    border-bottom: solid 1px #000000;
-    margin: 0 0 20pt;
-    padding: 0 0 20pt;
+    //border-bottom: solid 1px #000000;
+    margin: 0 0 20pt 0;
+    padding: 0 0 20pt 0;
   }
     .fa{
        //color: blue !important;
@@ -113,5 +134,14 @@
             position: static;
         }
     }
+  // Neighbors
+  .page-header{
+    .btn-group{
+      display: none;
+    }
+  }
+  .double-scroll{
+    //display: none;
+  }
 
 }
