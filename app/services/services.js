@@ -130,6 +130,31 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,cfg
     };
 
     /**
+     * Get device type
+     */
+    this.deviceType = function(node) {
+        var type;
+        var isListening = node.data.isListening.value;
+        var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
+        var hasWakeup = 0x84 in node.instances[0].commandClasses;
+
+        if (node.data.genericType.value === 1) {
+            type = 'portable';
+        } else if (node.data.genericType.value === 2) {
+            type = 'static';
+        } else if (isFLiRS) {
+            type = 'flirs';
+        } else if (hasWakeup) {
+            type = 'battery';
+        } else if (isListening) {
+            type = 'mains';
+        } else {
+            type = 'unknown';
+        }
+        return type;
+    };
+
+    /**
      * Check if device isFailed
      */
     this.isFailed = function(node) {

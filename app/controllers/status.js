@@ -181,7 +181,7 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
             var sleepingSince = 0;
             var lastWakeup = 0;
             var interval = 0;
-            var type;
+            var type = deviceService.deviceType(node);
             var hasSleeping;
             if (!isListening && hasWakeup) {
 
@@ -207,7 +207,7 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
 
 
             // Device type
-            if (node.data.genericType.value === 1) {
+           /* if (node.data.genericType.value === 1) {
                 type = 'portable';
             } else if (node.data.genericType.value === 2) {
                 type = 'static';
@@ -220,7 +220,7 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
                 type = 'mains';
             } else {
                 type = 'unknown';
-            }
+            }*/
 
 
             var obj = {};

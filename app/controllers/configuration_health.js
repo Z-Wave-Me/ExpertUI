@@ -211,28 +211,12 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
                 return;
             }
             //console.log(node)
-            var isListening = node.data.isListening.value;
-            var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
-            var hasWakeup = 0x84 in node.instances[0].commandClasses;
             var centralController = true;
-            var type;
+            var type = deviceService.deviceType(node);
             var indicator;
             var powerLevel = $scope.health.device.hasPowerLevel[nodeId];
             if (powerLevel) {
                 indicator = setPowerLevelIndicator(powerLevel);
-            }
-            if (node.data.genericType.value === 1) {
-                type = 'portable';
-            } else if (node.data.genericType.value === 2) {
-                type = 'static';
-            } else if (isFLiRS) {
-                type = 'flirs';
-            } else if (hasWakeup) {
-                type = 'battery';
-            } else if (isListening) {
-                type = 'mains';
-            } else {
-                type = 'unknown';
             }
             var obj = {
                 id: nodeId,

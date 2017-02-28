@@ -8,7 +8,7 @@
  * @class RoutingController
  *
  */
-appController.controller('RoutingController', function($scope, $filter, $timeout,$interval,$http,dataService, cfg,_, myCache) {
+appController.controller('RoutingController', function($scope, $filter, $timeout,$interval,$http,dataService, deviceService,cfg,_, myCache) {
     $scope.routings = {
         all: [],
         interval: null,
@@ -169,26 +169,7 @@ appController.controller('RoutingController', function($scope, $filter, $timeout
 
             var node = ZWaveAPIData.devices[nodeId];
             var name = $filter('deviceName')(nodeId, node);
-            var type;
-            var isListening = node.data.isListening.value;
-            var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
-            var hasWakeup = 0x84 in node.instances[0].commandClasses;
-
-
-            // Device type
-            if (node.data.genericType.value === 1) {
-                type = 'portable';
-            } else if (node.data.genericType.value === 2) {
-                type = 'static';
-            } else if (isFLiRS) {
-                type = 'flirs';
-            } else if (hasWakeup) {
-                type = 'battery';
-            } else if (isListening) {
-                type = 'mains';
-            } else {
-                type = 'unknown';
-            }
+            var type = deviceService.deviceType(node);
 
             var cellState = setCellState(nodeId, node,name);
 

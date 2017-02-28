@@ -113,32 +113,13 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
                 return;
             }*/
             var node = ZWaveAPIData.devices[nodeId];
-            var type;
-            var isListening = node.data.isListening.value;
-            var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
-            var hasBattery = 0x80 in node.instances[0].commandClasses;
-            var hasWakeup = 0x84 in node.instances[0].commandClasses;
+            var type = deviceService.deviceType(node);
             var totalPackets = 0;
             var okPackets = 0;
             var lastPackets = '';
             var basicType = node.data.basicType.value;
             var genericType = node.data.genericType.value;
             var specificType = node.data.specificType.value;
-
-            // Device type
-            if (node.data.genericType.value === 1) {
-                type = 'portable';
-            } else if (node.data.genericType.value === 2) {
-                type = 'static';
-            } else if (isFLiRS) {
-                type = 'flirs';
-            } else if (hasWakeup) {
-                type = 'battery';
-            } else if (isListening) {
-                type = 'mains';
-            } else {
-                type = 'unknown';
-            }
 
             // Packets
             var timingItems =  $scope.timing[nodeId];
