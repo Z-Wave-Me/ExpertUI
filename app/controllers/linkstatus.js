@@ -12,17 +12,28 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
     $scope.linkStatus = {
         all: [],
         interval: null,
-        show: false
+        show: false,
+        showInfo: true
 
     };
-    $scope.testNode = {
-        name: '',
-            data: []
-    };
+    $scope.htmlNeighbors = {};
+    $scope.testLink = {};
     // Cancel interval on page destroy
     $scope.$on('$destroy', function () {
         $interval.cancel($scope.linkStatus.interval);
     });
+
+    /**
+     * Chenge view info and table = true /table only = false
+     * @param {string} view
+     */
+    $scope.changeView = function (status) {
+        if (typeof status === 'boolean') {
+            $scope.linkStatus.showInfo = status;
+        } else {
+            $scope.rlinkStatus.showInfo = !$scope.linkStatus.showInfo;
+        }
+    };
 
     /**
      * Load zwave data
@@ -38,8 +49,9 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
                 };
                 return;
             }
+            setCells($scope.linkStatus.all);
             $scope.linkStatus.show = true;
-            //$scope.refreshZwaveData(ZWaveAPIData);
+            $scope.refreshZwaveData(ZWaveAPIData);
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
         });
@@ -54,6 +66,7 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
         var refresh = function () {
             dataService.loadJoinedZwaveData(ZWaveAPIData).then(function (response) {
                 setData(response.data.joined);
+                //console.log(Object.keys(response.data.update))
             }, function (error) {
             });
         };
@@ -61,18 +74,27 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
     };
 
     /**
+     * Runtest link command
+     * @param {string} params
+     */
+    $scope.runTestLink = function (nodeId) {
+        console.log($scope.testLink[nodeId]);
+        $scope.toggleRowSpinner(nodeId);
+        angular.forEach($scope.testLink[nodeId], function (v, k) {
+            var cmd = 'devices['+nodeId+'].instances[0].commandClasses[115].TestNodeSet('+v+',6,20)';
+            $scope.runZwaveCmd(cmd,5000,true);
+        });
+    };
+
+    /**
      * Run TestNode command
      * @param {string} params
      */
-    $scope.runZwaveTestNode = function (params,modalId,device, $event) {
-       //console.log(params)
-        //return;
+    $scope.runZwaveTestNode = function (params) {
+       console.log(params)
+        return;
         $scope.toggleRowSpinner(params);
-        $scope.testNode = {
-            name: device.name,
-            data: [29,35,80,15,99,45,67,100,89,100]
-        };
-        $scope.handleModal(modalId, $event)
+
         dataService.getApi('test_node', params, true).then(function (response) {
 
 
@@ -89,9 +111,9 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
      * @param {string} cmd
      */
     $scope.runZwaveNop = function (cmd) {
-        //for (i = 0; i < 21; i++) {
-            $scope.runZwaveCmd(cmd);
-        //}
+        for (i = 0; i < 21; i++) {
+            $scope.runZwaveCmd(cmd,5000,true);
+        }
     };
 
     /// --- Private functions --- ///
@@ -101,7 +123,7 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
      * @param {object} ZWaveAPIData
      */
     function setData(ZWaveAPIData) {
-        //var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
+        var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
             if (nodeId == 255 || node.data.isVirtual.value) {
@@ -110,6 +132,8 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
            /* if (k == 255 || k == $scope.controllerId || device.data.isVirtual.value) {
                 return false;
             }*/
+            var hasPowerLevel = node.instances[0].commandClasses[115];
+
             // Loop throught instances
             angular.forEach(node.instances, function (instance, instanceId) {
                 if (instanceId == 0 && node.instances.length > 1) {
@@ -118,16 +142,12 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
                 var indicator;
                 var dateTime;
                 var isUpdated;
-                var hasPowerLevel = instance.commandClasses[115];
-                var indicator = getLinkIndicator(ZWaveAPIData.devices, hasPowerLevel);
+                //var indicator = getLinkIndicator(ZWaveAPIData.devices, hasPowerLevel.data);
                 if (hasPowerLevel) {
+                    //console.log(instance.commandClasses[115])
                     isUpdated = ((hasPowerLevel.data.updateTime > hasPowerLevel.data.invalidateTime) ? true : false);
                     dateTime = $filter('getDateTimeObj')(hasPowerLevel.data.updateTime, hasPowerLevel.data.invalidateTime);
                 }
-
-               /* var isListening = node.data.isListening.value;
-                var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
-                var hasWakeup = 0x84 in node.instances[0].commandClasses;*/
                 //var centralController = true;
                 var type = deviceService.deviceType(node);
 
@@ -138,13 +158,13 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
                 obj['name'] = $filter('deviceName')(nodeId, node);
                 obj['type'] = type;
                 obj['hasPowerLevel'] = hasPowerLevel;
-                obj['icon'] = $filter('getDeviceTypeIcon')(type),
-                    obj['indicator'] = indicator;
+                obj['icon'] = $filter('getDeviceTypeIcon')(type);
+                //obj['indicator'] = indicator;
                 obj['dateTime'] = dateTime;
                 obj['isUpdated'] = isUpdated;
-                obj['paramsTestNode'] = nodeId;//+ '/' + 10;
-                ;
-                obj['cmdNop'] = 'devices[' + nodeId + '].SendNoOperation()'
+                obj['paramsTestNode'] = nodeId;
+                obj['cmdTestNode'] = 'devices['+nodeId+'].instances['+instanceId+'].commandClasses[115].TestNodeSet('+nodeId+',6,20)',
+                obj['cmdNop'] = 'devices[' + nodeId + '].SendNoOperation()';
                 var findIndex = _.findIndex($scope.linkStatus.all, {rowId: obj.rowId});
                 if (findIndex > -1) {
                     angular.extend($scope.linkStatus.all[findIndex], obj);
@@ -152,6 +172,40 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
                 } else {
                     $scope.linkStatus.all.push(obj);
                 }
+            });
+        });
+    }
+
+    /**
+     * Set table cell state
+     * @param {object} nodes
+     * @returns {Array}
+     */
+    function setCells(nodes) {
+        //console.log(nodes)
+        angular.forEach(nodes, function (node, i) {
+            $scope.htmlNeighbors[node.id] = '';
+            $scope.testLink[node.id] = [];
+            var powerLevel = node.hasPowerLevel ? node.hasPowerLevel.data : [];
+            //console.log(node.hasPowerLevel)
+            angular.forEach(nodes, function (v, k) {
+                var tooltip = node.id + ': ' + node.name + ' - ' + v.id + ': ' + v.name + ' ';
+                var cssClass = 'rtUnavailable';
+                var nodePowerLevel = node.id === v.id ? false : powerLevel[v.id];
+                if(nodePowerLevel){
+                    $scope.testLink[node.id].push(v.id);
+                    //console.log(node.id + ' | ' + v.id + ': ',powerLevel[v.id])
+                    if (nodePowerLevel.acknowledgedFrames.value > -1 && nodePowerLevel.acknowledgedFrames.value < 6) {
+                        cssClass = 'rtRed';
+                    } else if (nodePowerLevel.acknowledgedFrames.value > 5 && nodePowerLevel.acknowledgedFrames.value < 18) {
+                        cssClass = 'rtOrange';
+                    } else if (nodePowerLevel.acknowledgedFrames.value > 17) {
+                        cssClass = 'rtGreen';
+                    }
+                }
+                //console.log(tooltip)
+                var out = '<span class="rt-cell ' + cssClass + '" title="' + tooltip + '">' +  '&nbsp' + '</span>';
+                $scope.htmlNeighbors[node.id] += out;
             });
         });
     }
@@ -170,7 +224,7 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
             }
             var obj = {
                 nodeId: nodeId,
-                color: (hasPowerLevel ? setLinkIndicatorColor(nodeId, hasPowerLevel) : '')
+                cssClass: (hasPowerLevel ? setLinkIndicatorColor(nodeId, hasPowerLevel) : '')
             }
             indicator.push(obj);
 
@@ -184,18 +238,18 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
      * @returns {object}
      */
     function setLinkIndicatorColor(nodeId, hasPowerLevel) {
-        var color = 'rtGray';
+        var cssClass = 'rtGray';
         if (!hasPowerLevel[nodeId]) {
-            return color;
+            return cssClass;
         }
         var data = hasPowerLevel[nodeId];
         if (data.acknowledgedFrames.value > -1 && data.acknowledgedFrames.value < 6) {
-            color = 'rtRed';
+            cssClass = 'rtRed';
         } else if (data.acknowledgedFrames.value > 5 && data.acknowledgedFrames.value < 18) {
-            color = 'rtOrange';
+            cssClass = 'rtOrange';
         } else if (data.acknowledgedFrames.value > 17) {
-            color = 'rtGreen';
+            cssClass = 'rtGreen';
         }
-        return color;
+        return cssClass;
     }
 });
