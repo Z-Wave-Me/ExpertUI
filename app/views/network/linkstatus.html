@@ -50,7 +50,7 @@
                             <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
-                    <th class="neighbor-hide">&nbsp; </a>
+                    <th class="neighbor-hide print-hide">&nbsp; </a>
                     </th>
                     <th>
                         <span class="rt-cell"
@@ -63,7 +63,7 @@
                     <td class="headcol">
                         <span class="tool-tip right rt-cell rt-cell-th">{{v.id}}</span>
                     </td>
-                    <td class="neighbor-hide" data-title="{{ _t('device_description_device_type')}}">
+                    <td class="neighbor-hide" data-title="{{ _t('device_name')}}">
                         {{ v.name}}
                     </td>
                     <td class="neighbor-hide" data-title="{{ _t('type')}}" title="{{v.type}}">
@@ -100,7 +100,7 @@
                     </td>
                     <td ng-bind-html="htmlNeighbors[v.id]|toTrusted">{{htmlNeighbors[v.id]}}</td>
                 </tr>
-                <tr>
+                <tr class="print-hide">
                     <th class="th-id">&nbsp;</th>
                     <th class="neighbor-hide">
                         <a href="" ng-click="orderBy('name')">{{ _t('device_name')}}

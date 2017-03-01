@@ -16862,7 +16862,7 @@ http://codepen.io/MattIn4D/pen/LiKFC
   line-height: 1.4em;
 }
 /* line 14, ../sass/modules/_print.scss */
-#page_print #header, #page_print .container-installer, #page_print #footer, #page_print .print-hide {
+#page_print #header, #page_print .container-installer, #page_print #footer, #page_print .print-hide, #page_print .neighbor-hide {
   display: none;
 }
 /* line 17, ../sass/modules/_print.scss */
@@ -16989,6 +16989,20 @@ http://codepen.io/MattIn4D/pen/LiKFC
 /* line 139, ../sass/modules/_print.scss */
 #page_print .page-header .btn-group {
   display: none;
+}
+/* line 146, ../sass/modules/_print.scss */
+#page_print .rt-cell {
+  display: inline-block;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  margin: 4px;
+  border: solid 1px #FFFFFF;
+  text-align: center;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  font-weight: normal;
 }
 
 /*@media print {
