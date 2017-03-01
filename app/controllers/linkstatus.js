@@ -139,6 +139,9 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
                 if (instanceId == 0 && node.instances.length > 1) {
                     return;
                 }
+                var lastReceive = parseInt(node.data.lastReceived.updateTime, 10) || 0;
+                var lastSend = parseInt(node.data.lastSend.updateTime, 10) || 0;
+                var lastCommunication = (lastSend > lastReceive) ? lastSend : lastReceive;
                 var indicator;
                 var dateTime;
                 var isUpdated;
@@ -160,7 +163,8 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
                 obj['hasPowerLevel'] = hasPowerLevel;
                 obj['icon'] = $filter('getDeviceTypeIcon')(type);
                 //obj['indicator'] = indicator;
-                obj['dateTime'] = dateTime;
+                //obj['dateTime'] = dateTime;
+                obj['dateTime'] = $filter('getDateTimeObj')(lastCommunication);
                 obj['isUpdated'] = isUpdated;
                 obj['paramsTestNode'] = nodeId;
                 obj['cmdTestNode'] = 'devices['+nodeId+'].instances['+instanceId+'].commandClasses[115].TestNodeSet('+nodeId+',6,20)',
