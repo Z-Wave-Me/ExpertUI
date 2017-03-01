@@ -15894,36 +15894,42 @@ http://codepen.io/MattIn4D/pen/LiKFC
 }
 
 /* line 79, ../sass/modules/_neighbors.scss */
+.rtWhite {
+  background-color: #ebebeb !important;
+  -webkit-print-color-adjust: exact;
+}
+
+/* line 85, ../sass/modules/_neighbors.scss */
 .rtDirect, .rtGreen {
   background-color: green !important;
   -webkit-print-color-adjust: exact;
 }
 
-/* line 84, ../sass/modules/_neighbors.scss */
+/* line 90, ../sass/modules/_neighbors.scss */
 .rtRouted {
   background-color: #8C0 !important;
   -webkit-print-color-adjust: exact;
 }
 
-/* line 89, ../sass/modules/_neighbors.scss */
+/* line 95, ../sass/modules/_neighbors.scss */
 .rtBadlyRouted {
   background-color: yellow !important;
   -webkit-print-color-adjust: exact;
 }
 
-/* line 94, ../sass/modules/_neighbors.scss */
+/* line 100, ../sass/modules/_neighbors.scss */
 .rtNotLinked, .rtRed {
   background-color: red !important;
   -webkit-print-color-adjust: exact;
 }
 
-/* line 99, ../sass/modules/_neighbors.scss */
+/* line 105, ../sass/modules/_neighbors.scss */
 .rtUnavailable, .rtGray {
   background-color: gray !important;
   -webkit-print-color-adjust: exact;
 }
 
-/* line 104, ../sass/modules/_neighbors.scss */
+/* line 110, ../sass/modules/_neighbors.scss */
 .rtOrange {
   background-color: orange !important;
   -webkit-print-color-adjust: exact;

@@ -51,7 +51,7 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
             }
             setCells($scope.linkStatus.all);
             $scope.linkStatus.show = true;
-            $scope.refreshZwaveData(ZWaveAPIData);
+
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
         });
@@ -60,13 +60,28 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function (ZWaveAPIData) {
+    $scope.refreshZwaveData = function () {
+
         var refresh = function () {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function (response) {
-                setData(response.data.joined);
-                //console.log(Object.keys(response.data.update))
+            //var findZwaveStr = 'devices.' + 86;
+            dataService.loadJoinedZwaveData().then(function (response) {
+                var update = false;
+               angular.forEach(response.data.update, function(v, k) {
+                    var id = k.split('.')[1];
+                    if($scope.testLink[id]){
+                        update = true;
+                        return;
+                    }
+                    //console.log(deviceId)
+                });
+                if(update){
+                    //console.log('Updating device');
+                    setData(response.data.joined);
+                    setCells($scope.linkStatus.all);
+                }/*else{
+                    console.log('Nothing to update')
+                }*/
             }, function (error) {
             });
         };
@@ -74,36 +89,22 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
     };
 
     /**
-     * Runtest link command
-     * @param {string} params
+     * Test all links
+     * @param {string} id
      */
-    $scope.runTestLink = function (nodeId) {
-        console.log($scope.testLink[nodeId]);
+    $scope.testAllLinks = function(nodeId) {
+        $interval.cancel($scope.linkStatus.interval);
         $scope.toggleRowSpinner(nodeId);
-        angular.forEach($scope.testLink[nodeId], function (v, k) {
-            var cmd = 'devices['+nodeId+'].instances[0].commandClasses[115].TestNodeSet('+v+',6,20)';
-            $scope.runZwaveCmd(cmd,5000,true);
-        });
-    };
-
-    /**
-     * Run TestNode command
-     * @param {string} params
-     */
-    $scope.runZwaveTestNode = function (params) {
-       console.log(params)
-        return;
-        $scope.toggleRowSpinner(params);
-
-        dataService.getApi('test_node', params, true).then(function (response) {
-
-
-            $timeout($scope.toggleRowSpinner, 1000);
-        }, function (error) {
+        var data = {"nodeId": nodeId};
+        dataService.postApi('checklinks', data).then(function () {
+            $scope.refreshZwaveData();
             $scope.toggleRowSpinner();
-            alertify.alertError($scope._t('error_load_data'));
+        }, function () {
+            alertify.alertError($scope._t('error_update_data'));
+            $scope.toggleRowSpinner();
         });
     };
+
 
     /**
      * todo: Whay 21 times?
@@ -111,9 +112,11 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
      * @param {string} cmd
      */
     $scope.runZwaveNop = function (cmd) {
+        $interval.cancel($scope.linkStatus.interval);
         for (i = 0; i < 21; i++) {
-            $scope.runZwaveCmd(cmd,5000,true);
+            $scope.runZwaveCmd(cmd,3000,true);
         }
+        $scope.refreshZwaveData();
     };
 
     /// --- Private functions --- ///
@@ -129,9 +132,6 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
             if (nodeId == 255 || node.data.isVirtual.value) {
                 return;
             }
-           /* if (k == 255 || k == $scope.controllerId || device.data.isVirtual.value) {
-                return false;
-            }*/
             var hasPowerLevel = node.instances[0].commandClasses[115];
 
             // Loop throught instances
@@ -142,32 +142,25 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
                 var lastReceive = parseInt(node.data.lastReceived.updateTime, 10) || 0;
                 var lastSend = parseInt(node.data.lastSend.updateTime, 10) || 0;
                 var lastCommunication = (lastSend > lastReceive) ? lastSend : lastReceive;
-                var indicator;
                 var dateTime;
                 var isUpdated;
-                //var indicator = getLinkIndicator(ZWaveAPIData.devices, hasPowerLevel.data);
                 if (hasPowerLevel) {
-                    //console.log(instance.commandClasses[115])
                     isUpdated = ((hasPowerLevel.data.updateTime > hasPowerLevel.data.invalidateTime) ? true : false);
                     dateTime = $filter('getDateTimeObj')(hasPowerLevel.data.updateTime, hasPowerLevel.data.invalidateTime);
                 }
-                //var centralController = true;
                 var type = deviceService.deviceType(node);
-
-
                 var obj = {};
                 obj['id'] = nodeId;
                 obj['rowId'] = 'row_' + nodeId;
+                obj['isController'] = controllerNodeId == nodeId;
                 obj['name'] = $filter('deviceName')(nodeId, node);
                 obj['type'] = type;
                 obj['hasPowerLevel'] = hasPowerLevel;
                 obj['icon'] = $filter('getDeviceTypeIcon')(type);
-                //obj['indicator'] = indicator;
-                //obj['dateTime'] = dateTime;
+                obj['isFailed'] = node.data.isFailed.value;
+                obj['neighbours'] = node.data.neighbours.value;
                 obj['dateTime'] = $filter('getDateTimeObj')(lastCommunication);
                 obj['isUpdated'] = isUpdated;
-                obj['paramsTestNode'] = nodeId;
-                obj['cmdTestNode'] = 'devices['+nodeId+'].instances['+instanceId+'].commandClasses[115].TestNodeSet('+nodeId+',6,20)',
                 obj['cmdNop'] = 'devices[' + nodeId + '].SendNoOperation()';
                 var findIndex = _.findIndex($scope.linkStatus.all, {rowId: obj.rowId});
                 if (findIndex > -1) {
@@ -188,72 +181,51 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
     function setCells(nodes) {
         //console.log(nodes)
         angular.forEach(nodes, function (node, i) {
+            //console.log(node.id,node.neighbours)
             $scope.htmlNeighbors[node.id] = '';
             $scope.testLink[node.id] = [];
             var powerLevel = node.hasPowerLevel ? node.hasPowerLevel.data : [];
             //console.log(node.hasPowerLevel)
             angular.forEach(nodes, function (v, k) {
                 var tooltip = node.id + ': ' + node.name + ' - ' + v.id + ': ' + v.name + ' ';
-                var cssClass = 'rtUnavailable';
-                var nodePowerLevel = node.id === v.id ? false : powerLevel[v.id];
-                if(nodePowerLevel){
-                    $scope.testLink[node.id].push(v.id);
-                    //console.log(node.id + ' | ' + v.id + ': ',powerLevel[v.id])
-                    if (nodePowerLevel.acknowledgedFrames.value > -1 && nodePowerLevel.acknowledgedFrames.value < 6) {
-                        cssClass = 'rtRed';
-                    } else if (nodePowerLevel.acknowledgedFrames.value > 5 && nodePowerLevel.acknowledgedFrames.value < 18) {
-                        cssClass = 'rtOrange';
-                    } else if (nodePowerLevel.acknowledgedFrames.value > 17) {
-                        cssClass = 'rtGreen';
+                //var cssClass = node.hasPowerLevel ? 'rtUnavailable' : 'rtWhite';
+                var cssClass = 'rtWhite';
+
+                if(node.hasPowerLevel){ // Cols for powerLevel
+                    var nodePowerLevel = powerLevel[v.id];
+                    //console.log(node.neighbours.indexOf(parseInt(v.id)))
+                    if(node.neighbours.indexOf(parseInt(v.id)) > -1){
+                        cssClass = 'rtUnavailable';
+                        //console.log(node.id + ' | '+ v.id+' In neighbours',node.neighbours)
+                    }/*else{
+                        console.log(node.id + ' | '+ v.id+' NOT in neighbours',node.neighbours)
+                    }*/
+                   // cssClass = (node.neighbours.indexOf(parseInt(v.id)) === -1 ? 'rtOrange' : 'rtUnavailable');
+
+                    if(nodePowerLevel){
+                        $scope.testLink[node.id].push(v.id);
+                        //console.log(node.id + ' | ' + v.id + ': ',powerLevel[v.id])
+                        if (nodePowerLevel.acknowledgedFrames.value > -1 && nodePowerLevel.acknowledgedFrames.value < 6) {
+                            cssClass = 'rtRed';
+                        } else if (nodePowerLevel.acknowledgedFrames.value > 5 && nodePowerLevel.acknowledgedFrames.value < 18) {
+                            cssClass = 'rtOrange';
+                        } else if (nodePowerLevel.acknowledgedFrames.value > 17) {
+                            cssClass = 'rtGreen';
+                        }
                     }
+                }else{// Without powelLevel
+                    if(v.isController){
+                        //console.log(node.id +' : ' + v.id,v.isFailed)
+                        cssClass = node.isFailed ? 'rtUnavailable' : 'rtGreen';
+                    }
+
                 }
-                //console.log(tooltip)
+                if(node.id === v.id ){
+                    cssClass = 'rtWhite';
+                }
                 var out = '<span class="rt-cell ' + cssClass + '" title="' + tooltip + '">' +  '&nbsp' + '</span>';
                 $scope.htmlNeighbors[node.id] += out;
             });
         });
-    }
-
-
-    /**
-     * Get link indicator
-     * @param {object} data
-     * @returns {object}
-     */
-    function getLinkIndicator(data, hasPowerLevel) {
-        var indicator = [];
-        angular.forEach(data, function (node, nodeId) {
-            if (nodeId == 255 || node.data.isVirtual.value) {
-                return;
-            }
-            var obj = {
-                nodeId: nodeId,
-                cssClass: (hasPowerLevel ? setLinkIndicatorColor(nodeId, hasPowerLevel) : '')
-            }
-            indicator.push(obj);
-
-        });
-        return indicator;
-    }
-
-    /**
-     * Set link indicator
-     * @param {object} data
-     * @returns {object}
-     */
-    function setLinkIndicatorColor(nodeId, hasPowerLevel) {
-        var cssClass = 'rtGray';
-        if (!hasPowerLevel[nodeId]) {
-            return cssClass;
-        }
-        var data = hasPowerLevel[nodeId];
-        if (data.acknowledgedFrames.value > -1 && data.acknowledgedFrames.value < 6) {
-            cssClass = 'rtRed';
-        } else if (data.acknowledgedFrames.value > 5 && data.acknowledgedFrames.value < 18) {
-            cssClass = 'rtOrange';
-        } else if (data.acknowledgedFrames.value > 17) {
-            cssClass = 'rtGreen';
-        }
-        return cssClass;
     }
 });

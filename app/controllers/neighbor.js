@@ -80,6 +80,7 @@ appController.controller('NeighborController', function ($scope, $filter, $timeo
                     if($scope.routings.updates.indexOf(k) > -1){
                         console.log(k)
                         setData(response.data.joined);
+                        setCells($scope.routings.all);
                     }
             });
 
@@ -193,18 +194,18 @@ appController.controller('NeighborController', function ($scope, $filter, $timeo
                 var tooltip = node.id + ': ' + node.name + ' - ' + v.id + ': ' + v.name + ' ';
                 //var routesCount = v.routesCount;
                 var hasAssoc = false;
-                var cssClass = 'rtDiv ';
+                var cssClass = 'rtUnavailable';
                 //Check for associations
                 /*if ($filter('associationExists')(node.node, v.id)) {
                     hasAssoc = true;
                     tooltip += ' (' + $scope._t('rt_associated') + ')';
                 }*/
                 if (node.id == v.id) {
-                    cssClass += 'rtUnavailable';
+                    cssClass = 'rtWhite';
                 } else if (v.node.data.neighbours.value.indexOf(parseInt(node.id, 10)) != -1) {
-                    cssClass += 'rtDirect';
+                    cssClass = 'rtDirect';
                 }  else {
-                    cssClass += 'rtNotLinked';
+                    cssClass = 'rtNotLinked';
                 }
                 var out = '<span class="rt-cell ' + cssClass + '" title="' + tooltip + '">' + (hasAssoc ? "*" : "&nbsp") + '</span>';
                 //console.log(out)

@@ -76,6 +76,12 @@
   }
 }
 
+.rtWhite {
+  background-color: #ebebeb !important;
+  //border: solid 1px gray !important;
+  -webkit-print-color-adjust: exact;
+}
+
 .rtDirect, .rtGreen {
   background-color: green !important;
   -webkit-print-color-adjust: exact;

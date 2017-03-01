@@ -1,4 +1,10 @@
 {
+  "very_good":"Very Good",
+  "good":"Good",
+  "bad":"Bad",
+  "poor":"Poor",
+  "info_link_status":"Info and Link Status",
+  "info_neighbors":"Info and Neighbors",
   "last_communication":"Last communication",
   "in_range":"In the Range",
   "promiscuous_mode_info":"Important: If this function is inactive the application can not collect packages anymore",

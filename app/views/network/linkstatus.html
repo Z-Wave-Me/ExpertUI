@@ -46,7 +46,7 @@
                         </a>
                     </th>
                     <th class="neighbor-hide">
-                        <a href="" ng-click="orderBy('updateTime')">{{ _t('datetime')}}
+                        <a href="" ng-click="orderBy('updateTime')">{{ _t('rt_header_update_time')}}
                             <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
                     </th>
@@ -76,18 +76,18 @@
                     <td class="neighbor-hide td-action print-hide" data-title="">
                         <!-- Test node -->
                         <button class="btn btn-primary" id="btn_test_{{ v.id}}"
-                                ng-if="v.hasPowerLevel && _.size(testLink[v.id])"
-                                ng-click="runTestLink(v.id)"
+                                ng-if="v.hasPowerLevel"
+                                ng-click="testAllLinks(v.id)"
                                 ng-disabled="rowSpinner[v.id]">
                             <bb-row-spinner
                                     icon="'fa-circle-o'"
-                                    spinner="rowSpinner[v.paramsTestNode]"
+                                    spinner="rowSpinner[v.id]"
                                     label="_t('test_link')">
                             </bb-row-spinner>
                         </button>
                         <!-- NOP -->
                         <button class="btn btn-default" id="btn_nop_{{ v.id}}"
-                                ng-if="!v.hasPowerLevel ||  !_.size(testLink[v.id])"
+                                ng-if="!v.hasPowerLevel"
                                 ng-click="runZwaveNop(v.cmdNop)"
                                 ng-disabled="rowSpinner[v.cmdNop]">
                             <bb-row-spinner
@@ -100,15 +100,39 @@
                     </td>
                     <td ng-bind-html="htmlNeighbors[v.id]|toTrusted">{{htmlNeighbors[v.id]}}</td>
                 </tr>
+                <tr>
+                    <th class="th-id">&nbsp;</th>
+                    <th class="neighbor-hide">
+                        <a href="" ng-click="orderBy('name')">{{ _t('device_name')}}
+                            <span ng-show="predicate == 'name'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th class="neighbor-hide">
+                        <a href="" ng-click="orderBy('type')">{{_t('device_description_device_type')}}
+                            <span ng-show="predicate == 'type'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th class="neighbor-hide">
+                        <a href="" ng-click="orderBy('updateTime')">{{ _t('rt_header_update_time')}}
+                            <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th class="neighbor-hide">&nbsp; </a>
+                    </th>
+                    <th>
+                        <span class="rt-cell"
+                              ng-repeat="v in linkStatus.all track by $index">{{v.id}}</span>
+                    </th>
+                </tr>
                 </tbody>
             </table>
     </div>
         </div>
 <div id="RoutingComments">
-    <i class="fa fa-square fa-lg gray"></i> {{_t('What will be the text about?')}}<br/>
-    <i class="fa fa-square fa-lg green"></i> {{_t('What will be the text about?')}}<br/>
-    <i class="fa fa-square fa-lg orange"></i> {{_t('What will be the text about?')}}<br/>
-    <i class="fa fa-square fa-lg red"></i> {{_t('What will be the text about?')}}<br/>
+    <i class="fa fa-square fa-lg gray"></i> {{_t('unavailable')}}<br/>
+    <i class="fa fa-square fa-lg green"></i> {{_t('very_good')}}<br/>
+    <i class="fa fa-square fa-lg orange"></i> {{_t('good')}}<br/>
+    <i class="fa fa-square fa-lg red"></i> {{_t('poor')}}<br/>
 
 </div>
 </div><!-- /ng-controler -->
