@@ -1,6 +1,13 @@
 {
   "--- newtrans": "---",
  "---": "---",
+ "very_good":"Very Good",
+ "good":"Good",
+ "bad":"Bad",
+ "poor":"Poor",
+ "info_link_status":"Info and Link Status",
+ "info_neighbors":"Info and Neighbors",
+ "last_communication":"Last communication",
  "promiscuous_mode_info":"Important: If this function is inactive the application can not collect packages anymore",
  "in_range":"In the Range",
  "notin_range":"Not in the Range",

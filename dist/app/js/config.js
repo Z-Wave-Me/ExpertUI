@@ -5,9 +5,9 @@
  */
 var config_data = {
     'cfg': {
-        'app_name': 'Z-Wave CIT',
-        'app_version': '1.2.0-RC-67',
-        'app_built': '24-02-2017 08:08:09',
+        'app_name': 'Z-Wave Expert',
+        'app_version': '1.2.0-RC-68',
+        'app_built': '01-03-2017 15:03:32',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -187,7 +187,7 @@ var config_data = {
    },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer
-        'app_type': 'installer',
+        'app_type': 'default',
          'custom_cfg': {
              'default':{
                  'logo': 'app/images/zplus.jpg',
