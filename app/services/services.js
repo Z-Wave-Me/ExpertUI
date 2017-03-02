@@ -155,6 +155,15 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,cfg
     };
 
     /**
+     * Get last communication
+     */
+    this.lastCommunication = function(node) {
+        var lastReceive = parseInt(node.data.lastReceived.updateTime, 10) || 0;
+        var lastSend = parseInt(node.data.lastSend.updateTime, 10) || 0;
+        return (lastSend > lastReceive) ? lastSend : lastReceive;
+    };
+
+    /**
      * Check if device isFailed
      */
     this.isFailed = function(node) {

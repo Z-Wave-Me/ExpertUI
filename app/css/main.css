@@ -13432,35 +13432,40 @@ h4 {
   color: orange !important;
 }
 
-/* line 161, ../sass/common/_body.scss */
+/* line 160, ../sass/common/_body.scss */
+.black {
+  color: black !important;
+}
+
+/* line 164, ../sass/common/_body.scss */
 .main_spinner {
   font-size: 14px;
   color: #555;
 }
 
-/* line 166, ../sass/common/_body.scss */
+/* line 169, ../sass/common/_body.scss */
 .text-yellow {
   color: yellow;
 }
 
-/* line 169, ../sass/common/_body.scss */
+/* line 172, ../sass/common/_body.scss */
 .text-orange {
   color: orange;
 }
 
 /* Links
 -------------------------------------------------- */
-/* line 174, ../sass/common/_body.scss */
+/* line 177, ../sass/common/_body.scss */
 a {
   color: #5698d0;
   text-decoration: none;
 }
-/* line 178, ../sass/common/_body.scss */
+/* line 181, ../sass/common/_body.scss */
 a:hover, a:focus {
   color: #357fbe;
   text-decoration: underline;
 }
-/* line 183, ../sass/common/_body.scss */
+/* line 186, ../sass/common/_body.scss */
 a:focus {
   outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
@@ -13469,7 +13474,7 @@ a:focus {
 
 /* Fatal error
 -------------------------------------------------- */
-/* line 193, ../sass/common/_body.scss */
+/* line 196, ../sass/common/_body.scss */
 .app-fatal-error {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -13479,13 +13484,13 @@ a:focus {
   background-color: #FFFFFF;
   border: solid 1px #d9534f;
 }
-/* line 200, ../sass/common/_body.scss */
+/* line 203, ../sass/common/_body.scss */
 .app-fatal-error .fatal-error-message {
   color: #d9534f;
   font-weight: bold;
   font-size: 120%;
 }
-/* line 205, ../sass/common/_body.scss */
+/* line 208, ../sass/common/_body.scss */
 .app-fatal-error .fatal-error-info {
   margin: 10px 0 0 0;
   color: #000000;
@@ -13494,44 +13499,44 @@ a:focus {
 
 /* Others
 -------------------------------------------------- */
-/* line 214, ../sass/common/_body.scss */
+/* line 217, ../sass/common/_body.scss */
 .timestamp {
   color: #333333;
   font-size: 17px;
 }
-/* line 217, ../sass/common/_body.scss */
+/* line 220, ../sass/common/_body.scss */
 .timestamp .fa {
   font-size: 110%;
 }
 
-/* line 221, ../sass/common/_body.scss */
+/* line 224, ../sass/common/_body.scss */
 .bcg-success {
   background-color: #dff0d8;
 }
 
-/* line 224, ../sass/common/_body.scss */
+/* line 227, ../sass/common/_body.scss */
 .bcg-active.false, .bcg-danger {
   background-color: #f2dede;
 }
 
-/* line 228, ../sass/common/_body.scss */
+/* line 231, ../sass/common/_body.scss */
 .clickable {
   cursor: pointer;
 }
 
-/* line 232, ../sass/common/_body.scss */
+/* line 235, ../sass/common/_body.scss */
 .text-supp {
   font-style: italic;
   color: #595959;
 }
 
-/* line 237, ../sass/common/_body.scss */
+/* line 240, ../sass/common/_body.scss */
 .badge {
   padding: 5px;
   margin-right: 5px;
 }
 
-/* line 241, ../sass/common/_body.scss */
+/* line 244, ../sass/common/_body.scss */
 .help-text {
   display: block;
   font-size: 95%;
@@ -13539,63 +13544,63 @@ a:focus {
   margin: 5px 0;
 }
 
-/* line 247, ../sass/common/_body.scss */
+/* line 250, ../sass/common/_body.scss */
 .help-text.inline {
   display: inline;
 }
 
-/* line 251, ../sass/common/_body.scss */
+/* line 254, ../sass/common/_body.scss */
 .display-block {
   display: block;
 }
 
-/* line 255, ../sass/common/_body.scss */
+/* line 258, ../sass/common/_body.scss */
 .is-hidden, .alert-hidden, .alert- {
   display: none !important;
 }
 
-/* line 259, ../sass/common/_body.scss */
+/* line 262, ../sass/common/_body.scss */
 .alert-list {
   margin: 8px 0;
 }
 
-/* line 263, ../sass/common/_body.scss */
+/* line 266, ../sass/common/_body.scss */
 .text-alert, .text-alert-list {
   font-size: 85%;
   margin: 0 0 0 7px;
 }
 
-/* line 267, ../sass/common/_body.scss */
+/* line 270, ../sass/common/_body.scss */
 .text-alert {
   margin: 7px 0;
 }
 
-/* line 270, ../sass/common/_body.scss */
+/* line 273, ../sass/common/_body.scss */
 .report-img {
   display: inline-block;
   max-width: 32px;
 }
 
-/* line 274, ../sass/common/_body.scss */
+/* line 277, ../sass/common/_body.scss */
 .hidden-selectopt {
   display: none !important;
 }
 
 /* Response
 -------------------------------------------------- */
-/* line 280, ../sass/common/_body.scss */
+/* line 283, ../sass/common/_body.scss */
 #respone_container {
   display: none;
 }
 
-/* line 284, ../sass/common/_body.scss */
+/* line 287, ../sass/common/_body.scss */
 #respone_container_inner {
   margin: 0 auto;
   text-align: center;
   /*position: relative;*/
 }
 
-/* line 289, ../sass/common/_body.scss */
+/* line 292, ../sass/common/_body.scss */
 .page-load-spinner {
   z-index: 1000;
   text-align: center;
@@ -13605,7 +13610,7 @@ a:focus {
   width: 150px;
 }
 
-/* line 298, ../sass/common/_body.scss */
+/* line 301, ../sass/common/_body.scss */
 .response-message {
   z-index: 1000;
   text-align: center;
@@ -13615,7 +13620,7 @@ a:focus {
 
 /* Progress bar
 -------------------------------------------------- */
-/* line 306, ../sass/common/_body.scss */
+/* line 309, ../sass/common/_body.scss */
 .progress {
   margin-bottom: 0;
 }
@@ -15283,10 +15288,22 @@ http://codepen.io/MattIn4D/pen/LiKFC
 -------------------------------------------------- */
 /* line 3, ../sass/common/_legend.scss */
 .legend-entry {
-  margin: 10px 0 0 0;
+  font-size: 95%;
+  margin: 20px 0 0 0;
+  padding: 10px 0 0 0;
+  border-top: solid 1px #efefef;
+}
+/* line 8, ../sass/common/_legend.scss */
+.legend-entry .legend-title {
+  margin: 0 0 5px 0;
+  font-weight: bold;
+}
+/* line 12, ../sass/common/_legend.scss */
+.legend-entry .legend-row {
+  margin: 0 0 5px 0;
 }
 
-/* line 7, ../sass/common/_legend.scss */
+/* line 18, ../sass/common/_legend.scss */
 .legend-inline .legend-row {
   display: inline-block;
   margin: 0 10px 0 0;

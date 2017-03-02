@@ -128,11 +128,23 @@
             </table>
     </div>
         </div>
-<div id="RoutingComments">
-    <i class="fa fa-square fa-lg gray"></i> {{_t('unavailable')}}<br/>
-    <i class="fa fa-square fa-lg green"></i> {{_t('very_good')}}<br/>
-    <i class="fa fa-square fa-lg orange"></i> {{_t('good')}}<br/>
-    <i class="fa fa-square fa-lg red"></i> {{_t('poor')}}<br/>
-
-</div>
+    <!-- Legend -->
+    <div class="legend-entry">
+        <!-- gray -->
+        <div class="legend-row">
+            <i class="fa fa-square fa-lg gray"></i> {{_t('unavailable')}}
+        </div>
+        <!-- green -->
+        <div class="legend-row">
+            <i class="fa fa-square fa-lg green"></i> {{_t('very_good')}}
+        </div>
+        <!-- orange -->
+        <div class="legend-row">
+            <i class="fa fa-square fa-lg orange"></i> {{_t('good')}}
+        </div>
+        <!-- red -->
+        <div class="legend-row">
+            <i class="fa fa-square fa-lg red"></i> {{_t('poor')}}
+        </div>
+    </div>
 </div><!-- /ng-controler -->

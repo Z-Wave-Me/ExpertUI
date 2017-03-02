@@ -105,11 +105,14 @@
     </div>
 
     <!-- Legend -->
-    <div id="RoutingComments">
-        <i class="fa fa-square fa-lg green"></i> {{_t('in_range')}}<br/>
-        <!--<i class="fa fa-square fa-lg green-light"></i> {{_t('routed')}}<br/>
-        <i class="fa fa-square fa-lg yellow"></i> {{_t('badly_routed')}}<br/>-->
-        <i class="fa fa-square fa-lg red"></i> {{_t('notin_range')}}<br/>
-        <!--<i class="fa fa-square fa-lg gray"></i> {{_t('unavailable')}}<br/>-->
+    <div class="legend-entry">
+        <!-- green -->
+        <div class="legend-row">
+            <i class="fa fa-square fa-lg green"></i> {{_t('in_range')}}
+        </div>
+        <!-- red -->
+        <div class="legend-row">
+            <i class="fa fa-square fa-lg red"></i> {{_t('notin_range')}}
+        </div>
     </div>
 </div>

@@ -159,6 +159,7 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
                 obj['icon'] = $filter('getDeviceTypeIcon')(type);
                 obj['isFailed'] = node.data.isFailed.value;
                 obj['neighbours'] = node.data.neighbours.value;
+                obj['updateTime'] = lastCommunication;
                 obj['dateTime'] = $filter('getDateTimeObj')(lastCommunication);
                 obj['isUpdated'] = isUpdated;
                 obj['cmdNop'] = 'devices[' + nodeId + '].SendNoOperation()';

@@ -119,6 +119,7 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
             var basicType = node.data.basicType.value;
             var genericType = node.data.genericType.value;
             var specificType = node.data.specificType.value;
+            var lastCommunication = deviceService.lastCommunication(node);
 
             // Packets
             var timingItems =  $scope.timing[nodeId];
@@ -136,6 +137,8 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
             obj['name'] = $filter('deviceName')(nodeId, node);
             obj['type'] = type;
             obj['icon'] = $filter('getDeviceTypeIcon')(type);
+            obj['updateTime'] = lastCommunication;
+            obj['dateTime'] = $filter('getDateTimeObj')(lastCommunication);
             obj['totalPackets'] = totalPackets;
             obj['okPackets'] = okPackets;
             obj['lastPackets'] = lastPackets;

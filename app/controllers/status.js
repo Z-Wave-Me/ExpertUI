@@ -183,6 +183,7 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
             obj['cmd'] = bindPath.split(',');
             obj['name'] = $filter('deviceName')(nodeId, node);
             obj['sleeping'] = sleeping;
+            obj['updateTime'] = lastCommunication;
             obj['dateTime'] = $filter('getDateTimeObj')(lastCommunication);
             obj['isFailed'] = node.data.isFailed.value;
             obj['type'] = type;
