@@ -89,7 +89,7 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
             $scope.deviceName = $filter('deviceName')($routeParams.nodeId, node);
             setDevice(node);
             setData(ZWaveAPIData, neighbours);
-            $scope.refreshData(ZWaveAPIData);
+            $scope.refreshData();
 
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
@@ -101,10 +101,10 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
     /**
      * Refresh data
      */
-    $scope.refreshData = function (ZWaveAPIData) {
+    $scope.refreshData = function () {
         var refresh = function () {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function (response) {
-                setData(ZWaveAPIData);
+            dataService.loadJoinedZwaveData().then(function (response) {
+                setData(response.data.joined);
             }, function (error) {
                 return;
             });

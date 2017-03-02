@@ -72,7 +72,7 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
             //$scope.mainsDevices = $scope.countDevices - ($scope.batteryDevices + $scope.flirsDevices);
             $scope.controller.controllerState = ZWaveAPIData.controller.data.controllerState.value;
             $scope.controller.startLearnMode = !isRealPrimary || hasDevices < 2 ? true : false;
-            $scope.refreshZwaveData(ZWaveAPIData);
+            $scope.refreshZwaveData();
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
         });
@@ -81,11 +81,10 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function (ZWaveAPIData) {
+    $scope.refreshZwaveData = function () {
         var refresh = function () {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function (response) {
+            dataService.loadJoinedZwaveData().then(function (response) {
                 notInterviewDevices(response.data.joined);
                 countDevices(response.data.joined);
                 assocRemovedDevices(response.data.joined);

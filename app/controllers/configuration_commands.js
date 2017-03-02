@@ -75,11 +75,10 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function(ZWaveAPIData) {
+    $scope.refreshZwaveData = function() {
         var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+            dataService.loadJoinedZwaveData().then(function(response) {
             }, function(error) {});
         };
         $scope.commandsInterval = $interval(refresh, $scope.cfg.interval);

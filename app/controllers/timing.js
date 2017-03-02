@@ -65,7 +65,7 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
                     return;
                 }
                 $scope.devices.show = true;
-                $scope.refreshZwaveData(zwaveData.value);
+                $scope.refreshZwaveData();
             }
 
         });
@@ -75,11 +75,10 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function(ZWaveAPIData) {
+    $scope.refreshZwaveData = function() {
         var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+            dataService.loadJoinedZwaveData().then(function(response) {
                 setData(response.data.joined);
             }, function(error) {});
         };
