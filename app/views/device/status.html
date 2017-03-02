@@ -61,9 +61,18 @@
                     <i class="fa" ng-class="v.icon" title="{{_t(v.type)}}"></i>
                 </td>
                 <td data-title="{{ _t('th_sleeping')}}" class="row-sleeping">
-                    <span ng-show="v.hasSleeping">
+                    <!--<span ng-show="v.hasSleeping">
                           <i class="fa fa-clock-o fa-lg" title="{{_t('battery_operated_device_with_wakeup')}}"></i>
                         <span ng-bind-html="v.hasSleeping | toTrusted"></span>
+                    </span> &nbsp;-->
+                    <span ng-show="v.sleeping">
+                          <i class="fa fa-clock-o fa-lg" title="{{_t('battery_operated_device_with_wakeup')}}"></i>
+                        <span title="{{_t('sleeping_since_approximately')}}"
+                        ng-show="v.sleeping.approx">{{v.sleeping.approx}}</span>
+                        <span title="{{_t('sleeping_since')}}">{{v.sleeping.lastSleep}}</span>
+                        &#8594;
+
+                        <span title="{{_t('next_wakeup')}}">{{v.approx + v.sleeping.nextWakeup}}</span>
                     </span> &nbsp;
 
                 </td>
