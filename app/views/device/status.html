@@ -82,8 +82,7 @@
                 </td>-->
                 <td class="row-interview print-hide">
                     <button class="btn btn-default" title="{{_t('device_is_not_fully_interviewed')}}"
-                            ng-show="!v.interviewDone"
-                            ng-hide="v.isController"
+                            ng-hide="v.interviewDone || v.isController"
                             ng-click="handleModalInterview('interviewModal',$event,$index,v.id,v.name)" title="{{v.interview}}">
                         <i class="fa fa-search-minus fa-lg text-danger"></i>
                     </button> &nbsp;
