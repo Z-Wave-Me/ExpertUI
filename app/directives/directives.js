@@ -47,23 +47,26 @@ angApp.directive('bbAlertText', function () {
         + '</span>'
     };
 });
-
+/**
+ * Handles and displays sort by buttons
+ * @class sortBy
+ */
 angApp.directive('sortBy', function () {
     return {
         restrict: "E",
         replace: true,
         scope: {
-            callbackFn: '&',
+            callback: '&',
             obj: '=',
+            label: '=',
+            field: '='
         },
-        template: '<span class="clickable">'
+        template: '<span class="order-by clickable">{{label}}&nbsp<span ng-show="obj.field == field">'
         + '<i ng-show="!obj.reverse" class="fa fa-sort-asc"></i><i ng-show="obj.reverse" class="fa fa-sort-desc"></i>'
-        + '</span>',
+        + '</span></span>',
         link: function(scope, element, attrs) {
-
             element.bind('click', function (e) {
-                console.log(scope.obj)
-                scope.callbackFn(); //scope.someCtrlFn({arg1: 22});
+                scope.callback({field: scope.field});
             });
 
         },
