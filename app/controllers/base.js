@@ -17,6 +17,10 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     $scope.loading = false;
     $scope.alert = {message: false, status: 'is-hidden', icon: false};
     $scope.languages = {};
+    $scope.orderByArr = {
+        field: '',
+        reverse:  false
+    }
 
 
     // Custom IP
@@ -80,6 +84,10 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     });
     // Order by
     $scope.orderBy = function (field) {
+        $scope.orderByArr = {
+            field: field,
+            reverse:  !$scope.orderByArr.reverse
+        }
         $scope.predicate = field;
         $scope.reverse = !$scope.reverse;
     };

@@ -2,6 +2,14 @@
 <div ng-controller="BatteryController">
     <div class="page-header"><h1>{{_t('nav_battery')}}</h1></div>
     <bb-alert alert="alert"></bb-alert>
+    <!--<pre>{{orderByArr|json}}</pre>
+    reverse: {{reverse}}
+    <p>
+        <a href="" ng-click="orderBy('name')">{{ _t('device_name')}}
+            <span ng-show="predicate == 'name'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+        </a>
+    </p>
+    <sort-by callback-fn="orderBy('level')" obj="orderByArr"></sort-by>-->
      <div id="table_mobile" ng-if="batteries.show">
         <table class="table table-striped table-condensed table-hover">
         <thead>

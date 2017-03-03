@@ -52,11 +52,21 @@ angApp.directive('sortBy', function () {
     return {
         restrict: "E",
         replace: true,
-        template: '<span ng-show="predicate == {{coll_name}}"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>',
-        link: function (scope, element, attr) {
-            // this is link function
-            var col_name = scope.$eval(attr.col_name);
-        }
+        scope: {
+            callbackFn: '&',
+            obj: '=',
+        },
+        template: '<span class="clickable">'
+        + '<i ng-show="!obj.reverse" class="fa fa-sort-asc"></i><i ng-show="obj.reverse" class="fa fa-sort-desc"></i>'
+        + '</span>',
+        link: function(scope, element, attrs) {
+
+            element.bind('click', function (e) {
+                console.log(scope.obj)
+                scope.callbackFn(); //scope.someCtrlFn({arg1: 22});
+            });
+
+        },
     };
 });
 /**
