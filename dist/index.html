@@ -150,9 +150,9 @@
                     </li>
 
                     <!-- Busy indicator -->
-                    <li class="navibar-divider navi-timestamp" ng-if="cfg.app_type === 'installer'"> </li>
-                    <li class="navibar-item navi-timestamp" ng-if="cfg.app_type === 'installer'">
-                         <span class="timestamp" ng-if="cfg.app_type === 'installer'"
+                    <li class="navibar-divider navi-timestamp" ng-if_="cfg.app_type === 'installer'"> </li>
+                    <li class="navibar-item navi-timestamp" ng-if_="cfg.app_type === 'installer'">
+                         <span class="timestamp"
                                ng-include="'app/views/indicator.html'"></span>
                     </li>
                 </ul>
@@ -192,8 +192,8 @@
             <span class="copyright" ng-bind-html="getCustomCfgVal('footer_text') | toTrusted"></span>
             <span class="copyright">{{getCustomCfgVal('version_type')}}</span>
             <span class="timestamp" ng-if="cfg.route.time.string"><i class="fa fa-clock-o"></i> {{cfg.route.time.string}}</span>
-            <span class="timestamp" ng-if="cfg.app_type === 'installer'"> | </span>
-            <span class="timestamp" ng-if="cfg.app_type === 'installer'"
+            <span class="timestamp" ng-if_="cfg.app_type === 'installer'"> | </span>
+            <span class="timestamp" ng-if_="cfg.app_type === 'installer'"
                   ng-include="'app/views/indicator.html'"></span>
         </div>
 
