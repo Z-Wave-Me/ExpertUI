@@ -17,6 +17,10 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     $scope.loading = false;
     $scope.alert = {message: false, status: 'is-hidden', icon: false};
     $scope.languages = {};
+    $scope.orderByArr = {
+        field: '',
+        reverse:  false
+    }
 
 
     // Custom IP
@@ -80,6 +84,10 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     });
     // Order by
     $scope.orderBy = function (field) {
+        $scope.orderByArr = {
+            field: field,
+            reverse:  !$scope.orderByArr.reverse
+        }
         $scope.predicate = field;
         $scope.reverse = !$scope.reverse;
     };
@@ -467,8 +475,9 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
         $scope.loadZwaveConfig();
         $scope.setDongle();
         $scope.setTimeStamp();
+        $scope.loadBusyIndicator();
         if(cfg.app_type === 'installer'){
-            $scope.loadBusyIndicator();
+
             $scope.loadBoxApiData();
         }
 
@@ -490,12 +499,6 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
             d: 0
         }
         }
-        var arrCnt = {
-            v: 0,
-            s: 0,
-            d: 0
-        }
-
         angular.forEach(data, function(job, jobIndex) {
             if(job[1][1] === 1 || job[1][2] === 1 || job[1][4] === 1){
                 ret.busyLength += 1;

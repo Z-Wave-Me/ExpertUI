@@ -13,16 +13,27 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
         all: [],
         interval: null,
         show: false,
-        pwLvl: [0,-1, -2, -3, -4, -5, -6, -7, -8, -9],
-        pwLvlData: {},
-        pwLvlTested: []
-
+        showInfo: true
 
     };
+    $scope.htmlNeighbors = {};
+    $scope.testLink = {};
     // Cancel interval on page destroy
     $scope.$on('$destroy', function () {
         $interval.cancel($scope.linkStatus.interval);
     });
+
+    /**
+     * Chenge view info and table = true /table only = false
+     * @param {string} view
+     */
+    $scope.changeView = function (status) {
+        if (typeof status === 'boolean') {
+            $scope.linkStatus.showInfo = status;
+        } else {
+            $scope.rlinkStatus.showInfo = !$scope.linkStatus.showInfo;
+        }
+    };
 
     /**
      * Load zwave data
@@ -38,8 +49,9 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
                 };
                 return;
             }
+            setCells($scope.linkStatus.all);
             $scope.linkStatus.show = true;
-            //$scope.refreshZwaveData(ZWaveAPIData);
+
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
         });
@@ -48,12 +60,24 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function (ZWaveAPIData) {
+    $scope.refreshZwaveData = function () {
+
         var refresh = function () {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function (response) {
-                setData(response.data.joined);
+            //var findZwaveStr = 'devices.' + 86;
+            dataService.loadJoinedZwaveData().then(function (response) {
+                var update = false;
+               angular.forEach(response.data.update, function(v, k) {
+                    var nodeId = k.split('.')[1];
+                    if($scope.testLink[nodeId]){
+                        update = true;
+                        return;
+                    }
+                });
+                if(update){
+                    setData(response.data.joined);
+                    setCells($scope.linkStatus.all);
+                }
             }, function (error) {
             });
         };
@@ -61,42 +85,34 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
     };
 
     /**
-     * Run TestNode command
-     * @param {string} params
+     * Test all links
+     * @param {string} id
      */
-    $scope.runZwaveTestNode = function (v) {
-      // console.log(v.paramsTestNode);
-        //console.log(v);
-        var index = $scope.linkStatus.pwLvlTested.indexOf(v.id);
-        if (index > -1) {
-            $scope.linkStatus.pwLvlTested.splice(index, 1);
-        }/*else{
-            $scope.linkStatus.pwLvlTested.push(v.id);
-        }*/
-        //$scope.linkStatus.pwLvlData[v.id] = [0,5,0,51,0,0,99,0,100,100];
-
-        //return;
-        $scope.toggleRowSpinner(v.paramsTestNode);
-        dataService.getApi('test_node', v.paramsTestNode, true).then(function (response) {
-            $scope.linkStatus.pwLvlData[v.id] = response.data;
-            $scope.linkStatus.pwLvlTested.push(v.id);
-
-            $timeout($scope.toggleRowSpinner, 1000);
-        }, function (error) {
+    $scope.testAllLinks = function(nodeId) {
+        $interval.cancel($scope.linkStatus.interval);
+        $scope.toggleRowSpinner(nodeId);
+        var data = {"nodeId": nodeId};
+        dataService.postApi('checklinks', data).then(function () {
+            $scope.refreshZwaveData();
             $scope.toggleRowSpinner();
-            alertify.alertError($scope._t('error_load_data'));
+        }, function () {
+            alertify.alertError($scope._t('error_update_data'));
+            $scope.toggleRowSpinner();
         });
     };
 
+
     /**
-     * todo: Why 21 times?
+     * todo: Whay 21 times?
      * Run NOP command
      * @param {string} cmd
      */
     $scope.runZwaveNop = function (cmd) {
+        $interval.cancel($scope.linkStatus.interval);
         for (i = 0; i < 21; i++) {
-            $scope.runZwaveCmd(cmd);
+            $scope.runZwaveCmd(cmd,3000,true);
         }
+        $scope.refreshZwaveData();
     };
 
     /// --- Private functions --- ///
@@ -109,109 +125,104 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
-            if (nodeId == 255 || nodeId == ZWaveAPIData.controller.data.nodeId.value || node.data.isVirtual.value) {
+            if (nodeId == 255 || node.data.isVirtual.value) {
                 return;
             }
+            var hasPowerLevel = node.instances[0].commandClasses[115];
+
             // Loop throught instances
             angular.forEach(node.instances, function (instance, instanceId) {
                 if (instanceId == 0 && node.instances.length > 1) {
                     return;
                 }
-                var indicator;
+                var lastReceive = parseInt(node.data.lastReceived.updateTime, 10) || 0;
+                var lastSend = parseInt(node.data.lastSend.updateTime, 10) || 0;
+                var lastCommunication = (lastSend > lastReceive) ? lastSend : lastReceive;
                 var dateTime;
                 var isUpdated;
-                var hasPowerLevel = instance.commandClasses[115];
-                //var indicator = getLinkIndicator(ZWaveAPIData.devices, hasPowerLevel);
                 if (hasPowerLevel) {
                     isUpdated = ((hasPowerLevel.data.updateTime > hasPowerLevel.data.invalidateTime) ? true : false);
                     dateTime = $filter('getDateTimeObj')(hasPowerLevel.data.updateTime, hasPowerLevel.data.invalidateTime);
                 }
-
-                var isListening = node.data.isListening.value;
-                var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
-                var hasWakeup = 0x84 in node.instances[0].commandClasses;
-                //var centralController = true;
-                var type;
-
-                if (node.data.genericType.value === 1) {
-                    type = 'portable';
-                } else if (node.data.genericType.value === 2) {
-                    type = 'static';
-                } else if (isFLiRS) {
-                    type = 'flirs';
-                } else if (hasWakeup) {
-                    type = 'battery';
-                } else if (isListening) {
-                    type = 'mains';
-                } else {
-                    type = 'unknown';
-                }
+                var type = deviceService.deviceType(node);
                 var obj = {};
                 obj['id'] = nodeId;
                 obj['rowId'] = 'row_' + nodeId;
+                obj['isController'] = controllerNodeId == nodeId;
                 obj['name'] = $filter('deviceName')(nodeId, node);
                 obj['type'] = type;
                 obj['hasPowerLevel'] = hasPowerLevel;
-                obj['icon'] = $filter('getDeviceTypeIcon')(type),
-                    obj['indicator'] = indicator;
-                obj['dateTime'] = dateTime;
+                obj['icon'] = $filter('getDeviceTypeIcon')(type);
+                obj['isFailed'] = node.data.isFailed.value;
+                obj['neighbours'] = node.data.neighbours.value;
+                obj['updateTime'] = lastCommunication;
+                obj['dateTime'] = $filter('getDateTimeObj')(lastCommunication);
                 obj['isUpdated'] = isUpdated;
-                obj['paramsTestNode'] = nodeId;//+ '/' + 10;
-                ;
-                obj['cmdNop'] = 'devices[' + nodeId + '].SendNoOperation()'
+                obj['cmdNop'] = 'devices[' + nodeId + '].SendNoOperation()';
                 var findIndex = _.findIndex($scope.linkStatus.all, {rowId: obj.rowId});
                 if (findIndex > -1) {
                     angular.extend($scope.linkStatus.all[findIndex], obj);
 
                 } else {
                     $scope.linkStatus.all.push(obj);
-                    $scope.linkStatus.pwLvlData[nodeId] = [0,0,0,0,0,0,0,0,0,0];
                 }
-
             });
         });
     }
 
-
     /**
-     * Get link indicator
-     * @param {object} data
-     * @returns {object}
+     * Set table cell state
+     * @param {object} nodes
+     * @returns {Array}
      */
-    function getLinkIndicator(data, hasPowerLevel) {
-        var indicator = [];
-        angular.forEach(data, function (node, nodeId) {
-            if (nodeId == 255 || node.data.isVirtual.value) {
-                return;
-            }
-            var obj = {
-                nodeId: nodeId,
-                color: (hasPowerLevel ? setLinkIndicatorColor(nodeId, hasPowerLevel) : '')
-            }
-            indicator.push(obj);
+    function setCells(nodes) {
+        //console.log(nodes)
+        angular.forEach(nodes, function (node, i) {
+            //console.log(node.id,node.neighbours)
+            $scope.htmlNeighbors[node.id] = '';
+            $scope.testLink[node.id] = [];
+            var powerLevel = node.hasPowerLevel ? node.hasPowerLevel.data : [];
+            //console.log(node.hasPowerLevel)
+            angular.forEach(nodes, function (v, k) {
+                var tooltip = node.id + ': ' + node.name + ' - ' + v.id + ': ' + v.name + ' ';
+                //var cssClass = node.hasPowerLevel ? 'rtUnavailable' : 'rtWhite';
+                var cssClass = 'rtWhite';
 
+                if(node.hasPowerLevel){ // Cols for powerLevel
+                    var nodePowerLevel = powerLevel[v.id];
+                    //console.log(node.neighbours.indexOf(parseInt(v.id)))
+                    if(node.neighbours.indexOf(parseInt(v.id)) > -1){
+                        cssClass = 'rtUnavailable';
+                        //console.log(node.id + ' | '+ v.id+' In neighbours',node.neighbours)
+                    }/*else{
+                        console.log(node.id + ' | '+ v.id+' NOT in neighbours',node.neighbours)
+                    }*/
+                   // cssClass = (node.neighbours.indexOf(parseInt(v.id)) === -1 ? 'rtOrange' : 'rtUnavailable');
+
+                    if(nodePowerLevel){
+                        $scope.testLink[node.id].push(v.id);
+                        //console.log(node.id + ' | ' + v.id + ': ',powerLevel[v.id])
+                        if (nodePowerLevel.acknowledgedFrames.value > -1 && nodePowerLevel.acknowledgedFrames.value < 6) {
+                            cssClass = 'rtRed';
+                        } else if (nodePowerLevel.acknowledgedFrames.value > 5 && nodePowerLevel.acknowledgedFrames.value < 18) {
+                            cssClass = 'rtOrange';
+                        } else if (nodePowerLevel.acknowledgedFrames.value > 17) {
+                            cssClass = 'rtGreen';
+                        }
+                    }
+                }else{// Without powelLevel
+                    if(v.isController){
+                        //console.log(node.id +' : ' + v.id,v.isFailed)
+                        cssClass = node.isFailed ? 'rtUnavailable' : 'rtGreen';
+                    }
+
+                }
+                if(node.id === v.id ){
+                    cssClass = 'rtWhite';
+                }
+                var out = '<span class="rt-cell ' + cssClass + '" title="' + tooltip + '">' +  '&nbsp' + '</span>';
+                $scope.htmlNeighbors[node.id] += out;
+            });
         });
-        return indicator;
-    }
-
-    /**
-     * Set link indicator
-     * @param {object} data
-     * @returns {object}
-     */
-    function setLinkIndicatorColor(nodeId, hasPowerLevel) {
-        var color = 'rtGray';
-        if (!hasPowerLevel[nodeId]) {
-            return color;
-        }
-        var data = hasPowerLevel[nodeId];
-        if (data.acknowledgedFrames.value > -1 && data.acknowledgedFrames.value < 6) {
-            color = 'rtRed';
-        } else if (data.acknowledgedFrames.value > 5 && data.acknowledgedFrames.value < 18) {
-            color = 'rtOrange';
-        } else if (data.acknowledgedFrames.value > 17) {
-            color = 'rtGreen';
-        }
-        return color;
     }
 });

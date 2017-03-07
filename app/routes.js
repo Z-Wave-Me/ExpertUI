@@ -126,7 +126,7 @@ angApp.config(['$routeProvider',
         }).when('/network/statistics', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/network/statistics.html',
-            appTypeBanned: ['default']
+            appTypeBanned: []
         }).when('/network/linkstatus', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/network/linkstatus.html',
@@ -139,22 +139,22 @@ angApp.config(['$routeProvider',
         when('/installer/zniffer', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/installer/zniffer.html',
-            appTypeBanned: ['default']
+            appTypeBanned: []
         }).// Installer - history
         when('/installer/history', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/installer/history.html',
-            appTypeBanned: ['default']
+            appTypeBanned: []
         }).// Installer - RSSI
         when('/installer/rssi', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/installer/rssi_background.html',
-            appTypeBanned: ['default']
+            appTypeBanned: []
         }).
         when('/installer/rssimeter', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/installer/rssi_meter.html',
-            appTypeBanned: ['default']
+            appTypeBanned: []
         }).// Settings
         when('/settings', {
             requireLogin: requireLogin,

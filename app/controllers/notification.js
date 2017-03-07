@@ -48,7 +48,7 @@ appController.controller('NotificationController', function ($scope, $filter, $t
                 return;
             }
             $scope.notifications.show = true;
-            $scope.refreshZwaveData(ZWaveAPIData, alarms);
+            $scope.refreshZwaveData(alarms);
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
         });
@@ -58,11 +58,11 @@ appController.controller('NotificationController', function ($scope, $filter, $t
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
+     * @param {object}  alarms
      */
-    $scope.refreshZwaveData = function (ZWaveAPIData, alarms) {
+    $scope.refreshZwaveData = function (alarms) {
         var refresh = function () {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function (response) {
+            dataService.loadJoinedZwaveData().then(function (response) {
                 setData(response.data.joined, alarms);
             }, function (error) {
             });

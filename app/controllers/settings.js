@@ -152,6 +152,31 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
 });
 
 /**
+ * This controller renders and handles app settings for default version.
+ * @class SettingsAppController
+ *
+ */
+appController.controller('SettingsAppFormatController', function ($scope, $timeout, $window, $interval, $location, $q, cfg,dataService,deviceService) {
+    $scope.settingsFormat = {
+        input: cfg.zwavecfg
+    };
+
+    /**
+     * Store settings
+     * @param {object} input
+     */
+    $scope.storeFormatSettings = function(input) {
+        $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin', message: $scope._t('updating')};
+        dataService.postApi('configupdate_url', input).then(function (response) {
+            $scope.loading = false;
+        }, function (error) {
+            $scope.loading = false;
+            alertify.alertError($scope._t('error_update_data'));
+        });
+    };
+});
+
+/**
  * The controller that handles firmware update process.
  * @class SettingsFirmwareController
  *
@@ -325,7 +350,6 @@ appController.controller('SettingsReportController', function ($scope, $window, 
         input.browser_agent = $window.navigator.appCodeName;
         input.browser_version = $window.navigator.appVersion;
         input.browser_info = 'PLATFORM: ' + $window.navigator.platform + '\nUSER-AGENT: ' + $window.navigator.userAgent;
-
         if(input.log){
             $scope.sendReportLog(input);
 

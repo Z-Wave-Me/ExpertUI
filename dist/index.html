@@ -59,7 +59,7 @@
                             <ul>
                                 <li><a href="#device/status" ng-class="isActive('status',2)">{{ _t('nav_status') }}</a></li>
                                 <li><a href="#device/type" ng-class="isActive('type',2)">{{ _t('nav_type_info') }}</a></li>
-                                <!--<li><a href="#device/battery" ng-class="isActive('battery',2)">{{ _t('nav_battery') }}</a></li>-->
+                                <li><a href="#device/battery" ng-class="isActive('battery',2)">{{ _t('nav_battery') }}</a></li>
                                 <li ng-if="cfg.app_type === 'installer'">
                                     <a href="#config/configuration"
                                        ng-class="isActive('configuration',2)">{{ _t('nav_configuration') }}</a>
@@ -87,7 +87,8 @@
                         <div class="sub-navigation sub-navigation-left" ng-if="naviExpanded.naviNetwork">
                             <ul>
                                 <li><a href="#network/control" ng-class="isActive('control',2)">{{ _t('nav_control') }}</a></li>
-                                <li ng-if="cfg.app_type === 'installer'">
+                               <!-- <li ng-if="cfg.app_type === 'installer'">-->
+                                <li>
                                     <a href="#network/statistics" ng-class="isActive('statistics',2)">{{ _t('statistics') }}</a>
                                 </li>
                                 <li><a href="#network/neighbors" ng-class="isActive('neighbors',2)">{{ _t('neighbors') }}</a></li>
@@ -96,9 +97,10 @@
                                 <li><a href="#network/timing" ng-class="isActive('timing',2)">{{ _t('nav_timing_info') }}</a></li>
                                 <!--<li><a class="a-disabled" title="Temporary disabled. Will be back in the next release." ng-class="isActive('timing',2)">{{ _t('nav_timing_info') }}</a></li>-->
                                 <li><a href="#network/map" dng-class="isActive('map',2)">{{ _t('nav_network_map') }}</a></li>
-                               <!-- <li ng-if="cfg.app_type === 'installer'">
+                                <!--<li ng-if="cfg.app_type === 'installer'">-->
+                                <li>
                                     <a href="#network/linkstatus" ng-class="isActive('linkstatus',2)">{{ _t('nav_linkhealth_info') }}</a>
-                                </li>-->
+                                </li>
                                 <!--
                                 <li ng-if="cfg.app_type === 'installer' && !cfg.controller.isRealPrimary">
                                     <!--<a href="#network/linkstatus" ng-class="isActive('linkstatus',2)">{{ _t('nav_linkhealth_info') }}</a>-->
@@ -112,8 +114,10 @@
                     </li>
 
                     <!-- Analytics -->
-                    <li class="navibar-divider" ng-if="cfg.app_type === 'installer'"> </li>
-                    <li class="navibar-item" ng-click="expandNavi('naviInstaller', $event)"  ng-if="cfg.app_type === 'installer'">
+                    <!--<li class="navibar-divider" ng-if="cfg.app_type === 'installer'"> </li>-->
+                    <li class="navibar-divider"> </li>
+                   <!-- <li class="navibar-item" ng-click="expandNavi('naviInstaller', $event)"  ng-if="cfg.app_type === 'installer'">-->
+                    <li class="navibar-item" ng-click="expandNavi('naviInstaller', $event)">
                         <a class="navibar-item-root" href="" title="{{_t('installer')}}" ng-class="isActive('installer',1)">
                             <i class="fa fa-signal"></i> <span class="main-nav-name">{{ _t('nav_installer')}}</span>
                         </a>
@@ -146,9 +150,9 @@
                     </li>
 
                     <!-- Busy indicator -->
-                    <li class="navibar-divider navi-timestamp" ng-if="cfg.app_type === 'installer'"> </li>
-                    <li class="navibar-item navi-timestamp" ng-if="cfg.app_type === 'installer'">
-                         <span class="timestamp" ng-if="cfg.app_type === 'installer'"
+                    <li class="navibar-divider navi-timestamp" ng-if_="cfg.app_type === 'installer'"> </li>
+                    <li class="navibar-item navi-timestamp" ng-if_="cfg.app_type === 'installer'">
+                         <span class="timestamp"
                                ng-include="'app/views/indicator.html'"></span>
                     </li>
                 </ul>
@@ -188,8 +192,8 @@
             <span class="copyright" ng-bind-html="getCustomCfgVal('footer_text') | toTrusted"></span>
             <span class="copyright">{{getCustomCfgVal('version_type')}}</span>
             <span class="timestamp" ng-if="cfg.route.time.string"><i class="fa fa-clock-o"></i> {{cfg.route.time.string}}</span>
-            <span class="timestamp" ng-if="cfg.app_type === 'installer'"> | </span>
-            <span class="timestamp" ng-if="cfg.app_type === 'installer'"
+            <span class="timestamp" ng-if_="cfg.app_type === 'installer'"> | </span>
+            <span class="timestamp" ng-if_="cfg.app_type === 'installer'"
                   ng-include="'app/views/indicator.html'"></span>
         </div>
 

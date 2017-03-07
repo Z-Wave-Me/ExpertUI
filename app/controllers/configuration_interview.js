@@ -55,7 +55,7 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
             $scope.deviceName = $filter('deviceName')(nodeId, node);
             checkInterview(node);
             setData(ZWaveAPIData, nodeId);
-            $scope.refreshZwaveData(ZWaveAPIData,nodeId);
+            $scope.refreshZwaveData();
            /* dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
                 node = response.data.joined.devices[nodeId];
                 refreshData(node, nodeId, response.data.joined);
@@ -71,11 +71,11 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
      * Refresh zwave data
      * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function(ZWaveAPIData,nodeId) {
+    $scope.refreshZwaveData = function() {
         var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
-                var node = response.data.joined.devices[nodeId];
-                refreshData(node, nodeId, response.data.joined);
+            dataService.loadJoinedZwaveData().then(function(response) {
+                var node = response.data.joined.devices[$routeParams.nodeId];
+                refreshData(node, $routeParams.nodeId, response.data.joined);
             }, function(error) {});
         };
         $scope.zwaveInterview.interval = $interval(refresh, $scope.cfg.interval);
