@@ -63,11 +63,9 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                         return;
                     }
                     ;
-                    var obj = {};
-                    obj['id'] = v.id;
-                    obj['name'] = v.name;
-                    devices.push(obj);
+                    devices.push(v);
                 });
+                //console.log(devices)
                 return devices;
             };
 

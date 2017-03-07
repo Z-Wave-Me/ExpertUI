@@ -494,7 +494,10 @@ angApp.filter('toTrusted', ['$sce', function ($sce) {
  */
 angApp.filter('deviceName', function (cfg,deviceService) {
     return function (deviceId, device) {
-        var name = (deviceId === cfg.controller.zwayNodeId? deviceService.getCustomCfgVal('controller_name') : 'Device ' + '_' + deviceId);
+        if(deviceId == cfg.controller.zwayNodeId){
+            return deviceService.getCustomCfgVal('controller_name');
+        }
+        var name ='Device ' + '_' + deviceId;
         if (device === undefined) {
             return name;
         }
