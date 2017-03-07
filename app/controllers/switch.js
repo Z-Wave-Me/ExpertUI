@@ -59,7 +59,7 @@ appController.controller('SwitchController', function ($scope, $filter, $timeout
                     // Check if node ID is in the available devices
                     if($scope.switches.ids.indexOf(findId) > -1){
                         update = true;
-                        console.log('Updating nodeId: ',findId);
+                        //console.log('Updating nodeId: ',findId);
                         return;
                     }
                 });
