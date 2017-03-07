@@ -159,7 +159,7 @@ var config_data = {
         // Auth
         'auth': {
             'login': 'admin',
-            'password': 'admin1'
+            'password': 'admin'
         },
         // Date format list
         'date_format_list': ['dd.mm.yyyy','dd-mm-yyyy','yyyy-mm-dd','yyyy/mm/dd','mm/dd/yyyy', 'dd/mm/yyyy'],
