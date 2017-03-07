@@ -68,20 +68,16 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
             dataService.loadJoinedZwaveData().then(function (response) {
                 var update = false;
                angular.forEach(response.data.update, function(v, k) {
-                    var id = k.split('.')[1];
-                    if($scope.testLink[id]){
+                    var nodeId = k.split('.')[1];
+                    if($scope.testLink[nodeId]){
                         update = true;
                         return;
                     }
-                    //console.log(deviceId)
                 });
                 if(update){
-                    //console.log('Updating device');
                     setData(response.data.joined);
                     setCells($scope.linkStatus.all);
-                }/*else{
-                    console.log('Nothing to update')
-                }*/
+                }
             }, function (error) {
             });
         };

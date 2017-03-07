@@ -329,7 +329,6 @@ angApp.directive('expertCommandInput', function (cfg,$filter) {
 
         input += '<label>' + label + '</label> ';
         input += '<select name="select_' + inName + '" class="form-control">';
-        input += '<option value="1">' + (cfg.app_type === 'installer' ? 'CIT' : 'Z-Way')+ '</option>';
         angular.forEach(devices, function (v, k) {
             var selected = (v.id == currValue ? ' selected' : '');
             input += '<option value="' + v.id + '"' + selected + '>' + v.name + '</option>';

@@ -6,7 +6,6 @@
 <div class="accordion-entry-ctrl" ng-class="" ng-if="expand.settingsApp" ng-controller="SettingsAppController">
     <bb-loader></bb-loader>
     <form name="form_settings" id="form_settings" class="form form-page"
-          ng-if_="cfg.app_type === 'installer'"
           ng-submit="storeSettings(settings.input, $event)" novalidate>
         <fieldset>
             <!-- network name -->

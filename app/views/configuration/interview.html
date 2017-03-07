@@ -22,6 +22,7 @@
                                             <div ng-hide="goDeviceName" ng-click="goDeviceName = true">
                                                 {{deviceName}}
                                                 <button type="button" class="btn btn-default"
+                                                        ng-hide="cfg.controller.zwayNodeId == deviceId"
                                                         ng-click="goDeviceName = true"
                                                         ng-disabled="rowSpinner['deviceName']">
 

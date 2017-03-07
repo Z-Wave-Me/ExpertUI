@@ -8,8 +8,9 @@
  * @class SwitchController
  *
  */
-appController.controller('SwitchController', function($scope, $filter, $timeout,$interval,dataService, cfg,_) {
+appController.controller('SwitchController', function ($scope, $filter, $timeout, $interval, dataService, deviceService,cfg, _) {
     $scope.switches = {
+        ids: [],
         all: [],
         interval: null,
         rangeSlider: [],
@@ -19,23 +20,27 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
     /**
      * Cancel interval on page destroy
      */
-    $scope.$on('$destroy', function() {
+    $scope.$on('$destroy', function () {
         $interval.cancel($scope.switches.interval);
     });
 
     /**
      * Load zwave data
      */
-    $scope.loadZwaveData = function() {
-        dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
+    $scope.loadZwaveData = function () {
+        dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
             setData(ZWaveAPIData);
-             if(_.isEmpty($scope.switches.all)){
-                $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+            if (_.isEmpty($scope.switches.all)) {
+                $scope.alert = {
+                    message: $scope._t('device_404'),
+                    status: 'alert-warning',
+                    icon: 'fa-exclamation-circle'
+                };
                 return;
             }
             $scope.switches.show = true;
             $scope.refreshZwaveData();
-        }, function(error) {
+        }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
         });
     };
@@ -44,11 +49,27 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
     /**
      * Refresh zwave data
      */
-    $scope.refreshZwaveData = function() {
-        var refresh = function() {
-            dataService.loadJoinedZwaveData().then(function(response) {
-                setData(response.data.joined);
-            }, function(error) {});
+    $scope.refreshZwaveData = function () {
+        var refresh = function () {
+            dataService.loadJoinedZwaveData().then(function (response) {
+                var update = false;
+                angular.forEach(response.data.update, function(v, k) {
+                    // Get node ID from response
+                    var findId = k.split('.')[1];
+                    // Check if node ID is in the available devices
+                    if($scope.switches.ids.indexOf(findId) > -1){
+                        update = true;
+                        //console.log('Updating nodeId: ',findId);
+                        return;
+                    }
+                });
+                // Update found - updating available devices
+                if(update){
+                    setData(response.data.joined);
+                }
+                //setData(response.data.joined,nodeId);
+            }, function (error) {
+            });
         };
         $scope.switches.interval = $interval(refresh, $scope.cfg.interval);
     };
@@ -57,7 +78,7 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
      * Update switch
      * @param {string} url
      */
-    $scope.updateSwitch = function(url,$index) {
+    $scope.updateSwitch = function (url, $index) {
         $scope.toggleRowSpinner(url);
         dataService.runZwaveCmd(cfg.store_url + url).then(function (response) {
             $timeout($scope.toggleRowSpinner, 1000);
@@ -71,18 +92,18 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
      * @param {string} id
      * @param {string} urlType
      */
-    $scope.updateAllSwitches = function(id,urlType) {
+    $scope.updateAllSwitches = function (id, urlType) {
         var lastItem = _.last($scope.switches.all);
         $scope.toggleRowSpinner(id);
-        angular.forEach($scope.switches.all, function(v, k) {
+        angular.forEach($scope.switches.all, function (v, k) {
             $scope.toggleRowSpinner(v[urlType]);
             dataService.runZwaveCmd(cfg.store_url + v[urlType]).then(function (response) {
                 alertify.dismissAll();
             }, function (error) {
                 alertify.dismissAll();
-                alertify.alertError($scope._t('error_update_data') + '\n' +  v[urlType]);
+                alertify.alertError($scope._t('error_update_data') + '\n' + v[urlType]);
             });
-            if(lastItem.rowId === v.rowId){
+            if (lastItem.rowId === v.rowId) {
                 $timeout($scope.toggleRowSpinner, 1000);
             }
         });
@@ -92,7 +113,7 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
     /**
      * Calls function when slider handle is grabbed
      */
-    $scope.sliderOnHandleDown = function() {
+    $scope.sliderOnHandleDown = function () {
         $interval.cancel($scope.switches.interval);
     };
 
@@ -101,7 +122,7 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
      * @param {string} cmd
      * @param {int} index
      */
-    $scope.sliderOnHandleUp = function(cmd, index) {
+    $scope.sliderOnHandleUp = function (cmd, index) {
         $scope.refreshZwaveData(null);
         var val = $scope.switches.rangeSlider[index];
         var url = cmd + '.Set(' + val + ')';
@@ -119,15 +140,15 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
      * @param {int} index
      */
     /*$scope.sliderChange = function(cmd, index) {
-        var val = $scope.switches.rangeSlider[index];
-        var url = cmd + '.Set(' + val + ')';
-        dataService.runZwaveCmd(cfg.store_url + url).then(function (response) {
-            $scope.toggleRowSpinner();
-        }, function (error) {
-            $scope.toggleRowSpinner();
-            alertify.alertError($scope._t('error_update_data') + '\n' + url);
-        });
-    };*/
+     var val = $scope.switches.rangeSlider[index];
+     var url = cmd + '.Set(' + val + ')';
+     dataService.runZwaveCmd(cfg.store_url + url).then(function (response) {
+     $scope.toggleRowSpinner();
+     }, function (error) {
+     $scope.toggleRowSpinner();
+     alertify.alertError($scope._t('error_update_data') + '\n' + url);
+     });
+     };*/
 
     /// --- Private functions --- ///
 
@@ -136,100 +157,145 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
      * @param {object} ZWaveAPIData
      */
     function setData(ZWaveAPIData) {
+        /**
+         * todo: does not work properly - check "Update all"
+         * Set data for one device only
+         */
+        /*if(nodeId && ZWaveAPIData.devices[nodeId]){
+            console.log('Updating only nodeId: ',nodeId)
+            setNodeInstance(ZWaveAPIData.devices[nodeId], nodeId);
+            return;
+        }*/
+        /**
+         * Set data for all available devices
+         */
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
-        // Loop throught devices
-        angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+        // Loop through devices
+        angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
+            var type = deviceService.deviceType(node);
+            if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value || type == 'static') {
                 return;
             }
-            // Loop throught instances
-            var cnt = 1;
-            angular.forEach(node.instances, function(instance, instanceId) {
-                angular.forEach([0x25, 0x26], function(ccId) {
-                    if (!(ccId in instance.commandClasses)) return;
-                    var switchAllValue = null;
-                    var hasSwitchAll = (0x27 in instance.commandClasses) && (instanceId == 0);
-                    if (hasSwitchAll) {
-                        switchAllValue = instance.commandClasses[0x27].data.mode.value;
-                    }
+            setNodeInstance(node, nodeId);
 
-                    var deviceType = ccId == 0x25 ? 'binary' : 'multilevel';
-                    
-                    var genericType = node.data.genericType.value;
-                    var specificType = node.data.specificType.value;
-                    var genspecType = genericType + '/' + specificType;
-
-                    // Set object
-                    var obj = {};
-
-                    // Motor devices
-                    var btnOn = $scope._t('switched_on');
-                    var btnOff = $scope._t('switched_off');
-                    var btnFull = $scope._t('btn_full');
-                    var hasMotor = false;
-                    var motorDevices = ['17/3', '17/5', '17/6', '17/7', '9/0', ' 9/1'];
-                    if (motorDevices.indexOf(genspecType) !== -1) {
-                        btnOn = $scope._t('btn_switched_up');
-                        btnOff = $scope._t('btn_switched_down');
-                        hasMotor = true;
-                    }
-                    //console.log(nodeId + '.' + instanceId + ': ' + genspecType + ' motor: ' + hasMotor);
-                    var multiChannel = false;
-                    if (0x60 in instance.commandClasses) {
-                        multiChannel = true;
-                    }
-                    var level = updateLevel(instance.commandClasses[ccId].data.level, ccId, btnOn, btnOff);
-
-                    obj['id'] = nodeId;
-                    obj['cmd'] = instance.commandClasses[ccId].data.name + '.level';
-                    obj['iId'] = instanceId;
-                    obj['ccId'] = ccId;
-                    obj['hasMotor'] = hasMotor;
-                    obj['multiChannel'] = multiChannel;
-                    obj['deviceType'] = deviceType;
-                    obj['genericType'] = genericType;
-                    obj['specificType'] = specificType;
-                    obj['hasSwitchAll'] = hasSwitchAll;
-                    obj['switchAllValue'] = switchAllValue;
-                    obj['rowId'] = 'switch_' + nodeId + '_' + cnt;
-                    obj['name'] = $filter('deviceName')(nodeId, node);
-                    obj['updateTime'] = instance.commandClasses[ccId].data.level.updateTime;
-                    obj['invalidateTime'] = instance.commandClasses[ccId].data.level.invalidateTime;
-                    obj['dateTime'] = $filter('getDateTimeObj')(instance.commandClasses[ccId].data.level.updateTime,obj['invalidateTime']);
-                    obj['urlToStore'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Get()';
-                    obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
-                    //obj['level'] = ZWaveAPIData.devices[nodeId].instances[instanceId].commandClasses[ccId].data.level;
-                    obj['level'] = level.level_cont;
-                    obj['levelColor'] = level.level_color;
-                    obj['levelStatus'] = level.level_status;
-                    obj['levelMax'] = level.level_max;
-                    obj['levelVal'] = level.level_val;
-                    obj['urlToOff'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Set(0)';
-                    obj['urlToOn'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Set(255)';
-                    obj['urlToFull'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Set(99)';
-                    obj['urlToSlide'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']';
-                    obj['btnOn'] = btnOn;
-                    obj['btnOff'] = btnOff;
-                    obj['btnFull'] = btnFull;
-                    obj['cmdToUpdate'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.level';
-                   // obj['deviceIcon'] = $filter('deviceIcon')(obj);
-                    var findIndex = _.findIndex($scope.switches.all, {rowId: obj.rowId});
-                    if(findIndex > -1){
-                        angular.extend($scope.switches.all[findIndex],obj);
-                        $scope.switches.rangeSlider[findIndex] = level.level_val;
-
-                    }else{
-                        $scope.switches.all.push(obj);
-                        $scope.switches.rangeSlider.push(obj['range_' + nodeId] = level.level_val);
-                    }
-
-
-                    cnt++;
-                });
-            });
         });
     }
     ;
+    /**
+     * Set node instance
+     * @param node
+     * @param nodeId
+     */
+    function setNodeInstance(node, nodeId){
+        // Loop throught instances
+        var cnt = 0;
+        angular.forEach(node.instances, function (instance, instanceId) {
+            cnt++;
+            // angular.forEach([0x25, 0x26], function(ccId) {
+            /*if (!(ccId in instance.commandClasses)) return;
+             var switchAllValue = null;
+             var hasSwitchAll = (0x27 in instance.commandClasses) && (instanceId == 0);
+             if (hasSwitchAll) {
+             switchAllValue = instance.commandClasses[0x27].data.mode.value;
+             }*/
+            /* if (instanceId == 0 && _.size(node.instances) > 1) {
+             return;// we skip instance 0 if there are more, since it should be mapped to other instances or their superposition
+             }*/
+            var hasBinary = 0x25 in instance.commandClasses;
+            var hasMultilevel = 0x26 in instance.commandClasses;
+            var hasSwitchAll = (0x27 in instance.commandClasses) && (instanceId == 0);
+            var ccId;
+            var switchAllValue = null;
+
+            if (hasMultilevel) {
+                ccId = 0x26;
+            } else if (hasBinary) {
+                ccId = 0x25;
+            } else {
+                return; // we skip instance if there is no SwitchBinary or SwitchMultilevel CCs
+            }
+
+
+            // var hasSwitchAll = (0x27 in instance.commandClasses) && (instanceId == 0);
+            if (hasSwitchAll) {
+                switchAllValue = instance.commandClasses[0x27].data.mode.value;
+            }
+            var deviceType = ccId == 0x25 ? 'binary' : 'multilevel';
+
+            var genericType = node.data.genericType.value;
+            var specificType = node.data.specificType.value;
+            var genspecType = genericType + '/' + specificType;
+
+            // Set object
+            var obj = {};
+
+            // Motor devices
+            var btnOn = $scope._t('switched_on');
+            var btnOff = $scope._t('switched_off');
+            var btnFull = $scope._t('btn_full');
+            var hasMotor = false;
+            var motorDevices = ['17/3', '17/5', '17/6', '17/7', '9/0', ' 9/1'];
+            if (motorDevices.indexOf(genspecType) !== -1) {
+                btnOn = $scope._t('btn_switched_up');
+                btnOff = $scope._t('btn_switched_down');
+                hasMotor = true;
+            }
+            //console.log(nodeId + '.' + instanceId + ': ' + genspecType + ' motor: ' + hasMotor);
+            var multiChannel = false;
+            if (0x60 in instance.commandClasses) {
+                multiChannel = true;
+            }
+            var level = updateLevel(instance.commandClasses[ccId].data.level, ccId, btnOn, btnOff);
+            obj['id'] = nodeId;
+            obj['cmd'] = instance.commandClasses[ccId].data.name + '.level';
+            obj['iId'] = instanceId;
+            obj['ccId'] = ccId;
+            obj['hasMotor'] = hasMotor;
+            obj['multiChannel'] = multiChannel;
+            obj['deviceType'] = deviceType;
+            obj['genericType'] = genericType;
+            obj['specificType'] = specificType;
+            obj['hasSwitchAll'] = hasSwitchAll;
+            obj['switchAllValue'] = switchAllValue;
+            obj['rowId'] = 'switch_' + nodeId + '_' + cnt;
+            obj['name'] = $filter('deviceName')(nodeId, node);
+            obj['updateTime'] = instance.commandClasses[ccId].data.level.updateTime;
+            obj['invalidateTime'] = instance.commandClasses[ccId].data.level.invalidateTime;
+            obj['dateTime'] = $filter('getDateTimeObj')(instance.commandClasses[ccId].data.level.updateTime, obj['invalidateTime']);
+            obj['urlToStore'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Get()';
+            obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
+            //obj['level'] = ZWaveAPIData.devices[nodeId].instances[instanceId].commandClasses[ccId].data.level;
+            obj['level'] = level.level_cont;
+            obj['levelColor'] = level.level_color;
+            obj['levelStatus'] = level.level_status;
+            obj['levelMax'] = level.level_max;
+            obj['levelVal'] = level.level_val;
+            obj['urlToOff'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Set(0)';
+            obj['urlToOn'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Set(255)';
+            obj['urlToFull'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Set(99)';
+            obj['urlToSlide'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']';
+            obj['btnOn'] = btnOn;
+            obj['btnOff'] = btnOff;
+            obj['btnFull'] = btnFull;
+            obj['cmdToUpdate'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.level';
+            // obj['deviceIcon'] = $filter('deviceIcon')(obj);
+            var findIndex = _.findIndex($scope.switches.all, {rowId: obj.rowId});
+            if (findIndex > -1) {
+                angular.extend($scope.switches.all[findIndex], obj);
+                $scope.switches.rangeSlider[findIndex] = level.level_val;
+
+            } else {
+                $scope.switches.all.push(obj);
+                $scope.switches.rangeSlider.push(obj['range_' + nodeId] = level.level_val);
+            }
+            // Push available device id to an array
+            if($scope.switches.ids.indexOf(nodeId) === -1){
+                $scope.switches.ids.push(nodeId);
+            }
+
+            //});
+        });
+    }
 
     /**
      * Update level
@@ -282,7 +348,13 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
             }
         }
         ;
-        return {"level_cont": level_cont, "level_color": level_color, "level_status": level_status, "level_val": level_val, "level_max": level_max};
+        return {
+            "level_cont": level_cont,
+            "level_color": level_color,
+            "level_status": level_status,
+            "level_val": level_val,
+            "level_max": level_max
+        };
     }
     ;
 });
