@@ -168,7 +168,8 @@
                         <div class="sub-navigation sub-navigation-left" ng-if="naviExpanded.naviNetwork">
                             <ul>
                                 <li><a href="#network/control" ng-class="isActive('control',2)">{{ _t('nav_control') }}</a></li>
-                                <li ng-if="cfg.app_type === 'installer'">
+                               <!-- <li ng-if="cfg.app_type === 'installer'">-->
+                                <li>
                                     <a href="#network/statistics" ng-class="isActive('statistics',2)">{{ _t('statistics') }}</a>
                                 </li>
                                 <li><a href="#network/neighbors" ng-class="isActive('neighbors',2)">{{ _t('neighbors') }}</a></li>
@@ -177,7 +178,8 @@
                                 <li><a href="#network/timing" ng-class="isActive('timing',2)">{{ _t('nav_timing_info') }}</a></li>
                                 <!--<li><a class="a-disabled" title="Temporary disabled. Will be back in the next release." ng-class="isActive('timing',2)">{{ _t('nav_timing_info') }}</a></li>-->
                                 <li><a href="#network/map" dng-class="isActive('map',2)">{{ _t('nav_network_map') }}</a></li>
-                                <li ng-if="cfg.app_type === 'installer'">
+                                <!--<li ng-if="cfg.app_type === 'installer'">-->
+                                <li>
                                     <a href="#network/linkstatus" ng-class="isActive('linkstatus',2)">{{ _t('nav_linkhealth_info') }}</a>
                                 </li>
                                 <!--
@@ -193,8 +195,10 @@
                     </li>
 
                     <!-- Analytics -->
-                    <li class="navibar-divider" ng-if="cfg.app_type === 'installer'"> </li>
-                    <li class="navibar-item" ng-click="expandNavi('naviInstaller', $event)"  ng-if="cfg.app_type === 'installer'">
+                    <!--<li class="navibar-divider" ng-if="cfg.app_type === 'installer'"> </li>-->
+                    <li class="navibar-divider"> </li>
+                   <!-- <li class="navibar-item" ng-click="expandNavi('naviInstaller', $event)"  ng-if="cfg.app_type === 'installer'">-->
+                    <li class="navibar-item" ng-click="expandNavi('naviInstaller', $event)">
                         <a class="navibar-item-root" href="" title="{{_t('installer')}}" ng-class="isActive('installer',1)">
                             <i class="fa fa-signal"></i> <span class="main-nav-name">{{ _t('nav_installer')}}</span>
                         </a>
