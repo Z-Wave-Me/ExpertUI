@@ -7,8 +7,9 @@ var appService = angular.module('appService', []);
 /**
  * Device service
  */
-appService.service('deviceService', function($filter, $log, $cookies,$window,_) {
+appService.service('deviceService', function($filter, $log, $cookies,$window,cfg,_) {
     /// --- Public functions --- ///
+
     /**
      * Mobile device detect
      */
@@ -30,7 +31,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
     this.showNotifier = function (notifier) {
         var param = _.defaults(notifier, {position: 'top-right', message: false, type: 'success', wait: 5});
         if (notifier.message) {
-            alertify.set('notifier', 'position', 'top-right');
+            alertify.set('notifier', 'position', param.position);
             alertify.notify(param.message, param.type, param.wait);
         }
     };
@@ -119,10 +120,47 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
      * Check if is not device
      */
     this.notDevice = function(ZWaveAPIData, node, nodeId) {
-        if (nodeId == 255 || nodeId == ZWaveAPIData.controller.data.nodeId.value || node.data.isVirtual.value) {
+        /*if (nodeId == 255 || nodeId == ZWaveAPIData.controller.data.nodeId.value || node.data.isVirtual.value) {
+            return true;
+        }*/
+        if (nodeId == 255 || node.data.isVirtual.value) {
             return true;
         }
         return false;
+    };
+
+    /**
+     * Get device type
+     */
+    this.deviceType = function(node) {
+        var type;
+        var isListening = node.data.isListening.value;
+        var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
+        var hasWakeup = 0x84 in node.instances[0].commandClasses;
+
+        if (node.data.genericType.value === 1) {
+            type = 'portable';
+        } else if (node.data.genericType.value === 2) {
+            type = 'static';
+        } else if (isFLiRS) {
+            type = 'flirs';
+        } else if (hasWakeup) {
+            type = 'battery';
+        } else if (isListening) {
+            type = 'mains';
+        } else {
+            type = 'unknown';
+        }
+        return type;
+    };
+
+    /**
+     * Get last communication
+     */
+    this.lastCommunication = function(node) {
+        var lastReceive = parseInt(node.data.lastReceived.updateTime, 10) || 0;
+        var lastSend = parseInt(node.data.lastSend.updateTime, 10) || 0;
+        return (lastSend > lastReceive) ? lastSend : lastReceive;
     };
 
     /**
@@ -143,7 +181,8 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
      * Check if device isFLiRS
      */
     this.isFLiRS = function(node) {
-        return !node.data.isListening.value && (node.data.sensor250.value || node.data.sensor1000.value);
+        return  (node.data.sensor250.value || node.data.sensor1000.value);
+       // return !node.data.isListening.value && (node.data.sensor250.value || node.data.sensor1000.value);
     };
 
     /**
@@ -151,6 +190,32 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
      */
     this.isLocalyReset = function(node) {
         return isLocalyReset(node);
+    };
+
+    /**
+     * Check if device has a given command class
+     */
+    this.hasCommandClass = function(node,ccId) {
+        var hasCc = false;
+        angular.forEach(node.instances, function(instance, instanceId) {
+        if(instance.commandClasses[ccId]){
+            hasCc = instance.commandClasses[ccId];
+            return;
+           }
+        });
+        return hasCc;
+    };
+
+    /**
+     * Get a value from custom config
+     * @param {string} key
+     * @returns {string}
+     */
+    this.getCustomCfgVal = function (key) {
+        if (cfg.custom_cfg[cfg.app_type]) {
+            return cfg.custom_cfg[cfg.app_type][key] || '';
+        }
+        return '';
     };
     
     /**
@@ -422,9 +487,12 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+            if (nodeId == 255 || node.data.isVirtual.value) {
                 return;
             }
+            /*if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+                return;
+            }*/
             var node = ZWaveAPIData.devices[nodeId];
             // Set object
             var obj = {};

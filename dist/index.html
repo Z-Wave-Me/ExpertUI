@@ -1,191 +1,204 @@
-<!-- Copyright:  Z-Wave Europe, Created: 27-01-2017 17:46:20 -->
 <!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Z-Wave Expert-UI</title>
-        <!-- CSS -->
-        <link media="screen" type="text/css" rel="stylesheet" href="app/css/build.css">
-        <!-- App config -->
-        <script src="app/js/config.js"></script>
-        <!-- JS -->
-        <script src="app/js/build.js"></script>
-    </head>
-    <body ng-app="angApp" ng-controller="BaseController" id="page_{{getBodyId()}}"
-          class="is-mobile-{{isMobile}} custom-ip-{{cfg.custom_ip}} app-type-{{cfg.app_type}}">
-    <!-- Header -->
-    <div id="header" ng-if="getBodyId()">
-        <!-- Main navigation -->
-        <div id="main_navigation_wrap">
-            <div id="main_navigation" class="container">
-                <div id="navigation_left">
-                    <!--<a class="nav-logo" href="#home" title="{{_t('nav_home')}}">
-                        <img ng-src="{{getAppLogo()}}" id="header_logo" alt="App logo"/>
-                    </a>
-                    <span class="divider-vertical"></span>-->
-                    <ul class="navibar">
-                        <!-- Home -->
-                        <li class="navibar-item">
-                            <a class="navibar-item-root"href="#home" title="{{_t('nav_home')}}" ng-class="isActive('home')">
-                                <i class="fa fa-home"></i>
-                            </a>
-                        </li>
-                        <li class="navibar-divider"ng-if="cfg.app_type !== 'installer'"> </li>
-                        <!-- Conrol -->
-                        <li class="navibar-item" ng-click="expandNavi('naviControl', $event)" ng-if="cfg.app_type !== 'installer'">
-                            <a class="navibar-item-root" href="" title="{{ _t('nav_control')"
-                               ng-class="isActive('control',1)">
-                                <i class="fa fa-sliders"></i> <span class="main-nav-name">{{ _t('nav_control')}}</span>
-                            </a>
-                            <div class="sub-navigation sub-navigation-left" ng-if="naviExpanded.naviControl">
-                                <ul>
-                                    <li><a href="#control/switch" ng-class="isActive('switch',2)">{{ _t('nav_switch') }}</a></li>
-                                    <li><a href="#control/sensors" ng-class="isActive('sensors',2)">{{ _t('nav_sensors') }}</a></li>
-                                    <li><a href="#control/meters" ng-class="isActive('meters',2)">{{ _t('nav_meters') }}</a></li>
-                                    <li><a href="#control/thermostat" ng-class="isActive('thermostat',2)">{{ _t('nav_thermostat') }}</a></li>
-                                    <li><a href="#control/locks" ng-class="isActive('locks',2)">{{ _t('nav_locks') }}</a></li>
-                                    <li><a href="#control/notifications" ng-class="isActive('notifications',2)">{{ _t('notifications') }}</a></li>
-                                </ul>
-                            </div>
-                        </li>
+<html lang="en" ng-app="angApp" ng-controller="BaseController">
+<head>
+    <meta charset="utf-8">
+    <title>{{getCustomCfgVal('title')}}</title>
+<!-- CSS -->
+<link media="screen" type="text/css" rel="stylesheet" href="app/css/build.css">
+<!-- App config -->
+<script src="app/js/config.js"></script>
+<!-- JS -->
+<script src="app/js/build.js"></script>
 
-                        <!-- Device -->
-                        <li class="navibar-divider"> </li>
-                        <li class="navibar-item" ng-click="expandNavi('naviDevice', $event)">
-                            <a class="navibar-item-root" href="" title="{{_t('nav_device')}}" ng-class="isActive('device',1)">
-                                <i class="fa fa-database"> </i> <span class="main-nav-name">{{ _t('nav_device')}}</span>
-                            </a>
-                            <div class="sub-navigation sub-navigation-left" ng-if="naviExpanded.naviDevice">
-                                <ul>
-                                    <li><a href="#device/status" ng-class="isActive('status',2)">{{ _t('nav_status') }}</a></li>
-                                    <li><a href="#device/type" ng-class="isActive('type',2)">{{ _t('nav_type_info') }}</a></li>
-                                    <li><a href="#device/battery" ng-class="isActive('battery',2)">{{ _t('nav_battery') }}</a></li>
-                                    <li ng-if="cfg.app_type === 'installer'">
-                                        <a href="#config/configuration"
-                                           ng-class="isActive('configuration',2)">{{ _t('nav_configuration') }}</a>
-                                    </li>
-                                    <li><a href="#device/associations" ng-class="isActive('associations',2)">{{ _t('nav_active_associations') }}</a></li>
-                                    <!--  <li><a href="#device/security"{{ _t('nav_security_status') }}</a></li>-->
-                                </ul>
-                            </div>
-                        </li>
+</head>
+<body id="page_{{getBodyId()}}"
+      class="is-mobile-{{isMobile}} custom-ip-{{cfg.custom_ip}} app-type-{{cfg.app_type}}">
+<!-- Header -->
+<div id="header" ng-if="getBodyId()">
+    <!-- Main navigation -->
+    <div id="main_navigation_wrap">
+        <div id="main_navigation" class="container">
+            <div id="navigation_left">
+                <!--<a class="nav-logo" href="#home" title="{{_t('nav_home')}}">
+                    <img ng-src="{{getAppLogo()}}" id="header_logo" alt="App logo"/>
+                </a>
+                <span class="divider-vertical"></span>-->
+                <ul class="navibar">
+                    <!-- Home -->
+                    <li class="navibar-item">
+                        <a class="navibar-item-root"href="#home" title="{{_t('nav_home')}}" ng-class="isActive('home')">
+                            <i class="fa fa-home"></i>
+                        </a>
+                    </li>
+                    <li class="navibar-divider"ng-if="cfg.app_type !== 'installer'"> </li>
+                    <!-- Conrol -->
+                    <li class="navibar-item" ng-click="expandNavi('naviControl', $event)" ng-if="cfg.app_type !== 'installer'">
+                        <a class="navibar-item-root" href="" title="{{ _t('nav_control')"
+                           ng-class="isActive('control',1)">
+                            <i class="fa fa-sliders"></i> <span class="main-nav-name">{{ _t('nav_control')}}</span>
+                        </a>
+                        <div class="sub-navigation sub-navigation-left" ng-if="naviExpanded.naviControl">
+                            <ul>
+                                <li><a href="#control/switch" ng-class="isActive('switch',2)">{{ _t('nav_switch') }}</a></li>
+                                <li><a href="#control/sensors" ng-class="isActive('sensors',2)">{{ _t('nav_sensors') }}</a></li>
+                                <li><a href="#control/meters" ng-class="isActive('meters',2)">{{ _t('nav_meters') }}</a></li>
+                                <li><a href="#control/thermostat" ng-class="isActive('thermostat',2)">{{ _t('nav_thermostat') }}</a></li>
+                                <li><a href="#control/locks" ng-class="isActive('locks',2)">{{ _t('nav_locks') }}</a></li>
+                                <li><a href="#control/notifications" ng-class="isActive('notifications',2)">{{ _t('notifications') }}</a></li>
+                            </ul>
+                        </div>
+                    </li>
 
-                        <!-- Configuration -->
-                        <li class="navibar-divider" ng-if="cfg.app_type !== 'installer'"> </li>
-                        <li class="navibar-item" ng-if="cfg.app_type !== 'installer'">
-                            <a class="navibar-item-root" ng-href="#config/configuration" ng-class="isActive('configuration',2)">
-                                <i class="fa fa-wrench"></i> <span class="main-nav-name">{{ _t('nav_configuration')}}</span>
-                            </a>
-                        </li>
+                    <!-- Device -->
+                    <li class="navibar-divider"> </li>
+                    <li class="navibar-item" ng-click="expandNavi('naviDevice', $event)">
+                        <a class="navibar-item-root" href="" title="{{_t('nav_device')}}" ng-class="isActive('device',1)">
+                            <i class="fa fa-database"> </i> <span class="main-nav-name">{{ _t('nav_device')}}</span>
+                        </a>
+                        <div class="sub-navigation sub-navigation-left" ng-if="naviExpanded.naviDevice">
+                            <ul>
+                                <li><a href="#device/status" ng-class="isActive('status',2)">{{ _t('nav_status') }}</a></li>
+                                <li><a href="#device/type" ng-class="isActive('type',2)">{{ _t('nav_type_info') }}</a></li>
+                                <li><a href="#device/battery" ng-class="isActive('battery',2)">{{ _t('nav_battery') }}</a></li>
+                                <li ng-if="cfg.app_type === 'installer'">
+                                    <a href="#config/configuration"
+                                       ng-class="isActive('configuration',2)">{{ _t('nav_configuration') }}</a>
+                                </li>
+                                <li><a href="#device/associations" ng-class="isActive('associations',2)">{{ _t('nav_active_associations') }}</a></li>
+                                <!--  <li><a href="#device/security"{{ _t('nav_security_status') }}</a></li>-->
+                            </ul>
+                        </div>
+                    </li>
 
-                        <!-- Network -->
-                        <li class="navibar-divider"> </li>
-                        <li class="navibar-item" ng-click="expandNavi('naviNetwork', $event)">
-                            <a class="navibar-item-root" href="" title="{{_t('nav_network')}}" ng-class="isActive('network',1)">
-                                <i class="fa fa-sitemap"></i> <span class="main-nav-name">{{ _t('nav_network')}}</span>
-                            </a>
-                            <div class="sub-navigation sub-navigation-left" ng-if="naviExpanded.naviNetwork">
-                                <ul>
-                                    <li><a href="#network/control" ng-class="isActive('control',2)">{{ _t('nav_control') }}</a></li>
-                                    <li ng-if="cfg.app_type === 'installer'">
-                                        <a href="#network/statistics" ng-class="isActive('statistics',2)">{{ _t('statistics') }}</a>
-                                    </li>
-                                    <li><a href="#network/routing" ng-class="isActive('routing',2)">{{ _t('nav_routing') }}</a></li>
-                                    <!-- <li><a class="a-disabled" title="Temporary disabled. Will be back in the next release." ng-class="isActive('reorganization',2)">{{ _t('nav_reorganization') }}</a></li>-->
-                                    <!--<li><a href="#network/reorganization" ng-class="isActive('reorganization',2)">{{ _t('nav_reorganization') }}</a></li>-->
-                                    <li><a href="#network/timing" ng-class="isActive('timing',2)">{{ _t('nav_timing_info') }}</a></li>
-                                    <!--<li><a class="a-disabled" title="Temporary disabled. Will be back in the next release." ng-class="isActive('timing',2)">{{ _t('nav_timing_info') }}</a></li>-->
-                                    <li><a href="#network/map" dng-class="isActive('map',2)">{{ _t('nav_network_map') }}</a></li>
-                                    <li ng-if="cfg.app_type !== 'installer'">
-                                        <a href="#network/controller" ng-class="isActive('controller',2)">{{ _t('nav_controller_info') }}</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
+                    <!-- Configuration -->
+                    <li class="navibar-divider" ng-if="cfg.app_type !== 'installer'"> </li>
+                    <li class="navibar-item" ng-if="cfg.app_type !== 'installer'">
+                        <a class="navibar-item-root" ng-href="#config/configuration" ng-class="isActive('configuration',2)">
+                            <i class="fa fa-wrench"></i> <span class="main-nav-name">{{ _t('nav_configuration')}}</span>
+                        </a>
+                    </li>
 
-                        <!-- Analytics -->
-                        <li class="navibar-divider" ng-if="cfg.app_type === 'installer'"> </li>
-                        <li class="navibar-item" ng-click="expandNavi('naviInstaller', $event)"  ng-if="cfg.app_type === 'installer'">
-                            <a class="navibar-item-root" href="" title="{{_t('installer')}}" ng-class="isActive('installer',1)">
-                                <i class="fa fa-signal"></i> <span class="main-nav-name">{{ _t('nav_installer')}}</span>
-                            </a>
-                            <div class="sub-navigation sub-navigation-left" ng-if="naviExpanded.naviInstaller">
-                                <ul>
-                                    <li><a href="#installer/zniffer" ng-class="isActive('zniffer',2)">{{ _t('nav_zniffer') }}</a></li>
-                                    <li><a href="#installer/rssi" ng-class="isActive('rssi',2)">{{ _t('nav_rssi') }}</a></li>
-                                    <li><a href="#installer/history" ng-class="isActive('history',2)">{{ _t('nav_history') }}</a></li>
+                    <!-- Network -->
+                    <li class="navibar-divider"> </li>
+                    <li class="navibar-item" ng-click="expandNavi('naviNetwork', $event)">
+                        <a class="navibar-item-root" href="" title="{{_t('nav_network')}}" ng-class="isActive('network',1)">
+                            <i class="fa fa-sitemap"></i> <span class="main-nav-name">{{ _t('nav_network')}}</span>
+                        </a>
+                        <div class="sub-navigation sub-navigation-left" ng-if="naviExpanded.naviNetwork">
+                            <ul>
+                                <li><a href="#network/control" ng-class="isActive('control',2)">{{ _t('nav_control') }}</a></li>
+                               <!-- <li ng-if="cfg.app_type === 'installer'">-->
+                                <li>
+                                    <a href="#network/statistics" ng-class="isActive('statistics',2)">{{ _t('statistics') }}</a>
+                                </li>
+                                <li><a href="#network/neighbors" ng-class="isActive('neighbors',2)">{{ _t('neighbors') }}</a></li>
+                                <!-- <li><a class="a-disabled" title="Temporary disabled. Will be back in the next release." ng-class="isActive('reorganization',2)">{{ _t('nav_reorganization') }}</a></li>-->
+                                <!--<li><a href="#network/reorganization" ng-class="isActive('reorganization',2)">{{ _t('nav_reorganization') }}</a></li>-->
+                                <li><a href="#network/timing" ng-class="isActive('timing',2)">{{ _t('nav_timing_info') }}</a></li>
+                                <!--<li><a class="a-disabled" title="Temporary disabled. Will be back in the next release." ng-class="isActive('timing',2)">{{ _t('nav_timing_info') }}</a></li>-->
+                                <li><a href="#network/map" dng-class="isActive('map',2)">{{ _t('nav_network_map') }}</a></li>
+                                <!--<li ng-if="cfg.app_type === 'installer'">-->
+                                <li>
+                                    <a href="#network/linkstatus" ng-class="isActive('linkstatus',2)">{{ _t('nav_linkhealth_info') }}</a>
+                                </li>
+                                <!--
+                                <li ng-if="cfg.app_type === 'installer' && !cfg.controller.isRealPrimary">
+                                    <!--<a href="#network/linkstatus" ng-class="isActive('linkstatus',2)">{{ _t('nav_linkhealth_info') }}</a>-->
+                                    <!--<a href="#network/linkhealth/1" ng-class="isActive('linkstatus',2)">{{ _t('nav_linkhealth_info') }}</a>
+                                </li>-->
+                                <li ng-if="cfg.app_type !== 'installer'">
+                                    <a href="#network/controller" ng-class="isActive('controller',2)">{{ _t('nav_controller_info') }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
 
-                                    <!--<li><a href="#installer/spectrum" ng-class="isActive('spectrum',2)">{{ _t('nav_spectrum_analyzer') }}</a></li>-->
-                                </ul>
-                            </div>
-                        </li>
+                    <!-- Analytics -->
+                    <!--<li class="navibar-divider" ng-if="cfg.app_type === 'installer'"> </li>-->
+                    <li class="navibar-divider"> </li>
+                   <!-- <li class="navibar-item" ng-click="expandNavi('naviInstaller', $event)"  ng-if="cfg.app_type === 'installer'">-->
+                    <li class="navibar-item" ng-click="expandNavi('naviInstaller', $event)">
+                        <a class="navibar-item-root" href="" title="{{_t('installer')}}" ng-class="isActive('installer',1)">
+                            <i class="fa fa-signal"></i> <span class="main-nav-name">{{ _t('nav_installer')}}</span>
+                        </a>
+                        <div class="sub-navigation sub-navigation-left" ng-if="naviExpanded.naviInstaller">
+                            <ul>
+                                <li><a href="#installer/zniffer" ng-class="isActive('zniffer',2)">{{ _t('nav_zniffer') }}</a></li>
+                                <li><a href="#installer/rssi" ng-class="isActive('rssi',2)">{{ _t('nav_rssi') }}</a></li>
+                                <li><a href="#installer/rssimeter" ng-class="isActive('rssimeter',2)">{{ _t('nav_rssimeter') }}</a></li>
+                                <li><a href="#installer/history" ng-class="isActive('history',2)">{{ _t('nav_history') }}</a></li>
 
-                        <!-- Settings -->
-                        <li class="navibar-divider"></li>
-                        <li class="navibar-item">
-                            <a class="navibar-item-root" ng-href="#settings" ng-class="isActive('settings',1)">
-                                <i class="fa fa-cog"></i>
-                            </a>
-                        </li>
+                                <!--<li><a href="#installer/spectrum" ng-class="isActive('spectrum',2)">{{ _t('nav_spectrum_analyzer') }}</a></li>-->
+                            </ul>
+                        </div>
+                    </li>
 
-                        <!-- Time -->
-                        <li class="navibar-divider navi-timestamp"></li>
-                        <li class="navibar-item navi-timestamp">
+                    <!-- Settings -->
+                    <li class="navibar-divider"></li>
+                    <li class="navibar-item">
+                        <a class="navibar-item-root" ng-href="#settings" ng-class="isActive('settings',1)">
+                            <i class="fa fa-cog"></i>
+                        </a>
+                    </li>
+
+                    <!-- Time -->
+                    <li class="navibar-divider navi-timestamp"></li>
+                    <li class="navibar-item navi-timestamp">
                         <span class="timestamp" ng-if="cfg.route.time.string">
                         <i class="fa fa-clock-o"></i> {{cfg.route.time.string}}
                     </span>
-                        </li>
+                    </li>
 
-                        <!-- Busy indicator -->
-                        <li class="navibar-divider navi-timestamp" ng-if="cfg.app_type === 'installer'"> </li>
-                        <li class="navibar-item navi-timestamp" ng-if="cfg.app_type === 'installer'">
+                    <!-- Busy indicator -->
+                    <li class="navibar-divider navi-timestamp" ng-if="cfg.app_type === 'installer'"> </li>
+                    <li class="navibar-item navi-timestamp" ng-if="cfg.app_type === 'installer'">
                          <span class="timestamp" ng-if="cfg.app_type === 'installer'"
                                ng-include="'app/views/indicator.html'"></span>
-                        </li>
-                    </ul>
-                </div>
-            </div><!-- /#navigation -->
-        </div><!-- /#main_navigation_wrap -->
-    </div><!-- /#header -->
-
-    <!-- Installer Container -->
-    <div class="container-installer" ng-if="cfg.app_type === 'installer' && getBodyId()">
-        <div class="alert alert-success" ng-if="cfg.controller.isRealPrimary && !cfg.controller.hasDevices">
-            <div class="container"><i class="fa fa-info-circle"></i> {{_t('ready_to_network')}}</div>
-        </div>
-        <div class="alert alert-warning" ng-if="cfg.controller.isRealPrimary && cfg.controller.hasDevices">
-            <div class="container"><i class="fa fa-check"></i> {{_t('iam_in')}} {{cfg.controller.homeName}}</div>
-        </div>
-        <div class="alert alert-danger" ng-if="!cfg.controller.isRealPrimary">
-            <div class="container"><i class="fa fa-info-circle"></i> {{_t('iam_in_network_homeid')}}: {{cfg.controller.homeName}}</div>
-        </div>
-
-    </div>
-    <!-- Ang Container -->
-    <div id="main_content" class="container">
-        <div ng-if="cfg.route.fatalError.message">
-            <div class="app-fatal-error">
-                <div class="fatal-error-message"><i class="fa {{cfg.route.fatalError.icon}} fa-lg"></i> {{cfg.route.fatalError.message}}</div>
-                <div class="fatal-error-info" ng-if="cfg.route.fatalError.info" ng-bind-html="cfg.route.fatalError.info|toTrusted"></div>
+                    </li>
+                </ul>
             </div>
-        </div>
-        <div id="view_content" ng-hide="cfg.route.fatalError.hide" ng-view></div>
+        </div><!-- /#navigation -->
+    </div><!-- /#main_navigation_wrap -->
+</div><!-- /#header -->
+
+<!-- Installer Container -->
+<div class="container-installer" ng-if="cfg.app_type === 'installer' && getBodyId()">
+    <div class="alert alert-success" ng-if="cfg.controller.isRealPrimary && !cfg.controller.hasDevices">
+        <div class="container"><i class="fa fa-info-circle"></i> {{_t('ready_to_network')}}</div>
     </div>
-    <div class="clearfix"></div>
-
-    <div id="footer" ng-if="getBodyId()">
-        <div id="footer_in">
-            <div class="container">
-                <span class="copyright" ng-bind-html="getCustomCfgArr('footer_text') | toTrusted"></span>
-                <span class="copyright">{{getCustomCfgArr('version_type')}}</span>
-                <span class="timestamp" ng-if="cfg.route.time.string"><i class="fa fa-clock-o"></i> {{cfg.route.time.string}}</span>
-                <span class="timestamp" ng-if="cfg.app_type === 'installer'"> | </span>
-                <span class="timestamp" ng-if="cfg.app_type === 'installer'"
-                      ng-include="'app/views/indicator.html'"></span>
-            </div>
-
-        </div>
+    <div class="alert alert-warning" ng-if="cfg.controller.isRealPrimary && cfg.controller.hasDevices">
+        <div class="container"><i class="fa fa-check"></i> {{_t('iam_in')}} {{cfg.controller.homeName}}</div>
+    </div>
+    <div class="alert alert-danger" ng-if="!cfg.controller.isRealPrimary">
+        <div class="container"><i class="fa fa-info-circle"></i> {{_t('iam_in_network_homeid')}}: {{cfg.controller.homeName}}</div>
     </div>
 
-    </body>
+</div>
+<!-- Ang Container -->
+<div id="main_content" class="container">
+    <div ng-if="cfg.route.fatalError.message">
+        <div class="app-fatal-error">
+            <div class="fatal-error-message"><i class="fa {{cfg.route.fatalError.icon}} fa-lg"></i> {{cfg.route.fatalError.message}}</div>
+            <div class="fatal-error-info" ng-if="cfg.route.fatalError.info" ng-bind-html="cfg.route.fatalError.info|toTrusted"></div>
+        </div>
+    </div>
+    <div id="view_content" ng-hide="cfg.route.fatalError.hide" ng-view></div>
+</div>
+<div class="clearfix"></div>
+
+<div id="footer" ng-if="getBodyId()">
+    <div id="footer_in">
+        <div class="container">
+            <span class="copyright" ng-bind-html="getCustomCfgVal('footer_text') | toTrusted"></span>
+            <span class="copyright">{{getCustomCfgVal('version_type')}}</span>
+            <span class="timestamp" ng-if="cfg.route.time.string"><i class="fa fa-clock-o"></i> {{cfg.route.time.string}}</span>
+            <span class="timestamp" ng-if="cfg.app_type === 'installer'"> | </span>
+            <span class="timestamp" ng-if="cfg.app_type === 'installer'"
+                  ng-include="'app/views/indicator.html'"></span>
+        </div>
+
+    </div>
+</div>
+
+</body>
 </html>

@@ -1,4 +1,4 @@
-/* Copyright:  Z-Wave Europe, Created: 27-01-2017 17:46:20 */
+/* Copyright:  Z-Wave Europe, Created: 07-03-2017 10:06:27 */
 /*! jQuery v1.11.1 | (c) 2005, 2014 jQuery Foundation, Inc. | jquery.org/license */
 !function(a,b){"object"==typeof module&&"object"==typeof module.exports?module.exports=a.document?b(a,!0):function(a){if(!a.document)throw new Error("jQuery requires a window with a document");return b(a)}:b(a)}("undefined"!=typeof window?window:this,function(a,b){var c=[],d=c.slice,e=c.concat,f=c.push,g=c.indexOf,h={},i=h.toString,j=h.hasOwnProperty,k={},l="1.11.1",m=function(a,b){return new m.fn.init(a,b)},n=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,o=/^-ms-/,p=/-([\da-z])/gi,q=function(a,b){return b.toUpperCase()};m.fn=m.prototype={jquery:l,constructor:m,selector:"",length:0,toArray:function(){return d.call(this)},get:function(a){return null!=a?0>a?this[a+this.length]:this[a]:d.call(this)},pushStack:function(a){var b=m.merge(this.constructor(),a);return b.prevObject=this,b.context=this.context,b},each:function(a,b){return m.each(this,a,b)},map:function(a){return this.pushStack(m.map(this,function(b,c){return a.call(b,c,b)}))},slice:function(){return this.pushStack(d.apply(this,arguments))},first:function(){return this.eq(0)},last:function(){return this.eq(-1)},eq:function(a){var b=this.length,c=+a+(0>a?b:0);return this.pushStack(c>=0&&b>c?[this[c]]:[])},end:function(){return this.prevObject||this.constructor(null)},push:f,sort:c.sort,splice:c.splice},m.extend=m.fn.extend=function(){var a,b,c,d,e,f,g=arguments[0]||{},h=1,i=arguments.length,j=!1;for("boolean"==typeof g&&(j=g,g=arguments[h]||{},h++),"object"==typeof g||m.isFunction(g)||(g={}),h===i&&(g=this,h--);i>h;h++)if(null!=(e=arguments[h]))for(d in e)a=g[d],c=e[d],g!==c&&(j&&c&&(m.isPlainObject(c)||(b=m.isArray(c)))?(b?(b=!1,f=a&&m.isArray(a)?a:[]):f=a&&m.isPlainObject(a)?a:{},g[d]=m.extend(j,f,c)):void 0!==c&&(g[d]=c));return g},m.extend({expando:"jQuery"+(l+Math.random()).replace(/\D/g,""),isReady:!0,error:function(a){throw new Error(a)},noop:function(){},isFunction:function(a){return"function"===m.type(a)},isArray:Array.isArray||function(a){return"array"===m.type(a)},isWindow:function(a){return null!=a&&a==a.window},isNumeric:function(a){return!m.isArray(a)&&a-parseFloat(a)>=0},isEmptyObject:function(a){var b;for(b in a)return!1;return!0},isPlainObject:function(a){var b;if(!a||"object"!==m.type(a)||a.nodeType||m.isWindow(a))return!1;try{if(a.constructor&&!j.call(a,"constructor")&&!j.call(a.constructor.prototype,"isPrototypeOf"))return!1}catch(c){return!1}if(k.ownLast)for(b in a)return j.call(a,b);for(b in a);return void 0===b||j.call(a,b)},type:function(a){return null==a?a+"":"object"==typeof a||"function"==typeof a?h[i.call(a)]||"object":typeof a},globalEval:function(b){b&&m.trim(b)&&(a.execScript||function(b){a.eval.call(a,b)})(b)},camelCase:function(a){return a.replace(o,"ms-").replace(p,q)},nodeName:function(a,b){return a.nodeName&&a.nodeName.toLowerCase()===b.toLowerCase()},each:function(a,b,c){var d,e=0,f=a.length,g=r(a);if(c){if(g){for(;f>e;e++)if(d=b.apply(a[e],c),d===!1)break}else for(e in a)if(d=b.apply(a[e],c),d===!1)break}else if(g){for(;f>e;e++)if(d=b.call(a[e],e,a[e]),d===!1)break}else for(e in a)if(d=b.call(a[e],e,a[e]),d===!1)break;return a},trim:function(a){return null==a?"":(a+"").replace(n,"")},makeArray:function(a,b){var c=b||[];return null!=a&&(r(Object(a))?m.merge(c,"string"==typeof a?[a]:a):f.call(c,a)),c},inArray:function(a,b,c){var d;if(b){if(g)return g.call(b,a,c);for(d=b.length,c=c?0>c?Math.max(0,d+c):c:0;d>c;c++)if(c in b&&b[c]===a)return c}return-1},merge:function(a,b){var c=+b.length,d=0,e=a.length;while(c>d)a[e++]=b[d++];if(c!==c)while(void 0!==b[d])a[e++]=b[d++];return a.length=e,a},grep:function(a,b,c){for(var d,e=[],f=0,g=a.length,h=!c;g>f;f++)d=!b(a[f],f),d!==h&&e.push(a[f]);return e},map:function(a,b,c){var d,f=0,g=a.length,h=r(a),i=[];if(h)for(;g>f;f++)d=b(a[f],f,c),null!=d&&i.push(d);else for(f in a)d=b(a[f],f,c),null!=d&&i.push(d);return e.apply([],i)},guid:1,proxy:function(a,b){var c,e,f;return"string"==typeof b&&(f=a[b],b=a,a=f),m.isFunction(a)?(c=d.call(arguments,2),e=function(){return a.apply(b||this,c.concat(d.call(arguments)))},e.guid=a.guid=a.guid||m.guid++,e):void 0},now:function(){return+new Date},support:k}),m.each("Boolean Number String Function Array Date RegExp Object Error".split(" "),function(a,b){h["[object "+b+"]"]=b.toLowerCase()});function r(a){var b=a.length,c=m.type(a);return"function"===c||m.isWindow(a)?!1:1===a.nodeType&&b?!0:"array"===c||0===b||"number"==typeof b&&b>0&&b-1 in a}var s=function(a){var b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u="sizzle"+-new Date,v=a.document,w=0,x=0,y=gb(),z=gb(),A=gb(),B=function(a,b){return a===b&&(l=!0),0},C="undefined",D=1<<31,E={}.hasOwnProperty,F=[],G=F.pop,H=F.push,I=F.push,J=F.slice,K=F.indexOf||function(a){for(var b=0,c=this.length;c>b;b++)if(this[b]===a)return b;return-1},L="checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|ismap|loop|multiple|open|readonly|required|scoped",M="[\\x20\\t\\r\\n\\f]",N="(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+",O=N.replace("w","w#"),P="\\["+M+"*("+N+")(?:"+M+"*([*^$|!~]?=)"+M+"*(?:'((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\"|("+O+"))|)"+M+"*\\]",Q=":("+N+")(?:\\((('((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\")|((?:\\\\.|[^\\\\()[\\]]|"+P+")*)|.*)\\)|)",R=new RegExp("^"+M+"+|((?:^|[^\\\\])(?:\\\\.)*)"+M+"+$","g"),S=new RegExp("^"+M+"*,"+M+"*"),T=new RegExp("^"+M+"*([>+~]|"+M+")"+M+"*"),U=new RegExp("="+M+"*([^\\]'\"]*?)"+M+"*\\]","g"),V=new RegExp(Q),W=new RegExp("^"+O+"$"),X={ID:new RegExp("^#("+N+")"),CLASS:new RegExp("^\\.("+N+")"),TAG:new RegExp("^("+N.replace("w","w*")+")"),ATTR:new RegExp("^"+P),PSEUDO:new RegExp("^"+Q),CHILD:new RegExp("^:(only|first|last|nth|nth-last)-(child|of-type)(?:\\("+M+"*(even|odd|(([+-]|)(\\d*)n|)"+M+"*(?:([+-]|)"+M+"*(\\d+)|))"+M+"*\\)|)","i"),bool:new RegExp("^(?:"+L+")$","i"),needsContext:new RegExp("^"+M+"*[>+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\\("+M+"*((?:-\\d)?\\d*)"+M+"*\\)|)(?=[^-]|$)","i")},Y=/^(?:input|select|textarea|button)$/i,Z=/^h\d$/i,$=/^[^{]+\{\s*\[native \w/,_=/^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/,ab=/[+~]/,bb=/'|\\/g,cb=new RegExp("\\\\([\\da-f]{1,6}"+M+"?|("+M+")|.)","ig"),db=function(a,b,c){var d="0x"+b-65536;return d!==d||c?b:0>d?String.fromCharCode(d+65536):String.fromCharCode(d>>10|55296,1023&d|56320)};try{I.apply(F=J.call(v.childNodes),v.childNodes),F[v.childNodes.length].nodeType}catch(eb){I={apply:F.length?function(a,b){H.apply(a,J.call(b))}:function(a,b){var c=a.length,d=0;while(a[c++]=b[d++]);a.length=c-1}}}function fb(a,b,d,e){var f,h,j,k,l,o,r,s,w,x;if((b?b.ownerDocument||b:v)!==n&&m(b),b=b||n,d=d||[],!a||"string"!=typeof a)return d;if(1!==(k=b.nodeType)&&9!==k)return[];if(p&&!e){if(f=_.exec(a))if(j=f[1]){if(9===k){if(h=b.getElementById(j),!h||!h.parentNode)return d;if(h.id===j)return d.push(h),d}else if(b.ownerDocument&&(h=b.ownerDocument.getElementById(j))&&t(b,h)&&h.id===j)return d.push(h),d}else{if(f[2])return I.apply(d,b.getElementsByTagName(a)),d;if((j=f[3])&&c.getElementsByClassName&&b.getElementsByClassName)return I.apply(d,b.getElementsByClassName(j)),d}if(c.qsa&&(!q||!q.test(a))){if(s=r=u,w=b,x=9===k&&a,1===k&&"object"!==b.nodeName.toLowerCase()){o=g(a),(r=b.getAttribute("id"))?s=r.replace(bb,"\\$&"):b.setAttribute("id",s),s="[id='"+s+"'] ",l=o.length;while(l--)o[l]=s+qb(o[l]);w=ab.test(a)&&ob(b.parentNode)||b,x=o.join(",")}if(x)try{return I.apply(d,w.querySelectorAll(x)),d}catch(y){}finally{r||b.removeAttribute("id")}}}return i(a.replace(R,"$1"),b,d,e)}function gb(){var a=[];function b(c,e){return a.push(c+" ")>d.cacheLength&&delete b[a.shift()],b[c+" "]=e}return b}function hb(a){return a[u]=!0,a}function ib(a){var b=n.createElement("div");try{return!!a(b)}catch(c){return!1}finally{b.parentNode&&b.parentNode.removeChild(b),b=null}}function jb(a,b){var c=a.split("|"),e=a.length;while(e--)d.attrHandle[c[e]]=b}function kb(a,b){var c=b&&a,d=c&&1===a.nodeType&&1===b.nodeType&&(~b.sourceIndex||D)-(~a.sourceIndex||D);if(d)return d;if(c)while(c=c.nextSibling)if(c===b)return-1;return a?1:-1}function lb(a){return function(b){var c=b.nodeName.toLowerCase();return"input"===c&&b.type===a}}function mb(a){return function(b){var c=b.nodeName.toLowerCase();return("input"===c||"button"===c)&&b.type===a}}function nb(a){return hb(function(b){return b=+b,hb(function(c,d){var e,f=a([],c.length,b),g=f.length;while(g--)c[e=f[g]]&&(c[e]=!(d[e]=c[e]))})})}function ob(a){return a&&typeof a.getElementsByTagName!==C&&a}c=fb.support={},f=fb.isXML=function(a){var b=a&&(a.ownerDocument||a).documentElement;return b?"HTML"!==b.nodeName:!1},m=fb.setDocument=function(a){var b,e=a?a.ownerDocument||a:v,g=e.defaultView;return e!==n&&9===e.nodeType&&e.documentElement?(n=e,o=e.documentElement,p=!f(e),g&&g!==g.top&&(g.addEventListener?g.addEventListener("unload",function(){m()},!1):g.attachEvent&&g.attachEvent("onunload",function(){m()})),c.attributes=ib(function(a){return a.className="i",!a.getAttribute("className")}),c.getElementsByTagName=ib(function(a){return a.appendChild(e.createComment("")),!a.getElementsByTagName("*").length}),c.getElementsByClassName=$.test(e.getElementsByClassName)&&ib(function(a){return a.innerHTML="<div class='a'></div><div class='a i'></div>",a.firstChild.className="i",2===a.getElementsByClassName("i").length}),c.getById=ib(function(a){return o.appendChild(a).id=u,!e.getElementsByName||!e.getElementsByName(u).length}),c.getById?(d.find.ID=function(a,b){if(typeof b.getElementById!==C&&p){var c=b.getElementById(a);return c&&c.parentNode?[c]:[]}},d.filter.ID=function(a){var b=a.replace(cb,db);return function(a){return a.getAttribute("id")===b}}):(delete d.find.ID,d.filter.ID=function(a){var b=a.replace(cb,db);return function(a){var c=typeof a.getAttributeNode!==C&&a.getAttributeNode("id");return c&&c.value===b}}),d.find.TAG=c.getElementsByTagName?function(a,b){return typeof b.getElementsByTagName!==C?b.getElementsByTagName(a):void 0}:function(a,b){var c,d=[],e=0,f=b.getElementsByTagName(a);if("*"===a){while(c=f[e++])1===c.nodeType&&d.push(c);return d}return f},d.find.CLASS=c.getElementsByClassName&&function(a,b){return typeof b.getElementsByClassName!==C&&p?b.getElementsByClassName(a):void 0},r=[],q=[],(c.qsa=$.test(e.querySelectorAll))&&(ib(function(a){a.innerHTML="<select msallowclip=''><option selected=''></option></select>",a.querySelectorAll("[msallowclip^='']").length&&q.push("[*^$]="+M+"*(?:''|\"\")"),a.querySelectorAll("[selected]").length||q.push("\\["+M+"*(?:value|"+L+")"),a.querySelectorAll(":checked").length||q.push(":checked")}),ib(function(a){var b=e.createElement("input");b.setAttribute("type","hidden"),a.appendChild(b).setAttribute("name","D"),a.querySelectorAll("[name=d]").length&&q.push("name"+M+"*[*^$|!~]?="),a.querySelectorAll(":enabled").length||q.push(":enabled",":disabled"),a.querySelectorAll("*,:x"),q.push(",.*:")})),(c.matchesSelector=$.test(s=o.matches||o.webkitMatchesSelector||o.mozMatchesSelector||o.oMatchesSelector||o.msMatchesSelector))&&ib(function(a){c.disconnectedMatch=s.call(a,"div"),s.call(a,"[s!='']:x"),r.push("!=",Q)}),q=q.length&&new RegExp(q.join("|")),r=r.length&&new RegExp(r.join("|")),b=$.test(o.compareDocumentPosition),t=b||$.test(o.contains)?function(a,b){var c=9===a.nodeType?a.documentElement:a,d=b&&b.parentNode;return a===d||!(!d||1!==d.nodeType||!(c.contains?c.contains(d):a.compareDocumentPosition&&16&a.compareDocumentPosition(d)))}:function(a,b){if(b)while(b=b.parentNode)if(b===a)return!0;return!1},B=b?function(a,b){if(a===b)return l=!0,0;var d=!a.compareDocumentPosition-!b.compareDocumentPosition;return d?d:(d=(a.ownerDocument||a)===(b.ownerDocument||b)?a.compareDocumentPosition(b):1,1&d||!c.sortDetached&&b.compareDocumentPosition(a)===d?a===e||a.ownerDocument===v&&t(v,a)?-1:b===e||b.ownerDocument===v&&t(v,b)?1:k?K.call(k,a)-K.call(k,b):0:4&d?-1:1)}:function(a,b){if(a===b)return l=!0,0;var c,d=0,f=a.parentNode,g=b.parentNode,h=[a],i=[b];if(!f||!g)return a===e?-1:b===e?1:f?-1:g?1:k?K.call(k,a)-K.call(k,b):0;if(f===g)return kb(a,b);c=a;while(c=c.parentNode)h.unshift(c);c=b;while(c=c.parentNode)i.unshift(c);while(h[d]===i[d])d++;return d?kb(h[d],i[d]):h[d]===v?-1:i[d]===v?1:0},e):n},fb.matches=function(a,b){return fb(a,null,null,b)},fb.matchesSelector=function(a,b){if((a.ownerDocument||a)!==n&&m(a),b=b.replace(U,"='$1']"),!(!c.matchesSelector||!p||r&&r.test(b)||q&&q.test(b)))try{var d=s.call(a,b);if(d||c.disconnectedMatch||a.document&&11!==a.document.nodeType)return d}catch(e){}return fb(b,n,null,[a]).length>0},fb.contains=function(a,b){return(a.ownerDocument||a)!==n&&m(a),t(a,b)},fb.attr=function(a,b){(a.ownerDocument||a)!==n&&m(a);var e=d.attrHandle[b.toLowerCase()],f=e&&E.call(d.attrHandle,b.toLowerCase())?e(a,b,!p):void 0;return void 0!==f?f:c.attributes||!p?a.getAttribute(b):(f=a.getAttributeNode(b))&&f.specified?f.value:null},fb.error=function(a){throw new Error("Syntax error, unrecognized expression: "+a)},fb.uniqueSort=function(a){var b,d=[],e=0,f=0;if(l=!c.detectDuplicates,k=!c.sortStable&&a.slice(0),a.sort(B),l){while(b=a[f++])b===a[f]&&(e=d.push(f));while(e--)a.splice(d[e],1)}return k=null,a},e=fb.getText=function(a){var b,c="",d=0,f=a.nodeType;if(f){if(1===f||9===f||11===f){if("string"==typeof a.textContent)return a.textContent;for(a=a.firstChild;a;a=a.nextSibling)c+=e(a)}else if(3===f||4===f)return a.nodeValue}else while(b=a[d++])c+=e(b);return c},d=fb.selectors={cacheLength:50,createPseudo:hb,match:X,attrHandle:{},find:{},relative:{">":{dir:"parentNode",first:!0}," ":{dir:"parentNode"},"+":{dir:"previousSibling",first:!0},"~":{dir:"previousSibling"}},preFilter:{ATTR:function(a){return a[1]=a[1].replace(cb,db),a[3]=(a[3]||a[4]||a[5]||"").replace(cb,db),"~="===a[2]&&(a[3]=" "+a[3]+" "),a.slice(0,4)},CHILD:function(a){return a[1]=a[1].toLowerCase(),"nth"===a[1].slice(0,3)?(a[3]||fb.error(a[0]),a[4]=+(a[4]?a[5]+(a[6]||1):2*("even"===a[3]||"odd"===a[3])),a[5]=+(a[7]+a[8]||"odd"===a[3])):a[3]&&fb.error(a[0]),a},PSEUDO:function(a){var b,c=!a[6]&&a[2];return X.CHILD.test(a[0])?null:(a[3]?a[2]=a[4]||a[5]||"":c&&V.test(c)&&(b=g(c,!0))&&(b=c.indexOf(")",c.length-b)-c.length)&&(a[0]=a[0].slice(0,b),a[2]=c.slice(0,b)),a.slice(0,3))}},filter:{TAG:function(a){var b=a.replace(cb,db).toLowerCase();return"*"===a?function(){return!0}:function(a){return a.nodeName&&a.nodeName.toLowerCase()===b}},CLASS:function(a){var b=y[a+" "];return b||(b=new RegExp("(^|"+M+")"+a+"("+M+"|$)"))&&y(a,function(a){return b.test("string"==typeof a.className&&a.className||typeof a.getAttribute!==C&&a.getAttribute("class")||"")})},ATTR:function(a,b,c){return function(d){var e=fb.attr(d,a);return null==e?"!="===b:b?(e+="","="===b?e===c:"!="===b?e!==c:"^="===b?c&&0===e.indexOf(c):"*="===b?c&&e.indexOf(c)>-1:"$="===b?c&&e.slice(-c.length)===c:"~="===b?(" "+e+" ").indexOf(c)>-1:"|="===b?e===c||e.slice(0,c.length+1)===c+"-":!1):!0}},CHILD:function(a,b,c,d,e){var f="nth"!==a.slice(0,3),g="last"!==a.slice(-4),h="of-type"===b;return 1===d&&0===e?function(a){return!!a.parentNode}:function(b,c,i){var j,k,l,m,n,o,p=f!==g?"nextSibling":"previousSibling",q=b.parentNode,r=h&&b.nodeName.toLowerCase(),s=!i&&!h;if(q){if(f){while(p){l=b;while(l=l[p])if(h?l.nodeName.toLowerCase()===r:1===l.nodeType)return!1;o=p="only"===a&&!o&&"nextSibling"}return!0}if(o=[g?q.firstChild:q.lastChild],g&&s){k=q[u]||(q[u]={}),j=k[a]||[],n=j[0]===w&&j[1],m=j[0]===w&&j[2],l=n&&q.childNodes[n];while(l=++n&&l&&l[p]||(m=n=0)||o.pop())if(1===l.nodeType&&++m&&l===b){k[a]=[w,n,m];break}}else if(s&&(j=(b[u]||(b[u]={}))[a])&&j[0]===w)m=j[1];else while(l=++n&&l&&l[p]||(m=n=0)||o.pop())if((h?l.nodeName.toLowerCase()===r:1===l.nodeType)&&++m&&(s&&((l[u]||(l[u]={}))[a]=[w,m]),l===b))break;return m-=e,m===d||m%d===0&&m/d>=0}}},PSEUDO:function(a,b){var c,e=d.pseudos[a]||d.setFilters[a.toLowerCase()]||fb.error("unsupported pseudo: "+a);return e[u]?e(b):e.length>1?(c=[a,a,"",b],d.setFilters.hasOwnProperty(a.toLowerCase())?hb(function(a,c){var d,f=e(a,b),g=f.length;while(g--)d=K.call(a,f[g]),a[d]=!(c[d]=f[g])}):function(a){return e(a,0,c)}):e}},pseudos:{not:hb(function(a){var b=[],c=[],d=h(a.replace(R,"$1"));return d[u]?hb(function(a,b,c,e){var f,g=d(a,null,e,[]),h=a.length;while(h--)(f=g[h])&&(a[h]=!(b[h]=f))}):function(a,e,f){return b[0]=a,d(b,null,f,c),!c.pop()}}),has:hb(function(a){return function(b){return fb(a,b).length>0}}),contains:hb(function(a){return function(b){return(b.textContent||b.innerText||e(b)).indexOf(a)>-1}}),lang:hb(function(a){return W.test(a||"")||fb.error("unsupported lang: "+a),a=a.replace(cb,db).toLowerCase(),function(b){var c;do if(c=p?b.lang:b.getAttribute("xml:lang")||b.getAttribute("lang"))return c=c.toLowerCase(),c===a||0===c.indexOf(a+"-");while((b=b.parentNode)&&1===b.nodeType);return!1}}),target:function(b){var c=a.location&&a.location.hash;return c&&c.slice(1)===b.id},root:function(a){return a===o},focus:function(a){return a===n.activeElement&&(!n.hasFocus||n.hasFocus())&&!!(a.type||a.href||~a.tabIndex)},enabled:function(a){return a.disabled===!1},disabled:function(a){return a.disabled===!0},checked:function(a){var b=a.nodeName.toLowerCase();return"input"===b&&!!a.checked||"option"===b&&!!a.selected},selected:function(a){return a.parentNode&&a.parentNode.selectedIndex,a.selected===!0},empty:function(a){for(a=a.firstChild;a;a=a.nextSibling)if(a.nodeType<6)return!1;return!0},parent:function(a){return!d.pseudos.empty(a)},header:function(a){return Z.test(a.nodeName)},input:function(a){return Y.test(a.nodeName)},button:function(a){var b=a.nodeName.toLowerCase();return"input"===b&&"button"===a.type||"button"===b},text:function(a){var b;return"input"===a.nodeName.toLowerCase()&&"text"===a.type&&(null==(b=a.getAttribute("type"))||"text"===b.toLowerCase())},first:nb(function(){return[0]}),last:nb(function(a,b){return[b-1]}),eq:nb(function(a,b,c){return[0>c?c+b:c]}),even:nb(function(a,b){for(var c=0;b>c;c+=2)a.push(c);return a}),odd:nb(function(a,b){for(var c=1;b>c;c+=2)a.push(c);return a}),lt:nb(function(a,b,c){for(var d=0>c?c+b:c;--d>=0;)a.push(d);return a}),gt:nb(function(a,b,c){for(var d=0>c?c+b:c;++d<b;)a.push(d);return a})}},d.pseudos.nth=d.pseudos.eq;for(b in{radio:!0,checkbox:!0,file:!0,password:!0,image:!0})d.pseudos[b]=lb(b);for(b in{submit:!0,reset:!0})d.pseudos[b]=mb(b);function pb(){}pb.prototype=d.filters=d.pseudos,d.setFilters=new pb,g=fb.tokenize=function(a,b){var c,e,f,g,h,i,j,k=z[a+" "];if(k)return b?0:k.slice(0);h=a,i=[],j=d.preFilter;while(h){(!c||(e=S.exec(h)))&&(e&&(h=h.slice(e[0].length)||h),i.push(f=[])),c=!1,(e=T.exec(h))&&(c=e.shift(),f.push({value:c,type:e[0].replace(R," ")}),h=h.slice(c.length));for(g in d.filter)!(e=X[g].exec(h))||j[g]&&!(e=j[g](e))||(c=e.shift(),f.push({value:c,type:g,matches:e}),h=h.slice(c.length));if(!c)break}return b?h.length:h?fb.error(a):z(a,i).slice(0)};function qb(a){for(var b=0,c=a.length,d="";c>b;b++)d+=a[b].value;return d}function rb(a,b,c){var d=b.dir,e=c&&"parentNode"===d,f=x++;return b.first?function(b,c,f){while(b=b[d])if(1===b.nodeType||e)return a(b,c,f)}:function(b,c,g){var h,i,j=[w,f];if(g){while(b=b[d])if((1===b.nodeType||e)&&a(b,c,g))return!0}else while(b=b[d])if(1===b.nodeType||e){if(i=b[u]||(b[u]={}),(h=i[d])&&h[0]===w&&h[1]===f)return j[2]=h[2];if(i[d]=j,j[2]=a(b,c,g))return!0}}}function sb(a){return a.length>1?function(b,c,d){var e=a.length;while(e--)if(!a[e](b,c,d))return!1;return!0}:a[0]}function tb(a,b,c){for(var d=0,e=b.length;e>d;d++)fb(a,b[d],c);return c}function ub(a,b,c,d,e){for(var f,g=[],h=0,i=a.length,j=null!=b;i>h;h++)(f=a[h])&&(!c||c(f,d,e))&&(g.push(f),j&&b.push(h));return g}function vb(a,b,c,d,e,f){return d&&!d[u]&&(d=vb(d)),e&&!e[u]&&(e=vb(e,f)),hb(function(f,g,h,i){var j,k,l,m=[],n=[],o=g.length,p=f||tb(b||"*",h.nodeType?[h]:h,[]),q=!a||!f&&b?p:ub(p,m,a,h,i),r=c?e||(f?a:o||d)?[]:g:q;if(c&&c(q,r,h,i),d){j=ub(r,n),d(j,[],h,i),k=j.length;while(k--)(l=j[k])&&(r[n[k]]=!(q[n[k]]=l))}if(f){if(e||a){if(e){j=[],k=r.length;while(k--)(l=r[k])&&j.push(q[k]=l);e(null,r=[],j,i)}k=r.length;while(k--)(l=r[k])&&(j=e?K.call(f,l):m[k])>-1&&(f[j]=!(g[j]=l))}}else r=ub(r===g?r.splice(o,r.length):r),e?e(null,g,r,i):I.apply(g,r)})}function wb(a){for(var b,c,e,f=a.length,g=d.relative[a[0].type],h=g||d.relative[" "],i=g?1:0,k=rb(function(a){return a===b},h,!0),l=rb(function(a){return K.call(b,a)>-1},h,!0),m=[function(a,c,d){return!g&&(d||c!==j)||((b=c).nodeType?k(a,c,d):l(a,c,d))}];f>i;i++)if(c=d.relative[a[i].type])m=[rb(sb(m),c)];else{if(c=d.filter[a[i].type].apply(null,a[i].matches),c[u]){for(e=++i;f>e;e++)if(d.relative[a[e].type])break;return vb(i>1&&sb(m),i>1&&qb(a.slice(0,i-1).concat({value:" "===a[i-2].type?"*":""})).replace(R,"$1"),c,e>i&&wb(a.slice(i,e)),f>e&&wb(a=a.slice(e)),f>e&&qb(a))}m.push(c)}return sb(m)}function xb(a,b){var c=b.length>0,e=a.length>0,f=function(f,g,h,i,k){var l,m,o,p=0,q="0",r=f&&[],s=[],t=j,u=f||e&&d.find.TAG("*",k),v=w+=null==t?1:Math.random()||.1,x=u.length;for(k&&(j=g!==n&&g);q!==x&&null!=(l=u[q]);q++){if(e&&l){m=0;while(o=a[m++])if(o(l,g,h)){i.push(l);break}k&&(w=v)}c&&((l=!o&&l)&&p--,f&&r.push(l))}if(p+=q,c&&q!==p){m=0;while(o=b[m++])o(r,s,g,h);if(f){if(p>0)while(q--)r[q]||s[q]||(s[q]=G.call(i));s=ub(s)}I.apply(i,s),k&&!f&&s.length>0&&p+b.length>1&&fb.uniqueSort(i)}return k&&(w=v,j=t),r};return c?hb(f):f}return h=fb.compile=function(a,b){var c,d=[],e=[],f=A[a+" "];if(!f){b||(b=g(a)),c=b.length;while(c--)f=wb(b[c]),f[u]?d.push(f):e.push(f);f=A(a,xb(e,d)),f.selector=a}return f},i=fb.select=function(a,b,e,f){var i,j,k,l,m,n="function"==typeof a&&a,o=!f&&g(a=n.selector||a);if(e=e||[],1===o.length){if(j=o[0]=o[0].slice(0),j.length>2&&"ID"===(k=j[0]).type&&c.getById&&9===b.nodeType&&p&&d.relative[j[1].type]){if(b=(d.find.ID(k.matches[0].replace(cb,db),b)||[])[0],!b)return e;n&&(b=b.parentNode),a=a.slice(j.shift().value.length)}i=X.needsContext.test(a)?0:j.length;while(i--){if(k=j[i],d.relative[l=k.type])break;if((m=d.find[l])&&(f=m(k.matches[0].replace(cb,db),ab.test(j[0].type)&&ob(b.parentNode)||b))){if(j.splice(i,1),a=f.length&&qb(j),!a)return I.apply(e,f),e;break}}}return(n||h(a,o))(f,b,!p,e,ab.test(a)&&ob(b.parentNode)||b),e},c.sortStable=u.split("").sort(B).join("")===u,c.detectDuplicates=!!l,m(),c.sortDetached=ib(function(a){return 1&a.compareDocumentPosition(n.createElement("div"))}),ib(function(a){return a.innerHTML="<a href='#'></a>","#"===a.firstChild.getAttribute("href")})||jb("type|href|height|width",function(a,b,c){return c?void 0:a.getAttribute(b,"type"===b.toLowerCase()?1:2)}),c.attributes&&ib(function(a){return a.innerHTML="<input/>",a.firstChild.setAttribute("value",""),""===a.firstChild.getAttribute("value")})||jb("value",function(a,b,c){return c||"input"!==a.nodeName.toLowerCase()?void 0:a.defaultValue}),ib(function(a){return null==a.getAttribute("disabled")})||jb(L,function(a,b,c){var d;return c?void 0:a[b]===!0?b.toLowerCase():(d=a.getAttributeNode(b))&&d.specified?d.value:null}),fb}(a);m.find=s,m.expr=s.selectors,m.expr[":"]=m.expr.pseudos,m.unique=s.uniqueSort,m.text=s.getText,m.isXMLDoc=s.isXML,m.contains=s.contains;var t=m.expr.match.needsContext,u=/^<(\w+)\s*\/?>(?:<\/\1>|)$/,v=/^.[^:#\[\.,]*$/;function w(a,b,c){if(m.isFunction(b))return m.grep(a,function(a,d){return!!b.call(a,d,a)!==c});if(b.nodeType)return m.grep(a,function(a){return a===b!==c});if("string"==typeof b){if(v.test(b))return m.filter(b,a,c);b=m.filter(b,a)}return m.grep(a,function(a){return m.inArray(a,b)>=0!==c})}m.filter=function(a,b,c){var d=b[0];return c&&(a=":not("+a+")"),1===b.length&&1===d.nodeType?m.find.matchesSelector(d,a)?[d]:[]:m.find.matches(a,m.grep(b,function(a){return 1===a.nodeType}))},m.fn.extend({find:function(a){var b,c=[],d=this,e=d.length;if("string"!=typeof a)return this.pushStack(m(a).filter(function(){for(b=0;e>b;b++)if(m.contains(d[b],this))return!0}));for(b=0;e>b;b++)m.find(a,d[b],c);return c=this.pushStack(e>1?m.unique(c):c),c.selector=this.selector?this.selector+" "+a:a,c},filter:function(a){return this.pushStack(w(this,a||[],!1))},not:function(a){return this.pushStack(w(this,a||[],!0))},is:function(a){return!!w(this,"string"==typeof a&&t.test(a)?m(a):a||[],!1).length}});var x,y=a.document,z=/^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]*))$/,A=m.fn.init=function(a,b){var c,d;if(!a)return this;if("string"==typeof a){if(c="<"===a.charAt(0)&&">"===a.charAt(a.length-1)&&a.length>=3?[null,a,null]:z.exec(a),!c||!c[1]&&b)return!b||b.jquery?(b||x).find(a):this.constructor(b).find(a);if(c[1]){if(b=b instanceof m?b[0]:b,m.merge(this,m.parseHTML(c[1],b&&b.nodeType?b.ownerDocument||b:y,!0)),u.test(c[1])&&m.isPlainObject(b))for(c in b)m.isFunction(this[c])?this[c](b[c]):this.attr(c,b[c]);return this}if(d=y.getElementById(c[2]),d&&d.parentNode){if(d.id!==c[2])return x.find(a);this.length=1,this[0]=d}return this.context=y,this.selector=a,this}return a.nodeType?(this.context=this[0]=a,this.length=1,this):m.isFunction(a)?"undefined"!=typeof x.ready?x.ready(a):a(m):(void 0!==a.selector&&(this.selector=a.selector,this.context=a.context),m.makeArray(a,this))};A.prototype=m.fn,x=m(y);var B=/^(?:parents|prev(?:Until|All))/,C={children:!0,contents:!0,next:!0,prev:!0};m.extend({dir:function(a,b,c){var d=[],e=a[b];while(e&&9!==e.nodeType&&(void 0===c||1!==e.nodeType||!m(e).is(c)))1===e.nodeType&&d.push(e),e=e[b];return d},sibling:function(a,b){for(var c=[];a;a=a.nextSibling)1===a.nodeType&&a!==b&&c.push(a);return c}}),m.fn.extend({has:function(a){var b,c=m(a,this),d=c.length;return this.filter(function(){for(b=0;d>b;b++)if(m.contains(this,c[b]))return!0})},closest:function(a,b){for(var c,d=0,e=this.length,f=[],g=t.test(a)||"string"!=typeof a?m(a,b||this.context):0;e>d;d++)for(c=this[d];c&&c!==b;c=c.parentNode)if(c.nodeType<11&&(g?g.index(c)>-1:1===c.nodeType&&m.find.matchesSelector(c,a))){f.push(c);break}return this.pushStack(f.length>1?m.unique(f):f)},index:function(a){return a?"string"==typeof a?m.inArray(this[0],m(a)):m.inArray(a.jquery?a[0]:a,this):this[0]&&this[0].parentNode?this.first().prevAll().length:-1},add:function(a,b){return this.pushStack(m.unique(m.merge(this.get(),m(a,b))))},addBack:function(a){return this.add(null==a?this.prevObject:this.prevObject.filter(a))}});function D(a,b){do a=a[b];while(a&&1!==a.nodeType);return a}m.each({parent:function(a){var b=a.parentNode;return b&&11!==b.nodeType?b:null},parents:function(a){return m.dir(a,"parentNode")},parentsUntil:function(a,b,c){return m.dir(a,"parentNode",c)},next:function(a){return D(a,"nextSibling")},prev:function(a){return D(a,"previousSibling")},nextAll:function(a){return m.dir(a,"nextSibling")},prevAll:function(a){return m.dir(a,"previousSibling")},nextUntil:function(a,b,c){return m.dir(a,"nextSibling",c)},prevUntil:function(a,b,c){return m.dir(a,"previousSibling",c)},siblings:function(a){return m.sibling((a.parentNode||{}).firstChild,a)},children:function(a){return m.sibling(a.firstChild)},contents:function(a){return m.nodeName(a,"iframe")?a.contentDocument||a.contentWindow.document:m.merge([],a.childNodes)}},function(a,b){m.fn[a]=function(c,d){var e=m.map(this,b,c);return"Until"!==a.slice(-5)&&(d=c),d&&"string"==typeof d&&(e=m.filter(d,e)),this.length>1&&(C[a]||(e=m.unique(e)),B.test(a)&&(e=e.reverse())),this.pushStack(e)}});var E=/\S+/g,F={};function G(a){var b=F[a]={};return m.each(a.match(E)||[],function(a,c){b[c]=!0}),b}m.Callbacks=function(a){a="string"==typeof a?F[a]||G(a):m.extend({},a);var b,c,d,e,f,g,h=[],i=!a.once&&[],j=function(l){for(c=a.memory&&l,d=!0,f=g||0,g=0,e=h.length,b=!0;h&&e>f;f++)if(h[f].apply(l[0],l[1])===!1&&a.stopOnFalse){c=!1;break}b=!1,h&&(i?i.length&&j(i.shift()):c?h=[]:k.disable())},k={add:function(){if(h){var d=h.length;!function f(b){m.each(b,function(b,c){var d=m.type(c);"function"===d?a.unique&&k.has(c)||h.push(c):c&&c.length&&"string"!==d&&f(c)})}(arguments),b?e=h.length:c&&(g=d,j(c))}return this},remove:function(){return h&&m.each(arguments,function(a,c){var d;while((d=m.inArray(c,h,d))>-1)h.splice(d,1),b&&(e>=d&&e--,f>=d&&f--)}),this},has:function(a){return a?m.inArray(a,h)>-1:!(!h||!h.length)},empty:function(){return h=[],e=0,this},disable:function(){return h=i=c=void 0,this},disabled:function(){return!h},lock:function(){return i=void 0,c||k.disable(),this},locked:function(){return!i},fireWith:function(a,c){return!h||d&&!i||(c=c||[],c=[a,c.slice?c.slice():c],b?i.push(c):j(c)),this},fire:function(){return k.fireWith(this,arguments),this},fired:function(){return!!d}};return k},m.extend({Deferred:function(a){var b=[["resolve","done",m.Callbacks("once memory"),"resolved"],["reject","fail",m.Callbacks("once memory"),"rejected"],["notify","progress",m.Callbacks("memory")]],c="pending",d={state:function(){return c},always:function(){return e.done(arguments).fail(arguments),this},then:function(){var a=arguments;return m.Deferred(function(c){m.each(b,function(b,f){var g=m.isFunction(a[b])&&a[b];e[f[1]](function(){var a=g&&g.apply(this,arguments);a&&m.isFunction(a.promise)?a.promise().done(c.resolve).fail(c.reject).progress(c.notify):c[f[0]+"With"](this===d?c.promise():this,g?[a]:arguments)})}),a=null}).promise()},promise:function(a){return null!=a?m.extend(a,d):d}},e={};return d.pipe=d.then,m.each(b,function(a,f){var g=f[2],h=f[3];d[f[1]]=g.add,h&&g.add(function(){c=h},b[1^a][2].disable,b[2][2].lock),e[f[0]]=function(){return e[f[0]+"With"](this===e?d:this,arguments),this},e[f[0]+"With"]=g.fireWith}),d.promise(e),a&&a.call(e,e),e},when:function(a){var b=0,c=d.call(arguments),e=c.length,f=1!==e||a&&m.isFunction(a.promise)?e:0,g=1===f?a:m.Deferred(),h=function(a,b,c){return function(e){b[a]=this,c[a]=arguments.length>1?d.call(arguments):e,c===i?g.notifyWith(b,c):--f||g.resolveWith(b,c)}},i,j,k;if(e>1)for(i=new Array(e),j=new Array(e),k=new Array(e);e>b;b++)c[b]&&m.isFunction(c[b].promise)?c[b].promise().done(h(b,k,c)).fail(g.reject).progress(h(b,j,i)):--f;return f||g.resolveWith(k,c),g.promise()}});var H;m.fn.ready=function(a){return m.ready.promise().done(a),this},m.extend({isReady:!1,readyWait:1,holdReady:function(a){a?m.readyWait++:m.ready(!0)},ready:function(a){if(a===!0?!--m.readyWait:!m.isReady){if(!y.body)return setTimeout(m.ready);m.isReady=!0,a!==!0&&--m.readyWait>0||(H.resolveWith(y,[m]),m.fn.triggerHandler&&(m(y).triggerHandler("ready"),m(y).off("ready")))}}});function I(){y.addEventListener?(y.removeEventListener("DOMContentLoaded",J,!1),a.removeEventListener("load",J,!1)):(y.detachEvent("onreadystatechange",J),a.detachEvent("onload",J))}function J(){(y.addEventListener||"load"===event.type||"complete"===y.readyState)&&(I(),m.ready())}m.ready.promise=function(b){if(!H)if(H=m.Deferred(),"complete"===y.readyState)setTimeout(m.ready);else if(y.addEventListener)y.addEventListener("DOMContentLoaded",J,!1),a.addEventListener("load",J,!1);else{y.attachEvent("onreadystatechange",J),a.attachEvent("onload",J);var c=!1;try{c=null==a.frameElement&&y.documentElement}catch(d){}c&&c.doScroll&&!function e(){if(!m.isReady){try{c.doScroll("left")}catch(a){return setTimeout(e,50)}I(),m.ready()}}()}return H.promise(b)};var K="undefined",L;for(L in m(k))break;k.ownLast="0"!==L,k.inlineBlockNeedsLayout=!1,m(function(){var a,b,c,d;c=y.getElementsByTagName("body")[0],c&&c.style&&(b=y.createElement("div"),d=y.createElement("div"),d.style.cssText="position:absolute;border:0;width:0;height:0;top:0;left:-9999px",c.appendChild(d).appendChild(b),typeof b.style.zoom!==K&&(b.style.cssText="display:inline;margin:0;border:0;padding:1px;width:1px;zoom:1",k.inlineBlockNeedsLayout=a=3===b.offsetWidth,a&&(c.style.zoom=1)),c.removeChild(d))}),function(){var a=y.createElement("div");if(null==k.deleteExpando){k.deleteExpando=!0;try{delete a.test}catch(b){k.deleteExpando=!1}}a=null}(),m.acceptData=function(a){var b=m.noData[(a.nodeName+" ").toLowerCase()],c=+a.nodeType||1;return 1!==c&&9!==c?!1:!b||b!==!0&&a.getAttribute("classid")===b};var M=/^(?:\{[\w\W]*\}|\[[\w\W]*\])$/,N=/([A-Z])/g;function O(a,b,c){if(void 0===c&&1===a.nodeType){var d="data-"+b.replace(N,"-$1").toLowerCase();if(c=a.getAttribute(d),"string"==typeof c){try{c="true"===c?!0:"false"===c?!1:"null"===c?null:+c+""===c?+c:M.test(c)?m.parseJSON(c):c}catch(e){}m.data(a,b,c)}else c=void 0}return c}function P(a){var b;for(b in a)if(("data"!==b||!m.isEmptyObject(a[b]))&&"toJSON"!==b)return!1;return!0}function Q(a,b,d,e){if(m.acceptData(a)){var f,g,h=m.expando,i=a.nodeType,j=i?m.cache:a,k=i?a[h]:a[h]&&h;
 if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c.pop()||m.guid++:h),j[k]||(j[k]=i?{}:{toJSON:m.noop}),("object"==typeof b||"function"==typeof b)&&(e?j[k]=m.extend(j[k],b):j[k].data=m.extend(j[k].data,b)),g=j[k],e||(g.data||(g.data={}),g=g.data),void 0!==d&&(g[m.camelCase(b)]=d),"string"==typeof b?(f=g[b],null==f&&(f=g[m.camelCase(b)])):f=g,f}}function R(a,b,c){if(m.acceptData(a)){var d,e,f=a.nodeType,g=f?m.cache:a,h=f?a[m.expando]:m.expando;if(g[h]){if(b&&(d=c?g[h]:g[h].data)){m.isArray(b)?b=b.concat(m.map(b,m.camelCase)):b in d?b=[b]:(b=m.camelCase(b),b=b in d?[b]:b.split(" ")),e=b.length;while(e--)delete d[b[e]];if(c?!P(d):!m.isEmptyObject(d))return}(c||(delete g[h].data,P(g[h])))&&(f?m.cleanData([a],!0):k.deleteExpando||g!=g.window?delete g[h]:g[h]=null)}}}m.extend({cache:{},noData:{"applet ":!0,"embed ":!0,"object ":"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"},hasData:function(a){return a=a.nodeType?m.cache[a[m.expando]]:a[m.expando],!!a&&!P(a)},data:function(a,b,c){return Q(a,b,c)},removeData:function(a,b){return R(a,b)},_data:function(a,b,c){return Q(a,b,c,!0)},_removeData:function(a,b){return R(a,b,!0)}}),m.fn.extend({data:function(a,b){var c,d,e,f=this[0],g=f&&f.attributes;if(void 0===a){if(this.length&&(e=m.data(f),1===f.nodeType&&!m._data(f,"parsedAttrs"))){c=g.length;while(c--)g[c]&&(d=g[c].name,0===d.indexOf("data-")&&(d=m.camelCase(d.slice(5)),O(f,d,e[d])));m._data(f,"parsedAttrs",!0)}return e}return"object"==typeof a?this.each(function(){m.data(this,a)}):arguments.length>1?this.each(function(){m.data(this,a,b)}):f?O(f,a,m.data(f,a)):void 0},removeData:function(a){return this.each(function(){m.removeData(this,a)})}}),m.extend({queue:function(a,b,c){var d;return a?(b=(b||"fx")+"queue",d=m._data(a,b),c&&(!d||m.isArray(c)?d=m._data(a,b,m.makeArray(c)):d.push(c)),d||[]):void 0},dequeue:function(a,b){b=b||"fx";var c=m.queue(a,b),d=c.length,e=c.shift(),f=m._queueHooks(a,b),g=function(){m.dequeue(a,b)};"inprogress"===e&&(e=c.shift(),d--),e&&("fx"===b&&c.unshift("inprogress"),delete f.stop,e.call(a,g,f)),!d&&f&&f.empty.fire()},_queueHooks:function(a,b){var c=b+"queueHooks";return m._data(a,c)||m._data(a,c,{empty:m.Callbacks("once memory").add(function(){m._removeData(a,b+"queue"),m._removeData(a,c)})})}}),m.fn.extend({queue:function(a,b){var c=2;return"string"!=typeof a&&(b=a,a="fx",c--),arguments.length<c?m.queue(this[0],a):void 0===b?this:this.each(function(){var c=m.queue(this,a,b);m._queueHooks(this,a),"fx"===a&&"inprogress"!==c[0]&&m.dequeue(this,a)})},dequeue:function(a){return this.each(function(){m.dequeue(this,a)})},clearQueue:function(a){return this.queue(a||"fx",[])},promise:function(a,b){var c,d=1,e=m.Deferred(),f=this,g=this.length,h=function(){--d||e.resolveWith(f,[f])};"string"!=typeof a&&(b=a,a=void 0),a=a||"fx";while(g--)c=m._data(f[g],a+"queueHooks"),c&&c.empty&&(d++,c.empty.add(h));return h(),e.promise(b)}});var S=/[+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|)/.source,T=["Top","Right","Bottom","Left"],U=function(a,b){return a=b||a,"none"===m.css(a,"display")||!m.contains(a.ownerDocument,a)},V=m.access=function(a,b,c,d,e,f,g){var h=0,i=a.length,j=null==c;if("object"===m.type(c)){e=!0;for(h in c)m.access(a,b,h,c[h],!0,f,g)}else if(void 0!==d&&(e=!0,m.isFunction(d)||(g=!0),j&&(g?(b.call(a,d),b=null):(j=b,b=function(a,b,c){return j.call(m(a),c)})),b))for(;i>h;h++)b(a[h],c,g?d:d.call(a[h],h,b(a[h],c)));return e?a:j?b.call(a):i?b(a[0],c):f},W=/^(?:checkbox|radio)$/i;!function(){var a=y.createElement("input"),b=y.createElement("div"),c=y.createDocumentFragment();if(b.innerHTML="  <link/><table></table><a href='/a'>a</a><input type='checkbox'/>",k.leadingWhitespace=3===b.firstChild.nodeType,k.tbody=!b.getElementsByTagName("tbody").length,k.htmlSerialize=!!b.getElementsByTagName("link").length,k.html5Clone="<:nav></:nav>"!==y.createElement("nav").cloneNode(!0).outerHTML,a.type="checkbox",a.checked=!0,c.appendChild(a),k.appendChecked=a.checked,b.innerHTML="<textarea>x</textarea>",k.noCloneChecked=!!b.cloneNode(!0).lastChild.defaultValue,c.appendChild(b),b.innerHTML="<input type='radio' checked='checked' name='t'/>",k.checkClone=b.cloneNode(!0).cloneNode(!0).lastChild.checked,k.noCloneEvent=!0,b.attachEvent&&(b.attachEvent("onclick",function(){k.noCloneEvent=!1}),b.cloneNode(!0).click()),null==k.deleteExpando){k.deleteExpando=!0;try{delete b.test}catch(d){k.deleteExpando=!1}}}(),function(){var b,c,d=y.createElement("div");for(b in{submit:!0,change:!0,focusin:!0})c="on"+b,(k[b+"Bubbles"]=c in a)||(d.setAttribute(c,"t"),k[b+"Bubbles"]=d.attributes[c].expando===!1);d=null}();var X=/^(?:input|select|textarea)$/i,Y=/^key/,Z=/^(?:mouse|pointer|contextmenu)|click/,$=/^(?:focusinfocus|focusoutblur)$/,_=/^([^.]*)(?:\.(.+)|)$/;function ab(){return!0}function bb(){return!1}function cb(){try{return y.activeElement}catch(a){}}m.event={global:{},add:function(a,b,c,d,e){var f,g,h,i,j,k,l,n,o,p,q,r=m._data(a);if(r){c.handler&&(i=c,c=i.handler,e=i.selector),c.guid||(c.guid=m.guid++),(g=r.events)||(g=r.events={}),(k=r.handle)||(k=r.handle=function(a){return typeof m===K||a&&m.event.triggered===a.type?void 0:m.event.dispatch.apply(k.elem,arguments)},k.elem=a),b=(b||"").match(E)||[""],h=b.length;while(h--)f=_.exec(b[h])||[],o=q=f[1],p=(f[2]||"").split(".").sort(),o&&(j=m.event.special[o]||{},o=(e?j.delegateType:j.bindType)||o,j=m.event.special[o]||{},l=m.extend({type:o,origType:q,data:d,handler:c,guid:c.guid,selector:e,needsContext:e&&m.expr.match.needsContext.test(e),namespace:p.join(".")},i),(n=g[o])||(n=g[o]=[],n.delegateCount=0,j.setup&&j.setup.call(a,d,p,k)!==!1||(a.addEventListener?a.addEventListener(o,k,!1):a.attachEvent&&a.attachEvent("on"+o,k))),j.add&&(j.add.call(a,l),l.handler.guid||(l.handler.guid=c.guid)),e?n.splice(n.delegateCount++,0,l):n.push(l),m.event.global[o]=!0);a=null}},remove:function(a,b,c,d,e){var f,g,h,i,j,k,l,n,o,p,q,r=m.hasData(a)&&m._data(a);if(r&&(k=r.events)){b=(b||"").match(E)||[""],j=b.length;while(j--)if(h=_.exec(b[j])||[],o=q=h[1],p=(h[2]||"").split(".").sort(),o){l=m.event.special[o]||{},o=(d?l.delegateType:l.bindType)||o,n=k[o]||[],h=h[2]&&new RegExp("(^|\\.)"+p.join("\\.(?:.*\\.|)")+"(\\.|$)"),i=f=n.length;while(f--)g=n[f],!e&&q!==g.origType||c&&c.guid!==g.guid||h&&!h.test(g.namespace)||d&&d!==g.selector&&("**"!==d||!g.selector)||(n.splice(f,1),g.selector&&n.delegateCount--,l.remove&&l.remove.call(a,g));i&&!n.length&&(l.teardown&&l.teardown.call(a,p,r.handle)!==!1||m.removeEvent(a,o,r.handle),delete k[o])}else for(o in k)m.event.remove(a,o+b[j],c,d,!0);m.isEmptyObject(k)&&(delete r.handle,m._removeData(a,"events"))}},trigger:function(b,c,d,e){var f,g,h,i,k,l,n,o=[d||y],p=j.call(b,"type")?b.type:b,q=j.call(b,"namespace")?b.namespace.split("."):[];if(h=l=d=d||y,3!==d.nodeType&&8!==d.nodeType&&!$.test(p+m.event.triggered)&&(p.indexOf(".")>=0&&(q=p.split("."),p=q.shift(),q.sort()),g=p.indexOf(":")<0&&"on"+p,b=b[m.expando]?b:new m.Event(p,"object"==typeof b&&b),b.isTrigger=e?2:3,b.namespace=q.join("."),b.namespace_re=b.namespace?new RegExp("(^|\\.)"+q.join("\\.(?:.*\\.|)")+"(\\.|$)"):null,b.result=void 0,b.target||(b.target=d),c=null==c?[b]:m.makeArray(c,[b]),k=m.event.special[p]||{},e||!k.trigger||k.trigger.apply(d,c)!==!1)){if(!e&&!k.noBubble&&!m.isWindow(d)){for(i=k.delegateType||p,$.test(i+p)||(h=h.parentNode);h;h=h.parentNode)o.push(h),l=h;l===(d.ownerDocument||y)&&o.push(l.defaultView||l.parentWindow||a)}n=0;while((h=o[n++])&&!b.isPropagationStopped())b.type=n>1?i:k.bindType||p,f=(m._data(h,"events")||{})[b.type]&&m._data(h,"handle"),f&&f.apply(h,c),f=g&&h[g],f&&f.apply&&m.acceptData(h)&&(b.result=f.apply(h,c),b.result===!1&&b.preventDefault());if(b.type=p,!e&&!b.isDefaultPrevented()&&(!k._default||k._default.apply(o.pop(),c)===!1)&&m.acceptData(d)&&g&&d[p]&&!m.isWindow(d)){l=d[g],l&&(d[g]=null),m.event.triggered=p;try{d[p]()}catch(r){}m.event.triggered=void 0,l&&(d[g]=l)}return b.result}},dispatch:function(a){a=m.event.fix(a);var b,c,e,f,g,h=[],i=d.call(arguments),j=(m._data(this,"events")||{})[a.type]||[],k=m.event.special[a.type]||{};if(i[0]=a,a.delegateTarget=this,!k.preDispatch||k.preDispatch.call(this,a)!==!1){h=m.event.handlers.call(this,a,j),b=0;while((f=h[b++])&&!a.isPropagationStopped()){a.currentTarget=f.elem,g=0;while((e=f.handlers[g++])&&!a.isImmediatePropagationStopped())(!a.namespace_re||a.namespace_re.test(e.namespace))&&(a.handleObj=e,a.data=e.data,c=((m.event.special[e.origType]||{}).handle||e.handler).apply(f.elem,i),void 0!==c&&(a.result=c)===!1&&(a.preventDefault(),a.stopPropagation()))}return k.postDispatch&&k.postDispatch.call(this,a),a.result}},handlers:function(a,b){var c,d,e,f,g=[],h=b.delegateCount,i=a.target;if(h&&i.nodeType&&(!a.button||"click"!==a.type))for(;i!=this;i=i.parentNode||this)if(1===i.nodeType&&(i.disabled!==!0||"click"!==a.type)){for(e=[],f=0;h>f;f++)d=b[f],c=d.selector+" ",void 0===e[c]&&(e[c]=d.needsContext?m(c,this).index(i)>=0:m.find(c,this,null,[i]).length),e[c]&&e.push(d);e.length&&g.push({elem:i,handlers:e})}return h<b.length&&g.push({elem:this,handlers:b.slice(h)}),g},fix:function(a){if(a[m.expando])return a;var b,c,d,e=a.type,f=a,g=this.fixHooks[e];g||(this.fixHooks[e]=g=Z.test(e)?this.mouseHooks:Y.test(e)?this.keyHooks:{}),d=g.props?this.props.concat(g.props):this.props,a=new m.Event(f),b=d.length;while(b--)c=d[b],a[c]=f[c];return a.target||(a.target=f.srcElement||y),3===a.target.nodeType&&(a.target=a.target.parentNode),a.metaKey=!!a.metaKey,g.filter?g.filter(a,f):a},props:"altKey bubbles cancelable ctrlKey currentTarget eventPhase metaKey relatedTarget shiftKey target timeStamp view which".split(" "),fixHooks:{},keyHooks:{props:"char charCode key keyCode".split(" "),filter:function(a,b){return null==a.which&&(a.which=null!=b.charCode?b.charCode:b.keyCode),a}},mouseHooks:{props:"button buttons clientX clientY fromElement offsetX offsetY pageX pageY screenX screenY toElement".split(" "),filter:function(a,b){var c,d,e,f=b.button,g=b.fromElement;return null==a.pageX&&null!=b.clientX&&(d=a.target.ownerDocument||y,e=d.documentElement,c=d.body,a.pageX=b.clientX+(e&&e.scrollLeft||c&&c.scrollLeft||0)-(e&&e.clientLeft||c&&c.clientLeft||0),a.pageY=b.clientY+(e&&e.scrollTop||c&&c.scrollTop||0)-(e&&e.clientTop||c&&c.clientTop||0)),!a.relatedTarget&&g&&(a.relatedTarget=g===a.target?b.toElement:g),a.which||void 0===f||(a.which=1&f?1:2&f?3:4&f?2:0),a}},special:{load:{noBubble:!0},focus:{trigger:function(){if(this!==cb()&&this.focus)try{return this.focus(),!1}catch(a){}},delegateType:"focusin"},blur:{trigger:function(){return this===cb()&&this.blur?(this.blur(),!1):void 0},delegateType:"focusout"},click:{trigger:function(){return m.nodeName(this,"input")&&"checkbox"===this.type&&this.click?(this.click(),!1):void 0},_default:function(a){return m.nodeName(a.target,"a")}},beforeunload:{postDispatch:function(a){void 0!==a.result&&a.originalEvent&&(a.originalEvent.returnValue=a.result)}}},simulate:function(a,b,c,d){var e=m.extend(new m.Event,c,{type:a,isSimulated:!0,originalEvent:{}});d?m.event.trigger(e,null,b):m.event.dispatch.call(b,e),e.isDefaultPrevented()&&c.preventDefault()}},m.removeEvent=y.removeEventListener?function(a,b,c){a.removeEventListener&&a.removeEventListener(b,c,!1)}:function(a,b,c){var d="on"+b;a.detachEvent&&(typeof a[d]===K&&(a[d]=null),a.detachEvent(d,c))},m.Event=function(a,b){return this instanceof m.Event?(a&&a.type?(this.originalEvent=a,this.type=a.type,this.isDefaultPrevented=a.defaultPrevented||void 0===a.defaultPrevented&&a.returnValue===!1?ab:bb):this.type=a,b&&m.extend(this,b),this.timeStamp=a&&a.timeStamp||m.now(),void(this[m.expando]=!0)):new m.Event(a,b)},m.Event.prototype={isDefaultPrevented:bb,isPropagationStopped:bb,isImmediatePropagationStopped:bb,preventDefault:function(){var a=this.originalEvent;this.isDefaultPrevented=ab,a&&(a.preventDefault?a.preventDefault():a.returnValue=!1)},stopPropagation:function(){var a=this.originalEvent;this.isPropagationStopped=ab,a&&(a.stopPropagation&&a.stopPropagation(),a.cancelBubble=!0)},stopImmediatePropagation:function(){var a=this.originalEvent;this.isImmediatePropagationStopped=ab,a&&a.stopImmediatePropagation&&a.stopImmediatePropagation(),this.stopPropagation()}},m.each({mouseenter:"mouseover",mouseleave:"mouseout",pointerenter:"pointerover",pointerleave:"pointerout"},function(a,b){m.event.special[a]={delegateType:b,bindType:b,handle:function(a){var c,d=this,e=a.relatedTarget,f=a.handleObj;return(!e||e!==d&&!m.contains(d,e))&&(a.type=f.origType,c=f.handler.apply(this,arguments),a.type=b),c}}}),k.submitBubbles||(m.event.special.submit={setup:function(){return m.nodeName(this,"form")?!1:void m.event.add(this,"click._submit keypress._submit",function(a){var b=a.target,c=m.nodeName(b,"input")||m.nodeName(b,"button")?b.form:void 0;c&&!m._data(c,"submitBubbles")&&(m.event.add(c,"submit._submit",function(a){a._submit_bubble=!0}),m._data(c,"submitBubbles",!0))})},postDispatch:function(a){a._submit_bubble&&(delete a._submit_bubble,this.parentNode&&!a.isTrigger&&m.event.simulate("submit",this.parentNode,a,!0))},teardown:function(){return m.nodeName(this,"form")?!1:void m.event.remove(this,"._submit")}}),k.changeBubbles||(m.event.special.change={setup:function(){return X.test(this.nodeName)?(("checkbox"===this.type||"radio"===this.type)&&(m.event.add(this,"propertychange._change",function(a){"checked"===a.originalEvent.propertyName&&(this._just_changed=!0)}),m.event.add(this,"click._change",function(a){this._just_changed&&!a.isTrigger&&(this._just_changed=!1),m.event.simulate("change",this,a,!0)})),!1):void m.event.add(this,"beforeactivate._change",function(a){var b=a.target;X.test(b.nodeName)&&!m._data(b,"changeBubbles")&&(m.event.add(b,"change._change",function(a){!this.parentNode||a.isSimulated||a.isTrigger||m.event.simulate("change",this.parentNode,a,!0)}),m._data(b,"changeBubbles",!0))})},handle:function(a){var b=a.target;return this!==b||a.isSimulated||a.isTrigger||"radio"!==b.type&&"checkbox"!==b.type?a.handleObj.handler.apply(this,arguments):void 0},teardown:function(){return m.event.remove(this,"._change"),!X.test(this.nodeName)}}),k.focusinBubbles||m.each({focus:"focusin",blur:"focusout"},function(a,b){var c=function(a){m.event.simulate(b,a.target,m.event.fix(a),!0)};m.event.special[b]={setup:function(){var d=this.ownerDocument||this,e=m._data(d,b);e||d.addEventListener(a,c,!0),m._data(d,b,(e||0)+1)},teardown:function(){var d=this.ownerDocument||this,e=m._data(d,b)-1;e?m._data(d,b,e):(d.removeEventListener(a,c,!0),m._removeData(d,b))}}}),m.fn.extend({on:function(a,b,c,d,e){var f,g;if("object"==typeof a){"string"!=typeof b&&(c=c||b,b=void 0);for(f in a)this.on(f,b,c,a[f],e);return this}if(null==c&&null==d?(d=b,c=b=void 0):null==d&&("string"==typeof b?(d=c,c=void 0):(d=c,c=b,b=void 0)),d===!1)d=bb;else if(!d)return this;return 1===e&&(g=d,d=function(a){return m().off(a),g.apply(this,arguments)},d.guid=g.guid||(g.guid=m.guid++)),this.each(function(){m.event.add(this,a,d,c,b)})},one:function(a,b,c,d){return this.on(a,b,c,d,1)},off:function(a,b,c){var d,e;if(a&&a.preventDefault&&a.handleObj)return d=a.handleObj,m(a.delegateTarget).off(d.namespace?d.origType+"."+d.namespace:d.origType,d.selector,d.handler),this;if("object"==typeof a){for(e in a)this.off(e,b,a[e]);return this}return(b===!1||"function"==typeof b)&&(c=b,b=void 0),c===!1&&(c=bb),this.each(function(){m.event.remove(this,a,c,b)})},trigger:function(a,b){return this.each(function(){m.event.trigger(a,b,this)})},triggerHandler:function(a,b){var c=this[0];return c?m.event.trigger(a,b,c,!0):void 0}});function db(a){var b=eb.split("|"),c=a.createDocumentFragment();if(c.createElement)while(b.length)c.createElement(b.pop());return c}var eb="abbr|article|aside|audio|bdi|canvas|data|datalist|details|figcaption|figure|footer|header|hgroup|mark|meter|nav|output|progress|section|summary|time|video",fb=/ jQuery\d+="(?:null|\d+)"/g,gb=new RegExp("<(?:"+eb+")[\\s/>]","i"),hb=/^\s+/,ib=/<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/gi,jb=/<([\w:]+)/,kb=/<tbody/i,lb=/<|&#?\w+;/,mb=/<(?:script|style|link)/i,nb=/checked\s*(?:[^=]|=\s*.checked.)/i,ob=/^$|\/(?:java|ecma)script/i,pb=/^true\/(.*)/,qb=/^\s*<!(?:\[CDATA\[|--)|(?:\]\]|--)>\s*$/g,rb={option:[1,"<select multiple='multiple'>","</select>"],legend:[1,"<fieldset>","</fieldset>"],area:[1,"<map>","</map>"],param:[1,"<object>","</object>"],thead:[1,"<table>","</table>"],tr:[2,"<table><tbody>","</tbody></table>"],col:[2,"<table><tbody></tbody><colgroup>","</colgroup></table>"],td:[3,"<table><tbody><tr>","</tr></tbody></table>"],_default:k.htmlSerialize?[0,"",""]:[1,"X<div>","</div>"]},sb=db(y),tb=sb.appendChild(y.createElement("div"));rb.optgroup=rb.option,rb.tbody=rb.tfoot=rb.colgroup=rb.caption=rb.thead,rb.th=rb.td;function ub(a,b){var c,d,e=0,f=typeof a.getElementsByTagName!==K?a.getElementsByTagName(b||"*"):typeof a.querySelectorAll!==K?a.querySelectorAll(b||"*"):void 0;if(!f)for(f=[],c=a.childNodes||a;null!=(d=c[e]);e++)!b||m.nodeName(d,b)?f.push(d):m.merge(f,ub(d,b));return void 0===b||b&&m.nodeName(a,b)?m.merge([a],f):f}function vb(a){W.test(a.type)&&(a.defaultChecked=a.checked)}function wb(a,b){return m.nodeName(a,"table")&&m.nodeName(11!==b.nodeType?b:b.firstChild,"tr")?a.getElementsByTagName("tbody")[0]||a.appendChild(a.ownerDocument.createElement("tbody")):a}function xb(a){return a.type=(null!==m.find.attr(a,"type"))+"/"+a.type,a}function yb(a){var b=pb.exec(a.type);return b?a.type=b[1]:a.removeAttribute("type"),a}function zb(a,b){for(var c,d=0;null!=(c=a[d]);d++)m._data(c,"globalEval",!b||m._data(b[d],"globalEval"))}function Ab(a,b){if(1===b.nodeType&&m.hasData(a)){var c,d,e,f=m._data(a),g=m._data(b,f),h=f.events;if(h){delete g.handle,g.events={};for(c in h)for(d=0,e=h[c].length;e>d;d++)m.event.add(b,c,h[c][d])}g.data&&(g.data=m.extend({},g.data))}}function Bb(a,b){var c,d,e;if(1===b.nodeType){if(c=b.nodeName.toLowerCase(),!k.noCloneEvent&&b[m.expando]){e=m._data(b);for(d in e.events)m.removeEvent(b,d,e.handle);b.removeAttribute(m.expando)}"script"===c&&b.text!==a.text?(xb(b).text=a.text,yb(b)):"object"===c?(b.parentNode&&(b.outerHTML=a.outerHTML),k.html5Clone&&a.innerHTML&&!m.trim(b.innerHTML)&&(b.innerHTML=a.innerHTML)):"input"===c&&W.test(a.type)?(b.defaultChecked=b.checked=a.checked,b.value!==a.value&&(b.value=a.value)):"option"===c?b.defaultSelected=b.selected=a.defaultSelected:("input"===c||"textarea"===c)&&(b.defaultValue=a.defaultValue)}}m.extend({clone:function(a,b,c){var d,e,f,g,h,i=m.contains(a.ownerDocument,a);if(k.html5Clone||m.isXMLDoc(a)||!gb.test("<"+a.nodeName+">")?f=a.cloneNode(!0):(tb.innerHTML=a.outerHTML,tb.removeChild(f=tb.firstChild)),!(k.noCloneEvent&&k.noCloneChecked||1!==a.nodeType&&11!==a.nodeType||m.isXMLDoc(a)))for(d=ub(f),h=ub(a),g=0;null!=(e=h[g]);++g)d[g]&&Bb(e,d[g]);if(b)if(c)for(h=h||ub(a),d=d||ub(f),g=0;null!=(e=h[g]);g++)Ab(e,d[g]);else Ab(a,f);return d=ub(f,"script"),d.length>0&&zb(d,!i&&ub(a,"script")),d=h=e=null,f},buildFragment:function(a,b,c,d){for(var e,f,g,h,i,j,l,n=a.length,o=db(b),p=[],q=0;n>q;q++)if(f=a[q],f||0===f)if("object"===m.type(f))m.merge(p,f.nodeType?[f]:f);else if(lb.test(f)){h=h||o.appendChild(b.createElement("div")),i=(jb.exec(f)||["",""])[1].toLowerCase(),l=rb[i]||rb._default,h.innerHTML=l[1]+f.replace(ib,"<$1></$2>")+l[2],e=l[0];while(e--)h=h.lastChild;if(!k.leadingWhitespace&&hb.test(f)&&p.push(b.createTextNode(hb.exec(f)[0])),!k.tbody){f="table"!==i||kb.test(f)?"<table>"!==l[1]||kb.test(f)?0:h:h.firstChild,e=f&&f.childNodes.length;while(e--)m.nodeName(j=f.childNodes[e],"tbody")&&!j.childNodes.length&&f.removeChild(j)}m.merge(p,h.childNodes),h.textContent="";while(h.firstChild)h.removeChild(h.firstChild);h=o.lastChild}else p.push(b.createTextNode(f));h&&o.removeChild(h),k.appendChecked||m.grep(ub(p,"input"),vb),q=0;while(f=p[q++])if((!d||-1===m.inArray(f,d))&&(g=m.contains(f.ownerDocument,f),h=ub(o.appendChild(f),"script"),g&&zb(h),c)){e=0;while(f=h[e++])ob.test(f.type||"")&&c.push(f)}return h=null,o},cleanData:function(a,b){for(var d,e,f,g,h=0,i=m.expando,j=m.cache,l=k.deleteExpando,n=m.event.special;null!=(d=a[h]);h++)if((b||m.acceptData(d))&&(f=d[i],g=f&&j[f])){if(g.events)for(e in g.events)n[e]?m.event.remove(d,e):m.removeEvent(d,e,g.handle);j[f]&&(delete j[f],l?delete d[i]:typeof d.removeAttribute!==K?d.removeAttribute(i):d[i]=null,c.push(f))}}}),m.fn.extend({text:function(a){return V(this,function(a){return void 0===a?m.text(this):this.empty().append((this[0]&&this[0].ownerDocument||y).createTextNode(a))},null,a,arguments.length)},append:function(){return this.domManip(arguments,function(a){if(1===this.nodeType||11===this.nodeType||9===this.nodeType){var b=wb(this,a);b.appendChild(a)}})},prepend:function(){return this.domManip(arguments,function(a){if(1===this.nodeType||11===this.nodeType||9===this.nodeType){var b=wb(this,a);b.insertBefore(a,b.firstChild)}})},before:function(){return this.domManip(arguments,function(a){this.parentNode&&this.parentNode.insertBefore(a,this)})},after:function(){return this.domManip(arguments,function(a){this.parentNode&&this.parentNode.insertBefore(a,this.nextSibling)})},remove:function(a,b){for(var c,d=a?m.filter(a,this):this,e=0;null!=(c=d[e]);e++)b||1!==c.nodeType||m.cleanData(ub(c)),c.parentNode&&(b&&m.contains(c.ownerDocument,c)&&zb(ub(c,"script")),c.parentNode.removeChild(c));return this},empty:function(){for(var a,b=0;null!=(a=this[b]);b++){1===a.nodeType&&m.cleanData(ub(a,!1));while(a.firstChild)a.removeChild(a.firstChild);a.options&&m.nodeName(a,"select")&&(a.options.length=0)}return this},clone:function(a,b){return a=null==a?!1:a,b=null==b?a:b,this.map(function(){return m.clone(this,a,b)})},html:function(a){return V(this,function(a){var b=this[0]||{},c=0,d=this.length;if(void 0===a)return 1===b.nodeType?b.innerHTML.replace(fb,""):void 0;if(!("string"!=typeof a||mb.test(a)||!k.htmlSerialize&&gb.test(a)||!k.leadingWhitespace&&hb.test(a)||rb[(jb.exec(a)||["",""])[1].toLowerCase()])){a=a.replace(ib,"<$1></$2>");try{for(;d>c;c++)b=this[c]||{},1===b.nodeType&&(m.cleanData(ub(b,!1)),b.innerHTML=a);b=0}catch(e){}}b&&this.empty().append(a)},null,a,arguments.length)},replaceWith:function(){var a=arguments[0];return this.domManip(arguments,function(b){a=this.parentNode,m.cleanData(ub(this)),a&&a.replaceChild(b,this)}),a&&(a.length||a.nodeType)?this:this.remove()},detach:function(a){return this.remove(a,!0)},domManip:function(a,b){a=e.apply([],a);var c,d,f,g,h,i,j=0,l=this.length,n=this,o=l-1,p=a[0],q=m.isFunction(p);if(q||l>1&&"string"==typeof p&&!k.checkClone&&nb.test(p))return this.each(function(c){var d=n.eq(c);q&&(a[0]=p.call(this,c,d.html())),d.domManip(a,b)});if(l&&(i=m.buildFragment(a,this[0].ownerDocument,!1,this),c=i.firstChild,1===i.childNodes.length&&(i=c),c)){for(g=m.map(ub(i,"script"),xb),f=g.length;l>j;j++)d=i,j!==o&&(d=m.clone(d,!0,!0),f&&m.merge(g,ub(d,"script"))),b.call(this[j],d,j);if(f)for(h=g[g.length-1].ownerDocument,m.map(g,yb),j=0;f>j;j++)d=g[j],ob.test(d.type||"")&&!m._data(d,"globalEval")&&m.contains(h,d)&&(d.src?m._evalUrl&&m._evalUrl(d.src):m.globalEval((d.text||d.textContent||d.innerHTML||"").replace(qb,"")));i=c=null}return this}}),m.each({appendTo:"append",prependTo:"prepend",insertBefore:"before",insertAfter:"after",replaceAll:"replaceWith"},function(a,b){m.fn[a]=function(a){for(var c,d=0,e=[],g=m(a),h=g.length-1;h>=d;d++)c=d===h?this:this.clone(!0),m(g[d])[b](c),f.apply(e,c.get());return this.pushStack(e)}});var Cb,Db={};function Eb(b,c){var d,e=m(c.createElement(b)).appendTo(c.body),f=a.getDefaultComputedStyle&&(d=a.getDefaultComputedStyle(e[0]))?d.display:m.css(e[0],"display");return e.detach(),f}function Fb(a){var b=y,c=Db[a];return c||(c=Eb(a,b),"none"!==c&&c||(Cb=(Cb||m("<iframe frameborder='0' width='0' height='0'/>")).appendTo(b.documentElement),b=(Cb[0].contentWindow||Cb[0].contentDocument).document,b.write(),b.close(),c=Eb(a,b),Cb.detach()),Db[a]=c),c}!function(){var a;k.shrinkWrapBlocks=function(){if(null!=a)return a;a=!1;var b,c,d;return c=y.getElementsByTagName("body")[0],c&&c.style?(b=y.createElement("div"),d=y.createElement("div"),d.style.cssText="position:absolute;border:0;width:0;height:0;top:0;left:-9999px",c.appendChild(d).appendChild(b),typeof b.style.zoom!==K&&(b.style.cssText="-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;display:block;margin:0;border:0;padding:1px;width:1px;zoom:1",b.appendChild(y.createElement("div")).style.width="5px",a=3!==b.offsetWidth),c.removeChild(d),a):void 0}}();var Gb=/^margin/,Hb=new RegExp("^("+S+")(?!px)[a-z%]+$","i"),Ib,Jb,Kb=/^(top|right|bottom|left)$/;a.getComputedStyle?(Ib=function(a){return a.ownerDocument.defaultView.getComputedStyle(a,null)},Jb=function(a,b,c){var d,e,f,g,h=a.style;return c=c||Ib(a),g=c?c.getPropertyValue(b)||c[b]:void 0,c&&(""!==g||m.contains(a.ownerDocument,a)||(g=m.style(a,b)),Hb.test(g)&&Gb.test(b)&&(d=h.width,e=h.minWidth,f=h.maxWidth,h.minWidth=h.maxWidth=h.width=g,g=c.width,h.width=d,h.minWidth=e,h.maxWidth=f)),void 0===g?g:g+""}):y.documentElement.currentStyle&&(Ib=function(a){return a.currentStyle},Jb=function(a,b,c){var d,e,f,g,h=a.style;return c=c||Ib(a),g=c?c[b]:void 0,null==g&&h&&h[b]&&(g=h[b]),Hb.test(g)&&!Kb.test(b)&&(d=h.left,e=a.runtimeStyle,f=e&&e.left,f&&(e.left=a.currentStyle.left),h.left="fontSize"===b?"1em":g,g=h.pixelLeft+"px",h.left=d,f&&(e.left=f)),void 0===g?g:g+""||"auto"});function Lb(a,b){return{get:function(){var c=a();if(null!=c)return c?void delete this.get:(this.get=b).apply(this,arguments)}}}!function(){var b,c,d,e,f,g,h;if(b=y.createElement("div"),b.innerHTML="  <link/><table></table><a href='/a'>a</a><input type='checkbox'/>",d=b.getElementsByTagName("a")[0],c=d&&d.style){c.cssText="float:left;opacity:.5",k.opacity="0.5"===c.opacity,k.cssFloat=!!c.cssFloat,b.style.backgroundClip="content-box",b.cloneNode(!0).style.backgroundClip="",k.clearCloneStyle="content-box"===b.style.backgroundClip,k.boxSizing=""===c.boxSizing||""===c.MozBoxSizing||""===c.WebkitBoxSizing,m.extend(k,{reliableHiddenOffsets:function(){return null==g&&i(),g},boxSizingReliable:function(){return null==f&&i(),f},pixelPosition:function(){return null==e&&i(),e},reliableMarginRight:function(){return null==h&&i(),h}});function i(){var b,c,d,i;c=y.getElementsByTagName("body")[0],c&&c.style&&(b=y.createElement("div"),d=y.createElement("div"),d.style.cssText="position:absolute;border:0;width:0;height:0;top:0;left:-9999px",c.appendChild(d).appendChild(b),b.style.cssText="-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;display:block;margin-top:1%;top:1%;border:1px;padding:1px;width:4px;position:absolute",e=f=!1,h=!0,a.getComputedStyle&&(e="1%"!==(a.getComputedStyle(b,null)||{}).top,f="4px"===(a.getComputedStyle(b,null)||{width:"4px"}).width,i=b.appendChild(y.createElement("div")),i.style.cssText=b.style.cssText="-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;display:block;margin:0;border:0;padding:0",i.style.marginRight=i.style.width="0",b.style.width="1px",h=!parseFloat((a.getComputedStyle(i,null)||{}).marginRight)),b.innerHTML="<table><tr><td></td><td>t</td></tr></table>",i=b.getElementsByTagName("td"),i[0].style.cssText="margin:0;border:0;padding:0;display:none",g=0===i[0].offsetHeight,g&&(i[0].style.display="",i[1].style.display="none",g=0===i[0].offsetHeight),c.removeChild(d))}}}(),m.swap=function(a,b,c,d){var e,f,g={};for(f in b)g[f]=a.style[f],a.style[f]=b[f];e=c.apply(a,d||[]);for(f in b)a.style[f]=g[f];return e};var Mb=/alpha\([^)]*\)/i,Nb=/opacity\s*=\s*([^)]*)/,Ob=/^(none|table(?!-c[ea]).+)/,Pb=new RegExp("^("+S+")(.*)$","i"),Qb=new RegExp("^([+-])=("+S+")","i"),Rb={position:"absolute",visibility:"hidden",display:"block"},Sb={letterSpacing:"0",fontWeight:"400"},Tb=["Webkit","O","Moz","ms"];function Ub(a,b){if(b in a)return b;var c=b.charAt(0).toUpperCase()+b.slice(1),d=b,e=Tb.length;while(e--)if(b=Tb[e]+c,b in a)return b;return d}function Vb(a,b){for(var c,d,e,f=[],g=0,h=a.length;h>g;g++)d=a[g],d.style&&(f[g]=m._data(d,"olddisplay"),c=d.style.display,b?(f[g]||"none"!==c||(d.style.display=""),""===d.style.display&&U(d)&&(f[g]=m._data(d,"olddisplay",Fb(d.nodeName)))):(e=U(d),(c&&"none"!==c||!e)&&m._data(d,"olddisplay",e?c:m.css(d,"display"))));for(g=0;h>g;g++)d=a[g],d.style&&(b&&"none"!==d.style.display&&""!==d.style.display||(d.style.display=b?f[g]||"":"none"));return a}function Wb(a,b,c){var d=Pb.exec(b);return d?Math.max(0,d[1]-(c||0))+(d[2]||"px"):b}function Xb(a,b,c,d,e){for(var f=c===(d?"border":"content")?4:"width"===b?1:0,g=0;4>f;f+=2)"margin"===c&&(g+=m.css(a,c+T[f],!0,e)),d?("content"===c&&(g-=m.css(a,"padding"+T[f],!0,e)),"margin"!==c&&(g-=m.css(a,"border"+T[f]+"Width",!0,e))):(g+=m.css(a,"padding"+T[f],!0,e),"padding"!==c&&(g+=m.css(a,"border"+T[f]+"Width",!0,e)));return g}function Yb(a,b,c){var d=!0,e="width"===b?a.offsetWidth:a.offsetHeight,f=Ib(a),g=k.boxSizing&&"border-box"===m.css(a,"boxSizing",!1,f);if(0>=e||null==e){if(e=Jb(a,b,f),(0>e||null==e)&&(e=a.style[b]),Hb.test(e))return e;d=g&&(k.boxSizingReliable()||e===a.style[b]),e=parseFloat(e)||0}return e+Xb(a,b,c||(g?"border":"content"),d,f)+"px"}m.extend({cssHooks:{opacity:{get:function(a,b){if(b){var c=Jb(a,"opacity");return""===c?"1":c}}}},cssNumber:{columnCount:!0,fillOpacity:!0,flexGrow:!0,flexShrink:!0,fontWeight:!0,lineHeight:!0,opacity:!0,order:!0,orphans:!0,widows:!0,zIndex:!0,zoom:!0},cssProps:{"float":k.cssFloat?"cssFloat":"styleFloat"},style:function(a,b,c,d){if(a&&3!==a.nodeType&&8!==a.nodeType&&a.style){var e,f,g,h=m.camelCase(b),i=a.style;if(b=m.cssProps[h]||(m.cssProps[h]=Ub(i,h)),g=m.cssHooks[b]||m.cssHooks[h],void 0===c)return g&&"get"in g&&void 0!==(e=g.get(a,!1,d))?e:i[b];if(f=typeof c,"string"===f&&(e=Qb.exec(c))&&(c=(e[1]+1)*e[2]+parseFloat(m.css(a,b)),f="number"),null!=c&&c===c&&("number"!==f||m.cssNumber[h]||(c+="px"),k.clearCloneStyle||""!==c||0!==b.indexOf("background")||(i[b]="inherit"),!(g&&"set"in g&&void 0===(c=g.set(a,c,d)))))try{i[b]=c}catch(j){}}},css:function(a,b,c,d){var e,f,g,h=m.camelCase(b);return b=m.cssProps[h]||(m.cssProps[h]=Ub(a.style,h)),g=m.cssHooks[b]||m.cssHooks[h],g&&"get"in g&&(f=g.get(a,!0,c)),void 0===f&&(f=Jb(a,b,d)),"normal"===f&&b in Sb&&(f=Sb[b]),""===c||c?(e=parseFloat(f),c===!0||m.isNumeric(e)?e||0:f):f}}),m.each(["height","width"],function(a,b){m.cssHooks[b]={get:function(a,c,d){return c?Ob.test(m.css(a,"display"))&&0===a.offsetWidth?m.swap(a,Rb,function(){return Yb(a,b,d)}):Yb(a,b,d):void 0},set:function(a,c,d){var e=d&&Ib(a);return Wb(a,c,d?Xb(a,b,d,k.boxSizing&&"border-box"===m.css(a,"boxSizing",!1,e),e):0)}}}),k.opacity||(m.cssHooks.opacity={get:function(a,b){return Nb.test((b&&a.currentStyle?a.currentStyle.filter:a.style.filter)||"")?.01*parseFloat(RegExp.$1)+"":b?"1":""},set:function(a,b){var c=a.style,d=a.currentStyle,e=m.isNumeric(b)?"alpha(opacity="+100*b+")":"",f=d&&d.filter||c.filter||"";c.zoom=1,(b>=1||""===b)&&""===m.trim(f.replace(Mb,""))&&c.removeAttribute&&(c.removeAttribute("filter"),""===b||d&&!d.filter)||(c.filter=Mb.test(f)?f.replace(Mb,e):f+" "+e)}}),m.cssHooks.marginRight=Lb(k.reliableMarginRight,function(a,b){return b?m.swap(a,{display:"inline-block"},Jb,[a,"marginRight"]):void 0}),m.each({margin:"",padding:"",border:"Width"},function(a,b){m.cssHooks[a+b]={expand:function(c){for(var d=0,e={},f="string"==typeof c?c.split(" "):[c];4>d;d++)e[a+T[d]+b]=f[d]||f[d-2]||f[0];return e}},Gb.test(a)||(m.cssHooks[a+b].set=Wb)}),m.fn.extend({css:function(a,b){return V(this,function(a,b,c){var d,e,f={},g=0;if(m.isArray(b)){for(d=Ib(a),e=b.length;e>g;g++)f[b[g]]=m.css(a,b[g],!1,d);return f}return void 0!==c?m.style(a,b,c):m.css(a,b)},a,b,arguments.length>1)},show:function(){return Vb(this,!0)},hide:function(){return Vb(this)},toggle:function(a){return"boolean"==typeof a?a?this.show():this.hide():this.each(function(){U(this)?m(this).show():m(this).hide()})}});function Zb(a,b,c,d,e){return new Zb.prototype.init(a,b,c,d,e)}m.Tween=Zb,Zb.prototype={constructor:Zb,init:function(a,b,c,d,e,f){this.elem=a,this.prop=c,this.easing=e||"swing",this.options=b,this.start=this.now=this.cur(),this.end=d,this.unit=f||(m.cssNumber[c]?"":"px")
@@ -26979,6 +26979,1239 @@ module.exports = ( typeof window === 'undefined' ? null : window );
 });
 
 
+// ┌────────────────────────────────────────────────────────────────────┐ \\
+// │ Raphaël 2.1.4 - JavaScript Vector Library                          │ \\
+// ├────────────────────────────────────────────────────────────────────┤ \\
+// │ Copyright © 2008-2012 Dmitry Baranovskiy (http://raphaeljs.com)    │ \\
+// │ Copyright © 2008-2012 Sencha Labs (http://sencha.com)              │ \\
+// ├────────────────────────────────────────────────────────────────────┤ \\
+// │ Licensed under the MIT (http://raphaeljs.com/license.html) license.│ \\
+// └────────────────────────────────────────────────────────────────────┘ \\
+!function(a,b){"function"==typeof define&&define.amd?define("eve",function(){return b()}):"object"==typeof exports?module.exports=b():a.eve=b()}(this,function(){var a,b,c="0.4.2",d="hasOwnProperty",e=/[\.\/]/,f="*",g=function(){},h=function(a,b){return a-b},i={n:{}},j=function(c,d){c=String(c);var e,f=b,g=Array.prototype.slice.call(arguments,2),i=j.listeners(c),k=0,l=[],m={},n=[],o=a;a=c,b=0;for(var p=0,q=i.length;q>p;p++)"zIndex"in i[p]&&(l.push(i[p].zIndex),i[p].zIndex<0&&(m[i[p].zIndex]=i[p]));for(l.sort(h);l[k]<0;)if(e=m[l[k++]],n.push(e.apply(d,g)),b)return b=f,n;for(p=0;q>p;p++)if(e=i[p],"zIndex"in e)if(e.zIndex==l[k]){if(n.push(e.apply(d,g)),b)break;do if(k++,e=m[l[k]],e&&n.push(e.apply(d,g)),b)break;while(e)}else m[e.zIndex]=e;else if(n.push(e.apply(d,g)),b)break;return b=f,a=o,n.length?n:null};return j._events=i,j.listeners=function(a){var b,c,d,g,h,j,k,l,m=a.split(e),n=i,o=[n],p=[];for(g=0,h=m.length;h>g;g++){for(l=[],j=0,k=o.length;k>j;j++)for(n=o[j].n,c=[n[m[g]],n[f]],d=2;d--;)b=c[d],b&&(l.push(b),p=p.concat(b.f||[]));o=l}return p},j.on=function(a,b){if(a=String(a),"function"!=typeof b)return function(){};for(var c=a.split(e),d=i,f=0,h=c.length;h>f;f++)d=d.n,d=d.hasOwnProperty(c[f])&&d[c[f]]||(d[c[f]]={n:{}});for(d.f=d.f||[],f=0,h=d.f.length;h>f;f++)if(d.f[f]==b)return g;return d.f.push(b),function(a){+a==+a&&(b.zIndex=+a)}},j.f=function(a){var b=[].slice.call(arguments,1);return function(){j.apply(null,[a,null].concat(b).concat([].slice.call(arguments,0)))}},j.stop=function(){b=1},j.nt=function(b){return b?new RegExp("(?:\\.|\\/|^)"+b+"(?:\\.|\\/|$)").test(a):a},j.nts=function(){return a.split(e)},j.off=j.unbind=function(a,b){if(!a)return void(j._events=i={n:{}});var c,g,h,k,l,m,n,o=a.split(e),p=[i];for(k=0,l=o.length;l>k;k++)for(m=0;m<p.length;m+=h.length-2){if(h=[m,1],c=p[m].n,o[k]!=f)c[o[k]]&&h.push(c[o[k]]);else for(g in c)c[d](g)&&h.push(c[g]);p.splice.apply(p,h)}for(k=0,l=p.length;l>k;k++)for(c=p[k];c.n;){if(b){if(c.f){for(m=0,n=c.f.length;n>m;m++)if(c.f[m]==b){c.f.splice(m,1);break}!c.f.length&&delete c.f}for(g in c.n)if(c.n[d](g)&&c.n[g].f){var q=c.n[g].f;for(m=0,n=q.length;n>m;m++)if(q[m]==b){q.splice(m,1);break}!q.length&&delete c.n[g].f}}else{delete c.f;for(g in c.n)c.n[d](g)&&c.n[g].f&&delete c.n[g].f}c=c.n}},j.once=function(a,b){var c=function(){return j.unbind(a,c),b.apply(this,arguments)};return j.on(a,c)},j.version=c,j.toString=function(){return"You are running Eve "+c},j}),function(a,b){"function"==typeof define&&define.amd?define("raphael.core",["eve"],function(a){return b(a)}):"object"==typeof exports?module.exports=b(require("eve")):a.Raphael=b(a.eve)}(this,function(a){function b(c){if(b.is(c,"function"))return t?c():a.on("raphael.DOMload",c);if(b.is(c,U))return b._engine.create[C](b,c.splice(0,3+b.is(c[0],S))).add(c);var d=Array.prototype.slice.call(arguments,0);if(b.is(d[d.length-1],"function")){var e=d.pop();return t?e.call(b._engine.create[C](b,d)):a.on("raphael.DOMload",function(){e.call(b._engine.create[C](b,d))})}return b._engine.create[C](b,arguments)}function c(a){if("function"==typeof a||Object(a)!==a)return a;var b=new a.constructor;for(var d in a)a[y](d)&&(b[d]=c(a[d]));return b}function d(a,b){for(var c=0,d=a.length;d>c;c++)if(a[c]===b)return a.push(a.splice(c,1)[0])}function e(a,b,c){function e(){var f=Array.prototype.slice.call(arguments,0),g=f.join("␀"),h=e.cache=e.cache||{},i=e.count=e.count||[];return h[y](g)?(d(i,g),c?c(h[g]):h[g]):(i.length>=1e3&&delete h[i.shift()],i.push(g),h[g]=a[C](b,f),c?c(h[g]):h[g])}return e}function f(){return this.hex}function g(a,b){for(var c=[],d=0,e=a.length;e-2*!b>d;d+=2){var f=[{x:+a[d-2],y:+a[d-1]},{x:+a[d],y:+a[d+1]},{x:+a[d+2],y:+a[d+3]},{x:+a[d+4],y:+a[d+5]}];b?d?e-4==d?f[3]={x:+a[0],y:+a[1]}:e-2==d&&(f[2]={x:+a[0],y:+a[1]},f[3]={x:+a[2],y:+a[3]}):f[0]={x:+a[e-2],y:+a[e-1]}:e-4==d?f[3]=f[2]:d||(f[0]={x:+a[d],y:+a[d+1]}),c.push(["C",(-f[0].x+6*f[1].x+f[2].x)/6,(-f[0].y+6*f[1].y+f[2].y)/6,(f[1].x+6*f[2].x-f[3].x)/6,(f[1].y+6*f[2].y-f[3].y)/6,f[2].x,f[2].y])}return c}function h(a,b,c,d,e){var f=-3*b+9*c-9*d+3*e,g=a*f+6*b-12*c+6*d;return a*g-3*b+3*c}function i(a,b,c,d,e,f,g,i,j){null==j&&(j=1),j=j>1?1:0>j?0:j;for(var k=j/2,l=12,m=[-.1252,.1252,-.3678,.3678,-.5873,.5873,-.7699,.7699,-.9041,.9041,-.9816,.9816],n=[.2491,.2491,.2335,.2335,.2032,.2032,.1601,.1601,.1069,.1069,.0472,.0472],o=0,p=0;l>p;p++){var q=k*m[p]+k,r=h(q,a,c,e,g),s=h(q,b,d,f,i),t=r*r+s*s;o+=n[p]*M.sqrt(t)}return k*o}function j(a,b,c,d,e,f,g,h,j){if(!(0>j||i(a,b,c,d,e,f,g,h)<j)){var k,l=1,m=l/2,n=l-m,o=.01;for(k=i(a,b,c,d,e,f,g,h,n);P(k-j)>o;)m/=2,n+=(j>k?1:-1)*m,k=i(a,b,c,d,e,f,g,h,n);return n}}function k(a,b,c,d,e,f,g,h){if(!(N(a,c)<O(e,g)||O(a,c)>N(e,g)||N(b,d)<O(f,h)||O(b,d)>N(f,h))){var i=(a*d-b*c)*(e-g)-(a-c)*(e*h-f*g),j=(a*d-b*c)*(f-h)-(b-d)*(e*h-f*g),k=(a-c)*(f-h)-(b-d)*(e-g);if(k){var l=i/k,m=j/k,n=+l.toFixed(2),o=+m.toFixed(2);if(!(n<+O(a,c).toFixed(2)||n>+N(a,c).toFixed(2)||n<+O(e,g).toFixed(2)||n>+N(e,g).toFixed(2)||o<+O(b,d).toFixed(2)||o>+N(b,d).toFixed(2)||o<+O(f,h).toFixed(2)||o>+N(f,h).toFixed(2)))return{x:l,y:m}}}}function l(a,c,d){var e=b.bezierBBox(a),f=b.bezierBBox(c);if(!b.isBBoxIntersect(e,f))return d?0:[];for(var g=i.apply(0,a),h=i.apply(0,c),j=N(~~(g/5),1),l=N(~~(h/5),1),m=[],n=[],o={},p=d?0:[],q=0;j+1>q;q++){var r=b.findDotsAtSegment.apply(b,a.concat(q/j));m.push({x:r.x,y:r.y,t:q/j})}for(q=0;l+1>q;q++)r=b.findDotsAtSegment.apply(b,c.concat(q/l)),n.push({x:r.x,y:r.y,t:q/l});for(q=0;j>q;q++)for(var s=0;l>s;s++){var t=m[q],u=m[q+1],v=n[s],w=n[s+1],x=P(u.x-t.x)<.001?"y":"x",y=P(w.x-v.x)<.001?"y":"x",z=k(t.x,t.y,u.x,u.y,v.x,v.y,w.x,w.y);if(z){if(o[z.x.toFixed(4)]==z.y.toFixed(4))continue;o[z.x.toFixed(4)]=z.y.toFixed(4);var A=t.t+P((z[x]-t[x])/(u[x]-t[x]))*(u.t-t.t),B=v.t+P((z[y]-v[y])/(w[y]-v[y]))*(w.t-v.t);A>=0&&1.001>=A&&B>=0&&1.001>=B&&(d?p++:p.push({x:z.x,y:z.y,t1:O(A,1),t2:O(B,1)}))}}return p}function m(a,c,d){a=b._path2curve(a),c=b._path2curve(c);for(var e,f,g,h,i,j,k,m,n,o,p=d?0:[],q=0,r=a.length;r>q;q++){var s=a[q];if("M"==s[0])e=i=s[1],f=j=s[2];else{"C"==s[0]?(n=[e,f].concat(s.slice(1)),e=n[6],f=n[7]):(n=[e,f,e,f,i,j,i,j],e=i,f=j);for(var t=0,u=c.length;u>t;t++){var v=c[t];if("M"==v[0])g=k=v[1],h=m=v[2];else{"C"==v[0]?(o=[g,h].concat(v.slice(1)),g=o[6],h=o[7]):(o=[g,h,g,h,k,m,k,m],g=k,h=m);var w=l(n,o,d);if(d)p+=w;else{for(var x=0,y=w.length;y>x;x++)w[x].segment1=q,w[x].segment2=t,w[x].bez1=n,w[x].bez2=o;p=p.concat(w)}}}}}return p}function n(a,b,c,d,e,f){null!=a?(this.a=+a,this.b=+b,this.c=+c,this.d=+d,this.e=+e,this.f=+f):(this.a=1,this.b=0,this.c=0,this.d=1,this.e=0,this.f=0)}function o(){return this.x+G+this.y+G+this.width+" × "+this.height}function p(a,b,c,d,e,f){function g(a){return((l*a+k)*a+j)*a}function h(a,b){var c=i(a,b);return((o*c+n)*c+m)*c}function i(a,b){var c,d,e,f,h,i;for(e=a,i=0;8>i;i++){if(f=g(e)-a,P(f)<b)return e;if(h=(3*l*e+2*k)*e+j,P(h)<1e-6)break;e-=f/h}if(c=0,d=1,e=a,c>e)return c;if(e>d)return d;for(;d>c;){if(f=g(e),P(f-a)<b)return e;a>f?c=e:d=e,e=(d-c)/2+c}return e}var j=3*b,k=3*(d-b)-j,l=1-j-k,m=3*c,n=3*(e-c)-m,o=1-m-n;return h(a,1/(200*f))}function q(a,b){var c=[],d={};if(this.ms=b,this.times=1,a){for(var e in a)a[y](e)&&(d[$(e)]=a[e],c.push($(e)));c.sort(ka)}this.anim=d,this.top=c[c.length-1],this.percents=c}function r(c,d,e,f,g,h){e=$(e);var i,j,k,l,m,o,q=c.ms,r={},s={},t={};if(f)for(w=0,x=fb.length;x>w;w++){var u=fb[w];if(u.el.id==d.id&&u.anim==c){u.percent!=e?(fb.splice(w,1),k=1):j=u,d.attr(u.totalOrigin);break}}else f=+s;for(var w=0,x=c.percents.length;x>w;w++){if(c.percents[w]==e||c.percents[w]>f*c.top){e=c.percents[w],m=c.percents[w-1]||0,q=q/c.top*(e-m),l=c.percents[w+1],i=c.anim[e];break}f&&d.attr(c.anim[c.percents[w]])}if(i){if(j)j.initstatus=f,j.start=new Date-j.ms*f;else{for(var z in i)if(i[y](z)&&(ca[y](z)||d.paper.customAttributes[y](z)))switch(r[z]=d.attr(z),null==r[z]&&(r[z]=ba[z]),s[z]=i[z],ca[z]){case S:t[z]=(s[z]-r[z])/q;break;case"colour":r[z]=b.getRGB(r[z]);var A=b.getRGB(s[z]);t[z]={r:(A.r-r[z].r)/q,g:(A.g-r[z].g)/q,b:(A.b-r[z].b)/q};break;case"path":var B=Ia(r[z],s[z]),C=B[1];for(r[z]=B[0],t[z]=[],w=0,x=r[z].length;x>w;w++){t[z][w]=[0];for(var E=1,F=r[z][w].length;F>E;E++)t[z][w][E]=(C[w][E]-r[z][w][E])/q}break;case"transform":var G=d._,J=Na(G[z],s[z]);if(J)for(r[z]=J.from,s[z]=J.to,t[z]=[],t[z].real=!0,w=0,x=r[z].length;x>w;w++)for(t[z][w]=[r[z][w][0]],E=1,F=r[z][w].length;F>E;E++)t[z][w][E]=(s[z][w][E]-r[z][w][E])/q;else{var K=d.matrix||new n,L={_:{transform:G.transform},getBBox:function(){return d.getBBox(1)}};r[z]=[K.a,K.b,K.c,K.d,K.e,K.f],La(L,s[z]),s[z]=L._.transform,t[z]=[(L.matrix.a-K.a)/q,(L.matrix.b-K.b)/q,(L.matrix.c-K.c)/q,(L.matrix.d-K.d)/q,(L.matrix.e-K.e)/q,(L.matrix.f-K.f)/q]}break;case"csv":var M=H(i[z])[I](v),N=H(r[z])[I](v);if("clip-rect"==z)for(r[z]=N,t[z]=[],w=N.length;w--;)t[z][w]=(M[w]-r[z][w])/q;s[z]=M;break;default:for(M=[][D](i[z]),N=[][D](r[z]),t[z]=[],w=d.paper.customAttributes[z].length;w--;)t[z][w]=((M[w]||0)-(N[w]||0))/q}var O=i.easing,P=b.easing_formulas[O];if(!P)if(P=H(O).match(Y),P&&5==P.length){var Q=P;P=function(a){return p(a,+Q[1],+Q[2],+Q[3],+Q[4],q)}}else P=la;if(o=i.start||c.start||+new Date,u={anim:c,percent:e,timestamp:o,start:o+(c.del||0),status:0,initstatus:f||0,stop:!1,ms:q,easing:P,from:r,diff:t,to:s,el:d,callback:i.callback,prev:m,next:l,repeat:h||c.times,origin:d.attr(),totalOrigin:g},fb.push(u),f&&!j&&!k&&(u.stop=!0,u.start=new Date-q*f,1==fb.length))return hb();k&&(u.start=new Date-u.ms*f),1==fb.length&&gb(hb)}a("raphael.anim.start."+d.id,d,c)}}function s(a){for(var b=0;b<fb.length;b++)fb[b].el.paper==a&&fb.splice(b--,1)}b.version="2.1.4",b.eve=a;var t,u,v=/[, ]+/,w={circle:1,rect:1,path:1,ellipse:1,text:1,image:1},x=/\{(\d+)\}/g,y="hasOwnProperty",z={doc:document,win:window},A={was:Object.prototype[y].call(z.win,"Raphael"),is:z.win.Raphael},B=function(){this.ca=this.customAttributes={}},C="apply",D="concat",E="ontouchstart"in z.win||z.win.DocumentTouch&&z.doc instanceof DocumentTouch,F="",G=" ",H=String,I="split",J="click dblclick mousedown mousemove mouseout mouseover mouseup touchstart touchmove touchend touchcancel"[I](G),K={mousedown:"touchstart",mousemove:"touchmove",mouseup:"touchend"},L=H.prototype.toLowerCase,M=Math,N=M.max,O=M.min,P=M.abs,Q=M.pow,R=M.PI,S="number",T="string",U="array",V=Object.prototype.toString,W=(b._ISURL=/^url\(['"]?(.+?)['"]?\)$/i,/^\s*((#[a-f\d]{6})|(#[a-f\d]{3})|rgba?\(\s*([\d\.]+%?\s*,\s*[\d\.]+%?\s*,\s*[\d\.]+%?(?:\s*,\s*[\d\.]+%?)?)\s*\)|hsba?\(\s*([\d\.]+(?:deg|\xb0|%)?\s*,\s*[\d\.]+%?\s*,\s*[\d\.]+(?:%?\s*,\s*[\d\.]+)?)%?\s*\)|hsla?\(\s*([\d\.]+(?:deg|\xb0|%)?\s*,\s*[\d\.]+%?\s*,\s*[\d\.]+(?:%?\s*,\s*[\d\.]+)?)%?\s*\))\s*$/i),X={NaN:1,Infinity:1,"-Infinity":1},Y=/^(?:cubic-)?bezier\(([^,]+),([^,]+),([^,]+),([^\)]+)\)/,Z=M.round,$=parseFloat,_=parseInt,aa=H.prototype.toUpperCase,ba=b._availableAttrs={"arrow-end":"none","arrow-start":"none",blur:0,"clip-rect":"0 0 1e9 1e9",cursor:"default",cx:0,cy:0,fill:"#fff","fill-opacity":1,font:'10px "Arial"',"font-family":'"Arial"',"font-size":"10","font-style":"normal","font-weight":400,gradient:0,height:0,href:"http://raphaeljs.com/","letter-spacing":0,opacity:1,path:"M0,0",r:0,rx:0,ry:0,src:"",stroke:"#000","stroke-dasharray":"","stroke-linecap":"butt","stroke-linejoin":"butt","stroke-miterlimit":0,"stroke-opacity":1,"stroke-width":1,target:"_blank","text-anchor":"middle",title:"Raphael",transform:"",width:0,x:0,y:0},ca=b._availableAnimAttrs={blur:S,"clip-rect":"csv",cx:S,cy:S,fill:"colour","fill-opacity":S,"font-size":S,height:S,opacity:S,path:"path",r:S,rx:S,ry:S,stroke:"colour","stroke-opacity":S,"stroke-width":S,transform:"transform",width:S,x:S,y:S},da=/[\x09\x0a\x0b\x0c\x0d\x20\xa0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\u2028\u2029]*,[\x09\x0a\x0b\x0c\x0d\x20\xa0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\u2028\u2029]*/,ea={hs:1,rg:1},fa=/,?([achlmqrstvxz]),?/gi,ga=/([achlmrqstvz])[\x09\x0a\x0b\x0c\x0d\x20\xa0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\u2028\u2029,]*((-?\d*\.?\d*(?:e[\-+]?\d+)?[\x09\x0a\x0b\x0c\x0d\x20\xa0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\u2028\u2029]*,?[\x09\x0a\x0b\x0c\x0d\x20\xa0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\u2028\u2029]*)+)/gi,ha=/([rstm])[\x09\x0a\x0b\x0c\x0d\x20\xa0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\u2028\u2029,]*((-?\d*\.?\d*(?:e[\-+]?\d+)?[\x09\x0a\x0b\x0c\x0d\x20\xa0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\u2028\u2029]*,?[\x09\x0a\x0b\x0c\x0d\x20\xa0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\u2028\u2029]*)+)/gi,ia=/(-?\d*\.?\d*(?:e[\-+]?\d+)?)[\x09\x0a\x0b\x0c\x0d\x20\xa0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\u2028\u2029]*,?[\x09\x0a\x0b\x0c\x0d\x20\xa0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\u2028\u2029]*/gi,ja=(b._radial_gradient=/^r(?:\(([^,]+?)[\x09\x0a\x0b\x0c\x0d\x20\xa0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\u2028\u2029]*,[\x09\x0a\x0b\x0c\x0d\x20\xa0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\u2028\u2029]*([^\)]+?)\))?/,{}),ka=function(a,b){return $(a)-$(b)},la=function(a){return a},ma=b._rectPath=function(a,b,c,d,e){return e?[["M",a+e,b],["l",c-2*e,0],["a",e,e,0,0,1,e,e],["l",0,d-2*e],["a",e,e,0,0,1,-e,e],["l",2*e-c,0],["a",e,e,0,0,1,-e,-e],["l",0,2*e-d],["a",e,e,0,0,1,e,-e],["z"]]:[["M",a,b],["l",c,0],["l",0,d],["l",-c,0],["z"]]},na=function(a,b,c,d){return null==d&&(d=c),[["M",a,b],["m",0,-d],["a",c,d,0,1,1,0,2*d],["a",c,d,0,1,1,0,-2*d],["z"]]},oa=b._getPath={path:function(a){return a.attr("path")},circle:function(a){var b=a.attrs;return na(b.cx,b.cy,b.r)},ellipse:function(a){var b=a.attrs;return na(b.cx,b.cy,b.rx,b.ry)},rect:function(a){var b=a.attrs;return ma(b.x,b.y,b.width,b.height,b.r)},image:function(a){var b=a.attrs;return ma(b.x,b.y,b.width,b.height)},text:function(a){var b=a._getBBox();return ma(b.x,b.y,b.width,b.height)},set:function(a){var b=a._getBBox();return ma(b.x,b.y,b.width,b.height)}},pa=b.mapPath=function(a,b){if(!b)return a;var c,d,e,f,g,h,i;for(a=Ia(a),e=0,g=a.length;g>e;e++)for(i=a[e],f=1,h=i.length;h>f;f+=2)c=b.x(i[f],i[f+1]),d=b.y(i[f],i[f+1]),i[f]=c,i[f+1]=d;return a};if(b._g=z,b.type=z.win.SVGAngle||z.doc.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure","1.1")?"SVG":"VML","VML"==b.type){var qa,ra=z.doc.createElement("div");if(ra.innerHTML='<v:shape adj="1"/>',qa=ra.firstChild,qa.style.behavior="url(#default#VML)",!qa||"object"!=typeof qa.adj)return b.type=F;ra=null}b.svg=!(b.vml="VML"==b.type),b._Paper=B,b.fn=u=B.prototype=b.prototype,b._id=0,b._oid=0,b.is=function(a,b){return b=L.call(b),"finite"==b?!X[y](+a):"array"==b?a instanceof Array:"null"==b&&null===a||b==typeof a&&null!==a||"object"==b&&a===Object(a)||"array"==b&&Array.isArray&&Array.isArray(a)||V.call(a).slice(8,-1).toLowerCase()==b},b.angle=function(a,c,d,e,f,g){if(null==f){var h=a-d,i=c-e;return h||i?(180+180*M.atan2(-i,-h)/R+360)%360:0}return b.angle(a,c,f,g)-b.angle(d,e,f,g)},b.rad=function(a){return a%360*R/180},b.deg=function(a){return Math.round(180*a/R%360*1e3)/1e3},b.snapTo=function(a,c,d){if(d=b.is(d,"finite")?d:10,b.is(a,U)){for(var e=a.length;e--;)if(P(a[e]-c)<=d)return a[e]}else{a=+a;var f=c%a;if(d>f)return c-f;if(f>a-d)return c-f+a}return c};b.createUUID=function(a,b){return function(){return"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(a,b).toUpperCase()}}(/[xy]/g,function(a){var b=16*M.random()|0,c="x"==a?b:3&b|8;return c.toString(16)});b.setWindow=function(c){a("raphael.setWindow",b,z.win,c),z.win=c,z.doc=z.win.document,b._engine.initWin&&b._engine.initWin(z.win)};var sa=function(a){if(b.vml){var c,d=/^\s+|\s+$/g;try{var f=new ActiveXObject("htmlfile");f.write("<body>"),f.close(),c=f.body}catch(g){c=createPopup().document.body}var h=c.createTextRange();sa=e(function(a){try{c.style.color=H(a).replace(d,F);var b=h.queryCommandValue("ForeColor");return b=(255&b)<<16|65280&b|(16711680&b)>>>16,"#"+("000000"+b.toString(16)).slice(-6)}catch(e){return"none"}})}else{var i=z.doc.createElement("i");i.title="Raphaël Colour Picker",i.style.display="none",z.doc.body.appendChild(i),sa=e(function(a){return i.style.color=a,z.doc.defaultView.getComputedStyle(i,F).getPropertyValue("color")})}return sa(a)},ta=function(){return"hsb("+[this.h,this.s,this.b]+")"},ua=function(){return"hsl("+[this.h,this.s,this.l]+")"},va=function(){return this.hex},wa=function(a,c,d){if(null==c&&b.is(a,"object")&&"r"in a&&"g"in a&&"b"in a&&(d=a.b,c=a.g,a=a.r),null==c&&b.is(a,T)){var e=b.getRGB(a);a=e.r,c=e.g,d=e.b}return(a>1||c>1||d>1)&&(a/=255,c/=255,d/=255),[a,c,d]},xa=function(a,c,d,e){a*=255,c*=255,d*=255;var f={r:a,g:c,b:d,hex:b.rgb(a,c,d),toString:va};return b.is(e,"finite")&&(f.opacity=e),f};b.color=function(a){var c;return b.is(a,"object")&&"h"in a&&"s"in a&&"b"in a?(c=b.hsb2rgb(a),a.r=c.r,a.g=c.g,a.b=c.b,a.hex=c.hex):b.is(a,"object")&&"h"in a&&"s"in a&&"l"in a?(c=b.hsl2rgb(a),a.r=c.r,a.g=c.g,a.b=c.b,a.hex=c.hex):(b.is(a,"string")&&(a=b.getRGB(a)),b.is(a,"object")&&"r"in a&&"g"in a&&"b"in a?(c=b.rgb2hsl(a),a.h=c.h,a.s=c.s,a.l=c.l,c=b.rgb2hsb(a),a.v=c.b):(a={hex:"none"},a.r=a.g=a.b=a.h=a.s=a.v=a.l=-1)),a.toString=va,a},b.hsb2rgb=function(a,b,c,d){this.is(a,"object")&&"h"in a&&"s"in a&&"b"in a&&(c=a.b,b=a.s,d=a.o,a=a.h),a*=360;var e,f,g,h,i;return a=a%360/60,i=c*b,h=i*(1-P(a%2-1)),e=f=g=c-i,a=~~a,e+=[i,h,0,0,h,i][a],f+=[h,i,i,h,0,0][a],g+=[0,0,h,i,i,h][a],xa(e,f,g,d)},b.hsl2rgb=function(a,b,c,d){this.is(a,"object")&&"h"in a&&"s"in a&&"l"in a&&(c=a.l,b=a.s,a=a.h),(a>1||b>1||c>1)&&(a/=360,b/=100,c/=100),a*=360;var e,f,g,h,i;return a=a%360/60,i=2*b*(.5>c?c:1-c),h=i*(1-P(a%2-1)),e=f=g=c-i/2,a=~~a,e+=[i,h,0,0,h,i][a],f+=[h,i,i,h,0,0][a],g+=[0,0,h,i,i,h][a],xa(e,f,g,d)},b.rgb2hsb=function(a,b,c){c=wa(a,b,c),a=c[0],b=c[1],c=c[2];var d,e,f,g;return f=N(a,b,c),g=f-O(a,b,c),d=0==g?null:f==a?(b-c)/g:f==b?(c-a)/g+2:(a-b)/g+4,d=(d+360)%6*60/360,e=0==g?0:g/f,{h:d,s:e,b:f,toString:ta}},b.rgb2hsl=function(a,b,c){c=wa(a,b,c),a=c[0],b=c[1],c=c[2];var d,e,f,g,h,i;return g=N(a,b,c),h=O(a,b,c),i=g-h,d=0==i?null:g==a?(b-c)/i:g==b?(c-a)/i+2:(a-b)/i+4,d=(d+360)%6*60/360,f=(g+h)/2,e=0==i?0:.5>f?i/(2*f):i/(2-2*f),{h:d,s:e,l:f,toString:ua}},b._path2string=function(){return this.join(",").replace(fa,"$1")};b._preload=function(a,b){var c=z.doc.createElement("img");c.style.cssText="position:absolute;left:-9999em;top:-9999em",c.onload=function(){b.call(this),this.onload=null,z.doc.body.removeChild(this)},c.onerror=function(){z.doc.body.removeChild(this)},z.doc.body.appendChild(c),c.src=a};b.getRGB=e(function(a){if(!a||(a=H(a)).indexOf("-")+1)return{r:-1,g:-1,b:-1,hex:"none",error:1,toString:f};if("none"==a)return{r:-1,g:-1,b:-1,hex:"none",toString:f};!(ea[y](a.toLowerCase().substring(0,2))||"#"==a.charAt())&&(a=sa(a));var c,d,e,g,h,i,j=a.match(W);return j?(j[2]&&(e=_(j[2].substring(5),16),d=_(j[2].substring(3,5),16),c=_(j[2].substring(1,3),16)),j[3]&&(e=_((h=j[3].charAt(3))+h,16),d=_((h=j[3].charAt(2))+h,16),c=_((h=j[3].charAt(1))+h,16)),j[4]&&(i=j[4][I](da),c=$(i[0]),"%"==i[0].slice(-1)&&(c*=2.55),d=$(i[1]),"%"==i[1].slice(-1)&&(d*=2.55),e=$(i[2]),"%"==i[2].slice(-1)&&(e*=2.55),"rgba"==j[1].toLowerCase().slice(0,4)&&(g=$(i[3])),i[3]&&"%"==i[3].slice(-1)&&(g/=100)),j[5]?(i=j[5][I](da),c=$(i[0]),"%"==i[0].slice(-1)&&(c*=2.55),d=$(i[1]),"%"==i[1].slice(-1)&&(d*=2.55),e=$(i[2]),"%"==i[2].slice(-1)&&(e*=2.55),("deg"==i[0].slice(-3)||"°"==i[0].slice(-1))&&(c/=360),"hsba"==j[1].toLowerCase().slice(0,4)&&(g=$(i[3])),i[3]&&"%"==i[3].slice(-1)&&(g/=100),b.hsb2rgb(c,d,e,g)):j[6]?(i=j[6][I](da),c=$(i[0]),"%"==i[0].slice(-1)&&(c*=2.55),d=$(i[1]),"%"==i[1].slice(-1)&&(d*=2.55),e=$(i[2]),"%"==i[2].slice(-1)&&(e*=2.55),("deg"==i[0].slice(-3)||"°"==i[0].slice(-1))&&(c/=360),"hsla"==j[1].toLowerCase().slice(0,4)&&(g=$(i[3])),i[3]&&"%"==i[3].slice(-1)&&(g/=100),b.hsl2rgb(c,d,e,g)):(j={r:c,g:d,b:e,toString:f},j.hex="#"+(16777216|e|d<<8|c<<16).toString(16).slice(1),b.is(g,"finite")&&(j.opacity=g),j)):{r:-1,g:-1,b:-1,hex:"none",error:1,toString:f}},b),b.hsb=e(function(a,c,d){return b.hsb2rgb(a,c,d).hex}),b.hsl=e(function(a,c,d){return b.hsl2rgb(a,c,d).hex}),b.rgb=e(function(a,b,c){function d(a){return a+.5|0}return"#"+(16777216|d(c)|d(b)<<8|d(a)<<16).toString(16).slice(1)}),b.getColor=function(a){var b=this.getColor.start=this.getColor.start||{h:0,s:1,b:a||.75},c=this.hsb2rgb(b.h,b.s,b.b);return b.h+=.075,b.h>1&&(b.h=0,b.s-=.2,b.s<=0&&(this.getColor.start={h:0,s:1,b:b.b})),c.hex},b.getColor.reset=function(){delete this.start},b.parsePathString=function(a){if(!a)return null;var c=ya(a);if(c.arr)return Aa(c.arr);var d={a:7,c:6,h:1,l:2,m:2,r:4,q:4,s:4,t:2,v:1,z:0},e=[];return b.is(a,U)&&b.is(a[0],U)&&(e=Aa(a)),e.length||H(a).replace(ga,function(a,b,c){var f=[],g=b.toLowerCase();if(c.replace(ia,function(a,b){b&&f.push(+b)}),"m"==g&&f.length>2&&(e.push([b][D](f.splice(0,2))),g="l",b="m"==b?"l":"L"),"r"==g)e.push([b][D](f));else for(;f.length>=d[g]&&(e.push([b][D](f.splice(0,d[g]))),d[g]););}),e.toString=b._path2string,c.arr=Aa(e),e},b.parseTransformString=e(function(a){if(!a)return null;var c=[];return b.is(a,U)&&b.is(a[0],U)&&(c=Aa(a)),c.length||H(a).replace(ha,function(a,b,d){{var e=[];L.call(b)}d.replace(ia,function(a,b){b&&e.push(+b)}),c.push([b][D](e))}),c.toString=b._path2string,c});var ya=function(a){var b=ya.ps=ya.ps||{};return b[a]?b[a].sleep=100:b[a]={sleep:100},setTimeout(function(){for(var c in b)b[y](c)&&c!=a&&(b[c].sleep--,!b[c].sleep&&delete b[c])}),b[a]};b.findDotsAtSegment=function(a,b,c,d,e,f,g,h,i){var j=1-i,k=Q(j,3),l=Q(j,2),m=i*i,n=m*i,o=k*a+3*l*i*c+3*j*i*i*e+n*g,p=k*b+3*l*i*d+3*j*i*i*f+n*h,q=a+2*i*(c-a)+m*(e-2*c+a),r=b+2*i*(d-b)+m*(f-2*d+b),s=c+2*i*(e-c)+m*(g-2*e+c),t=d+2*i*(f-d)+m*(h-2*f+d),u=j*a+i*c,v=j*b+i*d,w=j*e+i*g,x=j*f+i*h,y=90-180*M.atan2(q-s,r-t)/R;return(q>s||t>r)&&(y+=180),{x:o,y:p,m:{x:q,y:r},n:{x:s,y:t},start:{x:u,y:v},end:{x:w,y:x},alpha:y}},b.bezierBBox=function(a,c,d,e,f,g,h,i){b.is(a,"array")||(a=[a,c,d,e,f,g,h,i]);var j=Ha.apply(null,a);return{x:j.min.x,y:j.min.y,x2:j.max.x,y2:j.max.y,width:j.max.x-j.min.x,height:j.max.y-j.min.y}},b.isPointInsideBBox=function(a,b,c){return b>=a.x&&b<=a.x2&&c>=a.y&&c<=a.y2},b.isBBoxIntersect=function(a,c){var d=b.isPointInsideBBox;return d(c,a.x,a.y)||d(c,a.x2,a.y)||d(c,a.x,a.y2)||d(c,a.x2,a.y2)||d(a,c.x,c.y)||d(a,c.x2,c.y)||d(a,c.x,c.y2)||d(a,c.x2,c.y2)||(a.x<c.x2&&a.x>c.x||c.x<a.x2&&c.x>a.x)&&(a.y<c.y2&&a.y>c.y||c.y<a.y2&&c.y>a.y)},b.pathIntersection=function(a,b){return m(a,b)},b.pathIntersectionNumber=function(a,b){return m(a,b,1)},b.isPointInsidePath=function(a,c,d){var e=b.pathBBox(a);return b.isPointInsideBBox(e,c,d)&&m(a,[["M",c,d],["H",e.x2+10]],1)%2==1},b._removedFactory=function(b){return function(){a("raphael.log",null,"Raphaël: you are calling to method “"+b+"” of removed object",b)}};var za=b.pathBBox=function(a){var b=ya(a);if(b.bbox)return c(b.bbox);if(!a)return{x:0,y:0,width:0,height:0,x2:0,y2:0};a=Ia(a);for(var d,e=0,f=0,g=[],h=[],i=0,j=a.length;j>i;i++)if(d=a[i],"M"==d[0])e=d[1],f=d[2],g.push(e),h.push(f);else{var k=Ha(e,f,d[1],d[2],d[3],d[4],d[5],d[6]);g=g[D](k.min.x,k.max.x),h=h[D](k.min.y,k.max.y),e=d[5],f=d[6]}var l=O[C](0,g),m=O[C](0,h),n=N[C](0,g),o=N[C](0,h),p=n-l,q=o-m,r={x:l,y:m,x2:n,y2:o,width:p,height:q,cx:l+p/2,cy:m+q/2};return b.bbox=c(r),r},Aa=function(a){var d=c(a);return d.toString=b._path2string,d},Ba=b._pathToRelative=function(a){var c=ya(a);if(c.rel)return Aa(c.rel);b.is(a,U)&&b.is(a&&a[0],U)||(a=b.parsePathString(a));var d=[],e=0,f=0,g=0,h=0,i=0;"M"==a[0][0]&&(e=a[0][1],f=a[0][2],g=e,h=f,i++,d.push(["M",e,f]));for(var j=i,k=a.length;k>j;j++){var l=d[j]=[],m=a[j];if(m[0]!=L.call(m[0]))switch(l[0]=L.call(m[0]),l[0]){case"a":l[1]=m[1],l[2]=m[2],l[3]=m[3],l[4]=m[4],l[5]=m[5],l[6]=+(m[6]-e).toFixed(3),l[7]=+(m[7]-f).toFixed(3);break;case"v":l[1]=+(m[1]-f).toFixed(3);break;case"m":g=m[1],h=m[2];default:for(var n=1,o=m.length;o>n;n++)l[n]=+(m[n]-(n%2?e:f)).toFixed(3)}else{l=d[j]=[],"m"==m[0]&&(g=m[1]+e,h=m[2]+f);for(var p=0,q=m.length;q>p;p++)d[j][p]=m[p]}var r=d[j].length;switch(d[j][0]){case"z":e=g,f=h;break;case"h":e+=+d[j][r-1];break;case"v":f+=+d[j][r-1];break;default:e+=+d[j][r-2],f+=+d[j][r-1]}}return d.toString=b._path2string,c.rel=Aa(d),d},Ca=b._pathToAbsolute=function(a){var c=ya(a);if(c.abs)return Aa(c.abs);if(b.is(a,U)&&b.is(a&&a[0],U)||(a=b.parsePathString(a)),!a||!a.length)return[["M",0,0]];var d=[],e=0,f=0,h=0,i=0,j=0;"M"==a[0][0]&&(e=+a[0][1],f=+a[0][2],h=e,i=f,j++,d[0]=["M",e,f]);for(var k,l,m=3==a.length&&"M"==a[0][0]&&"R"==a[1][0].toUpperCase()&&"Z"==a[2][0].toUpperCase(),n=j,o=a.length;o>n;n++){if(d.push(k=[]),l=a[n],l[0]!=aa.call(l[0]))switch(k[0]=aa.call(l[0]),k[0]){case"A":k[1]=l[1],k[2]=l[2],k[3]=l[3],k[4]=l[4],k[5]=l[5],k[6]=+(l[6]+e),k[7]=+(l[7]+f);break;case"V":k[1]=+l[1]+f;break;case"H":k[1]=+l[1]+e;break;case"R":for(var p=[e,f][D](l.slice(1)),q=2,r=p.length;r>q;q++)p[q]=+p[q]+e,p[++q]=+p[q]+f;d.pop(),d=d[D](g(p,m));break;case"M":h=+l[1]+e,i=+l[2]+f;default:for(q=1,r=l.length;r>q;q++)k[q]=+l[q]+(q%2?e:f)}else if("R"==l[0])p=[e,f][D](l.slice(1)),d.pop(),d=d[D](g(p,m)),k=["R"][D](l.slice(-2));else for(var s=0,t=l.length;t>s;s++)k[s]=l[s];switch(k[0]){case"Z":e=h,f=i;break;case"H":e=k[1];break;case"V":f=k[1];break;case"M":h=k[k.length-2],i=k[k.length-1];default:e=k[k.length-2],f=k[k.length-1]}}return d.toString=b._path2string,c.abs=Aa(d),d},Da=function(a,b,c,d){return[a,b,c,d,c,d]},Ea=function(a,b,c,d,e,f){var g=1/3,h=2/3;return[g*a+h*c,g*b+h*d,g*e+h*c,g*f+h*d,e,f]},Fa=function(a,b,c,d,f,g,h,i,j,k){var l,m=120*R/180,n=R/180*(+f||0),o=[],p=e(function(a,b,c){var d=a*M.cos(c)-b*M.sin(c),e=a*M.sin(c)+b*M.cos(c);return{x:d,y:e}});if(k)y=k[0],z=k[1],w=k[2],x=k[3];else{l=p(a,b,-n),a=l.x,b=l.y,l=p(i,j,-n),i=l.x,j=l.y;var q=(M.cos(R/180*f),M.sin(R/180*f),(a-i)/2),r=(b-j)/2,s=q*q/(c*c)+r*r/(d*d);s>1&&(s=M.sqrt(s),c=s*c,d=s*d);var t=c*c,u=d*d,v=(g==h?-1:1)*M.sqrt(P((t*u-t*r*r-u*q*q)/(t*r*r+u*q*q))),w=v*c*r/d+(a+i)/2,x=v*-d*q/c+(b+j)/2,y=M.asin(((b-x)/d).toFixed(9)),z=M.asin(((j-x)/d).toFixed(9));y=w>a?R-y:y,z=w>i?R-z:z,0>y&&(y=2*R+y),0>z&&(z=2*R+z),h&&y>z&&(y-=2*R),!h&&z>y&&(z-=2*R)}var A=z-y;if(P(A)>m){var B=z,C=i,E=j;z=y+m*(h&&z>y?1:-1),i=w+c*M.cos(z),j=x+d*M.sin(z),o=Fa(i,j,c,d,f,0,h,C,E,[z,B,w,x])}A=z-y;var F=M.cos(y),G=M.sin(y),H=M.cos(z),J=M.sin(z),K=M.tan(A/4),L=4/3*c*K,N=4/3*d*K,O=[a,b],Q=[a+L*G,b-N*F],S=[i+L*J,j-N*H],T=[i,j];if(Q[0]=2*O[0]-Q[0],Q[1]=2*O[1]-Q[1],k)return[Q,S,T][D](o);o=[Q,S,T][D](o).join()[I](",");for(var U=[],V=0,W=o.length;W>V;V++)U[V]=V%2?p(o[V-1],o[V],n).y:p(o[V],o[V+1],n).x;return U},Ga=function(a,b,c,d,e,f,g,h,i){var j=1-i;return{x:Q(j,3)*a+3*Q(j,2)*i*c+3*j*i*i*e+Q(i,3)*g,y:Q(j,3)*b+3*Q(j,2)*i*d+3*j*i*i*f+Q(i,3)*h}},Ha=e(function(a,b,c,d,e,f,g,h){var i,j=e-2*c+a-(g-2*e+c),k=2*(c-a)-2*(e-c),l=a-c,m=(-k+M.sqrt(k*k-4*j*l))/2/j,n=(-k-M.sqrt(k*k-4*j*l))/2/j,o=[b,h],p=[a,g];return P(m)>"1e12"&&(m=.5),P(n)>"1e12"&&(n=.5),m>0&&1>m&&(i=Ga(a,b,c,d,e,f,g,h,m),p.push(i.x),o.push(i.y)),n>0&&1>n&&(i=Ga(a,b,c,d,e,f,g,h,n),p.push(i.x),o.push(i.y)),j=f-2*d+b-(h-2*f+d),k=2*(d-b)-2*(f-d),l=b-d,m=(-k+M.sqrt(k*k-4*j*l))/2/j,n=(-k-M.sqrt(k*k-4*j*l))/2/j,P(m)>"1e12"&&(m=.5),P(n)>"1e12"&&(n=.5),m>0&&1>m&&(i=Ga(a,b,c,d,e,f,g,h,m),p.push(i.x),o.push(i.y)),n>0&&1>n&&(i=Ga(a,b,c,d,e,f,g,h,n),p.push(i.x),o.push(i.y)),{min:{x:O[C](0,p),y:O[C](0,o)},max:{x:N[C](0,p),y:N[C](0,o)}}}),Ia=b._path2curve=e(function(a,b){var c=!b&&ya(a);if(!b&&c.curve)return Aa(c.curve);for(var d=Ca(a),e=b&&Ca(b),f={x:0,y:0,bx:0,by:0,X:0,Y:0,qx:null,qy:null},g={x:0,y:0,bx:0,by:0,X:0,Y:0,qx:null,qy:null},h=(function(a,b,c){var d,e,f={T:1,Q:1};if(!a)return["C",b.x,b.y,b.x,b.y,b.x,b.y];switch(!(a[0]in f)&&(b.qx=b.qy=null),a[0]){case"M":b.X=a[1],b.Y=a[2];break;case"A":a=["C"][D](Fa[C](0,[b.x,b.y][D](a.slice(1))));break;case"S":"C"==c||"S"==c?(d=2*b.x-b.bx,e=2*b.y-b.by):(d=b.x,e=b.y),a=["C",d,e][D](a.slice(1));break;case"T":"Q"==c||"T"==c?(b.qx=2*b.x-b.qx,b.qy=2*b.y-b.qy):(b.qx=b.x,b.qy=b.y),a=["C"][D](Ea(b.x,b.y,b.qx,b.qy,a[1],a[2]));break;case"Q":b.qx=a[1],b.qy=a[2],a=["C"][D](Ea(b.x,b.y,a[1],a[2],a[3],a[4]));break;case"L":a=["C"][D](Da(b.x,b.y,a[1],a[2]));break;case"H":a=["C"][D](Da(b.x,b.y,a[1],b.y));break;case"V":a=["C"][D](Da(b.x,b.y,b.x,a[1]));break;case"Z":a=["C"][D](Da(b.x,b.y,b.X,b.Y))}return a}),i=function(a,b){if(a[b].length>7){a[b].shift();for(var c=a[b];c.length;)k[b]="A",e&&(l[b]="A"),a.splice(b++,0,["C"][D](c.splice(0,6)));a.splice(b,1),p=N(d.length,e&&e.length||0)}},j=function(a,b,c,f,g){a&&b&&"M"==a[g][0]&&"M"!=b[g][0]&&(b.splice(g,0,["M",f.x,f.y]),c.bx=0,c.by=0,c.x=a[g][1],c.y=a[g][2],p=N(d.length,e&&e.length||0))},k=[],l=[],m="",n="",o=0,p=N(d.length,e&&e.length||0);p>o;o++){d[o]&&(m=d[o][0]),"C"!=m&&(k[o]=m,o&&(n=k[o-1])),d[o]=h(d[o],f,n),"A"!=k[o]&&"C"==m&&(k[o]="C"),i(d,o),e&&(e[o]&&(m=e[o][0]),"C"!=m&&(l[o]=m,o&&(n=l[o-1])),e[o]=h(e[o],g,n),"A"!=l[o]&&"C"==m&&(l[o]="C"),i(e,o)),j(d,e,f,g,o),j(e,d,g,f,o);var q=d[o],r=e&&e[o],s=q.length,t=e&&r.length;f.x=q[s-2],f.y=q[s-1],f.bx=$(q[s-4])||f.x,f.by=$(q[s-3])||f.y,g.bx=e&&($(r[t-4])||g.x),g.by=e&&($(r[t-3])||g.y),g.x=e&&r[t-2],g.y=e&&r[t-1]}return e||(c.curve=Aa(d)),e?[d,e]:d},null,Aa),Ja=(b._parseDots=e(function(a){for(var c=[],d=0,e=a.length;e>d;d++){var f={},g=a[d].match(/^([^:]*):?([\d\.]*)/);if(f.color=b.getRGB(g[1]),f.color.error)return null;f.opacity=f.color.opacity,f.color=f.color.hex,g[2]&&(f.offset=g[2]+"%"),c.push(f)}for(d=1,e=c.length-1;e>d;d++)if(!c[d].offset){for(var h=$(c[d-1].offset||0),i=0,j=d+1;e>j;j++)if(c[j].offset){i=c[j].offset;break}i||(i=100,j=e),i=$(i);for(var k=(i-h)/(j-d+1);j>d;d++)h+=k,c[d].offset=h+"%"}return c}),b._tear=function(a,b){a==b.top&&(b.top=a.prev),a==b.bottom&&(b.bottom=a.next),a.next&&(a.next.prev=a.prev),a.prev&&(a.prev.next=a.next)}),Ka=(b._tofront=function(a,b){b.top!==a&&(Ja(a,b),a.next=null,a.prev=b.top,b.top.next=a,b.top=a)},b._toback=function(a,b){b.bottom!==a&&(Ja(a,b),a.next=b.bottom,a.prev=null,b.bottom.prev=a,b.bottom=a)},b._insertafter=function(a,b,c){Ja(a,c),b==c.top&&(c.top=a),b.next&&(b.next.prev=a),a.next=b.next,a.prev=b,b.next=a},b._insertbefore=function(a,b,c){Ja(a,c),b==c.bottom&&(c.bottom=a),b.prev&&(b.prev.next=a),a.prev=b.prev,b.prev=a,a.next=b},b.toMatrix=function(a,b){var c=za(a),d={_:{transform:F},getBBox:function(){return c}};return La(d,b),d.matrix}),La=(b.transformPath=function(a,b){return pa(a,Ka(a,b))},b._extractTransform=function(a,c){if(null==c)return a._.transform;c=H(c).replace(/\.{3}|\u2026/g,a._.transform||F);var d=b.parseTransformString(c),e=0,f=0,g=0,h=1,i=1,j=a._,k=new n;if(j.transform=d||[],d)for(var l=0,m=d.length;m>l;l++){var o,p,q,r,s,t=d[l],u=t.length,v=H(t[0]).toLowerCase(),w=t[0]!=v,x=w?k.invert():0;"t"==v&&3==u?w?(o=x.x(0,0),p=x.y(0,0),q=x.x(t[1],t[2]),r=x.y(t[1],t[2]),k.translate(q-o,r-p)):k.translate(t[1],t[2]):"r"==v?2==u?(s=s||a.getBBox(1),k.rotate(t[1],s.x+s.width/2,s.y+s.height/2),e+=t[1]):4==u&&(w?(q=x.x(t[2],t[3]),r=x.y(t[2],t[3]),k.rotate(t[1],q,r)):k.rotate(t[1],t[2],t[3]),e+=t[1]):"s"==v?2==u||3==u?(s=s||a.getBBox(1),k.scale(t[1],t[u-1],s.x+s.width/2,s.y+s.height/2),h*=t[1],i*=t[u-1]):5==u&&(w?(q=x.x(t[3],t[4]),r=x.y(t[3],t[4]),k.scale(t[1],t[2],q,r)):k.scale(t[1],t[2],t[3],t[4]),h*=t[1],i*=t[2]):"m"==v&&7==u&&k.add(t[1],t[2],t[3],t[4],t[5],t[6]),j.dirtyT=1,a.matrix=k}a.matrix=k,j.sx=h,j.sy=i,j.deg=e,j.dx=f=k.e,j.dy=g=k.f,1==h&&1==i&&!e&&j.bbox?(j.bbox.x+=+f,j.bbox.y+=+g):j.dirtyT=1}),Ma=function(a){var b=a[0];switch(b.toLowerCase()){case"t":return[b,0,0];case"m":return[b,1,0,0,1,0,0];case"r":return 4==a.length?[b,0,a[2],a[3]]:[b,0];case"s":return 5==a.length?[b,1,1,a[3],a[4]]:3==a.length?[b,1,1]:[b,1]}},Na=b._equaliseTransform=function(a,c){
+c=H(c).replace(/\.{3}|\u2026/g,a),a=b.parseTransformString(a)||[],c=b.parseTransformString(c)||[];for(var d,e,f,g,h=N(a.length,c.length),i=[],j=[],k=0;h>k;k++){if(f=a[k]||Ma(c[k]),g=c[k]||Ma(f),f[0]!=g[0]||"r"==f[0].toLowerCase()&&(f[2]!=g[2]||f[3]!=g[3])||"s"==f[0].toLowerCase()&&(f[3]!=g[3]||f[4]!=g[4]))return;for(i[k]=[],j[k]=[],d=0,e=N(f.length,g.length);e>d;d++)d in f&&(i[k][d]=f[d]),d in g&&(j[k][d]=g[d])}return{from:i,to:j}};b._getContainer=function(a,c,d,e){var f;return f=null!=e||b.is(a,"object")?a:z.doc.getElementById(a),null!=f?f.tagName?null==c?{container:f,width:f.style.pixelWidth||f.offsetWidth,height:f.style.pixelHeight||f.offsetHeight}:{container:f,width:c,height:d}:{container:1,x:a,y:c,width:d,height:e}:void 0},b.pathToRelative=Ba,b._engine={},b.path2curve=Ia,b.matrix=function(a,b,c,d,e,f){return new n(a,b,c,d,e,f)},function(a){function c(a){return a[0]*a[0]+a[1]*a[1]}function d(a){var b=M.sqrt(c(a));a[0]&&(a[0]/=b),a[1]&&(a[1]/=b)}a.add=function(a,b,c,d,e,f){var g,h,i,j,k=[[],[],[]],l=[[this.a,this.c,this.e],[this.b,this.d,this.f],[0,0,1]],m=[[a,c,e],[b,d,f],[0,0,1]];for(a&&a instanceof n&&(m=[[a.a,a.c,a.e],[a.b,a.d,a.f],[0,0,1]]),g=0;3>g;g++)for(h=0;3>h;h++){for(j=0,i=0;3>i;i++)j+=l[g][i]*m[i][h];k[g][h]=j}this.a=k[0][0],this.b=k[1][0],this.c=k[0][1],this.d=k[1][1],this.e=k[0][2],this.f=k[1][2]},a.invert=function(){var a=this,b=a.a*a.d-a.b*a.c;return new n(a.d/b,-a.b/b,-a.c/b,a.a/b,(a.c*a.f-a.d*a.e)/b,(a.b*a.e-a.a*a.f)/b)},a.clone=function(){return new n(this.a,this.b,this.c,this.d,this.e,this.f)},a.translate=function(a,b){this.add(1,0,0,1,a,b)},a.scale=function(a,b,c,d){null==b&&(b=a),(c||d)&&this.add(1,0,0,1,c,d),this.add(a,0,0,b,0,0),(c||d)&&this.add(1,0,0,1,-c,-d)},a.rotate=function(a,c,d){a=b.rad(a),c=c||0,d=d||0;var e=+M.cos(a).toFixed(9),f=+M.sin(a).toFixed(9);this.add(e,f,-f,e,c,d),this.add(1,0,0,1,-c,-d)},a.x=function(a,b){return a*this.a+b*this.c+this.e},a.y=function(a,b){return a*this.b+b*this.d+this.f},a.get=function(a){return+this[H.fromCharCode(97+a)].toFixed(4)},a.toString=function(){return b.svg?"matrix("+[this.get(0),this.get(1),this.get(2),this.get(3),this.get(4),this.get(5)].join()+")":[this.get(0),this.get(2),this.get(1),this.get(3),0,0].join()},a.toFilter=function(){return"progid:DXImageTransform.Microsoft.Matrix(M11="+this.get(0)+", M12="+this.get(2)+", M21="+this.get(1)+", M22="+this.get(3)+", Dx="+this.get(4)+", Dy="+this.get(5)+", sizingmethod='auto expand')"},a.offset=function(){return[this.e.toFixed(4),this.f.toFixed(4)]},a.split=function(){var a={};a.dx=this.e,a.dy=this.f;var e=[[this.a,this.c],[this.b,this.d]];a.scalex=M.sqrt(c(e[0])),d(e[0]),a.shear=e[0][0]*e[1][0]+e[0][1]*e[1][1],e[1]=[e[1][0]-e[0][0]*a.shear,e[1][1]-e[0][1]*a.shear],a.scaley=M.sqrt(c(e[1])),d(e[1]),a.shear/=a.scaley;var f=-e[0][1],g=e[1][1];return 0>g?(a.rotate=b.deg(M.acos(g)),0>f&&(a.rotate=360-a.rotate)):a.rotate=b.deg(M.asin(f)),a.isSimple=!(+a.shear.toFixed(9)||a.scalex.toFixed(9)!=a.scaley.toFixed(9)&&a.rotate),a.isSuperSimple=!+a.shear.toFixed(9)&&a.scalex.toFixed(9)==a.scaley.toFixed(9)&&!a.rotate,a.noRotation=!+a.shear.toFixed(9)&&!a.rotate,a},a.toTransformString=function(a){var b=a||this[I]();return b.isSimple?(b.scalex=+b.scalex.toFixed(4),b.scaley=+b.scaley.toFixed(4),b.rotate=+b.rotate.toFixed(4),(b.dx||b.dy?"t"+[b.dx,b.dy]:F)+(1!=b.scalex||1!=b.scaley?"s"+[b.scalex,b.scaley,0,0]:F)+(b.rotate?"r"+[b.rotate,0,0]:F)):"m"+[this.get(0),this.get(1),this.get(2),this.get(3),this.get(4),this.get(5)]}}(n.prototype);for(var Oa=function(){this.returnValue=!1},Pa=function(){return this.originalEvent.preventDefault()},Qa=function(){this.cancelBubble=!0},Ra=function(){return this.originalEvent.stopPropagation()},Sa=function(a){var b=z.doc.documentElement.scrollTop||z.doc.body.scrollTop,c=z.doc.documentElement.scrollLeft||z.doc.body.scrollLeft;return{x:a.clientX+c,y:a.clientY+b}},Ta=function(){return z.doc.addEventListener?function(a,b,c,d){var e=function(a){var b=Sa(a);return c.call(d,a,b.x,b.y)};if(a.addEventListener(b,e,!1),E&&K[b]){var f=function(b){for(var e=Sa(b),f=b,g=0,h=b.targetTouches&&b.targetTouches.length;h>g;g++)if(b.targetTouches[g].target==a){b=b.targetTouches[g],b.originalEvent=f,b.preventDefault=Pa,b.stopPropagation=Ra;break}return c.call(d,b,e.x,e.y)};a.addEventListener(K[b],f,!1)}return function(){return a.removeEventListener(b,e,!1),E&&K[b]&&a.removeEventListener(K[b],f,!1),!0}}:z.doc.attachEvent?function(a,b,c,d){var e=function(a){a=a||z.win.event;var b=z.doc.documentElement.scrollTop||z.doc.body.scrollTop,e=z.doc.documentElement.scrollLeft||z.doc.body.scrollLeft,f=a.clientX+e,g=a.clientY+b;return a.preventDefault=a.preventDefault||Oa,a.stopPropagation=a.stopPropagation||Qa,c.call(d,a,f,g)};a.attachEvent("on"+b,e);var f=function(){return a.detachEvent("on"+b,e),!0};return f}:void 0}(),Ua=[],Va=function(b){for(var c,d=b.clientX,e=b.clientY,f=z.doc.documentElement.scrollTop||z.doc.body.scrollTop,g=z.doc.documentElement.scrollLeft||z.doc.body.scrollLeft,h=Ua.length;h--;){if(c=Ua[h],E&&b.touches){for(var i,j=b.touches.length;j--;)if(i=b.touches[j],i.identifier==c.el._drag.id){d=i.clientX,e=i.clientY,(b.originalEvent?b.originalEvent:b).preventDefault();break}}else b.preventDefault();var k,l=c.el.node,m=l.nextSibling,n=l.parentNode,o=l.style.display;z.win.opera&&n.removeChild(l),l.style.display="none",k=c.el.paper.getElementByPoint(d,e),l.style.display=o,z.win.opera&&(m?n.insertBefore(l,m):n.appendChild(l)),k&&a("raphael.drag.over."+c.el.id,c.el,k),d+=g,e+=f,a("raphael.drag.move."+c.el.id,c.move_scope||c.el,d-c.el._drag.x,e-c.el._drag.y,d,e,b)}},Wa=function(c){b.unmousemove(Va).unmouseup(Wa);for(var d,e=Ua.length;e--;)d=Ua[e],d.el._drag={},a("raphael.drag.end."+d.el.id,d.end_scope||d.start_scope||d.move_scope||d.el,c);Ua=[]},Xa=b.el={},Ya=J.length;Ya--;)!function(a){b[a]=Xa[a]=function(c,d){return b.is(c,"function")&&(this.events=this.events||[],this.events.push({name:a,f:c,unbind:Ta(this.shape||this.node||z.doc,a,c,d||this)})),this},b["un"+a]=Xa["un"+a]=function(c){for(var d=this.events||[],e=d.length;e--;)d[e].name!=a||!b.is(c,"undefined")&&d[e].f!=c||(d[e].unbind(),d.splice(e,1),!d.length&&delete this.events);return this}}(J[Ya]);Xa.data=function(c,d){var e=ja[this.id]=ja[this.id]||{};if(0==arguments.length)return e;if(1==arguments.length){if(b.is(c,"object")){for(var f in c)c[y](f)&&this.data(f,c[f]);return this}return a("raphael.data.get."+this.id,this,e[c],c),e[c]}return e[c]=d,a("raphael.data.set."+this.id,this,d,c),this},Xa.removeData=function(a){return null==a?ja[this.id]={}:ja[this.id]&&delete ja[this.id][a],this},Xa.getData=function(){return c(ja[this.id]||{})},Xa.hover=function(a,b,c,d){return this.mouseover(a,c).mouseout(b,d||c)},Xa.unhover=function(a,b){return this.unmouseover(a).unmouseout(b)};var Za=[];Xa.drag=function(c,d,e,f,g,h){function i(i){(i.originalEvent||i).preventDefault();var j=i.clientX,k=i.clientY,l=z.doc.documentElement.scrollTop||z.doc.body.scrollTop,m=z.doc.documentElement.scrollLeft||z.doc.body.scrollLeft;if(this._drag.id=i.identifier,E&&i.touches)for(var n,o=i.touches.length;o--;)if(n=i.touches[o],this._drag.id=n.identifier,n.identifier==this._drag.id){j=n.clientX,k=n.clientY;break}this._drag.x=j+m,this._drag.y=k+l,!Ua.length&&b.mousemove(Va).mouseup(Wa),Ua.push({el:this,move_scope:f,start_scope:g,end_scope:h}),d&&a.on("raphael.drag.start."+this.id,d),c&&a.on("raphael.drag.move."+this.id,c),e&&a.on("raphael.drag.end."+this.id,e),a("raphael.drag.start."+this.id,g||f||this,i.clientX+m,i.clientY+l,i)}return this._drag={},Za.push({el:this,start:i}),this.mousedown(i),this},Xa.onDragOver=function(b){b?a.on("raphael.drag.over."+this.id,b):a.unbind("raphael.drag.over."+this.id)},Xa.undrag=function(){for(var c=Za.length;c--;)Za[c].el==this&&(this.unmousedown(Za[c].start),Za.splice(c,1),a.unbind("raphael.drag.*."+this.id));!Za.length&&b.unmousemove(Va).unmouseup(Wa),Ua=[]},u.circle=function(a,c,d){var e=b._engine.circle(this,a||0,c||0,d||0);return this.__set__&&this.__set__.push(e),e},u.rect=function(a,c,d,e,f){var g=b._engine.rect(this,a||0,c||0,d||0,e||0,f||0);return this.__set__&&this.__set__.push(g),g},u.ellipse=function(a,c,d,e){var f=b._engine.ellipse(this,a||0,c||0,d||0,e||0);return this.__set__&&this.__set__.push(f),f},u.path=function(a){a&&!b.is(a,T)&&!b.is(a[0],U)&&(a+=F);var c=b._engine.path(b.format[C](b,arguments),this);return this.__set__&&this.__set__.push(c),c},u.image=function(a,c,d,e,f){var g=b._engine.image(this,a||"about:blank",c||0,d||0,e||0,f||0);return this.__set__&&this.__set__.push(g),g},u.text=function(a,c,d){var e=b._engine.text(this,a||0,c||0,H(d));return this.__set__&&this.__set__.push(e),e},u.set=function(a){!b.is(a,"array")&&(a=Array.prototype.splice.call(arguments,0,arguments.length));var c=new jb(a);return this.__set__&&this.__set__.push(c),c.paper=this,c.type="set",c},u.setStart=function(a){this.__set__=a||this.set()},u.setFinish=function(a){var b=this.__set__;return delete this.__set__,b},u.getSize=function(){var a=this.canvas.parentNode;return{width:a.offsetWidth,height:a.offsetHeight}},u.setSize=function(a,c){return b._engine.setSize.call(this,a,c)},u.setViewBox=function(a,c,d,e,f){return b._engine.setViewBox.call(this,a,c,d,e,f)},u.top=u.bottom=null,u.raphael=b;var $a=function(a){var b=a.getBoundingClientRect(),c=a.ownerDocument,d=c.body,e=c.documentElement,f=e.clientTop||d.clientTop||0,g=e.clientLeft||d.clientLeft||0,h=b.top+(z.win.pageYOffset||e.scrollTop||d.scrollTop)-f,i=b.left+(z.win.pageXOffset||e.scrollLeft||d.scrollLeft)-g;return{y:h,x:i}};u.getElementByPoint=function(a,b){var c=this,d=c.canvas,e=z.doc.elementFromPoint(a,b);if(z.win.opera&&"svg"==e.tagName){var f=$a(d),g=d.createSVGRect();g.x=a-f.x,g.y=b-f.y,g.width=g.height=1;var h=d.getIntersectionList(g,null);h.length&&(e=h[h.length-1])}if(!e)return null;for(;e.parentNode&&e!=d.parentNode&&!e.raphael;)e=e.parentNode;return e==c.canvas.parentNode&&(e=d),e=e&&e.raphael?c.getById(e.raphaelid):null},u.getElementsByBBox=function(a){var c=this.set();return this.forEach(function(d){b.isBBoxIntersect(d.getBBox(),a)&&c.push(d)}),c},u.getById=function(a){for(var b=this.bottom;b;){if(b.id==a)return b;b=b.next}return null},u.forEach=function(a,b){for(var c=this.bottom;c;){if(a.call(b,c)===!1)return this;c=c.next}return this},u.getElementsByPoint=function(a,b){var c=this.set();return this.forEach(function(d){d.isPointInside(a,b)&&c.push(d)}),c},Xa.isPointInside=function(a,c){var d=this.realPath=oa[this.type](this);return this.attr("transform")&&this.attr("transform").length&&(d=b.transformPath(d,this.attr("transform"))),b.isPointInsidePath(d,a,c)},Xa.getBBox=function(a){if(this.removed)return{};var b=this._;return a?((b.dirty||!b.bboxwt)&&(this.realPath=oa[this.type](this),b.bboxwt=za(this.realPath),b.bboxwt.toString=o,b.dirty=0),b.bboxwt):((b.dirty||b.dirtyT||!b.bbox)&&((b.dirty||!this.realPath)&&(b.bboxwt=0,this.realPath=oa[this.type](this)),b.bbox=za(pa(this.realPath,this.matrix)),b.bbox.toString=o,b.dirty=b.dirtyT=0),b.bbox)},Xa.clone=function(){if(this.removed)return null;var a=this.paper[this.type]().attr(this.attr());return this.__set__&&this.__set__.push(a),a},Xa.glow=function(a){if("text"==this.type)return null;a=a||{};var b={width:(a.width||10)+(+this.attr("stroke-width")||1),fill:a.fill||!1,opacity:null==a.opacity?.5:a.opacity,offsetx:a.offsetx||0,offsety:a.offsety||0,color:a.color||"#000"},c=b.width/2,d=this.paper,e=d.set(),f=this.realPath||oa[this.type](this);f=this.matrix?pa(f,this.matrix):f;for(var g=1;c+1>g;g++)e.push(d.path(f).attr({stroke:b.color,fill:b.fill?b.color:"none","stroke-linejoin":"round","stroke-linecap":"round","stroke-width":+(b.width/c*g).toFixed(3),opacity:+(b.opacity/c).toFixed(3)}));return e.insertBefore(this).translate(b.offsetx,b.offsety)};var _a=function(a,c,d,e,f,g,h,k,l){return null==l?i(a,c,d,e,f,g,h,k):b.findDotsAtSegment(a,c,d,e,f,g,h,k,j(a,c,d,e,f,g,h,k,l))},ab=function(a,c){return function(d,e,f){d=Ia(d);for(var g,h,i,j,k,l="",m={},n=0,o=0,p=d.length;p>o;o++){if(i=d[o],"M"==i[0])g=+i[1],h=+i[2];else{if(j=_a(g,h,i[1],i[2],i[3],i[4],i[5],i[6]),n+j>e){if(c&&!m.start){if(k=_a(g,h,i[1],i[2],i[3],i[4],i[5],i[6],e-n),l+=["C"+k.start.x,k.start.y,k.m.x,k.m.y,k.x,k.y],f)return l;m.start=l,l=["M"+k.x,k.y+"C"+k.n.x,k.n.y,k.end.x,k.end.y,i[5],i[6]].join(),n+=j,g=+i[5],h=+i[6];continue}if(!a&&!c)return k=_a(g,h,i[1],i[2],i[3],i[4],i[5],i[6],e-n),{x:k.x,y:k.y,alpha:k.alpha}}n+=j,g=+i[5],h=+i[6]}l+=i.shift()+i}return m.end=l,k=a?n:c?m:b.findDotsAtSegment(g,h,i[0],i[1],i[2],i[3],i[4],i[5],1),k.alpha&&(k={x:k.x,y:k.y,alpha:k.alpha}),k}},bb=ab(1),cb=ab(),db=ab(0,1);b.getTotalLength=bb,b.getPointAtLength=cb,b.getSubpath=function(a,b,c){if(this.getTotalLength(a)-c<1e-6)return db(a,b).end;var d=db(a,c,1);return b?db(d,b).end:d},Xa.getTotalLength=function(){var a=this.getPath();if(a)return this.node.getTotalLength?this.node.getTotalLength():bb(a)},Xa.getPointAtLength=function(a){var b=this.getPath();if(b)return cb(b,a)},Xa.getPath=function(){var a,c=b._getPath[this.type];if("text"!=this.type&&"set"!=this.type)return c&&(a=c(this)),a},Xa.getSubpath=function(a,c){var d=this.getPath();if(d)return b.getSubpath(d,a,c)};var eb=b.easing_formulas={linear:function(a){return a},"<":function(a){return Q(a,1.7)},">":function(a){return Q(a,.48)},"<>":function(a){var b=.48-a/1.04,c=M.sqrt(.1734+b*b),d=c-b,e=Q(P(d),1/3)*(0>d?-1:1),f=-c-b,g=Q(P(f),1/3)*(0>f?-1:1),h=e+g+.5;return 3*(1-h)*h*h+h*h*h},backIn:function(a){var b=1.70158;return a*a*((b+1)*a-b)},backOut:function(a){a-=1;var b=1.70158;return a*a*((b+1)*a+b)+1},elastic:function(a){return a==!!a?a:Q(2,-10*a)*M.sin(2*(a-.075)*R/.3)+1},bounce:function(a){var b,c=7.5625,d=2.75;return 1/d>a?b=c*a*a:2/d>a?(a-=1.5/d,b=c*a*a+.75):2.5/d>a?(a-=2.25/d,b=c*a*a+.9375):(a-=2.625/d,b=c*a*a+.984375),b}};eb.easeIn=eb["ease-in"]=eb["<"],eb.easeOut=eb["ease-out"]=eb[">"],eb.easeInOut=eb["ease-in-out"]=eb["<>"],eb["back-in"]=eb.backIn,eb["back-out"]=eb.backOut;var fb=[],gb=window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame||window.oRequestAnimationFrame||window.msRequestAnimationFrame||function(a){setTimeout(a,16)},hb=function(){for(var c=+new Date,d=0;d<fb.length;d++){var e=fb[d];if(!e.el.removed&&!e.paused){var f,g,h=c-e.start,i=e.ms,j=e.easing,k=e.from,l=e.diff,m=e.to,n=(e.t,e.el),o={},p={};if(e.initstatus?(h=(e.initstatus*e.anim.top-e.prev)/(e.percent-e.prev)*i,e.status=e.initstatus,delete e.initstatus,e.stop&&fb.splice(d--,1)):e.status=(e.prev+(e.percent-e.prev)*(h/i))/e.anim.top,!(0>h))if(i>h){var q=j(h/i);for(var s in k)if(k[y](s)){switch(ca[s]){case S:f=+k[s]+q*i*l[s];break;case"colour":f="rgb("+[ib(Z(k[s].r+q*i*l[s].r)),ib(Z(k[s].g+q*i*l[s].g)),ib(Z(k[s].b+q*i*l[s].b))].join(",")+")";break;case"path":f=[];for(var t=0,u=k[s].length;u>t;t++){f[t]=[k[s][t][0]];for(var v=1,w=k[s][t].length;w>v;v++)f[t][v]=+k[s][t][v]+q*i*l[s][t][v];f[t]=f[t].join(G)}f=f.join(G);break;case"transform":if(l[s].real)for(f=[],t=0,u=k[s].length;u>t;t++)for(f[t]=[k[s][t][0]],v=1,w=k[s][t].length;w>v;v++)f[t][v]=k[s][t][v]+q*i*l[s][t][v];else{var x=function(a){return+k[s][a]+q*i*l[s][a]};f=[["m",x(0),x(1),x(2),x(3),x(4),x(5)]]}break;case"csv":if("clip-rect"==s)for(f=[],t=4;t--;)f[t]=+k[s][t]+q*i*l[s][t];break;default:var z=[][D](k[s]);for(f=[],t=n.paper.customAttributes[s].length;t--;)f[t]=+z[t]+q*i*l[s][t]}o[s]=f}n.attr(o),function(b,c,d){setTimeout(function(){a("raphael.anim.frame."+b,c,d)})}(n.id,n,e.anim)}else{if(function(c,d,e){setTimeout(function(){a("raphael.anim.frame."+d.id,d,e),a("raphael.anim.finish."+d.id,d,e),b.is(c,"function")&&c.call(d)})}(e.callback,n,e.anim),n.attr(m),fb.splice(d--,1),e.repeat>1&&!e.next){for(g in m)m[y](g)&&(p[g]=e.totalOrigin[g]);e.el.attr(p),r(e.anim,e.el,e.anim.percents[0],null,e.totalOrigin,e.repeat-1)}e.next&&!e.stop&&r(e.anim,e.el,e.next,null,e.totalOrigin,e.repeat)}}}fb.length&&gb(hb)},ib=function(a){return a>255?255:0>a?0:a};Xa.animateWith=function(a,c,d,e,f,g){var h=this;if(h.removed)return g&&g.call(h),h;var i=d instanceof q?d:b.animation(d,e,f,g);r(i,h,i.percents[0],null,h.attr());for(var j=0,k=fb.length;k>j;j++)if(fb[j].anim==c&&fb[j].el==a){fb[k-1].start=fb[j].start;break}return h},Xa.onAnimation=function(b){return b?a.on("raphael.anim.frame."+this.id,b):a.unbind("raphael.anim.frame."+this.id),this},q.prototype.delay=function(a){var b=new q(this.anim,this.ms);return b.times=this.times,b.del=+a||0,b},q.prototype.repeat=function(a){var b=new q(this.anim,this.ms);return b.del=this.del,b.times=M.floor(N(a,0))||1,b},b.animation=function(a,c,d,e){if(a instanceof q)return a;(b.is(d,"function")||!d)&&(e=e||d||null,d=null),a=Object(a),c=+c||0;var f,g,h={};for(g in a)a[y](g)&&$(g)!=g&&$(g)+"%"!=g&&(f=!0,h[g]=a[g]);if(f)return d&&(h.easing=d),e&&(h.callback=e),new q({100:h},c);if(e){var i=0;for(var j in a){var k=_(j);a[y](j)&&k>i&&(i=k)}i+="%",!a[i].callback&&(a[i].callback=e)}return new q(a,c)},Xa.animate=function(a,c,d,e){var f=this;if(f.removed)return e&&e.call(f),f;var g=a instanceof q?a:b.animation(a,c,d,e);return r(g,f,g.percents[0],null,f.attr()),f},Xa.setTime=function(a,b){return a&&null!=b&&this.status(a,O(b,a.ms)/a.ms),this},Xa.status=function(a,b){var c,d,e=[],f=0;if(null!=b)return r(a,this,-1,O(b,1)),this;for(c=fb.length;c>f;f++)if(d=fb[f],d.el.id==this.id&&(!a||d.anim==a)){if(a)return d.status;e.push({anim:d.anim,status:d.status})}return a?0:e},Xa.pause=function(b){for(var c=0;c<fb.length;c++)fb[c].el.id!=this.id||b&&fb[c].anim!=b||a("raphael.anim.pause."+this.id,this,fb[c].anim)!==!1&&(fb[c].paused=!0);return this},Xa.resume=function(b){for(var c=0;c<fb.length;c++)if(fb[c].el.id==this.id&&(!b||fb[c].anim==b)){var d=fb[c];a("raphael.anim.resume."+this.id,this,d.anim)!==!1&&(delete d.paused,this.status(d.anim,d.status))}return this},Xa.stop=function(b){for(var c=0;c<fb.length;c++)fb[c].el.id!=this.id||b&&fb[c].anim!=b||a("raphael.anim.stop."+this.id,this,fb[c].anim)!==!1&&fb.splice(c--,1);return this},a.on("raphael.remove",s),a.on("raphael.clear",s),Xa.toString=function(){return"Raphaël’s object"};var jb=function(a){if(this.items=[],this.length=0,this.type="set",a)for(var b=0,c=a.length;c>b;b++)!a[b]||a[b].constructor!=Xa.constructor&&a[b].constructor!=jb||(this[this.items.length]=this.items[this.items.length]=a[b],this.length++)},kb=jb.prototype;kb.push=function(){for(var a,b,c=0,d=arguments.length;d>c;c++)a=arguments[c],!a||a.constructor!=Xa.constructor&&a.constructor!=jb||(b=this.items.length,this[b]=this.items[b]=a,this.length++);return this},kb.pop=function(){return this.length&&delete this[this.length--],this.items.pop()},kb.forEach=function(a,b){for(var c=0,d=this.items.length;d>c;c++)if(a.call(b,this.items[c],c)===!1)return this;return this};for(var lb in Xa)Xa[y](lb)&&(kb[lb]=function(a){return function(){var b=arguments;return this.forEach(function(c){c[a][C](c,b)})}}(lb));return kb.attr=function(a,c){if(a&&b.is(a,U)&&b.is(a[0],"object"))for(var d=0,e=a.length;e>d;d++)this.items[d].attr(a[d]);else for(var f=0,g=this.items.length;g>f;f++)this.items[f].attr(a,c);return this},kb.clear=function(){for(;this.length;)this.pop()},kb.splice=function(a,b,c){a=0>a?N(this.length+a,0):a,b=N(0,O(this.length-a,b));var d,e=[],f=[],g=[];for(d=2;d<arguments.length;d++)g.push(arguments[d]);for(d=0;b>d;d++)f.push(this[a+d]);for(;d<this.length-a;d++)e.push(this[a+d]);var h=g.length;for(d=0;d<h+e.length;d++)this.items[a+d]=this[a+d]=h>d?g[d]:e[d-h];for(d=this.items.length=this.length-=b-h;this[d];)delete this[d++];return new jb(f)},kb.exclude=function(a){for(var b=0,c=this.length;c>b;b++)if(this[b]==a)return this.splice(b,1),!0},kb.animate=function(a,c,d,e){(b.is(d,"function")||!d)&&(e=d||null);var f,g,h=this.items.length,i=h,j=this;if(!h)return this;e&&(g=function(){!--h&&e.call(j)}),d=b.is(d,T)?d:g;var k=b.animation(a,c,d,g);for(f=this.items[--i].animate(k);i--;)this.items[i]&&!this.items[i].removed&&this.items[i].animateWith(f,k,k),this.items[i]&&!this.items[i].removed||h--;return this},kb.insertAfter=function(a){for(var b=this.items.length;b--;)this.items[b].insertAfter(a);return this},kb.getBBox=function(){for(var a=[],b=[],c=[],d=[],e=this.items.length;e--;)if(!this.items[e].removed){var f=this.items[e].getBBox();a.push(f.x),b.push(f.y),c.push(f.x+f.width),d.push(f.y+f.height)}return a=O[C](0,a),b=O[C](0,b),c=N[C](0,c),d=N[C](0,d),{x:a,y:b,x2:c,y2:d,width:c-a,height:d-b}},kb.clone=function(a){a=this.paper.set();for(var b=0,c=this.items.length;c>b;b++)a.push(this.items[b].clone());return a},kb.toString=function(){return"Raphaël‘s set"},kb.glow=function(a){var b=this.paper.set();return this.forEach(function(c,d){var e=c.glow(a);null!=e&&e.forEach(function(a,c){b.push(a)})}),b},kb.isPointInside=function(a,b){var c=!1;return this.forEach(function(d){return d.isPointInside(a,b)?(c=!0,!1):void 0}),c},b.registerFont=function(a){if(!a.face)return a;this.fonts=this.fonts||{};var b={w:a.w,face:{},glyphs:{}},c=a.face["font-family"];for(var d in a.face)a.face[y](d)&&(b.face[d]=a.face[d]);if(this.fonts[c]?this.fonts[c].push(b):this.fonts[c]=[b],!a.svg){b.face["units-per-em"]=_(a.face["units-per-em"],10);for(var e in a.glyphs)if(a.glyphs[y](e)){var f=a.glyphs[e];if(b.glyphs[e]={w:f.w,k:{},d:f.d&&"M"+f.d.replace(/[mlcxtrv]/g,function(a){return{l:"L",c:"C",x:"z",t:"m",r:"l",v:"c"}[a]||"M"})+"z"},f.k)for(var g in f.k)f[y](g)&&(b.glyphs[e].k[g]=f.k[g])}}return a},u.getFont=function(a,c,d,e){if(e=e||"normal",d=d||"normal",c=+c||{normal:400,bold:700,lighter:300,bolder:800}[c]||400,b.fonts){var f=b.fonts[a];if(!f){var g=new RegExp("(^|\\s)"+a.replace(/[^\w\d\s+!~.:_-]/g,F)+"(\\s|$)","i");for(var h in b.fonts)if(b.fonts[y](h)&&g.test(h)){f=b.fonts[h];break}}var i;if(f)for(var j=0,k=f.length;k>j&&(i=f[j],i.face["font-weight"]!=c||i.face["font-style"]!=d&&i.face["font-style"]||i.face["font-stretch"]!=e);j++);return i}},u.print=function(a,c,d,e,f,g,h,i){g=g||"middle",h=N(O(h||0,1),-1),i=N(O(i||1,3),1);var j,k=H(d)[I](F),l=0,m=0,n=F;if(b.is(e,"string")&&(e=this.getFont(e)),e){j=(f||16)/e.face["units-per-em"];for(var o=e.face.bbox[I](v),p=+o[0],q=o[3]-o[1],r=0,s=+o[1]+("baseline"==g?q+ +e.face.descent:q/2),t=0,u=k.length;u>t;t++){if("\n"==k[t])l=0,x=0,m=0,r+=q*i;else{var w=m&&e.glyphs[k[t-1]]||{},x=e.glyphs[k[t]];l+=m?(w.w||e.w)+(w.k&&w.k[k[t]]||0)+e.w*h:0,m=1}x&&x.d&&(n+=b.transformPath(x.d,["t",l*j,r*j,"s",j,j,p,s,"t",(a-p)/j,(c-s)/j]))}}return this.path(n).attr({fill:"#000",stroke:"none"})},u.add=function(a){if(b.is(a,"array"))for(var c,d=this.set(),e=0,f=a.length;f>e;e++)c=a[e]||{},w[y](c.type)&&d.push(this[c.type]().attr(c));return d},b.format=function(a,c){var d=b.is(c,U)?[0][D](c):arguments;return a&&b.is(a,T)&&d.length-1&&(a=a.replace(x,function(a,b){return null==d[++b]?F:d[b]})),a||F},b.fullfill=function(){var a=/\{([^\}]+)\}/g,b=/(?:(?:^|\.)(.+?)(?=\[|\.|$|\()|\[('|")(.+?)\2\])(\(\))?/g,c=function(a,c,d){var e=d;return c.replace(b,function(a,b,c,d,f){b=b||d,e&&(b in e&&(e=e[b]),"function"==typeof e&&f&&(e=e()))}),e=(null==e||e==d?a:e)+""};return function(b,d){return String(b).replace(a,function(a,b){return c(a,b,d)})}}(),b.ninja=function(){return A.was?z.win.Raphael=A.is:delete Raphael,b},b.st=kb,a.on("raphael.DOMload",function(){t=!0}),function(a,c,d){function e(){/in/.test(a.readyState)?setTimeout(e,9):b.eve("raphael.DOMload")}null==a.readyState&&a.addEventListener&&(a.addEventListener(c,d=function(){a.removeEventListener(c,d,!1),a.readyState="complete"},!1),a.readyState="loading"),e()}(document,"DOMContentLoaded"),b}),function(a,b){"function"==typeof define&&define.amd?define("raphael.svg",["raphael.core"],function(a){return b(a)}):b("object"==typeof exports?require("./raphael.core"):a.Raphael)}(this,function(a){if(!a||a.svg){var b="hasOwnProperty",c=String,d=parseFloat,e=parseInt,f=Math,g=f.max,h=f.abs,i=f.pow,j=/[, ]+/,k=a.eve,l="",m=" ",n="http://www.w3.org/1999/xlink",o={block:"M5,0 0,2.5 5,5z",classic:"M5,0 0,2.5 5,5 3.5,3 3.5,2z",diamond:"M2.5,0 5,2.5 2.5,5 0,2.5z",open:"M6,1 1,3.5 6,6",oval:"M2.5,0A2.5,2.5,0,0,1,2.5,5 2.5,2.5,0,0,1,2.5,0z"},p={};a.toString=function(){return"Your browser supports SVG.\nYou are running Raphaël "+this.version};var q=function(d,e){if(e){"string"==typeof d&&(d=q(d));for(var f in e)e[b](f)&&("xlink:"==f.substring(0,6)?d.setAttributeNS(n,f.substring(6),c(e[f])):d.setAttribute(f,c(e[f])))}else d=a._g.doc.createElementNS("http://www.w3.org/2000/svg",d),d.style&&(d.style.webkitTapHighlightColor="rgba(0,0,0,0)");return d},r=function(b,e){var j="linear",k=b.id+e,m=.5,n=.5,o=b.node,p=b.paper,r=o.style,s=a._g.doc.getElementById(k);if(!s){if(e=c(e).replace(a._radial_gradient,function(a,b,c){if(j="radial",b&&c){m=d(b),n=d(c);var e=2*(n>.5)-1;i(m-.5,2)+i(n-.5,2)>.25&&(n=f.sqrt(.25-i(m-.5,2))*e+.5)&&.5!=n&&(n=n.toFixed(5)-1e-5*e)}return l}),e=e.split(/\s*\-\s*/),"linear"==j){var t=e.shift();if(t=-d(t),isNaN(t))return null;var u=[0,0,f.cos(a.rad(t)),f.sin(a.rad(t))],v=1/(g(h(u[2]),h(u[3]))||1);u[2]*=v,u[3]*=v,u[2]<0&&(u[0]=-u[2],u[2]=0),u[3]<0&&(u[1]=-u[3],u[3]=0)}var w=a._parseDots(e);if(!w)return null;if(k=k.replace(/[\(\)\s,\xb0#]/g,"_"),b.gradient&&k!=b.gradient.id&&(p.defs.removeChild(b.gradient),delete b.gradient),!b.gradient){s=q(j+"Gradient",{id:k}),b.gradient=s,q(s,"radial"==j?{fx:m,fy:n}:{x1:u[0],y1:u[1],x2:u[2],y2:u[3],gradientTransform:b.matrix.invert()}),p.defs.appendChild(s);for(var x=0,y=w.length;y>x;x++)s.appendChild(q("stop",{offset:w[x].offset?w[x].offset:x?"100%":"0%","stop-color":w[x].color||"#fff","stop-opacity":isFinite(w[x].opacity)?w[x].opacity:1}))}}return q(o,{fill:"url('"+document.location.origin+document.location.pathname+"#"+k+"')",opacity:1,"fill-opacity":1}),r.fill=l,r.opacity=1,r.fillOpacity=1,1},s=function(a){var b=a.getBBox(1);q(a.pattern,{patternTransform:a.matrix.invert()+" translate("+b.x+","+b.y+")"})},t=function(d,e,f){if("path"==d.type){for(var g,h,i,j,k,m=c(e).toLowerCase().split("-"),n=d.paper,r=f?"end":"start",s=d.node,t=d.attrs,u=t["stroke-width"],v=m.length,w="classic",x=3,y=3,z=5;v--;)switch(m[v]){case"block":case"classic":case"oval":case"diamond":case"open":case"none":w=m[v];break;case"wide":y=5;break;case"narrow":y=2;break;case"long":x=5;break;case"short":x=2}if("open"==w?(x+=2,y+=2,z+=2,i=1,j=f?4:1,k={fill:"none",stroke:t.stroke}):(j=i=x/2,k={fill:t.stroke,stroke:"none"}),d._.arrows?f?(d._.arrows.endPath&&p[d._.arrows.endPath]--,d._.arrows.endMarker&&p[d._.arrows.endMarker]--):(d._.arrows.startPath&&p[d._.arrows.startPath]--,d._.arrows.startMarker&&p[d._.arrows.startMarker]--):d._.arrows={},"none"!=w){var A="raphael-marker-"+w,B="raphael-marker-"+r+w+x+y+"-obj"+d.id;a._g.doc.getElementById(A)?p[A]++:(n.defs.appendChild(q(q("path"),{"stroke-linecap":"round",d:o[w],id:A})),p[A]=1);var C,D=a._g.doc.getElementById(B);D?(p[B]++,C=D.getElementsByTagName("use")[0]):(D=q(q("marker"),{id:B,markerHeight:y,markerWidth:x,orient:"auto",refX:j,refY:y/2}),C=q(q("use"),{"xlink:href":"#"+A,transform:(f?"rotate(180 "+x/2+" "+y/2+") ":l)+"scale("+x/z+","+y/z+")","stroke-width":(1/((x/z+y/z)/2)).toFixed(4)}),D.appendChild(C),n.defs.appendChild(D),p[B]=1),q(C,k);var E=i*("diamond"!=w&&"oval"!=w);f?(g=d._.arrows.startdx*u||0,h=a.getTotalLength(t.path)-E*u):(g=E*u,h=a.getTotalLength(t.path)-(d._.arrows.enddx*u||0)),k={},k["marker-"+r]="url(#"+B+")",(h||g)&&(k.d=a.getSubpath(t.path,g,h)),q(s,k),d._.arrows[r+"Path"]=A,d._.arrows[r+"Marker"]=B,d._.arrows[r+"dx"]=E,d._.arrows[r+"Type"]=w,d._.arrows[r+"String"]=e}else f?(g=d._.arrows.startdx*u||0,h=a.getTotalLength(t.path)-g):(g=0,h=a.getTotalLength(t.path)-(d._.arrows.enddx*u||0)),d._.arrows[r+"Path"]&&q(s,{d:a.getSubpath(t.path,g,h)}),delete d._.arrows[r+"Path"],delete d._.arrows[r+"Marker"],delete d._.arrows[r+"dx"],delete d._.arrows[r+"Type"],delete d._.arrows[r+"String"];for(k in p)if(p[b](k)&&!p[k]){var F=a._g.doc.getElementById(k);F&&F.parentNode.removeChild(F)}}},u={"-":[3,1],".":[1,1],"-.":[3,1,1,1],"-..":[3,1,1,1,1,1],". ":[1,3],"- ":[4,3],"--":[8,3],"- .":[4,3,1,3],"--.":[8,3,1,3],"--..":[8,3,1,3,1,3]},v=function(a,b,d){if(b=u[c(b).toLowerCase()]){for(var e=a.attrs["stroke-width"]||"1",f={round:e,square:e,butt:0}[a.attrs["stroke-linecap"]||d["stroke-linecap"]]||0,g=[],h=b.length;h--;)g[h]=b[h]*e+(h%2?1:-1)*f;q(a.node,{"stroke-dasharray":g.join(",")})}else q(a.node,{"stroke-dasharray":"none"})},w=function(d,f){var i=d.node,k=d.attrs,m=i.style.visibility;i.style.visibility="hidden";for(var o in f)if(f[b](o)){if(!a._availableAttrs[b](o))continue;var p=f[o];switch(k[o]=p,o){case"blur":d.blur(p);break;case"title":var u=i.getElementsByTagName("title");if(u.length&&(u=u[0]))u.firstChild.nodeValue=p;else{u=q("title");var w=a._g.doc.createTextNode(p);u.appendChild(w),i.appendChild(u)}break;case"href":case"target":var x=i.parentNode;if("a"!=x.tagName.toLowerCase()){var z=q("a");x.insertBefore(z,i),z.appendChild(i),x=z}"target"==o?x.setAttributeNS(n,"show","blank"==p?"new":p):x.setAttributeNS(n,o,p);break;case"cursor":i.style.cursor=p;break;case"transform":d.transform(p);break;case"arrow-start":t(d,p);break;case"arrow-end":t(d,p,1);break;case"clip-rect":var A=c(p).split(j);if(4==A.length){d.clip&&d.clip.parentNode.parentNode.removeChild(d.clip.parentNode);var B=q("clipPath"),C=q("rect");B.id=a.createUUID(),q(C,{x:A[0],y:A[1],width:A[2],height:A[3]}),B.appendChild(C),d.paper.defs.appendChild(B),q(i,{"clip-path":"url(#"+B.id+")"}),d.clip=C}if(!p){var D=i.getAttribute("clip-path");if(D){var E=a._g.doc.getElementById(D.replace(/(^url\(#|\)$)/g,l));E&&E.parentNode.removeChild(E),q(i,{"clip-path":l}),delete d.clip}}break;case"path":"path"==d.type&&(q(i,{d:p?k.path=a._pathToAbsolute(p):"M0,0"}),d._.dirty=1,d._.arrows&&("startString"in d._.arrows&&t(d,d._.arrows.startString),"endString"in d._.arrows&&t(d,d._.arrows.endString,1)));break;case"width":if(i.setAttribute(o,p),d._.dirty=1,!k.fx)break;o="x",p=k.x;case"x":k.fx&&(p=-k.x-(k.width||0));case"rx":if("rx"==o&&"rect"==d.type)break;case"cx":i.setAttribute(o,p),d.pattern&&s(d),d._.dirty=1;break;case"height":if(i.setAttribute(o,p),d._.dirty=1,!k.fy)break;o="y",p=k.y;case"y":k.fy&&(p=-k.y-(k.height||0));case"ry":if("ry"==o&&"rect"==d.type)break;case"cy":i.setAttribute(o,p),d.pattern&&s(d),d._.dirty=1;break;case"r":"rect"==d.type?q(i,{rx:p,ry:p}):i.setAttribute(o,p),d._.dirty=1;break;case"src":"image"==d.type&&i.setAttributeNS(n,"href",p);break;case"stroke-width":(1!=d._.sx||1!=d._.sy)&&(p/=g(h(d._.sx),h(d._.sy))||1),i.setAttribute(o,p),k["stroke-dasharray"]&&v(d,k["stroke-dasharray"],f),d._.arrows&&("startString"in d._.arrows&&t(d,d._.arrows.startString),"endString"in d._.arrows&&t(d,d._.arrows.endString,1));break;case"stroke-dasharray":v(d,p,f);break;case"fill":var F=c(p).match(a._ISURL);if(F){B=q("pattern");var G=q("image");B.id=a.createUUID(),q(B,{x:0,y:0,patternUnits:"userSpaceOnUse",height:1,width:1}),q(G,{x:0,y:0,"xlink:href":F[1]}),B.appendChild(G),function(b){a._preload(F[1],function(){var a=this.offsetWidth,c=this.offsetHeight;q(b,{width:a,height:c}),q(G,{width:a,height:c})})}(B),d.paper.defs.appendChild(B),q(i,{fill:"url(#"+B.id+")"}),d.pattern=B,d.pattern&&s(d);break}var H=a.getRGB(p);if(H.error){if(("circle"==d.type||"ellipse"==d.type||"r"!=c(p).charAt())&&r(d,p)){if("opacity"in k||"fill-opacity"in k){var I=a._g.doc.getElementById(i.getAttribute("fill").replace(/^url\(#|\)$/g,l));if(I){var J=I.getElementsByTagName("stop");q(J[J.length-1],{"stop-opacity":("opacity"in k?k.opacity:1)*("fill-opacity"in k?k["fill-opacity"]:1)})}}k.gradient=p,k.fill="none";break}}else delete f.gradient,delete k.gradient,!a.is(k.opacity,"undefined")&&a.is(f.opacity,"undefined")&&q(i,{opacity:k.opacity}),!a.is(k["fill-opacity"],"undefined")&&a.is(f["fill-opacity"],"undefined")&&q(i,{"fill-opacity":k["fill-opacity"]});H[b]("opacity")&&q(i,{"fill-opacity":H.opacity>1?H.opacity/100:H.opacity});case"stroke":H=a.getRGB(p),i.setAttribute(o,H.hex),"stroke"==o&&H[b]("opacity")&&q(i,{"stroke-opacity":H.opacity>1?H.opacity/100:H.opacity}),"stroke"==o&&d._.arrows&&("startString"in d._.arrows&&t(d,d._.arrows.startString),"endString"in d._.arrows&&t(d,d._.arrows.endString,1));break;case"gradient":("circle"==d.type||"ellipse"==d.type||"r"!=c(p).charAt())&&r(d,p);
+
+break;case"opacity":k.gradient&&!k[b]("stroke-opacity")&&q(i,{"stroke-opacity":p>1?p/100:p});case"fill-opacity":if(k.gradient){I=a._g.doc.getElementById(i.getAttribute("fill").replace(/^url\(#|\)$/g,l)),I&&(J=I.getElementsByTagName("stop"),q(J[J.length-1],{"stop-opacity":p}));break}default:"font-size"==o&&(p=e(p,10)+"px");var K=o.replace(/(\-.)/g,function(a){return a.substring(1).toUpperCase()});i.style[K]=p,d._.dirty=1,i.setAttribute(o,p)}}y(d,f),i.style.visibility=m},x=1.2,y=function(d,f){if("text"==d.type&&(f[b]("text")||f[b]("font")||f[b]("font-size")||f[b]("x")||f[b]("y"))){var g=d.attrs,h=d.node,i=h.firstChild?e(a._g.doc.defaultView.getComputedStyle(h.firstChild,l).getPropertyValue("font-size"),10):10;if(f[b]("text")){for(g.text=f.text;h.firstChild;)h.removeChild(h.firstChild);for(var j,k=c(f.text).split("\n"),m=[],n=0,o=k.length;o>n;n++)j=q("tspan"),n&&q(j,{dy:i*x,x:g.x}),j.appendChild(a._g.doc.createTextNode(k[n])),h.appendChild(j),m[n]=j}else for(m=h.getElementsByTagName("tspan"),n=0,o=m.length;o>n;n++)n?q(m[n],{dy:i*x,x:g.x}):q(m[0],{dy:0});q(h,{x:g.x,y:g.y}),d._.dirty=1;var p=d._getBBox(),r=g.y-(p.y+p.height/2);r&&a.is(r,"finite")&&q(m[0],{dy:r})}},z=function(a){return a.parentNode&&"a"===a.parentNode.tagName.toLowerCase()?a.parentNode:a},A=function(b,c){this[0]=this.node=b,b.raphael=!0,this.id=a._oid++,b.raphaelid=this.id,this.matrix=a.matrix(),this.realPath=null,this.paper=c,this.attrs=this.attrs||{},this._={transform:[],sx:1,sy:1,deg:0,dx:0,dy:0,dirty:1},!c.bottom&&(c.bottom=this),this.prev=c.top,c.top&&(c.top.next=this),c.top=this,this.next=null},B=a.el;A.prototype=B,B.constructor=A,a._engine.path=function(a,b){var c=q("path");b.canvas&&b.canvas.appendChild(c);var d=new A(c,b);return d.type="path",w(d,{fill:"none",stroke:"#000",path:a}),d},B.rotate=function(a,b,e){if(this.removed)return this;if(a=c(a).split(j),a.length-1&&(b=d(a[1]),e=d(a[2])),a=d(a[0]),null==e&&(b=e),null==b||null==e){var f=this.getBBox(1);b=f.x+f.width/2,e=f.y+f.height/2}return this.transform(this._.transform.concat([["r",a,b,e]])),this},B.scale=function(a,b,e,f){if(this.removed)return this;if(a=c(a).split(j),a.length-1&&(b=d(a[1]),e=d(a[2]),f=d(a[3])),a=d(a[0]),null==b&&(b=a),null==f&&(e=f),null==e||null==f)var g=this.getBBox(1);return e=null==e?g.x+g.width/2:e,f=null==f?g.y+g.height/2:f,this.transform(this._.transform.concat([["s",a,b,e,f]])),this},B.translate=function(a,b){return this.removed?this:(a=c(a).split(j),a.length-1&&(b=d(a[1])),a=d(a[0])||0,b=+b||0,this.transform(this._.transform.concat([["t",a,b]])),this)},B.transform=function(c){var d=this._;if(null==c)return d.transform;if(a._extractTransform(this,c),this.clip&&q(this.clip,{transform:this.matrix.invert()}),this.pattern&&s(this),this.node&&q(this.node,{transform:this.matrix}),1!=d.sx||1!=d.sy){var e=this.attrs[b]("stroke-width")?this.attrs["stroke-width"]:1;this.attr({"stroke-width":e})}return this},B.hide=function(){return this.removed||(this.node.style.display="none"),this},B.show=function(){return this.removed||(this.node.style.display=""),this},B.remove=function(){var b=z(this.node);if(!this.removed&&b.parentNode){var c=this.paper;c.__set__&&c.__set__.exclude(this),k.unbind("raphael.*.*."+this.id),this.gradient&&c.defs.removeChild(this.gradient),a._tear(this,c),b.parentNode.removeChild(b),this.removeData();for(var d in this)this[d]="function"==typeof this[d]?a._removedFactory(d):null;this.removed=!0}},B._getBBox=function(){if("none"==this.node.style.display){this.show();var a=!0}var b,c=!1;this.paper.canvas.parentElement?b=this.paper.canvas.parentElement.style:this.paper.canvas.parentNode&&(b=this.paper.canvas.parentNode.style),b&&"none"==b.display&&(c=!0,b.display="");var d={};try{d=this.node.getBBox()}catch(e){d={x:this.node.clientLeft,y:this.node.clientTop,width:this.node.clientWidth,height:this.node.clientHeight}}finally{d=d||{},c&&(b.display="none")}return a&&this.hide(),d},B.attr=function(c,d){if(this.removed)return this;if(null==c){var e={};for(var f in this.attrs)this.attrs[b](f)&&(e[f]=this.attrs[f]);return e.gradient&&"none"==e.fill&&(e.fill=e.gradient)&&delete e.gradient,e.transform=this._.transform,e}if(null==d&&a.is(c,"string")){if("fill"==c&&"none"==this.attrs.fill&&this.attrs.gradient)return this.attrs.gradient;if("transform"==c)return this._.transform;for(var g=c.split(j),h={},i=0,l=g.length;l>i;i++)c=g[i],c in this.attrs?h[c]=this.attrs[c]:a.is(this.paper.customAttributes[c],"function")?h[c]=this.paper.customAttributes[c].def:h[c]=a._availableAttrs[c];return l-1?h:h[g[0]]}if(null==d&&a.is(c,"array")){for(h={},i=0,l=c.length;l>i;i++)h[c[i]]=this.attr(c[i]);return h}if(null!=d){var m={};m[c]=d}else null!=c&&a.is(c,"object")&&(m=c);for(var n in m)k("raphael.attr."+n+"."+this.id,this,m[n]);for(n in this.paper.customAttributes)if(this.paper.customAttributes[b](n)&&m[b](n)&&a.is(this.paper.customAttributes[n],"function")){var o=this.paper.customAttributes[n].apply(this,[].concat(m[n]));this.attrs[n]=m[n];for(var p in o)o[b](p)&&(m[p]=o[p])}return w(this,m),this},B.toFront=function(){if(this.removed)return this;var b=z(this.node);b.parentNode.appendChild(b);var c=this.paper;return c.top!=this&&a._tofront(this,c),this},B.toBack=function(){if(this.removed)return this;var b=z(this.node),c=b.parentNode;c.insertBefore(b,c.firstChild),a._toback(this,this.paper);this.paper;return this},B.insertAfter=function(b){if(this.removed||!b)return this;var c=z(this.node),d=z(b.node||b[b.length-1].node);return d.nextSibling?d.parentNode.insertBefore(c,d.nextSibling):d.parentNode.appendChild(c),a._insertafter(this,b,this.paper),this},B.insertBefore=function(b){if(this.removed||!b)return this;var c=z(this.node),d=z(b.node||b[0].node);return d.parentNode.insertBefore(c,d),a._insertbefore(this,b,this.paper),this},B.blur=function(b){var c=this;if(0!==+b){var d=q("filter"),e=q("feGaussianBlur");c.attrs.blur=b,d.id=a.createUUID(),q(e,{stdDeviation:+b||1.5}),d.appendChild(e),c.paper.defs.appendChild(d),c._blur=d,q(c.node,{filter:"url(#"+d.id+")"})}else c._blur&&(c._blur.parentNode.removeChild(c._blur),delete c._blur,delete c.attrs.blur),c.node.removeAttribute("filter");return c},a._engine.circle=function(a,b,c,d){var e=q("circle");a.canvas&&a.canvas.appendChild(e);var f=new A(e,a);return f.attrs={cx:b,cy:c,r:d,fill:"none",stroke:"#000"},f.type="circle",q(e,f.attrs),f},a._engine.rect=function(a,b,c,d,e,f){var g=q("rect");a.canvas&&a.canvas.appendChild(g);var h=new A(g,a);return h.attrs={x:b,y:c,width:d,height:e,rx:f||0,ry:f||0,fill:"none",stroke:"#000"},h.type="rect",q(g,h.attrs),h},a._engine.ellipse=function(a,b,c,d,e){var f=q("ellipse");a.canvas&&a.canvas.appendChild(f);var g=new A(f,a);return g.attrs={cx:b,cy:c,rx:d,ry:e,fill:"none",stroke:"#000"},g.type="ellipse",q(f,g.attrs),g},a._engine.image=function(a,b,c,d,e,f){var g=q("image");q(g,{x:c,y:d,width:e,height:f,preserveAspectRatio:"none"}),g.setAttributeNS(n,"href",b),a.canvas&&a.canvas.appendChild(g);var h=new A(g,a);return h.attrs={x:c,y:d,width:e,height:f,src:b},h.type="image",h},a._engine.text=function(b,c,d,e){var f=q("text");b.canvas&&b.canvas.appendChild(f);var g=new A(f,b);return g.attrs={x:c,y:d,"text-anchor":"middle",text:e,"font-family":a._availableAttrs["font-family"],"font-size":a._availableAttrs["font-size"],stroke:"none",fill:"#000"},g.type="text",w(g,g.attrs),g},a._engine.setSize=function(a,b){return this.width=a||this.width,this.height=b||this.height,this.canvas.setAttribute("width",this.width),this.canvas.setAttribute("height",this.height),this._viewBox&&this.setViewBox.apply(this,this._viewBox),this},a._engine.create=function(){var b=a._getContainer.apply(0,arguments),c=b&&b.container,d=b.x,e=b.y,f=b.width,g=b.height;if(!c)throw new Error("SVG container not found.");var h,i=q("svg"),j="overflow:hidden;";return d=d||0,e=e||0,f=f||512,g=g||342,q(i,{height:g,version:1.1,width:f,xmlns:"http://www.w3.org/2000/svg","xmlns:xlink":"http://www.w3.org/1999/xlink"}),1==c?(i.style.cssText=j+"position:absolute;left:"+d+"px;top:"+e+"px",a._g.doc.body.appendChild(i),h=1):(i.style.cssText=j+"position:relative",c.firstChild?c.insertBefore(i,c.firstChild):c.appendChild(i)),c=new a._Paper,c.width=f,c.height=g,c.canvas=i,c.clear(),c._left=c._top=0,h&&(c.renderfix=function(){}),c.renderfix(),c},a._engine.setViewBox=function(a,b,c,d,e){k("raphael.setViewBox",this,this._viewBox,[a,b,c,d,e]);var f,h,i=this.getSize(),j=g(c/i.width,d/i.height),l=this.top,n=e?"xMidYMid meet":"xMinYMin";for(null==a?(this._vbSize&&(j=1),delete this._vbSize,f="0 0 "+this.width+m+this.height):(this._vbSize=j,f=a+m+b+m+c+m+d),q(this.canvas,{viewBox:f,preserveAspectRatio:n});j&&l;)h="stroke-width"in l.attrs?l.attrs["stroke-width"]:1,l.attr({"stroke-width":h}),l._.dirty=1,l._.dirtyT=1,l=l.prev;return this._viewBox=[a,b,c,d,!!e],this},a.prototype.renderfix=function(){var a,b=this.canvas,c=b.style;try{a=b.getScreenCTM()||b.createSVGMatrix()}catch(d){a=b.createSVGMatrix()}var e=-a.e%1,f=-a.f%1;(e||f)&&(e&&(this._left=(this._left+e)%1,c.left=this._left+"px"),f&&(this._top=(this._top+f)%1,c.top=this._top+"px"))},a.prototype.clear=function(){a.eve("raphael.clear",this);for(var b=this.canvas;b.firstChild;)b.removeChild(b.firstChild);this.bottom=this.top=null,(this.desc=q("desc")).appendChild(a._g.doc.createTextNode("Created with Raphaël "+a.version)),b.appendChild(this.desc),b.appendChild(this.defs=q("defs"))},a.prototype.remove=function(){k("raphael.remove",this),this.canvas.parentNode&&this.canvas.parentNode.removeChild(this.canvas);for(var b in this)this[b]="function"==typeof this[b]?a._removedFactory(b):null};var C=a.st;for(var D in B)B[b](D)&&!C[b](D)&&(C[D]=function(a){return function(){var b=arguments;return this.forEach(function(c){c[a].apply(c,b)})}}(D))}}),function(a,b){"function"==typeof define&&define.amd?define("raphael.vml",["raphael.core"],function(a){return b(a)}):b("object"==typeof exports?require("./raphael.core"):a.Raphael)}(this,function(a){if(!a||a.vml){var b="hasOwnProperty",c=String,d=parseFloat,e=Math,f=e.round,g=e.max,h=e.min,i=e.abs,j="fill",k=/[, ]+/,l=a.eve,m=" progid:DXImageTransform.Microsoft",n=" ",o="",p={M:"m",L:"l",C:"c",Z:"x",m:"t",l:"r",c:"v",z:"x"},q=/([clmz]),?([^clmz]*)/gi,r=/ progid:\S+Blur\([^\)]+\)/g,s=/-?[^,\s-]+/g,t="position:absolute;left:0;top:0;width:1px;height:1px;behavior:url(#default#VML)",u=21600,v={path:1,rect:1,image:1},w={circle:1,ellipse:1},x=function(b){var d=/[ahqstv]/gi,e=a._pathToAbsolute;if(c(b).match(d)&&(e=a._path2curve),d=/[clmz]/g,e==a._pathToAbsolute&&!c(b).match(d)){var g=c(b).replace(q,function(a,b,c){var d=[],e="m"==b.toLowerCase(),g=p[b];return c.replace(s,function(a){e&&2==d.length&&(g+=d+p["m"==b?"l":"L"],d=[]),d.push(f(a*u))}),g+d});return g}var h,i,j=e(b);g=[];for(var k=0,l=j.length;l>k;k++){h=j[k],i=j[k][0].toLowerCase(),"z"==i&&(i="x");for(var m=1,r=h.length;r>m;m++)i+=f(h[m]*u)+(m!=r-1?",":o);g.push(i)}return g.join(n)},y=function(b,c,d){var e=a.matrix();return e.rotate(-b,.5,.5),{dx:e.x(c,d),dy:e.y(c,d)}},z=function(a,b,c,d,e,f){var g=a._,h=a.matrix,k=g.fillpos,l=a.node,m=l.style,o=1,p="",q=u/b,r=u/c;if(m.visibility="hidden",b&&c){if(l.coordsize=i(q)+n+i(r),m.rotation=f*(0>b*c?-1:1),f){var s=y(f,d,e);d=s.dx,e=s.dy}if(0>b&&(p+="x"),0>c&&(p+=" y")&&(o=-1),m.flip=p,l.coordorigin=d*-q+n+e*-r,k||g.fillsize){var t=l.getElementsByTagName(j);t=t&&t[0],l.removeChild(t),k&&(s=y(f,h.x(k[0],k[1]),h.y(k[0],k[1])),t.position=s.dx*o+n+s.dy*o),g.fillsize&&(t.size=g.fillsize[0]*i(b)+n+g.fillsize[1]*i(c)),l.appendChild(t)}m.visibility="visible"}};a.toString=function(){return"Your browser doesn’t support SVG. Falling down to VML.\nYou are running Raphaël "+this.version};var A=function(a,b,d){for(var e=c(b).toLowerCase().split("-"),f=d?"end":"start",g=e.length,h="classic",i="medium",j="medium";g--;)switch(e[g]){case"block":case"classic":case"oval":case"diamond":case"open":case"none":h=e[g];break;case"wide":case"narrow":j=e[g];break;case"long":case"short":i=e[g]}var k=a.node.getElementsByTagName("stroke")[0];k[f+"arrow"]=h,k[f+"arrowlength"]=i,k[f+"arrowwidth"]=j},B=function(e,i){e.attrs=e.attrs||{};var l=e.node,m=e.attrs,p=l.style,q=v[e.type]&&(i.x!=m.x||i.y!=m.y||i.width!=m.width||i.height!=m.height||i.cx!=m.cx||i.cy!=m.cy||i.rx!=m.rx||i.ry!=m.ry||i.r!=m.r),r=w[e.type]&&(m.cx!=i.cx||m.cy!=i.cy||m.r!=i.r||m.rx!=i.rx||m.ry!=i.ry),s=e;for(var t in i)i[b](t)&&(m[t]=i[t]);if(q&&(m.path=a._getPath[e.type](e),e._.dirty=1),i.href&&(l.href=i.href),i.title&&(l.title=i.title),i.target&&(l.target=i.target),i.cursor&&(p.cursor=i.cursor),"blur"in i&&e.blur(i.blur),(i.path&&"path"==e.type||q)&&(l.path=x(~c(m.path).toLowerCase().indexOf("r")?a._pathToAbsolute(m.path):m.path),e._.dirty=1,"image"==e.type&&(e._.fillpos=[m.x,m.y],e._.fillsize=[m.width,m.height],z(e,1,1,0,0,0))),"transform"in i&&e.transform(i.transform),r){var y=+m.cx,B=+m.cy,D=+m.rx||+m.r||0,E=+m.ry||+m.r||0;l.path=a.format("ar{0},{1},{2},{3},{4},{1},{4},{1}x",f((y-D)*u),f((B-E)*u),f((y+D)*u),f((B+E)*u),f(y*u)),e._.dirty=1}if("clip-rect"in i){var G=c(i["clip-rect"]).split(k);if(4==G.length){G[2]=+G[2]+ +G[0],G[3]=+G[3]+ +G[1];var H=l.clipRect||a._g.doc.createElement("div"),I=H.style;I.clip=a.format("rect({1}px {2}px {3}px {0}px)",G),l.clipRect||(I.position="absolute",I.top=0,I.left=0,I.width=e.paper.width+"px",I.height=e.paper.height+"px",l.parentNode.insertBefore(H,l),H.appendChild(l),l.clipRect=H)}i["clip-rect"]||l.clipRect&&(l.clipRect.style.clip="auto")}if(e.textpath){var J=e.textpath.style;i.font&&(J.font=i.font),i["font-family"]&&(J.fontFamily='"'+i["font-family"].split(",")[0].replace(/^['"]+|['"]+$/g,o)+'"'),i["font-size"]&&(J.fontSize=i["font-size"]),i["font-weight"]&&(J.fontWeight=i["font-weight"]),i["font-style"]&&(J.fontStyle=i["font-style"])}if("arrow-start"in i&&A(s,i["arrow-start"]),"arrow-end"in i&&A(s,i["arrow-end"],1),null!=i.opacity||null!=i["stroke-width"]||null!=i.fill||null!=i.src||null!=i.stroke||null!=i["stroke-width"]||null!=i["stroke-opacity"]||null!=i["fill-opacity"]||null!=i["stroke-dasharray"]||null!=i["stroke-miterlimit"]||null!=i["stroke-linejoin"]||null!=i["stroke-linecap"]){var K=l.getElementsByTagName(j),L=!1;if(K=K&&K[0],!K&&(L=K=F(j)),"image"==e.type&&i.src&&(K.src=i.src),i.fill&&(K.on=!0),(null==K.on||"none"==i.fill||null===i.fill)&&(K.on=!1),K.on&&i.fill){var M=c(i.fill).match(a._ISURL);if(M){K.parentNode==l&&l.removeChild(K),K.rotate=!0,K.src=M[1],K.type="tile";var N=e.getBBox(1);K.position=N.x+n+N.y,e._.fillpos=[N.x,N.y],a._preload(M[1],function(){e._.fillsize=[this.offsetWidth,this.offsetHeight]})}else K.color=a.getRGB(i.fill).hex,K.src=o,K.type="solid",a.getRGB(i.fill).error&&(s.type in{circle:1,ellipse:1}||"r"!=c(i.fill).charAt())&&C(s,i.fill,K)&&(m.fill="none",m.gradient=i.fill,K.rotate=!1)}if("fill-opacity"in i||"opacity"in i){var O=((+m["fill-opacity"]+1||2)-1)*((+m.opacity+1||2)-1)*((+a.getRGB(i.fill).o+1||2)-1);O=h(g(O,0),1),K.opacity=O,K.src&&(K.color="none")}l.appendChild(K);var P=l.getElementsByTagName("stroke")&&l.getElementsByTagName("stroke")[0],Q=!1;!P&&(Q=P=F("stroke")),(i.stroke&&"none"!=i.stroke||i["stroke-width"]||null!=i["stroke-opacity"]||i["stroke-dasharray"]||i["stroke-miterlimit"]||i["stroke-linejoin"]||i["stroke-linecap"])&&(P.on=!0),("none"==i.stroke||null===i.stroke||null==P.on||0==i.stroke||0==i["stroke-width"])&&(P.on=!1);var R=a.getRGB(i.stroke);P.on&&i.stroke&&(P.color=R.hex),O=((+m["stroke-opacity"]+1||2)-1)*((+m.opacity+1||2)-1)*((+R.o+1||2)-1);var S=.75*(d(i["stroke-width"])||1);if(O=h(g(O,0),1),null==i["stroke-width"]&&(S=m["stroke-width"]),i["stroke-width"]&&(P.weight=S),S&&1>S&&(O*=S)&&(P.weight=1),P.opacity=O,i["stroke-linejoin"]&&(P.joinstyle=i["stroke-linejoin"]||"miter"),P.miterlimit=i["stroke-miterlimit"]||8,i["stroke-linecap"]&&(P.endcap="butt"==i["stroke-linecap"]?"flat":"square"==i["stroke-linecap"]?"square":"round"),"stroke-dasharray"in i){var T={"-":"shortdash",".":"shortdot","-.":"shortdashdot","-..":"shortdashdotdot",". ":"dot","- ":"dash","--":"longdash","- .":"dashdot","--.":"longdashdot","--..":"longdashdotdot"};P.dashstyle=T[b](i["stroke-dasharray"])?T[i["stroke-dasharray"]]:o}Q&&l.appendChild(P)}if("text"==s.type){s.paper.canvas.style.display=o;var U=s.paper.span,V=100,W=m.font&&m.font.match(/\d+(?:\.\d*)?(?=px)/);p=U.style,m.font&&(p.font=m.font),m["font-family"]&&(p.fontFamily=m["font-family"]),m["font-weight"]&&(p.fontWeight=m["font-weight"]),m["font-style"]&&(p.fontStyle=m["font-style"]),W=d(m["font-size"]||W&&W[0])||10,p.fontSize=W*V+"px",s.textpath.string&&(U.innerHTML=c(s.textpath.string).replace(/</g,"&#60;").replace(/&/g,"&#38;").replace(/\n/g,"<br>"));var X=U.getBoundingClientRect();s.W=m.w=(X.right-X.left)/V,s.H=m.h=(X.bottom-X.top)/V,s.X=m.x,s.Y=m.y+s.H/2,("x"in i||"y"in i)&&(s.path.v=a.format("m{0},{1}l{2},{1}",f(m.x*u),f(m.y*u),f(m.x*u)+1));for(var Y=["x","y","text","font","font-family","font-weight","font-style","font-size"],Z=0,$=Y.length;$>Z;Z++)if(Y[Z]in i){s._.dirty=1;break}switch(m["text-anchor"]){case"start":s.textpath.style["v-text-align"]="left",s.bbx=s.W/2;break;case"end":s.textpath.style["v-text-align"]="right",s.bbx=-s.W/2;break;default:s.textpath.style["v-text-align"]="center",s.bbx=0}s.textpath.style["v-text-kern"]=!0}},C=function(b,f,g){b.attrs=b.attrs||{};var h=(b.attrs,Math.pow),i="linear",j=".5 .5";if(b.attrs.gradient=f,f=c(f).replace(a._radial_gradient,function(a,b,c){return i="radial",b&&c&&(b=d(b),c=d(c),h(b-.5,2)+h(c-.5,2)>.25&&(c=e.sqrt(.25-h(b-.5,2))*(2*(c>.5)-1)+.5),j=b+n+c),o}),f=f.split(/\s*\-\s*/),"linear"==i){var k=f.shift();if(k=-d(k),isNaN(k))return null}var l=a._parseDots(f);if(!l)return null;if(b=b.shape||b.node,l.length){b.removeChild(g),g.on=!0,g.method="none",g.color=l[0].color,g.color2=l[l.length-1].color;for(var m=[],p=0,q=l.length;q>p;p++)l[p].offset&&m.push(l[p].offset+n+l[p].color);g.colors=m.length?m.join():"0% "+g.color,"radial"==i?(g.type="gradientTitle",g.focus="100%",g.focussize="0 0",g.focusposition=j,g.angle=0):(g.type="gradient",g.angle=(270-k)%360),b.appendChild(g)}return 1},D=function(b,c){this[0]=this.node=b,b.raphael=!0,this.id=a._oid++,b.raphaelid=this.id,this.X=0,this.Y=0,this.attrs={},this.paper=c,this.matrix=a.matrix(),this._={transform:[],sx:1,sy:1,dx:0,dy:0,deg:0,dirty:1,dirtyT:1},!c.bottom&&(c.bottom=this),this.prev=c.top,c.top&&(c.top.next=this),c.top=this,this.next=null},E=a.el;D.prototype=E,E.constructor=D,E.transform=function(b){if(null==b)return this._.transform;var d,e=this.paper._viewBoxShift,f=e?"s"+[e.scale,e.scale]+"-1-1t"+[e.dx,e.dy]:o;e&&(d=b=c(b).replace(/\.{3}|\u2026/g,this._.transform||o)),a._extractTransform(this,f+b);var g,h=this.matrix.clone(),i=this.skew,j=this.node,k=~c(this.attrs.fill).indexOf("-"),l=!c(this.attrs.fill).indexOf("url(");if(h.translate(1,1),l||k||"image"==this.type)if(i.matrix="1 0 0 1",i.offset="0 0",g=h.split(),k&&g.noRotation||!g.isSimple){j.style.filter=h.toFilter();var m=this.getBBox(),p=this.getBBox(1),q=m.x-p.x,r=m.y-p.y;j.coordorigin=q*-u+n+r*-u,z(this,1,1,q,r,0)}else j.style.filter=o,z(this,g.scalex,g.scaley,g.dx,g.dy,g.rotate);else j.style.filter=o,i.matrix=c(h),i.offset=h.offset();return null!==d&&(this._.transform=d,a._extractTransform(this,d)),this},E.rotate=function(a,b,e){if(this.removed)return this;if(null!=a){if(a=c(a).split(k),a.length-1&&(b=d(a[1]),e=d(a[2])),a=d(a[0]),null==e&&(b=e),null==b||null==e){var f=this.getBBox(1);b=f.x+f.width/2,e=f.y+f.height/2}return this._.dirtyT=1,this.transform(this._.transform.concat([["r",a,b,e]])),this}},E.translate=function(a,b){return this.removed?this:(a=c(a).split(k),a.length-1&&(b=d(a[1])),a=d(a[0])||0,b=+b||0,this._.bbox&&(this._.bbox.x+=a,this._.bbox.y+=b),this.transform(this._.transform.concat([["t",a,b]])),this)},E.scale=function(a,b,e,f){if(this.removed)return this;if(a=c(a).split(k),a.length-1&&(b=d(a[1]),e=d(a[2]),f=d(a[3]),isNaN(e)&&(e=null),isNaN(f)&&(f=null)),a=d(a[0]),null==b&&(b=a),null==f&&(e=f),null==e||null==f)var g=this.getBBox(1);return e=null==e?g.x+g.width/2:e,f=null==f?g.y+g.height/2:f,this.transform(this._.transform.concat([["s",a,b,e,f]])),this._.dirtyT=1,this},E.hide=function(){return!this.removed&&(this.node.style.display="none"),this},E.show=function(){return!this.removed&&(this.node.style.display=o),this},E.auxGetBBox=a.el.getBBox,E.getBBox=function(){var a=this.auxGetBBox();if(this.paper&&this.paper._viewBoxShift){var b={},c=1/this.paper._viewBoxShift.scale;return b.x=a.x-this.paper._viewBoxShift.dx,b.x*=c,b.y=a.y-this.paper._viewBoxShift.dy,b.y*=c,b.width=a.width*c,b.height=a.height*c,b.x2=b.x+b.width,b.y2=b.y+b.height,b}return a},E._getBBox=function(){return this.removed?{}:{x:this.X+(this.bbx||0)-this.W/2,y:this.Y-this.H,width:this.W,height:this.H}},E.remove=function(){if(!this.removed&&this.node.parentNode){this.paper.__set__&&this.paper.__set__.exclude(this),a.eve.unbind("raphael.*.*."+this.id),a._tear(this,this.paper),this.node.parentNode.removeChild(this.node),this.shape&&this.shape.parentNode.removeChild(this.shape);for(var b in this)this[b]="function"==typeof this[b]?a._removedFactory(b):null;this.removed=!0}},E.attr=function(c,d){if(this.removed)return this;if(null==c){var e={};for(var f in this.attrs)this.attrs[b](f)&&(e[f]=this.attrs[f]);return e.gradient&&"none"==e.fill&&(e.fill=e.gradient)&&delete e.gradient,e.transform=this._.transform,e}if(null==d&&a.is(c,"string")){if(c==j&&"none"==this.attrs.fill&&this.attrs.gradient)return this.attrs.gradient;for(var g=c.split(k),h={},i=0,m=g.length;m>i;i++)c=g[i],c in this.attrs?h[c]=this.attrs[c]:a.is(this.paper.customAttributes[c],"function")?h[c]=this.paper.customAttributes[c].def:h[c]=a._availableAttrs[c];return m-1?h:h[g[0]]}if(this.attrs&&null==d&&a.is(c,"array")){for(h={},i=0,m=c.length;m>i;i++)h[c[i]]=this.attr(c[i]);return h}var n;null!=d&&(n={},n[c]=d),null==d&&a.is(c,"object")&&(n=c);for(var o in n)l("raphael.attr."+o+"."+this.id,this,n[o]);if(n){for(o in this.paper.customAttributes)if(this.paper.customAttributes[b](o)&&n[b](o)&&a.is(this.paper.customAttributes[o],"function")){var p=this.paper.customAttributes[o].apply(this,[].concat(n[o]));this.attrs[o]=n[o];for(var q in p)p[b](q)&&(n[q]=p[q])}n.text&&"text"==this.type&&(this.textpath.string=n.text),B(this,n)}return this},E.toFront=function(){return!this.removed&&this.node.parentNode.appendChild(this.node),this.paper&&this.paper.top!=this&&a._tofront(this,this.paper),this},E.toBack=function(){return this.removed?this:(this.node.parentNode.firstChild!=this.node&&(this.node.parentNode.insertBefore(this.node,this.node.parentNode.firstChild),a._toback(this,this.paper)),this)},E.insertAfter=function(b){return this.removed?this:(b.constructor==a.st.constructor&&(b=b[b.length-1]),b.node.nextSibling?b.node.parentNode.insertBefore(this.node,b.node.nextSibling):b.node.parentNode.appendChild(this.node),a._insertafter(this,b,this.paper),this)},E.insertBefore=function(b){return this.removed?this:(b.constructor==a.st.constructor&&(b=b[0]),b.node.parentNode.insertBefore(this.node,b.node),a._insertbefore(this,b,this.paper),this)},E.blur=function(b){var c=this.node.runtimeStyle,d=c.filter;return d=d.replace(r,o),0!==+b?(this.attrs.blur=b,c.filter=d+n+m+".Blur(pixelradius="+(+b||1.5)+")",c.margin=a.format("-{0}px 0 0 -{0}px",f(+b||1.5))):(c.filter=d,c.margin=0,delete this.attrs.blur),this},a._engine.path=function(a,b){var c=F("shape");c.style.cssText=t,c.coordsize=u+n+u,c.coordorigin=b.coordorigin;var d=new D(c,b),e={fill:"none",stroke:"#000"};a&&(e.path=a),d.type="path",d.path=[],d.Path=o,B(d,e),b.canvas.appendChild(c);var f=F("skew");return f.on=!0,c.appendChild(f),d.skew=f,d.transform(o),d},a._engine.rect=function(b,c,d,e,f,g){var h=a._rectPath(c,d,e,f,g),i=b.path(h),j=i.attrs;return i.X=j.x=c,i.Y=j.y=d,i.W=j.width=e,i.H=j.height=f,j.r=g,j.path=h,i.type="rect",i},a._engine.ellipse=function(a,b,c,d,e){{var f=a.path();f.attrs}return f.X=b-d,f.Y=c-e,f.W=2*d,f.H=2*e,f.type="ellipse",B(f,{cx:b,cy:c,rx:d,ry:e}),f},a._engine.circle=function(a,b,c,d){{var e=a.path();e.attrs}return e.X=b-d,e.Y=c-d,e.W=e.H=2*d,e.type="circle",B(e,{cx:b,cy:c,r:d}),e},a._engine.image=function(b,c,d,e,f,g){var h=a._rectPath(d,e,f,g),i=b.path(h).attr({stroke:"none"}),k=i.attrs,l=i.node,m=l.getElementsByTagName(j)[0];return k.src=c,i.X=k.x=d,i.Y=k.y=e,i.W=k.width=f,i.H=k.height=g,k.path=h,i.type="image",m.parentNode==l&&l.removeChild(m),m.rotate=!0,m.src=c,m.type="tile",i._.fillpos=[d,e],i._.fillsize=[f,g],l.appendChild(m),z(i,1,1,0,0,0),i},a._engine.text=function(b,d,e,g){var h=F("shape"),i=F("path"),j=F("textpath");d=d||0,e=e||0,g=g||"",i.v=a.format("m{0},{1}l{2},{1}",f(d*u),f(e*u),f(d*u)+1),i.textpathok=!0,j.string=c(g),j.on=!0,h.style.cssText=t,h.coordsize=u+n+u,h.coordorigin="0 0";var k=new D(h,b),l={fill:"#000",stroke:"none",font:a._availableAttrs.font,text:g};k.shape=h,k.path=i,k.textpath=j,k.type="text",k.attrs.text=c(g),k.attrs.x=d,k.attrs.y=e,k.attrs.w=1,k.attrs.h=1,B(k,l),h.appendChild(j),h.appendChild(i),b.canvas.appendChild(h);var m=F("skew");return m.on=!0,h.appendChild(m),k.skew=m,k.transform(o),k},a._engine.setSize=function(b,c){var d=this.canvas.style;return this.width=b,this.height=c,b==+b&&(b+="px"),c==+c&&(c+="px"),d.width=b,d.height=c,d.clip="rect(0 "+b+" "+c+" 0)",this._viewBox&&a._engine.setViewBox.apply(this,this._viewBox),this},a._engine.setViewBox=function(b,c,d,e,f){a.eve("raphael.setViewBox",this,this._viewBox,[b,c,d,e,f]);var g,h,i=this.getSize(),j=i.width,k=i.height;return f&&(g=k/e,h=j/d,j>d*g&&(b-=(j-d*g)/2/g),k>e*h&&(c-=(k-e*h)/2/h)),this._viewBox=[b,c,d,e,!!f],this._viewBoxShift={dx:-b,dy:-c,scale:i},this.forEach(function(a){a.transform("...")}),this};var F;a._engine.initWin=function(a){var b=a.document;b.styleSheets.length<31?b.createStyleSheet().addRule(".rvml","behavior:url(#default#VML)"):b.styleSheets[0].addRule(".rvml","behavior:url(#default#VML)");try{!b.namespaces.rvml&&b.namespaces.add("rvml","urn:schemas-microsoft-com:vml"),F=function(a){return b.createElement("<rvml:"+a+' class="rvml">')}}catch(c){F=function(a){return b.createElement("<"+a+' xmlns="urn:schemas-microsoft.com:vml" class="rvml">')}}},a._engine.initWin(a._g.win),a._engine.create=function(){var b=a._getContainer.apply(0,arguments),c=b.container,d=b.height,e=b.width,f=b.x,g=b.y;if(!c)throw new Error("VML container not found.");var h=new a._Paper,i=h.canvas=a._g.doc.createElement("div"),j=i.style;return f=f||0,g=g||0,e=e||512,d=d||342,h.width=e,h.height=d,e==+e&&(e+="px"),d==+d&&(d+="px"),h.coordsize=1e3*u+n+1e3*u,h.coordorigin="0 0",h.span=a._g.doc.createElement("span"),h.span.style.cssText="position:absolute;left:-9999em;top:-9999em;padding:0;margin:0;line-height:1;",i.appendChild(h.span),j.cssText=a.format("top:0;left:0;width:{0};height:{1};display:inline-block;position:relative;clip:rect(0 {0} {1} 0);overflow:hidden",e,d),1==c?(a._g.doc.body.appendChild(i),j.left=f+"px",j.top=g+"px",j.position="absolute"):c.firstChild?c.insertBefore(i,c.firstChild):c.appendChild(i),h.renderfix=function(){},h},a.prototype.clear=function(){a.eve("raphael.clear",this),this.canvas.innerHTML=o,this.span=a._g.doc.createElement("span"),this.span.style.cssText="position:absolute;left:-9999em;top:-9999em;padding:0;margin:0;line-height:1;display:inline;",this.canvas.appendChild(this.span),this.bottom=this.top=null},a.prototype.remove=function(){a.eve("raphael.remove",this),this.canvas.parentNode.removeChild(this.canvas);for(var b in this)this[b]="function"==typeof this[b]?a._removedFactory(b):null;return!0};var G=a.st;for(var H in E)E[b](H)&&!G[b](H)&&(G[H]=function(a){return function(){var b=arguments;return this.forEach(function(c){c[a].apply(c,b)})}}(H))}});
+/**
+ * JustGage - animated gauges using RaphaelJS
+ * Check http://www.justgage.com for official releases
+ * Licensed under MIT.
+ * @author Bojan Djuricic (@Toorshia)
+ **/
+
+JustGage = function(config) {
+
+  var obj = this;
+
+  // Helps in case developer wants to debug it. unobtrusive
+  if (config === null || config === undefined) {
+    console.log('* justgage: Make sure to pass options to the constructor!');
+    return false;
+  }
+
+  var node;
+
+  if (config.id !== null && config.id !== undefined) {
+    node = document.getElementById(config.id);
+    if (!node) {
+      console.log('* justgage: No element with id : %s found', config.id);
+      return false;
+    }
+  } else if (config.parentNode !== null && config.parentNode !== undefined) {
+    node = config.parentNode;
+  } else {
+    console.log('* justgage: Make sure to pass the existing element id or parentNode to the constructor.');
+    return false;
+  }
+
+  var dataset = node.dataset ? node.dataset : {};
+
+  // check for defaults
+  var defaults = (config.defaults !== null && config.defaults !== undefined) ? config.defaults : false;
+  if (defaults !== false) {
+    config = extend({}, config, defaults);
+    delete config.defaults;
+  }
+
+  // configurable parameters
+  obj.config = {
+    // id : string
+    // this is container element id
+    id: config.id,
+
+    // value : float
+    // value gauge is showing
+    value: kvLookup('value', config, dataset, 0, 'float'),
+
+    // defaults : bool
+    // defaults parameter to use
+    defaults: kvLookup('defaults', config, dataset, 0, false),
+
+    // parentNode : node object
+    // this is container element
+    parentNode: kvLookup('parentNode', config, dataset, null),
+
+    // width : int
+    // gauge width
+    width: kvLookup('width', config, dataset, null),
+
+    // height : int
+    // gauge height
+    height: kvLookup('height', config, dataset, null),
+
+    // title : string
+    // gauge title
+    title: kvLookup('title', config, dataset, ""),
+
+    // titleFontColor : string
+    // color of gauge title
+    titleFontColor: kvLookup('titleFontColor', config, dataset, "#999999"),
+
+    // titleFontFamily : string
+    // color of gauge title
+    titleFontFamily: kvLookup('titleFontFamily', config, dataset, "sans-serif"),
+
+    // titlePosition : string
+    // 'above' or 'below'
+    titlePosition: kvLookup('titlePosition', config, dataset, "above"),
+
+    // valueFontColor : string
+    // color of label showing current value
+    valueFontColor: kvLookup('valueFontColor', config, dataset, "#010101"),
+
+    // valueFontFamily : string
+    // color of label showing current value
+    valueFontFamily: kvLookup('valueFontFamily', config, dataset, "Arial"),
+
+    // symbol : string
+    // special symbol to show next to value
+    symbol: kvLookup('symbol', config, dataset, ''),
+
+    // min : float
+    // min value
+    min: kvLookup('min', config, dataset, 0, 'float'),
+
+    // max : float
+    // max value
+    max: kvLookup('max', config, dataset, 100, 'float'),
+
+    // reverse : bool
+    // reverse min and max
+    reverse: kvLookup('reverse', config, dataset, false),
+
+    // humanFriendlyDecimal : int
+    // number of decimal places for our human friendly number to contain
+    humanFriendlyDecimal: kvLookup('humanFriendlyDecimal', config, dataset, 0),
+
+
+    // textRenderer: func
+    // function applied before rendering text
+    textRenderer: kvLookup('textRenderer', config, dataset, null),
+
+    // gaugeWidthScale : float
+    // width of the gauge element
+    gaugeWidthScale: kvLookup('gaugeWidthScale', config, dataset, 1.0),
+
+    // gaugeColor : string
+    // background color of gauge element
+    gaugeColor: kvLookup('gaugeColor', config, dataset, "#edebeb"),
+
+    // label : string
+    // text to show below value
+    label: kvLookup('label', config, dataset, ''),
+
+    // labelFontColor : string
+    // color of label showing label under value
+    labelFontColor: kvLookup('labelFontColor', config, dataset, "#b3b3b3"),
+
+    // shadowOpacity : int
+    // 0 ~ 1
+    shadowOpacity: kvLookup('shadowOpacity', config, dataset, 0.2),
+
+    // shadowSize: int
+    // inner shadow size
+    shadowSize: kvLookup('shadowSize', config, dataset, 5),
+
+    // shadowVerticalOffset : int
+    // how much shadow is offset from top
+    shadowVerticalOffset: kvLookup('shadowVerticalOffset', config, dataset, 3),
+
+    // levelColors : string[]
+    // colors of indicator, from lower to upper, in RGB format
+    levelColors: kvLookup('levelColors', config, dataset, ["#a9d70b", "#f9c802", "#ff0000"], 'array', ','),
+
+    // startAnimationTime : int
+    // length of initial animation
+    startAnimationTime: kvLookup('startAnimationTime', config, dataset, 700),
+
+    // startAnimationType : string
+    // type of initial animation (linear, >, <,  <>, bounce)
+    startAnimationType: kvLookup('startAnimationType', config, dataset, '>'),
+
+    // refreshAnimationTime : int
+    // length of refresh animation
+    refreshAnimationTime: kvLookup('refreshAnimationTime', config, dataset, 700),
+
+    // refreshAnimationType : string
+    // type of refresh animation (linear, >, <,  <>, bounce)
+    refreshAnimationType: kvLookup('refreshAnimationType', config, dataset, '>'),
+
+    // donutStartAngle : int
+    // angle to start from when in donut mode
+    donutStartAngle: kvLookup('donutStartAngle', config, dataset, 90),
+
+    // valueMinFontSize : int
+    // absolute minimum font size for the value
+    valueMinFontSize: kvLookup('valueMinFontSize', config, dataset, 16),
+
+    // titleMinFontSize
+    // absolute minimum font size for the title
+    titleMinFontSize: kvLookup('titleMinFontSize', config, dataset, 10),
+
+    // labelMinFontSize
+    // absolute minimum font size for the label
+    labelMinFontSize: kvLookup('labelMinFontSize', config, dataset, 10),
+
+    // minLabelMinFontSize
+    // absolute minimum font size for the minimum label
+    minLabelMinFontSize: kvLookup('minLabelMinFontSize', config, dataset, 10),
+
+    // maxLabelMinFontSize
+    // absolute minimum font size for the maximum label
+    maxLabelMinFontSize: kvLookup('maxLabelMinFontSize', config, dataset, 10),
+
+    // hideValue : bool
+    // hide value text
+    hideValue: kvLookup('hideValue', config, dataset, false),
+
+    // hideMinMax : bool
+    // hide min and max values
+    hideMinMax: kvLookup('hideMinMax', config, dataset, false),
+
+    // hideInnerShadow : bool
+    // hide inner shadow
+    hideInnerShadow: kvLookup('hideInnerShadow', config, dataset, false),
+
+    // humanFriendly : bool
+    // convert large numbers for min, max, value to human friendly (e.g. 1234567 -> 1.23M)
+    humanFriendly: kvLookup('humanFriendly', config, dataset, false),
+
+    // noGradient : bool
+    // whether to use gradual color change for value, or sector-based
+    noGradient: kvLookup('noGradient', config, dataset, false),
+
+    // donut : bool
+    // show full donut gauge
+    donut: kvLookup('donut', config, dataset, false),
+
+    // relativeGaugeSize : bool
+    // whether gauge size should follow changes in container element size
+    relativeGaugeSize: kvLookup('relativeGaugeSize', config, dataset, false),
+
+    // counter : bool
+    // animate level number change
+    counter: kvLookup('counter', config, dataset, false),
+
+    // decimals : int
+    // number of digits after floating point
+    decimals: kvLookup('decimals', config, dataset, 0),
+
+    // customSectors : [] of objects
+    // number of digits after floating point
+    customSectors: kvLookup('customSectors', config, dataset, []),
+
+    // formatNumber: boolean
+    // formats numbers with commas where appropriate
+    formatNumber: kvLookup('formatNumber', config, dataset, false),
+
+    // pointer : bool
+    // show value pointer
+    pointer: kvLookup('pointer', config, dataset, false),
+
+    // pointerOptions : object
+    // define pointer look
+    pointerOptions: kvLookup('pointerOptions', config, dataset, [])
+  };
+
+  // variables
+  var
+    canvasW,
+    canvasH,
+    widgetW,
+    widgetH,
+    aspect,
+    dx,
+    dy,
+    titleFontSize,
+    titleX,
+    titleY,
+    valueFontSize,
+    valueX,
+    valueY,
+    labelFontSize,
+    labelX,
+    labelY,
+    minFontSize,
+    minX,
+    minY,
+    maxFontSize,
+    maxX,
+    maxY;
+
+  // overflow values
+  if (obj.config.value > obj.config.max) obj.config.value = obj.config.max;
+  if (obj.config.value < obj.config.min) obj.config.value = obj.config.min;
+  obj.originalValue = kvLookup('value', config, dataset, -1, 'float');
+
+  // create canvas
+  if (obj.config.id !== null && (document.getElementById(obj.config.id)) !== null) {
+    obj.canvas = Raphael(obj.config.id, "100%", "100%");
+  } else if (obj.config.parentNode !== null) {
+    obj.canvas = Raphael(obj.config.parentNode, "100%", "100%");
+  }
+
+  if (obj.config.relativeGaugeSize === true) {
+    obj.canvas.setViewBox(0, 0, 200, 150, true);
+  }
+
+  // canvas dimensions
+  if (obj.config.relativeGaugeSize === true) {
+    canvasW = 200;
+    canvasH = 150;
+  } else if (obj.config.width !== null && obj.config.height !== null) {
+    canvasW = obj.config.width;
+    canvasH = obj.config.height;
+  } else if (obj.config.parentNode !== null) {
+    obj.canvas.setViewBox(0, 0, 200, 150, true);
+    canvasW = 200;
+    canvasH = 150;
+  } else {
+    canvasW = getStyle(document.getElementById(obj.config.id), "width").slice(0, -2) * 1;
+    canvasH = getStyle(document.getElementById(obj.config.id), "height").slice(0, -2) * 1;
+  }
+
+  // widget dimensions
+  if (obj.config.donut === true) {
+
+    // DONUT *******************************
+
+    // width more than height
+    if (canvasW > canvasH) {
+      widgetH = canvasH;
+      widgetW = widgetH;
+      // width less than height
+    } else if (canvasW < canvasH) {
+      widgetW = canvasW;
+      widgetH = widgetW;
+      // if height don't fit, rescale both
+      if (widgetH > canvasH) {
+        aspect = widgetH / canvasH;
+        widgetH = widgetH / aspect;
+        widgetW = widgetH / aspect;
+      }
+      // equal
+    } else {
+      widgetW = canvasW;
+      widgetH = widgetW;
+    }
+
+    // delta
+    dx = (canvasW - widgetW) / 2;
+    dy = (canvasH - widgetH) / 2;
+
+    // title
+    titleFontSize = ((widgetH / 8) > 10) ? (widgetH / 10) : 10;
+    titleX = dx + widgetW / 2;
+    titleY = dy + widgetH / 11;
+
+    // value
+    valueFontSize = ((widgetH / 6.4) > 16) ? (widgetH / 5.4) : 18;
+    valueX = dx + widgetW / 2;
+    if (obj.config.label !== '') {
+      valueY = dy + widgetH / 1.85;
+    } else {
+      valueY = dy + widgetH / 1.7;
+    }
+
+    // label
+    labelFontSize = ((widgetH / 16) > 10) ? (widgetH / 16) : 10;
+    labelX = dx + widgetW / 2;
+    labelY = valueY + labelFontSize;
+
+    // min
+    minFontSize = ((widgetH / 16) > 10) ? (widgetH / 16) : 10;
+    minX = dx + (widgetW / 10) + (widgetW / 6.666666666666667 * obj.config.gaugeWidthScale) / 2;
+    minY = labelY;
+
+    // max
+    maxFontSize = ((widgetH / 16) > 10) ? (widgetH / 16) : 10;
+    maxX = dx + widgetW - (widgetW / 10) - (widgetW / 6.666666666666667 * obj.config.gaugeWidthScale) / 2;
+    maxY = labelY;
+
+  } else {
+    // HALF *******************************
+
+    // width more than height
+    if (canvasW > canvasH) {
+      widgetH = canvasH;
+      widgetW = widgetH * 1.25;
+      //if width doesn't fit, rescale both
+      if (widgetW > canvasW) {
+        aspect = widgetW / canvasW;
+        widgetW = widgetW / aspect;
+        widgetH = widgetH / aspect;
+      }
+      // width less than height
+    } else if (canvasW < canvasH) {
+      widgetW = canvasW;
+      widgetH = widgetW / 1.25;
+      // if height don't fit, rescale both
+      if (widgetH > canvasH) {
+        aspect = widgetH / canvasH;
+        widgetH = widgetH / aspect;
+        widgetW = widgetH / aspect;
+      }
+      // equal
+    } else {
+      widgetW = canvasW;
+      widgetH = widgetW * 0.75;
+    }
+
+    // delta
+    dx = (canvasW - widgetW) / 2;
+    dy = (canvasH - widgetH) / 2;
+    if (obj.config.titlePosition === 'below') {
+      // shift whole thing down
+      dy -= (widgetH / 6.4);
+    }
+
+    // title
+    titleFontSize = ((widgetH / 8) > obj.config.titleMinFontSize) ? (widgetH / 10) : obj.config.titleMinFontSize;
+    titleX = dx + widgetW / 2;
+    titleY = dy + (obj.config.titlePosition === 'below' ? (widgetH * 1.07) : (widgetH / 6.4));
+
+    // value
+    valueFontSize = ((widgetH / 6.5) > obj.config.valueMinFontSize) ? (widgetH / 6.5) : obj.config.valueMinFontSize;
+    valueX = dx + widgetW / 2;
+    valueY = dy + widgetH / 1.275;
+
+    // label
+    labelFontSize = ((widgetH / 16) > obj.config.labelMinFontSize) ? (widgetH / 16) : obj.config.labelMinFontSize;
+    labelX = dx + widgetW / 2;
+    labelY = valueY + valueFontSize / 2 + 5;
+
+    // min
+    minFontSize = ((widgetH / 16) > obj.config.minLabelMinFontSize) ? (widgetH / 16) : obj.config.minLabelMinFontSize;
+    minX = dx + (widgetW / 10) + (widgetW / 6.666666666666667 * obj.config.gaugeWidthScale) / 2;
+    minY = labelY;
+
+    // max
+    maxFontSize = ((widgetH / 16) > obj.config.maxLabelMinFontSize) ? (widgetH / 16) : obj.config.maxLabelMinFontSize;
+    maxX = dx + widgetW - (widgetW / 10) - (widgetW / 6.666666666666667 * obj.config.gaugeWidthScale) / 2;
+    maxY = labelY;
+  }
+
+  // parameters
+  obj.params = {
+    canvasW: canvasW,
+    canvasH: canvasH,
+    widgetW: widgetW,
+    widgetH: widgetH,
+    dx: dx,
+    dy: dy,
+    titleFontSize: titleFontSize,
+    titleX: titleX,
+    titleY: titleY,
+    valueFontSize: valueFontSize,
+    valueX: valueX,
+    valueY: valueY,
+    labelFontSize: labelFontSize,
+    labelX: labelX,
+    labelY: labelY,
+    minFontSize: minFontSize,
+    minX: minX,
+    minY: minY,
+    maxFontSize: maxFontSize,
+    maxX: maxX,
+    maxY: maxY
+  };
+
+  // var clear
+  canvasW, canvasH, widgetW, widgetH, aspect, dx, dy, titleFontSize, titleX, titleY, valueFontSize, valueX, valueY, labelFontSize, labelX, labelY, minFontSize, minX, minY, maxFontSize, maxX, maxY = null;
+
+  // pki - custom attribute for generating gauge paths
+  obj.canvas.customAttributes.pki = function(value, min, max, w, h, dx, dy, gws, donut, reverse) {
+
+    var alpha, Ro, Ri, Cx, Cy, Xo, Yo, Xi, Yi, path;
+
+    if (donut) {
+      alpha = (1 - 2 * (value - min) / (max - min)) * Math.PI;
+      Ro = w / 2 - w / 7;
+      Ri = Ro - w / 6.666666666666667 * gws;
+
+      Cx = w / 2 + dx;
+      Cy = h / 1.95 + dy;
+
+      Xo = w / 2 + dx + Ro * Math.cos(alpha);
+      Yo = h - (h - Cy) - Ro * Math.sin(alpha);
+      Xi = w / 2 + dx + Ri * Math.cos(alpha);
+      Yi = h - (h - Cy) - Ri * Math.sin(alpha);
+
+      path = "M" + (Cx - Ri) + "," + Cy + " ";
+      path += "L" + (Cx - Ro) + "," + Cy + " ";
+      if (value > ((max - min) / 2)) {
+        path += "A" + Ro + "," + Ro + " 0 0 1 " + (Cx + Ro) + "," + Cy + " ";
+      }
+      path += "A" + Ro + "," + Ro + " 0 0 1 " + Xo + "," + Yo + " ";
+      path += "L" + Xi + "," + Yi + " ";
+      if (value > ((max - min) / 2)) {
+        path += "A" + Ri + "," + Ri + " 0 0 0 " + (Cx + Ri) + "," + Cy + " ";
+      }
+      path += "A" + Ri + "," + Ri + " 0 0 0 " + (Cx - Ri) + "," + Cy + " ";
+      path += "Z ";
+
+      return {
+        path: path
+      };
+
+    } else {
+      alpha = (1 - (value - min) / (max - min)) * Math.PI;
+      Ro = w / 2 - w / 10;
+      Ri = Ro - w / 6.666666666666667 * gws;
+
+      Cx = w / 2 + dx;
+      Cy = h / 1.25 + dy;
+
+      Xo = w / 2 + dx + Ro * Math.cos(alpha);
+      Yo = h - (h - Cy) - Ro * Math.sin(alpha);
+      Xi = w / 2 + dx + Ri * Math.cos(alpha);
+      Yi = h - (h - Cy) - Ri * Math.sin(alpha);
+
+      path = "M" + (Cx - Ri) + "," + Cy + " ";
+      path += "L" + (Cx - Ro) + "," + Cy + " ";
+      path += "A" + Ro + "," + Ro + " 0 0 1 " + Xo + "," + Yo + " ";
+      path += "L" + Xi + "," + Yi + " ";
+      path += "A" + Ri + "," + Ri + " 0 0 0 " + (Cx - Ri) + "," + Cy + " ";
+      path += "Z ";
+
+      return {
+        path: path
+      };
+    }
+
+    // var clear
+    alpha, Ro, Ri, Cx, Cy, Xo, Yo, Xi, Yi, path = null;
+  };
+
+  // ndl - custom attribute for generating needle path
+  obj.canvas.customAttributes.ndl = function(value, min, max, w, h, dx, dy, gws, donut) {
+
+    var dlt = w * 3.5 / 100;
+    var dlb = w / 15;
+    var dw = w / 100;
+
+    if (obj.config.pointerOptions.toplength != null && obj.config.pointerOptions.toplength != undefined) dlt = obj.config.pointerOptions.toplength;
+    if (obj.config.pointerOptions.bottomlength != null && obj.config.pointerOptions.bottomlength != undefined) dlb = obj.config.pointerOptions.bottomlength;
+    if (obj.config.pointerOptions.bottomwidth != null && obj.config.pointerOptions.bottomwidth != undefined) dw = obj.config.pointerOptions.bottomwidth;
+
+    var alpha, Ro, Ri, Cx, Cy, Xo, Yo, Xi, Yi, Xc, Yc, Xz, Yz, Xa, Ya, Xb, Yb, path;
+
+    if (donut) {
+
+      alpha = (1 - 2 * (value - min) / (max - min)) * Math.PI;
+      Ro = w / 2 - w / 7;
+      Ri = Ro - w / 6.666666666666667 * gws;
+
+      Cx = w / 2 + dx;
+      Cy = h / 1.95 + dy;
+
+      Xo = w / 2 + dx + Ro * Math.cos(alpha);
+      Yo = h - (h - Cy) - Ro * Math.sin(alpha);
+      Xi = w / 2 + dx + Ri * Math.cos(alpha);
+      Yi = h - (h - Cy) - Ri * Math.sin(alpha);
+
+      Xc = Xo + dlt * Math.cos(alpha);
+      Yc = Yo - dlt * Math.sin(alpha);
+      Xz = Xi - dlb * Math.cos(alpha);
+      Yz = Yi + dlb * Math.sin(alpha);
+
+      Xa = Xz + dw * Math.sin(alpha);
+      Ya = Yz + dw * Math.cos(alpha);
+      Xb = Xz - dw * Math.sin(alpha);
+      Yb = Yz - dw * Math.cos(alpha);
+
+      path = 'M' + Xa + ',' + Ya + ' ';
+      path += 'L' + Xb + ',' + Yb + ' ';
+      path += 'L' + Xc + ',' + Yc + ' ';
+      path += 'Z ';
+
+      return {
+        path: path
+      };
+
+    } else {
+      alpha = (1 - (value - min) / (max - min)) * Math.PI;
+      Ro = w / 2 - w / 10;
+      Ri = Ro - w / 6.666666666666667 * gws;
+
+      Cx = w / 2 + dx;
+      Cy = h / 1.25 + dy;
+
+      Xo = w / 2 + dx + Ro * Math.cos(alpha);
+      Yo = h - (h - Cy) - Ro * Math.sin(alpha);
+      Xi = w / 2 + dx + Ri * Math.cos(alpha);
+      Yi = h - (h - Cy) - Ri * Math.sin(alpha);
+
+      Xc = Xo + dlt * Math.cos(alpha);
+      Yc = Yo - dlt * Math.sin(alpha);
+      Xz = Xi - dlb * Math.cos(alpha);
+      Yz = Yi + dlb * Math.sin(alpha);
+
+      Xa = Xz + dw * Math.sin(alpha);
+      Ya = Yz + dw * Math.cos(alpha);
+      Xb = Xz - dw * Math.sin(alpha);
+      Yb = Yz - dw * Math.cos(alpha);
+
+      path = 'M' + Xa + ',' + Ya + ' ';
+      path += 'L' + Xb + ',' + Yb + ' ';
+      path += 'L' + Xc + ',' + Yc + ' ';
+      path += 'Z ';
+
+      return {
+        path: path
+      };
+    }
+
+    // var clear
+    alpha, Ro, Ri, Cx, Cy, Xo, Yo, Xi, Yi, Xc, Yc, Xz, Yz, Xa, Ya, Xb, Yb, path = null;
+  };
+
+  // gauge
+  obj.gauge = obj.canvas.path().attr({
+    "stroke": "none",
+    "fill": obj.config.gaugeColor,
+    pki: [
+      obj.config.max,
+      obj.config.min,
+      obj.config.max,
+      obj.params.widgetW,
+      obj.params.widgetH,
+      obj.params.dx,
+      obj.params.dy,
+      obj.config.gaugeWidthScale,
+      obj.config.donut,
+      obj.config.reverse
+    ]
+  });
+
+  // level
+  obj.level = obj.canvas.path().attr({
+    "stroke": "none",
+    "fill": getColor(obj.config.value, (obj.config.value - obj.config.min) / (obj.config.max - obj.config.min), obj.config.levelColors, obj.config.noGradient, obj.config.customSectors),
+    pki: [
+      obj.config.min,
+      obj.config.min,
+      obj.config.max,
+      obj.params.widgetW,
+      obj.params.widgetH,
+      obj.params.dx,
+      obj.params.dy,
+      obj.config.gaugeWidthScale,
+      obj.config.donut,
+      obj.config.reverse
+    ]
+  });
+  if (obj.config.donut) {
+    obj.level.transform("r" + obj.config.donutStartAngle + ", " + (obj.params.widgetW / 2 + obj.params.dx) + ", " + (obj.params.widgetH / 1.95 + obj.params.dy));
+  }
+
+  if (obj.config.pointer) {
+    // needle
+    obj.needle = obj.canvas.path().attr({
+      "stroke": (obj.config.pointerOptions.stroke !== null && obj.config.pointerOptions.stroke !== undefined) ? obj.config.pointerOptions.stroke : "none",
+      "stroke-width": (obj.config.pointerOptions.stroke_width !== null && obj.config.pointerOptions.stroke_width !== undefined) ? obj.config.pointerOptions.stroke_width : 0,
+      "stroke-linecap": (obj.config.pointerOptions.stroke_linecap !== null && obj.config.pointerOptions.stroke_linecap !== undefined) ? obj.config.pointerOptions.stroke_linecap : "square",
+      "fill": (obj.config.pointerOptions.color !== null && obj.config.pointerOptions.color !== undefined) ? obj.config.pointerOptions.color : "#000000",
+      ndl: [
+        obj.config.min,
+        obj.config.min,
+        obj.config.max,
+        obj.params.widgetW,
+        obj.params.widgetH,
+        obj.params.dx,
+        obj.params.dy,
+        obj.config.gaugeWidthScale,
+        obj.config.donut
+      ]
+    });
+
+    if (obj.config.donut) {
+      obj.needle.transform("r" + obj.config.donutStartAngle + ", " + (obj.params.widgetW / 2 + obj.params.dx) + ", " + (obj.params.widgetH / 1.95 + obj.params.dy));
+    }
+
+  }
+
+  // title
+  obj.txtTitle = obj.canvas.text(obj.params.titleX, obj.params.titleY, obj.config.title);
+  obj.txtTitle.attr({
+    "font-size": obj.params.titleFontSize,
+    "font-weight": "bold",
+    "font-family": obj.config.titleFontFamily,
+    "fill": obj.config.titleFontColor,
+    "fill-opacity": "1"
+  });
+  setDy(obj.txtTitle, obj.params.titleFontSize, obj.params.titleY);
+
+  // value
+  obj.txtValue = obj.canvas.text(obj.params.valueX, obj.params.valueY, 0);
+  obj.txtValue.attr({
+    "font-size": obj.params.valueFontSize,
+    "font-weight": "bold",
+    "font-family": obj.config.valueFontFamily,
+    "fill": obj.config.valueFontColor,
+    "fill-opacity": "0"
+  });
+  setDy(obj.txtValue, obj.params.valueFontSize, obj.params.valueY);
+
+  // label
+  obj.txtLabel = obj.canvas.text(obj.params.labelX, obj.params.labelY, obj.config.label);
+  obj.txtLabel.attr({
+    "font-size": obj.params.labelFontSize,
+    "font-weight": "normal",
+    "font-family": "Arial",
+    "fill": obj.config.labelFontColor,
+    "fill-opacity": "0"
+  });
+  setDy(obj.txtLabel, obj.params.labelFontSize, obj.params.labelY);
+
+  // min
+  var min = obj.config.min;
+  if (obj.config.reverse) {
+    min = obj.config.max;
+  }
+
+  obj.txtMinimum = min;
+  if (obj.config.humanFriendly) {
+    obj.txtMinimum = humanFriendlyNumber(min, obj.config.humanFriendlyDecimal);
+  } else if (obj.config.formatNumber) {
+    obj.txtMinimum = formatNumber(min);
+  }
+  obj.txtMin = obj.canvas.text(obj.params.minX, obj.params.minY, obj.txtMinimum);
+  obj.txtMin.attr({
+    "font-size": obj.params.minFontSize,
+    "font-weight": "normal",
+    "font-family": "Arial",
+    "fill": obj.config.labelFontColor,
+    "fill-opacity": (obj.config.hideMinMax || obj.config.donut) ? "0" : "1"
+  });
+  setDy(obj.txtMin, obj.params.minFontSize, obj.params.minY);
+
+  // max
+  var max = obj.config.max;
+  if (obj.config.reverse) {
+    max = obj.config.min;
+  }
+  obj.txtMaximum = max;
+  if (obj.config.humanFriendly) {
+    obj.txtMaximum = humanFriendlyNumber(max, obj.config.humanFriendlyDecimal);
+  } else if (obj.config.formatNumber) {
+    obj.txtMaximum = formatNumber(max);
+  }
+  obj.txtMax = obj.canvas.text(obj.params.maxX, obj.params.maxY, obj.txtMaximum);
+  obj.txtMax.attr({
+    "font-size": obj.params.maxFontSize,
+    "font-weight": "normal",
+    "font-family": "Arial",
+    "fill": obj.config.labelFontColor,
+    "fill-opacity": (obj.config.hideMinMax || obj.config.donut) ? "0" : "1"
+  });
+  setDy(obj.txtMax, obj.params.maxFontSize, obj.params.maxY);
+
+  var defs = obj.canvas.canvas.childNodes[1];
+  var svg = "http://www.w3.org/2000/svg";
+
+  if (ie !== 'undefined' && ie < 9) {
+    // VML mode - no SVG & SVG filter support
+  } else if (ie !== 'undefined') {
+    onCreateElementNsReady(function() {
+      obj.generateShadow(svg, defs);
+    });
+  } else {
+    obj.generateShadow(svg, defs);
+  }
+
+  // var clear
+  defs, svg = null;
+
+  // set value to display
+  if (obj.config.textRenderer) {
+    obj.originalValue = obj.config.textRenderer(obj.originalValue);
+  } else if (obj.config.humanFriendly) {
+    obj.originalValue = humanFriendlyNumber(obj.originalValue, obj.config.humanFriendlyDecimal) + obj.config.symbol;
+  } else if (obj.config.formatNumber) {
+    obj.originalValue = formatNumber(obj.originalValue) + obj.config.symbol;
+  } else {
+    obj.originalValue = (obj.originalValue * 1).toFixed(obj.config.decimals) + obj.config.symbol;
+  }
+
+  if (obj.config.counter === true) {
+    //on each animation frame
+    eve.on("raphael.anim.frame." + (obj.level.id), function() {
+      var currentValue = obj.level.attr("pki")[0];
+      if (obj.config.reverse) {
+        currentValue = (obj.config.max * 1) + (obj.config.min * 1) - (obj.level.attr("pki")[0] * 1);
+      }
+      if (obj.config.textRenderer) {
+        obj.txtValue.attr("text", obj.config.textRenderer(Math.floor(currentValue)));
+      } else if (obj.config.humanFriendly) {
+        obj.txtValue.attr("text", humanFriendlyNumber(Math.floor(currentValue), obj.config.humanFriendlyDecimal) + obj.config.symbol);
+      } else if (obj.config.formatNumber) {
+        obj.txtValue.attr("text", formatNumber(Math.floor(currentValue)) + obj.config.symbol);
+      } else {
+        obj.txtValue.attr("text", (currentValue * 1).toFixed(obj.config.decimals) + obj.config.symbol);
+      }
+      setDy(obj.txtValue, obj.params.valueFontSize, obj.params.valueY);
+      currentValue = null;
+    });
+    //on animation end
+    eve.on("raphael.anim.finish." + (obj.level.id), function() {
+      obj.txtValue.attr({
+        "text": obj.originalValue
+      });
+      setDy(obj.txtValue, obj.params.valueFontSize, obj.params.valueY);
+    });
+  } else {
+    //on animation start
+    eve.on("raphael.anim.start." + (obj.level.id), function() {
+      obj.txtValue.attr({
+        "text": obj.originalValue
+      });
+      setDy(obj.txtValue, obj.params.valueFontSize, obj.params.valueY);
+    });
+  }
+
+  // animate gauge level, value & label
+  var rvl = obj.config.value;
+  if (obj.config.reverse) {
+    rvl = (obj.config.max * 1) + (obj.config.min * 1) - (obj.config.value * 1);
+  }
+  obj.level.animate({
+    pki: [
+      rvl,
+      obj.config.min,
+      obj.config.max,
+      obj.params.widgetW,
+      obj.params.widgetH,
+      obj.params.dx,
+      obj.params.dy,
+      obj.config.gaugeWidthScale,
+      obj.config.donut,
+      obj.config.reverse
+    ]
+  }, obj.config.startAnimationTime, obj.config.startAnimationType);
+
+  if (obj.config.pointer) {
+    obj.needle.animate({
+      ndl: [
+        rvl,
+        obj.config.min,
+        obj.config.max,
+        obj.params.widgetW,
+        obj.params.widgetH,
+        obj.params.dx,
+        obj.params.dy,
+        obj.config.gaugeWidthScale,
+        obj.config.donut
+      ]
+    }, obj.config.startAnimationTime, obj.config.startAnimationType);
+  }
+
+  obj.txtValue.animate({
+    "fill-opacity": (obj.config.hideValue) ? "0" : "1"
+  }, obj.config.startAnimationTime, obj.config.startAnimationType);
+  obj.txtLabel.animate({
+    "fill-opacity": "1"
+  }, obj.config.startAnimationTime, obj.config.startAnimationType);
+};
+
+/** Refresh gauge level */
+JustGage.prototype.refresh = function(val, max) {
+
+  var obj = this;
+  var displayVal, color, max = max || null;
+
+  // set new max
+  if (max !== null) {
+    obj.config.max = max;
+    // TODO: update customSectors
+
+    obj.txtMaximum = obj.config.max;
+    if (obj.config.humanFriendly) {
+      obj.txtMaximum = humanFriendlyNumber(obj.config.max, obj.config.humanFriendlyDecimal);
+    } else if (obj.config.formatNumber) {
+      obj.txtMaximum = formatNumber(obj.config.max);
+    }
+    if (!obj.config.reverse) {
+      obj.txtMax.attr({
+        "text": obj.txtMaximum
+      });
+      setDy(obj.txtMax, obj.params.maxFontSize, obj.params.maxY);
+    } else {
+      obj.txtMin.attr({
+        "text": obj.txtMaximum
+      });
+      setDy(obj.txtMin, obj.params.minFontSize, obj.params.minY);
+    }
+  }
+
+  // overflow values
+  displayVal = val;
+  if ((val * 1) > (obj.config.max * 1)) {
+    val = (obj.config.max * 1);
+  }
+  if ((val * 1) < (obj.config.min * 1)) {
+    val = (obj.config.min * 1);
+  }
+
+  color = getColor(val, (val - obj.config.min) / (obj.config.max - obj.config.min), obj.config.levelColors, obj.config.noGradient, obj.config.customSectors);
+
+  if (obj.config.textRenderer) {
+    displayVal = obj.config.textRenderer(displayVal);
+  } else if (obj.config.humanFriendly) {
+    displayVal = humanFriendlyNumber(displayVal, obj.config.humanFriendlyDecimal) + obj.config.symbol;
+  } else if (obj.config.formatNumber) {
+    displayVal = formatNumber((displayVal * 1).toFixed(obj.config.decimals)) + obj.config.symbol;
+  } else {
+    displayVal = (displayVal * 1).toFixed(obj.config.decimals) + obj.config.symbol;
+  }
+  obj.originalValue = displayVal;
+  obj.config.value = val * 1;
+
+  if (!obj.config.counter) {
+    obj.txtValue.attr({
+      "text": displayVal
+    });
+    setDy(obj.txtValue, obj.params.valueFontSize, obj.params.valueY);
+  }
+
+  var rvl = obj.config.value;
+  if (obj.config.reverse) {
+    rvl = (obj.config.max * 1) + (obj.config.min * 1) - (obj.config.value * 1);
+  }
+  obj.level.animate({
+    pki: [
+      rvl,
+      obj.config.min,
+      obj.config.max,
+      obj.params.widgetW,
+      obj.params.widgetH,
+      obj.params.dx,
+      obj.params.dy,
+      obj.config.gaugeWidthScale,
+      obj.config.donut,
+      obj.config.reverse
+    ],
+    "fill": color
+  }, obj.config.refreshAnimationTime, obj.config.refreshAnimationType);
+
+  if (obj.config.pointer) {
+    obj.needle.animate({
+      ndl: [
+        rvl,
+        obj.config.min,
+        obj.config.max,
+        obj.params.widgetW,
+        obj.params.widgetH,
+        obj.params.dx,
+        obj.params.dy,
+        obj.config.gaugeWidthScale,
+        obj.config.donut
+      ]
+    }, obj.config.refreshAnimationTime, obj.config.refreshAnimationType);
+  }
+
+  // var clear
+  obj, displayVal, color, max = null;
+};
+
+/** Generate shadow */
+JustGage.prototype.generateShadow = function(svg, defs) {
+
+  var obj = this;
+  var sid = "inner-shadow-" + obj.config.id;
+  var gaussFilter, feOffset, feGaussianBlur, feComposite1, feFlood, feComposite2, feComposite3;
+
+  // FILTER
+  gaussFilter = document.createElementNS(svg, "filter");
+  gaussFilter.setAttribute("id", sid);
+  defs.appendChild(gaussFilter);
+
+  // offset
+  feOffset = document.createElementNS(svg, "feOffset");
+  feOffset.setAttribute("dx", 0);
+  feOffset.setAttribute("dy", obj.config.shadowVerticalOffset);
+  gaussFilter.appendChild(feOffset);
+
+  // blur
+  feGaussianBlur = document.createElementNS(svg, "feGaussianBlur");
+  feGaussianBlur.setAttribute("result", "offset-blur");
+  feGaussianBlur.setAttribute("stdDeviation", obj.config.shadowSize);
+  gaussFilter.appendChild(feGaussianBlur);
+
+  // composite 1
+  feComposite1 = document.createElementNS(svg, "feComposite");
+  feComposite1.setAttribute("operator", "out");
+  feComposite1.setAttribute("in", "SourceGraphic");
+  feComposite1.setAttribute("in2", "offset-blur");
+  feComposite1.setAttribute("result", "inverse");
+  gaussFilter.appendChild(feComposite1);
+
+  // flood
+  feFlood = document.createElementNS(svg, "feFlood");
+  feFlood.setAttribute("flood-color", "black");
+  feFlood.setAttribute("flood-opacity", obj.config.shadowOpacity);
+  feFlood.setAttribute("result", "color");
+  gaussFilter.appendChild(feFlood);
+
+  // composite 2
+  feComposite2 = document.createElementNS(svg, "feComposite");
+  feComposite2.setAttribute("operator", "in");
+  feComposite2.setAttribute("in", "color");
+  feComposite2.setAttribute("in2", "inverse");
+  feComposite2.setAttribute("result", "shadow");
+  gaussFilter.appendChild(feComposite2);
+
+  // composite 3
+  feComposite3 = document.createElementNS(svg, "feComposite");
+  feComposite3.setAttribute("operator", "over");
+  feComposite3.setAttribute("in", "shadow");
+  feComposite3.setAttribute("in2", "SourceGraphic");
+  gaussFilter.appendChild(feComposite3);
+
+  // set shadow
+  if (!obj.config.hideInnerShadow) {
+    obj.canvas.canvas.childNodes[2].setAttribute("filter", "url(#" + sid + ")");
+    obj.canvas.canvas.childNodes[3].setAttribute("filter", "url(#" + sid + ")");
+  }
+
+  // var clear
+  gaussFilter, feOffset, feGaussianBlur, feComposite1, feFlood, feComposite2, feComposite3 = null;
+};
+
+//
+// tiny helper function to lookup value of a key from two hash tables
+// if none found, return defaultvalue
+//
+// key: string
+// tablea: object
+// tableb: DOMStringMap|object
+// defval: string|integer|float|null
+// datatype: return datatype
+// delimiter: delimiter to be used in conjunction with datatype formatting
+//
+function kvLookup(key, tablea, tableb, defval, datatype, delimiter) {
+  var val = defval;
+  var canConvert = false;
+  if (!(key === null || key === undefined)) {
+    if (tableb !== null && tableb !== undefined && typeof tableb === "object" && key in tableb) {
+      val = tableb[key];
+      canConvert = true;
+    } else if (tablea !== null && tablea !== undefined && typeof tablea === "object" && key in tablea) {
+      val = tablea[key];
+      canConvert = true;
+    } else {
+      val = defval;
+    }
+    if (canConvert === true) {
+      if (datatype !== null && datatype !== undefined) {
+        switch (datatype) {
+          case 'int':
+            val = parseInt(val, 10);
+            break;
+          case 'float':
+            val = parseFloat(val);
+            break;
+          default:
+            break;
+        }
+      }
+    }
+  }
+  return val;
+};
+
+/** Get color for value */
+function getColor(val, pct, col, noGradient, custSec) {
+
+  var no, inc, colors, percentage, rval, gval, bval, lower, upper, range, rangePct, pctLower, pctUpper, color;
+  var noGradient = noGradient || custSec.length > 0;
+
+  if (custSec.length > 0) {
+    for (var i = 0; i < custSec.length; i++) {
+      if (val > custSec[i].lo && val <= custSec[i].hi) {
+        return custSec[i].color;
+      }
+    }
+  }
+
+  no = col.length;
+  if (no === 1) return col[0];
+  inc = (noGradient) ? (1 / no) : (1 / (no - 1));
+  colors = [];
+  for (i = 0; i < col.length; i++) {
+    percentage = (noGradient) ? (inc * (i + 1)) : (inc * i);
+    rval = parseInt((cutHex(col[i])).substring(0, 2), 16);
+    gval = parseInt((cutHex(col[i])).substring(2, 4), 16);
+    bval = parseInt((cutHex(col[i])).substring(4, 6), 16);
+    colors[i] = {
+      pct: percentage,
+      color: {
+        r: rval,
+        g: gval,
+        b: bval
+      }
+    };
+  }
+
+  if (pct === 0) {
+    return 'rgb(' + [colors[0].color.r, colors[0].color.g, colors[0].color.b].join(',') + ')';
+  }
+
+  for (var j = 0; j < colors.length; j++) {
+    if (pct <= colors[j].pct) {
+      if (noGradient) {
+        return 'rgb(' + [colors[j].color.r, colors[j].color.g, colors[j].color.b].join(',') + ')';
+      } else {
+        lower = colors[j - 1];
+        upper = colors[j];
+        range = upper.pct - lower.pct;
+        rangePct = (pct - lower.pct) / range;
+        pctLower = 1 - rangePct;
+        pctUpper = rangePct;
+        color = {
+          r: Math.floor(lower.color.r * pctLower + upper.color.r * pctUpper),
+          g: Math.floor(lower.color.g * pctLower + upper.color.g * pctUpper),
+          b: Math.floor(lower.color.b * pctLower + upper.color.b * pctUpper)
+        };
+        return 'rgb(' + [color.r, color.g, color.b].join(',') + ')';
+      }
+    }
+  }
+
+}
+
+/** Fix Raphael display:none tspan dy attribute bug */
+function setDy(elem, fontSize, txtYpos) {
+  if ((!ie || ie > 9) && elem.node.firstChild.attributes.dy) {
+    elem.node.firstChild.attributes.dy.value = 0;
+  }
+}
+
+/** Random integer  */
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+/**  Cut hex  */
+function cutHex(str) {
+  return (str.charAt(0) == "#") ? str.substring(1, 7) : str;
+}
+
+/**  Human friendly number suffix - From: http://stackoverflow.com/questions/2692323/code-golf-friendly-number-abbreviator */
+function humanFriendlyNumber(n, d) {
+  var p, d2, i, s;
+
+  p = Math.pow;
+  d2 = p(10, d);
+  i = 7;
+  while (i) {
+    s = p(10, i-- * 3);
+    if (s <= n) {
+      n = Math.round(n * d2 / s) / d2 + "KMGTPE" [i];
+    }
+  }
+  return n;
+}
+
+/** Format numbers with commas - From: http://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript */
+function formatNumber(x) {
+  var parts = x.toString().split(".");
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return parts.join(".");
+}
+
+/**  Get style  */
+function getStyle(oElm, strCssRule) {
+  var strValue = "";
+  if (document.defaultView && document.defaultView.getComputedStyle) {
+    strValue = document.defaultView.getComputedStyle(oElm, "").getPropertyValue(strCssRule);
+  } else if (oElm.currentStyle) {
+    strCssRule = strCssRule.replace(/\-(\w)/g, function(strMatch, p1) {
+      return p1.toUpperCase();
+    });
+    strValue = oElm.currentStyle[strCssRule];
+  }
+  return strValue;
+}
+
+/**  Create Element NS Ready  */
+function onCreateElementNsReady(func) {
+  if (document.createElementNS !== undefined) {
+    func();
+  } else {
+    setTimeout(function() {
+      onCreateElementNsReady(func);
+    }, 100);
+  }
+}
+
+/**  Get IE version  */
+// ----------------------------------------------------------
+// A short snippet for detecting versions of IE in JavaScript
+// without resorting to user-agent sniffing
+// ----------------------------------------------------------
+// If you're not in IE (or IE version is less than 5) then:
+// ie === undefined
+// If you're in IE (>=5) then you can determine which version:
+// ie === 7; // IE7
+// Thus, to detect IE:
+// if (ie) {}
+// And to detect the version:
+// ie === 6 // IE6
+// ie > 7 // IE8, IE9 ...
+// ie < 9 // Anything less than IE9
+// ----------------------------------------------------------
+// UPDATE: Now using Live NodeList idea from @jdalton
+var ie = (function() {
+
+  var undef,
+    v = 3,
+    div = document.createElement('div'),
+    all = div.getElementsByTagName('i');
+
+  while (
+    div.innerHTML = '<!--[if gt IE ' + (++v) + ']><i></i><![endif]-->',
+    all[0]
+  );
+  return v > 4 ? v : undef;
+}());
+
+// extend target object with second object
+function extend(out) {
+  out = out || {};
+
+  for (var i = 1; i < arguments.length; i++) {
+    if (!arguments[i])
+      continue;
+
+    for (var key in arguments[i]) {
+      if (arguments[i].hasOwnProperty(key))
+        out[key] = arguments[i][key];
+    }
+  }
+
+  return out;
+};
+
 /**!
  * AngularJS file upload shim for HTML5 FormData
  * @author  Danial  <danial.farid@gmail.com>
@@ -31506,6 +32739,155 @@ function renderMethodSpec(ccId, data) {
 				"ConfigurationGet": [],
 				"ConfigurationSet": [
 					{
+						"label": "Operation Mode",
+						"type": {
+							"enumof": [
+								{
+									"label": "Constant operation",
+									"type": {
+										"fix": 	{
+											"value": 1
+										}
+									}
+								},
+								{
+									"label": "Timed operation",
+									"type": {
+										"fix": 	{
+											"value": 2
+										}
+									}
+								}
+							]
+						}
+					},
+					{
+						"label": "Outside state",
+						"type": {
+							"enumof": [
+								{
+									"label": "Door Unsecured",
+									"type": {
+										"fix": 	{
+											"value": 0
+										}
+									}
+								},
+								{
+									"label": "Door Unsecured with timeout",
+									"type": {
+										"fix": 	{
+											"value": 0x1
+										}
+									}
+								},
+								{
+									"label": "Door Unsecured for inside Door Handles",
+									"type": {
+										"fix": 	{
+											"value": 0x10
+										}
+									}
+								},
+								{
+									"label": "Door Unsecured for inside Door Handles with timeout",
+									"type": {
+										"fix": 	{
+											"value": 0x11
+										}
+									}
+								},
+								{
+									"label": "Door Unsecured for outside Door Handles",
+									"type": {
+										"fix": 	{
+											"value": 0x20
+										}
+									}
+								},
+								{
+									"label": "Door Unsecured for outside Door Handles with timeout",
+									"type": {
+										"fix": 	{
+											"value": 0x21
+										}
+									}
+								},
+								{
+									"label": "Door Secured",
+									"type": {
+										"fix": 	{
+											"value": 0xff
+										}
+									}
+								}
+							]
+						}
+					},
+					{
+						"label": "Inside state",
+						"type": {
+							"enumof": [
+								{
+									"label": "Door Unsecured",
+									"type": {
+										"fix": 	{
+											"value": 0
+										}
+									}
+								},
+								{
+									"label": "Door Unsecured with timeout",
+									"type": {
+										"fix": 	{
+											"value": 0x1
+										}
+									}
+								},
+								{
+									"label": "Door Unsecured for inside Door Handles",
+									"type": {
+										"fix": 	{
+											"value": 0x10
+										}
+									}
+								},
+								{
+									"label": "Door Unsecured for inside Door Handles with timeout",
+									"type": {
+										"fix": 	{
+											"value": 0x11
+										}
+									}
+								},
+								{
+									"label": "Door Unsecured for outside Door Handles",
+									"type": {
+										"fix": 	{
+											"value": 0x20
+										}
+									}
+								},
+								{
+									"label": "Door Unsecured for outside Door Handles with timeout",
+									"type": {
+										"fix": 	{
+											"value": 0x21
+										}
+									}
+								},
+								{
+									"label": "Door Secured",
+									"type": {
+										"fix": 	{
+											"value": 0xff
+										}
+									}
+								}
+							]
+						}
+					},
+					{
 						"label": "Timeout, minutes",
 						"type": {
 							"range": {
@@ -32261,7 +33643,8 @@ var angApp = angular.module('angApp', [
     'appConfig',
     'qAllSettled',
     'angularFileUpload',
-    'myAppTemplates'
+    'myAppTemplates',
+    'doubleScrollBars'
 ]);
 
 /**
@@ -32494,6 +33877,9 @@ angApp.config(['$routeProvider',
         when('/network/control', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/network/control/control_' + config_data.cfg.app_type + '.html'
+        }).when('/network/neighbors', {
+            requireLogin: requireLogin,
+            templateUrl: 'app/views/network/neighbors.html'
         }).when('/network/routing', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/network/routing.html'
@@ -32514,26 +33900,43 @@ angApp.config(['$routeProvider',
         }).when('/network/statistics', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/network/statistics.html',
+            appTypeBanned: []
+        }).when('/network/linkstatus', {
+            requireLogin: requireLogin,
+            templateUrl: 'app/views/network/linkstatus.html',
+            appTypeBanned: [/*'default'*/]
+        }).when('/network/linkhealth/:nodeId?', {
+            requireLogin: requireLogin,
+            templateUrl: 'app/views/network/link_health.html',
             appTypeBanned: ['default']
         }).// Installer - zniffer
         when('/installer/zniffer', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/installer/zniffer.html',
-            appTypeBanned: ['default']
+            appTypeBanned: []
         }).// Installer - history
         when('/installer/history', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/installer/history.html',
-            appTypeBanned: ['default']
+            appTypeBanned: []
         }).// Installer - RSSI
         when('/installer/rssi', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/installer/rssi_background.html',
-            appTypeBanned: ['default']
+            appTypeBanned: []
+        }).
+        when('/installer/rssimeter', {
+            requireLogin: requireLogin,
+            templateUrl: 'app/views/installer/rssi_meter.html',
+            appTypeBanned: []
         }).// Settings
         when('/settings', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/settings/settings_' + config_data.cfg.app_type + '.html'
+        }).// Print
+        when('/print', {
+            requireLogin: requireLogin,
+            templateUrl: 'app/views/print/print.html'
         }).// Error page
         when('/error/:code?', {
             requireLogin: requireLogin,
@@ -32566,17 +33969,17 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/configuration/assoc.html',
-    "<div id=AssociationTable ng-controller=ConfigAssocController><div ng-include=\"'app/views/configuration/navi.html'\"></div><div ng-show=deviceId><div class=table-responsive ng-if=\"assocGroups.length > 0\"><button class=\"btn btn-primary\" type=button ng-click=\"updateFromDevice('updateFromDevice')\" ng-disabled=\"rowSpinner['updateFromDevice']\"><bb-row-spinner spinner=\"rowSpinner['updateFromDevice']\" label=\"_t('btn_update_from_device')\" icon=\"'fa-files-o'\"></bb-row-spinner></button><br><br><div class=\"alert alert-warning\" ng-if=\"nodeCfg.hasBattery && nodeCfg.notAwake.length > 0\"><i class=\"fa fa-info-circle text-warning\"></i> {{_t('conf_apply_battery')}}</div><table class=\"table table-striped_ table-condensed\"><tbody><tr ng-repeat=\"v in assocGroups track by $index\"><td class=association-text><h5>{{v.label}} ({{ _t('assoc_max')}} {{v.max}} {{ _t('assoc_nodes')}}) <span>| <i class=\"fa fa-clock-o\"></i> <span class={{v.timeClass}}>{{v.updateTime| isTodayFromUnix}}</span></span></h5><div><div class=\"btn-group btn-group-assoc-devices {{d.status}}\" role=group ng-repeat=\"d in assocGroupsDevices[v.groupId] track by d.elId\" id={{d.elId}}><button type=button class=\"btn btn-info\"><i class=\"fa fa-exclamation-triangle text-danger\" ng-if=\"d.status !== 'true-true'\"></i>(#{{d.id}}<span ng-if=nodeCfg.hasMca>.{{d.instance}}</span>) {{d.name|cutText:true:20}}</button> <button type=button class=\"btn btn-primary\" ng-click=deleteAssoc(d) ng-if=!d.isNew><i class=\"fa fa-times text-danger\"></i></button></div></div><p class=text-alert-list ng-if=\"v.remaining < 1\"><i class=\"fa fa-exclamation-circle text-warning\"></i> {{_t('assoc_max_nodes_reached')}}</p></td><td class=association-action style=\"text-align: right; width: 20%\"><button class=\"btn btn-primary\" type=button ng-if=\"v.remaining > 0\" ng-click=\"handleAssocModal('assocAddModal',$event,v)\" ng-disabled=\"rowSpinner['group_' + v.groupId]\"><bb-row-spinner spinner=\"rowSpinner['group_' + v.groupId]\" icon=\"'fa-plus'\"></bb-row-spinner></button></td></tr><tr><td class=association-text colspan=2><h3>{{_t('legend')}}</h3><div><i class=\"fa fa-square fa-lg\" style=\"color: #f0ad4e\"></i> {{_t('assoc_legend_2')}}</div><div><i class=\"fa fa-square fa-lg\" style=\"color: #ccc\"></i> {{_t('assoc_legend_3')}}</div><div><i class=\"fa fa-square fa-lg\" style=\"color: #5bc0de;\"></i> {{_t('assoc_legend_4')}}</div></td></tr></tbody></table></div><div ng-include=\"'app/views/configuration/modal_assoc_add.html'\"></div><div class=\"modal fade\" id=modal_assoc_add tabindex=-1 role=dialog aria-labelledby=myModalLabel aria-hidden=true><div class=modal-dialog><div class=modal-content><form name=form_assoc id=form_assoc ng-submit_=storeAssoc(input) novalidate><div class=modal-header><button type=button class=close data-dismiss=modal aria-hidden=true>&times;</button><h4 class=modal-title>{{ _t('assoc_add_title')}}</h4></div><div class=modal-body style=\"white-space: normal\"><div class=form-inline>{{ _t('fro')}} {{nodeCfg.name}} {{ _t('to_locate')}}<br><div class=form-group><select class=form-control ng-model=input.toNode ng-change=showAssocNodeInstance(input.toNode,nodeCfg.hasMca)><option value=\"\" ng-selected=true>&lt; {{ _t('assoc_select_to_node')}} &gt;</option><option ng-repeat=\"v in assocAddDevices\" value={{v.id}}>(#{{v.id}}) {{v.name}}</option></select></div><div class=form-group ng-if=\"nodeCfg.hasMca && assocAddInstances\"><select class=form-control ng-model=input.toInstance><option value=\"\" ng-selected=true>&lt; {{ _t('assoc_select_to_instance')}} &gt;</option><option value=plain ng-selected=true>{{ _t('plain_association')}}</option><option ng-repeat=\"v in assocAddInstances\" value={{v.key}}>{{v.val}}</option></select></div></div></div><div class=modal-footer><button type=button class=\"btn btn-default\" data-dismiss=modal ng-click=modalAssocHide()>{{ _t('dialog_abort')}}</button> <button type=submit class=\"btn btn-primary\" data-dismiss=modal ng-click=storeAssoc(input) ng-disabled=\"!input.toNode || ((assocAddInstances) && !input.toInstance)\">{{ _t('dialog_add')}}</button></div></form></div></div></div></div></div>"
+    "<div id=AssociationTable ng-controller=ConfigAssocController><div ng-include=\"'app/views/configuration/navi.html'\"></div><div class=\"row row-configuration\"><div class=\"col-md-3 menu-vertical\"><div ng-include=\"'app/views/configuration/menu.html'\"></div></div><div class=\"col-md-9 col-content\"><bb-alert alert=alert></bb-alert><div ng-show=deviceId><div class=table-responsive ng-if=\"assocGroups.length > 0\"><button class=\"btn btn-primary\" type=button ng-click=\"updateFromDevice('updateFromDevice')\" ng-disabled=\"rowSpinner['updateFromDevice']\"><bb-row-spinner spinner=\"rowSpinner['updateFromDevice']\" label=\"_t('btn_update_from_device')\" icon=\"'fa-files-o'\"></bb-row-spinner></button><br><br><div class=\"alert alert-warning\" ng-if=\"nodeCfg.hasBattery && nodeCfg.notAwake.length > 0\"><i class=\"fa fa-info-circle text-warning\"></i> {{_t('conf_apply_battery')}}</div><table class=\"table table-striped_ table-condensed\"><tbody><tr ng-repeat=\"v in assocGroups track by $index\"><td class=association-text><h5>{{v.label}} ({{ _t('assoc_max')}} {{v.max}} {{ _t('assoc_nodes')}}) <span>| <i class=\"fa fa-clock-o\"></i> <span class={{v.timeClass}}>{{v.updateTime| isTodayFromUnix}}</span></span></h5><div><div class=\"btn-group btn-group-assoc-devices {{d.status}}\" role=group ng-repeat=\"d in assocGroupsDevices[v.groupId] track by d.elId\" id={{d.elId}}><button type=button class=\"btn btn-info\"><i class=\"fa fa-exclamation-triangle text-danger\" ng-if=\"d.status !== 'true-true'\"></i>(#{{d.id}}<span ng-if=nodeCfg.hasMca>.{{d.instance}}</span>) {{d.name|cutText:true:20}}</button> <button type=button class=\"btn btn-primary\" ng-click=deleteAssoc(d) ng-if=!d.isNew><i class=\"fa fa-times text-danger\"></i></button></div></div><p class=text-alert-list ng-if=\"v.remaining < 1\"><i class=\"fa fa-exclamation-circle text-warning\"></i> {{_t('assoc_max_nodes_reached')}}</p></td><td class=association-action style=\"text-align: right; width: 20%\"><button class=\"btn btn-primary\" type=button ng-if=\"v.remaining > 0\" ng-click=\"handleAssocModal('assocAddModal',$event,v)\" ng-disabled=\"rowSpinner['group_' + v.groupId]\"><bb-row-spinner spinner=\"rowSpinner['group_' + v.groupId]\" icon=\"'fa-plus'\"></bb-row-spinner></button></td></tr></tbody></table><div class=legend-entry><div class=legend-row><i class=\"fa fa-square fa-lg orange\"></i> {{_t('assoc_legend_2')}}</div><div class=legend-row><i class=\"fa fa-square fa-lg gray-light\"></i> {{_t('assoc_legend_3')}}</div><div class=legend-row><i class=\"fa fa-square fa-lg blue-info\"></i> {{_t('assoc_legend_4')}}</div></div><div ng-include=\"'app/views/configuration/modal_assoc_add.html'\"></div></div></div></div></div></div>"
   );
 
 
   $templateCache.put('app/views/configuration/commands.html',
-    "<div ng-controller=ConfigCommandsController><div ng-include=\"'app/views/configuration/navi.html'\"></div><div id=table_mobile ng-show=deviceId><table class=table><thead><tr><th>{{_t('th_instance')}}</th><th>{{_t('th_command_class')}}</th><th>{{_t('th_command_param')}}</th></tr></thead><tbody><tr ng-repeat=\"(k,v) in commands | orderBy:predicate:reverse\" id=\"{{ v.nodeId}}\"><td data-title=\"{{_t('th_instance')}}\" ng-class=\"($index == 0 ? 'no-class' : 'mobile-hide')\"><button class=\"btn btn-default\" ng-click=\"handleCmdClassModal('cmdClassModal',$event,v.instanceId, $index, v.ccId, 'cmdDataIn')\">{{v.instanceId}}</button> &nbsp;</td><td data-title=\"{{_t('th_command_class')}}\"><button class=\"btn btn-default\" href=\"\" ng-click=\"handleCmdClassModal('cmdClassModal',$event,v.instanceId,$index,v.ccId, 'cmdData')\">{{v.commandClass}}</button>&nbsp;</td><td data-title=\"{{_t('th_command_param')}}\"><div class=commands-data ng-repeat=\"c in v.command| orderBy:predicate:reverse\" ng-init=\"formName = 'form_' + c.data.method + '_' + v.rowId\"><form name={{formName}} id={{formName}} class=\"form form_commands\" role=form ng-submit=\"storeExpertCommnds(formName, v.cmd + '.' + c.data.method)\" novalidate><div class=commands-data-control><div class=form-inline ng-repeat=\"(pk,p) in c.data.params\"><expert-command-input collection=p values=c.data.values[pk] devices=devices name=c.data.method get-node-devices=getNodeDevices></expert-command-input></div><button class=\"btn btn-primary\" type=submit ng-disabled=\"rowSpinner[v.cmd + '.' + c.data.method]\"><bb-row-spinner spinner=\"rowSpinner[v.cmd + '.' + c.data.method]\" label=c.data.method icon=\"'fa-circle-o'\"></bb-row-spinner></button></div></form></div>&nbsp;</td></tr></tbody></table></div><div ng-include=\"'app/views/configuration/modal_cmdclass.html'\"></div></div>"
+    "<div ng-controller=ConfigCommandsController><div ng-include=\"'app/views/configuration/navi.html'\"></div><div class=\"row row-configuration\"><div class=\"col-md-3 menu-vertical\"><div ng-include=\"'app/views/configuration/menu.html'\"></div></div><div class=\"col-md-9 col-content\"><bb-alert alert=alert></bb-alert><div id=table_mobile ng-show=deviceId><table class=table><thead><tr><th>{{_t('th_instance')}}</th><th>{{_t('th_command_class')}}</th><th>{{_t('th_command_param')}}</th></tr></thead><tbody><tr ng-repeat=\"(k,v) in commands | orderBy:predicate:reverse\" id=\"{{ v.nodeId}}\"><td data-title=\"{{_t('th_instance')}}\" ng-class=\"($index == 0 ? 'no-class' : 'mobile-hide')\"><button class=\"btn btn-default\" ng-click=\"handleCmdClassModal('cmdClassModal',$event,v.instanceId, $index, v.ccId, 'cmdDataIn')\">{{v.instanceId}}</button> &nbsp;</td><td data-title=\"{{_t('th_command_class')}}\"><button class=\"btn btn-default\" href=\"\" ng-click=\"handleCmdClassModal('cmdClassModal',$event,v.instanceId,$index,v.ccId, 'cmdData')\">{{v.commandClass}}</button> &nbsp;</td><td data-title=\"{{_t('th_command_param')}}\"><div class=commands-data ng-repeat=\"c in v.command| orderBy:predicate:reverse\" ng-init=\"formName = 'form_' + c.data.method + '_' + v.rowId\"><form name={{formName}} id={{formName}} class=\"form form_commands\" role=form ng-submit=\"storeExpertCommnds(formName, v.cmd + '.' + c.data.method)\" novalidate><div class=commands-data-control><div class=form-inline ng-repeat=\"(pk,p) in c.data.params\"><expert-command-input collection=p values=c.data.values[pk] devices=devices name=c.data.method get-node-devices=getNodeDevices></expert-command-input></div><button class=\"btn btn-primary\" type=submit ng-disabled=\"rowSpinner[v.cmd + '.' + c.data.method]\"><bb-row-spinner spinner=\"rowSpinner[v.cmd + '.' + c.data.method]\" label=c.data.method icon=\"'fa-circle-o'\"></bb-row-spinner></button></div></form></div>&nbsp;</td></tr></tbody></table></div><div ng-include=\"'app/views/configuration/modal_cmdclass.html'\"></div></div></div></div>"
   );
 
 
   $templateCache.put('app/views/configuration/configuration.html',
-    "<div ng-controller=ConfigConfigurationController><div ng-include=\"'app/views/configuration/navi.html'\"></div><div ng-show=deviceId><div ng-include=\"'app/views/configuration/configuration_commands.html'\"></div><div ng-if=\"!configCont && deviceZddx.length > 0\"><button id=btn_show_description class=\"btn btn-default\" ng-click=\"handleModal('loadXmlModal', $event)\"><i class=\"fa fa-clone\"></i> {{_t('select_zddx_help')}}</button><div ng-include=\"'app/views/configuration/modal_loadxml.html'\"></div></div><div ng-include=\"'app/views/configuration/configuration_config.html'\"></div><div ng-include=\"'app/views/configuration/configuration_wakeup.html'\"></div><div ng-include=\"'app/views/configuration/configuration_switchall.html'\"></div><div ng-include=\"'app/views/configuration/configuration_protection.html'\"></div></div></div>"
+    "<div ng-controller=ConfigConfigurationController><div ng-include=\"'app/views/configuration/navi.html'\"></div><div class=\"row row-configuration\"><div class=\"col-md-3 menu-vertical\"><div ng-include=\"'app/views/configuration/menu.html'\"></div></div><div class=\"col-md-9 col-content\"><bb-alert alert=alert></bb-alert><div ng-show=deviceId><div ng-include=\"'app/views/configuration/configuration_commands.html'\"></div><div ng-if=\"!configCont && deviceZddx.length > 0\"><button id=btn_show_description class=\"btn btn-default\" ng-click=\"handleModal('loadXmlModal', $event)\"><i class=\"fa fa-clone\"></i> {{_t('select_zddx_help')}}</button><div ng-include=\"'app/views/configuration/modal_loadxml.html'\"></div></div><div ng-include=\"'app/views/configuration/configuration_config.html'\"></div><div ng-include=\"'app/views/configuration/configuration_wakeup.html'\"></div><div ng-include=\"'app/views/configuration/configuration_switchall.html'\"></div><div ng-include=\"'app/views/configuration/configuration_protection.html'\"></div></div></div></div></div>"
   );
 
 
@@ -32606,17 +34009,22 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/configuration/firmware.html',
-    "<div ng-controller=ConfigFirmwareController><div ng-include=\"'app/views/configuration/navi.html'\"></div><div ng-show=deviceId><form name=form_firmware_update id=form_firmware_update class=\"form form-inline\" ng-if=firmware.show ng-submit=\"updateDeviceFirmware(firmware.input,'btn_update')\" novalidate><input id=url name=url class=form-control ng-model=firmware.input.url placeholder=\"{{_t('firmware_url')}}\" title=\"{{_t('firmware_url')}}\"> <input id=targetId name=url class=form-control ng-model=firmware.input.targetId placeholder=\"{{_t('target_id')}}\" title=\"_t('target_id')\"> <input type=file class=form-control file-model=myFile> <button type=submit class=\"btn btn-primary\" id=btn_update ng-disabled=\"rowSpinner['btn_update']\"><bb-row-spinner spinner=\"rowSpinner['btn_update']\" label=\"_t('update')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></form></div></div>"
+    "<div ng-controller=ConfigFirmwareController><div ng-include=\"'app/views/configuration/navi.html'\"></div><div class=\"row row-configuration\"><div class=\"col-md-3 menu-vertical\"><div ng-include=\"'app/views/configuration/menu.html'\"></div></div><div class=\"col-md-9 col-content\"><bb-alert alert=alert></bb-alert><div ng-show=deviceId><form name=form_firmware_update id=form_firmware_update class=\"form form-inline\" ng-if=firmware.show ng-submit=\"updateDeviceFirmware(firmware.input,'btn_update')\" novalidate><input id=url name=url class=form-control ng-model=firmware.input.url placeholder=\"{{_t('firmware_url')}}\" title=\"{{_t('firmware_url')}}\"> <input id=targetId name=url class=form-control ng-model=firmware.input.targetId placeholder=\"{{_t('target_id')}}\" title=\"_t('target_id')\"> <input type=file class=form-control file-model=myFile> <button type=submit class=\"btn btn-primary\" id=btn_update ng-disabled=\"rowSpinner['btn_update']\"><bb-row-spinner spinner=\"rowSpinner['btn_update']\" label=\"_t('update')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></form></div></div></div></div>"
   );
 
 
   $templateCache.put('app/views/configuration/health.html',
-    "<div ng-controller=ConfigHealthController><div ng-include=\"'app/views/configuration/navi.html'\"></div><div ng-show=\"deviceId && !_.isEmpty(health.neighbours)\"><div id=table_mobile><div class=\"alert ng-scope alert-warning\" ng-if=!health.device.hasPowerLevel><i class=\"fa fa-exclamation-circle\"></i> {{_t('link_health_no_powerlevel')}}</div><table class=\"table table-striped table-condensed table-hover\"><thead class=cf><tr><th><a href=\"\" ng-click=\"orderBy('id')\">{{ _t('link_to_node')}} <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('type')\">{{_t('device_description_device_type')}} <span ng-show=\"predicate == 'type'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th>{{ _t('linkquality')}}</th><th class=mobile-show><button class=\"btn btn-primary\" id=btn_test_all_1 ng-if=health.device.hasPowerLevel ng-click=\"testAllLinks('all_1')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner icon=\"'fa-circle-o'\" spinner=\"rowSpinner['all_1']\" label=\"_t('test_all_links')\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in health.neighbours| orderBy:predicate:reverse track by $index\" id={{v.rowId}}><td data-title=#><button class=\"btn btn-default btn-{{v.type}}\">{{ v.id}}</button></td><td data-title=\"{{ _t('device_description_device_type')}}\">{{ v.name}}</td><td data-title=\"{{ _t('type')}}\"><i class=fa ng-class=v.icon></i></td><td data-title=\"{{ _t('datetime')}}\"><span class=\"row-time {{v.indicator.updateTimeColor}}\" ng-if=v.powerLevel>{{ v.indicator.updateTime | isTodayFromUnix }} </span><span class=\"row-time {{health.timing.indicator.updateTimeColor}}\" ng-if=\"!v.powerLevel && v.id === health.ctrlNodeId\">{{ health.timing.indicator.updateTime | isTodayFromUnix }}</span></td><td data-title=\"{{ _t('linkquality')}}\"><i class=\"fa fa-circle fa-2x clickable {{v.indicator.color}}\" ng-if=v.powerLevel ng-click=\"handlePowerLevelModal('healthPowerLevelModal', $event, v)\"></i> <i class=\"fa fa-circle fa-2x clickable {{health.timing.indicator.color}}\" ng-if=\"!v.powerLevel && v.id === health.ctrlNodeId\" ng-click=\"handleTimingModal('healthTimingModal', $event, v)\"></i></td><td data-title=\"\" ng-switch on=v.deviceType><button class=\"btn btn-default\" id=\"btn_test_{{ v.id}}\" ng-if=health.device.hasPowerLevel ng-click=runZwaveCmd(v.cmdTestNode) ng-disabled=rowSpinner[v.cmdTestNode]><bb-row-spinner icon=\"'fa-circle-o text-success'\" spinner=rowSpinner[v.cmdTestNode] label=\"_t('test_link')\"></bb-row-spinner></button> <button class=\"btn btn-default\" id=\"btn_nop_{{ v.id}}\" ng-if=\"!health.device.hasPowerLevel && v.type === 'static'\" ng-click=runZwaveNopCmd(v.cmdNop) ng-disabled=rowSpinner[v.cmdNop]><bb-row-spinner icon=\"'fa-circle-o text-success'\" spinner=rowSpinner[v.cmdNop] label=\"_t('nop')\"></bb-row-spinner></button></td></tr></tbody></table></div></div><div id=healthPowerLevelModal class=appmodal ng-if=modalArr.healthPowerLevelModal><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handlePowerLevelModal('healthPowerLevelModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{health.device.find.name|cutText:true:30}}</h3></div><div class=appmodal-body ng-bind-html=\"health.device.commandClass | toTrusted\"></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handlePowerLevelModal('healthPowerLevelModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_close')}}</span></button></div></div></div><div id=healthTimingModal class=appmodal ng-if=modalArr.healthTimingModal><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handleTimingModal('healthTimingModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{health.device.find.name|cutText:true:30}}</h3></div><div class=appmodal-body><p><strong>{{_t('th_total')}} (pkts)</strong>: {{health.timing.find.totalPackets}}</p><p><strong>{{_t('th_ok')}}</strong>: {{health.timing.find.okPackets}}%</p><p><strong>{{_t('th_lastpackets')}}</strong>: <span ng-bind-html=\"health.timing.find.lastPackets | toTrusted\"></span></p><p><strong>{{_t('timing_color_description')}}:</strong><br><i class=\"fa fa-square fa-lg\" style=\"color: green\"></i> {{_t('timing_green')}}<br><i class=\"fa fa-square fa-lg\" style=\"color: black\"></i> {{_t('timing_black')}}<br><i class=\"fa fa-square fa-lg\" style=\"color: red\"></i> {{_t('timing_red')}}.<br></p></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleTimingModal('healthTimingModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_close')}}</span></button></div></div></div></div>"
+    "<div ng-controller=ConfigHealthController><div ng-include=\"'app/views/configuration/navi.html'\"></div><div class=\"row row-configuration\"><div class=\"col-md-3 menu-vertical\"><div ng-include=\"'app/views/configuration/menu.html'\"></div></div><div class=\"col-md-9 col-content\"><bb-alert alert=alert></bb-alert><div ng-show=\"deviceId && !_.isEmpty(health.neighbours)\"><div id=table_mobile><div class=\"alert ng-scope alert-warning\" ng-if=!health.device.hasPowerLevel><i class=\"fa fa-exclamation-circle\"></i> {{_t('link_health_no_powerlevel')}}</div><table class=\"table table-striped table-condensed table-hover\"><thead class=cf><tr><th><a href=\"\" ng-click=\"orderBy('id')\">{{ _t('link_to_node')}} <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('type')\">{{_t('device_description_device_type')}} <span ng-show=\"predicate == 'type'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th>{{ _t('linkquality')}}</th><th class=mobile-show><button class=\"btn btn-primary\" id=btn_test_all_1 ng-if=health.device.hasPowerLevel ng-click=\"testAllLinks('all_1')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner icon=\"'fa-circle-o'\" spinner=\"rowSpinner['all_1']\" label=\"_t('test_all_links')\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in health.neighbours| orderBy:predicate:reverse track by $index\" id={{v.rowId}}><td data-title=#><button class=\"btn btn-default btn-sm btn-{{v.type}}\">{{ v.id}}</button></td><td data-title=\"{{ _t('device_description_device_type')}}\">{{ v.name}}</td><td data-title=\"{{ _t('type')}}\"><i class=fa ng-class=v.icon title={{_t(v.type)}}></i></td><td data-title=\"{{ _t('datetime')}}\"><span class=\"row-time {{v.indicator.updateTimeColor}}\" ng-if=v.powerLevel>{{ v.indicator.updateTime | isTodayFromUnix }} </span><span class=\"row-time {{health.timing.indicator.updateTimeColor}}\" ng-if=\"!v.powerLevel && v.id === health.ctrlNodeId\">{{ health.timing.indicator.updateTime | isTodayFromUnix }}</span></td><td data-title=\"{{ _t('linkquality')}}\"><i class=\"fa fa-circle fa-2x clickable {{v.indicator.color}}\" ng-if=v.powerLevel ng-click=\"handlePowerLevelModal('healthPowerLevelModal', $event, v)\"></i> <i class=\"fa fa-circle fa-2x clickable {{health.timing.indicator.color}}\" ng-if=\"!v.powerLevel && v.id === health.ctrlNodeId\" ng-click=\"handleTimingModal('healthTimingModal', $event, v)\"></i></td><td data-title=\"\" ng-switch on=v.deviceType><button class=\"btn btn-default\" id=\"btn_test_{{ v.id}}\" ng-if=health.device.hasPowerLevel ng-click=runZwaveCmd(v.cmdTestNode) ng-disabled=rowSpinner[v.cmdTestNode]><bb-row-spinner icon=\"'fa-circle-o text-success'\" spinner=rowSpinner[v.cmdTestNode] label=\"_t('test_link')\"></bb-row-spinner></button> <button class=\"btn btn-default\" id=\"btn_nop_{{ v.id}}\" ng-if=\"!health.device.hasPowerLevel && v.type === 'static'\" ng-click=runZwaveNopCmd(v.cmdNop) ng-disabled=rowSpinner[v.cmdNop]><bb-row-spinner icon=\"'fa-circle-o text-success'\" spinner=rowSpinner[v.cmdNop] label=\"_t('nop')\"></bb-row-spinner></button></td></tr></tbody></table></div><div class=\"legend-entry legend-inline\"><div class=legend-row><button class=\"btn btn-default btn-sm btn-static\">&nbsp;</button> {{_t('static')}}</div><div class=legend-row><button class=\"btn btn-default btn-sm btn-portable\">&nbsp;</button> {{_t('portable')}}</div><div class=legend-row><button class=\"btn btn-default btn-sm btn-battery\">&nbsp;</button> {{_t('battery')}}</div><div class=legend-row><button class=\"btn btn-default btn-sm btn-flirs\">&nbsp;</button> {{_t('flirs')}}</div><div class=legend-row><button class=\"btn btn-default btn-sm btn-mains\">&nbsp;</button> {{_t('mains')}}</div><div class=legend-row><button class=\"btn btn-default btn-sm btn-unknown\">&nbsp;</button> {{_t('unknown')}}</div></div></div><div id=healthPowerLevelModal class=appmodal ng-if=modalArr.healthPowerLevelModal><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handlePowerLevelModal('healthPowerLevelModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{health.device.find.name|cutText:true:30}}</h3></div><div class=appmodal-body ng-bind-html=\"health.device.commandClass | toTrusted\"></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handlePowerLevelModal('healthPowerLevelModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_close')}}</span></button></div></div></div><div id=healthTimingModal class=appmodal ng-if=modalArr.healthTimingModal><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handleTimingModal('healthTimingModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{health.device.find.name|cutText:true:30}}</h3></div><div class=appmodal-body><p><strong>{{_t('th_total')}} (pkts)</strong>: {{health.timing.find.totalPackets}}</p><p><strong>{{_t('th_ok')}}</strong>: {{health.timing.find.okPackets}}%</p><p><strong>{{_t('th_lastpackets')}}</strong>: <span ng-bind-html=\"health.timing.find.lastPackets | toTrusted\"></span></p><p><strong>{{_t('timing_color_description')}}:</strong><br><i class=\"fa fa-square fa-lg\" style=\"color: green\"></i> {{_t('timing_green')}}<br><i class=\"fa fa-square fa-lg\" style=\"color: black\"></i> {{_t('timing_black')}}<br><i class=\"fa fa-square fa-lg\" style=\"color: red\"></i> {{_t('timing_red')}}.<br></p></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleTimingModal('healthTimingModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_close')}}</span></button></div></div></div></div></div></div>"
   );
 
 
   $templateCache.put('app/views/configuration/interview.html',
-    "<div ng-controller=ConfigInterviewController><div ng-include=\"'app/views/configuration/navi.html'\"></div><div ng-show=deviceId><div class=cfg-block><div class=row><div class=col-md-8><div class=table-responsive_><table class=\"table table-striped table-condensed table-cfg-interview\"><tbody><tr><th>{{_t('device_node_name')}}</th><td><div ng-hide=goDeviceName ng-click=\"goDeviceName = true\">{{deviceName}} <button type=button class=\"btn btn-default\" ng-click=\"goDeviceName = true\" ng-disabled=\"rowSpinner['deviceName']\"><bb-row-spinner spinner=\"rowSpinner['deviceName']\" icon=\"'fa-pencil'\"></bb-row-spinner></button></div><form name=form_rename id=form_rename ng-model=form_rename class=\"form _form-inline\" ng-show=goDeviceName ng-submit=\"renameDevice(form_rename,deviceName,'deviceName');goDeviceName = !goDeviceName\" novalidate><div class=input-group><input name=device_name id=device_name class=form-control value={{deviceName}} ng-model=deviceName><div class=input-group-btn><button type=submit class=\"btn btn-primary\" title=\"{{_t('btn_save')}}\"><i class=\"fa fa-circle-o\"></i> <span class=btn-name>{{_t('btn_save')}}</span></button></div></div></form></td></tr><tr ng-repeat=\"v in descriptionCont track by $index\" ng-hide=\"v.val === '' || v.val === false || v.val === null\"><th>{{_t(v.key)}}</th><td id={{v.key}}><div ng-switch on=v.key><div ng-switch-when=command_class><span ng-repeat=\"cc in interviewCommands\"><a href=\"\" ng-click=\"handleCmdClassModal('cmdClassModal',$event,cc.iId,cc.ccId, 'cmdData')\">{{cc.ccName}} </a>&#8226;&nbsp;</span></div><div class=config-interview-val ng-switch-default ng-bind-html=\"v.val | toTrusted\"></div></div></td></tr><tr><th>{{_t('device_interview_indicator')}}</th><td><div class=progress ng-if_=\"zwaveInterview.progress > 0 && zwaveInterview.progress < 101\"><div class=progress-bar style=\"min-height:40px;min-width: 2em; width: {{zwaveInterview.progress}}%\" ng-class=\"zwaveInterview.progress < 100 ? 'progress-bar-danger progress-bar-striped active' : 'progress-bar-success'\">{{zwaveInterview.progress}}%</div></div></td></tr></tbody></table></div></div><div class=col-md-4><img src={{deviceImage}} class=config-device-img alt=Image></div></div></div><div class=cfg-block><button id=btn_request_nif class=\"btn btn-primary\" ng-click=\"requestNodeInformation('devices[' + deviceId + '].RequestNodeInformation()')\" ng-disabled=\"rowSpinner['devices[' + deviceId + '].RequestNodeInformation()']\"><bb-row-spinner spinner=\"rowSpinner['devices[' + deviceId + '].RequestNodeInformation()']\" label=\"_t('config_ui_request_node_info')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button> <button class=\"btn btn-primary\" id=btn_interview_force ng-click=\"interviewForce('devices[' + deviceId + '].InterviewForce()')\" ng-disabled=\"rowSpinner['devices[' + deviceId + '].InterviewForce()']\"><bb-row-spinner spinner=\"rowSpinner['devices[' + deviceId + '].InterviewForce()']\" label=\"_t('config_ui_force_interview')\" icon=\"'fa-fire'\"></bb-row-spinner></button> <button id=btn_show_interview_result class=\"btn btn-default\" ng-click=\"handleModal('interviewModal',$event)\"><i class=\"fa fa-clone\"></i> {{_t('config_ui_show_interview_results')}}</button> <button id=btn_show_description class=\"btn btn-default\" ng-click=\"handleModal('loadXmlModal', $event)\"><i class=\"fa fa-clone\"></i> {{_t('config_ui_select_xml')}}</button> <a href=\"{{cfg.server_url + cfg.zddx_create_url + deviceId}}\" class=\"btn btn-default\" id=btn_create_zddx target=_blank><i class=\"fa fa-clone\"></i> {{_t('btn_zddx_create')}}</a></div></div><div ng-include=\"'app/views/configuration/modal_interview.html'\"></div><div ng-include=\"'app/views/configuration/modal_cmdclass.html'\"></div><div ng-include=\"'app/views/configuration/modal_loadxml.html'\"></div></div>"
+    "<div ng-controller=ConfigInterviewController><div ng-include=\"'app/views/configuration/navi.html'\"></div><div class=\"row row-configuration\"><div class=\"col-md-3 menu-vertical\"><div ng-include=\"'app/views/configuration/menu.html'\"></div></div><div class=\"col-md-9 col-content\"><bb-alert alert=alert></bb-alert><div ng-show=deviceId><div class=cfg-block><div class=row><div class=col-md-8><div class=table-responsive_><table class=\"table table-striped table-condensed table-cfg-interview\"><tbody><tr><th>{{_t('device_node_name')}}</th><td><div ng-hide=goDeviceName ng-click=\"goDeviceName = true\">{{deviceName}} <button type=button class=\"btn btn-default\" ng-click=\"goDeviceName = true\" ng-disabled=\"rowSpinner['deviceName']\"><bb-row-spinner spinner=\"rowSpinner['deviceName']\" icon=\"'fa-pencil'\"></bb-row-spinner></button></div><form name=form_rename id=form_rename ng-model=form_rename class=\"form _form-inline\" ng-show=goDeviceName ng-submit=\"renameDevice(form_rename,deviceName,'deviceName');goDeviceName = !goDeviceName\" novalidate><div class=input-group><input name=device_name id=device_name class=form-control value={{deviceName}} ng-model=deviceName><div class=input-group-btn><button type=submit class=\"btn btn-primary\" title=\"{{_t('btn_save')}}\"><i class=\"fa fa-circle-o\"></i> <span class=btn-name>{{_t('btn_save')}}</span></button></div></div></form></td></tr><tr ng-repeat=\"v in descriptionCont track by $index\" ng-hide=\"v.val === '' || v.val === false || v.val === null\"><th>{{_t(v.key)}}</th><td id={{v.key}}><div ng-switch on=v.key><div ng-switch-when=command_class><span ng-repeat=\"cc in interviewCommands\"><a href=\"\" ng-click=\"handleCmdClassModal('cmdClassModal',$event,cc.iId,cc.ccId, 'cmdData')\">{{cc.ccName}} </a>&#8226;&nbsp;</span></div><div class=config-interview-val ng-switch-default ng-bind-html=\"v.val | toTrusted\"></div></div></td></tr><tr><th>{{_t('device_interview_indicator')}}</th><td><div class=progress ng-if_=\"zwaveInterview.progress > 0 && zwaveInterview.progress < 101\"><div class=progress-bar style=\"min-height:40px;min-width: 2em; width: {{zwaveInterview.progress}}%\" ng-class=\"zwaveInterview.progress < 100 ? 'progress-bar-danger progress-bar-striped active' : 'progress-bar-success'\">{{zwaveInterview.progress}}%</div></div></td></tr></tbody></table></div></div><div class=col-md-4><img src={{deviceImage}} class=config-device-img alt=Image></div></div></div><div class=cfg-block><button id=btn_request_nif class=\"btn btn-primary\" ng-click=\"requestNodeInformation('devices[' + deviceId + '].RequestNodeInformation()')\" ng-disabled=\"rowSpinner['devices[' + deviceId + '].RequestNodeInformation()']\"><bb-row-spinner spinner=\"rowSpinner['devices[' + deviceId + '].RequestNodeInformation()']\" label=\"_t('config_ui_request_node_info')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button> <button class=\"btn btn-primary\" id=btn_interview_force ng-click=\"interviewForce('devices[' + deviceId + '].InterviewForce()')\" ng-disabled=\"rowSpinner['devices[' + deviceId + '].InterviewForce()']\"><bb-row-spinner spinner=\"rowSpinner['devices[' + deviceId + '].InterviewForce()']\" label=\"_t('config_ui_force_interview')\" icon=\"'fa-fire'\"></bb-row-spinner></button> <button id=btn_show_interview_result class=\"btn btn-default\" ng-click=\"handleModal('interviewModal',$event)\"><i class=\"fa fa-clone\"></i> {{_t('config_ui_show_interview_results')}}</button> <button id=btn_show_description class=\"btn btn-default\" ng-click=\"handleModal('loadXmlModal', $event)\"><i class=\"fa fa-clone\"></i> {{_t('config_ui_select_xml')}}</button></div></div><div ng-include=\"'app/views/configuration/modal_interview.html'\"></div><div ng-include=\"'app/views/configuration/modal_cmdclass.html'\"></div><div ng-include=\"'app/views/configuration/modal_loadxml.html'\"></div></div></div></div>"
+  );
+
+
+  $templateCache.put('app/views/configuration/menu.html',
+    "<ul class=list-group><li class=\"list-group-item clickable\" title=\"{{v.name }}\" ng-repeat=\"v in devices| orderBy:predicate:reverse\" ng-click=changeDevice(v.id) ng-class=\"v.id == deviceId ? 'active': ''\">(#{{v.id}}) {{v.name | cutText:true:30}}</li></ul>"
   );
 
 
@@ -32636,66 +34044,75 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/configuration/modal_loadxml.html',
-    "<div id=loadXmlModa class=appmodal ng-if=modalArr.loadXmlModal><div class=appmodal-in ng-controller=LoadDeviceXmlController><div class=appmodal-header><span class=appmodal-close ng-click=\"handleModal('loadXmlModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{_t('config_ui_select_xml')}}</h3></div><div class=\"appmodal-body modal-h-600\"><p ng-bind-html=\"_t('select_zddx_help') | toTrusted\"></p><select id=select_zddx_help class=form-control ng-change=changeDeviceXml(deviceXml.input) ng-model=deviceXml.input.fileName><option value=\"\">---</option><option ng-init=\"selectCfg = {\n" +
+    "<div id=loadXmlModa class=appmodal ng-if=modalArr.loadXmlModal><div class=appmodal-in ng-controller=LoadDeviceXmlController><div class=appmodal-header><span class=appmodal-close ng-click=\"handleModal('loadXmlModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{_t('config_ui_select_xml')}}</h3></div><div class=\"appmodal-body modal-h-600\"><p ng-bind-html=\"_t('select_zddx_help') | toTrusted\"></p><select id=select_zddx_help class=form-control ng-change=changeDeviceXml(deviceXml.input) ng-model=deviceXml.input.fileName><option value=\"\">---</option><option ng-init=\"selectCfg = {\r" +
+    "\n" +
     "                                'name':((v.brandName == '' && v.productName == '')?('Unnamed ZDDX: ' + v.fileName):(v.brandName + ' ' + v.productName))}\" ng-repeat=\"v in deviceXml.all | orderBy:'brandName':false track by $index\" ng-selected=\"deviceZddxFile == v.fileName\" value={{v.fileName}}>{{selectCfg.name}}</option></select><div id=device_select_image_container ng-if=\"!_.isEmpty(deviceXml.find) && deviceXml.find.deviceImage\"><div id=device_select_image><img ng-src={{deviceXml.find.deviceImage}}></div></div></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleModal('loadXmlModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button> <button class=\"btn btn-primary\" ng-if=!_.isEmpty(deviceXml.find) ng-click=\"storeDeviceXml(deviceXml.input,'storeDeviceXml')\" ng-disabled=\"rowSpinner['storeDeviceXml']\"><bb-row-spinner spinner=\"rowSpinner['storeDeviceXml']\" label=\"_t('btn_save')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></div></div></div>"
   );
 
 
   $templateCache.put('app/views/configuration/navi.html',
-    "<div class=\"tabs-wrap form-inline\" ng-show=\"deviceId > 0\"><div class=\"btn-group btn-goup-tabs\" ng-class=\"cfg.zwavecfg.debug ? 'btn-tabs-7': 'btn-tabs-6'\"><a class=\"btn btn-default\" title=\"{{_t('nav_device_interview')}}\" href=#configuration/interview/{{deviceId}} ng-class=\"activeTab == 'interview' ? 'active' : ''\"><i class=\"fa fa-commenting\"></i> <span class=btn-name>{{_t('nav_device_interview')}}</span> </a><a class=\"btn btn-default\" title=\"{{_t('nav_device_configuration')}}\" href=#configuration/configuration/{{deviceId}} ng-class=\"activeTab == 'configuration' ? 'active' : ''\"><i class=\"fa fa-cogs\"></i> <span class=btn-name>{{_t('nav_device_configuration')}}</span> </a><a class=\"btn btn-default\" title=\"{{_t('nav_device_assoc')}}\" href=#configuration/association/{{deviceId}} ng-class=\"activeTab == 'association' ? 'active' : ''\"><i class=\"fa fa-share-alt\"></i> <span class=btn-name>{{_t('nav_device_assoc')}} </span></a><a class=\"btn btn-default\" title=\"{{_t('link_health')}}\" href=#configuration/health/{{deviceId}} ng-class=\"activeTab == 'health' ? 'active' : ''\"><i class=\"fa fa-unlink\"></i> <span class=btn-name>{{_t('link_health')}}</span> </a><a class=\"btn btn-default\" title=\"{{_t('nav_expert_commands')}}\" href=#configuration/commands/{{deviceId}} ng-class=\"activeTab == 'commands' ? 'active' : ''\"><i class=\"fa fa-file-code-o\"></i> <span class=btn-name>{{_t('nav_expert_commands')}}</span> </a><a class=\"btn btn-default\" title=\"{{_t('nav_firmware_update')}}\" href=#configuration/firmware/{{deviceId}} ng-class=\"activeTab == 'firmware' ? 'active' : ''\"><i class=\"fa fa-upload\"></i> <span class=btn-name>{{_t('nav_firmware_update')}}</span> </a><a class=\"btn btn-default\" title=\"{{_t('nav_postfix_update')}}\" href=#configuration/postfix/{{deviceId}} ng-class=\"activeTab == 'postfix' ? 'active' : ''\" ng-if=cfg.zwavecfg.debug><i class=\"fa fa-tasks\"></i> <span class=btn-name>{{_t('nav_postfix_update')}}</span></a></div></div><div class=\"page-header form-inline\" ng-if=\"_.size(devices) > 0\"><div class=\"btn-group btn-goup-block_ btn-goup-2_\" ng-click=\"expandNavi('configDevices', $event)\"><button class=\"btn btn-default\"><span ng-if=\"deviceId > 0\">(#{{deviceId}}) {{deviceName | cutText:true:40}}</span> <span ng-if=\"!deviceId > 0\">{{_t('select_device')}}</span></button> <button class=\"btn btn-default\"><i class=\"fa fa-chevron-down\"></i></button></div></div><div class=page-navi ng-if=naviExpanded.configDevices><div class=page-navi-in><div class=page-navi-content><a class=\"btn btn-default btn-tag\" title={{v.name}} ng-repeat=\"v in devices| orderBy:predicate:reverse\" ng-click=changeDevice(v.id) ng-class=\"v.id == deviceId ? 'active': ''\">(#{{v.id}}) {{v.name | cutText:true:30}}</a></div></div></div><bb-alert alert=alert></bb-alert>"
+    "<div class=\"tabs-wrap form-inline\" ng-show=\"deviceId > 0\"><div class=\"btn-group btn-goup-tabs\" ng-class=\"cfg.zwavecfg.debug ? 'btn-tabs-7': 'btn-tabs-6'\"><a class=\"btn btn-default\" title=\"{{_t('nav_device_interview')}}\" href=#configuration/interview/{{deviceId}} ng-class=\"activeTab == 'interview' ? 'active' : ''\"><i class=\"fa fa-commenting\"></i> <span class=btn-name>{{_t('nav_device_interview')}}</span> </a><a class=\"btn btn-default\" title=\"{{_t('nav_device_configuration')}}\" href=#configuration/configuration/{{deviceId}} ng-class=\"activeTab == 'configuration' ? 'active' : ''\"><i class=\"fa fa-cogs\"></i> <span class=btn-name>{{_t('nav_device_configuration')}}</span> </a><a class=\"btn btn-default\" title=\"{{_t('nav_device_assoc')}}\" href=#configuration/association/{{deviceId}} ng-class=\"activeTab == 'association' ? 'active' : ''\"><i class=\"fa fa-share-alt\"></i> <span class=btn-name>{{_t('nav_device_assoc')}} </span></a><a class=\"btn btn-default\" title=\"{{_t('link_health')}}\" href=#configuration/health/{{deviceId}} ng-class=\"activeTab == 'health' ? 'active' : ''\"><i class=\"fa fa-unlink\"></i> <span class=btn-name>{{_t('link_health')}}</span> </a><a class=\"btn btn-default\" title=\"{{_t('nav_expert_commands')}}\" href=#configuration/commands/{{deviceId}} ng-class=\"activeTab == 'commands' ? 'active' : ''\"><i class=\"fa fa-file-code-o\"></i> <span class=btn-name>{{_t('nav_expert_commands')}}</span> </a><a class=\"btn btn-default\" title=\"{{_t('nav_firmware_update')}}\" href=#configuration/firmware/{{deviceId}} ng-class=\"activeTab == 'firmware' ? 'active' : ''\"><i class=\"fa fa-upload\"></i> <span class=btn-name>{{_t('nav_firmware_update')}}</span> </a><a class=\"btn btn-default\" title=\"{{_t('nav_postfix_update')}}\" href=#configuration/postfix/{{deviceId}} ng-class=\"activeTab == 'postfix' ? 'active' : ''\" ng-if=cfg.zwavecfg.debug><i class=\"fa fa-tasks\"></i> <span class=btn-name>{{_t('nav_postfix_update')}}</span></a></div></div><div class=menu-horizontal><div class=\"page-header form-inline\" ng-if=\"_.size(devices) > 0\"><div class=\"btn-group btn-goup-block_ btn-goup-2_\" ng-click=\"expandNavi('configDevices', $event)\"><button class=\"btn btn-default\"><span ng-if=\"deviceId > 0\">(#{{deviceId}}) {{deviceName | cutText:true:40}}</span> <span ng-if=\"!deviceId > 0\">{{_t('select_device')}}</span></button> <button class=\"btn btn-default\"><i class=\"fa fa-chevron-down\"></i></button></div></div><div class=page-navi ng-if=naviExpanded.configDevices><div class=page-navi-in><div class=page-navi-content><a class=\"btn btn-default btn-tag\" title={{v.name}} ng-repeat=\"v in devices| orderBy:predicate:reverse\" ng-click=changeDevice(v.id) ng-class=\"v.id == deviceId ? 'active': ''\">(#{{v.id}}) {{v.name | cutText:true:30}}</a></div></div></div></div>"
   );
 
 
   $templateCache.put('app/views/configuration/postfix.html',
-    "<div ng-controller=ConfigPostfixController><div ng-include=\"'app/views/configuration/navi.html'\"></div><div ng-show=deviceId><div class=\"alert alert-warning\" ng-if=!postfix.model.p_id><i class=\"fa fa-exclamation-circle\"></i> {{_t('postfix_missingid')}}</div><form id=postfix_form name=postfix_form role=form class=form novalidate ng-if=postfix.model.p_id ng-submit=updatePostfix()><div class=cfg-block><table class=\"table table-striped table-condensed table-cfg-interview\"><tbody><tr><th>{{_t('p_id')}}</th><td>{{postfix.model.p_id}}</td><td>&nbsp;</td></tr><tr><th>{{_t('product')}}</th><td><input name=product id=product class=form-control ng-model=postfix.model.product></td><td>&nbsp;</td></tr><tr><th>{{_t('preInterview')}}</th><td><input name=preInterview id=preInterview class=form-control ng-model=postfix.interview.preInterview><div ng-repeat=\"v in postfix.model.preInterview track by $index\">{{v}} <span class=clickable ng-click=\"removeInterview('preInterview',$index)\"><i class=\"fa fa-times text-danger\"></i></span></div></td><td><button type=button class=\"btn btn-default\" ng-click=\"addInterview('preInterview')\"><i class=\"fa fa-plus text-success\"></i></button></td></tr><tr><th>{{_t('postInterview')}}</th><td><input name=postInterview id=postInterview class=form-control ng-model=postfix.interview.postInterview><div ng-repeat=\"v in postfix.model.postInterview\">{{v}} <span class=clickable ng-click=\"removeInterview('postInterview',$index)\"><i class=\"fa fa-times text-danger\"></i></span></div></td><td><button type=button class=\"btn btn-default\" ng-click=\"addInterview('postInterview')\"><i class=\"fa fa-plus text-success\"></i></button></td></tr><tr><th>{{_t('tester')}}</th><td><input name=tester id=tester class=form-control ng-model=postfix.model.tester></td><td>&nbsp;</td></tr><tr><th>{{_t('commentary')}}</th><td><input name=commentary id=commentary class=form-control ng-model=postfix.model.commentary></td><td>&nbsp;</td></tr></tbody></table></div><div class=\"cfg-block text-right\"><button type=button class=\"btn btn-default\" ng-click=\"deletePostfix(_t('lb_delete_confirm'))\" ng-if=postfix.find><i class=\"fa fa-times text-danger\"></i> {{_t('dialog_remove')}}</button> <a class=\"btn btn-default\" href=\"{{cfg.postfixget_url + '/' + postfix.model.p_id}}\" target=blank ng-if=postfix.find><i class=\"fa fa-file-code-o text-success\"></i> {{_t('show_json')}} </a><button type=submit class=\"btn btn-primary\"><i class=\"fa fa-circle-o\"></i> {{_t('btn_save')}}</button></div></form></div></div>"
+    "<div ng-controller=ConfigPostfixController><div ng-include=\"'app/views/configuration/navi.html'\"></div><div class=\"row row-configuration\"><div class=\"col-md-3 menu-vertical\"><div ng-include=\"'app/views/configuration/menu.html'\"></div></div><div class=\"col-md-9 col-content\"><bb-alert alert=alert></bb-alert><div ng-show=deviceId><div class=\"alert alert-warning\" ng-if=!postfix.model.p_id><i class=\"fa fa-exclamation-circle\"></i> {{_t('postfix_missingid')}}</div><form id=postfix_form name=postfix_form role=form class=form novalidate ng-if=postfix.model.p_id ng-submit=updatePostfix()><div class=cfg-block><table class=\"table table-striped table-condensed table-cfg-interview\"><tbody><tr><th>{{_t('p_id')}}</th><td>{{postfix.model.p_id}}</td><td>&nbsp;</td></tr><tr><th>{{_t('product')}}</th><td><input name=product id=product class=form-control ng-model=postfix.model.product></td><td>&nbsp;</td></tr><tr><th>{{_t('preInterview')}}</th><td><input name=preInterview id=preInterview class=form-control ng-model=postfix.interview.preInterview><div ng-repeat=\"v in postfix.model.preInterview track by $index\">{{v}} <span class=clickable ng-click=\"removeInterview('preInterview',$index)\"><i class=\"fa fa-times text-danger\"></i></span></div></td><td><button type=button class=\"btn btn-default\" ng-click=\"addInterview('preInterview')\"><i class=\"fa fa-plus text-success\"></i></button></td></tr><tr><th>{{_t('postInterview')}}</th><td><input name=postInterview id=postInterview class=form-control ng-model=postfix.interview.postInterview><div ng-repeat=\"v in postfix.model.postInterview\">{{v}} <span class=clickable ng-click=\"removeInterview('postInterview',$index)\"><i class=\"fa fa-times text-danger\"></i></span></div></td><td><button type=button class=\"btn btn-default\" ng-click=\"addInterview('postInterview')\"><i class=\"fa fa-plus text-success\"></i></button></td></tr><tr><th>{{_t('tester')}}</th><td><input name=tester id=tester class=form-control ng-model=postfix.model.tester></td><td>&nbsp;</td></tr><tr><th>{{_t('commentary')}}</th><td><input name=commentary id=commentary class=form-control ng-model=postfix.model.commentary></td><td>&nbsp;</td></tr></tbody></table></div><div class=\"cfg-block text-right\"><button type=button class=\"btn btn-default\" ng-click=\"deletePostfix(_t('lb_delete_confirm'))\" ng-if=postfix.find><i class=\"fa fa-times text-danger\"></i> {{_t('dialog_remove')}}</button> <a class=\"btn btn-default\" href=\"{{cfg.postfixget_url + '/' + postfix.model.p_id}}\" target=blank ng-if=postfix.find><i class=\"fa fa-file-code-o text-success\"></i> {{_t('show_json')}} </a><button type=submit class=\"btn btn-primary\"><i class=\"fa fa-circle-o\"></i> {{_t('btn_save')}}</button></div></form></div></div></div></div>"
   );
 
 
   $templateCache.put('app/views/controll/locks.html',
-    "<div ng-controller=LocksController><div class=page-header><h1>{{_t('nav_locks')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=locks.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><a href=\"\" ng-click=\"orderBy('id')\"># <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('level')\">{{ _t('nav_status')}} <span ng-show=\"predicate == 'status'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th>&nbsp;</th><th>&nbsp;</th></tr></thead><tbody><tr ng-repeat=\"v in locks.all | orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=#>{{ v.id}}</td><td data-title=\"{{ _t('device_name')}}\">{{ v.name}}</td><td data-title=\"{{ _t('nav_status')}}\" class=row-level>{{_t(v.status)}} &nbsp;</td><td data-title=\"{{ _t('datetime')}}\"><bb-date-time obj=v.dateTime updated=v.isUpdated></bb-date-time></td><td class=td-action data-title=\"\"><button class=\"btn btn-default\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateLock(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] label=\" _t('update')\" icon=\"'fa-circle-o text-success'\"></bb-row-spinner></button></td><td class=\"lock-controll td-action\" data-title=\"\"><div class=\"btn-group btn-group-lock\"><button type=button class=\"btn btn-default btn-lock\" id=\"btn_lock_{{ v.rowId}}\" title=\"{{_t('btn_close')}}\" ng-class=\"{active: v.level=='255'}\" ng-click=updateLock(v.urlToOn) ng-disabled=rowSpinner[v.urlToOn]><bb-row-spinner spinner=rowSpinner[v.urlToOn] icon=\"'fa-lock text-success'\"></bb-row-spinner></button> <button type=button class=\"btn btn-default btn-unlock\" id=\"btn_unlock_{{ v.rowId}}\" title=\"{{_t('btn_open')}}\" ng-class=\"{active: v.level=='0'}\" ng-click=updateLock(v.urlToOff) ng-disabled=rowSpinner[v.urlToOff]><bb-row-spinner spinner=rowSpinner[v.urlToOff] icon=\"'fa-unlock text-danger'\"></bb-row-spinner></button></div></td></tr></tbody></table></div></div>"
+    "<div ng-controller=LocksController><div class=page-header><h1>{{_t('nav_locks')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=locks.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'id'\" label=\"'#'\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'name'\" label=\"_t('device_name')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'status'\" label=\"_t('nav_status')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'updateTime'\" label=\"_t('datetime')\"></sort-by></th><th>&nbsp;</th><th>&nbsp;</th></tr></thead><tbody><tr ng-repeat=\"v in locks.all | orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=#>{{ v.id}}</td><td data-title=\"{{ _t('device_name')}}\">{{ v.name}}</td><td data-title=\"{{ _t('nav_status')}}\" class=row-level>{{_t(v.status)}} &nbsp;</td><td data-title=\"{{ _t('datetime')}}\"><bb-date-time obj=v.dateTime updated=v.isUpdated></bb-date-time></td><td class=td-action data-title=\"\"><button class=\"btn btn-default\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateLock(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] label=\" _t('update')\" icon=\"'fa-circle-o text-success'\"></bb-row-spinner></button></td><td class=\"lock-controll td-action\" data-title=\"\"><div class=\"btn-group btn-group-lock\"><button type=button class=\"btn btn-default btn-lock\" id=\"btn_lock_{{ v.rowId}}\" title=\"{{_t('btn_close')}}\" ng-class=\"{active: v.level=='255'}\" ng-click=updateLock(v.urlToOn) ng-disabled=rowSpinner[v.urlToOn]><bb-row-spinner spinner=rowSpinner[v.urlToOn] icon=\"'fa-lock text-success'\"></bb-row-spinner></button> <button type=button class=\"btn btn-default btn-unlock\" id=\"btn_unlock_{{ v.rowId}}\" title=\"{{_t('btn_open')}}\" ng-class=\"{active: v.level=='0'}\" ng-click=updateLock(v.urlToOff) ng-disabled=rowSpinner[v.urlToOff]><bb-row-spinner spinner=rowSpinner[v.urlToOff] icon=\"'fa-unlock text-danger'\"></bb-row-spinner></button></div></td></tr></tbody></table></div></div>"
   );
 
 
   $templateCache.put('app/views/controll/meters.html',
-    "<div ng-controller=MetersController><div class=page-header><h1>{{_t('nav_meters')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=meters.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><a href=\"\" ng-click=\"orderBy('id')\"># <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('purpose')\">{{ _t('device_description_device_type')}} <span ng-show=\"predicate == 'purpose'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th class=text-right><a href=\"\" ng-click=\"orderBy('level')\">{{ _t('th_level')}} <span ng-show=\"predicate == 'level'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('levelExt')\">{{ _t('th_scale')}} <span ng-show=\"predicate == 'levelExt'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th class=\"mobile-show td-action\"><button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=\"updateAllMeters('all_1','urlToStore')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner spinner=\"rowSpinner['all_1']\" label=\"_t('switches_update_all')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in meters.all | orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=#>{{ v.id}}<span ng-show=\"v.iId != 0\">.{{v.iId}}</span></td><td data-title=\"{{ _t('device_name')}}\">{{ v.name}}</td><td data-title=\"{{ _t('device_description_device_type')}}\">{{ v.purpose}} &nbsp;</td><td data-title=\"{{ _t('th_level')}}\" class=\"row-level text-right\">{{ v.level}} &nbsp;</td><td data-title=\"{{ _t('th_scale')}}\" class=row-level-ext>{{ v.levelExt}} &nbsp;</td><td data-title=\"{{ _t('datetime')}}\"><bb-date-time obj=v.dateTime updated=v.isUpdated></bb-date-time></td><td class=td-action data-title=\"\"><button class=\"btn btn-default\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateMeter(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] label=\" _t('update')\" icon=\"'fa-circle-o text-success'\"></bb-row-spinner></button> <button class=\"btn btn-default\" id=\"btn_reset_{{ v.rowId}}\" ng-if=v.urlToReset ng-click=updateMeter(v.urlToReset) ng-disabled=rowSpinner[v.urlToReset]><bb-row-spinner spinner=rowSpinner[v.urlToReset] label=\" _t('reset')\" icon=\"'fa-refresh text-success'\"></bb-row-spinner></button></td></tr></tbody></table></div></div>"
+    "<div ng-controller=MetersController><div class=page-header><h1>{{_t('nav_meters')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=meters.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'id'\" label=\"'#'\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'name'\" label=\"_t('device_name')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'purpose'\" label=\"_t('device_description_device_type')\"></sort-by></th><th class=text-right><sort-by callback=orderBy(field) obj=orderByArr field=\"'level'\" label=\"_t('th_level')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'levelExt'\" label=\"_t('th_scale')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'updateTime'\" label=\"_t('datetime')\"></sort-by></th><th class=\"mobile-show td-action\"><button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=\"updateAllMeters('all_1','urlToStore')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner spinner=\"rowSpinner['all_1']\" label=\"_t('switches_update_all')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in meters.all | orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=#>{{ v.id}}<span ng-show=\"v.iId != 0\">.{{v.iId}}</span></td><td data-title=\"{{ _t('device_name')}}\">{{ v.name}}</td><td data-title=\"{{ _t('device_description_device_type')}}\">{{ v.purpose}} &nbsp;</td><td data-title=\"{{ _t('th_level')}}\" class=\"row-level text-right\">{{ v.level}} &nbsp;</td><td data-title=\"{{ _t('th_scale')}}\" class=row-level-ext>{{ v.levelExt}} &nbsp;</td><td data-title=\"{{ _t('datetime')}}\"><bb-date-time obj=v.dateTime updated=v.isUpdated></bb-date-time></td><td class=td-action data-title=\"\"><button class=\"btn btn-default\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateMeter(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] label=\" _t('update')\" icon=\"'fa-circle-o text-success'\"></bb-row-spinner></button> <button class=\"btn btn-default\" id=\"btn_reset_{{ v.rowId}}\" ng-if=v.urlToReset ng-click=updateMeter(v.urlToReset) ng-disabled=rowSpinner[v.urlToReset]><bb-row-spinner spinner=rowSpinner[v.urlToReset] label=\" _t('reset')\" icon=\"'fa-refresh text-success'\"></bb-row-spinner></button></td></tr></tbody></table></div></div>"
   );
 
 
   $templateCache.put('app/views/controll/notifications.html',
-    "<div ng-controller=NotificationController><div class=page-header><h1>{{_t('notifications')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=notifications.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><a href=\"\" ng-click=\"orderBy('id')\"># <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('typeString')\">{{ _t('notification')}} <span ng-show=\"predicate == 'typeString'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('eventString')\">{{ _t('event')}} <span ng-show=\"predicate == 'eventString'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('status')\">{{ _t('nav_status')}} <span ng-show=\"predicate == 'status'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th class=\"mobile-show td-action\"><button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=\"updateAllNotifications('all_1','urlToStore')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner spinner=\"rowSpinner['all_1']\" label=\"_t('switches_update_all')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in notifications.all | orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=#>{{ v.id}}</td><td data-title=\"{{ _t('device_name')}}\">{{ v.name}}</td><td data-title=\"{{ _t('notification')}}\" title={{v.typeId}}>{{v.typeString}}</td><td data-title=\"{{ _t('event')}}\" title={{v.event}}>{{v.eventString}}</td><td data-title=\"{{ _t('datetime')}}\"><bb-date-time obj=v.dateTime updated=v.isUpdated></bb-date-time></td><td data-title=\"{{ _t('nav_status')}}\"><div ng-if=\"v.version >1\"><label class=switcher title={{_t(v.statusString)}} ng-class=\"v.status === 255 ? 'ison':'isoff'\" ng-hide=\"rowSpinner['btn_all_of'] || rowSpinner['btn_all_on']\" ng-click=\"setStatus(\n" +
-    "                               v.status === 255?  v.urlToOff : v.urlToOn);\n" +
+    "<div ng-controller=NotificationController><div class=page-header><h1>{{_t('notifications')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=notifications.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'id'\" label=\"'#'\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'name'\" label=\"_t('device_name')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'typeString'\" label=\"_t('notification')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'eventString'\" label=\"_t('event')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'updateTime'\" label=\"_t('datetime')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'status'\" label=\"_t('nav_status')\"></sort-by></th><th class=\"mobile-show td-action\"><button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=\"updateAllNotifications('all_1','urlToStore')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner spinner=\"rowSpinner['all_1']\" label=\"_t('switches_update_all')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in notifications.all | orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=#>{{ v.id}}</td><td data-title=\"{{ _t('device_name')}}\">{{ v.name}}</td><td data-title=\"{{ _t('notification')}}\" title={{v.typeId}}>{{v.typeString}}</td><td data-title=\"{{ _t('event')}}\" title={{v.event}}>{{v.eventString}}</td><td data-title=\"{{ _t('datetime')}}\"><bb-date-time obj=v.dateTime updated=v.isUpdated></bb-date-time></td><td data-title=\"{{ _t('nav_status')}}\"><div ng-if=\"v.version >1\"><label class=switcher title={{_t(v.statusString)}} ng-class=\"v.status === 255 ? 'ison':'isoff'\" ng-hide=\"rowSpinner['btn_all_of'] || rowSpinner['btn_all_on']\" ng-click=\"setStatus(\r" +
+    "\n" +
+    "                               v.status === 255?  v.urlToOff : v.urlToOn);\r" +
+    "\n" +
     "                               v.status = (v.status === 255 ?  0 : 255)\"><div class=\"switcher-slider round\"><span class=switcher-slider-in>{{v.status === 255 ? 'I':'0'}}</span></div></label><i class=\"fa fa-spinner fa-spin fa-lg\" ng-if=\"rowSpinner['btn_all_of'] || rowSpinner['btn_all_on'] \"></i></div><span ng-if=\"v.version === 1\">{{_t(v.statusString)}}</span></td><td class=td-action data-title=\"\"><button class=\"btn btn-default\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateNotification(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] label=\" _t('update')\" icon=\"'fa-circle-o text-success'\"></bb-row-spinner></button></td></tr></tbody></table></div></div>"
   );
 
 
   $templateCache.put('app/views/controll/sensors.html',
-    "<div ng-controller=SensorsController><div class=page-header><h1>{{ _t('h1_sensor')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=sensors.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><a href=\"\" ng-click=\"orderBy('id')\"># <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('purpose')\">{{ _t('device_description_device_type')}} <span ng-show=\"predicate == 'purpose'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th class=text-right><a href=\"\" ng-click=\"orderBy('level')\">{{ _t('th_level')}} <span ng-show=\"predicate == 'level'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('levelExt')\">{{ _t('th_scale')}} <span ng-show=\"predicate == 'levelExt'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th class=\"mobile-show td-action\"><button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=\"updateAllSensors('all_1','urlToStore')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner spinner=\"rowSpinner['all_1']\" label=\"_t('switches_update_all')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in sensors.all| orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=#>{{ v.id}}<span ng-show=\"v.iId != 0\">.{{v.iId}}</span></td><td data-title=\"{{ _t('device_name')}}\">{{ v.name}}</td><td data-title=\"{{ _t('device_description_device_type')}}\">{{v.purpose}} &nbsp;</td><td data-title=\"{{ _t('th_level')}}\" class=\"row-level text-right\"><span ng-if=!v.html ng-bind=v.level></span> <span ng-if=v.html ng-bind-html=v.level|toTrusted></span> &nbsp;</td><td data-title=\"{{ _t('th_scale')}}\" class=row-level-ext>{{v.levelExt}} &nbsp;</td><td data-title=\"{{ _t('datetime')}}\"><bb-date-time obj=v.dateTime updated=v.isUpdated></bb-date-time></td><td class=td-action data-title=\"\"><button class=\"btn btn-default\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateSensor(v.cmdToUpdate,v.urlToStore) ng-disabled=rowSpinner[v.cmdToUpdate]><bb-row-spinner spinner=rowSpinner[v.cmdToUpdate] label=\" _t('update')\" icon=\"'fa-circle-o text-success'\"></bb-row-spinner></button></td></tr></tbody></table></div></div>"
+    "<div ng-controller=SensorsController><div class=page-header><h1>{{ _t('h1_sensor')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=sensors.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'id'\" label=\"'#'\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'name'\" label=\"_t('device_name')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'purpose'\" label=\"_t('device_description_device_type')\"></sort-by></th><th class=text-right><sort-by callback=orderBy(field) obj=orderByArr field=\"'level'\" label=\"_t('th_level')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'levelExt'\" label=\"_t('th_scale')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'updateTime'\" label=\"_t('datetime')\"></sort-by></th><th class=\"mobile-show td-action\"><button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=\"updateAllSensors('all_1','urlToStore')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner spinner=\"rowSpinner['all_1']\" label=\"_t('switches_update_all')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in sensors.all| orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=#>{{ v.id}}<span ng-show=\"v.iId != 0\">.{{v.iId}}</span></td><td data-title=\"{{ _t('device_name')}}\">{{ v.name}}</td><td data-title=\"{{ _t('device_description_device_type')}}\">{{v.purpose}} &nbsp;</td><td data-title=\"{{ _t('th_level')}}\" class=\"row-level text-right\"><span ng-if=!v.html ng-bind=v.level></span> <span ng-if=v.html ng-bind-html=v.level|toTrusted></span> &nbsp;</td><td data-title=\"{{ _t('th_scale')}}\" class=row-level-ext>{{v.levelExt}} &nbsp;</td><td data-title=\"{{ _t('datetime')}}\"><bb-date-time obj=v.dateTime updated=v.isUpdated></bb-date-time></td><td class=td-action data-title=\"\"><button class=\"btn btn-default\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateSensor(v.cmdToUpdate,v.urlToStore) ng-disabled=rowSpinner[v.cmdToUpdate]><bb-row-spinner spinner=rowSpinner[v.cmdToUpdate] label=\" _t('update')\" icon=\"'fa-circle-o text-success'\"></bb-row-spinner></button></td></tr></tbody></table></div></div>"
   );
 
 
   $templateCache.put('app/views/controll/switch.html',
-    "<div ng-controller=SwitchController><div class=page-header><h1>{{_t('nav_switch')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=switches.show><table class=\"table table-striped table-condensed table-hover\"><thead class=cf><tr><th><a href=\"\" ng-click=\"orderBy('id')\"># <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th class=text-right><a href=\"\" ng-click=\"orderBy('level')\">{{ _t('th_level')}} <span ng-show=\"predicate == 'level'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('switchAllValue')\">{{ _t('th_switchall')}} <span ng-show=\"predicate == 'switchAllValue'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th class=mobile-show><button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=\"updateAllSwitches('all_1','urlToStore')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner spinner=\"rowSpinner['all_1']\" label=\"_t('switches_update_all')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></th><th class=mobile-show><div class=btn-group style=\"min-width: 150px !important\"><button class=\"btn btn-primary\" id=btn_all_of ng-click=\"updateAllSwitches('btn_all_of','urlToOff')\" ng-disabled=\"rowSpinner['btn_all_of']\"><bb-row-spinner spinner=\"rowSpinner['btn_all_of']\" label=\" _t('btn_all_off')\" icon=\"'fa-toggle-off'\"></bb-row-spinner></button> <button class=\"btn btn-primary\" id=btn_all_on ng-click=\"updateAllSwitches('btn_all_on','urlToOn')\" ng-disabled=\"rowSpinner['btn_all_on']\"><bb-row-spinner spinner=\"rowSpinner['btn_all_on']\" label=\"_t('btn_all_on')\" icon=\"'fa-toggle-on'\"></bb-row-spinner></button></div></th><th class=\"th-slider td-action\">&nbsp;</th></tr></thead><tbody><tr ng-repeat=\"v in switches.all| orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\" ng-init=\"range.maxs = v.levelVal\"><td data-title=#>{{ v.id}}<span ng-show=\"v.multiChannel || v.iId > 0\">.{{v.iId}}</span></td><td data-title=\"{{ _t('device_name')}}\">{{v.name}}</td><td data-title=\"{{ _t('th_level')}}\"><strong class=\"row-level text-right\" style=\"color: {{ v.levelColor}}\">{{ v.level}}</strong></td><td data-title=\"{{ _t('datetime')}}\"><bb-date-time obj=v.dateTime updated=v.isUpdated></bb-date-time></td><td data-title=\"{{ _t('th_switchall')}}\"><switch-all-icon hasall=\"{{ v.switchAllValue}}\" ng-if=\"v.switchAllValue !== null\"></switch-all-icon>&nbsp;</td><td data-title=\"\"><button class=\"btn btn-default\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateSwitch(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] label=\" _t('update')\" icon=\"'fa-circle-o text-success'\"></bb-row-spinner></button></td><td data-title=\"\" ng-switch on=v.deviceType><div ng-switch-when=multilevel><div class=btn-group style=\"min-width: 110px !important\"><label class=switcher title={{v.levelStatus}} ng-class=\"v.levelStatus === 'on' ? 'ison':'isoff'\" ng-hide=\"rowSpinner['btn_all_of'] || rowSpinner['btn_all_on']\" ng-click=\"updateSwitch(\n" +
-    "                               v.levelStatus === 'on' ?  v.urlToOff : v.urlToOn);\n" +
-    "                               v.levelStatus = (v.levelStatus === 'on' ?  'off' : 'on')\"><div class=\"switcher-slider round\"></div></label><i class=\"fa fa-spinner fa-spin fa-lg\" ng-if=\"rowSpinner['btn_all_of'] || rowSpinner['btn_all_on'] \"></i></div><button class=\"btn btn-default\" id=\"btn_full_{{ v.rowId}}\" ng-show_=!v.hasMotor ng-disabled=rowSpinner[v.urlToFull] ng-click=updateSwitch(v.urlToFull)><bb-row-spinner spinner=rowSpinner[v.urlToFull] label=v.btnFull icon=\"'fa-circle-o-notch text-success'\"></bb-row-spinner></button></div><div class=btn-group ng-switch-when=binary><label class=switcher title={{v.levelStatus}} ng-class=\"v.levelStatus === 'on' ? 'ison':'isoff'\" ng-hide=\"rowSpinner['btn_all_of'] || rowSpinner['btn_all_on']\" ng-click=\"updateSwitch(\n" +
-    "                               v.levelStatus === 'on' ?  v.urlToOff : v.urlToOn);\n" +
+    "<div ng-controller=SwitchController><div class=page-header><h1>{{_t('nav_switch')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=switches.show><table class=\"table table-striped table-condensed table-hover\"><thead class=cf><tr><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'id'\" label=\"'#'\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'name'\" label=\"_t('device_name')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'level'\" label=\"_t('th_level')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'updateTime'\" label=\"_t('datetime')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'switchAllValue'\" label=\"_t('th_switchall')\"></sort-by></th><th class=mobile-show><button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=\"updateAllSwitches('all_1','urlToStore')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner spinner=\"rowSpinner['all_1']\" label=\"_t('switches_update_all')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></th><th class=mobile-show><div class=btn-group style=\"min-width: 150px !important\"><button class=\"btn btn-primary\" id=btn_all_of ng-click=\"updateAllSwitches('btn_all_of','urlToOff')\" ng-disabled=\"rowSpinner['btn_all_of']\"><bb-row-spinner spinner=\"rowSpinner['btn_all_of']\" label=\" _t('btn_all_off')\" icon=\"'fa-toggle-off'\"></bb-row-spinner></button> <button class=\"btn btn-primary\" id=btn_all_on ng-click=\"updateAllSwitches('btn_all_on','urlToOn')\" ng-disabled=\"rowSpinner['btn_all_on']\"><bb-row-spinner spinner=\"rowSpinner['btn_all_on']\" label=\"_t('btn_all_on')\" icon=\"'fa-toggle-on'\"></bb-row-spinner></button></div></th><th class=\"th-slider td-action\">&nbsp;</th></tr></thead><tbody><tr ng-repeat=\"v in switches.all| orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\" ng-init=\"range.maxs = v.levelVal\"><td data-title=#>{{ v.id}}<span ng-show=\"v.multiChannel || v.iId > 0\">.{{v.iId}}</span></td><td data-title=\"{{ _t('device_name')}}\">{{v.name}}</td><td data-title=\"{{ _t('th_level')}}\"><strong class=\"row-level text-right\" style=\"color: {{ v.levelColor}}\">{{ v.level}}</strong></td><td data-title=\"{{ _t('datetime')}}\"><bb-date-time obj=v.dateTime updated=v.isUpdated></bb-date-time></td><td data-title=\"{{ _t('th_switchall')}}\"><switch-all-icon hasall=\"{{ v.switchAllValue}}\" ng-if=\"v.switchAllValue !== null\"></switch-all-icon>&nbsp;</td><td data-title=\"\"><button class=\"btn btn-default\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateSwitch(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] label=\" _t('update')\" icon=\"'fa-circle-o text-success'\"></bb-row-spinner></button></td><td data-title=\"\" ng-switch on=v.deviceType><div ng-switch-when=multilevel><div class=btn-group style=\"min-width: 110px !important\"><label class=switcher title={{v.levelStatus}} ng-class=\"v.levelStatus === 'on' ? 'ison':'isoff'\" ng-hide=\"rowSpinner['btn_all_of'] || rowSpinner['btn_all_on']\" ng-click=\"updateSwitch(\r" +
+    "\n" +
+    "                               v.levelStatus === 'on' ?  v.urlToOff : v.urlToOn);\r" +
+    "\n" +
+    "                               v.levelStatus = (v.levelStatus === 'on' ?  'off' : 'on')\"><div class=\"switcher-slider round\"></div></label><i class=\"fa fa-spinner fa-spin fa-lg\" ng-if=\"rowSpinner['btn_all_of'] || rowSpinner['btn_all_on'] \"></i></div><button class=\"btn btn-default\" id=\"btn_full_{{ v.rowId}}\" ng-show_=!v.hasMotor ng-disabled=rowSpinner[v.urlToFull] ng-click=updateSwitch(v.urlToFull)><bb-row-spinner spinner=rowSpinner[v.urlToFull] label=v.btnFull icon=\"'fa-circle-o-notch text-success'\"></bb-row-spinner></button></div><div class=btn-group ng-switch-when=binary><label class=switcher title={{v.levelStatus}} ng-class=\"v.levelStatus === 'on' ? 'ison':'isoff'\" ng-hide=\"rowSpinner['btn_all_of'] || rowSpinner['btn_all_on']\" ng-click=\"updateSwitch(\r" +
+    "\n" +
+    "                               v.levelStatus === 'on' ?  v.urlToOff : v.urlToOn);\r" +
+    "\n" +
     "                               v.levelStatus = (v.levelStatus === 'on' ?  'off' : 'on')\"><div class=\"switcher-slider round\"></div></label><i class=\"fa fa-spinner fa-spin fa-lg\" ng-if=\"rowSpinner['btn_all_of'] || rowSpinner['btn_all_on'] \"></i></div><div ng-switch-default>&nbsp;</div></td><td class=td-action data-title=\"\" ng-switch on=v.deviceType><div ng-switch-when=multilevel id=range_slider_{{$index}} class=app-range-slider range-slider min=0 max=v.levelMax model-max=switches.rangeSlider[$index] pin-handle=min on-handle-down=sliderOnHandleDown() on-handle-up=sliderOnHandleUp(v.urlToSlide,$index)></div><div ng-switch-default>&nbsp;</div></td></tr></tbody></table></div></div>"
   );
 
 
   $templateCache.put('app/views/controll/thermostat.html',
-    "<div ng-controller=ThermostatController><div class=page-header><h1>{{_t('nav_thermostat')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=thermostats.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><a href=\"\" ng-click=\"orderBy('id')\"># <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('temp')\">{{ _t('switch_point_temp')}} <span ng-show=\"predicate == 'temp'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th>&nbsp;</th><th>&nbsp;</th><th class=th-slider>&nbsp;</th></tr></thead><tbody><tr ng-repeat=\"v in thermostats.all| orderBy:predicate:reverse track by v.id\" id=\"{{ v.rowId}}\"><td data-title=#>{{ v.id}}</td><td data-title=\"{{ _t('device_name')}}\">{{v.name}}</td><td data-title=\"{{ _t('switch_point_temp')}}\" class=row-level><span class=level-val ng-show=\"v.level != null\">{{ v.level}}</span>&nbsp;<span ng-show=v.hasExt>{{ v.scale}}</span></td><td data-title=\"{{ _t('datetime')}}\" class=row-time><bb-date-time obj=v.dateTime updated=v.isUpdated ng-if=\"v.level != null\"></bb-date-time></td><td><div class=form-inline ng-show=v.isThermostatMode><select class=form-control ng-model=thermostats.mChangeMode[v.id] ng-change=updateThermostatMode(v.urlToStore,thermostats.mChangeMode[v.id])><option value=\"\">--- {{_t.('thermostat_mode_change')}} ---</option><option ng-repeat=\"m in v.modeList\" value={{m.key}} ng-selected=\"m.key == v.curThermMode\">{{m.val}}</option></select><bb-row-spinner spinner=rowSpinner[v.urlToStore]></bb-row-spinner></div></td><td><div class=btn-group ng-show=!v.curThermMode><button title=\"{{_t.('btn_minus')}}\" class=\"btn btn-default\" ng-click=\"updateThermostatTempClick(v.urlChangeTemperature, $index, '-')\"><i class=\"fa fa-minus text-danger\"></i></button> <button title=\"{{_t.('btn_plus')}}\" class=\"btn btn-default\" ng-click=\"updateThermostatTempClick(v.urlChangeTemperature, $index, '+')\"><i class=\"fa fa-plus text-success\"></i></button></div><bb-row-spinner spinner=rowSpinner[v.urlChangeTemperature]></bb-row-spinner></td><td><div ng-show=!v.curThermMode><div id=range_slider_{{$index}} class=app-range-slider range-slider min=cfg.thermostat_range.min max=cfg.thermostat_range.max model-max=thermostats.rangeSlider[$index] pin-handle=min on-handle-down=sliderOnHandleDown() on-handle-up=sliderOnHandleUp(v.urlChangeTemperature,$index)></div></div></td></tr></tbody></table></div></div>"
+    "<div ng-controller=ThermostatController><div class=page-header><h1>{{_t('nav_thermostat')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=thermostats.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'id'\" label=\"'#'\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'name'\" label=\"_t('device_name')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'level'\" label=\"_t('switch_point_temp')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'updateTime'\" label=\"_t('datetime')\"></sort-by></th><th>&nbsp;</th><th>&nbsp;</th><th class=th-slider>&nbsp;</th></tr></thead><tbody><tr ng-repeat=\"v in thermostats.all| orderBy:predicate:reverse track by v.id\" id=\"{{ v.rowId}}\"><td data-title=#>{{ v.id}}</td><td data-title=\"{{ _t('device_name')}}\">{{v.name}}</td><td data-title=\"{{ _t('switch_point_temp')}}\" class=row-level><span class=level-val ng-show=\"v.level != null\">{{ v.level}}</span>&nbsp;<span ng-show=v.hasExt>{{ v.scale}}</span></td><td data-title=\"{{ _t('datetime')}}\" class=row-time><bb-date-time obj=v.dateTime updated=v.isUpdated ng-if=\"v.level != null\"></bb-date-time></td><td><div class=form-inline ng-show=v.isThermostatMode><select class=form-control ng-model=thermostats.mChangeMode[v.id] ng-change=updateThermostatMode(v.urlToStore,thermostats.mChangeMode[v.id])><option value=\"\">--- {{_t.('thermostat_mode_change')}} ---</option><option ng-repeat=\"m in v.modeList\" value={{m.key}} ng-selected=\"m.key == v.curThermMode\">{{m.val}}</option></select><bb-row-spinner spinner=rowSpinner[v.urlToStore]></bb-row-spinner></div></td><td><div class=btn-group ng-show=!v.curThermMode><button title=\"{{_t.('btn_minus')}}\" class=\"btn btn-default\" ng-click=\"updateThermostatTempClick(v.urlChangeTemperature, $index, '-')\"><i class=\"fa fa-minus text-danger\"></i></button> <button title=\"{{_t.('btn_plus')}}\" class=\"btn btn-default\" ng-click=\"updateThermostatTempClick(v.urlChangeTemperature, $index, '+')\"><i class=\"fa fa-plus text-success\"></i></button></div><bb-row-spinner spinner=rowSpinner[v.urlChangeTemperature]></bb-row-spinner></td><td><div ng-show=!v.curThermMode><div id=range_slider_{{$index}} class=app-range-slider range-slider min=cfg.thermostat_range.min max=cfg.thermostat_range.max model-max=thermostats.rangeSlider[$index] pin-handle=min on-handle-down=sliderOnHandleDown() on-handle-up=sliderOnHandleUp(v.urlChangeTemperature,$index)></div></div></td></tr></tbody></table></div></div>"
   );
 
 
   $templateCache.put('app/views/device/associations.html',
-    "<div ng-controller=AssociationsController><div class=page-header><h1>{{_t('nav_active_associations')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=devices.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><a href=\"\" ng-click=\"orderBy('id')\"># <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th style=\"width: 20%\"><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th>{{ _t('th_assoc_group_name')}}</th><th class=\"mobile-show td-action\" style=\"width: 20%\"><button class=\"btn btn-primary\" ng-show=!hideLifeline ng-click=\"hideLifeline = !hideLifeline;\n" +
-    "                                        lifeline(true)\"><i class=\"fa fa-eye\"></i> {{ _t('btn_show_lifeline')}}</button> <button class=\"btn btn-default\" ng-show=hideLifeline ng-click=\"hideLifeline = false;\n" +
+    "<div ng-controller=AssociationsController><div class=page-header><h1>{{_t('nav_active_associations')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=devices.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><a href=\"\" ng-click=\"orderBy('id')\"># <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th style=\"width: 20%\"><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th>{{ _t('th_assoc_group_name')}}</th><th class=\"mobile-show td-action\" style=\"width: 20%\"><button class=\"btn btn-primary\" ng-show=!hideLifeline ng-click=\"hideLifeline = !hideLifeline;\r" +
+    "\n" +
+    "                                        lifeline(true)\"><i class=\"fa fa-eye\"></i> {{ _t('btn_show_lifeline')}}</button> <button class=\"btn btn-default\" ng-show=hideLifeline ng-click=\"hideLifeline = false;\r" +
+    "\n" +
     "                                        lifeline(false)\"><i class=\"fa fa-eye-slash\"></i> {{ _t('btn_hide_lifeline')}}</button></th></tr></thead><tbody><tr ng-repeat=\"v in devices.all | orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\" ng-show=v.assocGroup><td data-title=#>{{ v.id}}</td><td data-title=\"{{ _t('device_name')}}\"><a href=#configuration/interview/{{v.id}}>{{ v.name}}</a></td><td data-title=\"{{ _t('th_assoc_group_name')}}\"><div ng-repeat=\"g in v.assocGroup\"><p>{{g.name}}<br><button class=\"btn btn-default\" ng-repeat=\"d in g.devices\">{{d}}</button></p>&nbsp;</div></td><td class=td-action><a class=\"btn btn-default\" href=#configuration/interview/{{v.id}}><i class=\"fa fa-pencil text-success\"></i> {{ _t('btn_change')}}</a>&nbsp;</td></tr></tbody></table></div></div>"
   );
 
 
   $templateCache.put('app/views/device/battery.html',
-    "<div ng-controller=BatteryController><div class=page-header><h1>{{_t('nav_battery')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=batteries.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><a href=\"\" ng-click=\"orderBy('id')\"># <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('batteryType')\">{{ _t('th_battery_type')}} <span ng-show=\"predicate == 'batteryType'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('level')\">{{ _t('th_level')}} <span ng-show=\"predicate == 'level'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th class=\"mobile-show td-action\"><button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=\"updateAllBatteries('all_1','urlToStore')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner spinner=\"rowSpinner['all_1']\" label=\"_t('switches_update_all')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in batteries.all | orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=#>{{ v.id }}</td><td data-title=\"{{ _t('device_name')}}\"><a href=#configuration/interview/{{v.id}}>{{ v.name}}</a></td><td data-title=\"{{ _t('th_battery_type')}}\">{{ v.batteryCount }}<span ng-show=v.batteryCount>*</span>{{ v.batteryType }} &nbsp;</td><td data-title=\"{{ _t('th_level')}}\"><i class=\"fa fa-lg {{ v.level | getBatteryIcon }}\"></i>&nbsp;<span class=row-level>{{ v.level+v.scale }}</span></td><td data-title=\"{{ _t('datetime')}}\"><bb-date-time obj=v.dateTime updated=v.isUpdated></bb-date-time></td><td class=td-action><button class=\"btn btn-default\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateBattery(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] label=\" _t('update')\" icon=\"'fa-circle-o text-success'\"></bb-row-spinner></button></td></tr></tbody></table></div></div>"
+    "<div ng-controller=BatteryController><div class=page-header><h1>{{_t('nav_battery')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=batteries.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'id'\" label=\"'#'\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'name'\" label=\"_t('device_name')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'batteryType'\" label=\"_t('th_battery_type')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'level'\" label=\"_t('th_level')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'updateTime'\" label=\"_t('datetime')\"></sort-by></th><th class=\"mobile-show td-action\"><button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=\"updateAllBatteries('all_1','urlToStore')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner spinner=\"rowSpinner['all_1']\" label=\"_t('switches_update_all')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in batteries.all | orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=#>{{ v.id }}</td><td data-title=\"{{ _t('device_name')}}\"><a href=#configuration/interview/{{v.id}}>{{ v.name}}</a></td><td data-title=\"{{ _t('th_battery_type')}}\">{{ v.batteryCount }}<span ng-show=v.batteryCount>*</span>{{ v.batteryType }} &nbsp;</td><td data-title=\"{{ _t('th_level')}}\"><i class=\"fa fa-lg {{ v.level | getBatteryIcon }}\"></i>&nbsp;<span class=row-level>{{ v.level+v.scale }}</span></td><td data-title=\"{{ _t('datetime')}}\"><bb-date-time obj=v.dateTime updated=v.isUpdated></bb-date-time></td><td class=td-action><button class=\"btn btn-default\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateBattery(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] label=\" _t('update')\" icon=\"'fa-circle-o text-success'\"></bb-row-spinner></button></td></tr></tbody></table></div></div>"
   );
 
 
@@ -32705,12 +34122,12 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/device/status.html',
-    "<div ng-controller=StatusController><div class=page-header><h1>{{_t('nav_status')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=statuses.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><a href=\"\" ng-click=\"orderBy('id')\"># <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('sleeping')\">{{ _t('th_sleeping')}} <span ng-show=\"predicate == 'sleeping'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('interval')\">{{ _t('wakeup_interval')}} <span ng-show=\"predicate == 'interval'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('awake')\">{{ _t('th_awake')}} <span ng-show=\"predicate == 'awake'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th>&nbsp;</th><th class=\"mobile-show td-action\"><button class=\"btn btn-primary\" id=btn_ping_all_1 ng-click=\"pingAllDevices('btn_ping_all_1','urlToStore')\" ng-disabled=\"rowSpinner['btn_ping_all_1']\"><bb-row-spinner spinner=\"rowSpinner['btn_ping_all_1']\" label=\"_t('btn_checkall')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in statuses.all | orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=#>{{ v.id}}</td><td data-title=\"{{ _t('device_name')}}\"><a href=#configuration/interview/{{v.id}}>{{ v.name}}</a></td><td data-title=\"{{ _t('th_sleeping')}}\" class=row-sleeping><span ng-bind-html=\"v.sleeping | toTrusted\"></span> &nbsp;</td><td data-title=\"{{ _t('wakeup_interval')}}\" class=row-wakeupint><span ng-if=v.interval>{{v.interval}}s</span> &nbsp;</td><td data-title=\"{{ _t('th_awake')}}\" class=row-awake><span ng-bind-html=\"v.awake | toTrusted\"></span> &nbsp;</td><td data-title=\"{{ _t('datetime')}}\"><span class=row-isfailed ng-bind-html=\"v.isFailed | toTrusted\"></span> <span class=row-time ng-bind-html=\"v.updateTime | toTrusted\"></span> &nbsp;</td><td class=row-interview><button class=\"btn btn-default\" ng-if=v.interview ng-click=\"handleModalInterview('interviewModal',$event,$index,v.id,v.name)\" title={{v.interview}}><i class=\"fa fa-search-minus fa-lg text-danger\"></i></button> &nbsp;</td><td class=\"row-ping td-action\"><button class=\"btn btn-default\" id=\"btn_ping_{{ v.rowId}}\" title=\"{{_t('pingDevice')}}\" title=\"{{ _t('pingDevice')}}\" ng-if=v.urlToStore ng-click=pingDevice(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] icon=\"'fa-circle-o text-success'\"></bb-row-spinner></button></td></tr></tbody></table></div><div ng-include=\"'app/views/device/modal_status_interview.html'\"></div></div>"
+    "<div ng-controller=StatusController><div class=page-header><h1>{{_t('nav_status')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=statuses.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'id'\" label=\"'#'\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'name'\" label=\"_t('device_name')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'type'\" label=\"_t('th_type')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'sleeping'\" label=\"_t('th_sleeping')\"></sort-by></th><th>&nbsp;</th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'updateTime'\" label=\"_t('datetime')\"></sort-by></th><th class=print-hide>&nbsp;</th><th class=\"mobile-show td-action print-hide\"><button class=\"btn btn-primary\" id=btn_ping_all_1 ng-click=\"pingAllDevices('btn_ping_all_1','urlToStore')\" ng-disabled=\"rowSpinner['btn_ping_all_1']\"><bb-row-spinner spinner=\"rowSpinner['btn_ping_all_1']\" label=\"_t('btn_checkall')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in statuses.all | orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=#>{{ v.id}}</td><td data-title=\"{{ _t('device_name')}}\"><a href=#configuration/interview/{{v.id}}>{{ v.name}}</a></td><td data-title=\"{{_t('th_type')}}\"><i class=fa ng-class=v.icon title={{_t(v.type)}}></i></td><td data-title=\"{{ _t('th_sleeping')}}\" class=row-sleeping><span ng-show=v.sleeping><i class=\"fa fa-clock-o fa-lg\" title=\"{{_t('battery_operated_device_with_wakeup')}}\"></i> <span title=\"{{_t('sleeping_since_approximately')}}\" ng-show=v.sleeping.approx>{{v.sleeping.approx}}</span> <span title=\"{{_t('sleeping_since')}}\">{{v.sleeping.lastSleep}}</span> &#8594; <span title=\"{{_t('next_wakeup')}}\">{{v.approx + v.sleeping.nextWakeup}}</span> </span>&nbsp;</td><td><i class=\"fa fa-ban fa-lg text-danger\" title=\"{{_t('device_is_dead')}}\" ng-show=v.isFailed></i> <i class=\"fa fa-check fa-lg text-success\" title=\"{{_t('device_is_operating')}}\" ng-hide=v.isFailed></i></td><td data-title=\"{{ _t('last_communication')}}\"><bb-date-time obj=v.dateTime updated=v.isUpdated></bb-date-time></td><td class=\"row-interview print-hide\"><button class=\"btn btn-default\" title=\"{{_t('device_is_not_fully_interviewed')}}\" ng-hide=\"v.interviewDone || v.isController\" ng-click=\"handleModalInterview('interviewModal',$event,$index,v.id,v.name)\" title={{v.interview}}><i class=\"fa fa-search-minus fa-lg text-danger\"></i></button> &nbsp;</td><td class=\"row-ping td-action print-hide\"><button class=\"btn btn-default\" id=\"btn_ping_{{ v.rowId}}\" title=\"{{_t('pingDevice')}}\" title=\"{{ _t('pingDevice')}}\" ng-if=v.urlToStore ng-click=pingDevice(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] icon=\"'fa-circle-o text-success'\"></bb-row-spinner></button></td></tr></tbody></table></div><div ng-include=\"'app/views/device/modal_status_interview.html'\"></div></div>"
   );
 
 
   $templateCache.put('app/views/device/type.html',
-    "<div ng-controller=TypeController><div class=page-header><h1>{{_t('nav_type_info')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=devices.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><a href=\"\" ng-click=\"orderBy('id')\"># <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\"><span ng-bind=\"_t('device_name')\"></span> <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('security')\"><span ng-bind=\"_t('th_security')\"></span> <span ng-show=\"predicate == 'security'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('mwief')\" title=\"{{ _t('th_mwief_tip')}}\" tooltip><span ng-bind=\"_t('th_mwief')\"></span> <span ng-show=\"predicate == 'mwief'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('ZWavePlusInfo')\"><span ng-bind=\"_t('th_zwaveplus')\"></span> <span ng-show=\"predicate == 'zWavePlus'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('sdk')\"><span ng-bind=\"_t('th_sdk')\"></span> <span ng-show=\"predicate == 'sdk'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('vendorName')\"><span ng-bind=\"_t('th_vendor')\"></span> <span ng-show=\"predicate == 'vendorName'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('productName')\"><span ng-bind=\"_t('th_product')\"></span> <span ng-show=\"predicate == 'productName'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('appVersion')\"><span ng-bind=\"_t('th_appversion')\"></span> <span ng-show=\"predicate == 'appVersion'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('type')\"><span ng-bind=\"_t('device_description_device_type')\"></span> <span ng-show=\"predicate == 'type'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th></tr></thead><tbody><tr ng-repeat=\"v in devices.all | orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=# ng-bind=v.id></td><td data-title=\"{{ _t('device_name')}}\"><a href=#configuration/interview/{{v.id}} ng-bind=v.name></a></td><td data-title=\"{{ _t('th_security')}}\"><i class=\"{{ v.security | securityIcon }}\"></i>&nbsp;</td><td data-title=\"{{ _t('th_mwief')}}\"><i class=\"{{v.mwief| mwiefIcon}}\"></i>&nbsp;</td><td data-title=\"{{ _t('th_zwaveplus')}}\"><i class=\"{{ v.ZWavePlusInfo | zWavePlusIcon}}\"></i>&nbsp;</td><td data-title=\"{{ _t('th_sdk')}}\"><span ng-show=v.fromSdk ng-bind=v.sdk></span> <span ng-show=!v.fromSdk>(<em ng-bind=v.sdk></em>)</span></td><td data-title=\"{{ _t('th_vendor')}}\"><span ng-bind=v.vendorName></span>&nbsp;</td><td data-title=\"{{ _t('th_product')}}\"><span ng-bind=productNames[v.id]></span>&nbsp;</td><td data-title=\"{{ _t('th_appversion')}}\"><span ng-bind=v.appVersion></span>&nbsp;</td><td data-title=\"{{ _t('device_description_device_type')}}\"><span ng-bind=v.deviceType></span>&nbsp;</td></tr></tbody></table></div></div>"
+    "<div ng-controller=TypeController><div class=page-header><h1>{{_t('nav_type_info')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=devices.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'id'\" label=\"'#'\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'name'\" label=\"_t('device_name')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'security'\" label=\"_t('th_security')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'mwief'\" label=\"_t('th_mwief')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'zWavePlus'\" label=\"_t('th_zwaveplus')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'sdk'\" label=\"_t('th_sdk')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'vendorName'\" label=\"_t('th_vendor')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'productName'\" label=\"_t('th_product')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'appVersion'\" label=\"_t('th_appversion')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'type'\" label=\"_t('device_description_device_type')\"></sort-by></th></tr></thead><tbody><tr ng-repeat=\"v in devices.all | orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=# ng-bind=v.id></td><td data-title=\"{{ _t('device_name')}}\"><a href=#configuration/interview/{{v.id}} ng-bind=v.name></a></td><td data-title=\"{{ _t('th_security')}}\"><i class=\"{{ v.security | securityIcon }}\"></i>&nbsp;</td><td data-title=\"{{ _t('th_mwief')}}\"><i class=\"{{v.mwief| mwiefIcon}}\"></i>&nbsp;</td><td data-title=\"{{ _t('th_zwaveplus')}}\"><i class=\"{{ v.ZWavePlusInfo | zWavePlusIcon}}\"></i>&nbsp;</td><td data-title=\"{{ _t('th_sdk')}}\"><span ng-show=v.fromSdk ng-bind=v.sdk></span> <span ng-show=!v.fromSdk>(<em ng-bind=v.sdk></em>)</span></td><td data-title=\"{{ _t('th_vendor')}}\"><span ng-bind=v.vendorName></span>&nbsp;</td><td data-title=\"{{ _t('th_product')}}\"><span ng-bind=productNames[v.id]></span>&nbsp;</td><td data-title=\"{{ _t('th_appversion')}}\"><span ng-bind=v.appVersion></span>&nbsp;</td><td data-title=\"{{ _t('device_description_device_type')}}\"><span ng-bind=v.deviceType></span>&nbsp;</td></tr></tbody></table></div></div>"
   );
 
 
@@ -32729,7 +34146,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
   );
 
 
-  $templateCache.put('app/views/home/backup_restore.html',
+  $templateCache.put('app/views/home/_backup_restore.html',
     "<div class=\"panel panel-default\"><div class=panel-heading><i class=\"fa fa-download\"></i> {{_t('nm_backup_title')}}</div><div class=panel-body><a class=\"btn btn-info\" href={{cfg.server_url}}/ZWaveAPI/Backup><i class=\"fa fa-download\"></i> {{_t('nm_backup_download')}} </a>&nbsp; <button class=\"btn btn-info\" ng-click=\"handleModal('restoreModal', $event)\"><i class=\"fa fa-repeat\"></i> {{_t('nm_restore_backup_upload')}}</button></div></div>"
   );
 
@@ -32750,7 +34167,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/home/home_installer.html',
-    "<div ng-controller=HomeController><div ng-include=\"'app/views/home/ip.html'\"></div><div class=\"row home-page_\" ng-if=home.show><div class=\"col-sm-6 home-page-image\"><div ng-include=\"'app/views/home/promo_installer.html'\"></div><div ng-include=\"'app/views/home/network_name.html'\"></div><div ng-include=\"'app/views/home/notes.html'\"></div></div><div class=\"col-sm-6 product-data-list_ pull-right_\"><div ng-include=\"'app/views/home/network_informations.html'\"></div><div ng-include=\"'app/views/network/control/control_different.html'\" ng-controller=ControlController></div><div ng-include=\"'app/views/network/control/control_restore.html'\"></div></div></div></div>"
+    "<div ng-controller=HomeController><div ng-controller=SetPromiscuousModeController ng-init=\"setPromiscuousMode('SetPromiscuousMode(true)')\"></div><div ng-include=\"'app/views/home/ip.html'\"></div><div class=\"row home-page_\" ng-if=home.show><div class=\"col-sm-6 home-page-image\"><div ng-include=\"'app/views/home/promo_installer.html'\"></div><div ng-include=\"'app/views/home/use_cit.html'\"></div><div ng-include=\"'app/views/home/network_name.html'\"></div><div ng-include=\"'app/views/home/notes.html'\"></div></div><div class=\"col-sm-6 product-data-list_ pull-right_\"><div ng-include=\"'app/views/home/network_informations.html'\"></div><div ng-include=\"'app/views/network/control/control_different.html'\" ng-controller=ControlController></div><div ng-include=\"'app/views/network/control/control_restore.html'\" ng-controller=ControlController></div></div></div></div>"
   );
 
 
@@ -32765,7 +34182,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/home/network_informations.html',
-    "<div class=\"panel panel-default\"><div class=panel-heading><i class=\"fa fa-info-circle\"></i> {{_t('txt_network_info')}} (<em>{{countDevices}} {{_t('txt_devices_present')}})</em></div><div class=panel-body><ul class=list-report><li><strong>{{mainsDevices}}</strong> {{_t('txt_devices_mains')}}</li><li><strong>{{batteryWakeupDevices}}</strong> {{_t('txt_devices_battery')}}</li><li><strong>{{flirsDevices}}</strong> {{_t('txt_devices_flirs')}}</li></ul></div></div>"
+    "<div class=\"panel panel-default\"><div class=panel-heading><i class=\"fa fa-info-circle\"></i> {{_t('txt_network_info')}} (<em>{{home.networkInformation.sum}} {{_t('txt_devices_present')}})</em></div><div class=panel-body><ul class=list-report><li><strong>{{home.networkInformation.mains}}</strong> {{_t('txt_devices_mains')}}</li><li><strong>{{home.networkInformation.battery}}</strong> {{_t('txt_devices_battery')}}</li><li><strong>{{home.networkInformation.flirs}}</strong> {{_t('txt_devices_flirs')}}</li></ul></div></div>"
   );
 
 
@@ -32775,23 +34192,29 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/home/notes.html',
-    "<div class=\"panel panel-default\" ng-controller=DataHolderController><div class=panel-heading><i class=\"fa fa-list text-info\"></i> {{_t('txt_notes')}}</div><div class=panel-body><div ng-hide=goNotes ng-click=\"goNotes = true\"><span class=newlines ng-if=dataHolder.controller.homeNotes>{{dataHolder.controller.homeNotes|stripTags}} </span>&nbsp; <button type=button class=\"btn btn-default\" ng-click=\"goNotes = true\" ng-disabled=\"rowSpinner['spinNotes']\"><bb-row-spinner spinner=\"rowSpinner['spinNotes']\" icon=\"'fa-pencil'\"></bb-row-spinner></button></div><form name=form_notes id=form_notes class=form ng-show=goNotes ng-submit=\"storeNotes(form_notes,dataHolder.controller.homeNotes,'spinNotes');goNotes = !goNotes\" novalidate><textarea id=notes class=form-control rows=10 ng-model=dataHolder.controller.homeNotes>{{dataHolder.controller.homeNotes}}\n" +
+    "<div class=\"panel panel-default\"><div class=panel-heading><i class=\"fa fa-list text-info\"></i> {{_t('txt_notes')}}</div><div class=panel-body><div ng-hide=goNotes ng-click=\"goNotes = true\"><span class=newlines ng-if=dataHolder.controller.homeNotes>{{dataHolder.controller.homeNotes|stripTags}} </span>&nbsp; <button type=button class=\"btn btn-default\" ng-click=\"goNotes = true\" ng-disabled=\"rowSpinner['spinNotes']\"><bb-row-spinner spinner=\"rowSpinner['spinNotes']\" icon=\"'fa-pencil'\"></bb-row-spinner></button></div><form name=form_notes id=form_notes class=form ng-show=goNotes ng-submit=\"storeNotes(form_notes,dataHolder.controller.homeNotes,'spinNotes');goNotes = !goNotes\" novalidate><textarea id=notes class=form-control rows=10 ng-model=dataHolder.controller.homeNotes>{{dataHolder.controller.homeNotes}}\r" +
+    "\n" +
     "            </textarea><div class=text-right><button class=\"btn btn-primary\" title=\"{{_t('btn_save')}}\" ng-disabled=\"rowSpinner['spinNotes']\"><bb-row-spinner spinner=\"rowSpinner['spinNotes']\" label=\" _t('btn_save')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></div></form></div></div>"
   );
 
 
   $templateCache.put('app/views/home/promo_default.html',
-    "<img class=product-logo ng-src=\"{{getCustomCfgArr('logo')}}\" alt=Logo><p></p><div class=product-description ng-bind-html=\"_t('txt_homepage_promo_default') | toTrusted\"></div>"
+    "<img class=product-logo ng-src=\"{{getCustomCfgVal('logo')}}\" alt=Logo><p></p><div class=product-description ng-bind-html=\"_t('txt_homepage_promo_default') | toTrusted\"></div>"
   );
 
 
   $templateCache.put('app/views/home/promo_installer.html',
-    "<img class=product-logo ng-src=\"{{getCustomCfgArr('logo')}}\" alt=Logo><p></p><div class=product-description ng-bind-html=\"_t('txt_homepage_promo_installer') | toTrusted\"></div>"
+    "<img class=product-logo ng-src=\"{{getCustomCfgVal('logo')}}\" alt=Logo><p></p><div class=product-description ng-bind-html=\"_t('txt_homepage_promo_installer') | toTrusted\"></div>"
+  );
+
+
+  $templateCache.put('app/views/home/use_cit.html',
+    "<div class=\"panel panel-default\" ng-controller=DataHolderController><div class=panel-heading><i class=\"fa fa-info-circle\"></i> {{_t('use_cit')}}</div><div class=panel-body><a class=\"btn btn-default\" href=\"/cit/storage/data/docs/Z-Wave Alliance Certified Installer Toolkit User Guide (v0.5).pdf\" target=_blank><i class=\"fa fa-book\"></i> {{_t('user_guide')}}</a></div></div>"
   );
 
 
   $templateCache.put('app/views/indicator.html',
-    "<span>{{_t('jobs')}}: {{cfg.busy_indicator.result}}</span><span class=text-success ng-if=\"cfg.busy_indicator.result <= 0\"><i class=\"fa fa-stop\"></i> </span><span class=text-warning ng-if=\"cfg.busy_indicator.result > 0 && cfg.busy_indicator.result < 20 \"><i class=\"fa fa-stop\"></i><i class=\"fa fa-stop\"></i> </span><span class=text-danger ng-if=\"cfg.busy_indicator.result > 19\"><i class=\"fa fa-stop\"></i><i class=\"fa fa-stop\"></i><i class=\"fa fa-stop\"></i></span>"
+    "<span><a href=#network/queue target=_blank class=timestamp>{{_t('jobs')}}</a>: {{cfg.busy_indicator.result}}&nbsp;</span><span class=text-success ng-if=\"cfg.busy_indicator.result <= 0\"><i class=\"fa fa-stop\"></i> </span><span class=text-warning ng-if=\"cfg.busy_indicator.result > 0 && cfg.busy_indicator.result < 20 \"><i class=\"fa fa-stop\"></i><i class=\"fa fa-stop\"></i> </span><span class=text-danger ng-if=\"cfg.busy_indicator.result > 19\"><i class=\"fa fa-stop\"></i><i class=\"fa fa-stop\"></i><i class=\"fa fa-stop\"></i></span>"
   );
 
 
@@ -32801,12 +34224,12 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/installer/rssi_background.html',
-    "<div ng-controller=ZnifferRSSIController><div id=chart1 style=\"height: 400px; width: 100%\"></div><div id=chart2 style=\"height: 400px; width: 100%\"></div></div>"
+    "<div class=rssi-container ng-controller=ZnifferRSSIController><div id=chart1 class=rssi-entry></div><div id=chart2 class=rssi-entry></div></div>"
   );
 
 
-  $templateCache.put('app/views/installer/rssi_chart.html',
-    ""
+  $templateCache.put('app/views/installer/rssi_meter.html',
+    "<div ng-controller=ZnifferRSSIMeterController><div class=form-inline><div class=form-group><div class=btn-group><button class=\"btn btn-default\" title=\"Start new trace\" ng-class=\"rssi.trace === 'start' ? 'btn-success' : ''\" ng-disabled=\"rssi.trace === 'start'\" ng-click=\"setTrace('start')\"><i class=\"fa fa-play\"></i></button> <button class=\"btn btn-default\" title=\"Pause trace\" ng-class=\"rssi.trace === 'pause' ? 'btn-warning' : ''\" ng-disabled=\"rssi.trace === 'pause'\" ng-click=\"setTrace('pause')\"><i class=\"fa fa-pause\"></i></button></div></div></div><div id=gauge1 class=gauge></div><div id=gauge2 class=gauge></div></div>"
   );
 
 
@@ -32820,10 +34243,56 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
   );
 
 
+  $templateCache.put('app/views/network/_link_health.html',
+    "<div ng-controller=ConfigHealthController><div class=page-header><h1>{{_t('nav_linkhealth_info')}}</h1></div><div ng-show=\"deviceId && !_.isEmpty(health.neighbours)\"><div id=table_mobile><table class=\"table table-striped table-condensed table-hover\"><thead class=cf><tr><th><a href=\"\" ng-click=\"orderBy('id')\">{{ _t('link_to_node')}} <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('type')\">{{_t('device_description_device_type')}} <span ng-show=\"predicate == 'type'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th>{{ _t('linkquality')}}</th><th class=mobile-show><button class=\"btn btn-primary\" id=btn_test_all_1 ng-click=\"testAllLinks('all_1')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner icon=\"'fa-circle-o'\" spinner=\"rowSpinner['all_1']\" label=\"_t('test_all_links')\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in health.neighbours| orderBy:predicate:reverse track by $index\" id={{v.rowId}}><td data-title=#><button class=\"btn btn-default btn-{{v.type}}\">{{ v.id}}</button></td><td data-title=\"{{ _t('device_description_device_type')}}\">{{ v.name}}</td><td data-title=\"{{ _t('type')}}\"><i class=fa ng-class=v.icon title={{_t(v.type)}}></i></td><td data-title=\"{{ _t('datetime')}}\"><span class=\"row-time {{v.indicator.updateTimeColor}}\" ng-if=v.powerLevel>{{ v.indicator.updateTime | isTodayFromUnix }} </span><span class=\"row-time {{health.timing.indicator.updateTimeColor}}\" ng-if=\"!v.powerLevel && v.id === health.ctrlNodeId\">{{ health.timing.indicator.updateTime | isTodayFromUnix }}</span></td><td data-title=\"{{ _t('linkquality')}}\"><i class=\"fa fa-circle fa-2x clickable {{v.indicator.color}}\" ng-if=v.powerLevel ng-click=\"handlePowerLevelModal('healthPowerLevelModal', $event, v)\"></i> <i class=\"fa fa-circle fa-2x clickable {{health.timing.indicator.color}}\" ng-if=\"!v.powerLevel && v.id === health.ctrlNodeId\" ng-click=\"handleTimingModal('healthTimingModal', $event, v)\"></i></td><td data-title=\"\" ng-switch on=v.deviceType><button class=\"btn btn-default\" id=\"btn_test_{{ v.id}}\" ng-if=health.device.hasPowerLevel ng-click=runZwaveCmd(v.cmdTestNode) ng-disabled=rowSpinner[v.cmdTestNode]><bb-row-spinner icon=\"'fa-circle-o text-success'\" spinner=rowSpinner[v.cmdTestNode] label=\"_t('test_link')\"></bb-row-spinner></button> <button class=\"btn btn-default\" id=\"btn_nop_{{ v.id}}\" ng-if=\"!health.device.hasPowerLevel && v.type === 'static'\" ng-click=runZwaveNopCmd(v.cmdNop) ng-disabled=rowSpinner[v.cmdNop]><bb-row-spinner icon=\"'fa-circle-o text-success'\" spinner=rowSpinner[v.cmdNop] label=\"_t('nop')\"></bb-row-spinner></button></td></tr></tbody></table></div><div class=\"legend-entry legend-inline\"><div class=legend-row><button class=\"btn btn-default btn-sm btn-static\">&nbsp;</button> {{_t('static')}}</div><div class=legend-row><button class=\"btn btn-default btn-sm btn-portable\">&nbsp;</button> {{_t('portable')}}</div><div class=legend-row><button class=\"btn btn-default btn-sm btn-battery\">&nbsp;</button> {{_t('battery')}}</div><div class=legend-row><button class=\"btn btn-default btn-sm btn-flirs\">&nbsp;</button> {{_t('flirs')}}</div><div class=legend-row><button class=\"btn btn-default btn-sm btn-mains\">&nbsp;</button> {{_t('mains')}}</div><div class=legend-row><button class=\"btn btn-default btn-sm btn-unknown\">&nbsp;</button> {{_t('unknown')}}</div></div></div><div id=healthPowerLevelModal class=appmodal ng-if=modalArr.healthPowerLevelModal><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handlePowerLevelModal('healthPowerLevelModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{health.device.find.name|cutText:true:30}}</h3></div><div class=appmodal-body ng-bind-html=\"health.device.commandClass | toTrusted\"></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handlePowerLevelModal('healthPowerLevelModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_close')}}</span></button></div></div></div><div id=healthTimingModal class=appmodal ng-if=modalArr.healthTimingModal><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handleTimingModal('healthTimingModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{health.device.find.name|cutText:true:30}}</h3></div><div class=appmodal-body><p><strong>{{_t('th_total')}} (pkts)</strong>: {{health.timing.find.totalPackets}}</p><p><strong>{{_t('th_ok')}}</strong>: {{health.timing.find.okPackets}}%</p><p><strong>{{_t('th_lastpackets')}}</strong>: <span ng-bind-html=\"health.timing.find.lastPackets | toTrusted\"></span></p><p><strong>{{_t('timing_color_description')}}:</strong><br><i class=\"fa fa-square fa-lg\" style=\"color: green\"></i> {{_t('timing_green')}}<br><i class=\"fa fa-square fa-lg\" style=\"color: black\"></i> {{_t('timing_black')}}<br><i class=\"fa fa-square fa-lg\" style=\"color: red\"></i> {{_t('timing_red')}}.<br></p></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleTimingModal('healthTimingModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_close')}}</span></button></div></div></div></div>"
+  );
+
+
+  $templateCache.put('app/views/network/_linkstatus.html',
+    "<div ng-controller=LinkStatusController><div class=page-header><h1>{{_t('nav_linkhealth_info')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=linkStatus.show><table id=RoutingTable class=\"table table-striped table-condensed table-hover\"><thead class=cf><tr><th><a href=\"\" ng-click=\"orderBy('id')\"># <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('type')\">{{_t('device_description_device_type')}} <span ng-show=\"predicate == 'type'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th ng-repeat=\"pl in linkStatus.pwLvl\" style=text-align:center>{{pl}}</th><th class=mobile-show>&nbsp;</th></tr></thead><tbody><tr ng-repeat=\"v in linkStatus.all| orderBy:predicate:reverse track by $index\" id={{v.rowId}}><td data-title=#>{{ v.id}}</td><td data-title=\"{{ _t('device_description_device_type')}}\">{{ v.name}}</td><td data-title=\"{{ _t('type')}}\" title={{v.type}}><i class=fa ng-class=v.icon title={{_t(v.type)}}></i></td><td data-title=\"{{ _t('datetime')}}\"><bb-date-time ng-if=v.dateTime obj=v.dateTime updated=v.isUpdated></bb-date-time><span ng-if=!v.dateTime>-</span></td><td class=rtCell ng-repeat=\"n in linkStatus.pwLvlData[v.id] track by $index\"><div class=\"rtDiv {{n.color}}\" title={{n}} ng-class=\"{\r" +
+    "\n" +
+    "                             'rtGray': n == 0,\r" +
+    "\n" +
+    "                              'rtRed': n > 0 && n < 50,\r" +
+    "\n" +
+    "                              'rtOrange': n > 50 && n < 100,\r" +
+    "\n" +
+    "                              'rtGreen': n > 99\r" +
+    "\n" +
+    "                             }\"><i class=\"fa fa-check\" ng-if=\"linkStatus.pwLvlTested.indexOf(v.id) > -1\"></i>&nbsp;</div></td><td class=td-action data-title=\"\"><button class=\"btn btn-primary\" id=\"btn_test_{{ v.id}}\" ng-click=runZwaveTestNode(v) ng-disabled=rowSpinner[v.paramsTestNode]><bb-row-spinner icon=\"'fa-circle-o'\" spinner=rowSpinner[v.paramsTestNode] label=\"_t('test_link')\"></bb-row-spinner></button></td></tr></tbody></table></div><div id=RoutingComments><i class=\"fa fa-square fa-lg gray\"></i> {{_t('Unavailable')}}<br><i class=\"fa fa-square fa-lg green\"></i> {{_t('dBm 100%')}}<br><i class=\"fa fa-square fa-lg orange\"></i> {{_t('dBm from 50% to 99%')}}<br><i class=\"fa fa-square fa-lg red\"></i> {{_t('dBm from 1% to 50%')}}<br></div><div ng-include=\"'app/views/network/linkstatus_modal.html'\"></div></div>"
+  );
+
+
+  $templateCache.put('app/views/network/_linkstatus_modal.html',
+    "<div id=linkStatusModal class=appmodal ng-if=modalArr.linkStatusModal ng-controller=BackupRestoreController><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handleModal('linkStatusModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{testNode.name|cutText:true:25}}</h3></div><div class=appmodal-body><div class=\"progress modal-progress\" ng-repeat=\"v in testNode.data track by $index\"><div class=progress-bar title={{v}}% style=\"width: {{v}}%\" ng-class=\"{'progress-bar-danger': v <= 30 ,\r" +
+    "\n" +
+    "                     'progress-bar-warning': v > 30 && v <= 50,\r" +
+    "\n" +
+    "                     'progress-bar-info': v > 50 && v <= 70,\r" +
+    "\n" +
+    "                    'progress-bar-success': v == 100\r" +
+    "\n" +
+    "                    }\"><span>{{v}}%</span></div></div></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleModal('linkStatusModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button></div></div></div>"
+  );
+
+
+  $templateCache.put('app/views/network/_neighbors_info.html',
+    "<div class=table-responsive ng-if=routings.show><table class=\"table table-striped table-condensed table-hover table-neighbors\"><thead><tr><th>#</th><th>{{ _t('device_name')}}</th><th>{{ _t('nav_type_info')}}</th><th>{{ _t('rt_header_update_time')}}</th><th class=\"mobile-show td-action print-hide\"><button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=\"updateAllRoutess('all_1','urlToStore')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner spinner=\"rowSpinner['all_1']\" label=\"_t('switches_update_all')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></th><th><span class=rt-cell ng-repeat=\"v in routings.all track by $index\">{{v.id}}</span></th></tr></thead><tbody><tr ng-repeat=\"v in routings.all track by $index\"><td>{{v.id}}</td><td>{{v.name}}</td><td><i class=fa ng-class=v.icon title={{_t(v.type)}}></i></td><td class=\"row-time is-updated-{{v.isUpdated}}\">{{ v.updateTime | isTodayFromUnix }} &nbsp;</td><td class=\"td-action print-hide\"><button class=\"btn btn-default\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateRoute(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] label=\" _t('update')\" icon=\"'fa-circle-o text-success'\"></bb-row-spinner></button>&nbsp;</td><td ng-bind-html=htmlNeighbors[v.id]|toTrusted></td></tr></tbody></table></div>"
+  );
+
+
+  $templateCache.put('app/views/network/_neighbors_routing.html',
+    "<div class=overflow ng-if=routings.show><table class=table-neighbors><thead><tr><td>&nbsp;</td><td><span class=rt-cell ng-repeat=\"v in routings.all track by $index\">{{v.id}}</span></td></tr></thead><tbody><tr ng-repeat=\"v in routings.all track by $index\"><td class=rt-node-id><div class=\"tool-tip right rt-cell rt-cell-th\">{{v.id}}<div class=tool-tip-entry><p>{{v.name}}</p><p><strong>Type info:</strong> <i class=fa ng-class=v.icon title={{_t(v.type)}}></i></p><p><strong>Updated:</strong> {{ v.updateTime | isTodayFromUnix }}</p><div><button class=\"btn btn-primary\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateRoute(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] label=\" _t('update')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></div></div></div></td><td ng-bind-html=htmlNeighbors[v.id]|toTrusted></td></tr></tbody></table></div>"
+  );
+
+
   $templateCache.put('app/views/network/_queue.html',
-    "<div ng-controller=QueueController><div class=page-header><h1>{{_t('nm_inspect_queue_title')}}</h1></div><div><strong>{{_t('inspect_queue_legend_title')}}</strong><p ng-bind-html=\"_t('inspect_queue_legend_help') | toTrusted\"></p></div><div class=table-responsive><table id=inspect_queue_table class=table-striped><thead><tr><th>n</th><th>U</th><th>W</th><th>S</th><th>E</th><th>D</th><th>Ack</th><th>Resp</th><th>Cbk</th><th>{{_t('th_timeout')}}</th><th>{{_t('th_nodeid')}}</th><th>{{_t('th_description')}}</th><th>{{_t('th_progress')}}</th><th>{{_t('th_buffer')}}</th></tr></thead><tbody id=inspect_queue_table_body></tbody></table><div><div id=inspect_queue_len></div><br></div></div><script>function closeWindow() {\n" +
-    "                    window.open('', '_parent', '');\n" +
-    "                    window.close();\n" +
+    "<div ng-controller=QueueController><div class=page-header><h1>{{_t('nm_inspect_queue_title')}}</h1></div><div><strong>{{_t('inspect_queue_legend_title')}}</strong><p ng-bind-html=\"_t('inspect_queue_legend_help') | toTrusted\"></p></div><div class=table-responsive><table id=inspect_queue_table class=table-striped><thead><tr><th>n</th><th>U</th><th>W</th><th>S</th><th>E</th><th>D</th><th>Ack</th><th>Resp</th><th>Cbk</th><th>{{_t('th_timeout')}}</th><th>{{_t('th_nodeid')}}</th><th>{{_t('th_description')}}</th><th>{{_t('th_progress')}}</th><th>{{_t('th_buffer')}}</th></tr></thead><tbody id=inspect_queue_table_body></tbody></table><div><div id=inspect_queue_len></div><br></div></div><script>function closeWindow() {\r" +
+    "\n" +
+    "                    window.open('', '_parent', '');\r" +
+    "\n" +
+    "                    window.close();\r" +
+    "\n" +
     "                }</script><a class=\"btn btn-primary\" href=javascript:closeWindow();>{{_t('btn_close')}}</a></div>"
   );
 
@@ -32839,7 +34308,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/network/control/control_different.html',
-    "<div class=\"panel panel-default\" ng-controller=IncludeDifferentNetworkController><div class=panel-heading><i class=\"fa fa-sitemap\"></i> {{_t('nm_inc_into_nw')}}</div><div class=panel-body><div ng-if=\"controlDh.controller.isRealPrimary && (!controlDh.controller.hasDevices)\"><p class=input-help>{{_t('device_not_included_info')}}</p><bb-alert alert=controlDh.network.alert></bb-alert><button class=\"btn btn-primary\" id=btn_learn_start ng-disabled=\"rowSpinner['controller.SetLearnMode(1)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || (controlDh.controller.SUCNodeId ===  controlDh.controller.nodeId && controlDh.controller.isSIS)\" ng-show=\"[9].indexOf(controlDh.controller.controllerState) == -1\" ng-click=\"includeToNetwork('controller.SetLearnMode(1)','successNetworkIncludeModal',$event)\"><i class=\"fa fa-play-circle\"></i> {{_t('include_into_network')}}</button> <button class=\"btn btn-danger\" id=btn_learn_stop ng-show=\"[9].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"includeToNetwork('controller.SetLearnMode(0)')\"><i class=\"fa fa-stop-circle\"></i> {{_t('include_into_network_stop')}}</button></div><div ng-if=\"controlDh.controller.isRealPrimary && (controlDh.controller.hasDevices)\"><p class=input-help>{{_t('device_included_info')}}</p><button class=\"btn btn-primary\" id=btn_learn_start_2 disabled>{{_t('leave_network')}} {{controlDh.controller.homeName}}</button></div><div ng-if=!controlDh.controller.isRealPrimary><p class=input-help>{{_t('device_included_info')}}</p><div ng-hide=\"[0].indexOf(controlDh.controller.controllerState) > -1\"><bb-alert alert=controlDh.network.alert></bb-alert></div><button class=\"btn btn-info\" id=btn_learn_stop ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-hide=\"[9].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"excludeFromNetwork('controller.SetLearnMode(1)',_t('before_leaving_network'))\"><i class=\"fa fa-play-circle\"></i> {{_t('leave_network') + ' ' + controlDh.controller.homeName}}</button> <button class=\"btn btn-danger\" id=btn_learn_stop ng-show=\"[9].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"includeToNetwork('controller.SetLearnMode(0)')\"><i class=\"fa fa-stop-circle\"></i> {{_t('leave_network_stop') + ' ' + controlDh.controller.homeName}}</button></div></div><div id=successNetworkIncludeModal class=appmodal ng-if=\"controlDh.network.modal && !controlDh.controller.isRealPrimary\"><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"closeNetworkModal('successNetworkIncludeModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{_t('include_into_network')}}</h3></div><div class=appmodal-body><div class=\"alert alert-success\"><i class=\"fa fa-smile-o\"></i> {{_t('success_controller_include')}}</div><div class=cfg-block><button class=\"btn btn-primary\" ng-click=\"handleModal('restoreModal', $event);handleModal('successNetworkIncludeModal', $event)\"><i class=\"fa fa-repeat\"></i> {{_t('make_restore')}}</button></div><div class=cfg-block ng-controller=RequestNifAllController><button class=\"btn btn-primary\" id=btn_request_nif ng-click=\"requestNifAll('requestNifAll');handleModal('successNetworkIncludeModal', $event)\" ng-disabled=\"rowSpinner['requestNifAll']\"><bb-row-spinner spinner=\"rowSpinner['requestNifAll']\" label=\"_t('detect_all_nodes')\" icon=\"'fa-search-plus'\"></bb-row-spinner></button></div><div class=cfg-block><button type=button class=\"btn btn-default\" ng-click=\"closeNetworkModal('successNetworkIncludeModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('just_proceed')}}</span></button></div></div></div></div></div><div ng-include=\"'app/views/network/control/control_restore_modal.html'\"></div>"
+    "<div class=\"panel panel-default\" ng-controller=IncludeDifferentNetworkController><div class=panel-heading><i class=\"fa fa-sitemap\"></i> {{_t('nm_inc_into_nw')}}</div><div class=panel-body><div ng-if=\"controlDh.controller.isRealPrimary && (!controlDh.controller.hasDevices)\"><p class=input-help>{{_t('device_not_included_info')}}</p><bb-alert alert=controlDh.network.alert></bb-alert><button class=\"btn btn-primary\" id=btn_learn_start ng-disabled=\"rowSpinner['controller.SetLearnMode(1)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || (SUCNodeId == controllerNodeId && isSIS && hasDevices)\" ng-show=\"[9].indexOf(controlDh.controller.controllerState) == -1\" ng-click=\"includeToNetwork('controller.SetLearnMode(1)','successNetworkIncludeModal',$event)\"><i class=\"fa fa-play-circle\"></i> {{_t('include_into_network')}}</button> <button class=\"btn btn-danger\" id=btn_learn_stop ng-show=\"[9].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"includeToNetwork('controller.SetLearnMode(0)')\"><i class=\"fa fa-stop-circle\"></i> {{_t('include_into_network_stop')}}</button></div><div ng-if=\"controlDh.controller.isRealPrimary && (controlDh.controller.hasDevices)\"><p class=input-help>{{_t('device_included_info')}}</p><button class=\"btn btn-primary\" id=btn_learn_start_2 disabled>{{_t('leave_network')}}</button></div><div ng-if=!controlDh.controller.isRealPrimary><p class=input-help>{{_t('device_included_info')}}</p><div ng-hide=\"controlDh.network.modal && [0].indexOf(controlDh.controller.controllerState) > -1\"><bb-alert alert=controlDh.network.alert></bb-alert></div><div><bb-alert alert=controlDh.alert></bb-alert></div><button class=\"btn btn-info\" id=btn_learn_start ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-hide=\"(controlDh.network.inclusionProcess && !controlDh.network.modal) || [9].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"excludeFromNetwork('controller.SetLearnMode(1)',_t('before_leaving_network'))\"><i class=\"fa fa-play-circle\"></i> {{_t('leave_network')}}</button> <button class=\"btn btn-danger\" id=btn_learn_stop ng-show=\"[9].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"includeToNetwork('controller.SetLearnMode(0)')\"><i class=\"fa fa-stop-circle\"></i> {{_t('leave_network_stop')}}</button></div></div><div id=successNetworkIncludeModal class=appmodal ng-if=\"controlDh.network.modal && !controlDh.controller.isRealPrimary\"><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"closeNetworkModal('successNetworkIncludeModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{_t('include_into_network')}}</h3></div><div class=appmodal-body><div class=\"alert alert-success\"><i class=\"fa fa-smile-o\"></i> {{_t('success_controller_include')}}</div><div class=cfg-block><button class=\"btn btn-primary\" ng-click=\"handleModal('restoreModal', $event);handleModal('successNetworkIncludeModal', $event)\"><i class=\"fa fa-repeat\"></i> {{_t('make_restore')}}</button></div><div class=cfg-block ng-controller=RequestNifAllController><button class=\"btn btn-primary\" id=btn_request_nif ng-click=\"requestNifAll('requestNifAll');handleModal('successNetworkIncludeModal', $event)\" ng-disabled=\"rowSpinner['requestNifAll']\"><bb-row-spinner spinner=\"rowSpinner['requestNifAll']\" label=\"_t('detect_all_nodes')\" icon=\"'fa-search-plus'\"></bb-row-spinner></button></div><div class=cfg-block><button type=button class=\"btn btn-primary\" ng-click=\"closeNetworkModal('successNetworkIncludeModal', $event)\"><i class=\"fa fa-arrow-right\"></i> <span class=btn-name>{{_t('just_proceed')}}</span></button></div></div></div></div></div><div ng-include=\"'app/views/network/control/control_restore_modal.html'\"></div>"
   );
 
 
@@ -32864,8 +34333,10 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/network/control/control_network_maintance.html',
-    "<div class=\"panel panel-default\"><div class=panel-heading><i class=\"fa fa-sitemap\"></i> {{_t('nm_net_maintance')}}</div><div class=panel-body><div><div class=\"cfg-block form-inline\"><p class=input-help>{{_t('nm_remove_node_war')}}</p><select name=remove_failed_node id=remove_failed_node class=form-control ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-hide=_.isEmpty(controlDh.nodes.failedNodes) ng-model=controlDh.input.failedNodes><option ng-hide=\"controlDh.removed.failedNodes.indexOf(v) > -1\" ng-repeat=\"v in controlDh.nodes.failedNodes track by $index\" value={{v}}>{{v}}</option></select>&nbsp; <button class=\"btn btn-primary\" id=btn_remove_failed_mode ng-click=\"handleModal('failedNodeModal', $event)\" ng-disabled=!controlDh.input.failedNodes><bb-row-spinner spinner=\"rowSpinner['devices[' + controlDh.input.failedNodes + '].RemoveFailedNode()']\" label=\"_t('nm_remove_failed')\" icon=\"'fa-minus-circle'\"></bb-row-spinner></button></div><div class=\"cfg-block form-inline\" ng-controller=ReplaceFailedNodeController><p class=input-help>{{_t('nm_replace_node_war')}}</p><div class=\"alert nm-response alert-danger\" ng-show=\"[17, 18].indexOf(controllerState) != -1\">{{_t('nm_controller_state_' + controllerState)}}</div><select name=replace_failed_node id=replace_failed_node class=form-control ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-hide=_.isEmpty(controlDh.nodes.failedNodes) ng-model=controlDh.input.replaceNodes><option ng-hide=\"controlDh.removed.replaceNodes.indexOf(v) > -1\" ng-repeat=\"v in controlDh.nodes.failedNodes track by $index\" value={{v}}>{{v}}</option></select>&nbsp; <button class=\"btn btn-primary\" id=btn_replace_failed_node ng-click=\"replaceFailedNode('ReplaceFailedNode(' + controlDh.input.replaceNodes + ')')\" ng-disabled=!controlDh.input.replaceNodes><bb-row-spinner spinner=\"rowSpinner['ReplaceFailedNode(' + controlDh.input.replaceNodes + ')']\" label=\"_t('nm_replace_node')\" icon=\"'fa-exchange'\"></bb-row-spinner>{{_t('')}}</button></div><div class=\"cfg-block form-inline\"><p class=input-help>{{_t('nm_mark_node_war')}}</p><select name=mark_battery_failed id=mark_battery_failed class=form-control ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-hide=_.isEmpty(controlDh.nodes.failedBatteries) ng-change=changeSelectNode(modelBatteryFailed) ng-model=controlDh.input.failedBatteries><option ng-hide=\"controlDh.removed.failedBatteries.indexOf(v) > -1\" ng-repeat=\"v in controlDh.nodes.failedBatteries track by $index\" value={{v}}>{{v}}</option></select>&nbsp; <button class=\"btn btn-primary\" ng-click=\"handleModal('failedBatteryModal', $event)\" ng-disabled=!controlDh.input.failedBatteries><bb-row-spinner spinner=\"rowSpinner['devices[' + controlDh.input.failedBatteries + '].SendNoOperation()']\" label=\"_t('nm_mark_battery_as_failed')\" icon=\"'fa-thumb-tack'\"></bb-row-spinner></button></div></div><div><div class=\"cfg-block form-inline\" ng-controller=ControllerChangeController><p class=input-help>{{_t('nm_change_controller_war')}}</p><div class=nm-response ng-class=\"controllerState == 0 ? 'text-info' : 'text - danger'\" ng-show=\"[13, 14, 15, 16].indexOf(controllerState) > -1\">{{_t('nm_controller_state_' + controllerState)}}</div><button class=\"btn btn-primary\" id=btn_controller_change_start ng-show=\"[13, 14, 15, 16].indexOf(controlDh.controller.controllerState) == -1\" ng-click=\"controllerChange('controller.ControllerChange(1)')\" ng-disabled=\"[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controlDh.controller.controllerState) > -1 || isPrimary == false || rowSpinner['controller.ControllerChange(1)']\"><bb-row-spinner spinner=\"rowSpinner['controller.ControllerChange(1)']\" label=\"_t('nm_controller_change_start')\" icon=\"'fa-database'\"></bb-row-spinner></button> <button class=\"btn btn-danger\" id=btn_controller_change_stop ng-show=\"[13, 14, 15, 16].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"controllerChange('controller.ControllerChange(0)')\" ng-disabled=\"rowSpinner['controller.ControllerChange(0)']\"><bb-row-spinner spinner=\"rowSpinner['controller.ControllerChange(0)']\" label=\"_t('nm_controller_change_stop')\" icon=\"'fa-database'\"></bb-row-spinner></button></div><div class=\"cfg-block form-inline\" ng-controller=RequestNifAllController><p class=input-help>{{_t('nm_nif_all_war')}}</p><button class=\"btn btn-primary\" id=btn_request_nif ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"requestNifAll('requestNifAll')\" ng-disabled=\"rowSpinner['requestNifAll']\"><bb-row-spinner spinner=\"rowSpinner['requestNifAll']\" label=\"_t('nm_request_all_node_information')\" icon=\"'fa-search-plus'\"></bb-row-spinner></button></div></div></div></div><div id=failedNodeModal class=appmodal ng-if=modalArr.failedNodeModal ng-controller=RemoveFailedNodeController><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handleModal('failedNodeModal', $event);controlDh.input.failedNodes = 0\"><i class=\"fa fa-times\"></i></span><h3>{{_t('nm_remove_failed') + ' #' + controlDh.input.failedNodes}}</h3></div><div class=appmodal-body><div class=\"alert alert-warning\"><input type=checkbox name=remove_node_confirm id=remove_node_confirm value=1 ng-click=\"goFailedNode = !goFailedNode\"> <span ng-bind-html=\"_t('are_you_sure_remove_node') | toTrusted\"></span> <strong>{{deviceInfo.name}}</strong><p>{{_t('txt_controller_delete_node')}}</p></div></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleModal('failedNodeModal', $event);controlDh.input.failedNodes = 0\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button> <button type=button class=\"btn btn-danger\" id=btn_reset_controller ng-show=goFailedNode ng-click=\"removeFailedNode('devices[' + controlDh.input.failedNodes + '].RemoveFailedNode()',handleModal('failedNodeModal', $event))\"><i class=\"fa fa-exclamation-triangle\"></i> {{_t('nm_remove_failed')}}</button></div></div></div><div id=failedBatteryModal class=appmodal ng-if=modalArr.failedBatteryModal ng-controller=BatteryDeviceFailedController><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handleModal('failedBatteryModal', $event);controlDh.input.failedBatteries = 0\"><i class=\"fa fa-times\"></i></span><h3>{{_t('nm_mark_battery_as_failed') + ' #' + controlDh.input.failedBatteries}}</h3></div><div class=appmodal-body>{{_t('nm_mark_node_war_modal')}}</div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleModal('failedBatteryModal', $event);controlDh.input.failedBatteries = 0\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button> <button type=button class=\"btn btn-primary\" id=btn_reset_controller ng-click=\"markFailedNode(\n" +
-    "                    ['devices[' + controlDh.input.failedBatteries + '].SendNoOperation()',\n" +
+    "<div class=\"panel panel-default\"><div class=panel-heading><i class=\"fa fa-sitemap\"></i> {{_t('nm_net_maintance')}}</div><div class=panel-body><div><div class=\"cfg-block form-inline\"><p class=input-help>{{_t('nm_remove_node_war')}}</p><select name=remove_failed_node id=remove_failed_node class=form-control ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-hide=_.isEmpty(controlDh.nodes.failedNodes) ng-model=controlDh.input.failedNodes><option ng-hide=\"controlDh.removed.failedNodes.indexOf(v) > -1\" ng-repeat=\"v in controlDh.nodes.failedNodes track by $index\" value={{v}}>{{v}}</option></select>&nbsp; <button class=\"btn btn-primary\" id=btn_remove_failed_mode ng-click=\"handleModal('failedNodeModal', $event)\" ng-disabled=!controlDh.input.failedNodes><bb-row-spinner spinner=\"rowSpinner['devices[' + controlDh.input.failedNodes + '].RemoveFailedNode()']\" label=\"_t('nm_remove_failed')\" icon=\"'fa-minus-circle'\"></bb-row-spinner></button></div><div class=\"cfg-block form-inline\" ng-controller=ReplaceFailedNodeController><p class=input-help>{{_t('nm_replace_node_war')}}</p><div class=\"alert nm-response alert-danger\" ng-show=\"[17, 18].indexOf(controllerState) != -1\">{{_t('nm_controller_state_' + controllerState)}}</div><select name=replace_failed_node id=replace_failed_node class=form-control ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-hide=_.isEmpty(controlDh.nodes.failedNodes) ng-model=controlDh.input.replaceNodes><option ng-hide=\"controlDh.removed.replaceNodes.indexOf(v) > -1\" ng-repeat=\"v in controlDh.nodes.failedNodes track by $index\" value={{v}}>{{v}}</option></select>&nbsp; <button class=\"btn btn-primary\" id=btn_replace_failed_node ng-click=\"replaceFailedNode('ReplaceFailedNode(' + controlDh.input.replaceNodes + ')')\" ng-disabled=!controlDh.input.replaceNodes><bb-row-spinner spinner=\"rowSpinner['ReplaceFailedNode(' + controlDh.input.replaceNodes + ')']\" label=\"_t('nm_replace_node')\" icon=\"'fa-exchange'\"></bb-row-spinner>{{_t('')}}</button></div><div class=\"cfg-block form-inline\"><p class=input-help>{{_t('nm_mark_node_war')}}</p><select name=mark_battery_failed id=mark_battery_failed class=form-control ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-hide=_.isEmpty(controlDh.nodes.failedBatteries) ng-change=changeSelectNode(modelBatteryFailed) ng-model=controlDh.input.failedBatteries><option ng-hide=\"controlDh.removed.failedBatteries.indexOf(v) > -1\" ng-repeat=\"v in controlDh.nodes.failedBatteries track by $index\" value={{v}}>{{v}}</option></select>&nbsp; <button class=\"btn btn-primary\" ng-click=\"handleModal('failedBatteryModal', $event)\" ng-disabled=!controlDh.input.failedBatteries><bb-row-spinner spinner=\"rowSpinner['devices[' + controlDh.input.failedBatteries + '].SendNoOperation()']\" label=\"_t('nm_mark_battery_as_failed')\" icon=\"'fa-thumb-tack'\"></bb-row-spinner></button></div></div><div><div class=\"cfg-block form-inline\" ng-controller=ControllerChangeController><p class=input-help>{{_t('nm_change_controller_war')}}</p><div class=nm-response ng-class=\"controllerState == 0 ? 'text-info' : 'text - danger'\" ng-show=\"[13, 14, 15, 16].indexOf(controllerState) > -1\">{{_t('nm_controller_state_' + controllerState)}}</div><button class=\"btn btn-primary\" id=btn_controller_change_start ng-show=\"[13, 14, 15, 16].indexOf(controlDh.controller.controllerState) == -1\" ng-click=\"controllerChange('controller.ControllerChange(1)')\" ng-disabled=\"[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controlDh.controller.controllerState) > -1 || isPrimary == false || rowSpinner['controller.ControllerChange(1)']\"><bb-row-spinner spinner=\"rowSpinner['controller.ControllerChange(1)']\" label=\"_t('nm_controller_change_start')\" icon=\"'fa-database'\"></bb-row-spinner></button> <button class=\"btn btn-danger\" id=btn_controller_change_stop ng-show=\"[13, 14, 15, 16].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"controllerChange('controller.ControllerChange(0)')\" ng-disabled=\"rowSpinner['controller.ControllerChange(0)']\"><bb-row-spinner spinner=\"rowSpinner['controller.ControllerChange(0)']\" label=\"_t('nm_controller_change_stop')\" icon=\"'fa-database'\"></bb-row-spinner></button></div><div class=\"cfg-block form-inline\" ng-controller=RequestNifAllController><p class=input-help>{{_t('nm_nif_all_war')}}</p><button class=\"btn btn-primary\" id=btn_request_nif ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"requestNifAll('requestNifAll')\" ng-disabled=\"rowSpinner['requestNifAll']\"><bb-row-spinner spinner=\"rowSpinner['requestNifAll']\" label=\"_t('nm_request_all_node_information')\" icon=\"'fa-search-plus'\"></bb-row-spinner></button></div></div></div></div><div id=failedNodeModal class=appmodal ng-if=modalArr.failedNodeModal ng-controller=RemoveFailedNodeController><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handleModal('failedNodeModal', $event);controlDh.input.failedNodes = 0\"><i class=\"fa fa-times\"></i></span><h3>{{_t('nm_remove_failed') + ' #' + controlDh.input.failedNodes}}</h3></div><div class=appmodal-body><div class=\"alert alert-warning\"><input type=checkbox name=remove_node_confirm id=remove_node_confirm value=1 ng-click=\"goFailedNode = !goFailedNode\"> <span ng-bind-html=\"_t('are_you_sure_remove_node') | toTrusted\"></span> <strong>{{deviceInfo.name}}</strong><p>{{_t('txt_controller_delete_node')}}</p></div></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleModal('failedNodeModal', $event);controlDh.input.failedNodes = 0\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button> <button type=button class=\"btn btn-danger\" id=btn_reset_controller ng-show=goFailedNode ng-click=\"removeFailedNode('devices[' + controlDh.input.failedNodes + '].RemoveFailedNode()',handleModal('failedNodeModal', $event))\"><i class=\"fa fa-exclamation-triangle\"></i> {{_t('nm_remove_failed')}}</button></div></div></div><div id=failedBatteryModal class=appmodal ng-if=modalArr.failedBatteryModal ng-controller=BatteryDeviceFailedController><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handleModal('failedBatteryModal', $event);controlDh.input.failedBatteries = 0\"><i class=\"fa fa-times\"></i></span><h3>{{_t('nm_mark_battery_as_failed') + ' #' + controlDh.input.failedBatteries}}</h3></div><div class=appmodal-body>{{_t('nm_mark_node_war_modal')}}</div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleModal('failedBatteryModal', $event);controlDh.input.failedBatteries = 0\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button> <button type=button class=\"btn btn-primary\" id=btn_reset_controller ng-click=\"markFailedNode(\r" +
+    "\n" +
+    "                    ['devices[' + controlDh.input.failedBatteries + '].SendNoOperation()',\r" +
+    "\n" +
     "                    'devices[' + controlDh.input.failedBatteries + '].WakeupQueue()'],handleModal('failedBatteryModal', $event))\"><i class=\"fa fa-check\"></i> {{_t('nm_mark_battery_as_failed')}}</button></div></div></div>"
   );
 
@@ -32881,7 +34352,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/network/control/control_restore_modal.html',
-    "<div id=restoreModal class=appmodal ng-if=modalArr.restoreModal ng-controller=BackupRestoreController><div class=appmodal-in><form name=form_notes id=form_modal class=form ng-model=notes.input ng-submit=\"handleModal('restoreModal', $event);storeSettings(settings.input)\" novalidate><div class=appmodal-header><span class=appmodal-close ng-click=\"handleModal('restoreModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{_t('nm_restore_backup_upload')}}</h3></div><div class=appmodal-body><bb-loader></bb-loader><div class=restore-backup-control ng-if_=\"restoreBackupStatus == 0\"><div class=\"alert alert-warning\"><input type=checkbox name=restore_confirm value=1 id=restore_confirm ng-click=\"restore.allow = !restore.allow\"> <span ng-bind-html=\"_t('are_you_sure_restore') | toTrusted\"></span></div><div ng-if=restore.allow><p><input type=checkbox name=restore_chip_info id=restore_chip_info value=1 ng-true-value=1 ng-false-value=0 ng-model=restore.input.restore_chip_info> {{_t('restore_backup_chip')}}</p><p class=text-center><input id=btn_upload type=file name=file onchange=angular.element(this).scope().restoreFromBackup(this.files)></p></div></div></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleModal('restoreModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button></div></form></div></div>"
+    "<div id=restoreModal class=appmodal ng-if=modalArr.restoreModal ng-controller=BackupRestoreController><div class=appmodal-in><form name=form_notes id=form_modal class=form ng-model=notes.input ng-submit=\"handleModal('restoreModal', $event);storeSettings(settings.input)\" novalidate><div class=appmodal-header><span class=appmodal-close ng-click=\"handleModal('restoreModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{_t('nm_restore_backup_upload')}}</h3></div><div class=appmodal-body><bb-loader></bb-loader><div class=restore-backup-control ng-if_=\"restoreBackupStatus == 0\"><div class=\"alert alert-warning\"><input type=checkbox name=restore_confirm value=1 id=restore_confirm ng-click=\"restore.allow = !restore.allow\"> <span ng-bind-html=\"_t('are_you_sure_restore') | toTrusted\"></span></div><div ng-if=restore.allow><p ng-if=controlDh.controller.isRealPrimary><input type=checkbox name=restore_chip_info id=restore_chip_info value=1 ng-true-value=1 ng-false-value=0 ng-model=restore.input.restore_chip_info> {{_t('restore_backup_chip')}}</p><p class=text-center><input id=btn_upload type=file name=file onchange=angular.element(this).scope().restoreFromBackup(this.files)></p></div></div></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleModal('restoreModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button></div></form></div></div>"
   );
 
 
@@ -32900,15 +34371,28 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
   );
 
 
+  $templateCache.put('app/views/network/linkstatus.html',
+    "<div ng-controller=LinkStatusController><div class=\"page-header row\"><div class=\"col-sm-8 header-col\"><h1>{{ _t('nav_linkhealth_info')}}</h1></div><div class=\"col-sm-4 text-right header-col\"><div class=btn-group><button class=\"btn btn-default\" ng-class=\"linkStatus.showInfo ? 'active': ''\" ng-click=changeView(true)><i class=\"fa fa-th-list\"></i> {{_t('info_link_status')}}</button> <button class=\"btn btn-default\" ng-class=\"!linkStatus.showInfo ? 'active': ''\" ng-click=changeView(false)><i class=\"fa fa-th-large\"></i> {{_t('nav_linkhealth_info')}}</button></div></div></div><bb-alert alert=alert></bb-alert><div class=table-scroll ng-if=linkStatus.show><div data-double-scroll-bar-horizontal><table class=table-neighbors ng-class=\"linkStatus.showInfo ? 'table table-condensed table-hover ':'table-neighbors-noinfo'\"><thead><tr><th class=th-id>&nbsp;</th><th class=neighbor-hide><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th class=neighbor-hide><a href=\"\" ng-click=\"orderBy('type')\">{{_t('device_description_device_type')}} <span ng-show=\"predicate == 'type'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th class=neighbor-hide><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('rt_header_update_time')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th class=\"neighbor-hide print-hide\">&nbsp;</th><th><span class=rt-cell ng-repeat=\"v in linkStatus.all track by $index\">{{v.id}}</span></th></tr></thead><tbody><tr id={{v.rowId}} ng-repeat=\"v in linkStatus.all| orderBy:predicate:reverse track by $index\" ng-hide=v.isController><td class=headcol><span class=\"tool-tip right rt-cell rt-cell-th\">{{v.id}}</span></td><td class=neighbor-hide data-title=\"{{ _t('device_name')}}\">{{ v.name}}</td><td class=neighbor-hide data-title=\"{{ _t('type')}}\" title={{v.type}}><i class=fa ng-class=v.icon title={{_t(v.type)}}></i></td><td class=neighbor-hide data-title=\"{{ _t('datetime')}}\"><bb-date-time ng-if=v.dateTime obj=v.dateTime updated=v.isUpdated></bb-date-time><span ng-if=!v.dateTime>-</span></td><td class=\"neighbor-hide td-action print-hide\" data-title=\"\"><button class=\"btn btn-primary\" id=\"btn_test_{{ v.id}}\" ng-if=v.hasPowerLevel ng-click=testAllLinks(v.id) ng-disabled=rowSpinner[v.id]><bb-row-spinner icon=\"'fa-circle-o'\" spinner=rowSpinner[v.id] label=\"_t('test_link')\"></bb-row-spinner></button> <button class=\"btn btn-default\" id=\"btn_nop_{{ v.id}}\" ng-if=!v.hasPowerLevel ng-click=runZwaveNop(v.cmdNop) ng-disabled=rowSpinner[v.cmdNop]><bb-row-spinner icon=\"'fa-circle-o text-success'\" spinner=rowSpinner[v.cmdNop] label=\"_t('nop')\"></bb-row-spinner></button></td><td ng-bind-html=htmlNeighbors[v.id]|toTrusted>{{htmlNeighbors[v.id]}}</td></tr><tr class=print-hide><th class=th-id>&nbsp;</th><th class=neighbor-hide><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th class=neighbor-hide><a href=\"\" ng-click=\"orderBy('type')\">{{_t('device_description_device_type')}} <span ng-show=\"predicate == 'type'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th class=neighbor-hide><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('rt_header_update_time')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th class=neighbor-hide>&nbsp;</th><th><span class=rt-cell ng-repeat=\"v in linkStatus.all track by $index\">{{v.id}}</span></th></tr></tbody></table></div></div><div class=legend-entry><div class=legend-row><i class=\"fa fa-square fa-lg gray\"></i> {{_t('unavailable')}}</div><div class=legend-row><i class=\"fa fa-square fa-lg green\"></i> {{_t('very_good')}}</div><div class=legend-row><i class=\"fa fa-square fa-lg orange\"></i> {{_t('good')}}</div><div class=legend-row><i class=\"fa fa-square fa-lg red\"></i> {{_t('poor')}}</div></div></div>"
+  );
+
+
   $templateCache.put('app/views/network/map.html',
     "<div ng-controller=NetworkMapController><div id=cy></div></div>"
   );
 
 
+  $templateCache.put('app/views/network/neighbors.html',
+    "<div ng-controller=NeighborController><div class=\"page-header row\"><div class=\"col-sm-8 header-col\"><h1>{{ _t('neighbors')}}</h1></div><div class=\"col-sm-4 text-right header-col\"><div class=btn-group><button class=\"btn btn-default\" ng-class=\"routings.showInfo ? 'active': ''\" ng-click=\"changeView('table')\"><i class=\"fa fa-th-list\"></i> {{_t('info_neighbors')}}</button> <button class=\"btn btn-default\" ng-class=\"!routings.showInfo ? 'active': ''\" ng-click=\"changeView('neighbors')\"><i class=\"fa fa-th-large\"></i> {{_t('neighbors')}}</button></div></div></div><div class=table-scroll ng-if=routings.show><div data-double-scroll-bar-horizontal><table class=\"table-neighbors data-size-{{routings.dataSize}}\" ng-class=\"routings.showInfo ? 'table table-condensed table-hover ':'table-neighbors-noinfo'\"><thead><tr><th class=th-id>&nbsp;</th><th class=neighbor-hide>{{ _t('device_name')}}</th><th class=neighbor-hide>{{ _t('nav_type_info')}}</th><th class=neighbor-hide>{{ _t('rt_header_update_time')}}</th><th class=\"neighbor-hide mobile-show td-action print-hide\"><button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=\"updateAllRoutess('all_1','urlToStore')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner spinner=\"rowSpinner['all_1']\" label=\"_t('switches_update_all')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></th><th><span class=rt-cell ng-repeat=\"v in routings.all track by $index\">{{v.id}}</span></th></tr></thead><tbody><tr ng-repeat=\"v in routings.all track by $index\"><td class=headcol><span class=\"tool-tip right rt-cell rt-cell-th\">{{v.id}}</span></td><td class=neighbor-hide>{{v.name}}</td><td class=neighbor-hide><i class=fa ng-class=v.icon title={{_t(v.type)}}></i></td><td class=\"neighbor-hide row-time is-updated-{{v.isUpdated}}\">{{ v.updateTime | isTodayFromUnix }} &nbsp;</td><td class=\"neighbor-hide td-action print-hide\"><button class=\"btn btn-default\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateRoute(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] label=\" _t('update')\" icon=\"'fa-circle-o text-success'\"></bb-row-spinner></button>&nbsp;</td><td ng-bind-html=htmlNeighbors[v.id]|toTrusted></td></tr><tr><th class=th-id>&nbsp;</th><th class=neighbor-hide>{{ _t('device_name')}}</th><th class=neighbor-hide>{{ _t('nav_type_info')}}</th><th class=neighbor-hide>{{ _t('rt_header_update_time')}}</th><th class=\"neighbor-hide mobile-show td-action print-hide\"><button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=\"updateAllRoutess('all_1','urlToStore')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner spinner=\"rowSpinner['all_1']\" label=\"_t('switches_update_all')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></th><th><span class=rt-cell ng-repeat=\"v in routings.all track by $index\">{{v.id}}</span></th></tr></tbody></table></div></div><div class=legend-entry><div class=legend-row><i class=\"fa fa-square fa-lg green\"></i> {{_t('in_range')}}</div><div class=legend-row><i class=\"fa fa-square fa-lg red\"></i> {{_t('notin_range')}}</div></div></div>"
+  );
+
+
   $templateCache.put('app/views/network/queue.html',
-    "<div ng-controller=QueueController><div class=page-header><h1>{{_t('nm_inspect_queue_title')}}</h1></div><p>{{ _t('txt_queue_length')}}: {{queueData.length}}<bb-alert-text alert=alert></bb-alert-text></p><div id=inspect_queue_table class=table-responsive><table id=inspect_queue_table__ class=\"table table-striped table-condensed table-hover\"><thead><tr><th title=\"Send count\">n</th><th title=Urgent>U</th><th title=\"Wait wakeup\">W</th><th title=\"Wait security\">S</th><th title=Encapsulated>E</th><th title=Done>D</th><th>Ack</th><th>Resp</th><th>Cbk</th><th>{{_t('th_timeout')}}</th><th>{{_t('th_nodeid')}}</th><th>{{_t('th_description')}}</th><th>{{_t('th_progress')}}</th><th>{{_t('th_buffer')}}</th></tr></thead><tbody><tr ng-repeat=\"v in queueData.all track by $index\"><td>{{v.n}}</td><td>{{v.U}}</td><td>{{v.W}}</td><td>{{v.S}}</td><td>{{v.E}}</td><td>{{v.D}}</td><td>{{v.Ack}}</td><td>{{v.Resp}}</td><td>{{v.Cbk}}</td><td>{{v.Timeout}}</td><td>{{v.NodeId}}</td><td ng-bind-html=\"v.Description | toTrusted\"></td><td ng-bind-html=\"v.Progress | toTrusted\"></td><td>{{v.Buffer}}</td></tr></tbody></table></div><br><h3>{{_t('inspect_queue_legend_title')}}</h3><div>{{_t('inspect_queue_legend_help')}}</div><hr><div class=text-right><a href=javascript:closeWindow(); class=\"btn btn-default\"><i class=\"fa fa-times text-danger\"></i> <span class=\"btn-name ng-binding\">{{_t('btn_close')}}</span></a></div><script>function closeWindow() {\n" +
-    "            window.open('', '_parent', '');\n" +
-    "            window.close();\n" +
+    "<div ng-controller=QueueController><div class=page-header><h1>{{_t('nm_inspect_queue_title')}}</h1></div><p>{{ _t('txt_queue_length')}}: {{queueData.length}}<bb-alert-text alert=alert></bb-alert-text></p><div id=inspect_queue_table class=table-responsive><table id=inspect_queue_table__ class=\"table table-striped table-condensed table-hover\"><thead><tr><th title=\"Send count\">n</th><th title=Urgent>U</th><th title=\"Wait wakeup\">W</th><th title=\"Wait security\">S</th><th title=Encapsulated>E</th><th title=Done>D</th><th>Ack</th><th>Resp</th><th>Cbk</th><th>{{_t('th_timeout')}}</th><th>{{_t('th_nodeid')}}</th><th>{{_t('th_description')}}</th><th>{{_t('th_progress')}}</th><th>{{_t('th_buffer')}}</th></tr></thead><tbody><tr ng-repeat=\"v in queueData.all track by $index\"><td>{{v.n}}</td><td>{{v.U}}</td><td>{{v.W}}</td><td>{{v.S}}</td><td>{{v.E}}</td><td>{{v.D}}</td><td>{{v.Ack}}</td><td>{{v.Resp}}</td><td>{{v.Cbk}}</td><td>{{v.Timeout}}</td><td>{{v.NodeId}}</td><td ng-bind-html=\"v.Description | toTrusted\"></td><td ng-bind-html=\"v.Progress | toTrusted\"></td><td>{{v.Buffer}}</td></tr></tbody></table></div><div class=legend-entry><div class=legend-title>{{_t('legend')}}</div><div class=legend-row>{{_t('inspect_queue_legend_help')}}</div></div><hr><div class=text-right><a href=javascript:closeWindow(); class=\"btn btn-default\"><i class=\"fa fa-times text-danger\"></i> <span class=\"btn-name ng-binding\">{{_t('btn_close')}}</span></a></div><script>function closeWindow() {\r" +
+    "\n" +
+    "            window.open('', '_parent', '');\r" +
+    "\n" +
+    "            window.close();\r" +
+    "\n" +
     "        }</script></div>"
   );
 
@@ -32919,17 +34403,27 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/network/routing.html',
-    "<div ng-controller=RoutingController><div class=page-header><h1>{{ _t('tab_routing_table_title')}}</h1></div><div class=table-responsive ng-if=routings.show><table id=RoutingTable class=\"table table-striped table-condensed table-hover\"><thead><tr><th>#</th><th>{{ _t('device_name')}}</th><th>{{ _t('nav_type_info')}}</th><th>{{ _t('rt_header_update_time')}}</th><th ng-repeat=\"v in routings.all\" style=text-align:center>{{v.id}}</th><th class=\"mobile-show td-action\"><button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=\"updateAllRoutess('all_1','urlToStore')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner spinner=\"rowSpinner['all_1']\" label=\"_t('switches_update_all')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in routings.all track by $index\"><td>{{v.id}}</td><td>{{v.name}}</td><td><i class=fa ng-class=v.icon></i></td><td class=\"row-time is-updated-{{v.isUpdated}}\">{{ v.updateTime | isTodayFromUnix }} &nbsp;</td><td ng-repeat=\"n in devices\" class=rtCell><div id=cell{{nodeId}}-{{n}} class={{data[nodeId][n].clazz}} title={{data[nodeId][n].tooltip}} data-toggle=tooltip data-position=top tooltip_><span class=info>{{data[nodeId][n].info}}</span></div></td><td class=rtCell ng-repeat=\"n in v.cellState\"><div class={{n.cssClass}} title={{n.tooltip}}><span class=info ng-if=n.hasAssoc>*</span> <span class=info ng-if=!n.hasAssoc>&nbsp;</span></div></td><td class=td-action><button class=\"btn btn-default\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateRoute(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] label=\" _t('update')\" icon=\"'fa-circle-o text-success'\"></bb-row-spinner></button></td></tr></tbody></table></div><div id=RoutingComments><i class=\"fa fa-square fa-lg\" style=\"color: green\"></i> {{_t('direct')}}<br><i class=\"fa fa-square fa-lg\" style=\"color: #8C0\"></i> {{_t('routed')}}<br><i class=\"fa fa-square fa-lg\" style=\"color: yellow\"></i> {{_t('badly_routed')}}<br><i class=\"fa fa-square fa-lg\" style=\"color: red\"></i> {{_t('not_linked')}}<br><i class=\"fa fa-square fa-lg\" style=\"color: gray\"></i> {{_t('unavailable')}}<br></div></div>"
+    "<div ng-controller=RoutingController><bb-loader></bb-loader><div class=\"page-header row\"><div class=col-sm-8><h1>{{ _t('neighbors')}}</h1></div><div class=\"col-sm-4 text-right\"><div class=btn-group><button class=\"btn btn-default\" ng-class=\"routings.view === 'table' ? 'active': ''\" ng-click=\"changeView('table')\"><i class=\"fa fa-th-list\"></i> {{_t('Info and Neighbors')}}</button> <button class=\"btn btn-default\" ng-class=\"routings.view === 'neighbors' ? 'active': ''\" ng-click=\"changeView('neighbors')\"><i class=\"fa fa-th-large\"></i> {{_t('Neighbors only')}}</button></div></div></div><div ng-if=\"routings.view === 'neighbors'\" ng-include=\"'app/views/network/routing_neigbors.html'\"></div><div ng-if=\"routings.view === 'table'\" ng-include=\"'app/views/network/routing_table.html'\"></div><div id=RoutingComments><i class=\"fa fa-square fa-lg green\"></i> {{_t('direct')}}<br><i class=\"fa fa-square fa-lg green-light\"></i> {{_t('routed')}}<br><i class=\"fa fa-square fa-lg yellow\"></i> {{_t('badly_routed')}}<br><i class=\"fa fa-square fa-lg red\"></i> {{_t('not_linked')}}<br><i class=\"fa fa-square fa-lg gray\"></i> {{_t('unavailable')}}<br></div></div>"
+  );
+
+
+  $templateCache.put('app/views/network/routing_neigbors.html',
+    "<div class=table-responsive ng-if=routings.show><table class=table-routing><thead><tr><td>&nbsp;</td><td ng-repeat=\"v in routings.all | limitTo:increment\" style=text-align:center>{{v.id}}</td></tr></thead><tbody><tr ng-repeat=\"v in routings.all | limitTo:increment track by $index\"><td class=rt-node-id><div class=\"tool-tip right rt-cell rt-cell-th\">{{v.id}}<div class=tool-tip-entry><p>{{v.name}}</p><p><strong>Type info:</strong> <i class=fa ng-class=v.icon title={{_t(v.type)}}></i></p><p><strong>Updated:</strong> {{ v.updateTime | isTodayFromUnix }}</p><div><button class=\"btn btn-primary\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateRoute(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] label=\" _t('update')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></div></div></div></td><td ng-repeat=\"n in v.cellState | limitTo:increment\"><div class=\"rt-cell {{n.cssClass}}\" title={{n.tooltip}}><span class=info ng-if=n.hasAssoc>*</span> <span class=info ng-if=!n.hasAssoc>&nbsp;</span></div></td></tr></tbody></table></div>"
+  );
+
+
+  $templateCache.put('app/views/network/routing_table.html',
+    "<div class=table-responsive ng-if=routings.show><table id=RoutingTable class=\"table table-striped table-condensed table-hover table-routing\"><thead><tr><th>#</th><th>{{ _t('device_name')}}</th><th>{{ _t('nav_type_info')}}</th><th>{{ _t('rt_header_update_time')}}</th><th class=\"mobile-show td-action print-hide\"><button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=\"updateAllRoutess('all_1','urlToStore')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner spinner=\"rowSpinner['all_1']\" label=\"_t('switches_update_all')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></th><th ng-repeat=\"v in routings.all | limitTo:increment\" style=text-align:center>{{v.id}}</th></tr></thead><tbody><tr ng-repeat=\"v in routings.all  | limitTo:increment track by $index\"><td>{{v.id}}</td><td>{{v.name}}</td><td><i class=fa ng-class=v.icon title={{_t(v.type)}}></i></td><td class=\"row-time is-updated-{{v.isUpdated}}\">{{ v.updateTime | isTodayFromUnix }} &nbsp;</td><td class=\"td-action print-hide\"><button class=\"btn btn-default\" id=\"btn_update_{{ v.rowId}}\" ng-click=updateRoute(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] label=\" _t('update')\" icon=\"'fa-circle-o text-success'\"></bb-row-spinner></button>&nbsp;</td><td class=rt-cell ng-repeat=\"n in v.cellState | limitTo:increment\"><div class={{n.cssClass}} title={{n.tooltip}}><span class=info ng-if=n.hasAssoc>*</span> <span class=info ng-if=!n.hasAssoc>&nbsp;</span></div></td></tr></tbody></table></div>"
   );
 
 
   $templateCache.put('app/views/network/statistics.html',
-    "<div ng-controller=NetworkStatisticsController><div class=page-header><h1>{{_t('statistics')}}</h1></div><bb-alert alert=alert></bb-alert><div class=table-responsive ng-if=networkStatistics.show><table class=\"table table-striped table-condensed table-hover table-statistics\"><thead><tr><th style=\"width: 50%\">{{ _t('name')}}</th><th>{{ _t('datetime')}}</th><th class=\"mobile-show td-action\"><button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=\"updateNetworkStatistics('GetNetworkStats()')\" ng-disabled=\"rowSpinner['GetNetworkStats()']\"><bb-row-spinner spinner=\"rowSpinner['GetNetworkStats()']\" label=\"_t('update')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button> <button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=\"updateNetworkStatistics('ClearNetworkStats()')\" ng-disabled=\"rowSpinner['ClearNetworkStats()']\"><bb-row-spinner spinner=\"rowSpinner['ClearNetworkStats()']\" label=\"_t('reset')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in networkStatistics.all track by $index\"><td>{{_t(v.name)}}</td><td class=\"row-time is-updated-{{v.isUpdated}}\">{{ v.dateTime.today }}</td><td class=text-right>{{v.value}}</td></tr></tbody></table></div></div>"
+    "<div ng-controller=NetworkStatisticsController ng-init=\"updateNetworkStatistics('GetNetworkStats()')\"><div class=page-header><h1>{{_t('statistics')}}</h1></div><bb-alert alert=alert></bb-alert><div class=\"text-right print-hide\"><button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=\"updateNetworkStatistics('GetNetworkStats()')\" ng-disabled=\"rowSpinner['GetNetworkStats()']\"><bb-row-spinner spinner=\"rowSpinner['GetNetworkStats()']\" label=\"_t('update')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button> <button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=\"updateNetworkStatistics('ClearNetworkStats()')\" ng-disabled=\"rowSpinner['ClearNetworkStats()']\"><bb-row-spinner spinner=\"rowSpinner['ClearNetworkStats()']\" label=\"_t('reset')\" icon=\"'fa-refresh'\"></bb-row-spinner></button></div><div class=statistic-entry ng-repeat=\"v in netStat.all track by $index\"><div class=statistic-title>{{_t(v.name)}} <span class=\"label label-default\">{{v.dateTime.today}}</span></div><div ng-switch=v.name><div ng-switch-when=RFRxLRCErrors ng-click=\"expandNavi(v.name, $event)\"><div class=\"progress clickable\"><div class=\"progress-bar progress-bar-success\" title=\"{{_t('ok')}} {{v.success}}%\" style=\"width: {{v.success}}%\"><span>{{v.success}}% {{_t('success_reception')}}</span></div><div class=\"progress-bar progress-bar-danger\" title=\"{{_t(v.failCRC8Name)}} {{v.failCRC8}}%\" style=\"width: {{v.failCRC8}}%\"><span>{{v.failCRC8}}% {{_t('failCRC8')}}</span></div><div class=\"progress-bar progress-bar-warning\" title=\"{{_t(v.failCRC16Name)}} {{v.failCRC16}}%\" style=\"width: {{v.failCRC16}}%\"><span>{{v.failCRC16}}% {{_t('failCRC16')}}</span></div></div><div class=page-navi ng-if=naviExpanded[v.name]><div class=page-navi-in><div class=page-navi-content><span class=text-success>{{ _t('success_on_reception')}}: <strong>{{v.frameValue}}</strong></span><br><span class=text-danger>{{_t('failCRC8Name')}}: <strong>{{_t(v.failCRC8Value)}}</strong></span><br><span class=text-warning>{{_t('failCRC16Name')}}: <strong>{{_t(v.failCRC16Value)}}</strong></span></div></div></div></div><div ng-switch-default><div class=\"progress clickable\" ng-click=\"expandNavi(v.name, $event)\"><div class=\"progress-bar progress-bar-success\" title=\"{{_t('ok')}} {{v.success}}% \" style=\"width: {{v.success}}%\"><span ng-if=\"v.name == 'RFRxForeignHomeID'\">{{v.success}}% {{_t('own')}}</span> <span ng-if=\"v.name == 'RFTxLBTBackOffs'\">{{v.success}}% {{_t('ok')}}</span></div><div class=\"progress-bar progress-bar-danger\" title=\"{{_t(v.name)}} {{v.fail}}%\" style=\"width: {{v.fail}}%\"><span ng-if=\"v.name == 'RFRxForeignHomeID'\">{{v.fail}}% {{_t('foreign')}}</span> <span ng-if=\"v.name == 'RFTxLBTBackOffs'\">{{v.fail}}% {{_t('error')}}</span></div></div><div class=page-navi ng-if=naviExpanded[v.name]><div class=page-navi-in><div ng-if=\"v.name == 'RFRxForeignHomeID'\" class=page-navi-content><span class=text-success>{{ _t('own_frames_desc')}}: <strong>{{v.frameValue}}</strong></span><br><span class=text-danger>{{_t('foreign_frames_desc')}}: <strong>{{_t(v.value)}}</strong></span></div><div ng-if=\"v.name == 'RFTxLBTBackOffs'\" class=page-navi-content><span class=text-success>{{ _t(v.frameName)}}: <strong>{{v.frameValue}}</strong></span><br><span class=text-danger>{{_t('RFTxLBTBackOffs_error')}}: <strong>{{_t(v.value)}}</strong></span></div></div></div></div></div></div></div>"
   );
 
 
   $templateCache.put('app/views/network/timing.html',
-    "<div ng-controller=TimingController><div class=page-header><h1>{{_t('nav_timing_info')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=devices.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><a href=\"\" ng-click=\"orderBy('id')\">{{_t('th_node')}} <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('type')\">{{_t('th_type')}} <span ng-show=\"predicate == 'type'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('totalPackets')\">{{_t('th_total')}} (pkts) <span ng-show=\"predicate == 'totalPackets'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('okPackets')\">{{_t('th_ok')}} <span ng-show=\"predicate == 'okPackets'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th>{{_t('th_lastpackets')}}&nbsp;</th><th class=\"mobile-show text-right\"><button class=\"btn btn-primary\" ng-click=\"updateTimingInfo('updateTimingInfo')\" ng-disabled=\"rowSpinner['updateTimingInfo']\"><bb-row-spinner spinner=\"rowSpinner['updateTimingInfo']\" label=\" _t('update')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in devices.all | orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=\"{{_t('th_node')}}\">{{ v.id}}</td><td data-title=\"{{ _t('device_name')}}\">{{ v.name }}</td><td data-title=\"{{_t('th_type')}}\"><i class=fa ng-class=v.icon></i></td><td data-title=\"{{_t('th_total')}}\">{{ v.totalPackets}} &nbsp;</td><td data-title=\"{{_t('th_ok')}}\">{{ v.okPackets}}% &nbsp;</td><td data-title=\"{{_t('th_lastpackets')}}\"><span ng-bind-html=\"v.lastPackets | toTrusted\"></span> &nbsp;</td><td>&nbsp;</td></tr></tbody></table></div><p><strong>{{_t('timing_color_description')}}:</strong><br><i class=\"fa fa-square fa-lg\" style=\"color: green\"></i> {{_t('timing_green')}}<br><i class=\"fa fa-square fa-lg\" style=\"color: black\"></i> {{_t('timing_black')}}<br><i class=\"fa fa-square fa-lg\" style=\"color: red\"></i> {{_t('timing_red')}}.<br></p></div>"
+    "<div ng-controller=TimingController><div class=page-header><h1>{{_t('nav_timing_info')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=devices.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><a href=\"\" ng-click=\"orderBy('id')\">{{_t('th_node')}} <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('type')\">{{_t('th_type')}} <span ng-show=\"predicate == 'type'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('totalPackets')\">{{_t('th_total')}} (pkts) <span ng-show=\"predicate == 'totalPackets'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('okPackets')\">{{_t('th_ok')}} <span ng-show=\"predicate == 'okPackets'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th>{{_t('th_lastpackets')}}&nbsp;</th><th class=\"mobile-show text-right\"><button class=\"btn btn-primary\" ng-click=\"updateTimingInfo('updateTimingInfo')\" ng-disabled=\"rowSpinner['updateTimingInfo']\"><bb-row-spinner spinner=\"rowSpinner['updateTimingInfo']\" label=\" _t('update')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in devices.all | orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=\"{{_t('th_node')}}\">{{ v.id}}</td><td data-title=\"{{ _t('device_name')}}\">{{ v.name }}</td><td data-title=\"{{_t('th_type')}}\"><i class=fa ng-class=v.icon title={{_t(v.type)}}></i></td><td data-title=\"{{ _t('datetime')}}\"><bb-date-time obj=v.dateTime updated=v.isUpdated></bb-date-time></td><td data-title=\"{{_t('th_total')}}\">{{ v.totalPackets}} &nbsp;</td><td data-title=\"{{_t('th_ok')}}\">{{ v.okPackets}}% &nbsp;</td><td data-title=\"{{_t('th_lastpackets')}}\"><span ng-bind-html=\"v.lastPackets | toTrusted\"></span> &nbsp;</td><td>&nbsp;</td></tr></tbody></table></div><div class=legend-entry><div class=legend-title>{{_t('timing_color_description')}}</div><div class=legend-row><i class=\"fa fa-square fa-lg green\"></i> {{_t('timing_green')}}</div><div class=legend-row><i class=\"fa fa-square fa-lg black\"></i> {{_t('timing_black')}}</div><div class=legend-row><i class=\"fa fa-square fa-lg red\"></i> {{_t('timing_red')}}</div></div></div>"
   );
 
 
@@ -32943,23 +34437,38 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
   );
 
 
-  $templateCache.put('app/views/settings/settings_app.html',
-    "<h2 class=accordion-entry-title ng-click=\"expandElement('settingsApp')\"><i class=\"fa fa-cogs\"></i> {{_t('app_settings')}} <i class=\"fa accordion-arrow\" ng-class=\"expand.settingsApp ? 'fa-chevron-up':'fa-chevron-down'\"></i></h2><div class=accordion-entry-ctrl ng-class=\"\" ng-if=expand.settingsApp ng-controller=SettingsAppController><bb-loader></bb-loader><form name=form_settings id=form_settings class=\"form form-page\" ng-if_=\"cfg.app_type === 'installer'\" ng-submit=\"storeSettings(settings.input, cfg.zwavecfg)\" novalidate><fieldset><div class=\"form-group form-inline\"><label for=network_name>{{_t('network_name')}}:</label><input name=network_name id=network_name class=form-control placeholder=\"{{_t('network_name')}}\" value={{settings.input.network_name}} ng-model=settings.input.network_name></div><div class=\"form-group form-inline\"><label>{{_t('ssid_name')}}:</label><input name=ssid_name id=ssid_name class=form-control placeholder=\"{{_t('ssid_name')}}\" value={{settings.input.ssid_name}} ng-model=settings.input.ssid_name></div><div class=\"form-group form-inline\"><label>{{_t('wifi_password')}}:</label><input name=wifi_password id=wifi_password type=password class=form-control placeholder=\"{{_t('wifi_password')}}\" value={{settings.input.wifi_password}} ng-model=settings.input.wifi_password ng-blur=\"passwordBlur = true\" ng-minlength=8 ng-maxlength=63><bb-validator input-name=form_settings.wifi_password.$error.minlength trans='_t(\"wifi_password_valid\")' has-blur=passwordBlur></bb-validator><bb-validator input-name=form_settings.wifi_password.$error.maxlength trans='_t(\"wifi_password_valid\")' has-blur=passwordBlur></bb-validator></div><div class=\"form-group form-inline\"><label>{{_t('date_format')}}:</label><select name=date_format name=date_format class=form-control ng-model=settings.input.date_format><option ng-repeat=\"v in cfg.date_format_list\" value={{v}} ng-selected=\"v === cfg.zwavecfg.date_format\">{{v}}</option></select></div><div class=\"form-group form-inline\"><label>{{_t('time_format')}}:</label><select name=time_format name=time_format class=form-control ng-model=settings.input.time_format><option ng-repeat=\"v in cfg.time_format_list\" value={{v}} ng-selected=\"v === cfg.zwavecfg.time_format\">{{v}} {{_t('hours')}}</option></select></div><div class=\"form-group form-inline\"><label>{{_t('timezone')}}:</label><select name=time_zone name=time_zone class=form-control ng-model=settings.input.time_zone><option ng-repeat=\"v in cfg.time_zone_list\" value={{v}} ng-selected=\"v === cfg.zwavecfg.time_zone\">{{v}}</option></select></div></fieldset><fieldset class=submit-entry><button type=submit class=\"btn btn-submit\" title=\"{{_t('btn_save')}}\"><i class=\"fa fa-check\"></i> <span class=btn-name>{{_t('btn_save')}}</span></button></fieldset></form></div>"
+  $templateCache.put('app/views/print/print.html',
+    "<div class=print-header><p><strong>Network name:</strong> {{cfg.zwavecfg.network_name}}</p><p><strong>Date:</strong> {{ nowDate | date : 'yyyy-MM-dd' }}</p></div><div class=print-section><h2 class=section-title>Device Info und Device Status</h2><div class=print-entry><div ng-include=\"'app/views/device/status.html'\"></div></div><div class=print-entry><div ng-include=\"'app/views/device/type.html'\"></div></div></div><div class=\"print-section page-break\"><h2 class=section-title>Radio Situation</h2><div class=print-entry><div ng-include=\"'app/views/installer/rssi_background.html'\"></div></div><div class=print-entry><div ng-include=\"'app/views/network/statistics.html'\"></div></div></div><div class=\"print-section page-break\"><h2 class=section-title>Link status</h2><div class=print-entry><div ng-include=\"'app/views/network/neighbors.html'\"></div></div><div class=print-entry><div ng-include=\"'app/views/network/linkstatus.html'\"></div></div></div><div class=\"print-section page-break\"><h2 class=section-title>{{ _t('txt_notes') }}</h2><div class=print-entry ng-controller=DataHolderController><span class=newlines ng-if=dataHolder.controller.homeNotes>{{dataHolder.controller.homeNotes|stripTags}} </span>&nbsp;</div></div>"
+  );
+
+
+  $templateCache.put('app/views/settings/modal_timezone.html',
+    "<div id=timezoneModal class=appmodal ng-show=modalArr.timezoneModal><div class=appmodal-in><div class=appmodal-header><h3><i class=\"fa fa-exclamation-circle\"></i> {{getCustomCfgVal('title')}}</h3></div><div class=appmodal-body><div class=\"alert alert-warning\"><i class=\"fa fa-spinner fa-spin fa-lg\"></i> {{ _t('z_way_restart', {__val__: settings.countdown,__level__: _t('seconds')})}}</div></div></div></div>"
+  );
+
+
+  $templateCache.put('app/views/settings/settings_app_default.html',
+    "<h2 class=accordion-entry-title ng-click=\"expandElement('settingsApp')\"><i class=\"fa fa-cogs\"></i> {{_t('app_settings')}} <i class=\"fa accordion-arrow\" ng-class=\"expand.settingsApp ? 'fa-chevron-up':'fa-chevron-down'\"></i></h2><div class=accordion-entry-ctrl ng-class=\"\" ng-if=expand.settingsApp ng-controller=SettingsAppFormatController><bb-loader></bb-loader><form name=form_settings id=form_settings class=\"form form-page\" ng-submit=storeFormatSettings(settingsFormat.input) novalidate><fieldset><div class=\"form-group form-inline\"><label>{{_t('date_format')}}:</label><select name=date_format name=date_format class=form-control ng-model=settingsFormat.input.date_format><option ng-repeat=\"v in cfg.date_format_list\" value={{v}} ng-selected=\"v === cfg.zwavecfg.date_format\">{{v}}</option></select></div><div class=\"form-group form-inline\"><label>{{_t('time_format')}}:</label><select name=time_format name=time_format class=form-control ng-model=settingsFormat.input.time_format><option ng-repeat=\"v in cfg.time_format_list\" value={{v}} ng-selected=\"v === cfg.zwavecfg.time_format\">{{v}} {{_t('hours')}}</option></select></div></fieldset><fieldset class=submit-entry><button type=submit class=\"btn btn-submit\" title=\"{{_t('btn_save')}}\"><i class=\"fa fa-check\"></i> <span class=btn-name>{{_t('btn_save')}}</span></button></fieldset></form></div>"
+  );
+
+
+  $templateCache.put('app/views/settings/settings_app_installer.html',
+    "<h2 class=accordion-entry-title ng-click=\"expandElement('settingsApp')\"><i class=\"fa fa-cogs\"></i> {{_t('app_settings')}} <i class=\"fa accordion-arrow\" ng-class=\"expand.settingsApp ? 'fa-chevron-up':'fa-chevron-down'\"></i></h2><div class=accordion-entry-ctrl ng-class=\"\" ng-if=expand.settingsApp ng-controller=SettingsAppController><bb-loader></bb-loader><form name=form_settings id=form_settings class=\"form form-page\" ng-submit=\"storeSettings(settings.input, $event)\" novalidate><fieldset><div class=\"form-group form-inline\"><label for=network_name>{{_t('cit_identifier')}}:</label><input name=network_name id=network_name class=form-control placeholder=\"{{_t('cit_identifier')}}\" value={{settings.input.cit_identifier}} ng-model=settings.input.cit_identifier></div><div class=\"form-group form-inline\"><label>{{_t('ssid_name')}}:</label><input name=ssid_name id=ssid_name class=form-control placeholder=\"{{_t('ssid_name')}}\" value={{settings.input.ssid_name}} ng-model=settings.input.ssid_name></div><div class=\"form-group form-inline\"><label>{{_t('wifi_password')}}:</label><input name=wifi_password id=wifi_password type=password class=form-control placeholder=\"{{_t('wifi_password')}}\" value={{settings.input.wifi_password}} ng-model=settings.input.wifi_password ng-blur=\"passwordBlur = true\" ng-minlength=8 ng-maxlength=63><bb-validator input-name=form_settings.wifi_password.$error.minlength trans='_t(\"wifi_password_valid\")' has-blur=passwordBlur></bb-validator><bb-validator input-name=form_settings.wifi_password.$error.maxlength trans='_t(\"wifi_password_valid\")' has-blur=passwordBlur></bb-validator></div><div class=\"form-group form-inline\"><label>{{_t('date_format')}}:</label><select name=date_format name=date_format class=form-control ng-model=settings.input.date_format><option ng-repeat=\"v in cfg.date_format_list\" value={{v}} ng-selected=\"v === cfg.zwavecfg.date_format\">{{v}}</option></select></div><div class=\"form-group form-inline\"><label>{{_t('time_format')}}:</label><select name=time_format name=time_format class=form-control ng-model=settings.input.time_format><option ng-repeat=\"v in cfg.time_format_list\" value={{v}} ng-selected=\"v === cfg.zwavecfg.time_format\">{{v}} {{_t('hours')}}</option></select></div></fieldset><fieldset class=submit-entry><button type=submit class=\"btn btn-submit\" title=\"{{_t('btn_save')}}\"><i class=\"fa fa-check\"></i> <span class=btn-name>{{_t('btn_save')}}</span></button></fieldset></form><div ng-include=\"'app/views/settings/modal_timezone.html'\"></div></div>"
   );
 
 
   $templateCache.put('app/views/settings/settings_default.html',
-    "<div class=page-header><h1>{{_t('settings')}}</h1></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_lang.html'\"></div>"
+    "<div class=page-header><h1>{{_t('settings')}}</h1></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_lang.html'\"></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_app_default.html'\"></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_firmware.html'\"></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_report.html'\"></div>"
   );
 
 
   $templateCache.put('app/views/settings/settings_firmware.html',
-    "<h2 class=accordion-entry-title ng-click=\"expandElement('settingsFirmware')\"><i class=\"fa fa-level-up\"></i> {{_t('nav_firmware_update')}} <i class=\"fa accordion-arrow\" ng-class=\"expand.settingsFirmware  ? 'fa-chevron-up':'fa-chevron-down'\"></i></h2><div class=accordion-entry-ctrl ng-class=\"\" ng-if=expand.settingsFirmware ng-controller=SettingsFirmwareController><bb-loader></bb-loader><form name=form_firmware id=form_firmware class=\"form form-page\" ng-submit=updateFirmware() ng-if_=!firmwareUpdate.isUpToDate><fieldset><p class=form-control-static><span ng-bind=\"_t('current_firmware')\"></span>: {{firmwareUpdate.softwareCurrentVersion}}</p><div class=form-group><bb-help-text trans=\"_t('firmware_update_info')\"></bb-help-text></div></fieldset><fieldset class=submit-entry><button type=button class=\"btn btn-submit\" title=\"{{_t('update_to_latest')}}\" ng-click=\"setAccess('?allow_access=1',true);handleModal('firmwareUpdateModal', $event)\"><i class=\"fa fa-level-up\"></i> <span class=btn-name>{{_t('update_to_latest')}} ({{firmwareUpdate.softwareLatestVersion}})</span></button></fieldset></form><div id=firmwareUpdateModal class=\"appmodal appmodal-100\" ng-if=\"modalArr.firmwareUpdateModal && firmwareUpdate.show\"><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"setAccess('?allow_access=0');handleModal('firmwareUpdateModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{_t('nav_firmware_update')}}</h3></div><div class=\"appmodal-body text-center\"><iframe ng-src={{firmwareUpdate.url}} height=600 style=\"width: 100%\" ng-if=firmwareUpdate.loaded></iframe></div></div></div></div>"
+    "<h2 class=accordion-entry-title ng-click=\"expandElement('settingsFirmware')\"><i class=\"fa fa-level-up\"></i> {{_t('nav_firmware_update')}} <i class=\"fa accordion-arrow\" ng-class=\"expand.settingsFirmware  ? 'fa-chevron-up':'fa-chevron-down'\"></i></h2><div class=accordion-entry-ctrl ng-class=\"\" ng-if=expand.settingsFirmware ng-controller=SettingsFirmwareController><bb-loader></bb-loader><form name=form_firmware id=form_firmware class=\"form form-page\" ng-submit=updateFirmware() ng-if_=!firmwareUpdate.isUpToDate><fieldset><p class=form-control-static><span ng-bind=\"_t('current_firmware')\"></span>: {{firmwareUpdate.softwareCurrentVersion}}</p><div class=form-group><bb-help-text trans=\"_t('firmware_update_info')\"></bb-help-text></div></fieldset><fieldset class=submit-entry><button type=button class=\"btn btn-submit\" title=\"{{_t('update_to_latest')}}\" ng-click=\"setAccess('?allow_access=1',true);handleModal('firmwareUpdateModal', $event)\"><i class=\"fa fa-level-up\"></i> <span class=btn-name>{{_t('update_to_latest')}} ({{firmwareUpdate.softwareLatestVersion}})</span></button></fieldset></form><div id=firmwareUpdateModal class=\"appmodal appmodal-100\" ng-if=\"modalArr.firmwareUpdateModal && firmwareUpdate.show\"><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"redirectAfterUpdate();setAccess('?allow_access=0');handleModal('firmwareUpdateModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{_t('nav_firmware_update')}}</h3></div><div class=\"appmodal-body text-center\"><iframe ng-src={{firmwareUpdate.url}} height=600 style=\"width: 100%\" ng-if=firmwareUpdate.loaded></iframe></div></div></div><div ng-include=\"'app/views/settings/modal_timezone.html'\"></div></div>"
   );
 
 
   $templateCache.put('app/views/settings/settings_installer.html',
-    "<div class=page-header><h1>{{_t('settings')}}</h1></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_lang.html'\"></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_app.html'\"></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_firmware.html'\"></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_report.html'\"></div>"
+    "<div class=page-header><h1>{{_t('settings')}}</h1></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_lang.html'\"></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_app_installer.html'\"></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_firmware.html'\"></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_report.html'\"></div>"
   );
 
 
@@ -32969,7 +34478,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/settings/settings_report.html',
-    "<h2 class=accordion-entry-title ng-click=\"expandElement('report')\"><i class=\"fa fa-bug\"></i> <span ng-bind=\"_t('nav_report')\"></span> <i class=\"fa accordion-arrow\" ng-class=\"expand.report  ? 'fa-chevron-up':'fa-chevron-down'\"></i></h2><div class=accordion-entry-ctrl ng-if=expand.report ng-controller=SettingsReportController><bb-loader></bb-loader><form name=form_report id=form_profile class=\"form form-page\" ng-submit=sendReport(form_report,input) novalidate><fieldset><div class=\"alert alert-warning\"><i class=\"fa fa-exclamation-circle\"></i> {{_t('bugreport_info')}}</div><div class=form-group><textarea name=content id=content class=\"form-control report-content\" ng-blur=\"contentBlur = true\" ng-model=input.content ng-required=true></textarea><bb-validator input-name=form_report.content.$error.required trans='_t(\"field_required\")' has-blur=contentBlur></bb-validator></div><div class=\"form-group form-inline last\"><label>{{_t('lb_email')}}:</label><input name=email id=email type=email class=form-control value={{input.email}} ng-blur=\"emailBlur = true\" ng-model=input.email ng-required=true><bb-validator input-name=form_report.email.$error.required trans='_t(\"email_invalid\")' has-blur=emailBlur></bb-validator></div></fieldset><fieldset class=submit-entry><button type=submit class=\"btn btn-submit\" title=\"{{_t('lb_submit')}}\" ng-disabled=form_report.$invalid><i class=\"fa fa-check\"></i> <span class=btn-name>{{_t('lb_submit')}}</span></button></fieldset></form></div>"
+    "<h2 class=accordion-entry-title ng-click=\"expandElement('report')\"><i class=\"fa fa-bug\"></i> <span ng-bind=\"_t('nav_report')\"></span> <i class=\"fa accordion-arrow\" ng-class=\"expand.report  ? 'fa-chevron-up':'fa-chevron-down'\"></i></h2><div class=accordion-entry-ctrl ng-if=expand.report ng-controller=SettingsReportController><bb-loader></bb-loader><form name=form_report id=form_profile class=\"form form-page\" ng-submit=sendReport(form_report,input) novalidate><fieldset><div class=\"alert alert-warning\"><i class=\"fa fa-exclamation-circle\"></i> {{_t('bugreport_info')}}</div><div class=form-group><textarea name=content id=content class=\"form-control report-content\" ng-blur=\"contentBlur = true\" ng-model=input.content ng-required=true></textarea><bb-validator input-name=form_report.content.$error.required trans='_t(\"field_required\")' has-blur=contentBlur></bb-validator></div><div class=\"form-group form-inline\"><label>{{_t('lb_email')}}:</label><input name=email id=email type=email class=form-control value={{input.email}} ng-blur=\"emailBlur = true\" ng-model=input.email ng-required=true><bb-validator input-name=form_report.email.$error.required trans='_t(\"email_invalid\")' has-blur=emailBlur></bb-validator></div><div class=\"form-group form-inline last\"><input name=log id=log type=checkbox ng-model=input.log ng-value=true ng-change=\"showLogWarning(input.log ? _t('include_log_warning'):false)\"><label>{{_t('include_log')}}</label></div></fieldset><fieldset class=submit-entry><button type=submit class=\"btn btn-submit\" title=\"{{_t('lb_submit')}}\" ng-disabled=form_report.$invalid><i class=\"fa fa-check\"></i> <span class=btn-name>{{_t('lb_submit')}}</span></button></fieldset></form></div>"
   );
 
 }]);
@@ -33051,16 +34560,29 @@ angApp.directive('bbAlertText', function () {
         + '</span>'
     };
 });
-
+/**
+ * Handles and displays sort by buttons
+ * @class sortBy
+ */
 angApp.directive('sortBy', function () {
     return {
         restrict: "E",
         replace: true,
-        template: '<span ng-show="predicate == {{coll_name}}"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>',
-        link: function (scope, element, attr) {
-            // this is link function
-            var col_name = scope.$eval(attr.col_name);
-        }
+        scope: {
+            callback: '&',
+            obj: '=',
+            label: '=',
+            field: '='
+        },
+        template: '<span class="order-by clickable">{{label}}&nbsp<span ng-show="obj.field == field">'
+        + '<i ng-show="!obj.reverse" class="fa fa-sort-asc"></i><i ng-show="obj.reverse" class="fa fa-sort-desc"></i>'
+        + '</span></span>',
+        link: function(scope, element, attrs) {
+            element.bind('click', function (e) {
+                scope.callback({field: scope.field});
+            });
+
+        },
     };
 });
 /**
@@ -33304,7 +34826,7 @@ angApp.directive('routingTypeIcon', function () {
     };
 });
 
-angApp.directive('expertCommandInput', function ($filter) {
+angApp.directive('expertCommandInput', function (cfg,$filter) {
     // Get text input
     function getText(label, value, min, max, name) {
         var input = '';
@@ -33320,7 +34842,7 @@ angApp.directive('expertCommandInput', function ($filter) {
 
         input += '<label>' + label + '</label> ';
         input += '<select name="select_' + inName + '" class="form-control">';
-        input += '<option value="1">Z-Way</option>';
+        input += '<option value="1">' + (cfg.app_type === 'installer' ? 'CIT' : 'Z-Way')+ '</option>';
         angular.forEach(devices, function (v, k) {
             var selected = (v.id == currValue ? ' selected' : '');
             input += '<option value="' + v.id + '"' + selected + '>' + v.name + '</option>';
@@ -33345,7 +34867,7 @@ angApp.directive('expertCommandInput', function ($filter) {
         var value = (currValue !== undefined ? currValue : defaultValue);
         angular.forEach(enums.enumof, function (v, k) {
             //var inName =  $filter('stringToSlug')(name ? v.name : label);
-            var inName = name ? name : v.name;
+            var inName = (name ? name : v.name);// + '_' +label;
             //console.log(inName);
             var title = v.label || '';
             var type = v.type;
@@ -34595,6 +36117,7 @@ angApp.directive('dirPaginate', function($compile, $parse, $timeout, paginationS
             }
         };
     });
+/* AngularJS directives for double scroll bars by @przno, v0.1.5, https://github.com/przno/double-scroll-bars, MIT license */!function(a){"use strict";a.module("doubleScrollBars",[]).directive("doubleScrollBarHorizontal",["$timeout","$dsb","$$dsbStorage",function(a,b,c){return{restrict:"A",transclude:!0,scope:{doubleScrollBarHorizontal:"@",id:"@"},template:"<div class=\"double-scroll\"> <div style=\"overflow-y:hidden;\" data-ng-style=\"{height:nativeScrollBarHeight}\">  <div style=\"overflow-y:hidden;position:relative;top:-1px;\" data-ng-style=\"{'overflow-x':doubleScrollBarHorizontal=='always'?'scroll':'auto',height:scrollBarElementHeight}\">   <div data-ng-style=\"{width:wrapper2scrollWidth,height:scrollBarElementHeight}\"></div>  </div> </div> <div data-ng-style=\"{'overflow-x':doubleScrollBarHorizontal=='always'?'scroll':'auto'}\">  <div data-ng-transclude></div> </div></div>",link:function(d,e,f,g){var h=b.getSize();d.nativeScrollBarHeight=h+"px",d.scrollBarElementHeight=parseInt(h+1)+"px",d.wrapper2scrollWidth="0px";var i=e.children().eq(0),j=i.children().eq(0).children().eq(0),k=i.children().eq(1),l=j[0],m=k[0];j.on("scroll",function(){m.scrollLeft=l.scrollLeft}),k.on("scroll",function(){l.scrollLeft=m.scrollLeft});var n=!0;d.$watch(function(){return d.wrapper2scrollWidth=m.scrollWidth+"px"},function(b,e){a(function(){d.$apply(),n&&(l.scrollLeft=c.get(d.id)||0,m.scrollLeft=c.get(d.id)||0,n=!1)})}),d.$on("$destroy",function(){void 0!==d.id&&c.set(d.id,l.scrollLeft)})}}}]).service("$$dsbStorage",function(){var a={};return{get:function(b){return a[b]},set:function(b,c){a[b]=c}}}).service("$dsb",function(){function a(){var a=document.createElement("div"),b=document.createElement("div");a.style.width="100%",a.style.height="200px",b.style.width="200px",b.style.height="150px",b.style.position="absolute",b.style.top="0",b.style.left="0",b.style.visibility="hidden",b.style.overflow="hidden",b.appendChild(a),document.body.appendChild(b);var c=a.offsetWidth;b.style.overflow="scroll";var d=b.clientWidth;return document.body.removeChild(b),c-d}var b;return{getSize:function(){return b=b||a()}}})}(angular);
 /**
  * App filters
  * @author Martin Vach
@@ -34785,14 +36308,17 @@ angApp.filter('unique', function () {
  * @function setTimeFromBox
  */
 angApp.filter('setTimeFromBox', function (cfg, $filter) {
-    return function (input) {
-        if (input) {
-            var d = new Date(input * 1000);
-        } else {
-            var d = new Date();
-        }
+    return function (timestamp,offset) {
+        // time from server comes with correct added timezone offset so it isn't necessary to add it again
+        var d = new Date(timestamp * 1000);
+        // browser add his own tz offset to date object so it is necessary to remove it's offset
+        // because it is already negative we needn't multiplicate it by (-1)
+        var browserTZO = parseInt(d.getTimezoneOffset() * 60 * 1000);
+        // create new date object with correct time
+        d = new Date(d.getTime() + browserTZO);
+
         return $filter('getFormattedTime')(
-            d.toISOString().substring(11, d.toISOString().indexOf('.')),
+            d,
             false,
             cfg.zwavecfg.time_format
         );
@@ -34805,22 +36331,36 @@ angApp.filter('setTimeFromBox', function (cfg, $filter) {
  */
 angApp.filter('getDateTimeObj', function ($filter, cfg) {
     return function (timestamp,invalidateTime) {
-        var d = (timestamp ? new Date(timestamp * 1000) : new Date());
-        var di = (invalidateTime ? new Date(invalidateTime * 1000) : null);
+        // Count time with offset http://stackoverflow.com/questions/7403486/add-or-subtract-timezone-difference-to-javascript-date
+        /* ----------- NEW with time offset ----------- */
+        var targetTime = (timestamp ? new Date(timestamp * 1000) : new Date());
+        var browserTZO = parseInt(targetTime.getTimezoneOffset() * 60 * 1000);
+        //console.log('targetTime: ',targetTime);
+        //console.log('browserTZO: ', browserTZO);
+        //time zone value from config
+        var tzo = parseInt(cfg.route.time.offset * (-1) * 60 * 60 * 1000, 10);
+        //console.log('tzo:',tzo);
+        //get the timezone offset from local time in minutes
+        //var tzDifference = tzo * 60 * 1000;
+        //console.log(tzDifference)
+        //convert the offset to milliseconds, add to targetTime, and make a new Date
+        var d = new Date(targetTime.getTime() + tzo + browserTZO);
+
+        var di = (invalidateTime ? new Date(invalidateTime * 1000  + tzo + browserTZO) : null);
         var obj = {
             date: $filter('getFormattedDate')(d),
             time: $filter('getFormattedTime')(
-                d.toISOString().substring(11, d.toISOString().indexOf('.')),
+                d,
                 false,
-                cfg.zwavecfg.time_format
+                cfg.zwavecfg.time_format,d
             ),
             invalidateTime: (di ?
             $filter('getFormattedDate')(di) + ' '
-            + $filter('getFormattedTime')(di.toISOString().substring(11, di.toISOString().indexOf('.')),false,cfg.zwavecfg.time_format)
+            + $filter('getFormattedTime')(di,false,cfg.zwavecfg.time_format)
             : ''),
             today: (d.toDateString() === (new Date()).toDateString()
                 ? $filter('getFormattedTime')(
-                    d.toISOString().substring(11, d.toISOString().indexOf('.')),
+                    d,
                     'hh:mm',
                     cfg.zwavecfg.time_format
             )
@@ -34845,10 +36385,16 @@ angApp.filter('isTodayFromUnix', function (cfg, $filter) {
         }
         var d = new Date(input * 1000);
 
+        var browserTZO = parseInt(d.getTimezoneOffset() * 60 * 1000);
+        //time zone value from config
+        var tzo = parseInt(cfg.route.time.offset * (-1) * 60 * 60 * 1000, 10);
+        //convert the offset to milliseconds, add to targetTime, and make a new Date
+        d = new Date(d.getTime() + tzo + browserTZO);
+
         if (d.toDateString() == (new Date()).toDateString()) {
 
             return $filter('getFormattedTime')(
-                d.toISOString().substring(11, d.toISOString().indexOf('.')),
+                d,
                 'hh:mm',
                 cfg.zwavecfg.time_format
             );
@@ -34858,14 +36404,53 @@ angApp.filter('isTodayFromUnix', function (cfg, $filter) {
         }
     };
 });
-
 /**
  * Get formated date
  * @function getFormattedTime
  */
 angApp.filter('getFormattedTime', function () {
-    return function (time,stringFormat,timeFormat) {
+    return function (date,stringFormat,timeFormat) {
+        var str = '';
+        var suffix = '';
 
+        //var h = (date.getHours() < 10) ? "0" + date.getHours() : date.getHours();
+        var h = date.getHours();
+
+        var m = (date.getMinutes() < 10) ? "0" + date.getMinutes() : date.getMinutes();
+        var s = (date.getSeconds() < 10) ? "0" + date.getSeconds() : date.getSeconds();
+
+        //console.log(h,m)
+
+        // 12 hrs format?
+        if(timeFormat === '12' ){
+            h =  h % 12 || 12;
+            suffix = (h < 12) ? ' AM' : ' PM';
+        }
+        h = (h < 10) ? "0" + h : h;
+
+        switch (stringFormat) {
+            case 'hh:mm':
+                str =  h + ':' + m;
+                break;
+            case 'hh':
+                str =  h;
+                break;
+            default:
+                str =  h + ':' + m + ':' + s;
+                break;
+        }
+        return str + suffix;
+
+    };
+});
+
+/**
+ * TODO: deprecated
+ * Get formated date
+ * @function getFormattedTime
+ */
+angApp.filter('getFormattedTime____', function () {
+    return function (time,stringFormat,timeFormat) {
         var str = '';
         var suffix = '';
         var arr = time.split(':').map(function (x) {
@@ -34907,9 +36492,6 @@ angApp.filter('getFormattedDate', function (cfg) {
         var mon = d.getMonth() + 1; //Months are zero based
         mon = (mon < 10 ? '0' + mon : mon);
         var year = d.getFullYear();
-        //var hrs = (d.getHours() < 10 ? '0' + d.getHours() : d.getHours());
-        //var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
-        //var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
 
         switch (cfg.zwavecfg.date_format) {
             case 'dd-mm-yyyy':
@@ -34920,6 +36502,8 @@ angApp.filter('getFormattedDate', function (cfg) {
                 return year + '/' + mon + '/' + day;
             case 'mm/dd/yyyy':
                 return mon + '/' + day + '/' + year;
+            case 'dd/mm/yyyy':
+                return day + '/' + mon + '/' + year;
             default:
                 return day + '.' + mon + '.' + year;
         }
@@ -35028,9 +36612,9 @@ angApp.filter('toTrusted', ['$sce', function ($sce) {
 /**
  * Display device name
  */
-angApp.filter('deviceName', function () {
+angApp.filter('deviceName', function (cfg,deviceService) {
     return function (deviceId, device) {
-        var name = (deviceId == 1 ? 'Z-Way' : 'Device ' + '_' + deviceId);
+        var name = (deviceId === cfg.controller.zwayNodeId? deviceService.getCustomCfgVal('controller_name') : 'Device ' + '_' + deviceId);
         if (device === undefined) {
             return name;
         }
@@ -35230,9 +36814,6 @@ angApp.filter('getDeviceTypeIcon', function () {
             case 'mains':
                 icon = 'fa-bolt text-warning';
                 break;
-            case 'sleep':
-                icon = 'fa-battery-full text-danger';
-                break;
             case 'battery':
                 icon = 'fa-battery-full text-success';
                 break;
@@ -35240,7 +36821,7 @@ angApp.filter('getDeviceTypeIcon', function () {
                 icon = 'fa-feed text-primary';
                 break;
             default:
-                icon = '';
+                icon = 'fa-ellipsis-h';
                 break;
         }
         return icon;
@@ -35519,6 +37100,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         postApi: postApi,
         postToRemote: postToRemote,
         getRemoteData: getRemoteData,
+        sessionApi: sessionApi,
         xmlToJson: xmlToJson,
         getTextFile: getTextFile,
         storeTextToFile: storeTextToFile,
@@ -35952,7 +37534,23 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             return $q.reject(error);
         });
     }
-    
+
+    /**
+     * Get Z-Wave session
+     * @returns {unresolved}
+     */
+    function sessionApi() {
+        return $http({
+            method: "get",
+            url: cfg.server_url + cfg['session']
+        }).then(function (response) {
+            return response;
+        }, function (response) {// something went wrong
+            //return response;
+            return $q.reject(response);
+        });
+    }
+
     /**
      * Get XML from url and convert it to JSON
      * @param {string} url
@@ -36510,8 +38108,9 @@ var appService = angular.module('appService', []);
 /**
  * Device service
  */
-appService.service('deviceService', function($filter, $log, $cookies,$window,_) {
+appService.service('deviceService', function($filter, $log, $cookies,$window,cfg,_) {
     /// --- Public functions --- ///
+
     /**
      * Mobile device detect
      */
@@ -36533,7 +38132,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
     this.showNotifier = function (notifier) {
         var param = _.defaults(notifier, {position: 'top-right', message: false, type: 'success', wait: 5});
         if (notifier.message) {
-            alertify.set('notifier', 'position', 'top-right');
+            alertify.set('notifier', 'position', param.position);
             alertify.notify(param.message, param.type, param.wait);
         }
     };
@@ -36622,10 +38221,47 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
      * Check if is not device
      */
     this.notDevice = function(ZWaveAPIData, node, nodeId) {
-        if (nodeId == 255 || nodeId == ZWaveAPIData.controller.data.nodeId.value || node.data.isVirtual.value) {
+        /*if (nodeId == 255 || nodeId == ZWaveAPIData.controller.data.nodeId.value || node.data.isVirtual.value) {
+            return true;
+        }*/
+        if (nodeId == 255 || node.data.isVirtual.value) {
             return true;
         }
         return false;
+    };
+
+    /**
+     * Get device type
+     */
+    this.deviceType = function(node) {
+        var type;
+        var isListening = node.data.isListening.value;
+        var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
+        var hasWakeup = 0x84 in node.instances[0].commandClasses;
+
+        if (node.data.genericType.value === 1) {
+            type = 'portable';
+        } else if (node.data.genericType.value === 2) {
+            type = 'static';
+        } else if (isFLiRS) {
+            type = 'flirs';
+        } else if (hasWakeup) {
+            type = 'battery';
+        } else if (isListening) {
+            type = 'mains';
+        } else {
+            type = 'unknown';
+        }
+        return type;
+    };
+
+    /**
+     * Get last communication
+     */
+    this.lastCommunication = function(node) {
+        var lastReceive = parseInt(node.data.lastReceived.updateTime, 10) || 0;
+        var lastSend = parseInt(node.data.lastSend.updateTime, 10) || 0;
+        return (lastSend > lastReceive) ? lastSend : lastReceive;
     };
 
     /**
@@ -36646,7 +38282,8 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
      * Check if device isFLiRS
      */
     this.isFLiRS = function(node) {
-        return !node.data.isListening.value && (node.data.sensor250.value || node.data.sensor1000.value);
+        return  (node.data.sensor250.value || node.data.sensor1000.value);
+       // return !node.data.isListening.value && (node.data.sensor250.value || node.data.sensor1000.value);
     };
 
     /**
@@ -36654,6 +38291,32 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
      */
     this.isLocalyReset = function(node) {
         return isLocalyReset(node);
+    };
+
+    /**
+     * Check if device has a given command class
+     */
+    this.hasCommandClass = function(node,ccId) {
+        var hasCc = false;
+        angular.forEach(node.instances, function(instance, instanceId) {
+        if(instance.commandClasses[ccId]){
+            hasCc = instance.commandClasses[ccId];
+            return;
+           }
+        });
+        return hasCc;
+    };
+
+    /**
+     * Get a value from custom config
+     * @param {string} key
+     * @returns {string}
+     */
+    this.getCustomCfgVal = function (key) {
+        if (cfg.custom_cfg[cfg.app_type]) {
+            return cfg.custom_cfg[cfg.app_type][key] || '';
+        }
+        return '';
     };
     
     /**
@@ -36925,9 +38588,12 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+            if (nodeId == 255 || node.data.isVirtual.value) {
                 return;
             }
+            /*if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+                return;
+            }*/
             var node = ZWaveAPIData.devices[nodeId];
             // Set object
             var obj = {};
@@ -37860,9 +39526,14 @@ var appController = angular.module('appController', []);
  * @class BaseController
  */
 appController.controller('BaseController', function ($scope, $rootScope, $cookies, $filter, $location, $anchorScroll, $window, $route, $interval, $timeout, cfg, dataService, deviceService, myCache) {
+    $scope.nowDate = new Date();
     $scope.loading = false;
     $scope.alert = {message: false, status: 'is-hidden', icon: false};
     $scope.languages = {};
+    $scope.orderByArr = {
+        field: '',
+        reverse:  false
+    }
 
 
     // Custom IP
@@ -37926,6 +39597,10 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     });
     // Order by
     $scope.orderBy = function (field) {
+        $scope.orderByArr = {
+            field: field,
+            reverse:  !$scope.orderByArr.reverse
+        }
         $scope.predicate = field;
         $scope.reverse = !$scope.reverse;
     };
@@ -38113,16 +39788,20 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     };
 
     /**
-     * Get array from custom config
+     * Get a value from custom config
      * @param {string} key
-     * @returns {Array}
+     * @returns {string}
      */
-    $scope.getCustomCfgArr = function (key) {
+    $scope.getCustomCfgVal = function (key) {
+        return deviceService.getCustomCfgVal(key);
+    };
+    // todo: deprecated
+    /*$scope.getCustomCfgArr = function (key) {
         if (cfg.custom_cfg[cfg.app_type]) {
             return cfg.custom_cfg[cfg.app_type][key] || '';
         }
         return '';
-    };
+    };*/
 
     // Alertify defaults
     alertify.defaults.glossary.title = cfg.app_name;
@@ -38137,7 +39816,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
                 build: function () {
                     var errorHeader = '<span class="fa fa-exclamation-triangle fa-lg text-danger" '
                             + 'style="vertical-align:middle;">'
-                            + '</span> ' + cfg.app_name + ' - ERROR';
+                            + '</span> ' + $scope.getCustomCfgVal('title') + ' - ERROR';
                     this.setHeader(errorHeader);
                 }
             };
@@ -38151,7 +39830,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
                 build: function () {
                     var errorHeader = '<span class="fa fa-exclamation-circle fa-lg text-warning" '
                             + 'style="vertical-align:middle;">'
-                            + '</span> ' + cfg.app_name + ' - WARNING';
+                            + '</span> ' + $scope.getCustomCfgVal('title') + ' - WARNING';
                     this.setHeader(errorHeader);
                 }
             };
@@ -38164,14 +39843,17 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
      * @param {string} cmd
      * @param {int} timeout
      */
-    $scope.runZwaveCmd = function (cmd, timeout) {
+    $scope.runZwaveCmd = function (cmd, timeout,hideError) {
         timeout = timeout || 1000;
         $scope.toggleRowSpinner(cmd);
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
             $timeout($scope.toggleRowSpinner, timeout);
         }, function (error) {
             $scope.toggleRowSpinner();
-            alertify.alertError($scope._t('error_update_data') + '\n' + cmd);
+            if(!hideError){
+                alertify.alertError($scope._t('error_update_data') + '\n' + cmd);
+            }
+
         });
     };
 
@@ -38243,14 +39925,16 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     $scope.setTimeStamp = function () {
         dataService.getApi('time', null, true).then(function (response) {
             $interval.cancel($scope.timeZoneInterval);
-            angular.extend(cfg.route.time, {string: $filter('setTimeFromBox')(response.data.data.localTimeUT)},
-                {timestamp: response.data.data.localTimeUT});
+            angular.extend(cfg.route.time, {string: $filter('setTimeFromBox')(response.data.data.localTimeUT,true)},
+                {timestamp: response.data.data.localTimeUT},
+                {offset: response.data.data.localTimeZoneOffset});
             var refresh = function () {
-                cfg.route.time.timestamp += (cfg.interval < 1000 ? 1 : cfg.interval/1000)
-                cfg.route.time.string = $filter('setTimeFromBox')(cfg.route.time.timestamp)
+                cfg.route.time.timestamp += (cfg.interval < 1000 ? 1 : Math.floor(cfg.interval/1000));
+                cfg.route.time.string = $filter('setTimeFromBox')(cfg.route.time.timestamp);
             };
+
             cfg.zwavecfg.time_zone = response.data.data.localTimeZone;
-            $scope.timeZoneInterval = $interval(refresh, $scope.cfg.interval);
+            $scope.timeZoneInterval = $interval(refresh,cfg.interval);
         }, function (error) {});
 
     };
@@ -38264,17 +39948,9 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     };
     $scope.loadBoxApiData = function () {
         dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
-             var hasDevices = Object.keys(ZWaveAPIData.devices).length;
-             var homeId = ZWaveAPIData.controller.data.homeId.value;
-
-            // todo: deprecated
-            //$scope.boxData.controller.isPrimary = ZWaveAPIData.controller.data.isPrimary.value;
-            //$scope.boxData.controller.isRealPrimary = ZWaveAPIData.controller.data.isRealPrimary.value;
-            //$scope.boxData.controller.hasDevices =  hasDevices < 2 ? false : true;
-            //$scope.boxData.controller.homeId =   '0x' + ('00000000' + (homeId + (homeId < 0 ? 0x100000000 : 0)).toString(16)).slice(-8);
-            //$scope.boxData.controller.softwareRevisionVersion = ZWaveAPIData.controller.data.softwareRevisionVersion.value;
-            //$scope.boxData.controller.homeNotes = ZWaveAPIData.controller.data.homeNotes.value ;
-            //$scope.boxData.controller.homeName = ZWaveAPIData.controller.data.homeName.value || cfg.controller.network_name;
+            var hasDevices = Object.keys(ZWaveAPIData.devices).length;
+            var homeId = ZWaveAPIData.controller.data.homeId.value;
+            var zwayNodeId = ZWaveAPIData.controller.data.nodeId.value;
 
             // Changes MK
             //$scope.boxData.controller.controllerState = ZWaveAPIData.controller.data.controllerState.value;
@@ -38284,7 +39960,8 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
                 isRealPrimary: ZWaveAPIData.controller.data.isRealPrimary.value,
                 homeId: homeId,
                 homeIdHex: '0x' + ('00000000' + (homeId + (homeId < 0 ? 0x100000000 : 0)).toString(16)).slice(-8),
-                hasDevices: hasDevices < 2 ? false : true
+                hasDevices: hasDevices < 2 ? false : true,
+                zwayNodeId: zwayNodeId
             }
             angular.extend(cfg.controller,cfgController);
         }, function (error) {
@@ -38302,7 +39979,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
             }, function (error) {});
 
         };
-        $interval(refresh, 1000);
+        $interval(refresh, cfg.queue_interval);
     };
     /**
      * Load common APIs
@@ -38692,8 +40369,7 @@ appController.controller('AuthInstallerController', function($scope, $location,c
             var user = response.data.data;
             deviceService.setZWAYSession(user.sid);
             deviceService.setUser(user);
-            //window.location = location;
-            $location.path('/home');
+            window.location = '#/home';
             $window.location.reload();
         }, function (error) {
             $scope.loading = false;
@@ -38786,19 +40462,18 @@ appController.controller('SettingsLangController', function ($scope, $timeout,$w
  * @class SettingsAppController
  *
  */
-appController.controller('SettingsAppController', function ($scope, $timeout, $window, $interval, $location, cfg,dataService,deviceService) {
+appController.controller('SettingsAppController', function ($scope, $timeout, $window, $interval, $location, $q, cfg,dataService,deviceService) {
     $scope.settings = {
         input: {},
         lastTZ: "",
-        lastSsid: ""
+        lastSsid: "",
+        countdown: 60
     };
 
     /**
      * Load settings
      */
     $scope.loadSettings = function() {
-        $scope.settings.input = cfg.zwavecfg;
-        $scope.settings.lastTZ = cfg.zwavecfg.time_zone;
 
         dataService.getApi('wifi_settings').then(function (response) {
             $scope.settings.input.ssid_name = response.data.data.ssid;
@@ -38807,72 +40482,104 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
             $scope.loading = false;
             alertify.alertError($scope._t('error_load_data'));
         });
+
+        $scope.settings.input = cfg.zwavecfg;
+        $scope.settings.lastTZ = cfg.zwavecfg.time_zone;
     };
+
     $scope.loadSettings();
 
     /**
      * Store settings
      * @param {object} input
      */
-    $scope.storeSettings = function(input) {
+    $scope.storeSettings = function(input,$event) {
         $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin', message: $scope._t('updating')};
 
-        dataService.postApi('configupdate_url', input).then(function (response) {
-            //$scope.reloadData();
+        if(input.wifi_password !== '' || input.ssid_name !== $scope.settings.lastSsid) {
 
-            if(input.wifi_password !== '' || input.ssid_name !== $scope.settings.lastSsid) {
+            var data = {
+                "password": input.wifi_password,
+                "ssid": input.ssid_name === $scope.settings.lastSsid ? "" : input.ssid_name
+            };
 
-                var data = {
-                    "password": input.wifi_password,
-                    "ssid": input.ssid_name === $scope.settings.lastSsid ? "" : input.ssid_name
+            dataService.postApi('wifi_settings', data, null).then(function(response) {
+                deviceService.showNotifier({message: $scope._t('update_successful')});
+                $timeout( function() {
+                    $window.location.reload();
+                }, 1000);
+                $scope.loading = false;
+            }, function(error) {
+                $scope.input.ssid_name = $scope.settings.lastSsid;
+                alertify.alertError($scope._t('error_load_data'));
+            });
+        }
+
+        if(input.time_zone !== $scope.settings.lastTZ) {
+            var data = {
+                    "time_zone": input.time_zone
                 };
 
-                dataService.postApi('wifi_settings', data, null).then(function(response) {
-                    $scope.input.wifi_password = '';
+            dataService.postApi('time_zone', data, null).then(function (response) {
+                $scope.loading = false;
+                $scope.handleModal('timezoneModal', $event);
+                var myint = $interval(function(){
+                    $scope.settings.countdown--;
+                    if($scope.settings.countdown === 0){
+                        $interval.cancel(myint);
+                        $location.path('/');
+                    }
+                }, 1000);
+                    // todo: deprecated
+
+                    /*$timeout(function() {
+                        $location.path('/');
+                    }, timeout);
+
+                    $scope.settings.lastTZ = input.time_zone;
+                    alertify.alertWarning($scope._t('z_way_restart', {
+                        __val__: timeout/1000,
+                        __level__: $scope._t('seconds')
+                    }));
+
                     deviceService.showNotifier({message: $scope._t('update_successful')});
-                    $timeout( function() {
-                        $window.location.reload();
-                    }, 1000);
-                    $scope.loading = false;
-                }, function(error) {
-                    $scope.input.ssid_name = $scope.settings.lastSsid;
-                    $scope.input.wifi_password = '';
-                    $scope.loading = false;
-                    alertify.alertError($scope._t('error_load_data'));
+                    $scope.loading = false;*/
+
+                }, function (error) {
+                   alertify.alertError($scope._t('error_load_data'));
+
                 });
+        } else {
+            deviceService.showNotifier({message: $scope._t('update_successful')});
+        }
 
-            }
-
-
-            if(input.time_zone !== $scope.settings.lastTZ) {
-                var data = {
-                        "time_zone": input.time_zone
-                    },
-                    timeout = 15000;
-
-                    dataService.postApi('time_zone', data, null).then(function (response) {
-                        $timeout(function() {
-                            $location.path('/');
-                        }, timeout);
-
-                        $scope.settings.lastTZ = input.time_zone;
-                        alertify.alertWarning($scope._t('z_way_restart', {
-                            __val__: timeout/1000,
-                            __level__: $scope._t('seconds')
-                        }));
-
-                        deviceService.showNotifier({message: $scope._t('update_successful')});
-                        $scope.loading = false;
-
-                    }, function (error) {
-                        $scope.loading = false;
-                        alertify.alertError($scope._t('error_load_data'));
-                    });
-            } else {
-                deviceService.showNotifier({message: $scope._t('update_successful')});
-            }
+        dataService.postApi('configupdate_url', input).then(function (response) {
             $scope.loading = false;
+        }, function (error) {
+            $scope.loading = false;
+            alertify.alertError($scope._t('error_update_data'));
+        });
+    };
+});
 
+/**
+ * This controller renders and handles app settings for default version.
+ * @class SettingsAppController
+ *
+ */
+appController.controller('SettingsAppFormatController', function ($scope, $timeout, $window, $interval, $location, $q, cfg,dataService,deviceService) {
+    $scope.settingsFormat = {
+        input: cfg.zwavecfg
+    };
+
+    /**
+     * Store settings
+     * @param {object} input
+     */
+    $scope.storeFormatSettings = function(input) {
+        $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin', message: $scope._t('updating')};
+        dataService.postApi('configupdate_url', input).then(function (response) {
+            $scope.loading = false;
         }, function (error) {
             $scope.loading = false;
             alertify.alertError($scope._t('error_update_data'));
@@ -38885,7 +40592,12 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
  * @class SettingsFirmwareController
  *
  */
-appController.controller('SettingsFirmwareController', function ($scope, $sce, $timeout, $location,dataService) {
+appController.controller('SettingsFirmwareController', function ($scope, $sce, $timeout, $location, $interval, dataService) {
+    $scope.settings = {
+        countdown: 60,
+        hasSession: true
+    };
+
     $scope.firmwareUpdate = {
         show: false,
         loaded: false,
@@ -38926,8 +40638,27 @@ appController.controller('SettingsFirmwareController', function ($scope, $sce, $
 
         }, function (error) {
             $scope.loading = false;
-            alertify.alertError($scope._t('error_load_data'));
+            if($scope.settings.hasSession){
+                alertify.alertError($scope._t('error_load_data'));
+            }
+        });
+    };
 
+    $scope.redirectAfterUpdate = function ($event) {
+        dataService.sessionApi().then(function (sessionRes) {
+            // do nothing
+        }, function (error) {
+            $scope.settings.hasSession = false;
+
+            $scope.loading = false;
+            $scope.handleModal('timezoneModal', $event);
+            var myint = $interval(function(){
+                $scope.settings.countdown--;
+                if($scope.settings.countdown === 0){
+                    $interval.cancel(myint);
+                    $location.path('/');
+                }
+            }, 1000);
         });
     };
 
@@ -38960,6 +40691,7 @@ appController.controller('SettingsReportController', function ($scope, $window, 
         app_type: cfg.app_type,
         app_built_date: '',
         app_built_timestamp: '',
+        log: false,
     };
 
     /**
@@ -38993,7 +40725,17 @@ appController.controller('SettingsReportController', function ($scope, $window, 
     $scope.loadRemoteAccess();
 
     /**
-     * Send and save report
+     * Show log warning
+     */
+    $scope.showLogWarning = function (message) {
+        if(message){
+            alertify.alertWarning(message);
+        }
+
+    };
+
+    /**
+     * Send a report
      */
     $scope.sendReport = function (form, input) {
         if (form.$invalid) {
@@ -39019,9 +40761,38 @@ appController.controller('SettingsReportController', function ($scope, $window, 
         input.browser_agent = $window.navigator.appCodeName;
         input.browser_version = $window.navigator.appVersion;
         input.browser_info = 'PLATFORM: ' + $window.navigator.platform + '\nUSER-AGENT: ' + $window.navigator.userAgent;
-        console.log(input)
+        if(input.log){
+            $scope.sendReportLog(input);
+
+        }else{
+            $scope.sendReportNoLog(input);
+        }
+        //console.log(input)
         //return;
+
+    };
+
+    /**
+     *  Send a report without log
+     * @param {array}input
+     */
+    $scope.sendReportNoLog = function (input) {
         dataService.postReport(input).then(function (response) {
+            $scope.loading = false;
+            deviceService.showNotifier({message: $scope._t('success_send_report') + ' ' + input.email});
+            $route.reload();
+        }, function (error) {
+            alertify.alertError($scope._t('error_send_report'));
+            $scope.loading = false;
+        });
+    };
+
+    /**
+     *  Send a report with log
+     * @param {array}input
+     */
+    $scope.sendReportLog= function (input) {
+        dataService.postApi('post_report_api', input).then(function (response) {
             $scope.loading = false;
             deviceService.showNotifier({message: $scope._t('success_send_report') + ' ' + input.email});
             $route.reload();
@@ -39100,7 +40871,7 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
                 return;
             }
             $scope.switches.show = true;
-            $scope.refreshZwaveData(ZWaveAPIData);
+            $scope.refreshZwaveData();
         }, function(error) {
             alertify.alertError($scope._t('error_load_data'));
         });
@@ -39109,11 +40880,10 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function(ZWaveAPIData) {
+    $scope.refreshZwaveData = function() {
         var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+            dataService.loadJoinedZwaveData().then(function(response) {
                 setData(response.data.joined);
             }, function(error) {});
         };
@@ -39387,7 +41157,7 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
                 return;
             }
             $scope.sensors.show = true;
-            $scope.refreshZwaveData(ZWaveAPIData);
+            $scope.refreshZwaveData();
         }, function(error) {
             alertify.alertError($scope._t('error_load_data'));
         });
@@ -39396,11 +41166,10 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function(ZWaveAPIData) {
+    $scope.refreshZwaveData = function() {
         var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+            dataService.loadJoinedZwaveData().then(function(response) {
                 setData(response.data.joined);
             }, function(error) {});
         };
@@ -39676,7 +41445,7 @@ appController.controller('MetersController', function($scope, $filter, $timeout,
                 return;
             }
             $scope.meters.show = true;
-            $scope.refreshZwaveData(ZWaveAPIData);
+            $scope.refreshZwaveData();
         }, function(error) {
             alertify.alertError($scope._t('error_load_data'));
         });
@@ -39687,9 +41456,9 @@ appController.controller('MetersController', function($scope, $filter, $timeout,
      * Refresh zwave data
      * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function(ZWaveAPIData) {
+    $scope.refreshZwaveData = function() {
         var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+            dataService.loadJoinedZwaveData().then(function(response) {
                 setData(response.data.joined);
             }, function(error) {});
         };
@@ -39852,11 +41621,10 @@ appController.controller('ThermostatController', function($scope, $filter, $time
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function(ZWaveAPIData) {
+    $scope.refreshZwaveData = function() {
         var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+            dataService.loadJoinedZwaveData().then(function(response) {
                 setData(response.data.joined);
             }, function(error) {});
         };
@@ -40141,7 +41909,7 @@ appController.controller('LocksController', function($scope, $filter, $timeout,$
                 return;
             }
             $scope.locks.show = true;
-            $scope.refreshZwaveData(ZWaveAPIData);
+            $scope.refreshZwaveData();
         }, function(error) {
             alertify.alertError($scope._t('error_load_data'));
         });
@@ -40150,11 +41918,10 @@ appController.controller('LocksController', function($scope, $filter, $timeout,$
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function(ZWaveAPIData) {
+    $scope.refreshZwaveData = function() {
         var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+            dataService.loadJoinedZwaveData().then(function(response) {
                 setData(response.data.joined);
             }, function(error) {});
         };
@@ -40283,7 +42050,7 @@ appController.controller('NotificationController', function ($scope, $filter, $t
                 return;
             }
             $scope.notifications.show = true;
-            $scope.refreshZwaveData(ZWaveAPIData, alarms);
+            $scope.refreshZwaveData(alarms);
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
         });
@@ -40293,11 +42060,11 @@ appController.controller('NotificationController', function ($scope, $filter, $t
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
+     * @param {object}  alarms
      */
-    $scope.refreshZwaveData = function (ZWaveAPIData, alarms) {
+    $scope.refreshZwaveData = function (alarms) {
         var refresh = function () {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function (response) {
+            dataService.loadJoinedZwaveData().then(function (response) {
                 setData(response.data.joined, alarms);
             }, function (error) {
             });
@@ -40497,10 +42264,17 @@ appController.controller('NotificationController', function ($scope, $filter, $t
 });
 
 /**
- * StatusController
+ * @overview This controller renders and handles device statuses.
  * @author Martin Vach
  */
-appController.controller('StatusController', function ($scope, $filter, $timeout,$interval,dataService, cfg,_, deviceService) {
+
+/**
+ * Status root controller
+ * todo: remove commented stuff
+ * @class StatusController
+ *
+ */
+appController.controller('StatusController', function ($scope, $filter, $timeout, $interval, dataService, cfg, _, deviceService) {
     $scope.statuses = {
         all: [],
         interval: null,
@@ -40519,7 +42293,7 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
     /**
      * Cancel interval on page destroy
      */
-    $scope.$on('$destroy', function() {
+    $scope.$on('$destroy', function () {
         $interval.cancel($scope.statuses.interval);
     });
 
@@ -40527,17 +42301,21 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
     /**
      * Load zwave data
      */
-    $scope.loadZwaveData = function() {
-        dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
+    $scope.loadZwaveData = function () {
+        dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
             setData(ZWaveAPIData);
-            if(_.isEmpty($scope.statuses.all)){
-                $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+            if (_.isEmpty($scope.statuses.all)) {
+                $scope.alert = {
+                    message: $scope._t('device_404'),
+                    status: 'alert-warning',
+                    icon: 'fa-exclamation-circle'
+                };
                 return;
             }
             $scope.statuses.show = true;
-            $scope.refreshZwaveData(ZWaveAPIData);
-        }, function(error) {
+            $scope.refreshZwaveData();
+        }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
         });
     };
@@ -40545,13 +42323,13 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function(ZWaveAPIData) {
-        var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+    $scope.refreshZwaveData = function () {
+        var refresh = function () {
+            dataService.loadJoinedZwaveData().then(function (response) {
                 setData(response.data.joined);
-            }, function(error) {});
+            }, function (error) {
+            });
         };
         $scope.statuses.interval = $interval(refresh, $scope.cfg.interval);
     };
@@ -40560,7 +42338,7 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
      * Ping device
      * @param {string} url
      */
-    $scope.pingDevice = function(url) {
+    $scope.pingDevice = function (url) {
         $scope.toggleRowSpinner(url);
         dataService.runZwaveCmd(cfg.store_url + url).then(function (response) {
             $timeout($scope.toggleRowSpinner, 1000);
@@ -40596,8 +42374,15 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
 
     };
 
-    // Handle modal interview
-    $scope.handleModalInterview = function (target, $event,index, id, name) {
+    /**
+     * Handle modal interview
+     * @param {string} target
+     * @param $event - angular event
+     * @param {int} index - object index
+     * @param {object id} id
+     * @param name
+     */
+    $scope.handleModalInterview = function (target, $event, index, id, name) {
         $scope.deviceInfo = {
             "index": index,
             "id": id,
@@ -40606,7 +42391,7 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
         $scope.interviewDeviceId = id;
         var node = $scope.ZWaveAPIData.devices[id];
         $scope.interviewCommands = deviceService.configGetInterviewCommands(node);
-        $scope.handleModal(target,$event)
+        $scope.handleModal(target, $event)
 
     };
     /**
@@ -40620,185 +42405,115 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
 
     /**
      * Set zwave data
+     * @param {object} ZWaveAPIData
      */
     function setData(ZWaveAPIData) {
-        var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
-        var doorLockCCId = 0x62;
+        //var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
-            if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+            if (deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
             }
-
-            var basicType = node.data.basicType.value;
-            var genericType = node.data.genericType.value;
-            var specificType = node.data.specificType.value;
             var isListening = node.data.isListening.value;
             var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
             var hasWakeup = 0x84 in node.instances[0].commandClasses;
-            var hasBattery = 0x80 in node.instances[0].commandClasses;
-            // Update
-            var node = ZWaveAPIData.devices[nodeId];
-            var lastReceive = parseInt(node.data.lastReceived.updateTime, 10) || 0;
-            var lastSend = parseInt(node.data.lastSend.updateTime, 10) || 0;
-            var lastCommunication = (lastSend > lastReceive) ? lastSend : lastReceive;
             var isFailed = node.data.isFailed.value;
             var isAwake = node.data.isAwake.value;
             var prefixD = 'devices.' + nodeId + '.data.';
             var prefixIC = 'devices.' + nodeId + '.instances.0.commandClasses';
             var bindPath = prefixD + 'isFailed,' + prefixD + 'isAwake,' + prefixD + 'lastSend,' + prefixD + 'lastReceived,' + prefixD + 'queueLength,devices.' + nodeId + '.instances[*].commandClasses[*].data.interviewDone,' + prefixIC + '.' + 0x84 + '.data.lastWakeup,' + prefixIC + '.' + 0x84 + '.data.lastSleep,' + prefixIC + '.' + 0x84 + '.data.interval,' + prefixIC + '.' + 0x80 + '.data.last';
-            //$scope.interviewCommands.push(interviewCommands(node));
-            //$scope.interviewCommands.push(deviceService.configGetInterviewCommands(node));
+
+            var isController = (ZWaveAPIData.controller.data.nodeId.value == nodeId);
+            var lastReceive = parseInt(node.data.lastReceived.updateTime, 10) || 0;
+            var lastSend = parseInt(node.data.lastSend.updateTime, 10) || 0;
+            var lastCommunication = (lastSend > lastReceive) ? lastSend : lastReceive;
+            var sleepingSince = 0;
+            var lastWakeup = 0;
+            var interval = 0;
+            var type = deviceService.deviceType(node);
+            var sleeping;
+            if (!isListening && hasWakeup) {
+
+                sleepingSince = parseInt(node.instances[0].commandClasses[0x84].data.lastSleep.value, 10);
+                lastWakeup = parseInt(node.instances[0].commandClasses[0x84].data.lastWakeup.value, 10);
+                interval = parseInt(node.instances[0].commandClasses[0x84].data.interval.value, 10);
+                //hasSleeping = getSleeping(sleepingSince, lastWakeup, interval);
+                sleeping = setSleeping(sleepingSince, lastWakeup, interval);
+            }
+
+            var obj = {};
+            obj['id'] = nodeId;
+            obj['rowId'] = 'row_' + nodeId;
+            obj['isController'] = isController;
+            obj['cmd'] = bindPath.split(',');
+            obj['name'] = $filter('deviceName')(nodeId, node);
+            obj['sleeping'] = sleeping;
+            obj['updateTime'] = lastCommunication;
+            obj['dateTime'] = $filter('getDateTimeObj')(lastCommunication);
+            obj['isFailed'] = node.data.isFailed.value;
+            obj['type'] = type;
+            obj['icon'] = $filter('getDeviceTypeIcon')(type);
+            obj['urlToStore'] = (!isController && (isListening || isFLiRS) ? 'devices[' + nodeId + '].SendNoOperation()' : false);
+            obj['interviewDone'] = interviewDone(node);
+            var findIndex = _.findIndex($scope.statuses.all, {rowId: obj.rowId});
+            if (findIndex > -1) {
+                angular.extend($scope.statuses.all[findIndex], obj);
+
+            } else {
+                $scope.statuses.all.push(obj);
+            }
             $scope.interviewCommandsDevice.push(node.data);
-            updateDeviceInfo(ZWaveAPIData, nodeId, basicType, genericType, specificType, isFLiRS, hasWakeup, hasBattery, isListening, bindPath);
         });
     }
 
-    function updateDeviceInfo(ZWaveAPIData, nodeId, basicType, genericType, specificType, isFLiRS, hasWakeup, hasBattery, isListening, bindPath) {
-        //var nodeId = $(this).attr('device');
-        var node = ZWaveAPIData.devices[nodeId];
-        var lastReceive = parseInt(node.data.lastReceived.updateTime, 10) || 0;
-        var lastSend = parseInt(node.data.lastSend.updateTime, 10) || 0;
-        var lastCommunication = (lastSend > lastReceive) ? lastSend : lastReceive;
-        var isFailed = node.data.isFailed.value;
-        var isAwake = node.data.isAwake.value;
-        var sleepingSince = 0;
-        var lastWakeup = 0;
-        var interval = 0;
-        if (!isListening && hasWakeup) {
-            sleepingSince = parseInt(node.instances[0].commandClasses[0x84].data.lastSleep.value, 10);
-            lastWakeup = parseInt(node.instances[0].commandClasses[0x84].data.lastWakeup.value, 10);
-            interval = parseInt(node.instances[0].commandClasses[0x84].data.interval.value, 10);
-        }
-        // Conts
-        var sleeping_cont = sleepingCont(isListening, hasWakeup, isFLiRS, sleepingSince, lastWakeup, interval);
-        var awake_cont = awakeCont(isAwake, isListening, isFLiRS);
-        var operating_cont = operatingCont(lastCommunication);
-        var interview_cont = false;
-        //var _interview_cont = '<i class="fa fa-question-circle fa-lg text-info" title="' + $scope._t('device_is_not_fully_interviewed') + '"></i>';
-        var _interview_cont = $scope._t('device_is_not_fully_interviewed');
-        if (ZWaveAPIData.devices[nodeId].data.nodeInfoFrame.value && ZWaveAPIData.devices[nodeId].data.nodeInfoFrame.value.length) {
-            for (var iId in ZWaveAPIData.devices[nodeId].instances)
-                for (var ccId in ZWaveAPIData.devices[nodeId].instances[iId].commandClasses)
-                    if (!ZWaveAPIData.devices[nodeId].instances[iId].commandClasses[ccId].data.interviewDone.value) {
-                        interview_cont = _interview_cont;
+    /**
+     * Check if is an interview done
+     * @param {object} node
+     * @returns {boolean}
+     */
+    function interviewDone(node) {
+        var interview_cont = true;
+        if (node.data.nodeInfoFrame.value && node.data.nodeInfoFrame.value.length) {
+            for (var iId in node.instances)
+                for (var ccId in node.instances[iId].commandClasses)
+                    if (!node.instances[iId].commandClasses[ccId].data.interviewDone.value) {
+                        interview_cont = false;
                     }
         } else {
-            interview_cont = _interview_cont;
+            interview_cont = false;
         }
-
-        // DDR
-        /*var ddr = false;
-         if (angular.isDefined(node.data.ZDDXMLFile)) {
-         ddr = node.data.ZDDXMLFile.value;
-         }*/
-
-        var obj = {};
-        obj['id'] = nodeId;
-        obj['rowId'] = 'row_' + nodeId;
-        obj['cmd'] = bindPath.split(',');
-        obj['genericType'] = genericType;
-        obj['specificType'] = specificType;
-        obj['name'] = $filter('deviceName')(nodeId, node);
-        obj['sleeping'] = sleeping_cont;
-        obj['awake'] = awake_cont;
-        obj['updateTime'] = operating_cont;
-        obj['isFailed'] = getIsFailedCont(isFailed);
-        // obj['ddr'] = ddrCont(node);
-        obj['urlToStore'] = (isListening || isFLiRS ? 'devices[' + nodeId + '].SendNoOperation()' : false);
-        obj['interview'] = interview_cont;
-        obj['isListening'] = isListening;
-        obj['isFLiRS'] = isFLiRS;
-        obj['hasWakeup'] = hasWakeup;
-        obj['lastCommunication'] = lastCommunication;
-        obj['sleepingSince'] = sleepingSince;
-        obj['lastWakeup'] = lastWakeup;
-        obj['interval'] = interval;
-        var findIndex = _.findIndex($scope.statuses.all, {rowId: obj.rowId});
-        if(findIndex > -1){
-            angular.extend( $scope.statuses.all[findIndex],obj);
-
-        }else{
-            $scope.statuses.all.push(obj);
-        }
-
-    }
-    ;
-
-    // Refresh Modal Interview data
-    function refreshModalInterview(oldCc, newCc) {
-        var refresh = JSON.stringify(oldCc) !== JSON.stringify(newCc);
-        if (refresh) {
-            $scope.interviewCommands = deviceService.configGetInterviewCommands(newCc);
-        }
-
+        return interview_cont;
 
     }
 
-    // Refresh Modal Interview data
-    function refreshModalInterview(oldCc, newCc) {
-        var refresh = JSON.stringify(oldCc) !== JSON.stringify(newCc);
-        if (refresh) {
-            $scope.interviewCommands = deviceService.configGetInterviewCommands(newCc);
-        }
-
-
-    }
-
-
-    // Get Awake HTML
-    function awakeCont(isAwake, isListening, isFLiRS) {
-        var awake_cont = '';
-        if (!isListening && !isFLiRS)
-            awake_cont = isAwake ? ('<i class="fa fa-certificate fa-lg text-orange" title="' + $scope._t('device_is_active') + '"></i>') : ('<i class="fa fa-moon-o fa-lg text-primary" title="' + $scope._t('device_is_sleeping') + '"></i>');
-        return awake_cont;
-    }
-
-    // Get operating HTML
-    function operatingCont(lastCommunication) {
-//        var operating_cont = (isFailed ? ('<i class="fa fa-ban fa-lg text-danger" title="' + $scope._t('device_is_dead') + '"></i>') : ('<i class="fa fa-check fa-lg text-success" title="' + $scope._t('device_is_operating') + '"></i>')) + ' <span title="' + $scope._t('last_communication') + '" class="not_important">' + $filter('isTodayFromUnix')(lastCommunication) + '</span>';
-        var operating_cont = '<span title="' + $scope._t('last_communication') + '" class="not_important">' + $filter('isTodayFromUnix')(lastCommunication) + '</span>';
-        return operating_cont;
-    }
-
-    // Get is failed
-    function getIsFailedCont(isFailed) {
-        var failed_cont = (isFailed ? ('<i class="fa fa-ban fa-lg text-danger" title="' + $scope._t('device_is_dead') + '"></i>') : ('<i class="fa fa-check fa-lg text-success" title="' + $scope._t('device_is_operating') + '"></i>'));
-        return failed_cont;
-    }
-
-    // Get ddr
-    function ddrCont(node) {
-        var ddr = '<i class="fa fa-minus"></i>';
-        if (angular.isDefined(node.data.ZDDXMLFile) && node.data.ZDDXMLFile.value) {
-            ddr = '<i class="fa fa-check"></i>';
-        }
-        return ddr;
-    }
-
-    // Get Sleeping HTML
-    function sleepingCont(isListening, hasWakeup, isFLiRS, sleepingSince, lastWakeup, interval) {
-        var sleeping_cont;
-        if (isListening)
-            sleeping_cont = ''; // mains powered device
-        else if (!isListening && hasWakeup) {
-            var approx = '';
-            if (isNaN(sleepingSince) || sleepingSince < lastWakeup) {
-                sleepingSince = lastWakeup
-                if (!isNaN(lastWakeup))
-                    approx = '<span title="' + $scope._t('sleeping_since_approximately') + '">~</span> ';
+    /**
+     * Set sleeping data
+     * @param {int} sleepingSince
+     * @param {int} lastWakeup
+     * @param {int} interval
+     * @returns {string}
+     */
+    function setSleeping(sleepingSince, lastWakeup, interval) {
+        var sleeping = {
+            approx: false,
+            lastSleep: '',
+            nextWakeup: ''
+        };
+        if (isNaN(sleepingSince) || sleepingSince < lastWakeup) {
+            sleepingSince = lastWakeup
+            if (!isNaN(lastWakeup)) {
+                sleeping.approx = '~';
             }
-            ;
-            if (interval == 0)
-                interval = NaN; // to indicate that interval and hence next wakeup are unknown
-            var lastSleep = $filter('isTodayFromUnix')(sleepingSince);
-            var nextWakeup = $filter('isTodayFromUnix')(sleepingSince + interval);
-            sleeping_cont = ' <i class="fa fa-clock-o fa-lg" title="' + $scope._t('battery_operated_device_with_wakeup') + '"></i> <span title="' + $scope._t('sleeping_since') + '" class="not_important">' + approx + lastSleep + '</span> &#8594; <span title="' + $scope._t('next_wakeup') + '">' + approx + nextWakeup + '</span>';
-        } else if (!isListening && isFLiRS)
-            sleeping_cont = '<i class="fa fa-headphones fa-lg" title="' + $scope._t('FLiRS_device') + '"></i>';
-        else
-            sleeping_cont = '<i class="fa fa-rss fa-lg" title="' + $scope._t('battery_operated_remote_control') + '"></i>';
-        return sleeping_cont;
+
+        }
+        ;
+        // to indicate that interval and hence next wakeup are unknown
+        if (interval == 0) {
+            interval = NaN;
+        }
+        sleeping.lastSleep = $filter('isTodayFromUnix')(sleepingSince);
+        sleeping.nextWakeup = $filter('isTodayFromUnix')(sleepingSince + interval);
+        return sleeping;
     }
 });
 /**
@@ -40837,7 +42552,7 @@ appController.controller('BatteryController', function($scope, $filter, $timeout
                 return;
             }
             $scope.batteries.show = true;
-            $scope.refreshZwaveData(ZWaveAPIData);
+            $scope.refreshZwaveData();
         }, function(error) {
             alertify.alertError($scope._t('error_load_data'));
         });
@@ -40846,11 +42561,10 @@ appController.controller('BatteryController', function($scope, $filter, $timeout
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function(ZWaveAPIData) {
+    $scope.refreshZwaveData = function() {
         var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+            dataService.loadJoinedZwaveData().then(function(response) {
                 setData(response.data.joined);
             }, function(error) {});
         };
@@ -41058,7 +42772,7 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
                     return;
                 }
                 $scope.devices.show = true;
-                $scope.refreshZwaveData(zwaveData.value);
+                $scope.refreshZwaveData();
             }
 
         });
@@ -41068,11 +42782,10 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function(ZWaveAPIData) {
+    $scope.refreshZwaveData = function() {
         var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+            dataService.loadJoinedZwaveData().then(function(response) {
                 setData(response.data.joined);
             }, function(error) {});
         };
@@ -41103,9 +42816,12 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+            if (deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
             }
+            /*if (nodeId == 255 || node.data.isVirtual.value) {
+                return;
+            }*/
             var node = ZWaveAPIData.devices[nodeId];
             var instanceId = 0;
             var ccIds = [32, 34, 37, 38, 43, 70, 91, 94, 96, 114, 119, 129, 134, 138, 143, 152];
@@ -41243,7 +42959,7 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
  * @class AssociationsController
  *
  */
-appController.controller('AssociationsController', function($scope, $filter, $timeout,$interval,$http,dataService, cfg,_,myCache) {
+appController.controller('AssociationsController', function($scope, $filter, $timeout,$interval,$http,dataService, deviceService,cfg,_,myCache) {
     $scope.devices = {
         all: [],
         show: false,
@@ -41289,7 +43005,7 @@ appController.controller('AssociationsController', function($scope, $filter, $ti
      */
     $scope.refreshZwaveData = function(ZWaveAPIData) {
         var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+            dataService.loadJoinedZwaveData().then(function(response) {
                 setData(response.data.joined);
             }, function(error) {});
         };
@@ -41314,9 +43030,12 @@ appController.controller('AssociationsController', function($scope, $filter, $ti
         // Loop throught devices
         var cnt = 1;
         angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+            if (deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
             }
+            /*if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+                return;
+            }*/
             var zddXmlFile = $filter('hasNode')(node, 'data.ZDDXMLFile.value');
             var zdd = null;
             if (zddXmlFile) {
@@ -41513,6 +43232,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
     $scope.controlDh = {
         interval: null,
         show: false,
+        alert: $scope.alert,
         controller: {},
         inclusion: {
             lastIncludedDevice: $scope.alert,
@@ -41560,7 +43280,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
             setControllerData(ZWaveAPIData);
             setDeviceData(ZWaveAPIData);
             $scope.controlDh.show = true;
-            $scope.refreshZwaveData(ZWaveAPIData);
+            $scope.refreshZwaveData();
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
         });
@@ -41569,11 +43289,10 @@ appController.controller('ControlController', function ($scope, $interval, $time
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function (ZWaveAPIData) {
+    $scope.refreshZwaveData = function () {
         var refresh = function () {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function (response) {
+            dataService.loadJoinedZwaveData().then(function (response) {
                 setControllerData(response.data.joined);
                 setDeviceData(response.data.joined);
                 setInclusionData(response.data.joined,response.data.update)
@@ -41641,13 +43360,20 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 // Network inclusion
                 if($scope.controlDh.network.inclusionProcess){
                     if($scope.controlDh.network.include){
-                        $scope.controlDh.network.modal = true;
-                        $scope.controlDh.network.alert = {message: $scope._t('success_controller_include'), status: 'alert-success', icon: 'fa-smile-o'};
+                        if (!$scope.controlDh.network.modal) {
+                            $scope.controlDh.network.alert = {
+                                message: $scope._t('nm_controller_state_10'),
+                                status: 'alert-warning',
+                                icon: 'fa-spinner fa-spin'
+                            };
+                            $scope.controlDh.network.inclusionProcess = 'processing';
+                        } else {
+                            $scope.controlDh.network.alert = {message: $scope._t('success_controller_include'), status: 'alert-success', icon: 'fa-smile-o'};
+                        }
                    }
 
                 }else{
                     $scope.controlDh.network.alert = $scope.alert;
-
                 }
                 break;
             case 1:
@@ -41670,8 +43396,13 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 break;
             case 9:
                 // Network inclusion
-                $scope.controlDh.network.alert = {message: $scope._t('nm_controller_state_11'), status: 'alert-warning', icon: 'fa-spinner fa-spin'};
-                $scope.controlDh.network.inclusionProcess = 'processing';
+                if($scope.controlDh.controller.isRealPrimary) {
+                    $scope.controlDh.network.alert = {message: $scope._t('nm_controller_state_11'), status: 'alert-warning', icon: 'fa-spinner fa-spin'};
+                    $scope.controlDh.network.inclusionProcess = 'processing';
+                } else {
+                    $scope.controlDh.network.alert = {message: $scope._t('nm_controller_state_9_exclude'), status: 'alert-warning', icon: 'fa-spinner fa-spin'};
+                    $scope.controlDh.network.inclusionProcess = 'processing';
+                }
                 break;
             case 17:
                 // Network inclusion
@@ -41841,19 +43572,21 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
      * Include to network
      * @param {string} cmd
      */
-    $scope.includeToNetwork = function (cmd) {
+    $scope.includeToNetwork = function (cmd, modalId, $event) {
         //$scope.runZwaveCmd(cmd);
-        var timeout = 1000;
+        var timeout = 30000;
         $scope.toggleRowSpinner(cmd);
         if(cmd === 'controller.SetLearnMode(1)'){
             $scope.controlDh.network.include = true;
-
+            $scope.controlDh.network.inclusionProcess = 'processing';
         }else{
             $scope.controlDh.network.include = false;
             $scope.controlDh.network.inclusionProcess = false;
         }
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
-            $timeout($scope.toggleRowSpinner, timeout);
+            $timeout(function() {
+                $scope.controlDh.network.modal = true;
+            }, timeout);
         }, function (error) {
             $scope.toggleRowSpinner();
             alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
@@ -41880,6 +43613,25 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
 
         });
 
+    };
+
+    $scope.requestNetworkUpdate = function (cmd, message, id) {
+        $scope.controlDh.alert = {
+            message: message,
+            status: 'alert-info',
+            icon: false
+        };
+        $scope.toggleRowSpinner(id);
+        dataService.runZwaveCmd(cfg.store_url + cmd).then(function () {
+            $timeout(function() {
+                $scope.controlDh.alert = false;
+                $scope.toggleRowSpinner();
+            }, 2000);
+        }, function () {
+            $scope.controlDh.alert = false;
+            $scope.toggleRowSpinner();
+            alertify.alertError($scope._t('error_load_data'));
+        });
     };
 
     /**
@@ -42081,24 +43833,19 @@ appController.controller('ControllerChangeController', function ($scope) {
  * @class RequestNifAllController
  *
  */
-appController.controller('RequestNifAllController', function ($scope, $timeout, cfg, dataService) {
+appController.controller('RequestNifAllController', function ($scope, $timeout, cfg, dataService, deviceService) {
     /**
      * Request NIF from all devices
      */
     $scope.requestNifAll = function (spin) {
         $scope.toggleRowSpinner(spin);
-        var cmd = 'devices[2].RequestNodeInformation()';
         var timeout = 1000;
         dataService.runZwaveCmd(cfg.call_all_nif).then(function (response) {
-            timeout *= response.data.runtime;
-            alertify.alertWarning($scope._t('proccess_take', {
-                __val__: response.data.runtime,
-                __level__: $scope._t('seconds')
-            }));
-            $timeout($scope.toggleRowSpinner, timeout);
+            deviceService.showNotifier({message: $scope._t('nif_request_complete')});
+            $scope.toggleRowSpinner();
         }, function (error) {
             $scope.toggleRowSpinner();
-            alertify.alertError($scope._t('error_nif_request'));
+            deviceService.showNotifier({message: $scope._t('error_nif_request'),type: 'error'});
         });
     };
 });
@@ -42182,7 +43929,7 @@ appController.controller('SetPromiscuousModeController', function ($scope) {
      * @param {string} cmd
      */
     $scope.setPromiscuousMode = function (cmd) {
-        $scope.runZwaveCmd(cmd);
+        $scope.runZwaveCmd(cmd,1000,true);
     };
 });
 /**
@@ -42198,21 +43945,154 @@ appController.controller('SetPromiscuousModeController', function ($scope) {
 appController.controller('NetworkStatisticsController', function ($scope, $filter, $timeout, $interval, dataService, cfg, _, deviceService) {
     $scope.networkStatistics = {
         all: [],
+        collection: [],
         show: false,
         whiteList: ['RFRxCRC16Errors', 'RFRxForeignHomeID', 'RFRxFrames', 'RFRxLRCErrors', 'RFTxFrames', 'RFTxLBTBackOffs']
     };
 
+    $scope.netStat = {
+        all: {},
+        show: false
+    };
 
+    var cOptions = {
+        colorSet: "statisticsColors",
+        title:{
+            text: "Success on Reception (% ok versus % corrupted)",
+            fontFamily: "arial",
+            fontSize: 20
+        },
+        legend: {
+            verticalAlign: "bottom",
+            horizontalAlign: "center",
+            fontFamily: "arial",
+            fontSize: 15
+        },
+        theme: "theme2",
+        data: [
+            {
+                //indexLabelFontColor: "MistyRose",
+                //indexLabelLineColor: "darkgrey",
+                type: "pie",
+                indexLabelFontFamily: "arial",
+                indexLabelFontSize: 20,
+                indexLabelFontWeight: "bold",
+                startAngle:0,
+                indexLabelPlacement: "inside",
+                toolTipContent: "{name}: {y}",
+                showInLegend: true,
+                percentFormatString: "#0",
+                indexLabel: "#percent %",
+                dataPoints: [{  y: 100, name: "Not shown",color: '#f5f5f5'}]
+            //{  y: 100, name: "Not shown",color: '#f5f5f5'}
+            }
+        ]
+    };
+    var cColors =  ["#80AD80","#d9534f","#f0ad4e"];
+
+    $scope.testGraph = function(){
+
+        CanvasJS.addColorSet("statisticsColors",cColors);
+        var chart = new CanvasJS.Chart('chartContainer',cOptions);
+        chart.render();
+    };
+
+    //$scope.testGraph();
     /**
      * Load network statistics
      */
     $scope.loadNetworkStatistics = function () {
         var cmd = cfg.store_url + 'controller.data.statistics';
         dataService.runZwaveCmd(cmd).then(function (response) {
-           // console.log(response.data)
+            var percentCnt = function (total, num) {
+                if (total === 0 && num === 0) {
+                    return 0;
+                }
+                var out = parseInt(((num / total) * 100).toFixed());
+                // Sets 1 percent if num is not 0 and out is 0
+                return out === 0 && num > 0 ? 1 : out;
+            }
+            // Total Number of Frames Sent RFTxFrames
+            var RFTxFrames = parseInt(response.data.RFTxFrames.value);
+            // Frames with Frequency Backoff (in % of frames sent) RFTxLBTBackOffs
+            var RFTxLBTBackOffs = parseInt(response.data.RFTxLBTBackOffs.value);
+            var objRFTxLBTBackOffs = response.data.RFTxLBTBackOffs;
+
+            objRFTxLBTBackOffs['RFTxFrames'] = RFTxFrames;
+            objRFTxLBTBackOffs['frameName'] = 'RFTxFrames';
+            objRFTxLBTBackOffs['frameValue'] = RFTxFrames;
+            objRFTxLBTBackOffs['fail'] = percentCnt(RFTxFrames, RFTxLBTBackOffs);
+            objRFTxLBTBackOffs['success'] = (RFTxFrames > 0 ?(100 - objRFTxLBTBackOffs['fail']) : 0);
+            objRFTxLBTBackOffs['dateTime'] = $filter('getDateTimeObj')(response.data.RFTxLBTBackOffs.updateTime);
+            $scope.netStat.all[0] = objRFTxLBTBackOffs;
+
+            // Number of correct Frames received RFRxFrames
+            var RFRxFrames = parseInt(response.data.RFRxFrames.value);
+            var RFRxLRCErrors = parseInt(response.data.RFRxLRCErrors.value);
+            var RFRxCRC16Errors = parseInt(response.data.RFRxCRC16Errors.value);
+             var RFRxForeignHomeID = parseInt(response.data.RFRxForeignHomeID.value);
+
+            // Number of corrupted CRC8 Frames received
+            var objRFRxLRCErrors = response.data.RFRxLRCErrors;
+            objRFRxLRCErrors['fail'] = percentCnt(RFRxFrames, RFRxLRCErrors);
+            objRFRxLRCErrors['failCRC8'] = percentCnt(RFRxFrames, RFRxLRCErrors);
+            objRFRxLRCErrors['failCRC16'] = percentCnt(RFRxFrames, RFRxCRC16Errors);
+            objRFRxLRCErrors['success'] = (RFRxFrames > 0 ?(100 - (objRFRxLRCErrors['failCRC8'] + objRFRxLRCErrors['failCRC16'])) : 0);
+            objRFRxLRCErrors['RFRxFrames'] = RFRxFrames;
+            objRFRxLRCErrors['frameName'] = 'RFRxFrames';
+            objRFRxLRCErrors['frameValue'] = RFRxFrames;
+            objRFRxLRCErrors['failCRC8Name'] = 'RFRxLRCErrors';
+            objRFRxLRCErrors['failCRC16Name'] = 'RFRxCRC16Errors';
+            objRFRxLRCErrors['failCRC8Value'] = RFRxLRCErrors;
+            objRFRxLRCErrors['failCRC16Value'] = RFRxCRC16Errors;
+            objRFRxLRCErrors['dateTime'] = $filter('getDateTimeObj')(response.data.RFRxLRCErrors.updateTime);
+            $scope.netStat.all[1] = objRFRxLRCErrors;
+            /*console.log($scope.netStat.all[1])
+
+            cOptions.data.dataPoints = [
+                {  y: 100, name: "Not shown",color: '#f5f5f5'}
+            ]
+            CanvasJS.addColorSet("statisticsColors",cColors);
+            var chart = new CanvasJS.Chart('chartContainer',cOptions);
+            chart.render();*/
+
+            // Number of corrupted CRC16 Frames received
+            /*var objRFRxCRC16Errors = response.data.RFRxCRC16Errors;
+            objRFRxCRC16Errors['fail'] = percentCnt(RFRxFrames, RFRxCRC16Errors);
+            objRFRxCRC16Errors['success'] = (RFRxFrames > 0 ?(100 - objRFRxCRC16Errors['fail']) : 0);
+            objRFRxCRC16Errors['RFRxFrames'] = RFRxFrames;
+            objRFRxCRC16Errors['dateTime'] = $filter('getDateTimeObj')(response.data.RFRxCRC16Errors.updateTime);
+            $scope.netStat.all[2] = objRFRxCRC16Errors;*/
+
+            // RFRxForeignHomeID RFRxForeignHomeID
+            var objRFRxForeignHomeID = response.data.RFRxForeignHomeID;
+            objRFRxForeignHomeID['fail'] = percentCnt(RFRxFrames, RFRxForeignHomeID);
+            objRFRxForeignHomeID['success'] =  (RFRxFrames > 0 ?(100 - objRFRxForeignHomeID['fail']) : 0);
+            objRFRxForeignHomeID['RFRxFrames'] = RFRxFrames;
+            objRFRxForeignHomeID['frameName'] = 'RFRxFrames';
+            objRFRxForeignHomeID['frameValue'] = RFRxFrames;
+
+            objRFRxForeignHomeID['dateTime'] = $filter('getDateTimeObj')(response.data.RFRxForeignHomeID.updateTime);
+            $scope.netStat.all[3] = objRFRxForeignHomeID;
+            //return;
+            /*$scope.netStat.all['RFTxLBTBackOffs'] = response.data.RFTxLBTBackOffs;
+             $scope.netStat.all['RFRxCRC16Errors'] = response.data.RFRxCRC16Errors;
+             $scope.netStat.all['RFRxForeignHomeID'] = response.data.RFRxForeignHomeID;*/
+
+
+            //console.log(response);
+            //return;
+
+            /* $scope.netStat.all = _.chain(response.data)
+             .filter(function (v,k) {
+
+
+             }).value();*/
+
+            //Old
             $scope.networkStatistics.all = _.chain(response.data)
-                .filter(function (v,k) {
-                    if($scope.networkStatistics.whiteList.indexOf(k) > -1){
+                .filter(function (v, k) {
+                    if ($scope.networkStatistics.whiteList.indexOf(k) > -1) {
                         v.name = k;
                         v.isUpdated = (v.updateTime > v.invalidateTime ? true : false);
                         v.dateTime = $filter('getDateTimeObj')(v.updateTime);
@@ -42220,8 +44100,12 @@ appController.controller('NetworkStatisticsController', function ($scope, $filte
                     }
 
                 }).value();
-            if(_.isEmpty($scope.networkStatistics.all)){
-                $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+            if (_.isEmpty($scope.networkStatistics.all)) {
+                $scope.alert = {
+                    message: $scope._t('device_404'),
+                    status: 'alert-warning',
+                    icon: 'fa-exclamation-circle'
+                };
                 return;
             }
             $scope.networkStatistics.show = true;
@@ -42250,41 +44134,66 @@ appController.controller('NetworkStatisticsController', function ($scope, $filte
  */
 
 /**
- * Routing root controller
- * @class RoutingController
+ * Neighbor controller
+ * @class NeighborController
  *
  */
-appController.controller('RoutingController', function($scope, $filter, $timeout,$interval,$http,dataService, cfg,_, myCache) {
+appController.controller('NeighborController', function ($scope, $filter, $timeout, $interval, $http, dataService, deviceService,cfg, _) {
     $scope.routings = {
         all: [],
+        updates: [],
         interval: null,
         show: false,
-        nodes: {},
-        neighbours: {}
+        view: 'neighbors',
+        showInfo: true,
+        dataSize: 'sm'//sm/md/lg
     };
-    $scope.nodes = {};
+    $scope.htmlNeighbors = {};
 
     /**
      * Cancel interval on page destroy
      */
-    $scope.$on('$destroy', function() {
+    $scope.$on('$destroy', function () {
         $interval.cancel($scope.routings.interval);
     });
+    /**
+     * Chenge view neighbors/table
+     * @param {string} view
+     */
+    $scope.changeView = function (status) {
+        if (typeof status === 'boolean') {
+            $scope.routings.showInfo = status;
+        } else {
+            $scope.routings.showInfo = !$scope.routings.showInfo;
+        }
+    };
 
     /**
      * Load zwave data
      */
-    $scope.loadZwaveData = function() {
-        dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
-            setNodes(ZWaveAPIData);
+    $scope.loadZwaveData = function () {
+        dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
+            //setNodes(ZWaveAPIData);
             setData(ZWaveAPIData);
-            if(_.isEmpty($scope.routings.all)){
-                $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+            var size = _.size($scope.routings.all);
+            if (size < 1) {
+                $scope.alert = {
+                    message: $scope._t('device_404'),
+                    status: 'alert-warning',
+                    icon: 'fa-exclamation-circle'
+                };
                 return;
             }
+            // Data size
+            if (size > 30 && size < 50) {
+                $scope.routings.dataSize = 'md'
+            } else if (size > 50) {
+                $scope.routings.dataSize = 'lg'
+            }
+            setCells($scope.routings.all);
             $scope.routings.show = true;
-            $scope.refreshZwaveData(ZWaveAPIData);
-        }, function(error) {
+
+        }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
         });
     };
@@ -42294,11 +44203,20 @@ appController.controller('RoutingController', function($scope, $filter, $timeout
      * Refresh zwave data
      * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function(ZWaveAPIData) {
-        var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
-                setData(response.data.joined);
-            }, function(error) {});
+    $scope.refreshZwaveData = function () {
+        var refresh = function () {
+            dataService.loadJoinedZwaveData(null).then(function (response) {
+                angular.forEach(response.data.update, function(v, k) {
+                    if($scope.routings.updates.indexOf(k) > -1){
+                        console.log(k)
+                        setData(response.data.joined);
+                        setCells($scope.routings.all);
+                    }
+            });
+
+                //
+            }, function (error) {
+            });
         };
         $scope.routings.interval = $interval(refresh, $scope.cfg.interval);
     };
@@ -42307,10 +44225,15 @@ appController.controller('RoutingController', function($scope, $filter, $timeout
      * Update route
      * @param {string} url
      */
-    $scope.updateRoute = function(url) {
+    $scope.updateRoute = function (url) {
         $scope.toggleRowSpinner(url);
         dataService.runZwaveCmd(cfg.store_url + url).then(function (response) {
+            $scope.refreshZwaveData();
+            //$scope.toggleRowSpinner();
             $timeout($scope.toggleRowSpinner, 1000);
+            $timeout(function(){
+                $interval.cancel($scope.routings.interval);
+            }, 5000);
         }, function (error) {
             $scope.toggleRowSpinner();
             alertify.alertError($scope._t('error_update_data') + '\n' + url);
@@ -42322,153 +44245,104 @@ appController.controller('RoutingController', function($scope, $filter, $timeout
      * @param {string} id
      * @param {string} urlType
      */
-    $scope.updateAllRoutess = function(id,urlType) {
+    $scope.updateAllRoutess = function (id, urlType) {
         var lastItem = _.last($scope.routings.all);
         $scope.toggleRowSpinner(id);
-        angular.forEach($scope.routings.all, function(v, k) {
+        $scope.refreshZwaveData();
+        angular.forEach($scope.routings.all, function (v, k) {
             $scope.toggleRowSpinner(v[urlType]);
             dataService.runZwaveCmd(cfg.store_url + v[urlType]).then(function (response) {
                 alertify.dismissAll();
             }, function (error) {
                 alertify.dismissAll();
-                alertify.alertError($scope._t('error_update_data') + '\n' +  v[urlType]);
+                alertify.alertError($scope._t('error_update_data') + '\n' + v[urlType]);
             });
-            if(lastItem.rowId === v.rowId){
+            if (lastItem.rowId === v.rowId) {
                 $timeout($scope.toggleRowSpinner, 1000);
             }
         });
+        $timeout(function(){
+            $interval.cancel($scope.routings.interval);
+        }, 5000);
 
     };
 
     /// --- Private functions --- ///
     /**
-     * Set nodes data
-     * @param {object} ZWaveAPIData
-     */
-    function setNodes(ZWaveAPIData) {
-        angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1) {
-                return;
-            }
-            var nodeName = $filter('deviceName')(nodeId, node);
-            var routesCount = $filter('getRoutesCount')(ZWaveAPIData, nodeId);
-
-            $scope.routings.nodes[nodeId] = {
-                "id": nodeId,
-                "nodeName": nodeName,
-                "routesCount": routesCount,
-                "node": node
-            };
-        });
-    }
-
-    /**
      * Set zwave data
      */
     function setData(ZWaveAPIData) {
-        //var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
-        // Loop throught devices
-        angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+        angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
+
             if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1) {
                 return;
             }
-
-
             var node = ZWaveAPIData.devices[nodeId];
             var name = $filter('deviceName')(nodeId, node);
-            var type;
-            var isListening = node.data.isListening.value;
-            var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
-            var hasWakeup = 0x84 in node.instances[0].commandClasses;
+            var type = deviceService.deviceType(node);
 
-
-            // Device type
-            if (node.data.genericType.value === 1) {
-                type = 'portable';
-            } else if (node.data.genericType.value === 2) {
-                type = 'static';
-            } else if (isFLiRS) {
-                type = 'flirs';
-            } else if (hasWakeup) {
-                type = node.data.isAwake.value ? 'battery' : 'sleep';
-            } else if (isListening) {
-                type = 'mains';
-            } else {
-                type = 'error';
-            }
-             var cellState = setCellState(nodeId, node,name)
-
+            /// New version
+            var routesCount = $filter('getRoutesCount')(ZWaveAPIData, nodeId);
             // Set object
             var obj = {};
             obj['id'] = nodeId;
             obj['rowId'] = 'row_' + nodeId;
             obj['name'] = name;
             obj['node'] = node;
-            obj['cellState'] = cellState;
+            obj['routesCount'] = routesCount;
+
             obj['type'] = type;
             obj['icon'] = $filter('getDeviceTypeIcon')(type);
             obj['invalidateTime'] = node.data.neighbours.invalidateTime;
             obj['updateTime'] = node.data.neighbours.updateTime,
-            obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
+                obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
             obj['urlToStore'] = 'devices[' + nodeId + '].RequestNodeNeighbourUpdate()';
 
             var findIndex = _.findIndex($scope.routings.all, {rowId: obj.rowId});
-            if(findIndex > -1){
-                angular.extend($scope.routings.all[findIndex],obj);
+            if (findIndex > -1) {
+                angular.extend($scope.routings.all[findIndex], obj);
 
-            }else{
+            } else {
                 $scope.routings.all.push(obj);
+                $scope.routings.updates.push('devices.' + nodeId + '.data.neighbours')
             }
-
+            /*for (i = 0; i < 10; i++) {
+             $scope.routings.all.push(obj);
+             }*/
         });
     }
 
     /**
      * Set table cell state
-     * @param {object} nodeId
-     * @param {number} node
-     * @param {string} nodeName
+     * @param {object} nodes
      * @returns {Array}
      */
-    function setCellState(nodeId, node,nodeName) {
-        var routesCount = $scope.routings.nodes[nodeId].routesCount;
-        var state = [];
-        angular.forEach($scope.routings.nodes, function(v, k ){
-            var tooltip = nodeId + ': ' + nodeName + ' - ' + k + ': ' + v.nodeName  + ' ';
-            var hasAssoc = false;
-            var cssClass = 'rtDiv line' + nodeId + ' ';
-            //Check for associations
-            if ($filter('associationExists')(node, k)) {
-                hasAssoc = true;
-                tooltip += ' (' + $scope._t('rt_associated') + ')';
-            }
-            if (nodeId == k
-                || node.data.isVirtual.value
-                || v.node.data.isVirtual.value
-                || node.data.basicType.value == 1
-                || v.node.data.basicType.value == 1) {
-                cssClass = 'rtDiv rtUnavailable';
-            }else if(node.data.neighbours.value.indexOf(parseInt(k, 10)) != -1){
-                cssClass += 'rtDirect';
-            }else if (routesCount[k] && routesCount[k].length > 1){
-                cssClass += 'rtRouted';
-            }else if (routesCount[k] && routesCount[k].length == 1){
-                cssClass += 'rtBadlyRouted';
-            }else{
-                cssClass += 'rtNotLinked';
-            }
-
-            var obj = {
-                nodeId: nodeId,
-                routingId: k,
-                tooltip: tooltip,
-                hasAssoc: hasAssoc,
-                cssClass: cssClass
-
-            };
-            state.push(obj)
+    function setCells(nodes) {
+        angular.forEach(nodes, function (node, i) {
+            $scope.htmlNeighbors[node.id] = '';
+            angular.forEach(nodes, function (v, k) {
+                var tooltip = node.id + ': ' + node.name + ' - ' + v.id + ': ' + v.name + ' ';
+                //var routesCount = v.routesCount;
+                var hasAssoc = false;
+                var cssClass = 'rtUnavailable';
+                //Check for associations
+                /*if ($filter('associationExists')(node.node, v.id)) {
+                    hasAssoc = true;
+                    tooltip += ' (' + $scope._t('rt_associated') + ')';
+                }*/
+                if (node.id == v.id) {
+                    cssClass = 'rtWhite';
+                } else if (v.node.data.neighbours.value.indexOf(parseInt(node.id, 10)) != -1) {
+                    cssClass = 'rtDirect';
+                }  else {
+                    cssClass = 'rtNotLinked';
+                }
+                var out = '<span class="rt-cell ' + cssClass + '" title="' + tooltip + '">' + (hasAssoc ? "*" : "&nbsp") + '</span>';
+                //console.log(out)
+                $scope.htmlNeighbors[node.id] += out;
+            });
         });
-        return state;
+
     }
 });
 /**
@@ -42755,7 +44629,7 @@ appController.controller('ReorganizationController', function($scope, $filter, $
  * @class TimingController
  *
  */
-appController.controller('TimingController', function($scope, $filter, $q,$timeout,$interval,dataService, cfg,_) {
+appController.controller('TimingController', function($scope, $filter, $q,$timeout,$interval,dataService,deviceService, cfg,_) {
     $scope.devices = {
         all: [],
         interval: null,
@@ -42812,7 +44686,7 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
                     return;
                 }
                 $scope.devices.show = true;
-                $scope.refreshZwaveData(zwaveData.value);
+                $scope.refreshZwaveData();
             }
 
         });
@@ -42822,11 +44696,10 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function(ZWaveAPIData) {
+    $scope.refreshZwaveData = function() {
         var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+            dataService.loadJoinedZwaveData().then(function(response) {
                 setData(response.data.joined);
             }, function(error) {});
         };
@@ -42853,36 +44726,21 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+            if (deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
             }
+            /*if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+                return;
+            }*/
             var node = ZWaveAPIData.devices[nodeId];
-            var type;
-            var isListening = node.data.isListening.value;
-            var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
-            var hasBattery = 0x80 in node.instances[0].commandClasses;
-            var hasWakeup = 0x84 in node.instances[0].commandClasses;
+            var type = deviceService.deviceType(node);
             var totalPackets = 0;
             var okPackets = 0;
             var lastPackets = '';
             var basicType = node.data.basicType.value;
             var genericType = node.data.genericType.value;
             var specificType = node.data.specificType.value;
-
-            // Device type
-            if (node.data.genericType.value === 1) {
-                type = 'portable';
-            } else if (node.data.genericType.value === 2) {
-                type = 'static';
-            } else if (isFLiRS) {
-                type = 'flirs';
-            } else if (hasWakeup) {
-                type = node.data.isAwake.value ? 'battery' : 'sleep';
-            } else if (isListening) {
-                type = 'mains';
-            } else {
-                type = 'error';
-            }
+            var lastCommunication = deviceService.lastCommunication(node);
 
             // Packets
             var timingItems =  $scope.timing[nodeId];
@@ -42900,6 +44758,8 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
             obj['name'] = $filter('deviceName')(nodeId, node);
             obj['type'] = type;
             obj['icon'] = $filter('getDeviceTypeIcon')(type);
+            obj['updateTime'] = lastCommunication;
+            obj['dateTime'] = $filter('getDateTimeObj')(lastCommunication);
             obj['totalPackets'] = totalPackets;
             obj['okPackets'] = okPackets;
             obj['lastPackets'] = lastPackets;
@@ -42961,6 +44821,238 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
     }
 });
 /**
+ * @overview This controller renders and handles link status stuff.
+ * @author Martin Vach
+ */
+
+/**
+ * Link status controller
+ * @class CLinkStatusController
+ *
+ */
+appController.controller('LinkStatusController', function ($scope, $routeParams, $timeout, $location, $cookies, $filter, $interval, cfg, deviceService, dataService) {
+    $scope.linkStatus = {
+        all: [],
+        interval: null,
+        show: false,
+        showInfo: true
+
+    };
+    $scope.htmlNeighbors = {};
+    $scope.testLink = {};
+    // Cancel interval on page destroy
+    $scope.$on('$destroy', function () {
+        $interval.cancel($scope.linkStatus.interval);
+    });
+
+    /**
+     * Chenge view info and table = true /table only = false
+     * @param {string} view
+     */
+    $scope.changeView = function (status) {
+        if (typeof status === 'boolean') {
+            $scope.linkStatus.showInfo = status;
+        } else {
+            $scope.rlinkStatus.showInfo = !$scope.linkStatus.showInfo;
+        }
+    };
+
+    /**
+     * Load zwave data
+     */
+    $scope.loadZwaveData = function () {
+        dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
+            setData(ZWaveAPIData);
+            if (_.isEmpty($scope.linkStatus.all)) {
+                $scope.alert = {
+                    message: $scope._t('device_404'),
+                    status: 'alert-warning',
+                    icon: 'fa-exclamation-circle'
+                };
+                return;
+            }
+            setCells($scope.linkStatus.all);
+            $scope.linkStatus.show = true;
+
+        }, function (error) {
+            alertify.alertError($scope._t('error_load_data'));
+        });
+    };
+    $scope.loadZwaveData();
+
+    /**
+     * Refresh zwave data
+     */
+    $scope.refreshZwaveData = function () {
+
+        var refresh = function () {
+            //var findZwaveStr = 'devices.' + 86;
+            dataService.loadJoinedZwaveData().then(function (response) {
+                var update = false;
+               angular.forEach(response.data.update, function(v, k) {
+                    var id = k.split('.')[1];
+                    if($scope.testLink[id]){
+                        update = true;
+                        return;
+                    }
+                    //console.log(deviceId)
+                });
+                if(update){
+                    //console.log('Updating device');
+                    setData(response.data.joined);
+                    setCells($scope.linkStatus.all);
+                }/*else{
+                    console.log('Nothing to update')
+                }*/
+            }, function (error) {
+            });
+        };
+        $scope.linkStatus.interval = $interval(refresh, $scope.cfg.interval);
+    };
+
+    /**
+     * Test all links
+     * @param {string} id
+     */
+    $scope.testAllLinks = function(nodeId) {
+        $interval.cancel($scope.linkStatus.interval);
+        $scope.toggleRowSpinner(nodeId);
+        var data = {"nodeId": nodeId};
+        dataService.postApi('checklinks', data).then(function () {
+            $scope.refreshZwaveData();
+            $scope.toggleRowSpinner();
+        }, function () {
+            alertify.alertError($scope._t('error_update_data'));
+            $scope.toggleRowSpinner();
+        });
+    };
+
+
+    /**
+     * todo: Whay 21 times?
+     * Run NOP command
+     * @param {string} cmd
+     */
+    $scope.runZwaveNop = function (cmd) {
+        $interval.cancel($scope.linkStatus.interval);
+        for (i = 0; i < 21; i++) {
+            $scope.runZwaveCmd(cmd,3000,true);
+        }
+        $scope.refreshZwaveData();
+    };
+
+    /// --- Private functions --- ///
+
+    /**
+     * Set zwave data
+     * @param {object} ZWaveAPIData
+     */
+    function setData(ZWaveAPIData) {
+        var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
+        // Loop throught devices
+        angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
+            if (nodeId == 255 || node.data.isVirtual.value) {
+                return;
+            }
+            var hasPowerLevel = node.instances[0].commandClasses[115];
+
+            // Loop throught instances
+            angular.forEach(node.instances, function (instance, instanceId) {
+                if (instanceId == 0 && node.instances.length > 1) {
+                    return;
+                }
+                var lastReceive = parseInt(node.data.lastReceived.updateTime, 10) || 0;
+                var lastSend = parseInt(node.data.lastSend.updateTime, 10) || 0;
+                var lastCommunication = (lastSend > lastReceive) ? lastSend : lastReceive;
+                var dateTime;
+                var isUpdated;
+                if (hasPowerLevel) {
+                    isUpdated = ((hasPowerLevel.data.updateTime > hasPowerLevel.data.invalidateTime) ? true : false);
+                    dateTime = $filter('getDateTimeObj')(hasPowerLevel.data.updateTime, hasPowerLevel.data.invalidateTime);
+                }
+                var type = deviceService.deviceType(node);
+                var obj = {};
+                obj['id'] = nodeId;
+                obj['rowId'] = 'row_' + nodeId;
+                obj['isController'] = controllerNodeId == nodeId;
+                obj['name'] = $filter('deviceName')(nodeId, node);
+                obj['type'] = type;
+                obj['hasPowerLevel'] = hasPowerLevel;
+                obj['icon'] = $filter('getDeviceTypeIcon')(type);
+                obj['isFailed'] = node.data.isFailed.value;
+                obj['neighbours'] = node.data.neighbours.value;
+                obj['updateTime'] = lastCommunication;
+                obj['dateTime'] = $filter('getDateTimeObj')(lastCommunication);
+                obj['isUpdated'] = isUpdated;
+                obj['cmdNop'] = 'devices[' + nodeId + '].SendNoOperation()';
+                var findIndex = _.findIndex($scope.linkStatus.all, {rowId: obj.rowId});
+                if (findIndex > -1) {
+                    angular.extend($scope.linkStatus.all[findIndex], obj);
+
+                } else {
+                    $scope.linkStatus.all.push(obj);
+                }
+            });
+        });
+    }
+
+    /**
+     * Set table cell state
+     * @param {object} nodes
+     * @returns {Array}
+     */
+    function setCells(nodes) {
+        //console.log(nodes)
+        angular.forEach(nodes, function (node, i) {
+            //console.log(node.id,node.neighbours)
+            $scope.htmlNeighbors[node.id] = '';
+            $scope.testLink[node.id] = [];
+            var powerLevel = node.hasPowerLevel ? node.hasPowerLevel.data : [];
+            //console.log(node.hasPowerLevel)
+            angular.forEach(nodes, function (v, k) {
+                var tooltip = node.id + ': ' + node.name + ' - ' + v.id + ': ' + v.name + ' ';
+                //var cssClass = node.hasPowerLevel ? 'rtUnavailable' : 'rtWhite';
+                var cssClass = 'rtWhite';
+
+                if(node.hasPowerLevel){ // Cols for powerLevel
+                    var nodePowerLevel = powerLevel[v.id];
+                    //console.log(node.neighbours.indexOf(parseInt(v.id)))
+                    if(node.neighbours.indexOf(parseInt(v.id)) > -1){
+                        cssClass = 'rtUnavailable';
+                        //console.log(node.id + ' | '+ v.id+' In neighbours',node.neighbours)
+                    }/*else{
+                        console.log(node.id + ' | '+ v.id+' NOT in neighbours',node.neighbours)
+                    }*/
+                   // cssClass = (node.neighbours.indexOf(parseInt(v.id)) === -1 ? 'rtOrange' : 'rtUnavailable');
+
+                    if(nodePowerLevel){
+                        $scope.testLink[node.id].push(v.id);
+                        //console.log(node.id + ' | ' + v.id + ': ',powerLevel[v.id])
+                        if (nodePowerLevel.acknowledgedFrames.value > -1 && nodePowerLevel.acknowledgedFrames.value < 6) {
+                            cssClass = 'rtRed';
+                        } else if (nodePowerLevel.acknowledgedFrames.value > 5 && nodePowerLevel.acknowledgedFrames.value < 18) {
+                            cssClass = 'rtOrange';
+                        } else if (nodePowerLevel.acknowledgedFrames.value > 17) {
+                            cssClass = 'rtGreen';
+                        }
+                    }
+                }else{// Without powelLevel
+                    if(v.isController){
+                        //console.log(node.id +' : ' + v.id,v.isFailed)
+                        cssClass = node.isFailed ? 'rtUnavailable' : 'rtGreen';
+                    }
+
+                }
+                if(node.id === v.id ){
+                    cssClass = 'rtWhite';
+                }
+                var out = '<span class="rt-cell ' + cssClass + '" title="' + tooltip + '">' +  '&nbsp' + '</span>';
+                $scope.htmlNeighbors[node.id] += out;
+            });
+        });
+    }
+});
+/**
  * Application ControllerInfo controller
  * @author Martin Vach
  */
@@ -42997,7 +45089,7 @@ appController.controller('ControllerController', function($scope, $window, $filt
     $scope.loadZwaveData = function() {
         dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
             setData(ZWaveAPIData);
-            $scope.refreshZwaveData(ZWaveAPIData);
+            $scope.refreshZwaveData();
         }, function(error) {
             alertify.alertError($scope._t('error_load_data'));
         });
@@ -43006,11 +45098,10 @@ appController.controller('ControllerController', function($scope, $window, $filt
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function(ZWaveAPIData) {
+    $scope.refreshZwaveData = function() {
         var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+            dataService.loadJoinedZwaveData().then(function(response) {
                 setData(response.data.joined);
             }, function(error) {});
         };
@@ -43830,488 +45921,46 @@ appController.controller('ZnifferHistoryController', function ($scope, $interval
 
 });
 
-
-/**
- * ZnifferHistoryController
- * @author Martin Vach
- */
-appController.controller('ZnifferController_', function ($scope, $interval, $filter, $cookies, $location, cfg, dataService, myCache, _) {
-    $scope.zniffer = {
-        run: true,
-        trace: 'start',
-        interval: null,
-        updateTime: Math.round(+new Date() / 1000),
-        controller: {},
-        cmdClass: [],
-        all: [],
-        collection: {},
-        filter: {
-            model: {
-                src: {
-                    value: '',
-                    show: '1'
-                },
-                dest: {
-                    value: '',
-                    show: '1'
-                }
-            },
-            items: {
-                data: ['Singlecast', 'Predicast', 'Multicast']
-            },
-            used: []
-        }
-
-    };
-    /**
-     * Cancel interval on page destroy
-     */
-    $scope.$on('$destroy', function () {
-        $interval.cancel($scope.zniffer.interval);
-    });
-
-
-
-    /**
-     * Load cached zniffer filter
-     * @returns {undefined}
-     */
-    $scope.loadCachedZnifferFilter = function () {
-        if ($cookies.znifferFilter) {
-            angular.extend($scope.zniffer.filter.model, angular.fromJson($cookies.znifferFilter));
-        }
-
-    };
-    $scope.loadCachedZnifferFilter();
-
-    /**
-     * Detect zniffer filter
-     * @returns {undefined}
-     */
-    $scope.detectZnifferFilter = function () {
-        angular.forEach($scope.zniffer.filter.model, function (v, k) {
-            var index = $scope.zniffer.filter.used.indexOf(k);
-            if (v['value'] !== '' && index === -1) {
-                $scope.zniffer.filter.used.push(k);
-            }
-        });
-    };
-    $scope.detectZnifferFilter();
-
-    /**
-     * Load communication history
-     * @returns {undefined}
-     */
-    $scope.loadCommunication = function (updateTime) {
-        var params;
-        var time = (updateTime ? '/' + updateTime : '');
-        var filter = '?filter=' + JSON.stringify($scope.zniffer.filter.model);
-        params = time + filter;
-        dataService.getApi('communication_history_url', params, true).then(function (response) {
-            $scope.zniffer.updateTime = response.data.updateTime;
-            setZnifferData(response.data.data);
-            //$scope.zniffer.all = zniffer.value();
-            $scope.zniffer.run = true;
-        }, function (error) {
-            $scope.zniffer.run = false;
-            $interval.cancel($scope.zniffer.interval);
-            alertify.alertError($scope._t('error_load_data') + ': ' + cfg.communication_history_url);
-        });
-    };
-//    if ($scope.routeMatch('/installer/history')) {
-//        $scope.loadCommunication();
-//    }
-
-
-    /**
-     * Refresh communication history
-     * @returns {undefined}
-     */
-    $scope.refreshCommunication = function (time) {
-//        if ($scope.routeMatch('/installer/history')) {
-//            return;
-//        }
-        var refresh = function () {
-            $scope.zniffer.updateTime += Math.round(+cfg.interval / 1000);
-            //var updateTime = Math.round(+new Date() / 1000);
-            $scope.loadCommunication($scope.zniffer.updateTime);
-        };
-        if ($scope.zniffer.run && $scope.zniffer.trace === 'start') {
-            $scope.zniffer.interval = $interval(refresh, cfg.interval);
-        }
-
-
-    };
-    //$scope.refreshCommunication($scope.zniffer.updateTime);
-
-    /**
-     * Reset zniffer filter
-     * @returns {undefined}
-     */
-    $scope.resetZniffer = function () {
-        $scope.zniffer.trace = 'start';
-        $interval.cancel($scope.zniffer.interval);
-        $scope.zniffer.all = [];
-        if ($scope.routeMatch('/installer/history')) {
-            $scope.loadCommunication();
-        }
-        if ($scope.routeMatch('/installer/zniffer')) {
-            $scope.refreshCommunication($scope.zniffer.updateTime);
-        }
-    };
-    $scope.resetZniffer();
-    /**
-     * Set zniffer filter
-     * @returns {undefined}
-     */
-    $scope.setZnifferFilter = function (key) {
-        //$cookies.znifferFilter =  JSON.stringify($scope.zniffer.filter.model);
-        if (!$scope.zniffer.filter.model[key].value) {
-            return false;
-        }
-        $cookies.znifferFilter = angular.toJson($scope.zniffer.filter.model);
-        if (!_.contains($scope.zniffer.filter.used, key)) {
-            $scope.zniffer.filter.used.push(key);
-        }
-        $scope.resetZniffer();
-    };
-    /**
-     * Reset zniffer filter
-     * @returns {undefined}
-     */
-    $scope.resetZnifferFilter = function (key) {
-        $scope.zniffer.filter.model[key].value = '';
-        $scope.zniffer.filter.used = _.without($scope.zniffer.filter.used, key);
-        delete $cookies['znifferFilter'];
-        //$cookies.znifferFilter = angular.toJson($scope.zniffer.filter.model);
-        $scope.resetZniffer();
-    };
-    /**
-     * Reset all zniffer filters
-     * @returns {undefined}
-     */
-    $scope.resetZnifferFilterAll = function () {
-        angular.forEach($scope.zniffer.filter.model, function (v, k) {
-            $scope.zniffer.filter.model[k].value = '';
-        });
-
-        $scope.zniffer.filter.used = [];
-        delete $cookies['znifferFilter'];
-        //$cookies.znifferFilter = angular.toJson($scope.zniffer.filter.model);
-        $scope.resetZniffer();
-    };
-
-    /**
-     * Set trace
-     */
-    $scope.setTrace = function (trace) {
-        switch (trace) {
-            case 'pause':
-                $scope.zniffer.trace = 'pause';
-                $interval.cancel($scope.zniffer.interval);
-                break;
-            case 'stop':
-                $scope.zniffer.trace = 'stop';
-                $interval.cancel($scope.zniffer.interval);
-                myCache.remove('incoming_packet');
-                angular.copy([], $scope.zniffer.all);
-                break;
-            default:
-                $scope.zniffer.trace = 'start';
-                $scope.refreshCommunication($scope.zniffer.updateTime);
-                break;
-
-        }
-        //console.log('Set trace: ',  $scope.zniffer.trace)
-    };
-
-    /// --- Private functions --- ///
-    /**
-     * Set a Zniffer data
-     * @param {object} packet
-     * @returns {undefined}
-     */
-    function setZnifferData(data) {
-        var zniffer = _.chain(data)
-                .flatten()
-                .filter(function (v) {
-                    var bytes = v.value;
-                    var exist = _.findWhere($scope.zniffer.all, {updateTime: v.updateTime, bytes: bytes});
-                    v.dateTime = $filter('getDateTimeObj')(v.updateTime);
-                    v.bytes = (bytes ? bytes.toString() : '');
-                    if (!exist) {
-                        $scope.zniffer.all.push(v)
-                    }
-                    ;
-                    return v;
-                });
-    }
-
-});
-/**
- * ZnifferController
- * @author Martin Vach
- */
-appController.controller('ZnifferController_', function ($scope, $interval, $filter, cfg, dataService, myCache, _) {
-    $scope.zniffer = {
-        interval: null,
-        controller: {},
-        trace: 'start',
-        cmdClass: [],
-        all: []
-
-    };
-
-    /**
-     * Cancel interval on page destroy
-     */
-    $scope.$on('$destroy', function () {
-        //$interval.cancel( $scope.zniffer.interval);
-    });
-
-    /**
-     * Load zwave API
-     */
-    $scope.loadZwaveApi = function () {
-        dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
-            $scope.zniffer.controller.nodeId = ZWaveAPIData.controller.data.nodeId.value;
-        }, function (error) {
-            alertify.alertError($scope._t('error_load_data'));
-            return;
-        });
-    };
-    $scope.loadZwaveApi();
-
-    /**
-     * Load zwave command classes
-     * @returns {undefined}
-     */
-    $scope.loadCmdClass = function () {
-        dataService.xmlToJson(cfg.zwave_classes_url).then(function (response) {
-            $scope.zniffer.cmdClass = response.zw_classes.cmd_class;
-        }, function (error) {
-            alertify.alertError($scope._t('error_xml_load'));
-        });
-
-    };
-    $scope.loadCmdClass();
-
-    /**
-     * Load cached packet
-     * @returns {undefined}
-     */
-    $scope.loadCachedPackets = function () {
-        if (myCache.get('inout_packet')) {
-            $scope.zniffer.all = myCache.get('inout_packet');
-        }
-
-    };
-    $scope.loadCachedPackets();
-
-    /**
-     * Load packet data
-     * @returns {undefined}
-     */
-    $scope.loadIncomingPacket = function () {
-        dataService.getApi('incoming_packet_url', null, true).then(function (response) {
-            var exist = _.find($scope.zniffer.all, {updateTime: response.data.updateTime});
-            if (exist || !response.data.value) {
-                return;
-            }
-            $scope.zniffer.all.push(
-                    {
-                        type: 'incoming',
-                        updateTime: response.data.updateTime,
-                        value: response.data.value,
-                        dateTime: $filter('getDateTimeObj')(response.data.updateTime),
-                        src: response.data.value[3],
-                        dest: $scope.zniffer.controller.nodeId,
-                        data: setZnifferDataType(response.data.value[2]),
-                        application: packetApplication(response.data.value)
-                    }
-            );
-            myCache.put('inout_packet', $scope.zniffer.all);
-            //console.log(exist)
-        }, function (error) {});
-    };
-    //$scope.loadIncomingPacket();
-    /**
-     * Load packet data
-     * @returns {undefined}
-     */
-    $scope.loadOutgoingPacket = function () {
-        dataService.getApi('outgoing_packet_url', null, true).then(function (response) {
-            var exist = _.find($scope.zniffer.all, {updateTime: response.data.updateTime});
-            if (exist || !response.data.value) {
-                return;
-            }
-            $scope.zniffer.all.push(
-                    {
-                        type: 'outgoing',
-                        updateTime: response.data.updateTime,
-                        value: response.data.value,
-                        dateTime: $filter('getDateTimeObj')(response.data.updateTime),
-                        src: $scope.zniffer.controller.nodeId,
-                        dest: response.data.value[3],
-                        data: setZnifferDataType(response.data.value[2]),
-                        application: packetApplication(response.data.value)
-                    }
-            );
-            myCache.put('inout_packet', $scope.zniffer.all);
-            //console.log(exist)
-        }, function (error) {});
-    };
-    //$scope.loadOutgoingPacket();
-
-    /**
-     * Refresh packet
-     */
-    $scope.refreshPacket = function () {
-        var refresh = function () {
-            $scope.loadIncomingPacket();
-            $scope.loadOutgoingPacket();
-        };
-        if ($scope.zniffer.trace === 'start') {
-            $scope.zniffer.interval = $interval(refresh, $scope.cfg.interval);
-        }
-
-    };
-
-    $scope.refreshPacket();
-    /**
-     * Set trace
-     */
-    $scope.setTrace = function (trace) {
-        switch (trace) {
-            case 'pause':
-                $scope.zniffer.trace = 'pause';
-                $interval.cancel($scope.zniffer.interval);
-                break;
-            case 'stop':
-                $scope.zniffer.trace = 'stop';
-                $interval.cancel($scope.zniffer.interval);
-                myCache.remove('incoming_packet');
-                angular.copy([], $scope.zniffer.all);
-                break;
-            default:
-                $scope.zniffer.trace = 'start';
-                $scope.loadCachedPackets();
-                $scope.refreshPacket();
-                break;
-
-        }
-        //console.log('Set trace: ',  $scope.zniffer.trace)
-    };
-
-    /// --- Private functions --- ///
-    /**
-     * Set an application col
-     * @param {array} packet
-     * @returns {undefined}
-     */
-    function packetApplication(packet) {
-        // Get a command class from position 5
-        var cmdClassKey = $filter('decToHex')(packet[5], 2, '0x');
-        //key = '0x20'; // cc with cmd array
-        var cmdKey = $filter('decToHex')(packet[6], 2, '0x');
-        //keyCmd = '0x03';
-        //console.log('cmdClassKey: ', cmdClassKey)
-
-        var cmdClassVersion = '1';
-        var ret = {};
-        //var cc = _.findWhere( $scope.zniffer.cmdClass, {_key: cmdClassKey, _version: cmdClassVersion });
-
-        if (_.isEmpty($scope.zniffer.cmdClass)) {
-            return;
-        }
-        var findCmdClass = _.where($scope.zniffer.cmdClass, {_key: '0x71'});
-        if (!findCmdClass || _.isEmpty(findCmdClass)) {
-
-            return ret;
-        }
-        var cmdClass = findCmdClass.pop();
-        if (_.isArray(cmdClass.cmd)) {
-            ret = _.findWhere(cmdClass.cmd, {_key: cmdKey});
-        } else {
-            ret = cmdClass.cmd;
-        }
-        return ret;
-    }
-
-    function setZnifferDataType(data) {
-        switch (data) {
-            case 0:
-                return 'Singlecast';
-            case 255:
-                return 'Predicast';
-            default:
-                return 'Multicast';
-        }
-    }
-
-});
-
 /**
  * The controller that handles Zniffer Rssi Background.
  * @class ZnifferRSSIController
  * @author Niels Roche
  */
 appController.controller('ZnifferRSSIController', function ($scope, $interval, $filter, cfg, dataService, myCache, _) {
+    var cOptions = {
+        title:{
+            text: ""
+        },
+        axisX:{
+            title: "Time",
+            tickColor: "black",
+            tickLength: 5,
+            tickThickness: 2,
+            valueFormatString: "HH:mm"
+        },
+        axisY:{
+            title: "RSSI (dBm)",
+            tickColor: "black",
+            tickLength: 5,
+            tickThickness: 2,
+            includeZero: false
+        },
+        data: [
+            {
+                type: "line",
+                xValueType: "dateTime",
+                xValueFormatString: "HH:mm:ss",
+                connectNullData: true,
+                nullDataLineDashType: "solid",
+                dataPoints: [],
+            }
+        ],
+        zoomEnabled:true
+    };
+
     $scope.rssi = {
-        chartOptions1: {
-            title:{
-                text: ""
-            },
-            axisX:{
-                title: "Time",
-                tickColor: "black",
-                tickLength: 5,
-                tickThickness: 2,
-                valueFormatString: "HH:mm"
-            },
-            axisY:{
-                title: "RSSI (dBm)",
-                tickColor: "black",
-                tickLength: 5,
-                tickThickness: 2
-            },
-            data: [
-                {
-                    type: "line",
-                    xValueType: "dateTime",
-                    xValueFormatString: "HH:mm:ss",
-                    dataPoints: [],
-                }
-            ],
-            zoomEnabled:true
-        },
-        chartOptions2: {
-            title:{
-                text: ""
-            },
-            axisX:{
-                title: "Time",
-                tickColor: "black",
-                tickLength: 5,
-                tickThickness: 2,
-                valueFormatString: "HH:mm"
-            },
-            axisY:{
-                title: "RSSI (dBm)",
-                tickColor: "black",
-                tickLength: 5,
-                tickThickness: 2
-            },
-            data: [
-                {
-                    type: "line",
-                    xValueType: "dateTime",
-                    xValueFormatString: "HH:mm:ss",
-                    dataPoints: [],
-                }
-            ],
-            zoomEnabled:true
-        },
+        chartOptions1: cOptions,
+        chartOptions2: cOptions,
         chartData1: [],
         chartData2: [],
         interval: null
@@ -44324,7 +45973,7 @@ appController.controller('ZnifferRSSIController', function ($scope, $interval, $
         $interval.cancel($scope.rssi.interval);
     });
 
-    $scope.loadingRSSIData = function() {
+    $scope.loadingRSSIData = function(handleError) {
         dataService.getApi('rssi_chart','', true).then(function (response) {
             var rssiData = typeof response === 'string'? JSON.parse(response) : response;
             var tInterval = (new Date()).getTime() - 86400000; //86400000 - 24h
@@ -44339,11 +45988,11 @@ appController.controller('ZnifferRSSIController', function ($scope, $interval, $
                     if ((entry.time * 1000) > tInterval) {
 
                         if (typeof parseInt(entry.channel1) === 'number') {
-                            chartData1.push({x: timestamp, y: parseInt(entry.channel1)});
+                            chartData1.push({x: timestamp, y: !!entry.channel1? parseInt(entry.channel1) : entry.channel1});
                         }
 
                         if (typeof parseInt(entry.channel2) === 'number') {
-                            chartData2.push({x: timestamp, y: parseInt(entry.channel2)});
+                            chartData2.push({x: timestamp, y: !!entry.channel2? parseInt(entry.channel2) : entry.channel2});
                         }
                     }
                 }
@@ -44362,10 +46011,15 @@ appController.controller('ZnifferRSSIController', function ($scope, $interval, $
 
 
         }, function (error) {
-            alertify.alertError($scope._t('error_load_data') + ': ' + cfg.rssi_chart);
+            var message = $scope._t('error_load_data') + ': ' + cfg.rssi_chart;
+            if(handleError){
+                alertify.dismissAll();
+                alertify.alertError(message);
+            }
+
         });
     };
-    $scope.loadingRSSIData();
+    $scope.loadingRSSIData(true);
 
     $scope.createChart = function (elementID,chartOptions,chartData, chartTitle) {
         chartOptions.title.text = chartTitle;
@@ -44395,6 +46049,144 @@ appController.controller('ZnifferRSSIController', function ($scope, $interval, $
         $scope.rssi.interval = $interval(refresh, 30000);
     };
     $scope.initRefresh();
+});
+
+/**
+ * The controller that handles Zniffer Rssi Background Meter.
+ * @class ZnifferRSSIMeterController
+ * @author Michael Hensche
+ */
+appController.controller('ZnifferRSSIMeterController', function ($scope, $interval, $filter, cfg, dataService, myCache, _) {
+
+    var cOptions = {
+        id: "",
+        value: 0,
+        min: -120,
+        max: 0,
+        title: "",
+        label: "RSSI (dBm)",
+        pointer: true,
+        customSectors: [{
+            color: "#80AD80",
+            lo: -120,
+            hi: -75
+        },{
+            color: "#f0ad4e",
+            lo: -75,
+            hi: -45
+        },{
+            color: "#d9534f",
+            lo: -45,
+            hi: 0
+        }]
+    };
+
+    $scope.rssi = {
+        chartOptions1: cOptions,
+        chartOptions2: cOptions,
+        chartData1: 0,
+        chartData2: 0,
+        interval: null,
+        intervaltime: 2000,
+        trace: 'pause',
+        run: true
+    };
+
+    $scope.loadingRSSIData = function(handleError) {
+
+        dataService.getApi('rssi_chart','/realtime', true).then(function (response) {
+            var rssiData = typeof response === 'string'? JSON.parse(response) : response,
+                chartData1 = 0,
+                chartData2 = 0;
+
+            if (typeof parseInt(rssiData.data.data[0].channel1) === 'number') {
+                chartData1 = _.isNull(rssiData.data.data[0].channel1)? $scope.rssi.chartData1 : parseInt(rssiData.data.data[0].channel1);
+            }
+
+            if (typeof parseInt(rssiData.data.data[0].channel2) === 'number') {
+                chartData2 = _.isNull(rssiData.data.data[0].channel2) ? $scope.rssi.chartData2 : parseInt(rssiData.data.data[0].channel2);
+            }
+
+            $scope.rssi.chartData1 = chartData1;
+            $scope.rssi.chartData2 = chartData2;
+
+            if (!$scope.rssi['gauge1']) {
+                $scope.createChart('gauge1',$scope.rssi.chartOptions1,$scope.rssi.chartData1, 'Channel 1');
+            }
+
+            if (!$scope.rssi['gauge2']) {
+                $scope.createChart('gauge2',$scope.rssi.chartOptions2,$scope.rssi.chartData2, 'Channel 2');
+            }
+            $scope.rssi.run = true;
+
+        }, function (error) {
+            $scope.rssi.run = false;
+            var message = $scope._t('error_load_data') + ': ' + cfg.rssi_chart;
+            if(handleError){
+                alertify.dismissAll();
+                alertify.alertError(message);
+            }
+        });
+
+
+    };
+    $scope.loadingRSSIData(true);
+
+    if ($scope.rssi.run && $scope.rssi.trace === 'start') {
+        $scope.initRefresh();
+    }
+
+    $scope.createChart = function (elementID,chartOptions,chartData, chartTitle) {
+        chartOptions.id = elementID;
+        chartOptions.value = chartData;
+        chartOptions.title = chartTitle;
+
+        $scope.rssi[elementID] = new JustGage(chartOptions);
+    };
+
+    $scope.updateChart = function(elementID, chartData){
+
+        $scope.rssi[elementID].refresh(chartData);
+
+    };
+
+    /**
+     * Cancel interval on page destroy
+     */
+    $scope.$on('$destroy', function () {
+        $scope.rssi["gauge1"] = [];
+        $scope.rssi["gauge2"] = [];
+        $interval.cancel($scope.rssi.interval);
+    });
+
+
+    $scope.initRefresh = function() {
+        var refresh = function () {
+            $scope.loadingRSSIData();
+
+            $scope.updateChart('gauge1', $scope.rssi.chartData1);
+            $scope.updateChart('gauge2', $scope.rssi.chartData2);
+        }
+
+        $scope.rssi.interval = $interval(refresh, $scope.rssi.intervaltime);
+    };
+
+    /**
+     * Set trace
+     */
+    $scope.setTrace = function (trace) {
+        switch (trace) {
+            case 'pause':
+                $scope.rssi.trace = 'pause';
+                $interval.cancel($scope.rssi.interval);
+                break;
+            default:
+                $scope.rssi.trace = 'start';
+                $scope.initRefresh();
+                break;
+        }
+    };
+
 });
 
 /**
@@ -44543,16 +46335,22 @@ appController.controller('NetworkMapController', function ($scope, $interval, $f
 appController.controller('HomeController', function ($scope, $filter, $timeout, $route, $interval, dataService, deviceService, cfg) {
     $scope.home = {
         show: false,
-        interval: null
+        interval: null,
+        networkInformation: {
+            mains: 0,
+            battery: 0,
+            flirs: 0,
+            sum: 0
+        }
     };
     $scope.ZWaveAPIData;
     $scope.countDevices;
     $scope.failedDevices = [];
-    $scope.batteryDevices;
+    //$scope.batteryDevices;
     $scope.batteryWakeupDevices;
     $scope.lowBatteryDevices = [];
-    $scope.flirsDevices;
-    $scope.mainsDevices;
+    //$scope.flirsDevices;
+    //$scope.mainsDevices;
     $scope.localyResetDevices = [];
     $scope.notInterviewDevices = [];
     $scope.assocRemovedDevices = [];
@@ -44596,10 +46394,10 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
             assocRemovedDevices(ZWaveAPIData);
             notConfigDevices(ZWaveAPIData);
             batteryDevices(ZWaveAPIData);
-            $scope.mainsDevices = $scope.countDevices - ($scope.batteryDevices + $scope.flirsDevices);
+            //$scope.mainsDevices = $scope.countDevices - ($scope.batteryDevices + $scope.flirsDevices);
             $scope.controller.controllerState = ZWaveAPIData.controller.data.controllerState.value;
             $scope.controller.startLearnMode = !isRealPrimary || hasDevices < 2 ? true : false;
-            $scope.refreshZwaveData(ZWaveAPIData);
+            $scope.refreshZwaveData();
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
         });
@@ -44608,17 +46406,16 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function (ZWaveAPIData) {
+    $scope.refreshZwaveData = function () {
         var refresh = function () {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function (response) {
+            dataService.loadJoinedZwaveData().then(function (response) {
                 notInterviewDevices(response.data.joined);
                 countDevices(response.data.joined);
                 assocRemovedDevices(response.data.joined);
                 //notConfigDevices(ZWaveAPIData);
                 batteryDevices(response.data.joined);
-                $scope.mainsDevices = $scope.countDevices - ($scope.batteryDevices + $scope.flirsDevices);
+                //$scope.mainsDevices = $scope.countDevices - ($scope.batteryDevices + $scope.flirsDevices);
                 $scope.controller.controllerState = response.data.joined.controller.data.controllerState.value;
             }, function (error) {
             });
@@ -44702,23 +46499,48 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
     function countDevices(ZWaveAPIData) {
         var cnt = 0;
         var cntFlirs = 0;
+        var networkInformation = {
+            mains: 0,
+            battery: 0,
+            flirs: 0,
+            sum: 0
+        };
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
 
             if (deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
             }
-            var isFLiRS = deviceService.isFLiRS(node);
+           /* var isListening = node.data.isListening.value || node.data.isRouting.value;
+            var isBattery =
+            var isFLiRS = (node.data.sensor250.value || node.data.sensor1000.value);*/
+            if((node.data.isListening.value && node.data.isRouting.value) || (node.data.isListening.value && !node.data.isRouting.value)){ // Count mains devices
+                networkInformation.mains++;
+            }else if(!node.data.isListening.value && (!node.data.sensor250.value && !node.data.sensor1000.value)){// Count battery devices
+                networkInformation.battery++;
+            }else if(node.data.sensor250.value || node.data.sensor1000.value){// Count flirs devices
+
+                networkInformation.flirs++;
+            }
+
+            //var isFLiRS = !node.data.isListening.value && (node.data.sensor250.value || node.data.sensor1000.value);
+            //var isListening = node.data.isListening.value && node.data.isRouting.value;
+            //var hasWakeup = deviceService.hasCommandClass(node, 132);
+            /*if(isFLiRS){ // Count flirs devices
+                networkInformation.flirs++;
+            }else if(isListening){// Count mains devices
+                networkInformation.mains++;
+            }else{// Count battery devices
+                networkInformation.battery++;
+            }*/
+            networkInformation.sum++;
             var isLocalyReset = deviceService.isLocalyReset(node);
             var isFailed = deviceService.isFailed(node);
-
-            if (isFLiRS) {
-                cntFlirs++;
-            }
 
             var obj = {};
             obj['name'] = $filter('deviceName')(nodeId, node);
             obj['id'] = nodeId;
+            // Create object with failed devices
             if (isFailed) {
                 //$scope.failedDevices.push(obj);
                 var findIndexF = _.findIndex($scope.failedDevices, {id: obj.id});
@@ -44729,6 +46551,7 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
                     $scope.failedDevices.push(obj);
                 }
             }
+            // Create object with localy reset devices
             if (isLocalyReset) {
                 //$scope.localyResetDevices.push(obj);
                 var findIndexR = _.findIndex($scope.localyResetDevices, {id: obj.id});
@@ -44742,8 +46565,9 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
 
             cnt++;
         });
-        $scope.flirsDevices = cntFlirs;
-        $scope.countDevices = cnt + cntFlirs;
+        $scope.home.networkInformation = networkInformation;
+        //$scope.flirsDevices = cntFlirs;
+        //$scope.countDevices = cnt + cntFlirs;
     }
     ;
 
@@ -44800,7 +46624,7 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
             }
 
         });
-        $scope.batteryDevices = batteryCnt;
+        //$scope.batteryDevices = batteryCnt;
         $scope.batteryWakeupDevices = batteryWakeupCnt;
     }
     ;
@@ -45101,7 +46925,7 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
     // Load data
     $scope.load = function (nodeId) {
         //nodeId = parseInt(nodeId,10);
-        dataService.loadZwaveApiData(true).then(function(ZWaveAPIData) {
+        dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
             if(_.isEmpty($scope.devices)){
@@ -45119,7 +46943,7 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
             $scope.deviceName = $filter('deviceName')(nodeId, node);
             checkInterview(node);
             setData(ZWaveAPIData, nodeId);
-            $scope.refreshZwaveData(ZWaveAPIData,nodeId);
+            $scope.refreshZwaveData();
            /* dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
                 node = response.data.joined.devices[nodeId];
                 refreshData(node, nodeId, response.data.joined);
@@ -45135,11 +46959,11 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
      * Refresh zwave data
      * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function(ZWaveAPIData,nodeId) {
+    $scope.refreshZwaveData = function() {
         var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
-                var node = response.data.joined.devices[nodeId];
-                refreshData(node, nodeId, response.data.joined);
+            dataService.loadJoinedZwaveData().then(function(response) {
+                var node = response.data.joined.devices[$routeParams.nodeId];
+                refreshData(node, $routeParams.nodeId, response.data.joined);
             }, function(error) {});
         };
         $scope.zwaveInterview.interval = $interval(refresh, $scope.cfg.interval);
@@ -45841,7 +47665,11 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             $scope.wakeupCont = deviceService.configWakeupCont(node, nodeId, ZWaveAPIData, cfgXml);
             $scope.protectionCont = deviceService.configProtectionCont(node, nodeId, ZWaveAPIData, cfgXml);
             $scope.switchAllCont = deviceService.configSwitchAllCont(node, nodeId, ZWaveAPIData, cfgXml);
-            if (cfg.app_type === 'installer') {
+            if (!$scope.configCont && !$scope.wakeupCont && !$scope.protectionCont && !$scope.switchAllCont) {
+                $scope.alert = {message: $scope._t('configuration_not_supported'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                return;
+            }
+            /*if (cfg.app_type === 'installer') {
                 if (!$scope.configCont && !$scope.wakeupCont && !$scope.protectionCont && !$scope.switchAllCont) {
                     $location.path('/configuration/commands/' + $routeParams.nodeId);
                     return;
@@ -45851,7 +47679,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                     $scope.alert = {message: $scope._t('no_device_service'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
                     return;
                 }
-            }
+            }*/
 
         }, function(error) {
             var cfgXml = {};
@@ -45973,11 +47801,10 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function(ZWaveAPIData) {
+    $scope.refreshZwaveData = function() {
         var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+            dataService.loadJoinedZwaveData().then(function(response) {
             }, function(error) {});
         };
         $scope.commandsInterval = $interval(refresh, $scope.cfg.interval);
@@ -46182,11 +48009,10 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function(ZWaveAPIData) {
+    $scope.refreshZwaveData = function() {
         var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+            dataService.loadJoinedZwaveData().then(function(response) {
                 var updateData = false;
                 var searchStr = 'devices.' + $routeParams.nodeId + '.'
                 angular.forEach(response.data.update, function(v, k) {
@@ -46767,7 +48593,7 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
             if ('122' in node.instances[0].commandClasses) {
                 $scope.firmware.show = true;
                 //setFirmwareData(node);
-                //$scope.refreshZwaveData(ZWaveAPIData, nodeId);
+                //$scope.refreshZwaveData();
             }else{
                 $scope.alert = {message: $scope._t('no_device_service'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
                 return;
@@ -46780,19 +48606,19 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
     $scope.load($routeParams.nodeId);
 
     /**
+     * todo: not needed?
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function (ZWaveAPIData, nodeId) {
+    /*$scope.refreshZwaveData = function () {
         var refresh = function () {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function (response) {
+            dataService.loadJoinedZwaveData().then(function (response) {
                 var node = response.data.joined.devices[nodeId];
                 setFirmwareData(node);
             }, function (error) {
             });
         };
         $scope.firmware.interval = $interval(refresh, $scope.cfg.interval);
-    };
+    };*/
 
     // Redirect to detail page
     $scope.changeDevice = function (deviceId) {
@@ -46939,9 +48765,9 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
             }
             $scope.health.ctrlNodeId = ZWaveAPIData.controller.data.nodeId.value;
             var node = ZWaveAPIData.devices[$routeParams.nodeId];
-            if (!node || deviceService.notDevice(ZWaveAPIData, node, $routeParams.nodeId)) {
+            /*if (!node || deviceService.notDevice(ZWaveAPIData, node, $routeParams.nodeId)) {
                 return;
-            }
+            }*/
             var neighbours = $filter('hasNode')(node.data, 'neighbours.value');
             $scope.health.device.neighbours = $filter('hasNode')(node.data, 'neighbours.value');
 
@@ -46953,7 +48779,7 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
             $scope.deviceName = $filter('deviceName')($routeParams.nodeId, node);
             setDevice(node);
             setData(ZWaveAPIData, neighbours);
-            $scope.refreshData(ZWaveAPIData);
+            $scope.refreshData();
 
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
@@ -46965,10 +48791,10 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
     /**
      * Refresh data
      */
-    $scope.refreshData = function (ZWaveAPIData) {
+    $scope.refreshData = function () {
         var refresh = function () {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function (response) {
-                setData(ZWaveAPIData);
+            dataService.loadJoinedZwaveData().then(function (response) {
+                setData(response.data.joined);
             }, function (error) {
                 return;
             });
@@ -47035,12 +48861,10 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
         $scope.toggleRowSpinner(id);
         var data = {"nodeId": $scope.deviceId};
         dataService.postApi('checklinks', data).then(function (response) {
-            var runtime = parseInt(response.data.runtime) * 1000;
-            alertify.alertWarning($scope._t('proccess_take',{__val__:response.data.runtime,__level__:$scope._t('seconds')}));
-            $timeout($scope.toggleRowSpinner, runtime);
+            deviceService.showNotifier({message: $scope._t('test_all_links_complete')});
+            $scope.toggleRowSpinner();
         }, function (error) {
-            alertify.alertError($scope._t('error_update_data'));
-            alertify.dismissAll();
+            deviceService.showNotifier({message: $scope._t('error_update_data'),type: 'error'});
             $scope.toggleRowSpinner();
         });
     };
@@ -47077,28 +48901,12 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
                 return;
             }
             //console.log(node)
-            var isListening = node.data.isListening.value;
-            var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
-            var hasWakeup = 0x84 in node.instances[0].commandClasses;
             var centralController = true;
-            var type;
+            var type = deviceService.deviceType(node);
             var indicator;
             var powerLevel = $scope.health.device.hasPowerLevel[nodeId];
             if (powerLevel) {
                 indicator = setPowerLevelIndicator(powerLevel);
-            }
-            if (node.data.genericType.value === 1) {
-                type = 'portable';
-            } else if (node.data.genericType.value === 2) {
-                type = 'static';
-            } else if (isFLiRS) {
-                type = 'flirs';
-            } else if (hasWakeup) {
-                type = node.data.isAwake.value ? 'battery' : 'sleep';
-            } else if (isListening) {
-                type = 'mains';
-            } else {
-                type = 'error';
             }
             var obj = {
                 id: nodeId,

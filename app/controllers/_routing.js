@@ -8,14 +8,20 @@
  * @class RoutingController
  *
  */
-appController.controller('RoutingController', function($scope, $filter, $timeout,$interval,$http,dataService, cfg,_, myCache) {
+appController.controller('RoutingController', function($scope, $filter, $timeout,$interval,$http,dataService, deviceService,cfg,_, myCache) {
     $scope.routings = {
         all: [],
         interval: null,
         show: false,
         nodes: {},
-        neighbours: {}
+        neighbours: {},
+        view: 'table'
     };
+    $scope.loading = false;
+    $scope.increment = 0;
+    $scope.steps = 20;
+    $scope.interval = 2000;
+
     $scope.nodes = {};
 
     /**
@@ -24,6 +30,14 @@ appController.controller('RoutingController', function($scope, $filter, $timeout
     $scope.$on('$destroy', function() {
         $interval.cancel($scope.routings.interval);
     });
+    /**
+     * Chenge view neighbors/table
+     * @param {string} view
+     */
+    $scope.changeView = function(view) {
+        $scope.routings.view = view;
+        $scope.loadZwaveData();
+    };
 
     /**
      * Load zwave data
@@ -37,7 +51,7 @@ appController.controller('RoutingController', function($scope, $filter, $timeout
                 return;
             }
             $scope.routings.show = true;
-            $scope.refreshZwaveData(ZWaveAPIData);
+            //$scope.refreshZwaveData();
         }, function(error) {
             alertify.alertError($scope._t('error_load_data'));
         });
@@ -46,11 +60,10 @@ appController.controller('RoutingController', function($scope, $filter, $timeout
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function(ZWaveAPIData) {
+    $scope.refreshZwaveData = function() {
         var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+            dataService.loadJoinedZwaveData().then(function(response) {
                 setData(response.data.joined);
             }, function(error) {});
         };
@@ -94,6 +107,31 @@ appController.controller('RoutingController', function($scope, $filter, $timeout
 
     };
 
+    $scope.loadincremented = function() {
+        $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin', message: $scope._t('loading')};
+        var load = $interval(function() {
+            var cnt = Object.keys($scope.routings.nodes).length;
+            if(cnt < $scope.increment) {
+                $scope.increment = cnt;
+                $scope.loading = false;
+                $interval.cancel(load);
+            }
+
+            if($scope.increment + $scope.steps > cnt) {
+                var rest = cnt % $scope.steps;
+                $scope.increment += rest;
+            } else {
+                $scope.increment += $scope.steps;
+            }
+
+            if(cnt == $scope.increment) {
+                $scope.loading = false;
+                $interval.cancel(load);
+            }
+        }, $scope.interval);
+    };
+
+    $scope.loadincremented();
     /// --- Private functions --- ///
     /**
      * Set nodes data
@@ -130,27 +168,9 @@ appController.controller('RoutingController', function($scope, $filter, $timeout
 
             var node = ZWaveAPIData.devices[nodeId];
             var name = $filter('deviceName')(nodeId, node);
-            var type;
-            var isListening = node.data.isListening.value;
-            var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
-            var hasWakeup = 0x84 in node.instances[0].commandClasses;
+            var type = deviceService.deviceType(node);
 
-
-            // Device type
-            if (node.data.genericType.value === 1) {
-                type = 'portable';
-            } else if (node.data.genericType.value === 2) {
-                type = 'static';
-            } else if (isFLiRS) {
-                type = 'flirs';
-            } else if (hasWakeup) {
-                type = node.data.isAwake.value ? 'battery' : 'sleep';
-            } else if (isListening) {
-                type = 'mains';
-            } else {
-                type = 'error';
-            }
-             var cellState = setCellState(nodeId, node,name)
+            var cellState = setCellState(nodeId, node,name);
 
             // Set object
             var obj = {};

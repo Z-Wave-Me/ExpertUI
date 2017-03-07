@@ -1,0 +1,152 @@
+<!-- Link health -->
+<div ng-controller="LinkStatusController">
+    <div class="page-header row">
+        <div class="col-sm-8 header-col ">
+            <h1>{{ _t('nav_linkhealth_info')}}</h1>
+        </div>
+        <div class="col-sm-4 text-right header-col">
+            <div class="btn-group">
+                <!-- Info view -->
+                <button class="btn btn-default"
+                        ng-class="linkStatus.showInfo ? 'active': ''"
+                        ng-click="changeView(true)">
+                    <i class="fa fa-th-list"></i> {{_t('info_link_status')}}
+                </button>
+                <!-- Table view view -->
+                <button class="btn btn-default"
+                        ng-class="!linkStatus.showInfo ? 'active': ''"
+                        ng-click="changeView(false)">
+                    <i class="fa fa-th-large"></i> {{_t('nav_linkhealth_info')}}
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+    <bb-alert alert="alert"></bb-alert>
+
+    <!--<pre>{{testLink|json}}</pre>-->
+
+    <!-- Info table -->
+    <div class="table-scroll" ng-if="linkStatus.show">
+        <div data-double-scroll-bar-horizontal>
+            <table class="table-neighbors"
+                   ng-class="linkStatus.showInfo ? 'table table-condensed table-hover ':'table-neighbors-noinfo'">
+                <thead>
+                <tr>
+                    <th class="th-id">&nbsp;</th>
+                    <th class="neighbor-hide">
+                        <a href="" ng-click="orderBy('name')">{{ _t('device_name')}}
+                            <span ng-show="predicate == 'name'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th class="neighbor-hide">
+                        <a href="" ng-click="orderBy('type')">{{_t('device_description_device_type')}}
+                            <span ng-show="predicate == 'type'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th class="neighbor-hide">
+                        <a href="" ng-click="orderBy('updateTime')">{{ _t('rt_header_update_time')}}
+                            <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th class="neighbor-hide print-hide">&nbsp; </a>
+                    </th>
+                    <th>
+                        <span class="rt-cell"
+                              ng-repeat="v in linkStatus.all track by $index">{{v.id}}</span>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr id="{{v.rowId}}"
+                    ng-repeat="v in linkStatus.all| orderBy:predicate:reverse track by $index"
+                    ng-hide="v.isController">
+                    <td class="headcol">
+                        <span class="tool-tip right rt-cell rt-cell-th">{{v.id}}</span>
+                    </td>
+                    <td class="neighbor-hide" data-title="{{ _t('device_name')}}">
+                        {{ v.name}}
+                    </td>
+                    <td class="neighbor-hide" data-title="{{ _t('type')}}" title="{{v.type}}">
+                        <i class="fa" ng-class="v.icon" title="{{_t(v.type)}}"></i>
+                    </td>
+                    <td class="neighbor-hide" data-title="{{ _t('datetime')}}">
+                        <bb-date-time ng-if="v.dateTime" obj="v.dateTime" updated="v.isUpdated"></bb-date-time>
+                        <span ng-if="!v.dateTime">-</span>
+                    </td>
+                    <td class="neighbor-hide td-action print-hide" data-title="">
+                        <!-- Test node -->
+                        <button class="btn btn-primary" id="btn_test_{{ v.id}}"
+                                ng-if="v.hasPowerLevel"
+                                ng-click="testAllLinks(v.id)"
+                                ng-disabled="rowSpinner[v.id]">
+                            <bb-row-spinner
+                                    icon="'fa-circle-o'"
+                                    spinner="rowSpinner[v.id]"
+                                    label="_t('test_link')">
+                            </bb-row-spinner>
+                        </button>
+                        <!-- NOP -->
+                        <button class="btn btn-default" id="btn_nop_{{ v.id}}"
+                                ng-if="!v.hasPowerLevel"
+                                ng-click="runZwaveNop(v.cmdNop)"
+                                ng-disabled="rowSpinner[v.cmdNop]">
+                            <bb-row-spinner
+                                    icon="'fa-circle-o text-success'"
+                                    spinner="rowSpinner[v.cmdNop]"
+                                    label="_t('nop')">
+                            </bb-row-spinner>
+                        </button>
+
+                    </td>
+                    <td ng-bind-html="htmlNeighbors[v.id]|toTrusted">{{htmlNeighbors[v.id]}}</td>
+                </tr>
+                <tr class="print-hide">
+                    <th class="th-id">&nbsp;</th>
+                    <th class="neighbor-hide">
+                        <a href="" ng-click="orderBy('name')">{{ _t('device_name')}}
+                            <span ng-show="predicate == 'name'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th class="neighbor-hide">
+                        <a href="" ng-click="orderBy('type')">{{_t('device_description_device_type')}}
+                            <span ng-show="predicate == 'type'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th class="neighbor-hide">
+                        <a href="" ng-click="orderBy('updateTime')">{{ _t('rt_header_update_time')}}
+                            <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th class="neighbor-hide">&nbsp; </a>
+                    </th>
+                    <th>
+                        <span class="rt-cell"
+                              ng-repeat="v in linkStatus.all track by $index">{{v.id}}</span>
+                    </th>
+                </tr>
+                </tbody>
+            </table>
+    </div>
+        </div>
+    <!-- Legend -->
+    <div class="legend-entry">
+        <!-- gray -->
+        <div class="legend-row">
+            <i class="fa fa-square fa-lg gray"></i> {{_t('unavailable')}}
+        </div>
+        <!-- green -->
+        <div class="legend-row">
+            <i class="fa fa-square fa-lg green"></i> {{_t('very_good')}}
+        </div>
+        <!-- orange -->
+        <div class="legend-row">
+            <i class="fa fa-square fa-lg orange"></i> {{_t('good')}}
+        </div>
+        <!-- red -->
+        <div class="legend-row">
+            <i class="fa fa-square fa-lg red"></i> {{_t('poor')}}
+        </div>
+    </div>
+</div><!-- /ng-controler -->

@@ -98,11 +98,10 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function(ZWaveAPIData) {
+    $scope.refreshZwaveData = function() {
         var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+            dataService.loadJoinedZwaveData().then(function(response) {
                 var updateData = false;
                 var searchStr = 'devices.' + $routeParams.nodeId + '.'
                 angular.forEach(response.data.update, function(v, k) {

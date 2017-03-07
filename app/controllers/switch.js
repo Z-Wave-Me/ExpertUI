@@ -34,7 +34,7 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
                 return;
             }
             $scope.switches.show = true;
-            $scope.refreshZwaveData(ZWaveAPIData);
+            $scope.refreshZwaveData();
         }, function(error) {
             alertify.alertError($scope._t('error_load_data'));
         });
@@ -43,11 +43,10 @@ appController.controller('SwitchController', function($scope, $filter, $timeout,
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function(ZWaveAPIData) {
+    $scope.refreshZwaveData = function() {
         var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+            dataService.loadJoinedZwaveData().then(function(response) {
                 setData(response.data.joined);
             }, function(error) {});
         };

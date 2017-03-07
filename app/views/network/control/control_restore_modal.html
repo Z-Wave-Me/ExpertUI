@@ -21,7 +21,7 @@
                     </div>
                     <!-- if restore allowed -->
                     <div ng-if="restore.allow">
-                        <p>
+                        <p ng-if="controlDh.controller.isRealPrimary">
                             <input type="checkbox"
                                    name="restore_chip_info"
                                    id="restore_chip_info"

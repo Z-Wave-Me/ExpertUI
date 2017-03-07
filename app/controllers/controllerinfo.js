@@ -35,7 +35,7 @@ appController.controller('ControllerController', function($scope, $window, $filt
     $scope.loadZwaveData = function() {
         dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
             setData(ZWaveAPIData);
-            $scope.refreshZwaveData(ZWaveAPIData);
+            $scope.refreshZwaveData();
         }, function(error) {
             alertify.alertError($scope._t('error_load_data'));
         });
@@ -44,11 +44,10 @@ appController.controller('ControllerController', function($scope, $window, $filt
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function(ZWaveAPIData) {
+    $scope.refreshZwaveData = function() {
         var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+            dataService.loadJoinedZwaveData().then(function(response) {
                 setData(response.data.joined);
             }, function(error) {});
         };

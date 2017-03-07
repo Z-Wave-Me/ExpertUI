@@ -1,0 +1,113 @@
+/* Neighbors table styles
+-------------------------------------------------- */
+.table-scroll{
+  width: 100%;
+  overflow-y: hidden;
+  overflow-x: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  -webkit-overflow-scrolling: touch;
+
+  // Tighten up spacing
+  table {
+    margin-bottom: 0;
+
+    // Ensure the content doesn't wrap
+   thead,
+    tbody,
+    tfoot {
+    tr {
+        th,
+        td {
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+}
+
+.table-neighbors {
+  th{
+    border: 0 !important;
+    .rt-cell{
+      font-size: 80%;
+    }
+  }
+  .th-id{
+    border: 0;
+  }
+
+  .headcol {
+    border: 0;
+    position:absolute;
+    background-color: #fff;
+    margin: 0  0 0 -20px;
+    //border: solid 1px red !important;
+  }
+  .rt-cell {
+    display: inline-block;
+    @include appBorderRadius(4px);
+    margin: 4px;
+    border: solid 1px #FFFFFF;
+    text-align: center;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    //font-size: 80%;
+    font-weight:normal;
+
+  }
+
+  td {
+    vertical-align: middle;
+
+  }
+
+}
+.table-neighbors-noinfo{
+  .headcol {
+     margin: 0  0 0 -20px;
+  }
+  .rt-cell-th {
+    font-size: 80%;
+    border-color: #CCCCCC;
+  }
+  .neighbor-hide{
+    display: none !important;
+  }
+}
+
+.rtWhite {
+  background-color: #ebebeb !important;
+  //border: solid 1px gray !important;
+  -webkit-print-color-adjust: exact;
+}
+
+.rtDirect, .rtGreen {
+  background-color: green !important;
+  -webkit-print-color-adjust: exact;
+}
+
+.rtRouted {
+  background-color: #8C0 !important;
+  -webkit-print-color-adjust: exact;
+}
+
+.rtBadlyRouted {
+  background-color: yellow !important;
+  -webkit-print-color-adjust: exact;
+}
+
+.rtNotLinked, .rtRed {
+  background-color: red !important;
+  -webkit-print-color-adjust: exact;
+}
+
+.rtUnavailable, .rtGray {
+  background-color: gray !important;
+  -webkit-print-color-adjust: exact;
+}
+
+.rtOrange {
+  background-color: orange !important;
+  -webkit-print-color-adjust: exact;
+}

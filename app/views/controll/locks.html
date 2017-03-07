@@ -6,38 +6,44 @@
         <table class="table table-striped table-condensed table-hover">
             <thead>
                 <tr>
+                    <!-- id -->
                     <th>
-                        <a href="" ng-click="orderBy('id')">#  
-                            <span ng-show="predicate == 'id'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                        </a>
+                        <sort-by callback="orderBy(field)" obj="orderByArr" field="'id'" label="'#'"></sort-by>
                     </th>
+                    <!-- name-->
                     <th>
-                        <a href="" ng-click="orderBy('name')">{{ _t('device_name')}}
-                            <span ng-show="predicate == 'name'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                        </a>
+                        <sort-by callback="orderBy(field)" obj="orderByArr" field="'name'"
+                                 label="_t('device_name')"></sort-by>
                     </th>
+                    <!-- status-->
                     <th>
-                        <a href="" ng-click="orderBy('level')">{{ _t('nav_status')}}
-                            <span ng-show="predicate == 'status'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                        </a>
+                        <sort-by callback="orderBy(field)" obj="orderByArr" field="'status'"
+                                 label="_t('nav_status')"></sort-by>
                     </th>
+                    <!-- time -->
                     <th>
-                        <a href="" ng-click="orderBy('updateTime')">{{ _t('datetime')}}
-                            <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                        </a>
+                        <sort-by callback="orderBy(field)" obj="orderByArr" field="'updateTime'"
+                                 label="_t('datetime')"></sort-by>
                     </th>
+                    <!-- action -->
                     <th>&nbsp;</th>
+                    <!-- on/off -->
                     <th>&nbsp;</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="v in locks.all | orderBy:predicate:reverse track by $index" id="{{ v.rowId}}">
+                    <!-- id -->
                     <td data-title="#">{{ v.id}}</td>
+                    <!-- name -->
                     <td data-title="{{ _t('device_name')}}">{{ v.name}}</td>
+                    <!-- status -->
                     <td data-title="{{ _t('nav_status')}}" class="row-level">{{_t(v.status)}} &nbsp;</td>
+                    <!-- time -->
                     <td data-title="{{ _t('datetime')}}">
                         <bb-date-time obj="v.dateTime" updated="v.isUpdated"></bb-date-time>
                     </td>
+                    <!-- update -->
                     <td class="td-action" data-title="">
                         <button class="btn btn-default" id="btn_update_{{ v.rowId}}"
                                 ng-click="updateLock(v.urlToStore)"
@@ -50,6 +56,7 @@
                             </bb-row-spinner>
                         </button>
                     </td>
+                    <!-- on/off -->
                     <td class="lock-controll td-action" data-title="">
                        <div class="btn-group btn-group-lock">
                           <button 

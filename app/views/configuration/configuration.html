@@ -1,29 +1,37 @@
 <!-- Configuration view -->
 <div ng-controller="ConfigConfigurationController">
     <div ng-include="'app/views/configuration/navi.html'"></div>
-    <div ng-show="deviceId">
-        <!-- Generic configuration fom expert commands -->
-        <div ng-include="'app/views/configuration/configuration_commands.html'"></div>
-         <!-- Device description -->
-        <div ng-if="!configCont && deviceZddx.length > 0">
-            <button id="btn_show_description" class="btn btn-default"
-                    ng-click="handleModal('loadXmlModal', $event)">
-                <i class="fa fa-clone"></i> {{_t('select_zddx_help')}}
-            </button>
-            <!-- Modal load xml -->
-            <div ng-include="'app/views/configuration/modal_loadxml.html'"></div>
+    <div class="row row-configuration">
+        <div class="col-md-3 menu-vertical">
+            <div ng-include="'app/views/configuration/menu.html'"></div>
         </div>
+        <div class="col-md-9 col-content">
+            <bb-alert alert="alert"></bb-alert>
+            <div ng-show="deviceId">
+                <!-- Generic configuration fom expert commands -->
+                <div ng-include="'app/views/configuration/configuration_commands.html'"></div>
+                <!-- Device description -->
+                <div ng-if="!configCont && deviceZddx.length > 0">
+                    <button id="btn_show_description" class="btn btn-default"
+                            ng-click="handleModal('loadXmlModal', $event)">
+                        <i class="fa fa-clone"></i> {{_t('select_zddx_help')}}
+                    </button>
+                    <!-- Modal load xml -->
+                    <div ng-include="'app/views/configuration/modal_loadxml.html'"></div>
+                </div>
 
-         <!-- config_cont -->
-        <div ng-include="'app/views/configuration/configuration_config.html'"></div>
+                <!-- config_cont -->
+                <div ng-include="'app/views/configuration/configuration_config.html'"></div>
 
-        <!-- wakeup_cont -->
-        <div ng-include="'app/views/configuration/configuration_wakeup.html'"></div>
+                <!-- wakeup_cont -->
+                <div ng-include="'app/views/configuration/configuration_wakeup.html'"></div>
 
-        <!-- switchall_cont -->
-        <div ng-include="'app/views/configuration/configuration_switchall.html'"></div>
+                <!-- switchall_cont -->
+                <div ng-include="'app/views/configuration/configuration_switchall.html'"></div>
 
-        <!-- protection_cont -->
-        <div ng-include="'app/views/configuration/configuration_protection.html'"></div>
-    </div> 
+                <!-- protection_cont -->
+                <div ng-include="'app/views/configuration/configuration_protection.html'"></div>
+            </div>
+        </div>
+    </div>
 </div><!-- /ng-controler -->

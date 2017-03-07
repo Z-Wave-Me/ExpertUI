@@ -12,6 +12,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
     $scope.controlDh = {
         interval: null,
         show: false,
+        alert: $scope.alert,
         controller: {},
         inclusion: {
             lastIncludedDevice: $scope.alert,
@@ -59,7 +60,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
             setControllerData(ZWaveAPIData);
             setDeviceData(ZWaveAPIData);
             $scope.controlDh.show = true;
-            $scope.refreshZwaveData(ZWaveAPIData);
+            $scope.refreshZwaveData();
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
         });
@@ -68,11 +69,10 @@ appController.controller('ControlController', function ($scope, $interval, $time
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function (ZWaveAPIData) {
+    $scope.refreshZwaveData = function () {
         var refresh = function () {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function (response) {
+            dataService.loadJoinedZwaveData().then(function (response) {
                 setControllerData(response.data.joined);
                 setDeviceData(response.data.joined);
                 setInclusionData(response.data.joined,response.data.update)
@@ -140,13 +140,20 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 // Network inclusion
                 if($scope.controlDh.network.inclusionProcess){
                     if($scope.controlDh.network.include){
-                        $scope.controlDh.network.modal = true;
-                        $scope.controlDh.network.alert = {message: $scope._t('success_controller_include'), status: 'alert-success', icon: 'fa-smile-o'};
+                        if (!$scope.controlDh.network.modal) {
+                            $scope.controlDh.network.alert = {
+                                message: $scope._t('nm_controller_state_10'),
+                                status: 'alert-warning',
+                                icon: 'fa-spinner fa-spin'
+                            };
+                            $scope.controlDh.network.inclusionProcess = 'processing';
+                        } else {
+                            $scope.controlDh.network.alert = {message: $scope._t('success_controller_include'), status: 'alert-success', icon: 'fa-smile-o'};
+                        }
                    }
 
                 }else{
                     $scope.controlDh.network.alert = $scope.alert;
-
                 }
                 break;
             case 1:
@@ -169,8 +176,13 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 break;
             case 9:
                 // Network inclusion
-                $scope.controlDh.network.alert = {message: $scope._t('nm_controller_state_11'), status: 'alert-warning', icon: 'fa-spinner fa-spin'};
-                $scope.controlDh.network.inclusionProcess = 'processing';
+                if($scope.controlDh.controller.isRealPrimary) {
+                    $scope.controlDh.network.alert = {message: $scope._t('nm_controller_state_11'), status: 'alert-warning', icon: 'fa-spinner fa-spin'};
+                    $scope.controlDh.network.inclusionProcess = 'processing';
+                } else {
+                    $scope.controlDh.network.alert = {message: $scope._t('nm_controller_state_9_exclude'), status: 'alert-warning', icon: 'fa-spinner fa-spin'};
+                    $scope.controlDh.network.inclusionProcess = 'processing';
+                }
                 break;
             case 17:
                 // Network inclusion
@@ -340,19 +352,21 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
      * Include to network
      * @param {string} cmd
      */
-    $scope.includeToNetwork = function (cmd) {
+    $scope.includeToNetwork = function (cmd, modalId, $event) {
         //$scope.runZwaveCmd(cmd);
-        var timeout = 1000;
+        var timeout = 30000;
         $scope.toggleRowSpinner(cmd);
         if(cmd === 'controller.SetLearnMode(1)'){
             $scope.controlDh.network.include = true;
-
+            $scope.controlDh.network.inclusionProcess = 'processing';
         }else{
             $scope.controlDh.network.include = false;
             $scope.controlDh.network.inclusionProcess = false;
         }
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
-            $timeout($scope.toggleRowSpinner, timeout);
+            $timeout(function() {
+                $scope.controlDh.network.modal = true;
+            }, timeout);
         }, function (error) {
             $scope.toggleRowSpinner();
             alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
@@ -379,6 +393,25 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
 
         });
 
+    };
+
+    $scope.requestNetworkUpdate = function (cmd, message, id) {
+        $scope.controlDh.alert = {
+            message: message,
+            status: 'alert-info',
+            icon: false
+        };
+        $scope.toggleRowSpinner(id);
+        dataService.runZwaveCmd(cfg.store_url + cmd).then(function () {
+            $timeout(function() {
+                $scope.controlDh.alert = false;
+                $scope.toggleRowSpinner();
+            }, 2000);
+        }, function () {
+            $scope.controlDh.alert = false;
+            $scope.toggleRowSpinner();
+            alertify.alertError($scope._t('error_load_data'));
+        });
     };
 
     /**
@@ -580,24 +613,19 @@ appController.controller('ControllerChangeController', function ($scope) {
  * @class RequestNifAllController
  *
  */
-appController.controller('RequestNifAllController', function ($scope, $timeout, cfg, dataService) {
+appController.controller('RequestNifAllController', function ($scope, $timeout, cfg, dataService, deviceService) {
     /**
      * Request NIF from all devices
      */
     $scope.requestNifAll = function (spin) {
         $scope.toggleRowSpinner(spin);
-        var cmd = 'devices[2].RequestNodeInformation()';
         var timeout = 1000;
         dataService.runZwaveCmd(cfg.call_all_nif).then(function (response) {
-            timeout *= response.data.runtime;
-            alertify.alertWarning($scope._t('proccess_take', {
-                __val__: response.data.runtime,
-                __level__: $scope._t('seconds')
-            }));
-            $timeout($scope.toggleRowSpinner, timeout);
+            deviceService.showNotifier({message: $scope._t('nif_request_complete')});
+            $scope.toggleRowSpinner();
         }, function (error) {
             $scope.toggleRowSpinner();
-            alertify.alertError($scope._t('error_nif_request'));
+            deviceService.showNotifier({message: $scope._t('error_nif_request'),type: 'error'});
         });
     };
 });
@@ -681,6 +709,6 @@ appController.controller('SetPromiscuousModeController', function ($scope) {
      * @param {string} cmd
      */
     $scope.setPromiscuousMode = function (cmd) {
-        $scope.runZwaveCmd(cmd);
+        $scope.runZwaveCmd(cmd,1000,true);
     };
 });

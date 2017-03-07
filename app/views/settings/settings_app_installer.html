@@ -6,17 +6,16 @@
 <div class="accordion-entry-ctrl" ng-class="" ng-if="expand.settingsApp" ng-controller="SettingsAppController">
     <bb-loader></bb-loader>
     <form name="form_settings" id="form_settings" class="form form-page"
-          ng-if_="cfg.app_type === 'installer'"
-          ng-submit="storeSettings(settings.input, cfg.zwavecfg)" novalidate>
+          ng-submit="storeSettings(settings.input, $event)" novalidate>
         <fieldset>
             <!-- network name -->
             <div class="form-group form-inline">
-                <label for="network_name">{{_t('network_name')}}: </label>
+                <label for="network_name">{{_t('cit_identifier')}}: </label>
                 <input name="network_name" id="network_name" type="text"
                        class="form-control"
-                       placeholder="{{_t('network_name')}}"
-                       value="{{settings.input.network_name}}"
-                       ng-model="settings.input.network_name"/>
+                       placeholder="{{_t('cit_identifier')}}"
+                       value="{{settings.input.cit_identifier}}"
+                       ng-model="settings.input.cit_identifier"/>
             </div>
             <!-- ssid name -->
             <div class="form-group form-inline">
@@ -63,7 +62,7 @@
                 </select>
             </div>
             <!-- timezone -->
-            <div class="form-group form-inline">
+            <!--<div class="form-group form-inline">
                 <label>{{_t('timezone')}}: </label>
                 <select name="time_zone" name="time_zone" class="form-control"
                         ng-model="settings.input.time_zone">
@@ -71,7 +70,7 @@
                             ng-selected="v === cfg.zwavecfg.time_zone">{{v}}
                     </option>
                 </select>
-            </div>
+            </div>-->
         </fieldset>
         <fieldset class="submit-entry">
             <!-- Save -->
@@ -80,4 +79,6 @@
             </button>
         </fieldset>
     </form>
+    <!-- assocAddModal -->
+    <div ng-include="'app/views/settings/modal_timezone.html'"></div>
 </div>

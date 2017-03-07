@@ -403,7 +403,11 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             $scope.wakeupCont = deviceService.configWakeupCont(node, nodeId, ZWaveAPIData, cfgXml);
             $scope.protectionCont = deviceService.configProtectionCont(node, nodeId, ZWaveAPIData, cfgXml);
             $scope.switchAllCont = deviceService.configSwitchAllCont(node, nodeId, ZWaveAPIData, cfgXml);
-            if (cfg.app_type === 'installer') {
+            if (!$scope.configCont && !$scope.wakeupCont && !$scope.protectionCont && !$scope.switchAllCont) {
+                $scope.alert = {message: $scope._t('configuration_not_supported'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                return;
+            }
+            /*if (cfg.app_type === 'installer') {
                 if (!$scope.configCont && !$scope.wakeupCont && !$scope.protectionCont && !$scope.switchAllCont) {
                     $location.path('/configuration/commands/' + $routeParams.nodeId);
                     return;
@@ -413,7 +417,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                     $scope.alert = {message: $scope._t('no_device_service'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
                     return;
                 }
-            }
+            }*/
 
         }, function(error) {
             var cfgXml = {};
