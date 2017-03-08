@@ -63,7 +63,7 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
             if ('122' in node.instances[0].commandClasses) {
                 $scope.firmware.show = true;
                 //setFirmwareData(node);
-                //$scope.refreshZwaveData(ZWaveAPIData, nodeId);
+                //$scope.refreshZwaveData();
             }else{
                 $scope.alert = {message: $scope._t('no_device_service'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
                 return;
@@ -76,19 +76,19 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
     $scope.load($routeParams.nodeId);
 
     /**
+     * todo: not needed?
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function (ZWaveAPIData, nodeId) {
+    /*$scope.refreshZwaveData = function () {
         var refresh = function () {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function (response) {
+            dataService.loadJoinedZwaveData().then(function (response) {
                 var node = response.data.joined.devices[nodeId];
                 setFirmwareData(node);
             }, function (error) {
             });
         };
         $scope.firmware.interval = $interval(refresh, $scope.cfg.interval);
-    };
+    };*/
 
     // Redirect to detail page
     $scope.changeDevice = function (deviceId) {

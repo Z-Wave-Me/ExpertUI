@@ -54,7 +54,7 @@ appController.controller('AssociationsController', function($scope, $filter, $ti
      */
     $scope.refreshZwaveData = function(ZWaveAPIData) {
         var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+            dataService.loadJoinedZwaveData().then(function(response) {
                 setData(response.data.joined);
             }, function(error) {});
         };

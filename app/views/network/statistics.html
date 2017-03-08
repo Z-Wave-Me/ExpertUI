@@ -1,5 +1,5 @@
 <!-- Network map -->
-<div ng-controller="NetworkStatisticsController">
+<div ng-controller="NetworkStatisticsController" ng-init="updateNetworkStatistics('GetNetworkStats()')">
     <div class="page-header"><h1>{{_t('statistics')}}</h1></div>
     <bb-alert alert="alert"></bb-alert>
 
@@ -23,6 +23,8 @@
             </bb-row-spinner>
         </button>
     </div>
+
+    <!--<div id="chartContainer" style="height: 400px; width: 100%;"></div>-->
 
 
     <div class="statistic-entry"

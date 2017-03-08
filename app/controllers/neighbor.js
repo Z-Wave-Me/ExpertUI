@@ -8,7 +8,7 @@
  * @class NeighborController
  *
  */
-appController.controller('NeighborController', function ($scope, $filter, $timeout, $interval, $http, dataService, cfg, _) {
+appController.controller('NeighborController', function ($scope, $filter, $timeout, $interval, $http, dataService, deviceService,cfg, _) {
     $scope.routings = {
         all: [],
         updates: [],
@@ -80,6 +80,7 @@ appController.controller('NeighborController', function ($scope, $filter, $timeo
                     if($scope.routings.updates.indexOf(k) > -1){
                         console.log(k)
                         setData(response.data.joined);
+                        setCells($scope.routings.all);
                     }
             });
 
@@ -148,26 +149,7 @@ appController.controller('NeighborController', function ($scope, $filter, $timeo
             }
             var node = ZWaveAPIData.devices[nodeId];
             var name = $filter('deviceName')(nodeId, node);
-            var type;
-            var isListening = node.data.isListening.value;
-            var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
-            var hasWakeup = 0x84 in node.instances[0].commandClasses;
-
-
-            // Device type
-            if (node.data.genericType.value === 1) {
-                type = 'portable';
-            } else if (node.data.genericType.value === 2) {
-                type = 'static';
-            } else if (isFLiRS) {
-                type = 'flirs';
-            } else if (hasWakeup) {
-                type = 'battery';
-            } else if (isListening) {
-                type = 'mains';
-            } else {
-                type = 'unknown';
-            }
+            var type = deviceService.deviceType(node);
 
             /// New version
             var routesCount = $filter('getRoutesCount')(ZWaveAPIData, nodeId);
@@ -212,18 +194,18 @@ appController.controller('NeighborController', function ($scope, $filter, $timeo
                 var tooltip = node.id + ': ' + node.name + ' - ' + v.id + ': ' + v.name + ' ';
                 //var routesCount = v.routesCount;
                 var hasAssoc = false;
-                var cssClass = 'rtDiv ';
+                var cssClass = 'rtUnavailable';
                 //Check for associations
                 /*if ($filter('associationExists')(node.node, v.id)) {
                     hasAssoc = true;
                     tooltip += ' (' + $scope._t('rt_associated') + ')';
                 }*/
                 if (node.id == v.id) {
-                    cssClass += 'rtUnavailable';
+                    cssClass = 'rtWhite';
                 } else if (v.node.data.neighbours.value.indexOf(parseInt(node.id, 10)) != -1) {
-                    cssClass += 'rtDirect';
+                    cssClass = 'rtDirect';
                 }  else {
-                    cssClass += 'rtNotLinked';
+                    cssClass = 'rtNotLinked';
                 }
                 var out = '<span class="rt-cell ' + cssClass + '" title="' + tooltip + '">' + (hasAssoc ? "*" : "&nbsp") + '</span>';
                 //console.log(out)

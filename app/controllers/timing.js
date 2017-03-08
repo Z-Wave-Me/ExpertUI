@@ -65,7 +65,7 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
                     return;
                 }
                 $scope.devices.show = true;
-                $scope.refreshZwaveData(zwaveData.value);
+                $scope.refreshZwaveData();
             }
 
         });
@@ -75,11 +75,10 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function(ZWaveAPIData) {
+    $scope.refreshZwaveData = function() {
         var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+            dataService.loadJoinedZwaveData().then(function(response) {
                 setData(response.data.joined);
             }, function(error) {});
         };
@@ -113,32 +112,14 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
                 return;
             }*/
             var node = ZWaveAPIData.devices[nodeId];
-            var type;
-            var isListening = node.data.isListening.value;
-            var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
-            var hasBattery = 0x80 in node.instances[0].commandClasses;
-            var hasWakeup = 0x84 in node.instances[0].commandClasses;
+            var type = deviceService.deviceType(node);
             var totalPackets = 0;
             var okPackets = 0;
             var lastPackets = '';
             var basicType = node.data.basicType.value;
             var genericType = node.data.genericType.value;
             var specificType = node.data.specificType.value;
-
-            // Device type
-            if (node.data.genericType.value === 1) {
-                type = 'portable';
-            } else if (node.data.genericType.value === 2) {
-                type = 'static';
-            } else if (isFLiRS) {
-                type = 'flirs';
-            } else if (hasWakeup) {
-                type = 'battery';
-            } else if (isListening) {
-                type = 'mains';
-            } else {
-                type = 'unknown';
-            }
+            var lastCommunication = deviceService.lastCommunication(node);
 
             // Packets
             var timingItems =  $scope.timing[nodeId];
@@ -156,6 +137,8 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
             obj['name'] = $filter('deviceName')(nodeId, node);
             obj['type'] = type;
             obj['icon'] = $filter('getDeviceTypeIcon')(type);
+            obj['updateTime'] = lastCommunication;
+            obj['dateTime'] = $filter('getDateTimeObj')(lastCommunication);
             obj['totalPackets'] = totalPackets;
             obj['okPackets'] = okPackets;
             obj['lastPackets'] = lastPackets;

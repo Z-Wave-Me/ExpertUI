@@ -5,7 +5,7 @@
     <div class="row row-configuration">
         <div class="col-md-3 menu-vertical">
             <div ng-include="'app/views/configuration/menu.html'"></div>
-        </div>
+        </div><!-- /col -->
         <div class="col-md-9 col-content">
             <bb-alert alert="alert"></bb-alert>
             <div ng-show="deviceId">
@@ -74,79 +74,30 @@
                                 </button>
                             </td>
                         </tr>
-                        <tr>
-                            <td class="association-text" colspan="2">
-                                <h3>{{_t('legend')}}</h3>
-                                <!-- <div>1. {{_t('assoc_legend_1')}}</div>-->
-                                <div><i class="fa fa-square fa-lg" style="color: #f0ad4e;"></i> {{_t('assoc_legend_2')}}
-                                </div>
-                                <div><i class="fa fa-square fa-lg" style="color: #ccc;"></i> {{_t('assoc_legend_3')}}
-                                </div>
-                                <div><i class="fa fa-square fa-lg" style="color: #5bc0de;;"></i>
-                                    {{_t('assoc_legend_4')}}
-                                </div>
-
-                            </td>
-                        </tr>
                         </tbody>
                     </table>
-                </div>
-                <!-- ////////////////////////////////////////////////////////////////////////////////////// -->
-                <!-- assocAddModal -->
-                <div ng-include="'app/views/configuration/modal_assoc_add.html'"></div>
-                <!-- Modal add -->
-                <div class="modal fade" id="modal_assoc_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <form name="form_assoc" id="form_assoc" ng-submit_="storeAssoc(input)" novalidate>
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal"
-                                            aria-hidden="true">&times;</button>
-                                    <h4 class="modal-title">{{ _t('assoc_add_title')}}</h4>
-                                </div>
-                                <div class="modal-body" style="white-space: normal;">
-                                    <div class="form-inline">
-                                        {{ _t('fro')}} {{nodeCfg.name}} {{ _t('to_locate')}} <br/>
-                                        <div class="form-group">
-                                            <select class="form-control" ng-model="input.toNode"
-                                                    ng-change="showAssocNodeInstance(input.toNode,nodeCfg.hasMca)">
-                                                <option value="" ng-selected="true">&lt; {{ _t('assoc_select_to_node')}}
-                                                    &gt;</option>
-                                                <option ng-repeat="v in assocAddDevices" value="{{v.id}}">(#{{v.id}})
-                                                    {{v.name}}
-                                                </option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group" ng-if="nodeCfg.hasMca && assocAddInstances">
-                                            <select class="form-control" ng-model="input.toInstance">
-                                                <option value="" ng-selected="true">&lt; {{
-                                                    _t('assoc_select_to_instance')}} &gt;</option>
-                                                <option value="plain" ng-selected="true">{{ _t('plain_association')}}
-                                                </option>
-                                                <option ng-repeat="v in assocAddInstances" value="{{v.key}}">{{v.val}}
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal"
-                                            ng-click="modalAssocHide()">{{ _t('dialog_abort')}}
-                                    </button>
-                                    <button type="submit" class="btn btn-primary" data-dismiss="modal"
-                                            ng-click="storeAssoc(input)"
-                                            ng-disabled="!input.toNode || ((assocAddInstances) && !input.toInstance)">{{
-                                        _t('dialog_add')}}
-                                    </button>
-                                    <!--<button type="submit" class="btn btn-primary" ng-disabled="assocToNode == null || ((addInstances[assocToNode] != undefined) && assocToInstance == null)">{{ _t('dialog_add')}}</button>-->
-                                </div>
-                            </form>
+                    <!-- Legend -->
+                    <div class="legend-entry">
+                        <!-- orange -->
+                        <div class="legend-row">
+                            <i class="fa fa-square fa-lg orange"></i> {{_t('assoc_legend_2')}}
                         </div>
-                    </div>
-                </div><!-- /.Modal -->
-            </div>
+                        <!-- gray -->
+                        <div class="legend-row">
+                            <i class="fa fa-square fa-lg gray-light"></i> {{_t('assoc_legend_3')}}
+                        </div>
+                        <!-- info -->
+                        <div class="legend-row">
+                            <i class="fa fa-square fa-lg blue-info"></i> {{_t('assoc_legend_4')}}
+                        </div>
 
-        </div>
-    </div>
+                    </div>
+                    <!-- ////////////////////////////////////////////////////////////////////////////////////// -->
+                    <!-- assocAddModal -->
+                    <div ng-include="'app/views/configuration/modal_assoc_add.html'"></div>
+                </div>
+             </div><!-- /if id -->
+
+        </div><!-- /col -->
+    </div><!-- /row -->
 </div><!-- /ng-controler -->

@@ -6,15 +6,15 @@
 var config_data = {
     'cfg': {
         'app_name': 'Z-Wave Expert',
-        'app_version': '1.2.0-RC-59',
-        'app_built': '22-02-2017 15:21:11',
+        'app_version': '1.3.0-RC-6',
+        'app_built': '07-03-2017 16:05:38',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
         'pass_field': 'PSWDXXXX',
         'interval': 1000, // Set interval in miliseconds to refresh data
         'zniffer_interval': 3000, // Set interval in milisecondsfor zniffer
-        'queue_interval': 1000, // Set interval in miliseconds to refresh queue data 
+        'queue_interval': 1000, // Set interval in miliseconds to refresh queue data
         'route_update_timeout': 15000, // Maximum time in miliseconds to wait for an update-route
         //'server_url': 'http://zwave.dyndns.org:8083/', // Remote JSON
         'local_data_url':'app/data/',

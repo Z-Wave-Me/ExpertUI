@@ -14,7 +14,7 @@ var config_data = {
         'pass_field': 'PSWDXXXX',
         'interval': 1000, // Set interval in miliseconds to refresh data
         'zniffer_interval': 3000, // Set interval in milisecondsfor zniffer
-        'queue_interval': 1000, // Set interval in miliseconds to refresh queue data 
+        'queue_interval': 1000, // Set interval in miliseconds to refresh queue data
         'route_update_timeout': 15000, // Maximum time in miliseconds to wait for an update-route
         //'server_url': 'http://zwave.dyndns.org:8083/', // Remote JSON
         'local_data_url':'app/data/',
@@ -159,7 +159,7 @@ var config_data = {
         // Auth
         'auth': {
             'login': 'admin',
-            'password': 'admin1'
+            'password': 'admin'
         },
         // Date format list
         'date_format_list': ['dd.mm.yyyy','dd-mm-yyyy','yyyy-mm-dd','yyyy/mm/dd','mm/dd/yyyy', 'dd/mm/yyyy'],

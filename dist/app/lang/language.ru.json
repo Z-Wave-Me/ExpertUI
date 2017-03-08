@@ -1,5 +1,14 @@
-{  
+{
+  "sleeping_since_approximately": "Can not precisely calculate next wakeup time",
+  "very_good":"Very Good",
+  "good":"Good",
+  "bad":"Bad",
+  "poor":"Poor",
+  "info_link_status":"Info and Link Status",
+  "info_neighbors":"Info and Neighbors",
+  "last_communication":"Last communication",
   "in_range":"In the Range",
+  "promiscuous_mode_info":"Important: If this function is inactive the application can not collect packages anymore",
   "notin_range":"Not in the Range",
   "test_all_links_complete":"Link test on all links complete.",
   "nif_request_complete":"Requesting all NIF's complete.",
@@ -546,5 +555,6 @@
   "replicate_receive_update": "Replicate Receive Update",
   "request_update": "Request Update",
   "update_form_primary": "Starting network update from Primary.",
-  "update_form_sis": "Requesting Network Update from SIS."
+  "update_form_sis": "Requesting Network Update from SIS.",
+  "nav_rssimeter": "Noise Meter"
 }

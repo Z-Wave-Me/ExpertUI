@@ -60,7 +60,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
             setControllerData(ZWaveAPIData);
             setDeviceData(ZWaveAPIData);
             $scope.controlDh.show = true;
-            $scope.refreshZwaveData(ZWaveAPIData);
+            $scope.refreshZwaveData();
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
         });
@@ -69,11 +69,10 @@ appController.controller('ControlController', function ($scope, $interval, $time
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function (ZWaveAPIData) {
+    $scope.refreshZwaveData = function () {
         var refresh = function () {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function (response) {
+            dataService.loadJoinedZwaveData().then(function (response) {
                 setControllerData(response.data.joined);
                 setDeviceData(response.data.joined);
                 setInclusionData(response.data.joined,response.data.update)
@@ -710,6 +709,6 @@ appController.controller('SetPromiscuousModeController', function ($scope) {
      * @param {string} cmd
      */
     $scope.setPromiscuousMode = function (cmd) {
-        $scope.runZwaveCmd(cmd);
+        $scope.runZwaveCmd(cmd,1000,true);
     };
 });

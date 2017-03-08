@@ -130,6 +130,40 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,cfg
     };
 
     /**
+     * Get device type
+     */
+    this.deviceType = function(node) {
+        var type;
+        var isListening = node.data.isListening.value;
+        var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
+        var hasWakeup = 0x84 in node.instances[0].commandClasses;
+
+        if (node.data.genericType.value === 1) {
+            type = 'portable';
+        } else if (node.data.genericType.value === 2) {
+            type = 'static';
+        } else if (isFLiRS) {
+            type = 'flirs';
+        } else if (hasWakeup) {
+            type = 'battery';
+        } else if (isListening) {
+            type = 'mains';
+        } else {
+            type = 'unknown';
+        }
+        return type;
+    };
+
+    /**
+     * Get last communication
+     */
+    this.lastCommunication = function(node) {
+        var lastReceive = parseInt(node.data.lastReceived.updateTime, 10) || 0;
+        var lastSend = parseInt(node.data.lastSend.updateTime, 10) || 0;
+        return (lastSend > lastReceive) ? lastSend : lastReceive;
+    };
+
+    /**
      * Check if device isFailed
      */
     this.isFailed = function(node) {
@@ -464,6 +498,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,cfg
             var obj = {};
             obj['id'] = nodeId;
             obj['name'] = $filter('deviceName')(nodeId, node);
+            obj['isController'] = (controllerNodeId == nodeId);
             devices.push(obj);
         });
         return devices;

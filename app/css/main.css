@@ -13428,40 +13428,55 @@ h4 {
 }
 
 /* line 157, ../sass/common/_body.scss */
+.gray-light {
+  color: #cccccc !important;
+}
+
+/* line 160, ../sass/common/_body.scss */
 .orange {
   color: orange !important;
 }
 
-/* line 161, ../sass/common/_body.scss */
+/* line 163, ../sass/common/_body.scss */
+.black {
+  color: black !important;
+}
+
+/* line 167, ../sass/common/_body.scss */
+.blue-info {
+  color: #5bc0de !important;
+}
+
+/* line 172, ../sass/common/_body.scss */
 .main_spinner {
   font-size: 14px;
   color: #555;
 }
 
-/* line 166, ../sass/common/_body.scss */
+/* line 177, ../sass/common/_body.scss */
 .text-yellow {
   color: yellow;
 }
 
-/* line 169, ../sass/common/_body.scss */
+/* line 180, ../sass/common/_body.scss */
 .text-orange {
   color: orange;
 }
 
 /* Links
 -------------------------------------------------- */
-/* line 174, ../sass/common/_body.scss */
-a {
+/* line 185, ../sass/common/_body.scss */
+a, .order-by {
   color: #5698d0;
   text-decoration: none;
 }
-/* line 178, ../sass/common/_body.scss */
-a:hover, a:focus {
+/* line 189, ../sass/common/_body.scss */
+a:hover, a:focus, .order-by:hover, .order-by:focus {
   color: #357fbe;
   text-decoration: underline;
 }
-/* line 183, ../sass/common/_body.scss */
-a:focus {
+/* line 194, ../sass/common/_body.scss */
+a:focus, .order-by:focus {
   outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
@@ -13469,7 +13484,7 @@ a:focus {
 
 /* Fatal error
 -------------------------------------------------- */
-/* line 193, ../sass/common/_body.scss */
+/* line 204, ../sass/common/_body.scss */
 .app-fatal-error {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -13479,13 +13494,13 @@ a:focus {
   background-color: #FFFFFF;
   border: solid 1px #d9534f;
 }
-/* line 200, ../sass/common/_body.scss */
+/* line 211, ../sass/common/_body.scss */
 .app-fatal-error .fatal-error-message {
   color: #d9534f;
   font-weight: bold;
   font-size: 120%;
 }
-/* line 205, ../sass/common/_body.scss */
+/* line 216, ../sass/common/_body.scss */
 .app-fatal-error .fatal-error-info {
   margin: 10px 0 0 0;
   color: #000000;
@@ -13494,44 +13509,44 @@ a:focus {
 
 /* Others
 -------------------------------------------------- */
-/* line 214, ../sass/common/_body.scss */
+/* line 225, ../sass/common/_body.scss */
 .timestamp {
   color: #333333;
   font-size: 17px;
 }
-/* line 217, ../sass/common/_body.scss */
+/* line 228, ../sass/common/_body.scss */
 .timestamp .fa {
   font-size: 110%;
 }
 
-/* line 221, ../sass/common/_body.scss */
+/* line 232, ../sass/common/_body.scss */
 .bcg-success {
   background-color: #dff0d8;
 }
 
-/* line 224, ../sass/common/_body.scss */
+/* line 235, ../sass/common/_body.scss */
 .bcg-active.false, .bcg-danger {
   background-color: #f2dede;
 }
 
-/* line 228, ../sass/common/_body.scss */
+/* line 239, ../sass/common/_body.scss */
 .clickable {
   cursor: pointer;
 }
 
-/* line 232, ../sass/common/_body.scss */
+/* line 243, ../sass/common/_body.scss */
 .text-supp {
   font-style: italic;
   color: #595959;
 }
 
-/* line 237, ../sass/common/_body.scss */
+/* line 248, ../sass/common/_body.scss */
 .badge {
   padding: 5px;
   margin-right: 5px;
 }
 
-/* line 241, ../sass/common/_body.scss */
+/* line 252, ../sass/common/_body.scss */
 .help-text {
   display: block;
   font-size: 95%;
@@ -13539,63 +13554,63 @@ a:focus {
   margin: 5px 0;
 }
 
-/* line 247, ../sass/common/_body.scss */
+/* line 258, ../sass/common/_body.scss */
 .help-text.inline {
   display: inline;
 }
 
-/* line 251, ../sass/common/_body.scss */
+/* line 262, ../sass/common/_body.scss */
 .display-block {
   display: block;
 }
 
-/* line 255, ../sass/common/_body.scss */
+/* line 266, ../sass/common/_body.scss */
 .is-hidden, .alert-hidden, .alert- {
   display: none !important;
 }
 
-/* line 259, ../sass/common/_body.scss */
+/* line 270, ../sass/common/_body.scss */
 .alert-list {
   margin: 8px 0;
 }
 
-/* line 263, ../sass/common/_body.scss */
+/* line 274, ../sass/common/_body.scss */
 .text-alert, .text-alert-list {
   font-size: 85%;
   margin: 0 0 0 7px;
 }
 
-/* line 267, ../sass/common/_body.scss */
+/* line 278, ../sass/common/_body.scss */
 .text-alert {
   margin: 7px 0;
 }
 
-/* line 270, ../sass/common/_body.scss */
+/* line 281, ../sass/common/_body.scss */
 .report-img {
   display: inline-block;
   max-width: 32px;
 }
 
-/* line 274, ../sass/common/_body.scss */
+/* line 285, ../sass/common/_body.scss */
 .hidden-selectopt {
   display: none !important;
 }
 
 /* Response
 -------------------------------------------------- */
-/* line 280, ../sass/common/_body.scss */
+/* line 291, ../sass/common/_body.scss */
 #respone_container {
   display: none;
 }
 
-/* line 284, ../sass/common/_body.scss */
+/* line 295, ../sass/common/_body.scss */
 #respone_container_inner {
   margin: 0 auto;
   text-align: center;
   /*position: relative;*/
 }
 
-/* line 289, ../sass/common/_body.scss */
+/* line 300, ../sass/common/_body.scss */
 .page-load-spinner {
   z-index: 1000;
   text-align: center;
@@ -13605,7 +13620,7 @@ a:focus {
   width: 150px;
 }
 
-/* line 298, ../sass/common/_body.scss */
+/* line 309, ../sass/common/_body.scss */
 .response-message {
   z-index: 1000;
   text-align: center;
@@ -13615,7 +13630,7 @@ a:focus {
 
 /* Progress bar
 -------------------------------------------------- */
-/* line 306, ../sass/common/_body.scss */
+/* line 317, ../sass/common/_body.scss */
 .progress {
   margin-bottom: 0;
 }
@@ -14290,40 +14305,45 @@ img {
 
 /* Button
 -------------------------------------------------- */
-/* line 3, ../sass/common/_button.scss */
+/* line 4, ../sass/common/_button.scss */
+.panel .btn, .cfg-block .btn {
+  margin: 0 5px 10px 0;
+}
+
+/* line 9, ../sass/common/_button.scss */
 .btn-goup-block {
   display: table;
   width: 100%;
   margin: 0 0 10px 0;
 }
-/* line 8, ../sass/common/_button.scss */
+/* line 14, ../sass/common/_button.scss */
 .btn-goup-block .btn.active .fa {
   color: #80AD80;
 }
 
-/* line 18, ../sass/common/_button.scss */
+/* line 24, ../sass/common/_button.scss */
 .btn-goup-1 .btn {
   width: 100%;
 }
 
-/* line 23, ../sass/common/_button.scss */
+/* line 29, ../sass/common/_button.scss */
 .btn-goup-2 .btn {
   width: 50%;
 }
 
-/* line 28, ../sass/common/_button.scss */
+/* line 34, ../sass/common/_button.scss */
 .btn-goup-3 .btn {
   width: 33.33333%;
 }
 
-/* line 33, ../sass/common/_button.scss */
+/* line 39, ../sass/common/_button.scss */
 .btn-default {
   color: #0d0d0d;
   background-color: #FFFFFF;
   border-color: #CCCCCC;
 }
 
-/* line 39, ../sass/common/_button.scss */
+/* line 45, ../sass/common/_button.scss */
 .btn-default.active {
   background-color: #FFFFFF;
 }
@@ -14334,39 +14354,39 @@ img {
         font-size: $app-btn-icon-size; 
     }
 }*/
-/* line 50, ../sass/common/_button.scss */
+/* line 56, ../sass/common/_button.scss */
 .btn-submit {
   color: #FFFFFF;
   border: solid 1px #80AD80;
   background-color: #4e794e;
 }
-/* line 54, ../sass/common/_button.scss */
+/* line 60, ../sass/common/_button.scss */
 .btn-submit:hover, .btn-submit:focus {
   background-color: #80AD80;
 }
 
-/* line 59, ../sass/common/_button.scss */
+/* line 65, ../sass/common/_button.scss */
 .btn-installed {
   border: 0 none;
   background-color: none !important;
 }
 
-/* line 64, ../sass/common/_button.scss */
+/* line 70, ../sass/common/_button.scss */
 .btn-disabled {
   border: 0 none;
   background-color: transparent !important;
 }
 
-/* line 69, ../sass/common/_button.scss */
+/* line 75, ../sass/common/_button.scss */
 .btn-small {
   font-size: 90%;
 }
-/* line 71, ../sass/common/_button.scss */
+/* line 77, ../sass/common/_button.scss */
 .btn-small .fa {
   font-size: 95%;
 }
 
-/* line 76, ../sass/common/_button.scss */
+/* line 82, ../sass/common/_button.scss */
 .btn-tag {
   display: block;
   position: relative;
@@ -14374,78 +14394,78 @@ img {
   font-size: 100%;
   margin: 0 0 10px 0;
 }
-/* line 82, ../sass/common/_button.scss */
+/* line 88, ../sass/common/_button.scss */
 .btn-tag .fa {
   position: absolute;
   top: 5px;
   right: 10px;
   font-size: 150%;
 }
-/* line 88, ../sass/common/_button.scss */
+/* line 94, ../sass/common/_button.scss */
 .btn-tag.active {
   background-color: #f2f2f2;
 }
 
 /* Button tabs
 -------------------------------------------------- */
-/* line 97, ../sass/common/_button.scss */
+/* line 103, ../sass/common/_button.scss */
 .tabs-wrap {
   margin: 0 0 10px 0;
 }
 
-/* line 100, ../sass/common/_button.scss */
+/* line 106, ../sass/common/_button.scss */
 .btn-goup-tabs {
   display: table;
   width: 100%;
   margin: 0 0 10px 0;
 }
-/* line 104, ../sass/common/_button.scss */
+/* line 110, ../sass/common/_button.scss */
 .btn-goup-tabs .btn {
   padding: 10px;
   font-size: 105%;
   background-color: #FFFFFF;
   border-color: #9fd8ef;
 }
-/* line 109, ../sass/common/_button.scss */
+/* line 115, ../sass/common/_button.scss */
 .btn-goup-tabs .btn.active {
   background-color: #f2f2f2;
 }
-/* line 112, ../sass/common/_button.scss */
+/* line 118, ../sass/common/_button.scss */
 .btn-goup-tabs .btn .fa {
   font-size: 110%;
   color: #404040;
 }
-/* line 117, ../sass/common/_button.scss */
+/* line 123, ../sass/common/_button.scss */
 .btn-goup-tabs .active .fa {
   color: #6494BC;
 }
 
-/* line 122, ../sass/common/_button.scss */
+/* line 128, ../sass/common/_button.scss */
 .btn-tabs-2 .btn {
   width: 50%;
 }
 
-/* line 127, ../sass/common/_button.scss */
+/* line 133, ../sass/common/_button.scss */
 .btn-tabs-3 .btn {
   width: 33.33333%;
 }
 
-/* line 132, ../sass/common/_button.scss */
+/* line 138, ../sass/common/_button.scss */
 .btn-tabs-4 .btn {
   width: 25%;
 }
 
-/* line 137, ../sass/common/_button.scss */
+/* line 143, ../sass/common/_button.scss */
 .btn-tabs-5 .btn {
   width: 20%;
 }
 
-/* line 142, ../sass/common/_button.scss */
+/* line 148, ../sass/common/_button.scss */
 .btn-tabs-6 .btn {
   width: 16.66666%;
 }
 
-/* line 147, ../sass/common/_button.scss */
+/* line 153, ../sass/common/_button.scss */
 .btn-tabs-7 .btn {
   width: 14.2857%;
 }
@@ -15278,10 +15298,22 @@ http://codepen.io/MattIn4D/pen/LiKFC
 -------------------------------------------------- */
 /* line 3, ../sass/common/_legend.scss */
 .legend-entry {
-  margin: 10px 0 0 0;
+  font-size: 95%;
+  margin: 20px 0 0 0;
+  padding: 10px 0 0 0;
+  border-top: solid 1px #efefef;
+}
+/* line 8, ../sass/common/_legend.scss */
+.legend-entry .legend-title {
+  margin: 0 0 5px 0;
+  font-weight: bold;
+}
+/* line 12, ../sass/common/_legend.scss */
+.legend-entry .legend-row {
+  margin: 0 0 5px 0;
 }
 
-/* line 7, ../sass/common/_legend.scss */
+/* line 18, ../sass/common/_legend.scss */
 .legend-inline .legend-row {
   display: inline-block;
   margin: 0 10px 0 0;
@@ -15853,7 +15885,7 @@ http://codepen.io/MattIn4D/pen/LiKFC
   border: 0;
   position: absolute;
   background-color: #fff;
-  margin: 0  0 0 -10px;
+  margin: 0  0 0 -20px;
 }
 /* line 46, ../sass/modules/_neighbors.scss */
 .table-neighbors .rt-cell {
@@ -15889,36 +15921,42 @@ http://codepen.io/MattIn4D/pen/LiKFC
 }
 
 /* line 79, ../sass/modules/_neighbors.scss */
+.rtWhite {
+  background-color: #ebebeb !important;
+  -webkit-print-color-adjust: exact;
+}
+
+/* line 85, ../sass/modules/_neighbors.scss */
 .rtDirect, .rtGreen {
   background-color: green !important;
   -webkit-print-color-adjust: exact;
 }
 
-/* line 84, ../sass/modules/_neighbors.scss */
+/* line 90, ../sass/modules/_neighbors.scss */
 .rtRouted {
   background-color: #8C0 !important;
   -webkit-print-color-adjust: exact;
 }
 
-/* line 89, ../sass/modules/_neighbors.scss */
+/* line 95, ../sass/modules/_neighbors.scss */
 .rtBadlyRouted {
   background-color: yellow !important;
   -webkit-print-color-adjust: exact;
 }
 
-/* line 94, ../sass/modules/_neighbors.scss */
+/* line 100, ../sass/modules/_neighbors.scss */
 .rtNotLinked, .rtRed {
   background-color: red !important;
   -webkit-print-color-adjust: exact;
 }
 
-/* line 99, ../sass/modules/_neighbors.scss */
+/* line 105, ../sass/modules/_neighbors.scss */
 .rtUnavailable, .rtGray {
   background-color: gray !important;
   -webkit-print-color-adjust: exact;
 }
 
-/* line 104, ../sass/modules/_neighbors.scss */
+/* line 110, ../sass/modules/_neighbors.scss */
 .rtOrange {
   background-color: orange !important;
   -webkit-print-color-adjust: exact;
@@ -16026,6 +16064,13 @@ http://codepen.io/MattIn4D/pen/LiKFC
 .rssi-entry {
   height: 400px;
   width: 100%;
+}
+
+/* line 8, ../sass/modules/_rssi.scss */
+.gauge {
+  width: 540px;
+  height: 380px;
+  float: left;
 }
 
 /* Main navigation
@@ -16844,7 +16889,7 @@ http://codepen.io/MattIn4D/pen/LiKFC
   line-height: 1.4em;
 }
 /* line 14, ../sass/modules/_print.scss */
-#page_print #header, #page_print .container-installer, #page_print #footer, #page_print .print-hide {
+#page_print #header, #page_print .container-installer, #page_print #footer, #page_print .print-hide, #page_print .neighbor-hide {
   display: none;
 }
 /* line 17, ../sass/modules/_print.scss */
@@ -16853,71 +16898,95 @@ http://codepen.io/MattIn4D/pen/LiKFC
   min-width: 100%;
 }
 /* line 27, ../sass/modules/_print.scss */
+#page_print .page-break {
+  page-break-before: always;
+}
+/* line 30, ../sass/modules/_print.scss */
+#page_print .print-header {
+  margin: 0 0 20pt 0;
+  font-size: 16pt;
+  padding: 16pt;
+  background-color: #CCCCCC !important;
+  -webkit-print-color-adjust: exact;
+}
+/* line 37, ../sass/modules/_print.scss */
+#page_print .print-section {
+  margin: 0 0 20pt 0;
+  padding: 16pt;
+  border: solid 1pt #CCCCCC;
+}
+/* line 42, ../sass/modules/_print.scss */
+#page_print .section-title {
+  font-size: 18pt;
+  font-weight: bold;
+  margin: 0 0 20pt 0;
+}
+/* line 47, ../sass/modules/_print.scss */
 #page_print h1 {
   font-size: 16pt;
+  font-weight: normal;
 }
-/* line 31, ../sass/modules/_print.scss */
+/* line 52, ../sass/modules/_print.scss */
 #page_print .print-entry {
-  border-bottom: solid 1px #000000;
-  margin: 0 0 20pt;
-  padding: 0 0 20pt;
+  margin: 0 0 20pt 0;
+  padding: 0 0 20pt 0;
 }
-/* line 40, ../sass/modules/_print.scss */
+/* line 61, ../sass/modules/_print.scss */
 #page_print a {
   text-decoration: none;
 }
-/* line 44, ../sass/modules/_print.scss */
+/* line 65, ../sass/modules/_print.scss */
 #page_print .text-info {
   color: #5bc0de !important;
 }
-/* line 47, ../sass/modules/_print.scss */
+/* line 68, ../sass/modules/_print.scss */
 #page_print .text-primary {
   color: #6494BC !important;
 }
-/* line 50, ../sass/modules/_print.scss */
+/* line 71, ../sass/modules/_print.scss */
 #page_print .text-success {
   color: #80AD80 !important;
 }
-/* line 53, ../sass/modules/_print.scss */
+/* line 74, ../sass/modules/_print.scss */
 #page_print .text-danger {
   color: #d9534f !important;
 }
-/* line 56, ../sass/modules/_print.scss */
+/* line 77, ../sass/modules/_print.scss */
 #page_print .text-warning {
   color: #f0ad4e !important;
 }
-/* line 60, ../sass/modules/_print.scss */
+/* line 81, ../sass/modules/_print.scss */
 #page_print .progress-bar-info {
   background-color: #5bc0de !important;
   -webkit-print-color-adjust: exact;
 }
-/* line 64, ../sass/modules/_print.scss */
+/* line 85, ../sass/modules/_print.scss */
 #page_print .progress-bar-primary {
   background-color: #6494BC !important;
   -webkit-print-color-adjust: exact;
 }
-/* line 68, ../sass/modules/_print.scss */
+/* line 89, ../sass/modules/_print.scss */
 #page_print .progress-bar-success {
   background-color: #80AD80 !important;
   -webkit-print-color-adjust: exact;
 }
-/* line 72, ../sass/modules/_print.scss */
+/* line 93, ../sass/modules/_print.scss */
 #page_print .progress-bar-danger {
   background-color: #d9534f !important;
   -webkit-print-color-adjust: exact;
 }
-/* line 76, ../sass/modules/_print.scss */
+/* line 97, ../sass/modules/_print.scss */
 #page_print .progress-bar-warning {
   background-color: #f0ad4e !important;
   -webkit-print-color-adjust: exact;
 }
-/* line 81, ../sass/modules/_print.scss */
+/* line 102, ../sass/modules/_print.scss */
 #page_print table {
   width: 100%;
   border-collapse: collapse;
   border-spacing: 0;
 }
-/* line 85, ../sass/modules/_print.scss */
+/* line 106, ../sass/modules/_print.scss */
 #page_print table td, #page_print table th {
   vertical-align: top;
   text-align: left;
@@ -16925,24 +16994,42 @@ http://codepen.io/MattIn4D/pen/LiKFC
   border: solid 1px #CCCCCC;
   display: table-cell;
 }
-/* line 98, ../sass/modules/_print.scss */
+/* line 119, ../sass/modules/_print.scss */
 #page_print .rssi-container {
   page-break-after: auto;
 }
-/* line 101, ../sass/modules/_print.scss */
+/* line 122, ../sass/modules/_print.scss */
 #page_print .rssi-entry {
   page-break-inside: avoid;
   height: 150mm;
   width: auto;
   max-width: 210mm;
 }
-/* line 110, ../sass/modules/_print.scss */
+/* line 131, ../sass/modules/_print.scss */
 #page_print .page-navi {
   position: static;
 }
-/* line 112, ../sass/modules/_print.scss */
+/* line 133, ../sass/modules/_print.scss */
 #page_print .page-navi .page-navi-in {
   position: static;
+}
+/* line 139, ../sass/modules/_print.scss */
+#page_print .page-header .btn-group {
+  display: none;
+}
+/* line 146, ../sass/modules/_print.scss */
+#page_print .rt-cell {
+  display: inline-block;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  margin: 4px;
+  border: solid 1px #FFFFFF;
+  text-align: center;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  font-weight: normal;
 }
 
 /*@media print {

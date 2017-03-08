@@ -40,7 +40,7 @@
     border: 0;
     position:absolute;
     background-color: #fff;
-    margin: 0  0 0 -10px;
+    margin: 0  0 0 -20px;
     //border: solid 1px red !important;
   }
   .rt-cell {
@@ -74,6 +74,12 @@
   .neighbor-hide{
     display: none !important;
   }
+}
+
+.rtWhite {
+  background-color: #ebebeb !important;
+  //border: solid 1px gray !important;
+  -webkit-print-color-adjust: exact;
 }
 
 .rtDirect, .rtGreen {

@@ -372,9 +372,6 @@ angApp.filter('getFormattedDate', function (cfg) {
         var mon = d.getMonth() + 1; //Months are zero based
         mon = (mon < 10 ? '0' + mon : mon);
         var year = d.getFullYear();
-        //var hrs = (d.getHours() < 10 ? '0' + d.getHours() : d.getHours());
-        //var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
-        //var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
 
         switch (cfg.zwavecfg.date_format) {
             case 'dd-mm-yyyy':
@@ -385,6 +382,8 @@ angApp.filter('getFormattedDate', function (cfg) {
                 return year + '/' + mon + '/' + day;
             case 'mm/dd/yyyy':
                 return mon + '/' + day + '/' + year;
+            case 'dd/mm/yyyy':
+                return day + '/' + mon + '/' + year;
             default:
                 return day + '.' + mon + '.' + year;
         }
@@ -495,7 +494,10 @@ angApp.filter('toTrusted', ['$sce', function ($sce) {
  */
 angApp.filter('deviceName', function (cfg,deviceService) {
     return function (deviceId, device) {
-        var name = (deviceId === cfg.controller.zwayNodeId? deviceService.getCustomCfgVal('controller_name') : 'Device ' + '_' + deviceId);
+        if(deviceId == cfg.controller.zwayNodeId){
+            return deviceService.getCustomCfgVal('controller_name');
+        }
+        var name ='Device ' + '_' + deviceId;
         if (device === undefined) {
             return name;
         }

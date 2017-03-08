@@ -47,16 +47,29 @@ angApp.directive('bbAlertText', function () {
         + '</span>'
     };
 });
-
+/**
+ * Handles and displays sort by buttons
+ * @class sortBy
+ */
 angApp.directive('sortBy', function () {
     return {
         restrict: "E",
         replace: true,
-        template: '<span ng-show="predicate == {{coll_name}}"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>',
-        link: function (scope, element, attr) {
-            // this is link function
-            var col_name = scope.$eval(attr.col_name);
-        }
+        scope: {
+            callback: '&',
+            obj: '=',
+            label: '=',
+            field: '='
+        },
+        template: '<span class="order-by clickable">{{label}}&nbsp<span ng-show="obj.field == field">'
+        + '<i ng-show="!obj.reverse" class="fa fa-sort-asc"></i><i ng-show="obj.reverse" class="fa fa-sort-desc"></i>'
+        + '</span></span>',
+        link: function(scope, element, attrs) {
+            element.bind('click', function (e) {
+                scope.callback({field: scope.field});
+            });
+
+        },
     };
 });
 /**
@@ -316,7 +329,6 @@ angApp.directive('expertCommandInput', function (cfg,$filter) {
 
         input += '<label>' + label + '</label> ';
         input += '<select name="select_' + inName + '" class="form-control">';
-        input += '<option value="1">' + (cfg.app_type === 'installer' ? 'CIT' : 'Z-Way')+ '</option>';
         angular.forEach(devices, function (v, k) {
             var selected = (v.id == currValue ? ' selected' : '');
             input += '<option value="' + v.id + '"' + selected + '>' + v.name + '</option>';
@@ -341,7 +353,7 @@ angApp.directive('expertCommandInput', function (cfg,$filter) {
         var value = (currValue !== undefined ? currValue : defaultValue);
         angular.forEach(enums.enumof, function (v, k) {
             //var inName =  $filter('stringToSlug')(name ? v.name : label);
-            var inName = (name ? name : v.name) + '_' +label;
+            var inName = (name ? name : v.name);// + '_' +label;
             //console.log(inName);
             var title = v.label || '';
             var type = v.type;

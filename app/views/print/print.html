@@ -1,22 +1,61 @@
 <!--Print view -->
-<div class="print-entry">
+<div class="print-header">
+    <p><strong>Network name:</strong> {{cfg.zwavecfg.network_name}}</p>
+    <p><strong>Date:</strong> {{ nowDate | date :  'yyyy-MM-dd' }}</p>
+</div>
+<!-- Device Info und Device Status -->
+<div class="print-section">
+    <h2 class="section-title">Device Info und Device Status</h2>
+    <div class="print-entry">
 
-    <div ng-include="'app/views/device/status.html'"></div>
-    <!--zeigt die Übersichten Device Status-->
+        <div ng-include="'app/views/device/status.html'"></div>
+        <!--zeigt die Übersichten Device Status-->
+    </div>
+    <div class="print-entry">
+        <div ng-include="'app/views/device/type.html'"></div>
+        <!--zeigt die Übersichten Device Information-->
+    </div>
 </div>
-<div class="print-entry">
-    <div ng-include="'app/views/device/type.html'"></div>
-    <!--zeigt die Übersichten Device Information-->
-</div>
-<div class="print-entry">
-    <div ng-include="'app/views/installer/rssi_background.html'"></div>
-    <!--zeigt Background Noise-->
 
+<!-- Radio Situation -->
+<div class="print-section page-break">
+<h2 class="section-title">Radio Situation</h2>
+
+    <div class="print-entry">
+        <div ng-include="'app/views/installer/rssi_background.html'"></div>
+        <!--zeigt Background Noise-->
+
+    </div>
+    <div class="print-entry">
+        <div ng-include="'app/views/network/statistics.html'"></div>
+        <!--zeigt die noch zu entwerfende Network Statistik mit Eigene Pakete versus fremde Pakete, ...-->
+    </div>
 </div>
-<div class="print-entry">
-    <div ng-include="'app/views/network/statistics.html'"></div>
-    <!--zeigt die noch zu entwerfende Network Statistik mit Eigene Pakete versus fremde Pakete, ...-->
+
+<!-- Link status -->
+<div class="print-section page-break">
+    <h2 class="section-title">Link status</h2>
+
+    <div class="print-entry">
+        <div ng-include="'app/views/network/neighbors.html'"></div>
+
+    </div>
+    <div class="print-entry">
+        <div ng-include="'app/views/network/linkstatus.html'"></div>
+
+    </div>
 </div>
+
+<!-- Notes-->
+<div class="print-section page-break">
+    <h2 class="section-title">{{ _t('txt_notes') }}</h2>
+    <div class="print-entry" ng-controller="DataHolderController">
+        <span class="newlines" ng-if="dataHolder.controller.homeNotes">
+                {{dataHolder.controller.homeNotes|stripTags}}
+                </span>&nbsp;
+    </div>
+</div>
+
 <!--<div class="print-entry">
     <div ng-include="'app/views/network/routing.html'"></div>
     zeigt die aktuelle Routingtabelle
@@ -26,9 +65,3 @@
     zeigt die noch zu entwickelnde Übersicht mit den Link status als Zusammenfassung der Einzelseiten aus dem
     Config-bereich
 </div>-->
-<div class="print-entry" ng-controller="DataHolderController">
-    <div class="page-header"><h1>{{ _t('txt_notes') }}</h1></div>
-    <span class="newlines" ng-if="dataHolder.controller.homeNotes">
-                {{dataHolder.controller.homeNotes|stripTags}}
-                </span>&nbsp;
-</div>

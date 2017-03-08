@@ -13,9 +13,14 @@ var appController = angular.module('appController', []);
  * @class BaseController
  */
 appController.controller('BaseController', function ($scope, $rootScope, $cookies, $filter, $location, $anchorScroll, $window, $route, $interval, $timeout, cfg, dataService, deviceService, myCache) {
+    $scope.nowDate = new Date();
     $scope.loading = false;
     $scope.alert = {message: false, status: 'is-hidden', icon: false};
     $scope.languages = {};
+    $scope.orderByArr = {
+        field: '',
+        reverse:  false
+    }
 
 
     // Custom IP
@@ -79,6 +84,10 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     });
     // Order by
     $scope.orderBy = function (field) {
+        $scope.orderByArr = {
+            field: field,
+            reverse:  !$scope.orderByArr.reverse
+        }
         $scope.predicate = field;
         $scope.reverse = !$scope.reverse;
     };
@@ -321,14 +330,17 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
      * @param {string} cmd
      * @param {int} timeout
      */
-    $scope.runZwaveCmd = function (cmd, timeout) {
+    $scope.runZwaveCmd = function (cmd, timeout,hideError) {
         timeout = timeout || 1000;
         $scope.toggleRowSpinner(cmd);
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
             $timeout($scope.toggleRowSpinner, timeout);
         }, function (error) {
             $scope.toggleRowSpinner();
-            alertify.alertError($scope._t('error_update_data') + '\n' + cmd);
+            if(!hideError){
+                alertify.alertError($scope._t('error_update_data') + '\n' + cmd);
+            }
+
         });
     };
 
@@ -351,9 +363,10 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
      */
     $scope.setDongle = function () {
         dataService.getApi('zwave_list').then(function (response) {
-            if (response.data.length === 1) {
+           if (response.data.length === 1) {
                 angular.extend(cfg, {dongle: response.data[0]});
                 $cookies.dongle = response.data[0];
+            }
                 angular.extend(cfg,{dongle_list: response.data});
 
                 angular.extend(cfg, {
@@ -375,7 +388,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
                     'configupdate_url': '/ZWave.' + cfg.dongle + '/ExpertConfigUpdate'
 
                 });
-            }
+
         }, function (error) {
             if (error.status === 401 && cfg.app_type !== 'installer') {
                 window.location.href = cfg.smarthome_login;
@@ -454,7 +467,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
             }, function (error) {});
 
         };
-        $interval(refresh, 1000);
+        $interval(refresh, cfg.queue_interval);
     };
     /**
      * Load common APIs
@@ -463,8 +476,9 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
         $scope.loadZwaveConfig();
         $scope.setDongle();
         $scope.setTimeStamp();
+        $scope.loadBusyIndicator();
         if(cfg.app_type === 'installer'){
-            $scope.loadBusyIndicator();
+
             $scope.loadBoxApiData();
         }
 
@@ -486,12 +500,6 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
             d: 0
         }
         }
-        var arrCnt = {
-            v: 0,
-            s: 0,
-            d: 0
-        }
-
         angular.forEach(data, function(job, jobIndex) {
             if(job[1][1] === 1 || job[1][2] === 1 || job[1][4] === 1){
                 ret.busyLength += 1;

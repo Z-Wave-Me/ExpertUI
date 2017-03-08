@@ -154,8 +154,19 @@ h4 {
 .gray{
     color: gray !important;
 }
+.gray-light{
+    color: #cccccc !important;
+}
 .orange{
     color: orange !important;
+}
+.black{
+    color: black !important;
+}
+
+.blue-info{
+    color: #5bc0de !important;
+
 }
 
 .main_spinner{
@@ -171,7 +182,7 @@ h4 {
 }
 /* Links
 -------------------------------------------------- */
-a {
+a, .order-by {
     color: $app-a-color;
     text-decoration: none;
 
