@@ -363,9 +363,10 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
      */
     $scope.setDongle = function () {
         dataService.getApi('zwave_list').then(function (response) {
-            if (response.data.length === 1) {
+           if (response.data.length === 1) {
                 angular.extend(cfg, {dongle: response.data[0]});
                 $cookies.dongle = response.data[0];
+            }
                 angular.extend(cfg,{dongle_list: response.data});
 
                 angular.extend(cfg, {
@@ -387,7 +388,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
                     'configupdate_url': '/ZWave.' + cfg.dongle + '/ExpertConfigUpdate'
 
                 });
-            }
+
         }, function (error) {
             if (error.status === 401 && cfg.app_type !== 'installer') {
                 window.location.href = cfg.smarthome_login;
