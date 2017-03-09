@@ -1,56 +1,56 @@
 <!-- Reorganization view -->
 <div ng-controller="ReorganizationController">
-    <div class="page-header"><h1>{{ _t('reorg_title')}}</h1></div>
+   <div class="page-header"><h1>{{ _t('nav_reorganization')}}</h1></div>
     <bb-alert alert="alert"></bb-alert>
-    <div id="table_mobile"  ng-if="reorganizations.show">
-        <table class="table table-striped table-condensed table-hover">
-            <thead>
-            <tr>
-                <th>
-                    <a href="" ng-click="orderBy('id')">#
-                        <span ng-show="predicate == 'id'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                    </a>
-                </th>
-                <th>
-                    <a href="" ng-click="orderBy('name')">{{ _t('device_name')}}
-                        <span ng-show="predicate == 'name'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                    </a>
-                </th>
-                <th>
-                    <a href="" ng-click="orderBy('updateTime')">{{ _t('datetime')}}
-                        <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                    </a>
-                </th>
-            </tr>
-            </thead>
+
+    <div>
+        <div class="form-group form-inline">
+            <!-- mainsPowered -->
+            <input id="reorgMain" type="checkbox" ng-model="reorganizations.input.reorgMain"/>
+            <label for="reorgMain">{{ _t('reorg_mains_powered')}}</label>
+            <!-- batteryPowered -->
+            <input id="reorgBattery" type="checkbox" ng-model="reorganizations.input.reorgBattery"/>
+            <label for="reorgBattery">{{ _t('reorg_battery_powered')}}</label>
+        </div>
+        <div class="form-group form-inline">
+            <div class="btn-group">
+            <!-- Start -->
+            <button class="btn btn-default" title="{{ _t('reorg_start')}}"
+                    ng-click="setTrace('run',reorganizations.input)"
+                    ng-class="reorganizations.trace === 'run' ? 'active' : ''">
+                <i class="fa fa-play"></i>
+            </button>
+                <!--Pause -->
+                <button class="btn btn-default" title="{{_t('pause')}}"
+                        ng-class="reorganizations.trace === 'pause' ? 'active' : ''"
+                        ng-disabled="reorganizations.trace !== 'run'"
+                        ng-click="setTrace('pause')">
+                    <i class="fa fa-pause"></i>
+                </button>
+                <!--Stop -->
+                <button class="btn btn-default" title="{{_t('stop')}}"
+                        ng-class="zniffer.trace === 'stop' ? 'active' : ''"
+                        ng-disabled="reorganizations.trace === 'stop'"
+                        ng-click="setTrace('stop')">
+                    <i class="fa fa-stop"></i>
+                </button>
+            <!--Download -->
+            <a ng-href="{{ fileUrl }}" class="btn btn-default" title="{{_t('reorg_download_log')}}"
+               download="reorganization.txt"
+               ng-click="downloadReorganizationLog()"
+                    ng-disabled="reorganizations.trace !== 'pause'">
+                <i class="fa fa-download"></i>
+            </a>
+            </div>
+        </div>
+        <bb-alert alert="reorganizations.run"></bb-alert>
+        <table class="table table-condensed">
             <tbody>
-            <tr ng-repeat="v in reorganizations.all | orderBy:predicate:reverse track by $index" id="{{ v.rowId}}">
-                <td data-title="#">{{ v.id}}</td>
-                <td data-title="{{ _t('device_name')}}">{{ v.name}}</td>
-                <td data-title="{{ _t('datetime')}}" class="row-time is-updated-{{v.isUpdated}}"
-                    title="update: {{v.dateTime.date}} {{v.dateTime.time}} invalidate: {{v.dateTime.invalidateTime}}">
-                    {{v.dateTime.today}} &nbsp;
-                </td>
+            <tr ng-repeat="v in reorganizations.all track by $index" id="{{ v.rowId}}">
+                <td>{{v.dateTime.time}}</td>
+                <td >{{v.message}}</td>
             </tr>
             </tbody>
         </table>
-    </div>
-</div>
-
-<!-- OLD Reorganization view -->
-<hr />
-<h2>OLD version</h2>
-<div ng-controller="ReorganizationOldController">
-    <div class="page-header"><h1>{{ _t('reorg_title')}}</h1></div>
-    <div class="table-responsive">
-        <input id="mainsPowered" type="checkbox" ng-model="mainsPowered" /> <label for="mainsPowered">{{ _t('reorg_mains_powered')}}</label><br/>
-        <input id="batteryPowered" type="checkbox" ng-model="batteryPowered" /> <label for="batteryPowered">{{ _t('reorg_battery_powered')}}</label><br/>
-        <button class="btn btn-primary update" 
-                data-ng-click="reorgAll()"
-                data-action="reorgAll"  
-                id="btn_reorg_all_1"
-                ng-disabled="reorganizing">{{ _t('reorg_start')}}</button>
-        <button class="btn btn-primary update" data-ng-click="downloadLog()" ng-disabled="logged == ''">{{ _t('reorg_download_log')}}</button>
-        <textarea id="reorg_log" ng-model="logged" ng-readonly="true" style="width:100%; height: 300px;"></textarea>
     </div>
 </div>

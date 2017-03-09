@@ -83,6 +83,11 @@ angApp.run(function ($rootScope, $location, deviceService, cfg) {
     });
 });
 
+
+angApp.config(['$compileProvider', function ($compileProvider) {
+    $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|blob|):/);
+}]);
+
 /**
  * Intercepting HTTP calls with AngularJS.
  * @function config

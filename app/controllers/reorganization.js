@@ -7,49 +7,133 @@
  * @class ReorganizationController
  *
  */
-appController.controller('ReorganizationController', function($scope, $filter, $timeout,$interval,cfg,dataService,_) {
+appController.controller('ReorganizationController', function ($scope, $filter, $timeout, $interval, $window, cfg, dataService, _) {
     $scope.reorganizations = {
+        input: {
+            reorgMain: true,
+            reorgBattery: false
+        },
+        trace: 'run',
+        run: false,
         all: [],
         interval: null,
         show: false
     };
 
+
     /**
      * Cancel interval on page destroy
      */
-    $scope.$on('$destroy', function() {
+    $scope.$on('$destroy', function () {
         $interval.cancel($scope.reorganizations.interval);
     });
 
     /**
-     * Load zwave data
+     * Set trace
      */
-    $scope.loadZwaveData = function() {
-        dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
-            setData(ZWaveAPIData);
-            if(_.isEmpty($scope.reorganizations.all)){
-                $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
-                return;
-            }
-            $scope.reorganizations.show = true;
-            //$scope.refreshZwaveData(ZWaveAPIData);
-        }, function(error) {
+    $scope.setTrace = function (trace, input) {
+        switch (trace) {
+            case 'pause':
+                $scope.reorganizations.trace = 'pause';
+                $interval.cancel($scope.reorganizations.interval);
+                $scope.reorganizations.run = false;
+                break;
+            case 'run':
+                /*if($scope.reorganizations.trace === 'stop'){
+                    $scope.reorganizations.all = [];
+                }*/
+                $scope.runReorganization(input);
+                $scope.reorganizations.trace = 'run';
+
+
+                break;
+            case 'stop':
+                $scope.reorganizations.all = [];
+                $scope.reorganizations.trace = 'stop';
+                $interval.cancel($scope.reorganizations.interval);
+                $scope.reorganizations.run = false;
+                break;
+            default:
+                 break;
+
+        }
+        //console.log('Set trace: ',  $scope.zniffer.trace)
+    };
+
+    /**
+     * Run reorganization
+     */
+    $scope.runReorganization = function (input) {
+        var params = '?reorgMain=' + input.reorgMain + '&reorgBattery=' + input.reorgBattery;
+        $scope.reorganizations.run = false;
+        dataService.getApi('reorg_run_url', params, true).then(function (response) {
+            $scope.reorganizations.run = {
+                message: response.data.data,
+                status: 'alert-success',
+                icon: 'fa-spinner fa-spin'
+            };
+            $scope.loadReorganizationLog();
+        }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
         });
     };
-    $scope.loadZwaveData();
+    $scope.runReorganization($scope.reorganizations.input);
+
+    /**
+     * Load reorganization log
+     */
+    $scope.loadReorganizationLog = function () {
+        dataService.getApi('reorg_log_url', null, true).then(function (response) {
+            //response.data = [];
+            if(_.isEmpty(response.data)){
+                $scope.reorganizations.run = {
+                    message: $scope._t('reorg_empty'),
+                    status: 'alert-warning',
+                    icon: 'fa-exclamation'
+                };
+                $scope.reorganizations.trace = 'stop';
+                return;
+            }
+            //$scope.reorganizations.all = [];
+            setData(response.data);
+            $scope.refreshReorganization();
+
+        }, function (error) {
+            alertify.alertError($scope._t('error_load_data'));
+        });
+    };
+
+
+
+    /**
+     * Download reorganization log
+     */
+    $scope.downloadReorganizationLog = function () {
+        // Build a log
+        var data = '';
+        angular.forEach($scope.reorganizations.all, function (v, k) {
+            data += v.dateTime.time + ': ' + v.message + '\n';
+        });
+
+        // Download a log
+        var log = data;
+        blob = new Blob([log], {type: 'text/plain'}),
+            url = $window.URL || $window.webkitURL;
+        $scope.fileUrl = url.createObjectURL(blob);
+    };
 
     /**
      * Refresh zwave data
      * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function(ZWaveAPIData) {
-        var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
-                setData(response.data.joined);
-            }, function(error) {});
+    $scope.refreshReorganization = function () {
+        var refresh = function () {
+            dataService.getApi('reorg_log_url', null, true).then(function (response) {
+                setData(response.data);
+            }, function (error) {
+            });
         };
-        $scope.reorganizations.interval = $interval(refresh, $scope.cfg.interval);
+        $scope.reorganizations.interval = $interval(refresh,cfg.reorg_interval);
     };
 
     /// --- Private functions --- ///
@@ -58,30 +142,33 @@ appController.controller('ReorganizationController', function($scope, $filter, $
      * Set zwave data
      * @param {object} ZWaveAPIData
      */
-    function setData(ZWaveAPIData) {
-        var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
-        // Loop throught devices
-        angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-            console.log(node)
-            if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
-                return;
-            }
-            // Set object
-            var obj = {};
-            obj['id'] = nodeId;
-            obj['rowId'] = 'row_' + nodeId + '_';
-            obj['name'] = $filter('deviceName')(nodeId, node);
-            obj['updateTime'] = node.data.updateTime;
-            obj['invalidateTime'] = node.data.invalidateTime;
-            obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
-            obj['dateTime'] = $filter('getDateTimeObj')(obj['updateTime'], obj['invalidateTime']);
-            var findIndex = _.findIndex($scope.reorganizations.all, {rowId: obj.rowId});
-            if(findIndex > -1){
-                angular.extend($scope.reorganizations.all[findIndex],obj);
+    function setData(data) {
+        //$scope.reorganizations.all.push(data);
+        //$scope.reorganizations.all = [];
 
-            }else{
-                $scope.reorganizations.all.push(obj);
+        // Loop throught data
+        angular.forEach(data, function (v, k) {
+
+            /*var obj = {};
+            obj['timestamp'] = v.timestamp;
+            obj['message'] = v.message;
+            obj['dateTime'] = $filter('getDateTimeObj')(v.timestamp / 1000);*/
+            v. dateTime = $filter('getDateTimeObj')(v.timestamp / 1000);
+            var findIndex = _.findIndex($scope.reorganizations.all, {timestamp: v.timestamp});
+
+            if (findIndex === -1) {
+                $scope.reorganizations.all.push(v);
+
+            } else {
+
             }
+            var isComplete = v.message.search("reorg complete");
+            if(isComplete > -1){
+                $scope.setTrace('pause');
+            }
+            //console.log(isComplete);
+
+
         });
     }
 });
@@ -89,7 +176,7 @@ appController.controller('ReorganizationController', function($scope, $filter, $
  * OLD ReorganizationController
  * @author Martin Vach
  */
-appController.controller('ReorganizationOldController', function($scope, $filter, $interval, $timeout, dataService, cfg) {
+appController.controller('ReorganizationOldController', function ($scope, $filter, $interval, $timeout, dataService, cfg) {
 
     $scope.mainsPowered = true;
     $scope.batteryPowered = false;
@@ -100,7 +187,7 @@ appController.controller('ReorganizationOldController', function($scope, $filter
     $scope.reorganizing = true;
     $scope.log = [];
     $scope.logged = "";
-    $scope.appendLog = function(str, line) {
+    $scope.appendLog = function (str, line) {
         if (line !== undefined) {
             $scope.log[line] += str;
         } else {
@@ -109,14 +196,14 @@ appController.controller('ReorganizationOldController', function($scope, $filter
         dataService.putReorgLog($scope.log.join("\n"));
         return $scope.log.length - 1;
     };
-    $scope.downloadLog = function() {
+    $scope.downloadLog = function () {
         var hiddenElement = $('<a id="hiddenElement" href="' + cfg.server_url + cfg.reorg_log_url + '?at=' + (new Date()).getTime() + '" target="_blank" download="reorg.log"></a>').appendTo($('body'));
         hiddenElement.get(0).click();
         hiddenElement.detach();
     };
-    var refreshLog = function() {
+    var refreshLog = function () {
         // Assign to scope within callback to avoid data flickering on screen
-        dataService.getReorgLog(function(log) {
+        dataService.getReorgLog(function (log) {
             $scope.logged = log;
             // scroll to bottom
             var textarea = $("#reorg_log").get(0);
@@ -125,20 +212,20 @@ appController.controller('ReorganizationOldController', function($scope, $filter
     };
     var promise = $interval(refreshLog, 1000);
     // Cancel interval on page changes
-    $scope.$on('$destroy', function() {
+    $scope.$on('$destroy', function () {
         if (angular.isDefined(promise)) {
             $interval.cancel(promise);
             promise = undefined;
         }
     });
-    $scope.reorgNodesNeighbours = function(current, result, doNext) {
+    $scope.reorgNodesNeighbours = function (current, result, doNext) {
         if (("complete" in current) && current.complete) {
             doNext();
             return;
         }
-        dataService.store('devices[' + current.nodeId + '].RequestNodeNeighbourUpdate()', function(response) {
-            var pollForNodeNeighbourUpdate = function(current) {
-                dataService.updateZwaveDataSince(current.since, function(updateZWaveAPIData) {
+        dataService.store('devices[' + current.nodeId + '].RequestNodeNeighbourUpdate()', function (response) {
+            var pollForNodeNeighbourUpdate = function (current) {
+                dataService.updateZwaveDataSince(current.since, function (updateZWaveAPIData) {
                     $scope.appendLog(".", current.line);
                     try {
                         if ("devices." + current.nodeId + ".data.neighbours" in updateZWaveAPIData) {
@@ -148,7 +235,7 @@ appController.controller('ReorganizationOldController', function($scope, $filter
                                 $scope.nodes[current.nodeId].node = $scope.ZWaveAPIData.devices[current.nodeId];
                                 // routes updated
                                 var routesCount = $filter('getRoutesCount')($scope.ZWaveAPIData, current.nodeId);
-                                $.each($scope.ZWaveAPIData.devices, function(nnodeId, nnode) {
+                                $.each($scope.ZWaveAPIData.devices, function (nnodeId, nnode) {
                                     if (!routesCount[nnodeId]) {
                                         return;
                                     }
@@ -205,7 +292,7 @@ appController.controller('ReorganizationOldController', function($scope, $filter
                     }
                     // routes not yet updated, poll again
                     window.setTimeout(pollForNodeNeighbourUpdate, cfg.interval, current);
-                }, function(error) {
+                }, function (error) {
                     // error handler
                     $scope.appendLog(error, current.line);
                     if (current.retry == 3) {
@@ -229,7 +316,7 @@ appController.controller('ReorganizationOldController', function($scope, $filter
             };
             // first polling
             pollForNodeNeighbourUpdate(current);
-        }, function(error) {
+        }, function (error) {
             // error handler
             $scope.appendLog(error, current.line);
             if (current.type == "battery") {
@@ -249,7 +336,7 @@ appController.controller('ReorganizationOldController', function($scope, $filter
             doNext();
         });
     };
-    $scope.processReorgNodesNeighbours = function(result, pos) {
+    $scope.processReorgNodesNeighbours = function (result, pos) {
         if ($scope.processQueue.length <= pos) {
             if ($scope.reorganizing) {
                 $scope.appendLog($scope._t('reorg_completed') + ":");
@@ -280,20 +367,20 @@ appController.controller('ReorganizationOldController', function($scope, $filter
         }
         if (current.fork) {
             // batteries are processed in parallel, forking
-            $scope.reorgNodesNeighbours(current, result, function() {
+            $scope.reorgNodesNeighbours(current, result, function () {
             });
             pos++;
             $scope.processReorgNodesNeighbours(result, pos);
         } else {
             // main powereds are processed sequential
-            $scope.reorgNodesNeighbours(current, result, function() {
+            $scope.reorgNodesNeighbours(current, result, function () {
                 pos++;
                 $scope.processReorgNodesNeighbours(result, pos);
             });
         }
     };
     // reorgAll routes
-    $scope.reorgAll = function() {
+    $scope.reorgAll = function () {
         $scope.reorganizing = true;
         $scope.log = [];
         $scope.appendLog($scope._t('reorg_started'));
@@ -303,9 +390,15 @@ appController.controller('ReorganizationOldController', function($scope, $filter
         if ($scope.mainsPowered) {
             for (var retry = 0; retry < 4; retry++) {
                 // first RequestNodeNeighbourUpdate for non-battery devices
-                $.each($scope.devices, function(index, nodeId) {
+                $.each($scope.devices, function (index, nodeId) {
                     if ($filter('updateable')($scope.nodes[nodeId].node, nodeId, false)) {
-                        $scope.processQueue.push({"nodeId": nodeId, "retry": retry, "type": "mains", "since": $scope.ZWaveAPIData.updateTime, "fork": false});
+                        $scope.processQueue.push({
+                            "nodeId": nodeId,
+                            "retry": retry,
+                            "type": "mains",
+                            "since": $scope.ZWaveAPIData.updateTime,
+                            "fork": false
+                        });
                         if (retry == 0) {
                             if (logInfo != "") {
                                 logInfo += ", ";
@@ -323,9 +416,15 @@ appController.controller('ReorganizationOldController', function($scope, $filter
         if ($scope.batteryPowered) {
             for (var retry = 0; retry < 4; retry++) {
                 // second RequestNodeNeighbourUpdate for battery devices
-                $.each($scope.devices, function(index, nodeId) {
+                $.each($scope.devices, function (index, nodeId) {
                     if ($filter('updateable')($scope.nodes[nodeId].node, nodeId, true)) {
-                        $scope.processQueue.push({"nodeId": nodeId, "retry": retry, "type": "battery", "since": $scope.ZWaveAPIData.updateTime, "fork": true});
+                        $scope.processQueue.push({
+                            "nodeId": nodeId,
+                            "retry": retry,
+                            "type": "battery",
+                            "since": $scope.ZWaveAPIData.updateTime,
+                            "fork": true
+                        });
                         if (retry == 0) {
                             if (logInfo != "") {
                                 logInfo += ", ";
@@ -344,11 +443,11 @@ appController.controller('ReorganizationOldController', function($scope, $filter
         $scope.processReorgNodesNeighbours({}, 0);
     };
     // Load data
-    $scope.load = function(lang) {
-        dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
+    $scope.load = function (lang) {
+        dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
             // Prepare devices and nodes
-            angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+            angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
                 if (nodeId == 255 || node.data.isVirtual.value || node.data.basicType.value == 1)
                     return;
                 $scope.devices.push(nodeId);
