@@ -1,4 +1,7 @@
 {
+ "reorg_empty": "There are no data available",
+ "stop":"Stop",
+ "pause":"Pause",
  "sleeping_since_approximately": "Can not precisely calculate next wakeup time",
  "very_good":"Very Good",
  "good":"Good",
