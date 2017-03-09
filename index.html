@@ -169,9 +169,9 @@
                             <ul>
                                 <li><a href="#network/control" ng-class="isActive('control',2)">{{ _t('nav_control') }}</a></li>
                                <!-- <li ng-if="cfg.app_type === 'installer'">-->
-                                <li>
+                                <!--<li>
                                     <a href="#network/statistics" ng-class="isActive('statistics',2)">{{ _t('statistics') }}</a>
-                                </li>
+                                </li>-->
                                 <li><a href="#network/neighbors" ng-class="isActive('neighbors',2)">{{ _t('neighbors') }}</a></li>
                                 <!-- <li><a class="a-disabled" title="Temporary disabled. Will be back in the next release." ng-class="isActive('reorganization',2)">{{ _t('nav_reorganization') }}</a></li>-->
                                 <li><a href="#network/reorganization" ng-class="isActive('reorganization',2)">{{ _t('nav_reorganization') }}</a></li>
@@ -196,9 +196,9 @@
 
                     <!-- Analytics -->
                     <!--<li class="navibar-divider" ng-if="cfg.app_type === 'installer'"> </li>-->
-                    <li class="navibar-divider"> </li>
+                    <li class="navibar-divider"  ng-if="cfg.analytics.show"> </li>
                    <!-- <li class="navibar-item" ng-click="expandNavi('naviInstaller', $event)"  ng-if="cfg.app_type === 'installer'">-->
-                    <li class="navibar-item" ng-click="expandNavi('naviInstaller', $event)">
+                    <li class="navibar-item" ng-click="expandNavi('naviInstaller', $event)" ng-if="cfg.analytics.show">
                         <a class="navibar-item-root" href="" title="{{_t('installer')}}" ng-class="isActive('installer',1)">
                             <i class="fa fa-signal"></i> <span class="main-nav-name">{{ _t('nav_installer')}}</span>
                         </a>
@@ -208,6 +208,9 @@
                                 <li><a href="#installer/rssi" ng-class="isActive('rssi',2)">{{ _t('nav_rssi') }}</a></li>
                                 <li><a href="#installer/rssimeter" ng-class="isActive('rssimeter',2)">{{ _t('nav_rssimeter') }}</a></li>
                                 <li><a href="#installer/history" ng-class="isActive('history',2)">{{ _t('nav_history') }}</a></li>
+                                <li>
+                                    <a href="#network/statistics" ng-class="isActive('statistics',2)">{{ _t('statistics') }}</a>
+                                </li>
 
                                 <!--<li><a href="#installer/spectrum" ng-class="isActive('spectrum',2)">{{ _t('nav_spectrum_analyzer') }}</a></li>-->
                             </ul>
@@ -257,6 +260,7 @@
 </div>
 <!-- Ang Container -->
 <div id="main_content" class="container">
+    {{cfg.statistics}}
     <div ng-if="cfg.route.fatalError.message">
         <div class="app-fatal-error">
             <div class="fatal-error-message"><i class="fa {{cfg.route.fatalError.icon}} fa-lg"></i> {{cfg.route.fatalError.message}}</div>

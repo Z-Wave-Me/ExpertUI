@@ -188,7 +188,7 @@ angApp.filter('unique', function () {
  * @function setTimeFromBox
  */
 angApp.filter('setTimeFromBox', function (cfg, $filter) {
-    return function (timestamp,offset) {
+    return function (timestamp, offset) {
         // time from server comes with correct added timezone offset so it isn't necessary to add it again
         var d = new Date(timestamp * 1000);
         // browser add his own tz offset to date object so it is necessary to remove it's offset
@@ -210,7 +210,7 @@ angApp.filter('setTimeFromBox', function (cfg, $filter) {
  * @function getDateTimeObj
  */
 angApp.filter('getDateTimeObj', function ($filter, cfg) {
-    return function (timestamp,invalidateTime) {
+    return function (timestamp, invalidateTime) {
         // Count time with offset http://stackoverflow.com/questions/7403486/add-or-subtract-timezone-difference-to-javascript-date
         /* ----------- NEW with time offset ----------- */
         var targetTime = (timestamp ? new Date(timestamp * 1000) : new Date());
@@ -226,23 +226,23 @@ angApp.filter('getDateTimeObj', function ($filter, cfg) {
         //convert the offset to milliseconds, add to targetTime, and make a new Date
         var d = new Date(targetTime.getTime() + tzo + browserTZO);
 
-        var di = (invalidateTime ? new Date(invalidateTime * 1000  + tzo + browserTZO) : null);
+        var di = (invalidateTime ? new Date(invalidateTime * 1000 + tzo + browserTZO) : null);
         var obj = {
             date: $filter('getFormattedDate')(d),
             time: $filter('getFormattedTime')(
                 d,
                 false,
-                cfg.zwavecfg.time_format,d
+                cfg.zwavecfg.time_format, d
             ),
             invalidateTime: (di ?
             $filter('getFormattedDate')(di) + ' '
-            + $filter('getFormattedTime')(di,false,cfg.zwavecfg.time_format)
-            : ''),
+            + $filter('getFormattedTime')(di, false, cfg.zwavecfg.time_format)
+                : ''),
             today: (d.toDateString() === (new Date()).toDateString()
                 ? $filter('getFormattedTime')(
-                    d,
-                    'hh:mm',
-                    cfg.zwavecfg.time_format
+                d,
+                'hh:mm',
+                cfg.zwavecfg.time_format
             )
                 : $filter('getFormattedDate')(d))
 
@@ -289,7 +289,7 @@ angApp.filter('isTodayFromUnix', function (cfg, $filter) {
  * @function getFormattedTime
  */
 angApp.filter('getFormattedTime', function () {
-    return function (date,stringFormat,timeFormat) {
+    return function (date, stringFormat, timeFormat) {
         var str = '';
         var suffix = '';
 
@@ -302,21 +302,21 @@ angApp.filter('getFormattedTime', function () {
         //console.log(h,m)
 
         // 12 hrs format?
-        if(timeFormat === '12' ){
-            h =  h % 12 || 12;
+        if (timeFormat === '12') {
+            h = h % 12 || 12;
             suffix = (h < 12) ? ' AM' : ' PM';
         }
         h = (h < 10) ? "0" + h : h;
 
         switch (stringFormat) {
             case 'hh:mm':
-                str =  h + ':' + m;
+                str = h + ':' + m;
                 break;
             case 'hh':
-                str =  h;
+                str = h;
                 break;
             default:
-                str =  h + ':' + m + ':' + s;
+                str = h + ':' + m + ':' + s;
                 break;
         }
         return str + suffix;
@@ -330,30 +330,30 @@ angApp.filter('getFormattedTime', function () {
  * @function getFormattedTime
  */
 angApp.filter('getFormattedTime____', function () {
-    return function (time,stringFormat,timeFormat) {
+    return function (time, stringFormat, timeFormat) {
         var str = '';
         var suffix = '';
         var arr = time.split(':').map(function (x) {
             return parseInt(x, 10);
         });
         // 12 hrs format?
-        if(timeFormat === '12' ){
-            arr[0] =  arr[0] % 12 || 12;
+        if (timeFormat === '12') {
+            arr[0] = arr[0] % 12 || 12;
             suffix = (arr[0] < 12) ? ' AM' : ' PM';
         }
 
         var h = arr[0];
-        var m =(arr[1] < 10 ? '0' +  arr[1] :  arr[1]);
-        var s = (arr[2] < 10 ? '0' +  arr[2] :  arr[2]);
+        var m = (arr[1] < 10 ? '0' + arr[1] : arr[1]);
+        var s = (arr[2] < 10 ? '0' + arr[2] : arr[2]);
         switch (stringFormat) {
             case 'hh:mm':
-                str =  h + ':' + m;
+                str = h + ':' + m;
                 break;
             case 'hh':
-                str =  h;
+                str = h;
                 break;
             default:
-                str =  h + ':' + m + ':' + s;
+                str = h + ':' + m + ':' + s;
                 break;
         }
         //var time = h + ':' + m + ':' + s;
@@ -402,6 +402,31 @@ angApp.filter('getMysqlFromNow', function () {
         var m = (date.getMinutes() < 10) ? "0" + date.getMinutes() : date.getMinutes();
         var s = (date.getSeconds() < 10) ? "0" + date.getSeconds() : date.getSeconds();
         return year + "-" + month + "-" + day + " " + h + ":" + m + ":" + s;
+    };
+});
+
+/**
+ * Compare software version number
+ * Return values:
+ * a number < 0 if a < b
+ * a number > 0 if a > b
+ * 0 if a = b
+ */
+angApp.filter('cmpVersion', function () {
+    return function (a, b) {
+        var i, diff;
+        var regExStrip0 = /(\.0+)+$/;
+        var segmentsA = a.replace(regExStrip0, '').split('.');
+        var segmentsB = b.replace(regExStrip0, '').split('.');
+        var l = Math.min(segmentsA.length, segmentsB.length);
+
+        for (i = 0; i < l; i++) {
+            diff = parseInt(segmentsA[i], 10) - parseInt(segmentsB[i], 10);
+            if (diff) {
+                return diff;
+            }
+        }
+        return segmentsA.length - segmentsB.length;
     };
 });
 
@@ -492,12 +517,12 @@ angApp.filter('toTrusted', ['$sce', function ($sce) {
 /**
  * Display device name
  */
-angApp.filter('deviceName', function (cfg,deviceService) {
+angApp.filter('deviceName', function (cfg, deviceService) {
     return function (deviceId, device) {
-        if(deviceId == cfg.controller.zwayNodeId){
+        if (deviceId == cfg.controller.zwayNodeId) {
             return deviceService.getCustomCfgVal('controller_name');
         }
-        var name ='Device ' + '_' + deviceId;
+        var name = 'Device ' + '_' + deviceId;
         if (device === undefined) {
             return name;
         }
@@ -671,7 +696,7 @@ angApp.filter('getBatteryIcon', function () {
             icon = 'fa-battery-3 text-success';
         } else if (level >= 50 && level < 70) {
             icon = 'fa-battery-2 text-primary';
-        }else if (level > 30 && level <= 50) {
+        } else if (level > 30 && level <= 50) {
             icon = 'fa-battery-2 text-info';
         } else if (level >= 1 && level <= 30) {
             icon = 'fa-battery-1 text-danger';

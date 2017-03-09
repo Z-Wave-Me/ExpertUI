@@ -439,7 +439,8 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
             var hasDevices = Object.keys(ZWaveAPIData.devices).length;
             var homeId = ZWaveAPIData.controller.data.homeId.value;
             var zwayNodeId = ZWaveAPIData.controller.data.nodeId.value;
-
+            var APIVersion = ZWaveAPIData.controller.data.APIVersion.value;
+            var showAnalytics = $filter('cmpVersion')(APIVersion,cfg.analytics.required);
             // Changes MK
             //$scope.boxData.controller.controllerState = ZWaveAPIData.controller.data.controllerState.value;
             // Rewrite config
@@ -449,9 +450,14 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
                 homeId: homeId,
                 homeIdHex: '0x' + ('00000000' + (homeId + (homeId < 0 ? 0x100000000 : 0)).toString(16)).slice(-8),
                 hasDevices: hasDevices < 2 ? false : true,
-                zwayNodeId: zwayNodeId
+                zwayNodeId: zwayNodeId,
+                APIVersion: APIVersion
             }
+
             angular.extend(cfg.controller,cfgController);
+            if(showAnalytics > -1){
+                angular.extend(cfg.analytics,{show: true});
+            }
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
 
@@ -473,18 +479,35 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
      * Load common APIs
      */
     if($scope.getBodyId() !== ''){
+        console.log(cmpVersions('05.19','05.20'))
         $scope.loadZwaveConfig();
         $scope.setDongle();
         $scope.setTimeStamp();
         $scope.loadBusyIndicator();
-        if(cfg.app_type === 'installer'){
+        $scope.loadBoxApiData();
+        /*if(cfg.app_type === 'installer'){
 
             $scope.loadBoxApiData();
         }
-
+*/
     }
 
     /// --- Private functions --- ///
+    function cmpVersions (a, b) {
+        var i, diff;
+        var regExStrip0 = /(\.0+)+$/;
+        var segmentsA = a.replace(regExStrip0, '').split('.');
+        var segmentsB = b.replace(regExStrip0, '').split('.');
+        var l = Math.min(segmentsA.length, segmentsB.length);
+
+        for (i = 0; i < l; i++) {
+            diff = parseInt(segmentsA[i], 10) - parseInt(segmentsB[i], 10);
+            if (diff) {
+                return diff;
+            }
+        }
+        return segmentsA.length - segmentsB.length;
+    }
     /**
      * Set busy indicator
      * @param {object} ZWaveAPIData

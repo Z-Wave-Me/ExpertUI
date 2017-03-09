@@ -13,7 +13,7 @@ appController.controller('ReorganizationController', function ($scope, $filter, 
             reorgMain: true,
             reorgBattery: false
         },
-        trace: 'run',
+        trace: 'stop',
         run: false,
         all: [],
         interval: null,
@@ -77,7 +77,7 @@ appController.controller('ReorganizationController', function ($scope, $filter, 
             alertify.alertError($scope._t('error_load_data'));
         });
     };
-    $scope.runReorganization($scope.reorganizations.input);
+    //$scope.runReorganization($scope.reorganizations.input);
 
     /**
      * Load reorganization log
@@ -162,10 +162,10 @@ appController.controller('ReorganizationController', function ($scope, $filter, 
             } else {
 
             }
-            var isComplete = v.message.search("reorg complete");
+            /*var isComplete = v.message.search("reorg complete");
             if(isComplete > -1){
                 $scope.setTrace('pause');
-            }
+            }*/
             //console.log(isComplete);
 
 
