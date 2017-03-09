@@ -32,10 +32,11 @@ appController.controller('ReorganizationController', function ($scope, $filter, 
      * Set trace
      */
     $scope.setTrace = function (trace, input) {
+        $interval.cancel($scope.reorganizations.interval);
         switch (trace) {
             case 'pause':
                 $scope.reorganizations.trace = 'pause';
-                $interval.cancel($scope.reorganizations.interval);
+                //$interval.cancel($scope.reorganizations.interval);
                 $scope.reorganizations.run = false;
                 break;
             case 'run':
@@ -50,7 +51,7 @@ appController.controller('ReorganizationController', function ($scope, $filter, 
             case 'stop':
                 $scope.reorganizations.all = [];
                 $scope.reorganizations.trace = 'stop';
-                $interval.cancel($scope.reorganizations.interval);
+                //$interval.cancel($scope.reorganizations.interval);
                 $scope.reorganizations.run = false;
                 break;
             default:

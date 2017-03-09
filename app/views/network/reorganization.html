@@ -17,6 +17,7 @@
             <!-- Start -->
             <button class="btn btn-default" title="{{ _t('reorg_start')}}"
                     ng-click="setTrace('run',reorganizations.input)"
+                    ng-disabled="reorganizations.trace === 'run'"
                     ng-class="reorganizations.trace === 'run' ? 'active' : ''">
                 <i class="fa fa-play"></i>
             </button>
