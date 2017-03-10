@@ -116,11 +116,6 @@ angApp.config(function ($provide, $httpProvider, cfg) {
             // On response failture
             responseError: function (rejection) {
                 deviceService.logError(rejection);
-                if (rejection.status === 401 && cfg.app_type !== 'installer') {
-                    console.log('indow.location.href = cfg.smarthome_login')
-                    //$location.path(cfg.smarthome_login);
-                    //window.location.href = cfg.smarthome_login;
-                }
                 /*if(config_data.cfg.app_type === "installer" && rejection.data.code == 401) {
                     //alertify.alertWarning($scope._t('Login'));
                     $location.path("/");

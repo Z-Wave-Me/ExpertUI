@@ -391,8 +391,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
 
         }, function (error) {
             if (error.status === 401 && cfg.app_type !== 'installer') {
-                console.log('indow.location.href = cfg.smarthome_login')
-                //window.location.href = cfg.smarthome_login;
+                window.location.href = cfg.smarthome_login;
             }
             // todo: deprecated
             /*if (error.status === 401) {
