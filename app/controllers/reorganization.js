@@ -17,7 +17,8 @@ appController.controller('ReorganizationController', function ($scope, $filter, 
         run: false,
         all: [],
         interval: null,
-        show: false
+        show: false,
+        lastUpdate: 0
     };
 
 
@@ -66,6 +67,7 @@ appController.controller('ReorganizationController', function ($scope, $filter, 
      */
     $scope.runReorganization = function (input) {
         var params = '?reorgMain=' + input.reorgMain + '&reorgBattery=' + input.reorgBattery;
+        $scope.reorganizations.all = [];
         $scope.reorganizations.run = false;
         dataService.getApi('reorg_run_url', params, true).then(function (response) {
             $scope.reorganizations.run = {
@@ -73,7 +75,7 @@ appController.controller('ReorganizationController', function ($scope, $filter, 
                 status: 'alert-success',
                 icon: 'fa-spinner fa-spin'
             };
-            $scope.loadReorganizationLog();
+            $scope.loadReorganizationLog(true);
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
         });
@@ -83,7 +85,7 @@ appController.controller('ReorganizationController', function ($scope, $filter, 
     /**
      * Load reorganization log
      */
-    $scope.loadReorganizationLog = function () {
+    $scope.loadReorganizationLog = function (refresh) {
         dataService.getApi('reorg_log_url', null, true).then(function (response) {
             //response.data = [];
             if(_.isEmpty(response.data)){
@@ -95,9 +97,14 @@ appController.controller('ReorganizationController', function ($scope, $filter, 
                 $scope.reorganizations.trace = 'stop';
                 return;
             }
+
             //$scope.reorganizations.all = [];
             setData(response.data);
-            $scope.refreshReorganization();
+            if (refresh) {
+                $scope.refreshReorganization();
+            } else {
+                $scope.reorganizations.lastUpdate = $filter('getDateTimeObj')(response.data.pop().timestamp / 1000);
+            }
 
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
@@ -172,6 +179,8 @@ appController.controller('ReorganizationController', function ($scope, $filter, 
 
         });
     }
+
+    $scope.loadReorganizationLog();
 });
 /**
  * OLD ReorganizationController
