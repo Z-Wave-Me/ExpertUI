@@ -353,7 +353,11 @@ angApp.directive('expertCommandInput', function (cfg,$filter) {
         var value = (currValue !== undefined ? currValue : defaultValue);
         angular.forEach(enums.enumof, function (v, k) {
             //var inName =  $filter('stringToSlug')(name ? v.name : label);
-            var inName = (name ? name : v.name);// + '_' +label;
+            var inName = (name ? name + '_' +label : v.name);// + '_' +label;
+           /* var inName = v.name;
+                if(name){
+                    inName = name  + '_' +label;
+                }*/
             //console.log(inName);
             var title = v.label || '';
             var type = v.type;

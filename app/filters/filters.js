@@ -25,7 +25,8 @@ angApp.filter('hasNode', function () {
  * Convert text to slug
  */
 angApp.filter('stringToSlug', function () {
-    return function (str) {
+    return function (str,delim) {
+        delim = delim||'-';
         str = str.replace(/^\s+|\s+$/g, ''); // trim
         str = str.toLowerCase();
 
@@ -37,8 +38,8 @@ angApp.filter('stringToSlug', function () {
         }
 
         str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
-            .replace(/\s+/g, '-') // collapse whitespace and replace by -
-            .replace(/-+/g, '-'); // collapse dashes
+            .replace(/\s+/g,  delim) // collapse whitespace and replace by -
+            .replace(/-+/g,  delim); // collapse dashes
 
         return str;
     };
