@@ -227,7 +227,8 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
                 if (Object.keys(node.instances[iId].commandClasses).length < 1) {
                     return;
                 }
-                angular.extend($scope.zwaveInterview, {commandClassesCnt: Object.keys(node.instances[iId].commandClasses).length});
+                //angular.extend($scope.zwaveInterview, {commandClassesCnt: Object.keys(node.instances[iId].commandClasses).length});
+                $scope.zwaveInterview.commandClassesCnt +=  Object.keys(node.instances[iId].commandClasses).length;
                 for (var ccId in node.instances[iId].commandClasses) {
                     var cmdClass = node.instances[iId].commandClasses[ccId];
                     // Is interview done?
