@@ -74,7 +74,8 @@ appController.controller('ThermostatController', function($scope, $filter, $time
      * @param {int}  index
      * @param {string}  type
      */
-    $scope.updateThermostatTempClick = function(url, index, type) {
+    $scope.updateThermostatTempClick = function(v, index, type) {
+        var url = v.urlChangeTemperature;
         $scope.toggleRowSpinner(url);
         var val = $scope.thermostats.rangeSlider[index];
         var min = parseInt($scope.cfg.thermostat_range.min, 10);
@@ -87,7 +88,7 @@ appController.controller('ThermostatController', function($scope, $filter, $time
             count = max;
         }
         $scope.thermostats.rangeSlider[index] = count;
-        url = url + '.Set(' + count + ')';
+        url += '.Set('+v.curThermMode+',' + count + ')';
         updateThermostat(url);
     };
 
@@ -104,7 +105,8 @@ appController.controller('ThermostatController', function($scope, $filter, $time
      * @param {string} cmd
      * @param {int} index
      */
-    $scope.sliderOnHandleUp = function(url, index) {
+    $scope.sliderOnHandleUp = function(v, index) {
+        var url = v.urlChangeTemperature
         $scope.toggleRowSpinner(url);
         $scope.refreshZwaveData(null);
         var count = parseInt($scope.thermostats.rangeSlider[index]);
@@ -117,7 +119,7 @@ appController.controller('ThermostatController', function($scope, $filter, $time
             count = max;
         }
         $scope.thermostats.rangeSlider[index] = count;
-        url = url + '.Set(' + count + ')';
+        url += '.Set('+v.curThermMode+',' + count + ')';
         updateThermostat(url);
     };
 
