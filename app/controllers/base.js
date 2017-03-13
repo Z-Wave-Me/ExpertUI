@@ -404,7 +404,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
             }
 
             angular.extend(cfg.controller,cfgController);
-            if(showAnalytics > -1){
+            if(cfg.app_type === 'installer' ||  showAnalytics > -1){
                 angular.extend(cfg.analytics,{show: true});
             }
         }, function (error) {
