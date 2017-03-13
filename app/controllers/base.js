@@ -47,12 +47,13 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     $scope.lang_list = cfg.lang_list;
     // Set language
     $scope.lang = (angular.isDefined($cookies.lang) ? $cookies.lang : cfg.lang);
-    $('.current-lang').html($scope.lang);
+    //TODO: deprecated
+    /*$('.current-lang').html($scope.lang);
     $scope.changeLang = function (lang) {
         $window.alert($scope._t('language_select_reload_interface'));
         $cookies.lang = lang;
         $scope.lang = lang;
-    };
+    };*/
     // Load language files
     $scope.loadLang = function (lang) {
         // Is lang in language list?
@@ -61,27 +62,20 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
             angular.extend($scope.languages, response.data);
         }, function (error) {
         });
-        // todo: deprecated
-        /*// Is lang in language list?
-        var lang = (cfg.lang_list.indexOf(lang) > -1 ? lang : cfg.lang);
-        dataService.getLanguageFile(function (data) {
-            $cookies.langFile = {'ab': 25};
-            $scope.languages = data;
-        }, lang);*/
+     };
+    $scope.loadLang($scope.lang);
 
-
-    };
     // Get language lines
     $scope._t = function (key, replacement) {
         return deviceService.getLangLine(key, $scope.languages, replacement);
     };
 
     // Watch for lang change
-    //TODO: display a dialog "Page will be reloaded..." and auto reload page
-    $scope.$watch('lang', function () {
+    //TODO: deprecated
+    /*$scope.$watch('lang', function () {
         $('.current-lang').html($scope.lang);
         $scope.loadLang($scope.lang);
-    });
+    });*/
     // Order by
     $scope.orderBy = function (field) {
         $scope.orderByArr = {
@@ -137,33 +131,6 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
         myCache.removeAll();
         $route.reload();
     };
-
-    // todo: deprecated
-    /**
-     * Route on change start
-     */
-    /*$rootScope.$on("$routeChangeStart", function(event, next, current) {
-        if(config_data.cfg.app_type === "installer") {
-            console.log(event);
-            console.log(current);
-            var input = config_data.cfg.auth;
-            dataService.logInApi(input).then(function (response) {
-                var user = response.data.data;
-                deviceService.setZWAYSession(user.sid);
-                deviceService.setUser(user);
-                //$window.location.reload();
-            }, function (error) {
-                $scope.loading = false;
-                var message = $scope._t('error_load_data');
-                if (error.status == 401) {
-                    message = $scope._t('error_load_user');
-                }
-                alertify.alertError(message);
-            });
-        }
-        console.log(event);
-        console.log(current);
-    });*/
 
     $scope.naviExpanded = {};
     /**
@@ -282,14 +249,6 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     $scope.getCustomCfgVal = function (key) {
         return deviceService.getCustomCfgVal(key);
     };
-    // todo: deprecated
-    /*$scope.getCustomCfgArr = function (key) {
-        if (cfg.custom_cfg[cfg.app_type]) {
-            return cfg.custom_cfg[cfg.app_type][key] || '';
-        }
-        return '';
-    };*/
-
     // Alertify defaults
     alertify.defaults.glossary.title = cfg.app_name;
     alertify.defaults.glossary.ok = 'OK';
@@ -351,9 +310,6 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     $scope.loadZwaveConfig = function (nocache) {
         // Set config
         dataService.getApi('configget_url', null, nocache).then(function (response) {
-            // todo: deprecated
-            //angular.extend(cfg.zwavecfg, {debug: response.data.debug});
-            //angular.extend(cfg.zwavecfg, {notes: response.data.notes});
             angular.extend(cfg.zwavecfg, response.data);
         }, function (error) {});
     };
@@ -390,18 +346,11 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
                 });
 
         }, function (error) {
-            if (error.status === 401 && cfg.app_type !== 'installer') {
-                window.location.href = cfg.smarthome_login;
-            }
             // todo: deprecated
-            /*if (error.status === 401) {
-             //var redirectTo = $location.$$protocol+'://' + $location.$$host + ':' + $location.$$port + cfg.smarthome_login
-             //if( cfg.app_type === 'installer'){
-             //deviceService.logOut();
-             return;
-             //}
-             //window.location.href = cfg.smarthome_login;
-             }*/
+           /* if (error.status === 401 && cfg.app_type !== 'installer') {
+                window.location.href = cfg.smarthome_login;
+            }*/
+
         });
     };
 

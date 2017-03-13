@@ -116,27 +116,10 @@ angApp.config(function ($provide, $httpProvider, cfg) {
             // On response failture
             responseError: function (rejection) {
                 deviceService.logError(rejection);
-                /*if(config_data.cfg.app_type === "installer" && rejection.data.code == 401) {
-                    //alertify.alertWarning($scope._t('Login'));
-                    $location.path("/");
-                    return $q.reject(rejection);
-                } else {
-                    // Return the promise rejection.
-                    return $q.reject(rejection);
-                }*/
-
-
-                /*switch(rejection.status){
-                    case 401:
-                        if (path[1] !== '') {
-                            deviceService.logOut();
-                            break;
-
-                        }
-                    default:
-                        break;
-
-                }*/
+                if (rejection.status === 401 && cfg.app_type !== 'installer') {
+                    console.log(cfg.smarthome_login)
+                    window.location.href = cfg.smarthome_login;
+                }
                 // Return the promise rejection.
                 return $q.reject(rejection);
             }

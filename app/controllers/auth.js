@@ -7,8 +7,10 @@
  * @class AuthController
  *
  */
-appController.controller('AuthController', function($location) {
-    $location.path('/home');
+appController.controller('AuthController', function($location,$window) {
+    //$location.path('/home');
+    window.location = '#/home';
+    $window.location.reload();
 
 });
 
