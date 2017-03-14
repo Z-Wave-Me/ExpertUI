@@ -11,6 +11,7 @@
  */
 appController.controller('StatusController', function ($scope, $filter, $timeout, $interval, dataService, cfg, _, deviceService) {
     $scope.statuses = {
+        ids: [],
         all: [],
         interval: null,
         show: false
@@ -62,7 +63,22 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
     $scope.refreshZwaveData = function () {
         var refresh = function () {
             dataService.loadJoinedZwaveData().then(function (response) {
-                setData(response.data.joined);
+                //setData(response.data.joined);
+                var update = false;
+                angular.forEach(response.data.update, function(v, k) {
+                    // Get node ID from response
+                    var findId = k.split('.')[1];
+                    // Check if node ID is in the available devices
+                    if($scope.statuses.ids.indexOf(findId) > -1){
+                        update = true;
+                        //console.log('Updating nodeId: ',findId);
+                        return;
+                    }
+                });
+                // Update found - updating available devices
+                if(update){
+                    setData(response.data.joined);
+                }
             }, function (error) {
             });
         };
@@ -192,10 +208,14 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
             obj['interviewDone'] = interviewDone(node);
             var findIndex = _.findIndex($scope.statuses.all, {rowId: obj.rowId});
             if (findIndex > -1) {
+                //console.log('Updating nodeId: ',obj.rowId);
                 angular.extend($scope.statuses.all[findIndex], obj);
 
             } else {
                 $scope.statuses.all.push(obj);
+            }
+            if( $scope.statuses.ids.indexOf(nodeId) === -1){
+                $scope.statuses.ids.push(nodeId);
             }
             $scope.interviewCommandsDevice.push(node.data);
         });

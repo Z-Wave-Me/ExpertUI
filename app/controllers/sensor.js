@@ -10,6 +10,7 @@
  */
 appController.controller('SensorsController', function($scope, $filter, $timeout,$interval,cfg,dataService,_) {
     $scope.sensors = {
+        ids: [],
         all: [],
         interval: null,
         show: false
@@ -45,7 +46,21 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
     $scope.refreshZwaveData = function() {
         var refresh = function() {
             dataService.loadJoinedZwaveData().then(function(response) {
-                setData(response.data.joined);
+                var update = false;
+                angular.forEach(response.data.update, function(v, k) {
+                    // Get node ID from response
+                    var findId = k.split('.')[1];
+                    // Check if node ID is in the available devices
+                    if($scope.sensors.ids.indexOf(findId) > -1){
+                        update = true;
+                        //console.log('Updating nodeId: ',findId);
+                        return;
+                    }
+                });
+                // Update found - updating available devices
+                if(update){
+                    setData(response.data.joined);
+                }
             }, function(error) {});
         };
         $scope.sensors.interval = $interval(refresh, $scope.cfg.interval);
@@ -98,19 +113,17 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
         $scope.updateTime = ZWaveAPIData.updateTime;
         $scope.controllerId = ZWaveAPIData.controller.data.nodeId.value;
 
-        // Loop throught devices
         var cnt = 0;
+        // Loop through devices
         angular.forEach(ZWaveAPIData.devices, function(device, k) {
             if (k == 255 || k == $scope.controllerId || device.data.isVirtual.value) {
                 return false;
             }
-            // Loop throught instances
-
+            // Loop through instances
             angular.forEach(device.instances, function(instance, instanceId) {
                 if (instanceId == 0 && device.instances.length > 1) {
                     return;
-                }
-                // Look for SensorBinary - Loop throught 0x30 commandClasses
+                }// Look for SensorBinary - Loop throught 0x30 commandClasses
                 var sensorBinary = instance.commandClasses[0x30];
 
                 if (angular.isObject(sensorBinary)) {
@@ -146,6 +159,9 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
 
                         }else{
                             $scope.sensors.all.push(obj);
+                        }
+                        if($scope.sensors.ids.indexOf(k) === -1){
+                            $scope.sensors.ids.push(k);
                         }
                     });
                 }
@@ -187,9 +203,11 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
 
                         }else{
                             $scope.sensors.all.push(obj);
+
                         }
-                        // Push to sensors
-                       // $scope.sensors.all.push(obj);
+                        if($scope.sensors.ids.indexOf(k) === -1){
+                            $scope.sensors.ids.push(k);
+                        }
                     });
                 }
 
@@ -234,8 +252,11 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
 
                         }else{
                             $scope.sensors.all.push(obj);
+                            $scope.sensors.ids.push(k);
                         }
-                        //$scope.sensors.all.push(obj);
+                        if($scope.sensors.ids.indexOf(k) === -1){
+                            $scope.sensors.ids.push(k);
+                        }
                     });
                 }
 
@@ -275,8 +296,10 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
                         }else{
                             $scope.sensors.all.push(obj);
                         }
-                        // Push to sensors
-                        //$scope.sensors.all.push(obj);
+                        if($scope.sensors.ids.indexOf(k) === -1){
+                            $scope.sensors.ids.push(k);
+                        }
+
                     });
                 }
 

@@ -10,6 +10,7 @@
  */
 appController.controller('TypeController', function($scope, $filter, $timeout,$interval,$q,dataService, cfg,_,deviceService) {
     $scope.devices = {
+        ids: [],
         all: [],
         show: false,
         interval: null
@@ -78,7 +79,21 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
     $scope.refreshZwaveData = function() {
         var refresh = function() {
             dataService.loadJoinedZwaveData().then(function(response) {
-                setData(response.data.joined);
+                var update = false;
+                angular.forEach(response.data.update, function(v, k) {
+                    // Get node ID from response
+                    var findId = k.split('.')[1];
+                    // Check if node ID is in the available devices
+                    if($scope.devices.ids.indexOf(findId) > -1){
+                        update = true;
+                        return;
+                    }
+                });
+                // Update found - updating available devices
+                if(update){
+                    setData(response.data.joined);
+                }
+                //setData(response.data.joined);
             }, function(error) {});
         };
         $scope.devices.interval = $interval(refresh, $scope.cfg.interval);
@@ -215,6 +230,9 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
                     });
                 }
 
+            }
+            if($scope.devices.ids.indexOf(nodeId) === -1){
+                $scope.devices.ids.push(nodeId);
             }
         });
     }

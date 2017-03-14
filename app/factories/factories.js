@@ -305,18 +305,19 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
     /**
      * Get updated data and join with ZwaveData
      */
-    function  loadJoinedZwaveData(ZWaveAPIData) {
-        var time = Math.round(+new Date() / 1000);
+    function  loadJoinedZwaveData() {
         var cacheName = 'zwaveapidata';
         var apiData = myCache.get(cacheName);// || ZWaveAPIData;
-        //console.log(apiData)
-        var result = {};
+        var result = {
+            joined: apiData,
+            update: {}
+        };
         return $http({
             method: 'post',
             url: cfg.server_url + cfg.update_url + updatedTime
         }).then(function (response) {
-            if (typeof response.data === 'object' && apiData) {
-                //time = response.data.updateTime;
+            if (_.size(response.data)> 1 && apiData) {
+                //console.log('Response > 1')
                 angular.forEach(response.data, function (obj, path) {
                     if (!angular.isString(path)) {
                         return;
@@ -328,17 +329,17 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
                     }
                     pobj[pe_arr.slice(-1)] = obj;
                 });
-                result = {
-                    "joined": apiData,
-                    "update": response.data
-                };
+                result.update = response.data;
                 response.data = result;
                 updatedTime = ($filter('hasNode')(response, 'data.update.updateTime') || Math.round(+new Date() / 1000));
                 myCache.put(cacheName, apiData);
                 return response;
             } else {
+                response.data = result;
+                //console.log('Response === 1')
+                return response;
                 // invalid response
-                return $q.reject(response);
+                //return $q.reject(response);
             }
         }, function (response) {
             // something went wrong

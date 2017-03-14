@@ -10,6 +10,7 @@
  */
 appController.controller('LocksController', function($scope, $filter, $timeout,$interval,dataService, cfg,_) {
     $scope.locks = {
+        ids: [],
         all: [],
         interval: null,
         show: false
@@ -46,7 +47,21 @@ appController.controller('LocksController', function($scope, $filter, $timeout,$
     $scope.refreshZwaveData = function() {
         var refresh = function() {
             dataService.loadJoinedZwaveData().then(function(response) {
-                setData(response.data.joined);
+                var update = false;
+                angular.forEach(response.data.update, function(v, k) {
+                    // Get node ID from response
+                    var findId = k.split('.')[1];
+                    // Check if node ID is in the available devices
+                    if( $scope.locks.ids.indexOf(findId) > -1){
+                        update = true;
+                        //console.log('Updating nodeId: ',findId);
+                        return;
+                    }
+                });
+                // Update found - updating available devices
+                if(update){
+                    setData(response.data.joined);
+                }
             }, function(error) {});
         };
         $scope.locks.interval = $interval(refresh, $scope.cfg.interval);
@@ -118,6 +133,9 @@ appController.controller('LocksController', function($scope, $filter, $timeout,$
 
                 }else{
                     $scope.locks.all.push(obj);
+                }
+                if($scope.locks.ids.indexOf(k) === -1){
+                    $scope.locks.ids.push(k);
                 }
                 cnt++;
             });

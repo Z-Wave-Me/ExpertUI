@@ -10,6 +10,7 @@
  */
 appController.controller('ThermostatController', function($scope, $filter, $timeout,$interval,dataService, cfg,_) {
     $scope.thermostats = {
+        ids: [],
         all: [],
         interval: null,
         show: false,
@@ -48,7 +49,21 @@ appController.controller('ThermostatController', function($scope, $filter, $time
     $scope.refreshZwaveData = function() {
         var refresh = function() {
             dataService.loadJoinedZwaveData().then(function(response) {
-                setData(response.data.joined);
+                var update = false;
+                angular.forEach(response.data.update, function(v, k) {
+                    // Get node ID from response
+                    var findId = k.split('.')[1];
+                    // Check if node ID is in the available devices
+                    if($scope.thermostats.ids.indexOf(findId) > -1){
+                        update = true;
+                        //console.log('Updating nodeId: ',findId);
+                        return;
+                    }
+                });
+                // Update found - updating available devices
+                if(update){
+                    setData(response.data.joined);
+                }
             }, function(error) {});
         };
         $scope.thermostats.interval = $interval(refresh, $scope.cfg.interval);
@@ -244,6 +259,9 @@ appController.controller('ThermostatController', function($scope, $filter, $time
                 }else{
                     $scope.thermostats.all.push(obj);
                     $scope.thermostats.rangeSlider.push(obj['range_' + nodeId] = obj['level']);
+                }
+                if($scope.thermostats.ids.indexOf(nodeId) === -1){
+                    $scope.thermostats.ids.push(nodeId);
                 }
                 cnt++;
             });
