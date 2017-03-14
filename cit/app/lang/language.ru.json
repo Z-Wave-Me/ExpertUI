@@ -1,4 +1,6 @@
 {
+  "zwave_chip":"Z-Wave chip",
+  "additional_chip":"Additional chip",
   "reorg_last_update":"Last reorganization:",
   "reorg_empty": "There are no data available",
   "stop":"Stop",

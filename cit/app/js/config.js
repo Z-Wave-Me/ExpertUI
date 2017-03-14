@@ -6,8 +6,8 @@
 var config_data = {
     'cfg': {
         'app_name': 'Z-Wave CIT',
-        'app_version': '1.3.0-RC-13',
-        'app_built': '13-03-2017 14:07:26',
+        'app_version': '1.3.0-RC-15',
+        'app_built': '14-03-2017 16:20:39',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -194,6 +194,8 @@ var config_data = {
             show: false,
             required: '05.20'
         },
+        // Firmware target
+        firmware_target: ['zwave_chip','additional_chip'],
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer
         'app_type': 'installer',
