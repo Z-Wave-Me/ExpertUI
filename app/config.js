@@ -194,6 +194,8 @@ var config_data = {
             show: false,
             required: '05.20'
         },
+        // Firmware target
+        firmware_target: ['zwave_chip','additional_chip'],
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer
         'app_type': 'default',

@@ -61,9 +61,10 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
             $scope.deviceName = $filter('deviceName')(nodeId, node);
 
             if ('122' in node.instances[0].commandClasses) {
+                //console.log(node.instances[0].commandClasses[122].data)
                 $scope.firmware.show = true;
                 //setFirmwareData(node);
-                //$scope.refreshZwaveData();
+                //$scope.refreshZwaveData(nodeId);
             }else{
                 $scope.alert = {message: $scope._t('no_device_service'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
                 return;
@@ -79,16 +80,21 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
      * todo: not needed?
      * Refresh zwave data
      */
-    /*$scope.refreshZwaveData = function () {
+    $scope.refreshZwaveData = function (nodeId) {
         var refresh = function () {
-            dataService.loadJoinedZwaveData().then(function (response) {
-                var node = response.data.joined.devices[nodeId];
-                setFirmwareData(node);
+            //dataService.loadJoinedZwaveData().then(function (response) {
+            dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
+                var node = ZWaveAPIData.devices[nodeId];
+                if ('122' in node.instances[0].commandClasses) {
+                    console.log(node.instances[0].commandClasses[122].data.updateStatus)
+                }
+                //var node = response.data.joined.devices[nodeId];
+                //setFirmwareData(node);
             }, function (error) {
             });
         };
         $scope.firmware.interval = $interval(refresh, $scope.cfg.interval);
-    };*/
+    };
 
     // Redirect to detail page
     $scope.changeDevice = function (deviceId) {
