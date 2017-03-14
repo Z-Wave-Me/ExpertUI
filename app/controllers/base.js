@@ -450,21 +450,22 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
             queueLength: data.length,
             busyLength: 0,
             result: 0,
-            arrCnt: {
+            /*arrCnt: {
             v: 0,
             s: 0,
             d: 0
-        }
+        }*/
         }
         angular.forEach(data, function(job, jobIndex) {
-            if(job[1][1] === 1 || job[1][2] === 1 || job[1][4] === 1){
+            if(job[1][1] === 0 || job[1][2] === 0 || job[1][4] === 0){
                 ret.busyLength += 1;
             }
-            ret.arrCnt.v += job[1][1];
+            /*ret.arrCnt.v += job[1][1];
             ret.arrCnt.s += job[1][2];
-            ret.arrCnt.d += job[1][4];
+            ret.arrCnt.d += job[1][4];*/
         });
         ret.result = (ret.queueLength - ret.busyLength);
+        //console.log(ret)
         angular.extend(cfg.busy_indicator, ret);
     }
 
