@@ -519,25 +519,38 @@ angApp.filter('toTrusted', ['$sce', function ($sce) {
  * Display device name
  */
 angApp.filter('deviceName', function (cfg, deviceService) {
-    return function (deviceId, device) {
+    return function (deviceId, node) {
+
         if (deviceId == cfg.controller.zwayNodeId) {
             return deviceService.getCustomCfgVal('controller_name');
         }
-        var name = 'Device ' + '_' + deviceId;
-        if (device === undefined) {
+        var type = '';
+        var isListening = node.data.isListening.value;
+        var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
+        var hasWakeup = 0x84 in node.instances[0].commandClasses;
+
+        if (hasWakeup || isFLiRS) {
+            type = 'Battery';
+        } else if (isListening) {
+            type = 'Mains';
+        }
+        console.log(type)
+        var name = type + 'Device ' + '_' + deviceId;
+        if (node === undefined) {
             return name;
         }
-        if (device.data.givenName.value != '') {
-            name = device.data.givenName.value;
+        if (node.data.givenName.value != '') {
+            name = node.data.givenName.value;
         }
         return name;
     };
 });
 
 /**
+ * todo: deprecated
  * Display device name
  */
-angApp.filter('getDeviceName', function () {
+/*angApp.filter('getDeviceName', function () {
     return function (deviceId, data) {
         var name = 'Device ' + deviceId;
         angular.forEach(data, function (v, k) {
@@ -549,7 +562,7 @@ angApp.filter('getDeviceName', function () {
         });
         return name;
     };
-});
+});*/
 
 angApp.filter('getByProperty', function () {
     return function (propertyName, propertyValue, collection) {
@@ -562,53 +575,6 @@ angApp.filter('getByProperty', function () {
         return null;
     };
 });
-// @todo: Deprecated
-// Convert unix timastamp to date
-/*angApp.filter('dateFromUnix', function () {
- return function (input) {
- var d = new Date(input * 1000);
- var day = d.getDate();
- var mon = d.getMonth() + 1; //Months are zero based
- var year = d.getFullYear();
- var hrs = d.getHours();
- var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
- var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
- var time = day + '.' + mon + '.' + year + ' ' + hrs + ':' + min + ':' + sec;
- return time;
- };
- });*/
-
-
-
-//@todo: Deprecated
-// Get current date time
-/*angApp.filter('getCurrentDate', function () {
-
- var d = new Date();
- var day = d.getDate();
- var mon = d.getMonth() + 1; //Months are zero based
- var year = d.getFullYear();
- var hrs = d.getHours();
- var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
- var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
- var time = day + '.' + mon + '.' + year + ' ' + hrs + ':' + min + ':' + sec;
- return time;
-
- });*/
-
-/**
- * @todo: Deprecated
- */
-/*angApp.filter('getCurrentTime', function () {
- return function () {
- var d = new Date();
- var hrs = (d.getHours() < 10 ? '0' + d.getHours() : d.getHours());
- var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
- var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
- var time = hrs + ':' + min + ':' + sec;
- return time;
- };
- });*/
 
 
 //Convert decimal to hex
@@ -734,34 +700,6 @@ angApp.filter('getDeviceTypeIcon', function () {
                 break;
         }
         return icon;
-    };
-});
-
-/**
- * todo: deprecated
- * Get battery image
- */
-angApp.filter('getBatteryImg', function () {
-    return function (input) {
-        var img = 'battery.png';
-        if (isNaN(input)) {
-            return img;
-        }
-        var level = parseInt(input);
-        if (level > 95) {
-            img = 'battery-100.png';
-        } else if (level >= 70 && level <= 95) {
-            img = 'battery-80.png';
-        } else if (level >= 50 && level < 70) {
-            img = 'battery-50.png';
-        } else if (level > 20 && level < 50) {
-            img = 'battery-30.png';
-        } else if (level >= 5 && level <= 20) {
-            img = 'battery-20.png';
-        } else {
-            img = 'battery-0.png';
-        }
-        return img;
     };
 });
 

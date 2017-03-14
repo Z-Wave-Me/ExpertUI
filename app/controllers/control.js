@@ -255,11 +255,12 @@ appController.controller('ControlController', function ($scope, $interval, $time
          */
 
         if (deviceIncId) {
-            var givenName = 'Device_' + deviceIncId;
+            var node = data.devices[deviceIncId];
+            var givenName = $filter('deviceName')(deviceIncId, node);
             var updateTime = $filter('isTodayFromUnix')(data.controller.data.lastIncludedDevice.updateTime);
             //Run CMD
-            var cmd = 'devices[' + deviceIncId + '].data.givenName.value=\'' + givenName + '\'';
-            dataService.runZwaveCmd(cfg.store_url + cmd);
+            /*var cmd = 'devices[' + deviceIncId + '].data.givenName.value=\'' + givenName + '\'';
+            dataService.runZwaveCmd(cfg.store_url + cmd);*/
             $scope.controlDh.inclusion.lastIncludedDevice = {
                 message: $scope._t('nm_last_included_device') + '  (' + updateTime + ')  <a href="#configuration/interview/' + deviceIncId + '"><strong>' + givenName + '</strong></a>',
                 status: 'alert-success',
