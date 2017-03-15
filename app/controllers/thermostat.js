@@ -144,7 +144,7 @@ appController.controller('ThermostatController', function($scope, $filter, $time
             if((count % 1) > step){
                 count = Math.round(count);
             }
-            // Dec Number is =< 5 - Rounding up + step
+            // Dec Number is =< 5 - Rounding down + step
             // E.g.: 22.2 to 22.5
             else if((count % 1) > 0.0 && (count % 1) < 0.6){
                 count = (Math.round(count) +step);
