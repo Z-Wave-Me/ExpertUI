@@ -2,5 +2,28 @@
 <link media="screen" type="text/css" rel="stylesheet" href="app/css/build.css">
 <!-- App config -->
 <script src="app/js/config.js"></script>
+<!-- Vendors -->
+<script src="vendor/jquery/jquery-1.11.1.min.js"></script>
+<script src="vendor/underscore/underscore-1.8.3/underscore-min.js"></script>
+<script src="vendor/cytoscape/cytoscape.js"></script>
+<script src="vendor/justgagejs/raphael-2.1.4.min.js"></script>
+<script src="vendor/justgagejs/justgage.js"></script>
+<script src="vendor/upload/angular-file-upload-shim.js"></script>
+<script src="vendor/alertify/alertify.min.js"></script>
+<!-- Angular -->
+<script src="vendor/angular/angular-1.2.28/angular.min.js"></script>
+<script src="vendor/upload/angular-file-upload.js"></script>
+<script src="vendor/angular/angular-1.2.28/angular-route.min.js"></script>
+<script src="vendor/angular/angular-1.2.28/angular-resource.min.js"></script>
+<script src="vendor/angular/angular-1.2.28/angular-cookies.min.js"></script>
+<!-- Bootstrap -->
+<script src="vendor/bootstrap/bootstrap.min.js"></script>
+<!-- XML -->
+<script src="vendor/xml/xml2json.js"></script>
+<!-- Z-Wave old ExpertU -->
+<script src="vendor/zwave/pyzw.js"></script>
+<script src="vendor/zwave/pyzw_zwave_ui.js"></script>
+<!-- CANVAS JS -->
+<script src="vendor/canvasjs/canvasjs.min.js"></script>
 <!-- JS -->
 <script src="app/js/build.js"></script>
