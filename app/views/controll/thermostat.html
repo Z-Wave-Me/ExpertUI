@@ -75,14 +75,16 @@
                     </td>
                     <!-- slider -->
                     <td>
-                        <div ng-show="v.isThermostatSetpoint">
+                        <div ng-show="v.isThermostatSetpoint" ng-init="dec = v.range.decimal">
                             <div id="range_slider_{{$index}}" 
                                  class="app-range-slider" 
-                                 range-slider 
-                                 min='cfg.thermostat_range.min' 
-                                 max='cfg.thermostat_range.max'  
+                                 range-slider
+                                 min='v.range.min'
+                                 max='v.range.max'
                                  model-max="thermostats.rangeSlider[$index]"
                                  pin-handle="min"
+                                 decimal-places="1"
+                                 step="0"
                                  on-handle-down="sliderOnHandleDown()"
                                  on-handle-up="sliderOnHandleUp(v,$index)">
                             </div>

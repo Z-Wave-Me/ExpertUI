@@ -534,7 +534,6 @@ angApp.filter('deviceName', function (cfg, deviceService) {
         } else if (isListening) {
             type = 'Mains';
         }
-        console.log(type)
         var name = type + 'Device ' + '_' + deviceId;
         if (node === undefined) {
             return name;

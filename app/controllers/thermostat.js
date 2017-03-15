@@ -91,11 +91,12 @@ appController.controller('ThermostatController', function($scope, $filter, $time
      */
     $scope.updateThermostatTempClick = function(v, index, type) {
         var url = v.urlChangeTemperature;
+        var step = v.range.step;
         $scope.toggleRowSpinner(url);
         var val = $scope.thermostats.rangeSlider[index];
-        var min = parseInt($scope.cfg.thermostat_range.min, 10);
-        var max = parseInt($scope.cfg.thermostat_range.max, 10);
-        var count = (type === '-' ? val - 1 : val + 1);
+        var min = parseInt( v.range.min,1);
+        var max = parseInt(v.range.max, 1);
+        var count = (type === '-' ? val - step: val + step);
         if (count < min) {
             count = min;
         }
@@ -121,18 +122,35 @@ appController.controller('ThermostatController', function($scope, $filter, $time
      * @param {int} index
      */
     $scope.sliderOnHandleUp = function(v, index) {
-        var url = v.urlChangeTemperature
+        var url = v.urlChangeTemperature;
+        var step = v.range.step;
         $scope.toggleRowSpinner(url);
-        $scope.refreshZwaveData(null);
-        var count = parseInt($scope.thermostats.rangeSlider[index]);
-        var min = parseInt($scope.cfg.thermostat_range.min, 10);
-        var max = parseInt($scope.cfg.thermostat_range.max, 10);
+        $scope.refreshZwaveData();
+        var count = parseFloat($scope.thermostats.rangeSlider[index]);
+        var min = parseInt( v.range.min,1);
+        var max = parseInt(v.range.max, 1);
         if (count < min) {
             count = min;
         }
         if (count > max) {
             count = max;
         }
+        //count =  Math.round(count*2)/2;
+        if((step % 1) === 0){//Step is a whole number
+            count = Math.round(count);
+        }else{//Step has a decimal place
+            // Dec Number is > 5 - Rounding up
+            // E.g.: 22.7 to 23
+            if((count % 1) > step){
+                count = Math.round(count);
+            }
+            // Dec Number is =< 5 - Rounding up + step
+            // E.g.: 22.2 to 22.5
+            else if((count % 1) > 0.0 && (count % 1) < 0.6){
+                count = (Math.round(count) +step);
+            }
+        }
+
         $scope.thermostats.rangeSlider[index] = count;
         url += '.Set('+v.curThermMode+',' + count + ')';
         updateThermostat(url);
@@ -195,7 +213,6 @@ appController.controller('ThermostatController', function($scope, $filter, $time
                 if (!hasThermostatSetpoint && !hasThermostatMode) { // to include more Thermostat* CCs
                     return; // we don't want devices without ThermostatSetpoint AND ThermostatMode CCs
                 }
-                //console.log( nodeId + ': ' + curThermMode);
                 if (hasThermostatMode) {
                     ccId = 0x40;
                 }
@@ -226,7 +243,6 @@ appController.controller('ThermostatController', function($scope, $filter, $time
                     }
 
                 }
-
                 // Set object
                 var obj = {};
 
@@ -238,6 +254,7 @@ appController.controller('ThermostatController', function($scope, $filter, $time
                 obj['curThermMode'] = curThermMode;
                 obj['level'] = level;
                 obj['scale'] = scale;
+                obj['range'] = (scale === '°F' ? cfg.thermostat.f : cfg.thermostat.c);
                 obj['hasExt'] = hasExt;
                 obj['updateTime'] = updateTime;
                 obj['invalidateTime'] = invalidateTime;

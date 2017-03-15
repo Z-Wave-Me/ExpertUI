@@ -87,9 +87,19 @@ var config_data = {
             3: 'US',
             9: 'IL'
         }, // List of frequencies
-        'thermostat_range': {// Min and max thermostat range
-            "min": "0",
-            "max": "40"
+
+        // Thermostat settings
+        'thermostat': {
+            'c': {// °C Min and max range and step
+                "step": 0.5,//Value between steps in snapping on the scale
+                "min": "0",
+                "max": "40"
+            },
+            'f': {// °F Min and max range
+                "step": 1,
+                "min": "41",
+                "max": "104"
+            }
         },
         // Image path
         'img': {

@@ -5,16 +5,22 @@ This User Interfaces allows to operate a Smart Home Network based on Z-Wave devi
 
 ## v1.3.0
 #### New features
+- Thermostat SetPoint has step of 0.5 deg
 - Analytics: Zniffer, Background noise, Noise Meter, Zniffer History.
 - Settings: Time and date format, Firmware Update, Bug report.
 - Network: Statistics visualization, Link status.
-- Link status.
 - CIT: Print page.
 
 #### Changes
+- Firmware update: Target ID as select.
 - Neighbors: Completely refactored.
 
 #### Fixes
+- Switches are duplicated.
+- Door lock open status is not shown.
+- Not available selection for two dongles.
+- To wakeup is shown, but device is mains powered.
+- Expert commands with multiple parameters are wrong.
 - Water Meters are not shown in the list of Meters question.
 - Can't configure second parameter.
 - In expert commands SwitchBinary 0 is sent instead of 255.
