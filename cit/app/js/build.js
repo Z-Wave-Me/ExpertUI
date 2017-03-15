@@ -1,4 +1,4 @@
-/* Copyright:  Z-Wave Europe, Created: 15-03-2017 12:03:12 */
+/* Copyright:  Z-Wave Europe, Created: 15-03-2017 14:53:38 */
 /**
  * Application base
  * @author Martin Vach
@@ -456,7 +456,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/controll/thermostat.html',
-    "<div ng-controller=ThermostatController><div class=page-header><h1>{{_t('nav_thermostat')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=thermostats.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'id'\" label=\"'#'\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'name'\" label=\"_t('device_name')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'level'\" label=\"_t('switch_point_temp')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'updateTime'\" label=\"_t('datetime')\"></sort-by></th><th>&nbsp;</th><th>&nbsp;</th><th class=th-slider>&nbsp;</th></tr></thead><tbody><tr ng-repeat=\"v in thermostats.all| orderBy:predicate:reverse track by v.id\" id=\"{{ v.rowId}}\"><td data-title=#>{{ v.id}}</td><td data-title=\"{{ _t('device_name')}}\">{{v.name}}</td><td data-title=\"{{ _t('switch_point_temp')}}\" class=row-level><span class=level-val ng-show=\"v.level != null\">{{ v.level}}</span>&nbsp;<span ng-show=v.hasExt>{{ v.scale}}</span></td><td data-title=\"{{ _t('datetime')}}\" class=row-time><bb-date-time obj=v.dateTime updated=v.isUpdated ng-if=\"v.level != null\"></bb-date-time></td><td><div class=form-inline ng-show=v.isThermostatMode><select class=form-control ng-model=thermostats.mChangeMode[v.id] ng-change=updateThermostatMode(v.urlToStore,thermostats.mChangeMode[v.id])><option value=\"\">--- {{_t.('thermostat_mode_change')}} ---</option><option ng-repeat=\"m in v.modeList\" value={{m.key}} ng-selected=\"m.key == v.curThermMode\">{{m.val}}</option></select><bb-row-spinner spinner=rowSpinner[v.urlToStore]></bb-row-spinner></div></td><td><div class=btn-group ng-show=v.isThermostatSetpoint><button title=\"{{_t.('btn_minus')}}\" class=\"btn btn-default\" ng-click=\"updateThermostatTempClick(v, $index, '-')\"><i class=\"fa fa-minus text-danger\"></i></button> <button title=\"{{_t.('btn_plus')}}\" class=\"btn btn-default\" ng-click=\"updateThermostatTempClick(v, $index, '+')\"><i class=\"fa fa-plus text-success\"></i></button></div><bb-row-spinner spinner=rowSpinner[v.urlChangeTemperature]></bb-row-spinner></td><td><div ng-show=v.isThermostatSetpoint><div id=range_slider_{{$index}} class=app-range-slider range-slider min=cfg.thermostat_range.min max=cfg.thermostat_range.max model-max=thermostats.rangeSlider[$index] pin-handle=min on-handle-down=sliderOnHandleDown() on-handle-up=sliderOnHandleUp(v,$index)></div></div></td></tr></tbody></table></div></div>"
+    "<div ng-controller=ThermostatController><div class=page-header><h1>{{_t('nav_thermostat')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=thermostats.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'id'\" label=\"'#'\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'name'\" label=\"_t('device_name')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'level'\" label=\"_t('switch_point_temp')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'updateTime'\" label=\"_t('datetime')\"></sort-by></th><th>&nbsp;</th><th>&nbsp;</th><th class=th-slider>&nbsp;</th></tr></thead><tbody><tr ng-repeat=\"v in thermostats.all| orderBy:predicate:reverse track by v.id\" id=\"{{ v.rowId}}\"><td data-title=#>{{ v.id}}</td><td data-title=\"{{ _t('device_name')}}\">{{v.name}}</td><td data-title=\"{{ _t('switch_point_temp')}}\" class=row-level><span class=level-val ng-show=\"v.level != null\">{{ v.level}}</span>&nbsp;<span ng-show=v.hasExt>{{ v.scale}}</span></td><td data-title=\"{{ _t('datetime')}}\" class=row-time><bb-date-time obj=v.dateTime updated=v.isUpdated ng-if=\"v.level != null\"></bb-date-time></td><td><div class=form-inline ng-show=v.isThermostatMode><select class=form-control ng-model=thermostats.mChangeMode[v.id] ng-change=updateThermostatMode(v.urlToStore,thermostats.mChangeMode[v.id])><option value=\"\">--- {{_t.('thermostat_mode_change')}} ---</option><option ng-repeat=\"m in v.modeList\" value={{m.key}} ng-selected=\"m.key == v.curThermMode\">{{m.val}}</option></select><bb-row-spinner spinner=rowSpinner[v.urlToStore]></bb-row-spinner></div></td><td><div class=btn-group ng-show=v.isThermostatSetpoint><button title=\"{{_t.('btn_minus')}}\" class=\"btn btn-default\" ng-click=\"updateThermostatTempClick(v, $index, '-')\"><i class=\"fa fa-minus text-danger\"></i></button> <button title=\"{{_t.('btn_plus')}}\" class=\"btn btn-default\" ng-click=\"updateThermostatTempClick(v, $index, '+')\"><i class=\"fa fa-plus text-success\"></i></button></div><bb-row-spinner spinner=rowSpinner[v.urlChangeTemperature]></bb-row-spinner></td><td><div ng-show=v.isThermostatSetpoint ng-init=\"dec = v.range.decimal\"><div id=range_slider_{{$index}} class=app-range-slider range-slider min=v.range.min max=v.range.max model-max=thermostats.rangeSlider[$index] pin-handle=min decimal-places=1 step=0 on-handle-down=sliderOnHandleDown() on-handle-up=sliderOnHandleUp(v,$index)></div></div></td></tr></tbody></table></div></div>"
   );
 
 
@@ -3015,7 +3015,6 @@ angApp.filter('deviceName', function (cfg, deviceService) {
         } else if (isListening) {
             type = 'Mains';
         }
-        console.log(type)
         var name = type + 'Device ' + '_' + deviceId;
         if (node === undefined) {
             return name;
@@ -8066,11 +8065,12 @@ appController.controller('ThermostatController', function($scope, $filter, $time
      */
     $scope.updateThermostatTempClick = function(v, index, type) {
         var url = v.urlChangeTemperature;
+        var step = v.range.step;
         $scope.toggleRowSpinner(url);
         var val = $scope.thermostats.rangeSlider[index];
-        var min = parseInt($scope.cfg.thermostat_range.min, 10);
-        var max = parseInt($scope.cfg.thermostat_range.max, 10);
-        var count = (type === '-' ? val - 1 : val + 1);
+        var min = parseInt( v.range.min,1);
+        var max = parseInt(v.range.max, 1);
+        var count = (type === '-' ? val - step: val + step);
         if (count < min) {
             count = min;
         }
@@ -8096,18 +8096,35 @@ appController.controller('ThermostatController', function($scope, $filter, $time
      * @param {int} index
      */
     $scope.sliderOnHandleUp = function(v, index) {
-        var url = v.urlChangeTemperature
+        var url = v.urlChangeTemperature;
+        var step = v.range.step;
         $scope.toggleRowSpinner(url);
-        $scope.refreshZwaveData(null);
-        var count = parseInt($scope.thermostats.rangeSlider[index]);
-        var min = parseInt($scope.cfg.thermostat_range.min, 10);
-        var max = parseInt($scope.cfg.thermostat_range.max, 10);
+        $scope.refreshZwaveData();
+        var count = parseFloat($scope.thermostats.rangeSlider[index]);
+        var min = parseInt( v.range.min,1);
+        var max = parseInt(v.range.max, 1);
         if (count < min) {
             count = min;
         }
         if (count > max) {
             count = max;
         }
+        //count =  Math.round(count*2)/2;
+        if((step % 1) === 0){//Step is a whole number
+            count = Math.round(count);
+        }else{//Step has a decimal place
+            // Dec Number is > 5 - Rounding up
+            // E.g.: 22.7 to 23
+            if((count % 1) > step){
+                count = Math.round(count);
+            }
+            // Dec Number is =< 5 - Rounding up + step
+            // E.g.: 22.2 to 22.5
+            else if((count % 1) > 0.0 && (count % 1) < 0.6){
+                count = (Math.round(count) +step);
+            }
+        }
+
         $scope.thermostats.rangeSlider[index] = count;
         url += '.Set('+v.curThermMode+',' + count + ')';
         updateThermostat(url);
@@ -8170,7 +8187,6 @@ appController.controller('ThermostatController', function($scope, $filter, $time
                 if (!hasThermostatSetpoint && !hasThermostatMode) { // to include more Thermostat* CCs
                     return; // we don't want devices without ThermostatSetpoint AND ThermostatMode CCs
                 }
-                //console.log( nodeId + ': ' + curThermMode);
                 if (hasThermostatMode) {
                     ccId = 0x40;
                 }
@@ -8201,7 +8217,6 @@ appController.controller('ThermostatController', function($scope, $filter, $time
                     }
 
                 }
-
                 // Set object
                 var obj = {};
 
@@ -8213,6 +8228,7 @@ appController.controller('ThermostatController', function($scope, $filter, $time
                 obj['curThermMode'] = curThermMode;
                 obj['level'] = level;
                 obj['scale'] = scale;
+                obj['range'] = (scale === '°F' ? cfg.thermostat.f : cfg.thermostat.c);
                 obj['hasExt'] = hasExt;
                 obj['updateTime'] = updateTime;
                 obj['invalidateTime'] = invalidateTime;

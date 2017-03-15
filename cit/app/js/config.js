@@ -6,8 +6,8 @@
 var config_data = {
     'cfg': {
         'app_name': 'Z-Wave CIT',
-        'app_version': '1.3.0-RC-16',
-        'app_built': '15-03-2017 12:03:12',
+        'app_version': '1.3.0-RC-17',
+        'app_built': '15-03-2017 14:53:38',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -87,9 +87,19 @@ var config_data = {
             3: 'US',
             9: 'IL'
         }, // List of frequencies
-        'thermostat_range': {// Min and max thermostat range
-            "min": "0",
-            "max": "40"
+
+        // Thermostat settings
+        'thermostat': {
+            'c': {// °C Min and max range and step
+                "step": 0.5,//Value between steps in snapping on the scale
+                "min": "0",
+                "max": "40"
+            },
+            'f': {// °F Min and max range
+                "step": 1,
+                "min": "41",
+                "max": "104"
+            }
         },
         // Image path
         'img': {
