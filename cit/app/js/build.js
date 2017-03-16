@@ -1,4 +1,4 @@
-/* Copyright:  Z-Wave Europe, Created: 16-03-2017 08:33:29 */
+/* Copyright:  Z-Wave Europe, Created: 16-03-2017 09:59:07 */
 /**
  * Application base
  * @author Martin Vach
@@ -382,7 +382,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/configuration/menu.html',
-    "<ul class=list-group><li class=\"list-group-item clickable\" title=\"{{v.name }}\" ng-repeat=\"v in devices| orderBy:predicate:reverse\" ng-click=changeDevice(v.id) ng-class=\"v.id == deviceId ? 'active': ''\">(#{{v.id}}) {{v.name | cutText:true:30}}</li></ul>"
+    "<ul class=list-group><li class=\"list-group-item clickable\" title=\"{{v.name }}\" ng-repeat=\"v in devices\" ng-click=changeDevice(v.id) ng-class=\"v.id == deviceId ? 'active': ''\">(#{{v.id}}) {{v.name | cutText:true:30}}</li></ul>"
   );
 
 

@@ -286,6 +286,10 @@ module.exports = function (grunt) {
                 tagAnnotation: 'Release ' + app_cfg.name + ' ' + git_message,
                 buildCommand: false
             }
+        },
+        clean: {
+            options: {force: true},
+            build: ['dist/storage/data/docs/']
         }
     });
     // Load the plugin that provides the "uglify" task.
@@ -308,5 +312,5 @@ module.exports = function (grunt) {
 
     // Default task(s).
     //grunt.registerTask('default', ['clean','concat','copy','cssmin','string-replace']);
-    grunt.registerTask('default', ['clean', 'ngtemplates', 'concat', 'json_generator', 'copy', 'cssmin', 'usebanner', 'htmlbuild','replace','modify_json']);
+    grunt.registerTask('default', ['clean', 'ngtemplates', 'concat', 'json_generator', 'copy', 'cssmin', 'usebanner', 'htmlbuild','replace','modify_json','clean']);
 };

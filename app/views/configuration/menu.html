@@ -2,7 +2,7 @@
 <!-- Config menu -->
 <ul class="list-group">
     <li class="list-group-item clickable" title="{{v.name }}"
-        ng-repeat="v in devices| orderBy:predicate:reverse"
+        ng-repeat="v in devices"
         ng-click="changeDevice(v.id)"
         ng-class="v.id == deviceId ? 'active': ''">(#{{v.id}}) {{v.name | cutText:true:30}}</li>
 </ul>
