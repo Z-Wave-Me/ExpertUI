@@ -1,4 +1,4 @@
-/* Copyright:  Z-Wave Europe, Created: 15-03-2017 14:53:38 */
+/* Copyright:  Z-Wave Europe, Created: 16-03-2017 08:33:29 */
 /**
  * Application base
  * @author Martin Vach
@@ -676,7 +676,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/network/control/control_installer.html',
-    "<div ng-controller=ControlController><div class=page-header><h1>{{_t('nav_control')}}</h1></div><div class=row id=row_controll><div class=\"col-md-6 col-lg-6\"><div ng-include=\"'app/views/network/control/control_management.html'\"></div><div ng-include=\"'app/views/network/control/control_different.html'\"></div><div ng-include=\"'app/views/network/control/control_controller_maintance.html'\"></div><div ng-include=\"'app/views/network/control/control_promiscuous.html'\" ng-if=controlDh.controller.SetPromiscuousMode></div></div><div class=\"col-md-6 col-lg-6\"><div ng-include=\"'app/views/network/control/control_link_controller.html'\"></div><div ng-include=\"'app/views/network/control/control_network_maintance.html'\"></div><div ng-include=\"'app/views/network/control/control_sucsic.html'\"></div></div></div></div>"
+    "<div ng-controller=ControlController><div class=page-header><h1>{{_t('nav_control')}}</h1></div><div class=row id=row_controll><div class=\"col-md-6 col-lg-6\"><div ng-include=\"'app/views/network/control/control_management.html'\"></div><div ng-include=\"'app/views/network/control/control_different.html'\"></div><div ng-include=\"'app/views/network/control/control_controller_maintance.html'\"></div><div ng-include=\"'app/views/network/control/control_promiscuous.html'\" ng-if=controlDh.controller.SetPromiscuousMode></div><div ng-include=\"'app/views/network/control/control_frequency.html'\"></div></div><div class=\"col-md-6 col-lg-6\"><div ng-include=\"'app/views/network/control/control_link_controller.html'\"></div><div ng-include=\"'app/views/network/control/control_network_maintance.html'\"></div><div ng-include=\"'app/views/network/control/control_sucsic.html'\"></div></div></div></div>"
   );
 
 
@@ -8118,7 +8118,7 @@ appController.controller('ThermostatController', function($scope, $filter, $time
             if((count % 1) > step){
                 count = Math.round(count);
             }
-            // Dec Number is =< 5 - Rounding up + step
+            // Dec Number is =< 5 - Rounding down + step
             // E.g.: 22.2 to 22.5
             else if((count % 1) > 0.0 && (count % 1) < 0.6){
                 count = (Math.round(count) +step);
