@@ -695,7 +695,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,cfg
             if (cfgFile[conf_num] !== undefined) {
                 config_config_value = cfgFile[conf_num];
             } else {
-                if (config_zwave_value !== null) {
+               if (config_zwave_value !== null) {
                     config_config_value = config_zwave_value;
                 } else {
                     config_config_value = conf_default;
@@ -951,12 +951,17 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,cfg
                                 }
                             });
                     });
+
                     if (conf_default !== null) {
-                        conf_default_value = '';
-                        for (var ii in conf_default_value_arr)
+                        conf_default_value = conf_default;
+                        //conf_default_value = '';
+                        for (var ii in conf_default_value_arr){
                             conf_default_value += conf_default_value_arr[ii] + ', ';
-                        if (conf_default_value.length)
+                        }
+                        if (conf_default_value.length){
                             conf_default_value = conf_default_value.substr(0, conf_default_value.length - 2);
+                        }
+
                     }
                     conf_method_descr = {
                         nodeId: nodeId,
@@ -975,8 +980,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,cfg
                         confNum: conf_num,
                         confSize: conf_size
                     };
-                    //console.log(conf_method_descr)
-                    break;
+                   break;
                 default:
                     return;
                     //conf_cont.append('<span>' + $.translate('unhandled_type_parameter') + ': ' + conf_type + '</span>');

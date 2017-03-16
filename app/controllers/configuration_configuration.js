@@ -186,42 +186,73 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
 
         var dataArray = _.isObject(hasData) ? hasData : {};
         $scope.toggleRowSpinner(spin);
+        //var bitrangeCnt = [];
+        var bitcheckCnt = [];
         if (!_.isObject(hasData)) {
             data = $('#' + form).serializeArray();
+            //console.log(data)
+            //console.log(data)
             angular.forEach(data, function (v, k) {
                 if (v.value === 'N/A') {
                     return;
                 }
                 var value = $filter('setConfigValue')(v.value);
                 var inputConfNum = v.name.match(/\d+$/)[0];
-                var inputType = v.name.split('_')[0];
                 if (!inputConfNum) {
                     return;
                 }
+                var inputType = v.name.split('_')[0];
                 var cfg = _.findWhere(cfgValues, {confNum: inputConfNum.toString()});
                 if (cfg) {
                     if ('bitset' in cfg.type) {
-                        if (inputType === 'bitrange') {
+                         if (inputType === 'bitrange') {
+                             value = (value === '' ? 0 : parseInt(value));
+                             if(value < 1){
+                                 return;
+                             }
                             var bitRange = _.findWhere(cfg.type.bitset, {name: v.name});
-                            value = (value === '' ? 0 : parseInt(value));
+                             if (value < bitRange.type.bitrange.bit_from && value > 0) {
+                                 value = bitRange.type.bitrange.bit_from;
+                             } else if (value > bitRange.type.bitrange.bit_to) {
+                                 value = bitRange.type.bitrange.bit_to;
+                             }
+                             value = Math.pow(2, value);
+                             //var bitArray = $filter('getBitArray')(value, 8);
+
+                             /*if(!bitrangeCnt[inputConfNum]){
+                                 bitrangeCnt[inputConfNum] = 0;
+                             }
+                             bitrangeCnt[inputConfNum] = (value === '' ? 0 : parseInt(value));
+                            if (value < bitRange.type.bitrange.bit_from && value > 0) {
+                                bitrangeCnt[inputConfNum] += bitRange.type.bitrange.bit_from;
+                                value = bitrangeCnt[inputConfNum];
+                            } else if (value > bitRange.type.bitrange.bit_to) {
+                                bitrangeCnt[inputConfNum] += bitRange.type.bitrange.bit_to;
+                                value = bitrangeCnt[inputConfNum];
+                            }*/
+                            /*value = (value === '' ? 0 : parseInt(value));
                             if (value < bitRange.type.bitrange.bit_from && value > 0) {
                                 value = bitRange.type.bitrange.bit_from;
                             } else if (value > bitRange.type.bitrange.bit_to) {
                                 value = bitRange.type.bitrange.bit_to;
-                            }
+                            }*/
                         } else {
-                            value = Math.pow(2, value);
+                             value = (value === '' ? 0 : parseInt(value));
+                            if(!bitcheckCnt[inputConfNum]){
+                                bitcheckCnt[inputConfNum] = 0;
+                            }
+                            bitcheckCnt[inputConfNum] += Math.pow(2, value);
+                            value =  bitcheckCnt[inputConfNum];
+
+                            //value = Math.pow(2, value);
 
                         }
 
                     }
-                    /*else if('enumof' in cfg.type){
-                     var enumof = _.findWhere(cfg.type.enumof,{name: v.name});
-
-                     }*/
                 }
                 if (dataArray[inputConfNum]) {
-                    dataArray[inputConfNum].value += ',' + value;
+                    //dataArray[inputConfNum].value += ',' + value;
+                    dataArray[inputConfNum].value = value;
                 } else {
                     dataArray[inputConfNum] = {
                         value: value,
