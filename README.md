@@ -12,6 +12,7 @@ This User Interfaces allows to operate a Smart Home Network based on Z-Wave devi
 - CIT: Print page.
 
 #### Changes
+- CIT: showing frequency select.
 - Firmware update: Target ID as select.
 - Neighbors: Completely refactored.
 
