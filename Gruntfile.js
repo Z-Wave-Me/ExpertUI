@@ -52,6 +52,29 @@ module.exports = function (grunt) {
             },
             js: {
                 src: [
+                    // Vendors
+                    'vendor/jquery/jquery-1.11.1.min.js',
+                    'vendor/underscore/underscore-1.8.3/underscore-min.js',
+                    'vendor/cytoscape/cytoscape.min.js',
+                    'vendor/justgagejs/raphael-2.1.4.min.js',
+                    'vendor/justgagejs/justgage.js',
+                    'vendor/upload/angular-file-upload-shim.min.js',
+                    'vendor/alertify/alertify.min.js',
+                    // Angular
+                    'vendor/angular/angular-1.2.14/angular.min.js',
+                    'vendor/upload/angular-file-upload.min.js',
+                    'vendor/angular/angular-1.2.14/angular-route.min.js',
+                    'vendor/angular/angular-1.2.14/angular-resource.min.js',
+                    'vendor/angular/angular-1.2.14/angular-cookies.min.js',
+                    // Bootstrap
+                    'vendor/bootstrap/bootstrap.min.js',
+                    // XML
+                    'vendor/xml/xml2json.min.js',
+                    // Z-Wave old ExpertU
+                    'vendor/zwave/pyzw.js',
+                    'vendor/zwave/pyzw_zwave_ui.js',
+                    // CANVAS JS
+                    'vendor/canvasjs/canvasjs.min.js',
                     // APP
                     'app/app.js',
                     'app/routes.js',
@@ -154,19 +177,19 @@ module.exports = function (grunt) {
                 files: [
                     {
                         expand: true,
-                        src: ['vendor/angular/angular-1.2.28/angular-cookies.min.js.map'],
+                        src: ['vendor/angular/angular-1.2.14/angular-cookies.min.js.map'],
                         dest: app_cfg.dir + '/app/js/',
                         flatten: true
                     },
                     {
                         expand: true,
-                        src: ['vendor/angular/angular-1.2.28/angular.min.js.map'],
+                        src: ['vendor/angular/angular-1.2.14/angular.min.js.map'],
                         dest: app_cfg.dir + '/app/js/',
                         flatten: true
                     },
                     {
                         expand: true,
-                        src: ['vendor/angular/angular-1.2.28/angular-route.min.js.map'],
+                        src: ['vendor/angular/angular-1.2.14/angular-route.min.js.map'],
                         dest: app_cfg.dir + '/app/js/',
                         flatten: true
                     }
