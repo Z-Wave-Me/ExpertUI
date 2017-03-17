@@ -74,7 +74,6 @@ appController.controller('UzbController', function ($scope, $timeout, $window, c
         }
         $scope.toggleRowSpinner(action);
         var cmd = $scope.cfg.server_url + cfg[action];
-
         fd.append('file', files[0]);
 
         $scope.alert = {

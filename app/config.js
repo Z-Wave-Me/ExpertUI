@@ -31,6 +31,8 @@ var config_data = {
         'fw_update_url': '/ZWaveAPI/FirmwareUpdate', // Url for Firmware Update
         'zme_bootloader_upgrade': '/ZWaveAPI/ZMEBootloaderUpgrade', // ZME Bootloader upgrade url
         'zme_firmware_upgrade': '/ZWaveAPI/ZMEFirmwareUpgrade', // ZME Firmware upgrade url
+        'upload_bootloader': '/ZWaveAPI/ZMEBootloaderUpgrade', // Bootloader upload api
+        'upload_firmware': '/ZWaveAPI/ZMEFirmwareUpgrade', // Firmware upload api
         'license_load_url': '/ZWaveAPI/ZMELicense', // Url to load new license
         'stat_url': '/ZWaveAPI/CommunicationStatistics', // Url to statistics
         'postfixget_url': '/ZWaveAPI/PostfixGet', // Postfix GET
