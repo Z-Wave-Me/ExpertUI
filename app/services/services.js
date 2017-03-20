@@ -207,6 +207,22 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,cfg
     };
 
     /**
+     * Check if all device interviews are done
+     */
+    this.allInterviewsDone = function(instances) {
+        var  interviewDone = true;
+        for (var iId in instances) {
+            for (var ccId in instances[iId].commandClasses) {
+                var isDone = instances[iId].commandClasses[ccId].data.interviewDone.value;
+                if (isDone === false) {
+                   return false
+                }
+            }
+        }
+        return interviewDone;
+    };
+
+    /**
      * Get a value from custom config
      * @param {string} key
      * @returns {string}

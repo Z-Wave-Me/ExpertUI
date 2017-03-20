@@ -11,6 +11,7 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
     $scope.home = {
         show: false,
         interval: null,
+        devices: {},
         networkInformation: {
             mains: 0,
             battery: 0,
@@ -168,6 +169,66 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
         });
     }
     ;
+
+    /**
+     * todo: move all scope settings to this function
+     * Set zwave data
+     * @param {object} ZWaveAPIData
+     */
+    function setData(ZWaveAPIData) {
+        var networkInformation = {
+            mains: 0,
+            battery: 0,
+            flirs: 0,
+            sum: 0
+        };
+        /**
+         * Loop through nodes
+         */
+        angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
+            if (deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
+                return;
+            }
+            var hasBattery = false;
+            var allInterviewsDone = deviceService.allInterviewsDone(node.instances);
+            console.log(allInterviewsDone)
+            var isLocalyReset = deviceService.isLocalyReset(node);
+            var isFailed = deviceService.isFailed(node);
+            /**
+             * Set network information
+             */
+            // Count mains devices
+            if ((node.data.isListening.value && node.data.isRouting.value) || (node.data.isListening.value && !node.data.isRouting.value)) {
+                networkInformation.mains++;
+            }
+            // Count battery devices
+            else if (!node.data.isListening.value && (!node.data.sensor250.value && !node.data.sensor1000.value)) {
+                hasBattery = true;
+                networkInformation.battery++;
+            }
+            // Count flirs devices
+            else if (node.data.sensor250.value || node.data.sensor1000.value) {
+
+                networkInformation.flirs++;
+            }
+            networkInformation.sum++;
+
+
+            var obj = {};
+            obj['name'] = $filter('deviceName')(nodeId, node);
+            obj['id'] = nodeId;
+            obj['report'] = [];
+            if(!$scope.home.devices[nodeId]){
+                $scope.home.devices[nodeId] = obj;
+            }
+        });
+        $scope.home.networkInformation = networkInformation;
+        console.log(networkInformation)
+        /*if(!('isFailed' in $scope.home.devices[nodeId].report)){
+         $scope.home.devices[nodeId].report.push('isFailed');
+         }*/
+
+    }
 
     /**
      * Count devices
