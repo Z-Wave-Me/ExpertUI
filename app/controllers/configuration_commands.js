@@ -14,6 +14,9 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
     $scope.commands = [];
     $scope.interviewCommands;
     $scope.commandsInterval = null;
+    $scope.ccConfiguration = {
+        all: []
+    };
 
     $scope.deviceId = 0;
     $scope.activeTab = 'commands';
@@ -63,11 +66,15 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
                 return devices;
             };
             $scope.interviewCommands = deviceService.configGetInterviewCommands(node, ZWaveAPIData.updateTime);
+            var ccConfiguration = _.findWhere($scope.interviewCommands,{ccName: "Configuration"});
+            console.log(ccConfiguration)
             $cookies.configuration_id = nodeId;
             $cookies.config_url = $scope.activeUrl + nodeId;
             $scope.deviceId = nodeId;
             $scope.deviceName = $filter('deviceName')(nodeId, node);
             setData(ZWaveAPIData,node);
+            setCcConfig(ccConfiguration);
+            $scope.refreshZwaveData(nodeId);
         });
 
     }
@@ -76,9 +83,30 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
     /**
      * Refresh zwave data
      */
-    $scope.refreshZwaveData = function() {
+    $scope.refreshZwaveData = function(nodeId) {
         var refresh = function() {
+
             dataService.loadJoinedZwaveData().then(function(response) {
+                var update = false;
+                angular.forEach(response.data.update, function(v, k) {
+                    // Get node ID from response
+                    var findId = k.split('.')[1];
+                    // Check if node ID is in the available devices
+                    if(nodeId == findId){
+                        update = true;
+                        console.log('Updating nodeId: ',findId);
+                        return;
+                    }
+                });
+
+                // Update found - updating available devices
+                if(update){
+                    var node = response.data.joined.devices[nodeId];
+                    $scope.interviewCommands = deviceService.configGetInterviewCommands(node,response.data.update.updateTime);
+                    var ccConfiguration = _.findWhere($scope.interviewCommands,{ccName: "Configuration"});
+                    setData(response.data.joined,node);
+                    setCcConfig(ccConfiguration);
+                }
             }, function(error) {});
         };
         $scope.commandsInterval = $interval(refresh, $scope.cfg.interval);
@@ -143,10 +171,10 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
      * Watch for the modal closing
      */
     $scope.$watchCollection('modalArr', function (modalArr) {
-        if(_.has(modalArr, 'cmdClassModal') && !modalArr['cmdClassModal']){
+       /* if(_.has(modalArr, 'cmdClassModal') && !modalArr['cmdClassModal']){
             $interval.cancel($scope.commandsInterval);
             //console.log(modalArr['cmdClassModal'])
-        }
+        }*/
 
     });
 
@@ -178,6 +206,38 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
                 $scope.commands.push(obj);
             });
         });
+    }
+
+    /**
+     * Set cc configuration
+     * @param data
+     */
+    function setCcConfig(data){
+        //console.log(data.cmdData)
+        angular.forEach(data.cmdData, function (v, k) {
+            if(_.isNaN(parseInt(k))){
+                return;
+            }
+            var rowId = 'row_' + k;
+            //console.log(k)
+            var obj = {};
+            obj['rowId'] = rowId;
+            obj['param'] = k;
+            obj['size'] = v.size.value;
+            obj['val'] = v.val.value;
+            obj['updateTime'] = v.updateTime;
+            obj['isUpdated'] = (v.updateTime > v.invalidateTime ? true : false);
+            obj['isEqual'] = true;
+            var findIndex = _.findIndex($scope.ccConfiguration.all, {rowId: obj.rowId});
+            if(findIndex > -1){
+                obj['isEqual'] = _.isEqual(obj, $scope.ccConfiguration.all[findIndex]);
+                angular.extend(obj,{isEqual: _.isEqual(obj, $scope.ccConfiguration.all[findIndex])});
+                angular.extend($scope.ccConfiguration.all[findIndex],obj);
+            }else{
+                $scope.ccConfiguration.all.push(obj);
+            }
+        });
+
     }
 
 
