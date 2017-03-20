@@ -6,8 +6,8 @@
 var config_data = {
     'cfg': {
         'app_name': 'Z-Wave CIT',
-        'app_version': '1.3.0-RC-32',
-        'app_built': '16-03-2017 12:22:27',
+        'app_version': '1.3.0-RC-22',
+        'app_built': '20-03-2017 09:44:30',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -31,6 +31,8 @@ var config_data = {
         'fw_update_url': '/ZWaveAPI/FirmwareUpdate', // Url for Firmware Update
         'zme_bootloader_upgrade': '/ZWaveAPI/ZMEBootloaderUpgrade', // ZME Bootloader upgrade url
         'zme_firmware_upgrade': '/ZWaveAPI/ZMEFirmwareUpgrade', // ZME Firmware upgrade url
+        'upload_bootloader': '/ZWaveAPI/ZMEBootloaderUpgrade', // Bootloader upload api
+        'upload_firmware': '/ZWaveAPI/ZMEFirmwareUpgrade', // Firmware upload api
         'license_load_url': '/ZWaveAPI/ZMELicense', // Url to load new license
         'stat_url': '/ZWaveAPI/CommunicationStatistics', // Url to statistics
         'postfixget_url': '/ZWaveAPI/PostfixGet', // Postfix GET
