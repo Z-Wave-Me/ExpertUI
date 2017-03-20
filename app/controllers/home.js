@@ -81,7 +81,7 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
 
     /**
      * Refresh zwave data
-     */
+     */○
     $scope.refreshZwaveData = function () {
         var refresh = function () {
             dataService.loadJoinedZwaveData().then(function (response) {
@@ -104,7 +104,7 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
         if (cfg.server_url != '') {
             //$scope.loadData();
             $scope.loadZwaveData();
-        }
+        }○
     }
 
 
@@ -349,7 +349,6 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
             //dataService.getCfgXml(function(cfgXml) {
             angular.forEach(response.config.devices.deviceconfiguration, function (cfg, cfgId) {
                 var node = ZWaveAPIData.devices[cfg['_id']];
-
                 if (!node || !$filter('hasNode')(node, 'instances.0.commandClasses.112')) {
                     return;
                 }
@@ -360,7 +359,10 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
                 if (array.length > 2) {
                     cfgNum = array[0];
                     cfgVal = array[1];
-                    devVal = node.instances[0].commandClasses[0x70].data[cfgNum].val.value;
+                    if(node.instances[0].commandClasses[0x70].data[cfgNum]){
+                        devVal = node.instances[0].commandClasses[0x70].data[cfgNum].val.value;
+                    }
+
                     if (cfgVal != devVal) {
                         var obj = {};
                         obj['name'] = $filter('deviceName')(cfg['_id'], node);

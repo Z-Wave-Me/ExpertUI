@@ -5,19 +5,19 @@
     </div>
     <div class="panel-body">
         <ul class="list-report">
-            <li ng-if="lowBatteryDevices.length > 0">
+            <li ng-if="lowBatteryDevices.length">
                 <p ng-repeat="v in lowBatteryDevices">
                     <a class="text-danger" href="#device/battery">(#{{v.id}}) {{v.name}}
                         {{_t('txt_low_battery')}} ({{v.battery_charge}}%)</a>
                 </p>
             </li>
-            <li ng-if="cfg.app_type === 'default'">
+            <li ng-if="cfg.app_type === 'default' && notInterviewDevices.length">
                 <p ng-repeat="v in notInterviewDevices">
                     <a class="text-danger" href="#help/{{v.id}}"> (#{{v.id}}) {{v.name}}
                         {{_t('txt_interview_not')}}</a>
                 </p>
             </li>
-            <li ng-show="assocRemovedDevices.length > 1">
+            <li ng-show="assocRemovedDevices.length">
                 <p ng-repeat="v in assocRemovedDevices">
                     <a class="text-danger" href="#configuration/interview/{{v.id}}">(#{{v.id}})
                         {{v.name}}
@@ -25,13 +25,13 @@
                     <em ng-repeat="a in v.assoc">{{a.name}}, </em>
                 </p>
             </li>
-            <li>
+            <li  ng-show="failedDevices.length">
                 <p ng-repeat="v in failedDevices">
                     <a class="text-danger" href="#help/{{v.id}}">(#{{v.id}}) {{v.name}}
                         {{_t('txt_failed')}}</a>
                 </p>
             </li>
-            <li>
+            <li ng-show="notConfigDevices.length">
                 <p ng-repeat="v in notConfigDevices| unique:id">
                     <a class="text-danger" href="#configuration/interview/{{v.id}}">(#{{v.id}})
                         {{v.name}}

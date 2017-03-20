@@ -104,9 +104,9 @@
     margin: 0 0 $spacing 0;
 }
 .btn-goup-tabs{
-    display: table;
+   /* display: table;
     width: 100%;
-    margin: 0 0 $spacing 0;
+    margin: 0 0 $spacing 0;*/
     .btn{
         padding: $spacing;
         font-size: $tab-font-size;
@@ -124,7 +124,7 @@
         color: $tabs-icon-active-color;
     }
 }
-.btn-tabs-2{
+/*.btn-tabs-2{
     .btn{
         width: 50%;
     }
@@ -153,5 +153,5 @@
     .btn{
         width: 14.2857%;
     }
-}
+}*/
 

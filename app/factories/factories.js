@@ -59,10 +59,10 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         postReport: postReport,
         getAppBuiltInfo: getAppBuiltInfo,
         // Probably remove
-        store: store,
+        /*store: store,
         updateZwaveDataSince: updateZwaveDataSince,
         getReorgLog: getReorgLog,
-        putReorgLog: putReorgLog
+        putReorgLog: putReorgLog*/
     });
     /**
      * Get IP
@@ -644,7 +644,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
      *
      * Handle errors
      */
-    function handleError(message, showResponse, hideContent) {
+   /* function handleError(message, showResponse, hideContent) {
         // Custom IP show/hide
         $('.custom-ip-error').show();
         $('.custom-ip-success').hide();
@@ -662,19 +662,19 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
 
         console.log('Error');
 
-    }
+    }*/
 
     /**
      *
      * Handle cmd errors
      */
-    function handleCmdError(message) {
+    /*function handleCmdError(message) {
         var msg = (message ? message : 'Error handling data from server');
         $('#respone_container').show();
         $('#respone_container_inner').html('<div class="alert alert-danger alert-dismissable response-message"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <i class="icon-ban-circle"></i> ' + msg + '</div>');
         console.log('Error');
 
-    }
+    }*/
 
     /**
      * Clear the cached ZWaveData.
@@ -689,7 +689,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
      * @param callback called in case of successful data reception.
      * @param errorCallback called in case of error.
      */
-    function updateZwaveDataSince(since, callback, errorCallback) {
+    /*function updateZwaveDataSince(since, callback, errorCallback) {
         var time = since;
         var request = $http({
             method: "POST",
@@ -703,12 +703,12 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             if (errorCallback !== undefined)
                 errorCallback(error);
         });
-    }
+    }*/
     /**
      * todo: Deprecated (used only in ReorganizationController)
      * Run store api cmd
      */
-    function store(param, success, error) {
+   /* function store(param, success, error) {
         var url = cfg.server_url + cfg.store_url + param;
         var request = $http({
             method: 'POST',
@@ -724,23 +724,23 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
                 error(err);
         });
 
-    }
+    }*/
 
     /**
      * todo: Deprecated (used only in ReorganizationController)
      * Gets reorg log from remote text file
      */
-    function getReorgLog(callback) {
+   /* function getReorgLog(callback) {
         return $http({method: 'GET', url: cfg.server_url + cfg.reorg_log_url + '?at=' + (new Date()).getTime()}).success(function (data, status, headers, config) {
             callback(data);
         });
-    }
+    }*/
 
     /**
      * todo: Deprecated (used only in ReorganizationController)
      * Put reorg log in remote text file
      */
-    function putReorgLog(log) {
+   /* function putReorgLog(log) {
         return $.ajax({
             type: "PUT",
             dataType: "text",
@@ -748,7 +748,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             contentType: "text/plain",
             data: log
         });
-    }
+    }*/
 
 
 

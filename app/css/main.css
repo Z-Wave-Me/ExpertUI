@@ -14415,9 +14415,9 @@ img {
 
 /* line 106, ../sass/common/_button.scss */
 .btn-goup-tabs {
-  display: table;
-  width: 100%;
-  margin: 0 0 10px 0;
+  /* display: table;
+   width: 100%;
+   margin: 0 0 $spacing 0;*/
 }
 /* line 110, ../sass/common/_button.scss */
 .btn-goup-tabs .btn {
@@ -14440,36 +14440,36 @@ img {
   color: #6494BC;
 }
 
-/* line 128, ../sass/common/_button.scss */
-.btn-tabs-2 .btn {
-  width: 50%;
+/*.btn-tabs-2{
+    .btn{
+        width: 50%;
+    }
 }
-
-/* line 133, ../sass/common/_button.scss */
-.btn-tabs-3 .btn {
-  width: 33.33333%;
+.btn-tabs-3{
+    .btn{
+        width: 33.33333%;
+    }
 }
-
-/* line 138, ../sass/common/_button.scss */
-.btn-tabs-4 .btn {
-  width: 25%;
+.btn-tabs-4{
+    .btn{
+        width: 25%;
+    }
 }
-
-/* line 143, ../sass/common/_button.scss */
-.btn-tabs-5 .btn {
-  width: 20%;
+.btn-tabs-5{
+    .btn{
+        width: 20%;
+    }
 }
-
-/* line 148, ../sass/common/_button.scss */
-.btn-tabs-6 .btn {
-  width: 16.66666%;
+.btn-tabs-6{
+    .btn{
+        width: 16.66666%;
+    }
 }
-
-/* line 153, ../sass/common/_button.scss */
-.btn-tabs-7 .btn {
-  width: 14.2857%;
-}
-
+.btn-tabs-7{
+    .btn{
+        width: 14.2857%;
+    }
+}*/
 /* Switch button
 ---------- http://www.w3schools.com/howto/howto_css_switch.asp
 -------------------------------------------------- */
