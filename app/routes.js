@@ -111,7 +111,8 @@ angApp.config(['$routeProvider',
             requireLogin: requireLogin,
             templateUrl: 'app/views/network/routing.html'
         }).when('/network/reorganization', {
-            templateUrl: 'app/views/network/reorganization.html'
+            templateUrl: 'app/views/network/reorganization.html',
+            appTypeBanned: ['installer'],
         }).when('/network/timing', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/network/timing.html'

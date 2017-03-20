@@ -81,7 +81,7 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
 
     /**
      * Refresh zwave data
-     */○
+     */
     $scope.refreshZwaveData = function () {
         var refresh = function () {
             dataService.loadJoinedZwaveData().then(function (response) {
@@ -104,7 +104,7 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
         if (cfg.server_url != '') {
             //$scope.loadData();
             $scope.loadZwaveData();
-        }○
+        }
     }
 
 
@@ -136,13 +136,14 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
     };
 
     /**
+     * todo: deprecated
      * Show modal window
      *
      * @returns {void}
      */
-    $scope.showModal = function (target, id) {
+    /*$scope.showModal = function (target, id) {
 
-        /*var obj = $filter('filter')($scope.devices, function(d) {
+        /!*var obj = $filter('filter')($scope.devices, function(d) {
          return d.id == id;
          })[0];
          if (obj) {
@@ -150,10 +151,10 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
          "id": obj.id,
          "name": obj.name
          };
-         }*/
+         }*!/
         $(target).modal();
         return;
-    };
+    };*/
 
     /// --- Private functions --- ///
 
