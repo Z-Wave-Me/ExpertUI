@@ -87,7 +87,7 @@
                                                 {{_t('device_interview_stage_failed')}}
                                             </div>-->
                                             <div class="progress"
-                                                 ng-if_="zwaveInterview.progress > 0 && zwaveInterview.progress < 101">
+                                                 ng-if="zwaveInterview.progress >= 0 && zwaveInterview.progress < 101">
                                                 <div class="progress-bar"
                                                      style="min-height:40px;min-width: 2em; width: {{zwaveInterview.progress}}%;"
                                                      ng-class="zwaveInterview.progress < 100 ? 'progress-bar-danger progress-bar-striped active' : 'progress-bar-success'">

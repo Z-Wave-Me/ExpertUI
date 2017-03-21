@@ -21,17 +21,20 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
     $scope.firmware = {
         show: false,
         input: {
+            action: 'url',
             url: '',
-            targetId: ''
+            targetId: '',
+            file:''
         },
         interval: null,
-
         update: {
+            show : false,
             progress: 0,
             updateStatus: null,
             fragmentTransmitted: 0,
             fragmentCount: 0,
-            waitTime: 0
+            waitTime: 0,
+            alert: {}
         }
 
     };
@@ -83,13 +86,13 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
     $scope.refreshZwaveData = function (nodeId) {
         var refresh = function () {
             //dataService.loadJoinedZwaveData().then(function (response) {
-            dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
+            dataService.loadZwaveApiData(true).then(function (ZWaveAPIData) {
                 var node = ZWaveAPIData.devices[nodeId];
                 if ('122' in node.instances[0].commandClasses) {
                     console.log(node.instances[0].commandClasses[122].data.updateStatus)
                 }
                 //var node = response.data.joined.devices[nodeId];
-                //setFirmwareData(node);
+                setFirmwareData(node);
             }, function (error) {
             });
         };
@@ -108,16 +111,21 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
      * @param {string} id
      */
     $scope.updateDeviceFirmware = function (input, id) {
+        var fd = new FormData();
+        if (!fd) {
+            return;
+        }
         $scope.toggleRowSpinner(id);
         var cmd = cfg.server_url + cfg.fw_update_url + '/' + $scope.deviceId
-        var fd = new FormData();
 
-        fd.append('file', $scope.myFile);
+        fd.append('file', input.file);
         fd.append('url', input.url);
         fd.append('targetId', input.targetId || '0');
         dataService.uploadApiFile(cmd, fd).then(function (response) {
-            $timeout($scope.toggleRowSpinner, 1000);
-            deviceService.showNotifier({message: $scope._t('success_device_firmware_update')});
+            $scope.firmware.update.show = true;
+            $scope.refreshZwaveData($scope.deviceId);
+            //$timeout($scope.toggleRowSpinner, 1000);
+            //deviceService.showNotifier({message: $scope._t('success_device_firmware_update')});
             /*$timeout(function () {
              alertify.dismissAll();
              $window.location.reload();
@@ -144,23 +152,52 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
                 $scope.firmware.show = false;
                 return;
             }
-            var fragmentTransmitted = fw.data.updateStatus.value;
+            var updateStatus = fw.data.updateStatus.value;
+            var fragmentTransmitted = fw.data.fragmentTransmitted.value;
             var fragmentCount = fw.data.fragmentCount.value;
             var progress = ((fragmentTransmitted / fragmentCount) * 100).toFixed();
+            var updateMessages = {
+                "0x00": "fw_update_checksum_err", //The device was unable to receive the requested firmware data without checksum error. Not updated.
+                "0x01": "fw_update_receive_err", //The device was unable to receive the requested firmware data. Not updated.
+                "0x02": "fw_update_err_wrong_manufacturer_id", //The transferred image does not match the Manufacturer ID. Not updated.
+                "0x03": "fw_update_err_wrong_fw_id", //The transferred image does not match the Firmware ID. Not updated.
+                "0x04": "fw_update_err_wrong_fw_target", //The transferred image does not match the Firmware Target. Not updated.
+                "0x05": "fw_update_err_invalid_file_header_info", //Invalid file header information. Not updated.
+                "0x06": "fw_update_err_invalid_file_header_format", //Invalid file header format. Not updated.
+                "0x07": "fw_update_err_insufficient_memory", //Insufficient memory. Not updated.
+                "0xFD": "fw_update_download_success_activation_cmd", //Firmware image downloaded successfully. Waiting for activation command.
+                "0xFE": "fw_update_download_success_manual_restart", //Firmware image downloaded successfully. Manual restart needed.
+                "0xFF": "fw_update_download_success_auto_upgrade", //Firmware image downloaded successfully. The device will now start upgrading. Then the device will restart itself.
+            };
 
             $scope.firmware.update.fragmentTransmitted = fragmentTransmitted;
             $scope.firmware.update.fragmentCount = fragmentCount;
-            $scope.firmware.update.fragmentCount = fragmentCount;
-            $scope.firmware.update. progress =  progress;
+            $scope.firmware.update.progress =  isNaN(progress)? 0 : (progress > 100 ? 100 : progress);
 
-            $scope.firmware.update.updateStatus = fw.data.updateStatus.value;
+            $scope.firmware.update.updateStatus = updateStatus;
             $scope.firmware.update.waitTime = fw.data.waitTime.value;
+
+            if (updateStatus && !!updateStatus) {
+                $scope.firmware.update.alert = {
+                    message: $scope._t(updateMessages[$filter('decToHex')(updateStatus, 2, '0x')]),
+                    status: 'alert-warning',
+                    icon: 'fa-exclamation-circle'
+                };
+            }
+
+            if($scope.firmware.update.progress === 100) {
+                $timeout($scope.toggleRowSpinner, 1000);
+                deviceService.showNotifier({message: $scope._t('success_device_firmware_update')});
+                $interval.cancel($scope.firmware.interval);
+            } else if ([0,1,2,3,4,5,6,7].indexOf(updateStatus) >= 0) {
+                $timeout($scope.toggleRowSpinner, 1000);
+                deviceService.showNotifier({message: $scope._t('error_device_firmware_update'), type: 'error'});
+                $interval.cancel($scope.firmware.interval);
+                $scope.firmware.update.show = false;
+            }
 
             return;
 
         });
-
     }
-
-
 });
