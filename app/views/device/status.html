@@ -21,7 +21,7 @@
                              label="_t('th_type')"></sort-by>
                 </th>
                 <!-- sleping-->
-                <th>
+                <th ng-hide="cfg.app_type === 'installer'">
                     <sort-by callback="orderBy(field)" obj="orderByArr" field="'sleeping'"
                              label="_t('th_sleeping')"></sort-by>
                 </th>
@@ -61,7 +61,7 @@
                     <i class="fa" ng-class="v.icon" title="{{_t(v.type)}}"></i>
                 </td>
                 <!-- sleeping -->
-                <td data-title="{{ _t('th_sleeping')}}" class="row-sleeping">
+                <td data-title="{{ _t('th_sleeping')}}" class="row-sleeping" ng-hide="cfg.app_type === 'installer'">
                     <span ng-show="v.sleeping">
                           <i class="fa fa-clock-o fa-lg" title="{{_t('battery_operated_device_with_wakeup')}}"></i>
                         <span title="{{_t('sleeping_since_approximately')}}"

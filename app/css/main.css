@@ -13703,27 +13703,32 @@ a:focus, .order-by:focus {
   color: #5698d0;
 }
 /* line 65, ../sass/common/_header.scss */
+#main_navigation .jobs {
+  display: inline-block;
+  color: #5698d0;
+}
+/* line 71, ../sass/common/_header.scss */
 #main_navigation a:hover {
   text-decoration: none;
 }
-/* line 69, ../sass/common/_header.scss */
+/* line 75, ../sass/common/_header.scss */
 #main_navigation .active {
   background-color: #2A6496;
   color: #FFF;
 }
 
-/* line 75, ../sass/common/_header.scss */
+/* line 81, ../sass/common/_header.scss */
 #header_logo {
   max-height: 40px;
   max-width: 100px;
 }
 
-/* line 85, ../sass/common/_header.scss */
+/* line 91, ../sass/common/_header.scss */
 #navigation_right {
   float: right;
 }
 
-/* line 89, ../sass/common/_header.scss */
+/* line 95, ../sass/common/_header.scss */
 #navi_settings {
   border-radius: 4px;
   height: 40px;
@@ -13732,29 +13737,29 @@ a:focus, .order-by:focus {
   margin-right: 15px;
 }
 
-/* line 98, ../sass/common/_header.scss */
+/* line 104, ../sass/common/_header.scss */
 .navi-time-link {
   cursor: pointer;
 }
 
-/* line 102, ../sass/common/_header.scss */
+/* line 108, ../sass/common/_header.scss */
 .navi-time {
   padding-left: 10px;
 }
 
-/* line 106, ../sass/common/_header.scss */
+/* line 112, ../sass/common/_header.scss */
 .mobile-icon {
   padding-left: 7px;
   color: #5698d0;
 }
-/* line 109, ../sass/common/_header.scss */
+/* line 115, ../sass/common/_header.scss */
 .mobile-icon .fa {
   font-size: 17px;
 }
 
 /* Subnavigation
 -------------------------------------------------- */
-/* line 116, ../sass/common/_header.scss */
+/* line 122, ../sass/common/_header.scss */
 .sub-navigation {
   font-size: 110%;
   position: absolute;
@@ -13775,18 +13780,18 @@ a:focus, .order-by:focus {
   color: #272822;
   font-weight: normal;
 }
-/* line 133, ../sass/common/_header.scss */
+/* line 139, ../sass/common/_header.scss */
 .sub-navigation ul {
   padding: 0;
   margin: 0;
   list-style: none;
 }
-/* line 137, ../sass/common/_header.scss */
+/* line 143, ../sass/common/_header.scss */
 .sub-navigation ul li {
   padding: 10px 0;
   border-bottom: solid 1px #9fd8ef;
 }
-/* line 141, ../sass/common/_header.scss */
+/* line 147, ../sass/common/_header.scss */
 .sub-navigation ul li a {
   display: block;
   position: relative;
@@ -13794,35 +13799,35 @@ a:focus, .order-by:focus {
   vertical-align: middle;
   color: #272822;
 }
-/* line 149, ../sass/common/_header.scss */
+/* line 155, ../sass/common/_header.scss */
 .sub-navigation ul li .a-disabled {
   color: #a9ac9d;
 }
-/* line 152, ../sass/common/_header.scss */
+/* line 158, ../sass/common/_header.scss */
 .sub-navigation ul li .fa {
   color: #a6c8e6;
   padding-right: 7px;
 }
-/* line 156, ../sass/common/_header.scss */
+/* line 162, ../sass/common/_header.scss */
 .sub-navigation ul li .subnavi-arrow {
   position: absolute;
   right: 1%;
   display: inline-block;
 }
-/* line 164, ../sass/common/_header.scss */
+/* line 170, ../sass/common/_header.scss */
 .sub-navigation ul .active a {
   color: #f6f9fc;
   font-weight: bold;
   text-decoration: underline;
   cursor: text;
 }
-/* line 171, ../sass/common/_header.scss */
+/* line 177, ../sass/common/_header.scss */
 .sub-navigation ul .fa {
   font-size: 120%;
   padding-right: 10px;
 }
 
-/* line 179, ../sass/common/_header.scss */
+/* line 185, ../sass/common/_header.scss */
 .sub-navigation-left {
   float: left;
   left: 0;
@@ -16162,7 +16167,7 @@ http://codepen.io/MattIn4D/pen/LiKFC
   border-color: #87cf83;
 }
 /* line 39, ../sass/skins/installer/_main.scss */
-.app-type-installer #main_navigation .navibar-item-root, .app-type-installer #main_navigation .timestamp {
+.app-type-installer #main_navigation .navibar-item-root, .app-type-installer #main_navigation .timestamp, .app-type-installer #main_navigation .jobs {
   color: #F89847;
 }
 /* line 42, ../sass/skins/installer/_main.scss */

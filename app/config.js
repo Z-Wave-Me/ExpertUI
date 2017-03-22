@@ -241,7 +241,8 @@ var config_data = {
                 'logout': '/smarthome/#/logout',
                 'version_type': '',
                 'title': 'Z-Wave Expert UI',
-                'controller_name': 'Z-Way'
+                'controller_name': 'Z-Way',
+                'hardvare_vendor': 'RaZberry by Z-Wave.Me'
             },
             'installer': {
                 'logo': 'app/images/z-wave-aliance-logo.png',
@@ -249,7 +250,8 @@ var config_data = {
                 'logout': '#/logout',
                 'version_type': '- version BETA',
                 'title': 'Z-Wave CIT',
-                'controller_name': 'CIT'
+                'controller_name': 'CIT',
+                'hardvare_vendor': 'Z-Wave Alliance'
             }
         }
 
