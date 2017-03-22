@@ -162,7 +162,7 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
             }
             //if (fw.data.updateStatus.value !== $scope.firmware.update.updateStatus && !!$scope.firmware.update.updateStatus) {
             if (fw.data.fragmentTransmitted.value !== $scope.firmware.update.fragmentTransmitted && !!$scope.firmware.update.fragmentTransmitted){
-                if ($scope.rowSpinner.indexOf($scope.firmware.update.buttonId) < 0) {
+                if (!$scope.rowSpinner[$scope.firmware.update.buttonId]) {
                     $scope.toggleRowSpinner($scope.firmware.update.buttonId);
                 }
                 $scope.firmware.update.status = 'in progress';
