@@ -9,7 +9,7 @@
         <div class="col-md-9 col-content">
             <bb-alert alert="alert"></bb-alert>
     <div ng-show="deviceId">
-        <pre>{{firmware.update|json}}</pre>
+        <!--<pre>{{firmware.update|json}}</pre>-->
         <form name="form_firmware_update" id="form_firmware_update" class="form form-inline"
               ng-if="firmware.show"
               ng-submit="updateDeviceFirmware(firmware.input,'btn_update')" novalidate>
