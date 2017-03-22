@@ -12060,19 +12060,24 @@ a:focus, .order-by:focus {
   cursor: pointer;
 }
 
-/* line 243, ../sass/common/_body.scss */
+/* line 242, ../sass/common/_body.scss */
+.notclickable {
+  cursor: text;
+}
+
+/* line 246, ../sass/common/_body.scss */
 .text-supp {
   font-style: italic;
   color: #595959;
 }
 
-/* line 248, ../sass/common/_body.scss */
+/* line 251, ../sass/common/_body.scss */
 .badge {
   padding: 5px;
   margin-right: 5px;
 }
 
-/* line 252, ../sass/common/_body.scss */
+/* line 255, ../sass/common/_body.scss */
 .help-text {
   display: block;
   font-size: 95%;
@@ -12080,63 +12085,63 @@ a:focus, .order-by:focus {
   margin: 5px 0;
 }
 
-/* line 258, ../sass/common/_body.scss */
+/* line 261, ../sass/common/_body.scss */
 .help-text.inline {
   display: inline;
 }
 
-/* line 262, ../sass/common/_body.scss */
+/* line 265, ../sass/common/_body.scss */
 .display-block {
   display: block;
 }
 
-/* line 266, ../sass/common/_body.scss */
+/* line 269, ../sass/common/_body.scss */
 .is-hidden, .alert-hidden, .alert- {
   display: none !important;
 }
 
-/* line 270, ../sass/common/_body.scss */
+/* line 273, ../sass/common/_body.scss */
 .alert-list {
   margin: 8px 0;
 }
 
-/* line 274, ../sass/common/_body.scss */
+/* line 277, ../sass/common/_body.scss */
 .text-alert, .text-alert-list {
   font-size: 85%;
   margin: 0 0 0 7px;
 }
 
-/* line 278, ../sass/common/_body.scss */
+/* line 281, ../sass/common/_body.scss */
 .text-alert {
   margin: 7px 0;
 }
 
-/* line 281, ../sass/common/_body.scss */
+/* line 284, ../sass/common/_body.scss */
 .report-img {
   display: inline-block;
   max-width: 32px;
 }
 
-/* line 285, ../sass/common/_body.scss */
+/* line 288, ../sass/common/_body.scss */
 .hidden-selectopt {
   display: none !important;
 }
 
 /* Response
 -------------------------------------------------- */
-/* line 291, ../sass/common/_body.scss */
+/* line 294, ../sass/common/_body.scss */
 #respone_container {
   display: none;
 }
 
-/* line 295, ../sass/common/_body.scss */
+/* line 298, ../sass/common/_body.scss */
 #respone_container_inner {
   margin: 0 auto;
   text-align: center;
   /*position: relative;*/
 }
 
-/* line 300, ../sass/common/_body.scss */
+/* line 303, ../sass/common/_body.scss */
 .page-load-spinner {
   z-index: 1000;
   text-align: center;
@@ -12146,7 +12151,7 @@ a:focus, .order-by:focus {
   width: 150px;
 }
 
-/* line 309, ../sass/common/_body.scss */
+/* line 312, ../sass/common/_body.scss */
 .response-message {
   z-index: 1000;
   text-align: center;
@@ -12156,7 +12161,7 @@ a:focus, .order-by:focus {
 
 /* Progress bar
 -------------------------------------------------- */
-/* line 317, ../sass/common/_body.scss */
+/* line 320, ../sass/common/_body.scss */
 .progress {
   margin-bottom: 0;
 }

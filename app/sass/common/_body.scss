@@ -239,6 +239,9 @@ a, .order-by {
 .clickable{
     cursor: pointer;
 }
+.notclickable{
+    cursor: text;
+}
 
 .text-supp{
     font-style: italic;

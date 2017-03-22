@@ -75,7 +75,8 @@ appController.controller('AssociationsController', function($scope, $filter, $ti
      */
     function setData(ZWaveAPIData) {
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
-        var controllerSUCNodeId = ZWaveAPIData.controller.data.SUCNodeId.value;
+       // var controllerSUCNodeId = ZWaveAPIData.controller.data.SUCNodeId.value;
+        var controllerSUCNodeId = ZWaveAPIData.controller.data.nodeId.value;
         // Loop throught devices
         var cnt = 1;
         angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
@@ -192,7 +193,11 @@ appController.controller('AssociationsController', function($scope, $filter, $ti
                     data = cc[grp_num];
                     for (var i = 0; i < data.nodes.value.length; i++) {
                         var targetNodeId = data.nodes.value[i];
-                        var device = {'id': targetNodeId, 'name': '(#' + targetNodeId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId])};
+                        var device = {
+                            id: targetNodeId,
+                            name: $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId]),
+                        lifeline: targetNodeId === controllerSUCNodeId
+                        };
                         assocDevices.push({'group': grp_num, 'device': device});
                     }
 
@@ -214,7 +219,11 @@ appController.controller('AssociationsController', function($scope, $filter, $ti
                         var targetNodeId = data.nodesInstances.value[i];
                         var targetInstanceId = data.nodesInstances.value[i + 1];
                         var instanceId = (targetInstanceId > 0 ? '.' + targetInstanceId : '')
-                        var device = {'id': targetNodeId, 'name': '(#' + targetNodeId + instanceId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId])};
+                        var device = {
+                            id: targetNodeId,
+                            name:  $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId]),
+                            lifeline: targetNodeId === controllerSUCNodeId
+                        };
                         assocDevices.push({'group': grp_num, 'device': device});
                     }
                 }
@@ -244,13 +253,12 @@ appController.controller('AssociationsController', function($scope, $filter, $ti
             }
 
             angular.forEach(assocDevices, function(d, key, nodeId) {
-                //console.log(d)
                 if (d['group'] == v) {
                     if ($scope.devices.showLifeline) {
-                        dev.push(d.device.name);
+                        dev.push(d.device);
                     } else {
                         if (controllerSUCNodeId != d.device.id) {
-                            dev.push(d.device.name);
+                            dev.push(d.device);
                         }
                     }
                 }
