@@ -9,7 +9,7 @@
         <div class="col-md-9 col-content">
             <bb-alert alert="alert"></bb-alert>
     <div ng-show="deviceId">
-        <pre>{{firmware.update|json}}</pre>
+        <!--<pre>{{firmware.update|json}}</pre>-->
         <form name="form_firmware_update" id="form_firmware_update" class="form form-inline"
               ng-if="firmware.show"
               ng-submit="updateDeviceFirmware(firmware.input,'btn_update')" novalidate>
@@ -30,19 +30,6 @@
                        ng-selected="k === 0">{{k}}: {{_t(v)}}
                </option>
            </select>
-            <!--<input id="targetId" type="text" value="" name="url" class="form-control" ng-model="firmware.input.targetId" placeholder="{{_t('target_id')}}" title="_t('target_id')" />-->
-
-            <!-- <input class="inputfile" type="file" name="file" id="upload_firmware"
-                   ng-click="icons.find = v"
-                   onchange="angular.element(this).scope().uploadFile('upload_firmware',this.files)" /> -->
-            <!-- Target -->
-            <!--<select name="devices" class="form-control" ng-model="firmware.input.targetId">
-                <option value="" ng-selected="v.id != deviceId">-&#45;&#45; {{_t('Target')}} -&#45;&#45;</option>
-                <option value="{{k}}"
-                        ng-repeat="(k,v) in ['Z-Wave','EnOcean']"
-                        ng-selected="k === 0">{{v}}</option>
-            </select>-->
-
             <!-- Submit -->
             <button type="submit" class="btn btn-primary" id="btn_update"
                     ng-disabled="rowSpinner['btn_update']">

@@ -1,4 +1,6 @@
 {
+  "upload_format_unsupported": "The (__extension__)  format is not supported.",
+  "upload_allowed_formats": "The uploaded file must be in one of the following formats: __extensions__",
   "choose_fw_install_action":"Choose an upgrade action: ",
   "fw_upgrade_from_url":"URL",
   "fw_upgrade_from_file":"File (*.hex/*.bin)",

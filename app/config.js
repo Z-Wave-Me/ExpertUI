@@ -231,6 +231,12 @@ var config_data = {
                 th: ['type','val']
             }
         },
+        // Upload settings
+        'upload': {
+            'fw_or_bootloader': {
+                extension: ['bin', 'hex']
+            }
+        },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer
         'app_type': 'default',
