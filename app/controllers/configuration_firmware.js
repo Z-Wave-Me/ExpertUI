@@ -14,26 +14,25 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
     $scope.deviceId = 0;
     $scope.activeTab = 'firmware';
     $scope.activeUrl = 'configuration/firmware/';
-    /*$scope.showForm = false;
-     $scope.formFirmware = {};
-     $scope.firmwareProgress = 0;*/
 
     $scope.firmware = {
         show: false,
         input: {
             action: 'url',
-            url: '',
-            targetId: '',
-            file:''
+            url: null,
+            targetId: null,
+            file: null
         },
         interval: null,
         update: {
             show : false,
+            status: '',
             progress: 0,
             updateStatus: null,
-            fragmentTransmitted: 0,
-            fragmentCount: 0,
+            fragmentTransmitted: null,
+            fragmentCount: null,
             waitTime: 0,
+            buttonId: 'btn_update',
             alert: {}
         }
 
@@ -64,10 +63,8 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
             $scope.deviceName = $filter('deviceName')(nodeId, node);
 
             if ('122' in node.instances[0].commandClasses) {
-                //console.log(node.instances[0].commandClasses[122].data)
                 $scope.firmware.show = true;
-                //setFirmwareData(node);
-                //$scope.refreshZwaveData(nodeId);
+                $scope.refreshZwaveData($scope.deviceId);
             }else{
                 $scope.alert = {message: $scope._t('no_device_service'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
                 return;
@@ -91,7 +88,6 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
                 if ('122' in node.instances[0].commandClasses) {
                     console.log(node.instances[0].commandClasses[122].data.updateStatus)
                 }
-                //var node = response.data.joined.devices[nodeId];
                 setFirmwareData(node);
             }, function (error) {
             });
@@ -111,10 +107,27 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
      * @param {string} id
      */
     $scope.updateDeviceFirmware = function (input, id) {
+
+        if (input.action === 'url') {
+            input.file = undefined;
+        } else {
+            input.url = undefined;
+        }
+
+        if (input.file && cfg.upload.fw_or_bootloader.extension.indexOf($filter('fileExtension')(input.file.name)) === -1) {
+            alertify.alertError(
+                $scope._t('upload_format_unsupported', {'__extension__': $filter('fileExtension')(input.file.name)}) + ' ' +
+                $scope._t('upload_allowed_formats', {'__extensions__': cfg.upload.fw_or_bootloader.extension.toString()})
+            );
+
+            return;
+        }
+
         var fd = new FormData();
         if (!fd) {
             return;
         }
+
         $scope.toggleRowSpinner(id);
         var cmd = cfg.server_url + cfg.fw_update_url + '/' + $scope.deviceId
 
@@ -123,16 +136,11 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
         fd.append('targetId', input.targetId || '0');
         dataService.uploadApiFile(cmd, fd).then(function (response) {
             $scope.firmware.update.show = true;
-            $scope.refreshZwaveData($scope.deviceId);
-            //$timeout($scope.toggleRowSpinner, 1000);
-            //deviceService.showNotifier({message: $scope._t('success_device_firmware_update')});
-            /*$timeout(function () {
-             alertify.dismissAll();
-             $window.location.reload();
-             }, 2000);*/
+            $scope.firmware.update.status = 'in progress';
+            $scope.firmware.update.buttonId = id;
         }, function (error) {
             $timeout($scope.toggleRowSpinner, 1000);
-            alertify.alertError($scope._t('error_device_firmware_update'));
+            alertify.alertError($scope._t('error_device_firmware_update') + ':<br/>' + error.data);
         });
     };
 
@@ -152,6 +160,15 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
                 $scope.firmware.show = false;
                 return;
             }
+            //if (fw.data.updateStatus.value !== $scope.firmware.update.updateStatus && !!$scope.firmware.update.updateStatus) {
+            if (fw.data.fragmentTransmitted.value !== $scope.firmware.update.fragmentTransmitted && !!$scope.firmware.update.fragmentTransmitted){
+                if ($scope.rowSpinner.indexOf($scope.firmware.update.buttonId) < 0) {
+                    $scope.toggleRowSpinner($scope.firmware.update.buttonId);
+                }
+                $scope.firmware.update.status = 'in progress';
+                $scope.firmware.update.show = true;
+            }
+            var inProgress = $scope.firmware.update.status === 'in progress';
             var updateStatus = fw.data.updateStatus.value;
             var fragmentTransmitted = fw.data.fragmentTransmitted.value;
             var fragmentCount = fw.data.fragmentCount.value;
@@ -177,27 +194,37 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
             $scope.firmware.update.updateStatus = updateStatus;
             $scope.firmware.update.waitTime = fw.data.waitTime.value;
 
-            if (updateStatus && !!updateStatus) {
+            if (inProgress && updateStatus && !!updateStatus) {
                 $scope.firmware.update.alert = {
                     message: $scope._t(updateMessages[$filter('decToHex')(updateStatus, 2, '0x')]),
                     status: 'alert-warning',
                     icon: 'fa-exclamation-circle'
                 };
             }
-
-            if($scope.firmware.update.progress === 100) {
-                $timeout($scope.toggleRowSpinner, 1000);
-                deviceService.showNotifier({message: $scope._t('success_device_firmware_update')});
-                $interval.cancel($scope.firmware.interval);
-            } else if ([0,1,2,3,4,5,6,7].indexOf(updateStatus) >= 0) {
-                $timeout($scope.toggleRowSpinner, 1000);
-                deviceService.showNotifier({message: $scope._t('error_device_firmware_update'), type: 'error'});
-                $interval.cancel($scope.firmware.interval);
-                $scope.firmware.update.show = false;
+            if (inProgress) {
+                if($scope.firmware.update.progress === 100) {
+                    $timeout($scope.toggleRowSpinner, 1000);
+                    deviceService.showNotifier({message: $scope._t('success_device_firmware_update')});
+                    $scope.firmware.update.status = 'done';
+                } else if ([0,1,2,3,4,5,6,7].indexOf(updateStatus) >= 0) {
+                    $timeout($scope.toggleRowSpinner, 1000);
+                    deviceService.showNotifier({message: $scope._t('error_device_firmware_update'), type: 'error'});
+                    $scope.firmware.update.status = 'fail';
+                    $scope.firmware.update.show = false;
+                }
             }
 
             return;
 
         });
     }
+
+    /**
+     * Cancel interval on page destroy
+     */
+    $scope.$on('$destroy', function () {
+        $scope.firmware = {};
+        $interval.cancel($scope.firmware.interval);
+        $timeout($scope.toggleRowSpinner, 1000);
+    });
 });

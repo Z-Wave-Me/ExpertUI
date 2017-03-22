@@ -892,3 +892,25 @@ angApp.filter('deviceIcon', function () {
         return icon;
     };
 });
+
+/**
+ * Get a file extension from the path
+ * @function fileExtension
+ */
+angApp.filter('fileExtension', function () {
+    return function (path) {
+        // extract file name from full path ...
+        // (supports `\\` and `/` separators)
+        var basename = path.split(/[\\/]/).pop(),
+            // get last position of `.`
+            pos = basename.lastIndexOf(".");
+        // if file name is empty or ...
+        //  `.` not found (-1) or comes first (0)
+        if (basename === '' || pos < 1) {
+            return '';
+        }
+
+        // extract extension ignoring `.`
+        return basename.slice(pos + 1);
+    };
+});
