@@ -44,7 +44,7 @@
                     </td>
                     <!-- time -->
                     <td data-title="{{ _t('datetime')}}" class="row-time">
-                        <bb-date-time obj="v.dateTime" updated="v.isUpdated" ng-if="v.level != null"></bb-date-time>
+                        <bb-date-time obj="v.dateTime" updated="v.isUpdated"></bb-date-time>
                     </td>
                     <!-- mode -->
                     <td>
@@ -75,7 +75,7 @@
                     </td>
                     <!-- slider -->
                     <td>
-                        <div ng-show="v.isThermostatSetpoint" ng-init="dec = v.range.decimal">
+                        <div ng-if="v.isThermostatSetpoint">
                             <div id="range_slider_{{$index}}" 
                                  class="app-range-slider" 
                                  range-slider

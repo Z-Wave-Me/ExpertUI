@@ -94,13 +94,13 @@ var config_data = {
         'thermostat': {
             'c': {// °C Min and max range and step
                 "step": 0.5,//Value between steps in snapping on the scale
-                "min": "0",
-                "max": "40"
+                "min": 0,
+                "max": 40
             },
             'f': {// °F Min and max range
                 "step": 1,
-                "min": "41",
-                "max": "104"
+                "min": 41,
+                "max": 104
             }
         },
         // Image path
