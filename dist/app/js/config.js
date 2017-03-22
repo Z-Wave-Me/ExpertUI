@@ -6,8 +6,8 @@
 var config_data = {
     'cfg': {
         'app_name': 'Z-Wave Expert',
-        'app_version': '1.3.0-RC-21',
-        'app_built': '20-03-2017 09:42:50',
+        'app_version': '1.3.0-RC-25',
+        'app_built': '21-03-2017 16:04:03',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -208,6 +208,29 @@ var config_data = {
         },
         // Firmware target
         firmware_target: ['zwave_chip','additional_chip'],
+        // Expert commands table with values
+        expert_cmd: {
+            Configuration:{
+                ccName: 'Configuration',
+                valName: 'val',
+                th: ['param','val']
+            },
+            Association: {
+                ccName: 'Association',
+                valName:'nodes',
+                    th: ['group','nodes']
+            },
+            SensorBinary: {
+                ccName: 'SensorBinary',
+                valName: 'level',
+                th: ['param','level']
+            },
+            ThermostatSetPoint: {
+                ccName: 'ThermostatSetPoint',
+                valName:'val',
+                th: ['type','val']
+            }
+        },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer
         'app_type': 'default',
