@@ -6,8 +6,8 @@
 var config_data = {
     'cfg': {
         'app_name': 'Z-Wave Expert',
-        'app_version': '1.3.0-RC-25',
-        'app_built': '21-03-2017 16:04:03',
+        'app_version': '1.3.0-RC-28',
+        'app_built': '23-03-2017 11:09:44',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -94,13 +94,13 @@ var config_data = {
         'thermostat': {
             'c': {// °C Min and max range and step
                 "step": 0.5,//Value between steps in snapping on the scale
-                "min": "0",
-                "max": "40"
+                "min": 0,
+                "max": 40
             },
             'f': {// °F Min and max range
                 "step": 1,
-                "min": "41",
-                "max": "104"
+                "min": 41,
+                "max": 104
             }
         },
         // Image path
@@ -231,6 +231,12 @@ var config_data = {
                 th: ['type','val']
             }
         },
+        // Upload settings
+        'upload': {
+            'fw_or_bootloader': {
+                extension: ['bin', 'hex']
+            }
+        },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer
         'app_type': 'default',
@@ -241,7 +247,8 @@ var config_data = {
                 'logout': '/smarthome/#/logout',
                 'version_type': '',
                 'title': 'Z-Wave Expert UI',
-                'controller_name': 'Z-Way'
+                'controller_name': 'Z-Way',
+                'hardvare_vendor': 'RaZberry by Z-Wave.Me'
             },
             'installer': {
                 'logo': 'app/images/z-wave-aliance-logo.png',
@@ -249,7 +256,8 @@ var config_data = {
                 'logout': '#/logout',
                 'version_type': '- version BETA',
                 'title': 'Z-Wave CIT',
-                'controller_name': 'CIT'
+                'controller_name': 'CIT',
+                'hardvare_vendor': 'Z-Wave Alliance'
             }
         }
 
