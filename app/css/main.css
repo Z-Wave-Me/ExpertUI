@@ -15506,25 +15506,28 @@ http://codepen.io/MattIn4D/pen/LiKFC
 
 /* Active assoc
 -------------------------------------------------- */
-/* line 3, ../sass/modules/_activeassoc.scss */
-.badge-assoc {
+/*.badge-assoc{
+    margin: 0 5px 5px 0;
+    padding: 5px;
+}*/
+/* line 8, ../sass/modules/_activeassoc.scss */
+.active-assoc-entry .btn {
   margin: 0 5px 5px 0;
-  padding: 5px;
 }
 
-/* line 8, ../sass/modules/_activeassoc.scss */
+/* line 13, ../sass/modules/_activeassoc.scss */
 .btn-group-assoc-devices.false-false .btn {
   display: none;
 }
 
-/* line 12, ../sass/modules/_activeassoc.scss */
+/* line 17, ../sass/modules/_activeassoc.scss */
 .btn-group-assoc-devices.true-false .btn {
   color: #333;
   background-color: #f9f9f9;
   border-color: #ccc;
 }
 
-/* line 18, ../sass/modules/_activeassoc.scss */
+/* line 23, ../sass/modules/_activeassoc.scss */
 .btn-group-assoc-devices.false-true .btn {
   color: #fff;
   background-color: #f0ad4e;
