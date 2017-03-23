@@ -1,4 +1,4 @@
-/* Copyright:  Z-Wave Europe, Created: 23-03-2017 16:21:36 */
+/* Copyright:  Z-Wave Europe, Created: 23-03-2017 16:27:36 */
 angular.module('myAppTemplates', []).run(['$templateCache', function($templateCache) {
   'use strict';
 
@@ -458,7 +458,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/settings/settings_default.html',
-    "<div class=page-header><h1>{{_t('settings')}}</h1></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_lang.html'\"></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_app_default.html'\"></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_firmware.html'\"></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_report.html'\"></div>"
+    "<div class=page-header><h1>{{_t('settings')}}</h1></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_lang.html'\"></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_app_default.html'\"></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_report.html'\"></div>"
   );
 
 
