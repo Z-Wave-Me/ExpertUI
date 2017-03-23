@@ -5,6 +5,7 @@ This User Interfaces allows to operate a Smart Home Network based on Z-Wave devi
 
 ## v1.3.0
 #### New features
+- Progress bar in the  firmware update tab.
 - Thermostat SetPoint has step of 0.5 deg
 - Analytics: Zniffer, Background noise, Noise Meter, Zniffer History.
 - Settings: Time and date format, Firmware Update, Bug report.

@@ -33,7 +33,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
     $scope.assocGroupsDevices = [];
     $scope.assocAddDevices = [];
     $scope.assocAddInstances = false;
-    $scope.cfgXml = [];
+    $scope.cfgXml = {};
     $scope.input = {
         nodeId: 0,
         goupCfg: false,
@@ -57,7 +57,6 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             $location.path($scope.activeUrl + deviceId);
         }
     };
-
     // Load data
     $scope.loadZwaveData = function(nodeId, noCache) {
         dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
@@ -85,6 +84,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             $scope.deviceId = nodeId;
             $scope.deviceName = $filter('deviceName')(nodeId, node);
             dataService.getCfgXml().then(function (cfgXml) {
+                $scope.cfgXml = cfgXml;
                 //console.log(node)
                 setData(node, ZWaveAPIData, nodeId, cfgXml);
             }, function(error) {
@@ -264,8 +264,28 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             name: _.findWhere($scope.assocAddDevices, {id: input.toNode}).name
         };
          angular.extend($scope.assocGroupsDevices[input.groupId], addDevice);
+        console.log($scope.cfgXml)
 
-        dataService.getCfgXml().then(function (cfgXml) {
+        dataService.runZwaveCmd(cfg.store_url + cmd).then(function(response) {
+            $scope.closeAssocModal();
+            if(!_.isEmpty($scope.cfgXml)){
+                var xmlFile = deviceService.buildCfgXmlAssoc(data, cfgXml);
+                dataService.putCfgXml(xmlFile);
+            }
+
+        }, function(error) {
+            $window.alert($scope._t('error_handling_data') + '\n' + cmd);
+            $scope.loadZwaveData($routeParams.nodeId);
+        });
+        $scope.input.toNode = false;
+        $scope.input.toInstance = false;
+        $scope.input.groupId = 0;
+        $scope.assocAddInstances = false;
+        return;
+        /**
+         * todo: deprecated
+         */
+       /* dataService.getCfgXml().then(function (cfgXml) {
             dataService.runZwaveCmd(cfg.store_url + cmd).then(function(response) {
                 $scope.closeAssocModal();
                 var xmlFile = deviceService.buildCfgXmlAssoc(data, cfgXml);
@@ -279,7 +299,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             $scope.input.groupId = 0;
             $scope.assocAddInstances = false;
             return;
-        });
+        });*/
     };
 
     //Delete assoc device from group
@@ -297,7 +317,22 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             'parameter': '[' + params + ']'
 
         };
-        dataService.getCfgXml().then(function (cfgXml) {
+
+            dataService.runZwaveCmd(cfg.store_url + cmd).then(function(response) {
+                if(!_.isEmpty($scope.cfgXml)){
+                    var xmlFile = deviceService.deleteCfgXmlAssoc(data, cfgXml);
+                    dataService.putCfgXml(xmlFile);
+                }
+
+                $('#' + d.elId).addClass('true-false');
+
+            }, function(error) {
+                $window.alert($scope._t('error_handling_data') + '\n' + cmd);
+            });
+        /**
+         * todo: deprecated
+         */
+       /* dataService.getCfgXml().then(function (cfgXml) {
             dataService.runZwaveCmd(cfg.store_url + cmd).then(function(response) {
                 var xmlFile = deviceService.deleteCfgXmlAssoc(data, cfgXml);
                 dataService.putCfgXml(xmlFile);
@@ -306,7 +341,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             }, function(error) {
                 $window.alert($scope._t('error_handling_data') + '\n' + cmd);
             });
-        });
+        });*/
     };
 
     /// --- Private functions --- ///

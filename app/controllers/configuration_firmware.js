@@ -85,9 +85,9 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
             //dataService.loadJoinedZwaveData().then(function (response) {
             dataService.loadZwaveApiData(true).then(function (ZWaveAPIData) {
                 var node = ZWaveAPIData.devices[nodeId];
-                if ('122' in node.instances[0].commandClasses) {
+                /*if ('122' in node.instances[0].commandClasses) {
                     console.log(node.instances[0].commandClasses[122].data.updateStatus)
-                }
+                }*/
                 setFirmwareData(node);
             }, function (error) {
             });
@@ -223,8 +223,8 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
      * Cancel interval on page destroy
      */
     $scope.$on('$destroy', function () {
-        $scope.firmware = {};
         $interval.cancel($scope.firmware.interval);
+        $scope.firmware = {};
         $timeout($scope.toggleRowSpinner, 1000);
     });
 });
