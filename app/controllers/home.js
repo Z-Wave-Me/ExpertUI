@@ -12,6 +12,12 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
         show: false,
         interval: null,
         devices: {},
+        devicesCnt: {
+            mains: 0,
+            battery: 0,
+            flirs: 0,
+            sum: 0
+        },
         networkInformation: {
             mains: 0,
             battery: 0,
@@ -65,6 +71,7 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
             var isRealPrimary = ZWaveAPIData.controller.data.isRealPrimary.value;
             var hasDevices = Object.keys(ZWaveAPIData.devices).length;
             $scope.ZWaveAPIData = ZWaveAPIData;
+            setData(ZWaveAPIData);
             notInterviewDevices(ZWaveAPIData);
             countDevices(ZWaveAPIData);
             assocRemovedDevices(ZWaveAPIData);
@@ -182,6 +189,7 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
             flirs: 0,
             sum: 0
         };
+        var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         /**
          * Loop through nodes
          */
@@ -189,9 +197,13 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
             if (deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
             }
+            var report = [];
             var hasBattery = false;
             var allInterviewsDone = deviceService.allInterviewsDone(node.instances);
-            console.log(allInterviewsDone)
+            if(!allInterviewsDone){
+                report.push()
+            }
+            console.log(nodeId,allInterviewsDone)
             var isLocalyReset = deviceService.isLocalyReset(node);
             var isFailed = deviceService.isFailed(node);
             /**
@@ -217,7 +229,8 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
             var obj = {};
             obj['name'] = $filter('deviceName')(nodeId, node);
             obj['id'] = nodeId;
-            obj['report'] = [];
+            obj['isController'] = controllerNodeId == nodeId;
+            obj['report'] = {};
             if(!$scope.home.devices[nodeId]){
                 $scope.home.devices[nodeId] = obj;
             }
@@ -302,7 +315,7 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
 
             cnt++;
         });
-        $scope.home.networkInformation = networkInformation;
+        $scope.home.devicesCnt = networkInformation;
         //$scope.flirsDevices = cntFlirs;
         //$scope.countDevices = cnt + cntFlirs;
     }

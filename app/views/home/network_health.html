@@ -4,6 +4,7 @@
         <i class="fa fa-plus-square"></i> {{_t('txt_net_health')}}
     </div>
     <div class="panel-body">
+        <pre>{{home.devices|json}}</pre>
         <ul class="list-report">
             <li ng-if="lowBatteryDevices.length">
                 <p ng-repeat="v in lowBatteryDevices">
