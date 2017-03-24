@@ -76,7 +76,7 @@
         </div>
         <div>
             <!-- controller_change_start -->
-            <div class="cfg-block form-inline" ng-controller="ControllerChangeController">
+            <div class="cfg-block form-inline" ng-hide="!cfg.controller.isRealPrimary" ng-controller="ControllerChangeController">
                 <p class="input-help">{{_t('nm_change_controller_war')}}</p>
                 <div class="nm-response"  ng-class="controllerState == 0 ? 'text-info' : 'text - danger'" ng-show="[13, 14, 15, 16].indexOf(controllerState) > -1">
                     {{_t('nm_controller_state_' + controllerState)}}
