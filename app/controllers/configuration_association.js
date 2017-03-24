@@ -264,12 +264,12 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             name: _.findWhere($scope.assocAddDevices, {id: input.toNode}).name
         };
          angular.extend($scope.assocGroupsDevices[input.groupId], addDevice);
-        console.log($scope.cfgXml)
+
 
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function(response) {
             $scope.closeAssocModal();
             if(!_.isEmpty($scope.cfgXml)){
-                var xmlFile = deviceService.buildCfgXmlAssoc(data, cfgXml);
+                 var xmlFile = deviceService.buildCfgXmlAssoc(data,$scope.cfgXml);
                 dataService.putCfgXml(xmlFile);
             }
 
