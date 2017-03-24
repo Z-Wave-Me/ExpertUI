@@ -463,8 +463,8 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,cfg
     function isLocalyReset(node) {
         var isLocalyReset = false;
         for (var iId in node.instances) {
-            if (node.instances[iId].commandClasses[90]) {
-                isLocalyReset = node.instances[iId].commandClasses[90].data.reset.value;
+            if (node.instances[iId].commandClasses[90] && node.instances[iId].commandClasses[90].data.reset.value) {
+                isLocalyReset = true;
             }
         }
         return isLocalyReset;

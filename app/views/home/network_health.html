@@ -6,6 +6,32 @@
     <div class="panel-body">
         <pre>{{home.devices|json}}</pre>
         <ul class="list-report">
+            <li ng-repeat="v in home.devices" ng-hide="!_.size(v.report) || v.isController">
+                <strong>(#{{v.id}}) {{v.name}}</strong>
+                <div ng-repeat="t in v.report" ng-switch="t">
+                    <!-- Battery  -->
+                    <a class="text-danger" href="#device/battery" ng-switch-when="txt_low_battery" ng-hide="cfg.app_type === 'installer'">
+                            {{_t(t)}}
+                    </a>
+                    <!-- Changed Configuration  -->
+                    <a class="text-danger" href="#configuration/interview/{{v.id}}" ng-switch-when="device_changed_configuration">
+                        {{_t(t)}}
+                    </a>
+                    <!-- Assoc removed -->
+                    <a class="text-danger" href="#configuration/interview/{{v.id}}" ng-switch-when="txt_assoc_removed">
+                        {{_t(t)}}
+                    </a>
+                    <!-- Default -->
+                    <a class="text-danger" href="#help/{{v.id}}" ng-switch-default="">
+                        {{_t(t)}}
+                    </a>
+
+
+                </div>
+
+            </li>
+            </ul>
+        <ul class="list-report">
             <li ng-if="lowBatteryDevices.length">
                 <p ng-repeat="v in lowBatteryDevices">
                     <a class="text-danger" href="#device/battery">(#{{v.id}}) {{v.name}}

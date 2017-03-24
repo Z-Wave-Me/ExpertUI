@@ -12,6 +12,7 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
         show: false,
         interval: null,
         devices: {},
+        localyReset:[],
         devicesCnt: {
             mains: 0,
             battery: 0,
@@ -72,6 +73,8 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
             var hasDevices = Object.keys(ZWaveAPIData.devices).length;
             $scope.ZWaveAPIData = ZWaveAPIData;
             setData(ZWaveAPIData);
+            deviceChangedConfig(ZWaveAPIData);
+
             notInterviewDevices(ZWaveAPIData);
             countDevices(ZWaveAPIData);
             assocRemovedDevices(ZWaveAPIData);
@@ -198,14 +201,33 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
                 return;
             }
             var report = [];
+            var batteryCharge = '';
             var hasBattery = false;
             var allInterviewsDone = deviceService.allInterviewsDone(node.instances);
             if(!allInterviewsDone){
-                report.push()
+                report.push('txt_interview_not');
+            }
+            var isFailed = deviceService.isFailed(node);
+            if(isFailed){
+                report.push('txt_failed');
             }
             console.log(nodeId,allInterviewsDone)
+            var assocRemoved = deviceAssocRemoved(node, ZWaveAPIData);
+            if (assocRemoved.length > 0) {
+                report.push('txt_assoc_removed');
+            }
             var isLocalyReset = deviceService.isLocalyReset(node);
-            var isFailed = deviceService.isFailed(node);
+            /*if (isLocalyReset) {
+                //$scope.localyResetDevices.push(obj);
+                var findIndexR = _.findIndex($scope.home.localyReset, {id: obj.id});
+                if (findIndexR > -1) {
+                    angular.extend($scope.home.localyReset[findIndexR], obj);
+
+                } else {
+                    $scope.home.localyReset.push(obj);
+                }
+            }*/
+            //var isFailed = deviceService.isFailed(node);
             /**
              * Set network information
              */
@@ -215,7 +237,10 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
             }
             // Count battery devices
             else if (!node.data.isListening.value && (!node.data.sensor250.value && !node.data.sensor1000.value)) {
-                hasBattery = true;
+                batteryCharge = parseInt(node.instances[0].commandClasses[0x80].data.last.value);
+                if ( batteryCharge <= 20 && allInterviewsDone) {
+                    report.push('txt_low_battery')
+                }
                 networkInformation.battery++;
             }
             // Count flirs devices
@@ -230,10 +255,21 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
             obj['name'] = $filter('deviceName')(nodeId, node);
             obj['id'] = nodeId;
             obj['isController'] = controllerNodeId == nodeId;
-            obj['report'] = {};
+            obj['report'] = report;
+            obj['batteryCharge'] = batteryCharge;
             if(!$scope.home.devices[nodeId]){
                 $scope.home.devices[nodeId] = obj;
             }
+            if (isLocalyReset) {
+             //$scope.localyResetDevices.push(obj);
+             var findIndexR = _.findIndex($scope.home.localyReset, {id: obj.id});
+             if (findIndexR > -1) {
+             angular.extend($scope.home.localyReset[findIndexR], obj);
+
+             } else {
+             $scope.home.localyReset.push(obj);
+             }
+             }
         });
         $scope.home.networkInformation = networkInformation;
         console.log(networkInformation)
@@ -241,6 +277,94 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
          $scope.home.devices[nodeId].report.push('isFailed');
          }*/
 
+    }
+
+    /**
+     * Device changed vonfiguration
+     */
+    function deviceChangedConfig(ZWaveAPIData) {
+        // Loop throught devices
+        dataService.xmlToJson(cfg.server_url + '/config/Configuration.xml').then(function (response) {
+            //dataService.getCfgXml(function(cfgXml) {
+            angular.forEach(response.config.devices.deviceconfiguration, function (cfg, cfgId) {
+                var node = ZWaveAPIData.devices[cfg['_id']];
+                if (!node || !$filter('hasNode')(node, 'instances.0.commandClasses.112')) {
+                    return;
+                }
+                var nodeId = cfg['_id'];
+                var array = JSON.parse(cfg['_parameter']);
+                var cfgNum = 0;
+                var cfgVal;
+                var devVal;
+                if (array.length > 2) {
+                    cfgNum = array[0];
+                    cfgVal = array[1];
+                    if(node.instances[0].commandClasses[0x70].data[cfgNum]){
+                        devVal = node.instances[0].commandClasses[0x70].data[cfgNum].val.value;
+                    }
+                    if ($scope.home.devices[nodeId] && (cfgVal != devVal)) {
+                        if($scope.home.devices[nodeId].report.indexOf('device_changed_configuration') === -1){
+                            $scope.home.devices[nodeId].report.push('device_changed_configuration');
+                        }
+
+                    }
+
+                }
+            });
+        });
+    }
+    /**
+     * Device assoc removed
+     */
+    function deviceAssocRemoved(node, ZWaveAPIData) {
+        var assocDevices = [];
+        var data;
+        if (0x85 in node.instances[0].commandClasses) {
+            var cc = node.instances[0].commandClasses[0x85].data;
+            if (cc.groups.value >= 1) {
+                for (var grp_num = 1; grp_num <= parseInt(cc.groups.value, 10); grp_num++) {
+                    data = cc[grp_num];
+                    for (var i = 0; i < data.nodes.value.length; i++) {
+                        var targetNodeId = data.nodes.value[i];
+                        if (!(targetNodeId in ZWaveAPIData.devices)) {
+                            assocDevices.push({
+                                'id': targetNodeId,
+                                'name': '(#' + targetNodeId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId])
+                            });
+                        }
+                    }
+
+                }
+            }
+        }
+
+        if (0x8e in node.instances[0].commandClasses) {
+            var cc = node.instances[0].commandClasses[0x8e].data;
+            if (cc.groups.value >= 1) {
+                for (var grp_num = 1; grp_num <= parseInt(cc.groups.value, 10); grp_num++) {
+
+                    data = cc[grp_num];
+
+                    for (var i = 0; i < data.nodesInstances.value.length; i += 2) {
+                        var targetNodeId = data.nodesInstances.value[i];
+                        var targetInstanceId = data.nodesInstances.value[i + 1];
+                        var instanceId = (targetInstanceId > 0 ? '.' + targetInstanceId : '');
+                        if (!(targetNodeId in ZWaveAPIData.devices)) {
+                            assocDevices.push({
+                                'id': targetNodeId,
+                                'name': '(#' + targetNodeId + instanceId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId])
+                            });
+                        }
+
+                    }
+                }
+            }
+        }
+        if (assocDevices.length > 0) {
+            //console.log(assocDevices)
+        }
+
+        return assocDevices;
     }
 
     /**
