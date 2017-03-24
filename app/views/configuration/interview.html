@@ -80,7 +80,7 @@
                                         </td>
                                     </tr>
                                     <!-- device_interview_indicator -->
-                                    <tr>
+                                    <tr ng-if="showInterview">
                                         <th>{{_t('device_interview_indicator')}}</th>
                                         <td>
                                             <!--<div class="text-danger" ng-if="zwaveInterview.progress < 1">
@@ -123,7 +123,8 @@
                     <!-- force interview-->
                     <button class="btn btn-primary" id="btn_interview_force"
                             ng-click="interviewForce('devices[' + deviceId + '].InterviewForce()')"
-                            ng-disabled="rowSpinner['devices[' + deviceId + '].InterviewForce()']">
+                            ng-disabled="rowSpinner['devices[' + deviceId + '].InterviewForce()']"
+                            ng-if="showInterview">
 
                         <bb-row-spinner
                                 spinner="rowSpinner['devices[' + deviceId + '].InterviewForce()']"
@@ -133,7 +134,8 @@
                     </button>
                     <!-- interview result -->
                     <button id="btn_show_interview_result" class="btn btn-default"
-                            ng-click="handleModal('interviewModal',$event)">
+                            ng-click="handleModal('interviewModal',$event)"
+                            ng-if="showInterview">
                         <i class="fa fa-clone"></i> {{_t('config_ui_show_interview_results')}}
                     </button>
                     <!-- device description -->
