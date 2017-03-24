@@ -21,7 +21,9 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         progress: 0,
         commandClassesCnt: 0,
         interviewDoneCnt: 0
-    };
+    },
+    $scope.isController = false;
+    $scope.showInterview = true;
 
     // Interview data
     $scope.descriptionCont;
@@ -49,10 +51,15 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
                 return;
             }
 
+            //check if node is controller
+            $scope.isController = parseInt(nodeId, 10) === cfg.controller.zwayNodeId;
+
             $cookies.configuration_id = nodeId;
             $cookies.config_url = $scope.activeUrl + nodeId;
             $scope.deviceId = nodeId;
             $scope.deviceName = $filter('deviceName')(nodeId, node);
+            //hide interview if node is controller
+            $scope.showInterview = !$scope.isController;
             checkInterview(node);
             setData(ZWaveAPIData, nodeId);
             $scope.refreshZwaveData();
@@ -291,10 +298,10 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         }
 
         var sdk;
-        if (node.data.SDK.value == '') {
+        if (!$scope.isController && node.data.SDK.value == '') {
             sdk = '(' + node.data.ZWProtocolMajor.value + '.' + node.data.ZWProtocolMinor.value + ')';
         } else {
-            sdk = node.data.SDK.value;
+            sdk = $scope.isController? ZWaveAPIData.controller.data.SDK.value: node.data.SDK.value;
         }
 
         // Command class

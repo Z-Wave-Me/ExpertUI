@@ -18,6 +18,7 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
 
     $scope.deviceClasses = [];
     $scope.productNames = [];
+    $scope.isController = false;
 
     /**
      * Cancel interval on page destroy
@@ -129,6 +130,10 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
             /*if (nodeId == 255 || node.data.isVirtual.value) {
                 return;
             }*/
+            if (parseInt(nodeId, 10) === cfg.controller.zwayNodeId) {
+                $scope.isController = true;
+            }
+
             var node = ZWaveAPIData.devices[nodeId];
             var instanceId = 0;
             var ccIds = [32, 34, 37, 38, 43, 70, 91, 94, 96, 114, 119, 129, 134, 138, 143, 152];
@@ -143,11 +148,11 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
             var fromSdk = true;
             var sdk;
             // SDK
-            if (node.data.SDK.value == '') {
+            if (!$scope.isController && node.data.SDK.value == '') {
                 sdk = major + '.' + minor;
                 fromSdk = false;
             } else {
-                sdk = node.data.SDK.value;
+                sdk = $scope.isController? ZWaveAPIData.controller.data.SDK.value : node.data.SDK.value;
             }
             // Version
             var appVersion = node.data.applicationMajor.value + '.' + node.data.applicationMinor.value;
