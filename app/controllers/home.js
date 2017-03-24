@@ -217,18 +217,7 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
                 report.push('txt_assoc_removed');
             }
             var isLocalyReset = deviceService.isLocalyReset(node);
-            /*if (isLocalyReset) {
-                //$scope.localyResetDevices.push(obj);
-                var findIndexR = _.findIndex($scope.home.localyReset, {id: obj.id});
-                if (findIndexR > -1) {
-                    angular.extend($scope.home.localyReset[findIndexR], obj);
-
-                } else {
-                    $scope.home.localyReset.push(obj);
-                }
-            }*/
-            //var isFailed = deviceService.isFailed(node);
-            /**
+             /**
              * Set network information
              */
             // Count mains devices

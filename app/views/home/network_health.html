@@ -5,8 +5,8 @@
     </div>
     <div class="panel-body">
         <pre>{{home.devices|json}}</pre>
-        <ul class="list-report">
-            <li ng-repeat="v in home.devices" ng-hide="!_.size(v.report) || v.isController">
+        <div>
+            <div class="cfg-block" ng-repeat="v in home.devices" ng-hide="!_.size(v.report) || v.isController">
                 <strong>(#{{v.id}}) {{v.name}}</strong>
                 <div ng-repeat="t in v.report" ng-switch="t">
                     <!-- Battery  -->
@@ -29,8 +29,8 @@
 
                 </div>
 
-            </li>
-            </ul>
+            </div>
+            </div>
         <ul class="list-report">
             <li ng-if="lowBatteryDevices.length">
                 <p ng-repeat="v in lowBatteryDevices">
