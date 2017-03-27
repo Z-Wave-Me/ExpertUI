@@ -218,9 +218,8 @@ appController.controller('ThermostatController', function($scope, $filter, $time
 
                     }
                 }
-                // Init for ThermostatMode
+                // Init for hasThermostatSetpoint
                 if (hasThermostatSetpoint) {
-                    //console.log(hasThermostatSetpoint)
                     ccId = 0x43;
                     if (hasThermostatSetpoint.data[curThermMode]) {
                         level = hasThermostatSetpoint.data[curThermMode].setVal.value;

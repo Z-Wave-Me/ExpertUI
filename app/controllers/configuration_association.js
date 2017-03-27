@@ -60,6 +60,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
     // Load data
     $scope.loadZwaveData = function(nodeId, noCache) {
         dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
+            //console.log(ZWaveAPIData.devices[7].instances[0].commandClasses[133].data[2].nodes.value)
             $scope.ZWaveAPIData = ZWaveAPIData;
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
             if(_.isEmpty($scope.devices)){
@@ -119,28 +120,6 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
     };
 
     $scope.refreshZwaveData();
-
-    /**
-     * todo: deprecated
-     */
-    /*$scope.refresh = function() {
-        dataService.joinedZwaveData(function(data) {
-            var updateData = false;
-            var searchStr = 'devices.' + $routeParams.nodeId + '.'
-            angular.forEach(data.update, function(v, k) {
-                if (k.indexOf(searchStr) !== -1) {
-                    updateData = true;
-                    return;
-                }
-            });
-            if (updateData) {
-                $scope.load($routeParams.nodeId, true);
-            }
-
-
-        });
-    };*/
-    //$scope.refresh();
 
     // Update data from device
     $scope.updateFromDevice = function(spin) {
@@ -320,7 +299,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
 
             dataService.runZwaveCmd(cfg.store_url + cmd).then(function(response) {
                 if(!_.isEmpty($scope.cfgXml)){
-                    var xmlFile = deviceService.deleteCfgXmlAssoc(data, cfgXml);
+                    var xmlFile = deviceService.deleteCfgXmlAssoc(data, $scope.cfgXml);
                     dataService.putCfgXml(xmlFile);
                 }
 
@@ -391,6 +370,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
      * Get assoc groups
      */
     function getAssocGroups(node, zdd, nodeId, ZWaveAPIData, cfgXml) {
+        //console.log(ZWaveAPIData.devices[7].instances[0].commandClasses[133].data[2].nodes.value)
         var assocGroups = [];
         var groupZdd = [];
         if (zdd) {
@@ -426,7 +406,6 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                     }
 
                 }
-
                 for (var group = 0; group < groups; group++) {
                     var data;
                     var dataMca;
@@ -455,13 +434,18 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                     max = $filter('hasNode')(groupZdd[groupId], '_maxNodes');
 
                     $scope.assocGroupsDevices[groupId] = {};
-
+                    /**
+                     * Plain assoc
+                     */
                     if ((0x85 in instance.commandClasses) && (group < instance.commandClasses[0x85].data.groups.value)) {
-
-
                         cfgArray = deviceService.getCfgXmlAssoc(cfgXml, nodeId, '0', '85', 'Set', groupId);
                         var savedNodesInDevice = [];
-                        data = instance.commandClasses[0x85].data[group + 1];
+                        data = instance.commandClasses[0x85].data[groupId];
+                        /*if(groupId == 2){
+                            console.log('GROUP: ',groupId,'data.nodes.value: ',data.nodes.value)
+
+                        }*/
+
                         // Find duplicates in nodes
                         for (var i = 0; i < data.nodes.value.length; i++) {
                             if (savedNodesInDevice.indexOf(data.nodes.value[i]) === -1) {
@@ -516,10 +500,16 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                             objAssoc['status'] = (savedNodesInDevice.indexOf(targetNodeId) > -1 ? true : false) + '-' + inConfig;
                             assocDevices.push(objAssoc);
                             $scope.assocGroupsDevices[groupId][targetNodeId] = objAssoc;
-                            //console.log($scope.assocGroupsDevices[groupId])
+                            /*if(inConfig){
+                                console.log(data.nodes.value)
+                                console.log('GROUP:', groupId,'NODE:',targetNodeId,'STATUS:',objAssoc['status'],'SAVED:',savedNodesInDevice);
+                            }*/
+                            //
                         }
                     }
-
+                    /**
+                     * Multichannel assoc
+                     */
                     if ((0x8e in instance.commandClasses) && (group < instance.commandClasses[0x8e].data.groups.value)) {
                         cfgArrayMca = deviceService.getCfgXmlAssoc(cfgXml, nodeId, '0', '142', 'Set', groupId);
                         var savedNodesInstancesInDevice = [];

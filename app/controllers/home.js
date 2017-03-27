@@ -211,7 +211,7 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
             if(isFailed){
                 report.push('txt_failed');
             }
-            console.log(nodeId,allInterviewsDone)
+            //console.log(nodeId,allInterviewsDone)
             var assocRemoved = deviceAssocRemoved(node, ZWaveAPIData);
             if (assocRemoved.length > 0) {
                 report.push('txt_assoc_removed');
@@ -261,7 +261,7 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
              }
         });
         $scope.home.networkInformation = networkInformation;
-        console.log(networkInformation)
+        //console.log(networkInformation)
         /*if(!('isFailed' in $scope.home.devices[nodeId].report)){
          $scope.home.devices[nodeId].report.push('isFailed');
          }*/

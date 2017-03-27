@@ -34,7 +34,7 @@
                         <tr ng-repeat="v in assocGroups track by $index">
                             <td class="association-text">
                                 <h5>
-                                    {{v.label}} ({{ _t('assoc_max')}} {{v.max}} {{ _t('assoc_nodes')}})
+                                    {{v.groupId}}. {{v.label}} ({{ _t('assoc_max')}} {{v.max}} {{ _t('assoc_nodes')}})
                                     <span> | <i class="fa fa-clock-o"></i> <span class="{{v.timeClass}}">{{v.updateTime| isTodayFromUnix}}</span></span>
                                     <!--updateTime: {{v.updateTime |dateFromUnix}}, invalidateTime: {{v.invalidateTime|dateFromUnix}}-->
                                 </h5>
