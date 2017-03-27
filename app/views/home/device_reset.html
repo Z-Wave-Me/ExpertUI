@@ -4,7 +4,7 @@
         <i class="fa fa-info-circle"></i> {{_t('device_reset_locally')}}
     </div>
     <div class="panel-body">
-        <pre>{{home.localyReset|json}}</pre>
+        <!--<pre>{{home.localyReset|json}}</pre>-->
         <ul class="list-report" ng-if="!_.isEmpty(home.localyReset)">
             <li ng-repeat="v in home.localyReset"> (#{{v.id}}) {{v.name}}</li>
         </ul>
