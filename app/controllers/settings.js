@@ -157,16 +157,44 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
  *
  */
 appController.controller('SettingsAppFormatController', function ($scope, $timeout, $window, $interval, $location, $q, cfg,dataService,deviceService) {
-    $scope.settingsFormat = {
-        input: cfg.zwavecfg
+    $scope.settings = {
+        input: cfg.zwavecfg || {},
+        lastTZ: cfg.zwavecfg.time_zone,
+        lastSsid: "",
+        countdown: 60
     };
 
     /**
      * Store settings
      * @param {object} input
      */
-    $scope.storeFormatSettings = function(input) {
+    $scope.storeSettings = function(input,$event) {
         $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin', message: $scope._t('updating')};
+
+        if(input.time_zone !== $scope.settings.lastTZ) {
+            var data = {
+                "time_zone": input.time_zone
+            };
+
+            dataService.postApi('time_zone', data, null).then(function (response) {
+                $scope.loading = false;
+                $scope.handleModal('timezoneModal', $event);
+                var myint = $interval(function(){
+                    $scope.settings.countdown--;
+                    if($scope.settings.countdown === 0){
+                        $interval.cancel(myint);
+                        $location.path('/');
+                    }
+                }, 1000);
+
+            }, function (error) {
+                alertify.alertError($scope._t('error_load_data'));
+
+            });
+        } else {
+            deviceService.showNotifier({message: $scope._t('update_successful')});
+        }
+
         dataService.postApi('configupdate_url', input).then(function (response) {
             $scope.loading = false;
         }, function (error) {
