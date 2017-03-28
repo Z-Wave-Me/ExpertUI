@@ -6,13 +6,13 @@
 <div class="accordion-entry-ctrl" ng-class="" ng-if="expand.settingsApp" ng-controller="SettingsAppFormatController">
     <bb-loader></bb-loader>
     <form name="form_settings" id="form_settings" class="form form-page"
-          ng-submit="storeFormatSettings(settingsFormat.input)" novalidate>
+          ng-submit="storeSettings(settings.input)" novalidate>
         <fieldset>
             <!-- date format -->
             <div class="form-group form-inline">
                 <label>{{_t('date_format')}}: </label>
                 <select name="date_format" name="date_format" class="form-control"
-                        ng-model="settingsFormat.input.date_format">
+                        ng-model="settings.input.date_format">
                     <option ng-repeat="v in cfg.date_format_list" value="{{v}}"
                             ng-selected="v === cfg.zwavecfg.date_format">{{v}}
                     </option>
@@ -23,9 +23,19 @@
             <div class="form-group form-inline">
                 <label>{{_t('time_format')}}: </label>
                 <select name="time_format" name="time_format" class="form-control"
-                        ng-model="settingsFormat.input.time_format">
+                        ng-model="settings.input.time_format">
                     <option ng-repeat="v in cfg.time_format_list" value="{{v}}"
                             ng-selected="v === cfg.zwavecfg.time_format">{{v}} {{_t('hours')}}
+                    </option>
+                </select>
+            </div>
+            <!-- timezone -->
+            <div class="form-group form-inline">
+                <label>{{_t('timezone')}}: </label>
+                <select name="time_zone" name="time_zone" class="form-control"
+                        ng-model="settings.input.time_zone">
+                    <option ng-repeat="v in cfg.time_zone_list" value="{{v}}"
+                            ng-selected="v === cfg.zwavecfg.time_zone">{{v}}
                     </option>
                 </select>
             </div>
@@ -38,4 +48,6 @@
             </button>
         </fieldset>
     </form>
+    <!-- assocAddModal -->
+    <div ng-include="'app/views/settings/modal_timezone.html'" ng-controller="SettingsAppFormatController"></div>
 </div>
