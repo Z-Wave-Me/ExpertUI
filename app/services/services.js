@@ -1126,6 +1126,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,cfg
                 wakeup_cont = {
                     'params': gui_descr,
                     'values': {"0": wakeup_conf_value},
+                    type: 'wakeup',
                     name: 'wakeup_' + nodeId + '_' + 0,
                     updateTime: updateTime,
                     isUpdated: isUpdated,

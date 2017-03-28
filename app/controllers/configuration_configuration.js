@@ -183,14 +183,15 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             //alert($scope._t('conf_apply_battery'));
             deviceService.showNotifier({message: $scope._t('conf_apply_battery'),type: 'warning'});
         }
+        var cfgType = cfgValues.type;
 
         var dataArray = _.isObject(hasData) ? hasData : {};
+
         $scope.toggleRowSpinner(spin);
         //var bitrangeCnt = [];
         var bitcheckCnt = [];
         if (!_.isObject(hasData)) {
             data = $('#' + form).serializeArray();
-            //console.log(data)
             //console.log(data)
             angular.forEach(data, function (v, k) {
                 if (v.value === 'N/A') {
@@ -202,7 +203,9 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                     return;
                 }
                 var inputType = v.name.split('_')[0];
+
                 var cfg = _.findWhere(cfgValues, {confNum: inputConfNum.toString()});
+
                 if (cfg) {
                     if ('bitset' in cfg.type) {
                          if (inputType === 'bitrange') {
@@ -250,17 +253,24 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
 
                     }
                 }
+                //console.log(inputConfNum,cfgValues,cfgType)
                 if (dataArray[inputConfNum]) {
                     //dataArray[inputConfNum].value += ',' + value;
                     dataArray[inputConfNum].value = value;
-                } else {
+                } else if(cfgType === 'wakeup'){
+                    if (dataArray['wakeup']) {
+                        dataArray['wakeup'].value += ',' + value;
+
+                    }else{
+                        dataArray['wakeup'] = {name: 'wakeup_0',value: value};
+                    }
+
+                }else {
                     dataArray[inputConfNum] = {
                         value: value,
                         name: v.name
                         //cfg: cfg
                     };
-
-
                 }
 
             });
@@ -336,7 +346,8 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                 dataService.runZwaveCmd(cfg.store_url + request);
                 break;
             case '84':// Wakeup
-                request += cmd.command + '(' + configValues.join(",") + ')';
+                //request += cmd.command + '(' + configValues.join(",") + ')';
+                request += cmd.command + '(' + dataArray.wakeup.value + ')';
                 dataService.runZwaveCmd(cfg.store_url + request);
                 break;
             case '27':// Switch all
