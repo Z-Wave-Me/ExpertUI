@@ -4,7 +4,9 @@
  */
 
 /**
- * Sensor root controller
+ * Allows receive binary sensor states.
+ * Allows to read different kind of sensor.
+ * Allows to read different kind of meters.
  * @class SensorsController
  *
  */
@@ -123,7 +125,8 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
             angular.forEach(device.instances, function(instance, instanceId) {
                 if (instanceId == 0 && device.instances.length > 1) {
                     return;
-                }// Look for SensorBinary - Loop throught 0x30 commandClasses
+                }
+                // Command Class SensorBinary (0x30/48)
                 var sensorBinary = instance.commandClasses[0x30];
 
                 if (angular.isObject(sensorBinary)) {
@@ -167,7 +170,7 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
                 }
 
 
-                // Look for SensorMultilevel - Loop throught 0x31 commandClasses
+                // Command Class SensorMultilevel (0x31/49)
                 var sensorMultilevel = instance.commandClasses[0x31];
                 if (angular.isObject(sensorMultilevel)) {
                     angular.forEach(sensorMultilevel.data, function(val, key) {
@@ -211,7 +214,7 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
                     });
                 }
 
-                // Look for Meter - Loop throught 0x32 commandClasses
+                // Command Class Meter (0x32/50)
                 var meters = instance.commandClasses[0x32];
                 if (angular.isObject(meters)) {
                     angular.forEach(meters.data, function(meter, key) {
@@ -259,7 +262,8 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
                         }
                     });
                 }
-
+                // Command Class Alarm Sensor (0x9C/156)
+                // todo: Deprecated Command Class. Now Alarm/Notication is used instead.
                 var alarmSensor = instance.commandClasses[0x9c];
                 if (angular.isObject(alarmSensor)) {
                     //return;

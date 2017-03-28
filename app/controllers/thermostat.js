@@ -1,10 +1,11 @@
 /**
- * @overview This controller renders and handles thermostats.
+ * @overview  Depending on the thermostat capabilities reported, the dialog will allow to change the thermostat mode and/or change the setpoint temperature for the thermostat mode selected.
  * @author Martin Vach
  */
 
 /**
- * Thermostat root controller
+ * Allows to set a certain setpoint to a thermostat (set temperature to maintain).
+ * The command class can be applied to different kind of thermostats (heating, cooling, ...), hence it has various modes.
  * @class ThermostatController
  *
  */
@@ -206,7 +207,7 @@ appController.controller('ThermostatController', function($scope, $filter, $time
                 var isThermostatMode = false;
                 var isThermostatSetpoint = false;
                 var range = cfg.thermostat.c;
-                // Init for ThermostatMode
+                // Command Class Thermostat Mode (0x40/64)
                 if (hasThermostatMode) {
                     ccId = 0x40;
                     modeList = getModeList(hasThermostatMode.data);
@@ -218,7 +219,7 @@ appController.controller('ThermostatController', function($scope, $filter, $time
 
                     }
                 }
-                // Init for hasThermostatSetpoint
+                // Command Class Thermostat SetPoint (0x43/67)
                 if (hasThermostatSetpoint) {
                     ccId = 0x43;
                     if (hasThermostatSetpoint.data[curThermMode]) {

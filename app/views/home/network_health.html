@@ -5,30 +5,30 @@
     </div>
     <div class="panel-body">
         <!--<pre>{{home.devices|json}}</pre>-->
-        <div>
-            <div class="cfg-block" ng-repeat="v in home.devices" ng-hide="!_.size(v.report) || v.isController">
-                <strong>(#{{v.id}}) {{v.name}}</strong>
+        <ul class="list-report">
+            <li ng-repeat="v in home.devices" ng-hide="!_.size(v.report) || v.isController">
+                (#{{v.id}}) {{v.name}}
                 <div ng-repeat="t in v.report" ng-switch="t">
                     <!-- Battery  -->
                     <a class="text-danger" href="#device/battery" ng-switch-when="txt_low_battery"
                        ng-hide="cfg.app_type === 'installer'">
-                        {{_t(t)}}
+                        - {{_t(t)}}.
                     </a>
                     <!-- Changed Configuration  -->
                     <a class="text-danger" href="#configuration/interview/{{v.id}}"
                        ng-switch-when="device_changed_configuration">
-                        {{_t(t)}}
+                        - {{_t(t)}}.
                     </a>
                     <!-- Assoc removed -->
                     <a class="text-danger" href="#configuration/interview/{{v.id}}" ng-switch-when="txt_assoc_removed">
-                        {{_t(t)}}
+                        - {{_t(t)}}.
                     </a>
                     <!-- Default -->
                     <a class="text-danger" href="#help/{{v.id}}" ng-switch-default="">
-                        {{_t(t)}}
+                        - {{_t(t)}}.
                     </a>
                 </div>
-            </div>
-        </div>
+            </li>
+        </ul>
     </div>
 </div>
