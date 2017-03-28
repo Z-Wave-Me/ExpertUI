@@ -16,7 +16,7 @@
  "fw_update_download_success_manual_restart": "Firmware wurde erfolgreich übertragen. Manueller Neustart notwendig.",
  "fw_update_download_success_auto_upgrade": "Firmware wurde erfolgreich übertragen. Das Gerät beginnt jetzt mit der Aktualierung. Der Neustart erfolgt automatisch.",
  "zwave_chip":"Z-Wave chip",
- "additional_chip":"Anderer Chip",
+ "additional_chip":"Zusätzlicher Chip",
  "reorg_last_update":"Letzte Reorganisation:",
  "reorg_empty": "Keine Daten verfügbar",
  "stop":"Stop",
