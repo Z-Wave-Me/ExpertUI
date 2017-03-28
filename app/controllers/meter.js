@@ -4,7 +4,7 @@
  */
 
 /**
- * Meter root controller
+ * Allows to control different kind of meters.
  * @class MetersController
  *
  */
@@ -125,11 +125,12 @@ appController.controller('MetersController', function($scope, $filter, $timeout,
                     return;
                 }
 
-                // Look for Meter - Loop throught 0x32 commandClasses
+                // Command Class Meter (0x32/50)
                 var meters = instance.commandClasses[0x32];
                 if (angular.isObject(meters)) {
                     angular.forEach(meters.data, function(meter, key) {
-                        realEMeterScales = [0, 1, 3, 8, 9];// Not in [0, 1, 3, 8, 9] !== -1
+                        // Z-Wave differentiates different meter types and different meter scales.
+                        realEMeterScales = [0, 1, 3, 8, 9];
                         var scaleId = parseInt(key, 10);
                         if (isNaN(scaleId)) {
                             return;
@@ -140,6 +141,7 @@ appController.controller('MetersController', function($scope, $filter, $timeout,
                         /*if (meter.sensorType.value > 1) {
                             return; //  gas and water have real meter scales
                         }*/
+
                         var obj = {};
                         obj['id'] = k;
                         obj['iId'] = instanceId;

@@ -1,10 +1,14 @@
 /**
- * @overview This controller renders and handles switches.
+ * @overview This controller renders and handles switches, actuators, electrical power switches, dimmers and motor controlling devices.
  * @author Martin Vach
  */
 
 /**
- * Switch root controller
+ * Allows to control On/Off switches, actuators, electrical power switches and trap On/Off control commands from other devices.
+ * Allows to control all actuators with multilevel switching functions, primarily Dimmers and Motor Controlling devices
+ * as well as trap dim events sent by remotes.
+ * Controls the behavior of a actuator on Switch All commands.
+ *
  * @class SwitchController
  *
  */
@@ -134,22 +138,6 @@ appController.controller('SwitchController', function ($scope, $filter, $timeout
         });
     };
 
-    /**
-     * Update switch with slider
-     * @param {string} cmd
-     * @param {int} index
-     */
-    /*$scope.sliderChange = function(cmd, index) {
-     var val = $scope.switches.rangeSlider[index];
-     var url = cmd + '.Set(' + val + ')';
-     dataService.runZwaveCmd(cfg.store_url + url).then(function (response) {
-     $scope.toggleRowSpinner();
-     }, function (error) {
-     $scope.toggleRowSpinner();
-     alertify.alertError($scope._t('error_update_data') + '\n' + url);
-     });
-     };*/
-
     /// --- Private functions --- ///
 
     /**
@@ -157,15 +145,7 @@ appController.controller('SwitchController', function ($scope, $filter, $timeout
      * @param {object} ZWaveAPIData
      */
     function setData(ZWaveAPIData) {
-        /**
-         * todo: does not work properly - check "Update all"
-         * Set data for one device only
-         */
-        /*if(nodeId && ZWaveAPIData.devices[nodeId]){
-            console.log('Updating only nodeId: ',nodeId)
-            setNodeInstance(ZWaveAPIData.devices[nodeId], nodeId);
-            return;
-        }*/
+
         /**
          * Set data for all available devices
          */
@@ -191,18 +171,15 @@ appController.controller('SwitchController', function ($scope, $filter, $timeout
         var cnt = 0;
         angular.forEach(node.instances, function (instance, instanceId) {
             cnt++;
-            // angular.forEach([0x25, 0x26], function(ccId) {
-            /*if (!(ccId in instance.commandClasses)) return;
-             var switchAllValue = null;
-             var hasSwitchAll = (0x27 in instance.commandClasses) && (instanceId == 0);
-             if (hasSwitchAll) {
-             switchAllValue = instance.commandClasses[0x27].data.mode.value;
-             }*/
-            /* if (instanceId == 0 && _.size(node.instances) > 1) {
-             return;// we skip instance 0 if there are more, since it should be mapped to other instances or their superposition
-             }*/
+            // Command Class SwitchBinary (0x25/37)
+            // Allows to control On/Off switches
             var hasBinary = 0x25 in instance.commandClasses;
+            // Command Class SwitchMultilevel (0x26/38)
+            // Controls all actuators with multilevel switching functions,
             var hasMultilevel = 0x26 in instance.commandClasses;
+
+            // Command Class SwitchAll (0x27/39)
+            // Controls the behavior of a actuator on Switch All commands.
             var hasSwitchAll = (0x27 in instance.commandClasses) && (instanceId == 0);
             var ccId;
             var switchAllValue = null;
@@ -264,7 +241,6 @@ appController.controller('SwitchController', function ($scope, $filter, $timeout
             obj['dateTime'] = $filter('getDateTimeObj')(instance.commandClasses[ccId].data.level.updateTime, obj['invalidateTime']);
             obj['urlToStore'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Get()';
             obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
-            //obj['level'] = ZWaveAPIData.devices[nodeId].instances[instanceId].commandClasses[ccId].data.level;
             obj['level'] = level.level_cont;
             obj['levelColor'] = level.level_color;
             obj['levelStatus'] = level.level_status;

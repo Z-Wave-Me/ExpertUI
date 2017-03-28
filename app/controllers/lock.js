@@ -134,8 +134,8 @@ appController.controller('LocksController', function($scope, $filter, $timeout,$
                 }else{
                     $scope.locks.all.push(obj);
                 }
-                if($scope.locks.ids.indexOf(k) === -1){
-                    $scope.locks.ids.push(k);
+                if($scope.locks.ids.indexOf(nodeId) === -1){
+                    $scope.locks.ids.push(nodeId);
                 }
                 cnt++;
             });
