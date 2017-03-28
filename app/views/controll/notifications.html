@@ -66,25 +66,6 @@
                 </td>
                 <!-- status -->
                 <td data-title="{{ _t('nav_status')}}">
-                   <!-- <div class="btn-group" ng-if="v.version > 1">
-                        <button class="btn btn-default" id="btn_off_{{ v.rowId}}"
-                                ng-class="v.status === 0 ? 'active':''"
-                                ng-click="setStatus(v.urlToOff)">
-                            <bb-row-spinner spinner="rowSpinner[v.urlToOff]"
-                                            label="_t('off')"
-                                            icon="'fa-circle-o text-danger'">
-                            </bb-row-spinner>
-                        </button>
-                        <button class="btn btn-default" id="btn_on_{{ v.rowId}}"
-                                ng-class="v.status === 255 ? 'active':''"
-                                ng-disabled="rowSpinner[v.urlToOn]"
-                                ng-click="setStatus(v.urlToOn)">
-                            <bb-row-spinner spinner="rowSpinner[v.urlToOn]"
-                                            label="_t('on')"
-                                            icon="'fa-circle-o text-success'">
-                            </bb-row-spinner>
-                        </button>
-                    </div>-->
                     <div ng-if="v.version >1">
                         <label class="switcher" title="{{_t(v.statusString)}}"
                                ng-class="v.status === 255 ? 'ison':'isoff'"

@@ -27,24 +27,25 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
         }
     };
     $scope.ZWaveAPIData;
-    $scope.countDevices;
-    $scope.failedDevices = [];
-    //$scope.batteryDevices;
-    $scope.batteryWakeupDevices;
-    $scope.lowBatteryDevices = [];
-    //$scope.flirsDevices;
-    //$scope.mainsDevices;
-    $scope.localyResetDevices = [];
-    $scope.notInterviewDevices = [];
-    $scope.assocRemovedDevices = [];
-    $scope.notConfigDevices = [];
-    $scope.notes = [];
-    $scope.notesData = '';
-    //$scope.updateTime = $filter('getTimestamp');
     $scope.controller = {
         controllerState: 0,
         startLearnMode: false
     };
+    //$scope.countDevices;
+    //$scope.failedDevices = [];
+    //$scope.batteryDevices;
+    //$scope.batteryWakeupDevices;
+    //$scope.lowBatteryDevices = [];
+    //$scope.flirsDevices;
+    //$scope.mainsDevices;
+    //$scope.localyResetDevices = [];
+    //$scope.notInterviewDevices = [];
+    //$scope.assocRemovedDevices = [];
+    //$scope.notConfigDevices = [];
+    //$scope.notes = [];
+    //$scope.notesData = '';
+    //$scope.updateTime = $filter('getTimestamp');
+
 
     /**
      * Cancel interval on page destroy
@@ -52,16 +53,6 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
     $scope.$on('$destroy', function () {
         $interval.cancel($scope.home.interval);
     });
-
-    /*$scope.reset = function() {
-     $scope.failedDevices = angular.copy([]);
-     $scope.lowBatteryDevices = angular.copy([]);
-     $scope.notInterviewDevices = angular.copy([]);
-     $scope.localyResetDevices = angular.copy([]);
-     $scope.assocRemovedDevices = angular.copy([]);
-     $scope.notConfigDevices = angular.copy([]);
-
-     };*/
 
     /**
      * Load zwave data
@@ -73,13 +64,13 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
             var hasDevices = Object.keys(ZWaveAPIData.devices).length;
             $scope.ZWaveAPIData = ZWaveAPIData;
             setData(ZWaveAPIData);
-            deviceChangedConfig(ZWaveAPIData);
+            //deviceChangedConfig(ZWaveAPIData);
 
-            notInterviewDevices(ZWaveAPIData);
-            countDevices(ZWaveAPIData);
-            assocRemovedDevices(ZWaveAPIData);
-            notConfigDevices(ZWaveAPIData);
-            batteryDevices(ZWaveAPIData);
+            //notInterviewDevices(ZWaveAPIData);
+            //countDevices(ZWaveAPIData);
+            //assocRemovedDevices(ZWaveAPIData);
+            //notConfigDevices(ZWaveAPIData);
+            //batteryDevices(ZWaveAPIData);
             //$scope.mainsDevices = $scope.countDevices - ($scope.batteryDevices + $scope.flirsDevices);
             $scope.controller.controllerState = ZWaveAPIData.controller.data.controllerState.value;
             $scope.controller.startLearnMode = !isRealPrimary || hasDevices < 2 ? true : false;
@@ -96,11 +87,12 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
     $scope.refreshZwaveData = function () {
         var refresh = function () {
             dataService.loadJoinedZwaveData().then(function (response) {
-                notInterviewDevices(response.data.joined);
-                countDevices(response.data.joined);
-                assocRemovedDevices(response.data.joined);
+                setData(response.data.joined);
+                //notInterviewDevices(response.data.joined);
+                //countDevices(response.data.joined);
+                //assocRemovedDevices(response.data.joined);
                 //notConfigDevices(ZWaveAPIData);
-                batteryDevices(response.data.joined);
+                //batteryDevices(response.data.joined);
                 //$scope.mainsDevices = $scope.countDevices - ($scope.batteryDevices + $scope.flirsDevices);
                 $scope.controller.controllerState = response.data.joined.controller.data.controllerState.value;
             }, function (error) {
@@ -146,27 +138,6 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
         }
     };
 
-    /**
-     * todo: deprecated
-     * Show modal window
-     *
-     * @returns {void}
-     */
-    /*$scope.showModal = function (target, id) {
-
-        /!*var obj = $filter('filter')($scope.devices, function(d) {
-         return d.id == id;
-         })[0];
-         if (obj) {
-         $scope.deviceInfo = {
-         "id": obj.id,
-         "name": obj.name
-         };
-         }*!/
-        $(target).modal();
-        return;
-    };*/
-
     /// --- Private functions --- ///
 
     /**
@@ -181,7 +152,6 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
     ;
 
     /**
-     * todo: move all scope settings to this function
      * Set zwave data
      * @param {object} ZWaveAPIData
      */
@@ -250,7 +220,6 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
                 $scope.home.devices[nodeId] = obj;
             }
             if (isLocalyReset) {
-             //$scope.localyResetDevices.push(obj);
              var findIndexR = _.findIndex($scope.home.localyReset, {id: obj.id});
              if (findIndexR > -1) {
              angular.extend($scope.home.localyReset[findIndexR], obj);
@@ -261,11 +230,6 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
              }
         });
         $scope.home.networkInformation = networkInformation;
-        //console.log(networkInformation)
-        /*if(!('isFailed' in $scope.home.devices[nodeId].report)){
-         $scope.home.devices[nodeId].report.push('isFailed');
-         }*/
-
     }
 
     /**
@@ -357,9 +321,10 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
     }
 
     /**
+     * todo: deprecated
      * Count devices
      */
-    function countDevices(ZWaveAPIData) {
+    /*function countDevices(ZWaveAPIData) {
         var cnt = 0;
         var cntFlirs = 0;
         var networkInformation = {
@@ -374,9 +339,9 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
             if (deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
             }
-           /* var isListening = node.data.isListening.value || node.data.isRouting.value;
+           /!* var isListening = node.data.isListening.value || node.data.isRouting.value;
             var isBattery =
-            var isFLiRS = (node.data.sensor250.value || node.data.sensor1000.value);*/
+            var isFLiRS = (node.data.sensor250.value || node.data.sensor1000.value);*!/
             if((node.data.isListening.value && node.data.isRouting.value) || (node.data.isListening.value && !node.data.isRouting.value)){ // Count mains devices
                 networkInformation.mains++;
             }else if(!node.data.isListening.value && (!node.data.sensor250.value && !node.data.sensor1000.value)){// Count battery devices
@@ -389,13 +354,13 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
             //var isFLiRS = !node.data.isListening.value && (node.data.sensor250.value || node.data.sensor1000.value);
             //var isListening = node.data.isListening.value && node.data.isRouting.value;
             //var hasWakeup = deviceService.hasCommandClass(node, 132);
-            /*if(isFLiRS){ // Count flirs devices
+            /!*if(isFLiRS){ // Count flirs devices
                 networkInformation.flirs++;
             }else if(isListening){// Count mains devices
                 networkInformation.mains++;
             }else{// Count battery devices
                 networkInformation.battery++;
-            }*/
+            }*!/
             networkInformation.sum++;
             var isLocalyReset = deviceService.isLocalyReset(node);
             var isFailed = deviceService.isFailed(node);
@@ -432,12 +397,13 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
         //$scope.flirsDevices = cntFlirs;
         //$scope.countDevices = cnt + cntFlirs;
     }
-    ;
+    ;*/
 
     /**
+     * todo: deprecated
      * batteryDevices
      */
-    function batteryDevices(ZWaveAPIData) {
+    /*function batteryDevices(ZWaveAPIData) {
         var controllerId = ZWaveAPIData.controller.data.nodeId.value;
         var batteryCnt = 0;
         var batteryWakeupCnt = 0;
@@ -490,12 +456,13 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
         //$scope.batteryDevices = batteryCnt;
         $scope.batteryWakeupDevices = batteryWakeupCnt;
     }
-    ;
+    ;*/
 
     /**
+     * todo: deprecated
      * notInterviewDevices
      */
-    function notInterviewDevices(ZWaveAPIData) {
+    /*function notInterviewDevices(ZWaveAPIData) {
         var controllerId = ZWaveAPIData.controller.data.nodeId.value;
         var cnt = 0;
         // Loop throught devices
@@ -526,12 +493,13 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
         });
         return cnt;
     }
-    ;
+    ;*/
 
     /**
+     * todo: deprecated
      * notInterviewDevices
      */
-    function notConfigDevices(ZWaveAPIData) {
+    /*function notConfigDevices(ZWaveAPIData) {
         // Loop throught devices
         dataService.xmlToJson(cfg.server_url + '/config/Configuration.xml').then(function (response) {
             //dataService.getCfgXml(function(cfgXml) {
@@ -569,11 +537,12 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
             });
         });
     }
-    ;
+    ;*/
     /**
+     * todo: deprecated
      * assocRemovedDevices
      */
-    function assocRemovedDevices(ZWaveAPIData) {
+    /*function assocRemovedDevices(ZWaveAPIData) {
         var controllerId = ZWaveAPIData.controller.data.nodeId.value;
         var cnt = 0;
         // Loop throught devices
@@ -600,12 +569,13 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
         });
         return cnt;
     }
-    ;
+    ;*/
 
     /**
+     * todo: deprecated
      * assocGedRemovedDevices
      */
-    function assocGedRemovedDevices(node, ZWaveAPIData) {
+    /*function assocGedRemovedDevices(node, ZWaveAPIData) {
         var assocDevices = [];
         var data;
         if (0x85 in node.instances[0].commandClasses) {
@@ -655,5 +625,5 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
 
         return assocDevices;
     }
-    ;
+    ;*/
 });
