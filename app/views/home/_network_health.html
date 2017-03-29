@@ -1,4 +1,4 @@
-<!-- Network Healtht -->
+<!-- Network Health -->
 <div class="panel panel-default">
     <div class="panel-heading">
         <i class="fa fa-plus-square"></i> {{_t('txt_net_health')}}
@@ -11,7 +11,7 @@
                         {{_t('txt_low_battery')}} ({{v.battery_charge}}%)</a>
                 </p>
             </li>
-            <li ng-if="cfg.app_type === 'default' && notInterviewDevices.length">
+            <li ng-if="cfg.app_type !== 'installer' && notInterviewDevices.length">
                 <p ng-repeat="v in notInterviewDevices">
                     <a class="text-danger" href="#help/{{v.id}}"> (#{{v.id}}) {{v.name}}
                         {{_t('txt_interview_not')}}</a>

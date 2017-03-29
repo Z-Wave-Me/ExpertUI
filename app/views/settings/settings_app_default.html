@@ -30,7 +30,7 @@
                 </select>
             </div>
             <!-- timezone -->
-            <div class="form-group form-inline">
+            <div class="form-group form-inline" ng-if="['default','popp'].indexOf(cfg.app_type) > -1">
                 <label>{{_t('timezone')}}: </label>
                 <select name="time_zone" name="time_zone" class="form-control"
                         ng-model="settings.input.time_zone">
@@ -49,5 +49,5 @@
         </fieldset>
     </form>
     <!-- assocAddModal -->
-    <div ng-include="'app/views/settings/modal_timezone.html'" ng-controller="SettingsAppFormatController"></div>
+    <div ng-include="'app/views/settings/modal_timezone.html'" ng-if="['default','popp'].indexOf(cfg.app_type) > -1"></div>
 </div>

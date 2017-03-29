@@ -238,7 +238,7 @@ var config_data = {
             }
         },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
-        // Application type : default/installer
+        // Application type : default/installer/wd/popp/jb
         'app_type': 'default',
         'custom_cfg': {
             'default': {
@@ -258,6 +258,33 @@ var config_data = {
                 'title': 'Z-Wave CIT',
                 'controller_name': 'CIT',
                 'hardvare_vendor': 'Z-Wave Alliance'
+            },
+            'wd': {
+                'logo': 'app/images/zplus.jpg',
+                'footer_text': '&COPY; 2017 by Z-Wave.Me',
+                'logout': '/smarthome/#/logout',
+                'version_type': '',
+                'title': 'Z-Wave Expert UI',
+                'controller_name': 'Z-Way',
+                'hardvare_vendor': 'RaZberry by Z-Wave.Me'
+            },
+            'popp': {
+                'logo': 'app/images/zplus.jpg',
+                'footer_text': '&COPY; 2017 by Z-Wave.Me',
+                'logout': '/smarthome/#/logout',
+                'version_type': '',
+                'title': 'Z-Wave Expert UI',
+                'controller_name': 'Z-Way',
+                'hardvare_vendor': 'RaZberry by Z-Wave.Me'
+            },
+            'jb': {
+                'logo': 'app/images/zplus.jpg',
+                'footer_text': '&COPY; 2017 by Z-Wave.Me',
+                'logout': '/smarthome/#/logout',
+                'version_type': '',
+                'title': 'Z-Wave Expert UI',
+                'controller_name': 'Z-Way',
+                'hardvare_vendor': 'RaZberry by Z-Wave.Me'
             }
         }
 

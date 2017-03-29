@@ -304,8 +304,8 @@ angApp.filter('getFormattedTime', function () {
 
         // 12 hrs format?
         if (timeFormat === '12') {
-            h = h % 12 || 12;
             suffix = (h < 12) ? ' AM' : ' PM';
+            h = h % 12 || 12;
         }
         h = (h < 10) ? "0" + h : h;
 

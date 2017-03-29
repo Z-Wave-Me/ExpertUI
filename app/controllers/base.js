@@ -422,7 +422,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
             }, function (error) {});
 
         };
-        $interval(refresh, cfg.queue_interval);
+        $scope.jobQueueInterval = $interval(refresh, cfg.queue_interval);
     };
     /**
      * Load common APIs
