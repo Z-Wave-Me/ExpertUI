@@ -317,7 +317,7 @@ angApp.directive('expertCommandInput', function (cfg,$filter) {
     // Get text input
     function getText(label, value, min, max, name) {
         var input = '';
-        var inName = $filter('stringToSlug')(name ? name : label);
+        var inName = $filter('stringToSlug')(name ? name : label,'_');
         input += '<label>' + label + '</label> ';
         input += '<input class="form-control" name="' + inName + '" type="text" class="form-control" value="' + value + '" title=" min: ' + min + ', max: ' + max + '" />';
         return input;
