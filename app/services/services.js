@@ -57,7 +57,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,cfg
      * @returns {Array|Boolean}
      */
     this.getUser = function () {
-        var user = ($cookies.user !== 'undefined' ? angular.fromJson($cookies.user) : false);
+        var user = ($cookies.user && !!$cookies.user && $cookies.user !== 'undefined' ? angular.fromJson($cookies.user) : false);
         return user;
     };
 
@@ -67,11 +67,12 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,cfg
      * @returns {Boolean|Object}
      */
     this.setUser = function (data) {
-        if (!data) {
+        if (data && !!data) {
+            $cookies.user = angular.toJson(data);
+        } else {
             delete $cookies['user'];
             return false;
         }
-        $cookies.user = angular.toJson(data);
         return data;
     };
 
@@ -97,11 +98,12 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,cfg
      * @returns {Boolean|Object}
      */
     this.setZWAYSession = function (sid) {
-        if (!sid) {
+        if (sid && !!sid) {
+            $cookies.ZWAYSession = sid;
+        } else {
             delete $cookies['ZWAYSession'];
             return false;
         }
-        $cookies.ZWAYSession = sid;
     };
 
     /**
@@ -113,7 +115,6 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,cfg
         this.setZWAYSession(null);
         $window.location.href = '#/';
         $window.location.reload();
-
     };
 
     /**

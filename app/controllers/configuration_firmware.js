@@ -18,7 +18,7 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
     $scope.firmware = {
         show: false,
         input: {
-            action: 'url',
+            action: 'file',
             url: null,
             targetId: null,
             file: null
@@ -82,12 +82,8 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
      */
     $scope.refreshZwaveData = function (nodeId) {
         var refresh = function () {
-            //dataService.loadJoinedZwaveData().then(function (response) {
             dataService.loadZwaveApiData(true).then(function (ZWaveAPIData) {
                 var node = ZWaveAPIData.devices[nodeId];
-                /*if ('122' in node.instances[0].commandClasses) {
-                    console.log(node.instances[0].commandClasses[122].data.updateStatus)
-                }*/
                 setFirmwareData(node);
             }, function (error) {
             });
@@ -160,7 +156,7 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
                 $scope.firmware.show = false;
                 return;
             }
-            //if (fw.data.updateStatus.value !== $scope.firmware.update.updateStatus && !!$scope.firmware.update.updateStatus) {
+
             if (fw.data.fragmentTransmitted.value !== $scope.firmware.update.fragmentTransmitted && !!$scope.firmware.update.fragmentTransmitted){
                 if (!$scope.rowSpinner[$scope.firmware.update.buttonId]) {
                     $scope.toggleRowSpinner($scope.firmware.update.buttonId);

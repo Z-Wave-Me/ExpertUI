@@ -160,7 +160,6 @@ appController.controller('SettingsAppFormatController', function ($scope, $timeo
     $scope.settings = {
         input: cfg.zwavecfg || {},
         lastTZ: cfg.zwavecfg.time_zone,
-        lastSsid: "",
         countdown: 60
     };
 
@@ -178,12 +177,13 @@ appController.controller('SettingsAppFormatController', function ($scope, $timeo
 
             dataService.postApi('time_zone', data, null).then(function (response) {
                 $scope.loading = false;
+                $interval.cancel($scope.jobQueueInterval);
                 $scope.handleModal('timezoneModal', $event);
                 var myint = $interval(function(){
                     $scope.settings.countdown--;
                     if($scope.settings.countdown === 0){
                         $interval.cancel(myint);
-                        $location.path('/');
+                        window.location.href = '/smarthome';
                     }
                 }, 1000);
 

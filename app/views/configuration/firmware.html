@@ -15,8 +15,8 @@
               ng-submit="updateDeviceFirmware(firmware.input,'btn_update')" novalidate>
             <span class="">{{_t('choose_fw_install_action')}}</span>
             <select name="action" class="form-control" ng-model="firmware.input.action">
-                <option value="url" ng-selected="true">{{_t('fw_upgrade_from_url')}}</option>
-                <option value="file">{{_t('fw_upgrade_from_file')}}</option>
+                <option value="url">{{_t('fw_upgrade_from_url')}}</option>
+                <option value="file" ng-selected="true">{{_t('fw_upgrade_from_file')}}</option>
             </select>
             <!-- Url -->
             <input id="url" type="text" value="" name="url" class="form-control" ng-if="firmware.input.action == 'url'" ng-model="firmware.input.url" placeholder="{{_t('firmware_url')}}" title="{{_t('firmware_url')}}" />
