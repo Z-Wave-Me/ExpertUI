@@ -6,8 +6,8 @@
 var config_data = {
     'cfg': {
         'app_name': 'Z-Wave CIT',
-        'app_version': '1.3.0-RC-40',
-        'app_built': '28-03-2017 16:02:40',
+        'app_version': '1.3.0-RC-42',
+        'app_built': '29-03-2017 15:30:13',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -238,7 +238,7 @@ var config_data = {
             }
         },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
-        // Application type : default/installer
+        // Application type : default/installer/wd/popp/jb
         'app_type': 'installer',
         'custom_cfg': {
             'default': {
@@ -258,6 +258,33 @@ var config_data = {
                 'title': 'Z-Wave CIT',
                 'controller_name': 'CIT',
                 'hardvare_vendor': 'Z-Wave Alliance'
+            },
+            'wd': {
+                'logo': 'app/images/zplus.jpg',
+                'footer_text': '&COPY; 2017 by Z-Wave.Me',
+                'logout': '/smarthome/#/logout',
+                'version_type': '',
+                'title': 'Z-Wave Expert UI',
+                'controller_name': 'Z-Way',
+                'hardvare_vendor': 'RaZberry by Z-Wave.Me'
+            },
+            'popp': {
+                'logo': 'app/images/zplus.jpg',
+                'footer_text': '&COPY; 2017 by Z-Wave.Me',
+                'logout': '/smarthome/#/logout',
+                'version_type': '',
+                'title': 'Z-Wave Expert UI',
+                'controller_name': 'Z-Way',
+                'hardvare_vendor': 'RaZberry by Z-Wave.Me'
+            },
+            'jb': {
+                'logo': 'app/images/zplus.jpg',
+                'footer_text': '&COPY; 2017 by Z-Wave.Me',
+                'logout': '/smarthome/#/logout',
+                'version_type': '',
+                'title': 'Z-Wave Expert UI',
+                'controller_name': 'Z-Way',
+                'hardvare_vendor': 'RaZberry by Z-Wave.Me'
             }
         }
 
