@@ -279,13 +279,8 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
                     data = cc[grp_num];
                     for (var i = 0; i < data.nodes.value.length; i++) {
                         var targetNodeId = data.nodes.value[i];
-                        /*console.log(targetNodeId)
-                        console.log(ZWaveAPIData.devices[targetNodeId])*/
-                        if ((targetNodeId in ZWaveAPIData.devices)) {
-                            assocDevices.push({
-                                'id': targetNodeId,
-                                'name': '(#' + targetNodeId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId])
-                            });
+                        if (!(targetNodeId in ZWaveAPIData.devices)) {
+                            assocDevices.push(targetNodeId);
                         }
                     }
 
