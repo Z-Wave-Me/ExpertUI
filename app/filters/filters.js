@@ -520,7 +520,9 @@ angApp.filter('toTrusted', ['$sce', function ($sce) {
  */
 angApp.filter('deviceName', function (cfg, deviceService) {
     return function (deviceId, node) {
-
+        if(!node){
+            return 'Device ' + '_' + deviceId;
+        }
         if (deviceId == cfg.controller.zwayNodeId) {
             return deviceService.getCustomCfgVal('controller_name');
         }
@@ -535,9 +537,6 @@ angApp.filter('deviceName', function (cfg, deviceService) {
             type = 'Mains';
         }
         var name = type + 'Device ' + '_' + deviceId;
-        if (node === undefined) {
-            return name;
-        }
         if (node.data.givenName.value != '') {
             name = node.data.givenName.value;
         }

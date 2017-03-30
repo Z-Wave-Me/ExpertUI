@@ -97,7 +97,6 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
                     // Check if node ID is in the available devices
                     if (nodeId == findId) {
                         update = true;
-                        console.log('Updating nodeId: ', findId);
                         return;
                     }
                 });
@@ -168,17 +167,6 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
         });
         $scope.handleModal(target, $event);
     };
-    /**
-     *todo: deprecated
-     *  Watch for the modal closing
-     */
-    /*$scope.$watchCollection('modalArr', function (modalArr) {
-         if(_.has(modalArr, 'cmdClassModal') && !modalArr['cmdClassModal']){
-         $interval.cancel($scope.commandsInterval);
-         //console.log(modalArr['cmdClassModal'])
-         }
-
-    });*/
 
     /// --- Private functions --- ///
     /**

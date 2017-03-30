@@ -55,7 +55,7 @@
 
                                         </td>
                                         <td style="white-space: nowrap;">
-                                            {{v.value}}
+                                            <span ng-bind="v.value"></span>
                                         </td>
                                         <td style="white-space: nowrap;">
                                             <span ng-class="v.isUpdated ? 'green':'red'">{{v.updateTime | isTodayFromUnix}} </span>
