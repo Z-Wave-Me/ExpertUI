@@ -130,7 +130,8 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
         dataService.runZwaveCmd(cfg.store_url + request).then(function (response) {
             $timeout($scope.toggleRowSpinner, 3000);
         }, function (error) {
-            alertify.alertError($scope._t('error_update_data') + '\n' + cmd);
+            var message = (_.isString(error.data) ?  error.data : $scope._t('error_update_data')) + '\n' + request;
+            alertify.alertError(message);
             $scope.toggleRowSpinner();
         });
     };
