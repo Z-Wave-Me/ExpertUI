@@ -6,8 +6,8 @@
 var config_data = {
     'cfg': {
         'app_name': 'Z-Wave CIT',
-        'app_version': '1.3.0-RC-44',
-        'app_built': '30-03-2017 13:43:58',
+        'app_version': '1.3.0-RC-46',
+        'app_built': '31-03-2017 13:02:33',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -211,24 +211,49 @@ var config_data = {
         // Expert commands table with values
         expert_cmd: {
             Configuration:{
+                valArray: true,
                 ccName: 'Configuration',
-                valName: 'val',
-                th: ['param','val']
+                th: ['val']
             },
             Association: {
+                valArray: true,
                 ccName: 'Association',
-                valName:'nodes',
-                    th: ['group','nodes']
+                th: ['nodes']
             },
             SensorBinary: {
+                valArray: true,
                 ccName: 'SensorBinary',
-                valName: 'level',
-                th: ['param','level']
+                th: ['level']
             },
             ThermostatSetPoint: {
+                valArray: true,
                 ccName: 'ThermostatSetPoint',
-                valName:'val',
-                th: ['type','val']
+                th: ['val']
+            },
+            Basic: {
+                valArray: false,
+                ccName: 'Basic',
+                th: ['level']
+            },
+            SwitchBinary: {
+                valArray: false,
+                ccName: 'SwitchBinary',
+                th: ['level']
+            },
+            SwitchAll: {
+                valArray: false,
+                ccName: 'SwitchAll',
+                th: ['mode']
+            },
+            Wakeup: {
+                valArray: false,
+                ccName: 'Wakeup',
+                th: ['interval','nodeId']
+            },
+            PowerLevel: {
+                valArray: false,
+                ccName: 'PowerLevel',
+                th: ['level','timeout']
             }
         },
         // Upload settings
