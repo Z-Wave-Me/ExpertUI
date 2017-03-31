@@ -75,6 +75,10 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             $scope.deviceName = $filter('deviceName')(nodeId, node);
 
             setData(ZWaveAPIData, nodeId);
+            if(!$scope.hasConfigurationCc){
+                $scope.refreshZwaveData($routeParams.nodeId);
+            }
+
 
         });
     };
@@ -106,7 +110,6 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             setData(data.joined, nodeId);
         });*/
     };
-    $scope.refreshZwaveData($routeParams.nodeId);
 
 
 

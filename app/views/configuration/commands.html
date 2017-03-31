@@ -2,6 +2,7 @@
 <div ng-controller="ConfigCommandsController">
     <!-- Config navigation -->
     <div ng-include="'app/views/configuration/navi.html'"></div>
+    <!--<pre>{{ccTable['Basic']|json}}</pre>-->
     <div class="row row-configuration">
         <div class="col-md-3 menu-vertical">
             <div ng-include="'app/views/configuration/menu.html'"></div>
@@ -39,10 +40,10 @@
                             <div ng-show="ccTable[v.commandClass]">
                                 <!--<pre>{{ccTable[v.commandClass]|json}}</pre>-->
                                 <table class="table table-condensed" ng-if="_.size(ccTable[v.commandClass].rows)">
-                                    <thead>
+                                    <thead ng-if="cfg.expert_cmd[v.commandClass].valArray">
                                     <tr>
+                                        <th>#</th>
                                         <th>{{cfg.expert_cmd[v.commandClass].th[0]}}</th>
-                                        <th>{{cfg.expert_cmd[v.commandClass].th[1]}}</th>
                                         <th>&nbsp;</th>
 
                                     </tr>
@@ -55,7 +56,7 @@
 
                                         </td>
                                         <td style="white-space: nowrap;">
-                                            {{v.value}}
+                                            <span ng-bind="v.value"></span>
                                         </td>
                                         <td style="white-space: nowrap;">
                                             <span ng-class="v.isUpdated ? 'green':'red'">{{v.updateTime | isTodayFromUnix}} </span>

@@ -14,9 +14,9 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
     $scope.commands = [];
     $scope.interviewCommands;
     $scope.commandsInterval = null;
-   /* $scope.ccConfiguration = {
-        all: []
-    };*/
+    /* $scope.ccConfiguration = {
+     all: []
+     };*/
     $scope.ccTable = {};
 
     $scope.deviceId = 0;
@@ -97,7 +97,6 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
                     // Check if node ID is in the available devices
                     if (nodeId == findId) {
                         update = true;
-                        console.log('Updating nodeId: ', findId);
                         return;
                     }
                 });
@@ -105,6 +104,7 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
                 // Update found - updating available devices
                 if (update) {
                     var node = response.data.joined.devices[nodeId];
+                    $scope.interviewCommands = deviceService.configGetInterviewCommands(node, response.data.joined.updateTime);
                     setCcTable($scope.interviewCommands);
                 }
             }, function (error) {
@@ -131,7 +131,8 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
         dataService.runZwaveCmd(cfg.store_url + request).then(function (response) {
             $timeout($scope.toggleRowSpinner, 3000);
         }, function (error) {
-            alertify.alertError($scope._t('error_update_data') + '\n' + cmd);
+            var message = (_.isString(error.data) ? error.data : $scope._t('error_update_data')) + '\n' + request;
+            alertify.alertError(message);
             $scope.toggleRowSpinner();
         });
     };
@@ -168,17 +169,6 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
         });
         $scope.handleModal(target, $event);
     };
-    /**
-     *todo: deprecated
-     *  Watch for the modal closing
-     */
-    /*$scope.$watchCollection('modalArr', function (modalArr) {
-         if(_.has(modalArr, 'cmdClassModal') && !modalArr['cmdClassModal']){
-         $interval.cancel($scope.commandsInterval);
-         //console.log(modalArr['cmdClassModal'])
-         }
-
-    });*/
 
     /// --- Private functions --- ///
     /**
@@ -219,38 +209,82 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
      * @param data
      */
     function setCcTable(data) {
-        _.filter(data,function (v,k) {
+
+        angular.forEach(data, function (v, k) {
             var cmdCfg = cfg.expert_cmd[v.ccName];
-                if(cmdCfg){
-                    var obj = {};
-                    obj['ccName'] = v.ccName;
-                    obj['rows'] =[];
+            if (cmdCfg) {
+                var obj = {};
+                obj['ccName'] = v.ccName;
+                obj['rows'] = [];
+                if(!$scope.ccTable[v.ccName]){
                     $scope.ccTable[v.ccName] = obj;
-                   setCcTableRows(v.cmdData,cmdCfg);
                 }
-            });
+
+                //setCcTableRows(v.cmdData,cmdCfg);
+                if (cmdCfg.valArray) {
+                    setCcTableRowsArray(v.cmdData, cmdCfg);
+                } else {
+                    setCcTableRows(v.cmdData, cmdCfg)
+
+                }
+
+            }
+        });
     }
 
     /**
-     * Set cc table rows
+     * Set cc table rows with values
      * @param data
      */
-    function setCcTableRows(data,cmdCfg) {
-        //console.log(data.cmdData)
-        _.filter(data,function (v,k) {
+    function setCcTableRows(data, cmdCfg) {
+
+        //console.log(data,cmdCfg)
+        angular.forEach(cmdCfg.th, function (v,k) {
+            if(data[v]){
+               var obj = {};
+                obj['id'] = v;
+                obj['rowId'] = v;
+                obj['value'] = (data[v].value === null || data[v].value === '' ? '-' : '' + data[v].value);
+                obj['updateTime'] = data[v].updateTime;
+                obj['isUpdated'] = (data[v].updateTime > data[v].invalidateTime ? true : false);
+                obj['isEqual'] = true;
+
+                var findIndex = _.findIndex($scope.ccTable[cmdCfg.ccName]['rows'], {rowId: obj.rowId});
+                //console.log(console.log($scope.ccTable['Basic']['rows']))
+                if (findIndex > -1) {
+                    obj['isEqual'] = _.isEqual(obj, $scope.ccTable[cmdCfg.ccName]['rows'][findIndex]);
+                    angular.extend(obj, {isEqual: _.isEqual(obj, $scope.ccTable[cmdCfg.ccName]['rows'][findIndex])});
+                    angular.extend($scope.ccTable[cmdCfg.ccName]['rows'][findIndex], obj);
+                } else {
+                    $scope.ccTable[cmdCfg.ccName]['rows'].push(obj);
+                }
+            }
+
+        });
+
+
+    }
+
+    /**
+     * Set cc table rows with values from array
+     * @param data
+     */
+    function setCcTableRowsArray(data, cmdCfg) {
+
+        angular.forEach(data, function (v, k) {
             if (!_.isNaN(parseInt(k))) {
                 var obj = {};
                 obj['id'] = k;
-                obj['rowId'] =  k;
-                obj['value'] = v[cmdCfg.valName].value;
+                obj['rowId'] = k;
+                obj['value'] = (v[cmdCfg.th[0]].value === null || v[cmdCfg.th[0]].value === '' ? '-' : '' + v[cmdCfg.th[0]].value)
                 obj['updateTime'] = v.updateTime;
                 obj['isUpdated'] = (v.updateTime > v.invalidateTime ? true : false);
                 obj['isEqual'] = true;
                 var findIndex = _.findIndex($scope.ccTable[cmdCfg.ccName]['rows'], {rowId: obj.rowId});
                 if (findIndex > -1) {
-                    obj['isEqual'] = _.isEqual(obj,  $scope.ccTable[cmdCfg.ccName]['rows'][findIndex]);
-                    angular.extend(obj, {isEqual: _.isEqual(obj,  $scope.ccTable[cmdCfg.ccName]['rows'][findIndex])});
-                    angular.extend($scope. $scope.ccTable[cmdCfg.ccName]['rows'][findIndex], obj);
+                    obj['isEqual'] = _.isEqual(obj, $scope.ccTable[cmdCfg.ccName]['rows'][findIndex]);
+                    angular.extend(obj, {isEqual: _.isEqual(obj, $scope.ccTable[cmdCfg.ccName]['rows'][findIndex])});
+                    angular.extend($scope.ccTable[cmdCfg.ccName]['rows'][findIndex], obj);
                 } else {
                     $scope.ccTable[cmdCfg.ccName]['rows'].push(obj);
                 }
@@ -267,32 +301,32 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
      * @param data
      */
     /*function setCcConfig(data) {
-        //console.log(data.cmdData)
-        angular.forEach(data.cmdData, function (v, k) {
-            if (_.isNaN(parseInt(k))) {
-                return;
-            }
-            var rowId = 'row_' + k;
-            //console.log(k)
-            var obj = {};
-            obj['rowId'] = rowId;
-            obj['param'] = k;
-            obj['size'] = v.size.value;
-            obj['val'] = v.val.value;
-            obj['updateTime'] = v.updateTime;
-            obj['isUpdated'] = (v.updateTime > v.invalidateTime ? true : false);
-            obj['isEqual'] = true;
-            var findIndex = _.findIndex($scope.ccConfiguration.all, {rowId: obj.rowId});
-            if (findIndex > -1) {
-                obj['isEqual'] = _.isEqual(obj, $scope.ccConfiguration.all[findIndex]);
-                angular.extend(obj, {isEqual: _.isEqual(obj, $scope.ccConfiguration.all[findIndex])});
-                angular.extend($scope.ccConfiguration.all[findIndex], obj);
-            } else {
-                $scope.ccConfiguration.all.push(obj);
-            }
-        });
+     //console.log(data.cmdData)
+     angular.forEach(data.cmdData, function (v, k) {
+     if (_.isNaN(parseInt(k))) {
+     return;
+     }
+     var rowId = 'row_' + k;
+     //console.log(k)
+     var obj = {};
+     obj['rowId'] = rowId;
+     obj['param'] = k;
+     obj['size'] = v.size.value;
+     obj['val'] = v.val.value;
+     obj['updateTime'] = v.updateTime;
+     obj['isUpdated'] = (v.updateTime > v.invalidateTime ? true : false);
+     obj['isEqual'] = true;
+     var findIndex = _.findIndex($scope.ccConfiguration.all, {rowId: obj.rowId});
+     if (findIndex > -1) {
+     obj['isEqual'] = _.isEqual(obj, $scope.ccConfiguration.all[findIndex]);
+     angular.extend(obj, {isEqual: _.isEqual(obj, $scope.ccConfiguration.all[findIndex])});
+     angular.extend($scope.ccConfiguration.all[findIndex], obj);
+     } else {
+     $scope.ccConfiguration.all.push(obj);
+     }
+     });
 
-    }*/
+     }*/
 
 
 });
