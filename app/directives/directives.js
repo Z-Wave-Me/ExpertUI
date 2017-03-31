@@ -236,7 +236,7 @@ angApp.directive('switchAllIcon', function () {
     return {
         restrict: "E",
         replace: true,
-        template: '<img src="{{src}}" />',
+        template: '<img ng-src="{{src}}" />',
         link: function (scope, elem, attr) {
             var src;
             if (attr.hasall !== null) {
