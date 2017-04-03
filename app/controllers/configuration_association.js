@@ -12,9 +12,9 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
     $scope.devices = [];
     $scope.deviceName = '';
     $scope.deviceId = 0;
-    $scope.activeTab = 'association';
-    $scope.activeUrl = 'configuration/assoc/';
-    $cookies.tab_config = $scope.activeTab;
+    //$scope.activeTab = 'association';
+    $scope.activeUrl = 'configuration/association/';
+    $cookies.tab_config = 'association';
 
     $scope.alert = {message: false, status: 'is-hidden', icon: false};
     // Assoc vars
@@ -51,12 +51,12 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
         $interval.cancel($scope.assocInterval);
     });
 
-    // Redirect to detail page
-    $scope.changeDevice = function(deviceId) {
+    // todo: deprecated
+    /*$scope.changeDevice = function(deviceId) {
         if (deviceId > 0) {
             $location.path($scope.activeUrl + deviceId);
         }
-    };
+    };*/
     // Load data
     $scope.loadZwaveData = function(nodeId, noCache) {
         dataService.loadZwaveApiData().then(function(ZWaveAPIData) {

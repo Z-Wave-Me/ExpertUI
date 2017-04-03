@@ -12,9 +12,9 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
     $scope.devices = [];
     $scope.deviceName = '';
     $scope.deviceId = 0;
-    $scope.activeTab = 'interview';
+    //$scope.activeTab = 'interview';
     $scope.activeUrl = 'configuration/interview/';
-    $cookies.tab_config = $scope.activeTab;
+    $cookies.tab_config = 'interview';
     $scope.modelSelectZddx = false;
     $scope.zwaveInterview = {
         interval: null,
@@ -88,12 +88,12 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         $scope.zwaveInterview.interval = $interval(refresh, $scope.cfg.interval);
     };
 
-    // Redirect to detail page
-    $scope.changeDevice = function (deviceId) {
+    // todo: deprecated
+    /*$scope.changeDevice = function (deviceId) {
         if (deviceId > 0) {
             $location.path($scope.activeUrl + deviceId);
         }
-    };
+    };*/
 
     /**
      * Request NIF of a device

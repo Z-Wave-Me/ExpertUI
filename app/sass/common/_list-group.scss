@@ -12,6 +12,15 @@
     overflow-x: hidden;
     .list-group-item {
       padding: 5px 7px;
+      a{
+        color: $header-subnavi-color;
+      }
+      &.active{
+        a{
+          color: #ffffff;
+        }
+
+      }
     }
   }
 }

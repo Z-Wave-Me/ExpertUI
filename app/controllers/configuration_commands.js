@@ -20,10 +20,10 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
     $scope.ccTable = {};
 
     $scope.deviceId = 0;
-    $scope.activeTab = 'commands';
+    //$scope.activeTab = 'commands';
     $scope.activeUrl = 'configuration/commands/';
 
-    $cookies.tab_config = $scope.activeTab;
+    $cookies.tab_config =  'commands';
 
     /**
      * Cancel interval on page destroy
@@ -32,12 +32,12 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
         $interval.cancel($scope.commandsInterval);
     });
 
-    // Redirect to detail page
-    $scope.changeDevice = function (deviceId) {
+    // todo: deprecated
+   /* $scope.changeDevice = function (deviceId) {
         if (deviceId > 0) {
             $location.path($scope.activeUrl + deviceId);
         }
-    };
+    };*/
 
     // Load data
     $scope.loadData = function (nodeId) {

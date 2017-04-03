@@ -11,9 +11,9 @@
 appController.controller('ConfigConfigurationController', function ($scope, $routeParams, $location, $cookies, $filter, $http, $timeout, $route, $interval,cfg, dataService, deviceService, myCache, _) {
     $scope.devices = [];
     $scope.deviceId = 0;
-    $scope.activeTab = 'configuration';
+    //$scope.activeTab = 'configuration';
     $scope.activeUrl = 'configuration/configuration/';
-    $cookies.tab_config = $scope.activeTab;
+    $cookies.tab_config = 'configuration';
     $scope.reset = function () {
         $scope.devices = angular.copy([]);
     };
@@ -35,12 +35,12 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         $interval.cancel($scope.configInterval);
     });
 
-    // Redirect to detail page
-    $scope.changeDevice = function (deviceId) {
+    // todo: deprecated
+    /*$scope.changeDevice = function (deviceId) {
         if (deviceId > 0) {
             $location.path($scope.activeUrl + deviceId);
         }
-    };
+    };*/
 
     // Load data
     $scope.loadZwaveData = function (nodeId) {

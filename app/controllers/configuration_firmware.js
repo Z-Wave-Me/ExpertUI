@@ -12,8 +12,9 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
     $scope.devices = [];
     $scope.deviceName = '';
     $scope.deviceId = 0;
-    $scope.activeTab = 'firmware';
+    //$scope.activeTab = 'firmware';
     $scope.activeUrl = 'configuration/firmware/';
+    $cookies.tab_config = 'firmware';
 
     $scope.firmware = {
         show: false,
@@ -38,7 +39,7 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
 
     };
 
-    $cookies.tab_config = $scope.activeTab;
+
 
     // Load data
     $scope.load = function (nodeId) {
@@ -91,12 +92,12 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
         $scope.firmware.interval = $interval(refresh, $scope.cfg.interval);
     };
 
-    // Redirect to detail page
-    $scope.changeDevice = function (deviceId) {
+    // todo: deprecated
+   /* $scope.changeDevice = function (deviceId) {
         if (deviceId > 0) {
             $location.path($scope.activeUrl + deviceId);
         }
-    };
+    };*/
     /**
      * Handles device firmware update
      * @param {object} input
