@@ -18,7 +18,8 @@ appController.controller('ReorganizationController', function ($scope, $filter, 
         all: [],
         interval: null,
         show: false,
-        lastUpdate: 0
+        lastUpdate: 0,
+        lastUpdateMS: 0
     };
 
 
@@ -88,11 +89,17 @@ appController.controller('ReorganizationController', function ($scope, $filter, 
                 $scope.reorganizations.trace = 'stop';
                 return;
             }
+
+            var last = response.data[response.data.length - 1];
+
+            $scope.reorganizations.lastUpdateMS = last.timestamp;
+
             setData(response.data);
+
             if (refresh) {
                 $scope.refreshReorganization();
             } else {
-                $scope.reorganizations.lastUpdate = $filter('getDateTimeObj')(response.data.pop().timestamp / 1000);
+                $scope.reorganizations.lastUpdate = $filter('getDateTimeObj')(last.timestamp / 1000);
             }
 
         }, function (error) {
@@ -145,11 +152,10 @@ appController.controller('ReorganizationController', function ($scope, $filter, 
             v. dateTime = $filter('getDateTimeObj')(v.timestamp / 1000);
             var findIndex = _.findIndex($scope.reorganizations.all, {timestamp: v.timestamp});
 
-            if (findIndex === -1) {
+            if (findIndex === -1 && v.message !== 'finished') {
                 $scope.reorganizations.all.push(v);
-
-            } else {
-
+            } else if (v.message === 'finished' && $scope.reorganizations.lastUpdateMS < v.timestamp){
+                $scope.reorganizations.run = false;
             }
         });
     }
