@@ -6,8 +6,8 @@
 var config_data = {
     'cfg': {
         'app_name': 'Z-Wave Expert',
-        'app_version': '1.3.0-RC-48',
-        'app_built': '04-04-2017 09:21:55',
+        'app_version': '1.3.0-RC-53',
+        'app_built': '04-04-2017 14:14:43',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
