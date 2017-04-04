@@ -6,8 +6,8 @@
 var config_data = {
     'cfg': {
         'app_name': 'Z-Wave CIT',
-        'app_version': '1.3.0-RC-40',
-        'app_built': '28-03-2017 16:02:40',
+        'app_version': '1.3.0-RC-51',
+        'app_built': '04-04-2017 09:41:05',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -211,24 +211,49 @@ var config_data = {
         // Expert commands table with values
         expert_cmd: {
             Configuration:{
+                valArray: true,
                 ccName: 'Configuration',
-                valName: 'val',
-                th: ['param','val']
+                th: ['val']
             },
             Association: {
+                valArray: true,
                 ccName: 'Association',
-                valName:'nodes',
-                    th: ['group','nodes']
+                th: ['nodes']
             },
             SensorBinary: {
+                valArray: true,
                 ccName: 'SensorBinary',
-                valName: 'level',
-                th: ['param','level']
+                th: ['level']
             },
             ThermostatSetPoint: {
+                valArray: true,
                 ccName: 'ThermostatSetPoint',
-                valName:'val',
-                th: ['type','val']
+                th: ['val']
+            },
+            Basic: {
+                valArray: false,
+                ccName: 'Basic',
+                th: ['level']
+            },
+            SwitchBinary: {
+                valArray: false,
+                ccName: 'SwitchBinary',
+                th: ['level']
+            },
+            SwitchAll: {
+                valArray: false,
+                ccName: 'SwitchAll',
+                th: ['mode']
+            },
+            Wakeup: {
+                valArray: false,
+                ccName: 'Wakeup',
+                th: ['interval','nodeId']
+            },
+            PowerLevel: {
+                valArray: false,
+                ccName: 'PowerLevel',
+                th: ['level','timeout']
             }
         },
         // Upload settings
@@ -238,7 +263,7 @@ var config_data = {
             }
         },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
-        // Application type : default/installer
+        // Application type : default/installer/wd/popp/jb
         'app_type': 'installer',
         'custom_cfg': {
             'default': {
@@ -258,6 +283,33 @@ var config_data = {
                 'title': 'Z-Wave CIT',
                 'controller_name': 'CIT',
                 'hardvare_vendor': 'Z-Wave Alliance'
+            },
+            'wd': {
+                'logo': 'app/images/zplus.jpg',
+                'footer_text': '&COPY; 2017 by Z-Wave.Me',
+                'logout': '/smarthome/#/logout',
+                'version_type': '',
+                'title': 'Z-Wave Expert UI',
+                'controller_name': 'Z-Way',
+                'hardvare_vendor': 'RaZberry by Z-Wave.Me'
+            },
+            'popp': {
+                'logo': 'app/images/zplus.jpg',
+                'footer_text': '&COPY; 2017 by Z-Wave.Me',
+                'logout': '/smarthome/#/logout',
+                'version_type': '',
+                'title': 'Z-Wave Expert UI',
+                'controller_name': 'Z-Way',
+                'hardvare_vendor': 'RaZberry by Z-Wave.Me'
+            },
+            'jb': {
+                'logo': 'app/images/zplus.jpg',
+                'footer_text': '&COPY; 2017 by Z-Wave.Me',
+                'logout': '/smarthome/#/logout',
+                'version_type': '',
+                'title': 'Z-Wave Expert UI',
+                'controller_name': 'Z-Way',
+                'hardvare_vendor': 'RaZberry by Z-Wave.Me'
             }
         }
 

@@ -3,6 +3,7 @@
 <ul class="list-group">
     <li class="list-group-item clickable" title="{{v.name }}"
         ng-repeat="v in devices"
-        ng-click="changeDevice(v.id)"
-        ng-class="v.id == deviceId ? 'active': ''">(#{{v.id}}) {{v.name | cutText:true:30}}</li>
+        ng-class="v.id == deviceId ? 'active': ''">
+        <a ng-href="#{{activeUrl + v.id}}">(#{{v.id}}) {{v.name | cutText:true:30}}</a>
+    </li>
 </ul>

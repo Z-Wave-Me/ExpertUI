@@ -3,7 +3,7 @@
     <h4>{{_t('wakeup_list')}}</h4>
     <div class="cfg-block-content" ng-init="formName = 'form_wakeup'">
         <form name="{{formName}}" id="{{formName}}" class="form"
-                ng-submit="submitApplyConfigCfg(formName,{'id': deviceId,'instance': '0','commandclass': '84','command': 'Set'}, wakeupCont, hasBattery,false,false,false,'saveIntoDeviceWakeup')" novalidate>
+                ng-submit="storeSettings(formName,{'id': deviceId,'instance': '0','commandclass': '84','command': 'Set'}, hasBattery,'saveIntoDeviceWakeup')" novalidate>
             <div>
                <!-- update from device -->
                 <button class="btn btn-primary" type="button"

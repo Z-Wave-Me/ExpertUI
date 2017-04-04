@@ -3,7 +3,7 @@
     <h4>{{_t('protection_list')}}</h4>
     <div class="cfg-block-content" ng-init="formName = 'form_protection_list'">
         <form name="{{formName}}" id="{{formName}}" class="form"
-                ng-submit="submitApplyConfigCfg(formName,{'id': deviceId,'instance': '0','commandclass': '75','command': 'Set'}, protectionCont, hasBattery,false,false,false,'saveIntoDeviceProtection')"
+                ng-submit="storeSettings(formName,{'id': deviceId,'instance': '0','commandclass': '75','command': 'Set'}, hasBattery,'saveIntoDeviceProtection')"
                 novalidate>
 
             <div>

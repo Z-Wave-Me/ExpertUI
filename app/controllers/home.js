@@ -280,10 +280,7 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
                     for (var i = 0; i < data.nodes.value.length; i++) {
                         var targetNodeId = data.nodes.value[i];
                         if (!(targetNodeId in ZWaveAPIData.devices)) {
-                            assocDevices.push({
-                                'id': targetNodeId,
-                                'name': '(#' + targetNodeId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId])
-                            });
+                            assocDevices.push(targetNodeId);
                         }
                     }
 
@@ -303,10 +300,7 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
                         var targetInstanceId = data.nodesInstances.value[i + 1];
                         var instanceId = (targetInstanceId > 0 ? '.' + targetInstanceId : '');
                         if (!(targetNodeId in ZWaveAPIData.devices)) {
-                            assocDevices.push({
-                                'id': targetNodeId,
-                                'name': '(#' + targetNodeId + instanceId + ') ' + $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId])
-                            });
+                            assocDevices.push(targetNodeId);
                         }
 
                     }

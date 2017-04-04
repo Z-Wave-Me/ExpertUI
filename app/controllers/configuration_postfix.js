@@ -12,9 +12,9 @@ appController.controller('ConfigPostfixController', function ($scope, $routePara
     $scope.devices = [];
     $scope.deviceId = 0;
     $scope.deviceName = '';
-    $scope.activeTab = 'postfix';
+    //$scope.activeTab = 'postfix';
     $scope.activeUrl = 'configuration/postfix/';
-    $cookies.tab_config = $scope.activeTab;
+    $cookies.tab_config = 'postfix';
     $scope.postfix = {
         find: false,
         interview: {
@@ -34,12 +34,16 @@ appController.controller('ConfigPostfixController', function ($scope, $routePara
     // Interview data
     $scope.descriptionCont;
     $scope.deviceZddx = [];
+
+    // todo: deprecated
     // Redirect to detail page
-    $scope.changeDevice = function (deviceId) {
+    /*$scope.changeDevice = function (deviceId) {
         if (deviceId > 0) {
+            console.log($scope.activeUrl + deviceId);
+            return;
             $location.path($scope.activeUrl + deviceId);
         }
-    };
+    };*/
     // Load data
     $scope.loadData = function (nodeId) {
         dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
@@ -60,8 +64,7 @@ appController.controller('ConfigPostfixController', function ($scope, $routePara
             $scope.postfix.model.p_id = getPId(node);
             $scope.loadPostfix($scope.postfix.model.p_id);
         }, function (error) {
-            $location.path('/error/' + error.status);
-            return;
+            alertify.alertError($scope._t('error_load_data'));
         });
     };
     $scope.loadData($routeParams.nodeId);

@@ -14317,7 +14317,7 @@ img {
 -------------------------------------------------- */
 /* line 4, ../sass/common/_button.scss */
 .panel .btn, .cfg-block .btn {
-  margin: 0 4px 10px 0;
+  margin: 0 5px 10px 0;
 }
 
 /* line 9, ../sass/common/_button.scss */
@@ -15081,19 +15081,27 @@ fieldset.submit-entry {
 .row-configuration .menu-vertical .list-group-item {
   padding: 5px 7px;
 }
-
+/* line 15, ../sass/common/_list-group.scss */
+.row-configuration .menu-vertical .list-group-item a {
+  color: #272822;
+}
 /* line 19, ../sass/common/_list-group.scss */
+.row-configuration .menu-vertical .list-group-item.active a {
+  color: #ffffff;
+}
+
+/* line 28, ../sass/common/_list-group.scss */
 .list-report {
   margin: 0;
   padding: 0;
 }
-/* line 22, ../sass/common/_list-group.scss */
+/* line 31, ../sass/common/_list-group.scss */
 .list-report li {
   padding: 10px 0;
   display: block;
   border-top: solid 1px #9fd8ef;
 }
-/* line 27, ../sass/common/_list-group.scss */
+/* line 36, ../sass/common/_list-group.scss */
 .list-report li:first-child {
   border-top: 0 none;
 }

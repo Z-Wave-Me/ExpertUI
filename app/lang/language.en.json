@@ -48,7 +48,7 @@
  "own_frames_desc" : "Own Frames",
  "foreignframes" : "Foreign",
  "RFTxFrames":"100kbit",
- "RFTxLBTBackOffs":"Data Rate on Sent",
+ "RFTxLBTBackOffs":"Data Rate on Send",
  "RFTxLBTBackOffs_error":"40kbit",
  "RFRxFrames":"Own Frames",
  "RFRxLRCErrors":"Success on Reception (% ok versus % corrupted)",

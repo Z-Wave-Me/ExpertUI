@@ -11,9 +11,9 @@
 appController.controller('ConfigConfigurationController', function ($scope, $routeParams, $location, $cookies, $filter, $http, $timeout, $route, $interval,cfg, dataService, deviceService, myCache, _) {
     $scope.devices = [];
     $scope.deviceId = 0;
-    $scope.activeTab = 'configuration';
+    //$scope.activeTab = 'configuration';
     $scope.activeUrl = 'configuration/configuration/';
-    $cookies.tab_config = $scope.activeTab;
+    $cookies.tab_config = 'configuration';
     $scope.reset = function () {
         $scope.devices = angular.copy([]);
     };
@@ -35,12 +35,12 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         $interval.cancel($scope.configInterval);
     });
 
-    // Redirect to detail page
-    $scope.changeDevice = function (deviceId) {
+    // todo: deprecated
+    /*$scope.changeDevice = function (deviceId) {
         if (deviceId > 0) {
             $location.path($scope.activeUrl + deviceId);
         }
-    };
+    };*/
 
     // Load data
     $scope.loadZwaveData = function (nodeId) {
@@ -75,6 +75,10 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             $scope.deviceName = $filter('deviceName')(nodeId, node);
 
             setData(ZWaveAPIData, nodeId);
+            if(!$scope.hasConfigurationCc){
+                $scope.refreshZwaveData($routeParams.nodeId);
+            }
+
 
         });
     };
@@ -106,7 +110,6 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             setData(data.joined, nodeId);
         });*/
     };
-    $scope.refreshZwaveData($routeParams.nodeId);
 
 
 
@@ -183,15 +186,14 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             //alert($scope._t('conf_apply_battery'));
             deviceService.showNotifier({message: $scope._t('conf_apply_battery'),type: 'warning'});
         }
-        var cfgType = cfgValues.type;
 
         var dataArray = _.isObject(hasData) ? hasData : {};
-
         $scope.toggleRowSpinner(spin);
         //var bitrangeCnt = [];
         var bitcheckCnt = [];
         if (!_.isObject(hasData)) {
             data = $('#' + form).serializeArray();
+            //console.log(data)
             //console.log(data)
             angular.forEach(data, function (v, k) {
                 if (v.value === 'N/A') {
@@ -203,9 +205,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                     return;
                 }
                 var inputType = v.name.split('_')[0];
-
                 var cfg = _.findWhere(cfgValues, {confNum: inputConfNum.toString()});
-
                 if (cfg) {
                     if ('bitset' in cfg.type) {
                          if (inputType === 'bitrange') {
@@ -253,24 +253,17 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
 
                     }
                 }
-                //console.log(inputConfNum,cfgValues,cfgType)
                 if (dataArray[inputConfNum]) {
                     //dataArray[inputConfNum].value += ',' + value;
                     dataArray[inputConfNum].value = value;
-                } else if(cfgType === 'wakeup'){
-                    if (dataArray['wakeup']) {
-                        dataArray['wakeup'].value += ',' + value;
-
-                    }else{
-                        dataArray['wakeup'] = {name: 'wakeup_0',value: value};
-                    }
-
-                }else {
+                } else {
                     dataArray[inputConfNum] = {
                         value: value,
                         name: v.name
                         //cfg: cfg
                     };
+
+
                 }
 
             });
@@ -346,8 +339,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                 dataService.runZwaveCmd(cfg.store_url + request);
                 break;
             case '84':// Wakeup
-                //request += cmd.command + '(' + configValues.join(",") + ')';
-                request += cmd.command + '(' + dataArray.wakeup.value + ')';
+                request += cmd.command + '(' + configValues.join(",") + ')';
                 dataService.runZwaveCmd(cfg.store_url + request);
                 break;
             case '27':// Switch all
@@ -377,6 +369,62 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             $scope.toggleRowSpinner();
         }, 3000);
         return;
+    };
+
+    /**
+     * Set Wakeup and Protection
+     */
+    $scope.storeSettings = function (form, cmd, hasBattery,spin) {
+        // Show a notifier for battery operated device
+        if (hasBattery) {
+            deviceService.showNotifier({message: $scope._t('conf_apply_battery'),type: 'warning'});
+        }
+        $scope.toggleRowSpinner(spin);
+
+        var xmlData = [];
+        var data = $('#' + form).serializeArray();
+        var paramArr = [];
+        var parameter;
+        var request = 'devices[' + cmd.id + '].instances[' + cmd.instance + '].commandClasses[0x' + cmd.commandclass + '].';
+        var cnt =0;
+        angular.forEach(data, function (v, k) {
+            cnt++;
+            v.value = parseInt(v.value);
+            // There must be two params
+            if(cnt < 3){
+                paramArr.push(v.value);
+            }
+
+        });
+        parameter = paramArr.join(',');
+        // Data for XML
+        var obj = {};
+        obj['id'] = cmd['id'];
+        obj['instance'] = cmd['instance'];
+        obj['commandclass'] = cmd['commandclass'];
+        obj['command'] = cmd['command'];
+        obj['parameter'] = '[' + parameter + ']';
+        obj['parameterValues'] = parameter;
+        obj['confNum'] = 0;
+        xmlData.push(obj);
+
+        // Load a XML
+        dataService.getCfgXml().then(function (cfgXml) {
+            var xmlFile = deviceService.buildCfgXml(xmlData, cfgXml, cmd['id'], cmd['commandclass']);
+            dataService.putCfgXml(xmlFile);
+        });
+
+        // Run zwave command
+        request += cmd.command + '(' + parameter + ')';
+        dataService.runZwaveCmd(cfg.store_url + request);
+        $('#' + form + ' .cfg-control-content :input').prop('disabled', true);
+
+        // Reload data and remove spinner
+        $timeout(function () {
+            $scope.loadZwaveData($routeParams.nodeId);
+            $('#' + form + ' .cfg-control-content :input').prop('disabled', false);
+            $scope.toggleRowSpinner();
+        }, 3000);
     };
 
 

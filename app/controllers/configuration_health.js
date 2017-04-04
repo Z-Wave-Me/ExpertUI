@@ -13,10 +13,10 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
     $scope.devices = [];
     $scope.deviceName = '';
     $scope.deviceId = 0;
-    $scope.activeTab = 'health';
+    //$scope.activeTab = 'health';
     $scope.activeUrl = 'configuration/health/';
-    $cookies.tab_config = $scope.activeTab;
-    $cookies.interval = $scope.activeTab;
+    $cookies.tab_config = 'health';
+    $cookies.interval = 'health';
     $scope.health = {
         ctrlNodeId: 1,
         alert: {message: false, status: 'is-hidden', icon: false},
@@ -43,12 +43,12 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
         $interval.cancel($scope.apiDataInterval);
     });
 
-    // Redirect to detail page
-    $scope.changeDevice = function (deviceId) {
+    // todo: deprecated
+    /*$scope.changeDevice = function (deviceId) {
         if (deviceId > 0) {
             $location.path($scope.activeUrl + deviceId);
         }
-    };
+    };*/
 
     // Load timing data
     $scope.loadTiming = function () {

@@ -12,9 +12,9 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
     $scope.devices = [];
     $scope.deviceName = '';
     $scope.deviceId = 0;
-    $scope.activeTab = 'association';
-    $scope.activeUrl = 'configuration/assoc/';
-    $cookies.tab_config = $scope.activeTab;
+    //$scope.activeTab = 'association';
+    $scope.activeUrl = 'configuration/association/';
+    $cookies.tab_config = 'association';
 
     $scope.alert = {message: false, status: 'is-hidden', icon: false};
     // Assoc vars
@@ -51,12 +51,12 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
         $interval.cancel($scope.assocInterval);
     });
 
-    // Redirect to detail page
-    $scope.changeDevice = function(deviceId) {
+    // todo: deprecated
+    /*$scope.changeDevice = function(deviceId) {
         if (deviceId > 0) {
             $location.path($scope.activeUrl + deviceId);
         }
-    };
+    };*/
     // Load data
     $scope.loadZwaveData = function(nodeId, noCache) {
         dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
@@ -468,6 +468,10 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                         for (var i = 0; i < $filter('unique')(groupDevices).length; i++) {
 
                             var targetNodeId = data.nodes.value[i];
+                            var targetNode= ZWaveAPIData.devices[targetNodeId];
+                            if(!targetNode){
+                                return;
+                            }
                             nodeIds.push(targetNodeId);
                             var targetInstanceId = 0;
                             instanceIds.push(targetInstanceId);
@@ -487,7 +491,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                             objAssoc['isNew'] = false;
                             objAssoc['groupId'] = groupId;
                             objAssoc['elId'] = groupId + '_' + targetNodeId + '_' + targetInstanceId + '_' + i;
-                            objAssoc['name'] = $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId]);
+                            objAssoc['name'] = $filter('deviceName')(targetNodeId, targetNode);
                             objAssoc['instance'] = targetInstanceId;
                             objAssoc['cc'] = 85;
                             objAssoc['node'] = {
@@ -530,6 +534,10 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                         }
                         for (var i = 0; i < Object.keys(dataMca.nodesInstances.value).length; i += 2) {
                             var targetNodeId = dataMca.nodesInstances.value[i];
+                            var targetNode= ZWaveAPIData.devices[targetNodeId];
+                            if(!targetNode){
+                                return;
+                            }
                             nodeIds.push(targetNodeId);
                             var targetInstanceId = dataMca.nodesInstances.value[i + 1];
                             instanceIds.push(targetInstanceId);
@@ -548,7 +556,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                             objAssoc['isNew'] = false;
                             objAssoc['groupId'] = groupId;
                             objAssoc['elId'] = groupId + '_' + targetNodeId + '_' + targetInstanceId + '_' + i;
-                            objAssoc['name'] = $filter('deviceName')(targetNodeId, ZWaveAPIData.devices[targetNodeId]);
+                            objAssoc['name'] = $filter('deviceName')(targetNodeId, targetNode);
                             objAssoc['instance'] = targetInstanceId;
                             objAssoc['cc'] = '8e';
                             objAssoc['node'] = {
