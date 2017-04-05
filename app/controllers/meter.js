@@ -144,6 +144,7 @@ appController.controller('MetersController', function($scope, $filter, $timeout,
 
                         var obj = {};
                         obj['id'] = k;
+                        obj['idSort'] = $filter('zeroFill')(k);
                         obj['iId'] = instanceId;
                         obj['cmd'] = meters.name + '.' + meter.name;
                         obj['cmdId'] = 0x30;

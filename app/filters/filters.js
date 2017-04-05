@@ -913,3 +913,14 @@ angApp.filter('fileExtension', function () {
         return basename.slice(pos + 1);
     };
 });
+
+/**
+ * Output integer with leading zeros
+ * @function zeroFill
+ */
+angApp.filter('zeroFill', function () {
+    return function (num, len) {
+        len = len || 5;
+        return (Array(len).join("0") + num).slice(-len);
+    };
+});

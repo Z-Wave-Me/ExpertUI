@@ -112,6 +112,7 @@ appController.controller('AssociationsController', function($scope, $filter, $ti
         var assocDevices = getAssocDevices(node, ZWaveAPIData, zdd, controllerNodeId);
         var obj = {
             'id': nodeId,
+            'idSort': $filter('zeroFill')(nodeId),
             'rowId': 'row_' + nodeId + '_' + cnt,
             'name': $filter('deviceName')(nodeId, node),
             'assocGroup': assocDevices

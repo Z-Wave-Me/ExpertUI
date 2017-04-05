@@ -140,6 +140,7 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
                         // Set object
                         var obj = {};
                         obj['id'] = k;
+                        obj['idSort'] = $filter('zeroFill')(k);
                         obj['iId'] = instanceId;
                         obj['cmd'] = sensorBinary.data.name + '.' + val.name;
                         obj['cmdId'] = '48';

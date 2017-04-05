@@ -205,6 +205,7 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
             // Set object
             var obj = {};
             obj['id'] = nodeId;
+            obj['idSort'] = $filter('zeroFill')(nodeId);
             obj['rowId'] = 'row_' + nodeId;
             obj['name'] = $filter('deviceName')(nodeId, node);
             obj['security'] = security;

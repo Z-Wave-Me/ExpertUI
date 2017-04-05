@@ -238,6 +238,7 @@ appController.controller('ThermostatController', function($scope, $filter, $time
                 var obj = {};
 
                 obj['id'] = nodeId;
+                obj['idSort'] = $filter('zeroFill')(nodeId);
                 obj['cmd'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.' + curThermMode;
                 obj['ccId'] = ccId;
                 obj['rowId'] = 'row_' + nodeId + '_' + cnt;

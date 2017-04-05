@@ -132,6 +132,7 @@ appController.controller('BatteryController', function($scope, $filter, $timeout
             // Set object
             var obj = {};
             obj['id'] = nodeId;
+            obj['idSort'] = $filter('zeroFill')(nodeId);
             obj['cmd'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].data.last';
             obj['rowId'] = 'row_' + nodeId;
             obj['name'] = $filter('deviceName')(nodeId, node);

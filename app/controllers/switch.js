@@ -224,6 +224,7 @@ appController.controller('SwitchController', function ($scope, $filter, $timeout
             }
             var level = updateLevel(instance.commandClasses[ccId].data.level, ccId, btnOn, btnOff);
             obj['id'] = nodeId;
+            obj['idSort'] = $filter('zeroFill')(nodeId);
             obj['cmd'] = instance.commandClasses[ccId].data.name + '.level';
             obj['iId'] = instanceId;
             obj['ccId'] = ccId;
@@ -234,7 +235,7 @@ appController.controller('SwitchController', function ($scope, $filter, $timeout
             obj['specificType'] = specificType;
             obj['hasSwitchAll'] = hasSwitchAll;
             obj['switchAllValue'] = switchAllValue;
-            obj['rowId'] = 'switch_' + nodeId + '_' + cnt;
+            obj['rowId'] = 'switch_' + nodeId + '_' + $filter('zeroFill')(cnt);
             obj['name'] = $filter('deviceName')(nodeId, node);
             obj['updateTime'] = instance.commandClasses[ccId].data.level.updateTime;
             obj['invalidateTime'] = instance.commandClasses[ccId].data.level.invalidateTime;

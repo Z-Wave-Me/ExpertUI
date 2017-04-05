@@ -194,6 +194,7 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
 
             var obj = {};
             obj['id'] = nodeId;
+            obj['idSort'] = $filter('zeroFill')(nodeId);
             obj['rowId'] = 'row_' + nodeId;
             obj['isController'] = isController;
             obj['cmd'] = bindPath.split(',');

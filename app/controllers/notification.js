@@ -169,6 +169,7 @@ appController.controller('NotificationController', function ($scope, $filter, $t
         }
         var obj = {};
         obj['id'] = node.id;
+        obj['idSort'] = $filter('zeroFill')(node.id);
         obj['rowId'] = node.rowId + typeId;
         obj['instanceId'] = node.instanceId;
         obj['name'] = node.name;
@@ -222,6 +223,7 @@ appController.controller('NotificationController', function ($scope, $filter, $t
 
             var obj = {};
             obj['id'] = node.id;
+            obj['idSort'] = $filter('zeroFill')(node.id);
             obj['rowId'] = node.rowId + typeId;
             obj['instanceId'] = node.instanceId;
             obj['name'] = node.name;

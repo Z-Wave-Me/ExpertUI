@@ -113,6 +113,7 @@ appController.controller('LocksController', function($scope, $filter, $timeout,$
                 var apiUrl = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']';
 
                 obj['id'] = nodeId;
+                obj['idSort'] = $filter('zeroFill')(nodeId);
                 obj['cmd'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.mode';
                 obj['ccId'] = doorLockCCId;
                 obj['rowId'] = 'row_' + nodeId + '_' + cnt;
