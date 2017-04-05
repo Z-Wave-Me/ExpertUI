@@ -15066,42 +15066,49 @@ fieldset.submit-entry {
 
 /* List groups
 -------------------------------------------------- */
-/* line 4, ../sass/common/_list-group.scss */
+/* line 4, ../sass/common/_list_group.scss */
 .list-group-item {
   border-color: #9fd8ef;
 }
 
-/* line 9, ../sass/common/_list-group.scss */
+/* line 9, ../sass/common/_list_group.scss */
 .row-configuration .menu-vertical {
   height: auto;
   max-height: 800px;
   overflow-x: hidden;
 }
-/* line 13, ../sass/common/_list-group.scss */
+/* line 13, ../sass/common/_list_group.scss */
 .row-configuration .menu-vertical .list-group-item {
   padding: 5px 7px;
 }
-/* line 15, ../sass/common/_list-group.scss */
+/* line 15, ../sass/common/_list_group.scss */
 .row-configuration .menu-vertical .list-group-item a {
   color: #272822;
 }
-/* line 19, ../sass/common/_list-group.scss */
+/* line 19, ../sass/common/_list_group.scss */
 .row-configuration .menu-vertical .list-group-item.active a {
   color: #ffffff;
 }
 
-/* line 28, ../sass/common/_list-group.scss */
+/* line 27, ../sass/common/_list_group.scss */
+.configuration-select {
+  margin: 0 0 20px 0;
+  padding: 10px;
+  background-color: #e4f5fc;
+}
+
+/* line 33, ../sass/common/_list_group.scss */
 .list-report {
   margin: 0;
   padding: 0;
 }
-/* line 31, ../sass/common/_list-group.scss */
+/* line 36, ../sass/common/_list_group.scss */
 .list-report li {
   padding: 10px 0;
   display: block;
   border-top: solid 1px #9fd8ef;
 }
-/* line 36, ../sass/common/_list-group.scss */
+/* line 41, ../sass/common/_list_group.scss */
 .list-report li:first-child {
   border-top: 0 none;
 }

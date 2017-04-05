@@ -24,6 +24,11 @@
     }
   }
 }
+.configuration-select{
+  margin: 0 0 $spacing-double 0;
+  padding: $spacing;
+  background-color: $app-color-secondary;
+}
 
 .list-report{
   margin: 0 ;
