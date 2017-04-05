@@ -43,12 +43,12 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
         $interval.cancel($scope.apiDataInterval);
     });
 
-    // todo: deprecated
-    /*$scope.changeDevice = function (deviceId) {
-        if (deviceId > 0) {
+    // Redirect to device
+    $scope.redirectToDevice = function (deviceId) {
+        if (deviceId) {
             $location.path($scope.activeUrl + deviceId);
         }
-    };*/
+    };
 
     // Load timing data
     $scope.loadTiming = function () {

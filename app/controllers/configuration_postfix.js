@@ -35,15 +35,12 @@ appController.controller('ConfigPostfixController', function ($scope, $routePara
     $scope.descriptionCont;
     $scope.deviceZddx = [];
 
-    // todo: deprecated
-    // Redirect to detail page
-    /*$scope.changeDevice = function (deviceId) {
-        if (deviceId > 0) {
-            console.log($scope.activeUrl + deviceId);
-            return;
+    // Redirect to device
+    $scope.redirectToDevice = function (deviceId) {
+        if (deviceId) {
             $location.path($scope.activeUrl + deviceId);
         }
-    };*/
+    };
     // Load data
     $scope.loadData = function (nodeId) {
         dataService.loadZwaveApiData().then(function (ZWaveAPIData) {

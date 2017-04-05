@@ -1,7 +1,10 @@
 <!-- Config menu -->
-<div class="configuration-select" ng-if="_.size(devices) > 30">
-    <select class="form-control">
-        <option ng-selected="v.id == deviceId"
+<div class="configuration-select" ng-if_="_.size(devices) > 30">
+    <select class="form-control"
+            ng-model="deviceId"
+            ng-change="redirectToDevice(deviceId)" >
+        <option value="{{v.id}}"
+                ng-selected="v.id == deviceId"
                 ng-repeat="v in devices track by $index">
             (#{{v.id}}) {{v.name | cutText:true:30}}
         </option>

@@ -35,12 +35,12 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         $interval.cancel($scope.configInterval);
     });
 
-    // todo: deprecated
-    /*$scope.changeDevice = function (deviceId) {
-        if (deviceId > 0) {
+    // Redirect to device
+    $scope.redirectToDevice = function (deviceId) {
+        if (deviceId) {
             $location.path($scope.activeUrl + deviceId);
         }
-    };*/
+    };
 
     // Load data
     $scope.loadZwaveData = function (nodeId) {

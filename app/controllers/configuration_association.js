@@ -51,12 +51,13 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
         $interval.cancel($scope.assocInterval);
     });
 
-    // todo: deprecated
-    /*$scope.changeDevice = function(deviceId) {
-        if (deviceId > 0) {
+    // Redirect to device
+    $scope.redirectToDevice = function (deviceId) {
+        if (deviceId) {
             $location.path($scope.activeUrl + deviceId);
         }
-    };*/
+    };
+
     // Load data
     $scope.loadZwaveData = function(nodeId, noCache) {
         dataService.loadZwaveApiData().then(function(ZWaveAPIData) {

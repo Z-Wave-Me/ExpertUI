@@ -88,12 +88,12 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         $scope.zwaveInterview.interval = $interval(refresh, $scope.cfg.interval);
     };
 
-    // todo: deprecated
-    /*$scope.changeDevice = function (deviceId) {
-        if (deviceId > 0) {
+    // Redirect to device
+    $scope.redirectToDevice = function (deviceId) {
+        if (deviceId) {
             $location.path($scope.activeUrl + deviceId);
         }
-    };*/
+    };
 
     /**
      * Request NIF of a device

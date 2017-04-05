@@ -92,12 +92,12 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
         $scope.firmware.interval = $interval(refresh, $scope.cfg.interval);
     };
 
-    // todo: deprecated
-   /* $scope.changeDevice = function (deviceId) {
-        if (deviceId > 0) {
+    // Redirect to device
+    $scope.redirectToDevice = function (deviceId) {
+        if (deviceId) {
             $location.path($scope.activeUrl + deviceId);
         }
-    };*/
+    };
     /**
      * Handles device firmware update
      * @param {object} input

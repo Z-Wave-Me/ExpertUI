@@ -516,11 +516,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,cfg
             obj['id'] = nodeId;
             obj['name'] = $filter('deviceName')(nodeId, node);
             obj['isController'] = (controllerNodeId == nodeId);
-            for (i = 0; i < 5; i++) {
-                devices.push(obj);
-            }
-
-            //for(i)
+            devices.push(obj);
         });
         return devices;
     }

@@ -32,12 +32,12 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
         $interval.cancel($scope.commandsInterval);
     });
 
-    // todo: deprecated
-   /* $scope.changeDevice = function (deviceId) {
-        if (deviceId > 0) {
+    // Redirect to device
+    $scope.redirectToDevice = function (deviceId) {
+        if (deviceId) {
             $location.path($scope.activeUrl + deviceId);
         }
-    };*/
+    };
 
     // Load data
     $scope.loadData = function (nodeId) {
