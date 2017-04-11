@@ -2,6 +2,19 @@
 -------------------------------------------------- */
 .settings-lang{
     a{
+        &:hover,
+        &:active,
+        &:focus,
+        &:visited{
+            text-decoration: none;
+        }
+
+        &:active,
+        &:focus,
+        &:visited{
+            border: none;
+            outline: 0;
+        }
 
         img{
             width: 32px;
