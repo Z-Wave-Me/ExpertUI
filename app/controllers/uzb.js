@@ -26,7 +26,8 @@ appController.controller('UzbController', function ($scope, $timeout, $window, c
             var appVersion = ZWaveAPIData.controller.data.APIVersion.value.split('.');
             var appVersionMajor = parseInt(appVersion[0], 10);
             var appVersionMinor = parseInt(appVersion[1], 10);
-            var urlParams = '?vendorId=' + vendorId + '&appVersionMajor=' + appVersionMajor + '&appVersionMinor=' + appVersionMinor;
+            var bootloaderCRC = ZWaveAPIData.controller.data.bootloaderCRC.value;
+            var urlParams = '?vendorId=' + vendorId + '&appVersionMajor=' + appVersionMajor + '&appVersionMinor=' + appVersionMinor+ '&bootloaderCRC=' + bootloaderCRC;
             //return;
             // Load uzb
             loadUzb(urlParams);

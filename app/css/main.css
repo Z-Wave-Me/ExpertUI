@@ -16054,14 +16054,23 @@ http://codepen.io/MattIn4D/pen/LiKFC
 
 /* Settings
 -------------------------------------------------- */
-/* line 6, ../sass/modules/_settings.scss */
+/* line 5, ../sass/modules/_settings.scss */
+.settings-lang a:hover, .settings-lang a:active, .settings-lang a:focus, .settings-lang a:visited {
+  text-decoration: none;
+}
+/* line 12, ../sass/modules/_settings.scss */
+.settings-lang a:active, .settings-lang a:focus, .settings-lang a:visited {
+  border: none;
+  outline: 0;
+}
+/* line 19, ../sass/modules/_settings.scss */
 .settings-lang a img {
   width: 32px;
   height: 32px;
   display: inline-block;
   margin-right: 5px;
 }
-/* line 14, ../sass/modules/_settings.scss */
+/* line 27, ../sass/modules/_settings.scss */
 .settings-lang a.active img {
   border: solid 4px #9fd8ef;
 }
@@ -17063,5 +17072,3 @@ http://codepen.io/MattIn4D/pen/LiKFC
 /*@media print {
   @import "modules/_print";
 }*/
-
-/*# sourceMappingURL=main.css.map */
