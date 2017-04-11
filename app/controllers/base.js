@@ -449,23 +449,20 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
         var ret = {
             queueLength: data.length,
             busyLength: 0,
-            result: 0,
-            /*arrCnt: {
-            v: 0,
-            s: 0,
-            d: 0
-        }*/
+            result: 0
         }
         angular.forEach(data, function(job, jobIndex) {
-            if(job[1][1] === 0 || job[1][2] === 0 || job[1][4] === 0){
+            // job[1][1] = W
+            // job[1][2] = S
+            // job[1][4] = D
+
+            //if((job[1][1] === 0 || job[1][2] === 0 || job[1][4] === 0) || (job[1][1] === 0 && job[1][2] === 0 && job[1][4] === 0)){
+            if(job[1][1] === 0 && job[1][2] === 0 && job[1][4] === 0){
                 ret.busyLength += 1;
             }
-            /*ret.arrCnt.v += job[1][1];
-            ret.arrCnt.s += job[1][2];
-            ret.arrCnt.d += job[1][4];*/
         });
-        ret.result = (ret.queueLength - ret.busyLength);
-        //console.log(ret)
+        //ret.result = (ret.queueLength - ret.busyLength);
+        ret.result =  ret.busyLength;
         angular.extend(cfg.busy_indicator, ret);
     }
 
