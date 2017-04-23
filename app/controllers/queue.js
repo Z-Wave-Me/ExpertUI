@@ -100,6 +100,7 @@ appController.controller('QueueController', function($scope, $interval,cfg,dataS
                 Ack: (job[1][5] ? (job[1][6] ? "+" : "-") : " "),
                 Resp: (job[1][7] ? (job[1][8] ? "+" : "-") : " "),
                 Cbk: (job[1][9] ? (job[1][10] ? "+" : "-") : " "),
+                Repl: (job[1][12] ? (job[1][13] ? "+" : "-") : " "),
                 Timeout:  parseFloat(job[0]).toFixed(2),
                 NodeId:  job[2],
                 Description:  job[3],
