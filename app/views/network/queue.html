@@ -15,9 +15,10 @@
                 <th title="Wait security">S</th>
                 <th title="Encapsulated">E</th>
                 <th title="Done">D</th>
-                <th>Ack</th>
-                <th>Resp</th>
-                <th>Cbk</th>
+                <th title="Awaiting/received an Ack">Ack</th>
+                <th title="Awaiting/received a Respinse">Resp</th>
+                <th title="Awaiting/received a Callback">Cbk</th>
+                <th title="Awaiting/received a Reply">Repl</th>
                 <th>{{_t('th_timeout')}}</th>
                 <th>{{_t('th_nodeid')}}</th>
                 <th>{{_t('th_description')}}</th>
@@ -36,6 +37,7 @@
                 <td>{{v.Ack}}</td>
                 <td>{{v.Resp}}</td>
                 <td>{{v.Cbk}}</td>
+                <td>{{v.Repl}}</td>
                 <td>{{v.Timeout}}</td>
                 <td>{{v.NodeId}}</td>
                 <td ng-bind-html="v.Description | toTrusted"></td>
