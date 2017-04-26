@@ -34,10 +34,17 @@ appController.controller('AuthInstallerController', function($scope, $location,c
             window.location = '#/home';
             $window.location.reload();
         }, function (error) {
+            var redirect = cfg.logout_redirect[$location.host()];
             $scope.loading = false;
             var message = $scope._t('error_load_data');
             if (error.status == 401) {
                 message = $scope._t('error_load_user');
+            }
+
+            // Redirect to an url from list
+            if(redirect){
+                $window.location.href = redirect;
+                return;
             }
             alertify.alertError(message);
         });

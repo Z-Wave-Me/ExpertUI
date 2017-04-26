@@ -237,6 +237,14 @@
                          <span class="timestamp"
                                ng-include="'app/views/indicator.html'"></span>
                     </li>
+                    <!-- Logout - only for CIT  on the https://findcit.z-wavealliance.org/ -->
+                    <li class="navibar-divider" ng-if_="cfg.app_type === 'installer'"> </li>
+                    <li class="navibar-item" ng-if="cfg.app_type === 'installer' && cfg.logout_redirect[cfg.route.host]">
+                        <a class="navibar-item-root" ng-href="#logout" title="{{ _t('logout')}}">
+                            <i class="fa fa-sign-out"></i> <span class="main-nav-name">{{ _t('logout')}}</span>
+                        </a>
+
+                    </li>
                 </ul>
             </div>
         </div><!-- /#navigation -->

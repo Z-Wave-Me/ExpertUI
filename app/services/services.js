@@ -7,7 +7,7 @@ var appService = angular.module('appService', []);
 /**
  * Device service
  */
-appService.service('deviceService', function($filter, $log, $cookies,$window,cfg,_) {
+appService.service('deviceService', function($filter, $log, $cookies,$window,$location,cfg,_) {
     /// --- Public functions --- ///
 
     /**
@@ -113,6 +113,13 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,cfg
     this.logOut = function () {
         this.setUser(null);
         this.setZWAYSession(null);
+        // Check if host is in the logout redirect list
+        var redirect = cfg.logout_redirect[$location.host()];
+        // Redirect to an url from list
+        if(redirect){
+            $window.location.href = redirect;
+            return;
+        }
         $window.location.href = '#/';
         $window.location.reload();
     };

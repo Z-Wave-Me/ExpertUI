@@ -13,6 +13,10 @@ var appController = angular.module('appController', []);
  * @class BaseController
  */
 appController.controller('BaseController', function ($scope, $rootScope, $cookies, $filter, $location, $anchorScroll, $window, $route, $interval, $timeout, cfg, dataService, deviceService, myCache) {
+    cfg.route.host = $location.host();
+    // Global config
+    $scope.cfg = cfg;
+
     $scope.nowDate = new Date();
     $scope.loading = false;
     $scope.alert = {message: false, status: 'is-hidden', icon: false};
@@ -21,8 +25,6 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
         field: '',
         reverse:  false
     }
-
-
     // Custom IP
     $scope.customIP = {
         'url': cfg.server_url,
@@ -40,8 +42,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
 
     // Show page content
     $scope.showContent = false;
-    // Global config
-    $scope.cfg = cfg;
+
 
 // Lang settings
     $scope.lang_list = cfg.lang_list;

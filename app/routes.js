@@ -172,7 +172,7 @@ angApp.config(['$routeProvider',
         }).// Logout
         when('/logout', {
             requireLogin: requireLogin,
-            appTypeBanned: ['default','wd','popp','jb'],
+            appTypeBanned: ['default_','wd','popp','jb'],
             templateUrl: 'app/views/auth/logout_installer.html'
         }).otherwise({
             redirectTo: '/home'
