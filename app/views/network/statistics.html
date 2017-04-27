@@ -28,8 +28,8 @@
 
     <div class="statistic-entry"
          ng-repeat="v in netStat.all track by $index">
-        <div class="statistic-title">{{_t(v.name)}} {{v.name}}<span
-                class="label label-default">{{v.dateTime.today}}</span>
+        <div class="statistic-title">{{_t(v.name)}}&nbsp;
+            <span class="label label-default">{{v.dateTime.today}}</span>
         </div>
         <div ng-switch="v.name">
             <!-- Success on Reception -->

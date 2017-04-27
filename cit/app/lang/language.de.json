@@ -34,8 +34,6 @@
  "notin_range":"Nicht in Reichweite",
  "include_log":"Log hinzufügen",
  "include_log_warning":"Dies wird den Log ihres SmartHome-systems hinzufügen",
- "ok" : "100kbit",
- "error" : "40kbit",
  "success_reception" : "ok",
  "failCRC16" : "CHN 2",
  "failCRC8" : "CHN 1",

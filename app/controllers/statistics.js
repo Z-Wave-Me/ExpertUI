@@ -93,7 +93,7 @@ appController.controller('NetworkStatisticsController', function ($scope, $filte
             objRFTxLBTBackOffs['dateTime'] = $filter('getDateTimeObj')(response.data.RFTxLBTBackOffs.updateTime);
             $scope.netStat.all[0] = objRFTxLBTBackOffs;
 
-            // Number of correct Frames received RFRxFrames
+            // Success on Reception (% ok versus % corrupted)
             var RFRxFrames = parseInt(response.data.RFRxFrames.value);
             var RFRxLRCErrors = parseInt(response.data.RFRxLRCErrors.value);
             var RFRxCRC16Errors = parseInt(response.data.RFRxCRC16Errors.value);
