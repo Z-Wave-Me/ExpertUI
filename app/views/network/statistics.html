@@ -23,34 +23,39 @@
             </bb-row-spinner>
         </button>
     </div>
-
+   <!-- <pre>{{netStat.all[0]|json}}</pre>-->
     <!--<div id="chartContainer" style="height: 400px; width: 100%;"></div>-->
-
 
     <div class="statistic-entry"
          ng-repeat="v in netStat.all track by $index">
-        <div class="statistic-title">{{_t(v.name)}} <span
+        <div class="statistic-title">{{_t(v.name)}} {{v.name}}<span
                 class="label label-default">{{v.dateTime.today}}</span>
         </div>
         <div ng-switch="v.name">
-            <!-- RFRxLRCErrors -->
+            <!-- Success on Reception -->
             <div ng-switch-when="RFRxLRCErrors" ng-click="expandNavi(v.name, $event)">
                 <div class="progress clickable">
-                    <div class="progress-bar progress-bar-success" title="{{_t('ok')}} {{v.success}}%" style="width: {{v.success}}%">
+                    <!-- Success-->
+                    <div class="progress-bar progress-bar-success" title="{{_t('success_on_reception')}} {{v.success}}%" style="width: {{v.success}}%">
                         <span>{{v.success}}% {{_t('success_reception')}}</span>
                     </div>
-                    <div class="progress-bar progress-bar-danger" title="{{_t(v.failCRC8Name)}} {{v.failCRC8}}%" style="width: {{v.failCRC8}}%">
+                    <!-- Channel 1 -->
+                    <div class="progress-bar progress-bar-danger" title="{{_t('failCRC8Name')}} {{v.failCRC8}}%" style="width: {{v.failCRC8}}%">
                         <span>{{v.failCRC8}}% {{_t('failCRC8')}}</span>
                     </div>
-                    <div class="progress-bar progress-bar-warning" title="{{_t(v.failCRC16Name)}} {{v.failCRC16}}%" style="width: {{v.failCRC16}}%">
+                    <!-- Channel 2 -->
+                    <div class="progress-bar progress-bar-warning" title="{{_t('failCRC16Name')}} {{v.failCRC16}}%" style="width: {{v.failCRC16}}%">
                         <span>{{v.failCRC16}}% {{_t('failCRC16')}}</span>
                     </div>
                 </div>
                 <div class="page-navi" ng-if="naviExpanded[v.name]">
                     <div class="page-navi-in">
                         <div class="page-navi-content">
+                            <!-- Success-->
                             <span class="text-success">{{ _t('success_on_reception')}}: <strong>{{v.frameValue}}</strong></span><br />
+                            <!-- Channel 1 -->
                             <span class="text-danger">{{_t('failCRC8Name')}}:  <strong>{{_t(v.failCRC8Value)}}</strong></span><br />
+                            <!-- Channel 2 -->
                             <span class="text-warning">{{_t('failCRC16Name')}}:  <strong>{{_t(v.failCRC16Value)}}</strong></span>
                         </div>
                     </div>
@@ -59,14 +64,28 @@
             <!-- Default -->
             <div ng-switch-default>
                 <div class="progress clickable" ng-click="expandNavi(v.name, $event)">
-                    <div class="progress-bar progress-bar-success" title="{{_t('ok')}} {{v.success}}% " style="width: {{v.success}}%">
-                        <span ng-if="v.name == 'RFRxForeignHomeID'">{{v.success}}% {{_t('own')}}</span>
-                        <span ng-if="v.name == 'RFTxLBTBackOffs'">{{v.success}}% {{_t('ok')}}</span>
+                    <!-- SUCCESS -->
+                    <div class="progress-bar progress-bar-success" style="width: {{v.success}}%">
+                        <!-- SUCCESS Data Rate on Send -->
+                        <span ng-if="v.name == 'RFRxForeignHomeID'" title="{{v.success}}% {{_t('own')}}">
+                            {{v.success}}% {{_t('own')}}
+                        </span>
+                        <!-- SUCCESS Foreign Network Impact -->
+                        <span ng-if="v.name == 'RFTxLBTBackOffs'" title="{{v.success}}% {{_t('RFTxFrames')}}">
+                            {{v.success}}% {{_t('RFTxFrames')}}
+                        </span>
                     </div>
+                    <!-- FAILED -->
+                    <div class="progress-bar progress-bar-danger" style="width: {{v.fail}}%">
+                        <!-- FAILED Data Rate on Send -->
+                        <span ng-if="v.name == 'RFTxLBTBackOffs'" title="{{v.fail}}% {{_t('RFTxLBTBackOffs_error')}}">
+                            {{v.fail}}% {{_t('RFTxLBTBackOffs_error')}}
+                        </span>
+                        <!-- FAILED Foreign Network Impact -->
+                        <span ng-if="v.name == 'RFRxForeignHomeID'" title="{{v.fail}}% {{_t('foreign')}}">
+                            {{v.fail}}% {{_t('foreign')}}
+                        </span>
 
-                    <div class="progress-bar progress-bar-danger" title="{{_t(v.name)}} {{v.fail}}%" style="width: {{v.fail}}%">
-                        <span ng-if="v.name == 'RFRxForeignHomeID'">{{v.fail}}% {{_t('foreign')}}</span>
-                        <span ng-if="v.name == 'RFTxLBTBackOffs'">{{v.fail}}% {{_t('error')}}</span>
 
                     </div>
                 </div>
@@ -77,7 +96,7 @@
                             <span class="text-danger">{{_t('foreign_frames_desc')}}:  <strong>{{_t(v.value)}}</strong></span>
                         </div>
                         <div ng-if="v.name == 'RFTxLBTBackOffs'" class="page-navi-content">
-                            <span class="text-success">{{ _t(v.frameName)}}: <strong>{{v.frameValue}}</strong></span><br />
+                            <span class="text-success">{{ _t('RFTxFrames')}}: <strong>{{v.frameValue}}</strong></span><br />
                             <span class="text-danger">{{_t('RFTxLBTBackOffs_error')}}:  <strong>{{_t(v.value)}}</strong></span>
                         </div>
                     </div>

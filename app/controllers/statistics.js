@@ -78,6 +78,7 @@ appController.controller('NetworkStatisticsController', function ($scope, $filte
                 // Sets 1 percent if num is not 0 and out is 0
                 return out === 0 && num > 0 ? 1 : out;
             }
+            //response.data.RFTxLBTBackOffs.value = 200;
             // Total Number of Frames Sent RFTxFrames
             var RFTxFrames = parseInt(response.data.RFTxFrames.value);
             // Frames with Frequency Backoff (in % of frames sent) RFTxLBTBackOffs

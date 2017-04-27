@@ -63,6 +63,7 @@ var config_data = {
         'config_url': '/config/', // Url for store config data
         'reorg_run_url': '/ZWaveAPI/NetworkReorganization', // Url to start reorganization
         'reorg_log_url': '/ZWaveAPI/GetReorganizationLog', // Url to load log
+        'logout_url': 'ZAutomation/api/v1/logout',// Url for logout
         //'reorg_log_url': '/config/reorg.log', // Url for store reorg log data
         'zddx_url': '/ZDDX/', // Url for zddx xml files
         'zddx_create_url': '/ZWaveAPI/CreateZDDX/', // Create zddx file
@@ -271,7 +272,7 @@ var config_data = {
         },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer/wd/popp/jb
-        'app_type': 'installer',
+        'app_type': 'default',
         'custom_cfg': {
             'default': {
                 'logo': 'app/images/zplus.jpg',

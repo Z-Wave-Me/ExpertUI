@@ -54,7 +54,7 @@ appController.controller('AuthInstallerController', function($scope, $location,c
     /**
      * Login proccess
      */
-    $scope.login_ = function (input) {
+    /*$scope.login_ = function (input) {
         //$scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin', message: $scope._t('loading')};
         if (input.login !== cfg.auth.login || input.password !== cfg.auth.password) {
             alertify.alertError($scope._t('error_load_user'));
@@ -65,7 +65,7 @@ appController.controller('AuthInstallerController', function($scope, $location,c
             return;
         }
         $location.path('/home');
-    };
+    };*/
 
 });
 
@@ -74,7 +74,19 @@ appController.controller('AuthInstallerController', function($scope, $location,c
  * @class LogoutInstallerController
  *
  */
-appController.controller('LogoutInstallerController', function(deviceService) {
-    deviceService.logOut();
+appController.controller('LogoutInstallerController', function(dataService,deviceService) {
+    dataService.getApi('logout_url').then(function (response) {
+        deviceService.logOut();
+    });
+    /**
+     * Logout an user
+     */
+    /*$scope.logout = function () {
+        deviceService.setRememberMe(null);
+        dataService.getApi('logout_url').then(function (response) {
+            deviceService.logOut();
+        });
+    };
+    $scope.logout();*/
 
 });
