@@ -520,6 +520,29 @@ appController.controller('ChangeFrequencyController', function ($scope) {
      * Send Configuration ZMEFreqChange
      * @param {string} cmd
      */
+    $scope.frequency = {
+        arrays: {
+            EuRuInCnMy: ['EU','RU','IN','CN','MY'],
+            AnzBr: ['ANZ'],
+            HkKrJp: ['HK','KR','JP'],
+            UsIl: ['US','IL']
+        },
+        currentFreqArr: '',
+        currentFreq: $scope.controlDh.controller.frequency
+    };
+
+    if ($scope.frequency.currentFreq &&
+        ['unsupported','unknown','undefined'].indexOf($scope.frequency.currentFreq) < 0) {
+        Object.keys($scope.frequency.arrays).forEach(function(freqBand){
+            if($scope.frequency.arrays[freqBand].indexOf($scope.frequency.currentFreq) > -1) {
+                $scope.frequency.currentFreqArr = freqBand;
+                return;
+            }
+        })
+    } else {
+        $scope.frequency.currentFreqArr = null;
+    }
+
     $scope.zmeFreqChange = function (cmd) {
         $scope.runZwaveCmd(cmd);
     };

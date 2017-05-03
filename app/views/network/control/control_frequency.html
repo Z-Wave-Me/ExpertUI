@@ -2,11 +2,28 @@
 <div class="panel panel-default" ng-if="controlDh.controller.frequency" >
     <div class="panel-heading"><i class="fa fa-map-marker"></i> {{_t('nm_frequency_title')}}</div>
     <div class="panel-body" ng-controller="ChangeFrequencyController">
-        <div>{{_t('current_frequency')}}: <strong>{{controlDh.controller.frequency}}</strong></div>
+        <div class="form-inline">
+            <span>{{_t('current_frequency')}}: <strong>{{frequency.currentFreq}}</strong></span>
+            <div class="btn-group" ng-if="!frequency.currentFreq ||
+        ['unsupported','unknown','undefined'].indexOf(frequency.currentFreq) > -1">
+                <!-- Debug mode  -->
+                <button class="btn" ng-controller="ControllerController"
+                        ng-class="cfg.zwavecfg.debug === true ? 'btn-success active': 'btn-primary'"
+                        ng-click="setDebugMode(cfg.zwavecfg.debug === true ? false : true,'debugMode')"
+                        ng-disabled="rowSpinner['debugMode']"
+                        title="{{_t('debug_mode')}}">
+
+                    <bb-row-spinner
+                            spinner="rowSpinner['debugMode']"
+                            icon="'fa-bug'">
+                    </bb-row-spinner>
+                </button>
+            </div>
+        </div>
         <div class="text-alert-list">
             <i class="fa fa-info-circle text-info"></i> {{_t('frequency_info')}}
         </div>
-        <div class="cfg-block form-inline block-frequency">
+        <div class="cfg-block form-inline block-frequency" ng-if="frequency.currentFreqArr === 'EuRuInCnMy' || (cfg.zwavecfg.debug && frequency.currentFreqArr === null)">
             <!-- EU -->
             <button
                     class="btn"
@@ -53,7 +70,7 @@
                 <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(10)']"></bb-row-spinner>MY
             </button>
         </div>
-        <div class="cfg-block form-inline">
+        <div class="cfg-block form-inline" ng-if="frequency.currentFreqArr === 'AnzBr' || (cfg.zwavecfg.debug && frequency.currentFreqArr === null)">
             <!-- ANZ/BR -->
             <button
                     class="btn"
@@ -63,6 +80,8 @@
                     ng-click="zmeFreqChange('ZMEFreqChange(4)')">
                 <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(4)']"></bb-row-spinner>ANZ/BR
             </button>
+        </div>
+        <div class="cfg-block form-inline" ng-if="frequency.currentFreqArr === 'HkKrJp' || (cfg.zwavecfg.debug && frequency.currentFreqArr === null)">
             <!-- HK -->
             <button
                     class="btn"
@@ -91,7 +110,7 @@
                 <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(7)']"></bb-row-spinner>JP
             </button>
         </div>
-        <div class="cfg-block form-inline">
+        <div class="cfg-block form-inline" ng-if="frequency.currentFreqArr === 'UsIl' || (cfg.zwavecfg.debug && frequency.currentFreqArr === null)">
             <!-- US -->
             <button
                     class="btn"

@@ -5,125 +5,117 @@
     <i class="fa accordion-arrow" ng-class="expand.settingsFrequency  ? 'fa-chevron-up':'fa-chevron-down'"></i>
 </h2>
 <div class="accordion-entry-ctrl" ng-class="" ng-if="expand.settingsFrequency" ng-controller="ChangeFrequencyController">
-    <div>{{_t('current_frequency')}}: <strong>{{controlDh.controller.frequency}}</strong></div>
+    <div>{{_t('current_frequency')}}: <strong>{{frequency.currentFreq}}</strong></div>
     <div class="text-alert-list">
         <i class="fa fa-info-circle text-info"></i> {{_t('frequency_info')}}
     </div>
-    <div class="cfg-block form-inline block-frequency">
-    <!-- EU -->
-    <button
-            class="btn"
-            id="btn_nm_freq_change_eu"
-            ng-class="controlDh.controller.frequency === cfg.frequency[0] ? 'btn-default' : 'btn-primary'"
-            ng-disabled="rowSpinner['ZMEFreqChange(0)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
-            ng-click="zmeFreqChange('ZMEFreqChange(0)')">
-        <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(0)']"></bb-row-spinner>
-        EU
-    </button>
-    <!-- RU -->
-    <button
-            class="btn"
-            id="btn_nm_freq_change_ru"
-            ng-class="controlDh.controller.frequency === cfg.frequency[1] ? 'btn-default' : 'btn-primary'"
-            ng-disabled="rowSpinner['ZMEFreqChange(1)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
-            ng-click="zmeFreqChange('ZMEFreqChange(1)')">
-        <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(1)']"></bb-row-spinner>
-        RU
-    </button>
-    <!-- IN -->
-    <button
-            class="btn"
-            id="btn_nm_freq_change_in"
-            ng-class="controlDh.controller.frequency === cfg.frequency[2] ? 'btn-default' : 'btn-primary'"
-            ng-disabled="rowSpinner['ZMEFreqChange(2)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
-            ng-click="zmeFreqChange('ZMEFreqChange(2)')">
-        <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(2)']"></bb-row-spinner>
-        IN
-    </button>
-    <!-- CN -->
-    <button
-            class="btn"
-            id="btn_nm_freq_change_cn"
-            ng-class="controlDh.controller.frequency === cfg.frequency[6] ? 'btn-default' : 'btn-primary'"
-            ng-disabled="rowSpinner['ZMEFreqChange(6)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
-            ng-click="zmeFreqChange('ZMEFreqChange(6)')">
-        <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(6)']"></bb-row-spinner>
-        CN
-    </button>
-    <!-- MY -->
-    <button
-            class="btn"
-            id="btn_nm_freq_change_my"
-            ng-class="controlDh.controller.frequency === cfg.frequency[10] ? 'btn-default' : 'btn-primary'"
-            ng-disabled="rowSpinner['ZMEFreqChange(10)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
-            ng-click="zmeFreqChange('ZMEFreqChange(10)')">
-        <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(10)']"></bb-row-spinner>
-        MY
-    </button>
-</div>
-<div class="cfg-block form-inline">
-    <!-- ANZ/BR -->
-    <button
-            class="btn"
-            id="btn_nm_freq_change_anz"
-            ng-class="controlDh.controller.frequency === cfg.frequency[4] ? 'btn-default' : 'btn-primary'"
-            ng-disabled="rowSpinner['ZMEFreqChange(4)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
-            ng-click="zmeFreqChange('ZMEFreqChange(4)')">
-        <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(4)']"></bb-row-spinner>
-        ANZ/BR
-    </button>
-    <!-- HK -->
-    <button
-            class="btn"
-            id="btn_nm_freq_change_hk"
-            ng-class="controlDh.controller.frequency === cfg.frequency[5] ? 'btn-default' : 'btn-primary'"
-            ng-disabled="rowSpinner['ZMEFreqChange(5)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
-            ng-click="zmeFreqChange('ZMEFreqChange(5)')">
-        <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(5)']"></bb-row-spinner>
-        HK
-    </button>
-    <!-- KR -->
-    <button
-            class="btn"
-            id="btn_nm_freq_change_kr"
-            ng-class="controlDh.controller.frequency === cfg.frequency[8] ? 'btn-default' : 'btn-primary'"
-            ng-disabled="rowSpinner['ZMEFreqChange(8)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
-            ng-click="zmeFreqChange('ZMEFreqChange(8)')">
-        <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(8)']"></bb-row-spinner>
-        KR
-    </button>
-    <!-- JP -->
-    <button
-            class="btn"
-            id="btn_nm_freq_change_jp"
-            ng-class="controlDh.controller.frequency === cfg.frequency[7] ? 'btn-default' : 'btn-primary'"
-            ng-disabled="rowSpinner['ZMEFreqChange(7)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
-            ng-click="zmeFreqChange('ZMEFreqChange(7)')">
-        <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(7)']"></bb-row-spinner>
-        JP
-    </button>
-</div>
-<div class="cfg-block form-inline">
-    <!-- US -->
-    <button
-            class="btn"
-            id="btn_nm_freq_change_us"
-            ng-class="controlDh.controller.frequency === cfg.frequency[3] ? 'btn-default' : 'btn-primary'"
-            ng-disabled="rowSpinner['ZMEFreqChange(3)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
-            ng-click="zmeFreqChange('ZMEFreqChange(3)')">
-        <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(3)']"></bb-row-spinner>
-        US
-    </button>
-    <!-- IL -->
-    <button
-            class="btn"
-            id="btn_nm_freq_change_il"
-            ng-class="controlDh.controller.frequency === cfg.frequency[9] ? 'btn-default' : 'btn-primary'"
-            ng-disabled="rowSpinner['ZMEFreqChange(9)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
-            ng-click="zmeFreqChange('ZMEFreqChange(9)')">
-        <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(9)']"></bb-row-spinner>
-        IL
-    </button>
-</div>
+    <div class="cfg-block form-inline block-frequency" ng-if="frequency.currentFreqArr === 'EuRuInCn' || frequency.currentFreqArr === null">
+        <!-- EU -->
+        <button
+                class="btn"
+                id="btn_nm_freq_change_eu"
+                ng-class="controlDh.controller.frequency === cfg.frequency[0] ? 'btn-default' : 'btn-primary'"
+                ng-disabled="rowSpinner['ZMEFreqChange(0)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
+                ng-click="zmeFreqChange('ZMEFreqChange(0)')">
+            <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(0)']"></bb-row-spinner>
+            EU
+        </button>
+        <!-- RU -->
+        <button
+                class="btn"
+                id="btn_nm_freq_change_ru"
+                ng-class="controlDh.controller.frequency === cfg.frequency[1] ? 'btn-default' : 'btn-primary'"
+                ng-disabled="rowSpinner['ZMEFreqChange(1)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
+                ng-click="zmeFreqChange('ZMEFreqChange(1)')">
+            <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(1)']"></bb-row-spinner>
+            RU
+        </button>
+        <!-- IN -->
+        <button
+                class="btn"
+                id="btn_nm_freq_change_in"
+                ng-class="controlDh.controller.frequency === cfg.frequency[2] ? 'btn-default' : 'btn-primary'"
+                ng-disabled="rowSpinner['ZMEFreqChange(2)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
+                ng-click="zmeFreqChange('ZMEFreqChange(2)')">
+            <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(2)']"></bb-row-spinner>
+            IN
+        </button>
+        <!-- CN -->
+        <button
+                class="btn"
+                id="btn_nm_freq_change_cn"
+                ng-class="controlDh.controller.frequency === cfg.frequency[6] ? 'btn-default' : 'btn-primary'"
+                ng-disabled="rowSpinner['ZMEFreqChange(6)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
+                ng-click="zmeFreqChange('ZMEFreqChange(6)')">
+            <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(6)']"></bb-row-spinner>
+            CN
+        </button>
+    </div>
+    <div class="cfg-block form-inline" ng-if="frequency.currentFreqArr === 'AnzBr' || frequency.currentFreqArr === null">
+        <!-- ANZ/BR -->
+        <button
+                class="btn"
+                id="btn_nm_freq_change_anz"
+                ng-class="controlDh.controller.frequency === cfg.frequency[4] ? 'btn-default' : 'btn-primary'"
+                ng-disabled="rowSpinner['ZMEFreqChange(4)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
+                ng-click="zmeFreqChange('ZMEFreqChange(4)')">
+            <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(4)']"></bb-row-spinner>
+            ANZ/BR
+        </button>
+    </div>
+    <div class="cfg-block form-inline" ng-if="frequency.currentFreqArr === 'HkKrJp' || frequency.currentFreqArr === null">
+        <!-- HK -->
+        <button
+                class="btn"
+                id="btn_nm_freq_change_hk"
+                ng-class="controlDh.controller.frequency === cfg.frequency[5] ? 'btn-default' : 'btn-primary'"
+                ng-disabled="rowSpinner['ZMEFreqChange(5)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
+                ng-click="zmeFreqChange('ZMEFreqChange(5)')">
+            <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(5)']"></bb-row-spinner>
+            HK
+        </button>
+        <!-- KR -->
+        <button
+                class="btn"
+                id="btn_nm_freq_change_kr"
+                ng-class="controlDh.controller.frequency === cfg.frequency[8] ? 'btn-default' : 'btn-primary'"
+                ng-disabled="rowSpinner['ZMEFreqChange(8)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
+                ng-click="zmeFreqChange('ZMEFreqChange(8)')">
+            <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(8)']"></bb-row-spinner>
+            KR
+        </button>
+        <!-- JP -->
+        <button
+                class="btn"
+                id="btn_nm_freq_change_jp"
+                ng-class="controlDh.controller.frequency === cfg.frequency[7] ? 'btn-default' : 'btn-primary'"
+                ng-disabled="rowSpinner['ZMEFreqChange(7)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
+                ng-click="zmeFreqChange('ZMEFreqChange(7)')">
+            <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(7)']"></bb-row-spinner>
+            JP
+        </button>
+    </div>
+    <div class="cfg-block form-inline" ng-if="frequency.currentFreqArr === 'UsIl' || frequency.currentFreqArr === null">
+        <!-- US -->
+        <button
+                class="btn"
+                id="btn_nm_freq_change_us"
+                ng-class="controlDh.controller.frequency === cfg.frequency[3] ? 'btn-default' : 'btn-primary'"
+                ng-disabled="rowSpinner['ZMEFreqChange(3)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
+                ng-click="zmeFreqChange('ZMEFreqChange(3)')">
+            <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(3)']"></bb-row-spinner>
+            US
+        </button>
+        <!-- IL -->
+        <button
+                class="btn"
+                id="btn_nm_freq_change_il"
+                ng-class="controlDh.controller.frequency === cfg.frequency[9] ? 'btn-default' : 'btn-primary'"
+                ng-disabled="rowSpinner['ZMEFreqChange(9)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
+                ng-click="zmeFreqChange('ZMEFreqChange(9)')">
+            <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(9)']"></bb-row-spinner>
+            IL
+        </button>
+    </div>
 </div>
 
