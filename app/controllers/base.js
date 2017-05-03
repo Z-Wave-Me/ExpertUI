@@ -390,7 +390,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
             var homeId = ZWaveAPIData.controller.data.homeId.value;
             var zwayNodeId = ZWaveAPIData.controller.data.nodeId.value;
             var APIVersion = ZWaveAPIData.controller.data.APIVersion.value;
-            var showAnalytics = $filter('cmpVersion')(APIVersion,cfg.analytics.required);
+            var showAnalytics = cfg.analytics.show;
             // Changes MK
             //$scope.boxData.controller.controllerState = ZWaveAPIData.controller.data.controllerState.value;
             // Rewrite config
@@ -405,7 +405,8 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
             }
 
             angular.extend(cfg.controller,cfgController);
-            if(cfg.app_type === 'installer' ||  showAnalytics > -1){
+
+            if(cfg.app_type === 'installer' && !showAnalytics && ZWaveAPIData.controller.data.capabilities.value.indexOf(59) > -1){
                 angular.extend(cfg.analytics,{show: true});
             }
         }, function (error) {
