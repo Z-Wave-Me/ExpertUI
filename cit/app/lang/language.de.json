@@ -1,4 +1,5 @@
 {
+ "firmware_update_remote": "Firmware-Updates können nicht über den Remote-Zugang durchgeführt werden.",
  "upload_format_unsupported": "Das Format (__extension__) wird nicht unterstützt.",
  "upload_allowed_formats": "Die hochzuladende Datei muss eines der folgenden Formate haben: __extensions__",
  "choose_fw_install_action":"Aktualierungsoptionen: ",

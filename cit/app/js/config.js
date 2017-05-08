@@ -6,8 +6,8 @@
 var config_data = {
     'cfg': {
         'app_name': 'Z-Wave CIT',
-        'app_version': '1.3.0-RC-60',
-        'app_built': '27-04-2017 15:36:07',
+        'app_version': '1.3.0-RC-62',
+        'app_built': '08-05-2017 11:37:41',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -71,7 +71,6 @@ var config_data = {
         'uzb_url': 'https://service.z-wave.me/expertui/uzb/', // Url for uzb data
         'license_url': 'https://service.z-wave.me/licence/upgrade.php', // Url for license key
         'buy_licence_key': 'https://www.z-wave.me/index.php?id=41', // Buy licence key url
-        'raz_latest_version_url': 'https://razberry.z-wave.me/z-way/razberry/latest/VERSION', // Raz latest version
         'smarthome_login': '/smarthome/#/?fromexpert', // Smarthome login page
         'lang_dir': 'app/lang/', // Language directory
         'lang': 'en', // Default language
@@ -206,8 +205,7 @@ var config_data = {
         },
         // Required version for analytics
         analytics: {
-            show: false,
-            required: '05.20'
+            show: false
         },
         // Firmware target
         firmware_target: ['zwave_chip','additional_chip'],
@@ -265,6 +263,12 @@ var config_data = {
                 extension: ['bin', 'hex']
             }
         },
+        // List of the find hosts
+        'find_hosts': [
+            'find.z-wave.me',
+            'find.popp.eu',
+            'findcit.z-wavealliance.org'
+        ],
         // Redirect to the url after logout
         'logout_redirect': {
             //'192.168.10.156': 'https://findcit.z-wavealliance.org/',
@@ -281,7 +285,8 @@ var config_data = {
                 'version_type': '',
                 'title': 'Z-Wave Expert UI',
                 'controller_name': 'Z-Way',
-                'hardvare_vendor': 'RaZberry by Z-Wave.Me'
+                'hardware_vendor': 'RaZberry by Z-Wave.Me',
+                'latest_version_url': 'https://razberry.z-wave.me/z-way/razberry/latest/VERSION'
             },
             'installer': {
                 'logo': 'app/images/z-wave-aliance-logo.png',
@@ -290,8 +295,9 @@ var config_data = {
                 'version_type': '- version BETA',
                 'title': 'Z-Wave CIT',
                 'controller_name': 'CIT',
-                'hardvare_vendor': 'Z-Wave Alliance'
-            },
+                'hardware_vendor': 'Z-Wave Alliance',
+                'latest_version_url': 'https://razberry.z-wave.me/z-way/cit/latest/VERSION'
+                },
             'wd': {
                 'logo': 'app/images/zplus.jpg',
                 'footer_text': '&COPY; 2017 by Z-Wave.Me',
@@ -299,7 +305,7 @@ var config_data = {
                 'version_type': '',
                 'title': 'Z-Wave Expert UI',
                 'controller_name': 'Z-Way',
-                'hardvare_vendor': 'RaZberry by Z-Wave.Me'
+                'hardware_vendor': 'RaZberry by Z-Wave.Me'
             },
             'popp': {
                 'logo': 'app/images/zplus.jpg',
@@ -308,7 +314,9 @@ var config_data = {
                 'version_type': '',
                 'title': 'Z-Wave Expert UI',
                 'controller_name': 'Z-Way',
-                'hardvare_vendor': 'RaZberry by Z-Wave.Me'
+                'hardware_vendor': 'RaZberry by Z-Wave.Me',
+                'latest_version_url': 'https://razberry.z-wave.me/z-way/popp_rpi/latest/VERSION'
+
             },
             'jb': {
                 'logo': 'app/images/zplus.jpg',
@@ -317,7 +325,8 @@ var config_data = {
                 'version_type': '',
                 'title': 'Z-Wave Expert UI',
                 'controller_name': 'Z-Way',
-                'hardvare_vendor': 'RaZberry by Z-Wave.Me'
+                'hardware_vendor': 'RaZberry by Z-Wave.Me',
+                'latest_version_url': 'https://razberry.z-wave.me/z-way/poppbox/latest/VERSION'
             }
         }
 
