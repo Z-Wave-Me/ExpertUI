@@ -4,12 +4,9 @@
     <i class="fa accordion-arrow" ng-class="expand.settingsFirmware  ? 'fa-chevron-up':'fa-chevron-down'"></i>
 </h2>
 <div class="accordion-entry-ctrl" ng-class="" ng-if="expand.settingsFirmware" ng-controller="SettingsFirmwareController">
-    <bb-loader></bb-loader>
-    <!--<div class="alert alert-success" ng-if="firmwareUpdate.isUpToDate">
-        <i class="fa fa-smile-o fa-lg"></i> {{_t('firmware_uptodate')}} ({{firmwareUpdate.softwareCurrentVersion}})
-    </div>-->
-    <form name="form_firmware" id="form_firmware" class="form form-page" ng-submit="updateFirmware()"
-          ng-if_="!firmwareUpdate.isUpToDate">
+    <!--<bb-loader></bb-loader>-->
+    <bb-alert alert="firmwareUpdate.alert"></bb-alert>
+    <form name="form_firmware" id="form_firmware" class="form form-page" ng-submit="updateFirmware()" ng-if="!firmwareUpdate.remoteConnection">
         <fieldset>
 
             <p class="form-control-static">
@@ -23,7 +20,7 @@
         <fieldset class="submit-entry">
             <button type="button" class="btn btn-submit" title="{{_t('update_to_latest')}}"
                     ng-click="setAccess('?allow_access=1',true);handleModal('firmwareUpdateModal', $event)">
-                <i class="fa fa-level-up"></i> <span class="btn-name">{{_t('update_to_latest')}} ({{firmwareUpdate.softwareLatestVersion}})</span>
+                <i class="fa fa-level-up"></i> <span class="btn-name">{{_t('update_to_latest')}}</span> <span class="btn-name" ng-if="firmwareUpdate.softwareLatestVersion">({{firmwareUpdate.softwareLatestVersion}})</span>
             </button>
 
         </fieldset>

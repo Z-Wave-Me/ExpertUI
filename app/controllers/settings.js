@@ -221,13 +221,20 @@ appController.controller('SettingsFirmwareController', function ($scope, $sce, $
         url: $sce.trustAsResourceUrl('http://' + $location.host() + ':8084/cgi-bin/main.cgi'),
         softwareCurrentVersion: $scope.boxData.controller.softwareRevisionVersion,
         softwareLatestVersion: false,
-        isUpToDate: false
+        isUpToDate: false,
+        remoteConnection: $scope.cfg.find_hosts.indexOf($location.host()) > -1,
+        alert: false
     };
+
+    if ($scope.firmwareUpdate.remoteConnection) {
+        $scope.firmwareUpdate.alert = {message: $scope._t('firmware_update_remote'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+    }
+
     /**
      * Load latest version
      */
     $scope.loadRazLatest = function () {
-        dataService.getRemoteData($scope.cfg.raz_latest_version_url).then(function (response) {
+        dataService.getRemoteData($scope.getCustomCfgVal('latest_version_url')).then(function (response) {
             $scope.firmwareUpdate.softwareLatestVersion = response.data;
             if(response.data === $scope.boxData.controller.softwareRevisionVersion){
                 $scope.firmwareUpdate.isUpToDate = true;
