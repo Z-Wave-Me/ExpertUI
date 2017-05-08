@@ -143,17 +143,25 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
             var major = node.data.ZWProtocolMajor.value;
             var minor = node.data.ZWProtocolMinor.value;
             var vendorName = node.data.vendorString.value;
+            var isController = (controllerNodeId == nodeId);
             var zddXmlFile = $filter('hasNode')(node, 'data.ZDDXMLFile.value');
             //var productName = null;
             var fromSdk = true;
             var sdk;
             // SDK
-            if (!$scope.isController && node.data.SDK.value == '') {
+            if (isController) {
+                sdk = node.data.SDK.value || ZWaveAPIData.controller.data.SDK.value;
+            } else {
+                sdk = major + '.' + minor;
+                fromSdk = false;
+            }
+            /*if (!$scope.isController && node.data.SDK.value == '') {
+                console.log('dfdfdfdf')
                 sdk = major + '.' + minor;
                 fromSdk = false;
             } else {
-                sdk = $scope.isController? ZWaveAPIData.controller.data.SDK.value : node.data.SDK.value;
-            }
+                sdk = $scope.isController ? ZWaveAPIData.controller.data.SDK.value : node.data.SDK.value;
+            }*/
             // Version
             var appVersion = node.data.applicationMajor.value + '.' + node.data.applicationMinor.value;
             // Security and ZWavePlusInfo
@@ -222,6 +230,7 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
             obj['specificType'] = specificType;
             obj['vendorName'] = vendorName;
             //obj['productName'] = productName;
+            //console.log(obj)
 
             var findIndex = _.findIndex($scope.devices.all, {rowId: obj.rowId});
             if(findIndex > -1){
