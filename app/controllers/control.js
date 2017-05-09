@@ -522,10 +522,10 @@ appController.controller('ChangeFrequencyController', function ($scope) {
      */
     $scope.frequency = {
         arrays: {
-            EuRuInCnMy: ['EU','RU','IN','CN','MY'],
-            AnzBr: ['ANZ'],
-            HkKrJp: ['HK','KR','JP'],
-            UsIl: ['US','IL']
+            EuRuInCn: ['EU','RU','IN','CN'],
+            UsIl: ['US','IL'],
+            AnzHk: ['ANZ','HK'],
+            KrJp: ['KR','JP']
         },
         currentFreqArr: '',
         currentFreq: $scope.controlDh.controller.frequency
