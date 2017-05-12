@@ -3,7 +3,7 @@
     <i class="fa fa-cogs fa-fw"></i>&nbsp;{{_t('app_settings')}}
     <i class="fa accordion-arrow" ng-class="expand.settingsApp ? 'fa-chevron-up':'fa-chevron-down'"></i>
 </h2>
-<div class="accordion-entry-ctrl" ng-class="" ng-if_="expand.settingsApp" ng-controller="SettingsAppController">
+<div class="accordion-entry-ctrl" ng-class="" ng-if="expand.settingsApp" ng-controller="SettingsAppController">
     <bb-loader></bb-loader>
     <form name="form_settings" id="form_settings" class="form form-page"
           ng-submit="storeSettings(settings.input, $event)" novalidate>
