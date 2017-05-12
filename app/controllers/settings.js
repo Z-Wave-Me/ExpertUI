@@ -184,7 +184,6 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
     };
     var now = new Date();
     var cDT = now.toLocaleString(objects);
-    console.log('cDT:',cDT);
     cDT= cDT.replace(/\.|\, |\:/g,'-').substring(0,15).split('-');
 
     $scope.settings.input.currentDateTime = cDT[2]+'-'+(cDT[1].length < 2? '0'+cDT[1] : cDT[1])+'-'+(cDT[0].length < 2? '0'+cDT[0] : cDT[0])+'T'+cDT[3]+':'+cDT[4]+':00'; // transform to valid ISO-8601 local datetime format (yyyy-MM-ddTHH:mm:ss)
@@ -195,7 +194,6 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
     $scope.loadNTPStatus = function() {
 
         dataService.getApi('ntpdate_service','status', true).then(function (response) {
-            console.log('status', response.data.data);
             $scope.settings.ntp.status = response.data.data;
             $scope.settings.ntp.active = response.data.data.ntp_enabled && response.data.data.ntp_enabled == 'yes'? true : false;
             $scope.settings.ntp.synchronized = response.data.data.ntp_synchronized && response.data.data.ntp_synchronized == 'yes'? true : false;
@@ -228,7 +226,6 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
     }
 
     $scope.setNTPMode = function (cmd){
-        console.log('setNTPMode:', cmd);
         $scope.toggleRowSpinner(cmd);
 
         dataService.getApi('ntpdate_service', cmd).then(function (response) {
