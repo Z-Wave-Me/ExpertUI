@@ -51,12 +51,21 @@ appController.controller('SettingsLangController', function ($scope, $timeout,$w
  * @class SettingsAppController
  *
  */
-appController.controller('SettingsAppController', function ($scope, $timeout, $window, $interval, $location, $q, cfg,dataService,deviceService) {
+appController.controller('SettingsAppController', function ($scope, $timeout, $window, $interval, $location, $q, $filter,cfg,dataService,deviceService) {
     $scope.settings = {
         input: {},
         lastTZ: "",
         lastSsid: "",
-        countdown: 60
+        countdown: 60,
+        ntp: {
+            status: {},
+            synchronized: false,
+            active: false
+        },
+        changeDateTime: false,
+        show_tz: false,
+        reboot: false,
+        ntp_switch: ''
     };
 
     /**
@@ -104,10 +113,31 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
             });
         }
 
-        if(input.time_zone !== $scope.settings.lastTZ) {
+        if($scope.settings.changeDateTime && input.currentDateTime) {
+
+            var cDT = input.currentDateTime.replace('T',' ').substring(0,16); // transform date time string
+
+            dataService.getApi('ntpdate_service','setDateTime?dateTime=' + cDT).then(function(response) {
+                deviceService.showNotifier({message: $scope._t('update_successful')});
+                $scope.loading = false;
+                $scope.settings.reboot = true;
+            }, function(error) {
+                $scope.loading = false;
+                alertify.alertError($scope._t('error_load_data'));
+            });
+        }
+
+        dataService.postApi('configupdate_url', input).then(function (response) {
+            $scope.loading = false;
+        }, function (error) {
+            $scope.loading = false;
+            alertify.alertError($scope._t('error_update_data'));
+        });
+
+        if(input.time_zone !== 'automatic' && input.time_zone !== $scope.settings.lastTZ) {
             var data = {
-                    "time_zone": input.time_zone
-                };
+                "time_zone": input.time_zone
+            };
 
             dataService.postApi('time_zone', data, null).then(function (response) {
                 $scope.loading = false;
@@ -119,36 +149,103 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
                         $location.path('/');
                     }
                 }, 1000);
-                    // todo: deprecated
+            }, function (error) {
+                alertify.alertError($scope._t('error_load_data'));
 
-                    /*$timeout(function() {
+            });
+        }
+
+        if ($scope.settings.reboot) {
+            dataService.getApi('box_reboot').then(function (response) {
+                $scope.loading = false;
+                $scope.handleModal('timezoneModal', $event);
+                var myint = $interval(function(){
+                    $scope.settings.countdown--;
+                    if($scope.settings.countdown === 0){
+                        $interval.cancel(myint);
                         $location.path('/');
-                    }, timeout);
-
-                    $scope.settings.lastTZ = input.time_zone;
-                    alertify.alertWarning($scope._t('z_way_restart', {
-                        __val__: timeout/1000,
-                        __level__: $scope._t('seconds')
-                    }));
-
-                    deviceService.showNotifier({message: $scope._t('update_successful')});
-                    $scope.loading = false;*/
-
-                }, function (error) {
-                   alertify.alertError($scope._t('error_load_data'));
-
-                });
+                    }
+                }, 1000);
+            }, function (error) {
+                alertify.alertError($scope._t('error_load_data'));
+            });
         } else {
             deviceService.showNotifier({message: $scope._t('update_successful')});
         }
+    };
 
-        dataService.postApi('configupdate_url', input).then(function (response) {
+    var objects = {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZone: $scope.settings.lastTZ
+    };
+    var now = new Date();
+    var cDT = now.toLocaleString(objects);
+    console.log('cDT:',cDT);
+    cDT= cDT.replace(/\.|\, |\:/g,'-').substring(0,15).split('-');
+
+    $scope.settings.input.currentDateTime = cDT[2]+'-'+(cDT[1].length < 2? '0'+cDT[1] : cDT[1])+'-'+(cDT[0].length < 2? '0'+cDT[0] : cDT[0])+'T'+cDT[3]+':'+cDT[4]+':00'; // transform to valid ISO-8601 local datetime format (yyyy-MM-ddTHH:mm:ss)
+
+    /**
+     * Load ntp status
+     */
+    $scope.loadNTPStatus = function() {
+
+        dataService.getApi('ntpdate_service','status', true).then(function (response) {
+            console.log('status', response.data.data);
+            $scope.settings.ntp.status = response.data.data;
+            $scope.settings.ntp.active = response.data.data.ntp_enabled && response.data.data.ntp_enabled == 'yes'? true : false;
+            $scope.settings.ntp.synchronized = response.data.data.ntp_synchronized && response.data.data.ntp_synchronized == 'yes'? true : false;
+
+            var ts = now.getTime();
+            var split_local_st = $scope.settings.ntp.status.local_time.split(' ')
+            var server_ts = (new Date(split_local_st[1] + ' ' + split_local_st[2])).getTime();
+            $scope.settings.show_tz = (ts - server_ts) > 1800*1000 || !$scope.settings.ntp.active;
+
+        }, function (error) {
+            $scope.loading = false;
+            alertify.alertError($scope._t('error_load_data'));
+        });
+    };
+
+    $scope.loadNTPStatus();
+
+    $scope.synchronizeNTP = function (){
+        dataService.getApi('ntpdate_service','reconfigure').then(function (response) {
+            if (response) {
+                $scope.loadNTPStatus();
+                deviceService.showNotifier({message: $scope._t('update_successful')});
+                $scope.settings.reboot = true;
+            }
             $scope.loading = false;
         }, function (error) {
             $scope.loading = false;
-            alertify.alertError($scope._t('error_update_data'));
+            alertify.alertError($scope._t('error_load_data'));
         });
-    };
+    }
+
+    $scope.setNTPMode = function (cmd){
+        console.log('setNTPMode:', cmd);
+        $scope.toggleRowSpinner(cmd);
+
+        dataService.getApi('ntpdate_service', cmd).then(function (response) {
+            if (response.data) {
+                $scope.loadNTPStatus();
+                deviceService.showNotifier({message: $scope._t('update_successful')});
+                $scope.settings.reboot = true;
+                $scope.settings.ntp_switch = cmd;
+            }
+            $scope.loading = false;
+            $scope.toggleRowSpinner();
+        }, function (error) {
+            $scope.loading = false;
+            $scope.toggleRowSpinner();
+            alertify.alertError($scope._t('error_load_data'));
+        });
+    }
 });
 
 /**

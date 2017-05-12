@@ -64,6 +64,8 @@ var config_data = {
         'reorg_run_url': '/ZWaveAPI/NetworkReorganization', // Url to start reorganization
         'reorg_log_url': '/ZWaveAPI/GetReorganizationLog', // Url to load log
         'logout_url': 'ZAutomation/api/v1/logout',// Url for logout
+        'ntpdate_service': '/ZAutomation/api/v1/system/time/ntp/', // Url to check and control ntp date service
+        'box_reboot': '/ZAutomation/api/v1/system/reboot', // reboot box
         //'reorg_log_url': '/config/reorg.log', // Url for store reorg log data
         'zddx_url': '/ZDDX/', // Url for zddx xml files
         'zddx_create_url': '/ZWaveAPI/CreateZDDX/', // Create zddx file
