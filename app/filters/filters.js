@@ -511,7 +511,7 @@ angApp.filter('toTrusted', ['$sce', function ($sce) {
         if (text == null) {
             return '';
         }
-        return $sce.trustAsHtml(String(text));
+        return $sce.trustAsHtml(text);
     };
 }]);
 

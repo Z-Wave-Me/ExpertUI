@@ -61,11 +61,11 @@ module.exports = function (grunt) {
                     'vendor/upload/angular-file-upload-shim.min.js',
                     'vendor/alertify/alertify.min.js',
                     // Angular
-                    'vendor/angular/angular-1.3.9/angular.min.js',
+                    'vendor/angular/angular-1.2.14/angular.min.js',
                     'vendor/upload/angular-file-upload.min.js',
-                    'vendor/angular/angular-1.3.9/angular-route.min.js',
-                    'vendor/angular/angular-1.3.9/angular-resource.min.js',
-                    'vendor/angular/angular-1.3.9/angular-cookies.min.js',
+                    'vendor/angular/angular-1.2.14/angular-route.min.js',
+                    'vendor/angular/angular-1.2.14/angular-resource.min.js',
+                    'vendor/angular/angular-1.2.14/angular-cookies.min.js',
                     // Bootstrap
                     'vendor/bootstrap/bootstrap.min.js',
                     // XML
