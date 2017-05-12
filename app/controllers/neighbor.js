@@ -152,14 +152,14 @@ appController.controller('NeighborController', function ($scope, $filter, $timeo
             var type = deviceService.deviceType(node);
 
             /// New version
-            var routesCount = $filter('getRoutesCount')(ZWaveAPIData, nodeId);
+            //var routesCount = $filter('getRoutesCount')(ZWaveAPIData, nodeId);
             // Set object
             var obj = {};
             obj['id'] = nodeId;
             obj['rowId'] = 'row_' + nodeId;
             obj['name'] = name;
             obj['node'] = node;
-            obj['routesCount'] = routesCount;
+            //obj['routesCount'] = routesCount;
 
             obj['type'] = type;
             obj['icon'] = $filter('getDeviceTypeIcon')(type);
