@@ -3,7 +3,7 @@
     <i class="fa fa-cogs fa-fw"></i>&nbsp;{{_t('app_settings')}}
     <i class="fa accordion-arrow" ng-class="expand.settingsApp ? 'fa-chevron-up':'fa-chevron-down'"></i>
 </h2>
-<div class="accordion-entry-ctrl" ng-class="" ng-if="expand.settingsApp" ng-controller="SettingsAppController">
+<div class="accordion-entry-ctrl" ng-class="" ng-if_="expand.settingsApp" ng-controller="SettingsAppController">
     <bb-loader></bb-loader>
     <form name="form_settings" id="form_settings" class="form form-page"
           ng-submit="storeSettings(settings.input, $event)" novalidate>
@@ -61,16 +61,84 @@
                     </option>
                 </select>
             </div>
+            <!--ntpdate_service-->
+            <!--<pre>{{settings|json}}</pre>-->
+            <!-- enable / disable ntp -->
+            <div class="form-group form-inline">
+                <label>{{_t('ntp_set_mode')}}</label>
+                <div class="btn-group">
+                    <!-- ON -->
+                    <button type="button" class="btn" id="btn_promi_on"
+                            ng-click="setNTPMode('enable')"
+                            ng-disabled="settings.ntp.active"
+                            ng-class="!settings.ntp.active? 'btn-default' : 'btn-primary'">
+                        <bb-row-spinner
+                                spinner="rowSpinner['enable']"
+                                label="_t('on')">
+                        </bb-row-spinner>
+                    </button>
+                    <!-- OFF -->
+                    <button type="button" class="btn btn-default" id="btn_promi_off"
+                            ng-click="setNTPMode('disable')"
+                            ng-disabled="!settings.ntp.active"
+                            ng-class="settings.ntp.active? 'btn-default' : 'btn-primary'">
+                        <bb-row-spinner
+                                spinner="rowSpinner['disable']"
+                                label="_t('off')">
+                        </bb-row-spinner>
+                    </button>
+                </div>
+                <bb-help-text trans="_t('ntp_set_mode_info')"></bb-help-text>
+            </div>
             <!-- timezone -->
-            <!--<div class="form-group form-inline">
+            <div class="form-group form-inline">
                 <label>{{_t('timezone')}}: </label>
                 <select name="time_zone" name="time_zone" class="form-control"
-                        ng-model="settings.input.time_zone">
+                        ng-model="settings.input.time_zone"
+                        ng-disabled="!settings.show_tz || settings.ntp_switch === 'enable'">
+                    <option value="automatic"
+                            ng-selected="!settings.show_tz">{{_t('auto_tz')}}</option>
                     <option ng-repeat="v in cfg.time_zone_list" value="{{v}}"
-                            ng-selected="v === cfg.zwavecfg.time_zone">{{v}}
+                            ng-selected="v === cfg.zwavecfg.time_zone && settings.show_tz">{{v}}
                     </option>
                 </select>
-            </div>-->
+                <bb-help-text trans="_t('tz_set_info',{__ctz__: settings.lastTZ})"></bb-help-text>
+            </div>
+            <!-- date time picker -->
+            <div class="form-group form-inline">
+                <!-- current server time -->
+                <div>
+                    <label>{{_t('server_time')}}</label>
+                    <span class="timestamp" ng-bind="cfg.route.time.string"/>
+                </div>
+                <label>{{_t('ntp_set_time')}}</label>
+                <input type="datetime-local"
+                       id="dateTimeInput"
+                       name="date_time"
+                       ng-model="settings.input.currentDateTime"
+                       placeholder="yyyy-MM-ddTHH:mm:ss" min="2017-01-01T00:00:00" max="2025-12-31T00:00:00" required
+                       ng-disabled="settings.ntp.active || settings.ntp_switch === 'enable'"/>
+                <button class="btn"
+                        title="{{_t('btn_change')}}"
+                        ng-click="settings.changeDateTime = true"
+                        ng-class="settings.ntp.active? 'btn-default' : 'btn-primary'"
+                        ng-disabled="settings.ntp.active || settings.ntp_switch === 'enable'">
+                    <i class="fa fa-check"></i>
+                </button>
+                <bb-help-text trans="_t('ntp_set_time_info')"></bb-help-text>
+            </div>
+            <!-- synchronize ntp -->
+            <div class="form-group form-inline">
+                <label>{{_t('ntp_synchronize')}}</label>
+                <button class="btn"
+                        title="{{_t('btn_synchronize_ntp')}}"
+                        ng-click="synchronizeNTP()"
+                        ng-class="settings.ntp.synchronized? 'btn-default' : 'btn-primary'"
+                        ng-disabled="settings.ntp.synchronized || settings.ntp_switch === 'enable'">
+                    <i class="fa fa-repeat"></i> <span class="btn-name">{{_t('btn_synchronize_ntp')}}</span>
+                </button>
+                <bb-help-text trans="_t('ntp_synchronize_info')"></bb-help-text>
+            </div>
         </fieldset>
         <fieldset class="submit-entry">
             <!-- Save -->
