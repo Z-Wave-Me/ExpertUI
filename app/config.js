@@ -262,7 +262,7 @@ var config_data = {
         // Upload settings
         'upload': {
             'fw_or_bootloader': {
-                extension: ['bin', 'hex']
+                extension: ['bin', 'hex','ota']
             }
         },
         // List of the find hosts
