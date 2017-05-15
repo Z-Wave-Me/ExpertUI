@@ -22,32 +22,14 @@ var angApp = angular.module('angApp', [
  */
 var config_module = angular.module('appConfig', []);
 // Extend cfg dongle 
-angApp.run(function run($cookies, $rootScope) {
+angApp.run(function run($cookies, $rootScope,deviceService) {
     // Run ubderscore js in views
     $rootScope._ = _;
-
+    // Get dongle from cookie
     if ($cookies.dongle) {
         angular.extend(config_data.cfg, {dongle: $cookies.dongle});
-        angular.extend(config_data.cfg, {
-            update_url: '/ZWave.' + config_data.cfg.dongle + '/Data/',
-            store_url: '/ZWave.' + config_data.cfg.dongle + '/Run/',
-            restore_url: '/ZWave.' + config_data.cfg.dongle + '/Restore',
-            queue_url: '/ZWave.' + config_data.cfg.dongle + '/InspectQueue',
-            fw_update_url: '/ZWave.' + config_data.cfg.dongle + '/FirmwareUpdate',
-            zme_bootloader_upgrade: '/ZWave.' + config_data.cfg.dongle + '/ZMEBootloaderUpgrade',
-            zme_firmware_upgrade: '/ZWave.' + config_data.cfg.dongle + '/ZMEFirmwareUpgrade',
-            license_load_url: '/ZWave.' + config_data.cfg.dongle + '/ZMELicense',
-            zddx_create_url: '/ZWave.' + config_data.cfg.dongle + '/CreateZDDX/',
-            'stat_url': '/ZWave.' + config_data.cfg.dongle + '/CommunicationStatistics',
-            'postfixget_url': '/ZWave.' + config_data.cfg.dongle + '/PostfixGet',
-            'postfixadd_url': '/ZWave.' + config_data.cfg.dongle + '/PostfixAdd',
-            'postfixremove_url': '/ZWave.' + config_data.cfg.dongle + '/PostfixRemove',
-            //'communication_history_url': '/ZWave.' + config_data.cfg.dongle + '/CommunicationHistory',
-            'configget_url': '/ZWave.' + config_data.cfg.dongle + '/ExpertConfigGet',
-            'configupdate_url': '/ZWave.' + config_data.cfg.dongle + '/ExpertConfigUpdate'
-
-        });
     }
+    deviceService.setDongle(config_data.cfg.dongle);
 });
 
 angular.forEach(config_data, function (key, value) {
