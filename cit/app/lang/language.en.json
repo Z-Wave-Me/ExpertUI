@@ -15,7 +15,7 @@
  "upload_allowed_formats": "The uploaded file must be in one of the following formats: __extensions__",
  "choose_fw_install_action":"Choose an upgrade action: ",
  "fw_upgrade_from_url":"URL",
- "fw_upgrade_from_file":"File (*.hex/*.bin)",
+ "fw_upgrade_from_file":"File (*.hex,*.bin,*.ota)",
  "fw_update_checksum_err": "The device was unable to receive the requested firmware data without checksum error. Not updated.",
  "fw_update_receive_err": "The device was unable to receive the requested firmware data. Not updated.",
  "fw_update_err_wrong_manufacturer_id": "The transferred image does not match the Manufacturer ID. Not updated.",

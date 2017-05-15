@@ -57,33 +57,33 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
      */
     this.setDongle = function(dongle) {
         angular.extend(cfg, {
-            'update_url': '/ZWave.' + dongle+ '/Data/', // Url for update (refresh data)
-            'store_url': '/ZWave.' + dongle+ '/Run/', // Url for store data
-            'restore_url': '/ZWave.' + dongle+ '/Restore', // Url to restore backup
-            'queue_url': '/ZWave.' + dongle+ '/InspectQueue', // Url for inspect queue
-            'fw_update_url': '/ZWave.' + dongle+ '/FirmwareUpdate', // Url for Firmware Update
-            'zme_bootloader_upgrade': '/ZWave.' + dongle+ '/ZMEBootloaderUpgrade', // ZME Bootloader upgrade url
-            'zme_firmware_upgrade': '/ZWave.' + dongle+ '/ZMEFirmwareUpgrade', // ZME Firmware upgrade url
-            'upload_bootloader': '/ZWave.' + dongle+ '/ZMEBootloaderUpgrade', // Bootloader upload api
-            'upload_firmware': '/ZWave.' + dongle+ '/ZMEFirmwareUpgrade', // Firmware upload api
-            'license_load_url': '/ZWave.' + dongle+ '/ZMELicense', // Url to load new license
-            'stat_url': '/ZWave.' + dongle+ '/CommunicationStatistics', // Url to statistics
-            'postfixget_url': '/ZWave.' + dongle+ '/PostfixGet', // Postfix GET
-            'postfixadd_url': '/ZWave.' + dongle+ '/PostfixAdd', // Postfix Add
-            'postfixremove_url': '/ZWave.' + dongle+ '/PostfixRemove', // Postfix Remove
-            'checklinks': '/ZWave.' + dongle+ '/CheckAllLinks', // check link health
-            'zniffer_url': '/ZWave.' + dongle+ '/Zniffer', // Zniffer
-            'communication_history_url': '/ZWave.' + dongle+ '/CommunicationHistory', // Communication History
-            'rssi_chart': '/ZWave.' + dongle+ '/RSSIGet', // chart of rssi channels 1 and 2
-            'configget_url': '/ZWave.' + dongle+ '/ExpertConfigGet', // Config get
-            'configupdate_url': '/ZWave.' + dongle+ '/ExpertConfigUpdate', // Config update
-            'call_all_nif': '/ZWave.' + dongle+ '/CallForAllNIF', // Call niff for all devices
-            'test_node': '/ZWave.' + dongle+ '/TestNode/', // Test node command
-            'network_statistics': '/ZWave.' + dongle+ '/Run/', // Set time zone
-            'post_report_api': '/ZWave.' + dongle+ '/sendZWayReport', // Post report url
-            'reorg_run_url': '/ZWave.' + dongle+ '/NetworkReorganization', // Url to start reorganization
-            'reorg_log_url': '/ZWave.' + dongle+ '/GetReorganizationLog', // Url to load log
-            'zddx_create_url': '/ZWave.' + dongle+ '/CreateZDDX/', // Create zddx file
+            'update_url': '/ZWave.' + dongle+ '/Data/',
+            'store_url': '/ZWave.' + dongle+ '/Run/',
+            'restore_url': '/ZWave.' + dongle+ '/Restore',
+            'queue_url': '/ZWave.' + dongle+ '/InspectQueue',
+            'fw_update_url': '/ZWave.' + dongle+ '/FirmwareUpdate',
+            'zme_bootloader_upgrade': '/ZWave.' + dongle+ '/ZMEBootloaderUpgrade',
+            'zme_firmware_upgrade': '/ZWave.' + dongle+ '/ZMEFirmwareUpgrade',
+            'upload_bootloader': '/ZWave.' + dongle+ '/ZMEBootloaderUpgrade',
+            'upload_firmware': '/ZWave.' + dongle+ '/ZMEFirmwareUpgrade',
+            'license_load_url': '/ZWave.' + dongle+ '/ZMELicense',
+            'stat_url': '/ZWave.' + dongle+ '/CommunicationStatistics',
+            'postfixget_url': '/ZWave.' + dongle+ '/PostfixGet',
+            'postfixadd_url': '/ZWave.' + dongle+ '/PostfixAdd',
+            'postfixremove_url': '/ZWave.' + dongle+ '/PostfixRemove',
+            'checklinks': '/ZWave.' + dongle+ '/CheckAllLinks',
+            'zniffer_url': '/ZWave.' + dongle+ '/Zniffer',
+            'communication_history_url': '/ZWave.' + dongle+ '/CommunicationHistory',
+            'rssi_chart': '/ZWave.' + dongle+ '/RSSIGet',
+            'configget_url': '/ZWave.' + dongle+ '/ExpertConfigGet',
+            'configupdate_url': '/ZWave.' + dongle+ '/ExpertConfigUpdate',
+            'call_all_nif': '/ZWave.' + dongle+ '/CallForAllNIF',
+            'test_node': '/ZWave.' + dongle+ '/TestNode/',
+            'network_statistics': '/ZWave.' + dongle+ '/Run/',
+            'post_report_api': '/ZWave.' + dongle+ '/sendZWayReport',
+            'reorg_run_url': '/ZWave.' + dongle+ '/NetworkReorganization',
+            'reorg_log_url': '/ZWave.' + dongle+ '/GetReorganizationLog',
+            'zddx_create_url': '/ZWave.' + dongle+ '/CreateZDDX/'
 
         });
     };
