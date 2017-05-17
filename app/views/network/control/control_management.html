@@ -56,7 +56,7 @@
             </div>-->
             <!-- include start -->
             <button class="btn btn-primary" id="btn_nm_include_start" title="{{_t('nm_include_start_tooltip')}}"
-                    ng-disabled="[5, 6, 7, 20].indexOf(controlDh.controller.controllerState) > -1"
+                    ng-disabled="[5, 6, 7, 20].indexOf(controlDh.controller.controllerState) > -1 || (!controlDh.controller.isRealPrimary && !controlDh.controller.isSIS)"
                     ng-show="[1, 2, 3, 4].indexOf(controlDh.controller.controllerState) == -1"
                     ng-click="addNodeToNetwork('controller.AddNodeToNetwork(1)')">
                 <i class="fa fa-play-circle"></i> {{_t('nm_include_start')}}
@@ -71,7 +71,7 @@
             </button>
             <!-- exclude start -->
             <button class="btn btn-info" id="nm_exclude_start" title="{{_t('nm_exclude_start_tooltip')}}"
-                    ng-disabled="[1, 2, 3, 4, 20].indexOf(controlDh.controller.controllerState) > -1"
+                    ng-disabled="[1, 2, 3, 4, 20].indexOf(controlDh.controller.controllerState) > -1 || (!controlDh.controller.isRealPrimary && !controlDh.controller.isSIS)"
                     ng-show="[5, 6, 7].indexOf(controlDh.controller.controllerState) == -1"
                     ng-click="removeNodeToNetwork('controller.RemoveNodeFromNetwork(1)')">
                 <i class="fa fa-play-circle"></i> {{_t('nm_exclude_start')}}

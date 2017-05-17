@@ -113,7 +113,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
         $scope.controlDh.controller.frequency = $filter('hasNode')(ZWaveAPIData, 'controller.data.frequency.value');
         $scope.controlDh.controller.controllerState = controllerState;
         $scope.controlDh.controller.secureInclusion = ZWaveAPIData.controller.data.secureInclusion.value;
-        $scope.controlDh.controller.isPrimary = ZWaveAPIData.controller.data.isPrimary.value;
+        $scope.controlDh.controller.isPrimary =  ZWaveAPIData.controller.data.isPrimary.value;
         $scope.controlDh.controller.isRealPrimary = ZWaveAPIData.controller.data.isRealPrimary.value;
         $scope.controlDh.controller.isSIS = ZWaveAPIData.controller.data.SISPresent.value;
         $scope.controlDh.controller.secureInclusion = ZWaveAPIData.controller.data.secureInclusion.value;
