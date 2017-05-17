@@ -366,7 +366,12 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
         }
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
             $timeout(function() {
-                $scope.controlDh.network.modal = true;
+                if(cfg.app_type === 'installer'){
+                    $window.location.reload();
+                }else{
+                    $scope.controlDh.network.modal = true;
+                }
+
             }, timeout);
         }, function (error) {
             $scope.toggleRowSpinner();
