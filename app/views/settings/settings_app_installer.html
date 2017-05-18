@@ -120,7 +120,8 @@
                        ng-disabled="settings.ntp.active || settings.ntp_switch === 'enable'"/>
                 <button class="btn"
                         title="{{_t('btn_change')}}"
-                        ng-click="settings.changeDateTime = true"
+                        ng-click="setDateTime(settings.input.currentDateTime)"
+                        type="button"
                         ng-class="settings.ntp.active? 'btn-default' : 'btn-primary'"
                         ng-disabled="settings.ntp.active || settings.ntp_switch === 'enable'">
                     <i class="fa fa-check"></i>
@@ -131,6 +132,7 @@
             <div class="form-group form-inline">
                 <label>{{_t('ntp_synchronize')}}</label>
                 <button class="btn"
+                        type="button"
                         title="{{_t('btn_synchronize_ntp')}}"
                         ng-click="synchronizeNTP()"
                         ng-class="settings.ntp.synchronized? 'btn-default' : 'btn-primary'"
@@ -139,6 +141,7 @@
                 </button>
                 <bb-help-text trans="_t('ntp_synchronize_info')"></bb-help-text>
             </div>
+            <div class="alert alert-warning" ng-if="settings.reboot">{{_t('settings_box_reboot')}}</div>
         </fieldset>
         <fieldset class="submit-entry">
             <!-- Save -->

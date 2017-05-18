@@ -1,4 +1,5 @@
 {
+ "settings_box_reboot":"Um die Änderungen vollständig anzuwenden, ist ein Neustart erforderlich. Die Box wird nach dem Speichern der Einstellungen automatisch neu gestartet.",
  "tz_set_info":"Die aktuelle Zeitzone ist: __ctz__. Konfigurieren Sie die Zeitzone, wenn die automatische Zeitsynchronisation deaktiviert oder die Zeitversatz Differenz größer als 30 min ist. Ein Neustart ist erforderlich.",
  "auto_tz":"Automatisch (Internet)",
  "ntp_set_mode":"Automatische Zeitsynchronisation: ",
