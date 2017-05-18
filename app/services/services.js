@@ -53,6 +53,42 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
     };
 
     /**
+     * Set dongle
+     */
+    this.setDongle = function(dongle) {
+        angular.extend(cfg, {
+            'update_url': '/ZWave.' + dongle+ '/Data/',
+            'store_url': '/ZWave.' + dongle+ '/Run/',
+            'restore_url': '/ZWave.' + dongle+ '/Restore',
+            'queue_url': '/ZWave.' + dongle+ '/InspectQueue',
+            'fw_update_url': '/ZWave.' + dongle+ '/FirmwareUpdate',
+            'zme_bootloader_upgrade': '/ZWave.' + dongle+ '/ZMEBootloaderUpgrade',
+            'zme_firmware_upgrade': '/ZWave.' + dongle+ '/ZMEFirmwareUpgrade',
+            'upload_bootloader': '/ZWave.' + dongle+ '/ZMEBootloaderUpgrade',
+            'upload_firmware': '/ZWave.' + dongle+ '/ZMEFirmwareUpgrade',
+            'license_load_url': '/ZWave.' + dongle+ '/ZMELicense',
+            'stat_url': '/ZWave.' + dongle+ '/CommunicationStatistics',
+            'postfixget_url': '/ZWave.' + dongle+ '/PostfixGet',
+            'postfixadd_url': '/ZWave.' + dongle+ '/PostfixAdd',
+            'postfixremove_url': '/ZWave.' + dongle+ '/PostfixRemove',
+            'checklinks': '/ZWave.' + dongle+ '/CheckAllLinks',
+            'zniffer_url': '/ZWave.' + dongle+ '/Zniffer',
+            'communication_history_url': '/ZWave.' + dongle+ '/CommunicationHistory',
+            'rssi_chart': '/ZWave.' + dongle+ '/RSSIGet',
+            'configget_url': '/ZWave.' + dongle+ '/ExpertConfigGet',
+            'configupdate_url': '/ZWave.' + dongle+ '/ExpertConfigUpdate',
+            'call_all_nif': '/ZWave.' + dongle+ '/CallForAllNIF',
+            'test_node': '/ZWave.' + dongle+ '/TestNode/',
+            'network_statistics': '/ZWave.' + dongle+ '/Run/',
+            'post_report_api': '/ZWave.' + dongle+ '/sendZWayReport',
+            'reorg_run_url': '/ZWave.' + dongle+ '/NetworkReorganization',
+            'reorg_log_url': '/ZWave.' + dongle+ '/GetReorganizationLog',
+            'zddx_create_url': '/ZWave.' + dongle+ '/CreateZDDX/'
+
+        });
+    };
+
+    /**
      * Get user data from cookies
      * @returns {Array|Boolean}
      */

@@ -6,8 +6,8 @@
 var config_data = {
     'cfg': {
         'app_name': 'Z-Wave CIT',
-        'app_version': '1.3.0-RC-64',
-        'app_built': '09-05-2017 14:29:16',
+        'app_version': '1.3.0-RC-69',
+        'app_built': '17-05-2017 14:22:38',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -22,8 +22,8 @@ var config_data = {
         'server_url': '', // Remote JSON
         'dongle': 'zway', // Default dongle
         'dongle_list': [],// Dongle list
-        'session': '/ZAutomation/api/v1/session',
-        'zwave_list': '/ZWave/list', // Zwave list of dongles
+
+        // APIs with dongle
         'update_url': '/ZWaveAPI/Data/', // Url for update (refresh data)
         'store_url': '/ZWaveAPI/Run/', // Url for store data
         'restore_url': '/ZWaveAPI/Restore', // Url to restore backup
@@ -38,7 +38,6 @@ var config_data = {
         'postfixget_url': '/ZWaveAPI/PostfixGet', // Postfix GET
         'postfixadd_url': '/ZWaveAPI/PostfixAdd', // Postfix Add
         'postfixremove_url': '/ZWaveAPI/PostfixRemove', // Postfix Remove
-        'firmwareupdate': '/ZAutomation/api/v1/system/webif-access',
         'checklinks': '/ZWaveAPI/CheckAllLinks', // check link health
         'zniffer_url': '/ZWaveAPI/Zniffer', // Zniffer
         'communication_history_url': '/ZWaveAPI/CommunicationHistory', // Communication History
@@ -47,26 +46,33 @@ var config_data = {
         'configupdate_url': '/ZWaveAPI/ExpertConfigUpdate', // Config update
         'call_all_nif': '/ZWaveAPI/CallForAllNIF', // Call niff for all devices
         'test_node': '/ZWaveAPI/TestNode/', // Test node command
+        'network_statistics': '/ZWaveAPI/Run/', // Set time zone
+        'post_report_api': '/ZWaveAPI/sendZWayReport', // Post report url
+        'reorg_run_url': '/ZWaveAPI/NetworkReorganization', // Url to start reorganization
+        'reorg_log_url': '/ZWaveAPI/GetReorganizationLog', // Url to load log
+        'zddx_create_url': '/ZWaveAPI/CreateZDDX/', // Create zddx file
+
+        // Other APIs
+        'session': '/ZAutomation/api/v1/session',
+        'zwave_list': '/ZWave/list', // Zwave list of dongles
+        'firmwareupdate': '/ZAutomation/api/v1/system/webif-access',
         'time': '/ZAutomation/api/v1/system/time/get',// Get time
         'time_zone': '/ZAutomation/api/v1/system/timezone', // Set time zone
         'wifi_settings': '/ZAutomation/api/v1/system/wifi/settings', // Set wifi settings ssid and password
-        'network_statistics': '/ZWaveAPI/Run/', // Set time zone
         'login': '/ZAutomation/api/v1/login',// Get time
         'instances': '/ZAutomation/api/v1/instances',
         'app_built_info': 'app/info.json',// App build info
         'post_report_url': 'https://service.z-wave.me/report/', // Post report url
-        'post_report_api': '/ZWaveAPI/sendZWayReport', // Post report url
         'runjs_url': '/JS/Run/', // Url for running JS
         'device_classes_url': '/translations/DeviceClasses.xml', // Url to Device Classes
         'alarms_url': '/translations/Alarms.xml', // Url to Alarms
         'zwave_classes_url': 'storage/data/ZWave_cmd_classes.xml', // Url to Zwave Classes
         'config_url': '/config/', // Url for store config data
-        'reorg_run_url': '/ZWaveAPI/NetworkReorganization', // Url to start reorganization
-        'reorg_log_url': '/ZWaveAPI/GetReorganizationLog', // Url to load log
         'logout_url': 'ZAutomation/api/v1/logout',// Url for logout
+        'ntpdate_service': '/ZAutomation/api/v1/system/time/ntp/', // Url to check and control ntp date service
+        'box_reboot': '/ZAutomation/api/v1/system/reboot', // reboot box
         //'reorg_log_url': '/config/reorg.log', // Url for store reorg log data
         'zddx_url': '/ZDDX/', // Url for zddx xml files
-        'zddx_create_url': '/ZWaveAPI/CreateZDDX/', // Create zddx file
         'notes_url': '/config/notes.log', // Url for store notes data
         'uzb_url': 'https://service.z-wave.me/expertui/uzb/', // Url for uzb data
         'license_url': 'https://service.z-wave.me/licence/upgrade.php', // Url for license key
@@ -260,7 +266,7 @@ var config_data = {
         // Upload settings
         'upload': {
             'fw_or_bootloader': {
-                extension: ['bin', 'hex']
+                extension: ['bin', 'hex','ota']
             }
         },
         // List of the find hosts

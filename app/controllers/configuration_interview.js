@@ -166,8 +166,7 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
             $timeout(function(){
                 form.$setPristine();
                 $scope.toggleRowSpinner();
-                //$scope.form_rename.$dirty = !$scope.form_rename.$dirty;
-                //$route.reload();
+                $scope.load($routeParams.nodeId);
 
             }, timeout);
         }, function (error) {

@@ -23,7 +23,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     $scope.languages = {};
     $scope.orderByArr = {
         field: '',
-        reverse:  false
+        reverse: false
     }
     // Custom IP
     $scope.customIP = {
@@ -50,11 +50,11 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     $scope.lang = (angular.isDefined($cookies.lang) ? $cookies.lang : cfg.lang);
     //TODO: deprecated
     /*$('.current-lang').html($scope.lang);
-    $scope.changeLang = function (lang) {
-        $window.alert($scope._t('language_select_reload_interface'));
-        $cookies.lang = lang;
-        $scope.lang = lang;
-    };*/
+     $scope.changeLang = function (lang) {
+     $window.alert($scope._t('language_select_reload_interface'));
+     $cookies.lang = lang;
+     $scope.lang = lang;
+     };*/
     // Load language files
     $scope.loadLang = function (lang) {
         // Is lang in language list?
@@ -63,7 +63,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
             angular.extend($scope.languages, response.data);
         }, function (error) {
         });
-     };
+    };
     $scope.loadLang($scope.lang);
 
     // Get language lines
@@ -74,14 +74,14 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     // Watch for lang change
     //TODO: deprecated
     /*$scope.$watch('lang', function () {
-        $('.current-lang').html($scope.lang);
-        $scope.loadLang($scope.lang);
-    });*/
+     $('.current-lang').html($scope.lang);
+     $scope.loadLang($scope.lang);
+     });*/
     // Order by
     $scope.orderBy = function (field) {
         $scope.orderByArr = {
             field: field,
-            reverse:  !$scope.orderByArr.reverse
+            reverse: !$scope.orderByArr.reverse
         }
         $scope.predicate = field;
         $scope.reverse = !$scope.reverse;
@@ -100,7 +100,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
         var path = $location.path().split('/');
         return (route === path[segment] ? 'active' : '');
     };
-    
+
     /**
      * Check if route match the pattern.
      * @param {string} path
@@ -172,17 +172,17 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
      * @returns {undefined}
      */
     $scope.handleModal = function (key, $event, status) {
-       if (typeof status === 'boolean') {
+        if (typeof status === 'boolean') {
             $scope.modalArr[key] = status;
         } else {
-           if(key){
-               $scope.modalArr[key] = !($scope.modalArr[key]);
-           }else{
-               $scope.modalArr = {};
-           }
+            if (key) {
+                $scope.modalArr[key] = !($scope.modalArr[key]);
+            } else {
+                $scope.modalArr = {};
+            }
 
         }
-        if($event){
+        if ($event) {
             $event.stopPropagation();
         }
 
@@ -259,11 +259,11 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     if (!alertify.alertError) {
         //define a new errorAlert base on alert
         alertify.dialog('alertError', function factory() {
-            return{
+            return {
                 build: function () {
                     var errorHeader = '<span class="fa fa-exclamation-triangle fa-lg text-danger" '
-                            + 'style="vertical-align:middle;">'
-                            + '</span> ' + $scope.getCustomCfgVal('title') + ' - ERROR';
+                        + 'style="vertical-align:middle;">'
+                        + '</span> ' + $scope.getCustomCfgVal('title') + ' - ERROR';
                     this.setHeader(errorHeader);
                 }
             };
@@ -273,11 +273,11 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     // Extend existing alert (WARNING) dialog
     if (!alertify.alertWarning) {
         alertify.dialog('alertWarning', function factory() {
-            return{
+            return {
                 build: function () {
                     var errorHeader = '<span class="fa fa-exclamation-circle fa-lg text-warning" '
-                            + 'style="vertical-align:middle;">'
-                            + '</span> ' + $scope.getCustomCfgVal('title') + ' - WARNING';
+                        + 'style="vertical-align:middle;">'
+                        + '</span> ' + $scope.getCustomCfgVal('title') + ' - WARNING';
                     this.setHeader(errorHeader);
                 }
             };
@@ -290,14 +290,14 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
      * @param {string} cmd
      * @param {int} timeout
      */
-    $scope.runZwaveCmd = function (cmd, timeout,hideError) {
+    $scope.runZwaveCmd = function (cmd, timeout, hideError) {
         timeout = timeout || 1000;
         $scope.toggleRowSpinner(cmd);
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
             $timeout($scope.toggleRowSpinner, timeout);
         }, function (error) {
             $scope.toggleRowSpinner();
-            if(!hideError){
+            if (!hideError) {
                 alertify.alertError($scope._t('error_update_data') + '\n' + cmd);
             }
 
@@ -312,7 +312,8 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
         // Set config
         dataService.getApi('configget_url', null, nocache).then(function (response) {
             angular.extend(cfg.zwavecfg, response.data);
-        }, function (error) {});
+        }, function (error) {
+        });
     };
 
     /**
@@ -320,38 +321,14 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
      */
     $scope.setDongle = function () {
         dataService.getApi('zwave_list').then(function (response) {
-           if (response.data.length === 1) {
+            if (response.data.length === 1) {
                 angular.extend(cfg, {dongle: response.data[0]});
                 $cookies.dongle = response.data[0];
             }
-                angular.extend(cfg,{dongle_list: response.data});
+            angular.extend(cfg, {dongle_list: response.data});
 
-                angular.extend(cfg, {
-                    update_url: '/ZWave.' + cfg.dongle + '/Data/',
-                    store_url: '/ZWave.' + cfg.dongle + '/Run/',
-                    restore_url: '/ZWave.' + cfg.dongle + '/Restore',
-                    queue_url: '/ZWave.' + cfg.dongle + '/InspectQueue',
-                    fw_update_url: '/ZWave.' + cfg.dongle + '/FirmwareUpdate',
-                    zme_bootloader_upgrade: '/ZWave.' + cfg.dongle + '/ZMEBootloaderUpgrade',
-                    zme_firmware_upgrade: '/ZWave.' + cfg.dongle + '/ZMEFirmwareUpgrade',
-                    license_load_url: '/ZWave.' + cfg.dongle + '/ZMELicense',
-                    zddx_create_url: '/ZWave.' + cfg.dongle + '/CreateZDDX/',
-                    'stat_url': '/ZWave.' + cfg.dongle + '/CommunicationStatistics',
-                    'postfixget_url': '/ZWave.' + cfg.dongle + '/PostfixGet',
-                    'postfixadd_url': '/ZWave.' + cfg.dongle + '/PostfixAdd',
-                    'postfixremove_url': '/ZWave.' + cfg.dongle + '/PostfixRemove',
-                    //'communication_history_url': '/ZWave.' + cfg.dongle + '/CommunicationHistory',
-                    'configget_url': '/ZWave.' + cfg.dongle + '/ExpertConfigGet',
-                    'configupdate_url': '/ZWave.' + cfg.dongle + '/ExpertConfigUpdate'
-
-                });
-
-        }, function (error) {
-            // todo: deprecated
-           /* if (error.status === 401 && cfg.app_type !== 'installer') {
-                window.location.href = cfg.smarthome_login;
-            }*/
-
+        }, function (error) {}).finally(function(){
+           deviceService.setDongle(cfg.dongle);
         });
     };
 
@@ -363,17 +340,18 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     $scope.setTimeStamp = function () {
         dataService.getApi('time', null, true).then(function (response) {
             $interval.cancel($scope.timeZoneInterval);
-            angular.extend(cfg.route.time, {string: $filter('setTimeFromBox')(response.data.data.localTimeUT,true)},
+            angular.extend(cfg.route.time, {string: $filter('setTimeFromBox')(response.data.data.localTimeUT, true)},
                 {timestamp: response.data.data.localTimeUT},
                 {offset: response.data.data.localTimeZoneOffset});
             var refresh = function () {
-                cfg.route.time.timestamp += (cfg.interval < 1000 ? 1 : Math.floor(cfg.interval/1000));
+                cfg.route.time.timestamp += (cfg.interval < 1000 ? 1 : Math.floor(cfg.interval / 1000));
                 cfg.route.time.string = $filter('setTimeFromBox')(cfg.route.time.timestamp);
             };
 
             cfg.zwavecfg.time_zone = response.data.data.localTimeZone;
-            $scope.timeZoneInterval = $interval(refresh,cfg.interval);
-        }, function (error) {});
+            $scope.timeZoneInterval = $interval(refresh, cfg.interval);
+        }, function (error) {
+        });
 
     };
 
@@ -404,10 +382,10 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
                 APIVersion: APIVersion
             }
 
-            angular.extend(cfg.controller,cfgController);
+            angular.extend(cfg.controller, cfgController);
 
-            if(cfg.app_type === 'installer' && !showAnalytics && ZWaveAPIData.controller.data.capabilities.value.indexOf(59) > -1){
-                angular.extend(cfg.analytics,{show: true});
+            if (cfg.app_type === 'installer' && !showAnalytics && ZWaveAPIData.controller.data.capabilities.value.indexOf(59) > -1) {
+                angular.extend(cfg.analytics, {show: true});
             }
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
@@ -418,10 +396,11 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
      * Load queue data
      */
     $scope.loadBusyIndicator = function () {
-        var refresh = function() {
-            dataService.getApi('queue_url',null,true).then(function (response) {
+        var refresh = function () {
+            dataService.getApi('queue_url', null, true).then(function (response) {
                 setBusyIndicator(response.data);
-            }, function (error) {});
+            }, function (error) {
+            });
 
         };
         $scope.jobQueueInterval = $interval(refresh, cfg.queue_interval);
@@ -429,7 +408,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     /**
      * Load common APIs
      */
-    if($scope.getBodyId() !== ''){
+    if ($scope.getBodyId() !== '') {
         $scope.loadZwaveConfig();
         $scope.setDongle();
         $scope.setTimeStamp();
@@ -437,9 +416,9 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
         $scope.loadBoxApiData();
         /*if(cfg.app_type === 'installer'){
 
-            $scope.loadBoxApiData();
-        }
-*/
+         $scope.loadBoxApiData();
+         }
+         */
     }
 
     /// --- Private functions --- ///
@@ -453,18 +432,18 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
             busyLength: 0,
             result: 0
         }
-        angular.forEach(data, function(job, jobIndex) {
+        angular.forEach(data, function (job, jobIndex) {
             // job[1][1] = W
             // job[1][2] = S
             // job[1][4] = D
 
             //if((job[1][1] === 0 || job[1][2] === 0 || job[1][4] === 0) || (job[1][1] === 0 && job[1][2] === 0 && job[1][4] === 0)){
-            if(job[1][1] === 0 && job[1][2] === 0 && job[1][4] === 0){
+            if (job[1][1] === 0 && job[1][2] === 0 && job[1][4] === 0) {
                 ret.busyLength += 1;
             }
         });
         //ret.result = (ret.queueLength - ret.busyLength);
-        ret.result =  ret.busyLength;
+        ret.result = ret.busyLength;
         angular.extend(cfg.busy_indicator, ret);
     }
 
