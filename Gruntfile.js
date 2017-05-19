@@ -126,6 +126,7 @@ module.exports = function (grunt) {
                     'app/controllers/configuration_commands.js',
                     'app/controllers/configuration_association.js',
                     'app/controllers/configuration_firmware.js',
+                    'app/controllers/configuration_token.js',
                     'app/controllers/configuration_health.js',
                     'app/controllers/configuration_postfix.js',
                     'app/jquery/jquery-app.js'

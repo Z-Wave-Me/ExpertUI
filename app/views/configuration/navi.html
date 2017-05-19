@@ -30,12 +30,17 @@
            ng-class="routeMatch('/configuration/commands') ? 'active' : ''">
             <i class="fa fa-file-code-o"></i> <span class="btn-name">{{_t('nav_expert_commands')}}</span>
         </a>
-
         <!-- Firmware -->
         <a class="btn btn-default" title="{{_t('nav_firmware_update')}}" href="#configuration/firmware/{{deviceId}}"
            ng-class="routeMatch('/configuration/firmware') ? 'active' : ''">
             <i class="fa fa-upload"></i> <span class="btn-name">{{_t('nav_firmware_update')}}</span>
         </a>
+        <!-- Token -->
+        <a class="btn btn-default" title="{{_t('nav_firmware_token')}}" href="#configuration/token/{{deviceId}}"
+           ng-class="routeMatch('/configuration/token') ? 'active' : ''">
+            <i class="fa fa-tag"></i> <span class="btn-name">{{_t('nav_firmware_token')}}</span>
+        </a>
+
 
         <!-- Postfix -->
         <a class="btn btn-default" title="{{_t('nav_postfix_update')}}" href="#configuration/postfix/{{deviceId}}"
