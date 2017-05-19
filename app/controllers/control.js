@@ -39,7 +39,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
             failedBatteries: 0,
             sucSis: 0
         },
-        removed:{
+        removed: {
             failedNodes: [],
             replaceNodes: [],
             failedBatteries: []
@@ -48,7 +48,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
     /**
      * Cancel interval on page destroy
      */
-    $scope.$on('$destroy', function() {
+    $scope.$on('$destroy', function () {
         $interval.cancel($scope.controlDh.interval);
     });
 
@@ -75,7 +75,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
             dataService.loadJoinedZwaveData().then(function (response) {
                 setControllerData(response.data.joined);
                 setDeviceData(response.data.joined);
-                setInclusionData(response.data.joined,response.data.update)
+                setInclusionData(response.data.joined, response.data.update)
             }, function (error) {
             });
         };
@@ -96,7 +96,6 @@ appController.controller('ControlController', function ($scope, $interval, $time
         var controllerState = ZWaveAPIData.controller.data.controllerState.value;
 
 
-
         // Customsettings
         $scope.controlDh.controller.hasDevices = hasDevices > 1;
         $scope.controlDh.controller.disableSUCRequest = true;
@@ -113,12 +112,12 @@ appController.controller('ControlController', function ($scope, $interval, $time
         $scope.controlDh.controller.frequency = $filter('hasNode')(ZWaveAPIData, 'controller.data.frequency.value');
         $scope.controlDh.controller.controllerState = controllerState;
         $scope.controlDh.controller.secureInclusion = ZWaveAPIData.controller.data.secureInclusion.value;
-        $scope.controlDh.controller.isPrimary =  ZWaveAPIData.controller.data.isPrimary.value;
+        $scope.controlDh.controller.isPrimary = ZWaveAPIData.controller.data.isPrimary.value;
         $scope.controlDh.controller.isRealPrimary = ZWaveAPIData.controller.data.isRealPrimary.value;
         $scope.controlDh.controller.isSIS = ZWaveAPIData.controller.data.SISPresent.value;
         $scope.controlDh.controller.secureInclusion = ZWaveAPIData.controller.data.secureInclusion.value;
         $scope.controlDh.controller.homeName = ZWaveAPIData.controller.data.homeName.value || cfg.controller.homeName;
-        $scope.controlDh.controller.SetPromiscuousMode = (ZWaveAPIData.controller.data.functionClassesNames.value.indexOf('SetPromiscuousMode') > -1 ? true: false);
+        $scope.controlDh.controller.SetPromiscuousMode = (ZWaveAPIData.controller.data.functionClassesNames.value.indexOf('SetPromiscuousMode') > -1 ? true : false);
         $scope.controlDh.controller.SUCNodeId = ZWaveAPIData.controller.data.SUCNodeId.value;
 
         $scope.controlDh.inclusion.alert = {
@@ -128,7 +127,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
         };
 
         // Controller state switch
-        switch(controllerState){
+        switch (controllerState) {
             case 0:
                 // Device inclusion
                 $scope.controlDh.inclusion.alert = {
@@ -138,8 +137,8 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 };
                 $scope.controlDh.inclusion.alertPrimary = $scope.alert;
                 // Network inclusion
-                if($scope.controlDh.network.inclusionProcess){
-                    if($scope.controlDh.network.include){
+                if ($scope.controlDh.network.inclusionProcess) {
+                    if ($scope.controlDh.network.include) {
                         if (!$scope.controlDh.network.modal) {
                             $scope.controlDh.network.alert = {
                                 message: $scope._t('nm_controller_state_10'),
@@ -148,24 +147,28 @@ appController.controller('ControlController', function ($scope, $interval, $time
                             };
                             $scope.controlDh.network.inclusionProcess = 'processing';
                         } else {
-                            $scope.controlDh.network.alert = {message: $scope._t('success_controller_include'), status: 'alert-success', icon: 'fa-smile-o'};
+                            $scope.controlDh.network.alert = {
+                                message: $scope._t('success_controller_include'),
+                                status: 'alert-success',
+                                icon: 'fa-smile-o'
+                            };
                         }
-                   }
+                    }
 
-                }else{
+                } else {
                     $scope.controlDh.network.alert = $scope.alert;
                 }
                 break;
             case 1:
                 // Device inclusion
-                if($scope.controlDh.controller.isSIS || $scope.controlDh.controller.isPrimary){
+                if ($scope.controlDh.controller.isSIS || $scope.controlDh.controller.isPrimary) {
                     $scope.controlDh.inclusion.alertPrimary = {
                         message: $scope._t('nm_controller_sis_or_primary'),
                         status: 'alert-info',
                         icon: false
                     };
                 }
-                if(!$scope.controlDh.controller.isSIS && !$scope.controlDh.controller.isPrimary){
+                if (!$scope.controlDh.controller.isSIS && !$scope.controlDh.controller.isPrimary) {
                     $scope.controlDh.inclusion.alertPrimary = {
                         message: $scope._t('nm_controller_not_sis_or_primary'),
                         status: 'alert-danger',
@@ -176,22 +179,34 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 break;
             case 9:
                 // Network inclusion
-                if($scope.controlDh.controller.isRealPrimary) {
-                    $scope.controlDh.network.alert = {message: $scope._t('nm_controller_state_11'), status: 'alert-warning', icon: 'fa-spinner fa-spin'};
+                if ($scope.controlDh.controller.isRealPrimary) {
+                    $scope.controlDh.network.alert = {
+                        message: $scope._t('nm_controller_state_11'),
+                        status: 'alert-warning',
+                        icon: 'fa-spinner fa-spin'
+                    };
                     $scope.controlDh.network.inclusionProcess = 'processing';
                 } else {
-                    $scope.controlDh.network.alert = {message: $scope._t('nm_controller_state_9_exclude'), status: 'alert-warning', icon: 'fa-spinner fa-spin'};
+                    $scope.controlDh.network.alert = {
+                        message: $scope._t('nm_controller_state_9_exclude'),
+                        status: 'alert-warning',
+                        icon: 'fa-spinner fa-spin'
+                    };
                     $scope.controlDh.network.inclusionProcess = 'processing';
                 }
                 break;
             case 17:
                 // Network inclusion
-                $scope.controlDh.network.alert = {message: $scope._t('nm_controller_state_17'), status: 'alert-danger', icon: 'fa-exclamation-triangle'};
+                $scope.controlDh.network.alert = {
+                    message: $scope._t('nm_controller_state_17'),
+                    status: 'alert-danger',
+                    icon: 'fa-exclamation-triangle'
+                };
                 $scope.controlDh.network.inclusionProcess = 'error';
                 break;
 
             default:
-               break;
+                break;
         }
     }
 
@@ -238,7 +253,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
      * @param {object} data
      */
     function setInclusionData(data, update) {
-        var deviceIncId,deviceExcId;
+        var deviceIncId, deviceExcId;
         // console.log('Learn mode 2: ' + $scope.learnMode);
         if ('controller.data.lastIncludedDevice' in update) {
             deviceIncId = update['controller.data.lastIncludedDevice'].value;
@@ -246,7 +261,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
         if ('controller.data.lastExcludedDevice' in update) {
             deviceExcId = update['controller.data.lastExcludedDevice'].value;
         }
-        if(!deviceIncId && !deviceExcId){
+        if (!deviceIncId && !deviceExcId) {
             //console.log('Not Exclude/Include')
             return;
         }
@@ -260,7 +275,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
             var updateTime = $filter('isTodayFromUnix')(data.controller.data.lastIncludedDevice.updateTime);
             //Run CMD
             /*var cmd = 'devices[' + deviceIncId + '].data.givenName.value=\'' + givenName + '\'';
-            dataService.runZwaveCmd(cfg.store_url + cmd);*/
+             dataService.runZwaveCmd(cfg.store_url + cmd);*/
             $scope.controlDh.inclusion.lastIncludedDevice = {
                 message: $scope._t('nm_last_included_device') + '  (' + updateTime + ')  <a href="#configuration/interview/' + deviceIncId + '"><strong>' + givenName + '</strong></a>',
                 status: 'alert-success',
@@ -271,8 +286,8 @@ appController.controller('ControlController', function ($scope, $interval, $time
         /**
          * Last excluded device
          */
-       if (deviceExcId) {
-           var updateTime = $filter('isTodayFromUnix')(data.controller.data.lastExcludedDevice.updateTime);
+        if (deviceExcId) {
+            var updateTime = $filter('isTodayFromUnix')(data.controller.data.lastExcludedDevice.updateTime);
             if (deviceExcId != 0) {
                 var txt = $scope._t('txt_device') + ' # ' + deviceExcId + ' ' + $scope._t('nm_excluded_from_network');
             } else {
@@ -280,11 +295,11 @@ appController.controller('ControlController', function ($scope, $interval, $time
             }
 
             //$scope.controlDh.inclusion.lastExcludedDevice = txt + ' (' + updateTime + ')';
-           $scope.controlDh.inclusion.lastExcludedDevice = {
-               message: txt + ' (' + updateTime + ')',
-               status: 'alert-success',
-               icon: 'fa-smile-o'
-           };
+            $scope.controlDh.inclusion.lastExcludedDevice = {
+                message: txt + ' (' + updateTime + ')',
+                status: 'alert-success',
+                icon: 'fa-smile-o'
+            };
         }
     };
 
@@ -312,7 +327,7 @@ appController.controller('SetSecureInclusionController', function ($scope) {
  * @class IncludeDeviceController
  *
  */
-appController.controller('IncludeExcludeDeviceController', function ($scope,$route) {
+appController.controller('IncludeExcludeDeviceController', function ($scope, $route) {
     /**
      * Start Inclusion of a new node.
      * Turns the controller into an inclusion mode that allows including a device.
@@ -348,13 +363,29 @@ appController.controller('IncludeExcludeDeviceController', function ($scope,$rou
  * @class IncludeDifferentNetworkController
  *
  */
-appController.controller('IncludeDifferentNetworkController', function ($scope, $timeout, $window,cfg, dataService) {
+appController.controller('IncludeDifferentNetworkController', function ($scope, $timeout, $window, cfg, dataService) {
     /**
      * Include to network
      * @param {string} cmd
+     * @param {string} confirm
      */
-    $scope.includeToNetwork = function (cmd, modalId, $event) {
-        //$scope.runZwaveCmd(cmd);
+    $scope.includeToNetwork = function (cmd, confirm) {
+        if (_.isString(confirm)) {// Confirm is needed
+            alertify.confirm(confirm, function () {
+                $scope.runIncludeToNetwork(cmd);
+            });
+        } else {
+            $scope.runIncludeToNetwork(cmd);
+        }
+
+
+    };
+
+    /**
+     * Process network inclusion
+     * @param {string} cmd
+     */
+    $scope.runIncludeToNetwork = function (cmd) {
         var timeout = 30000;
         $scope.toggleRowSpinner(cmd);
         if(cmd === 'controller.SetLearnMode(1)'){
@@ -365,7 +396,10 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
             $scope.controlDh.network.inclusionProcess = false;
         }
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
+            //console.log('Run cmd: ', cfg.store_url + cmd)
             $timeout(function() {
+                dataService.runZwaveCmd(cfg.store_url + 'controller.SetLearnMode(0)');
+                console.log('Running controller.SetLearnMode(0) after timeout')
                 if(cfg.app_type === 'installer'){
                     $window.location.reload();
                 }else{
@@ -381,25 +415,26 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
     };
 
     /**
+     * todo: DEPRECATED
      * Exclude form network
      * @param {string} cmd
      */
-    $scope.excludeFromNetwork = function (cmd, confirm) {
-        console.log(cmd)
-       // return;
-        alertify.confirm(confirm, function () {
-            $scope.controlDh.network.inclusionProcess = false;
-            $scope.controlDh.network.include = false;
-            $scope.runZwaveCmd(cmd);
-            if(cmd === 'controller.SetLearnMode(1)') {
-                $timeout(function () {
-                    $window.location.reload();
-                }, 5000);
-            }
+    /*$scope.excludeFromNetwork = function (cmd, confirm) {
+     console.log(cmd)
+     // return;
+     alertify.confirm(confirm, function () {
+     $scope.controlDh.network.inclusionProcess = false;
+     $scope.controlDh.network.include = false;
+     $scope.runZwaveCmd(cmd);
+     if(cmd === 'controller.SetLearnMode(1)') {
+     $timeout(function () {
+     $window.location.reload();
+     }, 5000);
+     }
 
-        });
+     });
 
-    };
+     };*/
 
     $scope.requestNetworkUpdate = function (cmd, message, id) {
         $scope.controlDh.alert = {
@@ -409,7 +444,7 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
         };
         $scope.toggleRowSpinner(id);
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function () {
-            $timeout(function() {
+            $timeout(function () {
                 $scope.controlDh.alert = false;
                 $scope.toggleRowSpinner();
             }, 2000);
@@ -425,8 +460,8 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
      * @param {string} modal
      * @param $event
      */
-    $scope.closeNetworkModal = function (modal,$event) {
-       $scope.controlDh.network.inclusionProcess = false;
+    $scope.closeNetworkModal = function (modal, $event) {
+        $scope.controlDh.network.inclusionProcess = false;
         $scope.controlDh.network.modal = false;
         $window.location.reload();
 
@@ -493,7 +528,7 @@ appController.controller('BackupRestoreController', function ($scope, $upload, $
  * @class ZwaveChipRebootResetController
  *
  */
-appController.controller('ZwaveChipRebootResetController', function ($scope,$window) {
+appController.controller('ZwaveChipRebootResetController', function ($scope, $window) {
     /**
      * This function will perform a soft restart of the  firmware of the Z-Wave controller chip
      * without deleting any network information or setting.
@@ -510,7 +545,7 @@ appController.controller('ZwaveChipRebootResetController', function ($scope,$win
      */
     $scope.setDefault = function (cmd) {
         $scope.runZwaveCmd(cmd);
-       // $scope.handleModal('restoreModal');
+        // $scope.handleModal('restoreModal');
         $window.location.reload();
     };
 });
@@ -527,19 +562,19 @@ appController.controller('ChangeFrequencyController', function ($scope) {
      */
     $scope.frequency = {
         arrays: {
-            EuRuInCn: ['EU','RU','IN','CN'],
-            UsIl: ['US','IL'],
-            AnzHk: ['ANZ','HK'],
-            KrJp: ['KR','JP']
+            EuRuInCn: ['EU', 'RU', 'IN', 'CN'],
+            UsIl: ['US', 'IL'],
+            AnzHk: ['ANZ', 'HK'],
+            KrJp: ['KR', 'JP']
         },
         currentFreqArr: '',
         currentFreq: $scope.controlDh.controller.frequency
     };
 
     if ($scope.frequency.currentFreq &&
-        ['unsupported','unknown','undefined'].indexOf($scope.frequency.currentFreq) < 0) {
-        Object.keys($scope.frequency.arrays).forEach(function(freqBand){
-            if($scope.frequency.arrays[freqBand].indexOf($scope.frequency.currentFreq) > -1) {
+        ['unsupported', 'unknown', 'undefined'].indexOf($scope.frequency.currentFreq) < 0) {
+        Object.keys($scope.frequency.arrays).forEach(function (freqBand) {
+            if ($scope.frequency.arrays[freqBand].indexOf($scope.frequency.currentFreq) > -1) {
                 $scope.frequency.currentFreqArr = freqBand;
                 return;
             }
@@ -654,7 +689,7 @@ appController.controller('RequestNifAllController', function ($scope, $timeout, 
             $scope.toggleRowSpinner();
         }, function (error) {
             $scope.toggleRowSpinner();
-            deviceService.showNotifier({message: $scope._t('error_nif_request'),type: 'error'});
+            deviceService.showNotifier({message: $scope._t('error_nif_request'), type: 'error'});
         });
     };
 });
@@ -738,6 +773,6 @@ appController.controller('SetPromiscuousModeController', function ($scope) {
      * @param {string} cmd
      */
     $scope.setPromiscuousMode = function (cmd) {
-        $scope.runZwaveCmd(cmd,1000,true);
+        $scope.runZwaveCmd(cmd, 1000, true);
     };
 });
