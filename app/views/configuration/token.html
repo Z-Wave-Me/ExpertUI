@@ -8,8 +8,22 @@
         </div>
         <div class="col-md-9 col-content">
             <bb-alert alert="alert"></bb-alert>
-            <div ng-show_="deviceId">
-                token
+            <div ng-show="deviceId">
+                <!-- Search and autocomplete -->
+                <form id="form_token" class="input-group" autocomplete="off" novalidate
+                      ng-submit="addToken()">
+                    </form>
+                <div class="fieldset">
+                    <div class="form-group form-inline">
+                        <div class="input-group">
+                            <input name="token" id="token" class="form-control" value="" placeholder="{{_t('add_token')}}" ng-model="token.input.token">
+                            <span class="input-group-addon clickable" title="{{_t('add_token')}}" ng-click="addToken()">
+                       <i class="fa fa-plus text-success"></i>
+                   </span>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>

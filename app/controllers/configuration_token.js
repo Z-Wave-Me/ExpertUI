@@ -16,7 +16,13 @@ appController.controller('ConfigTokenController', function ($scope, $routeParams
     $scope.activeUrl = 'configuration/token/';
     $cookies.tab_config = 'token';
 
-    // Load data
+    $scope.token = {
+        input: {
+            token: ''
+        }
+    };
+
+    // Load zwave data
     $scope.load = function (nodeId) {
         dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
             $scope.devices = deviceService.configGetNav(ZWaveAPIData);
@@ -44,4 +50,15 @@ appController.controller('ConfigTokenController', function ($scope, $routeParams
         });
     };
     $scope.load($routeParams.nodeId);
+
+    /**
+     * Create/Update a token
+     */
+    $scope.addToken = function () {
+        if ($scope.token.input.token === '') {
+            return;
+        }
+        console.log('Adding token: ',$scope.token.input.token)
+
+    };
 });

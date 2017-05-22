@@ -1,6 +1,7 @@
 {
  "--- newtrans": "---",
  "nav_firmware_token":"Access token",
+ "add_token":"Add token",
  "---": "---",
  "settings_box_reboot":"In order to fully apply the changes a reboot is necessary. The box will be automatically rebooted after the settings has been saved.",
  "tz_set_info":"The current time zone is: __ctz__. You can change the time zone if automatic time synchronisation is disabled or there is an offset difference greater than 30 min. A reboot is necessary.",
