@@ -1,4 +1,4 @@
-/* Copyright:  Z-Wave Europe, Created: 19-05-2017 10:43:10 */
+/* Copyright:  Z-Wave Europe, Created: 22-05-2017 15:35:48 */
 angular.module('myAppTemplates', []).run(['$templateCache', function($templateCache) {
   'use strict';
 
@@ -9,6 +9,11 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
   $templateCache.put('app/views/auth/auth_installer.html',
     "<div ng-controller=AuthInstallerController></div>"
+  );
+
+
+  $templateCache.put('app/views/auth/init_installer.html',
+    "<div ng-controller=InitInstallerController><div class=text-center><img class=product-logo ng-src=\"{{getCustomCfgVal('logo')}}\" alt=Logo></div><form name=form_init id=form_login class=\"form form-page container-500\" ng-submit=initialize(init.input) novalidate><fieldset class=text-center><h1>{{_t('initial_setup')}}</h1></fieldset><bb-alert alert=init.alert></bb-alert><fieldset><div class=form-group><input name=user id=user class=form-control placeholder=\"{{_t('lb_login')}}\" ng-model=init.input.user ng-blur=\"userBlur = true\" ng-required=true><bb-validator input-name=form_init.user.$error.required trans='_t(\"field_required\")' has-blur=userBlur></bb-validator></div><div class=form-group><input name=pass id=pass type=password class=form-control placeholder=\"{{_t('lb_password')}}\" ng-model=init.input.pass ng-blur=\"passBlur = true\" ng-required=true><bb-validator input-name=form_init.pass.$error.required trans='_t(\"field_required\")' has-blur=passBlur></bb-validator></div><div class=form-group><input name=cit_identifier id=cit_identifier class=form-control placeholder=\"{{_t('cit_identifier')}}\" ng-model=init.input.cit_identifier ng-blur=\"cit_identifierBlur = true\" ng-required=true><bb-validator input-name=form_init.cit_identifier.$error.required trans='_t(\"field_required\")' has-blur=passBlur></bb-validator></div></fieldset><fieldset class=submit-entry><button type=submit class=\"btn btn-submit\" title=\"{{_t('lb_enter')}}\" ng-disabled=form_init.$invalid><bb-row-spinner spinner=\"rowSpinner['installer_init']\" label=\"_t('initialize')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></fieldset></form></div>"
   );
 
 
