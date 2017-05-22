@@ -406,9 +406,10 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
         $scope.jobQueueInterval = $interval(refresh, cfg.queue_interval);
     };
     /**
-     * Load common APIs
+     * Load common APIs for pages, where authorization is required
      */
-    if ($scope.getBodyId() !== '') {
+    //if ($scope.getBodyId() !== '') {
+    if (cfg.no_auth_pages.indexOf($scope.getBodyId()) === -1) {
         $scope.loadZwaveConfig();
         $scope.setDongle();
         $scope.setTimeStamp();

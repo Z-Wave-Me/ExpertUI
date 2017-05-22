@@ -7,9 +7,46 @@
  * @class AuthController
  *
  */
-appController.controller('AuthController', function($location,$window) {
-    //$location.path('/home');
-    window.location = '#/home';
+appController.controller('InitInstallerController', function ($scope,$location,$timeout,cfg,dataService) {
+    $scope.init = {
+        input: {
+            user: '',
+            pass: '',
+            cit_identifier: ''
+        },
+        alert: {}
+    };
+
+    /**
+     * Login proccess
+     */
+    $scope.initialize = function (input) {
+        $scope.init.alert = {};
+        $scope.toggleRowSpinner('installer_init');
+        dataService.postApi('installer_init', input).then(function (response) {
+            $location.path('/');
+        }, function (error) {
+            var message = $scope._t('initial_fail');
+            if (error.status == 500) {
+                message = $scope._t('error_load_data');
+            }
+            $scope.init.alert = {message: message, status: 'alert-danger', icon: 'fa-exclamation-triangle'};
+            $timeout($scope.toggleRowSpinner, 1000);
+        });
+
+
+    };
+
+});
+
+/**
+ * Auth default controller
+ * @class AuthController
+ *
+ */
+appController.controller('AuthController', function ($location, $window) {
+    $location.path('/home');
+    //window.location = '#/home';
     $window.location.reload();
 
 });
@@ -19,8 +56,9 @@ appController.controller('AuthController', function($location,$window) {
  * @class AuthInstallerController
  *
  */
-appController.controller('AuthInstallerController', function($scope, $location,cfg, $window,cfg,dataService,deviceService) {
+appController.controller('AuthInstallerController', function ($scope, $location, cfg, $window, cfg, dataService, deviceService) {
     $scope.input = cfg.auth;
+    //$location.path('/init');
 
     /**
      * Login proccess
@@ -31,7 +69,8 @@ appController.controller('AuthInstallerController', function($scope, $location,c
             var user = response.data.data;
             deviceService.setZWAYSession(user.sid);
             deviceService.setUser(user);
-            window.location = '#/home';
+            $location.path('/home');
+            //window.location = '#/home';
             $window.location.reload();
         }, function (error) {
             var redirect = cfg.logout_redirect[$location.host()];
@@ -42,7 +81,7 @@ appController.controller('AuthInstallerController', function($scope, $location,c
             }
 
             // Redirect to an url from list
-            if(redirect){
+            if (redirect) {
                 $window.location.href = redirect;
                 return;
             }
@@ -51,21 +90,6 @@ appController.controller('AuthInstallerController', function($scope, $location,c
     };
 
     $scope.login($scope.input);
-    /**
-     * Login proccess
-     */
-    /*$scope.login_ = function (input) {
-        //$scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin', message: $scope._t('loading')};
-        if (input.login !== cfg.auth.login || input.password !== cfg.auth.password) {
-            alertify.alertError($scope._t('error_load_user'));
-            $scope.input = {
-                login: '',
-                password: ''
-            };
-            return;
-        }
-        $location.path('/home');
-    };*/
 
 });
 
@@ -74,7 +98,7 @@ appController.controller('AuthInstallerController', function($scope, $location,c
  * @class LogoutInstallerController
  *
  */
-appController.controller('LogoutInstallerController', function(dataService,deviceService) {
+appController.controller('LogoutInstallerController', function (dataService, deviceService) {
     dataService.getApi('logout_url').then(function (response) {
         deviceService.logOut();
     });
@@ -82,11 +106,11 @@ appController.controller('LogoutInstallerController', function(dataService,devic
      * Logout an user
      */
     /*$scope.logout = function () {
-        deviceService.setRememberMe(null);
-        dataService.getApi('logout_url').then(function (response) {
-            deviceService.logOut();
-        });
-    };
-    $scope.logout();*/
+     deviceService.setRememberMe(null);
+     dataService.getApi('logout_url').then(function (response) {
+     deviceService.logOut();
+     });
+     };
+     $scope.logout();*/
 
 });

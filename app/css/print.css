@@ -12166,6 +12166,13 @@ a:focus, .order-by:focus {
   margin-bottom: 0;
 }
 
+/* Hide elements
+-------------------------------------------------- */
+/* line 327, ../sass/common/_body.scss */
+#page_init #header, #page_init .container-installer, #page_init #footer {
+  display: none;
+}
+
 /* NEW - Routing table cell styles
 -------------------------------------------------- */
 /* line 7, ../sass/modules/_routing.scss */

@@ -71,6 +71,7 @@ var config_data = {
         'logout_url': 'ZAutomation/api/v1/logout',// Url for logout
         'ntpdate_service': '/ZAutomation/api/v1/system/time/ntp/', // Url to check and control ntp date service
         'box_reboot': '/ZAutomation/api/v1/system/reboot', // reboot box
+        'installer_init': '/ZAutomation/api/v1/system/certfxAuth', // Installer initialization
         //'reorg_log_url': '/config/reorg.log', // Url for store reorg log data
         'zddx_url': '/ZDDX/', // Url for zddx xml files
         'notes_url': '/config/notes.log', // Url for store notes data
@@ -180,8 +181,10 @@ var config_data = {
         // Auth
         'auth': {
             'login': 'admin',
-            'password': 'admin'
+            'password': 'admin1'
         },
+        // Pages without authorization
+        'no_auth_pages':['','init'],
         // Date format list
         'date_format_list': ['dd.mm.yyyy', 'dd-mm-yyyy', 'yyyy-mm-dd', 'yyyy/mm/dd', 'mm/dd/yyyy', 'dd/mm/yyyy'],
         // Time format list
@@ -282,7 +285,7 @@ var config_data = {
         },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer/wd/popp/jb
-        'app_type': 'default',
+        'app_type': 'installer',
         'custom_cfg': {
             'default': {
                 'logo': 'app/images/zplus.jpg',

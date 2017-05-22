@@ -11,6 +11,10 @@ angApp.config(['$routeProvider',
         $routeProvider.// Login
         when('/', {
             templateUrl: 'app/views/auth/auth_' + appType + '.html'
+        }).// CIT init
+        when('/init', {
+            templateUrl: 'app/views/auth/init_installer.html',
+            appTypeBanned: ['default','wd','popp','jb'],
         }).// Home
         when('/home', {
             requireLogin: requireLogin,
@@ -172,7 +176,7 @@ angApp.config(['$routeProvider',
         }).// Logout
         when('/logout', {
             requireLogin: requireLogin,
-            appTypeBanned: ['default_','wd','popp','jb'],
+            appTypeBanned: ['default','wd','popp','jb'],
             templateUrl: 'app/views/auth/logout_installer.html'
         }).otherwise({
             redirectTo: '/home'
