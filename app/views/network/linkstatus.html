@@ -25,8 +25,7 @@
     </div>
     <bb-alert alert="alert"></bb-alert>
 
-    <!--<pre>{{testLink|json}}</pre>-->
-
+    <!--<pre>{{linkStatus|json}}</pre>-->
     <!-- Info table -->
     <div class="table-scroll" ng-if="linkStatus.show">
         <div data-double-scroll-bar-horizontal>
@@ -131,7 +130,7 @@
     </div>
         </div>
     <!-- Legend -->
-    <div class="legend-entry">
+    <div class="legend-entry" ng-if="linkStatus.show">
         <!-- gray -->
         <div class="legend-row">
             <i class="fa fa-square fa-lg gray"></i> {{_t('unavailable')}}
