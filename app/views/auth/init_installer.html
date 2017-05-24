@@ -1,13 +1,12 @@
 <!-- Auth installer -->
 
-<div ng-controller="InitInstallerController">
+<div id="cit_init" class="container-500" ng-controller="InitInstallerController">
     <div class="text-center">
         <img class="product-logo" ng-src="{{getCustomCfgVal('logo')}}" alt="Logo"/>
     </div>
-
-    <form name="form_init" id="form_login" class="form form-page container-500" ng-submit="initialize(init.input)" novalidate>
-        <fieldset class="text-center">
-            <h1>{{_t('initial_setup')}}</h1>
+    <form name="form_init" id="form_login" class="form form-page" ng-submit="initialize(init.input)" novalidate>
+       <fieldset class="text-center cit-welcome">
+            <h1>{{_t('initial_welcome')}}</h1>
         </fieldset>
         <bb-alert alert="init.alert"></bb-alert>
         <fieldset>
@@ -28,7 +27,9 @@
                 <input name="cit_identifier" id="cit_identifier" type="text" class="form-control" placeholder="{{_t('cit_identifier')}}"
                        ng-model="init.input.cit_identifier" ng-blur="cit_identifierBlur = true" ng-required="true" />
                 <bb-validator input-name='form_init.cit_identifier.$error.required' trans='_t("field_required")' has-blur='passBlur'></bb-validator>
+                <bb-help-text trans="_t('cit_identifier_info')"></bb-help-text>
             </div>
+            <div class="text-right"><small>{{_t('remote_id')}}: {{cfg.system_info.remote_id}}</small></div>
         </fieldset>
         <!-- password -->
         <fieldset class="submit-entry">

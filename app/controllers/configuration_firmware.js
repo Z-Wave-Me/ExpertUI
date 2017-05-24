@@ -157,6 +157,20 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
                 $scope.firmware.show = false;
                 return;
             }
+            //console.log('1: ',fw.data.fragmentTransmitted);
+            if($filter('hasNode')(fw,'data.fragmentTransmitted')){
+                fw.data.fragmentTransmitted.value = fw.data.fragmentTransmitted.value;
+            }else{
+                angular.extend(fw.data,{fragmentTransmitted:{value: null}})
+            }
+
+            if($filter('hasNode')($scope.firmware,'update.fragmentTransmitted')){
+                $scope.firmware.update.fragmentTransmitted = $scope.firmware.update.fragmentTransmitted;
+            }else{
+                angular.extend($scope.firmware,{update:{fragmentTransmitted: null}})
+            }
+            /*console.log('2: ',fw.data.fragmentTransmitted);
+            console.log('$scope.firmware.update.fragmentTransmitted: ',$scope.firmware.update.fragmentTransmitted);*/
 
             if (fw.data.fragmentTransmitted.value !== $scope.firmware.update.fragmentTransmitted && !!$scope.firmware.update.fragmentTransmitted){
                 if (!$scope.rowSpinner[$scope.firmware.update.buttonId]) {

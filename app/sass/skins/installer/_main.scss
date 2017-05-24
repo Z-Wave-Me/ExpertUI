@@ -6,7 +6,7 @@ $alliance-green-bcg: lighten($alliance-green,40%);
 $alliance-green-border: lighten($alliance-green,20%);
 $alliance-orange: #F89847;
 .app-type-installer{
-    #main_navigation{
+   #main_navigation{
         margin-bottom: 0;
     }
     /* Content */
@@ -72,6 +72,16 @@ $alliance-orange: #F89847;
     .product-logo{
         max-width: 150px;
         max-height: 150px;
+    }
+
+    /* Init */
+    #cit_init{
+        .product-logo{
+            margin: $spacing-double 0;
+        }
+        .cit-welcome{
+            margin: $spacing-double 0 0 0;
+        }
     }
 
     /* Homepage */

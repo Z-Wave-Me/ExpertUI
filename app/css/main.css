@@ -16158,6 +16158,7 @@ http://codepen.io/MattIn4D/pen/LiKFC
   /* Header */
   /* Dropdown menu */
   /* Logo */
+  /* Init */
   /* Homepage */
   /*    .product-data-list h3 {
           color: $alliance-green;
@@ -16243,108 +16244,116 @@ http://codepen.io/MattIn4D/pen/LiKFC
   max-width: 150px;
   max-height: 150px;
 }
-/* line 78, ../sass/skins/installer/_main.scss */
+/* line 79, ../sass/skins/installer/_main.scss */
+.app-type-installer #cit_init .product-logo {
+  margin: 20px 0;
+}
+/* line 82, ../sass/skins/installer/_main.scss */
+.app-type-installer #cit_init .cit-welcome {
+  margin: 20px 0 0 0;
+}
+/* line 88, ../sass/skins/installer/_main.scss */
 .app-type-installer .product-data-list {
   background-color: #ceebcd;
 }
-/* line 81, ../sass/skins/installer/_main.scss */
+/* line 91, ../sass/skins/installer/_main.scss */
 .app-type-installer .product-description {
   border-color: #87cf83;
 }
-/* line 91, ../sass/skins/installer/_main.scss */
+/* line 101, ../sass/skins/installer/_main.scss */
 .app-type-installer .table > thead > tr > th {
   border-color: #87cf83;
 }
-/* line 95, ../sass/skins/installer/_main.scss */
+/* line 105, ../sass/skins/installer/_main.scss */
 .app-type-installer .table > thead > tr > th, .app-type-installer .table > tbody > tr > th, .app-type-installer .table > tfoot > tr > th, .app-type-installer .table > thead > tr > td, .app-type-installer .table > tbody > tr > td, .app-type-installer .table > tfoot > tr > td {
   border-color: #87cf83;
 }
-/* line 100, ../sass/skins/installer/_main.scss */
+/* line 110, ../sass/skins/installer/_main.scss */
 .app-type-installer .cfg-control-content {
   background-color: #ceebcd;
 }
-/* line 105, ../sass/skins/installer/_main.scss */
+/* line 115, ../sass/skins/installer/_main.scss */
 .app-type-installer .form-control {
   border-color: #87cf83;
 }
-/* line 108, ../sass/skins/installer/_main.scss */
+/* line 118, ../sass/skins/installer/_main.scss */
 .app-type-installer .commands-data-control {
   background-color: #ceebcd;
 }
-/* line 111, ../sass/skins/installer/_main.scss */
+/* line 121, ../sass/skins/installer/_main.scss */
 .app-type-installer .commands-data {
   border-color: #87cf83;
 }
-/* line 114, ../sass/skins/installer/_main.scss */
+/* line 124, ../sass/skins/installer/_main.scss */
 .app-type-installer .cfg-block {
   border-color: #87cf83;
 }
-/* line 118, ../sass/skins/installer/_main.scss */
+/* line 128, ../sass/skins/installer/_main.scss */
 .app-type-installer .form-page {
   border-color: #87cf83;
 }
-/* line 120, ../sass/skins/installer/_main.scss */
+/* line 130, ../sass/skins/installer/_main.scss */
 .app-type-installer .form-page .form-group {
   border-color: #87cf83;
 }
-/* line 125, ../sass/skins/installer/_main.scss */
+/* line 135, ../sass/skins/installer/_main.scss */
 .app-type-installer .submit-entry {
   border-color: #87cf83;
   background-color: #ceebcd;
 }
-/* line 131, ../sass/skins/installer/_main.scss */
+/* line 141, ../sass/skins/installer/_main.scss */
 .app-type-installer .btn-goup-tabs .btn {
   border-color: #87cf83;
 }
-/* line 134, ../sass/skins/installer/_main.scss */
+/* line 144, ../sass/skins/installer/_main.scss */
 .app-type-installer .btn-goup-tabs .active .fa {
   color: #47AA42;
 }
-/* line 139, ../sass/skins/installer/_main.scss */
+/* line 149, ../sass/skins/installer/_main.scss */
 .app-type-installer .nav-tabs > li.active > a, .app-type-installer .nav-tabs > li.active > a:hover, .app-type-installer .nav-tabs > li.active > a:focus {
   background-color: #ceebcd;
   border-color: #87cf83;
 }
-/* line 143, ../sass/skins/installer/_main.scss */
+/* line 153, ../sass/skins/installer/_main.scss */
 .app-type-installer .tab-content {
   border-color: transparent #87cf83 #87cf83;
 }
-/* line 146, ../sass/skins/installer/_main.scss */
+/* line 156, ../sass/skins/installer/_main.scss */
 .app-type-installer .nav-tabs {
   border-color: #87cf83;
 }
-/* line 150, ../sass/skins/installer/_main.scss */
+/* line 160, ../sass/skins/installer/_main.scss */
 .app-type-installer .panel {
   border-color: #87cf83;
 }
-/* line 153, ../sass/skins/installer/_main.scss */
+/* line 163, ../sass/skins/installer/_main.scss */
 .app-type-installer .panel-default > .panel-heading {
   background-color: #ceebcd;
   border-color: #87cf83;
 }
-/* line 157, ../sass/skins/installer/_main.scss */
+/* line 167, ../sass/skins/installer/_main.scss */
 .app-type-installer .panel-default > .panel-footer {
   background-color: #f2faf1;
   border-color: #87cf83;
 }
-/* line 162, ../sass/skins/installer/_main.scss */
+/* line 172, ../sass/skins/installer/_main.scss */
 .app-type-installer .list-group-item {
   border-color: #87cf83;
 }
-/* line 166, ../sass/skins/installer/_main.scss */
+/* line 176, ../sass/skins/installer/_main.scss */
 .app-type-installer .list-report li {
   border-top: solid 1px #87cf83;
 }
-/* line 171, ../sass/skins/installer/_main.scss */
+/* line 181, ../sass/skins/installer/_main.scss */
 .app-type-installer .well {
   background-color: #ceebcd;
   border-color: #87cf83;
 }
-/* line 176, ../sass/skins/installer/_main.scss */
+/* line 186, ../sass/skins/installer/_main.scss */
 .app-type-installer #footer {
   border-color: #87cf83;
 }
-/* line 181, ../sass/skins/installer/_main.scss */
+/* line 191, ../sass/skins/installer/_main.scss */
 .app-type-installer .accordion-entry {
   border-color: #87cf83;
 }
