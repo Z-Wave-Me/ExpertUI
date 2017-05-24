@@ -182,7 +182,7 @@ var config_data = {
         // Auth
         'auth': {
             'login': 'admin',
-            'password': 'admin1'
+            'password': 'admin'
         },
         // Pages without authorization
         'no_auth_pages':['','init'],

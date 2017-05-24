@@ -6,8 +6,8 @@
 var config_data = {
     'cfg': {
         'app_name': 'Z-Wave Expert',
-        'app_version': '1.3.0-RC-76',
-        'app_built': '22-05-2017 15:36:35',
+        'app_version': '1.3.0-RC-77',
+        'app_built': '24-05-2017 15:26:05',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -71,6 +71,7 @@ var config_data = {
         'logout_url': 'ZAutomation/api/v1/logout',// Url for logout
         'ntpdate_service': '/ZAutomation/api/v1/system/time/ntp/', // Url to check and control ntp date service
         'box_reboot': '/ZAutomation/api/v1/system/reboot', // reboot box
+        'system_info_url': '/ZAutomation/api/v1/system/info', // Sytem info
         'installer_init': '/ZAutomation/api/v1/system/certfxAuth', // Installer initialization
         //'reorg_log_url': '/config/reorg.log', // Url for store reorg log data
         'zddx_url': '/ZDDX/', // Url for zddx xml files
@@ -181,7 +182,7 @@ var config_data = {
         // Auth
         'auth': {
             'login': 'admin',
-            'password': 'admin1'
+            'password': 'admin'
         },
         // Pages without authorization
         'no_auth_pages':['','init'],
@@ -212,6 +213,9 @@ var config_data = {
             zwayNodeId: 1,
             APIVersion: ''
         },
+
+        // System info
+        system_info: {},
         // Required version for analytics
         analytics: {
             show: false

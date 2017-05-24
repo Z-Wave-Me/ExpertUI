@@ -181,11 +181,14 @@
     <div class="alert alert-danger" ng-if="!cfg.controller.isRealPrimary">
         <div class="container"><i class="fa fa-info-circle"></i> {{_t('iam_in_network_homeid')}}: {{cfg.controller.homeName}}</div>
     </div>
-
+    <!-- CIT licence warning -->
+    <div class="alert alert-warning" ng-if="alertCitLicence">
+        <div class="container"><i class="fa fa-exclamation-circle"></i> {{_t(alertCitLicence)}}</div>
+    </div>
 </div>
 <!-- Ang Container -->
 <div id="main_content" class="container">
-    {{cfg.statistics}}
+    <!--{{cfg.statistics}}-->
     <div ng-if="cfg.route.fatalError.message">
         <div class="app-fatal-error">
             <div class="fatal-error-message"><i class="fa {{cfg.route.fatalError.icon}} fa-lg"></i> {{cfg.route.fatalError.message}}</div>
