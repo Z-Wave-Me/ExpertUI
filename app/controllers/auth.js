@@ -7,12 +7,12 @@
  * @class AuthController
  *
  */
-appController.controller('InitInstallerController', function ($scope,$location,$timeout,cfg,dataService) {
+appController.controller('InitInstallerController', function ($scope,$location,$timeout,$window,cfg,dataService,deviceService) {
     $scope.init = {
         input: {
             user: '',
             pass: '',
-            cit_identifier: ''
+            cit_identifier: cfg.system_info.cit_identifier||''
         },
         alert: {}
     };
@@ -23,18 +23,66 @@ appController.controller('InitInstallerController', function ($scope,$location,$
     $scope.initialize = function (input) {
         $scope.init.alert = {};
         $scope.toggleRowSpinner('installer_init');
-        dataService.postApi('installer_init', input).then(function (response) {
-            $location.path('/');
+        var auth = {
+            'login': input.user,
+            'password': input.pass
+        };
+        // Init
+        if(!cfg.system_info.cit_authorized){
+            dataService.postApi('installer_init', input).then(function (response) {
+                if(!response.data.data.result){
+                    $scope.init.alert = {message: response.dtata.data.result_message, status: 'alert-danger', icon: 'fa-exclamation-triangle'};
+                }else{
+                    $scope.login(auth);
+                }
+
+            }, function (error) {
+                var message = $scope._t('initial_fail');
+                if (error.status == 500) {
+                    message = $scope._t('error_load_data');
+                }
+                $scope.init.alert = {message: message, status: 'alert-danger', icon: 'fa-exclamation-triangle'};
+
+            }).finally(function(){
+                $timeout($scope.toggleRowSpinner, 1000);
+            }) ;
+        }else{ // Login
+            $scope.login(auth);
+        }
+
+
+
+
+    };
+
+    /**
+     * Login proccess
+     */
+    $scope.login = function (input) {
+        dataService.logInApi(input).then(function (response) {
+            var user = response.data.data;
+            deviceService.setZWAYSession(user.sid);
+            deviceService.setUser(user);
+            $location.path('/home');
+            //window.location = '#/home';
+            $window.location.reload();
         }, function (error) {
-            var message = $scope._t('initial_fail');
-            if (error.status == 500) {
-                message = $scope._t('error_load_data');
+            var redirect = cfg.logout_redirect[$location.host()];
+            $scope.loading = false;
+            var message = $scope._t('error_load_data');
+            if (error.status == 401) {
+                message = $scope._t('error_load_user');
+            }
+
+            // Redirect to an url from list
+            if (redirect) {
+                $window.location.href = redirect;
+                return;
             }
             $scope.init.alert = {message: message, status: 'alert-danger', icon: 'fa-exclamation-triangle'};
+        }).finally(function(){
             $timeout($scope.toggleRowSpinner, 1000);
-        });
-
-
+        }) ;
     };
 
 });

@@ -11,11 +11,12 @@ angApp.config(['$routeProvider',
         $routeProvider.// Login
         when('/', {
             templateUrl: 'app/views/auth/auth_' + appType + '.html'
-        }).// CIT init
+        })./* CIT init
         when('/init', {
             templateUrl: 'app/views/auth/init_installer.html',
             appTypeBanned: ['default','wd','popp','jb'],
-        }).// Home
+        }).*/
+        // Home
         when('/home', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/home/home_' + appType + '.html'

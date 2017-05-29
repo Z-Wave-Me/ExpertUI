@@ -1,25 +1,48 @@
 <!-- Auth installer -->
 
-<div ng-controller="AuthInstallerController">
-<!--    <div class="text-center">
-        <img class="product-logo" ng-src="{{getCustomCfgArr('logo')}}" alt="Logo" />
+<div id="cit_init" class="container-500" ng-controller="InitInstallerController">
+    <div class="text-center">
+        <img class="product-logo" ng-src="{{getCustomCfgVal('logo')}}" alt="Logo"/>
     </div>
-
-    <form name="form_login" id="form_login" class="form form-page container-500" ng-submit="login(input)" novalidate>
-        <fieldset>
-            <h3><span ng-bind="_t('nav_login')"></span></h3>
-            <!-- login -->
-    <!--           <div class="form-group">
-                <input name="login" id="login" type="text" class="form-control" placeholder="{{_t('lb_login')}}" value="{{input.login}}" ng-model="input.login" />
-            </div> -->
-            <!-- password -->
-<!--            <div class="form-group">
-                <input name="password" id="password" type="password" class="form-control" placeholder="{{_t('lb_password')}}" value="" ng-model="input.password" />
-            </div>
+    <form name="form_init" id="form_login" class="form form-page" ng-submit="initialize(init.input)" novalidate>
+        <fieldset class="text-center cit-welcome">
+            <h1 ng-if="!cfg.system_info.cit_authorized">{{_t('initial_welcome')}}</h1>
+            <h1 ng-if="cfg.system_info.cit_authorized">{{cfg.system_info.cit_identifier}}</h1>
         </fieldset>
+        <bb-alert alert="init.alert"></bb-alert>
+        <fieldset>
+            <!-- login -->
+            <div class="form-group">
+                <input name="user" id="user" type="text" class="form-control" placeholder="{{_t('lb_login')}}"
+                       ng-model="init.input.user" ng-blur="userBlur = true" ng-required="true" />
+                <bb-validator input-name='form_init.user.$error.required' trans='_t("field_required")' has-blur='userBlur'></bb-validator>
+            </div>
+            <!-- password -->
+            <div class="form-group">
+                <input name="pass" id="pass" type="password" class="form-control" placeholder="{{_t('lb_password')}}"
+                       ng-model="init.input.pass" ng-blur="passBlur = true" ng-required="true" />
+                <bb-validator input-name='form_init.pass.$error.required' trans='_t("field_required")' has-blur='passBlur'></bb-validator>
+            </div>
+            <!-- identifier -->
+            <div class="form-group" ng-if="!cfg.system_info.cit_authorized">
+                <input name="cit_identifier" id="cit_identifier" type="text" class="form-control" placeholder="{{_t('cit_identifier')}}"
+                       ng-model="init.input.cit_identifier" ng-blur="cit_identifierBlur = true" ng-required="true" />
+                <bb-validator input-name='form_init.cit_identifier.$error.required' trans='_t("field_required")' has-blur='passBlur'></bb-validator>
+                <bb-help-text trans="_t('cit_identifier_info')"></bb-help-text>
+            </div>
+            <div class="text-right"><small>{{_t('remote_id')}}: {{cfg.system_info.remote_id}}</small></div>
+        </fieldset>
+        <!-- password -->
         <fieldset class="submit-entry">
-            <button type="submit" class="btn btn-submit" title="{{_t('lb_enter')}}"><i class="fa fa-sign-in"></i> {{_t('lb_enter')}}</button>
+            <button type="submit" class="btn btn-submit" title="{{_t('lb_enter')}}" ng-disabled="form_init.$invalid || rowSpinner['installer_init']">
+                <bb-row-spinner
+                        spinner="rowSpinner['installer_init']"
+                        label="cfg.system_info.cit_authorized ? _t('lb_login') : _t('initialize')"
+                        icon="'fa-circle-o'">
+                </bb-row-spinner>
+            </button>
         </fieldset>
     </form>
--->
+
+
 </div>

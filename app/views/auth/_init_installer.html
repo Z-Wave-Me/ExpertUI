@@ -6,7 +6,8 @@
     </div>
     <form name="form_init" id="form_login" class="form form-page" ng-submit="initialize(init.input)" novalidate>
        <fieldset class="text-center cit-welcome">
-            <h1>{{_t('initial_welcome')}}</h1>
+            <h1 ng-if="!cfg.system_info.cit_authorized">{{_t('initial_welcome')}}</h1>
+           <h1 ng-if="cfg.system_info.cit_authorized">{{cfg.system_info.cit_identifier}}</h1>
         </fieldset>
         <bb-alert alert="init.alert"></bb-alert>
         <fieldset>
@@ -23,7 +24,7 @@
                 <bb-validator input-name='form_init.pass.$error.required' trans='_t("field_required")' has-blur='passBlur'></bb-validator>
             </div>
             <!-- identifier -->
-            <div class="form-group">
+            <div class="form-group" ng-if="!cfg.system_info.cit_authorized">
                 <input name="cit_identifier" id="cit_identifier" type="text" class="form-control" placeholder="{{_t('cit_identifier')}}"
                        ng-model="init.input.cit_identifier" ng-blur="cit_identifierBlur = true" ng-required="true" />
                 <bb-validator input-name='form_init.cit_identifier.$error.required' trans='_t("field_required")' has-blur='passBlur'></bb-validator>
@@ -33,10 +34,10 @@
         </fieldset>
         <!-- password -->
         <fieldset class="submit-entry">
-            <button type="submit" class="btn btn-submit" title="{{_t('lb_enter')}}" ng-disabled="form_init.$invalid">
+            <button type="submit" class="btn btn-submit" title="{{_t('lb_enter')}}" ng-disabled="form_init.$invalid || rowSpinner['installer_init']">
                <bb-row-spinner
                         spinner="rowSpinner['installer_init']"
-                        label="_t('initialize')"
+                        label="cfg.system_info.cit_authorized ? _t('login') : _t('initialize')"
                         icon="'fa-circle-o'">
                 </bb-row-spinner>
             </button>
