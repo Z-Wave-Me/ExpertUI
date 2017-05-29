@@ -6,8 +6,8 @@
 var config_data = {
     'cfg': {
         'app_name': 'Z-Wave CIT',
-        'app_version': '1.3.0-RC-75',
-        'app_built': '22-05-2017 15:35:48',
+        'app_version': '1.3.0-RC-78',
+        'app_built': '29-05-2017 15:08:12',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -68,9 +68,10 @@ var config_data = {
         'alarms_url': '/translations/Alarms.xml', // Url to Alarms
         'zwave_classes_url': 'storage/data/ZWave_cmd_classes.xml', // Url to Zwave Classes
         'config_url': '/config/', // Url for store config data
-        'logout_url': 'ZAutomation/api/v1/logout',// Url for logout
+        'logout_url': '/ZAutomation/api/v1/logout',// Url for logout
         'ntpdate_service': '/ZAutomation/api/v1/system/time/ntp/', // Url to check and control ntp date service
         'box_reboot': '/ZAutomation/api/v1/system/reboot', // reboot box
+        'system_info_url': '/ZAutomation/api/v1/system/info', // Sytem info
         'installer_init': '/ZAutomation/api/v1/system/certfxAuth', // Installer initialization
         //'reorg_log_url': '/config/reorg.log', // Url for store reorg log data
         'zddx_url': '/ZDDX/', // Url for zddx xml files
@@ -212,6 +213,9 @@ var config_data = {
             zwayNodeId: 1,
             APIVersion: ''
         },
+
+        // System info
+        system_info: {},
         // Required version for analytics
         analytics: {
             show: false
@@ -281,7 +285,7 @@ var config_data = {
         // Redirect to the url after logout
         'logout_redirect': {
             //'192.168.10.156': 'https://findcit.z-wavealliance.org/',
-            'find.z-wave.me': 'https://findcit.z-wavealliance.org/'
+            'findcit.z-wavealliance.org': 'https://findcit.z-wavealliance.org/zboxweb'
         },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer/wd/popp/jb

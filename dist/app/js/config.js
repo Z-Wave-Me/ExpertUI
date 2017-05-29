@@ -7,7 +7,7 @@ var config_data = {
     'cfg': {
         'app_name': 'Z-Wave Expert',
         'app_version': '1.3.0-RC-78',
-        'app_built': '29-05-2017 11:28:49',
+        'app_built': '29-05-2017 15:09:19',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -68,7 +68,7 @@ var config_data = {
         'alarms_url': '/translations/Alarms.xml', // Url to Alarms
         'zwave_classes_url': 'storage/data/ZWave_cmd_classes.xml', // Url to Zwave Classes
         'config_url': '/config/', // Url for store config data
-        'logout_url': 'ZAutomation/api/v1/logout',// Url for logout
+        'logout_url': '/ZAutomation/api/v1/logout',// Url for logout
         'ntpdate_service': '/ZAutomation/api/v1/system/time/ntp/', // Url to check and control ntp date service
         'box_reboot': '/ZAutomation/api/v1/system/reboot', // reboot box
         'system_info_url': '/ZAutomation/api/v1/system/info', // Sytem info
