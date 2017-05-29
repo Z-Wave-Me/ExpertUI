@@ -88,8 +88,16 @@ appController.controller('AuthInstallerController', function ($scope, $location,
             alertify.alertError(message);
         });
     };
+    //cfg.system_info.cit_authorized = true;
+    // Redirect to init page
+    if(!cfg.system_info.cit_authorized){
+        $location.path('/init');
+        $window.location.reload();
+    }else{ // Login
+        $scope.login($scope.input);
+    }
 
-    $scope.login($scope.input);
+
 
 });
 

@@ -1,5 +1,6 @@
 {
   "--- newtrans": "---",
+ "---": "---",
  "initial_welcome":"Welcome! Please register your CIT by entering your Z-Wave Alliance authentication.",
  "initial_setup":"Initial setup",
  "cit_identifier_info":"Please enter a unique name to identify your CIT.",
@@ -9,7 +10,6 @@
  "cit_not_registered":"Your CIT is not registered. For full functionality please register your CIT or contact the Support in case of problems.",
  "cit_licence_update":"Your license will be expire soon. Please connect your CIT to the internet to apply the new license automatically. Contact the Support in case of problems.",
  "cit_licence_expired":"Your license has been expired. Please connect your CIT to the internet. The new license will be applied automatically. Contact the Support in case of problems.",
- "---": "---",
  "settings_box_reboot":"In order to fully apply the changes a reboot is necessary. The box will be automatically rebooted after the settings has been saved.",
  "tz_set_info":"The current time zone is: __ctz__. You can change the time zone if automatic time synchronisation is disabled or there is an offset difference greater than 30 min. A reboot is necessary.",
  "auto_tz":"Automatic (Internet)",

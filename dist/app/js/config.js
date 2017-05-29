@@ -6,8 +6,8 @@
 var config_data = {
     'cfg': {
         'app_name': 'Z-Wave Expert',
-        'app_version': '1.3.0-RC-77',
-        'app_built': '24-05-2017 15:26:05',
+        'app_version': '1.3.0-RC-78',
+        'app_built': '29-05-2017 11:28:49',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -182,7 +182,7 @@ var config_data = {
         // Auth
         'auth': {
             'login': 'admin',
-            'password': 'admin'
+            'password': 'admin1'
         },
         // Pages without authorization
         'no_auth_pages':['','init'],
@@ -285,7 +285,7 @@ var config_data = {
         // Redirect to the url after logout
         'logout_redirect': {
             //'192.168.10.156': 'https://findcit.z-wavealliance.org/',
-            'find.z-wave.me': 'https://findcit.z-wavealliance.org/'
+            'findcit.z-wavealliance.org': 'https://findcit.z-wavealliance.org/zboxweb'
         },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer/wd/popp/jb

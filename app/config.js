@@ -182,7 +182,7 @@ var config_data = {
         // Auth
         'auth': {
             'login': 'admin',
-            'password': 'admin'
+            'password': 'admin1'
         },
         // Pages without authorization
         'no_auth_pages':['','init'],
@@ -285,11 +285,11 @@ var config_data = {
         // Redirect to the url after logout
         'logout_redirect': {
             //'192.168.10.156': 'https://findcit.z-wavealliance.org/',
-            'find.z-wave.me': 'https://findcit.z-wavealliance.org/'
+            'findcit.z-wavealliance.org': 'https://findcit.z-wavealliance.org/zboxweb'
         },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer/wd/popp/jb
-        'app_type': 'default',
+        'app_type': 'installer',
         'custom_cfg': {
             'default': {
                 'logo': 'app/images/zplus.jpg',
