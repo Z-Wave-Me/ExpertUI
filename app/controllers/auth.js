@@ -7,12 +7,12 @@
  * @class AuthController
  *
  */
-appController.controller('InitInstallerController', function ($scope,$location,$timeout,$window,cfg,dataService,deviceService) {
+appController.controller('InitInstallerController', function ($scope, $location, $timeout, $window, cfg, dataService, deviceService) {
     $scope.init = {
         input: {
             user: '',
             pass: '',
-            cit_identifier: cfg.system_info.cit_identifier||''
+            cit_identifier: cfg.system_info.cit_identifier || ''
         },
         alert: {}
     };
@@ -28,11 +28,15 @@ appController.controller('InitInstallerController', function ($scope,$location,$
             'password': input.pass
         };
         // Init
-        if(!cfg.system_info.cit_authorized){
+        if (!cfg.system_info.cit_authorized) {
             dataService.postApi('installer_init', input).then(function (response) {
-                if(!response.data.data.result){
-                    $scope.init.alert = {message: response.dtata.data.result_message, status: 'alert-danger', icon: 'fa-exclamation-triangle'};
-                }else{
+                if (!response.data.data.result) {
+                    $scope.init.alert = {
+                        message: response.dtata.data.result_message,
+                        status: 'alert-danger',
+                        icon: 'fa-exclamation-triangle'
+                    };
+                } else {
                     $scope.login(auth);
                 }
 
@@ -43,14 +47,12 @@ appController.controller('InitInstallerController', function ($scope,$location,$
                 }
                 $scope.init.alert = {message: message, status: 'alert-danger', icon: 'fa-exclamation-triangle'};
 
-            }).finally(function(){
+            }).finally(function () {
                 $timeout($scope.toggleRowSpinner, 1000);
-            }) ;
-        }else{ // Login
+            });
+        } else { // Login
             $scope.login(auth);
         }
-
-
 
 
     };
@@ -80,9 +82,9 @@ appController.controller('InitInstallerController', function ($scope,$location,$
                 return;
             }
             $scope.init.alert = {message: message, status: 'alert-danger', icon: 'fa-exclamation-triangle'};
-        }).finally(function(){
+        }).finally(function () {
             $timeout($scope.toggleRowSpinner, 1000);
-        }) ;
+        });
     };
 
 });
@@ -138,13 +140,12 @@ appController.controller('AuthInstallerController', function ($scope, $location,
     };
     //cfg.system_info.cit_authorized = true;
     // Redirect to init page
-    if(!cfg.system_info.cit_authorized){
+    if (!cfg.system_info.cit_authorized) {
         $location.path('/init');
         $window.location.reload();
-    }else{ // Login
+    } else { // Login
         $scope.login($scope.input);
     }
-
 
 
 });
@@ -156,17 +157,9 @@ appController.controller('AuthInstallerController', function ($scope, $location,
  */
 appController.controller('LogoutInstallerController', function (dataService, deviceService) {
     dataService.getApi('logout_url').then(function (response) {
-        deviceService.logOut();
-    });
-    /**
-     * Logout an user
-     */
-    /*$scope.logout = function () {
-     deviceService.setRememberMe(null);
-     dataService.getApi('logout_url').then(function (response) {
-     deviceService.logOut();
-     });
-     };
-     $scope.logout();*/
+    }, function (error) {})
+     .finally(function () {
+            deviceService.logOut();
+        });
 
 });

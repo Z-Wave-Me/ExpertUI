@@ -422,7 +422,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
                 angular.extend(cfg.analytics, {show: true});
             }
         }, function (error) {
-            alertify.alertError($scope._t('error_load_data'));
+            //alertify.alertError($scope._t('error_load_data'));
 
         });
     };
