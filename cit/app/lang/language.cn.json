@@ -1,4 +1,5 @@
 {
+  "cit_check_login":"Unable to initialize your CIT. Please check your login or password and wether the controller's UID is registrated on your account.",
   "initial_welcome":"Welcome! Please register your CIT by entering your Z-Wave Alliance authentication.",
   "initial_setup":"Initial setup",
   "cit_identifier_info":"Please enter a unique name to identify your CIT.",

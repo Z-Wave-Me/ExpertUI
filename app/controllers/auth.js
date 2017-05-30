@@ -32,7 +32,7 @@ appController.controller('InitInstallerController', function ($scope, $location,
             dataService.postApi('installer_init', input).then(function (response) {
                 if (!response.data.data.result) {
                     $scope.init.alert = {
-                        message: response.dtata.data.result_message,
+                        message: $scope._t('cit_check_login') + ' ' + response.data.data.result_message,
                         status: 'alert-danger',
                         icon: 'fa-exclamation-triangle'
                     };
@@ -157,8 +157,9 @@ appController.controller('AuthInstallerController', function ($scope, $location,
  */
 appController.controller('LogoutInstallerController', function (dataService, deviceService) {
     dataService.getApi('logout_url').then(function (response) {
-    }, function (error) {})
-     .finally(function () {
+    }, function (error) {
+    })
+        .finally(function () {
             deviceService.logOut();
         });
 
