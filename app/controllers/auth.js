@@ -31,7 +31,7 @@ appController.controller('InitInstallerController', function ($scope,$location,$
         if(!cfg.system_info.cit_authorized){
             dataService.postApi('installer_init', input).then(function (response) {
                 if(!response.data.data.result){
-                    $scope.init.alert = {message: response.dtata.data.result_message, status: 'alert-danger', icon: 'fa-exclamation-triangle'};
+                    $scope.init.alert = {message: $scope._t('cit_check_login') + ' ' + response.data.data.result_message , status: 'alert-danger', icon: 'fa-exclamation-triangle'};
                 }else{
                     $scope.login(auth);
                 }
