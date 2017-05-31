@@ -34,9 +34,9 @@
         </fieldset>
         <!-- password -->
         <fieldset class="submit-entry">
-            <button type="submit" class="btn btn-submit" title="{{_t('lb_enter')}}" ng-disabled="form_init.$invalid || rowSpinner['installer_init']">
+            <button type="submit" class="btn btn-submit" title="{{_t('lb_enter')}}" ng-disabled="form_init.$invalid || rowSpinner['installer_auth']">
                <bb-row-spinner
-                        spinner="rowSpinner['installer_init']"
+                        spinner="rowSpinner['installer_auth']"
                         label="cfg.system_info.cit_authorized ? _t('login') : _t('initialize')"
                         icon="'fa-circle-o'">
                 </bb-row-spinner>

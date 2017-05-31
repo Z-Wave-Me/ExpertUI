@@ -8,7 +8,7 @@
  *
  */
 appController.controller('InitInstallerController', function ($scope, $location, $timeout, $window, cfg, dataService, deviceService) {
-    $scope.init = {
+    $scope.auth = {
         input: {
             user: '',
             pass: '',
@@ -20,41 +20,40 @@ appController.controller('InitInstallerController', function ($scope, $location,
     /**
      * Login proccess
      */
-    $scope.initialize = function (input) {
-        $scope.init.alert = {};
-        $scope.toggleRowSpinner('installer_init');
+    $scope.authenticate = function (input) {
+        $scope.auth.alert = {};
+        $scope.toggleRowSpinner('installer_auth');
         var auth = {
             'login': input.user,
             'password': input.pass
         };
-        // Init
-        if (!cfg.system_info.cit_authorized) {
-            dataService.postApi('installer_init', input).then(function (response) {
-                if (!response.data.data.result) {
-                    $scope.init.alert = {
-                        message: $scope._t('cit_check_login') + ' ' + response.data.data.result_message,
-                        status: 'alert-danger',
-                        icon: 'fa-exclamation-triangle'
-                    };
-                } else {
-                    $scope.login(auth);
-                }
+        // cit authentication
+        dataService.postApi('installer_auth', input).then(function (response) {
+            if (!response.data.data.result) {
+                $scope.auth.alert = {
+                    message: $scope._t('cit_check_login') + ' ' + response.data.data.result_message,
+                    status: 'alert-danger',
+                    icon: 'fa-exclamation-triangle'
+                };
+            } else {
+                $scope.login(auth);
+            }
 
-            }, function (error) {
-                var message = $scope._t('initial_fail');
+        }, function (error) {
+            if (cfg.system_info.cit_authorized && error.status == 504) {
+                $scope.login(auth);
+            } else {
+                console.log(error);
+                var message = $scope._t('initial_fail');// + ' ' + response.data.data.result_message;
                 if (error.status == 500) {
                     message = $scope._t('error_load_data');
                 }
-                $scope.init.alert = {message: message, status: 'alert-danger', icon: 'fa-exclamation-triangle'};
+                $scope.auth.alert = {message: message, status: 'alert-danger', icon: 'fa-exclamation-triangle'};
+            }
 
-            }).finally(function () {
-                $timeout($scope.toggleRowSpinner, 1000);
-            });
-        } else { // Login
-            $scope.login(auth);
-        }
-
-
+        }).finally(function () {
+            $timeout($scope.toggleRowSpinner, 1000);
+        });
     };
 
     /**
@@ -81,7 +80,7 @@ appController.controller('InitInstallerController', function ($scope, $location,
                 $window.location.href = redirect;
                 return;
             }
-            $scope.init.alert = {message: message, status: 'alert-danger', icon: 'fa-exclamation-triangle'};
+            $scope.auth.alert = {message: message, status: 'alert-danger', icon: 'fa-exclamation-triangle'};
         }).finally(function () {
             $timeout($scope.toggleRowSpinner, 1000);
         });
