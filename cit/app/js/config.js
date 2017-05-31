@@ -6,8 +6,8 @@
 var config_data = {
     'cfg': {
         'app_name': 'Z-Wave CIT',
-        'app_version': '1.3.0-RC-81',
-        'app_built': '31-05-2017 09:09:50',
+        'app_version': '1.3.0-RC-82',
+        'app_built': '31-05-2017 10:24:09',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -72,7 +72,7 @@ var config_data = {
         'ntpdate_service': '/ZAutomation/api/v1/system/time/ntp/', // Url to check and control ntp date service
         'box_reboot': '/ZAutomation/api/v1/system/reboot', // reboot box
         'system_info_url': '/ZAutomation/api/v1/system/info', // Sytem info
-        'installer_init': '/ZAutomation/api/v1/system/certfxAuth', // Installer initialization
+        'installer_auth': '/ZAutomation/api/v1/system/certfxAuth', // Installer initialization
         //'reorg_log_url': '/config/reorg.log', // Url for store reorg log data
         'zddx_url': '/ZDDX/', // Url for zddx xml files
         'notes_url': '/config/notes.log', // Url for store notes data
