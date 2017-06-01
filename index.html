@@ -237,8 +237,17 @@
                          <span class="timestamp"
                                ng-include="'app/views/indicator.html'"></span>
                     </li>
+
+                    <!-- Internet connection indicator -->
+                    <li class="navibar-divider" ng-if="cfg.app_type === 'installer'"></li>
+                    <li class="navibar-item" ng-if="cfg.app_type === 'installer'">
+                        <span class="navibar-item-root">
+                        <i class="fa fa-wifi" ng-class="isOnline ? 'green' : 'red'"></i>
+                    </span>
+                    </li>
+
                     <!-- Logout - only for CIT  on the https://findcit.z-wavealliance.org/ -->
-                    <li class="navibar-divider" ng-if_="cfg.app_type === 'installer'"> </li>
+                    <li class="navibar-divider" ng-if="cfg.app_type === 'installer'"> </li>
                     <li class="navibar-item" ng-if="cfg.app_type === 'installer'">
                         <a class="navibar-item-root" ng-href="#logout" title="{{ _t('logout')}}">
                             <i class="fa fa-sign-out"></i> <span class="main-nav-name">{{ _t('logout')}}</span>

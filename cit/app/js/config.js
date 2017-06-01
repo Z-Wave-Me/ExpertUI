@@ -5,9 +5,10 @@
  */
 var config_data = {
     'cfg': {
+        'environment': 'live',
         'app_name': 'Z-Wave CIT',
         'app_version': '1.3.0-RC-82',
-        'app_built': '31-05-2017 10:24:09',
+        'app_built': '01-06-2017 17:00:05',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -286,6 +287,10 @@ var config_data = {
         'logout_redirect': {
             //'192.168.10.156': 'https://findcit.z-wavealliance.org/',
             'findcit.z-wavealliance.org': 'https://findcit.z-wavealliance.org/zboxweb'
+        },
+        // Url to check if is on-line
+        'ping': {
+            'findcit': 'https://findcit.z-wavealliance.org/zboxweb'
         },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer/wd/popp/jb

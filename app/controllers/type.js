@@ -152,7 +152,8 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
             if (isController) {
                 sdk = node.data.SDK.value || ZWaveAPIData.controller.data.SDK.value;
             } else {
-                sdk = major + '.' + minor;
+                //sdk = major + '.' + minor;
+                sdk = major + '.' + tranformTwoDigits(minor);
                 fromSdk = false;
             }
             /*if (!$scope.isController && node.data.SDK.value == '') {
@@ -220,7 +221,7 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
             obj['mwief'] = mwief;
             obj['ddr'] = ddr;
             obj['ZWavePlusInfo'] = ZWavePlusInfo;
-            obj['sdk'] = (sdk == '0.0' ? '?' : sdk);
+            obj['sdk'] = (sdk == '0.00' || sdk == '0.0' ? '?' : sdk);
             obj['fromSdk'] = fromSdk;
             obj['appVersion'] = appVersion;
             obj['type'] = deviceType;
@@ -250,6 +251,10 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
                 $scope.devices.ids.push(nodeId);
             }
         });
+    }
+
+    function tranformTwoDigits (number) {
+        return ("0" + number).slice(-2);
     }
 
     /**

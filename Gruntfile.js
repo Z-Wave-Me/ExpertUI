@@ -268,6 +268,10 @@ module.exports = function (grunt) {
                             }
                         },
                         {
+                            match: 'dev',
+                            replacement: 'live'
+                        },
+                        {
                             match: 'app_name',
                             replacement: app_cfg.name
                         },
