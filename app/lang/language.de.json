@@ -616,5 +616,6 @@
  "request_update": "Update anfordern",
  "update_form_primary": "Starte Netzwerkaktualisierung vom Primary Controller.",
  "update_form_sis": "Anfordern der Netzwerkaktualisierung von SIS.",
- "nav_rssimeter": "Noise Meter"
+ "nav_rssimeter": "Noise Meter",
+ "cit_identifier_update_info": "Änderung muss mit Anmeldeinformationen bestätigt werden."
 }

@@ -59,6 +59,7 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
         lastSsid: "",
         lastCITIdentifier: "",
         updateCITIdentifier: false,
+        modalCancel: false,
         countdown: 60,
         ntp: {
             status: {},
@@ -92,20 +93,21 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
     $scope.loadSettings();
 
 
-    $scope.cancelcloseModal = function($event) {
+    $scope.cancelUpdate = function($event) {
 
         $scope.settings.input.pass = "";
         $scope.settings.input.user = "";
 
         $scope.settings.wait = false;
         $scope.settings.updateCITIdentifier = false;
+        $scope.settings.modalCancel = true;
 
         $scope.storeSettings($scope.settings.input);
 
         $scope.handleModal('citidentifierModal', $event);
     };
 
-    $scope.okModal = function($event) {
+    $scope.confirmUpdate = function($event) {
 
         $scope.settings.lastCITIdentifier = $scope.settings.input.cit_identifier;
         $scope.settings.updateCITIdentifier = true;
@@ -121,7 +123,7 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
      * @param {object} input
      */
     $scope.storeSettings = function(input,$event) {
-        if(input.cit_identifier !== $scope.settings.lastCITIdentifier) {
+        if(input.cit_identifier !== $scope.settings.lastCITIdentifier && !$scope.settings.modalCancel) {
             $scope.settings.wait = true;
             $scope.handleModal('citidentifierModal',$event);
         }

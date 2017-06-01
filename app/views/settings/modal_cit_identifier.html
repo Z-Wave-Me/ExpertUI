@@ -2,7 +2,7 @@
 <div id="citidentifierModal" class="appmodal" ng-show="modalArr.citidentifierModal">
     <div class="appmodal-in">
         <div class="appmodal-header">
-                <span class="appmodal-close" ng-click="cancelcloseModal($event)"><i
+                <span class="appmodal-close" ng-click="cancelUpdate($event)"><i
                         class="fa fa-times"></i></span>
             <h3><i class="fa fa-exclamation-circle"></i> {{getCustomCfgVal('title')}}</h3>
         </div>
@@ -19,10 +19,10 @@
             </fieldset>
         </div>
         <div class="appmodal-footer">
-            <button type="button" class="btn btn-default" ng-click="okModal($event)">
+            <button type="button" class="btn btn-default" ng-click="confirmUpdate($event)">
                 <i class="fa fa-check"></i> <span class="btn-name">{{_t('ok')}}</span>
             </button>
-            <button type="button" class="btn btn-default" ng-click="cancelcloseModal($event)">
+            <button type="button" class="btn btn-default" ng-click="cancelUpdate($event)">
                 <i class="fa fa-times text-danger"></i> <span class="btn-name">{{_t('btn_cancel')}}</span>
             </button>
         </div>

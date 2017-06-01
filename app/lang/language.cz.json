@@ -610,5 +610,6 @@
   "request_update": "Request Update",
   "update_form_primary": "Starting network update from Primary.",
   "update_form_sis": "Requesting Network Update from SIS.",
-  "nav_rssimeter": "Noise Meter"
+  "nav_rssimeter": "Noise Meter",
+  "cit_identifier_update_info": "Change must be confirmed with login credentials."
 }
