@@ -1,4 +1,5 @@
 {
+ "error_load_cit_user": "Die angegebenen Login Daten stimmen nicht mit denen des registrierten CIT-Installateurs überein.",
  "cit_check_login":"Ihr CIT kann nicht initialisiert werden. Bitte überprüfen Sie Ihre Login Daten und ob die UID des Controllers auf Ihrem Konto registriert ist.",
  "initial_welcome":"Herzlich willkommen! Bitte registrieren Sie Ihren CIT, indem Sie Ihre Z-Wave Alliance Authentifizierung eingeben.",
  "initial_setup":"Initiales Setup",
