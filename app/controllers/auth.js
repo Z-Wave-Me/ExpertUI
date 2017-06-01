@@ -27,6 +27,11 @@ appController.controller('InitInstallerController', function ($scope, $location,
             'login': input.user,
             'password': input.pass
         };
+        if(cfg.app_name == '@@app_name'){
+            $scope.login(auth);
+            return;
+        }
+
         // cit authentication
         dataService.postApi('installer_auth', input).then(function (response) {
             if (!response.data.data.result) {

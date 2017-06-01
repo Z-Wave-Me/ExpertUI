@@ -5,6 +5,7 @@
  */
 var config_data = {
     'cfg': {
+        'environment': '@@dev',
         'app_name': '@@app_name',
         'app_version': '@@app_version',
         'app_built': '@@app_built',
@@ -287,9 +288,13 @@ var config_data = {
             //'192.168.10.156': 'https://findcit.z-wavealliance.org/',
             'findcit.z-wavealliance.org': 'https://findcit.z-wavealliance.org/zboxweb'
         },
+        // Url to check if is on-line
+        'ping': {
+            'findcit': 'https://findcit.z-wavealliance.org/zboxweb'
+        },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer/wd/popp/jb
-        'app_type': 'default',
+        'app_type': 'installer',
         'custom_cfg': {
             'default': {
                 'logo': 'app/images/zplus.jpg',
