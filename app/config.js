@@ -73,6 +73,7 @@ var config_data = {
         'box_reboot': '/ZAutomation/api/v1/system/reboot', // reboot box
         'system_info_url': '/ZAutomation/api/v1/system/info', // Sytem info
         'installer_auth': '/ZAutomation/api/v1/system/certfxAuth', // Installer initialization
+        'identifier_update': '/ZAutomation/api/v1/system/certfxUpdateIdentifier', // Identifier update
         //'reorg_log_url': '/config/reorg.log', // Url for store reorg log data
         'zddx_url': '/ZDDX/', // Url for zddx xml files
         'notes_url': '/config/notes.log', // Url for store notes data
