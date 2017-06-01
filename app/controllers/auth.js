@@ -24,7 +24,7 @@ appController.controller('InitInstallerController', function ($scope, $location,
         $scope.auth.alert = {};
         $scope.toggleRowSpinner('installer_auth');
         var auth = {
-            'login': input.user,
+            'login': input.user.toLowerCase(),
             'password': input.pass
         };
         if(cfg.app_name == '@@app_name'){
@@ -77,7 +77,7 @@ appController.controller('InitInstallerController', function ($scope, $location,
             $scope.loading = false;
             var message = $scope._t('error_load_data');
             if (error.status == 401) {
-                message = $scope._t('error_load_user');
+                message = $scope._t('error_load_cit_user');
             }
 
             // Redirect to an url from list

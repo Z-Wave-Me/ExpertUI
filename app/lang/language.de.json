@@ -1,8 +1,9 @@
 {
- "go":"GO",
- "nav_firmware_token":"Access token",
- "add_token_info":"If you have acquired an acces token you may include this token here.",
- "insert_token":"Insert your token",
+ "go":"LOS",
+ "nav_firmware_token":"Zugangstoken",
+ "add_token_info":"Wenn Sie ein Zugriffstoken erworben haben, können Sie dieses Token hier eingeben.",
+ "insert_token":"Bitte geben Sie Ihr Token ein",
+ "error_load_cit_user": "Die angegebenen Login Daten stimmen nicht mit denen des registrierten CIT-Installateurs überein.",
  "cit_check_login":"Ihr CIT kann nicht initialisiert werden. Bitte überprüfen Sie Ihre Login Daten und ob die UID des Controllers auf Ihrem Konto registriert ist.",
  "initial_welcome":"Herzlich willkommen! Bitte registrieren Sie Ihren CIT, indem Sie Ihre Z-Wave Alliance Authentifizierung eingeben.",
  "initial_setup":"Initiales Setup",
