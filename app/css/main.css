@@ -14322,45 +14322,50 @@ img {
 
 /* Button
 -------------------------------------------------- */
-/* line 4, ../sass/common/_button.scss */
+/* line 3, ../sass/common/_button.scss */
+.btn {
+  padding: 12px 14px;
+}
+
+/* line 7, ../sass/common/_button.scss */
 .panel .btn, .cfg-block .btn {
   margin: 0 5px 10px 0;
 }
 
-/* line 9, ../sass/common/_button.scss */
+/* line 12, ../sass/common/_button.scss */
 .btn-goup-block {
   display: table;
   width: 100%;
   margin: 0 0 10px 0;
 }
-/* line 14, ../sass/common/_button.scss */
+/* line 17, ../sass/common/_button.scss */
 .btn-goup-block .btn.active .fa {
   color: #80AD80;
 }
 
-/* line 24, ../sass/common/_button.scss */
+/* line 27, ../sass/common/_button.scss */
 .btn-goup-1 .btn {
   width: 100%;
 }
 
-/* line 29, ../sass/common/_button.scss */
+/* line 32, ../sass/common/_button.scss */
 .btn-goup-2 .btn {
   width: 50%;
 }
 
-/* line 34, ../sass/common/_button.scss */
+/* line 37, ../sass/common/_button.scss */
 .btn-goup-3 .btn {
   width: 33.33333%;
 }
 
-/* line 39, ../sass/common/_button.scss */
+/* line 42, ../sass/common/_button.scss */
 .btn-default {
   color: #0d0d0d;
   background-color: #FFFFFF;
   border-color: #CCCCCC;
 }
 
-/* line 45, ../sass/common/_button.scss */
+/* line 48, ../sass/common/_button.scss */
 .btn-default.active {
   background-color: #FFFFFF;
 }
@@ -14371,39 +14376,39 @@ img {
         font-size: $app-btn-icon-size; 
     }
 }*/
-/* line 56, ../sass/common/_button.scss */
+/* line 59, ../sass/common/_button.scss */
 .btn-submit {
   color: #FFFFFF;
   border: solid 1px #80AD80;
   background-color: #4e794e;
 }
-/* line 60, ../sass/common/_button.scss */
+/* line 63, ../sass/common/_button.scss */
 .btn-submit:hover, .btn-submit:focus {
   background-color: #80AD80;
 }
 
-/* line 65, ../sass/common/_button.scss */
+/* line 68, ../sass/common/_button.scss */
 .btn-installed {
   border: 0 none;
   background-color: none !important;
 }
 
-/* line 70, ../sass/common/_button.scss */
+/* line 73, ../sass/common/_button.scss */
 .btn-disabled {
   border: 0 none;
   background-color: transparent !important;
 }
 
-/* line 75, ../sass/common/_button.scss */
+/* line 78, ../sass/common/_button.scss */
 .btn-small {
   font-size: 90%;
 }
-/* line 77, ../sass/common/_button.scss */
+/* line 80, ../sass/common/_button.scss */
 .btn-small .fa {
   font-size: 95%;
 }
 
-/* line 82, ../sass/common/_button.scss */
+/* line 85, ../sass/common/_button.scss */
 .btn-tag {
   display: block;
   position: relative;
@@ -14411,48 +14416,48 @@ img {
   font-size: 100%;
   margin: 0 0 10px 0;
 }
-/* line 88, ../sass/common/_button.scss */
+/* line 91, ../sass/common/_button.scss */
 .btn-tag .fa {
   position: absolute;
   top: 5px;
   right: 10px;
   font-size: 150%;
 }
-/* line 94, ../sass/common/_button.scss */
+/* line 97, ../sass/common/_button.scss */
 .btn-tag.active {
   background-color: #f2f2f2;
 }
 
 /* Button tabs
 -------------------------------------------------- */
-/* line 103, ../sass/common/_button.scss */
+/* line 106, ../sass/common/_button.scss */
 .tabs-wrap {
   margin: 0 0 10px 0;
 }
 
-/* line 106, ../sass/common/_button.scss */
+/* line 109, ../sass/common/_button.scss */
 .btn-goup-tabs {
   /* display: table;
    width: 100%;
    margin: 0 0 $spacing 0;*/
 }
-/* line 110, ../sass/common/_button.scss */
+/* line 113, ../sass/common/_button.scss */
 .btn-goup-tabs .btn {
   padding: 10px;
   font-size: 105%;
   background-color: #FFFFFF;
   border-color: #9fd8ef;
 }
-/* line 115, ../sass/common/_button.scss */
+/* line 118, ../sass/common/_button.scss */
 .btn-goup-tabs .btn.active {
   background-color: #f2f2f2;
 }
-/* line 118, ../sass/common/_button.scss */
+/* line 121, ../sass/common/_button.scss */
 .btn-goup-tabs .btn .fa {
   font-size: 110%;
   color: #404040;
 }
-/* line 123, ../sass/common/_button.scss */
+/* line 126, ../sass/common/_button.scss */
 .btn-goup-tabs .active .fa {
   color: #6494BC;
 }
@@ -14661,7 +14666,6 @@ input:checked + .slider:before {
 -------------------------------------------------- */
 /* line 3, ../sass/common/_form.scss */
 .form-control {
-  font-size: 95%;
   color: #595959;
   border: solid 1px #9fd8ef;
   padding: 12px 14px;
@@ -16540,30 +16544,34 @@ http://codepen.io/MattIn4D/pen/LiKFC
 
   /* Button
   -------------------------------------------------- */
-  /* line 115, ../sass/responsive/_mq_shared.scss */
+  /* line 114, ../sass/responsive/_mq_shared.scss */
+  .btn, .btn-device-admin {
+    padding: 6px 12px;
+  }
+  /* line 116, ../sass/responsive/_mq_shared.scss */
   .btn .fa, .btn-device-admin .fa {
     font-size: 120%;
   }
 
-  /* line 119, ../sass/responsive/_mq_shared.scss */
+  /* line 120, ../sass/responsive/_mq_shared.scss */
   .btn-goup-block {
     width: auto !important;
     display: inline-block;
     margin: 0;
   }
-  /* line 123, ../sass/responsive/_mq_shared.scss */
+  /* line 124, ../sass/responsive/_mq_shared.scss */
   .btn-goup-block .btn {
     width: auto !important;
   }
 
-  /* line 127, ../sass/responsive/_mq_shared.scss */
+  /* line 128, ../sass/responsive/_mq_shared.scss */
   .btn-tag {
     display: inline-block;
     position: static;
     font-size: 100%;
     margin: 0 10px 10px 0;
   }
-  /* line 132, ../sass/responsive/_mq_shared.scss */
+  /* line 133, ../sass/responsive/_mq_shared.scss */
   .btn-tag .fa {
     position: static;
     margin: 0 0 0 10px;
@@ -16572,35 +16580,35 @@ http://codepen.io/MattIn4D/pen/LiKFC
 
   /* Modal
   -------------------------------------------------- */
-  /* line 141, ../sass/responsive/_mq_shared.scss */
+  /* line 142, ../sass/responsive/_mq_shared.scss */
   .appmodal .appmodal-in {
     width: 60%;
   }
 
-  /* line 147, ../sass/responsive/_mq_shared.scss */
+  /* line 148, ../sass/responsive/_mq_shared.scss */
   .appmodal-header .appmodal-close {
     font-size: 140%;
   }
 
   /* Dropdown
   -------------------------------------------------- */
-  /* line 154, ../sass/responsive/_mq_shared.scss */
+  /* line 155, ../sass/responsive/_mq_shared.scss */
   .app-dropdown {
     min-width: 360px;
   }
 
-  /* line 159, ../sass/responsive/_mq_shared.scss */
+  /* line 160, ../sass/responsive/_mq_shared.scss */
   .app-dropdown.dropdown-lang {
     min-width: 250px;
   }
-  /* line 162, ../sass/responsive/_mq_shared.scss */
+  /* line 163, ../sass/responsive/_mq_shared.scss */
   .app-dropdown.dropdown-lang ul li {
     padding: 5px;
   }
 
   /* Report
   -------------------------------------------------- */
-  /* line 173, ../sass/responsive/_mq_shared.scss */
+  /* line 174, ../sass/responsive/_mq_shared.scss */
   .report-img {
     max-width: 40px;
     max-height: 40px;
@@ -16608,7 +16616,7 @@ http://codepen.io/MattIn4D/pen/LiKFC
 
   /* Footer
   -------------------------------------------------- */
-  /* line 181, ../sass/responsive/_mq_shared.scss */
+  /* line 182, ../sass/responsive/_mq_shared.scss */
   #footer #footer_in {
     height: 40px;
     line-height: 40px;
@@ -16616,11 +16624,11 @@ http://codepen.io/MattIn4D/pen/LiKFC
 
   /* Others
   -------------------------------------------------- */
-  /* line 189, ../sass/responsive/_mq_shared.scss */
+  /* line 190, ../sass/responsive/_mq_shared.scss */
   .timestamp {
     font-size: 90% !important;
   }
-  /* line 191, ../sass/responsive/_mq_shared.scss */
+  /* line 192, ../sass/responsive/_mq_shared.scss */
   .timestamp .fa {
     font-size: 90% !important;
   }
@@ -16753,30 +16761,34 @@ http://codepen.io/MattIn4D/pen/LiKFC
 
   /* Button
   -------------------------------------------------- */
-  /* line 115, ../sass/responsive/_mq_shared.scss */
+  /* line 114, ../sass/responsive/_mq_shared.scss */
+  .btn, .btn-device-admin {
+    padding: 6px 12px;
+  }
+  /* line 116, ../sass/responsive/_mq_shared.scss */
   .btn .fa, .btn-device-admin .fa {
     font-size: 120%;
   }
 
-  /* line 119, ../sass/responsive/_mq_shared.scss */
+  /* line 120, ../sass/responsive/_mq_shared.scss */
   .btn-goup-block {
     width: auto !important;
     display: inline-block;
     margin: 0;
   }
-  /* line 123, ../sass/responsive/_mq_shared.scss */
+  /* line 124, ../sass/responsive/_mq_shared.scss */
   .btn-goup-block .btn {
     width: auto !important;
   }
 
-  /* line 127, ../sass/responsive/_mq_shared.scss */
+  /* line 128, ../sass/responsive/_mq_shared.scss */
   .btn-tag {
     display: inline-block;
     position: static;
     font-size: 100%;
     margin: 0 10px 10px 0;
   }
-  /* line 132, ../sass/responsive/_mq_shared.scss */
+  /* line 133, ../sass/responsive/_mq_shared.scss */
   .btn-tag .fa {
     position: static;
     margin: 0 0 0 10px;
@@ -16785,35 +16797,35 @@ http://codepen.io/MattIn4D/pen/LiKFC
 
   /* Modal
   -------------------------------------------------- */
-  /* line 141, ../sass/responsive/_mq_shared.scss */
+  /* line 142, ../sass/responsive/_mq_shared.scss */
   .appmodal .appmodal-in {
     width: 60%;
   }
 
-  /* line 147, ../sass/responsive/_mq_shared.scss */
+  /* line 148, ../sass/responsive/_mq_shared.scss */
   .appmodal-header .appmodal-close {
     font-size: 140%;
   }
 
   /* Dropdown
   -------------------------------------------------- */
-  /* line 154, ../sass/responsive/_mq_shared.scss */
+  /* line 155, ../sass/responsive/_mq_shared.scss */
   .app-dropdown {
     min-width: 380px;
   }
 
-  /* line 159, ../sass/responsive/_mq_shared.scss */
+  /* line 160, ../sass/responsive/_mq_shared.scss */
   .app-dropdown.dropdown-lang {
     min-width: 250px;
   }
-  /* line 162, ../sass/responsive/_mq_shared.scss */
+  /* line 163, ../sass/responsive/_mq_shared.scss */
   .app-dropdown.dropdown-lang ul li {
     padding: 5px;
   }
 
   /* Report
   -------------------------------------------------- */
-  /* line 173, ../sass/responsive/_mq_shared.scss */
+  /* line 174, ../sass/responsive/_mq_shared.scss */
   .report-img {
     max-width: 40px;
     max-height: 40px;
@@ -16821,7 +16833,7 @@ http://codepen.io/MattIn4D/pen/LiKFC
 
   /* Footer
   -------------------------------------------------- */
-  /* line 181, ../sass/responsive/_mq_shared.scss */
+  /* line 182, ../sass/responsive/_mq_shared.scss */
   #footer #footer_in {
     height: 40px;
     line-height: 40px;
@@ -16829,11 +16841,11 @@ http://codepen.io/MattIn4D/pen/LiKFC
 
   /* Others
   -------------------------------------------------- */
-  /* line 189, ../sass/responsive/_mq_shared.scss */
+  /* line 190, ../sass/responsive/_mq_shared.scss */
   .timestamp {
     font-size: 90% !important;
   }
-  /* line 191, ../sass/responsive/_mq_shared.scss */
+  /* line 192, ../sass/responsive/_mq_shared.scss */
   .timestamp .fa {
     font-size: 90% !important;
   }

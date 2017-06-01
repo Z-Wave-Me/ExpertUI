@@ -1,5 +1,8 @@
 /* Button
 -------------------------------------------------- */
+.btn{
+    padding: $app-input-padding;
+}
 .panel,.cfg-block {
     .btn{
         margin: 0 $spacing-half $spacing 0;

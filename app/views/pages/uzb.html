@@ -1,6 +1,7 @@
 <!-- Uzb view -->
 <div data-ng-controller="UzbController">
     <bb-loader></bb-loader>
+    <!-- /////////////////////////// Firmware update /////////////////////////// -->
     <div class="page-header"><h1>{{_t('upgrade_bootloader_firmware')}}</h1></div>
     <p>{{_t('txt_uzb_info')}}</p>
     <bb-alert alert="alert"></bb-alert>
@@ -11,7 +12,7 @@
                 <td style="white-space: nowrap;"><strong>{{v.released | date:'yyyy-MM-dd'}}</strong></td>
                 <td>{{v.appVersionMajor + '.' + v.appVersionMinor}}</td>
                 <td>{{v.comment}}</td>
-
+                <td ng-show="token.load">{{token.load}}</td>
                 <td class="td-action">
                     <!-- upgrade_bootloader -->
                     <button class="btn btn-default" id="btn_boot_{{v.id}}"
@@ -43,31 +44,57 @@
     </div>
     <div class="form-page">
         <div class="fieldset text-right">
-        <!--upload_bootloader -->
-        <input class="inputfile" type="file" name="file" id="upload_bootloader"
-               ng-click="icons.find = v"
-               onchange="angular.element(this).scope().uploadFile('upload_bootloader',this.files)" />
-        <label for="upload_bootloader" class="btn btn-primary" title="{{_t('upload_bootloader')}}"
-               ng-disabled="rowSpinner['upload_bootloader']">
-            <bb-row-spinner
-                    spinner="rowSpinner['upload_bootloader']"
-                    label="_t('upload_bootloader')"
-                    icon="'fa-upload'">
-            </bb-row-spinner>
-        </label>
+            <!--upload_bootloader -->
+            <input class="inputfile" type="file" name="file" id="upload_bootloader"
+                   ng-click="icons.find = v"
+                   onchange="angular.element(this).scope().uploadFile('upload_bootloader',this.files)"/>
+            <label for="upload_bootloader" class="btn btn-primary" title="{{_t('upload_bootloader')}}"
+                   ng-disabled="rowSpinner['upload_bootloader']">
+                <bb-row-spinner
+                        spinner="rowSpinner['upload_bootloader']"
+                        label="_t('upload_bootloader')"
+                        icon="'fa-upload'">
+                </bb-row-spinner>
+            </label>
 
-        <!--upload_firmware -->
-        <input class="inputfile" type="file" name="file" id="upload_firmware"
-               ng-click="icons.find = v"
-               onchange="angular.element(this).scope().uploadFile('upload_firmware',this.files)" />
-        <label for="upload_firmware" class="btn btn-info" title="{{_t('upload_firmware')}}"
-               ng-disabled="rowSpinner['upload_firmware']">
-            <bb-row-spinner
-                    spinner="rowSpinner['upload_firmware']"
-                    label="_t('upload_firmware')"
-                    icon="'fa-upload'">
-            </bb-row-spinner>
-        </label>
+            <!--upload_firmware -->
+            <input class="inputfile" type="file" name="file" id="upload_firmware"
+                   ng-click="icons.find = v"
+                   onchange="angular.element(this).scope().uploadFile('upload_firmware',this.files)"/>
+            <label for="upload_firmware" class="btn btn-info" title="{{_t('upload_firmware')}}"
+                   ng-disabled="rowSpinner['upload_firmware']">
+                <bb-row-spinner
+                        spinner="rowSpinner['upload_firmware']"
+                        label="_t('upload_firmware')"
+                        icon="'fa-upload'">
+                </bb-row-spinner>
+            </label>
         </div>
     </div>
-</div>
+    <!-- /////////////////////////// Token/////////////////////////// -->
+    <div class="panel panel-default panel-highlighted">
+        <!-- Header -->
+        <div class="panel-heading"><i class="fa fa-tag"></i> {{_t('nav_firmware_token')}}</div>
+        <!-- Body-->
+        <div class="panel-body form-inline">
+            <p>{{_t('add_token_info')}}</p>
+            <!-- Form -->
+            <form id="form_token" class="form" novalidate ng-submit="addToken(token.input)">
+                <div class="input-group">
+                    <input name="token" id="token" class="form-control" placeholder="{{_t('insert_token')}}"
+                           ng-model="token.input.token">
+                    <span class="input-group-btn">
+                        <button class="btn btn-info" type="submit">
+                            <bb-row-spinner
+                                    spinner="rowSpinner['add_token']"
+                                    label="_t('go')"
+                                    icon="'fa-circle-o'">
+                        </bb-row-spinner>
+                        </button>
+                  </span>
+                </div><!-- /input-group -->
+            </form>
+        </div>
+
+    </div>
+</div><!-- /ng-controler -->

@@ -100,9 +100,6 @@ angApp.config(['$routeProvider',
         }).when('/configuration/firmware/:nodeId?', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/configuration/firmware.html'
-        }).when('/configuration/token/:nodeId?', {
-            requireLogin: requireLogin,
-            templateUrl: 'app/views/configuration/token.html'
         }).when('/configuration/postfix/:nodeId?', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/configuration/postfix.html'
