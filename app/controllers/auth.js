@@ -27,7 +27,7 @@ appController.controller('InitInstallerController', function ($scope, $location,
             'login': input.user.toLowerCase(),
             'password': input.pass
         };
-        if(cfg.app_name == '@@app_name'){
+        if(cfg.environment == '@@dev'){
             $scope.login(auth);
             return;
         }

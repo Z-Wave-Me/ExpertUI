@@ -313,7 +313,6 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
         // Set config
         dataService.pingNet(url).then(function (response) {
             $scope.isOnline = true;
-            console.log('$scope.isOnline', $scope.isOnline)
         });
     };
 
