@@ -8,14 +8,14 @@
     <form name="form_settings" id="form_settings" class="form form-page"
           ng-submit="storeSettings(settings.input, $event)" novalidate>
         <fieldset>
-            <!-- network name -->
+            <!-- identifier/box name -->
             <div class="form-group form-inline">
                 <label for="network_name">{{_t('cit_identifier')}}: </label>
                 <input name="network_name" id="network_name" type="text"
                        class="form-control"
-                       placeholder="{{_t('cit_identifier')}}"
                        value="{{settings.input.cit_identifier}}"
-                       ng-model="settings.input.cit_identifier"/>
+                       ng-model="settings.input.cit_identifier"
+                       ng-disabled="true"/>
             </div>
             <!-- ssid name -->
             <div class="form-group form-inline">

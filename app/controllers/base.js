@@ -20,6 +20,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     $scope.nowDate = new Date();
     $scope.loading = false;
     $scope.alert = {message: false, status: 'is-hidden', icon: false};
+    $scope.alertCitLicence = false;
     $scope.languages = {};
     $scope.orderByArr = {
         field: '',
@@ -305,6 +306,39 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     };
 
     /**
+     * Load system info
+     * @returns {undefined}
+     */
+    $scope.loadSystemInfo = function () {
+        dataService.getApi('system_info_url').then(function (response) {
+            angular.extend(cfg.system_info, response.data.data);
+            // box is not registered
+            if(!cfg.system_info.cit_authorized){
+                $scope.alertCitLicence = 'cit_not_registered';
+                return;
+            }
+            //  license has been expired
+            if(cfg.system_info.cit_license_countDown == 0){
+                $scope.alertCitLicence = 'cit_licence_expired';
+                return;
+            }
+            //  license will be expire soon
+            if(cfg.system_info.cit_license_countDown < 5){
+                $scope.alertCitLicence = 'cit_licence_update';
+                return;
+            }
+
+        }, function (error) {
+        });
+
+    };
+    // System info only for installer
+    if(cfg.app_type === 'installer'){
+        $scope.loadSystemInfo();
+     }
+
+
+    /**
      * Set zwave configuration
      * @returns {undefined}
      */
@@ -388,7 +422,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
                 angular.extend(cfg.analytics, {show: true});
             }
         }, function (error) {
-            alertify.alertError($scope._t('error_load_data'));
+            //alertify.alertError($scope._t('error_load_data'));
 
         });
     };
@@ -406,9 +440,10 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
         $scope.jobQueueInterval = $interval(refresh, cfg.queue_interval);
     };
     /**
-     * Load common APIs
+     * Load common APIs for pages, where authorization is required
      */
-    if ($scope.getBodyId() !== '') {
+    //if ($scope.getBodyId() !== '') {
+    if (cfg.no_auth_pages.indexOf($scope.getBodyId()) === -1) {
         $scope.loadZwaveConfig();
         $scope.setDongle();
         $scope.setTimeStamp();

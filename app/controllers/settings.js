@@ -81,6 +81,7 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
         });
 
         $scope.settings.input = cfg.zwavecfg;
+        $scope.settings.input.cit_identifier = cfg.system_info.cit_identifier;
         $scope.settings.lastTZ = cfg.zwavecfg.time_zone;
     };
 

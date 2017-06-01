@@ -158,7 +158,7 @@
                     </li>
                     <!-- Logout - only for CIT  on the https://findcit.z-wavealliance.org/ -->
                     <li class="navibar-divider" ng-if_="cfg.app_type === 'installer'"> </li>
-                    <li class="navibar-item" ng-if="cfg.app_type === 'installer' && cfg.logout_redirect[cfg.route.host]">
+                    <li class="navibar-item" ng-if="cfg.app_type === 'installer'">
                         <a class="navibar-item-root" ng-href="#logout" title="{{ _t('logout')}}">
                             <i class="fa fa-sign-out"></i> <span class="main-nav-name">{{ _t('logout')}}</span>
                         </a>
@@ -181,11 +181,14 @@
     <div class="alert alert-danger" ng-if="!cfg.controller.isRealPrimary">
         <div class="container"><i class="fa fa-info-circle"></i> {{_t('iam_in_network_homeid')}}: {{cfg.controller.homeName}}</div>
     </div>
-
+    <!-- CIT licence warning -->
+    <div class="alert alert-warning" ng-if="alertCitLicence">
+        <div class="container"><i class="fa fa-exclamation-circle"></i> {{_t(alertCitLicence)}}</div>
+    </div>
 </div>
 <!-- Ang Container -->
 <div id="main_content" class="container">
-    {{cfg.statistics}}
+    <!--{{cfg.statistics}}-->
     <div ng-if="cfg.route.fatalError.message">
         <div class="app-fatal-error">
             <div class="fatal-error-message"><i class="fa {{cfg.route.fatalError.icon}} fa-lg"></i> {{cfg.route.fatalError.message}}</div>

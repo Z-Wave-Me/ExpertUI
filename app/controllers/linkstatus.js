@@ -41,7 +41,8 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
     $scope.loadZwaveData = function () {
         dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
             setData(ZWaveAPIData);
-            if (_.isEmpty($scope.linkStatus.all)) {
+            // There is controller only
+            if (_.size($scope.linkStatus.all) < 2) {
                 $scope.alert = {
                     message: $scope._t('device_404'),
                     status: 'alert-warning',

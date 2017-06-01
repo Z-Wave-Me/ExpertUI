@@ -62,14 +62,20 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
             $cookies.config_url = $scope.activeUrl + nodeId;
             $scope.deviceId = nodeId;
             $scope.deviceName = $filter('deviceName')(nodeId, node);
-
-            if ('122' in node.instances[0].commandClasses) {
+            if(deviceService.hasCommandClass(node,122)){
                 $scope.firmware.show = true;
                 $scope.refreshZwaveData($scope.deviceId);
             }else{
                 $scope.alert = {message: $scope._t('no_device_service'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
                 return;
             }
+           /* if ('122' in node.instances[0].commandClasses) {
+                $scope.firmware.show = true;
+                $scope.refreshZwaveData($scope.deviceId);
+            }else{
+                $scope.alert = {message: $scope._t('no_device_service'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                return;
+            }*/
 
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
@@ -154,8 +160,16 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
             }
             var fw = instance.commandClasses['122'];
             if (!fw) {
-                $scope.firmware.show = false;
+                //$scope.firmware.show = false;
                 return;
+            }
+
+            if(!$filter('hasNode')(fw,'data.fragmentTransmitted')){
+                angular.extend(fw.data,{fragmentTransmitted:{value: null}});
+            }
+
+            if(!$filter('hasNode')($scope.firmware,'update.fragmentTransmitted')){
+                angular.extend($scope.firmware,{update:{fragmentTransmitted: null}});
             }
 
             if (fw.data.fragmentTransmitted.value !== $scope.firmware.update.fragmentTransmitted && !!$scope.firmware.update.fragmentTransmitted){

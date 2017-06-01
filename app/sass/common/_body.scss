@@ -320,3 +320,11 @@ a, .order-by {
 .progress {
     margin-bottom: 0;
 }
+
+/* Hide elements
+-------------------------------------------------- */
+#page_init{
+    #header,.container-installer,#footer{
+        display: none;
+    }
+}

@@ -404,6 +404,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
      * @returns {unresolved}
      */
     function postApi(api, data, params) {
+        console.log(api)
         return $http({
             method: "post",
             data: data,
