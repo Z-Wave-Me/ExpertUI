@@ -36,7 +36,8 @@
                        ng-model="settings.input.wifi_password"
                        ng-blur="passwordBlur = true"
                        ng-minlength="8"
-                       ng-maxlength="63"/>
+                       ng-maxlength="63"
+                       ng-change="settings.wifi_pwd_changed = true"/>
                 <bb-validator input-name='form_settings.wifi_password.$error.minlength' trans='_t("wifi_password_valid")' has-blur='passwordBlur'></bb-validator>
                 <bb-validator input-name='form_settings.wifi_password.$error.maxlength' trans='_t("wifi_password_valid")' has-blur='passwordBlur'></bb-validator>
             </div>
