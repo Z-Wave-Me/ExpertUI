@@ -67,7 +67,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             url: url,
             timeout: 20000
         }).then(function (response) {
-            return (response.status >= 200 && response.status < 300);
+            return response;
         }, function (response) {
             return $q.reject(response);
         });
