@@ -7,8 +7,8 @@ var config_data = {
     'cfg': {
         'environment': 'live',
         'app_name': 'Z-Wave CIT',
-        'app_version': '1.3.0-RC-82',
-        'app_built': '01-06-2017 17:00:05',
+        'app_version': '1.3.0-RC-85',
+        'app_built': '02-06-2017 15:14:04',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -74,6 +74,7 @@ var config_data = {
         'box_reboot': '/ZAutomation/api/v1/system/reboot', // reboot box
         'system_info_url': '/ZAutomation/api/v1/system/info', // Sytem info
         'installer_auth': '/ZAutomation/api/v1/system/certfxAuth', // Installer initialization
+        'identifier_update': '/ZAutomation/api/v1/system/certfxUpdateIdentifier', // Identifier update
         //'reorg_log_url': '/config/reorg.log', // Url for store reorg log data
         'zddx_url': '/ZDDX/', // Url for zddx xml files
         'notes_url': '/config/notes.log', // Url for store notes data
@@ -290,7 +291,7 @@ var config_data = {
         },
         // Url to check if is on-line
         'ping': {
-            'findcit': 'https://findcit.z-wavealliance.org/zboxweb'
+            'findcit': 'https://findcit.z-wavealliance.org'
         },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer/wd/popp/jb

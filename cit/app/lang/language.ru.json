@@ -1,4 +1,15 @@
 {
+  "cit_auth_prompt": "Please confirm the CIT identifier change with your CIT login credentials.",
+  "err_get_wifi": "Unable to load wifi settings.",
+  "err_cit_update_identifier": "Unable to update CIT identifier name. Please check your login or password.",
+  "err_update_wifi": "Unable to update wifi settings.",
+  "err_update_config_data": "Unable to update settings data.",
+  "err_set_timezone": "Unable to set timezone.",
+  "err_ntp_load_status": "Unable to load ntp status.",
+  "err_ntp_synchronize": "Unable to synchronize ntp.",
+  "err_ntp_set_mode": "Unable to set ntp mode.",
+  "err_set_date_time": "Unable to set date and time.",
+  "findcit_no_connection": "The __server__ server is not reachable. If you want to update your CIT please first check if your CIT has connection to the internet via ethernet.",
   "go":"GO",
   "nav_firmware_token":"Access token",
   "add_token_info":"If you have acquired an acces token you may include this token here.",
@@ -605,5 +616,6 @@
   "request_update": "Request Update",
   "update_form_primary": "Starting network update from Primary.",
   "update_form_sis": "Requesting Network Update from SIS.",
-  "nav_rssimeter": "Noise Meter"
+  "nav_rssimeter": "Noise Meter",
+  "cit_identifier_update_info": "Change must be confirmed with login credentials."
 }
