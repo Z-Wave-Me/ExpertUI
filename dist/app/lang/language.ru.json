@@ -1,4 +1,9 @@
 {
+  "go":"GO",
+  "nav_firmware_token":"Access token",
+  "add_token_info":"If you have acquired an acces token you may include this token here.",
+  "insert_token":"Insert your token",
+  "error_load_cit_user": "The provided username or password does not match the registered CIT owner.",
   "cit_check_login":"Unable to initialize your CIT. Please check your login or password and wether the controller's UID is registrated on your account.",
   "initial_welcome":"Welcome! Please register your CIT by entering your Z-Wave Alliance authentication.",
   "initial_setup":"Initial setup",

@@ -14,8 +14,8 @@
                 <input name="network_name" id="network_name" type="text"
                        class="form-control"
                        value="{{settings.input.cit_identifier}}"
-                       ng-model="settings.input.cit_identifier"
-                       ng-disabled="true"/>
+                       ng-model="settings.input.cit_identifier"/>
+                <bb-help-text trans="_t('cit_identifier_update_info')"></bb-help-text>
             </div>
             <!-- ssid name -->
             <div class="form-group form-inline">
@@ -152,4 +152,5 @@
     </form>
     <!-- assocAddModal -->
     <div ng-include="'app/views/settings/modal_timezone.html'"></div>
+    <div ng-include="'app/views/settings/modal_cit_identifier.html'"></div>
 </div>
