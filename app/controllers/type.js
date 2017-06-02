@@ -164,7 +164,7 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
                 sdk = $scope.isController ? ZWaveAPIData.controller.data.SDK.value : node.data.SDK.value;
             }*/
             // Version
-            var appVersion = node.data.applicationMajor.value + '.' + node.data.applicationMinor.value;
+            var appVersion = node.data.applicationMajor.value + '.' + tranformTwoDigits(node.data.applicationMinor.value);
             // Security and ZWavePlusInfo
             var security = false;
             angular.forEach(ccIds, function(v) {
