@@ -9,7 +9,7 @@
   "err_ntp_synchronize": "Unable to synchronize ntp.",
   "err_ntp_set_mode": "Unable to set ntp mode.",
   "err_set_date_time": "Unable to set date and time.",
-  "findcit_no_connection": "The __server__ server is not reachable. Please check if your CIT has connection to the internet via ethernet.",
+  "findcit_no_connection": "The __server__ server is not reachable. If you want to update your CIT please first check if your CIT has connection to the internet via ethernet.",
   "go":"GO",
   "nav_firmware_token":"Access token",
   "add_token_info":"If you have acquired an acces token you may include this token here.",

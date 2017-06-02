@@ -9,7 +9,7 @@
  "err_ntp_synchronize": "NTP konnte nicht synchronisiert werden.",
  "err_ntp_set_mode": "Der NTP Modus konnte nicht gesetzt werden.",
  "err_set_date_time": "Datum und Zeit konnten nicht gesetzt werden.",
- "findcit_no_connection": "Der __server__ server ist nicht erreichbar. Bitte überprüfen Sie, ob ihr CIT über Ethernet mit dem Internet verbunden ist.",
+ "findcit_no_connection": "Der __server__ server ist nicht erreichbar. Wenn Sie das Gerät updaten möchten, überprüfen Sie bitte zunächst, ob ihr CIT über Ethernet mit dem Internet verbunden ist.",
  "go":"LOS",
  "nav_firmware_token":"Zugangstoken",
  "add_token_info":"Wenn Sie ein Zugriffstoken erworben haben, können Sie dieses Token hier eingeben.",
