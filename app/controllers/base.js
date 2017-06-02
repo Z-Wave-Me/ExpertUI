@@ -305,17 +305,6 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
         });
     };
 
-    /**
-     * Check if given url is on-line
-     * @returns {string} url
-     */
-    $scope.pingNet = function (url) {
-        // Set config
-        dataService.pingNet(url).then(function (response) {
-            $scope.isOnline = true;
-        });
-    };
-
 
     /**
      * Load system info
@@ -324,6 +313,8 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     $scope.loadSystemInfo = function () {
         dataService.getApi('system_info_url').then(function (response) {
             angular.extend(cfg.system_info, response.data.data);
+            // Is CIT server online?
+            $scope.isOnline = cfg.system_info.cit_server_reachable;
             // box is not registered
             if (!cfg.system_info.cit_authorized) {
                 $scope.alertCitLicence = 'cit_not_registered';
@@ -457,7 +448,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
      */
     $rootScope.$on("$routeChangeSuccess", function (event, current, previous) {
         if (cfg.app_type === 'installer') {
-            $scope.pingNet(cfg.ping.findcit);
+            $scope.loadSystemInfo();
         }
     });
     /**
