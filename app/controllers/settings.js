@@ -70,7 +70,7 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
         reboot: false,
         ntp_switch: '',
         wifi_pwd_changed: false,
-        show_update_successful: true
+        show_update_successful: false
     };
 
     /**
@@ -83,7 +83,7 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
             $scope.settings.lastSsid = response.data.data.ssid;
         }, function (error) {
             $scope.loading = false;
-            alertify.alertError($scope._t('error_load_data'));
+            alertify.alertError($scope._t('err_get_wifi'));
         });
 
         $scope.settings.input = cfg.zwavecfg;
@@ -99,6 +99,7 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
 
         $scope.settings.input.pass = "";
         $scope.settings.input.user = "";
+        $scope.settings.input.cit_identifier = $scope.settings.lastCITIdentifier;
 
         $scope.settings.wait = false;
         $scope.settings.updateCITIdentifier = false;
@@ -106,12 +107,10 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
 
         $scope.storeSettings($scope.settings.input);
 
-        $scope.handleModal('citidentifierModal', $event);
+        //$scope.handleModal('citidentifierModal', $event);
     };
 
     $scope.confirmUpdate = function($event) {
-
-        $scope.settings.lastCITIdentifier = $scope.settings.input.cit_identifier;
         $scope.settings.updateCITIdentifier = true;
         $scope.settings.wait = false;
 
@@ -125,9 +124,13 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
      * @param {object} input
      */
     $scope.storeSettings = function(input,$event) {
-        if(input.cit_identifier !== $scope.settings.lastCITIdentifier && !$scope.settings.modalCancel) {
+        //if(input.cit_identifier !== $scope.settings.lastCITIdentifier && !$scope.settings.modalCancel) {
+        if(!$scope.settings.updateCITIdentifier && !$scope.settings.modalCancel) {
             $scope.settings.wait = true;
             $scope.handleModal('citidentifierModal',$event);
+        } else if ($scope.settings.modalCancel) {
+            $scope.handleModal('citidentifierModal',$event);
+            $scope.settings.show_update_successful = false;
         }
 
         if(!$scope.settings.wait) {
@@ -144,8 +147,12 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
                 };
 
                 dataService.postApi('identifier_update', data).then(function (response) {
+                    $scope.settings.show_update_successful = true;
+                    $scope.settings.lastCITIdentifier = $scope.settings.input.cit_identifier;
                 }, function (error) {
                     $scope.settings.show_update_successful = false;
+
+                    $scope.settings.input.cit_identifier = $scope.settings.lastCITIdentifier;
                     alertify.alertError($scope._t('err_cit_update_identifier'));
                 });
 
@@ -163,6 +170,7 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
                 };
 
                 dataService.postApi('wifi_settings', data, null).then(function (response) {
+                    $scope.settings.show_update_successful = true;
                     $timeout(function () {
                         $window.location.reload();
                     }, 1000);
@@ -188,6 +196,7 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
 
 
             dataService.postApi('configupdate_url', newInput).then(function (response) {
+                $scope.settings.show_update_successful = true;
                 $scope.loading = false;
             }, function (error) {
                 $scope.loading = false;
@@ -201,6 +210,7 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
                 };
 
                 dataService.postApi('time_zone', data, null).then(function (response) {
+                    $scope.settings.show_update_successful = true;
                     $scope.loading = false;
                     $scope.handleModal('timezoneModal', $event);
                     var myint = $interval(function () {
@@ -218,6 +228,7 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
 
             if ($scope.settings.reboot) {
                 dataService.getApi('box_reboot').then(function (response) {
+                    $scope.settings.show_update_successful = true;
                     $scope.loading = false;
                     $scope.handleModal('timezoneModal', $event);
                     var myint = $interval(function () {
