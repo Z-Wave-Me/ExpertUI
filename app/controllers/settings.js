@@ -385,7 +385,7 @@ appController.controller('SettingsAppFormatController', function ($scope, $timeo
  * @class SettingsFirmwareController
  *
  */
-appController.controller('SettingsFirmwareController', function ($scope, $sce, $timeout, $location, $interval, dataService) {
+appController.controller('SettingsFirmwareController', function ($scope, $sce, $timeout, $location, $interval, cfg,dataService) {
     $scope.settings = {
         countdown: 60,
         hasSession: true
@@ -404,6 +404,10 @@ appController.controller('SettingsFirmwareController', function ($scope, $sce, $
 
     if ($scope.firmwareUpdate.remoteConnection) {
         $scope.firmwareUpdate.alert = {message: $scope._t('firmware_update_remote'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+    }
+
+    if (!$scope.isOnline) {
+        $scope.firmwareUpdate.alert = {message: $scope._t('findcit_no_connection',{__server__: cfg.ping.findcit}), status: 'alert-warning', icon: 'fa-exclamation-circle'};
     }
 
     /**

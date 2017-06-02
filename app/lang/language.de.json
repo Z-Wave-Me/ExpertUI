@@ -1,4 +1,5 @@
 {
+ "findcit_no_connection": "Der __server__ server ist nicht erreichbar. Bitte überprüfen Sie, ob ihr CIT über Ethernet mit dem Internet verbunden ist.",
  "go":"LOS",
  "nav_firmware_token":"Zugangstoken",
  "add_token_info":"Wenn Sie ein Zugriffstoken erworben haben, können Sie dieses Token hier eingeben.",

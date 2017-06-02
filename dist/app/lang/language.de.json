@@ -1,4 +1,5 @@
 {
+ "findcit_no_connection": "Der __server__ server ist nicht erreichbar. Bitte überprüfen Sie, ob ihr CIT über Ethernet mit dem Internet verbunden ist.",
  "go":"LOS",
  "nav_firmware_token":"Zugangstoken",
  "add_token_info":"Wenn Sie ein Zugriffstoken erworben haben, können Sie dieses Token hier eingeben.",
@@ -616,5 +617,6 @@
  "request_update": "Update anfordern",
  "update_form_primary": "Starte Netzwerkaktualisierung vom Primary Controller.",
  "update_form_sis": "Anfordern der Netzwerkaktualisierung von SIS.",
- "nav_rssimeter": "Noise Meter"
+ "nav_rssimeter": "Noise Meter",
+ "cit_identifier_update_info": "Änderung muss mit Anmeldeinformationen bestätigt werden."
 }

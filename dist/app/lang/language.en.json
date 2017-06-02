@@ -1,10 +1,11 @@
 {
   "--- newtrans": "---",
+ "---": "---",
+ "findcit_no_connection": "The __server__ server is not reachable. Please check if your CIT has connection to the internet via ethernet.",
  "go":"GO",
   "nav_firmware_token":"Access token",
  "add_token_info":"If you have acquired an acces token you may include this token here.",
  "insert_token":"Insert your token",
- "---": "---",
  "error_load_cit_user": "The provided username or password does not match the registered CIT owner.",
  "cit_check_login":"Unable to initialize your CIT. Please check your login or password and wether the controller's UID is registrated on your account.",
  "initial_welcome":"Welcome! Please register your CIT by entering your Z-Wave Alliance authentication.",
@@ -619,5 +620,6 @@
  "request_update": "Request Update",
  "update_form_primary": "Starting network update from Primary.",
  "update_form_sis": "Requesting Network Update from SIS.",
- "nav_rssimeter": "Noise Meter"
+ "nav_rssimeter": "Noise Meter",
+ "cit_identifier_update_info": "Change must be confirmed with login credentials."
 }
