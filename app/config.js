@@ -290,7 +290,7 @@ var config_data = {
         },
         // Url to check if is on-line
         'ping': {
-            'findcit': 'https://findcit.z-wavealliance.org/zboxweb'
+            'findcit': ' https://findcit.z-wavealliance.org'
         },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer/wd/popp/jb
