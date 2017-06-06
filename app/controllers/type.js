@@ -149,8 +149,8 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
             var fromSdk = true;
             var sdk;
             // SDK
-            if (isController) {
-                sdk = node.data.SDK.value || ZWaveAPIData.controller.data.SDK.value;
+            if ((node.data.SDK && node.data.SDK.value!== '') || (isController && ZWaveAPIData.controller.data.SDK && ZWaveAPIData.controller.data.SDK.value !== '')) {
+                sdk = isController? ZWaveAPIData.controller.data.SDK.value : node.data.SDK.value;
             } else {
                 //sdk = major + '.' + minor;
                 sdk = major + '.' + tranformTwoDigits(minor);
