@@ -1,4 +1,5 @@
 {
+ "connection": "Internetverbindung",
  "cit_auth_prompt": "Bitte bestätigen Sie die Änderung des CIT Namens mit Ihren CIT Zugangsdaten.",
  "err_get_wifi": "Die WiFi Konfiguration konnte nicht geladen werden.",
  "err_cit_update_identifier": "Der CIT Name konnte nicht geändert werden. Bitte überprüfen Sie Ihre Zugangsdaten.",
