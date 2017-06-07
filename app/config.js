@@ -284,9 +284,14 @@ var config_data = {
             'find.popp.eu',
             'findcit.z-wavealliance.org'
         ],
+        // Find cit host name
+        'find_cit': {
+            //'hostname':'find.zwave.me',
+            'hostname':'findcit.z-wavealliance.org'
+        },
         // Redirect to the url after logout
         'logout_redirect': {
-            //'192.168.10.156': 'https://findcit.z-wavealliance.org/',
+            //'findcit.z-wavealliance.org': 'https://find.zwave.me/zboxweb',
             'findcit.z-wavealliance.org': 'https://findcit.z-wavealliance.org/zboxweb'
         },
         // Url to check if is on-line

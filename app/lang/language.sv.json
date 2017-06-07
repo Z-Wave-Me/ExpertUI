@@ -1,4 +1,5 @@
 {
+  "goto":"GO TO",
   "findcit_no_connection": "The __server__ server is not reachable. Please check if your CIT has connection to the internet via ethernet.",
   "go":"GO",
   "nav_firmware_token":"Access token",

@@ -7,16 +7,37 @@
  * @class AuthController
  *
  */
-appController.controller('InitInstallerController', function ($scope, $location, $timeout, $window, cfg, dataService, deviceService) {
+appController.controller('InitInstallerController', function ($scope, $location, $timeout, $window, $cookies,cfg, dataService, deviceService) {
     $scope.auth = {
         input: {
             user: '',
             pass: '',
             cit_identifier: cfg.system_info.cit_identifier || ''
         },
-        alert: {}
+        alert: {},
+        findcit_referrer: false
     };
 
+    /**
+     * Set referrer
+     */
+    $scope.setReferrerCookie = function () {
+        $cookies.findcit_referrer = $window.document.referrer;
+    };
+    $scope.setReferrerCookie();
+
+    /**
+     * Get referrer from cookie and parse it
+     */
+    $scope.getReferrer = function () {
+        if($cookies.findcit_referrer){
+            var parseUrl = new URL($cookies.findcit_referrer);
+            $scope.auth.findcit_referrer = (parseUrl.hostname === cfg.find_cit.hostname);
+        }
+
+
+    };
+    $scope.getReferrer();
     /**
      * Login proccess
      */
