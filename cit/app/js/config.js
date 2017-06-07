@@ -7,8 +7,8 @@ var config_data = {
     'cfg': {
         'environment': 'live',
         'app_name': 'Z-Wave CIT',
-        'app_version': '1.3.0-RC-87',
-        'app_built': '02-06-2017 21:06:29',
+        'app_version': '1.3.0-RC-89',
+        'app_built': '07-06-2017 15:55:14',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -284,9 +284,14 @@ var config_data = {
             'find.popp.eu',
             'findcit.z-wavealliance.org'
         ],
+        // Find cit host name
+        'find_cit': {
+            //'hostname':'find.zwave.me',
+            'hostname':'findcit.z-wavealliance.org'
+        },
         // Redirect to the url after logout
         'logout_redirect': {
-            //'192.168.10.156': 'https://findcit.z-wavealliance.org/',
+            //'findcit.z-wavealliance.org': 'https://find.zwave.me/zboxweb',
             'findcit.z-wavealliance.org': 'https://findcit.z-wavealliance.org/zboxweb'
         },
         // Url to check if is on-line
