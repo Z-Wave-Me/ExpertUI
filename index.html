@@ -197,7 +197,7 @@
                     <li class="navibar-divider"  ng-if="cfg.analytics.show"> </li>
                    <!-- <li class="navibar-item" ng-click="expandNavi('naviInstaller', $event)"  ng-if="cfg.app_type === 'installer'">-->
                     <li class="navibar-item" ng-click="expandNavi('naviInstaller', $event)" ng-if="cfg.analytics.show">
-                        <a class="navibar-item-root" href="" title="{{_t('installer')}}" ng-class="isActive('installer',1)">
+                        <a class="navibar-item-root" href="" title="{{_t('nav_installer')}}" ng-class="isActive('installer',1)">
                             <i class="fa fa-signal"></i> <span class="main-nav-name">{{ _t('nav_installer')}}</span>
                         </a>
                         <div class="sub-navigation sub-navigation-left" ng-if="naviExpanded.naviInstaller">
@@ -242,7 +242,7 @@
                     <li class="navibar-divider" ng-if="cfg.app_type === 'installer'"></li>
                     <li class="navibar-item" ng-if="cfg.app_type === 'installer'">
                         <span class="navibar-item-root">
-                        <i class="fa fa-wifi" ng-class="isOnline ? 'green' : 'red'"></i>
+                        <i class="fa fa-globe" ng-class="isOnline ? 'green' : 'red'" title="{{ _t('connection')}}"></i>
                     </span>
                     </li>
 

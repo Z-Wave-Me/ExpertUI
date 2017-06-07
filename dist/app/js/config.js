@@ -7,8 +7,8 @@ var config_data = {
     'cfg': {
         'environment': 'live',
         'app_name': 'Z-Wave Expert',
-        'app_version': '1.3.0-RC-84',
-        'app_built': '02-06-2017 09:16:33',
+        'app_version': '1.3.0-RC-88',
+        'app_built': '02-06-2017 21:06:58',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -291,7 +291,7 @@ var config_data = {
         },
         // Url to check if is on-line
         'ping': {
-            'findcit': ' https://findcit.z-wavealliance.org'
+            'findcit': 'https://findcit.z-wavealliance.org'
         },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer/wd/popp/jb

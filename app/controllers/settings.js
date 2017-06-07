@@ -68,7 +68,9 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
         },
         show_tz: false,
         reboot: false,
-        ntp_switch: ''
+        ntp_switch: '',
+        wifi_pwd_changed: false,
+        show_update_successful: false
     };
 
     /**
@@ -81,7 +83,7 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
             $scope.settings.lastSsid = response.data.data.ssid;
         }, function (error) {
             $scope.loading = false;
-            alertify.alertError($scope._t('error_load_data'));
+            alertify.alertError($scope._t('err_get_wifi'));
         });
 
         $scope.settings.input = cfg.zwavecfg;
@@ -97,6 +99,7 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
 
         $scope.settings.input.pass = "";
         $scope.settings.input.user = "";
+        $scope.settings.input.cit_identifier = $scope.settings.lastCITIdentifier;
 
         $scope.settings.wait = false;
         $scope.settings.updateCITIdentifier = false;
@@ -104,12 +107,10 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
 
         $scope.storeSettings($scope.settings.input);
 
-        $scope.handleModal('citidentifierModal', $event);
+        //$scope.handleModal('citidentifierModal', $event);
     };
 
     $scope.confirmUpdate = function($event) {
-
-        $scope.settings.lastCITIdentifier = $scope.settings.input.cit_identifier;
         $scope.settings.updateCITIdentifier = true;
         $scope.settings.wait = false;
 
@@ -123,9 +124,13 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
      * @param {object} input
      */
     $scope.storeSettings = function(input,$event) {
-        if(input.cit_identifier !== $scope.settings.lastCITIdentifier && !$scope.settings.modalCancel) {
+        //if(input.cit_identifier !== $scope.settings.lastCITIdentifier && !$scope.settings.modalCancel) {
+        if(!$scope.settings.updateCITIdentifier && !$scope.settings.modalCancel) {
             $scope.settings.wait = true;
             $scope.handleModal('citidentifierModal',$event);
+        } else if ($scope.settings.modalCancel) {
+            $scope.handleModal('citidentifierModal',$event);
+            $scope.settings.show_update_successful = false;
         }
 
         if(!$scope.settings.wait) {
@@ -142,9 +147,13 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
                 };
 
                 dataService.postApi('identifier_update', data).then(function (response) {
-                    deviceService.showNotifier({message: $scope._t('update_successful')});
+                    $scope.settings.show_update_successful = true;
+                    $scope.settings.lastCITIdentifier = $scope.settings.input.cit_identifier;
                 }, function (error) {
-                    alertify.alertError($scope._t('error_load_data'));
+                    $scope.settings.show_update_successful = false;
+
+                    $scope.settings.input.cit_identifier = $scope.settings.lastCITIdentifier;
+                    alertify.alertError($scope._t('err_cit_update_identifier'));
                 });
 
                 $scope.settings.input.pass = "";
@@ -153,7 +162,7 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
             }
 
 
-            if (input.wifi_password !== '' || input.ssid_name !== $scope.settings.lastSsid) {
+            if (($scope.settings.wifi_pwd_changed && input.wifi_password !== '') || input.ssid_name !== $scope.settings.lastSsid) {
 
                 var data = {
                     "password": input.wifi_password,
@@ -161,23 +170,38 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
                 };
 
                 dataService.postApi('wifi_settings', data, null).then(function (response) {
-                    deviceService.showNotifier({message: $scope._t('update_successful')});
+                    $scope.settings.show_update_successful = true;
                     $timeout(function () {
                         $window.location.reload();
                     }, 1000);
                     $scope.loading = false;
                 }, function (error) {
                     $scope.input.ssid_name = $scope.settings.lastSsid;
-                    alertify.alertError($scope._t('error_load_data'));
+                    $scope.settings.show_update_successful = false;
+                    alertify.alertError($scope._t('err_update_wifi'));
                 });
             }
 
+            // do not all store in expertConfig
+            var newInput = _.pick(input,
+                'debug',
+                'network_name',
+                'date_format',
+                'time_format',
+                'time_zone',
+                'notes',
+                'ssid_name',
+                'currentDateTime',
+                'cit_identifier');
 
-            dataService.postApi('configupdate_url', input).then(function (response) {
+
+            dataService.postApi('configupdate_url', newInput).then(function (response) {
+                $scope.settings.show_update_successful = true;
                 $scope.loading = false;
             }, function (error) {
                 $scope.loading = false;
-                alertify.alertError($scope._t('error_update_data'));
+                $scope.settings.show_update_successful = false;
+                alertify.alertError($scope._t('err_update_config_data'));
             });
 
             if (input.time_zone !== 'automatic' && input.time_zone !== $scope.settings.lastTZ) {
@@ -186,6 +210,7 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
                 };
 
                 dataService.postApi('time_zone', data, null).then(function (response) {
+                    $scope.settings.show_update_successful = true;
                     $scope.loading = false;
                     $scope.handleModal('timezoneModal', $event);
                     var myint = $interval(function () {
@@ -196,13 +221,14 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
                         }
                     }, 1000);
                 }, function (error) {
-                    alertify.alertError($scope._t('error_load_data'));
-
+                    $scope.settings.show_update_successful = false;
+                    alertify.alertError($scope._t('err_set_timezone'));
                 });
             }
 
             if ($scope.settings.reboot) {
                 dataService.getApi('box_reboot').then(function (response) {
+                    $scope.settings.show_update_successful = true;
                     $scope.loading = false;
                     $scope.handleModal('timezoneModal', $event);
                     var myint = $interval(function () {
@@ -213,10 +239,13 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
                         }
                     }, 1000);
                 }, function (error) {
-                    alertify.alertError($scope._t('error_load_data'));
+                    $scope.settings.show_update_successful = false;
+                    alertify.alertError($scope._t('err_reboot'));
                 });
             } else {
-                deviceService.showNotifier({message: $scope._t('update_successful')});
+                if($scope.settings.show_update_successful) {
+                    deviceService.showNotifier({message: $scope._t('update_successful')});
+                }
             }
         }
     };
@@ -252,7 +281,7 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
 
         }, function (error) {
             $scope.loading = false;
-            alertify.alertError($scope._t('error_load_data'));
+            alertify.alertError($scope._t('err_ntp_load_status'));
         });
     };
 
@@ -262,13 +291,13 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
         dataService.getApi('ntpdate_service','reconfigure').then(function (response) {
             if (response) {
                 $scope.loadNTPStatus();
-                deviceService.showNotifier({message: $scope._t('update_successful')});
+                //deviceService.showNotifier({message: $scope._t('update_successful')});
                 $scope.settings.reboot = true;
             }
             $scope.loading = false;
         }, function (error) {
             $scope.loading = false;
-            alertify.alertError($scope._t('error_load_data'));
+            alertify.alertError($scope._t('err_ntp_synchronize'));
         });
     }
 
@@ -278,7 +307,7 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
         dataService.getApi('ntpdate_service', cmd).then(function (response) {
             if (response.data) {
                 $scope.loadNTPStatus();
-                deviceService.showNotifier({message: $scope._t('update_successful')});
+                //deviceService.showNotifier({message: $scope._t('update_successful')});
                 $scope.settings.reboot = true;
                 $scope.settings.ntp_switch = cmd;
             }
@@ -287,7 +316,7 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
         }, function (error) {
             $scope.loading = false;
             $scope.toggleRowSpinner();
-            alertify.alertError($scope._t('error_load_data'));
+            alertify.alertError($scope._t('err_ntp_set_mode'));
         });
     }
 
@@ -297,13 +326,13 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
             var cDT = currentDateTime.replace('T',' ').substring(0,16); // transform date time string
 
             dataService.getApi('ntpdate_service','setDateTime?dateTime=' + cDT).then(function(response) {
-                deviceService.showNotifier({message: $scope._t('update_successful')});
+                //deviceService.showNotifier({message: $scope._t('update_successful')});
                 $scope.loadNTPStatus();
                 $scope.loading = false;
                 $scope.settings.reboot = true;
             }, function(error) {
                 $scope.loading = false;
-                alertify.alertError($scope._t('error_load_data'));
+                alertify.alertError($scope._t('err_set_date_time'));
             });
         }
     };

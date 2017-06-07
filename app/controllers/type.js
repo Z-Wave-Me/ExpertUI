@@ -149,8 +149,8 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
             var fromSdk = true;
             var sdk;
             // SDK
-            if (isController) {
-                sdk = node.data.SDK.value || ZWaveAPIData.controller.data.SDK.value;
+            if ((node.data.SDK && node.data.SDK.value!== '') || (isController && ZWaveAPIData.controller.data.SDK && ZWaveAPIData.controller.data.SDK.value !== '')) {
+                sdk = isController? ZWaveAPIData.controller.data.SDK.value : node.data.SDK.value;
             } else {
                 //sdk = major + '.' + minor;
                 sdk = major + '.' + tranformTwoDigits(minor);
@@ -164,7 +164,7 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
                 sdk = $scope.isController ? ZWaveAPIData.controller.data.SDK.value : node.data.SDK.value;
             }*/
             // Version
-            var appVersion = node.data.applicationMajor.value + '.' + node.data.applicationMinor.value;
+            var appVersion = node.data.applicationMajor.value + '.' + tranformTwoDigits(node.data.applicationMinor.value);
             // Security and ZWavePlusInfo
             var security = false;
             angular.forEach(ccIds, function(v) {
