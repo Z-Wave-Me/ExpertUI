@@ -26,6 +26,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
         field: '',
         reverse: false
     }
+    $scope.user = deviceService.getUser();
     // Custom IP
     $scope.customIP = {
         'url': cfg.server_url,

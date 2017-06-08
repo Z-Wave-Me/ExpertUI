@@ -75,6 +75,8 @@ var config_data = {
         'system_info_url': '/ZAutomation/api/v1/system/info', // Sytem info
         'installer_auth': '/ZAutomation/api/v1/system/certfxAuth', // Installer initialization
         'identifier_update': '/ZAutomation/api/v1/system/certfxUpdateIdentifier', // Identifier update
+        'cit_forward_login':'/ZAutomation/api/v1/system/certfxAuthForwarding', // forward cit login
+        'cit_unregister':'/ZAutomation/api/v1/system/certfxUnregister', // unregister cit
         //'reorg_log_url': '/config/reorg.log', // Url for store reorg log data
         'zddx_url': '/ZDDX/', // Url for zddx xml files
         'notes_url': '/config/notes.log', // Url for store notes data

@@ -34,8 +34,6 @@ appController.controller('InitInstallerController', function ($scope, $location,
             var parseUrl = new URL($cookies.findcit_referrer);
             $scope.auth.findcit_referrer = (parseUrl.hostname === cfg.find_cit.hostname);
         }
-
-
     };
     $scope.getReferrer();
     /**
@@ -48,10 +46,12 @@ appController.controller('InitInstallerController', function ($scope, $location,
             'login': input.user.toLowerCase(),
             'password': input.pass
         };
-        if(cfg.environment == '@@dev'){
+
+        // test login without cit auth
+        /*if(cfg.environment == '@@dev'){
             $scope.login(auth);
             return;
-        }
+        }*/
 
         // cit authentication
         dataService.postApi('installer_auth', input).then(function (response) {
