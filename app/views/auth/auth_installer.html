@@ -31,7 +31,7 @@
                 <bb-validator input-name='form_init.cit_identifier.$error.required' trans='_t("field_required")' has-blur='passBlur'></bb-validator>
                 <bb-help-text trans="_t('cit_identifier_info')"></bb-help-text>
             </div>
-            <div ng-if_="cfg.system_info.cit_authorized && auth.findcit_referrer">
+            <div ng-if="cfg.system_info.cit_authorized && auth.findcit_referrer">
                 <a ng-href="{{cfg.logout_redirect['findcit.z-wavealliance.org']}}" class="">
                     {{_t('goto')}}: {{cfg.logout_redirect['findcit.z-wavealliance.org']}}  <i class="fa fa-chevron-right"></i>
                 </a>

@@ -18,10 +18,6 @@ appController.controller('InitInstallerController', function ($scope, $location,
         findcit_referrer: false
     };
 
-    // get system info settings
-    $scope.loadSystemInfo();
-    //$scope.auth.cit_login_forward = cfg.system_info.cit_forward_auth? cfg.system_info.cit_forward_auth : undefined;
-
     /**
      * Set referrer
      */
@@ -29,6 +25,28 @@ appController.controller('InitInstallerController', function ($scope, $location,
         $cookies.findcit_referrer = $window.document.referrer;
     };
     $scope.setReferrerCookie();
+
+    /**
+     * Get referrer from cookie and parse it
+     */
+    $scope.forward = function () {
+        dataService.getApi('system_info_url',false,true).then(function (response) {
+            $scope.auth.cit_login_forward = response.data.data.cit_forward_auth? response.data.data.cit_forward_auth : undefined;
+            console.log(response)
+            if ($scope.auth.cit_login_forward && $scope.auth.cit_login_forward.allowed) {
+                $scope.toggleRowSpinner('installer_auth');
+                $scope.login({
+                    'login': $scope.auth.cit_login_forward.user,
+                    'password': 'password'
+                });
+            }
+
+        }, function (error) {
+        });
+
+    };
+    $scope.forward();
+
 
     /**
      * Get referrer from cookie and parse it
@@ -116,18 +134,6 @@ appController.controller('InitInstallerController', function ($scope, $location,
             $timeout($scope.toggleRowSpinner, 1000);
         });
     };
-
-    $scope.$watch('cfg.system_info', function() {
-        $scope.auth.cit_login_forward = cfg.system_info.cit_forward_auth? cfg.system_info.cit_forward_auth : undefined;
-
-        if ($scope.auth.cit_login_forward && $scope.auth.cit_login_forward.allowed) {
-            $scope.toggleRowSpinner('installer_auth');
-            $scope.login({
-                'login': $scope.auth.cit_login_forward.user,
-                'password': 'password'
-            });
-        }
-    });
 });
 
 /**

@@ -313,6 +313,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
      */
     $scope.loadSystemInfo = function () {
         dataService.getApi('system_info_url').then(function (response) {
+            //angular.extend($scope.systemInfo, response.data.data);
             angular.extend(cfg.system_info, response.data.data);
             // Is CIT server online?
             $scope.isOnline = cfg.system_info.cit_server_reachable;
