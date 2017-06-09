@@ -95,10 +95,18 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
         // add logged in user login input by default
         $scope.settings.input.user = $scope.user && $scope.user.login? $scope.user.login : '';
 
-        // get system info settings
-        $scope.loadSystemInfo();
-        $scope.settings.forward_login_old = cfg.system_info.cit_forward_auth && cfg.system_info.cit_forward_auth.allowed? cfg.system_info.cit_forward_auth.allowed : false;
-        $scope.settings.input.forward_login = $scope.settings.forward_login_old;
+        //// get system info settings
+        dataService.getApi('cit_forward_login').then(function (response) {
+            if (response.data.data && response.data.data.forwardCITAuth) {
+                $scope.settings.input.forward_login = response.data.data.forwardCITAuth;
+            } else {
+                $scope.settings.input.forward_login = false
+            }
+        }, function (error) {
+            $scope.settings.input.forward_login = false
+            $scope.loading = false;
+            alertify.alertError($scope._t('err_cit_get_forward_login'));
+        });
     };
 
     $scope.loadSettings();
@@ -150,7 +158,7 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
                 $scope.settings.show_update_successful = true;
             }, function (error) {
                 $scope.settings.show_update_successful = false;
-                alertify.alertError($scope._t('err_cit_forward_login'));
+                alertify.alertError($scope._t('err_cit_set_forward_login'));
             });
         }
 

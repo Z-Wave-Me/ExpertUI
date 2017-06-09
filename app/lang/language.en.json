@@ -1,9 +1,10 @@
 {
   "--- newtrans": "---",
  "---": "---",
- "err_cit_forward_login":"Unable to set local login forwarding.",
+ "err_cit_get_forward_login":"Unable to get local login forwarding state.",
+ "err_cit_set_forward_login":"Unable to set local login forwarding.",
  "forward_login":"Automatic login on local access",
- "forward_login_info":"Activate this option if you don't want to be prompted for entering login credentials on every local access to your CIT.",
+ "forward_login_info":"Activate this option if you don't want to be prompted for entering login credentials on on every local (same network) access.",
  "cit_unregister_btn":"Unregister",
  "cit_unregister_info":"Unregister your CIT to prevent access to it until it is registered to a new owner. ATTENTION! After successful unregistration you'll be logged out automatically. For further use the CIT needs to be intialized by a registered CIT user again.",
  "cit_settings_unregister":"Unregister CIT",
