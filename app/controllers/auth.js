@@ -15,7 +15,8 @@ appController.controller('InitInstallerController', function ($scope, $location,
             cit_identifier: cfg.system_info.cit_identifier || ''
         },
         alert: {},
-        findcit_referrer: false
+        findcit_referrer: false,
+        hostname: $location.host()
     };
 
     /**

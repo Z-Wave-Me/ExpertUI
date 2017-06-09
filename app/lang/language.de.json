@@ -1,4 +1,8 @@
 {
+ "err_cit_get_forward_login":"Der Status der Login-Weiterleitung konnte nicht geladen werden.",
+ "err_cit_set_forward_login":"Der Status der Login-Weiterleitung konnte nicht gesetzt werden.",
+ "forward_login":"Automatisches Login bei lokalem Zugang (gleiches Netzwerk)",
+ "forward_login_info":"Aktivieren Sie diese Option, wenn Sie nicht auf bei jedem lokalen Zugriff (gleiches Netzwerk) aufgefordert werden möchten, Ihre Anmeldeinformationen einzugeben.",
  "cit_unregister_btn":"Abmelden",
  "cit_unregister_info":"Melden Sie Ihr CIT ab, um den Zugriff darauf zu verhindern, bis es durch einen neuen Besitzer registriert wird. ACHTUNG! Nach erfolgreicher Abmeldung werden Sie automatisch ausgeloggt. Zur weiteren Verwendung muss das CIT erneut von einem registrierten CIT-Benutzer intialisiert werden.",
  "cit_settings_unregister":"CIT Abmelden",
