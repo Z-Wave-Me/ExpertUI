@@ -15575,58 +15575,65 @@ http://codepen.io/MattIn4D/pen/LiKFC
 }
 
 /* line 13, ../sass/modules/_configuration.scss */
+.cfg-block-top-border {
+  margin: 20px 0 0 0;
+  padding: 20px 0 0 0;
+  border-top: solid 1px #9fd8ef;
+}
+
+/* line 19, ../sass/modules/_configuration.scss */
 .cfg-block h4 {
   color: #2A6496;
 }
 
-/* line 17, ../sass/modules/_configuration.scss */
+/* line 23, ../sass/modules/_configuration.scss */
 .cfg-control-content {
   padding: 10px;
   margin: 10px 0;
   background-color: #e4f5fc;
 }
 
-/* line 22, ../sass/modules/_configuration.scss */
+/* line 28, ../sass/modules/_configuration.scss */
 .cfg-info {
   margin: 10px 0 0 0;
   padding: 10px 0 0 0;
   border-top: solid 1px #fff;
 }
 
-/* line 27, ../sass/modules/_configuration.scss */
+/* line 33, ../sass/modules/_configuration.scss */
 .commads-is-current {
   text-decoration: underline;
 }
 
-/* line 30, ../sass/modules/_configuration.scss */
+/* line 36, ../sass/modules/_configuration.scss */
 #wakeup_cont .form-inline, #wakeup_cont .navbar-form {
   /*    max-width: 300px;*/
   float: left;
 }
 
-/* line 35, ../sass/modules/_configuration.scss */
+/* line 41, ../sass/modules/_configuration.scss */
 #device_select_image_container {
   margin: 20px;
 }
 
-/* line 39, ../sass/modules/_configuration.scss */
+/* line 45, ../sass/modules/_configuration.scss */
 #device_select_image {
   margin: 0 auto;
   text-align: center;
 }
 
-/* line 45, ../sass/modules/_configuration.scss */
+/* line 51, ../sass/modules/_configuration.scss */
 #device_select_image img {
   margin: 0 auto;
   max-width: 200px;
 }
 
-/* line 50, ../sass/modules/_configuration.scss */
+/* line 56, ../sass/modules/_configuration.scss */
 .btn-assoc {
   margin-bottom: 5px;
 }
 
-/* line 54, ../sass/modules/_configuration.scss */
+/* line 60, ../sass/modules/_configuration.scss */
 .btn-group-assoc-devices {
   margin: 0 5px 5px 0;
 }

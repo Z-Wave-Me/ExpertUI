@@ -76,12 +76,13 @@
         </div>
         <div>
             <!-- controller_change_start -->
-            <div class="cfg-block form-inline" ng-hide="!cfg.controller.isRealPrimary" ng-controller="ControllerChangeController">
+            <div ng-if="cfg.app_type == 'installer'" ng-include="'app/views/network/control/control_network_maintance_ctrlchange.html'"></div>
+            <!--<div class="cfg-block form-inline" ng-hide="!cfg.controller.isRealPrimary" ng-controller="ControllerChangeController">
                 <p class="input-help">{{_t('nm_change_controller_war')}}</p>
                 <div class="nm-response"  ng-class="controllerState == 0 ? 'text-info' : 'text - danger'" ng-show="[13, 14, 15, 16].indexOf(controllerState) > -1">
                     {{_t('nm_controller_state_' + controllerState)}}
                 </div>
-                <!--  ControllerChange start -->
+                &lt;!&ndash;  ControllerChange start &ndash;&gt;
                 <button class="btn btn-primary"
                         id="btn_controller_change_start"
                         ng-show="[13, 14, 15, 16].indexOf(controlDh.controller.controllerState) == -1"
@@ -95,7 +96,7 @@
                     </bb-row-spinner>
                 </button>
 
-                <!--  ControllerChange stop -->
+                &lt;!&ndash;  ControllerChange stop &ndash;&gt;
                 <button class="btn btn-danger"
                         id="btn_controller_change_stop"
                         ng-show="[13, 14, 15, 16].indexOf(controlDh.controller.controllerState) > -1"
@@ -108,7 +109,7 @@
                             icon="'fa-database'">
                     </bb-row-spinner>
                 </button>
-            </div>
+            </div>-->
 
             <!-- request_nif -->
             <div class="cfg-block form-inline" ng-controller="RequestNifAllController">

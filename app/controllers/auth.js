@@ -53,10 +53,10 @@ appController.controller('InitInstallerController', function ($scope, $location,
         };
 
         // test login without cit auth
-        /*if(cfg.environment == '@@dev'){
+        if(cfg.dev_host.indexOf($location.host()) > -1){
             $scope.login(auth);
             return;
-        }*/
+        }
 
         // cit authentication
         dataService.postApi('installer_auth', input).then(function (response) {

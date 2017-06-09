@@ -48,6 +48,8 @@
                 <i class="fa fa-stop-circle"></i> {{_t('leave_network_stop')}}
             </button>
         </div>
+        <!-- Controller change -->
+        <div class="cfg-block-top-border" ng-if="cfg.app_type == 'default'" ng-include="'app/views/network/control/control_network_maintance_ctrlchange.html'"></div>
     </div>
 
     <!-- successNetworkIncludeModal -->

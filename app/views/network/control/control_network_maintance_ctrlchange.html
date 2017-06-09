@@ -1,190 +1,37 @@
-<!-- Network Maintenance -->
-<div class="panel panel-default">
-    <div class="panel-heading"><i class="fa fa-sitemap"></i> {{_t('nm_net_maintance')}}</div>
-    <div class="panel-body">
-        <div>
-            <!-- remove_failed_node -->
-            <div class="cfg-block form-inline">
-                <p class="input-help">{{_t('nm_remove_node_war')}}</p>
-                <select name="remove_failed_node" id="remove_failed_node" class="form-control"
-                        ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
-                        ng-hide="_.isEmpty(controlDh.nodes.failedNodes)"
-                        ng-model="controlDh.input.failedNodes">
-                    <option ng-hide="controlDh.removed.failedNodes.indexOf(v) > -1"
-                            ng-repeat="v in controlDh.nodes.failedNodes track by $index" value="{{v}}">{{v}}</option>
-                </select>&nbsp;
-                <button
-                        class="btn btn-primary"
-                        id="btn_remove_failed_mode"
-                        ng-click="handleModal('failedNodeModal', $event)"
-                        ng-disabled="!controlDh.input.failedNodes">
-                    <bb-row-spinner
-                            spinner="rowSpinner['devices[' + controlDh.input.failedNodes + '].RemoveFailedNode()']"
-                            label="_t('nm_remove_failed')"
-                            icon="'fa-minus-circle'">
-                    </bb-row-spinner>
-                </button>
-
-            </div>
-
-            <!-- replace_failed_node -->
-            <div class="cfg-block form-inline" ng-controller="ReplaceFailedNodeController">
-                <p class="input-help">{{_t('nm_replace_node_war')}}</p>
-                 <div class="alert nm-response alert-danger" ng-show="[17, 18].indexOf(controllerState) != -1">{{_t('nm_controller_state_' + controllerState)}}</div>
-                <select name="replace_failed_node" id="replace_failed_node" class="form-control"
-                        ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
-                        ng-hide="_.isEmpty(controlDh.nodes.failedNodes)"
-                        ng-model="controlDh.input.replaceNodes">
-                    <option ng-hide="controlDh.removed.replaceNodes.indexOf(v) > -1"
-                            ng-repeat="v in controlDh.nodes.failedNodes track by $index" value="{{v}}">{{v}}</option>
-                </select>&nbsp;
-                <button class="btn btn-primary" id="btn_replace_failed_node"
-                        ng-click="replaceFailedNode('ReplaceFailedNode(' + controlDh.input.replaceNodes + ')')"
-                        ng-disabled="!controlDh.input.replaceNodes">
-                    <bb-row-spinner
-                            spinner="rowSpinner['ReplaceFailedNode(' + controlDh.input.replaceNodes + ')']"
-                            label="_t('nm_replace_node')"
-                            icon="'fa-exchange'">
-                    </bb-row-spinner>
-                    {{_t('')}}
-                </button>
-
-            </div>
-
-            <!-- mark_battery_failed -->
-            <div class="cfg-block form-inline">
-                <p class="input-help">{{_t('nm_mark_node_war')}}</p>
-                <select name="mark_battery_failed" id="mark_battery_failed" class="form-control"
-                        ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
-                        ng-hide="_.isEmpty(controlDh.nodes.failedBatteries)"
-                        ng-change="changeSelectNode(modelBatteryFailed)"
-                        ng-model="controlDh.input.failedBatteries">
-                    <option ng-hide="controlDh.removed.failedBatteries.indexOf(v) > -1"
-                            ng-repeat="v in controlDh.nodes.failedBatteries track by $index" value="{{v}}">{{v}}</option>
-                </select>&nbsp;
-                <button class="btn btn-primary"
-                        ng-click="handleModal('failedBatteryModal', $event)"
-                        ng-disabled="!controlDh.input.failedBatteries">
-                    <bb-row-spinner
-                            spinner="rowSpinner['devices[' + controlDh.input.failedBatteries + '].SendNoOperation()']"
-                            label="_t('nm_mark_battery_as_failed')"
-                            icon="'fa-thumb-tack'">
-                    </bb-row-spinner>
-                </button>
-
-            </div>
-        </div>
-        <div>
-            <!-- controller_change_start -->
-            <div class="cfg-block form-inline" ng-hide="!cfg.controller.isRealPrimary" ng-controller="ControllerChangeController">
-                <p class="input-help">{{_t('nm_change_controller_war')}}</p>
-                <div class="nm-response"  ng-class="controllerState == 0 ? 'text-info' : 'text - danger'" ng-show="[13, 14, 15, 16].indexOf(controllerState) > -1">
-                    {{_t('nm_controller_state_' + controllerState)}}
-                </div>
-                <!--  ControllerChange start -->
-                <button class="btn btn-primary"
-                        id="btn_controller_change_start"
-                        ng-show="[13, 14, 15, 16].indexOf(controlDh.controller.controllerState) == -1"
-                        ng-click="controllerChange('controller.ControllerChange(1)')"
-                        ng-disabled="[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controlDh.controller.controllerState) > -1 || isPrimary == false || rowSpinner['controller.ControllerChange(1)']">
-
-                    <bb-row-spinner
-                            spinner="rowSpinner['controller.ControllerChange(1)']"
-                            label="_t('nm_controller_change_start')"
-                            icon="'fa-database'">
-                    </bb-row-spinner>
-                </button>
-
-                <!--  ControllerChange stop -->
-                <button class="btn btn-danger"
-                        id="btn_controller_change_stop"
-                        ng-show="[13, 14, 15, 16].indexOf(controlDh.controller.controllerState) > -1"
-                        ng-click="controllerChange('controller.ControllerChange(0)')"
-                        ng-disabled="rowSpinner['controller.ControllerChange(0)']">
-
-                    <bb-row-spinner
-                            spinner="rowSpinner['controller.ControllerChange(0)']"
-                            label="_t('nm_controller_change_stop')"
-                            icon="'fa-database'">
-                    </bb-row-spinner>
-                </button>
-            </div>
-
-            <!-- request_nif -->
-            <div class="cfg-block form-inline" ng-controller="RequestNifAllController">
-                <p class="input-help">{{_t('nm_nif_all_war')}}</p>
-                <button class="btn btn-primary"
-                        id="btn_request_nif"
-                        ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
-                        ng-click="requestNifAll('requestNifAll')"
-                        ng-disabled="rowSpinner['requestNifAll']">
-
-                    <bb-row-spinner
-                            spinner="rowSpinner['requestNifAll']"
-                            label="_t('nm_request_all_node_information')"
-                            icon="'fa-search-plus'">
-                    </bb-row-spinner>
-                </button>
-            </div>
-        </div>
+<!-- controller_change_start -->
+<div class="cfg-block form-inline" ng-hide="!cfg.controller.isRealPrimary" ng-controller="ControllerChangeController">
+    <!--<pre>{{controlDh.controller|json}}</pre>-->
+    <p class="input-help">{{_t('nm_change_controller_war')}}</p>
+    <div class="nm-response" ng-class="controllerState == 0 ? 'text-info' : 'text - danger'"
+         ng-show="[13, 14, 15, 16].indexOf(controllerState) > -1">
+        {{_t('nm_controller_state_' + controllerState)}}
     </div>
+    <!--  ControllerChange start -->
+    <button class="btn btn-primary"
+            id="btn_controller_change_start"
+            ng-show="[13, 14, 15, 16].indexOf(controlDh.controller.controllerState) == -1"
+            ng-click="controllerChange('controller.ControllerChange(1)')"
+            ng-disabled="[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controlDh.controller.controllerState) > -1 || isPrimary == false || rowSpinner['controller.ControllerChange(1)']">
+
+        <bb-row-spinner
+                spinner="rowSpinner['controller.ControllerChange(1)']"
+                label="_t('nm_controller_change_start')"
+                icon="'fa-database'">
+        </bb-row-spinner>
+    </button>
+
+    <!--  ControllerChange stop -->
+    <button class="btn btn-danger"
+            id="btn_controller_change_stop"
+            ng-show="[13, 14, 15, 16].indexOf(controlDh.controller.controllerState) > -1"
+            ng-click="controllerChange('controller.ControllerChange(0)')"
+            ng-disabled="rowSpinner['controller.ControllerChange(0)']">
+
+        <bb-row-spinner
+                spinner="rowSpinner['controller.ControllerChange(0)']"
+                label="_t('nm_controller_change_stop')"
+                icon="'fa-database'">
+        </bb-row-spinner>
+    </button>
 </div>
-
-<!-- failedNodeModal -->
-<div id="failedNodeModal" class="appmodal" ng-if="modalArr.failedNodeModal" ng-controller="RemoveFailedNodeController">
-    <div class="appmodal-in">
-        <div class="appmodal-header">
-                <span class="appmodal-close" ng-click="handleModal('failedNodeModal', $event);controlDh.input.failedNodes = 0"><i
-                        class="fa fa-times"></i></span>
-            <h3>{{_t('nm_remove_failed') + ' #' + controlDh.input.failedNodes}}</h3>
-        </div>
-        <div class="appmodal-body">
-            <div class="alert alert-warning">
-                <input type="checkbox" name="remove_node_confirm" id="remove_node_confirm" value="1" ng-click="goFailedNode = !goFailedNode" /> <span ng-bind-html="_t('are_you_sure_remove_node') | toTrusted"></span> <strong>{{deviceInfo.name}}</strong>
-                <p>{{_t('txt_controller_delete_node')}}</p>
-            </div>
-
-        </div>
-        <div class="appmodal-footer">
-            <!-- Close -->
-            <button type="button" class="btn btn-default" ng-click="handleModal('failedNodeModal', $event);controlDh.input.failedNodes = 0">
-                <i class="fa fa-times text-danger"></i> <span class="btn-name">{{_t('btn_cancel')}}</span>
-            </button>
-            <!-- Set Default -->
-            <button type="button" class="btn btn-danger" id="btn_reset_controller"
-                    ng-show="goFailedNode"
-                    ng-click="removeFailedNode('devices[' + controlDh.input.failedNodes + '].RemoveFailedNode()',handleModal('failedNodeModal', $event))">
-                <i class="fa fa-exclamation-triangle"></i> {{_t('nm_remove_failed')}}
-            </button>
-        </div>
-    </div>
-</div><!-- /#modal failedNodeModal -->
-
-<!-- failedBatteryModal -->
-<div id="failedBatteryModal" class="appmodal" ng-if="modalArr.failedBatteryModal" ng-controller="BatteryDeviceFailedController">
-    <div class="appmodal-in">
-        <div class="appmodal-header">
-                <span class="appmodal-close" ng-click="handleModal('failedBatteryModal', $event);controlDh.input.failedBatteries = 0"><i
-                        class="fa fa-times"></i></span>
-            <h3>{{_t('nm_mark_battery_as_failed') + ' #' + controlDh.input.failedBatteries}}</h3>
-        </div>
-        <div class="appmodal-body">
-            {{_t('nm_mark_node_war_modal')}}
-
-        </div>
-        <div class="appmodal-footer">
-            <!-- Close -->
-            <button type="button" class="btn btn-default" ng-click="handleModal('failedBatteryModal', $event);controlDh.input.failedBatteries = 0">
-                <i class="fa fa-times text-danger"></i> <span class="btn-name">{{_t('btn_cancel')}}</span>
-            </button>
-            <!-- Set Default -->
-            <button type="button" class="btn btn-primary" id="btn_reset_controller"
-                    ng-click="markFailedNode(
-                    ['devices[' + controlDh.input.failedBatteries + '].SendNoOperation()',
-                    'devices[' + controlDh.input.failedBatteries + '].WakeupQueue()'],handleModal('failedBatteryModal', $event))">
-               <i class="fa fa-check"></i> {{_t('nm_mark_battery_as_failed')}}
-            </button>
-        </div>
-    </div>
-</div><!-- /#modal failedBatteryModal -->
 
