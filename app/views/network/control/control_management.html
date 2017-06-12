@@ -83,6 +83,54 @@
                 <i class="fa fa-stop-circle"></i> {{_t('nm_exclude_stop')}}
             </button>
         </div>
+        <pre>{{controlDh.inclusion|json}}</pre>
+        <a href="" ng-click="showInclusionModal('inclusionModal1')">Show POPUP 1</a> | <a href="" ng-click="showInclusionModal('inclusionModal2')">Show POPUP 2</a>
     </div>
 </div>
+
+<!-- inclusionModal1 -->
+<div id="inclusionModal1" class="appmodal" ng-if="controlDh.inclusion.popup === 'inclusionModal1'">
+    <div class="appmodal-in">
+        <div class="appmodal-header">
+                <span class="appmodal-close" ng-click="closeInclusionModal()"><i
+                        class="fa fa-times"></i></span>
+            <h3>{{_t(' POPUP 1 headline')}}</h3>
+        </div>
+        <div class="appmodal-body">
+           POPUP 1 text Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue.
+
+        </div>
+         <div class="appmodal-footer">
+             <!-- OK -->
+             <button type="button" class="btn btn-submit">
+                 <i class="fa fa-check"></i> <span class="btn-name">{{_t('ok')}}</span>
+             </button>
+         </div>
+    </div>
+</div><!-- /#inclusionModal1 -->
+
+<!-- inclusionModal2 -->
+<div id="inclusionModal2" class="appmodal" ng-if="controlDh.inclusion.popup === 'inclusionModal2'">
+    <div class="appmodal-in">
+        <div class="appmodal-header">
+                <span class="appmodal-close" ng-click="closeInclusionModal()"><i
+                        class="fa fa-times"></i></span>
+            <h3>{{_t(' POPUP 2 headline')}}</h3>
+        </div>
+        <div class="appmodal-body">
+            POPUP 2 text Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+
+        </div>
+        <div class="appmodal-footer">
+            <!-- Cancel -->
+            <button type="button" class="btn btn-default" ng-click="closeInclusionModal()">
+                <i class="fa fa-times text-danger"></i> <span class="btn-name">{{_t('btn_cancel')}}</span>
+            </button>
+            <!-- Confirm -->
+            <button type="button" class="btn btn-submit">
+                <i class="fa fa-check"></i> <span class="btn-name">{{_t('confirm')}}</span>
+            </button>
+        </div>
+    </div>
+</div><!-- /#inclusionModal1 -->
 

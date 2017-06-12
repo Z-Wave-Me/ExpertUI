@@ -18,7 +18,8 @@ appController.controller('ControlController', function ($scope, $interval, $time
             lastIncludedDevice: $scope.alert,
             lastExcludedDevice: $scope.alert,
             alert: $scope.alert,
-            alertPrimary: $scope.alert
+            alertPrimary: $scope.alert,
+            popup: false
         },
         network: {
             include: false,
@@ -80,6 +81,20 @@ appController.controller('ControlController', function ($scope, $interval, $time
             });
         };
         $scope.controlDh.interval = $interval(refresh, $scope.cfg.interval);
+    };
+
+    /**
+     * Show inclusion popup
+     */
+    $scope.showInclusionModal = function (popup) {
+        $scope.controlDh.inclusion.popup = popup;
+    };
+
+    /**
+     * Show inclusion popup
+     */
+    $scope.closeInclusionModal = function () {
+        $scope.controlDh.inclusion.popup = false;
     };
 
 
