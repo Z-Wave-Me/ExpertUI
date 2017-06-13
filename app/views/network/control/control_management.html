@@ -83,54 +83,79 @@
                 <i class="fa fa-stop-circle"></i> {{_t('nm_exclude_stop')}}
             </button>
         </div>
-        <pre>{{controlDh.inclusion|json}}</pre>
-        <a href="" ng-click="showInclusionModal('inclusionModal1')">Show POPUP 1</a> | <a href="" ng-click="showInclusionModal('inclusionModal2')">Show POPUP 2</a>
+        <pre>{{controlDh.inclusion.cc|json}}</pre>
+        <a href="" ng-click="controlDh.inclusion.cc.Basic.show = true;controlDh.inclusion.cc.Basic.done = true;countDownTest()">Show POPUP Basic</a> |
+        <a href="" ng-click="controlDh.inclusion.cc.SwitchMultilevel.show = true;controlDh.inclusion.cc.SwitchMultilevel.done = true">Show POPUP SwitchMultilevel</a>
     </div>
 </div>
 
-<!-- inclusionModal1 -->
-<div id="inclusionModal1" class="appmodal" ng-if="controlDh.inclusion.popup === 'inclusionModal1'">
-    <div class="appmodal-in">
-        <div class="appmodal-header">
-                <span class="appmodal-close" ng-click="closeInclusionModal()"><i
-                        class="fa fa-times"></i></span>
-            <h3>{{_t(' POPUP 1 headline')}}</h3>
-        </div>
-        <div class="appmodal-body">
-           POPUP 1 text Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue.
-
-        </div>
-         <div class="appmodal-footer">
-             <!-- OK -->
-             <button type="button" class="btn btn-submit">
-                 <i class="fa fa-check"></i> <span class="btn-name">{{_t('ok')}}</span>
-             </button>
-         </div>
+<!-- inclusionBasicModal -->
+<div id="inclusionBasicModal" class="appmodal" ng-if="controlDh.inclusion.cc.Basic.show">
+    <!-- <div class="appmodal-in">-->
+    <form class="appmodal-in" name="form_inclusion1" id="form_inclusion1" ng-submit="">
+    <div class="appmodal-header">
+                <!--<span class="appmodal-close" ng-click="closeInclusionModal()"><i
+                        class="fa fa-times"></i></span>-->
+        <h3>{{_t('POPUP 1 headline')}}</h3>
     </div>
-</div><!-- /#inclusionModal1 -->
+    <div class="appmodal-body">
+        <p>POPUP 1 text Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue.</p>
+        <div class="alert alert-warning">{{controlDh.inclusion.cc.Basic.countDown}}s remain to do something about it</div>
+        <!--<pre>{{controlDh.inclusion.input|json}}</pre>-->
+        <div>
+            <input type="radio" name="basic_level" value="true" id="basic_level_1" ng-model="controlDh.inclusion.input.basic_level" />
+            <label>Basic.data.level=True</label>
+        </div>
+        <div>
+            <input type="radio" name="basic_level" value="false" id="basic_level_2" ng-model="controlDh.inclusion.input.basic_level" />
+            <label>Basic.data.level=False</label>
+        </div>
+        <div>
+            <input type="radio" name="basic_level" value="true" id="basic_level_3" ng-model="controlDh.inclusion.input.basic_level" />
+            <label>Basic.data.level=True</label>
+        </div>
+        <div>
+            <input type="radio" name="basic_level" value="false" id="basic_level_4" ng-model="controlDh.inclusion.input.basic_level" />
+            <label>Basic.data.level=False</label>
+        </div>
 
-<!-- inclusionModal2 -->
-<div id="inclusionModal2" class="appmodal" ng-if="controlDh.inclusion.popup === 'inclusionModal2'">
+    </div>
+    <div class="appmodal-footer">
+        <!-- OK -->
+        <button type="button" class="btn btn-submit" ng-click="handleInclusionBasic(controlDh.inclusion.input.basic_level)">
+            <i class="fa fa-check"></i> <span class="btn-name">{{_t('ok')}}</span>
+        </button>
+    </div>
+    </form>
+    <!--</div>-->
+</div><!-- /#inclusionBasicModal -->
+
+<!-- inclusionSwitchMultilevelModal -->
+<div id="inclusionSwitchMultilevelModal" class="appmodal" ng-if="controlDh.inclusion.cc.SwitchMultilevel.show">
     <div class="appmodal-in">
         <div class="appmodal-header">
-                <span class="appmodal-close" ng-click="closeInclusionModal()"><i
-                        class="fa fa-times"></i></span>
+               <!-- <span class="appmodal-close" ng-click="closeInclusionModal()"><i
+                        class="fa fa-times"></i></span>-->
             <h3>{{_t(' POPUP 2 headline')}}</h3>
         </div>
-        <div class="appmodal-body">
-            POPUP 2 text Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+        <div class="appmodal-body form-group form-inline">
+            <p>POPUP 2 text Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+            <!-- name -->
+            <label>SwitchMultilevel.data.level: </label>
+            <input name="switch_multilevel_level" id="switch_multilevel_level" type="text" class="form-control"
+                   value=""/>
 
         </div>
         <div class="appmodal-footer">
             <!-- Cancel -->
-            <button type="button" class="btn btn-default" ng-click="closeInclusionModal()">
+            <button type="button" class="btn btn-default" ng-click="handleInclusionSwitchMultilevel(5)">
                 <i class="fa fa-times text-danger"></i> <span class="btn-name">{{_t('btn_cancel')}}</span>
             </button>
             <!-- Confirm -->
-            <button type="button" class="btn btn-submit">
+            <button type="button" class="btn btn-submit" ng-click="handleInclusionSwitchMultilevel(6)">
                 <i class="fa fa-check"></i> <span class="btn-name">{{_t('confirm')}}</span>
             </button>
         </div>
     </div>
-</div><!-- /#inclusionModal1 -->
+</div><!-- /#inclusionBasicModal -->
 

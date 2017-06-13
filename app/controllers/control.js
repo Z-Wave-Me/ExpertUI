@@ -19,7 +19,25 @@ appController.controller('ControlController', function ($scope, $interval, $time
             lastExcludedDevice: $scope.alert,
             alert: $scope.alert,
             alertPrimary: $scope.alert,
-            popup: false
+            popup: false,
+            input: {
+                basic_level: 'false',
+                switch_multilevel_level:5
+            },
+            cc:{
+                Basic: {
+                    interval: false,
+                    show: false,
+                    done: false,
+                    countDown: 5
+                },
+                SwitchMultilevel: {
+                    interval: false,
+                    show: false,
+                    done: false,
+                    countDown: 10
+                }
+            }
         },
         network: {
             include: false,
@@ -76,7 +94,9 @@ appController.controller('ControlController', function ($scope, $interval, $time
             dataService.loadJoinedZwaveData().then(function (response) {
                 setControllerData(response.data.joined);
                 setDeviceData(response.data.joined);
-                setInclusionData(response.data.joined, response.data.update)
+                setInclusionData(response.data.joined, response.data.update);
+                var nodeInstances = $filter('hasNode')(response,'data.joined.devices.' + 2 + '.instances')
+                checkInterview(nodeInstances)
             }, function (error) {
             });
         };
@@ -95,6 +115,53 @@ appController.controller('ControlController', function ($scope, $interval, $time
      */
     $scope.closeInclusionModal = function () {
         $scope.controlDh.inclusion.popup = false;
+    };
+
+    /**
+     * CountDown test
+     */
+    $scope.countDownTest = function (level) {
+        if($scope.controlDh.inclusion.cc.Basic.countDown < 1){
+            return;
+        }
+        var countDownBasic = $interval(function(){
+            $scope.controlDh.inclusion.cc.Basic.countDown--;
+            //$scope.$apply();
+            console.log($scope.controlDh.inclusion.cc.Basic.countDown);
+            if($scope.controlDh.inclusion.cc.Basic.countDown === 0){
+                console.log('Stop countDownBasic interval');
+                $interval.cancel(countDownBasic);
+                $scope.handleInclusionBasic();
+            }
+        }, 1000);
+    };
+    //$scope.countDownTest();
+
+    /**
+     * Handle inclusion modal 1
+     */
+    $scope.handleInclusionBasic = function (level) {
+        $scope.controlDh.inclusion.cc.Basic.show = false;
+        $scope.controlDh.inclusion.cc.Basic.done = true;
+        $interval.cancel($scope.controlDh.inclusion.cc.Basic.interval);
+        if(!level){
+            return;
+        }
+        var cmd = 'devices[2].instances[0].commandClasses[32].Set('+level+')';
+       // console.log(cmd)
+
+        $scope.runZwaveCmd(cmd)
+    };
+
+    /**
+     * Handle inclusion modal 2
+     */
+    $scope.handleInclusionSwitchMultilevel = function (level) {
+        var cmd = 'devices[2].instances[0].commandClasses[38].Set('+level+')';
+        //console.log(cmd)
+        $scope.controlDh.inclusion.cc.SwitchMultilevel.show = false;
+        $scope.controlDh.inclusion.cc.SwitchMultilevel.done = true;
+        $scope.runZwaveCmd(cmd)
     };
 
 
@@ -291,6 +358,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
             //Run CMD
             /*var cmd = 'devices[' + deviceIncId + '].data.givenName.value=\'' + givenName + '\'';
              dataService.runZwaveCmd(cfg.store_url + cmd);*/
+            $scope.controlDh.inclusion.lastIncludedDeviceId = deviceIncId;
             $scope.controlDh.inclusion.lastIncludedDevice = {
                 message: $scope._t('nm_last_included_device') + '  (' + updateTime + ')  <a href="#configuration/interview/' + deviceIncId + '"><strong>' + givenName + '</strong></a>',
                 status: 'alert-success',
@@ -316,7 +384,51 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 icon: 'fa-smile-o'
             };
         }
-    };
+    }
+
+    /**
+     * Check interview
+     * @param {int} nodeId
+     */
+    function checkInterview(nodeInstances) {
+        if($scope.controlDh.inclusion.cc.Basic.show){
+            return;
+        }
+        //console.log(instance)
+        //console.log(nodeInstances)
+        angular.forEach(nodeInstances,function(instance,iId){
+            /*if (Object.keys(ZWaveAPIData.devices[nodeId].instances[iId].commandClasses).length < 1) {
+                return;
+            }*/
+            /**
+             * Check for Basic cc
+             */
+
+                console.log(instance.commandClasses[32])
+                var hasBasic = instance.commandClasses[32];
+                if(hasBasic && !hasBasic.data.level.value && !$scope.controlDh.inclusion.cc.Basic.done){
+                    console.log('Show modal')
+                    $scope.controlDh.inclusion.cc.Basic.show = true;
+                    $scope.controlDh.inclusion.cc.Basic.done = true;
+                    var countDownBasic = function(){
+                        $scope.controlDh.inclusion.cc.Basic.countDown--;
+                        //$scope.$apply();
+                        console.log($scope.controlDh.inclusion.cc.Basic.countDown);
+                        if($scope.controlDh.inclusion.cc.Basic.countDown === 0){
+                            console.log('Stop countDownBasic interval');
+                            $interval.cancel($scope.controlDh.inclusion.cc.Basic.interval);
+                            $scope.handleInclusionBasic();
+                        }
+                    };
+                    $scope.controlDh.inclusion.cc.Basic.interval = $interval(countDownBasic, 1000);
+                }
+            /**
+             * Check for SwitchMultilevel cc
+             */
+            console.log(instance.commandClasses[38])
+            var hasSwitchMultilevel= instance.commandClasses[38];
+        });
+    }
 
 });
 
