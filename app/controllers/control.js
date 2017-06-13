@@ -119,6 +119,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
         $scope.controlDh.controller.homeName = ZWaveAPIData.controller.data.homeName.value || cfg.controller.homeName;
         $scope.controlDh.controller.SetPromiscuousMode = (ZWaveAPIData.controller.data.functionClassesNames.value.indexOf('SetPromiscuousMode') > -1 ? true : false);
         $scope.controlDh.controller.SUCNodeId = ZWaveAPIData.controller.data.SUCNodeId.value;
+        $scope.controlDh.controller.isInOthersNetwork = ZWaveAPIData.controller.data.isInOthersNetwork.value;
 
         $scope.controlDh.inclusion.alert = {
             message: $scope._t('nm_controller_state_' + controllerState),
@@ -399,7 +400,7 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
             //console.log('Run cmd: ', cfg.store_url + cmd)
             $timeout(function() {
                 dataService.runZwaveCmd(cfg.store_url + 'controller.SetLearnMode(0)');
-                console.log('Running controller.SetLearnMode(0) after timeout')
+                //console.log('Running controller.SetLearnMode(0) after timeout')
                 if(cfg.app_type === 'installer'){
                     $window.location.reload();
                 }else{
