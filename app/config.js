@@ -53,6 +53,7 @@ var config_data = {
         'reorg_run_url': '/ZWaveAPI/NetworkReorganization', // Url to start reorganization
         'reorg_log_url': '/ZWaveAPI/GetReorganizationLog', // Url to load log
         'zddx_create_url': '/ZWaveAPI/CreateZDDX/', // Create zddx file
+        'get_network_statistics': '/ZWaveAPI/GetStatisticsData', // get network statistics
 
         // Other APIs
         'session': '/ZAutomation/api/v1/session',

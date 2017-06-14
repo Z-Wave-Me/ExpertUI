@@ -25,6 +25,7 @@
     </div>
 
     <!-- ------------------------------------------ Data Rate on Send ------------------------------------------ -->
+    <!--<pre>{{netStat|json}}</pre>-->
     <div class="statistic-entry">
         <div class="statistic-title">{{_t('RFTxLBTBackOffs')}}&nbsp;
             <span class="label label-default">{{netStat.dataRate.dateTime.today}}</span>
@@ -49,7 +50,7 @@
             <div class="page-navi-in">
                 <div class="page-navi-content">
                     <span class="text-success">{{ _t('RFTxFrames')}}: <strong>{{netStat.dataRate.frameValue}}</strong></span><br/>
-                    <span class="text-danger">{{_t('RFTxLBTBackOffs_error')}}:  <strong>{{_t(netStat.dataRate.value)}}</strong></span>
+                    <span class="text-danger">{{_t('RFTxLBTBackOffs_error')}}:  <strong>{{_t(netStat.dataRate.failValue)}}</strong></span>
                 </div>
             </div>
         </div>

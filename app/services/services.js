@@ -83,7 +83,8 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
             'post_report_api': '/ZWave.' + dongle+ '/sendZWayReport',
             'reorg_run_url': '/ZWave.' + dongle+ '/NetworkReorganization',
             'reorg_log_url': '/ZWave.' + dongle+ '/GetReorganizationLog',
-            'zddx_create_url': '/ZWave.' + dongle+ '/CreateZDDX/'
+            'zddx_create_url': '/ZWave.' + dongle+ '/CreateZDDX/',
+            'get_network_statistics': '/ZWave.' + dongle+ '/GetStatisticsData'
 
         });
     };
