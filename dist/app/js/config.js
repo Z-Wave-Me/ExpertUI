@@ -6,9 +6,10 @@
 var config_data = {
     'cfg': {
         'environment': 'live',
+        'dev_host': ['192.168.10.156'],
         'app_name': 'Z-Wave Expert',
-        'app_version': '1.3.0-RC-89',
-        'app_built': '07-06-2017 15:55:54',
+        'app_version': '1.3.0-RC-90',
+        'app_built': '09-06-2017 16:50:14',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -75,6 +76,8 @@ var config_data = {
         'system_info_url': '/ZAutomation/api/v1/system/info', // Sytem info
         'installer_auth': '/ZAutomation/api/v1/system/certfxAuth', // Installer initialization
         'identifier_update': '/ZAutomation/api/v1/system/certfxUpdateIdentifier', // Identifier update
+        'cit_forward_login':'/ZAutomation/api/v1/system/certfxAuthForwarding', // forward cit login
+        'cit_unregister':'/ZAutomation/api/v1/system/certfxUnregister', // unregister cit
         //'reorg_log_url': '/config/reorg.log', // Url for store reorg log data
         'zddx_url': '/ZDDX/', // Url for zddx xml files
         'notes_url': '/config/notes.log', // Url for store notes data
