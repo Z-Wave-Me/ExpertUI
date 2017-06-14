@@ -6,7 +6,7 @@
 var config_data = {
     'cfg': {
         'environment': '@@dev',
-        'dev_host': ['192.168.10.156'],
+        'dev_host': ['192.168.10.147'],
         'app_name': '@@app_name',
         'app_version': '@@app_version',
         'app_built': '@@app_built',
@@ -319,7 +319,7 @@ var config_data = {
                 'logo': 'app/images/z-wave-aliance-logo.png',
                 'footer_text': '&COPY; 2017 Z-Wave Alliance',
                 'logout': '#/logout',
-                'version_type': '- version BETA',
+                'version_type': '',
                 'title': 'Z-Wave CIT',
                 'controller_name': 'CIT',
                 'hardware_vendor': 'Z-Wave Alliance',
