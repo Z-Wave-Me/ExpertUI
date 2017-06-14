@@ -90,7 +90,7 @@
 </div>
 
 <!-- inclusionBasicModal -->
-<div id="inclusionBasicModal" class="appmodal" ng-if="controlDh.inclusion.cc.Basic.show">
+<div id="inclusionBasicModal" class="appmodal" ng-if="controlDh.inclusion.cc.Basic.show && cfg.app_type != 'installer'">
     <!-- <div class="appmodal-in">-->
     <form class="appmodal-in" name="form_inclusion1" id="form_inclusion1" ng-submit="">
     <div class="appmodal-header">
@@ -131,7 +131,7 @@
 </div><!-- /#inclusionBasicModal -->
 
 <!-- inclusionSwitchMultilevelModal -->
-<div id="inclusionSwitchMultilevelModal" class="appmodal" ng-if="controlDh.inclusion.cc.SwitchMultilevel.show">
+<div id="inclusionSwitchMultilevelModal" class="appmodal" ng-if="controlDh.inclusion.cc.SwitchMultilevel.show && cfg.app_type != 'installer'">
     <div class="appmodal-in">
         <div class="appmodal-header">
                <!-- <span class="appmodal-close" ng-click="closeInclusionModal()"><i

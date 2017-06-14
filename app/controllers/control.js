@@ -96,7 +96,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 setControllerData(response.data.joined);
                 setDeviceData(response.data.joined);
                 setInclusionData(response.data.joined, response.data.update);
-                if($scope.controlDh.inclusion.lastIncludedDeviceId != 0){
+                if($scope.controlDh.inclusion.lastIncludedDeviceId != 0 && cfg.app_type != 'installer'){
                     var nodeInstances = $filter('hasNode')(response, 'data.joined.devices.' + $scope.controlDh.inclusion.lastIncludedDeviceId + '.instances')
                     checkInterview(nodeInstances);
                 }
