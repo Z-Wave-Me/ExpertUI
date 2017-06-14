@@ -17,19 +17,20 @@ appController.controller('ControlController', function ($scope, $interval, $time
         inclusion: {
             lastIncludedDevice: $scope.alert,
             lastExcludedDevice: $scope.alert,
+            lastIncludedDeviceId: 0,
             alert: $scope.alert,
             alertPrimary: $scope.alert,
             popup: false,
             input: {
                 basic_level: 'false',
-                switch_multilevel_level:5
+                switch_multilevel_level: 5
             },
-            cc:{
+            cc: {
                 Basic: {
                     interval: false,
                     show: false,
                     done: false,
-                    countDown: 5
+                    countDown: 10
                 },
                 SwitchMultilevel: {
                     interval: false,
@@ -95,47 +96,16 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 setControllerData(response.data.joined);
                 setDeviceData(response.data.joined);
                 setInclusionData(response.data.joined, response.data.update);
-                var nodeInstances = $filter('hasNode')(response,'data.joined.devices.' + 2 + '.instances')
-                checkInterview(nodeInstances)
+                if($scope.controlDh.inclusion.lastIncludedDeviceId != 0){
+                    var nodeInstances = $filter('hasNode')(response, 'data.joined.devices.' + $scope.controlDh.inclusion.lastIncludedDeviceId + '.instances')
+                    checkInterview(nodeInstances);
+                }
+
             }, function (error) {
             });
         };
         $scope.controlDh.interval = $interval(refresh, $scope.cfg.interval);
     };
-
-    /**
-     * Show inclusion popup
-     */
-    $scope.showInclusionModal = function (popup) {
-        $scope.controlDh.inclusion.popup = popup;
-    };
-
-    /**
-     * Show inclusion popup
-     */
-    $scope.closeInclusionModal = function () {
-        $scope.controlDh.inclusion.popup = false;
-    };
-
-    /**
-     * CountDown test
-     */
-    $scope.countDownTest = function (level) {
-        if($scope.controlDh.inclusion.cc.Basic.countDown < 1){
-            return;
-        }
-        var countDownBasic = $interval(function(){
-            $scope.controlDh.inclusion.cc.Basic.countDown--;
-            //$scope.$apply();
-            console.log($scope.controlDh.inclusion.cc.Basic.countDown);
-            if($scope.controlDh.inclusion.cc.Basic.countDown === 0){
-                console.log('Stop countDownBasic interval');
-                $interval.cancel(countDownBasic);
-                $scope.handleInclusionBasic();
-            }
-        }, 1000);
-    };
-    //$scope.countDownTest();
 
     /**
      * Handle inclusion modal 1
@@ -144,12 +114,12 @@ appController.controller('ControlController', function ($scope, $interval, $time
         $scope.controlDh.inclusion.cc.Basic.show = false;
         $scope.controlDh.inclusion.cc.Basic.done = true;
         $interval.cancel($scope.controlDh.inclusion.cc.Basic.interval);
-        if(!level){
+        if (!level) {
+            console.log('Basic popup AUTO closing');
             return;
         }
-        var cmd = 'devices[2].instances[0].commandClasses[32].Set('+level+')';
-       // console.log(cmd)
-
+        console.log('Basic popup MANUAL closing');
+        var cmd = 'devices['+ $scope.controlDh.inclusion.lastIncludedDeviceId +'].instances[0].commandClasses[32].Set(' + level + ')';
         $scope.runZwaveCmd(cmd)
     };
 
@@ -157,10 +127,15 @@ appController.controller('ControlController', function ($scope, $interval, $time
      * Handle inclusion modal 2
      */
     $scope.handleInclusionSwitchMultilevel = function (level) {
-        var cmd = 'devices[2].instances[0].commandClasses[38].Set('+level+')';
-        //console.log(cmd)
         $scope.controlDh.inclusion.cc.SwitchMultilevel.show = false;
         $scope.controlDh.inclusion.cc.SwitchMultilevel.done = true;
+        $interval.cancel($scope.controlDh.inclusion.cc.SwitchMultilevel.interval);
+        if (!level) {
+            console.log('SwitchMultilevel popup AUTO closing');
+            return;
+        }
+        console.log('SwitchMultilevel popup MANUAL closing');
+        var cmd = 'devices['+ $scope.controlDh.inclusion.lastIncludedDeviceId +'].instances[0].commandClasses[38].Set(' + level + ')';
         $scope.runZwaveCmd(cmd)
     };
 
@@ -391,42 +366,55 @@ appController.controller('ControlController', function ($scope, $interval, $time
      * @param {int} nodeId
      */
     function checkInterview(nodeInstances) {
-        if($scope.controlDh.inclusion.cc.Basic.show){
+        if ($scope.controlDh.inclusion.cc.Basic.show
+            || $scope.controlDh.inclusion.cc.SwitchMultilevel.show
+            || ($scope.controlDh.inclusion.cc.Basic.done  && $scope.controlDh.inclusion.cc.SwitchMultilevel.done)) {
             return;
         }
-        //console.log(instance)
-        //console.log(nodeInstances)
-        angular.forEach(nodeInstances,function(instance,iId){
-            /*if (Object.keys(ZWaveAPIData.devices[nodeId].instances[iId].commandClasses).length < 1) {
-                return;
-            }*/
+        angular.forEach(nodeInstances, function (instance, iId) {
             /**
              * Check for Basic cc
              */
-
-                console.log(instance.commandClasses[32])
-                var hasBasic = instance.commandClasses[32];
-                if(hasBasic && !hasBasic.data.level.value && !$scope.controlDh.inclusion.cc.Basic.done){
-                    console.log('Show modal')
-                    $scope.controlDh.inclusion.cc.Basic.show = true;
-                    $scope.controlDh.inclusion.cc.Basic.done = true;
-                    var countDownBasic = function(){
-                        $scope.controlDh.inclusion.cc.Basic.countDown--;
-                        //$scope.$apply();
-                        console.log($scope.controlDh.inclusion.cc.Basic.countDown);
-                        if($scope.controlDh.inclusion.cc.Basic.countDown === 0){
-                            console.log('Stop countDownBasic interval');
-                            $interval.cancel($scope.controlDh.inclusion.cc.Basic.interval);
-                            $scope.handleInclusionBasic();
-                        }
-                    };
-                    $scope.controlDh.inclusion.cc.Basic.interval = $interval(countDownBasic, 1000);
-                }
+            var hasBasic = instance.commandClasses[32];
+            console.log('hasBasic: ',hasBasic)
+            if (hasBasic && !hasBasic.data.level.value && !$scope.controlDh.inclusion.cc.Basic.done) {
+                console.log('Opening popup Basic')
+                $scope.controlDh.inclusion.cc.Basic.show = true;
+                $scope.controlDh.inclusion.cc.Basic.done = true;
+                var countDownBasic = function () {
+                    $scope.controlDh.inclusion.cc.Basic.countDown--;
+                    console.log('Basic.countDown: ',$scope.controlDh.inclusion.cc.Basic.countDown);
+                    if ($scope.controlDh.inclusion.cc.Basic.countDown === 0) {
+                        console.log('Stop countDownBasic interval');
+                        $interval.cancel($scope.controlDh.inclusion.cc.Basic.interval);
+                        $scope.handleInclusionBasic();
+                    }
+                };
+                $scope.controlDh.inclusion.cc.Basic.interval = $interval(countDownBasic, 1000);
+                return;
+            }
             /**
              * Check for SwitchMultilevel cc
              */
-            console.log(instance.commandClasses[38])
-            var hasSwitchMultilevel= instance.commandClasses[38];
+            var hasSwitchMultilevel = instance.commandClasses[38];
+            console.log('hasSwitchMultilevel: ', hasSwitchMultilevel)
+            if (hasSwitchMultilevel && !hasSwitchMultilevel.data.level.value && !$scope.controlDh.inclusion.cc.SwitchMultilevel.done) {
+            //if (!hasSwitchMultilevel && !$scope.controlDh.inclusion.cc.SwitchMultilevel.done) {
+                $scope.controlDh.inclusion.cc.SwitchMultilevel.show = true;
+                $scope.controlDh.inclusion.cc.SwitchMultilevel.done = true;
+                console.log('Opening popup witchMultilevel')
+                var countDownSwitchMultilevel = function () {
+                    $scope.controlDh.inclusion.cc.SwitchMultilevel.countDown--;
+                    console.log('SwitchMultilevel.countDown: ',$scope.controlDh.inclusion.cc.SwitchMultilevel.countDown)
+                    if ($scope.controlDh.inclusion.cc.SwitchMultilevel.countDown === 0) {
+                        console.log('Stop countDownSwitchMultilevel interval');
+                        $interval.cancel($scope.controlDh.inclusion.cc.SwitchMultilevel.interval);
+                        $scope.handleInclusionSwitchMultilevel();
+                    }
+                };
+                $scope.controlDh.inclusion.cc.SwitchMultilevel.interval = $interval(countDownSwitchMultilevel, 1000);
+                return;
+            }
         });
     }
 
@@ -515,21 +503,21 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
     $scope.runIncludeToNetwork = function (cmd) {
         var timeout = 30000;
         $scope.toggleRowSpinner(cmd);
-        if(cmd === 'controller.SetLearnMode(1)'){
+        if (cmd === 'controller.SetLearnMode(1)') {
             $scope.controlDh.network.include = true;
             $scope.controlDh.network.inclusionProcess = 'processing';
-        }else{
+        } else {
             $scope.controlDh.network.include = false;
             $scope.controlDh.network.inclusionProcess = false;
         }
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
             //console.log('Run cmd: ', cfg.store_url + cmd)
-            $timeout(function() {
+            $timeout(function () {
                 dataService.runZwaveCmd(cfg.store_url + 'controller.SetLearnMode(0)');
                 console.log('Running controller.SetLearnMode(0) after timeout')
-                if(cfg.app_type === 'installer'){
+                if (cfg.app_type === 'installer') {
                     $window.location.reload();
-                }else{
+                } else {
                     $scope.controlDh.network.modal = true;
                 }
 

@@ -83,9 +83,9 @@
                 <i class="fa fa-stop-circle"></i> {{_t('nm_exclude_stop')}}
             </button>
         </div>
-        <pre>{{controlDh.inclusion.cc|json}}</pre>
-        <a href="" ng-click="controlDh.inclusion.cc.Basic.show = true;controlDh.inclusion.cc.Basic.done = true;countDownTest()">Show POPUP Basic</a> |
-        <a href="" ng-click="controlDh.inclusion.cc.SwitchMultilevel.show = true;controlDh.inclusion.cc.SwitchMultilevel.done = true">Show POPUP SwitchMultilevel</a>
+       <!-- <pre>{{controlDh.inclusion|json}}</pre>-->
+        <!--<a href="" ng-click="controlDh.inclusion.cc.Basic.show = true;controlDh.inclusion.cc.Basic.done = true;countDownTest()">Show POPUP Basic</a> |
+        <a href="" ng-click="controlDh.inclusion.cc.SwitchMultilevel.show = true;controlDh.inclusion.cc.SwitchMultilevel.done = true">Show POPUP SwitchMultilevel</a>-->
     </div>
 </div>
 
@@ -140,6 +140,7 @@
         </div>
         <div class="appmodal-body form-group form-inline">
             <p>POPUP 2 text Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+            <div class="alert alert-warning">{{controlDh.inclusion.cc.SwitchMultilevel.countDown}}s remain to do something about it</div>
             <!-- name -->
             <label>SwitchMultilevel.data.level: </label>
             <input name="switch_multilevel_level" id="switch_multilevel_level" type="text" class="form-control"
