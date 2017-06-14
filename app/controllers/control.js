@@ -401,12 +401,12 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
             $timeout(function() {
                 dataService.runZwaveCmd(cfg.store_url + 'controller.SetLearnMode(0)');
                 //console.log('Running controller.SetLearnMode(0) after timeout')
-                if(cfg.app_type === 'installer'){
-                    $window.location.reload();
-                }else{
-                    $scope.controlDh.network.modal = true;
-                }
-
+                // if(cfg.app_type === 'installer'){
+                //     $window.location.reload();
+                // }else{
+                //     $scope.controlDh.network.modal = true;
+                // }
+                $scope.controlDh.network.modal = true;
             }, timeout);
         }, function (error) {
             $scope.toggleRowSpinner();
@@ -688,9 +688,11 @@ appController.controller('RequestNifAllController', function ($scope, $timeout, 
         dataService.runZwaveCmd(cfg.call_all_nif).then(function (response) {
             deviceService.showNotifier({message: $scope._t('nif_request_complete')});
             $scope.toggleRowSpinner();
+            $window.location.reload();
         }, function (error) {
             $scope.toggleRowSpinner();
             deviceService.showNotifier({message: $scope._t('error_nif_request'), type: 'error'});
+            $window.location.reload();
         });
     };
 });

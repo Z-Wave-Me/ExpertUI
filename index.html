@@ -293,14 +293,12 @@
     <div id="footer_in">
         <div class="container">
             <span class="copyright" ng-bind-html="getCustomCfgVal('footer_text') | toTrusted"></span>
-            <span class="copyright">{{getCustomCfgVal('version_type')}}</span>
+            <span class="copyright"> - UI: {{cfg.app_version}} / OS: {{cfg.system_info.current_firmware}}</span>
             <span class="timestamp" ng-if="cfg.route.time.string"><i class="fa fa-clock-o"></i> {{cfg.route.time.string}}</span>
             <span class="timestamp"> | </span>
             <span class="timestamp" ng-include="'app/views/indicator.html'"></span>
         </div>
-
     </div>
 </div>
-
 </body>
 </html>
