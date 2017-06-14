@@ -6,10 +6,10 @@
 var config_data = {
     'cfg': {
         'environment': 'live',
-        'dev_host': ['192.168.10.156'],
+        'dev_host': ['192.168.10.147'],
         'app_name': 'Z-Wave Expert',
-        'app_version': '1.3.0-RC-90',
-        'app_built': '09-06-2017 16:50:14',
+        'app_version': '1.3.0-RC-92',
+        'app_built': '14-06-2017 14:50:00',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -53,6 +53,7 @@ var config_data = {
         'reorg_run_url': '/ZWaveAPI/NetworkReorganization', // Url to start reorganization
         'reorg_log_url': '/ZWaveAPI/GetReorganizationLog', // Url to load log
         'zddx_create_url': '/ZWaveAPI/CreateZDDX/', // Create zddx file
+        'get_network_statistics': '/ZWaveAPI/GetStatisticsData', // get network statistics
 
         // Other APIs
         'session': '/ZAutomation/api/v1/session',
@@ -319,7 +320,7 @@ var config_data = {
                 'logo': 'app/images/z-wave-aliance-logo.png',
                 'footer_text': '&COPY; 2017 Z-Wave Alliance',
                 'logout': '#/logout',
-                'version_type': '- version BETA',
+                'version_type': '',
                 'title': 'Z-Wave CIT',
                 'controller_name': 'CIT',
                 'hardware_vendor': 'Z-Wave Alliance',
