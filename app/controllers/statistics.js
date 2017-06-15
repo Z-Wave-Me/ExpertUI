@@ -47,15 +47,13 @@ appController.controller('NetworkStatisticsController', function ($scope, $filte
             statisticsObj.tx_free = statisticsObj.tx_total > 0? RFTxFrames / statisticsObj.tx_total : 0;
             statisticsObj.tx_fail = statisticsObj.tx_total > 0? RFTxLBTBackOffs / statisticsObj.tx_total : 0;
 
-            var objRFTxLBTBackOffs = {};
-            objRFTxLBTBackOffs['RFTxFrames'] = RFTxFrames;
-            objRFTxLBTBackOffs['frameName'] = 'RFTxFrames';
-            objRFTxLBTBackOffs['frameValue'] = RFTxFrames;
-            objRFTxLBTBackOffs['failValue'] = RFTxLBTBackOffs;
-            objRFTxLBTBackOffs['fail'] = percentFormat(statisticsObj.tx_fail);
-            objRFTxLBTBackOffs['success'] = percentFormat(statisticsObj.tx_free);
-            objRFTxLBTBackOffs['dateTime'] = $filter('getDateTimeObj')(response.data.RFTxLBTBackOffs.updateTime);
-            $scope.netStat.dataRate = objRFTxLBTBackOffs;
+            var objBusyRate = {};
+            objBusyRate['sendValue'] = RFTxFrames;
+            objBusyRate['backOffValue'] = RFTxLBTBackOffs;
+            objBusyRate['fail'] = percentFormat(statisticsObj.tx_fail);
+            objBusyRate['success'] = percentFormat(statisticsObj.tx_free);
+            objBusyRate['dateTime'] = $filter('getDateTimeObj')(response.data.RFTxLBTBackOffs.updateTime);
+            $scope.netStat.dataRate = objBusyRate;
 
             // Rx failures
             // RX failures: [ok: RFRxFrames/(RFRxFrames + RFRxCRC16Errors + RFRxLRCErrors)][CRC16 error: RFRxCRC16Errors/(RFRxFrames + RFRxCRC16Errors + RFRxLRCErrors)][CRC error: RFRxLRCErrors/(RFRxFrames + RFRxCRC16Errors + RFRxLRCErrors)]
@@ -64,20 +62,15 @@ appController.controller('NetworkStatisticsController', function ($scope, $filte
             statisticsObj.rx_crc_error = statisticsObj.rx_total > 0? RFRxLRCErrors / statisticsObj.rx_total : 0;
             statisticsObj.rx_crc16_error = statisticsObj.rx_total > 0? RFRxCRC16Errors / statisticsObj.rx_total : 0;
 
-            var objRFRxLRCErrors = {};
-            objRFRxLRCErrors['fail'] = percentFormat(statisticsObj.rx_crc_error + statisticsObj.rx_crc16_error);
-            objRFRxLRCErrors['failCRC8'] = percentFormat(statisticsObj.rx_crc_error);
-            objRFRxLRCErrors['failCRC16'] = percentFormat(statisticsObj.rx_crc16_error);
-            objRFRxLRCErrors['success'] = percentFormat(statisticsObj.rx_ok);
-            objRFRxLRCErrors['RFRxFrames'] = statisticsObj.rx_ok;
-            objRFRxLRCErrors['frameName'] = 'RFRxFrames';
-            objRFRxLRCErrors['frameValue'] = RFRxFrames;
-            objRFRxLRCErrors['failCRC8Name'] = 'RFRxLRCErrors';
-            objRFRxLRCErrors['failCRC16Name'] = 'RFRxCRC16Errors';
-            objRFRxLRCErrors['failCRC8Value'] = RFRxLRCErrors;
-            objRFRxLRCErrors['failCRC16Value'] = RFRxCRC16Errors;
-            objRFRxLRCErrors['dateTime'] = $filter('getDateTimeObj')(response.data.RFRxLRCErrors.updateTime);
-            $scope.netStat.successReception = objRFRxLRCErrors;
+            var objRxFailures = {};
+            objRxFailures['failCRC'] = percentFormat(statisticsObj.rx_crc_error);
+            objRxFailures['failCRC16'] = percentFormat(statisticsObj.rx_crc16_error);
+            objRxFailures['success'] = percentFormat(statisticsObj.rx_ok);
+            objRxFailures['okValue'] = RFRxFrames;
+            objRxFailures['failCRCValue'] = RFRxLRCErrors;
+            objRxFailures['failCRC16Value'] = RFRxCRC16Errors;
+            objRxFailures['dateTime'] = $filter('getDateTimeObj')(response.data.RFRxLRCErrors.updateTime);
+            $scope.netStat.successReception = objRxFailures;
 
             // foreign network inpact
             // Foreign Network Impact: [own: RFRxFrames / (RFRxFrames + RFRxForeignHomeID)][foreign: RFRxForeignHomeID / (RFRxFrames + RFRxForeignHomeID)]
@@ -87,15 +80,14 @@ appController.controller('NetworkStatisticsController', function ($scope, $filte
             statisticsObj.network_impact_foreign = statisticsObj.network_impact_total > 0? RFRxForeignHomeID / statisticsObj.network_impact_total : 0;
 
             // Foreign Network Impact
-            var objRFRxForeignHomeID = response.data.RFRxForeignHomeID;
-            objRFRxForeignHomeID['fail'] = percentFormat(statisticsObj.network_impact_foreign);
-            objRFRxForeignHomeID['success'] = percentFormat(statisticsObj.network_impact_own);
-            objRFRxForeignHomeID['RFRxFrames'] = statisticsObj.network_impact_own;
-            objRFRxForeignHomeID['frameName'] = 'RFRxFrames';
-            objRFRxForeignHomeID['frameValue'] = RFRxForeignHomeID;
+            var objForeignNetworkImpact = {};
+            objForeignNetworkImpact['fail'] = percentFormat(statisticsObj.network_impact_foreign);
+            objForeignNetworkImpact['success'] = percentFormat(statisticsObj.network_impact_own);
+            objForeignNetworkImpact['foreign_value'] = RFRxForeignHomeID;
+            objForeignNetworkImpact['own_value'] = RFRxFrames;
 
-            objRFRxForeignHomeID['dateTime'] = $filter('getDateTimeObj')(response.data.RFRxForeignHomeID.updateTime);
-            $scope.netStat.foreignNetwork = objRFRxForeignHomeID;
+            objForeignNetworkImpact['dateTime'] = $filter('getDateTimeObj')(response.data.RFRxForeignHomeID.updateTime);
+            $scope.netStat.foreignNetwork = objForeignNetworkImpact;
 
         }, function (error) {
             alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
