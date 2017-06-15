@@ -8,9 +8,11 @@
  * @class ControlController
  *
  */
-appController.controller('ControlController', function ($scope, $interval, $timeout, $filter, cfg, dataService) {
+appController.controller('ControlController', function ($scope, $interval, $timeout, $window, $filter, cfg, dataService) {
     $scope.controlDh = {
+        process: false,
         interval: null,
+        includeToNetworkTimeout: null,
         show: false,
         alert: $scope.alert,
         controller: {},
@@ -50,6 +52,8 @@ appController.controller('ControlController', function ($scope, $interval, $time
      */
     $scope.$on('$destroy', function () {
         $interval.cancel($scope.controlDh.interval);
+        $timeout.cancel($scope.controlDh.includeToNetworkTimeout);
+        dataService.runZwaveCmd(cfg.store_url + 'controller.SetLearnMode(0)');
     });
 
     /**
@@ -127,6 +131,13 @@ appController.controller('ControlController', function ($scope, $interval, $time
             icon: 'fa-spinner fa-spin'
         };
 
+        if([1,5].indexOf(controllerState) == -1) {
+            if($scope.controlDh.includeToNetworkTimeout) {
+                $timeout.cancel($scope.controlDh.includeToNetworkTimeout);
+                $scope.controlDh.network.modal = true;
+            }
+        }
+
         // Controller state switch
         switch (controllerState) {
             case 0:
@@ -153,6 +164,13 @@ appController.controller('ControlController', function ($scope, $interval, $time
                                 status: 'alert-success',
                                 icon: 'fa-smile-o'
                             };
+                            $scope.controlDh.network.inclusionProcess = false;
+                            if($scope.controlDh.controller.isRealPrimary || !$scope.controlDh.controller.isInOthersNetwork) {
+                                $timeout(function() {
+                                    $window.location.reload();
+                                }, 2000);
+                            }
+
                         }
                     }
 
@@ -387,7 +405,7 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
      * @param {string} cmd
      */
     $scope.runIncludeToNetwork = function (cmd) {
-        var timeout = 30000;
+        var timeout = 240000;
         $scope.toggleRowSpinner(cmd);
         if(cmd === 'controller.SetLearnMode(1)'){
             $scope.controlDh.network.include = true;
@@ -398,7 +416,7 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
         }
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
             //console.log('Run cmd: ', cfg.store_url + cmd)
-            $timeout(function() {
+            $scope.controlDh.includeToNetworkTimeout = $timeout(function() {
                 dataService.runZwaveCmd(cfg.store_url + 'controller.SetLearnMode(0)');
                 //console.log('Running controller.SetLearnMode(0) after timeout')
                 // if(cfg.app_type === 'installer'){
@@ -684,15 +702,17 @@ appController.controller('RequestNifAllController', function ($scope, $timeout, 
      */
     $scope.requestNifAll = function (spin) {
         $scope.toggleRowSpinner(spin);
-        var timeout = 1000;
+        $scope.controlDh.process = true;
         dataService.runZwaveCmd(cfg.call_all_nif).then(function (response) {
             deviceService.showNotifier({message: $scope._t('nif_request_complete')});
             $scope.toggleRowSpinner();
-            $window.location.reload();
+            $scope.controlDh.process = false;
+            //$window.location.reload();
         }, function (error) {
             $scope.toggleRowSpinner();
             deviceService.showNotifier({message: $scope._t('error_nif_request'), type: 'error'});
-            $window.location.reload();
+            $scope.controlDh.process = false;
+            //$window.location.reload();
         });
     };
 });

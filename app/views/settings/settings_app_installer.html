@@ -98,6 +98,7 @@
                         ng-model="settings.input.time_zone"
                         ng-disabled="!settings.show_tz || settings.ntp_switch === 'enable'">
                     <option value="automatic"
+                            ng-if="!settings.show_tz"
                             ng-selected="!settings.show_tz">{{_t('auto_tz')}}</option>
                     <option ng-repeat="v in cfg.time_zone_list" value="{{v}}"
                             ng-selected="v === cfg.zwavecfg.time_zone && settings.show_tz">{{v}}

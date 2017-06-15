@@ -45,6 +45,8 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     // Show page content
     $scope.showContent = false;
 
+    // Version
+    $scope.version = "";
 
 // Lang settings
     $scope.lang_list = cfg.lang_list;
@@ -72,6 +74,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     $scope._t = function (key, replacement) {
         return deviceService.getLangLine(key, $scope.languages, replacement);
     };
+
 
     // Watch for lang change
     //TODO: deprecated
@@ -306,6 +309,22 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
         });
     };
 
+    /**
+     * Build version for CIT footer
+     * @returns {undefined}
+     */
+    $scope.buildVersion = function() {
+
+        var current_firmware = $scope.cfg.system_info.current_firmware;
+
+        var part = current_firmware.split("-");
+        var os = part[0];
+        $scope.version = $scope._t("version", {
+            "__ui__": $scope.cfg.app_version,
+            "__os__": os
+        });
+    };
+
 
     /**
      * Load system info
@@ -315,6 +334,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
         dataService.getApi('system_info_url').then(function (response) {
             //angular.extend($scope.systemInfo, response.data.data);
             angular.extend(cfg.system_info, response.data.data);
+            $scope.buildVersion();
             // Is CIT server online?
             $scope.isOnline = cfg.system_info.cit_server_reachable;
             // box is not registered
@@ -332,6 +352,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
                 $scope.alertCitLicence = 'cit_licence_update';
                 return;
             }
+
 
         }, function (error) {
         });

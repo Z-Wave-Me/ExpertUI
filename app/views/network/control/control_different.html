@@ -26,7 +26,7 @@
             </button>
         </div>
 
-        <!-- already included in network - displays include from network -->
+        <!-- already included in network - displays exclude from network -->
         <div ng-if="!controlDh.controller.isRealPrimary">
             <p class="input-help">{{_t('device_included_info')}}</p>
             <div ng-hide="controlDh.network.modal && [0].indexOf(controlDh.controller.controllerState) > -1">
@@ -53,10 +53,10 @@
     </div>
 
     <!-- successNetworkIncludeModal -->
-    <div id="successNetworkIncludeModal" class="appmodal" ng-if="controlDh.network.modal && (!controlDh.controller.isRealPrimary || controlDh.controller.isInOthersNetwork)">
+    <div id="successNetworkIncludeModal" class="appmodal" ng-if="controlDh.network.modal && controlDh.network.inclusionProcess !== 'processing' && (!controlDh.controller.isRealPrimary || controlDh.controller.isInOthersNetwork)">
         <div class="appmodal-in">
             <div class="appmodal-header">
-                <span class="appmodal-close" ng-click="closeNetworkModal('successNetworkIncludeModal', $event)"><i
+                <span class="appmodal-close" ng-click="closeNetworkModal('successNetworkIncludeModal', $event)" ng-hide="controlDh.process"><i
                         class="fa fa-times"></i></span>
                 <h3>{{_t('include_into_network')}}</h3>
             </div>
@@ -68,11 +68,11 @@
                 <div class="cfg-block">
                     <!-- restore -->
                     <button class="btn btn-primary"
-                            ng-click="handleModal('restoreModal', $event);handleModal('successNetworkIncludeModal', $event)">
+                            ng-click="handleModal('restoreModal', $event);handleModal('successNetworkIncludeModal', $event)" ng-disabled="controlDh.process">
                         <i class="fa fa-repeat"></i> {{_t('make_restore')}}
                     </button>
                 </div>
-                <div class="cfg-block"  ng-controller="RequestNifAllController">
+                <div class="cfg-block" ng-controller="RequestNifAllController">
                     <button class="btn btn-primary"
                             id="btn_request_nif"
                             ng-click="requestNifAll('requestNifAll');handleModal('successNetworkIncludeModal', $event)"
@@ -86,7 +86,7 @@
                     </button>
                 </div>
                 <div class="cfg-block">
-                    <button type="button" class="btn btn-primary" ng-click="closeNetworkModal('successNetworkIncludeModal', $event)">
+                    <button type="button" class="btn btn-primary" ng-click="closeNetworkModal('successNetworkIncludeModal', $event)" ng-disabled="controlDh.process">
                         <i class="fa fa-arrow-right"></i> <span class="btn-name">{{_t('just_proceed')}}</span>
                     </button>
                 </div>
