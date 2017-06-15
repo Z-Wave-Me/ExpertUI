@@ -171,7 +171,7 @@
  "lb_login": "Login",
  "lb_enter": "Login",
  "lb_password": "Password",
- "reloading": "DONE. Reloading the page, please wait a moment.",
+ "reloading": "Reloading the page...",
  "language": "Language",
  "logout": "Logout",
  "network_name": "Network name",

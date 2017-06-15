@@ -8,7 +8,7 @@
  * @class ControlController
  *
  */
-appController.controller('ControlController', function ($scope, $interval, $timeout, $filter, cfg, dataService) {
+appController.controller('ControlController', function ($scope, $interval, $timeout, $filter,  $window,cfg, dataService, deviceService) {
     $scope.controlDh = {
         interval: null,
         show: false,
@@ -43,6 +43,10 @@ appController.controller('ControlController', function ($scope, $interval, $time
             failedNodes: [],
             replaceNodes: [],
             failedBatteries: []
+        },
+        factory:{
+           process: false,
+            alert: $scope.alert,
         }
     };
     /**
@@ -159,6 +163,20 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 } else {
                     $scope.controlDh.network.alert = $scope.alert;
                 }
+                // Factory default
+                if($scope.controlDh.factory.process){
+                    $scope.toggleRowSpinner('controller.SetDefault()');
+                    $scope.controlDh.factory.process = false;
+                    $scope.controlDh.factory.alert = {
+                        message: $scope._t('reloading'),
+                        status: 'alert-warning',
+                        icon: 'fa-spinner fa-spin'
+                    };
+                    // Reloading a page
+                    $timeout(function(){
+                        $window.location.reload();
+                    }, 3000 );
+                }
                 break;
             case 1:
                 // Device inclusion
@@ -204,6 +222,15 @@ appController.controller('ControlController', function ($scope, $interval, $time
                     icon: 'fa-exclamation-triangle'
                 };
                 $scope.controlDh.network.inclusionProcess = 'error';
+                break;
+            case 20:
+                // Factory default
+                $scope.controlDh.factory.process = true;
+                $scope.controlDh.factory.alert = {
+                    message: $scope._t('nm_controller_state_20'),
+                    status: 'alert-success',
+                    icon: 'fa-smile-o'
+                };
                 break;
 
             default:
@@ -519,7 +546,7 @@ appController.controller('BackupRestoreController', function ($scope, $upload, $
  * @class ZwaveChipRebootResetController
  *
  */
-appController.controller('ZwaveChipRebootResetController', function ($scope, $window) {
+appController.controller('ZwaveChipRebootResetController', function ($scope, cfg,dataService) {
     /**
      * This function will perform a soft restart of the  firmware of the Z-Wave controller chip
      * without deleting any network information or setting.
@@ -535,9 +562,19 @@ appController.controller('ZwaveChipRebootResetController', function ($scope, $wi
      *  @param {string} cmd
      */
     $scope.setDefault = function (cmd) {
-        $scope.runZwaveCmd(cmd);
+        dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
+            $scope.toggleRowSpinner(cmd);
+        }, function (error) {
+            $scope.toggleRowSpinner();
+          alertify.alertError($scope._t('error_update_data') + '\n' + cmd);
+        });
+       /* $scope.$watchCollection('controlDh', function (newVal, oldVal) {
+            console.log(newVal.controller.controllerState)
+            console.log(oldVal.controller.controllerState)
+        });*/
+        //console.log($scope.controlDh.controller.controllerState)
         // $scope.handleModal('restoreModal');
-        $window.location.reload();
+        //$window.location.reload();
     };
 });
 
