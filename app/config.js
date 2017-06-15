@@ -6,7 +6,7 @@
 var config_data = {
     'cfg': {
         'environment': '@@dev',
-        'dev_host': ['192.168.10.147'],
+        'dev_host': ['192.168.10.156'],
         'app_name': '@@app_name',
         'app_version': '@@app_version',
         'app_built': '@@app_built',
@@ -280,6 +280,9 @@ var config_data = {
         'upload': {
             'fw_or_bootloader': {
                 extension: ['bin', 'hex','ota']
+            },
+            'restore_from_backup': {
+                extension: ['zbk']
             }
         },
         // List of the find hosts

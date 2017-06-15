@@ -17,11 +17,11 @@
                     <div class="alert alert-warning">
                         <input type="checkbox" name="restore_confirm" value="1" id="restore_confirm"
                                ng-click="restore.allow = !restore.allow"/>
-                        <span ng-bind-html="_t('are_you_sure_restore') | toTrusted"></span>
+                        {{_t(cfg.app_type == 'installer' ? 'are_you_sure_restore_cit' : 'are_you_sure_restore')}}
                     </div>
                     <!-- if restore allowed -->
                     <div ng-if="restore.allow">
-                        <p ng-if="controlDh.controller.isRealPrimary">
+                        <p ng-if="cfg.app_type !== 'installer' && controlDh.controller.isRealPrimary">
                             <input type="checkbox"
                                    name="restore_chip_info"
                                    id="restore_chip_info"
