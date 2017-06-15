@@ -25,7 +25,7 @@ appController.controller('NetworkStatisticsController', function ($scope, $filte
                 if (num === 0) {
                     return 0;
                 }
-                var out = parseInt((num * 100).toFixed());
+                var out = parseFloat((num * 100).toFixed(2));
                 // Sets 1 percent if num is not 0 and out is 0
                 return out === 0 && num > 0 ? 1 : out;
             }
