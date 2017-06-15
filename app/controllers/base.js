@@ -316,11 +316,14 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     $scope.buildVersion = function() {
 
         var current_firmware = $scope.cfg.system_info.current_firmware;
+        var app_version = $scope.cfg.app_version
+        var part_ui = app_version.split("-");
+        var part_os = current_firmware.split("-");
+        var os = part_os[0];
+        var ui = part_ui[0];
 
-        var part = current_firmware.split("-");
-        var os = part[0];
         $scope.version = $scope._t("version", {
-            "__ui__": $scope.cfg.app_version,
+            "__ui__": ui,
             "__os__": os
         });
     };

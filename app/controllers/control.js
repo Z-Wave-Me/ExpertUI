@@ -168,9 +168,10 @@ appController.controller('ControlController', function ($scope, $interval, $time
                             };
                             $scope.controlDh.network.inclusionProcess = false;
                             if($scope.controlDh.controller.isRealPrimary || !$scope.controlDh.controller.isInOthersNetwork) {
+                                // Reloading a page
                                 $timeout(function() {
                                     $window.location.reload();
-                                }, 2000);
+                                }, 3000);
                             }
 
                         }
