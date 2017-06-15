@@ -157,7 +157,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
             $window.location.href = redirect;
             return;
         }
-        $window.location.href = '#/';
+        $window.location.href = '#/?logout';
         $window.location.reload();
     };
 
@@ -1474,5 +1474,21 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
         xml += '</devices></config>' + "\n";
         return xml;
 
+    }
+
+    /**
+     * Get Z-Wave session
+     * @returns {unresolved}
+     */
+    function sessionApi() {
+        return $http({
+            method: "get",
+            url: cfg.server_url + cfg['session']
+        }).then(function (response) {
+            return response;
+        }, function (response) {// something went wrong
+            //return response;
+            return $q.reject(response);
+        });
     }
 });

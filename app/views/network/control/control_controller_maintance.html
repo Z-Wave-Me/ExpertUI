@@ -21,12 +21,18 @@
         <div class="cfg-block form-inline">
             <p class="input-help" ng-hide="cfg.app_type === 'installer'">{{_t('nm_chip_reset_war')}}</p>
             <p class="input-help" ng-if="cfg.app_type === 'installer'">{{_t('nm_chip_reset_war_ima')}}</p>
-
-            <button
-                    class="btn btn-danger"
-                    ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
+            <!--controllerState: {{controlDh.controller.controllerState}}<br/>
+            controlDh.factory.process: {{controlDh.factory.process}}-->
+            <bb-alert alert="controlDh.factory.alert"></bb-alert>
+            <button class="btn btn-danger"
+                    ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || rowSpinner['controller.SetDefault()']"
                     ng-click="handleModal('rebootResetModal', $event)">
-                <i class="fa fa-exclamation-triangle"></i> {{_t('nm_reset_controller')}}</button>
+                <bb-row-spinner
+                        spinner="rowSpinner['controller.SetDefault()']"
+                        label="_t('nm_reset_controller')"
+                        icon="'fa-exclamation-triangle'">
+                </bb-row-spinner>
+                </button>
         </div>
     </div>
 </div>

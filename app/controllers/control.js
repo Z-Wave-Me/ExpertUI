@@ -8,7 +8,7 @@
  * @class ControlController
  *
  */
-appController.controller('ControlController', function ($scope, $interval, $timeout, $window, $filter, cfg, dataService) {
+appController.controller('ControlController', function ($scope, $interval, $timeout, $filter,  $window,cfg, dataService, deviceService) {
     $scope.controlDh = {
         process: false,
         interval: null,
@@ -45,6 +45,10 @@ appController.controller('ControlController', function ($scope, $interval, $time
             failedNodes: [],
             replaceNodes: [],
             failedBatteries: []
+        },
+        factory:{
+           process: false,
+            alert: $scope.alert,
         }
     };
     /**
@@ -52,8 +56,6 @@ appController.controller('ControlController', function ($scope, $interval, $time
      */
     $scope.$on('$destroy', function () {
         $interval.cancel($scope.controlDh.interval);
-        $timeout.cancel($scope.controlDh.includeToNetworkTimeout);
-        dataService.runZwaveCmd(cfg.store_url + 'controller.SetLearnMode(0)');
     });
 
     /**
@@ -177,6 +179,20 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 } else {
                     $scope.controlDh.network.alert = $scope.alert;
                 }
+                // Factory default
+                if($scope.controlDh.factory.process){
+                    $scope.toggleRowSpinner('controller.SetDefault()');
+                    $scope.controlDh.factory.process = false;
+                    $scope.controlDh.factory.alert = {
+                        message: $scope._t('reloading'),
+                        status: 'alert-warning',
+                        icon: 'fa-spinner fa-spin'
+                    };
+                    // Reloading a page
+                    $timeout(function(){
+                        $window.location.reload();
+                    }, 3000 );
+                }
                 break;
             case 1:
                 // Device inclusion
@@ -222,6 +238,15 @@ appController.controller('ControlController', function ($scope, $interval, $time
                     icon: 'fa-exclamation-triangle'
                 };
                 $scope.controlDh.network.inclusionProcess = 'error';
+                break;
+            case 20:
+                // Factory default
+                $scope.controlDh.factory.process = true;
+                $scope.controlDh.factory.alert = {
+                    message: $scope._t('nm_controller_state_20'),
+                    status: 'alert-success',
+                    icon: 'fa-smile-o'
+                };
                 break;
 
             default:
@@ -433,28 +458,6 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
 
     };
 
-    /**
-     * todo: DEPRECATED
-     * Exclude form network
-     * @param {string} cmd
-     */
-    /*$scope.excludeFromNetwork = function (cmd, confirm) {
-     console.log(cmd)
-     // return;
-     alertify.confirm(confirm, function () {
-     $scope.controlDh.network.inclusionProcess = false;
-     $scope.controlDh.network.include = false;
-     $scope.runZwaveCmd(cmd);
-     if(cmd === 'controller.SetLearnMode(1)') {
-     $timeout(function () {
-     $window.location.reload();
-     }, 5000);
-     }
-
-     });
-
-     };*/
-
     $scope.requestNetworkUpdate = function (cmd, message, id) {
         $scope.controlDh.alert = {
             message: message,
@@ -494,7 +497,7 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
  * @class BackupRestoreController
  *
  */
-appController.controller('BackupRestoreController', function ($scope, $upload, $window, deviceService, cfg, _) {
+appController.controller('BackupRestoreController', function ($scope, $upload, $window, $filter,$timeout,deviceService, cfg, _) {
     $scope.restore = {
         allow: false,
         input: {
@@ -508,37 +511,50 @@ appController.controller('BackupRestoreController', function ($scope, $upload, $
      * @returns {void}
      */
     $scope.restoreFromBackup = function ($files) {
-        $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin', message: $scope._t('restore_wait')};
         var chip = $scope.restore.input.restore_chip_info;
         var url = cfg.server_url + cfg.restore_url + '?restore_chip_info=' + chip;
-        //return;
-        for (var i = 0; i < $files.length; i++) {
-            var $file = $files[i];
-            $upload.upload({
-                url: url,
-                fileFormDataName: 'config_backup',
-                file: $file
-            }).progress(function (evt) {
-                //$scope.restoreBackupStatus = 1;
-            }).success(function (data, status, headers, config) {
-                //$scope.handleModal('restoreModal');
-                $scope.handleModal();
-                if (data && data.replace(/(<([^>]+)>)/ig, "") !== "null") {//Error
-                    alertify.alertError($scope._t('restore_backup_failed'));
-                    //$scope.restoreBackupStatus = 3;
-                } else {// Success
-                    deviceService.showNotifier({message: $scope._t('restore_done_reload_ui')});
-                    $window.location.reload();
-                    //$scope.restoreBackupStatus = 2;
-                }
-            }).error(function (data, status) {
-                //$scope.handleModal('restoreModal');
-                $scope.handleModal();
-                alertify.alertError($scope._t('restore_backup_failed'));
-                //$scope.restoreBackupStatus = 3;
-            });
-
+        var file;
+        // Getting a file object
+         if($files.length > 0){
+            file = $files[0];
+        }else{
+            alertify.alertError($scope._t('restore_backup_failed'));
+             return;
         }
+        // File extension validation
+        if (cfg.upload.restore_from_backup.extension.indexOf($filter('fileExtension')(file.name)) === -1) {
+            alertify.alertError(
+                $scope._t('upload_format_unsupported', {'__extension__': $filter('fileExtension')(file.name)}) + ' ' +
+                $scope._t('upload_allowed_formats', {'__extensions__': cfg.upload.restore_from_backup.extension.toString()})
+            );
+            return;
+        }
+
+        // Uploading file
+        $upload.upload({
+            url: url,
+            fileFormDataName: 'config_backup',
+            file: file
+        }).progress(function (evt) {
+            $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin', message: $scope._t('restore_wait')};
+        }).success(function (data, status, headers, config) {
+            $scope.loading = false;
+            $scope.handleModal();
+            if (data && data.replace(/(<([^>]+)>)/ig, "") !== "null") {//Error
+                alertify.alertError($scope._t('restore_backup_failed'));
+            } else {// Success
+                deviceService.showNotifier({message: $scope._t('restore_done_reload_ui')});
+                // Reloading a page
+                $timeout( function(){
+                    $window.location.reload();
+                }, 3000 );
+
+            }
+        }).error(function (data, status) {
+            $scope.loading = false;
+            $scope.handleModal();
+            alertify.alertError($scope._t('restore_backup_failed'));
+        });
     };
 });
 
@@ -547,7 +563,7 @@ appController.controller('BackupRestoreController', function ($scope, $upload, $
  * @class ZwaveChipRebootResetController
  *
  */
-appController.controller('ZwaveChipRebootResetController', function ($scope, $window) {
+appController.controller('ZwaveChipRebootResetController', function ($scope, cfg,dataService) {
     /**
      * This function will perform a soft restart of the  firmware of the Z-Wave controller chip
      * without deleting any network information or setting.
@@ -563,9 +579,19 @@ appController.controller('ZwaveChipRebootResetController', function ($scope, $wi
      *  @param {string} cmd
      */
     $scope.setDefault = function (cmd) {
-        $scope.runZwaveCmd(cmd);
+        dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
+            $scope.toggleRowSpinner(cmd);
+        }, function (error) {
+            $scope.toggleRowSpinner();
+          alertify.alertError($scope._t('error_update_data') + '\n' + cmd);
+        });
+       /* $scope.$watchCollection('controlDh', function (newVal, oldVal) {
+            console.log(newVal.controller.controllerState)
+            console.log(oldVal.controller.controllerState)
+        });*/
+        //console.log($scope.controlDh.controller.controllerState)
         // $scope.handleModal('restoreModal');
-        $window.location.reload();
+        //$window.location.reload();
     };
 });
 

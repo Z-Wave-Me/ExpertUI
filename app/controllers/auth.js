@@ -7,7 +7,7 @@
  * @class AuthController
  *
  */
-appController.controller('InitInstallerController', function ($scope, $location, $timeout, $window, $cookies,cfg, dataService, deviceService) {
+appController.controller('InitInstallerController', function ($scope, $location, $timeout, $window, $cookies, $routeParams, cfg, dataService, deviceService) {
     $scope.auth = {
         input: {
             user: '',
@@ -19,6 +19,8 @@ appController.controller('InitInstallerController', function ($scope, $location,
         hostname: $location.host()
     };
 
+    var path = $location.path().split('/');
+
     /**
      * Set referrer
      */
@@ -26,6 +28,22 @@ appController.controller('InitInstallerController', function ($scope, $location,
         $cookies.findcit_referrer = $window.document.referrer;
     };
     $scope.setReferrerCookie();
+
+    /**
+     * Get session (ie for users holding only a session id, or users that require no login)
+     */
+    $scope.getSession = function () {
+        var hasCookie = ($cookies.user) ? true : false;
+        if (hasCookie) {
+            dataService.sessionApi().then(function (response) {
+                var user = response.data.data;
+                deviceService.setZWAYSession(user.sid);
+                deviceService.setUser(user);
+                $window.location.href = '#/home';
+                $window.location.reload();
+            });
+        }
+    };
 
     /**
      * Get referrer from cookie and parse it
@@ -59,6 +77,12 @@ appController.controller('InitInstallerController', function ($scope, $location,
         }
     };
     $scope.getReferrer();
+
+    if ((typeof $routeParams.logout === 'undefined' ||
+        !$routeParams.logout || path[1] === '') &&
+        $scope.cfg.find_hosts.indexOf($location.host()) === -1) {
+        $scope.getSession();
+    }
 
     /**
      * Login proccess
@@ -114,8 +138,7 @@ appController.controller('InitInstallerController', function ($scope, $location,
             var user = response.data.data;
             deviceService.setZWAYSession(user.sid);
             deviceService.setUser(user);
-            $location.path('/home');
-            //window.location = '#/home';
+            $window.location.href = '#/home';
             $window.location.reload();
         }, function (error) {
             var redirect = cfg.logout_redirect[$location.host()];
@@ -144,7 +167,6 @@ appController.controller('InitInstallerController', function ($scope, $location,
  */
 appController.controller('AuthController', function ($location, $window) {
     $location.path('/home');
-    //window.location = '#/home';
     $window.location.reload();
 
 });

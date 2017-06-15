@@ -25,7 +25,7 @@
     </div>
 
     <!-- ------------------------------------------ Data Rate on Send ------------------------------------------ -->
-    <!--<pre>{{netStat|json}}</pre>-->
+    <!--<pre>{{netStat.dataRate|json}}</pre>-->
     <div class="statistic-entry">
         <div class="statistic-title">{{_t('RFTxLBTBackOffs')}}&nbsp;
             <span class="label label-default">{{netStat.dataRate.dateTime.today}}</span>
@@ -49,13 +49,14 @@
         <div class="page-navi" ng-if="naviExpanded['RFTxLBTBackOffs']">
             <div class="page-navi-in">
                 <div class="page-navi-content">
-                    <span class="text-success">{{ _t('RFTxFrames')}}: <strong>{{netStat.dataRate.frameValue}}</strong></span><br/>
-                    <span class="text-danger">{{_t('RFTxLBTBackOffs_error')}}:  <strong>{{_t(netStat.dataRate.failValue)}}</strong></span>
+                    <span class="text-success">{{ _t('RFTxFrames')}}: <strong>{{netStat.dataRate.sendValue}}</strong></span><br/>
+                    <span class="text-danger">{{_t('RFTxLBTBackOffs_error')}}:  <strong>{{_t(netStat.dataRate.backOffValue)}}</strong></span>
                 </div>
             </div>
         </div>
     </div>
     <!-- ------------------------------------------ Success on Reception ------------------------------------------ -->
+    <!--<pre>{{netStat.successReception|json}}</pre>-->
     <div class="statistic-entry">
         <div class="statistic-title">{{_t('RFRxLRCErrors')}}&nbsp;
             <span class="label label-default">{{netStat.successReception.dateTime.today}}</span>
@@ -68,13 +69,13 @@
                  style="width: {{netStat.successReception.success}}%">
                 <span>{{netStat.successReception.success}}% {{_t('success_reception')}}</span>
             </div>
-            <!-- Channel 1 -->
+            <!-- CRC errors-->
             <div class="progress-bar progress-bar-danger"
-                 title="{{_t('failCRC8Name')}} {{netStat.successReception.failCRC8}}%"
-                 style="width: {{netStat.successReception.failCRC8}}%">
-                <span>{{netStat.successReception.failCRC8}}% {{_t('failCRC8')}}</span>
+                 title="{{_t('failCRCName')}} {{netStat.successReception.failCRC}}%"
+                 style="width: {{netStat.successReception.failCRC}}%">
+                <span>{{netStat.successReception.failCRC}}% {{_t('failCRC')}}</span>
             </div>
-            <!-- Channel 2 -->
+            <!-- CRC16 errors-->
             <div class="progress-bar progress-bar-warning"
                  title="{{_t('failCRC16Name')}} {{netStat.successReception.failCRC16}}%"
                  style="width: {{netStat.successReception.failCRC16}}%">
@@ -85,10 +86,10 @@
             <div class="page-navi-in">
                 <div class="page-navi-content">
                     <!-- Success-->
-                    <span class="text-success">{{ _t('success_on_reception')}}: <strong>{{netStat.successReception.frameValue}}</strong></span><br/>
-                    <!-- Channel 1 -->
-                    <span class="text-danger">{{_t('failCRC8Name')}}:  <strong>{{_t(netStat.successReception.failCRC8Value)}}</strong></span><br/>
-                    <!-- Channel 2 -->
+                    <span class="text-success">{{ _t('success_on_reception')}}: <strong>{{netStat.successReception.okValue}}</strong></span><br/>
+                    <!-- CRC errors-->
+                    <span class="text-danger">{{_t('failCRCName')}}:  <strong>{{_t(netStat.successReception.failCRCValue)}}</strong></span><br/>
+                    <!-- CRC16 errors-->
                     <span class="text-warning">{{_t('failCRC16Name')}}:  <strong>{{_t(netStat.successReception.failCRC16Value)}}</strong></span>
                 </div>
             </div>
@@ -96,6 +97,7 @@
     </div>
 
     <!-- ------------------------------------------ Foreign Network Impact ------------------------------------------ -->
+    <!--<pre>{{netStat.foreignNetwork|json}}</pre>-->
     <div class="statistic-entry">
         <div class="statistic-title">{{_t('RFRxForeignHomeID')}}&nbsp;
             <span class="label label-default">{{netStat.foreignNetwork.dateTime.today}}</span>
@@ -118,8 +120,8 @@
         <div class="page-navi" ng-if="naviExpanded['RFRxForeignHomeID']">
             <div class="page-navi-in">
                 <div class="page-navi-content">
-                    <span class="text-success">{{ _t('own_frames_desc')}}: <strong>{{netStat.foreignNetwork.frameValue}}</strong></span><br/>
-                    <span class="text-danger">{{_t('foreign_frames_desc')}}:  <strong>{{_t(netStat.foreignNetwork.value)}}</strong></span>
+                    <span class="text-success">{{ _t('own_frames_desc')}}: <strong>{{netStat.foreignNetwork.own_value}}</strong></span><br/>
+                    <span class="text-danger">{{_t('foreign_frames_desc')}}:  <strong>{{_t(netStat.foreignNetwork.foreign_value)}}</strong></span>
                 </div>
             </div>
         </div>
