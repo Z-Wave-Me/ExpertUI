@@ -96,7 +96,7 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
         $scope.settings.input.user = $scope.user && $scope.user.login? $scope.user.login : '';
 
         //// get system info settings
-        dataService.getApi('cit_forward_login').then(function (response) {
+        /*dataService.getApi('cit_forward_login').then(function (response) {
             if (response.data.data && response.data.data.forwardCITAuth) {
                 $scope.settings.input.forward_login = response.data.data.forwardCITAuth;
             } else {
@@ -106,7 +106,7 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
             $scope.settings.input.forward_login = false
             $scope.loading = false;
             alertify.alertError($scope._t('err_cit_get_forward_login'));
-        });
+        });*/
     };
 
     $scope.loadSettings();
@@ -152,7 +152,7 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
             });
         }
 
-        if ($scope.settings.input.forward_login !== $scope.settings.forward_login_old) {
+        /*if ($scope.settings.input.forward_login !== $scope.settings.forward_login_old) {
 
             dataService.postApi('cit_forward_login', {forwardCITAuth: $scope.settings.input.forward_login}).then(function (response) {
                 $scope.settings.show_update_successful = true;
@@ -160,7 +160,7 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
                 $scope.settings.show_update_successful = false;
                 alertify.alertError($scope._t('err_cit_set_forward_login'));
             });
-        }
+        }*/
 
 
         if (($scope.settings.wifi_pwd_changed && input.wifi_password !== '') || input.ssid_name !== $scope.settings.lastSsid) {
