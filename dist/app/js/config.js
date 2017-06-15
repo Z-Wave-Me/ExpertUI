@@ -6,10 +6,10 @@
 var config_data = {
     'cfg': {
         'environment': 'live',
-        'dev_host': ['192.168.10.147'],
+        'dev_host': ['192.168.10.156'],
         'app_name': 'Z-Wave Expert',
-        'app_version': '1.3.0-RC-92',
-        'app_built': '14-06-2017 14:50:00',
+        'app_version': '1.3.0-RC-94',
+        'app_built': '15-06-2017 14:57:57',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -280,6 +280,9 @@ var config_data = {
         'upload': {
             'fw_or_bootloader': {
                 extension: ['bin', 'hex','ota']
+            },
+            'restore_from_backup': {
+                extension: ['zbk']
             }
         },
         // List of the find hosts
