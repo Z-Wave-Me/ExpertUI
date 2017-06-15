@@ -10,10 +10,8 @@ This User Interfaces allows to operate a Smart Home Network based on Z-Wave devi
 - Analytics: Zniffer, Background noise, Noise Meter, Zniffer History.
 - Settings: Time and date format, Firmware Update, Bug report.
 - Network: Statistics visualization, Link status.
-- CIT: Print page.
 
 #### Changes
-- CIT: showing frequency select.
 - Firmware update: Target ID as select.
 - Neighbors: Completely refactored.
 
@@ -21,7 +19,7 @@ This User Interfaces allows to operate a Smart Home Network based on Z-Wave devi
 - Switches are duplicated.
 - Door lock open status is not shown.
 - Not available selection for two dongles.
-- To wakeup is shown, but device is mains powered.
+- The wakeup is shown, but device is mains powered.
 - Expert commands with multiple parameters are wrong.
 - Water Meters are not shown in the list of Meters question.
 - Can't configure second parameter.
@@ -36,7 +34,6 @@ This User Interfaces allows to operate a Smart Home Network based on Z-Wave devi
 - Notifications page.
 - UZB: Button for uploading bootloader/firmware.
 - Interview progress bar.
-- CIT: network name, time format, firmware update, time zone, busy indicator, interview progressbar, network statitstics, primiscuous mode, bug report.
 - Icons in the menu.
 - Enhanced display on mobile devices and tablets.
 - Spinner indicators.
