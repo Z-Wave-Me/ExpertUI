@@ -397,8 +397,7 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
             $scope.controlDh.network.inclusionProcess = false;
         }
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
-            //console.log('Run cmd: ', cfg.store_url + cmd)
-            $timeout(function() {
+           $timeout(function() {
                 dataService.runZwaveCmd(cfg.store_url + 'controller.SetLearnMode(0)');
                 //console.log('Running controller.SetLearnMode(0) after timeout')
                 // if(cfg.app_type === 'installer'){
@@ -414,28 +413,6 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
         });
 
     };
-
-    /**
-     * todo: DEPRECATED
-     * Exclude form network
-     * @param {string} cmd
-     */
-    /*$scope.excludeFromNetwork = function (cmd, confirm) {
-     console.log(cmd)
-     // return;
-     alertify.confirm(confirm, function () {
-     $scope.controlDh.network.inclusionProcess = false;
-     $scope.controlDh.network.include = false;
-     $scope.runZwaveCmd(cmd);
-     if(cmd === 'controller.SetLearnMode(1)') {
-     $timeout(function () {
-     $window.location.reload();
-     }, 5000);
-     }
-
-     });
-
-     };*/
 
     $scope.requestNetworkUpdate = function (cmd, message, id) {
         $scope.controlDh.alert = {
@@ -476,7 +453,7 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
  * @class BackupRestoreController
  *
  */
-appController.controller('BackupRestoreController', function ($scope, $upload, $window, deviceService, cfg, _) {
+appController.controller('BackupRestoreController', function ($scope, $upload, $window, $filter,$timeout,deviceService, cfg, _) {
     $scope.restore = {
         allow: false,
         input: {
@@ -490,37 +467,50 @@ appController.controller('BackupRestoreController', function ($scope, $upload, $
      * @returns {void}
      */
     $scope.restoreFromBackup = function ($files) {
-        $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin', message: $scope._t('restore_wait')};
         var chip = $scope.restore.input.restore_chip_info;
         var url = cfg.server_url + cfg.restore_url + '?restore_chip_info=' + chip;
-        //return;
-        for (var i = 0; i < $files.length; i++) {
-            var $file = $files[i];
-            $upload.upload({
-                url: url,
-                fileFormDataName: 'config_backup',
-                file: $file
-            }).progress(function (evt) {
-                //$scope.restoreBackupStatus = 1;
-            }).success(function (data, status, headers, config) {
-                //$scope.handleModal('restoreModal');
-                $scope.handleModal();
-                if (data && data.replace(/(<([^>]+)>)/ig, "") !== "null") {//Error
-                    alertify.alertError($scope._t('restore_backup_failed'));
-                    //$scope.restoreBackupStatus = 3;
-                } else {// Success
-                    deviceService.showNotifier({message: $scope._t('restore_done_reload_ui')});
-                    $window.location.reload();
-                    //$scope.restoreBackupStatus = 2;
-                }
-            }).error(function (data, status) {
-                //$scope.handleModal('restoreModal');
-                $scope.handleModal();
-                alertify.alertError($scope._t('restore_backup_failed'));
-                //$scope.restoreBackupStatus = 3;
-            });
-
+        var file;
+        // Getting a file object
+         if($files.length > 0){
+            file = $files[0];
+        }else{
+            alertify.alertError($scope._t('restore_backup_failed'));
+             return;
         }
+        // File extension validation
+        if (cfg.upload.restore_from_backup.extension.indexOf($filter('fileExtension')(file.name)) === -1) {
+            alertify.alertError(
+                $scope._t('upload_format_unsupported', {'__extension__': $filter('fileExtension')(file.name)}) + ' ' +
+                $scope._t('upload_allowed_formats', {'__extensions__': cfg.upload.restore_from_backup.extension.toString()})
+            );
+            return;
+        }
+
+        // Uploading file
+        $upload.upload({
+            url: url,
+            fileFormDataName: 'config_backup',
+            file: file
+        }).progress(function (evt) {
+            $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin', message: $scope._t('restore_wait')};
+        }).success(function (data, status, headers, config) {
+            $scope.loading = false;
+            $scope.handleModal();
+            if (data && data.replace(/(<([^>]+)>)/ig, "") !== "null") {//Error
+                alertify.alertError($scope._t('restore_backup_failed'));
+            } else {// Success
+                deviceService.showNotifier({message: $scope._t('restore_done_reload_ui')});
+                // Reloading a page
+                $timeout( function(){
+                    $window.location.reload();
+                }, 3000 );
+
+            }
+        }).error(function (data, status) {
+            $scope.loading = false;
+            $scope.handleModal();
+            alertify.alertError($scope._t('restore_backup_failed'));
+        });
     };
 });
 
