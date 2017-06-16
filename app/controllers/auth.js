@@ -48,7 +48,7 @@ appController.controller('InitInstallerController', function ($scope, $location,
     /**
      * Get referrer from cookie and parse it
      */
-    $scope.forward = function () {
+    /*$scope.forward = function () {
         dataService.getApi('system_info_url',false,true).then(function (response) {
             $scope.auth.cit_login_forward = response.data.data.cit_forward_auth? response.data.data.cit_forward_auth : undefined;
             console.log(response)
@@ -64,7 +64,7 @@ appController.controller('InitInstallerController', function ($scope, $location,
         });
 
     };
-    $scope.forward();
+    $scope.forward();*/
 
 
     /**
