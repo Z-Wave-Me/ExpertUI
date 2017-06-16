@@ -95,7 +95,7 @@
  "own_frames_desc" : "Own Frames",
  "foreignframes" : "Foreign",
  "RFTxFrames":"Sent frames",
- "RFTxLBTBackOffs":"Data Rate on Send",
+ "RFTxLBTBackOffs":"CIT Transmissions vs Back-Offs",
  "RFTxLBTBackOffs_error":"Back off frames",
  "RFRxFrames":"Own Frames",
  "RFRxLRCErrors":"Success on Reception",
