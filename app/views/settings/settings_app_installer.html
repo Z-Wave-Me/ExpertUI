@@ -131,6 +131,7 @@
                 <bb-help-text trans="_t('ntp_set_time_info')"></bb-help-text>
             </div>
             <!-- synchronize ntp -->
+            <!--<pre>{{settings.ntp|json}}</pre>-->
             <div class="form-group form-inline">
                 <label>{{_t('ntp_synchronize')}}</label>
                 <button class="btn"
@@ -138,7 +139,7 @@
                         title="{{_t('btn_synchronize_ntp')}}"
                         ng-click="synchronizeNTP()"
                         ng-class="settings.ntp.synchronized? 'btn-default' : 'btn-primary'"
-                        ng-disabled="settings.ntp.synchronized || settings.ntp_switch === 'enable'">
+                        ng-disabled="(settings.ntp.synchronized && settings.ntp.active) || !settings.ntp.active">
                     <i class="fa fa-repeat"></i> <span class="btn-name">{{_t('btn_synchronize_ntp')}}</span>
                 </button>
                 <bb-help-text trans="_t('ntp_synchronize_info')"></bb-help-text>
