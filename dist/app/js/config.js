@@ -6,10 +6,10 @@
 var config_data = {
     'cfg': {
         'environment': 'live',
-        'dev_host': ['192.168.10.156'],
+        'dev_host': [],
         'app_name': 'Z-Wave Expert',
-        'app_version': '1.3.0-RC-96',
-        'app_built': '15-06-2017 15:36:28',
+        'app_version': '1.3.0-RC-112',
+        'app_built': '16-06-2017 10:05:17',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',

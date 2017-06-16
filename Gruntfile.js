@@ -7,9 +7,9 @@ module.exports = function (grunt) {
     var git_message = pkg.v;
     var app_rc = (pkg.rc ? pkg.rc + 1 : 0);
 
-    if(app_rc){
-        app_version += '-RC-'+app_rc;
-        git_message += '-RC-'+pkg.rc;
+    if (app_rc) {
+        app_version += '-RC-' + app_rc;
+        git_message += '-RC-' + pkg.rc;
     }
 // Project configuration.
     grunt.initConfig({
@@ -258,13 +258,19 @@ module.exports = function (grunt) {
                         {
                             match: /'app_type': 'default'/g,
                             replacement: function () {
-                                return '\'app_type\': \''+ app_type + '\'';
+                                return '\'app_type\': \'' + app_type + '\'';
                             }
                         },
                         {
                             match: /'app_type': 'installer'/g,
                             replacement: function () {
-                                return '\'app_type\': \''+ app_type + '\'';
+                                return '\'app_type\': \'' + app_type + '\'';
+                            }
+                        },
+                        {
+                            match: /'dev_host': \[([^\]]+)]/g,
+                            replacement: function () {
+                                return '\'dev_host\': \[\]';
                             }
                         },
                         {
@@ -339,5 +345,5 @@ module.exports = function (grunt) {
 
     // Default task(s).
     //grunt.registerTask('default', ['clean','concat','copy','cssmin','string-replace']);
-    grunt.registerTask('default', ['clean', 'ngtemplates', 'concat', 'json_generator', 'copy', 'cssmin', 'usebanner', 'htmlbuild','replace','modify_json','clean']);
+    grunt.registerTask('default', ['clean', 'ngtemplates', 'concat', 'json_generator', 'copy', 'cssmin', 'usebanner', 'htmlbuild', 'replace', 'modify_json', 'clean']);
 };
