@@ -30,22 +30,31 @@
         <div class="statistic-title">{{_t('RFTxLBTBackOffs')}}&nbsp;
             <span class="label label-default">{{netStat.dataRate.dateTime.today}}</span>
         </div>
+
+        
+            <div class="page-navi-content">
+                <span class="text-success">{{ _t('RFTxFrames')}}: <strong>{{netStat.dataRate.sendValue}}</strong></span><br/>
+                <span class="text-danger">{{_t('RFTxLBTBackOffs_error')}}:  <strong>{{_t(netStat.dataRate.backOffValue)}}</strong></span>
+            </div>
+
         <!--<pre>{{netStat.dataRate|json}}</pre>-->
-        <div class="progress clickable" ng-click="expandNavi('RFTxLBTBackOffs', $event)">
+    <!--   <div class="progress clickable" ng-click="expandNavi('RFTxLBTBackOffs', $event)"> -->
             <!-- SUCCESS -->
-            <div class="progress-bar progress-bar-success" style="width: {{netStat.dataRate.success}}%">
+           <!-- <div class="progress-bar progress-bar-success" style="width: {{netStat.dataRate.success}}%">
                 <span title="{{netStat.dataRate.success}}% {{_t('RFTxFrames')}}">
                     {{netStat.dataRate.success}}% {{_t('RFTxFrames')}}
                 </span>
-            </div>
+            </div>-->
             <!-- FAILED -->
+        <!--
             <div class="progress-bar progress-bar-danger" style="width: {{netStat.dataRate.fail}}%">
                 <span title="{{netStat.dataRate.fail}}% {{_t('RFTxLBTBackOffs_error')}}">
                     {{netStat.dataRate.fail}}% {{_t('RFTxLBTBackOffs_error')}}
                 </span>
             </div>
-        </div>
+        </div>-->
         <!-- Info -->
+            <!--
         <div class="page-navi" ng-if="naviExpanded['RFTxLBTBackOffs']">
             <div class="page-navi-in">
                 <div class="page-navi-content">
@@ -53,7 +62,7 @@
                     <span class="text-danger">{{_t('RFTxLBTBackOffs_error')}}:  <strong>{{_t(netStat.dataRate.backOffValue)}}</strong></span>
                 </div>
             </div>
-        </div>
+        </div>-->
     </div>
     <!-- ------------------------------------------ Success on Reception ------------------------------------------ -->
     <!--<pre>{{netStat.successReception|json}}</pre>-->
