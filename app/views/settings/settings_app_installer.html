@@ -96,15 +96,14 @@
                 <label>{{_t('timezone')}}: </label>
                 <select name="time_zone" name="time_zone" class="form-control"
                         ng-model="settings.input.time_zone"
-                        ng-disabled="!settings.show_tz || settings.ntp_switch === 'enable'">
-                    <option value="automatic"
+                        ng-disabled="!settings.show_tz || settings.ntp_switch === 'disable'">
+                    <!--<option value="automatic"
                             ng-if="!settings.show_tz"
-                            ng-selected="!settings.show_tz">{{_t('auto_tz')}}</option>
+                            ng-selected="!settings.show_tz">{{_t('auto_tz')}}</option>-->
                     <option ng-repeat="v in cfg.time_zone_list" value="{{v}}"
-                            ng-selected="v === cfg.zwavecfg.time_zone && settings.show_tz">{{v}}
-                    </option>
+                            ng-selected="v === settings.lastTZ.replace('_',' ') && settings.show_tz">{{v}}</option>
                 </select>
-                <bb-help-text trans="_t('tz_set_info',{__ctz__: settings.lastTZ})"></bb-help-text>
+                <bb-help-text trans="_t('tz_set_info',{__ctz__: settings.lastTZ.replace('_',' ')})"></bb-help-text>
             </div>
             <!-- date time picker -->
             <div class="form-group form-inline">

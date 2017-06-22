@@ -273,7 +273,7 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
             var ts = now.getTime();
             var split_local_st = $scope.settings.ntp.status.local_time.split(' ')
             var server_ts = (new Date(split_local_st[1] + ' ' + split_local_st[2])).getTime();
-            $scope.settings.show_tz = ((ts - server_ts) > 1800*1000 && $scope.settings.ntp.active) || !$scope.settings.ntp.active;
+            $scope.settings.show_tz = $scope.settings.ntp.active; //((ts - server_ts) > 1800*1000 && $scope.settings.ntp.active) || !$scope.settings.ntp.active;
 
         }, function (error) {
             $scope.loading = false;
