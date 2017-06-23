@@ -167,7 +167,8 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
             }
             var isListening = node.data.isListening.value;
             var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
-            var hasWakeup = 0x84 in node.instances[0].commandClasses;
+            //var hasWakeup = 0x84 in node.instances[0].commandClasses;
+            var hasWakeup = !isListening && !node.data.sensor250.value && !node.data.sensor1000.value;
             var isFailed = node.data.isFailed.value;
             var isAwake = node.data.isAwake.value;
             var prefixD = 'devices.' + nodeId + '.data.';
@@ -183,7 +184,7 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
             var interval = 0;
             var type = deviceService.deviceType(node);
             var sleeping;
-            if (!isListening && hasWakeup) {
+            if (!isListening && hasWakeup && 0x84 in node.instances[0].commandClasses) {
 
                 sleepingSince = parseInt(node.instances[0].commandClasses[0x84].data.lastSleep.value, 10);
                 lastWakeup = parseInt(node.instances[0].commandClasses[0x84].data.lastWakeup.value, 10);

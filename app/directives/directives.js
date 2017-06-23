@@ -285,7 +285,8 @@ angApp.directive('routingTypeIcon', function () {
 
                 var isListening = node.data.isListening.value;
                 var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
-                var hasWakeup = 0x84 in node.instances[0].commandClasses;
+                //var hasWakeup = 0x84 in node.instances[0].commandClasses;
+                var hasWakeup = !isListening && !node.data.sensor250.value && !node.data.sensor1000.value;
                 var hasBattery = 0x80 in node.instances[0].commandClasses;
                 var isPortableRemoteControl = (node.data.deviceTypeString.value == "Portable Remote Controller");
 

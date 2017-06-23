@@ -195,10 +195,12 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
                 networkInformation.mains++;
             }
             // Count battery devices
-            else if (!node.data.isListening.value && (!node.data.sensor250.value && !node.data.sensor1000.value) && node.instances[0].commandClasses[0x80]) {
-                batteryCharge = parseInt(node.instances[0].commandClasses[0x80].data.last.value);
-                if ( batteryCharge <= 20 && allInterviewsDone) {
-                    report.push('txt_low_battery')
+            else if (!node.data.isListening.value && !node.data.sensor250.value && !node.data.sensor1000.value) {
+                if (node.instances[0].commandClasses[0x80]) {
+                    batteryCharge = parseInt(node.instances[0].commandClasses[0x80].data.last.value);
+                    if ( batteryCharge <= 20 && allInterviewsDone) {
+                        report.push('txt_low_battery')
+                    }
                 }
                 networkInformation.battery++;
             }

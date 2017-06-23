@@ -529,7 +529,8 @@ angApp.filter('deviceName', function (cfg, deviceService) {
         var type = '';
         var isListening = node.data.isListening.value;
         var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
-        var hasWakeup = 0x84 in node.instances[0].commandClasses;
+        //var hasWakeup = 0x84 in node.instances[0].commandClasses;
+        var hasWakeup = !isListening && !node.data.sensor250.value && !node.data.sensor1000.value;
 
         if (hasWakeup || isFLiRS) {
             type = 'Battery';

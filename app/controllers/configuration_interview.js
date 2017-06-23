@@ -278,7 +278,9 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         var securityInterview = '';
         var deviceDescriptionAppVersion = parseInt(node.data.applicationMajor.value, 10);
         var deviceDescriptionAppSubVersion = parseInt(node.data.applicationMinor.value, 10);
-        var hasWakeup = 0x84 in node.instances[0].commandClasses;
+        var isListening = node.data.isListening.value;
+        //var hasWakeup = 0x84 in node.instances[0].commandClasses;
+        var hasWakeup = !isListening && !node.data.sensor250.value && !node.data.sensor1000.value;
         if (isNaN(deviceDescriptionAppVersion))
             deviceDescriptionAppVersion = '-';
         if (isNaN(deviceDescriptionAppSubVersion))
