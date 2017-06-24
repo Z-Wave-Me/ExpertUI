@@ -22,22 +22,31 @@ appController.controller('ControlController', function ($scope, $interval, $time
             alertPrimary: $scope.alert,
             popup: false,
             input: {
-                basic_level: 'false',
+                keysGranted: {
+                    S0: 'false',
+                    S2Unauthenticated: 'false',
+                    S2Authenticated: 'false',
+                    S2Access: 'false'
+                },
+                keysRequested: {
+                    S0: 'false',
+                    S2Unauthenticated: 'false',
+                    S2Authenticated: 'false',
+                    S2Access: 'false'
+                },
                 switch_multilevel_level: 5
             },
-            cc: {
-                Basic: {
-                    interval: false,
-                    show: false,
-                    done: false,
-                    countDown: 10
-                },
-                SwitchMultilevel: {
-                    interval: false,
-                    show: false,
-                    done: false,
-                    countDown: 10
-                }
+            grantKeys: {
+                interval: false,
+                show: false,
+                done: false,
+                countDown: 10
+            },
+            verifyDSK: {
+                interval: false,
+                show: false,
+                done: false,
+                countDown: 10
             }
         },
         network: {
@@ -108,18 +117,19 @@ appController.controller('ControlController', function ($scope, $interval, $time
     };
 
     /**
-     * Handle inclusion modal 1
+     * Handle inclusionS2GrantKeys
      */
-    $scope.handleInclusionBasic = function (level) {
-        $scope.controlDh.inclusion.cc.Basic.show = false;
-        $scope.controlDh.inclusion.cc.Basic.done = true;
-        $interval.cancel($scope.controlDh.inclusion.cc.Basic.interval);
-        if (!level) {
-            console.log('Basic popup AUTO closing');
-            return;
-        }
-        console.log('Basic popup MANUAL closing');
-        var cmd = 'devices['+ $scope.controlDh.inclusion.lastIncludedDeviceId +'].instances[0].commandClasses[32].Set(' + level + ')';
+    $scope.handleInclusionS2GrantKeys = function (keysGranted) {
+        $scope.controlDh.inclusion.grantKeys.show = false;
+        $scope.controlDh.inclusion.grantKeys.done = true;
+        $interval.cancel($scope.controlDh.inclusion.grantKeys.interval);
+        var nodeId = $scope.controlDh.inclusion.lastIncludedDeviceId.toString(10);
+        var cmd = 
+            'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S0=' + keysGranted.S0 + '; '+
+            'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S2Unauthenticated=' + keysGranted.S2Unauthenticated + '; '+
+            'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S2Authenticated=' + keysGranted.S2Authenticated + '; '+
+            'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S2Access=' + keysGranted.S2Access + '; '+
+            'devices[' + nodeId + '].SecurityS2.data.grantedKeys=true';
         $scope.runZwaveCmd(cmd)
     };
 
@@ -366,36 +376,30 @@ appController.controller('ControlController', function ($scope, $interval, $time
      * @param {int} nodeId
      */
     function checkInterview(nodeInstances) {
-        if ($scope.controlDh.inclusion.cc.Basic.show
-            || $scope.controlDh.inclusion.cc.SwitchMultilevel.show
-            || ($scope.controlDh.inclusion.cc.Basic.done  && $scope.controlDh.inclusion.cc.SwitchMultilevel.done)) {
+        if ($scope.controlDh.inclusion.grantKeys.show
+            || $scope.controlDh.inclusion.verifyDSK.show
+            || ($scope.controlDh.inclusion.grantKeys.done  && $scope.controlDh.inclusion.verifyDSK.done)) {
             return;
         }
         angular.forEach(nodeInstances, function (instance, iId) {
-            /**
-             * Check for Basic cc
-             */
-            var hasBasic = instance.commandClasses[32];
-            console.log('hasBasic: ',hasBasic)
-            if (hasBasic && !hasBasic.data.level.value && !$scope.controlDh.inclusion.cc.Basic.done) {
-                console.log('Opening popup Basic')
-                $scope.controlDh.inclusion.cc.Basic.show = true;
-                $scope.controlDh.inclusion.cc.Basic.done = true;
-                var countDownBasic = function () {
-                    $scope.controlDh.inclusion.cc.Basic.countDown--;
-                    console.log('Basic.countDown: ',$scope.controlDh.inclusion.cc.Basic.countDown);
-                    if ($scope.controlDh.inclusion.cc.Basic.countDown === 0) {
-                        console.log('Stop countDownBasic interval');
-                        $interval.cancel($scope.controlDh.inclusion.cc.Basic.interval);
-                        $scope.handleInclusionBasic();
+            var securityS2 = instance.commandClasses[159];
+            
+            if (securityS2 && securityS2.data.requestedKeys.value && !$scope.controlDh.inclusion.grantKeys.done) {
+                $scope.controlDh.inclusion.input.keysRequested.S0 = securityS2.data.requestedKeys.S0.value;
+                $scope.controlDh.inclusion.input.keysRequested.S2Unauthenticated = securityS2.data.requestedKeys.S2Unauthenticated.value;
+                $scope.controlDh.inclusion.input.keysRequested.S2Authenticated = securityS2.data.requestedKeys.S2Authenticated.value;
+                $scope.controlDh.inclusion.input.keysRequested.S2Access = securityS2.data.requestedKeys.S2Access.value;
+                $scope.controlDh.inclusion.grantKeys.show = true;
+                var countDownGrantKeys = function () {
+                    $scope.controlDh.inclusion.grantKeys.countDown--;
+                    if ($scope.controlDh.inclusion.grantKeys.countDown === 0) {
+                        $interval.cancel($scope.controlDh.inclusion.grantKeys.interval);
                     }
                 };
-                $scope.controlDh.inclusion.cc.Basic.interval = $interval(countDownBasic, 1000);
+                $scope.controlDh.inclusion.grantKeys.interval = $interval(countDownGrantKeys, 1000);
                 return;
             }
-            /**
-             * Check for SwitchMultilevel cc
-             */
+
             var hasSwitchMultilevel = instance.commandClasses[38];
             console.log('hasSwitchMultilevel: ', hasSwitchMultilevel)
             if (hasSwitchMultilevel && !hasSwitchMultilevel.data.level.value && !$scope.controlDh.inclusion.cc.SwitchMultilevel.done) {
