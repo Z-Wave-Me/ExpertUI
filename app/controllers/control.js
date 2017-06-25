@@ -34,19 +34,20 @@ appController.controller('ControlController', function ($scope, $interval, $time
                     S2Authenticated: 'false',
                     S2Access: 'false'
                 },
-                switch_multilevel_level: 5
+                dskPin: 0,
+                publicKey: null
             },
             grantKeys: {
                 interval: false,
                 show: false,
                 done: false,
-                countDown: 10
+                countDown: 20
             },
             verifyDSK: {
                 interval: false,
                 show: false,
                 done: false,
-                countDown: 10
+                countDown: 20
             }
         },
         network: {
@@ -123,32 +124,42 @@ appController.controller('ControlController', function ($scope, $interval, $time
         $scope.controlDh.inclusion.grantKeys.show = false;
         $scope.controlDh.inclusion.grantKeys.done = true;
         $interval.cancel($scope.controlDh.inclusion.grantKeys.interval);
-        var nodeId = $scope.controlDh.inclusion.lastIncludedDeviceId.toString(10);
-        var cmd = 
-            'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S0=' + keysGranted.S0 + '; '+
-            'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S2Unauthenticated=' + keysGranted.S2Unauthenticated + '; '+
-            'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S2Authenticated=' + keysGranted.S2Authenticated + '; '+
-            'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S2Access=' + keysGranted.S2Access + '; '+
-            'devices[' + nodeId + '].SecurityS2.data.grantedKeys=true';
+        var nodeId = $scope.controlDh.inclusion.lastIncludedDeviceId.toString(10),
+            cmd = 
+                'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S0=' + keysGranted.S0 + '; '+
+                'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S2Unauthenticated=' + keysGranted.S2Unauthenticated + '; '+
+                'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S2Authenticated=' + keysGranted.S2Authenticated + '; '+
+                'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S2Access=' + keysGranted.S2Access + '; '+
+                'devices[' + nodeId + '].SecurityS2.data.grantedKeys=true';
         $scope.runZwaveCmd(cmd)
     };
 
     /**
-     * Handle inclusion modal 2
+     * Handle inclusionS2VerifyDSK
      */
-    $scope.handleInclusionSwitchMultilevel = function (level) {
-        $scope.controlDh.inclusion.cc.SwitchMultilevel.show = false;
-        $scope.controlDh.inclusion.cc.SwitchMultilevel.done = true;
-        $interval.cancel($scope.controlDh.inclusion.cc.SwitchMultilevel.interval);
-        if (!level) {
-            console.log('SwitchMultilevel popup AUTO closing');
-            return;
+    $scope.handleInclusionVerifyDSK = function (confirmed) {
+        $scope.controlDh.inclusion.verifyDSK.show = false;
+        $scope.controlDh.inclusion.verifyDSK.done = true;
+        $interval.cancel($scope.controlDh.inclusion.verifyDSK.interval);
+        var dskPin = parseInt($scope.controlDh.inclusion.input.dskPin, 10),
+            nodeId = $scope.controlDh.inclusion.lastIncludedDeviceId.toString(10),
+            publicKey = [];
+
+        if (confirmed) {
+            publicKey = $scope.controlDh.inclusion.input.publicKey;
+            publicKey[0] = (dskPin >> 8) & 0xff;
+            publicKey[1] = dskPin & 0xff;
         }
-        console.log('SwitchMultilevel popup MANUAL closing');
-        var cmd = 'devices['+ $scope.controlDh.inclusion.lastIncludedDeviceId +'].instances[0].commandClasses[38].Set(' + level + ')';
+        var cmd = 'devices[' + nodeId + '].SecurityS2.data.publicKeyVerified=[' + publicKey.join(',') + '];';
         $scope.runZwaveCmd(cmd)
     };
 
+    /**
+     * Get block of DSK
+     */
+    $scope.dskBlock = function(publicKey, block) {
+        return (publicKey[(block - 1) * 2] * 256 + publicKey[(block - 1) * 2 + 1]);
+    };
 
     /// --- Private functions --- ///
     /**
@@ -381,47 +392,44 @@ appController.controller('ControlController', function ($scope, $interval, $time
             || ($scope.controlDh.inclusion.grantKeys.done  && $scope.controlDh.inclusion.verifyDSK.done)) {
             return;
         }
-        angular.forEach(nodeInstances, function (instance, iId) {
-            var securityS2 = instance.commandClasses[159];
-            
-            if (securityS2 && securityS2.data.requestedKeys.value && !$scope.controlDh.inclusion.grantKeys.done) {
-                $scope.controlDh.inclusion.input.keysRequested.S0 = securityS2.data.requestedKeys.S0.value;
-                $scope.controlDh.inclusion.input.keysRequested.S2Unauthenticated = securityS2.data.requestedKeys.S2Unauthenticated.value;
-                $scope.controlDh.inclusion.input.keysRequested.S2Authenticated = securityS2.data.requestedKeys.S2Authenticated.value;
-                $scope.controlDh.inclusion.input.keysRequested.S2Access = securityS2.data.requestedKeys.S2Access.value;
-                $scope.controlDh.inclusion.grantKeys.show = true;
-                var countDownGrantKeys = function () {
-                    $scope.controlDh.inclusion.grantKeys.countDown--;
-                    if ($scope.controlDh.inclusion.grantKeys.countDown === 0) {
-                        $interval.cancel($scope.controlDh.inclusion.grantKeys.interval);
-                    }
-                };
-                $scope.controlDh.inclusion.grantKeys.interval = $interval(countDownGrantKeys, 1000);
-                return;
-            }
-
-            var hasSwitchMultilevel = instance.commandClasses[38];
-            console.log('hasSwitchMultilevel: ', hasSwitchMultilevel)
-            if (hasSwitchMultilevel && !hasSwitchMultilevel.data.level.value && !$scope.controlDh.inclusion.cc.SwitchMultilevel.done) {
-            //if (!hasSwitchMultilevel && !$scope.controlDh.inclusion.cc.SwitchMultilevel.done) {
-                $scope.controlDh.inclusion.cc.SwitchMultilevel.show = true;
-                $scope.controlDh.inclusion.cc.SwitchMultilevel.done = true;
-                console.log('Opening popup witchMultilevel')
-                var countDownSwitchMultilevel = function () {
-                    $scope.controlDh.inclusion.cc.SwitchMultilevel.countDown--;
-                    console.log('SwitchMultilevel.countDown: ',$scope.controlDh.inclusion.cc.SwitchMultilevel.countDown)
-                    if ($scope.controlDh.inclusion.cc.SwitchMultilevel.countDown === 0) {
-                        console.log('Stop countDownSwitchMultilevel interval');
-                        $interval.cancel($scope.controlDh.inclusion.cc.SwitchMultilevel.interval);
-                        $scope.handleInclusionSwitchMultilevel();
-                    }
-                };
-                $scope.controlDh.inclusion.cc.SwitchMultilevel.interval = $interval(countDownSwitchMultilevel, 1000);
-                return;
-            }
-        });
+        
+        var securityS2 = nodeInstances[0].commandClasses[159];
+        
+        if (securityS2 && securityS2.data.requestedKeys.value && !$scope.controlDh.inclusion.grantKeys.done) {
+            $scope.controlDh.inclusion.input.keysRequested.S0 = securityS2.data.requestedKeys.S0.value;
+            $scope.controlDh.inclusion.input.keysRequested.S2Unauthenticated = securityS2.data.requestedKeys.S2Unauthenticated.value;
+            $scope.controlDh.inclusion.input.keysRequested.S2Authenticated = securityS2.data.requestedKeys.S2Authenticated.value;
+            $scope.controlDh.inclusion.input.keysRequested.S2Access = securityS2.data.requestedKeys.S2Access.value;
+            $scope.controlDh.inclusion.grantKeys.show = true;
+            var countDownGrantKeys = function () {
+                $scope.controlDh.inclusion.grantKeys.countDown--;
+                if ($scope.controlDh.inclusion.grantKeys.countDown === 0) {
+                    $interval.cancel($scope.controlDh.inclusion.grantKeys.interval);
+                    // cancel
+                    $scope.controlDh.inclusion.input.keysRequested.S0 = $scope.controlDh.inclusion.input.keysRequested.S2Unauthenticated = $scope.controlDh.inclusion.input.keysRequested.S2Authenticated = $scope.controlDh.inclusion.input.keysRequested.S2Access = false;
+                    $scope.handleInclusionS2GrantKeys($scope.controlDh.inclusion.input.keysRequested);
+                }
+            };
+            $scope.controlDh.inclusion.grantKeys.interval = $interval(countDownGrantKeys, 1000);
+            return;
+        }
+        
+        if (securityS2 && securityS2.data.publicKey.value.length && !$scope.controlDh.inclusion.verifyDSK.done) {
+            $scope.controlDh.inclusion.input.publicKey = securityS2.data.publicKey.value;
+            $scope.controlDh.inclusion.input.publicKeyAuthenticationRequired = securityS2.data.publicKeyAuthenticationRequired.value;
+            $scope.controlDh.inclusion.input.dskPin = $scope.dskBlock($scope.controlDh.inclusion.input.publicKey, 1);
+            $scope.controlDh.inclusion.verifyDSK.show = true;
+            var countDownVerifyDSK = function () {
+                $scope.controlDh.inclusion.verifyDSK.countDown--;
+                if ($scope.controlDh.inclusion.verifyDSK.countDown === 0) {
+                    $interval.cancel($scope.controlDh.inclusion.verifyDSK.interval);
+                    $scope.handleInclusionVerifyDSK(false);
+                }
+            };
+            $scope.controlDh.inclusion.verifyDSK.interval = $interval(countDownVerifyDSK, 1000);
+            return;
+        }
     }
-
 });
 
 /**
