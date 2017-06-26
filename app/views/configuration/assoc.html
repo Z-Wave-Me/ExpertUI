@@ -45,6 +45,7 @@
                                         <button type="button" class="btn btn-info">
                                             <!--inDevice: {{d.inDevice}}  | inConfig: {{d.inConfig}} | Status: {{d.status}}-->
                                             <i class="fa fa-exclamation-triangle text-danger"
+                                               ng-hide="cfg.app_type === 'installer'"
                                                ng-if="d.status !== 'true-true'"></i>
                                             <!--(#{{d.id}}<span ng-if="nodeCfg.hasMca && d.instance > 0">.{{d.instance}}</span>) {{d.name|cutText:true:20}}-->
                                             (#{{d.id}}<span ng-if="nodeCfg.hasMca">.{{d.instance}}</span>)
