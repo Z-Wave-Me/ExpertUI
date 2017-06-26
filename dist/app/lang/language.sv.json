@@ -1,5 +1,6 @@
 {
   "are_you_sure_restore_cit": "Are you sure that you want to overwrite the device names? It is recommended to create a backup before.",
+  "th_add_assoc": "Add Association",
   "err_cit_get_forward_login":"Unable to get local login forwarding state.",
   "err_cit_set_forward_login":"Unable to set local login forwarding.",
   "forward_login":"Automatic login on local access",
@@ -38,7 +39,7 @@
   "settings_box_reboot":"In order to fully apply the changes a reboot is necessary. The box will be automatically rebooted after the settings has been saved.",
   "tz_set_info":"The current time zone is: __ctz__. You can change the time zone if automatic time synchronisation is enabled. A reboot is necessary.",
   "auto_tz":"Automatic (Internet)",
-  "ntp_set_mode":"Automatic Time Synchronisation: ",
+  "ntp_set_mode":"Automatic Time Synchronization: ",
   "ntp_set_mode_info":"En-/disable automatic time synchronisation via NTP (Network Time Protocol). A reboot is necessary.",
   "server_time":"Current Server Time: ",
   "ntp_set_time":"Date/Time: ",

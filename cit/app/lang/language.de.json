@@ -1,5 +1,6 @@
 {
  "are_you_sure_restore_cit": "Sind Sie sicher, dass Sie die Gerätenamen überschreiben möchten? Es wird empfohlen vorher eine Sicherung zu erstellen.",
+ "th_add_assoc": "Assoziation hinzufügen",
  "err_cit_get_forward_login":"Der Status der Login-Weiterleitung konnte nicht geladen werden.",
  "err_cit_set_forward_login":"Der Status der Login-Weiterleitung konnte nicht gesetzt werden.",
  "forward_login":"Automatisches Login bei lokalem Zugang (gleiches Netzwerk)",
