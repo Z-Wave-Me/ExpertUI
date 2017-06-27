@@ -1,14 +1,14 @@
 <!-- Network map -->
-<div ng-controller="NetworkStatisticsController" ng-init="updateNetworkStatistics('GetNetworkStats()')">
+<div ng-controller="NetworkStatisticsController">
     <div class="page-header"><h1>{{_t('statistics')}}</h1></div>
     <bb-alert alert="alert"></bb-alert>
 
     <div class="text-right print-hide">
         <button class="btn btn-primary" id="btn_update_all_1"
-                ng-click="updateNetworkStatistics('GetNetworkStats()')"
-                ng-disabled="rowSpinner['GetNetworkStats()']">
+                ng-click="loadNetworkStatistics()"
+                ng-disabled="rowSpinner['loadNetStatistics']">
             <bb-row-spinner
-                    spinner="rowSpinner['GetNetworkStats()']"
+                    spinner="rowSpinner['loadNetStatistics']"
                     label="_t('update')"
                     icon="'fa-circle-o'">
             </bb-row-spinner>
