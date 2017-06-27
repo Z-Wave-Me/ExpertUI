@@ -592,6 +592,9 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
      *  Get interview Commands
      */
     function configGetInterviewCommands(node, updateTime) {
+        if(!node){
+            return [];
+        }
         var interviews = [];
         for (var iId in node.instances) {
             var cnt = 0;

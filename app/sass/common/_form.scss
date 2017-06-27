@@ -102,6 +102,11 @@ fieldset, .fieldset{
     content: "*";
 }
 
+.input-valid-false{
+    border: solid 1px red;
+
+}
+
 .form-control-sm{
     width: 30% !important;
 }

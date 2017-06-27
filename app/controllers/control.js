@@ -19,8 +19,38 @@ appController.controller('ControlController', function ($scope, $interval, $time
         inclusion: {
             lastIncludedDevice: $scope.alert,
             lastExcludedDevice: $scope.alert,
+            lastIncludedDeviceId: 0,
             alert: $scope.alert,
-            alertPrimary: $scope.alert
+            alertPrimary: $scope.alert,
+            popup: false,
+            input: {
+                keysGranted: {
+                    S0: 'false',
+                    S2Unauthenticated: 'false',
+                    S2Authenticated: 'false',
+                    S2Access: 'false'
+                },
+                keysRequested: {
+                    S0: 'false',
+                    S2Unauthenticated: 'false',
+                    S2Authenticated: 'false',
+                    S2Access: 'false'
+                },
+                dskPin: 0,
+                publicKey: null
+            },
+            grantKeys: {
+                interval: false,
+                show: false,
+                done: false,
+                countDown: 20
+            },
+            verifyDSK: {
+                interval: false,
+                show: false,
+                done: false,
+                countDown: 20
+            }
         },
         network: {
             include: false,
@@ -81,13 +111,61 @@ appController.controller('ControlController', function ($scope, $interval, $time
             dataService.loadJoinedZwaveData().then(function (response) {
                 setControllerData(response.data.joined);
                 setDeviceData(response.data.joined);
-                setInclusionData(response.data.joined, response.data.update)
+                setInclusionData(response.data.joined, response.data.update);
+                if($scope.controlDh.inclusion.lastIncludedDeviceId != 0 && cfg.app_type != 'installer'){
+                    var nodeInstances = $filter('hasNode')(response, 'data.joined.devices.' + $scope.controlDh.inclusion.lastIncludedDeviceId + '.instances')
+                    checkInterview(nodeInstances);
+                }
+
             }, function (error) {
             });
         };
         $scope.controlDh.interval = $interval(refresh, $scope.cfg.interval);
     };
 
+    /**
+     * Handle inclusionS2GrantKeys
+     */
+    $scope.handleInclusionS2GrantKeys = function (keysGranted) {
+        $scope.controlDh.inclusion.grantKeys.show = false;
+        $scope.controlDh.inclusion.grantKeys.done = true;
+        $interval.cancel($scope.controlDh.inclusion.grantKeys.interval);
+        var nodeId = $scope.controlDh.inclusion.lastIncludedDeviceId.toString(10),
+            cmd =
+                'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S0=' + keysGranted.S0 + '; '+
+                'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S2Unauthenticated=' + keysGranted.S2Unauthenticated + '; '+
+                'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S2Authenticated=' + keysGranted.S2Authenticated + '; '+
+                'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S2Access=' + keysGranted.S2Access + '; '+
+                'devices[' + nodeId + '].SecurityS2.data.grantedKeys=true';
+        $scope.runZwaveCmd(cmd)
+    };
+
+    /**
+     * Handle inclusionS2VerifyDSK
+     */
+    $scope.handleInclusionVerifyDSK = function (confirmed) {
+        $scope.controlDh.inclusion.verifyDSK.show = false;
+        $scope.controlDh.inclusion.verifyDSK.done = true;
+        $interval.cancel($scope.controlDh.inclusion.verifyDSK.interval);
+        var dskPin = parseInt($scope.controlDh.inclusion.input.dskPin, 10),
+            nodeId = $scope.controlDh.inclusion.lastIncludedDeviceId.toString(10),
+            publicKey = [];
+
+        if (confirmed) {
+            publicKey = $scope.controlDh.inclusion.input.publicKey;
+            publicKey[0] = (dskPin >> 8) & 0xff;
+            publicKey[1] = dskPin & 0xff;
+        }
+        var cmd = 'devices[' + nodeId + '].SecurityS2.data.publicKeyVerified=[' + publicKey.join(',') + '];';
+        $scope.runZwaveCmd(cmd)
+    };
+
+    /**
+     * Get block of DSK
+     */
+    $scope.dskBlock = function(publicKey, block) {
+        return (publicKey[(block - 1) * 2] * 256 + publicKey[(block - 1) * 2 + 1]);
+    };
 
     /// --- Private functions --- ///
     /**
@@ -321,6 +399,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
             //Run CMD
             /*var cmd = 'devices[' + deviceIncId + '].data.givenName.value=\'' + givenName + '\'';
              dataService.runZwaveCmd(cfg.store_url + cmd);*/
+            $scope.controlDh.inclusion.lastIncludedDeviceId = deviceIncId;
             $scope.controlDh.inclusion.lastIncludedDevice = {
                 message: $scope._t('nm_last_included_device') + '  (' + updateTime + ')  <a href="#configuration/interview/' + deviceIncId + '"><strong>' + givenName + '</strong></a>',
                 status: 'alert-success',
@@ -346,8 +425,56 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 icon: 'fa-smile-o'
             };
         }
-    };
+    }
 
+    /**
+     * Check interview
+     * @param {int} nodeId
+     */
+    function checkInterview(nodeInstances) {
+        if ($scope.controlDh.inclusion.grantKeys.show
+            || $scope.controlDh.inclusion.verifyDSK.show
+            || ($scope.controlDh.inclusion.grantKeys.done  && $scope.controlDh.inclusion.verifyDSK.done)) {
+            return;
+        }
+
+        var securityS2 = nodeInstances[0].commandClasses[159];
+
+        if (securityS2 && securityS2.data.requestedKeys.value && !$scope.controlDh.inclusion.grantKeys.done) {
+            $scope.controlDh.inclusion.input.keysRequested.S0 = securityS2.data.requestedKeys.S0.value;
+            $scope.controlDh.inclusion.input.keysRequested.S2Unauthenticated = securityS2.data.requestedKeys.S2Unauthenticated.value;
+            $scope.controlDh.inclusion.input.keysRequested.S2Authenticated = securityS2.data.requestedKeys.S2Authenticated.value;
+            $scope.controlDh.inclusion.input.keysRequested.S2Access = securityS2.data.requestedKeys.S2Access.value;
+            $scope.controlDh.inclusion.grantKeys.show = true;
+            var countDownGrantKeys = function () {
+                $scope.controlDh.inclusion.grantKeys.countDown--;
+                if ($scope.controlDh.inclusion.grantKeys.countDown === 0) {
+                    $interval.cancel($scope.controlDh.inclusion.grantKeys.interval);
+                    // cancel
+                    $scope.controlDh.inclusion.input.keysRequested.S0 = $scope.controlDh.inclusion.input.keysRequested.S2Unauthenticated = $scope.controlDh.inclusion.input.keysRequested.S2Authenticated = $scope.controlDh.inclusion.input.keysRequested.S2Access = false;
+                    $scope.handleInclusionS2GrantKeys($scope.controlDh.inclusion.input.keysRequested);
+                }
+            };
+            $scope.controlDh.inclusion.grantKeys.interval = $interval(countDownGrantKeys, 1000);
+            return;
+        }
+
+        if (securityS2 && securityS2.data.publicKey.value.length && !$scope.controlDh.inclusion.verifyDSK.done) {
+            $scope.controlDh.inclusion.input.publicKey = securityS2.data.publicKey.value;
+            $scope.controlDh.inclusion.input.publicKeyAuthenticationRequired = securityS2.data.publicKeyAuthenticationRequired.value;
+            $scope.controlDh.inclusion.input.dskPin = $scope.dskBlock($scope.controlDh.inclusion.input.publicKey, 1);
+            $scope.controlDh.inclusion.verifyDSK.show = true;
+            var countDownVerifyDSK = function () {
+                $scope.controlDh.inclusion.verifyDSK.countDown--;
+                if ($scope.controlDh.inclusion.verifyDSK.countDown === 0) {
+                    $interval.cancel($scope.controlDh.inclusion.verifyDSK.interval);
+                    $scope.handleInclusionVerifyDSK(false);
+                }
+            };
+            $scope.controlDh.inclusion.verifyDSK.interval = $interval(countDownVerifyDSK, 1000);
+            return;
+        }
+    }
 });
 
 /**
@@ -433,10 +560,10 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
     $scope.runIncludeToNetwork = function (cmd) {
         var timeout = 240000;
         $scope.toggleRowSpinner(cmd);
-        if(cmd === 'controller.SetLearnMode(1)'){
+        if (cmd === 'controller.SetLearnMode(1)') {
             $scope.controlDh.network.include = true;
             $scope.controlDh.network.inclusionProcess = 'processing';
-        }else{
+        } else {
             $scope.controlDh.network.include = false;
             $scope.controlDh.network.inclusionProcess = false;
         }
