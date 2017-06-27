@@ -83,6 +83,95 @@
                 <i class="fa fa-stop-circle"></i> {{_t('nm_exclude_stop')}}
             </button>
         </div>
+       <!-- <pre>{{controlDh.inclusion|json}}</pre>-->
+        <!--<a href="" ng-click="controlDh.inclusion.cc.Basic.show = true;controlDh.inclusion.cc.Basic.done = true;countDownTest()">Show POPUP Basic</a> |
+        <a href="" ng-click="controlDh.inclusion.cc.SwitchMultilevel.show = true;controlDh.inclusion.cc.SwitchMultilevel.done = true">Show POPUP SwitchMultilevel</a>-->
     </div>
 </div>
+
+<!-- inclusionS2GrantKeysModal -->
+<div id="inclusionS2GrantKeys" class="appmodal" ng-if="controlDh.inclusion.grantKeys.show && cfg.app_type != 'installer'">
+    <!-- <div class="appmodal-in">-->
+    <form class="appmodal-in" name="form_inclusionS2GrantKeys" id="form_inclusionS2GrantKeys" ng-submit="">
+    <div class="appmodal-header">
+                <!--<span class="appmodal-close" ng-click="closeInclusionModal()"><i
+                        class="fa fa-times"></i></span>-->
+        <h3>{{_t('Grant Security Keys')}}</h3>
+    </div>
+    <div class="appmodal-body">
+        <p>Select keys to grant to the newly included device:</p>
+        <div class="alert alert-warning">{{controlDh.inclusion.grantKeys.countDown}}s remain</div>
+        <!--<pre>{{controlDh.inclusion.input|json}}</pre>-->
+        <div>
+            <input type="checkbox" name="grantS0" value="false" id="grantS0" ng-model="controlDh.inclusion.input.keysGranted.S0" ng-disabled="!controlDh.inclusion.input.keysRequested.S0" />
+            <label ng-class="{diabled_label: !controlDh.inclusion.input.keysRequested.S0}">S0</label>
+        </div>
+        <div>
+            <input type="checkbox" name="grantS2Unauthenticated" value="false" id="grantS2Unauthenticated" ng-model="controlDh.inclusion.input.keysGranted.S2Unauthenticated" ng-disabled="!controlDh.inclusion.input.keysRequested.S2Unauthenticated" />
+            <label ng-class="{diabled_label: !controlDh.inclusion.input.keysRequested.S2Unauthenticated}">S2 Unauthenticated</label>
+        </div>
+        <div>
+            <input type="checkbox" name="grantS2Authenticated" value="false" id="grantS2Authenticated" ng-model="controlDh.inclusion.input.keysGranted.S2Authenticated" ng-disabled="!controlDh.inclusion.input.keysRequested.S2Authenticated" />
+            <label ng-class="{diabled_label: !controlDh.inclusion.input.keysRequested.S2Authenticated}">S2 Authenticated</label>
+        </div>
+        <div>
+            <input type="checkbox" name="grantS2Access" value="false" id="grantS2Access" ng-model="controlDh.inclusion.input.keysGranted.S2Access" ng-disabled="!controlDh.inclusion.input.keysRequested.S2Access" />
+            <label ng-class="{diabled_label: !controlDh.inclusion.input.keysRequested.S2Access}">S2 Access</label>
+        </div>
+    </div>
+    <div class="appmodal-footer">
+        <!-- Ok -->
+        <button type="button" class="btn btn-submit" ng-click="handleInclusionS2GrantKeys(controlDh.inclusion.input.keysGranted)">
+            <i class="fa fa-check"></i> <span class="btn-name">{{_t('ok')}}</span>
+        </button>
+    </div>
+    </form>
+    <!--</div>-->
+</div><!-- /#inclusionS2GrantKeysModal -->
+<!-- inclusionVerifyDSKModal -->
+<div id="inclusionVerifyDSKModal" class="appmodal" ng-if="controlDh.inclusion.verifyDSK.show && cfg.app_type != 'installer'">
+    <div class="appmodal-in">
+        <form name="dskForm">
+        <div class="appmodal-header">
+               <!-- <span class="appmodal-close" ng-click="closeInclusionModal()"><i
+                        class="fa fa-times"></i></span>-->
+            <h3>{{_t('Verify device PIN')}}</h3>
+        </div>
+        <div class="appmodal-body form-group form-inline">
+            <p>Verify PIN code of the newly included device.</p>
+            <div class="alert alert-warning">{{controlDh.inclusion.verifyDSK.countDown}}s remain</div>
+            <!-- name -->
+            <label>PIN: </label>
+            <input name="dsk_pin" id="dsk_pin" type="number" size="5" class="form-control input_number input-valid-{{dskForm.dsk_pin.$valid}}" min="0" max="65533" ng-show="controlDh.inclusion.input.publicKeyAuthenticationRequired"
+                   ng-model="controlDh.inclusion.input.dskPin" required />
+
+            <input name="dsk_1" id="dsk_1" type="number" size="5" class="form-control input_number" ng-value="dskBlock(controlDh.inclusion.input.publicKey, 1)" disabled="true" ng-show="!controlDh.inclusion.input.publicKeyAuthenticationRequired" />
+            -
+            <input name="dsk_2" id="dsk_2" type="number" size="5" class="form-control input_number" ng-value="dskBlock(controlDh.inclusion.input.publicKey, 2)" disabled="true" />
+            -
+            <input name="dsk_3" id="dsk_3" type="number" size="5" class="form-control input_number" ng-value="dskBlock(controlDh.inclusion.input.publicKey, 3)" disabled="true" />
+            -
+            <input name="dsk_4" id="dsk_4" type="number" size="5" class="form-control input_number" ng-value="dskBlock(controlDh.inclusion.input.publicKey, 4)" disabled="true" />
+            -
+            <input name="dsk_5" id="dsk_5" type="number" size="5" class="form-control input_number" ng-value="dskBlock(controlDh.inclusion.input.publicKey, 5)" disabled="true" />
+            -
+            <input name="dsk_6" id="dsk_6" type="number" size="5" class="form-control input_number" ng-value="dskBlock(controlDh.inclusion.input.publicKey, 6)" disabled="true" />
+            -
+            <input name="dsk_7" id="dsk_7" type="number" size="5" class="form-control input_number" ng-value="dskBlock(controlDh.inclusion.input.publicKey, 7)" disabled="true" />
+            -
+            <input name="dsk_8" id="dsk_8" type="number" size="5" class="form-control input_number" ng-value="dskBlock(controlDh.inclusion.input.publicKey, 8)" disabled="true" />
+        </div>
+        <div class="appmodal-footer">
+            <!-- Cancel -->
+            <button type="button" class="btn btn-default" ng-click="handleInclusionVerifyDSK(false)">
+                <i class="fa fa-times text-danger"></i> <span class="btn-name">{{_t('btn_cancel')}}</span>
+            </button>
+            <!-- Confirm -->
+            <button type="button" class="btn btn-submit" ng-click="handleInclusionVerifyDSK(true)">
+                <i class="fa fa-check"></i> <span class="btn-name">{{_t('confirm')}}</span>
+            </button>
+        </div>
+            </form>
+    </div>
+</div><!-- /#inclusionVerifyDSKModal -->
 

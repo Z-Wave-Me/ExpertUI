@@ -14794,16 +14794,21 @@ fieldset, .fieldset {
 }
 
 /* line 105, ../sass/common/_form.scss */
+.input-valid-false {
+  border: solid 1px red;
+}
+
+/* line 110, ../sass/common/_form.scss */
 .form-control-sm {
   width: 30% !important;
 }
 
-/* line 109, ../sass/common/_form.scss */
+/* line 114, ../sass/common/_form.scss */
 .form-control-md {
   width: 50% !important;
 }
 
-/* line 113, ../sass/common/_form.scss */
+/* line 118, ../sass/common/_form.scss */
 .submit-entry {
   text-align: right;
   display: block;
@@ -14811,23 +14816,23 @@ fieldset, .fieldset {
   border-top: solid 1px #9fd8ef;
 }
 
-/* line 121, ../sass/common/_form.scss */
+/* line 126, ../sass/common/_form.scss */
 fieldset.submit-entry {
   margin: 0 !important;
 }
 
-/* line 124, ../sass/common/_form.scss */
+/* line 129, ../sass/common/_form.scss */
 .form-control-hidden {
   display: none !important;
 }
 
-/* line 127, ../sass/common/_form.scss */
+/* line 132, ../sass/common/_form.scss */
 .form-control-img {
   cursor: pointer;
   border: solid 4px transparent;
 }
 
-/* line 132, ../sass/common/_form.scss */
+/* line 137, ../sass/common/_form.scss */
 .control-active {
   border: solid 4px black !important;
 }
@@ -16024,6 +16029,27 @@ http://codepen.io/MattIn4D/pen/LiKFC
   margin: 8px 8px 0 0;
 }
 
+/* Inclusion S2
+-------------------------------------------------- */
+/* line 13, ../sass/modules/_control.scss */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* line 18, ../sass/modules/_control.scss */
+input[type="number"].input_number {
+  -moz-appearance: textfield;
+  width: 5em;
+}
+
+/* line 23, ../sass/modules/_control.scss */
+.diabled_label {
+  color: darkgrey;
+}
+
+/* TODO !!! check dsk_1 field to make red border on min-max invalidation */
 /* Zniffer
 -------------------------------------------------- */
 /* line 3, ../sass/modules/_installer.scss */
