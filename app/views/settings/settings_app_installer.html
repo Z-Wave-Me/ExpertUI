@@ -72,7 +72,7 @@
                     <button type="button" class="btn" id="btn_promi_on"
                             ng-click="setNTPMode('enable')"
                             ng-disabled="settings.ntp.active"
-                            ng-class="!settings.ntp.active? 'btn-default' : 'btn-primary'">
+                            ng-class="!settings.ntp.active? 'btn-primary' : 'btn-default'">
                         <bb-row-spinner
                                 spinner="rowSpinner['enable']"
                                 label="_t('on')">
@@ -82,7 +82,7 @@
                     <button type="button" class="btn btn-default" id="btn_promi_off"
                             ng-click="setNTPMode('disable')"
                             ng-disabled="!settings.ntp.active"
-                            ng-class="settings.ntp.active? 'btn-default' : 'btn-primary'">
+                            ng-class="settings.ntp.active? 'btn-primary' : 'btn-default'">
                         <bb-row-spinner
                                 spinner="rowSpinner['disable']"
                                 label="_t('off')">
@@ -94,20 +94,21 @@
             <!-- timezone -->
             <div class="form-group form-inline">
                 <label>{{_t('timezone')}}: </label>
-                <select name="time_zone" name="time_zone" class="form-control"
+                <select name="time_zone" class="form-control"
                         ng-model="settings.input.time_zone"
-                        ng-disabled="!settings.show_tz || settings.ntp_switch === 'disable'">
+                        ng-disabled="!settings.show_tz || settings.ntp_switch === 'disable'"
+                        ng-change="settings.reboot_tz = (settings.input.time_zone !== settings.lastTZ)">
                     <!--<option value="automatic"
                             ng-if="!settings.show_tz"
                             ng-selected="!settings.show_tz">{{_t('auto_tz')}}</option>-->
                     <option ng-repeat="v in cfg.time_zone_list" value="{{v}}"
-                            ng-selected="v === settings.lastTZ.replace('_',' ') && settings.show_tz">{{v}}</option>
+                            ng-selected="v === settings.lastTZ.replace('_',' ')">{{v}}</option>
                 </select>
-                <bb-help-text trans="_t('tz_set_info',{__ctz__: settings.lastTZ.replace('_',' ')})"></bb-help-text>
+                <bb-help-text trans="_t('tz_set_info',{__ctz__: settings.lastTZ})"></bb-help-text>
             </div>
             <!-- date time picker -->
-            <div class="form-group form-inline">
-                <!-- current server time -->
+            <!--<div class="form-group form-inline">
+                &lt;!&ndash; current server time &ndash;&gt;
                 <div>
                     <label>{{_t('server_time')}}</label>
                     <span class="timestamp" ng-bind="cfg.route.time.string"/>
@@ -128,17 +129,16 @@
                     <i class="fa fa-check"></i>
                 </button>
                 <bb-help-text trans="_t('ntp_set_time_info')"></bb-help-text>
-            </div>
+            </div>-->
             <!-- synchronize ntp -->
             <!--<pre>{{settings.ntp|json}}</pre>-->
             <div class="form-group form-inline">
                 <label>{{_t('ntp_synchronize')}}</label>
-                <button class="btn"
+                <button class="btn btn-primary"
                         type="button"
                         title="{{_t('btn_synchronize_ntp')}}"
                         ng-click="synchronizeNTP()"
-                        ng-class="settings.ntp.synchronized? 'btn-default' : 'btn-primary'"
-                        ng-disabled="(settings.ntp.synchronized && settings.ntp.active) || !settings.ntp.active">
+                        ng-disabled="!settings.ntp.active">
                     <i class="fa fa-repeat"></i> <span class="btn-name">{{_t('btn_synchronize_ntp')}}</span>
                 </button>
                 <bb-help-text trans="_t('ntp_synchronize_info')"></bb-help-text>
@@ -154,7 +154,7 @@
                        ng-model="settings.input.forward_login">
                 <bb-help-text trans="_t('forward_login_info')"></bb-help-text>
             </div>-->
-            <div class="alert alert-warning" ng-if="settings.reboot">{{_t('settings_box_reboot')}}</div>
+            <div class="alert alert-warning" ng-if="settings.reboot || settings.reboot_tz">{{_t('settings_box_reboot')}}</div>
         </fieldset>
         <fieldset class="submit-entry">
             <!-- Save -->

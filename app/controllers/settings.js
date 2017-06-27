@@ -68,6 +68,7 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
         },
         show_tz: false,
         reboot: false,
+        reboot_tz: false,
         ntp_switch: '',
         wifi_pwd_changed: false,
         show_update_successful: false,
@@ -90,7 +91,7 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
         $scope.settings.input = cfg.zwavecfg;
         $scope.settings.input.cit_identifier = cfg.system_info.cit_identifier;
         $scope.settings.lastCITIdentifier = cfg.system_info.cit_identifier;
-        $scope.settings.lastTZ = cfg.zwavecfg.time_zone;
+        $scope.settings.lastTZ = cfg.zwavecfg.time_zone.replace(/_/g, ' ');
 
         // add logged in user login input by default
         $scope.settings.input.user = $scope.user && $scope.user.login? $scope.user.login : '';
@@ -205,9 +206,9 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
             alertify.alertError($scope._t('err_update_config_data'));
         });
 
-        if (input.time_zone !== 'automatic' && input.time_zone !== $scope.settings.lastTZ) {
+        if (input.time_zone !== $scope.settings.lastTZ.replace(/ /g,'_')) {
             var data = {
-                "time_zone": input.time_zone
+                "time_zone": input.time_zone.replace(/ /g, '_')
             };
 
             dataService.postApi('time_zone', data, null).then(function (response) {
@@ -225,6 +226,8 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
                 $scope.settings.show_update_successful = false;
                 alertify.alertError($scope._t('err_set_timezone'));
             });
+
+            $scope.settings.reboot_tz = false;
         }
 
         if ($scope.settings.reboot) {
