@@ -20,6 +20,7 @@
                     <sort-by callback="orderBy(field)" obj="orderByArr" field="'security'"
                              label="_t('th_security')"></sort-by>
                 </th>
+
                 <!-- nwi -->
                 <th>
                     <sort-by callback="orderBy(field)" obj="orderByArr" field="'mwief'"
@@ -55,6 +56,10 @@
                     <sort-by callback="orderBy(field)" obj="orderByArr" field="'type'"
                              label="_t('device_description_device_type')"></sort-by>
                 </th>
+                <!-- Granted keys -->
+                <th>
+                   {{_t('granted_keys')}}
+                </th>
             </tr>
             </thead>
             <tbody>
@@ -66,7 +71,9 @@
                     <a href="#configuration/interview/{{v.id}}" ng-bind="v.name"></a>
                 </td>
                 <!-- id -->
-                <td data-title="{{ _t('th_security')}}"><i class="{{ v.security | securityIcon }}"></i>&nbsp;</td>
+                <td data-title="{{ _t('th_security')}}">
+                    <i class="{{ v.security | securityIcon }}"></i>&nbsp;
+                </td>
                 <!-- nwi -->
                 <td data-title="{{ _t('th_mwief')}}"><i class="{{v.mwief| mwiefIcon}}"></i>&nbsp;</td>
                 <!-- zwaveplus -->
@@ -86,6 +93,9 @@
                 <td data-title="{{ _t('th_appversion')}}"><span ng-bind="v.appVersion"></span>&nbsp;</td>
                 <!-- type -->
                 <td data-title="{{ _t('device_description_device_type')}}"><span ng-bind="v.deviceType"></span>&nbsp;
+                    <!-- securityS2Key -->
+                <td data-title="{{ _t('granted_keys')}}"><span ng-bind="v.securityS2Key"></span>&nbsp;
+
                 </td>
             </tr>
             </tbody>

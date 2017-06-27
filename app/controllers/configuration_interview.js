@@ -266,7 +266,6 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
      * Device description
      */
     function setCont(node, nodeId, zddXml, ZWaveAPIData, refresh) {
-
         // Set device data
         var deviceImage = 'app/images/no_device_image.png';
         var deviceDescription = '';
@@ -279,7 +278,10 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         var deviceDescriptionAppVersion = parseInt(node.data.applicationMajor.value, 10);
         var deviceDescriptionAppSubVersion = parseInt(node.data.applicationMinor.value, 10);
         var isListening = node.data.isListening.value;
-        //var hasWakeup = 0x84 in node.instances[0].commandClasses;
+        // Security S2
+        var hasSecurityS2Cc = deviceService.hasCommandClass(node,159);
+        var securityS2Key = deviceService.getS2GrantedKeys(hasSecurityS2Cc);
+
         var hasWakeup = !isListening && !node.data.sensor250.value && !node.data.sensor1000.value;
         if (isNaN(deviceDescriptionAppVersion))
             deviceDescriptionAppVersion = '-';
@@ -368,7 +370,9 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         if (typeof securityInterview === 'boolean') {
             obj["s"] = {"key": "device_security_interview", "val": '<i class="' + $filter('checkedIcon')(securityInterview === true ? false : true) + '"></i>'};
         }
+        obj["u"] = {"key": "granted_keys", "val": securityS2Key.join()};
         return obj;
+
     }
 
     /**

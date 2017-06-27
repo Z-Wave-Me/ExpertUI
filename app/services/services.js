@@ -269,6 +269,28 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
     };
 
     /**
+     * Get S2 granted keys
+     * @param {Object} hasSecurityS2Cc
+     * @returns {Array}
+     */
+    this.getS2GrantedKeys = function(hasSecurityS2Cc) {
+        var securityS2Key = [];
+        if($filter('hasNode')(hasSecurityS2Cc,'data.interviewDone.value')){
+            securityS2Key.push('S0');
+            if($filter('hasNode')(hasSecurityS2Cc,'data.grantedKeys.S2Unauthenticated.value')){
+                securityS2Key.push('S2 Unauthenticated');
+            }
+            if($filter('hasNode')(hasSecurityS2Cc,'data.grantedKeys.S2Authenticated.value')){
+                securityS2Key.push('S2 Authenticated');
+            }
+            if($filter('hasNode')(hasSecurityS2Cc,'data.grantedKeys.S2Access.value')){
+                securityS2Key.push('S2 Access');
+            }
+        }
+        return securityS2Key;
+    };
+
+    /**
      * Get a value from custom config
      * @param {string} key
      * @returns {string}
