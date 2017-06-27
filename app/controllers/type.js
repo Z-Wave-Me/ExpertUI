@@ -156,41 +156,33 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
                 sdk = major + '.' + tranformTwoDigits(minor);
                 fromSdk = false;
             }
-            /*if (!$scope.isController && node.data.SDK.value == '') {
-                console.log('dfdfdfdf')
-                sdk = major + '.' + minor;
-                fromSdk = false;
-            } else {
-                sdk = $scope.isController ? ZWaveAPIData.controller.data.SDK.value : node.data.SDK.value;
-            }*/
             // Version
             var appVersion = node.data.applicationMajor.value + '.' + tranformTwoDigits(node.data.applicationMinor.value);
-            // Security and ZWavePlusInfo
+            // Security
             var security = false;
-            angular.forEach(ccIds, function(v) {
-                var cmd = node.instances[instanceId].commandClasses[v];
-                if (angular.isObject(cmd) && cmd.name === 'Security') {
-                    security = cmd.data.interviewDone.value;
 
-                }
-            });
+            var hasSecurityCc = deviceService.hasCommandClass(node,152);
+            if(hasSecurityCc){
+                security = $filter('hasNode')(hasSecurityCc,'data.interviewDone.value');
+            }
+            // Security S2
+            var hasSecurityS2Cc = deviceService.hasCommandClass(node,159);
+            var securityS2Key = deviceService.getS2GrantedKeys(hasSecurityS2Cc);
 
 
+            // todo: deprecated
             // DDR
-            var ddr = false;
+            /*var ddr = false;
             if (angular.isDefined(node.data.ZDDXMLFile)) {
                 ddr = node.data.ZDDXMLFile.value;
-            }
+            }*/
 
             // Zwave plus
+            var hasZWavePlusInfoCc = deviceService.hasCommandClass(node,94);
             var ZWavePlusInfo = false;
-            angular.forEach(ccIds, function(v) {
-                var cmd = node.instances[instanceId].commandClasses[v];
-                if (angular.isObject(cmd) && cmd.name === 'ZWavePlusInfo') {
-                    ZWavePlusInfo = true;
-
-                }
-            });
+            if(deviceService.hasCommandClass(node,94)){
+                ZWavePlusInfo = true;
+            }
             // MWI and EF
             var mwief = getEXFrame(major, minor);
             if(ZWavePlusInfo){
@@ -218,8 +210,9 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
             obj['rowId'] = 'row_' + nodeId;
             obj['name'] = $filter('deviceName')(nodeId, node);
             obj['security'] = security;
+            obj['securityS2Key'] = securityS2Key.join();
             obj['mwief'] = mwief;
-            obj['ddr'] = ddr;
+           // obj['ddr'] = ddr;
             obj['ZWavePlusInfo'] = ZWavePlusInfo;
             obj['sdk'] = (sdk == '0.00' || sdk == '0.0' ? '?' : sdk);
             obj['fromSdk'] = fromSdk;
@@ -230,8 +223,6 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
             obj['genericType'] = genericType;
             obj['specificType'] = specificType;
             obj['vendorName'] = vendorName;
-            //obj['productName'] = productName;
-            //console.log(obj)
 
             var findIndex = _.findIndex($scope.devices.all, {rowId: obj.rowId});
             if(findIndex > -1){

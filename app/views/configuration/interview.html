@@ -5,12 +5,13 @@
         <div class="col-md-3 menu-vertical">
             <div ng-include="'app/views/configuration/menu.html'"></div>
         </div>
+       <!-- <pre>{{descriptionCont|json}}</pre>-->
         <div class="col-md-9 col-content">
             <bb-alert alert="alert"></bb-alert>
             <div ng-show="deviceId">
                 <div class="cfg-block">
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-12">
                             <div class="table-responsive_">
                                 <table class="table table-striped table-condensed table-cfg-interview">
                                     <tbody>
@@ -102,9 +103,9 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <!--<div class="col-md-4">
                             <img src="{{deviceImage}}" class="config-device-img" alt="Image"/>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
 
