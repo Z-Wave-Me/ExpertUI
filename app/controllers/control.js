@@ -850,18 +850,24 @@ appController.controller('ControllerChangeController', function ($scope) {
  * @class RequestNifAllController
  *
  */
-appController.controller('RequestNifAllController', function ($scope, $timeout, cfg, dataService, deviceService) {
+appController.controller('RequestNifAllController', function ($scope, $timeout, $window, cfg, dataService, deviceService) {
     /**
      * Request NIF from all devices
      */
-    $scope.requestNifAll = function (spin) {
+    $scope.requestNifAll = function (spin, $event) {
         $scope.toggleRowSpinner(spin);
         $scope.controlDh.process = true;
         dataService.runZwaveCmd(cfg.call_all_nif).then(function (response) {
             deviceService.showNotifier({message: $scope._t('nif_request_complete')});
             $scope.toggleRowSpinner();
             $scope.controlDh.process = false;
-            //$window.location.reload();
+
+            $scope.controlDh.network.inclusionProcess = false;
+            $scope.controlDh.network.modal = false;
+            $scope.handleModal();
+            $timeout( function(){
+                $window.location.reload();
+            }, 3000 );
         }, function (error) {
             $scope.toggleRowSpinner();
             deviceService.showNotifier({message: $scope._t('error_nif_request'), type: 'error'});

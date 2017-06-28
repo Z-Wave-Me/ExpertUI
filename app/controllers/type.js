@@ -142,8 +142,8 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
             var specificType = node.data.specificType.value;
             var major = node.data.ZWProtocolMajor.value;
             var minor = node.data.ZWProtocolMinor.value;
-            var vendorName = node.data.vendorString.value;
             var isController = (controllerNodeId == nodeId);
+            var vendorName = isController? ZWaveAPIData.controller.data.vendor.value : node.data.vendorString.value;
             var zddXmlFile = $filter('hasNode')(node, 'data.ZDDXMLFile.value');
             //var productName = null;
             var fromSdk = true;

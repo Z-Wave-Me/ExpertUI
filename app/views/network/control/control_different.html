@@ -68,14 +68,14 @@
                 <div class="cfg-block">
                     <!-- restore -->
                     <button class="btn btn-primary"
-                            ng-click="handleModal('restoreModal', $event);handleModal('successNetworkIncludeModal', $event)" ng-disabled="controlDh.process">
+                            ng-click="handleModal('restoreModal', $event)" ng-disabled="controlDh.process">
                         <i class="fa fa-repeat"></i> {{_t('make_restore')}}
                     </button>
                 </div>
                 <div class="cfg-block" ng-controller="RequestNifAllController">
                     <button class="btn btn-primary"
                             id="btn_request_nif"
-                            ng-click="requestNifAll('requestNifAll');handleModal('successNetworkIncludeModal', $event)"
+                            ng-click="requestNifAll('requestNifAll');"
                             ng-disabled="rowSpinner['requestNifAll']">
 
                         <bb-row-spinner
