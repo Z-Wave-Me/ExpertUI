@@ -226,11 +226,9 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
                 $scope.settings.show_update_successful = false;
                 alertify.alertError($scope._t('err_set_timezone'));
             });
-
-            $scope.settings.reboot_tz = false;
         }
 
-        if ($scope.settings.reboot) {
+        if ($scope.settings.reboot && !$scope.settings.reboot_tz) {
             dataService.getApi('box_reboot').then(function (response) {
                 $scope.settings.show_update_successful = true;
                 $scope.loading = false;
