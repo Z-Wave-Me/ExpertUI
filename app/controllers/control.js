@@ -728,7 +728,7 @@ appController.controller('ZwaveChipRebootResetController', function ($scope, cfg
  * @class ChangeFrequencyController
  *
  */
-appController.controller('ChangeFrequencyController', function ($scope) {
+appController.controller('ChangeFrequencyController', function ($scope, $timeout) {
     /**
      * Send Configuration ZMEFreqChange
      * @param {string} cmd
@@ -758,6 +758,11 @@ appController.controller('ChangeFrequencyController', function ($scope) {
 
     $scope.zmeFreqChange = function (cmd) {
         $scope.runZwaveCmd(cmd);
+        $timeout(function () {
+            $scope.frequency.currentFreq = $scope.controlDh.controller.frequency;
+        }, 1000);
+
+
     };
 });
 
