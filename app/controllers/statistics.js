@@ -19,6 +19,8 @@ appController.controller('NetworkStatisticsController', function ($scope, $filte
      * Load network statistics
      */
     $scope.loadNetworkStatistics = function () {
+        var timeout = 1000;
+        $scope.toggleRowSpinner('loadNetStatistics');
 
         dataService.getApi('get_network_statistics', null, true).then(function (response) {
             var percentFormat = function (num) {
@@ -89,8 +91,11 @@ appController.controller('NetworkStatisticsController', function ($scope, $filte
             objForeignNetworkImpact['dateTime'] = $filter('getDateTimeObj')(response.data.RFRxForeignHomeID.updateTime);
             $scope.netStat.foreignNetwork = objForeignNetworkImpact;
 
+            $timeout($scope.toggleRowSpinner, timeout);
+
         }, function (error) {
-            alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
+            alertify.alertError($scope._t('error_load_data'));
+            $scope.toggleRowSpinner();
         });
     };
     $scope.loadNetworkStatistics();
