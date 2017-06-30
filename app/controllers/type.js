@@ -159,7 +159,7 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
             // Security
             var security = false;
             var hasSecurityCc = deviceService.hasCommandClass(node,152);
-            if(!hasSecurityCc){
+            if(hasSecurityCc){
                 security = $filter('hasNode')(hasSecurityCc,'data.interviewDone.value');
             }
             // Security S2
@@ -241,6 +241,7 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
             if($scope.devices.ids.indexOf(nodeId) === -1){
                 $scope.devices.ids.push(nodeId);
             }
+
         });
     }
 
