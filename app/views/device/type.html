@@ -71,8 +71,8 @@
                     <a href="#configuration/interview/{{v.id}}" ng-bind="v.name"></a>
                 </td>
                 <!-- id -->
-                <td data-title="{{ _t('th_security')}}">
-                    <i class="{{ v.security | securityIcon }}"></i>&nbsp;
+                <td data-title="{{ _t('th_security')}}" title="{{v.hasSecurityS2Cc ? 'S2 Secure' : ''}}">
+                    <i class="{{ v.security | securityIcon }}"></i> <span class="text-success" ng-show="v.hasSecurityS2Cc">S2</span>&nbsp;
                 </td>
                 <!-- nwi -->
                 <td data-title="{{ _t('th_mwief')}}"><i class="{{v.mwief| mwiefIcon}}"></i>&nbsp;</td>

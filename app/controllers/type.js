@@ -135,8 +135,6 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
             }
 
             var node = ZWaveAPIData.devices[nodeId];
-            var instanceId = 0;
-            var ccIds = [32, 34, 37, 38, 43, 70, 91, 94, 96, 114, 119, 129, 134, 138, 143, 152];
             var basicType = node.data.basicType.value;
             var genericType = node.data.genericType.value;
             var specificType = node.data.specificType.value;
@@ -160,15 +158,16 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
             var appVersion = node.data.applicationMajor.value + '.' + tranformTwoDigits(node.data.applicationMinor.value);
             // Security
             var security = false;
-
             var hasSecurityCc = deviceService.hasCommandClass(node,152);
-            if(hasSecurityCc){
+            if(!hasSecurityCc){
                 security = $filter('hasNode')(hasSecurityCc,'data.interviewDone.value');
             }
             // Security S2
             var hasSecurityS2Cc = deviceService.hasCommandClass(node,159);
+            if(hasSecurityS2Cc){
+                security = true;
+            }
             var securityS2Key = deviceService.getS2GrantedKeys(hasSecurityS2Cc);
-
 
             // todo: deprecated
             // DDR
@@ -209,6 +208,7 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
             obj['idSort'] = $filter('zeroFill')(nodeId);
             obj['rowId'] = 'row_' + nodeId;
             obj['name'] = $filter('deviceName')(nodeId, node);
+            obj['hasSecurityS2Cc'] = hasSecurityS2Cc;
             obj['security'] = security;
             obj['securityS2Key'] = securityS2Key.join();
             obj['mwief'] = mwief;
