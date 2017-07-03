@@ -43,7 +43,8 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 interval: false,
                 show: false,
                 done: false,
-                countDown: 20
+                countDown: 20,
+               anyChecked: false
             },
             verifyDSK: {
                 interval: false,
@@ -127,7 +128,15 @@ appController.controller('ControlController', function ($scope, $interval, $time
      * Handle inclusionS2GrantKeys
      */
     $scope.handleInclusionS2GrantKeys = function (keysGranted) {
-        $scope.controlDh.inclusion.grantKeys.show = false;
+        // Is any checkbox checked?
+        angular.forEach(keysGranted,function(v){
+            if(v == true){
+                $scope.controlDh.inclusion.grantKeys.anyChecked = true
+                return;
+            }
+        });
+
+       $scope.controlDh.inclusion.grantKeys.show = false;
         $scope.controlDh.inclusion.grantKeys.done = true;
         $interval.cancel($scope.controlDh.inclusion.grantKeys.interval);
         var nodeId = $scope.controlDh.inclusion.lastIncludedDeviceId.toString(10),
