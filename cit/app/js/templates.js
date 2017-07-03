@@ -1,4 +1,4 @@
-/* Copyright:  Z-Wave Europe, Created: 29-06-2017 14:41:01 */
+/* Copyright:  Z-Wave Europe, Created: 03-07-2017 10:17:38 */
 angular.module('myAppTemplates', []).run(['$templateCache', function($templateCache) {
   'use strict';
 
@@ -283,7 +283,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/home/use_cit.html',
-    "<div class=\"panel panel-default\" ng-controller=DataHolderController><div class=panel-heading><i class=\"fa fa-info-circle\"></i> {{_t('use_cit')}}</div><div class=panel-body><a class=\"btn btn-default\" href=\"/cit/storage/data/docs/Z-Wave Alliance Certified Installer Toolkit User Guide (v1.1).pdf\" target=_blank><i class=\"fa fa-book\"></i> {{_t('user_guide')}}</a></div></div>"
+    "<div class=\"panel panel-default\" ng-controller=DataHolderController><div class=panel-heading><i class=\"fa fa-info-circle\"></i> {{_t('use_cit')}}</div><div class=panel-body><a class=\"btn btn-default\" href=/cit/storage/data/docs/user_guide.pdf target=_blank><i class=\"fa fa-book\"></i> {{_t('user_guide')}}</a></div></div>"
   );
 
 
