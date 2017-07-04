@@ -73,7 +73,7 @@
                 <!-- id -->
                 <td data-title="{{ _t('th_security')}}" title="{{v.hasSecurityS2Cc ? 'S2 Secure' : ''}}">
                     <i ng-hide="v.hasSecurityS2Cc" class="{{ v.security | securityIcon }}"></i>
-                    <span class="fa-stack fa-lg" ng-show_="v.hasSecurityS2Cc">
+                    <span class="fa-stack fa-lg" ng-show="v.hasSecurityS2Cc">
                         <i class="fa fa-lock fa-stack-1x" style="color: darkgray;"></i>
                         <i class="fa fa-lock fa-stack-1x text-success" style="left:4px; top:4px;"></i>
                     </span>
