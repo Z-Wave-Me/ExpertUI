@@ -328,3 +328,26 @@ a, .order-by {
         display: none;
     }
 }
+
+/* Security 2 icons
+-------------------------------------------------- */
+.security-2{
+    &.fa-stack{
+        width: 1em;
+    }
+    .fa-stack-1x,.fa-stack-1x{
+        text-align: left;
+    }
+    .icon-bottom{
+        color: darkgray;
+    }
+    .icon-top{
+        color: green;
+        left:4px; top:4px;
+    }
+    &.false{
+        .icon-top{
+            color: #a94442;
+        }
+    }
+}

@@ -13647,6 +13647,31 @@ a:focus, .order-by:focus {
   display: none;
 }
 
+/* Security 2 icons
+-------------------------------------------------- */
+/* line 335, ../sass/common/_body.scss */
+.security-2.fa-stack {
+  width: 1em;
+}
+/* line 338, ../sass/common/_body.scss */
+.security-2 .fa-stack-1x, .security-2 .fa-stack-1x {
+  text-align: left;
+}
+/* line 341, ../sass/common/_body.scss */
+.security-2 .icon-bottom {
+  color: darkgray;
+}
+/* line 344, ../sass/common/_body.scss */
+.security-2 .icon-top {
+  color: green;
+  left: 4px;
+  top: 4px;
+}
+/* line 349, ../sass/common/_body.scss */
+.security-2.false .icon-top {
+  color: #a94442;
+}
+
 /* Header
 -------------------------------------------------- */
 /* line 3, ../sass/common/_header.scss */

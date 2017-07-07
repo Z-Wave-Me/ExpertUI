@@ -16,6 +16,11 @@
                              label="_t('device_name')"></sort-by>
                 </th>
                 <!-- security -->
+                <!--<th>
+                    <sort-by callback="orderBy(field)" obj="orderByArr" field="'security'"
+                             label="_t('th_security')"></sort-by>
+                </th>-->
+                <!-- security -->
                 <th>
                     <sort-by callback="orderBy(field)" obj="orderByArr" field="'security'"
                              label="_t('th_security')"></sort-by>
@@ -70,9 +75,22 @@
                 <td data-title="{{ _t('device_name')}}">
                     <a href="#configuration/interview/{{v.id}}" ng-bind="v.name"></a>
                 </td>
-                <!-- id -->
-                <td data-title="{{ _t('th_security')}}">
-                    <i class="{{ v.security | securityIcon }}"></i>&nbsp;
+                <!-- security -->
+               <!-- <td data-title="{{ _t('th_security')}}" title="{{v.hasSecurityS2Cc ? 'S2 Secure' : ''}}">
+                    <i ng-hide="v.hasSecurityS2Cc" class="{{ v.security | securityIcon }}"></i>
+                    <span class="fa-stack fa-lg" ng-show="v.hasSecurityS2Cc">
+                        <i class="fa fa-lock fa-stack-1x" style="color: darkgray;"></i>
+                        <i class="fa fa-lock fa-stack-1x text-success" style="left:4px; top:4px;"></i>
+                    </span>&nbsp;
+                </td>-->
+                <!-- security new -->
+                <td data-title="{{ _t('th_security')}}" title="{{v.hasSecurityS2Cc ? 'S2 Secure' : ''}}">
+                    <i  class="fa fa-unlock-alt fa-lg orange" ng-show="v.securityType == 'security-0'"></i>
+                    <i  class="fa fa-lock fa-lg green" ng-show="v.securityType == 'security-1'"></i>
+                    <span class="security-2 {{v.securityInterview}} fa-stack fa-lg" ng-show="v.securityType == 'security-2'">
+                        <i class="fa fa-lock fa-stack-1x icon-bottom"></i>
+                        <i class="fa fa-lock fa-stack-1x icon-top"></i>
+                    </span>&nbsp;
                 </td>
                 <!-- nwi -->
                 <td data-title="{{ _t('th_mwief')}}"><i class="{{v.mwief| mwiefIcon}}"></i>&nbsp;</td>

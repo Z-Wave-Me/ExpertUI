@@ -96,7 +96,7 @@
         <h3>{{_t('granted_keys')}}</h3>
     </div>
     <div class="appmodal-body">
-        <p>{{_t('select_keys_to_grant')}}:</p>
+        <p>{{_t('select_auth_for_device')}}:</p>
         <div class="alert alert-warning">{{controlDh.inclusion.grantKeys.countDown}}s {{_t('remain')}}</div>
         <!--<pre>{{controlDh.inclusion.input|json}}</pre>-->
         <div>
@@ -126,7 +126,7 @@
     <!--</div>-->
 </div><!-- /#inclusionS2GrantKeysModal -->
 <!-- inclusionVerifyDSKModal -->
-<div id="inclusionVerifyDSKModal" class="appmodal" ng-if="controlDh.inclusion.verifyDSK.show && cfg.app_type != 'installer'">
+<div id="inclusionVerifyDSKModal" class="appmodal" ng-if="controlDh.inclusion.grantKeys.anyChecked && controlDh.inclusion.verifyDSK.show && cfg.app_type != 'installer'">
     <div class="appmodal-in">
         <form name="dskForm">
         <div class="appmodal-header">
