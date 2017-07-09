@@ -148,14 +148,6 @@
             </th>
             <!-- application --> 
             <th>{{ _t('application')}}</th>
-            <!--<th>Packet</th>--> 
-            <th class="text-right">
-                <button class="btn btn-default" type="button"
-                        ng-show="!_.isEmpty(zniffer.filter.used)"
-                        ng-click="resetZnifferFilterAll()">
-                    <i class="fa fa-times text-danger"></i>  {{_t('reset_all_filters')}}
-                </button>
-            </th>
         </tr>
     </thead>
     <tbody>
@@ -170,7 +162,6 @@
             <td ng-class="zniffer.filter.model['dest'].value !== '' ? 'bcg-success' : ''">{{v.dest}}</td>
             <td ng-class="zniffer.filter.model['data'].value !== '' ? 'bcg-success' : ''">{{v.data}}</td>
             <td>{{v.application}}</td>
-            <td>{{v.bytes}}</td>
         </tr>
     </tbody>
 </table>
