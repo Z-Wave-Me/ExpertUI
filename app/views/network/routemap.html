@@ -116,18 +116,18 @@
             <!-- Allow node moving -->
             <button class="btn btn-default" id="AllowNodeMoving"
                     ng-if="!routeMap.moveNodes"
-                    ng-click="routeMap.moveNodes = !routeMap.moveNodes">
+                    ng-click="routeMap.startMove(); routeMap.moveNodes = true;">
                 <span><i class="fa fa-share-alt"></i> Allow node moving</span>
             </button>
             <span ng-if="routeMap.moveNodes">
                 <!-- Cancel -->
                 <button class="btn btn-warning" id="CancelNodeMoving"
-                        ng-click="routeMap.moveNodes = !routeMap.moveNodes">
+                        ng-click="routeMap.cancelMoveNodes(); routeMap.moveNodes = false;">
                 <i class="fa fa-remove"></i> Cancel
                     </button> &nbsp;
                 <!-- Save -->
                 <button class="btn btn-success" id="SaveNodePosition"
-                        ng-click="routeMap.moveNodes = !routeMap.moveNodes">
+                        ng-click="routeMap.finishMoveNodes(); routeMap.moveNodes = false;">
                 <i class="fa fa-check"></i> Save
             </button>
             </span>

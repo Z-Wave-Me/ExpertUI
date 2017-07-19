@@ -7,10 +7,33 @@
  * @author Martin Vach
  */
 appController.controller('RouteMapController', function ($scope, $interval, $filter, cfg, dataService, myCache, _) {
+    var zrp;
+
     $scope.routeMap = {
         showAnnotations: true,
-        moveNodes: false
+        moveNodes: false,
+        startMove: function() {
+            zrp.allowMoveNodes(true);
+        },
+        finishMoveNodes: function() {
+            zrp.allowMoveNodes(false);
+            console.log(zrp.getNodesPositions());
+        },
+        cancelMoveNodes: function() {
+            // TODO !!! refresh the page ?? or just revert nodes back?
+        }
     };
-    var zna = new ZWaveNetworkAnalyticsLib(zway, comHist, nodesPositions);
-    var zrp = new ZWaveRoutesPlotLib(zna);
+
+    dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
+        dataService.getApi('packet_log').then(function (response) {
+            var packets = response.data.data;
+            if (packets.length) {
+                zrp = new ZWaveRoutesPlotLib(new ZWaveNetworkAnalyticsLib(ZWaveAPIData, packets, undefined));
+            }
+        }, function (error) {
+            // TODO !!!
+        });
+    }, function(error) {
+        // TODO !!!
+    });
 });

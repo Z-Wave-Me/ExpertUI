@@ -43,6 +43,7 @@ var config_data = {
         'time': '/ZAutomation/api/v1/system/time/get',// Get time
         'time_zone': '/ZAutomation/api/v1/system/timezone', // Set time zone
         'network_statistics': '/ZWaveAPI/Run/', // Set time zone
+        'packet_log': '/ZWaveAPI/PacketLog', // Get Packet log
         'login': '/ZAutomation/api/v1/login',// Get time
         'runjs_url': '/JS/Run/', // Url for running JS
         'device_classes_url': '/translations/DeviceClasses.xml', // Url to Device Classes
