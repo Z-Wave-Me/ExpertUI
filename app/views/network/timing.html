@@ -25,6 +25,11 @@
                         </a>
                     </th>
                     <th>
+                        <a href="" ng-click="orderBy('updateTime')">{{ _t('datetime')}}
+                            <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        </a>
+                    </th>
+                    <th>
                          <a href="" ng-click="orderBy('totalPackets')">{{_t('th_total')}} (pkts) 
                             <span ng-show="predicate == 'totalPackets'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
                         </a>
@@ -56,7 +61,10 @@
                     <td data-title="{{_t('th_node')}}">{{ v.id}}</td>
                     <td data-title="{{ _t('device_name')}}"><!-- <switch-type-icon generic="{{ v.genericType}}" specific="{{ v.specificType}}"></switch-type-icon> -->{{ v.name }}</td>
                     <td data-title="{{_t('th_type')}}">
-                        <i class="fa" ng-class="v.icon"></i>
+                        <i class="fa" ng-class="v.icon" title="{{_t(v.type)}}"></i>
+                    </td>
+                    <td data-title="{{ _t('datetime')}}">
+                        <bb-date-time obj="v.dateTime" updated="v.isUpdated"></bb-date-time>
                     </td>
                    <td data-title="{{_t('th_total')}}">{{ v.totalPackets}} &nbsp;</td>
                     <td data-title="{{_t('th_ok')}}">{{ v.okPackets}}% &nbsp;</td>
@@ -66,11 +74,22 @@
             </tbody>
         </table>
     </div>
-    
-     <p><strong>{{_t('timing_color_description')}}:</strong><br /> 
-      <i class="fa fa-square fa-lg" style="color: green;"></i> {{_t('timing_green')}}<br /> 
-      <i class="fa fa-square fa-lg" style="color: black;"></i> {{_t('timing_black')}}<br />
-      <i class="fa fa-square fa-lg" style="color: red;"></i> {{_t('timing_red')}}.<br /> 
-    </p>
+
+    <!-- Legend -->
+    <div class="legend-entry">
+        <div class="legend-title">{{_t('timing_color_description')}}</div>
+            <!-- green -->
+        <div class="legend-row">
+        <i class="fa fa-square fa-lg green"></i> {{_t('timing_green')}}
+        </div>
+        <!-- black -->
+        <div class="legend-row">
+            <i class="fa fa-square fa-lg black"></i> {{_t('timing_black')}}
+        </div>
+        <!-- red -->
+        <div class="legend-row">
+            <i class="fa fa-square fa-lg red"></i> {{_t('timing_red')}}
+        </div>
+    </div>
         
 </div>

@@ -1,0 +1,14 @@
+<!-- Device reset locally -->
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <i class="fa fa-info-circle"></i> {{_t('device_reset_locally')}}
+    </div>
+    <div class="panel-body">
+        <ul class="list-report">
+            <li ng-repeat="v in localyResetDevices"> (#{{v.id}}) {{v.name}}</li>
+            <li ng-show="localyResetDevices.length < 1">
+                {{_t('no_device_reset_locally')}}
+            </li>
+        </ul>
+    </div>
+</div>

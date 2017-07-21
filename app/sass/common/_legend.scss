@@ -1,0 +1,23 @@
+/* Legend
+-------------------------------------------------- */
+.legend-entry {
+  font-size: 95%;
+  margin: $spacing-double 0 0 0;
+  padding: $spacing 0 0 0;
+  border-top: solid 1px $app-bcg-gray;
+  .legend-title{
+    margin:0 0  $spacing-half 0;
+    font-weight: bold;
+  }
+  .legend-row {
+    margin:0 0  $spacing-half 0;
+
+  }
+}
+.legend-inline {
+  .legend-row {
+    display: inline-block;
+    margin: 0 $spacing 0 0;
+
+  }
+}

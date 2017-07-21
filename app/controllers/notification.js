@@ -48,7 +48,7 @@ appController.controller('NotificationController', function ($scope, $filter, $t
                 return;
             }
             $scope.notifications.show = true;
-            $scope.refreshZwaveData(ZWaveAPIData, alarms);
+            $scope.refreshZwaveData(alarms);
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
         });
@@ -58,11 +58,11 @@ appController.controller('NotificationController', function ($scope, $filter, $t
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
+     * @param {object}  alarms
      */
-    $scope.refreshZwaveData = function (ZWaveAPIData, alarms) {
+    $scope.refreshZwaveData = function (alarms) {
         var refresh = function () {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function (response) {
+            dataService.loadJoinedZwaveData().then(function (response) {
                 setData(response.data.joined, alarms);
             }, function (error) {
             });
@@ -119,13 +119,18 @@ appController.controller('NotificationController', function ($scope, $filter, $t
         $scope.controllerId = ZWaveAPIData.controller.data.nodeId.value;
 
         // Loop throught devices
-        angular.forEach(ZWaveAPIData.devices, function (device, k) {
-            if (k == 255 || k == $scope.controllerId || device.data.isVirtual.value) {
+        angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
+            if (nodeId == 255 || nodeId == $scope.controllerId || node.data.isVirtual.value) {
                 return false;
             }
+            var allInterviewsDone = deviceService.allInterviewsDone(node.instances);
+            if(!allInterviewsDone){
+                return;
+            }
+            //console.log(allInterviewsDone)
             // Loop throught instances
-            angular.forEach(device.instances, function (instance, instanceId) {
-                if (instanceId == 0 && device.instances.length > 1) {
+            angular.forEach(node.instances, function (instance, instanceId) {
+                if (instanceId == 0 && node.instances.length > 1) {
                     return;
                 }
 
@@ -137,10 +142,10 @@ appController.controller('NotificationController', function ($scope, $filter, $t
                 var version = parseInt(hasNotification.data.version.value, 10);
 
                 var obj = {};
-                obj['id'] = parseInt(k, 10);
-                obj['rowId'] = hasNotification.name + '_' + k + '_' + instanceId + '_' + '113' + '_';
+                obj['id'] = parseInt(nodeId, 10);
+                obj['rowId'] = hasNotification.name + '_' + nodeId + '_' + instanceId + '_' + '113' + '_';
                 obj['instanceId'] = instanceId;
-                obj['name'] = $filter('deviceName')(k, device);
+                obj['name'] = $filter('deviceName')(nodeId, node);
                 obj['version'] = version;
                 if (version > 1) {
                     notificationV2(obj, hasNotification.data, alarms);
@@ -158,27 +163,13 @@ appController.controller('NotificationController', function ($scope, $filter, $t
      * @param {object} data
      */
     function notificationV1(node, data) {
-        /*var alarmCfg = {
-         type: hasNotification.data.V1event.alarmType.value,
-         typeHex: $filter('decToHex')(hasNotification.data.V1event.alarmType.value, 2, '0x'),
-         status: hasNotification.data.V1event.level.value,
-         statusHex:$filter('decToHex')(hasNotification.data.V1event.level.value, 2, '0x')
-         }
-
-         var alarm = _.findWhere(alarms,{_id:  alarmCfg.typeHex});
-         if(alarm){
-         type = deviceService.configGetZddxLang(alarm.name.lang, $scope.lang);
-         var event = _.findWhere(alarm.Event,{_id:  alarmCfg.statusHex});
-         if(event){
-         status = deviceService.configGetZddxLang(event.name.lang, $scope.lang);
-         }
-         }*/
         var typeId = parseInt(data.V1event.alarmType.value, 10);
         if (isNaN(typeId)) {
             return;
         }
         var obj = {};
         obj['id'] = node.id;
+        obj['idSort'] = $filter('zeroFill')(node.id);
         obj['rowId'] = node.rowId + typeId;
         obj['instanceId'] = node.instanceId;
         obj['name'] = node.name;
@@ -232,6 +223,7 @@ appController.controller('NotificationController', function ($scope, $filter, $t
 
             var obj = {};
             obj['id'] = node.id;
+            obj['idSort'] = $filter('zeroFill')(node.id);
             obj['rowId'] = node.rowId + typeId;
             obj['instanceId'] = node.instanceId;
             obj['name'] = node.name;

@@ -1,0 +1,44 @@
+/* List groups
+-------------------------------------------------- */
+
+.list-group-item {
+  border-color: $app-border-color;
+}
+// Configuration menu
+.row-configuration{
+  .menu-vertical{
+    height: auto;
+    max-height: 800px;
+    overflow-x: hidden;
+    .list-group-item {
+      padding: 5px 7px;
+      a{
+        color: $header-subnavi-color;
+      }
+      &.active{
+        a{
+          color: #ffffff;
+        }
+
+      }
+    }
+  }
+}
+.configuration-select{
+  margin: 0 0 $spacing-double 0;
+  padding: $spacing;
+  background-color: $app-color-secondary;
+}
+
+.list-report{
+  margin: 0 ;
+  padding: 0;
+  li{
+    padding: $spacing 0;
+    display: block;
+    border-top: solid 1px $app-border-color;
+  }
+  li:first-child{
+    border-top: 0 none;
+  }
+}

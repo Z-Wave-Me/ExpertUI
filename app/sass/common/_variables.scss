@@ -182,6 +182,9 @@ $app-bcg-info: #d9edf7;
 $app-bcg-warning: #fcf8e3;
 $app-bcg-danger: #f2dede;
 
+$app-color-gray: #727272;
+$app-bcg-gray: #efefef;
+
 $app-overlay-bcg-color: rgba(37, 37, 37, 0.5);
 
 // Header
@@ -292,6 +295,14 @@ $widget-danger-border-color: lighten($app-brand-danger,20%);
 $widget-heading-color: $app-heading-color;
 $widget-icon-color:lighten($widget-color, 40%);
 
+// Switcher button
+$switcher-color: #ffffff;
+$switcher-off-background-color: #f9f9f9;
+$switcher-on-background-color: #5bc0de;
+
+// Tooltip
+$tooltip-bcg-color: #f2f2f2;
+$tooltip-border-color: #c9c9c9;
 
 /*-------------------------------------*/
 // EFFECTS

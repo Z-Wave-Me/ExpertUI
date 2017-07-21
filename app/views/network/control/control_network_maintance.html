@@ -12,7 +12,7 @@
                         ng-model="controlDh.input.failedNodes">
                     <option ng-hide="controlDh.removed.failedNodes.indexOf(v) > -1"
                             ng-repeat="v in controlDh.nodes.failedNodes track by $index" value="{{v}}">{{v}}</option>
-                </select>
+                </select>&nbsp;
                 <button
                         class="btn btn-primary"
                         id="btn_remove_failed_mode"
@@ -37,9 +37,8 @@
                         ng-model="controlDh.input.replaceNodes">
                     <option ng-hide="controlDh.removed.replaceNodes.indexOf(v) > -1"
                             ng-repeat="v in controlDh.nodes.failedNodes track by $index" value="{{v}}">{{v}}</option>
-                </select>
+                </select>&nbsp;
                 <button class="btn btn-primary" id="btn_replace_failed_node"
-                        ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
                         ng-click="replaceFailedNode('ReplaceFailedNode(' + controlDh.input.replaceNodes + ')')"
                         ng-disabled="!controlDh.input.replaceNodes">
                     <bb-row-spinner
@@ -62,7 +61,7 @@
                         ng-model="controlDh.input.failedBatteries">
                     <option ng-hide="controlDh.removed.failedBatteries.indexOf(v) > -1"
                             ng-repeat="v in controlDh.nodes.failedBatteries track by $index" value="{{v}}">{{v}}</option>
-                </select>
+                </select>&nbsp;
                 <button class="btn btn-primary"
                         ng-click="handleModal('failedBatteryModal', $event)"
                         ng-disabled="!controlDh.input.failedBatteries">
@@ -77,12 +76,13 @@
         </div>
         <div>
             <!-- controller_change_start -->
-            <div class="cfg-block form-inline" ng-controller="ControllerChangeController">
+            <div ng-if="cfg.app_type == 'installer'" ng-include="'app/views/network/control/control_network_maintance_ctrlchange.html'"></div>
+            <!--<div class="cfg-block form-inline" ng-hide="!cfg.controller.isRealPrimary" ng-controller="ControllerChangeController">
                 <p class="input-help">{{_t('nm_change_controller_war')}}</p>
                 <div class="nm-response"  ng-class="controllerState == 0 ? 'text-info' : 'text - danger'" ng-show="[13, 14, 15, 16].indexOf(controllerState) > -1">
                     {{_t('nm_controller_state_' + controllerState)}}
                 </div>
-                <!--  ControllerChange start -->
+                &lt;!&ndash;  ControllerChange start &ndash;&gt;
                 <button class="btn btn-primary"
                         id="btn_controller_change_start"
                         ng-show="[13, 14, 15, 16].indexOf(controlDh.controller.controllerState) == -1"
@@ -96,7 +96,7 @@
                     </bb-row-spinner>
                 </button>
 
-                <!--  ControllerChange stop -->
+                &lt;!&ndash;  ControllerChange stop &ndash;&gt;
                 <button class="btn btn-danger"
                         id="btn_controller_change_stop"
                         ng-show="[13, 14, 15, 16].indexOf(controlDh.controller.controllerState) > -1"
@@ -109,7 +109,7 @@
                             icon="'fa-database'">
                     </bb-row-spinner>
                 </button>
-            </div>
+            </div>-->
 
             <!-- request_nif -->
             <div class="cfg-block form-inline" ng-controller="RequestNifAllController">

@@ -25,7 +25,8 @@ angApp.filter('hasNode', function () {
  * Convert text to slug
  */
 angApp.filter('stringToSlug', function () {
-    return function (str) {
+    return function (str,delim) {
+        delim = delim||'-';
         str = str.replace(/^\s+|\s+$/g, ''); // trim
         str = str.toLowerCase();
 
@@ -37,8 +38,8 @@ angApp.filter('stringToSlug', function () {
         }
 
         str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
-            .replace(/\s+/g, '-') // collapse whitespace and replace by -
-            .replace(/-+/g, '-'); // collapse dashes
+            .replace(/\s+/g,  delim) // collapse whitespace and replace by -
+            .replace(/-+/g,  delim); // collapse dashes
 
         return str;
     };
@@ -188,14 +189,17 @@ angApp.filter('unique', function () {
  * @function setTimeFromBox
  */
 angApp.filter('setTimeFromBox', function (cfg, $filter) {
-    return function (input) {
-        if (input) {
-            var d = new Date(input * 1000);
-        } else {
-            var d = new Date();
-        }
+    return function (timestamp, offset) {
+        // time from server comes with correct added timezone offset so it isn't necessary to add it again
+        var d = new Date(timestamp * 1000);
+        // browser add his own tz offset to date object so it is necessary to remove it's offset
+        // because it is already negative we needn't multiplicate it by (-1)
+        var browserTZO = parseInt(d.getTimezoneOffset() * 60 * 1000);
+        // create new date object with correct time
+        d = new Date(d.getTime() + browserTZO);
+
         return $filter('getFormattedTime')(
-            d.toISOString().substring(11, d.toISOString().indexOf('.')),
+            d,
             false,
             cfg.zwavecfg.time_format
         );
@@ -207,25 +211,39 @@ angApp.filter('setTimeFromBox', function (cfg, $filter) {
  * @function getDateTimeObj
  */
 angApp.filter('getDateTimeObj', function ($filter, cfg) {
-    return function (timestamp,invalidateTime) {
-        var d = (timestamp ? new Date(timestamp * 1000) : new Date());
-        var di = (invalidateTime ? new Date(invalidateTime * 1000) : null);
+    return function (timestamp, invalidateTime) {
+        // Count time with offset http://stackoverflow.com/questions/7403486/add-or-subtract-timezone-difference-to-javascript-date
+        /* ----------- NEW with time offset ----------- */
+        var targetTime = (timestamp ? new Date(timestamp * 1000) : new Date());
+        var browserTZO = parseInt(targetTime.getTimezoneOffset() * 60 * 1000);
+        //console.log('targetTime: ',targetTime);
+        //console.log('browserTZO: ', browserTZO);
+        //time zone value from config
+        var tzo = parseInt(cfg.route.time.offset * (-1) * 60 * 60 * 1000, 10);
+        //console.log('tzo:',tzo);
+        //get the timezone offset from local time in minutes
+        //var tzDifference = tzo * 60 * 1000;
+        //console.log(tzDifference)
+        //convert the offset to milliseconds, add to targetTime, and make a new Date
+        var d = new Date(targetTime.getTime() + tzo + browserTZO);
+
+        var di = (invalidateTime ? new Date(invalidateTime * 1000 + tzo + browserTZO) : null);
         var obj = {
             date: $filter('getFormattedDate')(d),
             time: $filter('getFormattedTime')(
-                d.toISOString().substring(11, d.toISOString().indexOf('.')),
+                d,
                 false,
-                cfg.zwavecfg.time_format
+                cfg.zwavecfg.time_format, d
             ),
             invalidateTime: (di ?
             $filter('getFormattedDate')(di) + ' '
-            + $filter('getFormattedTime')(di.toISOString().substring(11, di.toISOString().indexOf('.')),false,cfg.zwavecfg.time_format)
-            : ''),
+            + $filter('getFormattedTime')(di, false, cfg.zwavecfg.time_format)
+                : ''),
             today: (d.toDateString() === (new Date()).toDateString()
                 ? $filter('getFormattedTime')(
-                    d.toISOString().substring(11, d.toISOString().indexOf('.')),
-                    'hh:mm',
-                    cfg.zwavecfg.time_format
+                d,
+                'hh:mm',
+                cfg.zwavecfg.time_format
             )
                 : $filter('getFormattedDate')(d))
 
@@ -248,10 +266,16 @@ angApp.filter('isTodayFromUnix', function (cfg, $filter) {
         }
         var d = new Date(input * 1000);
 
+        var browserTZO = parseInt(d.getTimezoneOffset() * 60 * 1000);
+        //time zone value from config
+        var tzo = parseInt(cfg.route.time.offset * (-1) * 60 * 60 * 1000, 10);
+        //convert the offset to milliseconds, add to targetTime, and make a new Date
+        d = new Date(d.getTime() + tzo + browserTZO);
+
         if (d.toDateString() == (new Date()).toDateString()) {
 
             return $filter('getFormattedTime')(
-                d.toISOString().substring(11, d.toISOString().indexOf('.')),
+                d,
                 'hh:mm',
                 cfg.zwavecfg.time_format
             );
@@ -261,37 +285,76 @@ angApp.filter('isTodayFromUnix', function (cfg, $filter) {
         }
     };
 });
-
 /**
  * Get formated date
  * @function getFormattedTime
  */
 angApp.filter('getFormattedTime', function () {
-    return function (time,stringFormat,timeFormat) {
+    return function (date, stringFormat, timeFormat) {
+        var str = '';
+        var suffix = '';
 
+        //var h = (date.getHours() < 10) ? "0" + date.getHours() : date.getHours();
+        var h = date.getHours();
+
+        var m = (date.getMinutes() < 10) ? "0" + date.getMinutes() : date.getMinutes();
+        var s = (date.getSeconds() < 10) ? "0" + date.getSeconds() : date.getSeconds();
+
+        //console.log(h,m)
+
+        // 12 hrs format?
+        if (timeFormat === '12') {
+            suffix = (h < 12) ? ' AM' : ' PM';
+            h = h % 12 || 12;
+        }
+        h = (h < 10) ? "0" + h : h;
+
+        switch (stringFormat) {
+            case 'hh:mm':
+                str = h + ':' + m;
+                break;
+            case 'hh':
+                str = h;
+                break;
+            default:
+                str = h + ':' + m + ':' + s;
+                break;
+        }
+        return str + suffix;
+
+    };
+});
+
+/**
+ * TODO: deprecated
+ * Get formated date
+ * @function getFormattedTime
+ */
+angApp.filter('getFormattedTime____', function () {
+    return function (time, stringFormat, timeFormat) {
         var str = '';
         var suffix = '';
         var arr = time.split(':').map(function (x) {
             return parseInt(x, 10);
         });
         // 12 hrs format?
-        if(timeFormat === '12' ){
-            arr[0] =  arr[0] % 12 || 12;
+        if (timeFormat === '12') {
+            arr[0] = arr[0] % 12 || 12;
             suffix = (arr[0] < 12) ? ' AM' : ' PM';
         }
 
         var h = arr[0];
-        var m =(arr[1] < 10 ? '0' +  arr[1] :  arr[1]);
-        var s = (arr[2] < 10 ? '0' +  arr[2] :  arr[2]);
+        var m = (arr[1] < 10 ? '0' + arr[1] : arr[1]);
+        var s = (arr[2] < 10 ? '0' + arr[2] : arr[2]);
         switch (stringFormat) {
             case 'hh:mm':
-                str =  h + ':' + m;
+                str = h + ':' + m;
                 break;
             case 'hh':
-                str =  h;
+                str = h;
                 break;
             default:
-                str =  h + ':' + m + ':' + s;
+                str = h + ':' + m + ':' + s;
                 break;
         }
         //var time = h + ':' + m + ':' + s;
@@ -310,9 +373,6 @@ angApp.filter('getFormattedDate', function (cfg) {
         var mon = d.getMonth() + 1; //Months are zero based
         mon = (mon < 10 ? '0' + mon : mon);
         var year = d.getFullYear();
-        //var hrs = (d.getHours() < 10 ? '0' + d.getHours() : d.getHours());
-        //var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
-        //var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
 
         switch (cfg.zwavecfg.date_format) {
             case 'dd-mm-yyyy':
@@ -323,6 +383,8 @@ angApp.filter('getFormattedDate', function (cfg) {
                 return year + '/' + mon + '/' + day;
             case 'mm/dd/yyyy':
                 return mon + '/' + day + '/' + year;
+            case 'dd/mm/yyyy':
+                return day + '/' + mon + '/' + year;
             default:
                 return day + '.' + mon + '.' + year;
         }
@@ -341,6 +403,31 @@ angApp.filter('getMysqlFromNow', function () {
         var m = (date.getMinutes() < 10) ? "0" + date.getMinutes() : date.getMinutes();
         var s = (date.getSeconds() < 10) ? "0" + date.getSeconds() : date.getSeconds();
         return year + "-" + month + "-" + day + " " + h + ":" + m + ":" + s;
+    };
+});
+
+/**
+ * Compare software version number
+ * Return values:
+ * a number < 0 if a < b
+ * a number > 0 if a > b
+ * 0 if a = b
+ */
+angApp.filter('cmpVersion', function () {
+    return function (a, b) {
+        var i, diff;
+        var regExStrip0 = /(\.0+)+$/;
+        var segmentsA = a.replace(regExStrip0, '').split('.');
+        var segmentsB = b.replace(regExStrip0, '').split('.');
+        var l = Math.min(segmentsA.length, segmentsB.length);
+
+        for (i = 0; i < l; i++) {
+            diff = parseInt(segmentsA[i], 10) - parseInt(segmentsB[i], 10);
+            if (diff) {
+                return diff;
+            }
+        }
+        return segmentsA.length - segmentsB.length;
     };
 });
 
@@ -431,23 +518,38 @@ angApp.filter('toTrusted', ['$sce', function ($sce) {
 /**
  * Display device name
  */
-angApp.filter('deviceName', function () {
-    return function (deviceId, device) {
-        var name = (deviceId == 1 ? 'Z-Way' : 'Device ' + '_' + deviceId);
-        if (device === undefined) {
-            return name;
+angApp.filter('deviceName', function (cfg, deviceService) {
+    return function (deviceId, node) {
+        if(!node){
+            return 'Device ' + '_' + deviceId;
         }
-        if (device.data.givenName.value != '') {
-            name = device.data.givenName.value;
+        if (deviceId == cfg.controller.zwayNodeId) {
+            return deviceService.getCustomCfgVal('controller_name');
+        }
+        var type = '';
+        var isListening = node.data.isListening.value;
+        var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
+        //var hasWakeup = 0x84 in node.instances[0].commandClasses;
+        var hasWakeup = !isListening && !node.data.sensor250.value && !node.data.sensor1000.value;
+
+        if (hasWakeup || isFLiRS) {
+            type = 'Battery';
+        } else if (isListening) {
+            type = 'Mains';
+        }
+        var name = type + 'Device ' + '_' + deviceId;
+        if (node.data.givenName.value != '') {
+            name = node.data.givenName.value;
         }
         return name;
     };
 });
 
 /**
+ * todo: deprecated
  * Display device name
  */
-angApp.filter('getDeviceName', function () {
+/*angApp.filter('getDeviceName', function () {
     return function (deviceId, data) {
         var name = 'Device ' + deviceId;
         angular.forEach(data, function (v, k) {
@@ -459,7 +561,7 @@ angApp.filter('getDeviceName', function () {
         });
         return name;
     };
-});
+});*/
 
 angApp.filter('getByProperty', function () {
     return function (propertyName, propertyValue, collection) {
@@ -472,53 +574,6 @@ angApp.filter('getByProperty', function () {
         return null;
     };
 });
-// @todo: Deprecated
-// Convert unix timastamp to date
-/*angApp.filter('dateFromUnix', function () {
- return function (input) {
- var d = new Date(input * 1000);
- var day = d.getDate();
- var mon = d.getMonth() + 1; //Months are zero based
- var year = d.getFullYear();
- var hrs = d.getHours();
- var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
- var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
- var time = day + '.' + mon + '.' + year + ' ' + hrs + ':' + min + ':' + sec;
- return time;
- };
- });*/
-
-
-
-//@todo: Deprecated
-// Get current date time
-/*angApp.filter('getCurrentDate', function () {
-
- var d = new Date();
- var day = d.getDate();
- var mon = d.getMonth() + 1; //Months are zero based
- var year = d.getFullYear();
- var hrs = d.getHours();
- var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
- var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
- var time = day + '.' + mon + '.' + year + ' ' + hrs + ':' + min + ':' + sec;
- return time;
-
- });*/
-
-/**
- * @todo: Deprecated
- */
-/*angApp.filter('getCurrentTime', function () {
- return function () {
- var d = new Date();
- var hrs = (d.getHours() < 10 ? '0' + d.getHours() : d.getHours());
- var min = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes());
- var sec = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds());
- var time = hrs + ':' + min + ':' + sec;
- return time;
- };
- });*/
 
 
 //Convert decimal to hex
@@ -534,28 +589,25 @@ angApp.filter('decToHex', function () {
  * Replace Lock state with text
  */
 angApp.filter('lockStatus', function () {
-    return function (input) {
-        var mode = input;
+    return function (mode) {
         var mode_lbl;
 
-        if (mode === '' || mode === null) {
-            mode_lbl = '?';
-        } else {
-            switch (mode) {
-                case 0x00:
-                    mode_lbl = 'Open';
-                    break;
-                case 0x10:
-                    mode_lbl = 'Open from inside';
-                    break;
-                case 0x20:
-                    mode_lbl = 'Open from outside';
-                    break;
-                case 0xff:
-                    mode_lbl = 'Closed';
-                    break;
-            }
-            ;
+        switch (mode) {
+            case 0:
+                mode_lbl = 'open';
+                break;
+            case 16:
+                mode_lbl = 'open_from_inside';
+                break;
+            case 32:
+                mode_lbl = 'open_from_outside';
+                break;
+            case 255:
+                mode_lbl = 'closed';
+                break;
+            default:
+                mode_lbl = '-';
+                break;
         }
         ;
         return mode_lbl;
@@ -610,7 +662,7 @@ angApp.filter('getBatteryIcon', function () {
             icon = 'fa-battery-3 text-success';
         } else if (level >= 50 && level < 70) {
             icon = 'fa-battery-2 text-primary';
-        }else if (level > 30 && level <= 50) {
+        } else if (level > 30 && level <= 50) {
             icon = 'fa-battery-2 text-info';
         } else if (level >= 1 && level <= 30) {
             icon = 'fa-battery-1 text-danger';
@@ -636,9 +688,6 @@ angApp.filter('getDeviceTypeIcon', function () {
             case 'mains':
                 icon = 'fa-bolt text-warning';
                 break;
-            case 'sleep':
-                icon = 'fa-battery-full text-danger';
-                break;
             case 'battery':
                 icon = 'fa-battery-full text-success';
                 break;
@@ -646,38 +695,10 @@ angApp.filter('getDeviceTypeIcon', function () {
                 icon = 'fa-feed text-primary';
                 break;
             default:
-                icon = '';
+                icon = 'fa-ellipsis-h';
                 break;
         }
         return icon;
-    };
-});
-
-/**
- * todo: deprecated
- * Get battery image
- */
-angApp.filter('getBatteryImg', function () {
-    return function (input) {
-        var img = 'battery.png';
-        if (isNaN(input)) {
-            return img;
-        }
-        var level = parseInt(input);
-        if (level > 95) {
-            img = 'battery-100.png';
-        } else if (level >= 70 && level <= 95) {
-            img = 'battery-80.png';
-        } else if (level >= 50 && level < 70) {
-            img = 'battery-50.png';
-        } else if (level > 20 && level < 50) {
-            img = 'battery-30.png';
-        } else if (level >= 5 && level <= 20) {
-            img = 'battery-20.png';
-        } else {
-            img = 'battery-0.png';
-        }
-        return img;
     };
 });
 
@@ -869,5 +890,38 @@ angApp.filter('deviceIcon', function () {
                 break;
         }
         return icon;
+    };
+});
+
+/**
+ * Get a file extension from the path
+ * @function fileExtension
+ */
+angApp.filter('fileExtension', function () {
+    return function (path) {
+        // extract file name from full path ...
+        // (supports `\\` and `/` separators)
+        var basename = path.split(/[\\/]/).pop(),
+            // get last position of `.`
+            pos = basename.lastIndexOf(".");
+        // if file name is empty or ...
+        //  `.` not found (-1) or comes first (0)
+        if (basename === '' || pos < 1) {
+            return '';
+        }
+
+        // extract extension ignoring `.`
+        return basename.slice(pos + 1);
+    };
+});
+
+/**
+ * Output integer with leading zeros
+ * @function zeroFill
+ */
+angApp.filter('zeroFill', function () {
+    return function (num, len) {
+        len = len || 5;
+        return (Array(len).join("0") + num).slice(-len);
     };
 });

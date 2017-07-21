@@ -5,6 +5,7 @@
 appController.controller('ControllerController', function($scope, $window, $filter, $interval,$timeout,cfg,dataService,deviceService) {
     $scope.funcList;
     $scope.ZWaveAPIData;
+    $scope.builtInfo = '';
     $scope.info = {};
     $scope.master = {};
     $scope.runQueue = false;
@@ -12,10 +13,21 @@ appController.controller('ControllerController', function($scope, $window, $filt
         interval: null
     }
 
-    // Cancel interval on page destroy
+    /**
+     * Cancel interval on page destroy
+     */
     $scope.$on('$destroy', function() {
-        dataService.cancelZwaveDataInterval();
+        $interval.cancel($scope.controllerInfo.interval);
     });
+    /**
+     * Load app built info
+     */
+    $scope.loadAppBuiltInfo = function() {
+        dataService.getAppBuiltInfo().then(function(response) {
+            $scope.builtInfo = response.data;
+        }, function(error) {});
+    };
+    $scope.loadAppBuiltInfo();
 
     /**
      * Load zwave data
@@ -23,7 +35,7 @@ appController.controller('ControllerController', function($scope, $window, $filt
     $scope.loadZwaveData = function() {
         dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
             setData(ZWaveAPIData);
-            $scope.refreshZwaveData(ZWaveAPIData);
+            $scope.refreshZwaveData();
         }, function(error) {
             alertify.alertError($scope._t('error_load_data'));
         });
@@ -32,11 +44,10 @@ appController.controller('ControllerController', function($scope, $window, $filt
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function(ZWaveAPIData) {
+    $scope.refreshZwaveData = function() {
         var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
+            dataService.loadJoinedZwaveData().then(function(response) {
                 setData(response.data.joined);
             }, function(error) {});
         };

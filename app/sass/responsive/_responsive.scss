@@ -62,6 +62,7 @@
 
 /* Medium Devices, Desktops */
 @media only screen and (min-width : 992px) and (orientation:landscape) {
+    .menu-horizontal{display: none;}
     @import "_mq_md";
 }
 
@@ -82,7 +83,7 @@
     .nav-logo,
     #__header .timestamp,
     #main_navigation .divider-vertical,
-    .main-nav-name,.btn-name{
+    .main-nav-name,.btn-name,.menu-vertical{
         display: none !important;
     }
     .mobile-block{

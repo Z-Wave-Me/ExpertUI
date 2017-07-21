@@ -1,41 +1,83 @@
 <!-- Generic configuration fom expert commands -->
-<div class="cfg-block"  ng-if="hasConfigurationCc.command" ng-controller="ConfigCommandsController">
+<div class="cfg-block" ng-if="hasConfigurationCc.command" ng-controller="ConfigCommandsController">
     <h4>{{hasConfigurationCc.commandClass}}</h4>
-    <div class="commands-data"
-         ng-repeat="c in hasConfigurationCc.command| orderBy:predicate:reverse"
-         ng-init="formName = 'form_' + c.data.method + '_' + v.rowId">
 
-        <form
-                name="{{formName}}"
-                id="{{formName}}"
-                class="form form_commands"
-                role="form"
-                ng-submit="storeExpertCommnds(formName, hasConfigurationCc.cmd + '.' + c.data.method)"
-                novalidate>
-            <div class="commands-data-control">
-                <div class="form-inline" ng-repeat="(pk,p) in c.data.params">
-                    <expert-command-input
-                            collection='p'
-                            values='c.data.values[pk]'
-                            devices='devices'
-                            name='c.data.method'
-                            get-node-devices='getNodeDevices'
-                    ></expert-command-input>
-                    <!-- {{pk}} {{p}}
-                    {{c.data.values[pk]}}-->
+    <div id="table_mobile" ng-show="deviceId">
+        <table class="table">
+            <tr>
+                <!-- Feedback -->
+                <td ng-if="_.size(ccTable['Configuration'].rows)">
+                    <!--<pre>{{ccTable['Configuration']|json}}</pre>-->
+                    <table class="table table-condensed">
+                        <thead>
+                        <tr>
+                            <th>{{cfg.expert_cmd['Configuration'].th[0]}}</th>
+                            <th>{{cfg.expert_cmd['Configuration'].th[1]}}</th>
+                            <th>&nbsp;</th>
 
-                </div>
-                <button class="btn btn-primary" type="submit"
-                        ng-disabled="rowSpinner[hasConfigurationCc.cmd + '.' + c.data.method]">
-                    <bb-row-spinner
-                            spinner="rowSpinner[hasConfigurationCc.cmd + '.' + c.data.method]"
-                            label="c.data.method"
-                            icon="'fa-circle-o'">
-                    </bb-row-spinner>
-                </button>
-            </div>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="{{v.isEqual ? 'na':'bcg-success'}}"
+                            ng-repeat="v in ccTable['Configuration'].rows track by $index">
+                            <td style="white-space: nowrap;">
+                                {{v.id}}&nbsp
+
+                            </td>
+                            <td style="white-space: nowrap;">
+                                <span ng-bind="v.value"></span>
+                            </td>
+                            <td style="white-space: nowrap;">
+                                <span ng-class="v.isUpdated ? 'green':'red'">{{v.updateTime | isTodayFromUnix}} </span>
+                            </td>
+
+                        </tr>
+                        </tbody>
+
+                    </table>
+                </td>
+                <!-- Form -->
+                <td>
+                    <div class="commands-data"
+                         ng-repeat="c in hasConfigurationCc.command| orderBy:predicate:reverse"
+                         ng-init="formName = 'form_' + c.data.method + '_' + v.rowId">
+
+                        <form
+                                name="{{formName}}"
+                                id="{{formName}}"
+                                class="form form_commands"
+                                role="form"
+                                ng-submit="storeExpertCommnds(formName, hasConfigurationCc.cmd + '.' + c.data.method)"
+                                novalidate>
+                            <div class="commands-data-control">
+                                <div class="form-inline" ng-repeat="(pk,p) in c.data.params">
+                                    <expert-command-input
+                                            collection='p'
+                                            values='c.data.values[pk]'
+                                            devices='devices'
+                                            name='c.data.method'
+                                            get-node-devices='getNodeDevices'
+                                    ></expert-command-input>
+                                    <!-- {{pk}} {{p}}
+                                    {{c.data.values[pk]}}-->
+
+                                </div>
+                                <button class="btn btn-primary" type="submit"
+                                        ng-disabled="rowSpinner[hasConfigurationCc.cmd + '.' + c.data.method]">
+                                    <bb-row-spinner
+                                            spinner="rowSpinner[hasConfigurationCc.cmd + '.' + c.data.method]"
+                                            label="c.data.method"
+                                            icon="'fa-circle-o'">
+                                    </bb-row-spinner>
+                                </button>
+                            </div>
 
 
-        </form>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+
+        </table>
     </div>
 </div>

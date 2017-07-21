@@ -1,80 +1,72 @@
 <div class="tabs-wrap form-inline" ng-show="deviceId > 0">
-    <div class="btn-group btn-goup-tabs" ng-class="cfg.zwavecfg.debug ? 'btn-tabs-7': 'btn-tabs-6'">
+    <div class="btn-group btn-group-justified btn-goup-tabs">
         <!-- Interview -->
         <a class="btn btn-default" title="{{_t('nav_device_interview')}}" href="#configuration/interview/{{deviceId}}"
-           ng-class="activeTab == 'interview' ? 'active' : ''">
+           ng-class="routeMatch('/configuration/interview') ? 'active' : ''">
             <i class="fa fa-commenting"></i> <span class="btn-name">{{_t('nav_device_interview')}}</span>
         </a>
 
         <!-- Config -->
         <a class="btn btn-default" title="{{_t('nav_device_configuration')}}"
            href="#configuration/configuration/{{deviceId}}"
-           ng-class="activeTab == 'configuration' ? 'active' : ''">
+           ng-class="routeMatch('/configuration/configuration') ? 'active' : ''">
             <i class="fa fa-cogs"></i> <span class="btn-name">{{_t('nav_device_configuration')}}</span>
         </a>
 
         <!-- Assoc -->
         <a class="btn btn-default" title="{{_t('nav_device_assoc')}}" href="#configuration/association/{{deviceId}}"
-           ng-class="activeTab == 'association' ? 'active' : ''">
+           ng-class="routeMatch('/configuration/association') ? 'active' : ''">
             <i class="fa fa-share-alt"></i> <span class="btn-name">{{_t('nav_device_assoc')}}
         </a>
 
         <!-- Health -->
         <a class="btn btn-default" title="{{_t('link_health')}}" href="#configuration/health/{{deviceId}}"
-           ng-class="activeTab == 'health' ? 'active' : ''">
+           ng-class="routeMatch('/configuration/health') ? 'active' : ''">
             <i class="fa fa-unlink"></i> <span class="btn-name">{{_t('link_health')}}</span>
         </a>
 
         <!-- Expert -->
         <a class="btn btn-default" title="{{_t('nav_expert_commands')}}" href="#configuration/commands/{{deviceId}}"
-           ng-class="activeTab == 'commands' ? 'active' : ''">
+           ng-class="routeMatch('/configuration/commands') ? 'active' : ''">
             <i class="fa fa-file-code-o"></i> <span class="btn-name">{{_t('nav_expert_commands')}}</span>
         </a>
-
         <!-- Firmware -->
         <a class="btn btn-default" title="{{_t('nav_firmware_update')}}" href="#configuration/firmware/{{deviceId}}"
-           ng-class="activeTab == 'firmware' ? 'active' : ''">
+           ng-class="routeMatch('/configuration/firmware') ? 'active' : ''">
             <i class="fa fa-upload"></i> <span class="btn-name">{{_t('nav_firmware_update')}}</span>
         </a>
 
         <!-- Postfix -->
         <a class="btn btn-default" title="{{_t('nav_postfix_update')}}" href="#configuration/postfix/{{deviceId}}"
-           ng-class="activeTab == 'postfix' ? 'active' : ''" ng-if="cfg.zwavecfg.debug">
+           ng-class="routeMatch('/configuration/postfix') ? 'active' : ''" ng-if="cfg.zwavecfg.debug">
             <i class="fa fa-tasks"></i> <span class="btn-name">{{_t('nav_postfix_update')}}</span>
         </a>
     </div>
 </div>
-<div class="page-header form-inline" ng-if="_.size(devices) > 0">
-    <!-- Device name and select -->
-    <div class="btn-group btn-goup-block_ btn-goup-2_" ng-click="expandNavi('configDevices', $event)">
-        <button class="btn btn-default">
-            <span ng-if="deviceId > 0">(#{{deviceId}}) {{deviceName | cutText:true:40}}</span>
-            <span ng-if="!deviceId > 0">{{_t('select_device')}}</span>
-        </button>
-        <button class="btn btn-default">
-            <i class="fa fa-chevron-down"></i>
-        </button>
+<div class="menu-horizontal">
+    <div class="page-header form-inline" ng-if="_.size(devices) > 0">
+        <!-- Device name and select -->
+        <div class="btn-group btn-goup-block_ btn-goup-2_" ng-click="expandNavi('configDevices', $event)">
+            <button class="btn btn-default">
+                <span ng-if="deviceId > 0">(#{{deviceId}}) {{deviceName | cutText:true:40}}</span>
+                <span ng-if="!deviceId > 0">{{_t('select_device')}}</span>
+            </button>
+            <button class="btn btn-default">
+                <i class="fa fa-chevron-down"></i>
+            </button>
+        </div>
     </div>
-
-    <!-- todo: deprecated <label>{{_t('h1_configuration_for')}}</label>
-    <select name="devices" class="form-control" ng-model="deviceId" ng-change="changeDevice(deviceId)">
-        <option value="" ng-selected="v.id != deviceId">-&#45;&#45; {{_t('select_device')}} -&#45;&#45;</option>
-        <option ng-repeat="v in devices| orderBy:predicate:reverse" value="{{v.id}}" ng-selected="v.id == deviceId">
-            (#{{v.id}}) {{v.name}}
-        </option>
-    </select>-->
-</div>
-<!-- Page subnavi  categories -->
-<div class="page-navi" ng-if="naviExpanded.configDevices">
-    <div class="page-navi-in">
-        <div class="page-navi-content">
-            <a class="btn btn-default btn-tag" title="{{v.name}}"
-               ng-repeat="v in devices| orderBy:predicate:reverse"
-               ng-click="changeDevice(v.id)"
-               ng-class="v.id == deviceId ? 'active': ''">
-                (#{{v.id}}) {{v.name | cutText:true:30}}
-            </a>
+    <!-- Page subnavi  categories -->
+    <div class="page-navi" ng-if="naviExpanded.configDevices">
+        <div class="page-navi-in">
+            <div class="page-navi-content">
+                <a class="btn btn-default btn-tag" title="{{v.name}}"
+                   ng-href="#{{activeUrl + v.id}}"
+                   ng-repeat="v in devices| orderBy:predicate:reverse"
+                   ng-class="v.id == deviceId ? 'active': ''">
+                    (#{{v.id}}) {{v.name | cutText:true:30}}
+                </a>
+            </div>
         </div>
     </div>
 </div>
-<bb-alert alert="alert"></bb-alert>

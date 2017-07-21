@@ -6,37 +6,31 @@
         <table class="table table-striped table-condensed table-hover">
             <thead class="cf">
             <tr>
+                <!-- id -->
                 <th>
-                    <a href="" ng-click="orderBy('id')">#
-                        <span ng-show="predicate == 'id'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i
-                                ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                    </a>
+                    <sort-by callback="orderBy(field)" obj="orderByArr" field="'idSort'" label="'#'"></sort-by>
                 </th>
+                <!-- Name -->
                 <th>
-                    <a href="" ng-click="orderBy('name')">{{ _t('device_name')}}
-                        <span ng-show="predicate == 'name'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i
-                                ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                    </a>
+                    <sort-by callback="orderBy(field)" obj="orderByArr" field="'name'"
+                             label="_t('device_name')"></sort-by>
                 </th>
-                <th class="text-right">
-                    <a href="" ng-click="orderBy('level')">{{ _t('th_level')}}
-                        <span ng-show="predicate == 'level'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i
-                                ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                    </a>
-                </th>
+                <!-- Level -->
                 <th>
-                    <a href="" ng-click="orderBy('updateTime')">{{ _t('datetime')}}
-                        <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i
-                                ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                    </a>
+                    <sort-by callback="orderBy(field)" obj="orderByArr" field="'level'"
+                             label="_t('th_level')"></sort-by>
                 </th>
+                <!-- time -->
                 <th>
-                    <a href="" ng-click="orderBy('switchAllValue')">{{ _t('th_switchall')}}
-                        <span ng-show="predicate == 'switchAllValue'"><i ng-show="!reverse"
-                                                                         class="fa fa-sort-asc"></i><i ng-show="reverse"
-                                                                                                       class="fa fa-sort-desc"></i></span>
-                    </a>
+                    <sort-by callback="orderBy(field)" obj="orderByArr" field="'updateTime'"
+                             label="_t('datetime')"></sort-by>
                 </th>
+                <!-- switch -->
+                <th>
+                    <sort-by callback="orderBy(field)" obj="orderByArr" field="'switchAllValue'"
+                             label="_t('th_switchall')"></sort-by>
+                </th>
+                <!-- update all -->
                 <th class="mobile-show">
                     <button class="btn btn-primary" id="btn_update_all_1"
                             ng-click="updateAllSwitches('all_1','urlToStore')"
@@ -48,6 +42,7 @@
                         </bb-row-spinner>
                     </button>
                 </th>
+                <!-- on/off -->
                 <th class="mobile-show">
                     <div class="btn-group" style="min-width: 150px !important;">
                         <button class="btn btn-primary" id="btn_all_of"
@@ -70,6 +65,7 @@
                         </button>
                     </div>
                 </th>
+                <!-- slider -->
                 <th class="th-slider td-action">&nbsp;</th>
             </tr>
 
@@ -77,23 +73,30 @@
             <tbody>
             <tr ng-repeat="v in switches.all| orderBy:predicate:reverse track by $index" id="{{ v.rowId}}"
                 ng-init="range.maxs = v.levelVal">
+                <!-- id -->
                 <td data-title="#">
                     {{ v.id}}<span ng-show="v.multiChannel || v.iId > 0">.{{v.iId}}</span>
                 </td>
+                <!-- name -->
                 <td data-title="{{ _t('device_name')}}">
                     {{v.name}}
                 </td>
+                <!-- level -->
                 <td data-title="{{ _t('th_level')}}">
                     <strong class="row-level text-right" style="color: {{ v.levelColor}};">{{ v.level}}</strong>
 
                 </td>
+                <!-- time -->
                 <td data-title="{{ _t('datetime')}}">
+
                     <bb-date-time obj="v.dateTime" updated="v.isUpdated"></bb-date-time>
                 </td>
+                <!-- switch -->
                 <td data-title="{{ _t('th_switchall')}}">
                     <switch-all-icon hasall="{{ v.switchAllValue}}" ng-if="v.switchAllValue !== null"></switch-all-icon>
                     &nbsp;
                 </td>
+                <!-- update all -->
                 <td data-title="">
                     <button class="btn btn-default" id="btn_update_{{ v.rowId}}"
                             ng-click="updateSwitch(v.urlToStore)"
@@ -106,6 +109,7 @@
                         </bb-row-spinner>
                     </button>
                 </td>
+                <!-- on/off -->
                 <td data-title="" ng-switch on="v.deviceType">
                     <!-- multilevel -->
                     <div ng-switch-when="multilevel">
@@ -208,6 +212,7 @@
                     <!-- mdefault -->
                     <div ng-switch-default>&nbsp;</div>
                 </td>
+                <!-- slider -->
                 <td class="td-action" data-title="" ng-switch on="v.deviceType">
                     <div ng-switch-when="multilevel"
                          id="range_slider_{{$index}}"

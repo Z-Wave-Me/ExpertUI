@@ -1,0 +1,168 @@
+<!-- Settings app  -->
+<h2 class="accordion-entry-title" ng-click="expandElement('settingsApp')">
+    <i class="fa fa-cogs fa-fw"></i>&nbsp;{{_t('app_settings')}}
+    <i class="fa accordion-arrow" ng-class="expand.settingsApp ? 'fa-chevron-up':'fa-chevron-down'"></i>
+</h2>
+<div class="accordion-entry-ctrl" ng-class="" ng-if="expand.settingsApp" ng-controller="SettingsAppController">
+    <bb-loader></bb-loader>
+    <form name="form_settings" id="form_settings" class="form form-page"
+          ng-submit="storeSettings(settings.input, $event)" novalidate>
+        <fieldset>
+            <!-- identifier/box name -->
+            <div class="form-group form-inline">
+                <label for="network_name">{{_t('cit_identifier')}}: </label>
+                <input name="network_name" id="network_name" type="text"
+                       class="form-control"
+                       value="{{settings.input.cit_identifier}}"
+                       ng-model="settings.input.cit_identifier"/>
+                <!--<bb-help-text trans="_t('cit_identifier_update_info')"></bb-help-text>-->
+            </div>
+            <!-- ssid name -->
+            <div class="form-group form-inline">
+                <label>{{_t('ssid_name')}}: </label>
+                <input name="ssid_name" id="ssid_name" type="text"
+                       class="form-control"
+                       placeholder="{{_t('ssid_name')}}"
+                       value="{{settings.input.ssid_name}}"
+                       ng-model="settings.input.ssid_name"/>
+            </div>
+            <!-- wifi password -->
+            <div class="form-group form-inline">
+                <label>{{_t('wifi_password')}}: </label>
+                <input name="wifi_password" id="wifi_password" type="password"
+                       class="form-control"
+                       placeholder="{{_t('wifi_password')}}"
+                       value="{{settings.input.wifi_password}}"
+                       ng-model="settings.input.wifi_password"
+                       ng-blur="passwordBlur = true"
+                       ng-minlength="8"
+                       ng-maxlength="63"
+                       ng-change="settings.wifi_pwd_changed = true"/>
+                <bb-validator input-name='form_settings.wifi_password.$error.minlength' trans='_t("wifi_password_valid")' has-blur='passwordBlur'></bb-validator>
+                <bb-validator input-name='form_settings.wifi_password.$error.maxlength' trans='_t("wifi_password_valid")' has-blur='passwordBlur'></bb-validator>
+            </div>
+            <!-- date format -->
+            <div class="form-group form-inline">
+                <label>{{_t('date_format')}}: </label>
+                <select name="date_format" name="date_format" class="form-control"
+                        ng-model="settings.input.date_format">
+                    <option ng-repeat="v in cfg.date_format_list" value="{{v}}"
+                            ng-selected="v === cfg.zwavecfg.date_format">{{v}}
+                    </option>
+                </select>
+            </div>
+
+            <!-- time format -->
+            <div class="form-group form-inline">
+                <label>{{_t('time_format')}}: </label>
+                <select name="time_format" name="time_format" class="form-control"
+                        ng-model="settings.input.time_format">
+                    <option ng-repeat="v in cfg.time_format_list" value="{{v}}"
+                            ng-selected="v === cfg.zwavecfg.time_format">{{v}} {{_t('hours')}}
+                    </option>
+                </select>
+            </div>
+            <!--ntpdate_service-->
+            <!--<pre>{{settings|json}}</pre>-->
+            <!-- enable / disable ntp -->
+            <div class="form-group form-inline">
+                <label>{{_t('ntp_set_mode')}}</label>
+                <div class="btn-group">
+                    <!-- ON -->
+                    <button type="button" class="btn" id="btn_promi_on"
+                            ng-click="setNTPMode('enable')"
+                            ng-disabled="settings.ntp.active"
+                            ng-class="!settings.ntp.active? 'btn-primary' : 'btn-default'">
+                        <bb-row-spinner
+                                spinner="rowSpinner['enable']"
+                                label="_t('on')">
+                        </bb-row-spinner>
+                    </button>
+                    <!-- OFF -->
+                    <button type="button" class="btn btn-default" id="btn_promi_off"
+                            ng-click="setNTPMode('disable')"
+                            ng-disabled="!settings.ntp.active"
+                            ng-class="settings.ntp.active? 'btn-primary' : 'btn-default'">
+                        <bb-row-spinner
+                                spinner="rowSpinner['disable']"
+                                label="_t('off')">
+                        </bb-row-spinner>
+                    </button>
+                </div>
+                <bb-help-text trans="_t('ntp_set_mode_info')"></bb-help-text>
+            </div>
+            <!-- timezone -->
+            <div class="form-group form-inline">
+                <label>{{_t('timezone')}}: </label>
+                <select name="time_zone" class="form-control"
+                        ng-model="settings.input.time_zone"
+                        ng-disabled="!settings.show_tz || settings.ntp_switch === 'disable'"
+                        ng-change="settings.reboot_tz = (settings.input.time_zone !== settings.lastTZ)">
+                    <!--<option value="automatic"
+                            ng-if="!settings.show_tz"
+                            ng-selected="!settings.show_tz">{{_t('auto_tz')}}</option>-->
+                    <option ng-repeat="v in cfg.time_zone_list" value="{{v}}"
+                            ng-selected="v === settings.lastTZ.replace('_',' ')">{{v}}</option>
+                </select>
+                <bb-help-text trans="_t('tz_set_info',{__ctz__: settings.lastTZ})"></bb-help-text>
+            </div>
+            <!-- date time picker -->
+            <!--<div class="form-group form-inline">
+                &lt;!&ndash; current server time &ndash;&gt;
+                <div>
+                    <label>{{_t('server_time')}}</label>
+                    <span class="timestamp" ng-bind="cfg.route.time.string"/>
+                </div>
+                <label>{{_t('ntp_set_time')}}</label>
+                <input type="datetime-local"
+                       id="dateTimeInput"
+                       name="date_time"
+                       ng-model="settings.input.currentDateTime"
+                       placeholder="yyyy-MM-ddTHH:mm:ss" min="2017-01-01T00:00:00" max="2025-12-31T00:00:00" required
+                       ng-disabled="settings.ntp.active || settings.ntp_switch === 'enable'"/>
+                <button class="btn"
+                        title="{{_t('btn_change')}}"
+                        ng-click="setDateTime(settings.input.currentDateTime)"
+                        type="button"
+                        ng-class="settings.ntp.active? 'btn-default' : 'btn-primary'"
+                        ng-disabled="settings.ntp.active || settings.ntp_switch === 'enable'">
+                    <i class="fa fa-check"></i>
+                </button>
+                <bb-help-text trans="_t('ntp_set_time_info')"></bb-help-text>
+            </div>-->
+            <!-- synchronize ntp -->
+            <!--<pre>{{settings.ntp|json}}</pre>-->
+            <div class="form-group form-inline">
+                <label>{{_t('ntp_synchronize')}}</label>
+                <button class="btn btn-primary"
+                        type="button"
+                        title="{{_t('btn_synchronize_ntp')}}"
+                        ng-click="synchronizeNTP()"
+                        ng-disabled="!settings.ntp.active">
+                    <i class="fa fa-repeat"></i> <span class="btn-name">{{_t('btn_synchronize_ntp')}}</span>
+                </button>
+                <bb-help-text trans="_t('ntp_synchronize_info')"></bb-help-text>
+            </div>
+            <!-- login forwarding -->
+            <!--<div class="form-group form-inline">
+                <label>{{_t('forward_login')}}</label>
+                <input type="checkbox"
+                       name="forward_login"
+                       id="forward_login"
+                       class="form-control"
+                       value="{{settings.input.forward_login}}"
+                       ng-model="settings.input.forward_login">
+                <bb-help-text trans="_t('forward_login_info')"></bb-help-text>
+            </div>-->
+            <div class="alert alert-warning" ng-if="settings.reboot || settings.reboot_tz">{{_t('settings_box_reboot')}}</div>
+        </fieldset>
+        <fieldset class="submit-entry">
+            <!-- Save -->
+            <button type="submit" class="btn btn-submit" title="{{_t('btn_save')}}">
+                <i class="fa fa-check"></i> <span class="btn-name">{{_t('btn_save')}}</span>
+            </button>
+        </fieldset>
+    </form>
+    <!-- assocAddModal -->
+    <div ng-include="'app/views/settings/modal_timezone.html'"></div>
+</div>

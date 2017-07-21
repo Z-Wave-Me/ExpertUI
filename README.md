@@ -3,12 +3,37 @@ zwave-expertui
 
 This User Interfaces allows to operate a Smart Home Network based on Z-Wave devices. It utilizes the software architecture "Z-Way", certified as Z-Wave Plus Controller.
 
+## v1.3.0
+#### New features
+- Progress bar in the  firmware update tab.
+- Thermostat SetPoint has step of 0.5 deg
+- Analytics: Zniffer, Background noise, Noise Meter, Zniffer History.
+- Settings: Time and date format, Firmware Update, Bug report.
+- Network: Statistics visualization, Link status.
+
+#### Changes
+- Firmware update: Target ID as select.
+- Neighbors: Completely refactored.
+
+#### Fixes
+- Switches are duplicated.
+- Door lock open status is not shown.
+- Not available selection for two dongles.
+- The wakeup is shown, but device is mains powered.
+- Expert commands with multiple parameters are wrong.
+- Water Meters are not shown in the list of Meters question.
+- Can't configure second parameter.
+- In expert commands SwitchBinary 0 is sent instead of 255.
+- In routing table timestamps are not updated.
+- When I press Update on motion and tamper th clock is not becoming red.
+- F/w update UI is shown, but device don't have FirmwareUpgrade CC.
+- Thermostat widget sends wrong command.
+
 ## v1.2.0
 #### New features
 - Notifications page.
 - UZB: Button for uploading bootloader/firmware.
 - Interview progress bar.
-- CIT: network name, time format, firmware update, time zone, busy indicator, interview progressbar, network statitstics, primiscuous mode.
 - Icons in the menu.
 - Enhanced display on mobile devices and tablets.
 - Spinner indicators.
@@ -27,6 +52,7 @@ This User Interfaces allows to operate a Smart Home Network based on Z-Wave devi
 - Folder app/core removed.
 
 #### Fixes
+- Fixing not configured devices on the homepage.
 - Can't configure second parameter #174
 - In routing table timestamps are not updated #161
 - LICENSE file missing #213

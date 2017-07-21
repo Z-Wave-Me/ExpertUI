@@ -27,17 +27,12 @@ appFactory.factory('_', function () {
 appFactory.factory('dataService', function ($http, $q, $interval, $filter, $location, $window, deviceService, myCache, cfg) {
     var updatedTime = Math.round(+new Date() / 1000);
     var apiData;
-    var apiDataInterval;
-    var queueDataInterval;
     /**
      * Public functions
      */
     return({
-        getZwaveData: getZwaveData,
-        joinedZwaveData: joinedZwaveData,
-        cancelZwaveDataInterval: cancelZwaveDataInterval,
-        purgeCache: purgeCache,
         // With promises
+        pingNet: pingNet,
         getCfgXml: getCfgXml,
         putCfgXml: putCfgXml,
         getUzb: getUzb,
@@ -54,17 +49,30 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         postApi: postApi,
         postToRemote: postToRemote,
         getRemoteData: getRemoteData,
+        sessionApi: sessionApi,
         xmlToJson: xmlToJson,
         getTextFile: getTextFile,
         storeTextToFile: storeTextToFile,
-        updateDeviceFirmware: updateDeviceFirmware,
         uploadApiFile: uploadApiFile,
-        // Probably remove
-        store: store,
-        updateZwaveDataSince: updateZwaveDataSince,
-        getReorgLog: getReorgLog,
-        putReorgLog: putReorgLog
+        postReport: postReport,
+        getAppBuiltInfo: getAppBuiltInfo
     });
+    /**
+     * Check if given url is on-line
+     * @param {string} url
+     */
+    function pingNet(url) {
+        return $http({
+            method: 'HEAD',
+            url: url,
+            timeout: 20000
+        }).then(function (response) {
+            return response;
+        }, function (response) {
+            return $q.reject(response);
+        });
+
+    }
     /**
      * Get IP
      */
@@ -76,91 +84,6 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             }
         }
 
-    }
-
-    /**
-     * Gets all of the data in the remote collection.
-     */
-    function getZwaveData(callback, noCache) {
-        getAppIp();
-        var time = Math.round(+new Date() / 1000);
-        if (apiData && !noCache) {
-            return callback(apiData);
-        } else {
-
-            //pageLoader();
-            var request = $http({
-                method: "POST",
-                url: cfg.server_url + cfg.update_url + "0"
-                        //url: 'storage/all_cp.json'
-            });
-            request.success(function (data) {
-                apiData = data;
-                //pageLoader(true);
-                return callback(data);
-            }).error(function () {
-                //pageLoader(true);
-                handleError(false, true, false);
-
-
-            });
-        }
-    }
-
-
-
-    /**
-     * Get updated data and join with ZwaveData
-     */
-    function  joinedZwaveData(callback) {
-        var time = Math.round(+new Date() / 1000);
-
-        var result = {};
-        var refresh = function () {
-            //console.log(apiData);
-            var request = $http({
-                method: "POST",
-                //url: "storage/updated.json"
-                url: cfg.server_url + cfg.update_url + time
-            });
-            request.success(function (data) {
-                if (!apiData || !data)
-                    return;
-                time = data.updateTime;
-                angular.forEach(data, function (obj, path) {
-                    if (!angular.isString(path)) {
-                        return;
-                    }
-                    var pobj = apiData;
-                    var pe_arr = path.split('.');
-                    for (var pe in pe_arr.slice(0, -1)) {
-                        pobj = pobj[pe_arr[pe]];
-                    }
-                    pobj[pe_arr.slice(-1)] = obj;
-                });
-                result = {
-                    "joined": apiData,
-                    "update": data
-                };
-                return callback(result);
-            }).error(function () {
-                handleError();
-
-            });
-        };
-        apiDataInterval = $interval(refresh, cfg.interval);
-    }
-
-
-    /**
-     * Cancel data interval
-     */
-    function cancelZwaveDataInterval() {
-        if (angular.isDefined(apiDataInterval)) {
-            $interval.cancel(apiDataInterval);
-            apiDataInterval = undefined;
-        }
-        return;
     }
 
     /**
@@ -391,18 +314,19 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
     /**
      * Get updated data and join with ZwaveData
      */
-    function  loadJoinedZwaveData(ZWaveAPIData) {
-        var time = Math.round(+new Date() / 1000);
+    function  loadJoinedZwaveData() {
         var cacheName = 'zwaveapidata';
         var apiData = myCache.get(cacheName);// || ZWaveAPIData;
-        //console.log(apiData)
-        var result = {};
+        var result = {
+            joined: apiData,
+            update: {}
+        };
         return $http({
             method: 'post',
             url: cfg.server_url + cfg.update_url + updatedTime
         }).then(function (response) {
-            if (typeof response.data === 'object' && apiData) {
-                //time = response.data.updateTime;
+            if (_.size(response.data)> 1 && apiData) {
+                //console.log('Response > 1')
                 angular.forEach(response.data, function (obj, path) {
                     if (!angular.isString(path)) {
                         return;
@@ -414,17 +338,17 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
                     }
                     pobj[pe_arr.slice(-1)] = obj;
                 });
-                result = {
-                    "joined": apiData,
-                    "update": response.data
-                };
+                result.update = response.data;
                 response.data = result;
                 updatedTime = ($filter('hasNode')(response, 'data.update.updateTime') || Math.round(+new Date() / 1000));
                 myCache.put(cacheName, apiData);
                 return response;
             } else {
+                response.data = result;
+                //console.log('Response === 1')
+                return response;
                 // invalid response
-                return $q.reject(response);
+                //return $q.reject(response);
             }
         }, function (response) {
             // something went wrong
@@ -571,7 +495,23 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             return $q.reject(error);
         });
     }
-    
+
+    /**
+     * Get Z-Wave session
+     * @returns {unresolved}
+     */
+    function sessionApi() {
+        return $http({
+            method: "get",
+            url: cfg.server_url + cfg['session']
+        }).then(function (response) {
+            return response;
+        }, function (response) {// something went wrong
+            //return response;
+            return $q.reject(response);
+        });
+    }
+
     /**
      * Get XML from url and convert it to JSON
      * @param {string} url
@@ -645,25 +585,6 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         });
     }
 
-    /**
-     * Run Firmware Update
-     */
-    function updateDeviceFirmware(nodeId, data) {
-        var uploadUrl = cfg.server_url + cfg.fw_update_url + '/' + nodeId;
-        var fd = new FormData();
-        fd.append('file', data.file);
-        fd.append('url', data.url);
-        fd.append('targetId', data.targetId);
-        $http.post(uploadUrl, fd, {
-            transformRequest: angular.identity,
-            headers: {'Content-Type': undefined}
-        }).success(function () {
-            handleSuccess(data);
-        }).error(function () {
-            handleError();
-        });
-
-    }
 
     /**
      * Upload a file to ZAutomation
@@ -686,301 +607,44 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
 
     }
 
-    /* /////////////////////////////////////// Probably remove /////////////////////////////////////////////// */
     /**
-     *
-     * Handle errors
+     * Post a bug report on the remote server
+     * @param {object} data
+     * @returns {unresolved}
      */
-    function handleError(message, showResponse, hideContent) {
-        // Custom IP show/hide
-        $('.custom-ip-error').show();
-        $('.custom-ip-success').hide();
-
-        var msg = (message ? message : 'Error handling data from server');
-        if (showResponse) {
-            $('#respone_container').show();
-            $('#respone_container_inner').html('<div class="alert alert-danger alert-dismissable response-message"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <i class="icon-ban-circle"></i> ' + msg + '</div>');
-        }
-        $('.error-hide').hide();
-
-        if (hideContent) {
-            $('#main_content').hide();
-        }
-
-        console.log('Error');
-
-    }
-
-    /**
-     *
-     * Handle cmd errors
-     */
-    function handleCmdError(message) {
-        var msg = (message ? message : 'Error handling data from server');
-        $('#respone_container').show();
-        $('#respone_container_inner').html('<div class="alert alert-danger alert-dismissable response-message"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <i class="icon-ban-circle"></i> ' + msg + '</div>');
-        console.log('Error');
-
-    }
-
-    /**
-     * Handle success response
-     */
-    function handleSuccess(response) {
-        console.log('Success');
-        return;
-
-    }
-
-    /**
-     * Clear the cached ZWaveData.
-     */
-    function purgeCache() {
-        apiData = undefined;
-    }
-    /**
-     * todo: Deprecated (used only in ReorganizationController)
-     * Gets one update of data in the remote collection since a specific time.
-     * @param since the time (in seconds) to update from.
-     * @param callback called in case of successful data reception.
-     * @param errorCallback called in case of error.
-     */
-    function updateZwaveDataSince(since, callback, errorCallback) {
-        var time = since;
-        var request = $http({
+    function postReport(data) {
+        return $http({
             method: "POST",
-            url: cfg.server_url + cfg.update_url + time
-        });
-        request.success(function (data) {
-            time = data.updateTime;
-            return callback(data);
-        }).error(function (error) {
-            handleError();
-            if (errorCallback !== undefined)
-                errorCallback(error);
-        });
-    }
-    /**
-     * todo: Deprecated (used only in ReorganizationController)
-     * Run store api cmd
-     */
-    function store(param, success, error) {
-        var url = cfg.server_url + cfg.store_url + param;
-        var request = $http({
-            method: 'POST',
-            url: url
-        });
-        request.success(function (data) {
-            handleSuccess(data);
-            if (success)
-                success();
-        }).error(function (err) {
-            handleError();
-            if (error)
-                error(err);
-        });
-
-    }
-
-    /**
-     * todo: Deprecated (used only in ReorganizationController)
-     * Gets reorg log from remote text file
-     */
-    function getReorgLog(callback) {
-        return $http({method: 'GET', url: cfg.server_url + cfg.reorg_log_url + '?at=' + (new Date()).getTime()}).success(function (data, status, headers, config) {
-            callback(data);
+            url: cfg.post_report_url,
+            data: $.param(data),
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+        }).then(function (response) {
+            return response;
+        }, function (response) {// something went wrong
+            return $q.reject(response);
         });
     }
 
     /**
-     * todo: Deprecated (used only in ReorganizationController)
-     * Put reorg log in remote text file
+     * Get app built info
+     * @param {string} file
+     * @returns {unresolved}
      */
-    function putReorgLog(log) {
-        return $.ajax({
-            type: "PUT",
-            dataType: "text",
-            url: cfg.server_url + cfg.reorg_log_url,
-            contentType: "text/plain",
-            data: log
+    function getAppBuiltInfo() {
+        return $http({
+            method: 'get',
+            url: cfg.app_built_info
+        }).then(function (response) {
+            if (typeof response.data === 'object') {
+                return response;
+            } else {// invalid response
+                return $q.reject(response);
+            }
+        }, function (response) {// something went wrong
+            return $q.reject(response);
         });
+
     }
-
-
-
-    /* /////////////////////////////////////// Remove /////////////////////////////////////////////// */
-
-
-    /**
-     * todo: deprecated
-     * Run api cmd
-     */
-    /*function runCmd(param, request, error, noFade) {
-     var url = (request ? cfg.server_url + request : cfg.server_url + cfg.store_url + param);
-     var request = $http({
-     method: 'POST',
-     url: url
-     });
-     request.success(function (data) {
-     if (!noFade) {
-     $('button .fa-spin,a .fa-spin').fadeOut(1000);
-     }
-
-     handleSuccess(data);
-     }).error(function () {
-     if (!noFade) {
-     $('button .fa-spin,a .fa-spin').fadeOut(1000);
-     }
-     if (error) {
-     $window.alert(error + '\n' + url);
-     }
-
-     });
-
-     }*/
-
-
-    /**
-     * todo: deprecated
-     * Get zddx device selection
-     */
-    /*function getSelectZDDX(nodeId, callback, alert) {
-     var request = $http({
-     method: "POST",
-     url: cfg.server_url + cfg.store_url + 'devices[' + nodeId + '].GuessXML()'
-     });
-     request.success(function (data) {
-     return callback(data);
-     }).error(function () {
-     $(alert).removeClass('allert-hidden');
-
-     });
-     }*/
-
-    /**
-     * todo: deprecated
-     * Get ZddXml file
-     */
-    /*function getZddXml(file, callback) {
-     var cachedZddXml = myCache.get(file);
-     if (cachedZddXml) {
-     return callback(cachedZddXml);
-     } else {
-     var request = $http({
-     method: "get",
-     url: cfg.server_url + cfg.zddx_url + file
-     });
-     request.success(function (data) {
-     var x2js = new X2JS();
-     var json = x2js.xml_str2json(data);
-     myCache.put(file, json);
-     return callback(json);
-     }).error(function () {
-     handleError();
-
-     });
-     }
-     }*/
-
-
-
-    /**
-     * todo: deprecated
-     * Run JavaScript cmd
-     */
-    /*function runJs(param) {
-     var request = $http({
-     method: 'POST',
-     dataType: "json",
-     url: cfg.server_url + cfg.runjs_url + param
-     });
-     request.success(function (data) {
-     handleSuccess(data);
-     }).error(function () {
-     handleError();
-
-     });
-
-     }*/
-
-    /**
-     * todo: deprecated
-     * Run Firmware Update
-     */
-    /*function fwUpdate(nodeId, data) {
-     var uploadUrl = cfg.server_url + cfg.fw_update_url + '/' + nodeId;
-     var fd = new FormData();
-     fd.append('file', data.file);
-     fd.append('url', data.url);
-     fd.append('targetId', data.targetId);
-     $http.post(uploadUrl, fd, {
-     transformRequest: angular.identity,
-     headers: {'Content-Type': undefined}
-     }).success(function () {
-     handleSuccess(data);
-     }).error(function () {
-     handleError();
-     });
-
-     }*/
-
-
-
-
-
-    /**
-     * todo: deprecated
-     * Load Queue data
-     */
-    /*function getQueueData(callback) {
-     if (typeof (callback) != 'function') {
-     return;
-     }
-     ;
-     var request = $http({
-     method: "POST",
-     url: cfg.server_url + cfg.queue_url
-     });
-     request.success(function (data) {
-     return callback(data);
-     }).error(function () {
-     handleError();
-
-     });
-     }*/
-
-    /**
-     * todo: deprecated
-     * Load and update Queue data
-     */
-    /*function updateQueueData(callback) {
-     var refresh = function () {
-     getQueueData(callback);
-     };
-     queueDataInterval = $interval(refresh, cfg.queue_interval);
-     }*/
-
-    /**
-     * todo: deprecated
-     * Show / Hide page loader
-     */
-   /* function pageLoader(hide) {
-        // Custom IP show/hide
-        $('.custom-ip-error').hide();
-        $('.custom-ip-success').show();
-
-        if (hide) {
-            $('#respone_container').hide();
-            $('#main_content').show();
-            $('.error-hide').show();
-            return;
-        }
-        //$('#main_content').hide();
-        $('#respone_container').show();
-        $('#respone_container_inner').html('<div class="alert alert-warning page-load-spinner"><i class="fa fa-spinner fa-lg fa-spin"></i><br /> Loading data....</div>');
-        return;
-
-    }*/
 });
-
-

@@ -12,9 +12,9 @@ appController.controller('ConfigPostfixController', function ($scope, $routePara
     $scope.devices = [];
     $scope.deviceId = 0;
     $scope.deviceName = '';
-    $scope.activeTab = 'postfix';
+    //$scope.activeTab = 'postfix';
     $scope.activeUrl = 'configuration/postfix/';
-    $cookies.tab_config = $scope.activeTab;
+    $cookies.tab_config = 'postfix';
     $scope.postfix = {
         find: false,
         interview: {
@@ -34,9 +34,10 @@ appController.controller('ConfigPostfixController', function ($scope, $routePara
     // Interview data
     $scope.descriptionCont;
     $scope.deviceZddx = [];
-    // Redirect to detail page
-    $scope.changeDevice = function (deviceId) {
-        if (deviceId > 0) {
+
+    // Redirect to device
+    $scope.redirectToDevice = function (deviceId) {
+        if (deviceId) {
             $location.path($scope.activeUrl + deviceId);
         }
     };
@@ -60,8 +61,7 @@ appController.controller('ConfigPostfixController', function ($scope, $routePara
             $scope.postfix.model.p_id = getPId(node);
             $scope.loadPostfix($scope.postfix.model.p_id);
         }, function (error) {
-            $location.path('/error/' + error.status);
-            return;
+            alertify.alertError($scope._t('error_load_data'));
         });
     };
     $scope.loadData($routeParams.nodeId);

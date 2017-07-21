@@ -4,12 +4,15 @@
  */
 
 /**
- * Sensor root controller
+ * Allows receive binary sensor states.
+ * Allows to read different kind of sensor.
+ * Allows to read different kind of meters.
  * @class SensorsController
  *
  */
 appController.controller('SensorsController', function($scope, $filter, $timeout,$interval,cfg,dataService,_) {
     $scope.sensors = {
+        ids: [],
         all: [],
         interval: null,
         show: false
@@ -19,7 +22,6 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
      */
     $scope.$on('$destroy', function() {
         $interval.cancel($scope.sensors.interval);
-        //dataService.cancelZwaveDataInterval();
     });
 
     /**
@@ -33,7 +35,7 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
                 return;
             }
             $scope.sensors.show = true;
-            $scope.refreshZwaveData(ZWaveAPIData);
+            $scope.refreshZwaveData();
         }, function(error) {
             alertify.alertError($scope._t('error_load_data'));
         });
@@ -42,12 +44,25 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function(ZWaveAPIData) {
+    $scope.refreshZwaveData = function() {
         var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
-                setData(response.data.joined);
+            dataService.loadJoinedZwaveData().then(function(response) {
+                var update = false;
+                angular.forEach(response.data.update, function(v, k) {
+                    // Get node ID from response
+                    var findId = k.split('.')[1];
+                    // Check if node ID is in the available devices
+                    if($scope.sensors.ids.indexOf(findId) > -1){
+                        update = true;
+                        //console.log('Updating nodeId: ',findId);
+                        return;
+                    }
+                });
+                // Update found - updating available devices
+                if(update){
+                    setData(response.data.joined);
+                }
             }, function(error) {});
         };
         $scope.sensors.interval = $interval(refresh, $scope.cfg.interval);
@@ -100,19 +115,18 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
         $scope.updateTime = ZWaveAPIData.updateTime;
         $scope.controllerId = ZWaveAPIData.controller.data.nodeId.value;
 
-        // Loop throught devices
         var cnt = 0;
+        // Loop through devices
         angular.forEach(ZWaveAPIData.devices, function(device, k) {
             if (k == 255 || k == $scope.controllerId || device.data.isVirtual.value) {
                 return false;
             }
-            // Loop throught instances
-
+            // Loop through instances
             angular.forEach(device.instances, function(instance, instanceId) {
                 if (instanceId == 0 && device.instances.length > 1) {
                     return;
                 }
-                // Look for SensorBinary - Loop throught 0x30 commandClasses
+                // Command Class SensorBinary (0x30/48)
                 var sensorBinary = instance.commandClasses[0x30];
 
                 if (angular.isObject(sensorBinary)) {
@@ -126,6 +140,7 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
                         // Set object
                         var obj = {};
                         obj['id'] = k;
+                        obj['idSort'] = $filter('zeroFill')(k);
                         obj['iId'] = instanceId;
                         obj['cmd'] = sensorBinary.data.name + '.' + val.name;
                         obj['cmdId'] = '48';
@@ -149,11 +164,14 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
                         }else{
                             $scope.sensors.all.push(obj);
                         }
+                        if($scope.sensors.ids.indexOf(k) === -1){
+                            $scope.sensors.ids.push(k);
+                        }
                     });
                 }
 
 
-                // Look for SensorMultilevel - Loop throught 0x31 commandClasses
+                // Command Class SensorMultilevel (0x31/49)
                 var sensorMultilevel = instance.commandClasses[0x31];
                 if (angular.isObject(sensorMultilevel)) {
                     angular.forEach(sensorMultilevel.data, function(val, key) {
@@ -189,13 +207,15 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
 
                         }else{
                             $scope.sensors.all.push(obj);
+
                         }
-                        // Push to sensors
-                       // $scope.sensors.all.push(obj);
+                        if($scope.sensors.ids.indexOf(k) === -1){
+                            $scope.sensors.ids.push(k);
+                        }
                     });
                 }
 
-                // Look for Meter - Loop throught 0x32 commandClasses
+                // Command Class Meter (0x32/50)
                 var meters = instance.commandClasses[0x32];
                 if (angular.isObject(meters)) {
                     angular.forEach(meters.data, function(meter, key) {
@@ -236,11 +256,15 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
 
                         }else{
                             $scope.sensors.all.push(obj);
+                            $scope.sensors.ids.push(k);
                         }
-                        //$scope.sensors.all.push(obj);
+                        if($scope.sensors.ids.indexOf(k) === -1){
+                            $scope.sensors.ids.push(k);
+                        }
                     });
                 }
-
+                // Command Class Alarm Sensor (0x9C/156)
+                // todo: Deprecated Command Class. Now Alarm/Notication is used instead.
                 var alarmSensor = instance.commandClasses[0x9c];
                 if (angular.isObject(alarmSensor)) {
                     //return;
@@ -277,8 +301,10 @@ appController.controller('SensorsController', function($scope, $filter, $timeout
                         }else{
                             $scope.sensors.all.push(obj);
                         }
-                        // Push to sensors
-                        //$scope.sensors.all.push(obj);
+                        if($scope.sensors.ids.indexOf(k) === -1){
+                            $scope.sensors.ids.push(k);
+                        }
+
                     });
                 }
 

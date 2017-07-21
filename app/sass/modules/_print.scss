@@ -1,0 +1,160 @@
+/* Print
+-------------------------------------------------- */
+
+#page_print{
+    body{
+
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        //color: #000000;
+        background-color: #FFFFFF;
+        -webkit-print-color-adjust: exact;
+        font-size: 11pt;
+        line-height: 1.4em;
+    }
+    #header,.container-installer,#footer,.print-hide,.neighbor-hide{
+        display: none;
+    }
+    #main_content.container{
+        padding: 0;
+       // margin: 10px;
+        //border: solid 1px red;
+        min-width: 100%;
+    }
+    a,h1,h2,h3,h4,h5,h6{
+        //color: red !important;
+
+    }
+  .page-break{
+    page-break-before:always;
+  }
+  .print-header{
+    margin: 0 0 20pt 0;
+    font-size: 16pt;
+    padding: 16pt;
+    background-color: #CCCCCC !important;
+    -webkit-print-color-adjust: exact;
+  }
+  .print-section{
+    margin: 0 0 20pt 0;
+    padding: 16pt;
+    border: solid 1pt #CCCCCC;
+  }
+  .section-title{
+    font-size: 18pt;
+    font-weight: bold;
+    margin: 0 0 20pt 0;
+  }
+  h1{
+    font-size: 16pt;
+    font-weight: normal;
+
+  }
+  .print-entry{
+    //border-bottom: solid 1px #000000;
+    margin: 0 0 20pt 0;
+    padding: 0 0 20pt 0;
+  }
+    .fa{
+       //color: blue !important;
+    }
+    //h1{page-break-before: always;}
+    a{
+        text-decoration: none;
+    }
+    // Text
+    .text-info{
+        color: $app-brand-info !important;
+    }
+    .text-primary{
+        color: $app-brand-primary !important;
+    }
+    .text-success{
+        color: $app-brand-success !important;
+    }
+    .text-danger{
+        color: $app-brand-danger !important;
+    }
+    .text-warning{
+        color: $app-brand-warning !important;
+    }
+
+    .progress-bar-info{
+        background-color: $app-brand-info !important;
+        -webkit-print-color-adjust: exact;
+    }
+   .progress-bar-primary{
+        background-color: $app-brand-primary !important;
+       -webkit-print-color-adjust: exact;
+    }
+   .progress-bar-success{
+        background-color: $app-brand-success !important;
+       -webkit-print-color-adjust: exact;
+    }
+    .progress-bar-danger{
+        background-color: $app-brand-danger !important;
+        -webkit-print-color-adjust: exact;
+    }
+    .progress-bar-warning{
+        background-color: $app-brand-warning !important;
+        -webkit-print-color-adjust: exact;
+    }
+    // Tables
+    table{
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+        td,th{
+            vertical-align: top;
+            text-align: left;
+            padding: 5px;
+            //color: red;
+            border: solid 1px #CCCCCC;
+            display: table-cell;
+            //background-color: #000 !important;
+            //-webkit-print-color-adjust: exact;
+        }
+
+    }
+    // RSSI graph
+    .rssi-container{
+        page-break-after:auto;
+    }
+    .rssi-entry{
+        //overflow: auto;
+        //zoom: 1;
+        page-break-inside: avoid;
+        height: 150mm;
+        width: auto;
+        max-width: 210mm;
+    }
+    // Statistics
+    .page-navi{
+        position: static;
+        .page-navi-in{
+            position: static;
+        }
+    }
+  // Neighbors
+  .page-header{
+    .btn-group{
+      display: none;
+    }
+  }
+  .double-scroll{
+    //display: none;
+  }
+  .rt-cell {
+    display: inline-block;
+    @include appBorderRadius(4px);
+    margin: 4px;
+    border: solid 1px #FFFFFF;
+    text-align: center;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    //font-size: 80%;
+    font-weight:normal;
+
+  }
+
+}
