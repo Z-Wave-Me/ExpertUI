@@ -916,6 +916,45 @@ angApp.filter('fileExtension', function () {
 });
 
 /**
+ * Get a file extension from the path
+ * @function fileExtension
+ */
+angApp.filter('fileExtension', function () {
+    return function (path) {
+        // extract file name from full path ...
+        // (supports `\\` and `/` separators)
+        var basename = path.split(/[\\/]/).pop(),
+            // get last position of `.`
+            pos = basename.lastIndexOf(".");
+        // if file name is empty or ...
+        //  `.` not found (-1) or comes first (0)
+        if (basename === '' || pos < 1) {
+            return '';
+        }
+
+        // extract extension ignoring `.`
+        return basename.slice(pos + 1);
+    };
+});
+
+/**
+ * Convert file size in bytes to human readable with a scale type
+ * @function fileSizeString
+ */
+angApp.filter('fileSizeString', function () {
+    return function (bytes) {
+        var i = -1;
+        var byteUnits = [' kB', ' MB', ' GB', ' TB', 'PB', 'EB', 'ZB', 'YB'];
+        do {
+            bytes = bytes / 1024;
+            i++;
+        } while (bytes > 1024);
+
+        return Math.max(bytes, 0.1).toFixed(1) + byteUnits[i];
+    };
+});
+
+/**
  * Output integer with leading zeros
  * @function zeroFill
  */

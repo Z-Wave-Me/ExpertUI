@@ -6,7 +6,7 @@
  * RouteMapController
  * @author Martin Vach
  */
-appController.controller('RouteMapController', function ($scope, $q,$interval, $filter, $window,cfg, dataService, myCache, _) {
+appController.controller('RouteMapController', function ($scope, $q,$interval, $filter, $window,$timeout,cfg, dataService,deviceService, myCache, _) {
     var zrp;
 
     $scope.routeMap = {
@@ -85,26 +85,41 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
      * @param {object} input
      * @param {string} id
      */
-    $scope.uploadFloorImage = function (files, id) {
-        $scope.toggleRowSpinner(id);
+    $scope.uploadFloorImage = function (files,info,spinner) {
+        // Check allowed file formats
+        if (info.extension.indexOf($filter('fileExtension')(files[0].name)) === -1) {
+            alertify.alertError(
+                $scope._t('upload_format_unsupported', {'__extension__': $filter('fileExtension')(files[0].name)}) + ' ' +
+                $scope._t('upload_allowed_formats', {'__extensions__': info.extension.toString()})
+            );
+            return;
+
+        }
+        // Check allowed file size
+        if (files[0].size > info.size) {
+            alertify.alertError(
+                $scope._t('upload_allowed_size', {'__size__': $filter('fileSizeString')(info.size)}) + ' ' +
+                $scope._t('upload_size_is', {'__size__': $filter('fileSizeString')(files[0].size)})
+            );
+            return;
+
+        }
+        $scope.toggleRowSpinner(spinner);
         var cmd = cfg.server_url + cfg.fw_update_url
         var fd = new FormData();
-        console.log(fd)
-        return;
-
-        fd.append('file', $scope.myFile);
-        fd.append('url', input.url);
-        fd.append('targetId', input.targetId || '0');
+        // Set form data
+        fd.append('file', files[0]);
+        console.log(files[0])
         dataService.uploadApiFile(cmd, fd).then(function (response) {
             $timeout($scope.toggleRowSpinner, 1000);
-            deviceService.showNotifier({message: $scope._t('success_device_firmware_update')});
-            /*$timeout(function () {
+            deviceService.showNotifier({message: $scope._t('reloading')});
+            $timeout(function () {
              alertify.dismissAll();
              $window.location.reload();
-             }, 2000);*/
+             }, 2000);
         }, function (error) {
             $timeout($scope.toggleRowSpinner, 1000);
-            alertify.alertError($scope._t('error_device_firmware_update'));
+            alertify.alertError($scope._t('upload_image_failed'));
         });
     };
 
@@ -113,10 +128,7 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
         var input = {node_positions: nodes};
         console.log(input);
         dataService.postApi('configupdate_url', input).then(function (response) {
-           // $window.location.reload();
-            /*$timeout( function() {
-                $window.location.reload();
-            }, 1000);*/
+           $window.location.reload();
 
         }, function (error) {
             alertify.alertError($scope._t('error_update_data'));

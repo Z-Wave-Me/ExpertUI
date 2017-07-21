@@ -284,6 +284,12 @@ var config_data = {
             },
             'restore_from_backup': {
                 extension: ['zbk']
+            },
+            'routemap': {
+                size: 512000, //Bytes
+                type: ['image/jpeg', 'image/gif'],
+                extension: ['jpg', 'jpeg', 'gif'],
+                dimension: '200 x 200'//px
             }
         },
         // List of the find hosts

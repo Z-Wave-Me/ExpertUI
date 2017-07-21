@@ -132,11 +132,14 @@
             </button>
             </span>
             &nbsp;
-            <input class="inputfile" type="file" name="file" id="file{{v.id}}"
-                   onchange="angular.element(this).scope().checkUploadedFile(this.files, angular.element(this).scope().cfg.upload.icon)"/>
-            <label for="file{{v.id}}" class="btn btn-success" title="{{_t('lb_upload_image')}}"
-                   ng-click="icons.find = v">
-                <i class="fa fa-upload"></i> {{_t('upload_single_icon')}}
+            <input class="inputfile" type="file" name="file" id="file"
+                   onchange="angular.element(this).scope().uploadFloorImage(this.files,angular.element(this).scope().cfg.upload.routemap,'routemap_upload')"/>
+            <label for="file" class="btn btn-default" title="{{_t('upload_image')}}">
+                <bb-row-spinner
+                        spinner="rowSpinner['routemap_upload']"
+                        label="_t('upload_image')"
+                        icon="'fa-upload'">
+                </bb-row-spinner>
             </label>
         </form>
     </div>
