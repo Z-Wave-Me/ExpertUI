@@ -1,5 +1,57 @@
 <!-- Route map -->
 <div ng-controller="RouteMapController">
+
+
+
+    <!-- Control panel -->
+    <div id="controlPanel">
+        <form name="control">
+            <label><input type="checkbox" name="ShowAllRoutes" id="ShowAllRoutes" checked>All routes</label>
+            <label><input type="checkbox" name="ShowNeighbours" id="ShowNeighbours" checked>Node neighbours</label>
+            <label><input type="checkbox" name="ShowRepeatingFor" id="ShowRepeatingFor" checked>Nodes this node is
+                repeating for</label>
+            <label><input type="checkbox" name="ShowAssociations" id="ShowAssociations" checked>Nodes
+                associations</label>
+            <!-- Show annotations-->
+            &nbsp;
+            <button class="btn btn-default" id="ShowAnnotations"
+                    ng-class="routeMap.showAnnotations ? 'active' : ''"
+                    ng-click="routeMap.showAnnotations = !routeMap.showAnnotations">
+                <span ng-if="!routeMap.showAnnotations"><i class="fa fa-eye"></i> Show annotations</span>
+                <span ng-if="routeMap.showAnnotations"><i class="fa fa-eye-slash"></i> Hide annotations</span>
+            </button>
+
+            &nbsp;
+            <!-- Allow node moving -->
+            <button class="btn btn-default" id="AllowNodeMoving"
+                    ng-if="!routeMap.moveNodes"
+                    ng-click="routeMap.startMove(); routeMap.moveNodes = true;">
+                <span><i class="fa fa-share-alt"></i> Allow node moving</span>
+            </button>
+            <span ng-if="routeMap.moveNodes">
+                <!-- Cancel -->
+                <button class="btn btn-warning" id="CancelNodeMoving"
+                        ng-click="routeMap.cancelMoveNodes(); routeMap.moveNodes = false;">
+                <i class="fa fa-remove"></i> Cancel
+                    </button> &nbsp;
+                <!-- Save -->
+                <button class="btn btn-success" id="SaveNodePosition"
+                        ng-click="routeMap.finishMoveNodes(); routeMap.moveNodes = false;">
+                <i class="fa fa-check"></i> Save
+            </button>
+            </span>
+            &nbsp;
+            <input class="inputfile" type="file" name="file" id="file"
+                   onchange="angular.element(this).scope().uploadFloorImage(this.files,angular.element(this).scope().cfg.upload.routemap,'routemap_upload')"/>
+            <label for="file" class="btn btn-default" title="{{_t('upload_image')}}">
+                <bb-row-spinner
+                        spinner="rowSpinner['routemap_upload']"
+                        label="_t('upload_image')"
+                        icon="'fa-upload'">
+                </bb-row-spinner>
+            </label>
+        </form>
+    </div>
     <div class="row">
         <!-- Graph -->
         <div ng-class="routeMap.showAnnotations ? 'col-md-9' : 'col-md-12'">
@@ -92,57 +144,6 @@
     </div>
 
 
-
-
-    <!-- Control panel -->
-    <div id="controlPanel">
-        <form name="control">
-            <label><input type="checkbox" name="ShowAllRoutes" id="ShowAllRoutes" checked>All routes</label>
-            <label><input type="checkbox" name="ShowNeighbours" id="ShowNeighbours" checked>Node neighbours</label>
-            <label><input type="checkbox" name="ShowRepeatingFor" id="ShowRepeatingFor" checked>Nodes this node is
-                repeating for</label>
-            <label><input type="checkbox" name="ShowAssociations" id="ShowAssociations" checked>Nodes
-                associations</label>
-            <!-- Show annotations-->
-            &nbsp;
-            <button class="btn btn-default" id="ShowAnnotations"
-                    ng-class="routeMap.showAnnotations ? 'active' : ''"
-                    ng-click="routeMap.showAnnotations = !routeMap.showAnnotations">
-                <span ng-if="!routeMap.showAnnotations"><i class="fa fa-eye"></i> Show annotations</span>
-                <span ng-if="routeMap.showAnnotations"><i class="fa fa-eye-slash"></i> Hide annotations</span>
-            </button>
-
-            &nbsp;
-            <!-- Allow node moving -->
-            <button class="btn btn-default" id="AllowNodeMoving"
-                    ng-if="!routeMap.moveNodes"
-                    ng-click="routeMap.startMove(); routeMap.moveNodes = true;">
-                <span><i class="fa fa-share-alt"></i> Allow node moving</span>
-            </button>
-            <span ng-if="routeMap.moveNodes">
-                <!-- Cancel -->
-                <button class="btn btn-warning" id="CancelNodeMoving"
-                        ng-click="routeMap.cancelMoveNodes(); routeMap.moveNodes = false;">
-                <i class="fa fa-remove"></i> Cancel
-                    </button> &nbsp;
-                <!-- Save -->
-                <button class="btn btn-success" id="SaveNodePosition"
-                        ng-click="routeMap.finishMoveNodes(); routeMap.moveNodes = false;">
-                <i class="fa fa-check"></i> Save
-            </button>
-            </span>
-            &nbsp;
-            <input class="inputfile" type="file" name="file" id="file"
-                   onchange="angular.element(this).scope().uploadFloorImage(this.files,angular.element(this).scope().cfg.upload.routemap,'routemap_upload')"/>
-            <label for="file" class="btn btn-default" title="{{_t('upload_image')}}">
-                <bb-row-spinner
-                        spinner="rowSpinner['routemap_upload']"
-                        label="_t('upload_image')"
-                        icon="'fa-upload'">
-                </bb-row-spinner>
-            </label>
-        </form>
-    </div>
 
 </div>
 
