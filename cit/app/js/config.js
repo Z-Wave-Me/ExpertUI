@@ -8,8 +8,8 @@ var config_data = {
         'environment': 'live',
         'dev_host': [],
         'app_name': 'Z-Wave CIT',
-        'app_version': '1.3.0',
-        'app_built': '07-07-2017 14:59:55',
+        'app_version': '1.4.0-RC-2',
+        'app_built': '31-07-2017 15:21:09',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -56,6 +56,7 @@ var config_data = {
         'get_network_statistics': '/ZWaveAPI/GetStatisticsData', // get network statistics
 
         // Other APIs
+        'packet_log': '/ZWaveAPI/PacketLog', // Get Packet log
         'session': '/ZAutomation/api/v1/session',
         'zwave_list': '/ZWave/list', // Zwave list of dongles
         'firmwareupdate': '/ZAutomation/api/v1/system/webif-access',
@@ -283,6 +284,12 @@ var config_data = {
             },
             'restore_from_backup': {
                 extension: ['zbk']
+            },
+            'routemap': {
+                size: 512000, //Bytes
+                type: ['image/jpeg', 'image/gif'],
+                extension: ['png','jpg', 'jpeg', 'gif'],
+                dimension: '200 x 200'//px
             }
         },
         // List of the find hosts
