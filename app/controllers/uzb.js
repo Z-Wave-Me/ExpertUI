@@ -6,12 +6,19 @@ appController.controller('UzbController', function ($scope, $timeout, $window, c
     $scope.uzbUpgrade = [];
     $scope.uzbFromUrl = [];
     $scope.alert = {message: false, status: 'is-hidden', icon: false};
+    $scope.token = {
+        input:{
+            token: ''
+        },
+        load: false
+    };
     /**
      * Load data
      *
      */
-    $scope.loadZwaveData = function () {
+    $scope.loadZwaveData = function (token) {
         dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
+            $scope.token.load = token;
             var vendorId = parseInt(ZWaveAPIData.controller.data.manufacturerId.value, 10);
             //0x0115 = 277, 0x0147 = 327
             var allowedVendors = [277, 327];
@@ -23,10 +30,12 @@ appController.controller('UzbController', function ($scope, $timeout, $window, c
                 };
                 return;
             }
+            var tokenParam = (token ? '&token=' + token : '');
             var appVersion = ZWaveAPIData.controller.data.APIVersion.value.split('.');
             var appVersionMajor = parseInt(appVersion[0], 10);
             var appVersionMinor = parseInt(appVersion[1], 10);
-            var urlParams = '?vendorId=' + vendorId + '&appVersionMajor=' + appVersionMajor + '&appVersionMinor=' + appVersionMinor;
+            var bootloaderCRC = ZWaveAPIData.controller.data.bootloaderCRC.value;
+            var urlParams = '?vendorId=' + vendorId + '&appVersionMajor=' + appVersionMajor + '&appVersionMinor=' + appVersionMinor+ '&bootloaderCRC=' + bootloaderCRC + tokenParam;
             //return;
             // Load uzb
             loadUzb(urlParams);
@@ -74,7 +83,6 @@ appController.controller('UzbController', function ($scope, $timeout, $window, c
         }
         $scope.toggleRowSpinner(action);
         var cmd = $scope.cfg.server_url + cfg[action];
-
         fd.append('file', files[0]);
 
         $scope.alert = {
@@ -94,6 +102,24 @@ appController.controller('UzbController', function ($scope, $timeout, $window, c
             $timeout($scope.toggleRowSpinner, 1000);
             alertify.alertError($scope._t('error_update_data') + '\n' + cmd);
         });
+    };
+
+    /**
+     * Add token
+     * @param {object} input
+     */
+    $scope.addToken = function (input) {
+        /*if (input.token === '') {
+            return;
+        }*/
+        $scope.toggleRowSpinner('add_token');
+        $scope.loadZwaveData(input.token);
+
+        $timeout(function () {
+            $scope.toggleRowSpinner();
+        }, 1000);
+
+
     };
 
     /// --- Private functions --- ///

@@ -1,0 +1,23 @@
+<!-- Settings firmware  -->
+<h2 class="accordion-entry-title" ng-click="expandElement('settingsUnregister')">
+    <i class="fa fa-eraser fa-fw"></i>&nbsp;{{_t('cit_settings_unregister')}}
+    <i class="fa accordion-arrow" ng-class="expand.settingsUnregister? 'fa-chevron-up':'fa-chevron-down'"></i>
+</h2>
+<div class="accordion-entry-ctrl" ng-class="" ng-if="expand.settingsUnregister" ng-controller="SettingsUnregisterCITController" ng-submit="handleModal('citUnregisterModal', $event)">
+    <!--<bb-loader></bb-loader>-->
+    <bb-alert alert="unregisterCit.alert"></bb-alert>
+    <form name="form_unregister" id="form_unregister" class="form form-page" ng-if="!unregisterCit.remoteConnection">
+        <fieldset>
+            <div class="form-group">
+                <bb-help-text trans="_t('cit_unregister_info')"></bb-help-text>
+            </div>
+        </fieldset>
+        <fieldset class="submit-entry">
+            <button type="submit" class="btn btn-submit" title="{{_t('cit_unregister_btn')}}" ng-disabled="!isOnline">
+                <i class="fa fa-eraser"></i> <span class="btn-name">{{_t('cit_unregister_btn')}}</span>
+            </button>
+        </fieldset>
+    </form>
+    <!-- assocAddModal -->
+    <div ng-include="'app/views/settings/modal_cit_unregister.html'"></div>
+</div>

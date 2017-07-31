@@ -13,7 +13,8 @@ var angApp = angular.module('angApp', [
     'appConfig',
     'qAllSettled',
     'angularFileUpload',
-    'myAppTemplates'
+    'myAppTemplates',
+    'doubleScrollBars'
 ]);
 
 /**
@@ -21,32 +22,14 @@ var angApp = angular.module('angApp', [
  */
 var config_module = angular.module('appConfig', []);
 // Extend cfg dongle 
-angApp.run(function run($cookies, $rootScope) {
+angApp.run(function run($cookies, $rootScope,deviceService) {
     // Run ubderscore js in views
     $rootScope._ = _;
-
+    // Get dongle from cookie
     if ($cookies.dongle) {
         angular.extend(config_data.cfg, {dongle: $cookies.dongle});
-        angular.extend(config_data.cfg, {
-            update_url: '/ZWave.' + config_data.cfg.dongle + '/Data/',
-            store_url: '/ZWave.' + config_data.cfg.dongle + '/Run/',
-            restore_url: '/ZWave.' + config_data.cfg.dongle + '/Restore',
-            queue_url: '/ZWave.' + config_data.cfg.dongle + '/InspectQueue',
-            fw_update_url: '/ZWave.' + config_data.cfg.dongle + '/FirmwareUpdate',
-            zme_bootloader_upgrade: '/ZWave.' + config_data.cfg.dongle + '/ZMEBootloaderUpgrade',
-            zme_firmware_upgrade: '/ZWave.' + config_data.cfg.dongle + '/ZMEFirmwareUpgrade',
-            license_load_url: '/ZWave.' + config_data.cfg.dongle + '/ZMELicense',
-            zddx_create_url: '/ZWave.' + config_data.cfg.dongle + '/CreateZDDX/',
-            'stat_url': '/ZWave.' + config_data.cfg.dongle + '/CommunicationStatistics',
-            'postfixget_url': '/ZWave.' + config_data.cfg.dongle + '/PostfixGet',
-            'postfixadd_url': '/ZWave.' + config_data.cfg.dongle + '/PostfixAdd',
-            'postfixremove_url': '/ZWave.' + config_data.cfg.dongle + '/PostfixRemove',
-            //'communication_history_url': '/ZWave.' + config_data.cfg.dongle + '/CommunicationHistory',
-            'configget_url': '/ZWave.' + config_data.cfg.dongle + '/ExpertConfigGet',
-            'configupdate_url': '/ZWave.' + config_data.cfg.dongle + '/ExpertConfigUpdate'
-
-        });
     }
+    deviceService.setDongle(config_data.cfg.dongle);
 });
 
 angular.forEach(config_data, function (key, value) {
@@ -82,6 +65,11 @@ angApp.run(function ($rootScope, $location, deviceService, cfg) {
     });
 });
 
+
+angApp.config(['$compileProvider', function ($compileProvider) {
+    $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|blob|):/);
+}]);
+
 /**
  * Intercepting HTTP calls with AngularJS.
  * @function config
@@ -110,27 +98,16 @@ angApp.config(function ($provide, $httpProvider, cfg) {
             // On response failture
             responseError: function (rejection) {
                 deviceService.logError(rejection);
-                /*if(config_data.cfg.app_type === "installer" && rejection.data.code == 401) {
-                    //alertify.alertWarning($scope._t('Login'));
-                    $location.path("/");
-                    return $q.reject(rejection);
-                } else {
-                    // Return the promise rejection.
-                    return $q.reject(rejection);
-                }*/
-
-
-                /*switch(rejection.status){
-                    case 401:
-                        if (path[1] !== '') {
+                if (rejection.status === 401) {
+                    switch(cfg.app_type){
+                        case 'installer':
                             deviceService.logOut();
                             break;
-
-                        }
-                    default:
-                        break;
-
-                }*/
+                        default:
+                            $window.location.href = cfg.smarthome_login;
+                            break;
+                    }
+                }
                 // Return the promise rejection.
                 return $q.reject(rejection);
             }

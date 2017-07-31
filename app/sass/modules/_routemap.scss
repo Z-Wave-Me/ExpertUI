@@ -1,0 +1,44 @@
+/* Route map
+-------------------------------------------------- */
+#page_routemap{
+    #main_content.container {
+        max-width: 100%;
+        width: 100%;
+    }
+}
+#graph {
+    width:99%;
+    height: 99%;
+}
+.annotation-title {
+    font-weight: bold;
+}
+#controlPanel {
+    //position: absolute;
+    padding: $spacing;
+    margin: $spacing 0;
+    background-color: #e4f5fc;
+    border: solid 1px $app-border-color;
+    label{
+        font-weight: normal;
+    }
+}
+#annotationPanel {
+    //position: absolute;
+    right: 0;
+}
+#plan {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1;
+}
+#svg {
+    padding: $spacing-double;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}

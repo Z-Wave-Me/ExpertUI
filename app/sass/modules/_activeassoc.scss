@@ -1,8 +1,13 @@
 /* Active assoc
 -------------------------------------------------- */
-.badge-assoc{
+/*.badge-assoc{
     margin: 0 5px 5px 0;
     padding: 5px;
+}*/
+.active-assoc-entry{
+    .btn{
+       margin: 0 $spacing-half $spacing-half 0;
+    }
 }
 
 .btn-group-assoc-devices.false-false .btn {

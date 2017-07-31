@@ -57,7 +57,13 @@
     }
   }
   .navibar-item-root,.timestamp{
-    padding: 0 $spacing + $spacing-half;
+     padding: 0 $spacing + $spacing-half;
+     display: inline-block;
+     color: $header-a-color;
+
+   }
+  .jobs{
+    //padding: 0 $spacing + $spacing-half;
     display: inline-block;
     color: $header-a-color;
 

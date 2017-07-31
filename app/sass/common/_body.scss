@@ -86,6 +86,9 @@ h4 {
         font-size:$app-header-h1-font-size;
         font-weight:bold;
     }
+    .header-col{
+        padding: 0;
+    }
 }
 
 .perex{
@@ -135,20 +138,35 @@ h4 {
 }
 
 .red,.is-updated-false{
-    color: red;
+    color: red !important;
 }
 
 .green,.is-rfreshed{
-    color: green;
+    color: green !important;
 }
+.green-light{
+    color: #8C0 !important;
+}
+
 .yellow{
-    color: yellow;
+    color: yellow !important;
 }
 .gray{
-    color: gray;
+    color: gray !important;
+}
+.gray-light{
+    color: #cccccc !important;
 }
 .orange{
-    color: orange;
+    color: orange !important;
+}
+.black{
+    color: black !important;
+}
+
+.blue-info{
+    color: #5bc0de !important;
+
 }
 
 .main_spinner{
@@ -164,7 +182,7 @@ h4 {
 }
 /* Links
 -------------------------------------------------- */
-a {
+a, .order-by {
     color: $app-a-color;
     text-decoration: none;
 
@@ -220,6 +238,9 @@ a {
 
 .clickable{
     cursor: pointer;
+}
+.notclickable{
+    cursor: text;
 }
 
 .text-supp{
@@ -298,4 +319,35 @@ a {
 -------------------------------------------------- */
 .progress {
     margin-bottom: 0;
+}
+
+/* Hide elements
+-------------------------------------------------- */
+#page_init{
+    #header,.container-installer,#footer{
+        display: none;
+    }
+}
+
+/* Security 2 icons
+-------------------------------------------------- */
+.security-2{
+    &.fa-stack{
+        width: 1em;
+    }
+    .fa-stack-1x,.fa-stack-1x{
+        text-align: left;
+    }
+    .icon-bottom{
+        color: darkgray;
+    }
+    .icon-top{
+        color: green;
+        left:4px; top:4px;
+    }
+    &.false{
+        .icon-top{
+            color: #a94442;
+        }
+    }
 }

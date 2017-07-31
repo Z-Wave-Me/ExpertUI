@@ -7,8 +7,9 @@ var appService = angular.module('appService', []);
 /**
  * Device service
  */
-appService.service('deviceService', function($filter, $log, $cookies,$window,_) {
+appService.service('deviceService', function($filter, $log, $cookies,$window,$location,cfg,_) {
     /// --- Public functions --- ///
+
     /**
      * Mobile device detect
      */
@@ -30,7 +31,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
     this.showNotifier = function (notifier) {
         var param = _.defaults(notifier, {position: 'top-right', message: false, type: 'success', wait: 5});
         if (notifier.message) {
-            alertify.set('notifier', 'position', 'top-right');
+            alertify.set('notifier', 'position', param.position);
             alertify.notify(param.message, param.type, param.wait);
         }
     };
@@ -52,11 +53,48 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
     };
 
     /**
+     * Set dongle
+     */
+    this.setDongle = function(dongle) {
+        angular.extend(cfg, {
+            'update_url': '/ZWave.' + dongle+ '/Data/',
+            'store_url': '/ZWave.' + dongle+ '/Run/',
+            'restore_url': '/ZWave.' + dongle+ '/Restore',
+            'queue_url': '/ZWave.' + dongle+ '/InspectQueue',
+            'fw_update_url': '/ZWave.' + dongle+ '/FirmwareUpdate',
+            'zme_bootloader_upgrade': '/ZWave.' + dongle+ '/ZMEBootloaderUpgrade',
+            'zme_firmware_upgrade': '/ZWave.' + dongle+ '/ZMEFirmwareUpgrade',
+            'upload_bootloader': '/ZWave.' + dongle+ '/ZMEBootloaderUpgrade',
+            'upload_firmware': '/ZWave.' + dongle+ '/ZMEFirmwareUpgrade',
+            'license_load_url': '/ZWave.' + dongle+ '/ZMELicense',
+            'stat_url': '/ZWave.' + dongle+ '/CommunicationStatistics',
+            'postfixget_url': '/ZWave.' + dongle+ '/PostfixGet',
+            'postfixadd_url': '/ZWave.' + dongle+ '/PostfixAdd',
+            'postfixremove_url': '/ZWave.' + dongle+ '/PostfixRemove',
+            'checklinks': '/ZWave.' + dongle+ '/CheckAllLinks',
+            'zniffer_url': '/ZWave.' + dongle+ '/Zniffer',
+            'communication_history_url': '/ZWave.' + dongle+ '/CommunicationHistory',
+            'rssi_chart': '/ZWave.' + dongle+ '/RSSIGet',
+            'configget_url': '/ZWave.' + dongle+ '/ExpertConfigGet',
+            'configupdate_url': '/ZWave.' + dongle+ '/ExpertConfigUpdate',
+            'call_all_nif': '/ZWave.' + dongle+ '/CallForAllNIF',
+            'test_node': '/ZWave.' + dongle+ '/TestNode/',
+            'network_statistics': '/ZWave.' + dongle+ '/Run/',
+            'post_report_api': '/ZWave.' + dongle+ '/sendZWayReport',
+            'reorg_run_url': '/ZWave.' + dongle+ '/NetworkReorganization',
+            'reorg_log_url': '/ZWave.' + dongle+ '/GetReorganizationLog',
+            'zddx_create_url': '/ZWave.' + dongle+ '/CreateZDDX/',
+            'get_network_statistics': '/ZWave.' + dongle+ '/GetStatisticsData'
+
+        });
+    };
+
+    /**
      * Get user data from cookies
      * @returns {Array|Boolean}
      */
     this.getUser = function () {
-        var user = ($cookies.user !== 'undefined' ? angular.fromJson($cookies.user) : false);
+        var user = ($cookies.user && !!$cookies.user && $cookies.user !== 'undefined' ? angular.fromJson($cookies.user) : false);
         return user;
     };
 
@@ -66,11 +104,12 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
      * @returns {Boolean|Object}
      */
     this.setUser = function (data) {
-        if (!data) {
+        if (data && !!data) {
+            $cookies.user = angular.toJson(data);
+        } else {
             delete $cookies['user'];
             return false;
         }
-        $cookies.user = angular.toJson(data);
         return data;
     };
 
@@ -96,11 +135,12 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
      * @returns {Boolean|Object}
      */
     this.setZWAYSession = function (sid) {
-        if (!sid) {
+        if (sid && !!sid) {
+            $cookies.ZWAYSession = sid;
+        } else {
             delete $cookies['ZWAYSession'];
             return false;
         }
-        $cookies.ZWAYSession = sid;
     };
 
     /**
@@ -110,19 +150,63 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
     this.logOut = function () {
         this.setUser(null);
         this.setZWAYSession(null);
-        $window.location.href = '#/';
+        // Check if host is in the logout redirect list
+        var redirect = cfg.logout_redirect[$location.host()];
+        // Redirect to an url from list
+        if(redirect){
+            $window.location.href = redirect;
+            return;
+        }
+        $window.location.href = '#/?logout';
         $window.location.reload();
-
     };
 
     /**
      * Check if is not device
      */
     this.notDevice = function(ZWaveAPIData, node, nodeId) {
-        if (nodeId == 255 || nodeId == ZWaveAPIData.controller.data.nodeId.value || node.data.isVirtual.value) {
+        /*if (nodeId == 255 || nodeId == ZWaveAPIData.controller.data.nodeId.value || node.data.isVirtual.value) {
+            return true;
+        }*/
+        if (nodeId == 255 || node.data.isVirtual.value) {
             return true;
         }
         return false;
+    };
+
+    /**
+     * Get device type
+     */
+    this.deviceType = function(node) {
+        var type;
+        var isListening = node.data.isListening.value;
+        var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
+        //var hasWakeup = 0x84 in node.instances[0].commandClasses;
+        var hasWakeup = !isListening && !node.data.sensor250.value && !node.data.sensor1000.value;
+
+        if (node.data.genericType.value === 1) {
+            type = 'portable';
+        } else if (node.data.genericType.value === 2) {
+            type = 'static';
+        } else if (isFLiRS) {
+            type = 'flirs';
+        } else if (hasWakeup) {
+            type = 'battery';
+        } else if (isListening) {
+            type = 'mains';
+        } else {
+            type = 'unknown';
+        }
+        return type;
+    };
+
+    /**
+     * Get last communication
+     */
+    this.lastCommunication = function(node) {
+        var lastReceive = parseInt(node.data.lastReceived.updateTime, 10) || 0;
+        var lastSend = parseInt(node.data.lastSend.updateTime, 10) || 0;
+        return (lastSend > lastReceive) ? lastSend : lastReceive;
     };
 
     /**
@@ -143,7 +227,8 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
      * Check if device isFLiRS
      */
     this.isFLiRS = function(node) {
-        return !node.data.isListening.value && (node.data.sensor250.value || node.data.sensor1000.value);
+        return  (node.data.sensor250.value || node.data.sensor1000.value);
+       // return !node.data.isListening.value && (node.data.sensor250.value || node.data.sensor1000.value);
     };
 
     /**
@@ -151,6 +236,70 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
      */
     this.isLocalyReset = function(node) {
         return isLocalyReset(node);
+    };
+
+    /**
+     * Check if device has a given command class
+     */
+    this.hasCommandClass = function(node,ccId) {
+        var hasCc = false;
+        angular.forEach(node.instances, function(instance, instanceId) {
+        if(instance.commandClasses[ccId]){
+            hasCc = instance.commandClasses[ccId];
+            return;
+           }
+        });
+        return hasCc;
+    };
+
+    /**
+     * Check if all device interviews are done
+     */
+    this.allInterviewsDone = function(instances) {
+        var  interviewDone = true;
+        for (var iId in instances) {
+            for (var ccId in instances[iId].commandClasses) {
+                var isDone = instances[iId].commandClasses[ccId].data.interviewDone.value;
+                if (isDone === false) {
+                   return false
+                }
+            }
+        }
+        return interviewDone;
+    };
+
+    /**
+     * Get S2 granted keys
+     * @param {Object} hasSecurityS2Cc
+     * @returns {Array}
+     */
+    this.getS2GrantedKeys = function(hasSecurityS2Cc) {
+        var securityS2Key = [];
+        if($filter('hasNode')(hasSecurityS2Cc,'data.interviewDone.value')){
+            securityS2Key.push('S0');
+            if($filter('hasNode')(hasSecurityS2Cc,'data.grantedKeys.S2Unauthenticated.value')){
+                securityS2Key.push('S2 Unauthenticated');
+            }
+            if($filter('hasNode')(hasSecurityS2Cc,'data.grantedKeys.S2Authenticated.value')){
+                securityS2Key.push('S2 Authenticated');
+            }
+            if($filter('hasNode')(hasSecurityS2Cc,'data.grantedKeys.S2Access.value')){
+                securityS2Key.push('S2 Access');
+            }
+        }
+        return securityS2Key;
+    };
+
+    /**
+     * Get a value from custom config
+     * @param {string} key
+     * @returns {string}
+     */
+    this.getCustomCfgVal = function (key) {
+        if (cfg.custom_cfg[cfg.app_type]) {
+            return cfg.custom_cfg[cfg.app_type][key] || '';
+        }
+        return '';
     };
     
     /**
@@ -382,8 +531,8 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
     function isLocalyReset(node) {
         var isLocalyReset = false;
         for (var iId in node.instances) {
-            if (node.instances[iId].commandClasses[90]) {
-                isLocalyReset = node.instances[iId].commandClasses[90].data.reset.value;
+            if (node.instances[iId].commandClasses[90] && node.instances[iId].commandClasses[90].data.reset.value) {
+                isLocalyReset = true;
             }
         }
         return isLocalyReset;
@@ -422,14 +571,18 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+            if (nodeId == 255 || node.data.isVirtual.value) {
                 return;
             }
+            /*if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+                return;
+            }*/
             var node = ZWaveAPIData.devices[nodeId];
             // Set object
             var obj = {};
             obj['id'] = nodeId;
             obj['name'] = $filter('deviceName')(nodeId, node);
+            obj['isController'] = (controllerNodeId == nodeId);
             devices.push(obj);
         });
         return devices;
@@ -461,6 +614,9 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
      *  Get interview Commands
      */
     function configGetInterviewCommands(node, updateTime) {
+        if(!node){
+            return [];
+        }
         var interviews = [];
         for (var iId in node.instances) {
             var cnt = 0;
@@ -626,7 +782,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
             if (cfgFile[conf_num] !== undefined) {
                 config_config_value = cfgFile[conf_num];
             } else {
-                if (config_zwave_value !== null) {
+               if (config_zwave_value !== null) {
                     config_config_value = config_zwave_value;
                 } else {
                     config_config_value = conf_default;
@@ -882,12 +1038,17 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
                                 }
                             });
                     });
+
                     if (conf_default !== null) {
-                        conf_default_value = '';
-                        for (var ii in conf_default_value_arr)
+                        conf_default_value = conf_default;
+                        //conf_default_value = '';
+                        for (var ii in conf_default_value_arr){
                             conf_default_value += conf_default_value_arr[ii] + ', ';
-                        if (conf_default_value.length)
+                        }
+                        if (conf_default_value.length){
                             conf_default_value = conf_default_value.substr(0, conf_default_value.length - 2);
+                        }
+
                     }
                     conf_method_descr = {
                         nodeId: nodeId,
@@ -906,8 +1067,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
                         confNum: conf_num,
                         confSize: conf_size
                     };
-                    //console.log(conf_method_descr)
-                    break;
+                   break;
                 default:
                     return;
                     //conf_cont.append('<span>' + $.translate('unhandled_type_parameter') + ': ' + conf_type + '</span>');
@@ -1037,6 +1197,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
                 wakeup_cont = {
                     'params': gui_descr,
                     'values': {"0": wakeup_conf_value},
+                    type: 'wakeup',
                     name: 'wakeup_' + nodeId + '_' + 0,
                     updateTime: updateTime,
                     isUpdated: isUpdated,
@@ -1339,5 +1500,21 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,_) 
         xml += '</devices></config>' + "\n";
         return xml;
 
+    }
+
+    /**
+     * Get Z-Wave session
+     * @returns {unresolved}
+     */
+    function sessionApi() {
+        return $http({
+            method: "get",
+            url: cfg.server_url + cfg['session']
+        }).then(function (response) {
+            return response;
+        }, function (response) {// something went wrong
+            //return response;
+            return $q.reject(response);
+        });
     }
 });

@@ -4,12 +4,13 @@
  */
 
 /**
- * Meter root controller
+ * Allows to control different kind of meters.
  * @class MetersController
  *
  */
 appController.controller('MetersController', function($scope, $filter, $timeout,$interval,dataService, cfg,_) {
     $scope.meters = {
+        ids: [],
         all: [],
         interval: null,
         show: false
@@ -33,7 +34,7 @@ appController.controller('MetersController', function($scope, $filter, $timeout,
                 return;
             }
             $scope.meters.show = true;
-            $scope.refreshZwaveData(ZWaveAPIData);
+            $scope.refreshZwaveData();
         }, function(error) {
             alertify.alertError($scope._t('error_load_data'));
         });
@@ -44,10 +45,24 @@ appController.controller('MetersController', function($scope, $filter, $timeout,
      * Refresh zwave data
      * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function(ZWaveAPIData) {
+    $scope.refreshZwaveData = function() {
         var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
-                setData(response.data.joined);
+            dataService.loadJoinedZwaveData().then(function(response) {
+                var update = false;
+                angular.forEach(response.data.update, function(v, k) {
+                    // Get node ID from response
+                    var findId = k.split('.')[1];
+                    // Check if node ID is in the available devices
+                    if($scope.meters.ids.indexOf(findId) > -1){
+                        update = true;
+                        //console.log('Updating nodeId: ',findId);
+                        return;
+                    }
+                });
+                // Update found - updating available devices
+                if(update){
+                    setData(response.data.joined);
+                }
             }, function(error) {});
         };
         $scope.meters.interval = $interval(refresh, $scope.cfg.interval);
@@ -110,11 +125,12 @@ appController.controller('MetersController', function($scope, $filter, $timeout,
                     return;
                 }
 
-                // Look for Meter - Loop throught 0x32 commandClasses
+                // Command Class Meter (0x32/50)
                 var meters = instance.commandClasses[0x32];
                 if (angular.isObject(meters)) {
                     angular.forEach(meters.data, function(meter, key) {
-                        realEMeterScales = [0, 1, 3, 8, 9];// Not in [0, 1, 3, 8, 9] !== -1
+                        // Z-Wave differentiates different meter types and different meter scales.
+                        realEMeterScales = [0, 1, 3, 8, 9];
                         var scaleId = parseInt(key, 10);
                         if (isNaN(scaleId)) {
                             return;
@@ -125,8 +141,10 @@ appController.controller('MetersController', function($scope, $filter, $timeout,
                         /*if (meter.sensorType.value > 1) {
                             return; //  gas and water have real meter scales
                         }*/
+
                         var obj = {};
                         obj['id'] = k;
+                        obj['idSort'] = $filter('zeroFill')(k);
                         obj['iId'] = instanceId;
                         obj['cmd'] = meters.name + '.' + meter.name;
                         obj['cmdId'] = 0x30;
@@ -155,6 +173,9 @@ appController.controller('MetersController', function($scope, $filter, $timeout,
 
                         }else{
                             $scope.meters.all.push(obj);
+                        }
+                        if($scope.meters.ids.indexOf(k) === -1){
+                            $scope.meters.ids.push(k);
                         }
                     });
                 }

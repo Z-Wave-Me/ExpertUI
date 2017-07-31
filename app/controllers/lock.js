@@ -10,6 +10,7 @@
  */
 appController.controller('LocksController', function($scope, $filter, $timeout,$interval,dataService, cfg,_) {
     $scope.locks = {
+        ids: [],
         all: [],
         interval: null,
         show: false
@@ -33,7 +34,7 @@ appController.controller('LocksController', function($scope, $filter, $timeout,$
                 return;
             }
             $scope.locks.show = true;
-            $scope.refreshZwaveData(ZWaveAPIData);
+            $scope.refreshZwaveData();
         }, function(error) {
             alertify.alertError($scope._t('error_load_data'));
         });
@@ -42,12 +43,25 @@ appController.controller('LocksController', function($scope, $filter, $timeout,$
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function(ZWaveAPIData) {
+    $scope.refreshZwaveData = function() {
         var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
-                setData(response.data.joined);
+            dataService.loadJoinedZwaveData().then(function(response) {
+                var update = false;
+                angular.forEach(response.data.update, function(v, k) {
+                    // Get node ID from response
+                    var findId = k.split('.')[1];
+                    // Check if node ID is in the available devices
+                    if( $scope.locks.ids.indexOf(findId) > -1){
+                        update = true;
+                        //console.log('Updating nodeId: ',findId);
+                        return;
+                    }
+                });
+                // Update found - updating available devices
+                if(update){
+                    setData(response.data.joined);
+                }
             }, function(error) {});
         };
         $scope.locks.interval = $interval(refresh, $scope.cfg.interval);
@@ -99,6 +113,7 @@ appController.controller('LocksController', function($scope, $filter, $timeout,$
                 var apiUrl = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']';
 
                 obj['id'] = nodeId;
+                obj['idSort'] = $filter('zeroFill')(nodeId);
                 obj['cmd'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.mode';
                 obj['ccId'] = doorLockCCId;
                 obj['rowId'] = 'row_' + nodeId + '_' + cnt;
@@ -119,6 +134,9 @@ appController.controller('LocksController', function($scope, $filter, $timeout,$
 
                 }else{
                     $scope.locks.all.push(obj);
+                }
+                if($scope.locks.ids.indexOf(nodeId) === -1){
+                    $scope.locks.ids.push(nodeId);
                 }
                 cnt++;
             });

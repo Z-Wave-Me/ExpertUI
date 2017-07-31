@@ -6,44 +6,37 @@
         <table class="table table-striped table-condensed table-hover">
             <thead>
             <tr>
+                <!-- id -->
                 <th>
-                    <a href="" ng-click="orderBy('id')">#
-                        <span ng-show="predicate == 'id'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i
-                                ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                    </a>
+                    <sort-by callback="orderBy(field)" obj="orderByArr" field="'idSort'" label="'#'"></sort-by>
                 </th>
+                <!-- name-->
                 <th>
-                    <a href="" ng-click="orderBy('name')">{{ _t('device_name')}}
-                        <span ng-show="predicate == 'name'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i
-                                ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                    </a>
+                    <sort-by callback="orderBy(field)" obj="orderByArr" field="'name'"
+                             label="_t('device_name')"></sort-by>
                 </th>
+                <!-- notification-->
                 <th>
-                    <a href="" ng-click="orderBy('typeString')">{{ _t('notification')}}
-                        <span ng-show="predicate == 'typeString'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i
-                                ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                    </a>
+                    <sort-by callback="orderBy(field)" obj="orderByArr" field="'typeString'"
+                             label="_t('notification')"></sort-by>
                 </th>
+                <!-- event -->
                 <th>
-                    <a href="" ng-click="orderBy('eventString')">{{ _t('event')}}
-                        <span ng-show="predicate == 'eventString'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i
-                                ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                    </a>
+                    <sort-by callback="orderBy(field)" obj="orderByArr" field="'eventString'"
+                             label="_t('event')"></sort-by>
                 </th>
+                <!-- time -->
                 <th>
-                    <a href="" ng-click="orderBy('updateTime')">{{ _t('datetime')}}
-                        <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i
-                                ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                    </a>
+                    <sort-by callback="orderBy(field)" obj="orderByArr" field="'updateTime'"
+                             label="_t('datetime')"></sort-by>
                 </th>
+                <!-- status -->
                 <th>
-                    <a href="" ng-click="orderBy('status')">{{ _t('nav_status')}}
-                        <span ng-show="predicate == 'status'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i
-                                ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                    </a>
+                    <sort-by callback="orderBy(field)" obj="orderByArr" field="'status'"
+                             label="_t('nav_status')"></sort-by>
                 </th>
 
-
+                <!-- update -->
                 <th class="mobile-show td-action">
                     <button class="btn btn-primary" id="btn_update_all_1"
                             ng-click="updateAllNotifications('all_1','urlToStore')"
@@ -59,33 +52,20 @@
             </thead>
             <tbody>
             <tr ng-repeat="v in notifications.all | orderBy:predicate:reverse track by $index" id="{{ v.rowId}}">
+                <!-- id -->
                 <td data-title="#">{{ v.id}}</td>
+                <!-- name -->
                 <td data-title="{{ _t('device_name')}}">{{ v.name}}</td>
+                <!-- notification -->
                 <td data-title="{{ _t('notification')}}" title="{{v.typeId}}">{{v.typeString}}</td>
+                <!-- event -->
                 <td data-title="{{ _t('event')}}" title="{{v.event}}">{{v.eventString}}</td>
+                <!-- time -->
                 <td data-title="{{ _t('datetime')}}">
                     <bb-date-time obj="v.dateTime" updated="v.isUpdated"></bb-date-time>
                 </td>
+                <!-- status -->
                 <td data-title="{{ _t('nav_status')}}">
-                   <!-- <div class="btn-group" ng-if="v.version > 1">
-                        <button class="btn btn-default" id="btn_off_{{ v.rowId}}"
-                                ng-class="v.status === 0 ? 'active':''"
-                                ng-click="setStatus(v.urlToOff)">
-                            <bb-row-spinner spinner="rowSpinner[v.urlToOff]"
-                                            label="_t('off')"
-                                            icon="'fa-circle-o text-danger'">
-                            </bb-row-spinner>
-                        </button>
-                        <button class="btn btn-default" id="btn_on_{{ v.rowId}}"
-                                ng-class="v.status === 255 ? 'active':''"
-                                ng-disabled="rowSpinner[v.urlToOn]"
-                                ng-click="setStatus(v.urlToOn)">
-                            <bb-row-spinner spinner="rowSpinner[v.urlToOn]"
-                                            label="_t('on')"
-                                            icon="'fa-circle-o text-success'">
-                            </bb-row-spinner>
-                        </button>
-                    </div>-->
                     <div ng-if="v.version >1">
                         <label class="switcher" title="{{_t(v.statusString)}}"
                                ng-class="v.status === 255 ? 'ison':'isoff'"
@@ -106,7 +86,7 @@
                     <span ng-if="v.version === 1">{{_t(v.statusString)}}</span>
 
                 </td>
-
+                <!-- update -->
                 <td class="td-action" data-title="">
                     <button class="btn btn-default" id="btn_update_{{ v.rowId}}"
                             ng-click="updateNotification(v.urlToStore)"

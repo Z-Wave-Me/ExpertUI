@@ -15,12 +15,14 @@
     position: relative;
     width: 100%;
     height: 100%;
-    color: $page-navi-color;
+    //color: $page-navi-color;
     .page-navi-in{
         position: absolute;
         background-color: $page-navi-bcg-color;
         @include appBoxShadow($page-navi-box-shadow);
-        border: 1px solid $page-navi-border-color;
+        //border: 1px solid $page-navi-border-color;
+        border: 1px solid  $page-navi-border-color-gray;
+
         width: 100%;
         top:0;
         left:0;

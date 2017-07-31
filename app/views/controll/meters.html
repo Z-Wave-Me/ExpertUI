@@ -6,36 +6,36 @@
         <table class="table table-striped table-condensed table-hover">
             <thead>
                 <tr>
+                    <!-- id -->
                     <th>
-                        <a href="" ng-click="orderBy('id')">#  
-                            <span ng-show="predicate == 'id'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                        </a>
+                        <sort-by callback="orderBy(field)" obj="orderByArr" field="'idSort'" label="'#'"></sort-by>
                     </th>
+                    <!-- name-->
                     <th>
-                        <a href="" ng-click="orderBy('name')">{{ _t('device_name')}}
-                            <span ng-show="predicate == 'name'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                        </a>
+                        <sort-by callback="orderBy(field)" obj="orderByArr" field="'name'"
+                                 label="_t('device_name')"></sort-by>
                     </th>
+                    <!-- type -->
                     <th>
-                        <a href="" ng-click="orderBy('purpose')">{{ _t('device_description_device_type')}}
-                            <span ng-show="predicate == 'purpose'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                        </a>
+                        <sort-by callback="orderBy(field)" obj="orderByArr" field="'purpose'"
+                                 label="_t('device_description_device_type')"></sort-by>
                     </th>
+                    <!-- level -->
                     <th class="text-right">
-                        <a href="" ng-click="orderBy('level')">{{ _t('th_level')}}
-                            <span ng-show="predicate == 'level'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                        </a>
+                        <sort-by callback="orderBy(field)" obj="orderByArr" field="'level'"
+                                 label="_t('th_level')"></sort-by>
                     </th>
+                    <!-- scale -->
                     <th>
-                        <a href="" ng-click="orderBy('levelExt')">{{ _t('th_scale')}}
-                            <span ng-show="predicate == 'levelExt'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                        </a>
+                        <sort-by callback="orderBy(field)" obj="orderByArr" field="'levelExt'"
+                                 label="_t('th_scale')"></sort-by>
                     </th>
+                    <!-- time -->
                     <th>
-                        <a href="" ng-click="orderBy('updateTime')">{{ _t('datetime')}}
-                            <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                        </a>
+                        <sort-by callback="orderBy(field)" obj="orderByArr" field="'updateTime'"
+                                 label="_t('datetime')"></sort-by>
                     </th>
+                    <!-- action -->
                     <th class="mobile-show td-action">
                         <button class="btn btn-primary" id="btn_update_all_1"
                                 ng-click="updateAllMeters('all_1','urlToStore')"
@@ -51,14 +51,21 @@
             </thead>
             <tbody>
                 <tr ng-repeat="v in meters.all | orderBy:predicate:reverse track by $index" id="{{ v.rowId}}">
+                    <!-- id -->
                     <td data-title="#">{{ v.id}}<span ng-show="v.iId != 0">.{{v.iId}}</span></td>
+                    <!-- name -->
                     <td data-title="{{ _t('device_name')}}">{{ v.name}}</td>
+                    <!-- type -->
                     <td data-title="{{ _t('device_description_device_type')}}">{{ v.purpose}} &nbsp;</td>
+                    <!-- level -->
                     <td data-title="{{ _t('th_level')}}" class="row-level text-right">{{ v.level}} &nbsp;</td>
+                    <!-- extension -->
                     <td data-title="{{ _t('th_scale')}}" class="row-level-ext">{{ v.levelExt}} &nbsp;</td>
+                    <!-- time -->
                     <td data-title="{{ _t('datetime')}}">
                         <bb-date-time obj="v.dateTime" updated="v.isUpdated"></bb-date-time>
                     </td>
+                    <!-- action -->
                     <td class="td-action" data-title="">
                         <button class="btn btn-default" id="btn_update_{{ v.rowId}}"
                                 ng-click="updateMeter(v.urlToStore)"

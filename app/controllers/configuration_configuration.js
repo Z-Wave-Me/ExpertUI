@@ -11,9 +11,9 @@
 appController.controller('ConfigConfigurationController', function ($scope, $routeParams, $location, $cookies, $filter, $http, $timeout, $route, $interval,cfg, dataService, deviceService, myCache, _) {
     $scope.devices = [];
     $scope.deviceId = 0;
-    $scope.activeTab = 'configuration';
+    //$scope.activeTab = 'configuration';
     $scope.activeUrl = 'configuration/configuration/';
-    $cookies.tab_config = $scope.activeTab;
+    $cookies.tab_config = 'configuration';
     $scope.reset = function () {
         $scope.devices = angular.copy([]);
     };
@@ -35,9 +35,9 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         $interval.cancel($scope.configInterval);
     });
 
-    // Redirect to detail page
-    $scope.changeDevice = function (deviceId) {
-        if (deviceId > 0) {
+    // Redirect to device
+    $scope.redirectToDevice = function (deviceId) {
+        if (deviceId) {
             $location.path($scope.activeUrl + deviceId);
         }
     };
@@ -63,11 +63,9 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                         return;
                     }
                     ;
-                    var obj = {};
-                    obj['id'] = v.id;
-                    obj['name'] = v.name;
-                    devices.push(obj);
+                    devices.push(v);
                 });
+                //console.log(devices)
                 return devices;
             };
 
@@ -77,6 +75,10 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             $scope.deviceName = $filter('deviceName')(nodeId, node);
 
             setData(ZWaveAPIData, nodeId);
+            if(!$scope.hasConfigurationCc){
+                $scope.refreshZwaveData($routeParams.nodeId);
+            }
+
 
         });
     };
@@ -108,7 +110,6 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             setData(data.joined, nodeId);
         });*/
     };
-    $scope.refreshZwaveData($routeParams.nodeId);
 
 
 
@@ -188,42 +189,73 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
 
         var dataArray = _.isObject(hasData) ? hasData : {};
         $scope.toggleRowSpinner(spin);
+        //var bitrangeCnt = [];
+        var bitcheckCnt = [];
         if (!_.isObject(hasData)) {
             data = $('#' + form).serializeArray();
+            //console.log(data)
+            //console.log(data)
             angular.forEach(data, function (v, k) {
                 if (v.value === 'N/A') {
                     return;
                 }
                 var value = $filter('setConfigValue')(v.value);
                 var inputConfNum = v.name.match(/\d+$/)[0];
-                var inputType = v.name.split('_')[0];
                 if (!inputConfNum) {
                     return;
                 }
+                var inputType = v.name.split('_')[0];
                 var cfg = _.findWhere(cfgValues, {confNum: inputConfNum.toString()});
                 if (cfg) {
                     if ('bitset' in cfg.type) {
-                        if (inputType === 'bitrange') {
+                         if (inputType === 'bitrange') {
+                             value = (value === '' ? 0 : parseInt(value));
+                             if(value < 1){
+                                 return;
+                             }
                             var bitRange = _.findWhere(cfg.type.bitset, {name: v.name});
-                            value = (value === '' ? 0 : parseInt(value));
+                             if (value < bitRange.type.bitrange.bit_from && value > 0) {
+                                 value = bitRange.type.bitrange.bit_from;
+                             } else if (value > bitRange.type.bitrange.bit_to) {
+                                 value = bitRange.type.bitrange.bit_to;
+                             }
+                             value = Math.pow(2, value);
+                             //var bitArray = $filter('getBitArray')(value, 8);
+
+                             /*if(!bitrangeCnt[inputConfNum]){
+                                 bitrangeCnt[inputConfNum] = 0;
+                             }
+                             bitrangeCnt[inputConfNum] = (value === '' ? 0 : parseInt(value));
+                            if (value < bitRange.type.bitrange.bit_from && value > 0) {
+                                bitrangeCnt[inputConfNum] += bitRange.type.bitrange.bit_from;
+                                value = bitrangeCnt[inputConfNum];
+                            } else if (value > bitRange.type.bitrange.bit_to) {
+                                bitrangeCnt[inputConfNum] += bitRange.type.bitrange.bit_to;
+                                value = bitrangeCnt[inputConfNum];
+                            }*/
+                            /*value = (value === '' ? 0 : parseInt(value));
                             if (value < bitRange.type.bitrange.bit_from && value > 0) {
                                 value = bitRange.type.bitrange.bit_from;
                             } else if (value > bitRange.type.bitrange.bit_to) {
                                 value = bitRange.type.bitrange.bit_to;
-                            }
+                            }*/
                         } else {
-                            value = Math.pow(2, value);
+                             value = (value === '' ? 0 : parseInt(value));
+                            if(!bitcheckCnt[inputConfNum]){
+                                bitcheckCnt[inputConfNum] = 0;
+                            }
+                            bitcheckCnt[inputConfNum] += Math.pow(2, value);
+                            value =  bitcheckCnt[inputConfNum];
+
+                            //value = Math.pow(2, value);
 
                         }
 
                     }
-                    /*else if('enumof' in cfg.type){
-                     var enumof = _.findWhere(cfg.type.enumof,{name: v.name});
-
-                     }*/
                 }
                 if (dataArray[inputConfNum]) {
-                    dataArray[inputConfNum].value += ',' + value;
+                    //dataArray[inputConfNum].value += ',' + value;
+                    dataArray[inputConfNum].value = value;
                 } else {
                     dataArray[inputConfNum] = {
                         value: value,
@@ -339,6 +371,62 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         return;
     };
 
+    /**
+     * Set Wakeup and Protection
+     */
+    $scope.storeSettings = function (form, cmd, hasBattery,spin) {
+        // Show a notifier for battery operated device
+        if (hasBattery) {
+            deviceService.showNotifier({message: $scope._t('conf_apply_battery'),type: 'warning'});
+        }
+        $scope.toggleRowSpinner(spin);
+
+        var xmlData = [];
+        var data = $('#' + form).serializeArray();
+        var paramArr = [];
+        var parameter;
+        var request = 'devices[' + cmd.id + '].instances[' + cmd.instance + '].commandClasses[0x' + cmd.commandclass + '].';
+        var cnt =0;
+        angular.forEach(data, function (v, k) {
+            cnt++;
+            v.value = parseInt(v.value);
+            // There must be two params
+            if(cnt < 3){
+                paramArr.push(v.value);
+            }
+
+        });
+        parameter = paramArr.join(',');
+        // Data for XML
+        var obj = {};
+        obj['id'] = cmd['id'];
+        obj['instance'] = cmd['instance'];
+        obj['commandclass'] = cmd['commandclass'];
+        obj['command'] = cmd['command'];
+        obj['parameter'] = '[' + parameter + ']';
+        obj['parameterValues'] = parameter;
+        obj['confNum'] = 0;
+        xmlData.push(obj);
+
+        // Load a XML
+        dataService.getCfgXml().then(function (cfgXml) {
+            var xmlFile = deviceService.buildCfgXml(xmlData, cfgXml, cmd['id'], cmd['commandclass']);
+            dataService.putCfgXml(xmlFile);
+        });
+
+        // Run zwave command
+        request += cmd.command + '(' + parameter + ')';
+        dataService.runZwaveCmd(cfg.store_url + request);
+        $('#' + form + ' .cfg-control-content :input').prop('disabled', true);
+
+        // Reload data and remove spinner
+        $timeout(function () {
+            $scope.loadZwaveData($routeParams.nodeId);
+            $('#' + form + ' .cfg-control-content :input').prop('disabled', false);
+            $scope.toggleRowSpinner();
+        }, 3000);
+    };
+
 
     /// --- Private functions --- ///
     /**
@@ -403,7 +491,11 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             $scope.wakeupCont = deviceService.configWakeupCont(node, nodeId, ZWaveAPIData, cfgXml);
             $scope.protectionCont = deviceService.configProtectionCont(node, nodeId, ZWaveAPIData, cfgXml);
             $scope.switchAllCont = deviceService.configSwitchAllCont(node, nodeId, ZWaveAPIData, cfgXml);
-            if (cfg.app_type === 'installer') {
+            if (!$scope.configCont && !$scope.wakeupCont && !$scope.protectionCont && !$scope.switchAllCont) {
+                $scope.alert = {message: $scope._t('configuration_not_supported'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                return;
+            }
+            /*if (cfg.app_type === 'installer') {
                 if (!$scope.configCont && !$scope.wakeupCont && !$scope.protectionCont && !$scope.switchAllCont) {
                     $location.path('/configuration/commands/' + $routeParams.nodeId);
                     return;
@@ -413,7 +505,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                     $scope.alert = {message: $scope._t('no_device_service'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
                     return;
                 }
-            }
+            }*/
 
         }, function(error) {
             var cfgXml = {};

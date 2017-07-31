@@ -2,82 +2,116 @@
 <div ng-controller="ControllerController">
     <div class="page-header"><h1>{{_t('nav_controller_info')}}</h1></div>
     <div class="well well-sm">
-        <a href="#network/queue" target="_blank" class="btn btn-primary" _ngs-click="openQueue()"><i class="fa fa-search"></i> {{_t('nm_inspect_queue_title')}}</a> <em>{{_t('txt_inspect_queue')}}</em>
+        <a href="#network/queue" target="_blank" class="btn btn-primary" _ngs-click="openQueue()"><i
+                class="fa fa-search"></i> {{_t('nm_inspect_queue_title')}}</a> <em>{{_t('txt_inspect_queue')}}</em>
     </div>
     <div class="table-responsive table-controller">
         <!-- Role in Network -->
         <h3>{{_t('ctrl_info_role_title')}}</h3>
         <table class="table table-condensed">
             <tbody>
-                <tr><td id="ctrl_info_nodeid_title" class="controller-th">{{_t('ctrl_info_nodeid_title')}}</td><td id="ctrl_info_nodeid_value">{{master['controller.data.nodeId']}}</td></tr>
-                <tr>
-                    <td id="ctrl_info_homeid_title" class="controller-th">{{_t('ctrl_info_homeid_title')}}</td>
-                    <td id="ctrl_info_homeid_value">
+            <tr>
+                <td id="ctrl_info_nodeid_title" class="controller-th">{{_t('ctrl_info_nodeid_title')}}</td>
+                <td id="ctrl_info_nodeid_value">{{master['controller.data.nodeId']}}</td>
+            </tr>
+            <tr>
+                <td id="ctrl_info_homeid_title" class="controller-th">{{_t('ctrl_info_homeid_title')}}</td>
+                <td id="ctrl_info_homeid_value">
                         <span ng-if="boxData.controller.isPrimary && boxData.controller.hasDevices">
                             {{_t('my_own')}}
                         </span>
-                        <span ng-if="!boxData.controller.isPrimary || !boxData.controller.hasDevices">
+                    <span ng-if="!boxData.controller.isPrimary || !boxData.controller.hasDevices">
                             {{_t('other_network')}}
                         </span>
-                    </td>
-                    <!--<td id="ctrl_info_homeid_value">{{master['txtHomeId']}}</td>-->
-                </tr>
-                <tr>
-                    <td id="ctrl_info_primary_title" class="controller-th">{{_t('ctrl_info_primary_title')}}</td>
-                    <td id="ctrl_info_primary_value">{{master['controller.data.isPrimary']? 'Yes': 'No'}}</td></tr>
-                 <tr>
-                     <td id="ctrl_info_real_primary_title" class="controller-th">{{_t('ctrl_info_real_primary_title')}}</td>
-                     <td id="ctrl_info_real_primary_value">
-                         {{master['controller.data.isRealPrimary']? 'Yes - ' + _t('secondary_inclusion_controller') : 'No'}}
-                     </td>
-                     <!--<td id="ctrl_info_real_primary_value">{{master['controller.data.isRealPrimary']? 'Yes': 'No'}}</td>-->
-                 </tr>
-               <tr>
-                   <td id="ctrl_info_suc_sis_title" class="controller-th">{{_t('ctrl_info_suc_sis_title')}}</td><td id="ctrl_info_suc_sis_value">{{master['txtSucSis']}}</td> </tr>
+                </td>
+                <!--<td id="ctrl_info_homeid_value">{{master['txtHomeId']}}</td>-->
+            </tr>
+            <tr>
+                <td id="ctrl_info_primary_title" class="controller-th">{{_t('ctrl_info_primary_title')}}</td>
+                <td id="ctrl_info_primary_value">{{master['controller.data.isPrimary']? 'Yes': 'No'}}</td>
+            </tr>
+            <tr>
+                <td id="ctrl_info_real_primary_title" class="controller-th">{{_t('ctrl_info_real_primary_title')}}</td>
+                <td id="ctrl_info_real_primary_value">
+                    {{master['controller.data.isRealPrimary']? 'Yes - ' + _t('secondary_inclusion_controller') : 'No'}}
+                </td>
+                <!--<td id="ctrl_info_real_primary_value">{{master['controller.data.isRealPrimary']? 'Yes': 'No'}}</td>-->
+            </tr>
+            <tr>
+                <td id="ctrl_info_suc_sis_title" class="controller-th">{{_t('ctrl_info_suc_sis_title')}}</td>
+                <td id="ctrl_info_suc_sis_value">{{master['txtSucSis']}}</td>
+            </tr>
             </tbody>
         </table>
-         <!-- Hardware -->
+        <!-- Hardware -->
         <h3>{{_t('ctrl_info_hw_title')}}</h3>
         <table class="table table-condensed">
             <tbody>
-                <tr><td id="ctrl_info_hw_vendor_title" class="controller-th">{{_t('ctrl_info_hw_vendor_title')}}</td><td id="ctrl_info_hw_vendor_value">{{master['controller.data.vendor']}}</td></tr>				
-                <tr>
-                    <td id="ctrl_info_hw_product_title" class="controller-th">{{_t('ctrl_info_hw_product_title')}}</td>
-                    <td id="ctrl_info_hw_product_value">0001 / 0001</td>
-                   <!-- <td id="ctrl_info_hw_product_value">{{master['controller.data.manufacturerProductType']}} / {{master['controller.data.manufacturerProductId']}}</td>-->
-                </tr>
-                <tr><td id="ctrl_info_hw_chip_title" class="controller-th">{{_t('ctrl_info_hw_chip_title')}}</td><td id="ctrl_info_hw_chip_value">{{master['controller.data.ZWaveChip']}}</td></tr>
-        </tbody>
+            <tr>
+                <td id="ctrl_info_hw_vendor_title" class="controller-th">{{_t('ctrl_info_hw_vendor_title')}}</td>
+                <td id="ctrl_info_hw_vendor_value">{{getCustomCfgVal('hardware_vendor')}}</td>
+            </tr>
+            <tr>
+                <td id="ctrl_info_hw_product_title" class="controller-th">{{_t('ctrl_info_hw_product_title')}}</td>
+                <td id="ctrl_info_hw_product_value">0001 / 0001</td>
+                <!-- <td id="ctrl_info_hw_product_value">{{master['controller.data.manufacturerProductType']}} / {{master['controller.data.manufacturerProductId']}}</td>-->
+            </tr>
+            <tr>
+                <td id="ctrl_info_hw_chip_title" class="controller-th">{{_t('ctrl_info_hw_chip_title')}}</td>
+                <td id="ctrl_info_hw_chip_value">{{master['controller.data.ZWaveChip']}}</td>
+            </tr>
+            </tbody>
         </table>
-         <!-- Firmware -->
+        <!-- Firmware -->
         <h3>{{_t('ctrl_info_sw_title')}}</h3>
         <table class="table table-condensed">
             <tbody>
-                <tr><td id="ctrl_info_sw_lib_title" class="controller-th">{{_t('ctrl_info_sw_lib_title')}}</td><td id="ctrl_info_sw_lib_value">{{master['controller.data.libType']}}</td></tr>				
-                <tr><td id="ctrl_info_sw_sdk_title" class="controller-th">{{_t('ctrl_info_sw_sdk_title')}}</td><td id="ctrl_info_sw_sdk_value">{{master['controller.data.SDK']}}</td></tr>			
-                <tr><td id="ctrl_info_sw_api_title" class="controller-th">{{_t('ctrl_info_sw_api_title')}}</td><td id="ctrl_info_sw_api_value">{{master['controller.data.APIVersion']}}</td></tr>
-        </tbody>
+            <tr>
+                <td id="ctrl_info_sw_lib_title" class="controller-th">{{_t('ctrl_info_sw_lib_title')}}</td>
+                <td id="ctrl_info_sw_lib_value">{{master['controller.data.libType']}}</td>
+            </tr>
+            <tr>
+                <td id="ctrl_info_sw_sdk_title" class="controller-th">{{_t('ctrl_info_sw_sdk_title')}}</td>
+                <td id="ctrl_info_sw_sdk_value">{{master['controller.data.SDK']}}</td>
+            </tr>
+            <tr>
+                <td id="ctrl_info_sw_api_title" class="controller-th">{{_t('ctrl_info_sw_api_title')}}</td>
+                <td id="ctrl_info_sw_api_value">{{master['controller.data.APIVersion']}}</td>
+            </tr>
+            </tbody>
         </table>
         <!-- Z_Way Software Information -->
-         <h3>{{_t('ctrl_info_sw_rev_title')}}</h3>
+        <h3>{{_t('ctrl_info_sw_rev_title')}}</h3>
         <table class="table table-condensed">
             <tbody>
-                 <tr><td id="ctrl_info_sw_rev_ver_title" class="controller-th">{{_t('ctrl_info_sw_rev_ver_title')}}</td><td id="ctrl_info_sw_rev_ver_value">{{master['controller.data.softwareRevisionVersion']}}</td></tr>			
-                <tr><td id="ctrl_info_sw_rev_id_title" class="controller-th">{{_t('ctrl_info_sw_rev_id_title')}}</td><td id="ctrl_info_sw_rev_id_value">{{master['controller.data.softwareRevisionId']}}</td></tr>			
-                <tr><td id="ctrl_info_sw_rev_date_title" class="controller-th">{{_t('ctrl_info_sw_rev_date_title')}}</td><td id="ctrl_info_sw_rev_date_value">{{master['controller.data.softwareRevisionDate']}}</td></tr>
-        </tbody>
+            <tr>
+                <td id="ctrl_info_sw_rev_ver_title" class="controller-th">{{_t('ctrl_info_sw_rev_ver_title')}}</td>
+                <td id="ctrl_info_sw_rev_ver_value">{{master['controller.data.softwareRevisionVersion']}}</td>
+            </tr>
+            <tr>
+                <td id="ctrl_info_sw_rev_id_title" class="controller-th">{{_t('ctrl_info_sw_rev_id_title')}}</td>
+                <td id="ctrl_info_sw_rev_id_value">{{master['controller.data.softwareRevisionId']}}</td>
+            </tr>
+            <tr>
+                <td id="ctrl_info_sw_rev_date_title" class="controller-th">{{_t('ctrl_info_sw_rev_date_title')}}</td>
+                <td id="ctrl_info_sw_rev_date_value">{{master['controller.data.softwareRevisionDate']}}</td>
+            </tr>
+            </tbody>
         </table>
 
         <!-- UI Information -->
-         <h3>{{_t('ui')}}</h3>
+        <h3>{{_t('ui')}}</h3>
         <table class="table table-condensed">
             <tbody>
-                <tr><td id="ctrl_ui_version" class="controller-th">{{_t('ui_version')}}</td><td id="ctrl_ui_version_value">{{cfg.app_version}}</td></tr>
-                <tr>
-                    <td id="ctrl_ui_version" class="controller-th">{{_t('built_date')}}</td>
-                    <td id="ctrl_ui_version_value">{{builtInfo.built}}</td>
-                </tr>
-        </tbody>
+            <tr>
+                <td id="ctrl_ui_version" class="controller-th">{{_t('ui_version')}}</td>
+                <td id="ctrl_ui_version_value">{{cfg.app_version}}</td>
+            </tr>
+            <tr>
+                <td id="ctrl_ui_version" class="controller-th">{{_t('built_date')}}</td>
+                <td id="ctrl_ui_version_value">{{builtInfo.built}}</td>
+            </tr>
+            </tbody>
         </table>
 
         <!-- Frequency -->

@@ -1,9 +1,17 @@
 /**
- * StatusController
+ * @overview This controller renders and handles device statuses.
  * @author Martin Vach
  */
-appController.controller('StatusController', function ($scope, $filter, $timeout,$interval,dataService, cfg,_, deviceService) {
+
+/**
+ * Status root controller
+ * todo: remove commented stuff
+ * @class StatusController
+ *
+ */
+appController.controller('StatusController', function ($scope, $filter, $timeout, $interval, dataService, cfg, _, deviceService) {
     $scope.statuses = {
+        ids: [],
         all: [],
         interval: null,
         show: false
@@ -21,7 +29,7 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
     /**
      * Cancel interval on page destroy
      */
-    $scope.$on('$destroy', function() {
+    $scope.$on('$destroy', function () {
         $interval.cancel($scope.statuses.interval);
     });
 
@@ -29,17 +37,21 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
     /**
      * Load zwave data
      */
-    $scope.loadZwaveData = function() {
-        dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
+    $scope.loadZwaveData = function () {
+        dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
             $scope.ZWaveAPIData = ZWaveAPIData;
             setData(ZWaveAPIData);
-            if(_.isEmpty($scope.statuses.all)){
-                $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+            if (_.isEmpty($scope.statuses.all)) {
+                $scope.alert = {
+                    message: $scope._t('device_404'),
+                    status: 'alert-warning',
+                    icon: 'fa-exclamation-circle'
+                };
                 return;
             }
             $scope.statuses.show = true;
-            $scope.refreshZwaveData(ZWaveAPIData);
-        }, function(error) {
+            $scope.refreshZwaveData();
+        }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
         });
     };
@@ -47,13 +59,28 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function(ZWaveAPIData) {
-        var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
-                setData(response.data.joined);
-            }, function(error) {});
+    $scope.refreshZwaveData = function () {
+        var refresh = function () {
+            dataService.loadJoinedZwaveData().then(function (response) {
+                //setData(response.data.joined);
+                var update = false;
+                angular.forEach(response.data.update, function(v, k) {
+                    // Get node ID from response
+                    var findId = k.split('.')[1];
+                    // Check if node ID is in the available devices
+                    if($scope.statuses.ids.indexOf(findId) > -1){
+                        update = true;
+                        //console.log('Updating nodeId: ',findId);
+                        return;
+                    }
+                });
+                // Update found - updating available devices
+                if(update){
+                    setData(response.data.joined);
+                }
+            }, function (error) {
+            });
         };
         $scope.statuses.interval = $interval(refresh, $scope.cfg.interval);
     };
@@ -62,7 +89,7 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
      * Ping device
      * @param {string} url
      */
-    $scope.pingDevice = function(url) {
+    $scope.pingDevice = function (url) {
         $scope.toggleRowSpinner(url);
         dataService.runZwaveCmd(cfg.store_url + url).then(function (response) {
             $timeout($scope.toggleRowSpinner, 1000);
@@ -98,8 +125,15 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
 
     };
 
-    // Handle modal interview
-    $scope.handleModalInterview = function (target, $event,index, id, name) {
+    /**
+     * Handle modal interview
+     * @param {string} target
+     * @param $event - angular event
+     * @param {int} index - object index
+     * @param {object id} id
+     * @param name
+     */
+    $scope.handleModalInterview = function (target, $event, index, id, name) {
         $scope.deviceInfo = {
             "index": index,
             "id": id,
@@ -108,7 +142,7 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
         $scope.interviewDeviceId = id;
         var node = $scope.ZWaveAPIData.devices[id];
         $scope.interviewCommands = deviceService.configGetInterviewCommands(node);
-        $scope.handleModal(target,$event)
+        $scope.handleModal(target, $event)
 
     };
     /**
@@ -122,184 +156,120 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
 
     /**
      * Set zwave data
+     * @param {object} ZWaveAPIData
      */
     function setData(ZWaveAPIData) {
-        var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
-        var doorLockCCId = 0x62;
+        //var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
-            if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+            if (deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
             }
-
-            var basicType = node.data.basicType.value;
-            var genericType = node.data.genericType.value;
-            var specificType = node.data.specificType.value;
             var isListening = node.data.isListening.value;
             var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
-            var hasWakeup = 0x84 in node.instances[0].commandClasses;
-            var hasBattery = 0x80 in node.instances[0].commandClasses;
-            // Update
-            var node = ZWaveAPIData.devices[nodeId];
-            var lastReceive = parseInt(node.data.lastReceived.updateTime, 10) || 0;
-            var lastSend = parseInt(node.data.lastSend.updateTime, 10) || 0;
-            var lastCommunication = (lastSend > lastReceive) ? lastSend : lastReceive;
+            //var hasWakeup = 0x84 in node.instances[0].commandClasses;
+            var hasWakeup = !isListening && !node.data.sensor250.value && !node.data.sensor1000.value;
             var isFailed = node.data.isFailed.value;
             var isAwake = node.data.isAwake.value;
             var prefixD = 'devices.' + nodeId + '.data.';
             var prefixIC = 'devices.' + nodeId + '.instances.0.commandClasses';
             var bindPath = prefixD + 'isFailed,' + prefixD + 'isAwake,' + prefixD + 'lastSend,' + prefixD + 'lastReceived,' + prefixD + 'queueLength,devices.' + nodeId + '.instances[*].commandClasses[*].data.interviewDone,' + prefixIC + '.' + 0x84 + '.data.lastWakeup,' + prefixIC + '.' + 0x84 + '.data.lastSleep,' + prefixIC + '.' + 0x84 + '.data.interval,' + prefixIC + '.' + 0x80 + '.data.last';
-            //$scope.interviewCommands.push(interviewCommands(node));
-            //$scope.interviewCommands.push(deviceService.configGetInterviewCommands(node));
+
+            var isController = (ZWaveAPIData.controller.data.nodeId.value == nodeId);
+            var lastReceive = parseInt(node.data.lastReceived.updateTime, 10) || 0;
+            var lastSend = parseInt(node.data.lastSend.updateTime, 10) || 0;
+            var lastCommunication = (lastSend > lastReceive) ? lastSend : lastReceive;
+            var sleepingSince = 0;
+            var lastWakeup = 0;
+            var interval = 0;
+            var type = deviceService.deviceType(node);
+            var sleeping;
+            if (!isListening && hasWakeup && 0x84 in node.instances[0].commandClasses) {
+
+                sleepingSince = parseInt(node.instances[0].commandClasses[0x84].data.lastSleep.value, 10);
+                lastWakeup = parseInt(node.instances[0].commandClasses[0x84].data.lastWakeup.value, 10);
+                interval = parseInt(node.instances[0].commandClasses[0x84].data.interval.value, 10);
+                //hasSleeping = getSleeping(sleepingSince, lastWakeup, interval);
+                sleeping = setSleeping(sleepingSince, lastWakeup, interval);
+            }
+
+            var obj = {};
+            obj['id'] = nodeId;
+            obj['idSort'] = $filter('zeroFill')(nodeId);
+            obj['rowId'] = 'row_' + nodeId;
+            obj['isController'] = isController;
+            obj['cmd'] = bindPath.split(',');
+            obj['name'] = $filter('deviceName')(nodeId, node);
+            obj['sleeping'] = sleeping;
+            obj['updateTime'] = lastCommunication;
+            obj['dateTime'] = $filter('getDateTimeObj')(lastCommunication);
+            obj['isFailed'] = node.data.isFailed.value;
+            obj['type'] = type;
+            obj['icon'] = $filter('getDeviceTypeIcon')(type);
+            obj['urlToStore'] = (!isController && (isListening || isFLiRS) ? 'devices[' + nodeId + '].SendNoOperation()' : false);
+            obj['interviewDone'] = interviewDone(node);
+            var findIndex = _.findIndex($scope.statuses.all, {rowId: obj.rowId});
+            if (findIndex > -1) {
+                //console.log('Updating nodeId: ',obj.rowId);
+                angular.extend($scope.statuses.all[findIndex], obj);
+
+            } else {
+                $scope.statuses.all.push(obj);
+            }
+            if( $scope.statuses.ids.indexOf(nodeId) === -1){
+                $scope.statuses.ids.push(nodeId);
+            }
             $scope.interviewCommandsDevice.push(node.data);
-            updateDeviceInfo(ZWaveAPIData, nodeId, basicType, genericType, specificType, isFLiRS, hasWakeup, hasBattery, isListening, bindPath);
         });
     }
 
-    function updateDeviceInfo(ZWaveAPIData, nodeId, basicType, genericType, specificType, isFLiRS, hasWakeup, hasBattery, isListening, bindPath) {
-        //var nodeId = $(this).attr('device');
-        var node = ZWaveAPIData.devices[nodeId];
-        var lastReceive = parseInt(node.data.lastReceived.updateTime, 10) || 0;
-        var lastSend = parseInt(node.data.lastSend.updateTime, 10) || 0;
-        var lastCommunication = (lastSend > lastReceive) ? lastSend : lastReceive;
-        var isFailed = node.data.isFailed.value;
-        var isAwake = node.data.isAwake.value;
-        var sleepingSince = 0;
-        var lastWakeup = 0;
-        var interval = 0;
-        if (!isListening && hasWakeup) {
-            sleepingSince = parseInt(node.instances[0].commandClasses[0x84].data.lastSleep.value, 10);
-            lastWakeup = parseInt(node.instances[0].commandClasses[0x84].data.lastWakeup.value, 10);
-            interval = parseInt(node.instances[0].commandClasses[0x84].data.interval.value, 10);
-        }
-        // Conts
-        var sleeping_cont = sleepingCont(isListening, hasWakeup, isFLiRS, sleepingSince, lastWakeup, interval);
-        var awake_cont = awakeCont(isAwake, isListening, isFLiRS);
-        var operating_cont = operatingCont(lastCommunication);
-        var interview_cont = false;
-        //var _interview_cont = '<i class="fa fa-question-circle fa-lg text-info" title="' + $scope._t('device_is_not_fully_interviewed') + '"></i>';
-        var _interview_cont = $scope._t('device_is_not_fully_interviewed');
-        if (ZWaveAPIData.devices[nodeId].data.nodeInfoFrame.value && ZWaveAPIData.devices[nodeId].data.nodeInfoFrame.value.length) {
-            for (var iId in ZWaveAPIData.devices[nodeId].instances)
-                for (var ccId in ZWaveAPIData.devices[nodeId].instances[iId].commandClasses)
-                    if (!ZWaveAPIData.devices[nodeId].instances[iId].commandClasses[ccId].data.interviewDone.value) {
-                        interview_cont = _interview_cont;
+    /**
+     * Check if is an interview done
+     * @param {object} node
+     * @returns {boolean}
+     */
+    function interviewDone(node) {
+        var interview_cont = true;
+        if (node.data.nodeInfoFrame.value && node.data.nodeInfoFrame.value.length) {
+            for (var iId in node.instances)
+                for (var ccId in node.instances[iId].commandClasses)
+                    if (!node.instances[iId].commandClasses[ccId].data.interviewDone.value) {
+                        interview_cont = false;
                     }
         } else {
-            interview_cont = _interview_cont;
+            interview_cont = false;
         }
-
-        // DDR
-        /*var ddr = false;
-         if (angular.isDefined(node.data.ZDDXMLFile)) {
-         ddr = node.data.ZDDXMLFile.value;
-         }*/
-
-        var obj = {};
-        obj['id'] = nodeId;
-        obj['rowId'] = 'row_' + nodeId;
-        obj['cmd'] = bindPath.split(',');
-        obj['genericType'] = genericType;
-        obj['specificType'] = specificType;
-        obj['name'] = $filter('deviceName')(nodeId, node);
-        obj['sleeping'] = sleeping_cont;
-        obj['awake'] = awake_cont;
-        obj['updateTime'] = operating_cont;
-        obj['isFailed'] = getIsFailedCont(isFailed);
-        // obj['ddr'] = ddrCont(node);
-        obj['urlToStore'] = (isListening || isFLiRS ? 'devices[' + nodeId + '].SendNoOperation()' : false);
-        obj['interview'] = interview_cont;
-        obj['isListening'] = isListening;
-        obj['isFLiRS'] = isFLiRS;
-        obj['hasWakeup'] = hasWakeup;
-        obj['lastCommunication'] = lastCommunication;
-        obj['sleepingSince'] = sleepingSince;
-        obj['lastWakeup'] = lastWakeup;
-        obj['interval'] = interval;
-        var findIndex = _.findIndex($scope.statuses.all, {rowId: obj.rowId});
-        if(findIndex > -1){
-            angular.extend( $scope.statuses.all[findIndex],obj);
-
-        }else{
-            $scope.statuses.all.push(obj);
-        }
-
-    }
-    ;
-
-    // Refresh Modal Interview data
-    function refreshModalInterview(oldCc, newCc) {
-        var refresh = JSON.stringify(oldCc) !== JSON.stringify(newCc);
-        if (refresh) {
-            $scope.interviewCommands = deviceService.configGetInterviewCommands(newCc);
-        }
-
+        return interview_cont;
 
     }
 
-    // Refresh Modal Interview data
-    function refreshModalInterview(oldCc, newCc) {
-        var refresh = JSON.stringify(oldCc) !== JSON.stringify(newCc);
-        if (refresh) {
-            $scope.interviewCommands = deviceService.configGetInterviewCommands(newCc);
-        }
-
-
-    }
-
-
-    // Get Awake HTML
-    function awakeCont(isAwake, isListening, isFLiRS) {
-        var awake_cont = '';
-        if (!isListening && !isFLiRS)
-            awake_cont = isAwake ? ('<i class="fa fa-certificate fa-lg text-orange" title="' + $scope._t('device_is_active') + '"></i>') : ('<i class="fa fa-moon-o fa-lg text-primary" title="' + $scope._t('device_is_sleeping') + '"></i>');
-        return awake_cont;
-    }
-
-    // Get operating HTML
-    function operatingCont(lastCommunication) {
-//        var operating_cont = (isFailed ? ('<i class="fa fa-ban fa-lg text-danger" title="' + $scope._t('device_is_dead') + '"></i>') : ('<i class="fa fa-check fa-lg text-success" title="' + $scope._t('device_is_operating') + '"></i>')) + ' <span title="' + $scope._t('last_communication') + '" class="not_important">' + $filter('isTodayFromUnix')(lastCommunication) + '</span>';
-        var operating_cont = '<span title="' + $scope._t('last_communication') + '" class="not_important">' + $filter('isTodayFromUnix')(lastCommunication) + '</span>';
-        return operating_cont;
-    }
-
-    // Get is failed
-    function getIsFailedCont(isFailed) {
-        var failed_cont = (isFailed ? ('<i class="fa fa-ban fa-lg text-danger" title="' + $scope._t('device_is_dead') + '"></i>') : ('<i class="fa fa-check fa-lg text-success" title="' + $scope._t('device_is_operating') + '"></i>'));
-        return failed_cont;
-    }
-
-    // Get ddr
-    function ddrCont(node) {
-        var ddr = '<i class="fa fa-minus"></i>';
-        if (angular.isDefined(node.data.ZDDXMLFile) && node.data.ZDDXMLFile.value) {
-            ddr = '<i class="fa fa-check"></i>';
-        }
-        return ddr;
-    }
-
-    // Get Sleeping HTML
-    function sleepingCont(isListening, hasWakeup, isFLiRS, sleepingSince, lastWakeup, interval) {
-        var sleeping_cont;
-        if (isListening)
-            sleeping_cont = ''; // mains powered device
-        else if (!isListening && hasWakeup) {
-            var approx = '';
-            if (isNaN(sleepingSince) || sleepingSince < lastWakeup) {
-                sleepingSince = lastWakeup
-                if (!isNaN(lastWakeup))
-                    approx = '<span title="' + $scope._t('sleeping_since_approximately') + '">~</span> ';
+    /**
+     * Set sleeping data
+     * @param {int} sleepingSince
+     * @param {int} lastWakeup
+     * @param {int} interval
+     * @returns {string}
+     */
+    function setSleeping(sleepingSince, lastWakeup, interval) {
+        var sleeping = {
+            approx: false,
+            lastSleep: '',
+            nextWakeup: ''
+        };
+        if (isNaN(sleepingSince) || sleepingSince < lastWakeup) {
+            sleepingSince = lastWakeup
+            if (!isNaN(lastWakeup)) {
+                sleeping.approx = '~';
             }
-            ;
-            if (interval == 0)
-                interval = NaN; // to indicate that interval and hence next wakeup are unknown
-            var lastSleep = $filter('isTodayFromUnix')(sleepingSince);
-            var nextWakeup = $filter('isTodayFromUnix')(sleepingSince + interval);
-            sleeping_cont = ' <i class="fa fa-clock-o fa-lg" title="' + $scope._t('battery_operated_device_with_wakeup') + '"></i> <span title="' + $scope._t('sleeping_since') + '" class="not_important">' + approx + lastSleep + '</span> &#8594; <span title="' + $scope._t('next_wakeup') + '">' + approx + nextWakeup + '</span>';
-        } else if (!isListening && isFLiRS)
-            sleeping_cont = '<i class="fa fa-headphones fa-lg" title="' + $scope._t('FLiRS_device') + '"></i>';
-        else
-            sleeping_cont = '<i class="fa fa-rss fa-lg" title="' + $scope._t('battery_operated_remote_control') + '"></i>';
-        return sleeping_cont;
+
+        }
+        ;
+        // to indicate that interval and hence next wakeup are unknown
+        if (interval == 0) {
+            interval = NaN;
+        }
+        sleeping.lastSleep = $filter('isTodayFromUnix')(sleepingSince);
+        sleeping.nextWakeup = $filter('isTodayFromUnix')(sleepingSince + interval);
+        return sleeping;
     }
 });

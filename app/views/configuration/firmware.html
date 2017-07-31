@@ -2,25 +2,34 @@
 <div ng-controller="ConfigFirmwareController">
     <!-- Config navigation -->
     <div ng-include="'app/views/configuration/navi.html'"></div>
+    <div class="row row-configuration">
+        <div class="col-md-3 menu-vertical">
+            <div ng-include="'app/views/configuration/menu.html'"></div>
+        </div>
+        <div class="col-md-9 col-content">
+            <bb-alert alert="alert"></bb-alert>
     <div ng-show="deviceId">
-        <!-- <pre>{{firmware.update|json}}</pre> -->
+        <!--<pre>{{firmware.update|json}}</pre>-->
         <form name="form_firmware_update" id="form_firmware_update" class="form form-inline"
               ng-if="firmware.show"
               ng-submit="updateDeviceFirmware(firmware.input,'btn_update')" novalidate>
+            <span class="">{{_t('choose_fw_install_action')}}</span>
+            <select name="action" class="form-control" ng-model="firmware.input.action">
+                <option value="url">{{_t('fw_upgrade_from_url')}}</option>
+                <option value="file" ng-selected="true">{{_t('fw_upgrade_from_file')}}</option>
+            </select>
             <!-- Url -->
-            <input id="url" type="text" value="" name="url" class="form-control" ng-model="firmware.input.url" placeholder="{{_t('firmware_url')}}" title="{{_t('firmware_url')}}" />
-            <!-- Target -->
-            <input id="targetId" type="text" value="" name="url" class="form-control" ng-model="firmware.input.targetId" placeholder="{{_t('target_id')}}" title="_t('target_id')" />
+            <input id="url" type="text" value="" name="url" class="form-control" ng-if="firmware.input.action == 'url'" ng-model="firmware.input.url" placeholder="{{_t('firmware_url')}}" title="{{_t('firmware_url')}}" />
             <!-- File -->
-            <input type="file" class="form-control" file-model="myFile" />
+            <input type="file" class="form-control" file-model="firmware.input.file" ng-if="firmware.input.action == 'file'"/>
             <!-- Target -->
-            <!--<select name="devices" class="form-control" ng-model="firmware.input.targetId">
-                <option value="" ng-selected="v.id != deviceId">-&#45;&#45; {{_t('Target')}} -&#45;&#45;</option>
-                <option value="{{k}}"
-                        ng-repeat="(k,v) in ['Z-Wave','EnOcean']"
-                        ng-selected="k === 0">{{v}}</option>
-            </select>-->
-
+            <select name="devices" class="form-control" ng-model="firmware.input.targetId">
+               <option value="" ng-selected="v.id != deviceId">--- {{_t('target_id')}} ---</option>
+               <option value="{{k}}"
+                       ng-repeat="(k,v) in cfg.firmware_target"
+                       ng-selected="k === 0">{{k}}: {{_t(v)}}
+               </option>
+           </select>
             <!-- Submit -->
             <button type="submit" class="btn btn-primary" id="btn_update"
                     ng-disabled="rowSpinner['btn_update']">
@@ -31,5 +40,18 @@
                 </bb-row-spinner>
             </button>
         </form>
-    </div> 
+        <div>
+            <bb-alert alert="firmware.update.alert"></bb-alert>
+            <div class="progress"
+                 ng-if="firmware.update.show && firmware.update.progress >= 0 && firmware.update.progress < 101">
+                <div class="progress-bar"
+                     style="min-height:40px;min-width: 2em; width:{{firmware.update.progress}}%;"
+                     ng-class="firmware.update.progress < 100 ? 'progress-bar-danger progress-bar-striped active' : 'progress-bar-success'">
+                    {{firmware.update.progress}}%
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 </div><!-- /ng-controler -->

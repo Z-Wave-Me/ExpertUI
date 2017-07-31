@@ -47,16 +47,29 @@ angApp.directive('bbAlertText', function () {
         + '</span>'
     };
 });
-
+/**
+ * Handles and displays sort by buttons
+ * @class sortBy
+ */
 angApp.directive('sortBy', function () {
     return {
         restrict: "E",
         replace: true,
-        template: '<span ng-show="predicate == {{coll_name}}"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>',
-        link: function (scope, element, attr) {
-            // this is link function
-            var col_name = scope.$eval(attr.col_name);
-        }
+        scope: {
+            callback: '&',
+            obj: '=',
+            label: '=',
+            field: '='
+        },
+        template: '<span class="order-by clickable">{{label}}&nbsp<span ng-show="obj.field == field">'
+        + '<i ng-show="!obj.reverse" class="fa fa-sort-asc"></i><i ng-show="obj.reverse" class="fa fa-sort-desc"></i>'
+        + '</span></span>',
+        link: function(scope, element, attrs) {
+            element.bind('click', function (e) {
+                scope.callback({field: scope.field});
+            });
+
+        },
     };
 });
 /**
@@ -223,7 +236,7 @@ angApp.directive('switchAllIcon', function () {
     return {
         restrict: "E",
         replace: true,
-        template: '<img src="{{src}}" />',
+        template: '<img ng-src="{{src}}" />',
         link: function (scope, elem, attr) {
             var src;
             if (attr.hasall !== null) {
@@ -272,7 +285,8 @@ angApp.directive('routingTypeIcon', function () {
 
                 var isListening = node.data.isListening.value;
                 var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
-                var hasWakeup = 0x84 in node.instances[0].commandClasses;
+                //var hasWakeup = 0x84 in node.instances[0].commandClasses;
+                var hasWakeup = !isListening && !node.data.sensor250.value && !node.data.sensor1000.value;
                 var hasBattery = 0x80 in node.instances[0].commandClasses;
                 var isPortableRemoteControl = (node.data.deviceTypeString.value == "Portable Remote Controller");
 
@@ -300,11 +314,11 @@ angApp.directive('routingTypeIcon', function () {
     };
 });
 
-angApp.directive('expertCommandInput', function ($filter) {
+angApp.directive('expertCommandInput', function (cfg,$filter) {
     // Get text input
     function getText(label, value, min, max, name) {
         var input = '';
-        var inName = $filter('stringToSlug')(name ? name : label);
+        var inName = $filter('stringToSlug')(name ? name : label,'_');
         input += '<label>' + label + '</label> ';
         input += '<input class="form-control" name="' + inName + '" type="text" class="form-control" value="' + value + '" title=" min: ' + min + ', max: ' + max + '" />';
         return input;
@@ -316,7 +330,6 @@ angApp.directive('expertCommandInput', function ($filter) {
 
         input += '<label>' + label + '</label> ';
         input += '<select name="select_' + inName + '" class="form-control">';
-        input += '<option value="1">Z-Way</option>';
         angular.forEach(devices, function (v, k) {
             var selected = (v.id == currValue ? ' selected' : '');
             input += '<option value="' + v.id + '"' + selected + '>' + v.name + '</option>';
@@ -341,7 +354,11 @@ angApp.directive('expertCommandInput', function ($filter) {
         var value = (currValue !== undefined ? currValue : defaultValue);
         angular.forEach(enums.enumof, function (v, k) {
             //var inName =  $filter('stringToSlug')(name ? v.name : label);
-            var inName = name ? name : v.name;
+            var inName = (name ? name + '_' +label : v.name);// + '_' +label;
+           /* var inName = v.name;
+                if(name){
+                    inName = name  + '_' +label;
+                }*/
             //console.log(inName);
             var title = v.label || '';
             var type = v.type;

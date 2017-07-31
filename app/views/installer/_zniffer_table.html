@@ -1,0 +1,167 @@
+<!-- zniffer table -->
+<table class="table table-condensed table-hover">
+    <thead>
+        <!--<th>#</th>--> 
+        <tr>
+            <th>&nbsp;</th>
+            <!-- date --> 
+            <th>{{ _t('date')}}</th>
+            <!-- time --> 
+            <th>{{ _t('time')}}</th>
+            <!-- src --> 
+            <th>
+                <div class="input-group">
+                    <!-- Title and filter -->
+                    <span class="clickable"
+                          ng-class="zniffer.filter.model['src'].value !== '' ? 'text-success' : ''"
+                          ng-click="expandFilter('znifferFilterSrc', $event)"> 
+                        <i class="fa fa-filter"></i>  {{ _t('src')}}
+                    </span>
+                    <!-- Dropdown -->
+                    <div class="app-dropdown app-dropdown-left" ng-if="filterExpanded.znifferFilterSrc">
+                        <div class="app-dropdown-content">
+                            <!--<pre>{{zniffer.filter.model.src|json}} </pre>-->
+                            <div class="form-group">
+                                <!-- Value -->
+                                <input class="form-control" type="text" id="filter_src" 
+                                       placeholder="{{_t('enter_value')}}. {{_t('use_charcter_delimit')}}" 
+                                       ng-model="zniffer.filter.model.src.value" />
+                            </div>
+                            <!-- Visibility -->
+                            <div class="form-group   form-inline">
+
+                                <input class="form-control_" type="radio" name="src_show" value="1" 
+                                       ng-model="zniffer.filter.model.src.show" 
+                                       ng-checked="zniffer.filter.model.src.show == '1'" /> {{_t('show')}}
+                                <input class="form-control_" type="radio" name="src_show" value="0" 
+                                       ng-model="zniffer.filter.model.src.show" 
+                                       ng-checked="zniffer.filter.model.src.show == '0'" /> {{_t('hide')}}
+                            </div>
+                        </div>
+                        <div class="appdropdown-footer" ng-click="resetZnifferFilter()">
+                            <!-- Reset -->
+                            <button class="btn btn-default" type="button" 
+                                    ng-click="expandFilter('znifferFilterSrc', $event);resetZnifferFilter('src')">
+                                <i class="fa fa-times text-danger"></i>  {{_t('reset_filter')}}
+                            </button>
+                            <!-- OK -->
+                            <button class="btn btn-success" type="button" 
+                                    ng-click="expandFilter('znifferFilterSrc', $event);setZnifferFilter('src')">
+                                <i class="fa fa-check"></i>  {{_t('th_ok')}}
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </th>
+            <!-- dest --> 
+            <th>
+                <div class="input-group">
+                    <!-- Title and filter -->
+                    <span class="clickable"
+                          ng-class="zniffer.filter.model['dest'].value !== '' ? 'text-success' : ''"
+                          ng-click="expandFilter('znifferFilterDest', $event)"> 
+                        <i class="fa fa-filter"></i>  {{ _t('dest')}}
+                    </span>
+                    <!-- Dropdown -->
+                    <div class="app-dropdown app-dropdown-left" ng-if="filterExpanded.znifferFilterDest">
+                        <div class="app-dropdown-content">
+                            <!--<pre>{{zniffer.filter.model.dest|json}} </pre>-->
+                            <div class="form-group">
+                                <!-- Value -->
+                                <input class="form-control" type="text" id="filter_dest" 
+                                       placeholder="{{_t('enter_value')}}. {{_t('use_charcter_delimit')}}" 
+                                       ng-model="zniffer.filter.model.dest.value" />
+                            </div>
+                            <!-- Visibility -->
+                            <div class="form-group   form-inline">
+
+                                <input class="form-control_" type="radio" name="dest_show" value="1" 
+                                       ng-model="zniffer.filter.model.dest.show" 
+                                       ng-checked="zniffer.filter.model.dest.show == '1'" /> {{_t('show')}}
+                                <input class="form-control_" type="radio" name="dest_show" value="0" 
+                                       ng-model="zniffer.filter.model.dest.show" 
+                                       ng-checked="zniffer.filter.model.dest.show == '0'" /> {{_t('hide')}}
+                            </div>
+                        </div>
+                        <div class="appdropdown-footer" ng-click="resetZnifferFilter()">
+                            <!-- Reset -->
+                            <button class="btn btn-default" type="button" 
+                                    ng-click="expandFilter('znifferFilterDest', $event);resetZnifferFilter('dest')">
+                                <i class="fa fa-times text-danger"></i>  {{_t('reset_filter')}}
+                            </button>
+                            <!-- OK -->
+                            <button class="btn btn-success" type="button" 
+                                    ng-click="expandFilter('znifferFilterDest', $event);setZnifferFilter('dest')">
+                                <i class="fa fa-check"></i>  {{_t('th_ok')}}
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </th>
+            <!-- data --> 
+            <th>
+                <div class="input-group">
+                    <!-- Title and filter -->
+                    <span class="clickable"
+                          ng-class="zniffer.filter.model['data'].value !== '' ? 'text-success' : ''"
+                          ng-click="expandFilter('znifferFilterData', $event)"> 
+                        <i class="fa fa-filter"></i>  {{ _t('data')}}
+                    </span>
+                    <!-- Dropdown -->
+                    <div class="app-dropdown app-dropdown" ng-if="filterExpanded.znifferFilterData">
+                        <div class="app-dropdown-content">
+                            <!--<pre>{{zniffer.filter.model.data|json}} </pre>-->
+                            <div class="form-group">
+                                <!-- Value -->
+                                <select class="form-control" ng-model="zniffer.filter.model.data.value">
+                                    <option value="{{v}}" ng-repeat="v in zniffer.filter.items.data">{{v}}</option>
+                                </select>
+                            </div>
+                            <!-- Visibility -->
+                            <div class="form-group form-inline">
+
+                                <input class="form-control_" type="radio" name="data_show" value="1" 
+                                       ng-model="zniffer.filter.model.data.show" 
+                                       ng-checked="zniffer.filter.model.data.show == '1'" /> {{_t('show')}}
+                                <input class="form-control_" type="radio" name="data_show" value="0" 
+                                       ng-model="zniffer.filter.model.data.show" 
+                                       ng-checked="zniffer.filter.model.data.show == '0'" /> {{_t('hide')}}
+                            </div>
+                        </div>
+                        <div class="appdropdown-footer" ng-click="resetZnifferFilter()">
+                            <!-- Reset -->
+                            <button class="btn btn-default" type="button" 
+                                    ng-click="expandFilter('znifferFilterData', $event);resetZnifferFilter('data')">
+                                <i class="fa fa-times text-danger"></i>  {{_t('reset_filter')}}
+                            </button>
+                            <!-- OK -->
+                            <button class="btn btn-success" type="button" 
+                                    ng-click="expandFilter('znifferFilterData', $event);setZnifferFilter('data')">
+                                <i class="fa fa-check"></i>  {{_t('th_ok')}}
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </th>
+            <!-- application --> 
+            <th>{{ _t('application')}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="zniffer-row-{{v.data}}" ng-repeat="v in zniffer.all| orderBy: '-id' track by $index">
+            <td>
+                <i title="{{v.type}}" class="fa fa-long-arrow-right" ng-if="v.type === 'incoming'"></i>
+                <i title="{{v.type}}" class="fa fa-long-arrow-left" ng-if="v.type === 'outgoing'"></i> 
+            </td>
+            <td>{{v.dateTime.date}}</td>
+            <td>{{v.dateTime.time}}</td>
+            <td ng-class="zniffer.filter.model['src'].value !== '' ? 'bcg-success' : ''">{{v.src}}</td>
+            <td ng-class="zniffer.filter.model['dest'].value !== '' ? 'bcg-success' : ''">{{v.dest}}</td>
+            <td ng-class="zniffer.filter.model['data'].value !== '' ? 'bcg-success' : ''">{{v.data}}</td>
+            <td>{{v.application}}</td>
+        </tr>
+    </tbody>
+</table>

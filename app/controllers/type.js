@@ -10,6 +10,7 @@
  */
 appController.controller('TypeController', function($scope, $filter, $timeout,$interval,$q,dataService, cfg,_,deviceService) {
     $scope.devices = {
+        ids: [],
         all: [],
         show: false,
         interval: null
@@ -17,6 +18,7 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
 
     $scope.deviceClasses = [];
     $scope.productNames = [];
+    $scope.isController = false;
 
     /**
      * Cancel interval on page destroy
@@ -64,7 +66,7 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
                     return;
                 }
                 $scope.devices.show = true;
-                $scope.refreshZwaveData(zwaveData.value);
+                $scope.refreshZwaveData();
             }
 
         });
@@ -74,12 +76,25 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function(ZWaveAPIData) {
+    $scope.refreshZwaveData = function() {
         var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
-                setData(response.data.joined);
+            dataService.loadJoinedZwaveData().then(function(response) {
+                var update = false;
+                angular.forEach(response.data.update, function(v, k) {
+                    // Get node ID from response
+                    var findId = k.split('.')[1];
+                    // Check if node ID is in the available devices
+                    if($scope.devices.ids.indexOf(findId) > -1){
+                        update = true;
+                        return;
+                    }
+                });
+                // Update found - updating available devices
+                if(update){
+                    setData(response.data.joined);
+                }
+                //setData(response.data.joined);
             }, function(error) {});
         };
         $scope.devices.interval = $interval(refresh, $scope.cfg.interval);
@@ -109,57 +124,74 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
-            if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
+            if (deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
             }
+            /*if (nodeId == 255 || node.data.isVirtual.value) {
+                return;
+            }*/
+            if (parseInt(nodeId, 10) === cfg.controller.zwayNodeId) {
+                $scope.isController = true;
+            }
+
             var node = ZWaveAPIData.devices[nodeId];
-            var instanceId = 0;
-            var ccIds = [32, 34, 37, 38, 43, 70, 91, 94, 96, 114, 119, 129, 134, 138, 143, 152];
             var basicType = node.data.basicType.value;
             var genericType = node.data.genericType.value;
             var specificType = node.data.specificType.value;
             var major = node.data.ZWProtocolMajor.value;
             var minor = node.data.ZWProtocolMinor.value;
-            var vendorName = node.data.vendorString.value;
+            var isController = (controllerNodeId == nodeId);
+            var vendorName = isController? ZWaveAPIData.controller.data.vendor.value : node.data.vendorString.value;
             var zddXmlFile = $filter('hasNode')(node, 'data.ZDDXMLFile.value');
             //var productName = null;
             var fromSdk = true;
             var sdk;
             // SDK
-            if (node.data.SDK.value == '') {
-                sdk = major + '.' + minor;
-                fromSdk = false;
+            if ((node.data.SDK && node.data.SDK.value!== '') || (isController && ZWaveAPIData.controller.data.SDK && ZWaveAPIData.controller.data.SDK.value !== '')) {
+                sdk = isController? ZWaveAPIData.controller.data.SDK.value : node.data.SDK.value;
             } else {
-                sdk = node.data.SDK.value;
+                //sdk = major + '.' + minor;
+                sdk = major + '.' + tranformTwoDigits(minor);
+                fromSdk = false;
             }
             // Version
-            var appVersion = node.data.applicationMajor.value + '.' + node.data.applicationMinor.value;
-            // Security and ZWavePlusInfo
+            var appVersion = node.data.applicationMajor.value + '.' + tranformTwoDigits(node.data.applicationMinor.value);
+            // Security
             var security = false;
-            angular.forEach(ccIds, function(v) {
-                var cmd = node.instances[instanceId].commandClasses[v];
-                if (angular.isObject(cmd) && cmd.name === 'Security') {
-                    security = cmd.data.interviewDone.value;
+            // Security type
+            var securityType = 'security-0';
+            var securityInterview = false;
+            var hasSecurityCc = deviceService.hasCommandClass(node,152);
+            if(hasSecurityCc){
+                security = $filter('hasNode')(hasSecurityCc,'data.interviewDone.value');
+                securityType = 'security-1';
+                securityInterview = $filter('hasNode')(hasSecurityCc,'data.interviewDone.value');
+            }
+            // Security S2
+            var hasSecurityS2Cc = deviceService.hasCommandClass(node,159);
+            if(hasSecurityS2Cc){
+                security = true;
+                securityType = 'security-2';
+                securityInterview = $filter('hasNode')(hasSecurityS2Cc,'data.interviewDone.value');
+            }
+            var securityS2Key = deviceService.getS2GrantedKeys(hasSecurityS2Cc);
 
-                }
-            });
 
 
+
+            // todo: deprecated
             // DDR
-            var ddr = false;
+            /*var ddr = false;
             if (angular.isDefined(node.data.ZDDXMLFile)) {
                 ddr = node.data.ZDDXMLFile.value;
-            }
+            }*/
 
             // Zwave plus
+            var hasZWavePlusInfoCc = deviceService.hasCommandClass(node,94);
             var ZWavePlusInfo = false;
-            angular.forEach(ccIds, function(v) {
-                var cmd = node.instances[instanceId].commandClasses[v];
-                if (angular.isObject(cmd) && cmd.name === 'ZWavePlusInfo') {
-                    ZWavePlusInfo = true;
-
-                }
-            });
+            if(deviceService.hasCommandClass(node,94)){
+                ZWavePlusInfo = true;
+            }
             // MWI and EF
             var mwief = getEXFrame(major, minor);
             if(ZWavePlusInfo){
@@ -183,13 +215,18 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
             // Set object
             var obj = {};
             obj['id'] = nodeId;
+            obj['idSort'] = $filter('zeroFill')(nodeId);
             obj['rowId'] = 'row_' + nodeId;
             obj['name'] = $filter('deviceName')(nodeId, node);
+            obj['hasSecurityS2Cc'] = hasSecurityS2Cc;
+            obj['securityType'] = securityType;
+            obj['securityInterview'] = securityInterview;
             obj['security'] = security;
+            obj['securityS2Key'] = securityS2Key.join();
             obj['mwief'] = mwief;
-            obj['ddr'] = ddr;
+           // obj['ddr'] = ddr;
             obj['ZWavePlusInfo'] = ZWavePlusInfo;
-            obj['sdk'] = (sdk == '0.0' ? '?' : sdk);
+            obj['sdk'] = (sdk == '0.00' || sdk == '0.0' ? '?' : sdk);
             obj['fromSdk'] = fromSdk;
             obj['appVersion'] = appVersion;
             obj['type'] = deviceType;
@@ -198,7 +235,6 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
             obj['genericType'] = genericType;
             obj['specificType'] = specificType;
             obj['vendorName'] = vendorName;
-            //obj['productName'] = productName;
 
             var findIndex = _.findIndex($scope.devices.all, {rowId: obj.rowId});
             if(findIndex > -1){
@@ -214,7 +250,15 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
                 }
 
             }
+            if($scope.devices.ids.indexOf(nodeId) === -1){
+                $scope.devices.ids.push(nodeId);
+            }
+
         });
+    }
+
+    function tranformTwoDigits (number) {
+        return ("0" + number).slice(-2);
     }
 
     /**

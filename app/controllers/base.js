@@ -13,11 +13,20 @@ var appController = angular.module('appController', []);
  * @class BaseController
  */
 appController.controller('BaseController', function ($scope, $rootScope, $cookies, $filter, $location, $anchorScroll, $window, $route, $interval, $timeout, cfg, dataService, deviceService, myCache) {
+    cfg.route.host = $location.host();
+    // Global config
+    $scope.cfg = cfg;
+    $scope.isOnline = false;
+    $scope.nowDate = new Date();
     $scope.loading = false;
     $scope.alert = {message: false, status: 'is-hidden', icon: false};
+    $scope.alertCitLicence = false;
     $scope.languages = {};
-
-
+    $scope.orderByArr = {
+        field: '',
+        reverse: false
+    }
+    $scope.user = deviceService.getUser();
     // Custom IP
     $scope.customIP = {
         'url': cfg.server_url,
@@ -35,19 +44,21 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
 
     // Show page content
     $scope.showContent = false;
-    // Global config
-    $scope.cfg = cfg;
+
+    // Version
+    $scope.version = "";
 
 // Lang settings
     $scope.lang_list = cfg.lang_list;
     // Set language
     $scope.lang = (angular.isDefined($cookies.lang) ? $cookies.lang : cfg.lang);
-    $('.current-lang').html($scope.lang);
-    $scope.changeLang = function (lang) {
-        $window.alert($scope._t('language_select_reload_interface'));
-        $cookies.lang = lang;
-        $scope.lang = lang;
-    };
+    //TODO: deprecated
+    /*$('.current-lang').html($scope.lang);
+     $scope.changeLang = function (lang) {
+     $window.alert($scope._t('language_select_reload_interface'));
+     $cookies.lang = lang;
+     $scope.lang = lang;
+     };*/
     // Load language files
     $scope.loadLang = function (lang) {
         // Is lang in language list?
@@ -56,29 +67,27 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
             angular.extend($scope.languages, response.data);
         }, function (error) {
         });
-        // todo: deprecated
-        /*// Is lang in language list?
-        var lang = (cfg.lang_list.indexOf(lang) > -1 ? lang : cfg.lang);
-        dataService.getLanguageFile(function (data) {
-            $cookies.langFile = {'ab': 25};
-            $scope.languages = data;
-        }, lang);*/
-
-
     };
+    $scope.loadLang($scope.lang);
+
     // Get language lines
     $scope._t = function (key, replacement) {
         return deviceService.getLangLine(key, $scope.languages, replacement);
     };
 
+
     // Watch for lang change
-    //TODO: display a dialog "Page will be reloaded..." and auto reload page
-    $scope.$watch('lang', function () {
-        $('.current-lang').html($scope.lang);
-        $scope.loadLang($scope.lang);
-    });
+    //TODO: deprecated
+    /*$scope.$watch('lang', function () {
+     $('.current-lang').html($scope.lang);
+     $scope.loadLang($scope.lang);
+     });*/
     // Order by
     $scope.orderBy = function (field) {
+        $scope.orderByArr = {
+            field: field,
+            reverse: !$scope.orderByArr.reverse
+        }
         $scope.predicate = field;
         $scope.reverse = !$scope.reverse;
     };
@@ -96,7 +105,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
         var path = $location.path().split('/');
         return (route === path[segment] ? 'active' : '');
     };
-    
+
     /**
      * Check if route match the pattern.
      * @param {string} path
@@ -128,33 +137,6 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
         myCache.removeAll();
         $route.reload();
     };
-
-    // todo: deprecated
-    /**
-     * Route on change start
-     */
-    /*$rootScope.$on("$routeChangeStart", function(event, next, current) {
-        if(config_data.cfg.app_type === "installer") {
-            console.log(event);
-            console.log(current);
-            var input = config_data.cfg.auth;
-            dataService.logInApi(input).then(function (response) {
-                var user = response.data.data;
-                deviceService.setZWAYSession(user.sid);
-                deviceService.setUser(user);
-                //$window.location.reload();
-            }, function (error) {
-                $scope.loading = false;
-                var message = $scope._t('error_load_data');
-                if (error.status == 401) {
-                    message = $scope._t('error_load_user');
-                }
-                alertify.alertError(message);
-            });
-        }
-        console.log(event);
-        console.log(current);
-    });*/
 
     $scope.naviExpanded = {};
     /**
@@ -195,17 +177,17 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
      * @returns {undefined}
      */
     $scope.handleModal = function (key, $event, status) {
-       if (typeof status === 'boolean') {
+        if (typeof status === 'boolean') {
             $scope.modalArr[key] = status;
         } else {
-           if(key){
-               $scope.modalArr[key] = !($scope.modalArr[key]);
-           }else{
-               $scope.modalArr = {};
-           }
+            if (key) {
+                $scope.modalArr[key] = !($scope.modalArr[key]);
+            } else {
+                $scope.modalArr = {};
+            }
 
         }
-        if($event){
+        if ($event) {
             $event.stopPropagation();
         }
 
@@ -266,17 +248,13 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     };
 
     /**
-     * Get array from custom config
+     * Get a value from custom config
      * @param {string} key
-     * @returns {Array}
+     * @returns {string}
      */
-    $scope.getCustomCfgArr = function (key) {
-        if (cfg.custom_cfg[cfg.app_type]) {
-            return cfg.custom_cfg[cfg.app_type][key] || '';
-        }
-        return '';
+    $scope.getCustomCfgVal = function (key) {
+        return deviceService.getCustomCfgVal(key);
     };
-
     // Alertify defaults
     alertify.defaults.glossary.title = cfg.app_name;
     alertify.defaults.glossary.ok = 'OK';
@@ -286,11 +264,11 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     if (!alertify.alertError) {
         //define a new errorAlert base on alert
         alertify.dialog('alertError', function factory() {
-            return{
+            return {
                 build: function () {
                     var errorHeader = '<span class="fa fa-exclamation-triangle fa-lg text-danger" '
-                            + 'style="vertical-align:middle;">'
-                            + '</span> ' + cfg.app_name + ' - ERROR';
+                        + 'style="vertical-align:middle;">'
+                        + '</span> ' + $scope.getCustomCfgVal('title') + ' - ERROR';
                     this.setHeader(errorHeader);
                 }
             };
@@ -300,11 +278,11 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     // Extend existing alert (WARNING) dialog
     if (!alertify.alertWarning) {
         alertify.dialog('alertWarning', function factory() {
-            return{
+            return {
                 build: function () {
                     var errorHeader = '<span class="fa fa-exclamation-circle fa-lg text-warning" '
-                            + 'style="vertical-align:middle;">'
-                            + '</span> ' + cfg.app_name + ' - WARNING';
+                        + 'style="vertical-align:middle;">'
+                        + '</span> ' + $scope.getCustomCfgVal('title') + ' - WARNING';
                     this.setHeader(errorHeader);
                 }
             };
@@ -317,16 +295,77 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
      * @param {string} cmd
      * @param {int} timeout
      */
-    $scope.runZwaveCmd = function (cmd, timeout) {
+    $scope.runZwaveCmd = function (cmd, timeout, hideError) {
         timeout = timeout || 1000;
         $scope.toggleRowSpinner(cmd);
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
             $timeout($scope.toggleRowSpinner, timeout);
         }, function (error) {
             $scope.toggleRowSpinner();
-            alertify.alertError($scope._t('error_update_data') + '\n' + cmd);
+            if (!hideError) {
+                alertify.alertError($scope._t('error_update_data') + '\n' + cmd);
+            }
+
         });
     };
+
+    /**
+     * Build version for CIT footer
+     * @returns {undefined}
+     */
+    $scope.buildVersion = function() {
+
+        var current_firmware = $scope.cfg.system_info.current_firmware;
+        var app_version = $scope.cfg.app_version
+        var part_ui = app_version.split("-");
+        var part_os = current_firmware.split("-");
+        var os = part_os[0];
+        var ui = part_ui[0];
+
+        $scope.version = $scope._t("version", {
+            "__ui__": ui,
+            "__os__": os
+        });
+    };
+
+
+    /**
+     * Load system info
+     * @returns {undefined}
+     */
+    $scope.loadSystemInfo = function () {
+        dataService.getApi('system_info_url').then(function (response) {
+            //angular.extend($scope.systemInfo, response.data.data);
+            angular.extend(cfg.system_info, response.data.data);
+            $scope.buildVersion();
+            // Is CIT server online?
+            $scope.isOnline = cfg.system_info.cit_server_reachable;
+            // box is not registered
+            if (!cfg.system_info.cit_authorized) {
+                $scope.alertCitLicence = 'cit_not_registered';
+                return;
+            }
+            //  license has been expired
+            if (cfg.system_info.cit_license_countDown == 0) {
+                $scope.alertCitLicence = 'cit_licence_expired';
+                return;
+            }
+            //  license will be expire soon
+            if (cfg.system_info.cit_license_countDown < 5) {
+                $scope.alertCitLicence = 'cit_licence_update';
+                return;
+            }
+
+
+        }, function (error) {
+        });
+
+    };
+    // System info only for installer
+    if (cfg.app_type === 'installer') {
+        $scope.loadSystemInfo();
+    }
+
 
     /**
      * Set zwave configuration
@@ -335,11 +374,9 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     $scope.loadZwaveConfig = function (nocache) {
         // Set config
         dataService.getApi('configget_url', null, nocache).then(function (response) {
-            // todo: deprecated
-            //angular.extend(cfg.zwavecfg, {debug: response.data.debug});
-            //angular.extend(cfg.zwavecfg, {notes: response.data.notes});
             angular.extend(cfg.zwavecfg, response.data);
-        }, function (error) {});
+        }, function (error) {
+        });
     };
 
     /**
@@ -350,41 +387,12 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
             if (response.data.length === 1) {
                 angular.extend(cfg, {dongle: response.data[0]});
                 $cookies.dongle = response.data[0];
-                angular.extend(cfg,{dongle_list: response.data});
-
-                angular.extend(cfg, {
-                    update_url: '/ZWave.' + cfg.dongle + '/Data/',
-                    store_url: '/ZWave.' + cfg.dongle + '/Run/',
-                    restore_url: '/ZWave.' + cfg.dongle + '/Restore',
-                    queue_url: '/ZWave.' + cfg.dongle + '/InspectQueue',
-                    fw_update_url: '/ZWave.' + cfg.dongle + '/FirmwareUpdate',
-                    zme_bootloader_upgrade: '/ZWave.' + cfg.dongle + '/ZMEBootloaderUpgrade',
-                    zme_firmware_upgrade: '/ZWave.' + cfg.dongle + '/ZMEFirmwareUpgrade',
-                    license_load_url: '/ZWave.' + cfg.dongle + '/ZMELicense',
-                    zddx_create_url: '/ZWave.' + cfg.dongle + '/CreateZDDX/',
-                    'stat_url': '/ZWave.' + cfg.dongle + '/CommunicationStatistics',
-                    'postfixget_url': '/ZWave.' + cfg.dongle + '/PostfixGet',
-                    'postfixadd_url': '/ZWave.' + cfg.dongle + '/PostfixAdd',
-                    'postfixremove_url': '/ZWave.' + cfg.dongle + '/PostfixRemove',
-                    //'communication_history_url': '/ZWave.' + cfg.dongle + '/CommunicationHistory',
-                    'configget_url': '/ZWave.' + cfg.dongle + '/ExpertConfigGet',
-                    'configupdate_url': '/ZWave.' + cfg.dongle + '/ExpertConfigUpdate'
-
-                });
             }
+            angular.extend(cfg, {dongle_list: response.data});
+
         }, function (error) {
-            if (error.status === 401 && cfg.app_type !== 'installer') {
-                window.location.href = cfg.smarthome_login;
-            }
-            // todo: deprecated
-            /*if (error.status === 401) {
-             //var redirectTo = $location.$$protocol+'://' + $location.$$host + ':' + $location.$$port + cfg.smarthome_login
-             //if( cfg.app_type === 'installer'){
-             //deviceService.logOut();
-             return;
-             //}
-             //window.location.href = cfg.smarthome_login;
-             }*/
+        }).finally(function () {
+            deviceService.setDongle(cfg.dongle);
         });
     };
 
@@ -396,15 +404,18 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     $scope.setTimeStamp = function () {
         dataService.getApi('time', null, true).then(function (response) {
             $interval.cancel($scope.timeZoneInterval);
-            angular.extend(cfg.route.time, {string: $filter('setTimeFromBox')(response.data.data.localTimeUT)},
-                {timestamp: response.data.data.localTimeUT});
+            angular.extend(cfg.route.time, {string: $filter('setTimeFromBox')(response.data.data.localTimeUT, true)},
+                {timestamp: response.data.data.localTimeUT},
+                {offset: response.data.data.localTimeZoneOffset});
             var refresh = function () {
-                cfg.route.time.timestamp += (cfg.interval < 1000 ? 1 : cfg.interval/1000)
-                cfg.route.time.string = $filter('setTimeFromBox')(cfg.route.time.timestamp)
+                cfg.route.time.timestamp += (cfg.interval < 1000 ? 1 : Math.floor(cfg.interval / 1000));
+                cfg.route.time.string = $filter('setTimeFromBox')(cfg.route.time.timestamp);
             };
+
             cfg.zwavecfg.time_zone = response.data.data.localTimeZone;
-            $scope.timeZoneInterval = $interval(refresh, $scope.cfg.interval);
-        }, function (error) {});
+            $scope.timeZoneInterval = $interval(refresh, cfg.interval);
+        }, function (error) {
+        });
 
     };
 
@@ -417,18 +428,11 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     };
     $scope.loadBoxApiData = function () {
         dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
-             var hasDevices = Object.keys(ZWaveAPIData.devices).length;
-             var homeId = ZWaveAPIData.controller.data.homeId.value;
-
-            // todo: deprecated
-            //$scope.boxData.controller.isPrimary = ZWaveAPIData.controller.data.isPrimary.value;
-            //$scope.boxData.controller.isRealPrimary = ZWaveAPIData.controller.data.isRealPrimary.value;
-            //$scope.boxData.controller.hasDevices =  hasDevices < 2 ? false : true;
-            //$scope.boxData.controller.homeId =   '0x' + ('00000000' + (homeId + (homeId < 0 ? 0x100000000 : 0)).toString(16)).slice(-8);
-            //$scope.boxData.controller.softwareRevisionVersion = ZWaveAPIData.controller.data.softwareRevisionVersion.value;
-            //$scope.boxData.controller.homeNotes = ZWaveAPIData.controller.data.homeNotes.value ;
-            //$scope.boxData.controller.homeName = ZWaveAPIData.controller.data.homeName.value || cfg.controller.network_name;
-
+            var hasDevices = Object.keys(ZWaveAPIData.devices).length;
+            var homeId = ZWaveAPIData.controller.data.homeId.value;
+            var zwayNodeId = ZWaveAPIData.controller.data.nodeId.value;
+            var APIVersion = ZWaveAPIData.controller.data.APIVersion.value;
+            var showAnalytics = cfg.analytics.show;
             // Changes MK
             //$scope.boxData.controller.controllerState = ZWaveAPIData.controller.data.controllerState.value;
             // Rewrite config
@@ -437,11 +441,18 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
                 isRealPrimary: ZWaveAPIData.controller.data.isRealPrimary.value,
                 homeId: homeId,
                 homeIdHex: '0x' + ('00000000' + (homeId + (homeId < 0 ? 0x100000000 : 0)).toString(16)).slice(-8),
-                hasDevices: hasDevices < 2 ? false : true
+                hasDevices: hasDevices < 2 ? false : true,
+                zwayNodeId: zwayNodeId,
+                APIVersion: APIVersion
             }
-            angular.extend(cfg.controller,cfgController);
+
+            angular.extend(cfg.controller, cfgController);
+
+            if ((cfg.app_type === 'installer') || (!showAnalytics && ZWaveAPIData.controller.data.capabilities.value.indexOf(59) > -1)) {
+                angular.extend(cfg.analytics, {show: true});
+            }
         }, function (error) {
-            alertify.alertError($scope._t('error_load_data'));
+            //alertify.alertError($scope._t('error_load_data'));
 
         });
     };
@@ -449,26 +460,38 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
      * Load queue data
      */
     $scope.loadBusyIndicator = function () {
-        var refresh = function() {
-            dataService.getApi('queue_url',null,true).then(function (response) {
+        var refresh = function () {
+            dataService.getApi('queue_url', null, true).then(function (response) {
                 setBusyIndicator(response.data);
-            }, function (error) {});
+            }, function (error) {
+            });
 
         };
-        $interval(refresh, 1000);
+        $scope.jobQueueInterval = $interval(refresh, cfg.queue_interval);
     };
     /**
-     * Load common APIs
+     * Route on change Success
      */
-    if($scope.getBodyId() !== ''){
+    $rootScope.$on("$routeChangeSuccess", function (event, current, previous) {
+        if (cfg.app_type === 'installer') {
+            $scope.loadSystemInfo();
+        }
+    });
+    /**
+     * Load common APIs for pages, where authorization is required
+     */
+    //if ($scope.getBodyId() !== '') {
+    if (cfg.no_auth_pages.indexOf($scope.getBodyId()) === -1) {
         $scope.loadZwaveConfig();
         $scope.setDongle();
         $scope.setTimeStamp();
-        if(cfg.app_type === 'installer'){
-            $scope.loadBusyIndicator();
-            $scope.loadBoxApiData();
-        }
+        $scope.loadBusyIndicator();
+        $scope.loadBoxApiData();
+        /*if(cfg.app_type === 'installer'){
 
+         $scope.loadBoxApiData();
+         }
+         */
     }
 
     /// --- Private functions --- ///
@@ -480,28 +503,20 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
         var ret = {
             queueLength: data.length,
             busyLength: 0,
-            result: 0,
-            arrCnt: {
-            v: 0,
-            s: 0,
-            d: 0
+            result: 0
         }
-        }
-        var arrCnt = {
-            v: 0,
-            s: 0,
-            d: 0
-        }
+        angular.forEach(data, function (job, jobIndex) {
+            // job[1][1] = W
+            // job[1][2] = S
+            // job[1][4] = D
 
-        angular.forEach(data, function(job, jobIndex) {
-            if(job[1][1] === 1 || job[1][2] === 1 || job[1][4] === 1){
+            //if((job[1][1] === 0 || job[1][2] === 0 || job[1][4] === 0) || (job[1][1] === 0 && job[1][2] === 0 && job[1][4] === 0)){
+            if (job[1][1] === 0 && job[1][2] === 0 && job[1][4] === 0) {
                 ret.busyLength += 1;
             }
-            ret.arrCnt.v += job[1][1];
-            ret.arrCnt.s += job[1][2];
-            ret.arrCnt.d += job[1][4];
         });
-        ret.result = (ret.queueLength - ret.busyLength);
+        //ret.result = (ret.queueLength - ret.busyLength);
+        ret.result = ret.busyLength;
         angular.extend(cfg.busy_indicator, ret);
     }
 

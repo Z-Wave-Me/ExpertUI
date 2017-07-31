@@ -10,6 +10,7 @@
  */
 appController.controller('BatteryController', function($scope, $filter, $timeout,$interval,$http,dataService, cfg,_, myCache) {
     $scope.batteries = {
+        ids: [],
         all: [],
         interval: null,
         show: false
@@ -34,7 +35,7 @@ appController.controller('BatteryController', function($scope, $filter, $timeout
                 return;
             }
             $scope.batteries.show = true;
-            $scope.refreshZwaveData(ZWaveAPIData);
+            $scope.refreshZwaveData();
         }, function(error) {
             alertify.alertError($scope._t('error_load_data'));
         });
@@ -43,12 +44,25 @@ appController.controller('BatteryController', function($scope, $filter, $timeout
 
     /**
      * Refresh zwave data
-     * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function(ZWaveAPIData) {
+    $scope.refreshZwaveData = function() {
         var refresh = function() {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function(response) {
-                setData(response.data.joined);
+            dataService.loadJoinedZwaveData().then(function(response) {
+                var update = false;
+                angular.forEach(response.data.update, function(v, k) {
+                    // Get node ID from response
+                    var findId = k.split('.')[1];
+                    // Check if node ID is in the available devices
+                    if($scope.batteries.ids.indexOf(findId) > -1){
+                        update = true;
+                       //console.log('Updating nodeId: ',findId);
+                        return;
+                    }
+                });
+                // Update found - updating available devices
+                if(update){
+                    setData(response.data.joined);
+                }
             }, function(error) {});
         };
         $scope.batteries.interval = $interval(refresh, $scope.cfg.interval);
@@ -118,6 +132,7 @@ appController.controller('BatteryController', function($scope, $filter, $timeout
             // Set object
             var obj = {};
             obj['id'] = nodeId;
+            obj['idSort'] = $filter('zeroFill')(nodeId);
             obj['cmd'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].data.last';
             obj['rowId'] = 'row_' + nodeId;
             obj['name'] = $filter('deviceName')(nodeId, node);
@@ -161,6 +176,9 @@ appController.controller('BatteryController', function($scope, $filter, $timeout
 
             }else{
                 $scope.batteries.all.push(obj);
+            }
+            if($scope.batteries.ids.indexOf(nodeId) === -1){
+                $scope.batteries.ids.push(nodeId);
             }
         });
     }

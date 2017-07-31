@@ -112,6 +112,7 @@ input[type=radio] {
 /* Button
 -------------------------------------------------- */
 .btn,.btn-device-admin {
+    padding: $app-input-padding;
     .fa{
         font-size: $app-btn-icon-size; 
     }

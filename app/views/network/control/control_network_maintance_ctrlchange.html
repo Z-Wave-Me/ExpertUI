@@ -1,0 +1,37 @@
+<!-- controller_change_start -->
+<div class="cfg-block form-inline" ng-hide="!cfg.controller.isRealPrimary" ng-controller="ControllerChangeController">
+    <!--<pre>{{controlDh.controller|json}}</pre>-->
+    <p class="input-help">{{_t('nm_change_controller_war')}}</p>
+    <div class="nm-response" ng-class="controllerState == 0 ? 'text-info' : 'text - danger'"
+         ng-show="[13, 14, 15, 16].indexOf(controllerState) > -1">
+        {{_t('nm_controller_state_' + controllerState)}}
+    </div>
+    <!--  ControllerChange start -->
+    <button class="btn btn-primary"
+            id="btn_controller_change_start"
+            ng-show="[13, 14, 15, 16].indexOf(controlDh.controller.controllerState) == -1"
+            ng-click="controllerChange('controller.ControllerChange(1)')"
+            ng-disabled="[1, 2, 3, 4, 5, 6, 7, 20].indexOf(controlDh.controller.controllerState) > -1 || isPrimary == false || rowSpinner['controller.ControllerChange(1)']">
+
+        <bb-row-spinner
+                spinner="rowSpinner['controller.ControllerChange(1)']"
+                label="_t('nm_controller_change_start')"
+                icon="'fa-database'">
+        </bb-row-spinner>
+    </button>
+
+    <!--  ControllerChange stop -->
+    <button class="btn btn-danger"
+            id="btn_controller_change_stop"
+            ng-show="[13, 14, 15, 16].indexOf(controlDh.controller.controllerState) > -1"
+            ng-click="controllerChange('controller.ControllerChange(0)')"
+            ng-disabled="rowSpinner['controller.ControllerChange(0)']">
+
+        <bb-row-spinner
+                spinner="rowSpinner['controller.ControllerChange(0)']"
+                label="_t('nm_controller_change_stop')"
+                icon="'fa-database'">
+        </bb-row-spinner>
+    </button>
+</div>
+

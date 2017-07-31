@@ -2,66 +2,118 @@
 <div ng-controller="ConfigCommandsController">
     <!-- Config navigation -->
     <div ng-include="'app/views/configuration/navi.html'"></div>
-    <div id="table_mobile" ng-show="deviceId">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>{{_t('th_instance')}}</th>
-                    <th>{{_t('th_command_class')}}</th>
-                    <th>{{_t('th_command_param')}}</th>
+    <!--<pre>{{ccTable['Basic']|json}}</pre>-->
+    <div class="row row-configuration">
+        <div class="col-md-3 menu-vertical">
+            <div ng-include="'app/views/configuration/menu.html'"></div>
+        </div>
+        <div class="col-md-9 col-content">
+            <bb-alert alert="alert"></bb-alert>
+            <div id="table_mobile" ng-show="deviceId">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>{{_t('th_instance')}}</th>
+                        <th>{{_t('th_command_class')}}</th>
+                        <th>{{_t('th_command_param')}}</th>
 
-            </thead>
-            <tbody>
-                <tr ng-repeat="(k,v) in commands | orderBy:predicate:reverse" id="{{ v.nodeId}}">
-                    <td data-title="{{_t('th_instance')}}" ng-class="($index == 0 ? 'no-class' : 'mobile-hide')">
-                        <button class="btn btn-default" ng-click="handleCmdClassModal('cmdClassModal',$event,v.instanceId, $index, v.ccId, 'cmdDataIn')">{{v.instanceId}}</button> &nbsp;
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="(k,v) in commands | orderBy:predicate:reverse" id="{{ v.nodeId}}">
+                        <!-- instance -->
+                        <td data-title="{{_t('th_instance')}}" ng-class="($index == 0 ? 'no-class' : 'mobile-hide')">
+                            <button class="btn btn-default"
+                                    ng-click="handleCmdClassModal('cmdClassModal',$event,v.instanceId, $index, v.ccId, 'cmdDataIn')">
+                                {{v.instanceId}}
+                            </button>
+                            &nbsp;
 
-                    </td>
-                    <td data-title="{{_t('th_command_class')}}">
-                        <button class="btn btn-default" href="" ng-click="handleCmdClassModal('cmdClassModal',$event,v.instanceId,$index,v.ccId, 'cmdData')">{{v.commandClass}}</button>&nbsp;
-                    </td>
-                    <td data-title="{{_t('th_command_param')}}">
-                        <div class="commands-data" ng-repeat="c in v.command| orderBy:predicate:reverse" ng-init="formName = 'form_' + c.data.method + '_' + v.rowId">
-                            <form 
-                                name="{{formName}}" 
-                                id="{{formName}}"
-                                class="form form_commands" 
-                                role="form"
-                                ng-submit="storeExpertCommnds(formName, v.cmd + '.' + c.data.method)"
-                                novalidate>
-                                <div class="commands-data-control">
-                                    <div class="form-inline" ng-repeat="(pk,p) in c.data.params">
-                                        <expert-command-input 
-                                            collection='p' 
-                                            values='c.data.values[pk]'
-                                            devices='devices'
-                                            name='c.data.method'
-                                            get-node-devices='getNodeDevices'
+                        </td>
+                        <!-- command_class -->
+                        <td data-title="{{_t('th_command_class')}}">
+                            <p>
+                                <button class="btn btn-default" href=""
+                                        ng-click="handleCmdClassModal('cmdClassModal',$event,v.instanceId,$index,v.ccId, 'cmdData')">
+                                    {{v.commandClass}}
+                                </button>
+                            </p>
+                            <div ng-show="ccTable[v.commandClass]">
+                                <!--<pre>{{ccTable[v.commandClass]|json}}</pre>-->
+                                <table class="table table-condensed" ng-if="_.size(ccTable[v.commandClass].rows)">
+                                    <thead ng-if="cfg.expert_cmd[v.commandClass].valArray">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>{{cfg.expert_cmd[v.commandClass].th[0]}}</th>
+                                        <th>&nbsp;</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="{{v.isEqual ? 'na':'bcg-success'}}"
+                                        ng-repeat="v in ccTable[v.commandClass].rows track by $index">
+                                        <td style="white-space: nowrap;">
+                                            {{v.id}}&nbsp
+
+                                        </td>
+                                        <td style="white-space: nowrap;">
+                                            <span ng-bind="v.value"></span>
+                                        </td>
+                                        <td style="white-space: nowrap;">
+                                            <span ng-class="v.isUpdated ? 'green':'red'">{{v.updateTime | isTodayFromUnix}} </span>
+                                        </td>
+
+                                    </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </td>
+                        <!-- command_param -->
+                        <td data-title="{{_t('th_command_param')}}">
+                            <div class="commands-data" ng-repeat="c in v.command| orderBy:predicate:reverse"
+                                 ng-init="formName = 'form_' + c.data.method + '_' + v.rowId">
+                                <form
+                                        name="{{formName}}"
+                                        id="{{formName}}"
+                                        class="form form_commands"
+                                        role="form"
+                                        ng-submit="storeExpertCommnds(formName, v.cmd + '.' + c.data.method)"
+                                        novalidate>
+                                    <div class="commands-data-control">
+                                        <div class="form-inline" ng-repeat="(pk,p) in c.data.params">
+                                            <expert-command-input
+                                                    collection='p'
+                                                    values='c.data.values[pk]'
+                                                    devices='devices'
+                                                    name='c.data.method'
+                                                    get-node-devices='getNodeDevices'
                                             ></expert-command-input>
-                                        <!-- {{pk}} {{p}} 
-                                        {{c.data.values[pk]}}-->
+                                            <!-- {{pk}} {{p}}
+                                            {{c.data.values[pk]}}-->
 
+                                        </div>
+                                        <button class="btn btn-primary" type="submit"
+                                                ng-disabled="rowSpinner[v.cmd + '.' + c.data.method]">
+                                            <bb-row-spinner
+                                                    spinner="rowSpinner[v.cmd + '.' + c.data.method]"
+                                                    label="c.data.method"
+                                                    icon="'fa-circle-o'">
+                                            </bb-row-spinner>
+                                        </button>
                                     </div>
-                                    <button class="btn btn-primary" type="submit"
-                                            ng-disabled="rowSpinner[v.cmd + '.' + c.data.method]">
-                                        <bb-row-spinner
-                                                spinner="rowSpinner[v.cmd + '.' + c.data.method]"
-                                                label="c.data.method"
-                                                icon="'fa-circle-o'">
-                                        </bb-row-spinner>
-                                    </button>
-                                </div>
 
 
-                            </form>
-                        </div>
-                        &nbsp;
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                                </form>
+                            </div>
+                            &nbsp;
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Modal Command class -->
+            <div ng-include="'app/views/configuration/modal_cmdclass.html'"></div>
+        </div>
     </div>
-
-    <!-- Modal Command class -->
-    <div ng-include="'app/views/configuration/modal_cmdclass.html'"></div>
 </div><!-- /ng-controler -->

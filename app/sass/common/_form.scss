@@ -1,7 +1,7 @@
 /* Form 
 -------------------------------------------------- */
 .form-control {
-    font-size: $app-input-font-size;
+    //font-size: $app-input-font-size;
     color: $form-input-color;
     border: solid 1px $form-input-border-color;
     padding: $app-input-padding;
@@ -100,6 +100,11 @@ fieldset, .fieldset{
 }
 .isrequired::before { 
     content: "*";
+}
+
+.input-valid-false{
+    border: solid 1px red;
+
 }
 
 .form-control-sm{

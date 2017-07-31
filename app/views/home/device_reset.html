@@ -4,11 +4,12 @@
         <i class="fa fa-info-circle"></i> {{_t('device_reset_locally')}}
     </div>
     <div class="panel-body">
-        <ul class="list-report">
-            <li ng-repeat="v in localyResetDevices"> (#{{v.id}}) {{v.name}}</li>
-            <li ng-show="localyResetDevices.length < 1">
-                {{_t('no_device_reset_locally')}}
-            </li>
+        <!--<pre>{{home.localyReset|json}}</pre>-->
+        <ul class="list-report" ng-if="!_.isEmpty(home.localyReset)">
+            <li ng-repeat="v in home.localyReset"> (#{{v.id}}) {{v.name}}</li>
         </ul>
+        <div ng-if="_.isEmpty(home.localyReset)">
+            {{_t('no_device_reset_locally')}}
+        </div>
     </div>
 </div>

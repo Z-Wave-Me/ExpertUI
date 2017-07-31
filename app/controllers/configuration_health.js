@@ -13,10 +13,10 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
     $scope.devices = [];
     $scope.deviceName = '';
     $scope.deviceId = 0;
-    $scope.activeTab = 'health';
+    //$scope.activeTab = 'health';
     $scope.activeUrl = 'configuration/health/';
-    $cookies.tab_config = $scope.activeTab;
-    $cookies.interval = $scope.activeTab;
+    $cookies.tab_config = 'health';
+    $cookies.interval = 'health';
     $scope.health = {
         ctrlNodeId: 1,
         alert: {message: false, status: 'is-hidden', icon: false},
@@ -43,9 +43,9 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
         $interval.cancel($scope.apiDataInterval);
     });
 
-    // Redirect to detail page
-    $scope.changeDevice = function (deviceId) {
-        if (deviceId > 0) {
+    // Redirect to device
+    $scope.redirectToDevice = function (deviceId) {
+        if (deviceId) {
             $location.path($scope.activeUrl + deviceId);
         }
     };
@@ -75,9 +75,9 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
             }
             $scope.health.ctrlNodeId = ZWaveAPIData.controller.data.nodeId.value;
             var node = ZWaveAPIData.devices[$routeParams.nodeId];
-            if (!node || deviceService.notDevice(ZWaveAPIData, node, $routeParams.nodeId)) {
+            /*if (!node || deviceService.notDevice(ZWaveAPIData, node, $routeParams.nodeId)) {
                 return;
-            }
+            }*/
             var neighbours = $filter('hasNode')(node.data, 'neighbours.value');
             $scope.health.device.neighbours = $filter('hasNode')(node.data, 'neighbours.value');
 
@@ -89,7 +89,7 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
             $scope.deviceName = $filter('deviceName')($routeParams.nodeId, node);
             setDevice(node);
             setData(ZWaveAPIData, neighbours);
-            $scope.refreshData(ZWaveAPIData);
+            $scope.refreshData();
 
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
@@ -101,10 +101,10 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
     /**
      * Refresh data
      */
-    $scope.refreshData = function (ZWaveAPIData) {
+    $scope.refreshData = function () {
         var refresh = function () {
-            dataService.loadJoinedZwaveData(ZWaveAPIData).then(function (response) {
-                setData(ZWaveAPIData);
+            dataService.loadJoinedZwaveData().then(function (response) {
+                setData(response.data.joined);
             }, function (error) {
                 return;
             });
@@ -171,12 +171,10 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
         $scope.toggleRowSpinner(id);
         var data = {"nodeId": $scope.deviceId};
         dataService.postApi('checklinks', data).then(function (response) {
-            var runtime = parseInt(response.data.runtime) * 1000;
-            alertify.alertWarning($scope._t('proccess_take',{__val__:response.data.runtime,__level__:$scope._t('seconds')}));
-            $timeout($scope.toggleRowSpinner, runtime);
+            deviceService.showNotifier({message: $scope._t('test_all_links_complete')});
+            $scope.toggleRowSpinner();
         }, function (error) {
-            alertify.alertError($scope._t('error_update_data'));
-            alertify.dismissAll();
+            deviceService.showNotifier({message: $scope._t('error_update_data'),type: 'error'});
             $scope.toggleRowSpinner();
         });
     };
@@ -213,28 +211,12 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
                 return;
             }
             //console.log(node)
-            var isListening = node.data.isListening.value;
-            var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
-            var hasWakeup = 0x84 in node.instances[0].commandClasses;
             var centralController = true;
-            var type;
+            var type = deviceService.deviceType(node);
             var indicator;
             var powerLevel = $scope.health.device.hasPowerLevel[nodeId];
             if (powerLevel) {
                 indicator = setPowerLevelIndicator(powerLevel);
-            }
-            if (node.data.genericType.value === 1) {
-                type = 'portable';
-            } else if (node.data.genericType.value === 2) {
-                type = 'static';
-            } else if (isFLiRS) {
-                type = 'flirs';
-            } else if (hasWakeup) {
-                type = node.data.isAwake.value ? 'battery' : 'sleep';
-            } else if (isListening) {
-                type = 'mains';
-            } else {
-                type = 'error';
             }
             var obj = {
                 id: nodeId,

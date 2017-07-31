@@ -1,0 +1,98 @@
+/* Tooltip
+-------------------------------------------------- */
+/* Tooltip container */
+.tool-tip {
+  position: relative;
+  display: inline-block;
+  /* Tooltip content */
+  .tool-tip-entry {
+    line-height: $app-line-height-base;
+    @include appBorderRadius(4px);
+    visibility: hidden;
+    border: 1px solid $tooltip-border-color;
+    background-color: $tooltip-bcg-color;
+    width: 240px;
+    text-align: center;
+    padding: $spacing ;
+    position: absolute;
+    z-index: 1;
+  }
+  /* Show the tooltip text when you mouse over the tooltip container */
+  &:hover {
+    .tool-tip-entry {
+      visibility: visible;
+    }
+  }
+  /* Right Tooltip */
+  &.right{
+    .tool-tip-entry {
+      top: -5px;
+      //top: -60px;
+      left: 105%;
+      &::after{
+        content: " ";
+        position: absolute;
+        top: 10%;
+        right: 100%; /* To the left of the tooltip */
+        margin-top: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent $tooltip-border-color transparent transparent;
+      }
+    }
+  }
+  /* Left Tooltip */
+  &.left{
+    .tool-tip-entry {
+      top: -5px;
+      right: 105%;
+      &::after{
+        content: " ";
+        position: absolute;
+        top: 10%;
+        left: 100%; /* To the right of the tooltip */
+        margin-top: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent transparent transparent $tooltip-border-color;
+      }
+    }
+  }
+  /* Top Tooltip */
+  &.top{
+    .tool-tip-entry {
+      bottom: 100%;
+      left: 50%;
+      margin-left: -120px; /* Use half of the width (120/2 = 60), to center the tooltip */
+      &::after{
+        content: " ";
+        position: absolute;
+        top: 100%; /* At the bottom of the tooltip */
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: $tooltip-border-color transparent transparent transparent;
+      }
+    }
+  }
+  /* Bottom Tooltip */
+  &.bottom{
+    .tool-tip-entry {
+      top: 100%;
+      left: 50%;
+      margin-left: -120px; /* Use half of the width (120/2 = 60), to center the tooltip */
+      &::after{
+        content: " ";
+        position: absolute;
+        bottom: 100%;  /* At the top of the tooltip */
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent transparent $tooltip-border-color transparent;
+      }
+    }
+  }
+}
+
