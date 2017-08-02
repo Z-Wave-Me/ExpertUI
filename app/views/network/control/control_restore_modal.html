@@ -21,6 +21,8 @@
                     </div>
                     <!-- if restore allowed -->
                     <div ng-if="restore.allow">
+                        <p> <bb-help-text trans="_t('restore_secondary_primary')"></bb-help-text></p>
+
                         <p ng-if="cfg.app_type !== 'installer' && controlDh.controller.isRealPrimary">
                             <input type="checkbox"
                                    name="restore_chip_info"
@@ -31,6 +33,7 @@
                                    ng-model="restore.input.restore_chip_info"/> {{_t('restore_backup_chip')}}
 
                         </p>
+
                         <p class="text-center">
                             <input id="btn_upload" type="file" name="file"
                                    onchange="angular.element(this).scope().restoreFromBackup(this.files)"/>
