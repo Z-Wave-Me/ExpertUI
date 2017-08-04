@@ -316,6 +316,9 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
      */
     function  loadJoinedZwaveData() {
         var cacheName = 'zwaveapidata';
+        if(_.findWhere($http.pendingRequests,{failWait: cacheName})){
+            return $q.reject('Pending');
+        }
         var apiData = myCache.get(cacheName);// || ZWaveAPIData;
         var result = {
             joined: apiData,
@@ -323,7 +326,8 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         };
         return $http({
             method: 'post',
-            url: cfg.server_url + cfg.update_url + updatedTime
+            url: cfg.server_url + cfg.update_url + updatedTime,
+            failWait:cacheName
         }).then(function (response) {
             if (_.size(response.data)> 1 && apiData) {
                 //console.log('Response > 1')
@@ -345,10 +349,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
                 return response;
             } else {
                 response.data = result;
-                //console.log('Response === 1')
                 return response;
-                // invalid response
-                //return $q.reject(response);
             }
         }, function (response) {
             // something went wrong
@@ -407,10 +408,8 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
      * @returns {unresolved}
      */
     function refreshApi(api, params) {
-        var deferred = $q.defer();
         if(_.findWhere($http.pendingRequests,{failWait: api})){
-            deferred.resolve();
-            return deferred.promise;
+            return $q.reject('Pending');
         }
         return $http({
             method: 'get',

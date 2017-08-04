@@ -274,6 +274,12 @@ module.exports = function (grunt) {
                             }
                         },
                         {
+                            match: /'interval': ([0-9a-zA-Z]+)/g,
+                            replacement: function () {
+                                return '\'interval\': 1000';
+                            }
+                        },
+                        {
                             match: 'dev',
                             replacement: 'live'
                         },

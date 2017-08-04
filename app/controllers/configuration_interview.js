@@ -83,7 +83,7 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
             dataService.loadJoinedZwaveData().then(function(response) {
                 var node = response.data.joined.devices[$routeParams.nodeId];
                 refreshData(node, $routeParams.nodeId, response.data.joined);
-            }, function(error) {});
+            });
         };
         $scope.zwaveInterview.interval = $interval(refresh, $scope.cfg.interval);
     };

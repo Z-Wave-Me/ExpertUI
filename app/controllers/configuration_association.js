@@ -115,7 +115,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                 if (updateData) {
                     $scope.loadZwaveData($routeParams.nodeId, false);
                 }
-            }, function(error) {});
+            });
         };
         $scope.assocInterval = $interval(refresh, cfg.interval);
     };

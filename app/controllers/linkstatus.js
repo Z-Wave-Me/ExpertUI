@@ -79,7 +79,6 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
                     setData(response.data.joined);
                     setCells($scope.linkStatus.all);
                 }
-            }, function (error) {
             });
         };
         $scope.linkStatus.interval = $interval(refresh, $scope.cfg.interval);

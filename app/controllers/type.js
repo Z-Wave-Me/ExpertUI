@@ -95,7 +95,7 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
                     setData(response.data.joined);
                 }
                 //setData(response.data.joined);
-            }, function(error) {});
+            });
         };
         $scope.devices.interval = $interval(refresh, $scope.cfg.interval);
     };

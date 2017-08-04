@@ -455,10 +455,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     $scope.loadBusyIndicator = function () {
         var refresh = function () {
             dataService.refreshApi('queue_url').then(function (response) {
-                if(response){
-                    setBusyIndicator(response.data);
-                }
-
+                setBusyIndicator(response.data);
             });
         };
         $scope.jobQueueInterval = $interval(refresh, cfg.queue_interval);

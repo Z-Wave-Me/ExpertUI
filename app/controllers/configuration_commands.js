@@ -107,7 +107,6 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
                     $scope.interviewCommands = deviceService.configGetInterviewCommands(node, response.data.joined.updateTime);
                     setCcTable($scope.interviewCommands);
                 }
-            }, function (error) {
             });
         };
         $scope.commandsInterval = $interval(refresh, $scope.cfg.interval);
