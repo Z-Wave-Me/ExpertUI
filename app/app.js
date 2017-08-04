@@ -40,11 +40,18 @@ angular.forEach(config_data, function (key, value) {
  * Angular run function
  * @function run
  */
-angApp.run(function ($rootScope, $location, deviceService, cfg) {
+angApp.run(function ($rootScope, $location, $http, $q, deviceService, cfg) {
     // Run ubderscore js in views
     $rootScope._ = _;
 
     $rootScope.$on("$routeChangeStart", function (event, next) {
+        /**
+         * Cancels pending requests
+         */
+        angular.forEach($http.pendingRequests, function(request) {
+            request.cancel  = $q.defer();
+            request.timeout = request.cancel.promise;
+        });
         /**
          * Check if page access is banned for the app type
          */

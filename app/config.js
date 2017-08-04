@@ -14,7 +14,7 @@ var config_data = {
         'custom_ip': false,
         'user_field': 'USERXXXX',
         'pass_field': 'PSWDXXXX',
-        'interval': 1000, // Set interval in miliseconds to refresh data
+        'interval': 3000, // Set interval in miliseconds to refresh data
         'zniffer_interval': 3000, // Set interval in milisecondsfor zniffer
         'queue_interval': 1000, // Set interval in miliseconds to refresh queue data
         'reorg_interval': 3000, // Set interval in miliseconds to refresh reorganizations
