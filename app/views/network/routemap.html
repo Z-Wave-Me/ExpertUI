@@ -25,7 +25,7 @@
             </button>
             <span ng-if="routeMap.moveNodes">
                 <!-- Cancel -->
-                <button class="btn btn-warning" id="CancelNodeMoving"
+                <button class="btn btn-default" id="CancelNodeMoving"
                         ng-click="routeMap.cancelMoveNodes(); routeMap.moveNodes = false;">
                 <i class="fa fa-remove"></i> {{_t('btn_cancel')}}
                     </button> &nbsp;
@@ -33,7 +33,13 @@
                 <button class="btn btn-success" id="SaveNodePosition"
                         ng-click="routeMap.finishMoveNodes(); routeMap.moveNodes = false;">
                 <i class="fa fa-check"></i> {{_t('btn_save')}}
+            </button> &nbsp;
+                <!-- Reset -->
+                <button class="btn btn-warning" id="ResetNodePosition"
+                        ng-click="routeMap.resetMoveNodes(); routeMap.moveNodes = false;">
+                <i class="fa fa-refresh"></i> {{_t('reset')}}
             </button>
+
             </span>
             &nbsp;
             <input class="inputfile" type="file" name="file" id="file"

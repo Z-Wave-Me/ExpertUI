@@ -20,7 +20,10 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
         finishMoveNodes: function() {
             zrp.allowMoveNodes(false);
             $scope.saveNodesPositions(zrp.getNodesPositions());
-            //console.log(zrp.getNodesPositions());
+        },
+        resetMoveNodes: function() {
+            zrp.allowMoveNodes(false);
+            $scope.saveNodesPositions([]);
         },
         cancelMoveNodes: function() {
             // TODO !!! refresh the page ?? or just revert nodes back?
@@ -52,7 +55,6 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
             // Success - zwaveData
             if (ZWaveAPIData.state === 'fulfilled' && packetApi.state === 'fulfilled') {
                 //console.log(cfg.zwavecfg.node_positions)
-                /*var positions = [{"id":1,"x":16.42722511291504,"y":6.361807823181152},{"id":3,"x":176.64948018391928,"y":80.43401336669922},{"id":5,"x":116.66666666666667,"y":78.86751345948129},{"id":10,"x":110.54681905110678,"y":65.01923159912972},{"id":12,"x":24.799763361612946,"y":71.57755661010742},{"id":15,"x":76.08714040120441,"y":88.44158383055778},{"id":16,"x":116.66666666666664,"y":21.1324865405187}];*/
                 // Is routemap image in the zwave config?
                 if(cfg.zwavecfg.routemap_img){
                     $scope.routeMap.bcgImage = cfg.server_url + cfg.load_image + cfg.zwavecfg.routemap_img;
