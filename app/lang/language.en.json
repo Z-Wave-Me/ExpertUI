@@ -1,5 +1,6 @@
 {
-  "--- newtrans": "---",
+ "--- newtrans": "---",
+ "---": "---",
  "all_routes":"All routes",
  "nodes_neighbours":"Node neighbours",
  "nodes_is_repeating":"Nodes this node is repeating for",
@@ -15,7 +16,6 @@
  "destination":"Destination",
  "id":"Id",
  "routes_for":"Routes for",
- "---": "---",
  "restore_secondary_primary":"If you want to restore your secondary controller - do re-inclusion from your primary controller. If you want to restore another configuration - do a factory reset first.",
  "route_map":"Route map",
  "upload_image":"Upload image",
