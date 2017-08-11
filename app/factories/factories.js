@@ -21,8 +21,6 @@ appFactory.factory('_', function () {
 });
 /**
  * Data service
- * @todo: Replace all data handler with this service
- * @todo: Complete error handling
  */
 appFactory.factory('dataService', function ($http, $q, $interval, $filter, $location, $window, deviceService, myCache, cfg) {
     var updatedTime = Math.round(+new Date() / 1000);
@@ -46,6 +44,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         loadJoinedZwaveData: loadJoinedZwaveData,
         runZwaveCmd: runZwaveCmd,
         getApi: getApi,
+        refreshApi: refreshApi,
         postApi: postApi,
         postToRemote: postToRemote,
         getRemoteData: getRemoteData,
@@ -74,9 +73,10 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
 
     }
     /**
+     * todo: deprecated
      * Get IP
      */
-    function getAppIp() {
+    /*function getAppIp() {
         if (cfg.custom_ip) {
             var ip = cfg.server_url;
             if (!ip || ip == '') {
@@ -84,7 +84,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             }
         }
 
-    }
+    }*/
 
     /**
      * Get config XML file
@@ -316,6 +316,9 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
      */
     function  loadJoinedZwaveData() {
         var cacheName = 'zwaveapidata';
+        if(_.findWhere($http.pendingRequests,{failWait: cacheName})){
+            return $q.reject('Pending');
+        }
         var apiData = myCache.get(cacheName);// || ZWaveAPIData;
         var result = {
             joined: apiData,
@@ -323,7 +326,8 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         };
         return $http({
             method: 'post',
-            url: cfg.server_url + cfg.update_url + updatedTime
+            url: cfg.server_url + cfg.update_url + updatedTime,
+            failWait:cacheName
         }).then(function (response) {
             if (_.size(response.data)> 1 && apiData) {
                 //console.log('Response > 1')
@@ -345,10 +349,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
                 return response;
             } else {
                 response.data = result;
-                //console.log('Response === 1')
                 return response;
-                // invalid response
-                //return $q.reject(response);
             }
         }, function (response) {
             // something went wrong
@@ -389,16 +390,37 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             method: 'get',
             url: cfg.server_url + cfg[api] + (params ? params : '')
         }).then(function (response) {
-            if (!angular.isDefined(response.data)) {
-                return $q.reject(response);
-            }
-            if (typeof response.data === 'object') {
-                myCache.put(cacheName, response);
+            if (angular.isDefined(response.data)) {
                 return response;
-            } else {// invalid response
-                return $q.reject(response);
             }
+            // invalid response
+            return $q.reject(response);
 
+        }, function (response) {// something went wrong
+            return $q.reject(response);
+        });
+    }
+
+    /**
+     * Get data from the ZAutomation api all x seconds
+     * @param {string} api
+     * @param {string} params
+     * @returns {unresolved}
+     */
+    function refreshApi(api, params) {
+        if(_.findWhere($http.pendingRequests,{failWait: api})){
+            return $q.reject('Pending');
+        }
+        return $http({
+            method: 'get',
+            url: cfg.server_url + cfg[api] + (params ? params : ''),
+            failWait:api
+        }).then(function (response) {
+            if (angular.isDefined(response.data)) {
+                return response;
+            }
+            // invalid response
+            return $q.reject(response);
         }, function (response) {// something went wrong
             return $q.reject(response);
         });

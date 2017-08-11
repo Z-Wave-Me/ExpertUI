@@ -85,7 +85,6 @@ appController.controller('NeighborController', function ($scope, $filter, $timeo
             });
 
                 //
-            }, function (error) {
             });
         };
         $scope.routings.interval = $interval(refresh, $scope.cfg.interval);

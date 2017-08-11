@@ -95,7 +95,7 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
                 if(update){
                     setData(response.data.joined);
                 }
-            }, function(error) {});
+            });
         };
         $scope.devices.interval = $interval(refresh, $scope.cfg.interval);
     };

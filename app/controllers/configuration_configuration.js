@@ -106,9 +106,6 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             }, function(error) {});
         };
         $scope.configInterval = $interval(refresh, $scope.cfg.interval);
-       /* dataService.joinedZwaveData(function (data) {
-            setData(data.joined, nodeId);
-        });*/
     };
 
 

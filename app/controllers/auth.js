@@ -165,10 +165,11 @@ appController.controller('InitInstallerController', function ($scope, $location,
  * @class AuthController
  *
  */
-appController.controller('AuthController', function ($location, $window) {
+appController.controller('AuthController', function ($location, $window, $timeout) {
     $location.path('/home');
-    $window.location.reload();
-
+    $timeout(function() {
+        $window.location.reload();
+    }, 1);
 });
 
 /**

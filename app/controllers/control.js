@@ -118,7 +118,6 @@ appController.controller('ControlController', function ($scope, $interval, $time
                     checkInterview(nodeInstances);
                 }
 
-            }, function (error) {
             });
         };
         $scope.controlDh.interval = $interval(refresh, $scope.cfg.interval);

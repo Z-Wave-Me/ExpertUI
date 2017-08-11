@@ -8,15 +8,18 @@ appController.controller('LicenseController', function($scope, $timeout, dataSer
         'status': 'is-hidden'
 
     };
-    $scope.controllerUuid = null;
-     $scope.controllerIsZeroUuid = false;
+    //$scope.controllerUuid = null;
+    $scope.controllerIsZeroUuid = false;
     $scope.proccessUpdate = {
         'message': false,
         'status': 'is-hidden'
 
     };
     $scope.formData = {
-        "scratch_id": null
+        'scratch_id': null,
+        'controllerUuid': null,
+        'appVersionMajor':'',
+        'appVersionMinor':''
     };
     $scope.license = {
         "scratch_id": null,
@@ -34,8 +37,13 @@ appController.controller('LicenseController', function($scope, $timeout, dataSer
      */
     $scope.loadZwaveData = function() {
         dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
-            $scope.controllerUuid = ZWaveAPIData.controller.data.uuid.value;
+            //$scope.controllerUuid = ZWaveAPIData.controller.data.uuid.value;
+            var appVersion = ZWaveAPIData.controller.data.APIVersion.value.split('.');
             $scope.controllerIsZeroUuid = parseInt("0x" + ZWaveAPIData.controller.data.uuid.value, 16) === 0;
+            // Form data
+            $scope.formData.controllerUuid = ZWaveAPIData.controller.data.uuid.value;
+            $scope.formData.appVersionMajor = parseInt(appVersion[0], 10);
+            $scope.formData.appVersionMinor = parseInt(appVersion[1], 10);
 
         });
     };
@@ -43,18 +51,14 @@ appController.controller('LicenseController', function($scope, $timeout, dataSer
     /**
      * Get license key
      */
-    $scope.getLicense = function(formData) {
+    $scope.getLicense = function(input) {
         // Clear messages
         $scope.proccessVerify.message = false;
         $scope.proccessUpdate.message = false;
-        if (!formData.scratch_id) {
+        if (!input.scratch_id) {
             return;
         }
         $scope.proccessVerify = {'message': $scope._t('verifying_licence_key'), 'status': 'fa fa-spinner fa-spin'};
-        var input = {
-            'uuid': $scope.controllerUuid,
-            'scratch': formData.scratch_id
-        };
         dataService.getLicense(input).then(function(response) {
             $scope.proccessVerify = {'message': $scope._t('success_licence_key'), 'status': 'fa fa-check text-success'};
             console.log('1. ---------- SUCCESS Verification ----------', response);

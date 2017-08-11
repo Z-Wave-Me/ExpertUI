@@ -2272,7 +2272,9 @@ function renderMethodSpec(ccId, data) {
 					{
 						"label": "Node",
 						"type": {
-							"node": {
+							"range": {
+								"min": 	1,
+								"max": 255
 							}
 						}
 					},
