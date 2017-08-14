@@ -14,7 +14,7 @@ var config_data = {
         'custom_ip': false,
         'user_field': 'USERXXXX',
         'pass_field': 'PSWDXXXX',
-        'interval': 1000, // Set interval in miliseconds to refresh data
+        'interval': 3000, // Set interval in miliseconds to refresh data
         'zniffer_interval': 3000, // Set interval in milisecondsfor zniffer
         'queue_interval': 1000, // Set interval in miliseconds to refresh queue data
         'reorg_interval': 3000, // Set interval in miliseconds to refresh reorganizations
@@ -65,6 +65,8 @@ var config_data = {
         'wifi_settings': '/ZAutomation/api/v1/system/wifi/settings', // Set wifi settings ssid and password
         'login': '/ZAutomation/api/v1/login',// Get time
         'instances': '/ZAutomation/api/v1/instances',
+        'upload_file': '/ZAutomation/api/v1/upload/file', // upload a file
+        'load_image': '/ZAutomation/api/v1/load/image/', // load image from automation storage
         'app_built_info': 'app/info.json',// App build info
         'post_report_url': 'https://service.z-wave.me/report/', // Post report url
         'runjs_url': '/JS/Run/', // Url for running JS
@@ -287,8 +289,8 @@ var config_data = {
             },
             'routemap': {
                 size: 512000, //Bytes
-                type: ['image/jpeg', 'image/gif'],
-                extension: ['png','jpg', 'jpeg', 'gif'],
+                type: ['image/jpeg'],
+                extension: ['jpg'],
                 dimension: '200 x 200'//px
             }
         },

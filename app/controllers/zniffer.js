@@ -113,7 +113,7 @@ appController.controller('ZnifferController', function ($scope, $interval, $time
             //var time = 1472729277;//(updateTime ? '/' + updateTime : '');
             //var time = updateTime;//(updateTime ? '/' + updateTime : '');
 
-            dataService.getApi('zniffer_url',null,true).then(function (response) {
+            dataService.refreshApi('zniffer_url',null,true).then(function (response) {
                 $scope.zniffer.updateTime = response.data.updateTime;
                 //var znifferData = deviceService.setZnifferData(response.data.data);
                 var znifferData = response.data.data;

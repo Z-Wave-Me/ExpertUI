@@ -62,7 +62,7 @@ appController.controller('LocksController', function($scope, $filter, $timeout,$
                 if(update){
                     setData(response.data.joined);
                 }
-            }, function(error) {});
+            });
         };
         $scope.locks.interval = $interval(refresh, $scope.cfg.interval);
     };

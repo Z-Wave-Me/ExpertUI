@@ -132,7 +132,7 @@ appController.controller('ReorganizationController', function ($scope, $filter, 
      */
     $scope.refreshReorganization = function () {
         var refresh = function () {
-            dataService.getApi('reorg_log_url', null, true).then(function (response) {
+            dataService.refreshApi('reorg_log_url').then(function (response) {
                 setData(response.data);
             }, function (error) {
             });

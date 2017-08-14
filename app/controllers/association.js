@@ -49,17 +49,18 @@ appController.controller('AssociationsController', function($scope, $filter, $ti
     $scope.loadZwaveData();
 
     /**
+     * todo: deprecated
      * Refresh zwave data
      * @param {object} ZWaveAPIData
      */
-    $scope.refreshZwaveData = function(ZWaveAPIData) {
+    /*$scope.refreshZwaveData = function(ZWaveAPIData) {
         var refresh = function() {
             dataService.loadJoinedZwaveData().then(function(response) {
                 setData(response.data.joined);
             }, function(error) {});
         };
         $scope.devices.interval = $interval(refresh, $scope.cfg.interval);
-    };
+    };*/
 
     // Store data on remote server
     $scope.lifeline = function(status) {

@@ -79,7 +79,6 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
                 if(update){
                     setData(response.data.joined);
                 }
-            }, function (error) {
             });
         };
         $scope.statuses.interval = $interval(refresh, $scope.cfg.interval);

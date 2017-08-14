@@ -66,7 +66,6 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
             dataService.loadJoinedZwaveData().then(function (response) {
                 setData(response.data.joined);
                 $scope.controller.controllerState = response.data.joined.controller.data.controllerState.value;
-            }, function (error) {
             });
         };
         $scope.home.interval = $interval(refresh, $scope.cfg.interval);

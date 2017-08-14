@@ -64,7 +64,6 @@ appController.controller('NotificationController', function ($scope, $filter, $t
         var refresh = function () {
             dataService.loadJoinedZwaveData().then(function (response) {
                 setData(response.data.joined, alarms);
-            }, function (error) {
             });
         };
         $scope.notifications.interval = $interval(refresh, $scope.cfg.interval);

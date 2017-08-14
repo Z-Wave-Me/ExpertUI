@@ -65,7 +65,7 @@ appController.controller('ThermostatController', function($scope, $filter, $time
                 if(update){
                     setData(response.data.joined);
                 }
-            }, function(error) {});
+            });
         };
         $scope.thermostats.interval = $interval(refresh, $scope.cfg.interval);
     };

@@ -10,7 +10,9 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
     var zrp;
 
     $scope.routeMap = {
-        showAnnotations: true,
+        ///ZAutomation/api/v1/load/image/DSC01425.jpg
+        bcgImage: 'app/images/transparent.png',
+        showAnnotations: false,
         moveNodes: false,
         startMove: function() {
             zrp.allowMoveNodes(true);
@@ -18,7 +20,10 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
         finishMoveNodes: function() {
             zrp.allowMoveNodes(false);
             $scope.saveNodesPositions(zrp.getNodesPositions());
-            //console.log(zrp.getNodesPositions());
+        },
+        resetMoveNodes: function() {
+            zrp.allowMoveNodes(false);
+            $scope.saveNodesPositions([]);
         },
         cancelMoveNodes: function() {
             // TODO !!! refresh the page ?? or just revert nodes back?
@@ -50,10 +55,15 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
             // Success - zwaveData
             if (ZWaveAPIData.state === 'fulfilled' && packetApi.state === 'fulfilled') {
                 //console.log(cfg.zwavecfg.node_positions)
-                /*var positions = [{"id":1,"x":16.42722511291504,"y":6.361807823181152},{"id":3,"x":176.64948018391928,"y":80.43401336669922},{"id":5,"x":116.66666666666667,"y":78.86751345948129},{"id":10,"x":110.54681905110678,"y":65.01923159912972},{"id":12,"x":24.799763361612946,"y":71.57755661010742},{"id":15,"x":76.08714040120441,"y":88.44158383055778},{"id":16,"x":116.66666666666664,"y":21.1324865405187}];*/
+                // Is routemap image in the zwave config?
+                if(cfg.zwavecfg.routemap_img){
+                    $scope.routeMap.bcgImage = cfg.server_url + cfg.load_image + cfg.zwavecfg.routemap_img;
+                }/*else{
+                    $scope.routeMap.bcgImage = cfg.server_url + cfg.load_image + 'floorplan.jpg';
+                }*/
+                // Set positions
                 var positions = cfg.zwavecfg.node_positions;
                 var packets = packetApi.value.data.data;
-                console.log(packets)
                 if (_.size(packets)) {
                     zrp = new ZWaveRoutesPlotLib(new ZWaveNetworkAnalyticsLib(ZWaveAPIData.value, packets, positions));
                 }
@@ -63,22 +73,6 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
 
     };
     $scope.allSettled();
-
-   /* dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
-        dataService.getApi('packet_log').then(function (response) {
-            var packets = response.data.data.incoming;
-            if (_.size(packets)) {
-                zrp = new ZWaveRoutesPlotLib(new ZWaveNetworkAnalyticsLib(ZWaveAPIData, packets, undefined));
-            }
-            /!*if (packets.length) {
-                zrp = new ZWaveRoutesPlotLib(new ZWaveNetworkAnalyticsLib(ZWaveAPIData, packets, undefined));
-            }*!/
-        }, function (error) {
-            // TODO !!!
-        });
-    }, function(error) {
-        // TODO !!!
-    });*/
 
     /**
      * Upload floor image
@@ -105,14 +99,15 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
 
         }
         $scope.toggleRowSpinner(spinner);
-        var cmd = cfg.server_url + cfg.fw_update_url
+        var cmd = cfg.server_url + cfg.upload_file;
         var fd = new FormData();
         // Set form data
-        fd.append('file', files[0]);
+         fd.append('file', files[0]);
         console.log(files[0])
         dataService.uploadApiFile(cmd, fd).then(function (response) {
             $timeout($scope.toggleRowSpinner, 1000);
             deviceService.showNotifier({message: $scope._t('reloading')});
+            $scope.updateZwaveConfig({routemap_img: files[0].name});
             $timeout(function () {
              alertify.dismissAll();
              $window.location.reload();
@@ -122,14 +117,22 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
             alertify.alertError($scope._t('upload_image_failed'));
         });
     };
-
+    /**
+     * Save node positions
+     * @param {object} nodes
+     */
     $scope.saveNodesPositions = function(nodes){
-        console.log(nodes);
         var input = {node_positions: nodes};
-        console.log(input);
+        $scope.updateZwaveConfig(input);
+    }
+
+    /**
+     * Save node positions
+     * @param {object} nodes
+     */
+    $scope.updateZwaveConfig = function(input){
         dataService.postApi('configupdate_url', input).then(function (response) {
            $window.location.reload();
-
         }, function (error) {
             alertify.alertError($scope._t('error_update_data'));
         });

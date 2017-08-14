@@ -49,7 +49,7 @@ appController.controller('ControllerController', function($scope, $window, $filt
         var refresh = function() {
             dataService.loadJoinedZwaveData().then(function(response) {
                 setData(response.data.joined);
-            }, function(error) {});
+            });
         };
         $scope.controllerInfo.interval = $interval(refresh, $scope.cfg.interval);
     };

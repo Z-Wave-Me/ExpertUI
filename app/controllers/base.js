@@ -75,13 +75,6 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
         return deviceService.getLangLine(key, $scope.languages, replacement);
     };
 
-
-    // Watch for lang change
-    //TODO: deprecated
-    /*$scope.$watch('lang', function () {
-     $('.current-lang').html($scope.lang);
-     $scope.loadLang($scope.lang);
-     });*/
     // Order by
     $scope.orderBy = function (field) {
         $scope.orderByArr = {
@@ -461,11 +454,9 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
      */
     $scope.loadBusyIndicator = function () {
         var refresh = function () {
-            dataService.getApi('queue_url', null, true).then(function (response) {
+            dataService.refreshApi('queue_url').then(function (response) {
                 setBusyIndicator(response.data);
-            }, function (error) {
             });
-
         };
         $scope.jobQueueInterval = $interval(refresh, cfg.queue_interval);
     };

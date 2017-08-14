@@ -60,6 +60,8 @@ module.exports = function (grunt) {
                     'vendor/justgagejs/justgage.js',
                     'vendor/upload/angular-file-upload-shim.min.js',
                     'vendor/alertify/alertify.min.js',
+                    'vendor/routemap/ZWaveAnalytics.min.js',
+                    'vendor/routemap/ZWaveRouteMapDraw.min.js',
                     // Angular
                     'vendor/angular/angular-1.2.14/angular.min.js',
                     'vendor/upload/angular-file-upload.min.js',
@@ -271,6 +273,12 @@ module.exports = function (grunt) {
                             match: /'dev_host': \[([^\]]+)]/g,
                             replacement: function () {
                                 return '\'dev_host\': \[\]';
+                            }
+                        },
+                        {
+                            match: /'interval': ([0-9a-zA-Z]+)/g,
+                            replacement: function () {
+                                return '\'interval\': 1000';
                             }
                         },
                         {

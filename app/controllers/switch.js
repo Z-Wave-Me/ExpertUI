@@ -71,8 +71,6 @@ appController.controller('SwitchController', function ($scope, $filter, $timeout
                 if(update){
                     setData(response.data.joined);
                 }
-                //setData(response.data.joined,nodeId);
-            }, function (error) {
             });
         };
         $scope.switches.interval = $interval(refresh, $scope.cfg.interval);
