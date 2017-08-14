@@ -6,7 +6,7 @@
 var config_data = {
     'cfg': {
         'environment': '@@dev',
-        'dev_host': ['192.168.10.156'],
+        'dev_host': [],
         'app_name': '@@app_name',
         'app_version': '@@app_version',
         'app_built': '@@app_built',
