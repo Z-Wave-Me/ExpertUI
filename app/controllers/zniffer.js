@@ -565,12 +565,12 @@ appController.controller('ZnifferRSSIMeterController', function ($scope, $interv
                 chartData1 = 0,
                 chartData2 = 0;
 
-            if (typeof parseInt(rssiData.data.data[0].channel1) === 'number') {
-                chartData1 = _.isNull(rssiData.data.data[0].channel1)? $scope.rssi.chartData1 : parseInt(rssiData.data.data[0].channel1);
+            if (typeof parseInt(rssiData.data.data.channel1) === 'number') {
+                chartData1 = _.isNull(rssiData.data.data.channel1)? $scope.rssi.chartData1 : parseInt(rssiData.data.data.channel1);
             }
 
-            if (typeof parseInt(rssiData.data.data[0].channel2) === 'number') {
-                chartData2 = _.isNull(rssiData.data.data[0].channel2) ? $scope.rssi.chartData2 : parseInt(rssiData.data.data[0].channel2);
+            if (typeof parseInt(rssiData.data.data.channel2) === 'number') {
+                chartData2 = _.isNull(rssiData.data.data.channel2) ? $scope.rssi.chartData2 : parseInt(rssiData.data.data.channel2);
             }
 
             $scope.rssi.chartData1 = chartData1;
