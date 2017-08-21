@@ -252,8 +252,8 @@ appController.controller('ThermostatController', function($scope, $filter, $time
                 obj['invalidateTime'] = invalidateTime;
                 obj['dateTime'] = $filter('getDateTimeObj')(obj['updateTime'],obj['invalidateTime']);
                 obj['isUpdated'] = (updateTime > invalidateTime ? true : false);
-                obj['urlToStore'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']';
-                obj['urlChangeTemperature'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + 0x43 + ']';
+                obj['urlToStore'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + 0x40 + ']'; // ThermostatMode 0x40
+                obj['urlChangeTemperature'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']'; //ThermostatSetpoint 0x43
                 obj['cmdToUpdate'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.' + curThermMode;
                 obj['modeType'] = modeType;
                 obj['isThermostatMode'] = isThermostatMode;
