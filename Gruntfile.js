@@ -60,6 +60,8 @@ module.exports = function (grunt) {
                     'vendor/justgagejs/justgage.js',
                     'vendor/upload/angular-file-upload-shim.min.js',
                     'vendor/alertify/alertify.min.js',
+                    // Routemap
+                    'vendor/routemap/d3.v4.min.js',
                     'vendor/routemap/ZWaveAnalytics.min.js',
                     'vendor/routemap/ZWaveRouteMapDraw.min.js',
                     // Angular
@@ -120,6 +122,7 @@ module.exports = function (grunt) {
                     'app/controllers/uzb.js',
                     'app/controllers/zniffer.js',
                     'app/controllers/spectrum.js',
+                    'app/controllers/routemap.js',
                     'app/controllers/networkmap.js',
                     'app/controllers/home.js',
                     'app/controllers/configuration.js',
