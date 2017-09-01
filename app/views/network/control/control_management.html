@@ -46,14 +46,10 @@
             </div>
             <!-- Inclusion success  -->
             <bb-alert alert="controlDh.inclusion.lastIncludedDevice"></bb-alert>
-            <!--<div class="alert alert-success" ng-if="controlDh.inclusion.lastIncludedDevice">
-                <p ng-bind-html="controlDh.inclusion.lastIncludedDevice | toTrusted"></p>
-            </div>-->
             <!-- Exclusion success  -->
             <bb-alert alert="controlDh.inclusion.lastExcludedDevice"></bb-alert>
-            <!--<div class="alert alert-success" ng-if="controlDh.inclusion.lastExcludedDevice">
-                <p ng-bind-html="controlDh.inclusion.lastExcludedDevice | toTrusted"></p>
-            </div>-->
+            <!-- S2 Alert  -->
+            <bb-alert alert="controlDh.inclusion.alertS2"></bb-alert>
             <!-- include start -->
             <button class="btn btn-primary" id="btn_nm_include_start" title="{{_t('nm_include_start_tooltip')}}"
                     ng-disabled="[5, 6, 7, 20].indexOf(controlDh.controller.controllerState) > -1 || (!controlDh.controller.isRealPrimary && !controlDh.controller.isSIS)"
