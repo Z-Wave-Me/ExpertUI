@@ -16,8 +16,8 @@ appController.controller('LicenseController', function($scope, $timeout, dataSer
 
     };
     $scope.formData = {
-        'scratch_id': null,
-        'controllerUuid': null,
+        'scratch': null,
+        'uuid': null,
         'appVersionMajor':'',
         'appVersionMinor':''
     };
@@ -41,7 +41,7 @@ appController.controller('LicenseController', function($scope, $timeout, dataSer
             var appVersion = ZWaveAPIData.controller.data.APIVersion.value.split('.');
             $scope.controllerIsZeroUuid = parseInt("0x" + ZWaveAPIData.controller.data.uuid.value, 16) === 0;
             // Form data
-            $scope.formData.controllerUuid = ZWaveAPIData.controller.data.uuid.value;
+            $scope.formData.uuid = ZWaveAPIData.controller.data.uuid.value;
             $scope.formData.appVersionMajor = parseInt(appVersion[0], 10);
             $scope.formData.appVersionMinor = parseInt(appVersion[1], 10);
 
@@ -55,7 +55,7 @@ appController.controller('LicenseController', function($scope, $timeout, dataSer
         // Clear messages
         $scope.proccessVerify.message = false;
         $scope.proccessUpdate.message = false;
-        if (!input.scratch_id) {
+        if (!input.scratch) {
             return;
         }
         $scope.proccessVerify = {'message': $scope._t('verifying_licence_key'), 'status': 'fa fa-spinner fa-spin'};
