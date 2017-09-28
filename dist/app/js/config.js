@@ -7,9 +7,9 @@ var config_data = {
     'cfg': {
         'environment': 'live',
         'dev_host': [],
-        'app_name': 'Z-Wave Expert S2',
-        'app_version': '1.3.1-RC-8',
-        'app_built': '01-09-2017 21:34:52',
+        'app_name': 'Z-Wave Expert',
+        'app_version': '1.3.1',
+        'app_built': '28-09-2017 15:16:36',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
