@@ -3,9 +3,15 @@
         <!-- Navigation -->
         <div ng-include="'app/views/smartstart/navi.html'"></div>
          <!-- Entry -->
-        <div class="entry list">
+         <div class="entry list">
+            <bb-alert alert="alert"></bb-alert>
          <ul class="scrollh">
-              <li ng-repeat="v in list.all track by $index"><span class="badge">{{$index + 1}}</span> {{v}}</li>
+              <li ng-repeat="v in list.all track by $index">
+                  <span class="badge">{{$index + 1}}</span> {{v}} 
+                  <button class="btn btn-default" title="{{_t('dialog_remove')}}" ng-click="removeDsk(v)">
+                      <i class="fa fa-trash text-danger"></i>
+                  </button>
+              </li>
           </ul>
         </div>
     </div>

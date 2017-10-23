@@ -82,6 +82,9 @@ var config_data = {
         'identifier_update': '/ZAutomation/api/v1/system/certfxUpdateIdentifier', // Identifier update
         'cit_forward_login':'/ZAutomation/api/v1/system/certfxAuthForwarding', // forward cit login
         'cit_unregister':'/ZAutomation/api/v1/system/certfxUnregister', // unregister cit
+        'get_dsk':'/ZWaveAPI/GetDSKCollection', // Get DSK collection
+        'add_dsk':'/ZWaveAPI/AddDSKEntry?dsk=', // Add DSK
+        'remove_dsk':'/ZWaveAPI/RemoveDSKEntry?dsk=', // Remove DSK
         //'reorg_log_url': '/config/reorg.log', // Url for store reorg log data
         'zddx_url': '/ZDDX/', // Url for zddx xml files
         'notes_url': '/config/notes.log', // Url for store notes data
