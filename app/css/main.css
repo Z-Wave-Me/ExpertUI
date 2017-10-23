@@ -13647,27 +13647,48 @@ a:focus, .order-by:focus {
   display: none;
 }
 
+/* QR code
+-------------------------------------------------- */
+/* line 334, ../sass/common/_body.scss */
+.qrcode-wrap {
+  margin: 0 auto;
+}
+/* line 336, ../sass/common/_body.scss */
+.qrcode-wrap #qrcode_network {
+  margin: 20px auto 0 auto;
+  text-align: center;
+}
+/* line 340, ../sass/common/_body.scss */
+.qrcode-wrap #qrcode_network img {
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 200px;
+}
+
 /* Security 2 icons
 -------------------------------------------------- */
-/* line 335, ../sass/common/_body.scss */
+/* line 354, ../sass/common/_body.scss */
 .security-2.fa-stack {
   width: 1em;
 }
-/* line 338, ../sass/common/_body.scss */
+/* line 357, ../sass/common/_body.scss */
 .security-2 .fa-stack-1x, .security-2 .fa-stack-1x {
   text-align: left;
 }
-/* line 341, ../sass/common/_body.scss */
+/* line 360, ../sass/common/_body.scss */
 .security-2 .icon-bottom {
   color: darkgray;
 }
-/* line 344, ../sass/common/_body.scss */
+/* line 363, ../sass/common/_body.scss */
 .security-2 .icon-top {
   color: green;
   left: 4px;
   top: 4px;
 }
-/* line 349, ../sass/common/_body.scss */
+/* line 368, ../sass/common/_body.scss */
 .security-2.false .icon-top {
   color: #a94442;
 }
@@ -14279,68 +14300,69 @@ img {
 /* line 10, ../sass/common/_table.scss */
 .table thead tr th {
   border-bottom: 2px solid #9fd8ef;
+  color: #5698d0;
 }
-/* line 17, ../sass/common/_table.scss */
+/* line 18, ../sass/common/_table.scss */
 .table tbody tr td {
   border-top: 1px solid #9fd8ef;
 }
-/* line 24, ../sass/common/_table.scss */
+/* line 25, ../sass/common/_table.scss */
 .table tbody tr td {
   border-top: 1px solid #9fd8ef;
 }
 
-/* line 32, ../sass/common/_table.scss */
+/* line 33, ../sass/common/_table.scss */
 .table-hover > tbody > tr:hover > td, .table-hover > tbody > tr:hover > th {
   background-color: #e4f5fc;
 }
 
-/* line 36, ../sass/common/_table.scss */
+/* line 37, ../sass/common/_table.scss */
 #inspect_queue_table {
   font-size: 12px;
   width: 100%;
 }
 
-/* line 40, ../sass/common/_table.scss */
+/* line 41, ../sass/common/_table.scss */
 .th-slider {
   min-width: 100px;
 }
 
-/* line 44, ../sass/common/_table.scss */
+/* line 45, ../sass/common/_table.scss */
 .table-condensed td p {
   margin: 0 !important;
   padding: 0 !important;
 }
 
-/* line 49, ../sass/common/_table.scss */
+/* line 50, ../sass/common/_table.scss */
 .table-report {
   border: 0 !important;
   margin-bottom: 0 !important;
 }
-/* line 53, ../sass/common/_table.scss */
+/* line 54, ../sass/common/_table.scss */
 .table-report tbody td {
   vertical-align: middle !important;
   background-color: #FFFFFF;
 }
-/* line 57, ../sass/common/_table.scss */
+/* line 58, ../sass/common/_table.scss */
 .table-report tbody .td-img {
   width: 30px;
 }
-/* line 60, ../sass/common/_table.scss */
+/* line 61, ../sass/common/_table.scss */
 .table-report tbody .td-action {
   text-align: right;
 }
 
-/* line 66, ../sass/common/_table.scss */
+/* line 67, ../sass/common/_table.scss */
 .table-products td {
   vertical-align: middle !important;
 }
 
-/* line 71, ../sass/common/_table.scss */
+/* line 72, ../sass/common/_table.scss */
 .td20 {
   width: 20%;
 }
 
-/* line 74, ../sass/common/_table.scss */
+/* line 75, ../sass/common/_table.scss */
 .td30 {
   width: 30%;
 }
@@ -16065,16 +16087,29 @@ input[type="number"]::-webkit-inner-spin-button {
 
 /* line 18, ../sass/modules/_control.scss */
 input[type="number"].input_number {
+  display: inline-block;
   -moz-appearance: textfield;
   width: 5em;
 }
 
-/* line 23, ../sass/modules/_control.scss */
+/* line 24, ../sass/modules/_control.scss */
 .diabled_label {
   color: darkgrey;
 }
 
-/* TODO !!! check dsk_1 field to make red border on min-max invalidation */
+/* S2 DSK window
+-------------------------------------------------- */
+/* line 31, ../sass/modules/_control.scss */
+.dsk-wrap {
+  margin: 10px;
+  text-align: center;
+}
+/* line 34, ../sass/modules/_control.scss */
+.dsk-wrap .dsk-block {
+  padding: 0 2px;
+  font-size: 120%;
+}
+
 /* Zniffer
 -------------------------------------------------- */
 /* line 3, ../sass/modules/_installer.scss */
@@ -16236,6 +16271,50 @@ input[type="number"].input_number {
   width: 540px;
   height: 380px;
   float: left;
+}
+
+/* SmartStart
+-------------------------------------------------- */
+/* 
+-------------------------------------------------- */
+/* line 9, ../sass/modules/_smartstart.scss */
+.smart-start .container {
+  padding: 0;
+}
+/* line 12, ../sass/modules/_smartstart.scss */
+.smart-start .container .entry {
+  background-color: #E4F5FC;
+  padding: 20px;
+  text-align: center;
+  height: auto;
+}
+/* line 18, ../sass/modules/_smartstart.scss */
+.smart-start .container .entry .content {
+  margin: 20px;
+}
+/* line 22, ../sass/modules/_smartstart.scss */
+.smart-start .container .entry .image .fa {
+  font-size: 64px;
+  color: #80AD80;
+}
+/* line 25, ../sass/modules/_smartstart.scss */
+.smart-start .container .entry .image .fa.fa-exclamation {
+  color: #d9534f;
+}
+/* line 30, ../sass/modules/_smartstart.scss */
+.smart-start .container .entry.list {
+  text-align: left;
+}
+/* line 32, ../sass/modules/_smartstart.scss */
+.smart-start .container .entry.list ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+/* line 36, ../sass/modules/_smartstart.scss */
+.smart-start .container .entry.list ul li {
+  padding: 10px;
+  width: auto;
 }
 
 /* Main navigation

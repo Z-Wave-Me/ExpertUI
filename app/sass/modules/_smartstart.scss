@@ -1,0 +1,47 @@
+/* SmartStart
+-------------------------------------------------- */
+$ss-brand-color: #E4F5FC;
+$ss-dark-color: darken($ss-brand-color,50%);
+$ss-img-w: 64px;
+/* 
+-------------------------------------------------- */
+.smart-start {
+    .container{
+        padding: 0;
+        //background-color: $ss-brand-color;
+        .entry{
+           background-color: $ss-brand-color;
+            padding: $spacing-double;
+            text-align: center;
+            height: auto;
+            //border: solid 1px $app-border-color;
+            .content{
+                margin: $spacing-double;
+            }
+            .image{
+                .fa{
+                    font-size: $ss-img-w;
+                    color: $app-brand-success;
+                    &.fa-exclamation{
+                        color: $app-brand-danger;
+                    }
+                }
+            }
+            &.list{
+                text-align: left;
+                ul{
+                    list-style-type: none;
+                    margin: 0;
+                    padding: 0;
+                    li{
+                        padding:  $spacing;
+                        width: auto;
+                    }
+
+                }
+            }
+        }
+
+    }
+
+}

@@ -1,0 +1,13 @@
+<div class="smart-start" ng-controller="SmartStartListController">
+    <div class="container">
+        <!-- Navigation -->
+        <div ng-include="'app/views/smartstart/navi.html'"></div>
+         <!-- Entry -->
+        <div class="entry list">
+         <ul class="scrollh">
+              <li ng-repeat="v in list.all track by $index"><span class="badge">{{$index + 1}}</span> {{v}}</li>
+          </ul>
+        </div>
+    </div>
+</div> <!-- /ng-controller --> 
+
