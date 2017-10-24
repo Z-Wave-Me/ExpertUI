@@ -10,10 +10,10 @@ $ss-img-w: 64px;
         padding: 0;
         //background-color: $ss-brand-color;
         .entry{
-           background-color: $ss-brand-color;
+            background-color: $ss-brand-color;
             padding: $spacing-double;
             text-align: center;
-            height: auto;
+            margin: 0 0 $spacing-double 0;
             //border: solid 1px $app-border-color;
             .content{
                 margin: $spacing-double;
@@ -29,6 +29,8 @@ $ss-img-w: 64px;
             }
             &.list{
                 text-align: left;
+                border: solid 1px $app-border-color;
+                background-color: transparent;
                 ul{
                     list-style-type: none;
                     margin: 0;
@@ -36,7 +38,12 @@ $ss-img-w: 64px;
                     li{
                         padding:  $spacing;
                         width: auto;
+                        &.highlighted{
+                            //border: solid 1px red;
+                            background-color: $app-bcg-success;
+                        }
                     }
+
 
                 }
             }
@@ -44,4 +51,29 @@ $ss-img-w: 64px;
 
     }
 
+}
+.dsk-info{
+    margin: $spacing-double 0 0 0;
+    dl.inline-flex {
+        display: flex;
+        flex-flow: row;
+        flex-wrap: wrap;
+        width: 100%; /* set the container width*/
+        max-width: 500px;
+        overflow: visible;
+        dt{
+            flex: 0 0 20%;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            margin: 0 0 $spacing 0;
+        }
+        dd{
+            margin-left: auto;
+            text-align: left;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            flex: 0 0 80%;
+            margin: 0 0 $spacing 0;
+        }
+    }
 }

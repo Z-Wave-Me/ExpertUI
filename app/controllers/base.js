@@ -425,6 +425,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
             var homeId = ZWaveAPIData.controller.data.homeId.value;
             var zwayNodeId = ZWaveAPIData.controller.data.nodeId.value;
             var APIVersion = ZWaveAPIData.controller.data.APIVersion.value;
+            var SDKVersion = ZWaveAPIData.controller.data.SDK.value;
             var showAnalytics = cfg.analytics.show;
             // Changes MK
             //$scope.boxData.controller.controllerState = ZWaveAPIData.controller.data.controllerState.value;
@@ -436,7 +437,8 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
                 homeIdHex: '0x' + ('00000000' + (homeId + (homeId < 0 ? 0x100000000 : 0)).toString(16)).slice(-8),
                 hasDevices: hasDevices < 2 ? false : true,
                 zwayNodeId: zwayNodeId,
-                APIVersion: APIVersion
+                APIVersion: APIVersion,
+                SDKVersion: SDKVersion
             }
 
             angular.extend(cfg.controller, cfgController);

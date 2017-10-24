@@ -8,40 +8,53 @@
  * The controller that include device with DSK.
  * @class SmartStartDskController
  */
-appController.controller('SmartStartDskController', function ($scope, $timeout) {
+appController.controller('SmartStartDskController', function ($scope, $timeout, cfg, dataService, deviceService) {
     $scope.dsk = {
         input: {
             dsk: ''
         },
-        state: 'start'
+        state: null,
+        list: []
     };
+    console.log(deviceService.compareVersion(cfg.SDKVersion,cfg.smart_start.required_min_sdk,'>='))
     /**
-     * Reset state to start
+     * Get DSK colection
      */
-    $scope.resetState = function () {
-        $scope.dsk.state = 'start';
-        $scope.reloadData();
+    $scope.getDsk = function () {
+        dataService.getApi('get_dsk', null, true).then(function (response) {
+            if (_.isEmpty(response.data)) {
+                return;
+            }
+            $scope.dsk.list = response.data;
+        });
     };
-    /**
-     * Authenticate by DSK
-     */
-    $scope.authenticate = function () {
-        console.log($scope.dsk.input.dsk)
-        $scope.dsk.state = 'authenticating';
-        $timeout(function () {
-            $scope.dsk.state = ($scope.dsk.input.dsk ? 'success-authenticate' : 'error');
-        }, 2000);
-    };
+    $scope.getDsk();
 
     /**
-     * Discover the device
+     * Add DSK 
+     * @returns {undefined}
      */
-    $scope.discover = function () {
-        $scope.dsk.state = 'discovering';
-        $timeout(function () {
-            //$scope.dsk.state = 'success-discover';
-            $scope.dsk.state = ($scope.dsk.input.dsk == 1 ? 'error' : 'success-discover');
-        }, 2000);
+    $scope.addDsk = function () {
+        if (!$scope.dsk.input.dsk) {
+            return;
+        }
+        $scope.dsk.state = 'registering';
+        $scope.toggleRowSpinner(cfg.add_dsk);
+        dataService.getApi('add_dsk', $scope.dsk.input.dsk, true).then(function (response) {
+
+            $timeout(function () {
+                $scope.dsk.list.unshift($scope.dsk.input.dsk);
+                $scope.dsk.state = 'success-register';
+                $scope.dsk.input.dsk = '';
+
+            }, 1000);
+
+        }, function (error) {
+            $scope.dsk.state = null;
+            alertify.alertError($scope._t('error_update_data'));
+        }).finally(function () {
+            $timeout($scope.toggleRowSpinner, 1000);
+        });
     };
 
 });
@@ -113,7 +126,7 @@ appController.controller('SmartStartListController', function ($scope, $timeout,
         });
     };
     $scope.getDsk();
-    
+
     /**
      * Remov a DSK item
      * @param {string} dsk
@@ -121,7 +134,11 @@ appController.controller('SmartStartListController', function ($scope, $timeout,
      */
     $scope.removeDsk = function (dsk) {
         dataService.getApi('remove_dsk', dsk, true).then(function (response) {
-             $scope.reloadData();
+            var index = $scope.list.all.indexOf(dsk);
+            if (index > -1) {
+                $scope.list.all.splice(index, 1);
+            }
+            //$scope.reloadData();
         }, function (error) {
             alertify.alertError($scope._t('error_delete_data'));
         });

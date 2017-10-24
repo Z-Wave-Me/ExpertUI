@@ -196,6 +196,10 @@ var config_data = {
             'login': 'admin',
             'password': 'admin1'
         },
+        // SmartStart
+        'smart_start':{
+            required_min_sdk:'6.8'// Required min SDK version
+        },
         // Pages without authorization
         'no_auth_pages':['','init'],
         // Date format list

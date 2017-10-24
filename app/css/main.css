@@ -16286,7 +16286,7 @@ input[type="number"].input_number {
   background-color: #E4F5FC;
   padding: 20px;
   text-align: center;
-  height: auto;
+  margin: 0 0 20px 0;
 }
 /* line 18, ../sass/modules/_smartstart.scss */
 .smart-start .container .entry .content {
@@ -16304,17 +16304,54 @@ input[type="number"].input_number {
 /* line 30, ../sass/modules/_smartstart.scss */
 .smart-start .container .entry.list {
   text-align: left;
+  border: solid 1px #9fd8ef;
+  background-color: transparent;
 }
-/* line 32, ../sass/modules/_smartstart.scss */
+/* line 34, ../sass/modules/_smartstart.scss */
 .smart-start .container .entry.list ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
-/* line 36, ../sass/modules/_smartstart.scss */
+/* line 38, ../sass/modules/_smartstart.scss */
 .smart-start .container .entry.list ul li {
   padding: 10px;
   width: auto;
+}
+/* line 41, ../sass/modules/_smartstart.scss */
+.smart-start .container .entry.list ul li.highlighted {
+  background-color: #dff0d8;
+}
+
+/* line 55, ../sass/modules/_smartstart.scss */
+.dsk-info {
+  margin: 20px 0 0 0;
+}
+/* line 57, ../sass/modules/_smartstart.scss */
+.dsk-info dl.inline-flex {
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+  width: 100%;
+  /* set the container width*/
+  max-width: 500px;
+  overflow: visible;
+}
+/* line 64, ../sass/modules/_smartstart.scss */
+.dsk-info dl.inline-flex dt {
+  flex: 0 0 20%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin: 0 0 10px 0;
+}
+/* line 70, ../sass/modules/_smartstart.scss */
+.dsk-info dl.inline-flex dd {
+  margin-left: auto;
+  text-align: left;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  flex: 0 0 80%;
+  margin: 0 0 10px 0;
 }
 
 /* Main navigation
