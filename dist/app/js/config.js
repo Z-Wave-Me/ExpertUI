@@ -8,8 +8,8 @@ var config_data = {
         'environment': 'live',
         'dev_host': [],
         'app_name': 'Z-Wave Expert',
-        'app_version': '1.3.1',
-        'app_built': '28-09-2017 15:16:36',
+        'app_version': '1.4.0-RC-2',
+        'app_built': '25-10-2017 14:55:47',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -82,6 +82,12 @@ var config_data = {
         'identifier_update': '/ZAutomation/api/v1/system/certfxUpdateIdentifier', // Identifier update
         'cit_forward_login':'/ZAutomation/api/v1/system/certfxAuthForwarding', // forward cit login
         'cit_unregister':'/ZAutomation/api/v1/system/certfxUnregister', // unregister cit
+        'get_dsk':'/ZWaveAPI/GetDSKCollection', // Get DSK collection
+        'add_dsk':'/ZWaveAPI/AddDSKEntry?dsk=', // Add DSK
+        'remove_dsk':'/ZWaveAPI/RemoveDSKEntry?dsk=', // Remove DSK
+        'get_dsk_provisioning_list':'/ZWaveAPI/GetDSKProvisioningList', // Show ProvisioningList (includes only DSKs)
+        'add_dsk_provisioning_list':'/ZWaveAPI/AddDSKProvisioningEntry?dsk=', // Add DSK to ProvisioningList (Response with added DSK) GET 
+        'remove_dsk_collection':'/JS/Run/saveObject("zwaydskCollection",null)', // Remove DSK collection
         //'reorg_log_url': '/config/reorg.log', // Url for store reorg log data
         'zddx_url': '/ZDDX/', // Url for zddx xml files
         'notes_url': '/config/notes.log', // Url for store notes data
@@ -193,6 +199,10 @@ var config_data = {
             'login': 'admin',
             'password': 'admin1'
         },
+        // SmartStart
+        'smart_start':{
+            required_min_sdk:'6.8'// Required min SDK version
+        },
         // Pages without authorization
         'no_auth_pages':['','init'],
         // Date format list
@@ -288,7 +298,7 @@ var config_data = {
                 extension: ['zbk']
             },
             'routemap': {
-                size: 512000, //Bytes
+                size: 2048000, //Bytes
                 type: ['image/jpeg'],
                 extension: ['jpg'],
                 dimension: '200 x 200'//px
