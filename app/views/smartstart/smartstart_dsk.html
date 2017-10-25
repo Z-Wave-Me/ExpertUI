@@ -1,6 +1,9 @@
 <div class="smart-start" ng-controller="SmartStartDskController">
-    <pre>{{cfg.controller|json}}</pre>
-    <div class="container" ng-switch="dsk.state">
+     <!-- <pre>{{cfg.controller|json}}</pre>
+     <pre>{{dsk.sdkAlert|json}}</pre>-->
+   
+     <bb-alert alert="dsk.firmwareAlert"></bb-alert>
+     <div class="container" ng-switch="dsk.state" ng-if_="_.isEmpty(dsk.firmwareAlert)">
         <!-- Navigation -->
         <div ng-include="'app/views/smartstart/navi.html'"></div>
         <!-- Start -->
@@ -8,11 +11,22 @@
             <p class="content">
                 Please enter the Key on new Device (DSK - device specific keys), which you find below QR code
             </p>
-            <form name="form_dsk" class="form-inline_" ng-submit="addDsk()">
-                <div class="form-group">
+            <form name="form_dsk" class="form-inline_" ng-submit="addDskProvisioningList()">
+                 <!--<div class="form-group">
                     <input name="dsk" id="dsk" class="form-control" type="text" placeholder="Enter key here"
                            ng-model="dsk.input.dsk" />
+                </div>-->
+                <div class="form-group">
+              <input id="dsk_1" type="text" maxlength="5" class="form-control dsk-number" bb-arrow-navigate ng-model="dsk.input.dsk_1"  /> 
+            - <input id="dsk_2" type="text" maxlength="5" class="form-control dsk-number" bb-arrow-navigate ng-model="dsk.input.dsk_2" /> 
+            - <input id="dsk_3" type="text" maxlength="5" class="form-control dsk-number" bb-arrow-navigate ng-model="dsk.input.dsk_3" /> 
+            - <input id="dsk_4" type="text" maxlength="5" class="form-control dsk-number" bb-arrow-navigate ng-model="dsk.input.dsk_4" /> 
+            - <input id="dsk_5" type="text" maxlength="5" class="form-control dsk-number" bb-arrow-navigate ng-model="dsk.input.dsk_5" /> 
+            - <input id="dsk_6" type="text" maxlength="5" class="form-control dsk-number" bb-arrow-navigate ng-model="dsk.input.dsk_6" /> 
+            - <input id="dsk_7" type="text" maxlength="5" class="form-control dsk-number" bb-arrow-navigate ng-model="dsk.input.dsk_7" /> 
+            - <input id="dsk_8" type="text" maxlength="5" class="form-control dsk-number" bb-arrow-navigate ng-model="dsk.input.dsk_8" /> 
                 </div>
+                
                 <div class="form-group">
                     <button class="btn btn-success btn-block_">
                         <bb-row-spinner
@@ -38,14 +52,15 @@
         </div> -->
         <!-- success-register -->
         <div class="entry list" ng-switch-when="success-register">
-             <div class="alert alert-info">
-                  <i class="fa fa-check"></i> Device has been included in the network and is ready for use
+             <div class="alert alert-success">
+                  <i class="fa fa-check"></i> Device has been included in the network and is ready for use.
+                  <div>{{dsk.response}}</div>
             </div>
-          <ul class="scrollh">
-              <li ng-repeat="v in dsk.list track by $index" ng-class="{'highlighted': $index == 0}">
+          <!--<ul class="scrollh">
+              <li ng-repeat="v in dsk.list track by $index">
                  {{v}} 
               </li>
-          </ul>
+          </ul>-->
         </div>
         <!--  <div class="entry enter-dsk success-register" ng-switch-when="success-register">
             <div class="image clickable" ng-click="discover()">

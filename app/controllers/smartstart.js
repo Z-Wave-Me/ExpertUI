@@ -8,44 +8,55 @@
  * The controller that include device with DSK.
  * @class SmartStartDskController
  */
-appController.controller('SmartStartDskController', function ($scope, $timeout, cfg, dataService, deviceService) {
+appController.controller('SmartStartDskController', function ($scope, $timeout, cfg, dataService, deviceService, _) {
     $scope.dsk = {
+        firmwareAlert: {},
         input: {
-            dsk: ''
+            dsk_1: '',
+            dsk_2: '',
+            dsk_3: '',
+            dsk_4: '',
+            dsk_5: '',
+            dsk_6: '',
+            dsk_7: '',
+            dsk_8: ''
         },
         state: null,
-        list: []
+        list: [],
+        response: ''
     };
-    console.log(deviceService.compareVersion(cfg.SDKVersion,cfg.smart_start.required_min_sdk,'>='))
-    /**
-     * Get DSK colection
-     */
-    $scope.getDsk = function () {
-        dataService.getApi('get_dsk', null, true).then(function (response) {
-            if (_.isEmpty(response.data)) {
-                return;
-            }
-            $scope.dsk.list = response.data;
-        });
-    };
-    $scope.getDsk();
+    // Copy original input values
+    $scope.origInput = angular.copy($scope.dsk.input);
+    console.log(deviceService.compareVersion(cfg.SDKVersion, cfg.smart_start.required_min_sdk, '>='))
+    $scope.checkSdkVersion = function () {
+        if(!deviceService.compareVersion(cfg.SDKVersion, cfg.smart_start.required_min_sdk, '>=')){
+            //$scope.dsk.firmwareAlert = {message: $scope._t('Your device does not support SmartStart. Please upgrade your firmware'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+        }
+    }
+    $scope.checkSdkVersion();
 
     /**
      * Add DSK 
      * @returns {undefined}
      */
-    $scope.addDsk = function () {
-        if (!$scope.dsk.input.dsk) {
-            return;
-        }
+    $scope.addDskProvisioningList = function () {
+        var dsk = _.map($scope.dsk.input, function (v) {
+            return v;
+        }).join('-');
+       
         $scope.dsk.state = 'registering';
         $scope.toggleRowSpinner(cfg.add_dsk);
-        dataService.getApi('add_dsk', $scope.dsk.input.dsk, true).then(function (response) {
+        dataService.getApi('add_dsk_provisioning_list', dsk, true).then(function (response) {
 
             $timeout(function () {
-                $scope.dsk.list.unshift($scope.dsk.input.dsk);
+                //$scope.dsk.list.unshift($scope.dsk.input.dsk);
+                //$scope.getDskProvisioningList();
+                // Set state
                 $scope.dsk.state = 'success-register';
-                $scope.dsk.input.dsk = '';
+                // Reset model
+                $scope.dsk.input = angular.copy($scope.origInput);
+                // Set response
+                $scope.dsk.response = response.data[0];
 
             }, 1000);
 
@@ -56,6 +67,19 @@ appController.controller('SmartStartDskController', function ($scope, $timeout, 
             $timeout($scope.toggleRowSpinner, 1000);
         });
     };
+
+    /**
+     * Get DSK Provisioning List
+     */
+    $scope.getDskProvisioningList = function () {
+        dataService.getApi('get_dsk_provisioning_list', null, true).then(function (response) {
+            if (_.isEmpty(response.data)) {
+                return;
+            }
+            $scope.dsk.list = response.data;
+        });
+    };
+
 
 });
 
@@ -109,12 +133,11 @@ appController.controller('SmartStartListController', function ($scope, $timeout,
         all: []
     };
 
-
     /**
-     * Get DSK colection
+     * Get DSK Provisioning List
      */
-    $scope.getDsk = function () {
-        dataService.getApi('get_dsk', null, true).then(function (response) {
+    $scope.getDskProvisioningList = function () {
+        dataService.getApi('get_dsk_provisioning_list', null, true).then(function (response) {
             if (_.isEmpty(response.data)) {
                 $scope.alert = {message: $scope._t('empty_dsk_list'), status: 'alert', icon: 'fa-exclamation-circle'};
                 return;
@@ -125,7 +148,7 @@ appController.controller('SmartStartListController', function ($scope, $timeout,
             alertify.alertError($scope._t('error_load_data'));
         });
     };
-    $scope.getDsk();
+    $scope.getDskProvisioningList();
 
     /**
      * Remov a DSK item

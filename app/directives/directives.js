@@ -102,6 +102,49 @@ angApp.directive('bbLoader', function () {
                 + '</div></div>'
     };
 });
+/**
+ * Navigate form fields with arrow keys
+ */
+angApp.directive('bbArrowNavigate', function ($document) {
+     return{
+        restrict:'A',
+        link:function(scope,elem,attrs){
+            var elemFocus = false;
+            elem.on('mouseenter',function(){
+                elemFocus = true;
+            });
+            elem.on('mouseleave',function(){
+                elemFocus = false;
+            });
+             elem.on('focus',function(){
+                elemFocus = true;
+            });
+            return;
+            
+            $document.bind('keydown',function(e){
+                /*if(elem.is(':focus')){
+                     elemFocus = true;
+                }*/
+                 if(elemFocus){
+                    // Left arrow key
+                    if(e.keyCode == 37){
+                        console.log('LEFT pressed')
+                        elem.prev('input').focus();
+                         e.preventDefault();
+                    }
+                    // Right arrow key
+                    if(e.keyCode == 39){
+                       console.log('RIGHT pressed');
+                       elem.next('input').focus();
+                       e.preventDefault();
+                       
+                    }
+                    
+                }
+            });
+        }
+    };
+});
 
 /**
  * Displays a dta/time in the table row
