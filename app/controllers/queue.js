@@ -11,21 +11,19 @@ appController.controller('QueueController', function($scope, $interval,cfg,dataS
     };
 
     /**
-     * todo: deprecated
      * Load Queue
      */
-    /*$scope.loadQueueData = function() {
+    $scope.loadQueueData = function() {
         // Load queue
         dataService.getApi('queue_url', null, true).then(function (response) {
             setData(response.data);
-            //getQueueUpdate(response.data);
             $scope.refreshQueueData()
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
             return;
         });
-    };*/
-   // $scope.loadQueueData();
+    };
+    $scope.loadQueueData();
 
     /**
      * Refresh Queue data
@@ -41,7 +39,6 @@ appController.controller('QueueController', function($scope, $interval,cfg,dataS
         };
         $scope.queueData.interval = $interval(refresh, $scope.cfg.queue_interval);
     };
-    $scope.refreshQueueData();
     /// --- Private functions --- ///
 
     /**
@@ -51,13 +48,6 @@ appController.controller('QueueController', function($scope, $interval,cfg,dataS
     function setData(data) {
         var dataLength = _.size(data);
         $scope.queueData.length = dataLength;
-        if(dataLength < 1){
-            // Set warning  queue is empty
-            $scope.alert = {message: $scope._t('inspect_queue_empty'), status: 'text-warning', icon: 'fa-exclamation-circle'};
-            // Remove queue is empty
-        }else{
-            $scope.alert = {message: false, status: 'is-hidden', icon: false};
-        }
         // Reset queue object
         $scope.queueData.all = [];
         angular.forEach(data, function(job, jobIndex) {
