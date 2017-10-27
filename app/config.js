@@ -88,6 +88,7 @@ var config_data = {
         'get_dsk_provisioning_list':'/ZWaveAPI/GetDSKProvisioningList', // Show ProvisioningList (includes only DSKs)
         'add_dsk_provisioning_list':'/ZWaveAPI/AddDSKProvisioningEntry?dsk=', // Add DSK to ProvisioningList (Response with added DSK) GET 
         'remove_dsk_collection':'/JS/Run/saveObject("zwaydskCollection",null)', // Remove DSK collection
+        'enable_smart_start':'/JS/Run/zway.SmartStartEnable()', // enable SmartStart
         //'reorg_log_url': '/config/reorg.log', // Url for store reorg log data
         'zddx_url': '/ZDDX/', // Url for zddx xml files
         'notes_url': '/config/notes.log', // Url for store notes data
