@@ -298,7 +298,6 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
             if (!hideError) {
                 alertify.alertError($scope._t('error_update_data') + '\n' + cmd);
             }
-
         });
     };
 
