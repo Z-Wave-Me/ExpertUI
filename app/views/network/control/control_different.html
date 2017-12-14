@@ -2,6 +2,12 @@
 <div class="panel panel-default" ng-controller="IncludeDifferentNetworkController">
     <div class="panel-heading"><i class="fa fa-sitemap"></i> {{_t('nm_inc_into_nw')}}</div>
     <div class="panel-body">
+
+       <!-- Show DSK  -->
+       <div class="cfg-block" ng-if="controlDh.controller.joiningS2">
+          <p>DSK key:</p> <p class="dsk-highlight" ng-bind-html="controlDh.controller.publicKeyStringHighligted|toTrusted"></p>
+        </div>
+      
         <!-- Not included in network -->
         <span ng-if="controlDh.controller.isRealPrimary && (!controlDh.controller.hasDevices)">
             <p class="input-help">{{_t('device_not_included_info')}}</p>
@@ -47,6 +53,7 @@
                 <i class="fa fa-stop-circle"></i> {{_t('leave_network_stop')}}
             </button>
         </span>
+       
         <!-- S2 DSK -->
         <button class="btn btn-default"
                 ng-show="_.size(controlDh.controller.publicKey) && !controlDh.controller.isRealPrimary"
@@ -71,6 +78,10 @@
                     <i class="fa fa-smile-o"></i> {{_t('success_controller_include')}}
 
                 </div>
+                 <!-- Show DSK  -->
+          <div class="cfg-block" ng-if="controlDh.controller.joiningS2">
+              <p>DSK key:</p> <p class="dsk-highlight" ng-bind-html="controlDh.controller.publicKeyStringHighligted|toTrusted"></p>
+            </div>
                 <div class="cfg-block">
                     <!-- restore -->
                     <button class="btn btn-primary"
@@ -96,6 +107,7 @@
                         <i class="fa fa-arrow-right"></i> <span class="btn-name">{{_t('just_proceed')}}</span>
                     </button>
                 </div>
+                
 
             </div>
             <!-- <div class="appmodal-footer">
