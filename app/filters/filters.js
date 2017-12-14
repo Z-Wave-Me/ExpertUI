@@ -964,3 +964,15 @@ angApp.filter('zeroFill', function () {
         return (Array(len).join("0") + num).slice(-len);
     };
 });
+
+/**
+ * Highlight first five digits in the DSK
+ * @function highlight
+ */
+angApp.filter('highlightDsk', function () {
+  return function (dsk) {
+      var array = dsk.split('-');
+      array[0] = '<span>' + array[0] + '</span>';
+      return array.join('-');
+  };
+});

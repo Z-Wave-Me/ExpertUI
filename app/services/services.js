@@ -290,6 +290,14 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
         return securityS2Key;
     };
 
+     /**
+     * Get ZWAY session
+     * @returns {string}
+     */
+    this.mapPublicKey = function (publicKey) {
+      return publicKey.map(function(x, i, a) { if (i % 2 == 0) return x * 256 + a[i + 1]; }).filter(function(x) { return x != undefined; }).map(function(x) { return ("00000" + x).slice(-5); }).slice(0, 8).join('-');
+  };
+
     /**
      * Get a value from custom config
      * @param {string} key

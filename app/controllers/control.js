@@ -239,10 +239,10 @@ appController.controller('ControlController', function ($scope, $interval, $time
         var hasSUC = ZWaveAPIData.controller.data.SUCNodeId.value;
         var hasDevices = Object.keys(ZWaveAPIData.devices).length;
         var controllerState = ZWaveAPIData.controller.data.controllerState.value;
-        var publicKey = $filter('hasNode')(ZWaveAPIData, 'devices.' + controllerNodeId + '.instances.0.commandClasses.159.data.publicKey');
-        //var  publicKey = [153, 208, 7, 160, 148, 242, 106, 250, 131, 14, 199, 190, 151, 144, 115, 18, 26, 150, 80, 131, 83, 143, 64, 149, 103, 61, 70, 243, 147, 85, 55, 108]
-
-        // Customsettings
+        var joiningS2 = $filter('hasNode')(ZWaveAPIData,'devices.' + controllerNodeId + '.data.joiningS2.value');
+        var publicKey = $filter('hasNode')(ZWaveAPIData,'devices.' + controllerNodeId + '.data.publicKey.value');
+        var publicKeyString = deviceService.mapPublicKey(publicKey||[]);
+       // Customsettings
         $scope.controlDh.controller.hasDevices = hasDevices > 1;
         $scope.controlDh.controller.disableSUCRequest = true;
         if (hasSUC && hasSUC != controllerNodeId) {
@@ -266,9 +266,12 @@ appController.controller('ControlController', function ($scope, $interval, $time
         $scope.controlDh.controller.SetPromiscuousMode = (ZWaveAPIData.controller.data.functionClassesNames.value.indexOf('SetPromiscuousMode') > -1 ? true : false);
         $scope.controlDh.controller.SUCNodeId = ZWaveAPIData.controller.data.SUCNodeId.value;
         $scope.controlDh.controller.isInOthersNetwork = ZWaveAPIData.controller.data.isInOthersNetwork.value;
+        $scope.controlDh.controller.joiningS2 = joiningS2;
+        $scope.controlDh.controller.publicKey = publicKey;
+        $scope.controlDh.controller.publicKeyString = publicKeyString;
         if (_.size(publicKey)) {
-            $scope.controlDh.controller.publicKey = publicKey;
-            $scope.controlDh.controller.publicKeyQr =
+          $scope.controlDh.controller.publicKeyStringHighligted =   $filter('highlightDsk')(publicKeyString);
+             $scope.controlDh.controller.publicKeyQr =
                     $scope.dskBlock(publicKey, 0) || ''
                     + $scope.dskBlock(publicKey, 1).toString()
                     + $scope.dskBlock(publicKey, 2)
@@ -295,6 +298,8 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 $scope.controlDh.network.modal = true;
             }
         }
+
+      
 
         // Controller state switch
         switch (controllerState) {

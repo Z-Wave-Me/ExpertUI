@@ -12219,6 +12219,14 @@ a:focus, .order-by:focus {
   color: #a94442;
 }
 
+/* Dsk
+-------------------------------------------------- */
+/* line 376, ../sass/common/_body.scss */
+.dsk-highlight span {
+  font-weight: bold;
+  font-size: 120%;
+}
+
 /* NEW - Routing table cell styles
 -------------------------------------------------- */
 /* line 7, ../sass/modules/_routing.scss */
