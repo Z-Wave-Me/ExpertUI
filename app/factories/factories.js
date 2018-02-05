@@ -72,19 +72,6 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         });
 
     }
-    /**
-     * todo: deprecated
-     * Get IP
-     */
-    /*function getAppIp() {
-        if (cfg.custom_ip) {
-            var ip = cfg.server_url;
-            if (!ip || ip == '') {
-                $location.path('/');
-            }
-        }
-
-    }*/
 
     /**
      * Get config XML file
@@ -93,7 +80,8 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         // NOT Cached data
         return $http({
             method: 'get',
-            url: cfg.server_url + '/config/Configuration.xml'
+            url: cfg.server_url + '/config/Configuration.xml',
+            timeout: cfg.pending_timeout_limit
         }).then(function (response) {
             var x2js = new X2JS();
             var json = x2js.xml_str2json(response.data);
@@ -116,6 +104,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             //dataType: "text",
             url: cfg.server_url + '/config/Configuration.xml',
             data: data,
+            timeout: cfg.pending_timeout_limit,
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
@@ -132,7 +121,8 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
     function getUzb(params) {
         return $http({
             method: 'get',
-            url: cfg.uzb_url + params
+            url: cfg.uzb_url + params,
+            timeout: cfg.pending_timeout_limit
         }).then(function (response) {
             if (typeof response.data.data === 'object') {
                 return response.data.data;
@@ -155,6 +145,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             method: 'POST',
             url: url,
             data: $.param(data),
+            timeout: cfg.pending_timeout_limit,
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
@@ -174,6 +165,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             method: 'post',
             url: cfg.license_url,
             data: $.param(data),
+            timeout: cfg.pending_timeout_limit,
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
@@ -199,6 +191,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             method: 'POST',
             url: cfg.server_url + cfg.license_load_url,
             data: $.param({license: data.toString()}),
+            timeout: cfg.pending_timeout_limit,
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
@@ -228,7 +221,8 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         }
         return $http({
             method: 'get',
-            url: cfg.lang_dir + langFile
+            url: cfg.lang_dir + langFile,
+            timeout: cfg.pending_timeout_limit
         }).then(function (response) {
             if (typeof response.data === 'object') {
                 myCache.put(langFile, response);
@@ -254,6 +248,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         return $http({
             method: "post",
             data: data,
+            timeout: cfg.pending_timeout_limit,
             url: cfg.server_url + cfg['login']
         }).then(function (response) {
             return response;
@@ -270,6 +265,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
     function getApiLocal(file) {
         return $http({
             method: 'get',
+            timeout: cfg.pending_timeout_limit,
             url: cfg.local_data_url + file
         }).then(function (response) {
             if (typeof response.data === 'object') {
@@ -296,7 +292,8 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         }
         return $http({
             method: 'post',
-            url: cfg.server_url + cfg.update_url + "0"
+            url: cfg.server_url + cfg.update_url + "0",
+            timeout: cfg.pending_timeout_limit
         }).then(function (response) {
             if (typeof response.data === 'object') {
                 myCache.put(cacheName, response.data);
@@ -326,6 +323,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         };
         return $http({
             method: 'post',
+            timeout: cfg.pending_timeout_limit,
             url: cfg.server_url + cfg.update_url + updatedTime,
             failWait:cacheName
         }).then(function (response) {
@@ -363,7 +361,8 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
     function runZwaveCmd(cmd) {
         return $http({
             method: 'post',
-            url: cfg.server_url + cmd
+            url: cfg.server_url + cmd,
+            timeout: cfg.pending_timeout_limit
         }).then(function (response) {
             return response;
         }, function (response) {// something went wrong
@@ -388,7 +387,8 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         }
         return $http({
             method: 'get',
-            url: cfg.server_url + cfg[api] + (params ? params : '')
+            url: cfg.server_url + cfg[api] + (params ? params : ''),
+            timeout: cfg.pending_timeout_limit
         }).then(function (response) {
             if (angular.isDefined(response.data)) {
                 return response;
@@ -414,7 +414,8 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         return $http({
             method: 'get',
             url: cfg.server_url + cfg[api] + (params ? params : ''),
-            failWait:api
+            failWait:api,
+            timeout: cfg.pending_timeout_limit
         }).then(function (response) {
             if (angular.isDefined(response.data)) {
                 return response;
@@ -438,6 +439,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         return $http({
             method: "post",
             data: data,
+            timeout: cfg.pending_timeout_limit,
             url: cfg.server_url + cfg[api] + (params ? params : '')
         }).then(function (response) {
             return response;
@@ -452,12 +454,6 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
 
                     postApi(api,data,params);
 
-                }, function (error) {
-                    var message = $scope._t('error_load_data');
-                    if (error.status == 401) {
-                        message = $scope._t('error_load_user');
-                    }
-                    alertify.alertError(message);
                 });
 
             } else {
@@ -485,10 +481,8 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         // NOT Cached data
         return $http({
             method: 'get',
-            url: url
-            /*headers: {
-             'Accept-Language': lang
-             }*/
+            url: url,
+            timeout: cfg.pending_timeout_limit
         }).then(function (response) {
             return response;
         }, function (error) {// something went wrong
@@ -509,6 +503,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             method: 'POST',
             url: url,
             data: data,
+            timeout: cfg.pending_timeout_limit,
             headers: headers
         }).then(function (response) {
             return response;
@@ -525,7 +520,8 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
     function sessionApi() {
         return $http({
             method: "get",
-            url: cfg.server_url + cfg['session']
+            url: cfg.server_url + cfg['session'],
+            timeout: cfg.pending_timeout_limit
         }).then(function (response) {
             return response;
         }, function (response) {// something went wrong
@@ -553,7 +549,8 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         // NOT Cached data
         return $http({
             method: 'get',
-            url: url
+            url: url,
+            timeout: cfg.pending_timeout_limit
         }).then(function (response) {
             var x2js = new X2JS();
             var json = x2js.xml_str2json(response.data);
@@ -576,7 +573,8 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
     function getTextFile(url) {
         return $http({
             method: 'get',
-            url: url
+            url: url,
+            timeout: cfg.pending_timeout_limit
         }).then(function (response) {
             return response;
         }, function (response) {// something went wrong
@@ -597,6 +595,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             dataType: "text",
             url: url,
             data: data,
+            timeout: cfg.pending_timeout_limit,
             headers: {
                 "Content-Type": "application/json"
             }
@@ -639,6 +638,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             method: "POST",
             url: cfg.post_report_url,
             data: $.param(data),
+            timeout: cfg.pending_timeout_limit,
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
@@ -657,7 +657,8 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
     function getAppBuiltInfo() {
         return $http({
             method: 'get',
-            url: cfg.app_built_info
+            url: cfg.app_built_info,
+            timeout: cfg.pending_timeout_limit
         }).then(function (response) {
             if (typeof response.data === 'object') {
                 return response;

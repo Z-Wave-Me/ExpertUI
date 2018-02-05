@@ -41,13 +41,12 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
             $scope.loading = false;
 
             // timing error message
-            if (timing.state === 'rejected') {
-                alertify.alertError($scope._t('error_load_data') + ':' + cfg.server_url + cfg.device_classes_url);
-            }
+            /* if (timing.state === 'rejected') {
+                return;
+            } */
 
             // zwaveData error message
             if (zwaveData.state === 'rejected') {
-                alertify.alertError($scope._t('error_load_data'));
                 return;
             }
             // Success - timing

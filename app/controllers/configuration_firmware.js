@@ -77,8 +77,6 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
                 return;
             }*/
 
-        }, function (error) {
-            alertify.alertError($scope._t('error_load_data'));
         });
     };
     $scope.load($routeParams.nodeId);
@@ -92,7 +90,6 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
             dataService.loadZwaveApiData(true).then(function (ZWaveAPIData) {
                 var node = ZWaveAPIData.devices[nodeId];
                 setFirmwareData(node);
-            }, function (error) {
             });
         };
         $scope.firmware.interval = $interval(refresh, $scope.cfg.interval);

@@ -63,8 +63,6 @@ appController.controller('NeighborController', function ($scope, $filter, $timeo
             setCells($scope.routings.all);
             $scope.routings.show = true;
 
-        }, function (error) {
-            alertify.alertError($scope._t('error_load_data'));
         });
     };
     $scope.loadZwaveData();

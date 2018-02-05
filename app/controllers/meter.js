@@ -35,8 +35,6 @@ appController.controller('MetersController', function($scope, $filter, $timeout,
             }
             $scope.meters.show = true;
             $scope.refreshZwaveData();
-        }, function(error) {
-            alertify.alertError($scope._t('error_load_data'));
         });
     };
     $scope.loadZwaveData();

@@ -60,8 +60,6 @@ appController.controller('ConfigPostfixController', function ($scope, $routePara
             $scope.deviceName = $filter('deviceName')(nodeId, node);
             $scope.postfix.model.p_id = getPId(node);
             $scope.loadPostfix($scope.postfix.model.p_id);
-        }, function (error) {
-            alertify.alertError($scope._t('error_load_data'));
         });
     };
     $scope.loadData($routeParams.nodeId);

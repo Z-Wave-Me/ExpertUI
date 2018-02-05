@@ -69,8 +69,6 @@ appController.controller('ReorganizationController', function ($scope, $filter, 
                 icon: 'fa-spinner fa-spin'
             };
             $scope.loadReorganizationLog(true);
-        }, function (error) {
-            alertify.alertError($scope._t('error_load_data'));
         });
     };
 
@@ -102,8 +100,6 @@ appController.controller('ReorganizationController', function ($scope, $filter, 
                 $scope.reorganizations.lastUpdate = $filter('getDateTimeObj')(last.timestamp / 1000);
             }
 
-        }, function (error) {
-            alertify.alertError($scope._t('error_load_data'));
         });
     };
 

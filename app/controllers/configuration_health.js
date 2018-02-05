@@ -56,9 +56,6 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
         dataService.getApi('stat_url', null, true).then(function (response) {
             $scope.health.timing.all = response.data;
             $scope.health.timing.indicator.color = setTimingIndicatorColor(response.data[$routeParams.nodeId]);
-        }, function (error) {
-            alertify.alertError($scope._t('error_load_data'));
-            return;
         });
     };
     $scope.loadTiming();
@@ -91,9 +88,6 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
             setData(ZWaveAPIData, neighbours);
             $scope.refreshData();
 
-        }, function (error) {
-            alertify.alertError($scope._t('error_load_data'));
-            return;
         });
     };
     $scope.load();

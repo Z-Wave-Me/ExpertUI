@@ -320,8 +320,6 @@ appController.controller('ZnifferHistoryController', function ($scope, $interval
             $scope.zniffer.all = deviceService.setZnifferData(response.data.data).value();
             //$scope.zniffer.all = zniffer.value();
             $scope.zniffer.run = true;
-        }, function (error) {
-            alertify.alertError($scope._t('error_load_data') + ': ' + cfg.communication_history_url);
         });
     };
     $scope.loadCommunicationHistory();
@@ -477,10 +475,8 @@ appController.controller('ZnifferRSSIController', function ($scope, $interval, $
 
 
         }, function (error) {
-            var message = $scope._t('error_load_data') + ': ' + cfg.rssi_chart;
             if(handleError){
                 alertify.dismissAll();
-                alertify.alertError(message);
             }
 
         });
@@ -587,10 +583,8 @@ appController.controller('ZnifferRSSIMeterController', function ($scope, $interv
 
         }, function (error) {
             $scope.rssi.run = false;
-            var message = $scope._t('error_load_data') + ': ' + cfg.rssi_chart;
-            if(handleError){
+             if(handleError){
                 alertify.dismissAll();
-                alertify.alertError(message);
             }
         });
 

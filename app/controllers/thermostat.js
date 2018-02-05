@@ -38,8 +38,6 @@ appController.controller('ThermostatController', function($scope, $filter, $time
             }
             $scope.thermostats.show = true;
             $scope.refreshZwaveData(ZWaveAPIData);
-        }, function(error) {
-            alertify.alertError($scope._t('error_load_data'));
         });
     };
     $scope.loadZwaveData();

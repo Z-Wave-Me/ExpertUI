@@ -48,7 +48,6 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
 
             // zwaveData and packet error message
             if (ZWaveAPIData.state === 'rejected' || packetApi.state === 'rejected') {
-                alertify.alertError($scope._t('error_load_data'));
                 return;
             }
 

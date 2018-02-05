@@ -117,7 +117,6 @@ appController.controller('InitInstallerController', function ($scope, $location,
             if (cfg.system_info.cit_authorized && error.status == 504) {
                 $scope.login(auth);
             } else {
-                console.log(error);
                 var message = $scope._t('initial_fail');// + ' ' + response.data.data.result_message;
                 if (error.status == 500) {
                     message = $scope._t('error_load_data');

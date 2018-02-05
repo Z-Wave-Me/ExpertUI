@@ -44,13 +44,12 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
             $scope.loading = false;
 
             // deviceClasses error message
-            if (deviceClasses.state === 'rejected') {
-                alertify.alertError($scope._t('error_load_data') + ':' + cfg.server_url + cfg.device_classes_url);
-            }
+            /* if (deviceClasses.state === 'rejected') {
+               return;
+            } */
 
             // zwaveData error message
             if (zwaveData.state === 'rejected') {
-                alertify.alertError($scope._t('error_load_data'));
                 return;
             }
             // Success - deviceClasses

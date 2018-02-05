@@ -52,8 +52,6 @@ appController.controller('DataHolderController', function ($scope, $timeout,$int
     $scope.loadZwaveData = function () {
         dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
             setControllerData(ZWaveAPIData);
-        }, function (error) {
-            alertify.alertError($scope._t('error_load_data'));
         });
     };
     $scope.loadZwaveData();

@@ -36,8 +36,6 @@ appController.controller('ControllerController', function($scope, $window, $filt
         dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
             setData(ZWaveAPIData);
             $scope.refreshZwaveData();
-        }, function(error) {
-            alertify.alertError($scope._t('error_load_data'));
         });
     };
     $scope.loadZwaveData();

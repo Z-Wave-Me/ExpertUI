@@ -27,8 +27,6 @@ appController.controller('NotificationController', function ($scope, $filter, $t
     $scope.loadXmlData = function () {
         dataService.xmlToJson(cfg.server_url + cfg.alarms_url).then(function (response) {
             $scope.loadZwaveData(response.Alarms.Alarm);
-        }, function (error) {
-            alertify.alertError($scope._t('error_load_data'));
         });
     };
     $scope.loadXmlData();
@@ -49,8 +47,6 @@ appController.controller('NotificationController', function ($scope, $filter, $t
             }
             $scope.notifications.show = true;
             $scope.refreshZwaveData(alarms);
-        }, function (error) {
-            alertify.alertError($scope._t('error_load_data'));
         });
     };
     // $scope.loadZwaveData();

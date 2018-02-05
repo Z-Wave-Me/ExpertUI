@@ -53,8 +53,6 @@ appController.controller('LinkStatusController', function ($scope, $routeParams,
             setCells($scope.linkStatus.all);
             $scope.linkStatus.show = true;
 
-        }, function (error) {
-            alertify.alertError($scope._t('error_load_data'));
         });
     };
     $scope.loadZwaveData();

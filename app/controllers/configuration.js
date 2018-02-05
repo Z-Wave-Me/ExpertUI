@@ -51,7 +51,6 @@ appController.controller('LoadDeviceXmlController', function($scope,$routeParams
            $scope.deviceXml.all = response.data;
         }, function (error) {
             $scope.toggleRowSpinner();
-            alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
         });
     };
     $scope.loadDeviceXml($routeParams.nodeId);

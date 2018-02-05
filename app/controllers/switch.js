@@ -44,8 +44,6 @@ appController.controller('SwitchController', function ($scope, $filter, $timeout
             }
             $scope.switches.show = true;
             $scope.refreshZwaveData();
-        }, function (error) {
-            alertify.alertError($scope._t('error_load_data'));
         });
     };
     $scope.loadZwaveData();

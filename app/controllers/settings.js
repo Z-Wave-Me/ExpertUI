@@ -371,9 +371,6 @@ appController.controller('SettingsAppFormatController', function ($scope, $timeo
                     }
                 }, 1000);
 
-            }, function (error) {
-                alertify.alertError($scope._t('error_load_data'));
-
             });
         } else {
             deviceService.showNotifier({message: $scope._t('update_successful')});
@@ -450,9 +447,6 @@ appController.controller('SettingsFirmwareController', function ($scope, $sce, $
 
         }, function (error) {
             $scope.loading = false;
-            if($scope.settings.hasSession){
-                alertify.alertError($scope._t('error_load_data'));
-            }
         });
     };
 

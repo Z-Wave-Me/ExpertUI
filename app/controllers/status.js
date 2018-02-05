@@ -51,8 +51,6 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
             }
             $scope.statuses.show = true;
             $scope.refreshZwaveData();
-        }, function (error) {
-            alertify.alertError($scope._t('error_load_data'));
         });
     };
     $scope.loadZwaveData();

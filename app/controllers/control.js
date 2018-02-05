@@ -109,8 +109,6 @@ appController.controller('ControlController', function ($scope, $interval, $time
             setDeviceData(ZWaveAPIData);
             $scope.controlDh.show = true;
             $scope.refreshZwaveData();
-        }, function (error) {
-            alertify.alertError($scope._t('error_load_data'));
         });
     };
     $scope.loadZwaveData();
@@ -678,9 +676,6 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
                 // }
                 $scope.controlDh.network.modal = true;
             }, timeout);
-        }, function (error) {
-            $scope.toggleRowSpinner();
-            alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
         });
 
     };
@@ -700,7 +695,6 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
         }, function () {
             $scope.controlDh.alert = false;
             $scope.toggleRowSpinner();
-            alertify.alertError($scope._t('error_load_data'));
         });
     };
 

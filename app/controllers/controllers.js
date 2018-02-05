@@ -127,8 +127,6 @@ appController.controller('ErrorController', function($scope, $routeParams, devic
      *!/
     function runZwaveCmd(cmd) {
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
-        }, function (error) {
-            alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
         });
     }
     ;

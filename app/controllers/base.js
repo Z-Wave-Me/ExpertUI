@@ -444,9 +444,6 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
             if ((cfg.app_type === 'installer') || (!showAnalytics && ZWaveAPIData.controller.data.capabilities.value.indexOf(59) > -1)) {
                 angular.extend(cfg.analytics, {show: true});
             }
-        }, function (error) {
-            //alertify.alertError($scope._t('error_load_data'));
-
         });
     };
     /**

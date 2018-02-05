@@ -20,9 +20,6 @@ appController.controller('QueueController', function($scope, $interval,cfg,dataS
             setData(response.data);
             //getQueueUpdate(response.data);
             $scope.refreshQueueData()
-        }, function (error) {
-            alertify.alertError($scope._t('error_load_data'));
-            return;
         });
     };*/
    // $scope.loadQueueData();

@@ -58,9 +58,6 @@ appController.controller('NetworkMapController', function ($scope, $interval, $f
         dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
             $scope.networkmap.cytoscape.elements = setCyElements(ZWaveAPIData);
             var cy = cytoscape($scope.networkmap.cytoscape);
-        }, function (error) {
-            alertify.alertError($scope._t('error_load_data'));
-            return;
         });
     };
     $scope.loadZwaveApi();

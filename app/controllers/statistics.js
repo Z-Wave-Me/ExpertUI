@@ -94,8 +94,7 @@ appController.controller('NetworkStatisticsController', function ($scope, $filte
             $timeout($scope.toggleRowSpinner, timeout);
 
         }, function (error) {
-            alertify.alertError($scope._t('error_load_data'));
-            $scope.toggleRowSpinner();
+             $scope.toggleRowSpinner();
         });
     };
     $scope.loadNetworkStatistics();

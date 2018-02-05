@@ -68,8 +68,6 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
                 refreshData(node, nodeId, response.data.joined);
                 $scope.ZWaveAPIData = ZWaveAPIData;
             });*/
-        }, function(error) {
-            alertify.alertError($scope._t('error_load_data'));
         });
     };
     $scope.load($routeParams.nodeId);
@@ -171,7 +169,6 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
             }, timeout);
         }, function (error) {
             $scope.toggleRowSpinner();
-            alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
         });
     };
 
