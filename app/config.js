@@ -6,7 +6,7 @@
 var config_data = {
     'cfg': {
         'environment': '@@dev',
-        'dev_host': [],
+        'dev_host': ['192.168.10.214'],
         'app_name': '@@app_name',
         'app_version': '@@app_version',
         'app_built': '@@app_built',
@@ -316,7 +316,7 @@ var config_data = {
         },
         // ---------------------------------- Custom config for specifics app_type ---------------------------------- //
         // Application type : default/installer/wd/popp/jb
-        'app_type': 'default',
+        'app_type': 'installer',
         'custom_cfg': {
             'default': {
                 'logo': 'app/images/zplus.jpg',
