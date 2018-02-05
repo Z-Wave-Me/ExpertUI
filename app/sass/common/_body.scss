@@ -329,6 +329,25 @@ a, .order-by {
     }
 }
 
+/* QR code
+-------------------------------------------------- */
+.qrcode-wrap{
+    margin: 0 auto;
+    #qrcode_network{
+        margin: $spacing-double auto 0 auto;
+        //width: 200px;
+        text-align: center;
+        img {
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            width: 200px;
+        }
+    }
+}
+
 /* Security 2 icons
 -------------------------------------------------- */
 .security-2{

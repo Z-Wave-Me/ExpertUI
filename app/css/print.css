@@ -12173,27 +12173,48 @@ a:focus, .order-by:focus {
   display: none;
 }
 
+/* QR code
+-------------------------------------------------- */
+/* line 334, ../sass/common/_body.scss */
+.qrcode-wrap {
+  margin: 0 auto;
+}
+/* line 336, ../sass/common/_body.scss */
+.qrcode-wrap #qrcode_network {
+  margin: 20px auto 0 auto;
+  text-align: center;
+}
+/* line 340, ../sass/common/_body.scss */
+.qrcode-wrap #qrcode_network img {
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 200px;
+}
+
 /* Security 2 icons
 -------------------------------------------------- */
-/* line 335, ../sass/common/_body.scss */
+/* line 354, ../sass/common/_body.scss */
 .security-2.fa-stack {
   width: 1em;
 }
-/* line 338, ../sass/common/_body.scss */
+/* line 357, ../sass/common/_body.scss */
 .security-2 .fa-stack-1x, .security-2 .fa-stack-1x {
   text-align: left;
 }
-/* line 341, ../sass/common/_body.scss */
+/* line 360, ../sass/common/_body.scss */
 .security-2 .icon-bottom {
   color: darkgray;
 }
-/* line 344, ../sass/common/_body.scss */
+/* line 363, ../sass/common/_body.scss */
 .security-2 .icon-top {
   color: green;
   left: 4px;
   top: 4px;
 }
-/* line 349, ../sass/common/_body.scss */
+/* line 368, ../sass/common/_body.scss */
 .security-2.false .icon-top {
   color: #a94442;
 }

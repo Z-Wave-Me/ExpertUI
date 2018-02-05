@@ -3,7 +3,7 @@
     <div class="panel-heading"><i class="fa fa-sitemap"></i> {{_t('nm_inc_into_nw')}}</div>
     <div class="panel-body">
         <!-- Not included in network -->
-        <div ng-if="controlDh.controller.isRealPrimary && (!controlDh.controller.hasDevices)">
+        <span ng-if="controlDh.controller.isRealPrimary && (!controlDh.controller.hasDevices)">
             <p class="input-help">{{_t('device_not_included_info')}}</p>
             <bb-alert alert="controlDh.network.alert"></bb-alert>
             <button class="btn btn-primary" id="btn_learn_start"
@@ -17,17 +17,16 @@
                     ng-click="includeToNetwork('controller.SetLearnMode(0)')">
                 <i class="fa fa-stop-circle"></i> {{_t('include_into_network_stop')}}
             </button>
-        </div>
+        </span>
         <!-- included in network - disabled-->
-        <div ng-if="controlDh.controller.isRealPrimary && (controlDh.controller.hasDevices)">
+        <span ng-if="controlDh.controller.isRealPrimary && (controlDh.controller.hasDevices)">
             <p class="input-help">{{_t('device_included_info')}}</p>
-            <button class="btn btn-primary" id="btn_learn_start_2" disabled
-            >{{_t('leave_network')}}
+            <button class="btn btn-primary" id="btn_learn_start_2" disabled>{{_t('leave_network')}}
             </button>
-        </div>
+        </span>
 
         <!-- already included in network - displays exclude from network -->
-        <div ng-if="!controlDh.controller.isRealPrimary">
+        <span ng-if="!controlDh.controller.isRealPrimary">
             <p class="input-help">{{_t('device_included_info')}}</p>
             <div ng-hide="controlDh.network.modal && [0].indexOf(controlDh.controller.controllerState) > -1">
                 <bb-alert alert="controlDh.network.alert"></bb-alert>
@@ -47,9 +46,16 @@
                     ng-click="includeToNetwork('controller.SetLearnMode(0)')">
                 <i class="fa fa-stop-circle"></i> {{_t('leave_network_stop')}}
             </button>
-        </div>
+        </span>
+        <!-- S2 DSK -->
+        <button class="btn btn-default"
+                ng-show="_.size(controlDh.controller.publicKey) && !controlDh.controller.isRealPrimary"
+                ng-click="handleModal('networkS2Modal')">
+            S2 DSK
+        </button>
         <!-- Controller change -->
         <div class="cfg-block-top-border" ng-if="cfg.app_type == 'default'" ng-include="'app/views/network/control/control_network_maintance_ctrlchange.html'"></div>
+
     </div>
 
     <!-- successNetworkIncludeModal -->
@@ -100,6 +106,44 @@
              </div>-->
         </div>
     </div><!-- /#modal successNetworkIncludeModal -->
+
+    <!-- inclusionVerifyDSKModal -->
+    <div id="inclusionVerifyDSKModal" class="appmodal" ng-if="modalArr.networkS2Modal">
+        <div class="appmodal-in">
+            <form name="dskForm">
+                <div class="appmodal-header">
+                    <!-- <span class="appmodal-close" ng-click="closeInclusionModal()"><i
+                             class="fa fa-times"></i></span>-->
+                    <h3>{{_t('S2 DSK')}}</h3>
+                </div>
+                <div class="appmodal-body modal-h-600 form-group form-inline" ng-controller="S2DskController">
+                    <!-- name -->
+                    <div class="qrcode-wrap">
+                        <div id="qrcode_network"></div>
+                    </div>
+                    <div class="dsk-wrap">
+                        <span class="dsk-block">{{dskBlock(controlDh.controller.publicKey, 0)|| ''}}</span>
+                        <span class="dsk-block">{{dskBlock(controlDh.controller.publicKey, 1)}}</span>
+                        <span class="dsk-block">{{dskBlock(controlDh.controller.publicKey, 2)}}</span>
+                        <span class="dsk-block">{{dskBlock(controlDh.controller.publicKey, 3)}}</span>
+                        <span class="dsk-block">{{dskBlock(controlDh.controller.publicKey, 4)}}</span>
+                        <span class="dsk-block">{{dskBlock(controlDh.controller.publicKey, 5)}}</span>
+                        <span class="dsk-block">{{dskBlock(controlDh.controller.publicKey, 6)}}</span>
+                        <span class="dsk-block">{{dskBlock(controlDh.controller.publicKey, 7)}}</span>
+                        <span class="dsk-block">{{dskBlock(controlDh.controller.publicKey, 8)}}</span>
+                    </div>
+
+                </div>
+                <div class="appmodal-footer">
+                    <!-- Cancel -->
+                    <button type="button" class="btn btn-default" ng-click="handleModal()">
+                        <i class="fa fa-times text-danger"></i> <span class="btn-name">{{_t('btn_cancel')}}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div><!-- /#inclusionVerifyDSKModal -->
+
 </div>
 
 <!-- Backup and Restore -->
