@@ -75,7 +75,6 @@ appController.controller('LocksController', function($scope, $filter, $timeout,$
             $timeout($scope.toggleRowSpinner, 1000);
         }, function (error) {
             $scope.toggleRowSpinner();
-            alertify.alertError($scope._t('error_update_data') + '\n' + url);
         });
     };
     /// --- Private functions --- ///

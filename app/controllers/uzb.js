@@ -144,7 +144,6 @@ appController.controller('UzbController', function ($scope, $timeout, $window, c
             $scope.loading = false;
         }, function (error) {
             $scope.loading = false;
-            alertify.alertError($scope._t('error_handling_data_remote'));
         });
     }
     ;

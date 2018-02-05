@@ -95,7 +95,6 @@ appController.controller('NotificationController', function ($scope, $filter, $t
                 alertify.dismissAll();
             }, function (error) {
                 alertify.dismissAll();
-                alertify.alertError($scope._t('error_update_data') + '\n' + v[urlType]);
             });
             if (lastItem.rowId === v.rowId) {
                 $timeout($scope.toggleRowSpinner, 1000);

@@ -166,7 +166,6 @@ appController.controller('ThermostatController', function($scope, $filter, $time
             $timeout($scope.toggleRowSpinner, 1000);
         }, function (error) {
             $scope.toggleRowSpinner();
-            alertify.alertError($scope._t('error_update_data') + '\n' + url);
         });
     };
 

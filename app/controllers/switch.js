@@ -84,7 +84,6 @@ appController.controller('SwitchController', function ($scope, $filter, $timeout
             $timeout($scope.toggleRowSpinner, 1000);
         }, function (error) {
             $scope.toggleRowSpinner();
-            alertify.alertError($scope._t('error_update_data') + '\n' + url);
         });
     };
     /**
@@ -101,7 +100,6 @@ appController.controller('SwitchController', function ($scope, $filter, $timeout
                 alertify.dismissAll();
             }, function (error) {
                 alertify.dismissAll();
-                alertify.alertError($scope._t('error_update_data') + '\n' + v[urlType]);
             });
             if (lastItem.rowId === v.rowId) {
                 $timeout($scope.toggleRowSpinner, 1000);
@@ -130,7 +128,6 @@ appController.controller('SwitchController', function ($scope, $filter, $timeout
             $scope.toggleRowSpinner();
         }, function (error) {
             $scope.toggleRowSpinner();
-            alertify.alertError($scope._t('error_update_data') + '\n' + url);
         });
     };
 

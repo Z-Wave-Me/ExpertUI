@@ -92,7 +92,6 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
             $timeout($scope.toggleRowSpinner, 1000);
         }, function (error) {
             $scope.toggleRowSpinner();
-            alertify.alertError($scope._t('error_update_data') + '\n' + url);
         });
     };
 
@@ -111,7 +110,6 @@ appController.controller('StatusController', function ($scope, $filter, $timeout
                     alertify.dismissAll();
                 }, function (error) {
                     alertify.dismissAll();
-                    alertify.alertError($scope._t('error_update_data') + '\n' + v[urlType]);
                 });
 
             }

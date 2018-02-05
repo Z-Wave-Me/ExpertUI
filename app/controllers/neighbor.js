@@ -103,7 +103,6 @@ appController.controller('NeighborController', function ($scope, $filter, $timeo
             }, 5000);
         }, function (error) {
             $scope.toggleRowSpinner();
-            alertify.alertError($scope._t('error_update_data') + '\n' + url);
         });
     };
 
@@ -122,7 +121,6 @@ appController.controller('NeighborController', function ($scope, $filter, $timeo
                 alertify.dismissAll();
             }, function (error) {
                 alertify.dismissAll();
-                alertify.alertError($scope._t('error_update_data') + '\n' + v[urlType]);
             });
             if (lastItem.rowId === v.rowId) {
                 $timeout($scope.toggleRowSpinner, 1000);

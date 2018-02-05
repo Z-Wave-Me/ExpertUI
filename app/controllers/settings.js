@@ -85,7 +85,6 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
             $scope.settings.lastSsid = response.data.data.ssid;
         }, function (error) {
             $scope.loading = false;
-            alertify.alertError($scope._t('err_get_wifi'));
         });
 
         $scope.settings.input = cfg.zwavecfg;
@@ -242,7 +241,6 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
                 }, 1000);
             }, function (error) {
                 $scope.settings.show_update_successful = false;
-                alertify.alertError($scope._t('err_reboot'));
             });
         }
     };
@@ -278,7 +276,6 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
 
         }, function (error) {
             $scope.loading = false;
-            alertify.alertError($scope._t('err_ntp_load_status'));
         });
     };
 
@@ -294,7 +291,6 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
             $scope.loading = false;
         }, function (error) {
             $scope.loading = false;
-            alertify.alertError($scope._t('err_ntp_synchronize'));
         });
     }
 
@@ -313,7 +309,6 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
         }, function (error) {
             $scope.loading = false;
             $scope.toggleRowSpinner();
-            alertify.alertError($scope._t('err_ntp_set_mode'));
         });
     }
 
@@ -329,7 +324,6 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
                 $scope.settings.reboot = true;
             }, function(error) {
                 $scope.loading = false;
-                alertify.alertError($scope._t('err_set_date_time'));
             });
         }
     };

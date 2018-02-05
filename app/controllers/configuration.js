@@ -85,7 +85,6 @@ appController.controller('LoadDeviceXmlController', function($scope,$routeParams
             }, timeout);
         }, function (error) {
             $scope.toggleRowSpinner();
-            alertify.alertError($scope._t('error_update_data') + '\n' + cmd);
         });
     };
 });

@@ -804,7 +804,6 @@ appController.controller('ZwaveChipRebootResetController', function ($scope, cfg
             $scope.toggleRowSpinner(cmd);
         }, function (error) {
             $scope.toggleRowSpinner();
-          alertify.alertError($scope._t('error_update_data') + '\n' + cmd);
         });
        /* $scope.$watchCollection('controlDh', function (newVal, oldVal) {
             console.log(newVal.controller.controllerState)
