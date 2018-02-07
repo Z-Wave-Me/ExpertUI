@@ -8,7 +8,7 @@ var config_data = {
     'dev_host': [],
     'app_name': 'Z-Wave CIT',
     'app_version': '1.1.0-RC-2',
-    'app_built': '07-02-2018 09:42:18',
+    'app_built': '07-02-2018 09:52:15',
     'app_id': 'CIT',
     'custom_ip': false,
     'user_field': 'USERXXXX',
