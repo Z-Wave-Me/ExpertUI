@@ -466,11 +466,13 @@ appController.controller('ZnifferRSSIController', function ($scope, $interval, $
             $scope.rssi.chartData2 = chartData2;
 
             if (!$scope.rssi['chart1']) {
-                $scope.createChart('chart1',$scope.rssi.chartOptions1,$scope.rssi.chartData1, 'Channel 1');
+                //$scope.createChart('chart1',$scope.rssi.chartOptions1,$scope.rssi.chartData1, 'Channel 1');
+                $scope.createChart('chart1',$scope.rssi.chartOptions1,$scope.rssi.chartData1, '9.6K/40K Channel');
             }
 
             if (!$scope.rssi['chart2']) {
-                $scope.createChart('chart2',$scope.rssi.chartOptions2,$scope.rssi.chartData2, 'Channel 2');
+                //$scope.createChart('chart2',$scope.rssi.chartOptions2,$scope.rssi.chartData2, 'Channel 2');
+                $scope.createChart('chart2',$scope.rssi.chartOptions2,$scope.rssi.chartData2, '100K Channel');
             }
 
 
@@ -504,8 +506,10 @@ appController.controller('ZnifferRSSIController', function ($scope, $interval, $
         var refresh = function () {
             $scope.loadingRSSIData();
 
-            $scope.updateChart('chart1', $scope.rssi.chartData1,'Channel 1');
-            $scope.updateChart('chart2', $scope.rssi.chartData2,'Channel 2');
+            $scope.updateChart('chart1', $scope.rssi.chartData1,'9.6K/40K Channel');
+            //$scope.updateChart('chart1', $scope.rssi.chartData1,'Channel 1');
+            $scope.updateChart('chart2', $scope.rssi.chartData2,'100K Channel');
+            //$scope.updateChart('chart2', $scope.rssi.chartData2,'Channel 2');
         }
 
         $scope.rssi.interval = $interval(refresh, 30000);
@@ -573,11 +577,13 @@ appController.controller('ZnifferRSSIMeterController', function ($scope, $interv
             $scope.rssi.chartData2 = chartData2;
 
             if (!$scope.rssi['gauge1']) {
-                $scope.createChart('gauge1',$scope.rssi.chartOptions1,$scope.rssi.chartData1, 'Channel 1');
+                $scope.createChart('gauge1',$scope.rssi.chartOptions1,$scope.rssi.chartData1, '9.6K/40K Channel');
+                //$scope.createChart('gauge1',$scope.rssi.chartOptions1,$scope.rssi.chartData1, 'Channel 1');
             }
 
             if (!$scope.rssi['gauge2']) {
-                $scope.createChart('gauge2',$scope.rssi.chartOptions2,$scope.rssi.chartData2, 'Channel 2');
+                $scope.createChart('gauge2',$scope.rssi.chartOptions2,$scope.rssi.chartData2, '100K Channel');
+                //$scope.createChart('gauge2',$scope.rssi.chartOptions2,$scope.rssi.chartData2, 'Channel 2');
             }
             $scope.rssi.run = true;
 
