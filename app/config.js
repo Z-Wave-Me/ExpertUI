@@ -1,7 +1,6 @@
 /**
  * App configuration
  * @author Martin Vach
- * @author Martin Hartnagel
  */
 var config_data = {
   'cfg': {
@@ -10,7 +9,7 @@ var config_data = {
     'app_name': '@@app_name',
     'app_version': '@@app_version',
     'app_built': '@@app_built',
-    'app_id': 'ExpertUI',
+    'app_id': 'CIT',
     'custom_ip': false,
     'user_field': 'USERXXXX',
     'pass_field': 'PSWDXXXX',
