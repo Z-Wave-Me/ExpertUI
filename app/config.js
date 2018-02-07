@@ -343,36 +343,6 @@ var config_data = {
         'controller_name': 'CIT',
         'hardware_vendor': 'Z-Wave Alliance',
         'latest_version_url': 'https://razberry.z-wave.me/z-way/cit/latest/VERSION'
-      },
-      'wd': {
-        'logo': 'app/images/zplus.jpg',
-        'footer_text': '&COPY; 2017 by Z-Wave.Me',
-        'logout': '/smarthome/#/logout',
-        'version_type': '',
-        'title': 'Z-Wave Expert UI',
-        'controller_name': 'Z-Way',
-        'hardware_vendor': 'RaZberry by Z-Wave.Me'
-      },
-      'popp': {
-        'logo': 'app/images/zplus.jpg',
-        'footer_text': '&COPY; 2017 by Z-Wave.Me',
-        'logout': '/smarthome/#/logout',
-        'version_type': '',
-        'title': 'Z-Wave Expert UI',
-        'controller_name': 'Z-Way',
-        'hardware_vendor': 'RaZberry by Z-Wave.Me',
-        'latest_version_url': 'https://razberry.z-wave.me/z-way/popp_rpi/latest/VERSION'
-
-      },
-      'jb': {
-        'logo': 'app/images/zplus.jpg',
-        'footer_text': '&COPY; 2017 by Z-Wave.Me',
-        'logout': '/smarthome/#/logout',
-        'version_type': '',
-        'title': 'Z-Wave Expert UI',
-        'controller_name': 'Z-Way',
-        'hardware_vendor': 'RaZberry by Z-Wave.Me',
-        'latest_version_url': 'https://razberry.z-wave.me/z-way/poppbox/latest/VERSION'
       }
     }
 

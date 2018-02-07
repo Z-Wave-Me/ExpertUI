@@ -144,16 +144,7 @@
                             ng-click="handleModal('loadXmlModal', $event)">
                         <i class="fa fa-clone"></i> {{_t('config_ui_select_xml')}}
                     </button>
-
-                    <!-- <button id="btn_show_description" class="btn btn-default"
-                             ng-click="showModalDeviceSelect('#modal_device_select', deviceId, '#modal_device_select .allert-hidden')">
-                         <i class="fa fa-clone"></i> {{_t('config_ui_select_xml')}}
-                     </button>-->
-                    <!-- zddx creator -->
-                    <a href="{{cfg.server_url + cfg.zddx_create_url + deviceId}}" class="btn btn-default" id="btn_create_zddx"
-                       target="blank" ng-if="cfg.app_type !== 'installer'">
-                        <i class="fa fa-clone"></i> {{_t('btn_zddx_create')}}
-                    </a>
+                      
                 </div>
 
             </div>

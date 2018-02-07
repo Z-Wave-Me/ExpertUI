@@ -27,10 +27,7 @@
     <!-- ------------------------------------------ Data Rate on Send ------------------------------------------ -->
     <!--<pre>{{netStat.dataRate|json}}</pre>-->
     <div class="statistic-entry">
-        <div ng-if="cfg.app_type === 'installer'" class="statistic-title">{{_t('cit_RFTxLBTBackOffs')}}&nbsp;
-            <span class="label label-default">{{netStat.dataRate.dateTime.today}}</span>
-        </div>
-        <div ng-if="cfg.app_type !== 'installer'" class="statistic-title">{{_t('RFTxLBTBackOffs')}}&nbsp;
+        <div class="statistic-title">{{_t('cit_RFTxLBTBackOffs')}}&nbsp;
             <span class="label label-default">{{netStat.dataRate.dateTime.today}}</span>
         </div>
 
