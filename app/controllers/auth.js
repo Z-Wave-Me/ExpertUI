@@ -105,7 +105,7 @@ appController.controller('InitInstallerController', function ($scope, $location,
         dataService.postApi('installer_auth', input).then(function (response) {
             if (!response.data.data.result) {
                 $scope.auth.alert = {
-                    message: $scope._t(response.data.data.key) + ' ' + response.data.data.result_message,
+                    message: $scope._t(response.data.data.key) + ' ' + '<center>' + response.data.data.result_message +'</center>',
                     status: 'alert-danger',
                     icon: 'fa-exclamation-triangle'
                 };
