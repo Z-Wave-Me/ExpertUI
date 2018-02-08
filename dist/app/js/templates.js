@@ -1,4 +1,4 @@
-/* Copyright:  Z-Wave Europe, Created: 07-02-2018 09:52:15 */
+/* Copyright:  Z-Wave Europe, Created: 08-02-2018 09:00:26 */
 angular.module('myAppTemplates', []).run(['$templateCache', function($templateCache) {
   'use strict';
 
@@ -231,12 +231,12 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/installer/rssi_background.html',
-    "<div class=rssi-container ng-controller=ZnifferRSSIController><div id=chart1 class=rssi-entry></div><div id=chart2 class=rssi-entry></div></div>"
+    "<div class=rssi-container ng-controller=ZnifferRSSIController><div id=chart2 class=rssi-entry></div><div id=chart1 class=rssi-entry></div></div>"
   );
 
 
   $templateCache.put('app/views/installer/rssi_meter.html',
-    "<div ng-controller=ZnifferRSSIMeterController><div class=form-inline><div class=form-group><div class=btn-group><button class=\"btn btn-default\" title=\"Start new trace\" ng-class=\"rssi.trace === 'start' ? 'btn-success' : ''\" ng-disabled=\"rssi.trace === 'start'\" ng-click=\"setTrace('start')\"><i class=\"fa fa-play\"></i></button> <button class=\"btn btn-default\" title=\"Pause trace\" ng-class=\"rssi.trace === 'pause' ? 'btn-warning' : ''\" ng-disabled=\"rssi.trace === 'pause'\" ng-click=\"setTrace('pause')\"><i class=\"fa fa-pause\"></i></button></div></div></div><div id=gauge1 class=gauge></div><div id=gauge2 class=gauge></div></div>"
+    "<div ng-controller=ZnifferRSSIMeterController><div class=form-inline><div class=form-group><div class=btn-group><button class=\"btn btn-default\" title=\"Start new trace\" ng-class=\"rssi.trace === 'start' ? 'btn-success' : ''\" ng-disabled=\"rssi.trace === 'start'\" ng-click=\"setTrace('start')\"><i class=\"fa fa-play\"></i></button> <button class=\"btn btn-default\" title=\"Pause trace\" ng-class=\"rssi.trace === 'pause' ? 'btn-warning' : ''\" ng-disabled=\"rssi.trace === 'pause'\" ng-click=\"setTrace('pause')\"><i class=\"fa fa-pause\"></i></button></div></div></div><div id=gauge2 class=gauge></div><div id=gauge1 class=gauge></div></div>"
   );
 
 
