@@ -10,3 +10,4 @@ npm-debug.log
 /app/css/vendor/*
 *.iml
 /.idea
+/.history
