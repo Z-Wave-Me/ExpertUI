@@ -187,11 +187,6 @@ var config_data = {
       result: 0,
       arrCnt: {}
     },
-    // Auth
-    'auth': {
-      'login': 'admin',
-      'password': 'admin1'
-    },
     // Pages without authorization
     'no_auth_pages': ['', 'init'],
     // Date format list
