@@ -331,11 +331,11 @@ module.exports = function (grunt) {
                 tagAnnotation: 'Release ' + app_cfg.name + ' ' + git_message,
                 buildCommand: false
             }
-        },
-        clean: {
+        }
+        /* clean: {
             options: {force: true},
             build: ['dist/storage/data/docs/']
-        }
+        } */
     });
     // Load the plugin that provides the "uglify" task.
     grunt.loadNpmTasks('grunt-contrib-clean');
