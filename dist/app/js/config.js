@@ -7,8 +7,8 @@ var config_data = {
     'environment': 'live',
     'dev_host': [],
     'app_name': 'Z-Wave CIT',
-    'app_version': '1.1.0-RC-3',
-    'app_built': '08-02-2018 09:00:26',
+    'app_version': '1.1.0-RC-4',
+    'app_built': '14-02-2018 14:31:12',
     'app_id': 'CIT',
     'custom_ip': false,
     'user_field': 'USERXXXX',
@@ -186,11 +186,6 @@ var config_data = {
       busyLength: 0,
       result: 0,
       arrCnt: {}
-    },
-    // Auth
-    'auth': {
-      'login': 'admin',
-      'password': 'admin1'
     },
     // Pages without authorization
     'no_auth_pages': ['', 'init'],
