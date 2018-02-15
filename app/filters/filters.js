@@ -911,7 +911,7 @@ angApp.filter('fileExtension', function () {
         }
 
         // extract extension ignoring `.`
-        return basename.slice(pos + 1);
+        return basename.slice(pos + 1).toLowerCase();
     };
 });
 
