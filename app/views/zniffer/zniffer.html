@@ -1,0 +1,41 @@
+<!--Zniffer view -->
+<div ng-controller="ZnifferController">
+  <div ng-controller="SetPromiscuousModeController" ng-init="setPromiscuousMode('SetPromiscuousMode(true)')"></div>
+  <div class="page-header"><h1>{{ _t('nav_zniffer')}}</h1></div>
+   <!-- Control -->
+  <div class="form-inline">
+      <div class="form-group">
+          <fieldset class="btn-group" ng-disabled="zniffer.history">
+              <button class="btn btn-default" title="{{ _t('start_trace')}}"
+                      ng-class="zniffer.trace === 'start' ? 'btn-success' : ''"
+                      ng-disabled="zniffer.trace === 'start'"
+                      ng-click="setTrace('start')">
+                  <i class="fa" ng-class="zniffer.trace === 'start' ? 'fa-circle-o-notch fa-spin' : 'fa-play'"></i>
+              </button>
+
+              <button class="btn btn-default" title="{{ _t('pause_trace')}}"
+                      ng-class="zniffer.trace === 'pause' ? 'btn-warning' : ''"
+                      ng-disabled="zniffer.trace === 'pause'"
+                      ng-click="setTrace('pause')">
+                  <i class="fa fa-pause"></i>
+              </button>
+              <button class="btn btn-default" title="{{ _t('stop_trace')}}"
+                      ng-class="zniffer.trace === 'stop' ? 'btn-danger' : ''"
+                      ng-disabled="zniffer.trace === 'stop'"
+                      ng-click="setTrace('stop')">
+                  <i class="fa fa-stop"></i>
+              </button>
+
+          </fieldset>
+          <div class="btn-group btn-default" ng-click="toggleView(zniffer.history = !zniffer.history)">
+            <button class="btn btn-default" title="{{ _t('nav_history')}}" ng-class="{'active': zniffer.history}">
+              <i class="fa fa-history" ng-class="{'text-success': zniffer.history}"></i>
+            </button>
+          </div>
+      </div>
+  </div>
+  <!--<pre>{{zniffer|json}}</pre>-->
+  <!-- Table -->
+  <div ng-include="zniffer.history ? 'app/views/zniffer/zniffer_history.html' : 'app/views/zniffer/zniffer_log.html'"></div>
+   <!--<pre>{{zniffer.all|json}} </pre>--> 
+ </div>

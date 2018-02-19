@@ -111,12 +111,12 @@ angApp.config(['$routeProvider',
         }).// Installer - zniffer
         when('/installer/zniffer', {
             requireLogin: true,
-            templateUrl: 'app/views/installer/zniffer.html'
+            templateUrl: 'app/views/zniffer/zniffer.html'
         }).// Installer - history
-        when('/installer/history', {
+        /* when('/installer/history', {
             requireLogin: true,
             templateUrl: 'app/views/installer/history.html'
-        }).// Installer - RSSI
+        }).// Installer - RSSI */
         when('/installer/rssi', {
             requireLogin: true,
             templateUrl: 'app/views/installer/rssi_background.html'

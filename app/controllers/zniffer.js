@@ -10,6 +10,7 @@
  */
 appController.controller('ZnifferController', function ($scope, $interval, $timeout, $cookies, $location, $http, $filter, cfg, dataService, deviceService, myCache, _) {
     $scope.zniffer = {
+        history: false,
         run: true,
         updateTime: Math.round(+new Date() / 1000),
         trace: 'start',
@@ -40,6 +41,18 @@ appController.controller('ZnifferController', function ($scope, $interval, $time
     $scope.$on('$destroy', function () {
         $interval.cancel($scope.zniffer.interval);
     });
+
+     /**
+     * Toggle view log/history
+     */
+    $scope.toggleView = function (history) {
+     if(history){
+      $scope.setTrace('pause');
+     }else{
+      $scope.setTrace('start');
+     }
+  };
+
 
     /**
      * Update zniffer object after setting the filter
