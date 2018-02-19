@@ -91,7 +91,7 @@ var config_data = {
     'lang_dir': 'app/lang/', // Language directory
     'lang': 'en', // Default language
     'lang_list': ['en', 'de', 'fr', 'es', 'ru', 'cz', 'sk', 'sv', 'cn'], // List of languages
-    'page_results_history': 20, // List of languages
+    'page_results_history': 100, // Zniffer history pagination
     'frequency': {
       0: 'EU',
       1: 'RU',

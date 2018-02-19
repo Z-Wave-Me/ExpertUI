@@ -122,6 +122,7 @@ module.exports = function (grunt) {
                     'app/controllers/license.js',
                     'app/controllers/uzb.js',
                     'app/controllers/zniffer.js',
+                    'app/controllers/zniffercit.js',
                     'app/controllers/spectrum.js',
                     'app/controllers/routemap.js',
                     'app/controllers/networkmap.js',

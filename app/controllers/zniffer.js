@@ -111,7 +111,7 @@ appController.controller('ZnifferController', function ($scope, $interval, $time
         if($scope.zniffer.filter.used.indexOf('src') > -1){
             filterBySrc = $scope.zniffer.filter.model['src'];
         }
-        // Is filter by destc set?
+        // Is filter by dest set?
         if($scope.zniffer.filter.used.indexOf('dest') > -1){
             filterByDest = $scope.zniffer.filter.model['dest'];
         }
@@ -155,7 +155,7 @@ appController.controller('ZnifferController', function ($scope, $interval, $time
                             return dests.indexOf(v.dest.toString()) > -1;
                         });
                     }else{
-                        c//onsole.log('SRC - HIDE: ',dests)
+                        //onsole.log('SRC - HIDE: ',dests)
                         znifferData = _.filter(znifferData, function (v) {
                             return dests.indexOf(v.dest.toString()) === -1;
                         });
@@ -291,6 +291,9 @@ appController.controller('ZnifferHistoryController', function ($scope, $interval
     };
     $scope.currentPage = 1;
     $scope.pageSize = cfg.page_results_history;
+    $scope.setCurrentPage = function (val) {
+      $scope.currentPage = val;
+  };
     /**
      * Cancel interval on page destroy
      */

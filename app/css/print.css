@@ -12127,21 +12127,26 @@ a:focus, .order-by:focus {
   display: none !important;
 }
 
+/* line 292, ../sass/common/_body.scss */
+.zniffer-start .zniffer-isnew-true {
+  font-weight: bold;
+}
+
 /* Response
 -------------------------------------------------- */
-/* line 294, ../sass/common/_body.scss */
+/* line 300, ../sass/common/_body.scss */
 #respone_container {
   display: none;
 }
 
-/* line 298, ../sass/common/_body.scss */
+/* line 304, ../sass/common/_body.scss */
 #respone_container_inner {
   margin: 0 auto;
   text-align: center;
   /*position: relative;*/
 }
 
-/* line 303, ../sass/common/_body.scss */
+/* line 309, ../sass/common/_body.scss */
 .page-load-spinner {
   z-index: 1000;
   text-align: center;
@@ -12151,7 +12156,7 @@ a:focus, .order-by:focus {
   width: 150px;
 }
 
-/* line 312, ../sass/common/_body.scss */
+/* line 318, ../sass/common/_body.scss */
 .response-message {
   z-index: 1000;
   text-align: center;
@@ -12161,30 +12166,30 @@ a:focus, .order-by:focus {
 
 /* Progress bar
 -------------------------------------------------- */
-/* line 320, ../sass/common/_body.scss */
+/* line 326, ../sass/common/_body.scss */
 .progress {
   margin-bottom: 0;
 }
 
 /* Hide elements
 -------------------------------------------------- */
-/* line 327, ../sass/common/_body.scss */
+/* line 333, ../sass/common/_body.scss */
 #page_init #header, #page_init .container-installer, #page_init #footer {
   display: none;
 }
 
 /* QR code
 -------------------------------------------------- */
-/* line 334, ../sass/common/_body.scss */
+/* line 340, ../sass/common/_body.scss */
 .qrcode-wrap {
   margin: 0 auto;
 }
-/* line 336, ../sass/common/_body.scss */
+/* line 342, ../sass/common/_body.scss */
 .qrcode-wrap #qrcode_network {
   margin: 20px auto 0 auto;
   text-align: center;
 }
-/* line 340, ../sass/common/_body.scss */
+/* line 346, ../sass/common/_body.scss */
 .qrcode-wrap #qrcode_network img {
   padding-left: 0;
   padding-right: 0;
@@ -12196,25 +12201,25 @@ a:focus, .order-by:focus {
 
 /* Security 2 icons
 -------------------------------------------------- */
-/* line 354, ../sass/common/_body.scss */
+/* line 360, ../sass/common/_body.scss */
 .security-2.fa-stack {
   width: 1em;
 }
-/* line 357, ../sass/common/_body.scss */
+/* line 363, ../sass/common/_body.scss */
 .security-2 .fa-stack-1x, .security-2 .fa-stack-1x {
   text-align: left;
 }
-/* line 360, ../sass/common/_body.scss */
+/* line 366, ../sass/common/_body.scss */
 .security-2 .icon-bottom {
   color: darkgray;
 }
-/* line 363, ../sass/common/_body.scss */
+/* line 369, ../sass/common/_body.scss */
 .security-2 .icon-top {
   color: green;
   left: 4px;
   top: 4px;
 }
-/* line 368, ../sass/common/_body.scss */
+/* line 374, ../sass/common/_body.scss */
 .security-2.false .icon-top {
   color: #a94442;
 }
