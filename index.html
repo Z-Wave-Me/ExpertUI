@@ -84,8 +84,8 @@
     <script src="app/controllers/interviewcommand.js"></script>
     <script src="app/controllers/license.js"></script>
     <script src="app/controllers/uzb.js"></script>
+    <script src="app/controllers/rssi.js"></script>
     <script src="app/controllers/zniffer.js"></script>
-    <script src="app/controllers/zniffercit.js"></script>
     <script src="app/controllers/spectrum.js"></script>
     <script src="app/controllers/routemap.js"></script>
     <script src="app/controllers/networkmap.js"></script>
@@ -175,9 +175,9 @@
                         </a>
                         <div class="sub-navigation sub-navigation-left" ng-if="naviExpanded.naviInstaller">
                             <ul>
-                                <li><a href="#installer/zniffer" ng-class="isActive('zniffer',2)">{{ _t('nav_zniffer') }}</a></li>
-                                <li><a href="#installer/rssi" ng-class="isActive('rssi',2)">{{ _t('nav_rssi') }}</a></li>
-                                <li><a href="#installer/rssimeter" ng-class="isActive('rssimeter',2)">{{ _t('nav_rssimeter') }}</a></li>
+                                <li><a href="#zniffer" ng-class="isActive('zniffer',2)">{{ _t('nav_zniffer') }}</a></li>
+                                <li><a href="#rssibackground" ng-class="isActive('rssi',2)">{{ _t('nav_rssi') }}</a></li>
+                                <li><a href="#rssimeter" ng-class="isActive('rssimeter',2)">{{ _t('nav_rssimeter') }}</a></li>
                                <!--  <li><a href="#installer/history" ng-class="isActive('history',2)">{{ _t('nav_history') }}</a></li> -->
                                 <li>
                                     <a href="#network/statistics" ng-class="isActive('statistics',2)">{{ _t('statistics') }}</a>

@@ -108,22 +108,18 @@ angApp.config(['$routeProvider',
         }).when('/network/linkhealth/:nodeId?', {
             requireLogin: true,
             templateUrl: 'app/views/network/link_health.html'
-        }).// Installer - zniffer
-        when('/installer/zniffer', {
+        }).// IZniffer
+        when('/zniffer', {
             requireLogin: true,
             templateUrl: 'app/views/zniffer/zniffer.html'
-        }).// Installer - history
-        /* when('/installer/history', {
-            requireLogin: true,
-            templateUrl: 'app/views/installer/history.html'
         }).// Installer - RSSI */
-        when('/installer/rssi', {
+        when('/rssibackground', {
             requireLogin: true,
-            templateUrl: 'app/views/installer/rssi_background.html'
+            templateUrl: 'app/views/rssi/rssi_background.html'
         }).
-        when('/installer/rssimeter', {
+        when('/rssimeter', {
             requireLogin: true,
-            templateUrl: 'app/views/installer/rssi_meter.html'
+            templateUrl: 'app/views/rssi/rssi_meter.html'
         }).// Settings
         when('/settings', {
             requireLogin: true,
