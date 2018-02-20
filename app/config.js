@@ -288,7 +288,7 @@ var config_data = {
                 extension: ['zbk']
             },
             'routemap': {
-                size: 2048000, //Bytes
+                size: 5242880, //Bytes
                 type: ['image/jpeg'],
                 extension: ['jpg'],
                 dimension: '200 x 200'//px
