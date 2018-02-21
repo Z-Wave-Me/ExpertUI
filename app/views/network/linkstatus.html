@@ -62,7 +62,7 @@
                     ng-repeat="v in linkStatus.all| orderBy:predicate:reverse track by $index"
                     ng-hide="v.isController">
                     <td class="headcol">
-                        <span class="tool-tip right rt-cell rt-cell-th">{{v.id}}</span>
+                        <span class="right rt-cell rt-cell-th">{{v.id}}</span>
                     </td>
                     <td class="neighbor-hide" data-title="{{ _t('device_name')}}">
                         {{ v.name}}

@@ -15,6 +15,7 @@ appController.controller('ZnifferController', function ($scope, $interval, $time
     trace: 'start',
     interval: null,
     all: [],
+    devices: {},
     filter: {
       model: {
         src: {
@@ -40,11 +41,11 @@ appController.controller('ZnifferController', function ($scope, $interval, $time
     $scope.currentPage = val;
   };
 
- /**
-     * Cancel interval on page destroy
-     */
-    $scope.$on('$destroy', function () {
-      $interval.cancel($scope.zniffer.interval);
+  /**
+   * Cancel interval on page destroy
+   */
+  $scope.$on('$destroy', function () {
+    $interval.cancel($scope.zniffer.interval);
   });
 
   /**
@@ -124,6 +125,22 @@ appController.controller('ZnifferController', function ($scope, $interval, $time
   $scope.setCurrentPage = function (val) {
     $scope.currentPage = val;
   };
+
+  /**
+   * Load zwave data
+   */
+  $scope.loadZwaveData = function () {
+    dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
+      angular.forEach(ZWaveAPIData.devices, function (v, k) {
+        $scope.zniffer.devices[k] = {
+          givenName:  $filter('deviceName')(k, v)
+        };
+        console.log(k)
+      });
+      console.log($scope.zniffer.devices)
+    });
+  };
+  $scope.loadZwaveData();
 
   /**
    * Load communication history
@@ -213,7 +230,7 @@ appController.controller('ZnifferController', function ($scope, $interval, $time
             $scope.zniffer.all.push(v);
           };
         });
-       
+
       });
     }
     if ($scope.zniffer.trace === 'start') {

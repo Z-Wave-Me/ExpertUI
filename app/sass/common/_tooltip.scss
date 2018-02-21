@@ -1,98 +1,171 @@
 /* Tooltip
 -------------------------------------------------- */
-/* Tooltip container */
-.tool-tip {
+
+$tooltip-spacing: $spacing;
+$tooltip-w: 200px;
+$tooltip-color:#fff;
+$tooltip-bcg-color: lighten(#000, 30%); 
+.tooltip-wrap {
   position: relative;
   display: inline-block;
-  /* Tooltip content */
-  .tool-tip-entry {
-    line-height: $app-line-height-base;
-    @include appBorderRadius(4px);
-    visibility: hidden;
-    border: 1px solid $tooltip-border-color;
-    background-color: $tooltip-bcg-color;
-    width: 240px;
-    text-align: center;
-    padding: $spacing ;
+  cursor: help;
+  &.on-hover {
+     &:hover {
+      .tooltip {
+        display: block;
+      }
+    }
+  }
+  .tooltip {
+    white-space: normal;
+    display: none;
     position: absolute;
-    z-index: 1;
-  }
-  /* Show the tooltip text when you mouse over the tooltip container */
-  &:hover {
-    .tool-tip-entry {
-      visibility: visible;
+    width: $tooltip-w;
+    padding: $tooltip-spacing;
+    background-color: $tooltip-bcg-color;
+    color: $tooltip-color;
+    z-index: $zindex-tooltip;
+    text-align: left;
+    &.text-center{
+      text-align: center;
     }
-  }
-  /* Right Tooltip */
-  &.right{
-    .tool-tip-entry {
-      top: -5px;
-      //top: -60px;
+    @include appBoxShadow($dropdown-box-shadow);
+    /* Arrow */
+    &::after {
+      content: " ";
+      position: absolute;
+      border-width: $tooltip-spacing/2;
+      border-style: solid;
+    }
+    /* Right tooltip */
+    &.right {
+      top: -$tooltip-spacing/2;
       left: 105%;
-      &::after{
-        content: " ";
-        position: absolute;
-        top: 10%;
-        right: 100%; /* To the left of the tooltip */
-        margin-top: -5px;
-        border-width: 5px;
-        border-style: solid;
-        border-color: transparent $tooltip-border-color transparent transparent;
+      /* Arrow To the left of the tooltip */
+      &::after {
+        //top: 50%;
+        top: $tooltip-spacing*2;
+        right: 100%;
+        margin-top: -$tooltip-spacing/2;
+        border-color: transparent $tooltip-bcg-color transparent transparent;
       }
     }
-  }
-  /* Left Tooltip */
-  &.left{
-    .tool-tip-entry {
-      top: -5px;
+    /* Left tooltip */
+    &.left {
+      top: -$tooltip-spacing/2;
+      margin-top: -$tooltip-spacing/2;
       right: 105%;
-      &::after{
-        content: " ";
-        position: absolute;
-        top: 10%;
-        left: 100%; /* To the right of the tooltip */
-        margin-top: -5px;
-        border-width: 5px;
-        border-style: solid;
-        border-color: transparent transparent transparent $tooltip-border-color;
+      /* Arrow To the right of the tooltip */
+      &::after {
+        //top: 50%;
+        top: $tooltip-spacing*2;
+        left: 100%;
+        border-color: transparent transparent transparent $tooltip-bcg-color;
       }
     }
-  }
-  /* Top Tooltip */
-  &.top{
-    .tool-tip-entry {
+    /* Top tooltip */
+    &.top {
       bottom: 100%;
       left: 50%;
-      margin-left: -120px; /* Use half of the width (120/2 = 60), to center the tooltip */
-      &::after{
-        content: " ";
-        position: absolute;
-        top: 100%; /* At the bottom of the tooltip */
+      /* Use half of the width (120/2 = 60), to center the tooltip */
+      margin-left: -$tooltip-w/2;
+      /* Arrow To the bottom of the tooltip */
+      &::after {
+        top: 100%;
         left: 50%;
-        margin-left: -5px;
-        border-width: 5px;
-        border-style: solid;
-        border-color: $tooltip-border-color transparent transparent transparent;
+        margin-left: -$tooltip-spacing/2;
+        border-color: $tooltip-bcg-color transparent transparent transparent;
       }
     }
-  }
-  /* Bottom Tooltip */
-  &.bottom{
-    .tool-tip-entry {
+    /* Bottom tooltip */
+    &.bottom {
       top: 100%;
       left: 50%;
-      margin-left: -120px; /* Use half of the width (120/2 = 60), to center the tooltip */
-      &::after{
-        content: " ";
-        position: absolute;
-        bottom: 100%;  /* At the top of the tooltip */
+      /* Use half of the width (120/2 = 60), to center the tooltip */
+      margin-left: -$tooltip-w/2;
+      /* Arrow To the top of the tooltip */
+      &::after {
+        bottom: 100%;
         left: 50%;
-        margin-left: -5px;
-        border-width: 5px;
-        border-style: solid;
-        border-color: transparent transparent $tooltip-border-color transparent;
+        margin-left: -$tooltip-spacing/2;
+        border-color: transparent transparent $tooltip-bcg-color transparent;
       }
     }
   }
 }
 
+/* FIXME:
+-------------------------------------------------- */
+
+.tooltip-wrap_ {
+  position: relative;
+  display: inline-block;
+  &:hover {
+    .tooltip {
+      display: inline-block;
+    }
+  }
+}
+
+.tooltip_ {
+  display: none; //display: inline-block;
+  position: absolute; //left: 100%;
+  //top: 0;
+  width: $tooltip-w;
+  padding: $tooltip-spacing;
+  background: $tooltip-bcg-color;
+  color: $tooltip-color;
+  z-index: $zindex-tooltip;
+  &::after {
+    content: " ";
+    position: absolute;
+    margin-left: -$spacing;
+    border-width: $spacing;
+    border-style: solid;
+    border-color: transparent;
+  }
+  &.right {
+    top: 0;
+    left: 100%;
+    &:after {
+      top: 50%;
+      right: 100%;
+      /* To the left of the tooltip */
+      border-color: transparent $tooltip-bcg-color transparent transparent;
+    }
+  }
+  &.left {
+    top: 0;
+    right: 100%;
+    &:after {
+      top: 50%;
+      left: 100%;
+      /* To the right of the tooltip */
+      border-color: transparent transparent transparent $tooltip-bcg-color;
+    }
+  }
+  &.top {
+    bottom: 100%;
+    left: 50%;
+    margin-left: -$tooltip-w/2;
+    /* Use half of the width (120/2 = 60), to center the tooltip */
+    &::after {
+      top: 100%;
+      /* At the bottom of the tooltip */
+      left: 50%;
+      border-color: $tooltip-bcg-color transparent transparent transparent;
+    }
+  }
+  &.bottom {
+    top: 100%;
+    left: 50%;
+    margin-left: -$tooltip-w/2;
+    /* Use half of the width (120/2 = 60), to center the tooltip */
+    &::after {
+      bottom: 100%;
+      /* At the top of the window */
+      left: 50%;
+      border-color: transparent transparent $tooltip-bcg-color transparent;
+    }
+  }
+}

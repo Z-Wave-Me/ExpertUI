@@ -7159,124 +7159,6 @@ button.close {
     width: 900px;
   }
 }
-/* line 7, ../sass/vendor/bootstrap/_tooltip.scss */
-.tooltip {
-  position: absolute;
-  z-index: 1070;
-  display: block;
-  visibility: visible;
-  font-size: 12px;
-  line-height: 1.4;
-  opacity: 0;
-  filter: alpha(opacity=0);
-}
-/* line 16, ../sass/vendor/bootstrap/_tooltip.scss */
-.tooltip.in {
-  opacity: 0.9;
-  filter: alpha(opacity=90);
-}
-/* line 17, ../sass/vendor/bootstrap/_tooltip.scss */
-.tooltip.top {
-  margin-top: -3px;
-  padding: 5px 0;
-}
-/* line 18, ../sass/vendor/bootstrap/_tooltip.scss */
-.tooltip.right {
-  margin-left: 3px;
-  padding: 0 5px;
-}
-/* line 19, ../sass/vendor/bootstrap/_tooltip.scss */
-.tooltip.bottom {
-  margin-top: 3px;
-  padding: 5px 0;
-}
-/* line 20, ../sass/vendor/bootstrap/_tooltip.scss */
-.tooltip.left {
-  margin-left: -3px;
-  padding: 0 5px;
-}
-
-/* line 24, ../sass/vendor/bootstrap/_tooltip.scss */
-.tooltip-inner {
-  max-width: 200px;
-  padding: 3px 8px;
-  color: #fff;
-  text-align: center;
-  text-decoration: none;
-  background-color: #000;
-  border-radius: 4px;
-}
-
-/* line 35, ../sass/vendor/bootstrap/_tooltip.scss */
-.tooltip-arrow {
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-color: transparent;
-  border-style: solid;
-}
-
-/* line 43, ../sass/vendor/bootstrap/_tooltip.scss */
-.tooltip.top .tooltip-arrow {
-  bottom: 0;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px 5px 0;
-  border-top-color: #000;
-}
-/* line 50, ../sass/vendor/bootstrap/_tooltip.scss */
-.tooltip.top-left .tooltip-arrow {
-  bottom: 0;
-  left: 5px;
-  border-width: 5px 5px 0;
-  border-top-color: #000;
-}
-/* line 56, ../sass/vendor/bootstrap/_tooltip.scss */
-.tooltip.top-right .tooltip-arrow {
-  bottom: 0;
-  right: 5px;
-  border-width: 5px 5px 0;
-  border-top-color: #000;
-}
-/* line 62, ../sass/vendor/bootstrap/_tooltip.scss */
-.tooltip.right .tooltip-arrow {
-  top: 50%;
-  left: 0;
-  margin-top: -5px;
-  border-width: 5px 5px 5px 0;
-  border-right-color: #000;
-}
-/* line 69, ../sass/vendor/bootstrap/_tooltip.scss */
-.tooltip.left .tooltip-arrow {
-  top: 50%;
-  right: 0;
-  margin-top: -5px;
-  border-width: 5px 0 5px 5px;
-  border-left-color: #000;
-}
-/* line 76, ../sass/vendor/bootstrap/_tooltip.scss */
-.tooltip.bottom .tooltip-arrow {
-  top: 0;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 0 5px 5px;
-  border-bottom-color: #000;
-}
-/* line 83, ../sass/vendor/bootstrap/_tooltip.scss */
-.tooltip.bottom-left .tooltip-arrow {
-  top: 0;
-  left: 5px;
-  border-width: 0 5px 5px;
-  border-bottom-color: #000;
-}
-/* line 89, ../sass/vendor/bootstrap/_tooltip.scss */
-.tooltip.bottom-right .tooltip-arrow {
-  top: 0;
-  right: 5px;
-  border-width: 0 5px 5px;
-  border-bottom-color: #000;
-}
-
 /* line 6, ../sass/vendor/bootstrap/_popovers.scss */
 .popover {
   position: absolute;
@@ -15435,108 +15317,186 @@ http://codepen.io/MattIn4D/pen/LiKFC
 
 /* Tooltip
 -------------------------------------------------- */
-/* Tooltip container */
-/* line 4, ../sass/common/_tooltip.scss */
-.tool-tip {
+/* line 8, ../sass/common/_tooltip.scss */
+.tooltip-wrap {
   position: relative;
   display: inline-block;
-  /* Tooltip content */
-  /* Show the tooltip text when you mouse over the tooltip container */
-  /* Right Tooltip */
-  /* Left Tooltip */
-  /* Top Tooltip */
-  /* Bottom Tooltip */
+  cursor: help;
 }
-/* line 8, ../sass/common/_tooltip.scss */
-.tool-tip .tool-tip-entry {
-  line-height: 1.42857;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-  visibility: hidden;
-  border: 1px solid #c9c9c9;
-  background-color: #f2f2f2;
-  width: 240px;
-  text-align: center;
-  padding: 10px;
+/* line 14, ../sass/common/_tooltip.scss */
+.tooltip-wrap.on-hover:hover .tooltip {
+  display: block;
+}
+/* line 19, ../sass/common/_tooltip.scss */
+.tooltip-wrap .tooltip {
+  white-space: normal;
+  display: none;
   position: absolute;
-  z-index: 1;
+  width: 200px;
+  padding: 10px;
+  background-color: #4d4d4d;
+  color: #fff;
+  z-index: 1070;
+  text-align: left;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  -moz-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  /* Arrow */
+  /* Right tooltip */
+  /* Left tooltip */
+  /* Top tooltip */
+  /* Bottom tooltip */
 }
-/* line 22, ../sass/common/_tooltip.scss */
-.tool-tip:hover .tool-tip-entry {
-  visibility: visible;
+/* line 29, ../sass/common/_tooltip.scss */
+.tooltip-wrap .tooltip.text-center {
+  text-align: center;
 }
-/* line 28, ../sass/common/_tooltip.scss */
-.tool-tip.right .tool-tip-entry {
+/* line 34, ../sass/common/_tooltip.scss */
+.tooltip-wrap .tooltip::after {
+  content: " ";
+  position: absolute;
+  border-width: 5px;
+  border-style: solid;
+}
+/* line 41, ../sass/common/_tooltip.scss */
+.tooltip-wrap .tooltip.right {
   top: -5px;
   left: 105%;
+  /* Arrow To the left of the tooltip */
 }
-/* line 32, ../sass/common/_tooltip.scss */
-.tool-tip.right .tool-tip-entry::after {
-  content: " ";
-  position: absolute;
-  top: 10%;
+/* line 45, ../sass/common/_tooltip.scss */
+.tooltip-wrap .tooltip.right::after {
+  top: 20px;
   right: 100%;
-  /* To the left of the tooltip */
   margin-top: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent #c9c9c9 transparent transparent;
+  border-color: transparent #4d4d4d transparent transparent;
 }
-/* line 46, ../sass/common/_tooltip.scss */
-.tool-tip.left .tool-tip-entry {
+/* line 54, ../sass/common/_tooltip.scss */
+.tooltip-wrap .tooltip.left {
   top: -5px;
-  right: 105%;
-}
-/* line 49, ../sass/common/_tooltip.scss */
-.tool-tip.left .tool-tip-entry::after {
-  content: " ";
-  position: absolute;
-  top: 10%;
-  left: 100%;
-  /* To the right of the tooltip */
   margin-top: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent transparent transparent #c9c9c9;
+  right: 105%;
+  /* Arrow To the right of the tooltip */
 }
-/* line 63, ../sass/common/_tooltip.scss */
-.tool-tip.top .tool-tip-entry {
-  bottom: 100%;
-  left: 50%;
-  margin-left: -120px;
-  /* Use half of the width (120/2 = 60), to center the tooltip */
+/* line 59, ../sass/common/_tooltip.scss */
+.tooltip-wrap .tooltip.left::after {
+  top: 20px;
+  left: 100%;
+  border-color: transparent transparent transparent #4d4d4d;
 }
 /* line 67, ../sass/common/_tooltip.scss */
-.tool-tip.top .tool-tip-entry::after {
+.tooltip-wrap .tooltip.top {
+  bottom: 100%;
+  left: 50%;
+  /* Use half of the width (120/2 = 60), to center the tooltip */
+  margin-left: -100px;
+  /* Arrow To the bottom of the tooltip */
+}
+/* line 73, ../sass/common/_tooltip.scss */
+.tooltip-wrap .tooltip.top::after {
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-color: #4d4d4d transparent transparent transparent;
+}
+/* line 81, ../sass/common/_tooltip.scss */
+.tooltip-wrap .tooltip.bottom {
+  top: 100%;
+  left: 50%;
+  /* Use half of the width (120/2 = 60), to center the tooltip */
+  margin-left: -100px;
+  /* Arrow To the top of the tooltip */
+}
+/* line 87, ../sass/common/_tooltip.scss */
+.tooltip-wrap .tooltip.bottom::after {
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-color: transparent transparent #4d4d4d transparent;
+}
+
+/* FIXME:
+-------------------------------------------------- */
+/* line 100, ../sass/common/_tooltip.scss */
+.tooltip-wrap_ {
+  position: relative;
+  display: inline-block;
+}
+/* line 104, ../sass/common/_tooltip.scss */
+.tooltip-wrap_:hover .tooltip {
+  display: inline-block;
+}
+
+/* line 110, ../sass/common/_tooltip.scss */
+.tooltip_ {
+  display: none;
+  position: absolute;
+  width: 200px;
+  padding: 10px;
+  background: #4d4d4d;
+  color: #fff;
+  z-index: 1070;
+}
+/* line 119, ../sass/common/_tooltip.scss */
+.tooltip_::after {
   content: " ";
   position: absolute;
+  margin-left: -10px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent;
+}
+/* line 127, ../sass/common/_tooltip.scss */
+.tooltip_.right {
+  top: 0;
+  left: 100%;
+}
+/* line 130, ../sass/common/_tooltip.scss */
+.tooltip_.right:after {
+  top: 50%;
+  right: 100%;
+  /* To the left of the tooltip */
+  border-color: transparent #4d4d4d transparent transparent;
+}
+/* line 137, ../sass/common/_tooltip.scss */
+.tooltip_.left {
+  top: 0;
+  right: 100%;
+}
+/* line 140, ../sass/common/_tooltip.scss */
+.tooltip_.left:after {
+  top: 50%;
+  left: 100%;
+  /* To the right of the tooltip */
+  border-color: transparent transparent transparent #4d4d4d;
+}
+/* line 147, ../sass/common/_tooltip.scss */
+.tooltip_.top {
+  bottom: 100%;
+  left: 50%;
+  margin-left: -100px;
+  /* Use half of the width (120/2 = 60), to center the tooltip */
+}
+/* line 152, ../sass/common/_tooltip.scss */
+.tooltip_.top::after {
   top: 100%;
   /* At the bottom of the tooltip */
   left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: #c9c9c9 transparent transparent transparent;
+  border-color: #4d4d4d transparent transparent transparent;
 }
-/* line 81, ../sass/common/_tooltip.scss */
-.tool-tip.bottom .tool-tip-entry {
+/* line 159, ../sass/common/_tooltip.scss */
+.tooltip_.bottom {
   top: 100%;
   left: 50%;
-  margin-left: -120px;
+  margin-left: -100px;
   /* Use half of the width (120/2 = 60), to center the tooltip */
 }
-/* line 85, ../sass/common/_tooltip.scss */
-.tool-tip.bottom .tool-tip-entry::after {
-  content: " ";
-  position: absolute;
+/* line 164, ../sass/common/_tooltip.scss */
+.tooltip_.bottom::after {
   bottom: 100%;
-  /* At the top of the tooltip */
+  /* At the top of the window */
   left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent transparent #c9c9c9 transparent;
+  border-color: transparent transparent #4d4d4d transparent;
 }
 
 /* Homepage
@@ -16558,6 +16518,12 @@ a {
 /* line 242, ../sass/skins/installer/_main.scss */
 .accordion-entry {
   border-color: #87cf83;
+}
+
+/* Tooltip */
+/* line 247, ../sass/skins/installer/_main.scss */
+.tooltip-wrap .tooltip {
+  background-color: #083366;
 }
 
 /*

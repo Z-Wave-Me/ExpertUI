@@ -242,3 +242,9 @@ a {
 .accordion-entry {
   border-color: $alliance-green-border;
 }
+/* Tooltip */
+.tooltip-wrap {
+  .tooltip {
+    background-color: $alliance-blue;
+  }
+}
