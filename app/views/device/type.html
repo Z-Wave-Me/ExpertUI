@@ -61,6 +61,10 @@
                     <sort-by callback="orderBy(field)" obj="orderByArr" field="'type'"
                              label="_t('device_description_device_type')"></sort-by>
                 </th>
+                <!-- Granted keys -->
+                <th>
+                   {{_t('keys')}}
+                </th>
             </tr>
             </thead>
             <tbody>
@@ -107,6 +111,8 @@
                 <td data-title="{{ _t('th_appversion')}}"><span ng-bind="v.appVersion"></span>&nbsp;</td>
                 <!-- type -->
                 <td data-title="{{ _t('device_description_device_type')}}"><span ng-bind="v.deviceType"></span>&nbsp;
+                <!-- securityS2Key -->
+                <td data-title="{{ _t('keys')}}"><span ng-bind="v.securityS2Key"></span>&nbsp;
 
                 </td>
             </tr>
