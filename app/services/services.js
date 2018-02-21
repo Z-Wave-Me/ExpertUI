@@ -276,7 +276,9 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
     this.getS2GrantedKeys = function(hasSecurityS2Cc) {
         var securityS2Key = [];
         if($filter('hasNode')(hasSecurityS2Cc,'data.interviewDone.value')){
+          if($filter('hasNode')(hasSecurityS2Cc,'data.grantedKeys.S0.value')){
             securityS2Key.push('S0');
+           }
             if($filter('hasNode')(hasSecurityS2Cc,'data.grantedKeys.S2Unauthenticated.value')){
                 securityS2Key.push('S2 Unauthenticated');
             }
