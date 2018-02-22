@@ -152,10 +152,10 @@ appController.controller('ConfigHealthController', function ($scope, $routeParam
         var data = {"nodeId": $scope.deviceId};
         dataService.postApi('checklinks', data).then(function (response) {
             deviceService.showNotifier({message: $scope._t('test_all_links_complete')});
-            $scope.toggleRowSpinner();
         }, function (error) {
             deviceService.showNotifier({message: $scope._t('error_update_data'),type: 'error'});
-            $scope.toggleRowSpinner();
+        }).finally(function () {
+          $timeout($scope.toggleRowSpinner, 2000);
         });
     };
 

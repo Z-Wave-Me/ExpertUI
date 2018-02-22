@@ -292,13 +292,13 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
         timeout = timeout || 1000;
         $scope.toggleRowSpinner(cmd);
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
-            $timeout($scope.toggleRowSpinner, timeout);
         }, function (error) {
-            $scope.toggleRowSpinner();
             if (!hideError) {
                 alertify.alertError($scope._t('error_update_data') + '\n' + cmd);
             }
 
+        }).finally(function () {
+          $timeout($scope.toggleRowSpinner, timeout);
         });
     };
 
