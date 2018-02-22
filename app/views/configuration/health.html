@@ -95,7 +95,7 @@
                                 <!-- Test node -->
                                 <button class="btn btn-default" id="btn_test_{{ v.id}}"
                                         ng-if="health.device.hasPowerLevel"
-                                        ng-click="runZwaveCmd(v.cmdTestNode)"
+                                        ng-click="runZwaveCmd(v.cmdTestNode,2000)"
                                         ng-disabled="rowSpinner[v.cmdTestNode]">
                                     <bb-row-spinner
                                             icon="'fa-circle-o text-success'"
