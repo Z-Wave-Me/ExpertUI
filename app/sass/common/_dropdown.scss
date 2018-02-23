@@ -67,6 +67,34 @@
         }
 
     }
+     /* Arrow To the top */
+    &::after {
+      content: " ";
+      position: absolute;
+      border-width: $spacing;
+      border-style: solid;
+      bottom: 100%;
+     
+      margin-left: -$spacing;
+      border-color: transparent transparent $dropdown-border-color transparent;
+    }
+    &.right{
+      &::after {
+        right: $spacing-double;
+      }
+      
+    }
+    &.left{
+        float: left;
+        left: 0;
+        right: auto;
+         /* Arrow To the top of the tooltip */
+         &::after {
+          left: $spacing-double;
+        }
+        
+    }
+    
 }
 .appdropdown-footer{
      padding: $spacing;
@@ -90,11 +118,8 @@
         }
     }
 }
-.app-dropdown-left{
-    float: left;
-    left: 0;
-    right: auto;
-}
+
+
 .app-dropdown-bottom{
     top: auto;
     bottom: 100%;

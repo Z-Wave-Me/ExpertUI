@@ -1,0 +1,26 @@
+<div class="app-dropdown-content">
+  <!--<pre>{{zniffer.filter.model.application|json}} </pre>-->
+  <div class="form-group">
+    <!-- Value -->
+    <input class="form-control" type="text" id="filter_dest" placeholder="{{_t('enter_value')}}. {{_t('use_charcter_delimit')}}"
+      ng-model="zniffer.filter.model.dest.value" />
+  </div>
+  <!-- Visibility -->
+  <div class="form-group   form-inline">
+
+    <input class="form-control_" type="radio" name="dest_show" value="1" ng-model="zniffer.filter.model.application.show" ng-checked="zniffer.filter.model.application.show == '1'"
+    /> {{_t('show')}}
+    <input class="form-control_" type="radio" name="application_show" value="0" ng-model="zniffer.filter.model.application.show" ng-checked="zniffer.filter.model.application.show == '0'"
+    /> {{_t('hide')}}
+  </div>
+</div>
+<div class="appdropdown-footer" ng-click="resetZnifferFilter()">
+  <!-- Reset -->
+  <button class="btn btn-default" type="button" bb-dropdown=".position-relative" ng-click="resetZnifferFilter('application')">
+    <i class="fa fa-times text-danger"></i> {{_t('reset_filter')}}
+  </button>
+  <!-- OK -->
+  <button class="btn btn-success" type="button" bb-dropdown=".position-relative" ng-click="setZnifferFilter('application')">
+    <i class="fa fa-check"></i> {{_t('th_ok')}}
+  </button>
+</div>

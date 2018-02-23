@@ -803,6 +803,28 @@ angApp.directive('bbKeyEvent', function () {
     };
 });
 
+/**
+ * Toggle dropdown
+ */
+angApp.directive('bbDropdown', function () {
+  return {
+    restrict: 'A',
+    link: function (scope, elem, attrs) {
+      elem.on('click', function (e) {
+        elem.attr('aria-expanded', function (_, attr) {
+          return attr == 'true' ? false : true;
+        });
+        var target =   elem.parents(attrs.bbDropdown).find('> .app-dropdown').eq(0);
+        target.attr('hidden', function (_, attr) {
+          return !attr
+        });
+        return false;
+      });
+    }
+  };
+});
+
+
 /*** Fixes ***/
 // js holder fix
 angApp.directive('jsholderFix', function () {

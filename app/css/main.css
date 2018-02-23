@@ -13488,21 +13488,26 @@ a:focus, .order-by:focus {
   font-weight: bold;
 }
 
+/* line 296, ../sass/common/_body.scss */
+.position-relative {
+  position: relative;
+}
+
 /* Response
 -------------------------------------------------- */
-/* line 300, ../sass/common/_body.scss */
+/* line 303, ../sass/common/_body.scss */
 #respone_container {
   display: none;
 }
 
-/* line 304, ../sass/common/_body.scss */
+/* line 307, ../sass/common/_body.scss */
 #respone_container_inner {
   margin: 0 auto;
   text-align: center;
   /*position: relative;*/
 }
 
-/* line 309, ../sass/common/_body.scss */
+/* line 312, ../sass/common/_body.scss */
 .page-load-spinner {
   z-index: 1000;
   text-align: center;
@@ -13512,7 +13517,7 @@ a:focus, .order-by:focus {
   width: 150px;
 }
 
-/* line 318, ../sass/common/_body.scss */
+/* line 321, ../sass/common/_body.scss */
 .response-message {
   z-index: 1000;
   text-align: center;
@@ -13522,30 +13527,30 @@ a:focus, .order-by:focus {
 
 /* Progress bar
 -------------------------------------------------- */
-/* line 326, ../sass/common/_body.scss */
+/* line 329, ../sass/common/_body.scss */
 .progress {
   margin-bottom: 0;
 }
 
 /* Hide elements
 -------------------------------------------------- */
-/* line 333, ../sass/common/_body.scss */
+/* line 336, ../sass/common/_body.scss */
 #page_init #header, #page_init .container-installer, #page_init #footer {
   display: none;
 }
 
 /* QR code
 -------------------------------------------------- */
-/* line 340, ../sass/common/_body.scss */
+/* line 343, ../sass/common/_body.scss */
 .qrcode-wrap {
   margin: 0 auto;
 }
-/* line 342, ../sass/common/_body.scss */
+/* line 345, ../sass/common/_body.scss */
 .qrcode-wrap #qrcode_network {
   margin: 20px auto 0 auto;
   text-align: center;
 }
-/* line 346, ../sass/common/_body.scss */
+/* line 349, ../sass/common/_body.scss */
 .qrcode-wrap #qrcode_network img {
   padding-left: 0;
   padding-right: 0;
@@ -13557,25 +13562,25 @@ a:focus, .order-by:focus {
 
 /* Security 2 icons
 -------------------------------------------------- */
-/* line 360, ../sass/common/_body.scss */
+/* line 363, ../sass/common/_body.scss */
 .security-2.fa-stack {
   width: 1em;
 }
-/* line 363, ../sass/common/_body.scss */
+/* line 366, ../sass/common/_body.scss */
 .security-2 .fa-stack-1x, .security-2 .fa-stack-1x {
   text-align: left;
 }
-/* line 366, ../sass/common/_body.scss */
+/* line 369, ../sass/common/_body.scss */
 .security-2 .icon-bottom {
   color: darkgray;
 }
-/* line 369, ../sass/common/_body.scss */
+/* line 372, ../sass/common/_body.scss */
 .security-2 .icon-top {
   color: green;
   left: 4px;
   top: 4px;
 }
-/* line 374, ../sass/common/_body.scss */
+/* line 377, ../sass/common/_body.scss */
 .security-2.false .icon-top {
   color: #a94442;
 }
@@ -14871,6 +14876,7 @@ fieldset.submit-entry {
   background-clip: padding-box;
   color: #5698d0;
   font-weight: normal;
+  /* Arrow To the top */
 }
 /* line 20, ../sass/common/_dropdown.scss */
 .app-dropdown .app-dropdown-title {
@@ -14926,48 +14932,66 @@ fieldset.submit-entry {
   font-size: 120%;
   padding-right: 10px;
 }
-
 /* line 71, ../sass/common/_dropdown.scss */
+.app-dropdown::after {
+  content: " ";
+  position: absolute;
+  border-width: 10px;
+  border-style: solid;
+  bottom: 100%;
+  margin-left: -10px;
+  border-color: transparent transparent #9fd8ef transparent;
+}
+/* line 82, ../sass/common/_dropdown.scss */
+.app-dropdown.right::after {
+  right: 20px;
+}
+/* line 87, ../sass/common/_dropdown.scss */
+.app-dropdown.left {
+  float: left;
+  left: 0;
+  right: auto;
+  /* Arrow To the top of the tooltip */
+}
+/* line 92, ../sass/common/_dropdown.scss */
+.app-dropdown.left::after {
+  left: 20px;
+}
+
+/* line 99, ../sass/common/_dropdown.scss */
 .appdropdown-footer {
   padding: 10px;
   text-align: right;
 }
 
-/* line 76, ../sass/common/_dropdown.scss */
+/* line 104, ../sass/common/_dropdown.scss */
 .dropdown-100 {
   width: 100%;
 }
 
-/* line 79, ../sass/common/_dropdown.scss */
+/* line 107, ../sass/common/_dropdown.scss */
 .dropdown-50 {
   width: 50%;
 }
 
-/* line 82, ../sass/common/_dropdown.scss */
+/* line 110, ../sass/common/_dropdown.scss */
 .dropdown-lang {
   min-width: 250px;
 }
-/* line 85, ../sass/common/_dropdown.scss */
+/* line 113, ../sass/common/_dropdown.scss */
 .dropdown-lang ul li {
   display: inline-block;
   padding: 5px;
   border: 0;
 }
 
-/* line 93, ../sass/common/_dropdown.scss */
-.app-dropdown-left {
-  float: left;
-  left: 0;
-  right: auto;
-}
-
-/* line 98, ../sass/common/_dropdown.scss */
+/* line 123, ../sass/common/_dropdown.scss */
 .app-dropdown-bottom {
   top: auto;
   bottom: 100%;
 }
 
-/* line 103, ../sass/common/_dropdown.scss */
+/* line 128, ../sass/common/_dropdown.scss */
 .app-dropdown-mxh-600 {
   height: auto;
   max-height: 600px;
@@ -14976,7 +15000,7 @@ fieldset.submit-entry {
 
 /* Old css - will be removed
 -------------------------------------------------- */
-/* line 110, ../sass/common/_dropdown.scss */
+/* line 135, ../sass/common/_dropdown.scss */
 .dropdown-config {
   font-size: 16px;
   /*    text-shadow: 3px 1px 2px rgba(150, 150, 150, 1);*/
