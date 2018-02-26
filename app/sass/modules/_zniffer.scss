@@ -1,0 +1,12 @@
+/* Zniffer
+-------------------------------------------------- */
+.zniffer-start{
+  .zniffer-isnew-true{
+    font-weight: bold;
+  }
+}
+.zniffer-col{
+  &.has-filter{
+    background-color: lighten($app-bcg-success,5%);
+  }
+}

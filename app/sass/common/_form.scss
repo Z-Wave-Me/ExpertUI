@@ -24,8 +24,8 @@ input[type=checkbox]{
     -moz-transform: scale($checkbox-scale); /* FF */
     -webkit-transform: scale($checkbox-scale); /* Safari and Chrome */
     -o-transform: scale($checkbox-scale); /* Opera */
-    padding: $spacing;
-    margin: 0 $spacing 0;
+    /* padding: $spacing;
+    margin: 0 $spacing 0; */
 }
 input[type=radio] { 
     transform: scale($radio-scale, $radio-scale); 
@@ -33,8 +33,8 @@ input[type=radio] {
     -ms-transform: scale($radio-scale, $radio-scale); 
     -webkit-transform: scale($radio-scale, $radio-scale); 
     -o-transform: scale($radio-scale, $radio-scale); 
-    padding: $spacing;
-    margin: 0 $spacing 0;
+    /* padding: $spacing;
+    margin: 0 $spacing 0; */
 }
 
 // IOS inputs

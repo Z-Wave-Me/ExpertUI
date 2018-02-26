@@ -13,7 +13,7 @@
 //@import "common/_main";
 
 // Skin variables
-@import "skins/default/_variables";
+@import "skins/installer/_variables";
 // Vendors
 
 @import "vendor/_angular.slider.scss";
@@ -54,7 +54,7 @@
 @import "modules/_routing";
 @import "modules/_neighbors";
 @import "modules/_control";
-@import "modules/_installer";
+@import "modules/_zniffer";
 @import "modules/_routemap";
 @import "modules/_networkmap";
 @import "modules/_timing";
@@ -64,7 +64,7 @@
 @import "modules/_rssi";
 
 // Expert UI Skin css
-@import "skins/default/_main";
+//@import "skins/default/_main";
 
 // Installer css
 @import "skins/installer/_main";

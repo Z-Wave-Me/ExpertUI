@@ -13483,31 +13483,26 @@ a:focus, .order-by:focus {
   display: none !important;
 }
 
-/* line 292, ../sass/common/_body.scss */
-.zniffer-start .zniffer-isnew-true {
-  font-weight: bold;
-}
-
-/* line 296, ../sass/common/_body.scss */
+/* line 291, ../sass/common/_body.scss */
 .position-relative {
   position: relative;
 }
 
 /* Response
 -------------------------------------------------- */
-/* line 303, ../sass/common/_body.scss */
+/* line 298, ../sass/common/_body.scss */
 #respone_container {
   display: none;
 }
 
-/* line 307, ../sass/common/_body.scss */
+/* line 302, ../sass/common/_body.scss */
 #respone_container_inner {
   margin: 0 auto;
   text-align: center;
   /*position: relative;*/
 }
 
-/* line 312, ../sass/common/_body.scss */
+/* line 307, ../sass/common/_body.scss */
 .page-load-spinner {
   z-index: 1000;
   text-align: center;
@@ -13517,7 +13512,7 @@ a:focus, .order-by:focus {
   width: 150px;
 }
 
-/* line 321, ../sass/common/_body.scss */
+/* line 316, ../sass/common/_body.scss */
 .response-message {
   z-index: 1000;
   text-align: center;
@@ -13527,30 +13522,30 @@ a:focus, .order-by:focus {
 
 /* Progress bar
 -------------------------------------------------- */
-/* line 329, ../sass/common/_body.scss */
+/* line 324, ../sass/common/_body.scss */
 .progress {
   margin-bottom: 0;
 }
 
 /* Hide elements
 -------------------------------------------------- */
-/* line 336, ../sass/common/_body.scss */
+/* line 331, ../sass/common/_body.scss */
 #page_init #header, #page_init .container-installer, #page_init #footer {
   display: none;
 }
 
 /* QR code
 -------------------------------------------------- */
-/* line 343, ../sass/common/_body.scss */
+/* line 338, ../sass/common/_body.scss */
 .qrcode-wrap {
   margin: 0 auto;
 }
-/* line 345, ../sass/common/_body.scss */
+/* line 340, ../sass/common/_body.scss */
 .qrcode-wrap #qrcode_network {
   margin: 20px auto 0 auto;
   text-align: center;
 }
-/* line 349, ../sass/common/_body.scss */
+/* line 344, ../sass/common/_body.scss */
 .qrcode-wrap #qrcode_network img {
   padding-left: 0;
   padding-right: 0;
@@ -13562,25 +13557,25 @@ a:focus, .order-by:focus {
 
 /* Security 2 icons
 -------------------------------------------------- */
-/* line 363, ../sass/common/_body.scss */
+/* line 358, ../sass/common/_body.scss */
 .security-2.fa-stack {
   width: 1em;
 }
-/* line 366, ../sass/common/_body.scss */
+/* line 361, ../sass/common/_body.scss */
 .security-2 .fa-stack-1x, .security-2 .fa-stack-1x {
   text-align: left;
 }
-/* line 369, ../sass/common/_body.scss */
+/* line 364, ../sass/common/_body.scss */
 .security-2 .icon-bottom {
   color: darkgray;
 }
-/* line 372, ../sass/common/_body.scss */
+/* line 367, ../sass/common/_body.scss */
 .security-2 .icon-top {
   color: green;
   left: 4px;
   top: 4px;
 }
-/* line 377, ../sass/common/_body.scss */
+/* line 372, ../sass/common/_body.scss */
 .security-2.false .icon-top {
   color: #a94442;
 }
@@ -13766,7 +13761,7 @@ a:focus, .order-by:focus {
 }
 /* line 170, ../sass/common/_header.scss */
 .sub-navigation ul .active a {
-  color: #f6f9fc;
+  color: #737373;
   font-weight: bold;
   text-decoration: underline;
   cursor: text;
@@ -14641,8 +14636,8 @@ input[type=checkbox] {
   /* Safari and Chrome */
   -o-transform: scale(2);
   /* Opera */
-  padding: 10px;
-  margin: 0 10px 0;
+  /* padding: $spacing;
+  margin: 0 $spacing 0; */
 }
 
 /* line 30, ../sass/common/_form.scss */
@@ -14652,8 +14647,8 @@ input[type=radio] {
   -ms-transform: scale(1.8, 1.8);
   -webkit-transform: scale(1.8, 1.8);
   -o-transform: scale(1.8, 1.8);
-  padding: 10px;
-  margin: 0 10px 0;
+  /* padding: $spacing;
+  margin: 0 $spacing 0; */
 }
 
 /* line 42, ../sass/common/_form.scss */
@@ -14865,7 +14860,7 @@ fieldset.submit-entry {
   left: auto;
   z-index: 1100;
   float: right;
-  min-width: 300px;
+  min-width: 200px;
   padding: 0;
   text-align: left;
   background-color: #FFFFFF;
@@ -14874,7 +14869,7 @@ fieldset.submit-entry {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   border: 1px solid #9fd8ef;
   background-clip: padding-box;
-  color: #5698d0;
+  color: #0d0d0d;
   font-weight: normal;
   /* Arrow To the top */
 }
@@ -14907,7 +14902,7 @@ fieldset.submit-entry {
   position: relative;
   padding: 0;
   vertical-align: middle;
-  color: #5698d0;
+  color: #0d0d0d;
 }
 /* line 45, ../sass/common/_dropdown.scss */
 .app-dropdown ul li .menu-arrow {
@@ -14922,7 +14917,7 @@ fieldset.submit-entry {
 }
 /* line 57, ../sass/common/_dropdown.scss */
 .app-dropdown ul .active a {
-  color: #f6f9fc;
+  color: #737373;
   font-weight: bold;
   text-decoration: underline;
   cursor: text;
@@ -14960,7 +14955,7 @@ fieldset.submit-entry {
 
 /* line 99, ../sass/common/_dropdown.scss */
 .appdropdown-footer {
-  padding: 10px;
+  padding: 0 10px 10px;
   text-align: right;
 }
 
@@ -16101,14 +16096,14 @@ input[type="number"].input_number {
 
 /* Zniffer
 -------------------------------------------------- */
-/* line 3, ../sass/modules/_installer.scss */
-.zniffer-row-Predicast {
-  color: #6494BC;
+/* line 4, ../sass/modules/_zniffer.scss */
+.zniffer-start .zniffer-isnew-true {
+  font-weight: bold;
 }
 
-/* line 6, ../sass/modules/_installer.scss */
-.zniffer-row-Multicast {
-  color: #80AD80;
+/* line 9, ../sass/modules/_zniffer.scss */
+.zniffer-col.has-filter {
+  background-color: #eef7ea;
 }
 
 /* Route map
@@ -16262,9 +16257,11 @@ input[type="number"].input_number {
   float: left;
 }
 
+/* Zwave alliance
+-------------------------------------------------- */
 /* Main navigation
 -------------------------------------------------- */
-/* line 5, ../sass/skins/default/_main.scss */
+/* line 14, ../sass/skins/installer/_main.scss */
 #main_navigation_wrap {
   /*background-color: $header-bcg-color;
   border-bottom: solid 1px $header-border-color;
@@ -16288,25 +16285,18 @@ input[type="number"].input_number {
   border-bottom: solid 4px #2A6496;
 }
 
-/* Form
--------------------------------------------------- */
-/*.form-page{
-    border-width: 4px;
-}*/
-/* Zwave alliance
--------------------------------------------------- */
-/* line 10, ../sass/skins/installer/_main.scss */
+/* line 30, ../sass/skins/installer/_main.scss */
 #main_navigation {
   margin-bottom: 0;
 }
 
 /* Content */
-/* line 16, ../sass/skins/installer/_main.scss */
+/* line 36, ../sass/skins/installer/_main.scss */
 .container-installer {
   margin: 50px 0 0 0;
   width: 100%;
 }
-/* line 19, ../sass/skins/installer/_main.scss */
+/* line 39, ../sass/skins/installer/_main.scss */
 .container-installer .alert {
   text-align: left !important;
   font-size: 120%;
@@ -16315,63 +16305,63 @@ input[type="number"].input_number {
 }
 
 /* Content */
-/* line 29, ../sass/skins/installer/_main.scss */
+/* line 49, ../sass/skins/installer/_main.scss */
 #main_content {
   margin-top: 10px;
 }
 
 /*Typo */
-/* line 35, ../sass/skins/installer/_main.scss */
+/* line 55, ../sass/skins/installer/_main.scss */
 h1 {
   color: #083366;
 }
 
-/* line 39, ../sass/skins/installer/_main.scss */
+/* line 59, ../sass/skins/installer/_main.scss */
 a {
   color: #083366;
 }
 
-/* line 43, ../sass/skins/installer/_main.scss */
+/* line 63, ../sass/skins/installer/_main.scss */
 .list-group-item {
   border-color: #87cf83;
 }
 
 /* Header */
-/* line 50, ../sass/skins/installer/_main.scss */
+/* line 70, ../sass/skins/installer/_main.scss */
 #main_navigation .navibar-item-root,
 #main_navigation .timestamp,
 #main_navigation .jobs {
   color: #F89847;
 }
-/* line 55, ../sass/skins/installer/_main.scss */
+/* line 75, ../sass/skins/installer/_main.scss */
 #main_navigation .active {
   color: #47aa42;
   background-color: #2A6496;
 }
 
-/* line 61, ../sass/skins/installer/_main.scss */
+/* line 81, ../sass/skins/installer/_main.scss */
 .sub-navigation {
   background-color: #47AA42;
   border: 1px solid #e3e3e3;
 }
-/* line 65, ../sass/skins/installer/_main.scss */
+/* line 85, ../sass/skins/installer/_main.scss */
 .sub-navigation ul li {
   border-color: #FFF;
 }
 
 /* Dropdown menu */
-/* line 73, ../sass/skins/installer/_main.scss */
+/* line 93, ../sass/skins/installer/_main.scss */
 .dropdown-menu {
   background-color: #47AA42;
   border: 1px solid #e3e3e3;
 }
 
-/* line 78, ../sass/skins/installer/_main.scss */
+/* line 98, ../sass/skins/installer/_main.scss */
 .dropdown-menu > li > a {
   color: #083366;
 }
 
-/* line 82, ../sass/skins/installer/_main.scss */
+/* line 102, ../sass/skins/installer/_main.scss */
 .dropdown-menu > li > a.active,
 .dropdown-menu > li > a.active:hover {
   color: #47AA42;
@@ -16379,29 +16369,29 @@ a {
 }
 
 /* Logo */
-/* line 90, ../sass/skins/installer/_main.scss */
+/* line 110, ../sass/skins/installer/_main.scss */
 .product-logo {
   max-width: 150px;
   max-height: 150px;
 }
 
 /* Init */
-/* line 98, ../sass/skins/installer/_main.scss */
+/* line 118, ../sass/skins/installer/_main.scss */
 #cit_init .product-logo {
   margin: 20px 0;
 }
-/* line 101, ../sass/skins/installer/_main.scss */
+/* line 121, ../sass/skins/installer/_main.scss */
 #cit_init .cit-welcome {
   margin: 20px 0 0 0;
 }
 
 /* Homepage */
-/* line 108, ../sass/skins/installer/_main.scss */
+/* line 128, ../sass/skins/installer/_main.scss */
 .product-data-list {
   background-color: #ceebcd;
 }
 
-/* line 112, ../sass/skins/installer/_main.scss */
+/* line 132, ../sass/skins/installer/_main.scss */
 .product-description {
   border-color: #87cf83;
 }
@@ -16410,12 +16400,12 @@ a {
             color: $alliance-green;
         }*/
 /* Table  */
-/* line 122, ../sass/skins/installer/_main.scss */
+/* line 142, ../sass/skins/installer/_main.scss */
 .table > thead > tr > th {
   border-color: #87cf83;
 }
 
-/* line 126, ../sass/skins/installer/_main.scss */
+/* line 146, ../sass/skins/installer/_main.scss */
 .table > thead > tr > th,
 .table > tbody > tr > th,
 .table > tfoot > tr > th,
@@ -16426,59 +16416,59 @@ a {
 }
 
 /* Config */
-/* line 137, ../sass/skins/installer/_main.scss */
+/* line 157, ../sass/skins/installer/_main.scss */
 .cfg-control-content {
   background-color: #ceebcd;
 }
 
 /*Form */
-/* line 143, ../sass/skins/installer/_main.scss */
+/* line 163, ../sass/skins/installer/_main.scss */
 .form-control {
   border-color: #87cf83;
 }
 
-/* line 147, ../sass/skins/installer/_main.scss */
+/* line 167, ../sass/skins/installer/_main.scss */
 .commands-data-control {
   background-color: #ceebcd;
 }
 
-/* line 151, ../sass/skins/installer/_main.scss */
+/* line 171, ../sass/skins/installer/_main.scss */
 .commands-data {
   border-color: #87cf83;
 }
 
-/* line 155, ../sass/skins/installer/_main.scss */
+/* line 175, ../sass/skins/installer/_main.scss */
 .cfg-block {
   border-color: #87cf83;
 }
 
-/* line 159, ../sass/skins/installer/_main.scss */
+/* line 179, ../sass/skins/installer/_main.scss */
 .form-page {
   border-color: #87cf83;
 }
-/* line 161, ../sass/skins/installer/_main.scss */
+/* line 181, ../sass/skins/installer/_main.scss */
 .form-page .form-group {
   border-color: #87cf83;
 }
 
-/* line 166, ../sass/skins/installer/_main.scss */
+/* line 186, ../sass/skins/installer/_main.scss */
 .submit-entry {
   border-color: #87cf83;
   background-color: #ceebcd;
 }
 
 /* Tabs new */
-/* line 174, ../sass/skins/installer/_main.scss */
+/* line 194, ../sass/skins/installer/_main.scss */
 .btn-goup-tabs .btn {
   border-color: #87cf83;
 }
-/* line 177, ../sass/skins/installer/_main.scss */
+/* line 197, ../sass/skins/installer/_main.scss */
 .btn-goup-tabs .active .fa {
   color: #47AA42;
 }
 
 /* Tabs */
-/* line 184, ../sass/skins/installer/_main.scss */
+/* line 204, ../sass/skins/installer/_main.scss */
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
@@ -16486,66 +16476,66 @@ a {
   border-color: #87cf83;
 }
 
-/* line 191, ../sass/skins/installer/_main.scss */
+/* line 211, ../sass/skins/installer/_main.scss */
 .tab-content {
   border-color: transparent #87cf83 #87cf83;
 }
 
-/* line 195, ../sass/skins/installer/_main.scss */
+/* line 215, ../sass/skins/installer/_main.scss */
 .nav-tabs {
   border-color: #87cf83;
 }
 
 /* Panel */
-/* line 201, ../sass/skins/installer/_main.scss */
+/* line 221, ../sass/skins/installer/_main.scss */
 .panel {
   border-color: #87cf83;
 }
 
-/* line 205, ../sass/skins/installer/_main.scss */
+/* line 225, ../sass/skins/installer/_main.scss */
 .panel-default > .panel-heading {
   background-color: #ceebcd;
   border-color: #87cf83;
 }
 
-/* line 210, ../sass/skins/installer/_main.scss */
+/* line 230, ../sass/skins/installer/_main.scss */
 .panel-default > .panel-footer {
   background-color: #f2faf1;
   border-color: #87cf83;
 }
 
 /* List group */
-/* line 217, ../sass/skins/installer/_main.scss */
+/* line 237, ../sass/skins/installer/_main.scss */
 .list-group-item {
   border-color: #87cf83;
 }
 
-/* line 222, ../sass/skins/installer/_main.scss */
+/* line 242, ../sass/skins/installer/_main.scss */
 .list-report li {
   border-top: solid 1px #87cf83;
 }
 
 /* Welll */
-/* line 229, ../sass/skins/installer/_main.scss */
+/* line 249, ../sass/skins/installer/_main.scss */
 .well {
   background-color: #ceebcd;
   border-color: #87cf83;
 }
 
 /* footer */
-/* line 236, ../sass/skins/installer/_main.scss */
+/* line 256, ../sass/skins/installer/_main.scss */
 #footer {
   border-color: #87cf83;
 }
 
 /* Accordion */
-/* line 242, ../sass/skins/installer/_main.scss */
+/* line 262, ../sass/skins/installer/_main.scss */
 .accordion-entry {
   border-color: #87cf83;
 }
 
 /* Tooltip */
-/* line 247, ../sass/skins/installer/_main.scss */
+/* line 267, ../sass/skins/installer/_main.scss */
 .tooltip-wrap .tooltip {
   background-color: #083366;
 }
@@ -16780,11 +16770,10 @@ a {
 
   /* Dropdown
   -------------------------------------------------- */
-  /* line 155, ../sass/responsive/_mq_shared.scss */
-  .app-dropdown {
-    min-width: 360px;
-  }
-
+  /* .app-dropdown{
+      min-width: $dropdown-w;
+  
+  } */
   /* line 160, ../sass/responsive/_mq_shared.scss */
   .app-dropdown.dropdown-lang {
     min-width: 250px;
@@ -16997,11 +16986,10 @@ a {
 
   /* Dropdown
   -------------------------------------------------- */
-  /* line 155, ../sass/responsive/_mq_shared.scss */
-  .app-dropdown {
-    min-width: 380px;
-  }
-
+  /* .app-dropdown{
+      min-width: $dropdown-w;
+  
+  } */
   /* line 160, ../sass/responsive/_mq_shared.scss */
   .app-dropdown.dropdown-lang {
     min-width: 250px;

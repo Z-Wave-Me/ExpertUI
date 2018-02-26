@@ -1,5 +1,8 @@
 {
  "--- newtrans": "---",
+ "incoming_outgoing":"IN/OUT",
+ "incoming":"Incoming",
+ "outgoing":"Outgoing",
  "---": "---",
  "start_trace":"Start trace",
  "pause_trace":"Pause trace",
