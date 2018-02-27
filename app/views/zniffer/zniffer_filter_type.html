@@ -1,22 +1,11 @@
 <div class="app-dropdown-content">
-  <!-- Incoming -->
-  <div class="radio">
-    <label>
-      <input type="radio" value="incoming" ng-model="zniffer.filter.type.value" /> {{_t('incoming')}}
-    </label>
-  </div>
-  <!-- Outgoing -->
-  <div class="radio">
-    <label>
-      <input type="radio" value="outgoing" ng-model="zniffer.filter.type.value" /> {{_t('outgoing')}}
-    </label>
-  </div>
-  <!-- Hide -->
-  <div class="checkbox" ng-if="zniffer.filter.type.value">
-    <label>
-      <input type="checkbox" type="checkbox" ng-model="zniffer.filter.type.hide" /> {{_t('hide')}}
-    </label>
-  </div>
+
+  <!-- Value -->
+  <select class="form-control" ng-model="zniffer.filter.type.value">
+      <option value="">--- {{_t('all')}} ---</option>
+      <option value="{{v}}" ng-repeat="v in zniffer.cfg.type track by $index" ng-selected="v == zniffer.filter.type.value">
+        {{_t(v)}}</option>
+    </select>
 </div>
 <div class="appdropdown-footer">
   <!-- Close -->

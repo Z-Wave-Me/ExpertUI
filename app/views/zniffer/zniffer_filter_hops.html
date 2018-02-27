@@ -1,9 +1,10 @@
 <div class="app-dropdown-content">
     <div class="form-group">
-      <!-- Value -->
-      <input class="form-control" type="text" placeholder="{{_t('enter_value')}}. {{_t('use_charcter_delimit')}}" ng-model="zniffer.filter.hops.value"
-      />
-    </div>
+       <!-- Value -->
+    <select class="form-control" ng-model="zniffer.filter.hops.value">
+        <option value="">--- {{_t('all')}} ---</option>
+        <option value="{{v}}" ng-repeat="v in zniffer.cfg.hops track by $index" ng-selected="v == zniffer.filter.hops.value">{{v}}</option>
+      </select>
     <!-- Hide -->
     <div class="checkbox" ng-if="zniffer.filter.hops.value">
       <label>

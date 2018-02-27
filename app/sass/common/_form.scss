@@ -17,7 +17,11 @@ textarea{
     min-height: 150px;
 }
 label{
-    font-size: $app-label-font-size;
+    //font-size: $app-label-font-size;
+}
+
+input[type="date"], input[type="time"], input[type="datetime-local"], input[type="month"] {
+  line-height: 1.42857;
 }
 input[type=checkbox]{
     -ms-transform: scale($checkbox-scale); /* IE */

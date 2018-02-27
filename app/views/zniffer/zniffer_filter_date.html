@@ -1,15 +1,14 @@
 <div class="app-dropdown-content">
+   <!-- From-->
     <div class="form-group">
-      <!-- Value -->
-      <input class="form-control" type="text" placeholder="{{_t('enter_value')}}. {{_t('use_charcter_delimit')}}" ng-model="zniffer.filter.date.value"
-      />
+      <label>{{_t('date_from')}}</label>
+      <input class="form-control" type="date" ng-model="zniffer.filter.date.value" />
     </div>
-    <!-- Hide -->
-    <div class="checkbox" ng-if="zniffer.filter.date.value">
-      <label>
-        <input type="checkbox" type="checkbox" ng-model="zniffer.filter.date.hide" /> {{_t('hide')}}
-      </label>
-    </div>
+     <!-- To-->
+    <div class="form-group" ng-show="zniffer.filter.date.value.length > 0">
+      <label>{{_t('date_to')}}</label>
+         <input class="form-control" type="date" ng-model="zniffer.filter.date.to" />
+      </div>
   </div>
   <div class="appdropdown-footer">
     <!-- Close -->

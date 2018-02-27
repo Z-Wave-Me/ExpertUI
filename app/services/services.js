@@ -354,6 +354,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
         return _.chain(data)
                 .flatten()
                 .filter(function (v) {
+                    v.speed = parseInt(v.speed);
                     v.dateTime = $filter('getDateTimeObj')(v.updateTime);
                     v.bytes = (_.isArray(v.value) ? v.value.toString() : v.value);
                     v.rssi = (_.isArray(v.rssi) ? v.rssi.toString() : v.rssi);

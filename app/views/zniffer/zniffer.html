@@ -22,81 +22,98 @@
         <i class="fa fa-trash text-danger"></i> {{_t('reset_all_filters')}}
       </button>
     </div>
+    {{_.size(zniffer.all)}}
 
   </div>
   <pre>{{zniffer.filter|json}}</pre>
   <!-- Table -->
   <table class="table table-condensed table-hover zniffer-{{zniffer.trace}}">
       <col class="zniffer-col" ng-class="{'has-filter': zniffer.filter['type'].value}" />
-      <col class="zniffer-col" />
+      <col class="zniffer-col" ng-class="{'has-filter': zniffer.filter['date'].value}" />
       <col class="zniffer-col" />
       <col class="zniffer-col" ng-class="{'has-filter': zniffer.filter['src'].value}" />
       <col class="zniffer-col" ng-class="{'has-filter': zniffer.filter['dest'].value}" />
+      <col class="zniffer-col" ng-class="{'has-filter': zniffer.filter['speed'].value}" />
       <col class="zniffer-col" />
       <col class="zniffer-col" />
-      <col class="zniffer-col" />
-      <col class="zniffer-col" />
-      <col class="zniffer-col" />
+      <col class="zniffer-col" ng-class="{'has-filter': zniffer.filter['encaps'].value}" />
+      <col class="zniffer-col" ng-class="{'has-filter': zniffer.filter['application'].value}" />
     <thead>
       <!--<th>#</th>-->
       <tr>
          <!-- in/out -->
         <th class="position-relative">
-            <span class="clickable" aria-expanded="false" bb-dropdown=".position-relative">{{ _t('incoming_outgoing')}}</span>
+            <span class="clickable" aria-expanded="false" bb-dropdown=".position-relative">
+                <i class="fa fa-filter"></i> {{ _t('incoming_outgoing')}}
+              </span>
             <!-- Dropdown -->
             <div class="app-dropdown left" ng-include="'app/views/zniffer/zniffer_filter_type.html'" hidden></div>
         </th>
         <!-- date -->
         <th class="position-relative">
-          <span class="clickable" aria-expanded="false" bb-dropdown=".position-relative">{{ _t('date')}}</span>
+          <span class="clickable" aria-expanded="false" bb-dropdown=".position-relative">
+              <i class="fa fa-filter"></i> {{ _t('date')}}
+            </span>
           <!-- Dropdown -->
           <div class="app-dropdown left" ng-include="'app/views/zniffer/zniffer_filter_date.html'" hidden></div>
       </th>
         <!-- time -->
         <th class="position-relative">
-          <span class="clickable" aria-expanded="false" bb-dropdown=".position-relative">{{ _t('time')}}</span>
+          <span class="clickable_" aria-expanded="false" bb-dropdown__=".position-relative">{{ _t('time')}}</span>
           <!-- Dropdown -->
-          <div class="app-dropdown left" ng-include="'app/views/zniffer/zniffer_filter_time.html'" hidden></div>
+          <!-- <div class="app-dropdown left" ng-include="'app/views/zniffer/zniffer_filter_time.html'" hidden></div> -->
       </th>
         <!-- src -->
         <th class="position-relative">
-            <span class="clickable" aria-expanded="false" bb-dropdown=".position-relative">{{ _t('src')}}</span>
+            <span class="clickable" aria-expanded="false" bb-dropdown=".position-relative">
+                <i class="fa fa-filter"></i> {{ _t('src')}}
+              </span>
             <!-- Dropdown -->
             <div class="app-dropdown left" ng-include="'app/views/zniffer/zniffer_filter_src.html'" hidden></div>
         </th>
         <!-- dest -->
         <th class="position-relative">
-          <span class="clickable" aria-expanded="false" bb-dropdown=".position-relative">{{ _t('dest')}}</span>
+          <span class="clickable" aria-expanded="false" bb-dropdown=".position-relative">
+              <i class="fa fa-filter"></i> {{ _t('dest')}}
+            </span>
             <!-- Dropdown -->
             <div class="app-dropdown left" ng-include="'app/views/zniffer/zniffer_filter_dest.html'" hidden></div>
         </th>
         <!-- speed -->
         <th class="position-relative">
-          <span class="clickable" aria-expanded="false" bb-dropdown=".position-relative">{{ _t('speed')}}</span>
+          <span class="clickable" aria-expanded="false" bb-dropdown=".position-relative">
+              <i class="fa fa-filter"></i> {{ _t('speed')}}
+            </span>
           <!-- Dropdown -->
           <div class="app-dropdown left" ng-include="'app/views/zniffer/zniffer_filter_speed.html'" hidden></div>
       </th>
         <!-- rssi -->
         <th class="position-relative">
-          <span class="clickable" aria-expanded="false" bb-dropdown=".position-relative">{{ _t('rssi')}}</span>
+          <span class="clickable_" aria-expanded="false" bb-dropdown__=".position-relative">{{ _t('rssi')}}</span>
           <!-- Dropdown -->
-          <div class="app-dropdown left" ng-include="'app/views/zniffer/zniffer_filter_rssi.html'" hidden></div>
+          <!-- <div class="app-dropdown left" ng-include="'app/views/zniffer/zniffer_filter_rssi.html'" hidden></div> -->
       </th>
         <!-- hops -->
-        <th class="position-relative">
-          <span class="clickable" aria-expanded="false" bb-dropdown=".position-relative">{{ _t('hops')}}</span>
+        <th class="position-relative_">
+          <span class="clickable_" aria-expanded="false" bb-dropdown_=".position-relative">
+             <!--  <i class="fa fa-filter"></i> --> {{ _t('hops')}}
+            </span>
           <!-- Dropdown -->
-          <div class="app-dropdown left" ng-include="'app/views/zniffer/zniffer_filter_hops.html'" hidden></div>
+         <!--  <div class="app-dropdown left" ng-include="'app/views/zniffer/zniffer_filter_hops.html'" hidden></div> -->
       </th>
         <!-- encapsulation -->
         <th class="position-relative">
-          <span class="clickable" aria-expanded="false" bb-dropdown=".position-relative">{{ _t('encapsulation')}}</span>
+          <span class="clickable" aria-expanded="false" bb-dropdown=".position-relative">
+              <i class="fa fa-filter"></i> {{ _t('encapsulation')}}
+            </span>
           <!-- Dropdown -->
           <div class="app-dropdown left" ng-include="'app/views/zniffer/zniffer_filter_encaps.html'" hidden></div>
         </th>
         <!-- application -->
         <th class="position-relative">
-          <span class="clickable" aria-expanded="false" bb-dropdown=".position-relative">{{ _t('application')}}</span>
+          <span class="clickable" aria-expanded="false" bb-dropdown=".position-relative">
+              <i class="fa fa-filter"></i> {{ _t('application')}}
+            </span>
           <!-- Dropdown -->
           <div class="app-dropdown left" ng-include="'app/views/zniffer/zniffer_filter_application.html'" hidden></div>
         </th>
@@ -123,7 +140,7 @@
                 <span class="tooltip top text-center">{{zniffer.devices[v.dest].givenName}}</span>
               </span>
         </td>
-        <td>{{v.speed||'-'}}</td>
+        <td>{{v.speed||'-'}} <span ng-show="v.speed">{{_t('kbps')}}</span></td>
         <td>{{v.rssi||'-'}}</td>
         <td>{{v.hops||'-'}}</td>
         <td>{{v.encaps||'-'}}</td>
