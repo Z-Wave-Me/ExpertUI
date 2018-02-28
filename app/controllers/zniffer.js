@@ -31,85 +31,122 @@ appController.controller('ZnifferController', function ($scope, $interval, $time
     $scope.currentPage = val;
   };
 
+  $scope.autocomplete = {
+    source: [],
+    term: '',
+    searchInKeys: 'application',
+    returnKeys: 'id,application',
+    strLength: 2,
+    resultLength: 10
+  };
+
   /**
    * Filter by
    */
   $scope.filterBy = {
     // Type
     type: function (data, filter) {
-      if (filter.value) {
-        data = _.where(data, {
-          type: filter.value
-        });
-      }
-      return data;
+      return _.where(data, {
+        type: filter.value
+      });
     },
     // Date
     date: function (data, filter) {
-      if (filter.value) {
-        var from = Date.parse(filter.value) / 1000;
-        data = _.filter(data, function (v) {
-          if (filter.to) {
-            var to = Date.parse(filter.to) / 1000;
-            return (v.updateTime >= from) && (v.updateTime <= to);
-          }
-          return v.updateTime >= from;
-        });
-      }
-      return data;
+      var from = Date.parse(filter.value) / 1000;
+      return _.filter(data, function (v) {
+        if (filter.to) {
+          var to = Date.parse(filter.to) / 1000;
+          return (v.updateTime >= from) && (v.updateTime <= to);
+        }
+        return v.updateTime >= from;
+      });
     },
     // Src
     src: function (data, filter) {
-      if (filter.value) {
-        var values = filter.value.split(',');
-        if (filter.hide) {
-          data = _.filter(data, function (v) {
-            return values.indexOf(v.src.toString()) === -1;
-          });
-        } else {
-          data = _.filter(data, function (v) {
-            return values.indexOf(v.src.toString()) > -1;
-          });
-        }
+      var values = filter.value.split(',');
+      if (filter.hide) {
+        return _.filter(data, function (v) {
+          return values.indexOf(v.src.toString()) === -1;
+        });
       }
-      return data;
+      return _.filter(data, function (v) {
+        return values.indexOf(v.src.toString()) > -1;
+      });
     },
     // Dest
     dest: function (data, filter) {
-      if (filter.value) {
-        var values = filter.value.split(',');
-        if (filter.hide) {
-          data = _.filter(data, function (v) {
-            return values.indexOf(v.src.toString()) === -1;
-
-          });
-        } else {
-          data = _.filter(data, function (v) {
-            return values.indexOf(v.src.toString()) > -1;
-          });
-        }
+      var values = filter.value.split(',');
+      if (filter.hide) {
+        return _.filter(data, function (v) {
+          return values.indexOf(v.dest.toString()) === -1;
+        });
       }
-      return data;
+      return _.filter(data, function (v) {
+        return values.indexOf(v.dest.toString()) > -1;
+      });
     },
     // Speed
     speed: function (data, filter) {
-      if (filter.value) {
-        data = _.where(data, {
-          speed: parseInt(filter.value)
+      if (filter.hide) {
+        return _.reject(data, function (v) {
+          return v.speed === parseInt(filter.value);
         });
       }
+      return _.where(data, {
+        speed: parseInt(filter.value)
+      });
+
+    },
+    // Hops
+    hops: function (data, filter) {
       return data;
     },
     // Encaps
     encaps: function (data, filter) {
-      return data;
+      if (filter.hide) {
+        return _.reject(data, function (v) {
+          return v.encaps === filter.value;
+        });
+      }
+      return _.where(data, {
+        encaps: filter.value
+      });
     },
     // Application
     application: function (data, filter) {
-      return data;
+      var searchResult = _.indexBy(deviceService.autocomplete(data, $scope.autocomplete), 'id');
+      return _.filter(data, function (v) {
+        return (searchResult[v.id] ? v : false);
+      });
     },
   };
-  // execute the one specified in the 'funcToRun' variable:
+
+  /**
+   * Renders search result in the list
+   */
+  $scope.searchMe = function () {
+    if (!$scope.zniffer.filter.application) {
+      $scope.zniffer.filter.application = {
+        value: ''
+      }
+    }
+    $scope.zniffer.filter.application.value = $scope.autocomplete.term;
+    $scope.autocomplete.results = _.uniq(deviceService.autocomplete($scope.zniffer.all, $scope.autocomplete), function (v) {
+      return v.application;
+    });
+    console.log($scope.autocomplete.results);
+    return;
+    // Expand/Collapse the list
+    if (!_.isEmpty($scope.autocomplete.results)) {
+      $scope.expandAutocomplete('searchProducts');
+    } else {
+      $scope.expandAutocomplete();
+    }
+    // Reset filter q if is input empty
+    if ($scope.zwaveVendors.filter.q && $scope.autocomplete.term.length < 1) {
+      $scope.setFilter();
+    }
+  };
 
 
   /**
@@ -136,6 +173,7 @@ appController.controller('ZnifferController', function ($scope, $interval, $time
     var filter = angular.fromJson($cookies.znifferFilter);
     if (_.size(filter)) {
       $scope.zniffer.filter = filter;
+      $scope.autocomplete.term = $filter('hasNode')(filter, 'application.value');
     }
   };
 
@@ -174,10 +212,12 @@ appController.controller('ZnifferController', function ($scope, $interval, $time
       var znifferData = deviceService.setZnifferData(response.data.data).value();
       //$scope.zniffer.all = deviceService.setZnifferData(response.data.data).value();
       angular.forEach($scope.zniffer.filter, function (v, k) {
-        znifferData = $scope.filterBy[k](znifferData, v);
+        if ($scope.filterBy[k] && v.value) {
+          znifferData = $scope.filterBy[k](znifferData, v);
+        }
       });
       //znifferData = $scope.filter['type'](response.data.data,$scope.zniffer.filter['type']);
-      console.log(znifferData)
+      //console.log(znifferData)
       $scope.zniffer.all = znifferData;
       $scope.zniffer.run = true;
     });
@@ -340,13 +380,9 @@ appController.controller('ZnifferController', function ($scope, $interval, $time
     $scope.zniffer.filter.used = [];
     delete $cookies['znifferFilter'];
     //$cookies.znifferFilter = angular.toJson($scope.zniffer.filter.model);
+    $scope.autocomplete.term = '';
     $scope.resetCommunicationHistory();
     //$scope.runZniffer($scope.zniffer.updateTime);
   };
-
-  /// --- Private functions --- ///
-  function filterByType(data) {
-    console.log('function type: ', data)
-  }
 
 });

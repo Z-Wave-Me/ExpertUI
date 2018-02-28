@@ -365,6 +365,47 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
     };
 
     /**
+     * Set dat for autocomplete
+     * @param {object} param
+     * @returns {array}
+     */
+    this.autocomplete = function (data,param) {
+      var results = [];
+      var term = param.term;
+      var searchInKeys = param.searchInKeys.split(',');
+      var returnKeys = param.returnKeys.split(',');
+      var strLength = param.strLength;
+      var resultLength = param.resultLength;
+      // Start search when min strLength entered
+      term = term.toLowerCase();
+      if (term.length < strLength) {
+          return;
+      }
+
+      // Find first result length states that start with `term`.
+      for (var i = 0; i <data.length && results.length < resultLength; i++) {
+          var obj = data[i];
+          var found = false;
+          var re = new RegExp(term, "ig");
+          // Search in given cols
+          for (var c = 0; c < searchInKeys.length; c++) {
+              if(obj[searchInKeys[c]] && re.test(obj[searchInKeys[c]])){
+                  found = true;
+                  // Avoid to duplicate results
+                  continue;
+              }
+
+          }
+          if(found){
+              results.push(_.pick(obj, returnKeys));
+          }
+      }
+      return results;
+
+
+  };
+
+    /**
      * Get language from zddx
      */
     this.configGetZddxLang = function(node, lang) {
