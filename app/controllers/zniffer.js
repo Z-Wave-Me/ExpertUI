@@ -114,9 +114,9 @@ appController.controller('ZnifferController', function ($scope, $interval, $time
     },
     // Application
     application: function (data, filter) {
-      var searchResult = _.indexBy(deviceService.autocomplete(data, $scope.autocomplete), 'id');
+      var re = new RegExp(filter.value, "ig");
       return _.filter(data, function (v) {
-        return (searchResult[v.id] ? v : false);
+        return re.test(v.application) ? v : false;
       });
     },
   };
@@ -131,21 +131,16 @@ appController.controller('ZnifferController', function ($scope, $interval, $time
       }
     }
     $scope.zniffer.filter.application.value = $scope.autocomplete.term;
-    $scope.autocomplete.results = _.uniq(deviceService.autocomplete($scope.zniffer.all, $scope.autocomplete), function (v) {
+    $scope.autocomplete.results = _.uniq(deviceService.autocomplete($scope.autocomplete.source, $scope.autocomplete), function (v) {
       return v.application;
     });
-    console.log($scope.autocomplete.results);
+
+     // Reset filter q if is input empty
+    /*  if ($scope.zniffer.filter.application && $scope.autocomplete.term.length < 1) {
+      $scope.autocomplete.results = [];
+    } */
     return;
-    // Expand/Collapse the list
-    if (!_.isEmpty($scope.autocomplete.results)) {
-      $scope.expandAutocomplete('searchProducts');
-    } else {
-      $scope.expandAutocomplete();
-    }
-    // Reset filter q if is input empty
-    if ($scope.zwaveVendors.filter.q && $scope.autocomplete.term.length < 1) {
-      $scope.setFilter();
-    }
+
   };
 
 
@@ -207,9 +202,15 @@ appController.controller('ZnifferController', function ($scope, $interval, $time
    */
   $scope.loadCommunicationHistory = function () {
     $scope.getCookieZnifferFilter();
-
+    $scope.autocomplete.results = [];
     dataService.getApi('communication_history_url', false, true).then(function (response) {
       var znifferData = deviceService.setZnifferData(response.data.data).value();
+      $scope.autocomplete.source = _.map(znifferData,function(v){
+          return {
+            id: v.id,
+            application: v.application
+          }
+      });
       //$scope.zniffer.all = deviceService.setZnifferData(response.data.data).value();
       angular.forEach($scope.zniffer.filter, function (v, k) {
         if ($scope.filterBy[k] && v.value) {
