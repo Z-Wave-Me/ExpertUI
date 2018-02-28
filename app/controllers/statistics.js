@@ -8,7 +8,7 @@
  * @class NetworkStatisticsController
  *
  */
-appController.controller('NetworkStatisticsController', function ($scope, $filter, $timeout, $interval, dataService, cfg, _, deviceService) {
+appController.controller('NetworkStatisticsController', function ($scope, $filter, $timeout, $interval, $window,dataService, cfg, _, deviceService) {
 
     $scope.netStat = {
         dataRate: {},
@@ -99,12 +99,18 @@ appController.controller('NetworkStatisticsController', function ($scope, $filte
         });
     };
     $scope.loadNetworkStatistics();
-
     /**
      * Update network statistics
+     */
+    $scope.updateNetworkStatistics = function () {
+      $window.location.reload();
+  };
+
+    /**
+     * Reset network statistics
      * @param {string} cmd
      */
-    $scope.updateNetworkStatistics = function (cmd) {
+    $scope.resetNetworkStatistics = function (cmd) {
         var timeout = 1000;
         $scope.runZwaveCmd(cmd, timeout);
         $timeout(function () {
