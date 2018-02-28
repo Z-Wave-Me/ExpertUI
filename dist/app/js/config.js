@@ -9,7 +9,7 @@ var config_data = {
         'dev_host': [],
         'app_name': 'Z-Wave Expert',
         'app_version': '1.3.1',
-        'app_built': '08-02-2018 08:28:11',
+        'app_built': '28-02-2018 14:26:14',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -288,7 +288,7 @@ var config_data = {
                 extension: ['zbk']
             },
             'routemap': {
-                size: 2048000, //Bytes
+                size: 5242880, //Bytes
                 type: ['image/jpeg'],
                 extension: ['jpg'],
                 dimension: '200 x 200'//px
