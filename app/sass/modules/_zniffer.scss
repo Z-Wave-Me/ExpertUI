@@ -10,3 +10,11 @@
     background-color: lighten($app-bcg-success,5%);
   }
 }
+
+.zniffer-autocomplete{
+  font-size: 85%;
+  padding-bottom: $spacing-half;
+  margin-bottom: $spacing-half;
+  border-bottom: 1px solid $app-border-color;
+
+}

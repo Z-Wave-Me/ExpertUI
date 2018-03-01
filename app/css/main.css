@@ -14860,7 +14860,7 @@ fieldset.submit-entry {
   left: auto;
   z-index: 1100;
   float: right;
-  min-width: 200px;
+  min-width: 260px;
   padding: 0;
   text-align: left;
   background-color: #FFFFFF;
@@ -16104,6 +16104,14 @@ input[type="number"].input_number {
 /* line 9, ../sass/modules/_zniffer.scss */
 .zniffer-col.has-filter {
   background-color: #eef7ea;
+}
+
+/* line 14, ../sass/modules/_zniffer.scss */
+.zniffer-autocomplete {
+  font-size: 85%;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #9fd8ef;
 }
 
 /* Route map

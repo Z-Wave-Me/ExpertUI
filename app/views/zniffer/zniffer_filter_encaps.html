@@ -1,7 +1,7 @@
 <div class="app-dropdown-content">
   <div class="form-group">
     <!-- Value -->
-    <select class="form-control" ng-model="zniffer.filter.encaps.value">
+    <select class="form-control" ng-model="zniffer.filter.encaps.value" ng-change="onChangeZnifferFilter('encaps')">
       <option value="">--- {{_t('all')}} ---</option>
       <option value="{{v}}" ng-repeat="v in zniffer.cfg.encaps track by $index" ng-selected="v == zniffer.filter.encaps.value">
         {{_t(v)}} -  {{_t('encaps_' + v)}}</option>
@@ -10,7 +10,7 @@
   <!-- Hide -->
   <div class="checkbox" ng-if="zniffer.filter.encaps.value">
     <label>
-      <input type="checkbox" type="checkbox" ng-model="zniffer.filter.encaps.hide" /> {{_t('hide')}}
+      <input type="checkbox" type="checkbox" ng-model="zniffer.filter.encaps.hide" ng-change="onChangeZnifferFilter('encaps')" /> {{_t('hide')}}
     </label>
   </div>
 </div>

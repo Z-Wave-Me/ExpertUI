@@ -1,14 +1,14 @@
 <div class="app-dropdown-content">
     <div class="form-group">
       <!-- Value -->
-      <input class="form-control" type="text" placeholder="{{_t('enter_value')}}. {{_t('use_charcter_delimit')}}" ng-model___="zniffer.filter.application.value" placeholder="{{_t('lb_search')}}"
+      <input class="form-control" type="text" placeholder="{{_t('enter_search_query')}}" 
       ng-model="autocomplete.term" bb-key-event="searchMe()"
       />
     </div>
 
-    <p class="dropdown-entry" title="{{v.application}}" ng-repeat="v in autocomplete.results | orderBy:'application' track by $index">
+    <div class="zniffer-autocomplete" title="{{v.application}}" ng-repeat="v in autocomplete.results | orderBy:'application' track by $index">
         {{v.application}}
-                    </p>
+     </div>
     <!-- Hide -->
     <!-- <div class="checkbox" ng-if="zniffer.filter.application.value">
       <label>

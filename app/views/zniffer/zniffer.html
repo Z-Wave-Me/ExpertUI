@@ -2,30 +2,42 @@
 <div ng-controller="ZnifferController">
   <div ng-controller="SetPromiscuousModeController" ng-init="setPromiscuousMode('SetPromiscuousMode(true)')"></div>
   <div class="page-header">
-    <h1>{{ _t('nav_zniffer')}}</h1>
+    <h1>{{ _t('nav_zniffer')}} <i class="fa fa-spinner fa-spin" ng-if="zniffer.trace === 'start'"></i></h1>
   </div>
   <!-- Control -->
-  <div class="form-inline">
-    <div class="btn-group">
+  <div class="form-group">
+   <!--  <div class="btn-group">
       <button class="btn btn-default" title="{{ _t('start_trace')}}" ng-class="zniffer.trace === 'start' ? 'btn-success' : ''"
         ng-disabled="zniffer.trace === 'start'" ng-click="setTrace('start')">
-        <i class="fa" ng-class="zniffer.trace === 'start' ? 'fa-circle-o-notch fa-spin' : 'fa-play'"></i>
+        <i class="fa" ng-class="zniffer.trace === 'start' ? 'fa-spinner fa-spin' : 'fa-play'"></i> 
       </button>
 
       <button class="btn btn-default" title="{{ _t('pause_trace')}}" ng-class="zniffer.trace === 'pause' ? 'btn-warning' : ''"
         ng-disabled="zniffer.trace === 'pause'" ng-click="setTrace('pause')">
         <i class="fa fa-pause"></i>
       </button>
-    </div>
-    <div class="form-group">
+    </div> -->
+   
+        <button class="btn btn-default" title="{{ _t('start_trace')}}" ng-if="zniffer.trace === 'pause'" ng-click="setTrace('start')">
+          <i class="fa" ng-class="zniffer.trace === 'start' ? 'fa-spinner fa-spin' : 'fa-play'"></i> 
+        </button>
+  
+        <button class="btn btn-default" title="{{ _t('pause_trace')}}" ng-if="zniffer.trace === 'start'" ng-click="setTrace('pause')">
+          <i class="fa fa-pause"></i>
+        </button>
+        <button class="btn btn-default" type="button" ng-if="_.size(zniffer.filter)" ng-click="resetZnifferFilter()">
+            <i class="fa fa-trash text-danger"></i> {{_t('reset_all_filters')}}
+          </button>
+      
+    <!-- <div class="form-group">
       <button class="btn btn-default" type="button" ng-show="_.size(zniffer.filter)" ng-click="resetZnifferFilter()">
         <i class="fa fa-trash text-danger"></i> {{_t('reset_all_filters')}}
       </button>
-    </div>
-    {{_.size(zniffer.all)}}
+    </div> -->
+   
 
   </div>
-  <pre>{{zniffer.filter|json}}</pre>
+  <!-- <pre>{{zniffer.filter|json}}</pre> -->
   <!-- Table -->
   <table class="table table-condensed table-hover zniffer-{{zniffer.trace}}">
       <col class="zniffer-col" ng-class="{'has-filter': zniffer.filter['type'].value}" />
@@ -148,7 +160,7 @@
       </tr>
     </tbody>
   </table>
-  <div class="text-center mobile-padding" ng-if_="collection.length > 0">
+  <div class="text-center mobile-padding">
     <dir-pagination-controls boundary-links="true"></dir-pagination-controls>
   </div>
   <!--<pre>{{zniffer.all|json}} </pre>-->

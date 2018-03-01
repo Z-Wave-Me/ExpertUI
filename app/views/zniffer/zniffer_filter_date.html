@@ -2,12 +2,12 @@
    <!-- From-->
     <div class="form-group">
       <label>{{_t('date_from')}}</label>
-      <input class="form-control" type="date" ng-model="zniffer.filter.date.value" />
+      <input class="form-control" type="date" ng-model="zniffer.filter.date.value" ng-change="onChangeZnifferFilter('date')" />
     </div>
      <!-- To-->
     <div class="form-group" ng-show="zniffer.filter.date.value.length > 0">
       <label>{{_t('date_to')}}</label>
-         <input class="form-control" type="date" ng-model="zniffer.filter.date.to" />
+         <input class="form-control" type="date" ng-model="zniffer.filter.date.to" ng-change="onChangeZnifferFilter('date')" />
       </div>
   </div>
   <div class="appdropdown-footer">

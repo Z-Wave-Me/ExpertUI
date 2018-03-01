@@ -1,13 +1,13 @@
 <div class="app-dropdown-content">
   <div class="form-group">
     <!-- Value -->
-    <input class="form-control" type="text" placeholder="{{_t('enter_value')}}. {{_t('use_charcter_delimit')}}" ng-model="zniffer.filter.src.value"
-    />
+    <input class="form-control" type="text" placeholder="{{_t('use_charcter_delimit')}}" ng-model="zniffer.filter.src.value"
+    ng-change="onChangeZnifferFilter('src')" />
   </div>
   <!-- Hide -->
   <div class="checkbox" ng-if="zniffer.filter.src.value">
     <label>
-      <input type="checkbox" type="checkbox" ng-model="zniffer.filter.src.hide" /> {{_t('hide')}}
+      <input type="checkbox" type="checkbox" ng-model="zniffer.filter.src.hide" ng-change="onChangeZnifferFilter('src')" /> {{_t('hide')}}
     </label>
   </div>
 </div>

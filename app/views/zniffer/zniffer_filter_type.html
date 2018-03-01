@@ -1,7 +1,7 @@
 <div class="app-dropdown-content">
 
   <!-- Value -->
-  <select class="form-control" ng-model="zniffer.filter.type.value">
+  <select class="form-control" ng-model="zniffer.filter.type.value" ng-change="onChangeZnifferFilter('type')">
       <option value="">--- {{_t('all')}} ---</option>
       <option value="{{v}}" ng-repeat="v in zniffer.cfg.type track by $index" ng-selected="v == zniffer.filter.type.value">
         {{_t(v)}}</option>

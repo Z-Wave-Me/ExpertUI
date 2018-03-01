@@ -1,7 +1,7 @@
 <div class="app-dropdown-content">
   <div class="form-group">
     <!-- Value -->
-    <select class="form-control" ng-model="zniffer.filter.speed.value">
+    <select class="form-control" ng-model="zniffer.filter.speed.value" ng-change="onChangeZnifferFilter('speed')">
       <option value="">--- {{_t('all')}} ---</option>
       <option value="{{v}}" ng-repeat="v in zniffer.cfg.speed track by $index" ng-selected="v == zniffer.filter.speed.value">
         {{v}} {{_t('kbps')}}</option>
@@ -10,7 +10,7 @@
   <!-- Hide -->
   <div class="checkbox" ng-if="zniffer.filter.speed.value">
     <label>
-      <input type="checkbox" type="checkbox" ng-model="zniffer.filter.speed.hide" /> {{_t('hide')}}
+      <input type="checkbox" type="checkbox" ng-model="zniffer.filter.speed.hide"  ng-change="onChangeZnifferFilter('speed')" /> {{_t('hide')}}
     </label>
   </div>
 </div>
