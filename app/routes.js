@@ -94,12 +94,12 @@ angApp.config(['$routeProvider',
             requireLogin: true,
             templateUrl: 'app/views/network/queue.html'
         })
-        /* .when('/network/routemap', {
+        .when('/network/routemap', {
             templateUrl: 'app/views/network/routemap.html'
-        }) */
-        .when('/network/map', {
+        })
+        /* .when('/network/map', {
             templateUrl: 'app/views/network/map.html'
-        }).when('/network/statistics', {
+        }) */.when('/network/statistics', {
             requireLogin: true,
             templateUrl: 'app/views/network/statistics.html',
         }).when('/network/linkstatus', {
