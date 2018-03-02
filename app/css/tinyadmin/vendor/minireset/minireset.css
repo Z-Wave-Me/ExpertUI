@@ -1,0 +1,89 @@
+/*! minireset.css v0.0.3 | MIT License | github.com/jgthms/minireset.css */
+/* line 2, ../../../../sass/tinyadmin/vendor/minireset/minireset.scss */
+html,
+body,
+p,
+ol,
+ul,
+li,
+dl,
+dt,
+dd,
+blockquote,
+figure,
+fieldset,
+legend,
+textarea,
+pre,
+iframe,
+hr,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+}
+
+/*h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+  font-weight: normal;
+}*/
+/*ul {
+  list-style: none;
+}*/
+/* line 43, ../../../../sass/tinyadmin/vendor/minireset/minireset.scss */
+button,
+input,
+select,
+textarea {
+  margin: 0;
+}
+
+/* line 50, ../../../../sass/tinyadmin/vendor/minireset/minireset.scss */
+html {
+  box-sizing: border-box;
+}
+
+/* line 54, ../../../../sass/tinyadmin/vendor/minireset/minireset.scss */
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+/* line 58, ../../../../sass/tinyadmin/vendor/minireset/minireset.scss */
+img,
+embed,
+iframe,
+object,
+audio,
+video {
+  height: auto;
+  max-width: 100%;
+}
+
+/* line 68, ../../../../sass/tinyadmin/vendor/minireset/minireset.scss */
+iframe {
+  border: 0;
+}
+
+/* line 72, ../../../../sass/tinyadmin/vendor/minireset/minireset.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 77, ../../../../sass/tinyadmin/vendor/minireset/minireset.scss */
+td,
+th {
+  padding: 0;
+  text-align: left;
+}
+
+/*# sourceMappingURL=minireset.css.map */

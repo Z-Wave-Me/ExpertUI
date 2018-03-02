@@ -1,0 +1,67 @@
+/* Input switch
+-------------------------------------------------- */
+
+$switch-w: 60px;
+$switch-h: 34px;
+$switch-slider-w: 26px;
+$switch-slider-h: 26px;
+$switch-bcg-color: #fff;
+$switch-border-color: $border-color;
+$switch-border-radius: $border-radius;
+.switch {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  width: $switch-w;
+  height: $switch-h;
+  input {
+    display: none;
+    &:checked+.slider:before {
+      background-color: $success-color;
+      -webkit-transform: translateX($switch-slider-w);
+      -ms-transform: translateX($switch-slider-w);
+      transform: translateX($switch-slider-w);
+    }
+    &:focus+.slider {
+      box-shadow: 0 0 1px $success-color;
+    }
+  }
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: $switch-border-radius;
+    background-color: $switch-bcg-color;
+    border: solid 1px $switch-border-color;
+    transition: .4s;
+    @include boxShadow(inset 2px 2px 4px 0 rgba(0, 0, 0, 0.1));
+    &:before {
+      position: absolute;
+      content: "";
+      height: $switch-slider-w;
+      width: $switch-slider-h;
+      left: 4px;
+      bottom: 3px;
+      border-radius: $switch-border-radius;
+      border: solid 1px $switch-border-color;
+      background-color: $switch-bcg-color;
+      transition: .4s;
+      @include boxShadow(2px 2px 5px 0px rgba(0, 0, 0, 0.15));
+    }
+  }
+  &:after {
+    content: attr(aria-label);
+    position: absolute;
+    top: 0;
+    left: $switch-w + 5px;
+    right: 0;
+    bottom: 0;
+    margin: auto 0;
+    height: 50%;
+    font-size: 90%;
+    font-weight: normal;
+  }
+}

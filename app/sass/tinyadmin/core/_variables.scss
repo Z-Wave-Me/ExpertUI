@@ -1,0 +1,76 @@
+/* Global variables
+-------------------------------------------------- */
+// Base font size
+// We are defining a base font-size of 62.5% to have the convenience 
+// of sizing rems in a way that is similar to using px.
+$base-font-size: 62.5%;
+$body-font-size: 1.4rem;
+// Extra small devices (phones, up to 480px)
+$break-xs: 480px;
+// Small devices (tablets, 768px and up)
+$break-s: 768px;
+// Medium devices (big landscape tablets, laptops, and desktops, 992px and up)
+$break-m: 992px;
+// Large devices (large desktops, 1200px and up)
+$break-l: 1200px;
+// Extra large
+$break-xl: 1824px;
+// Z-INDEX
+$zindex-modal: 2900;
+$zindex-tooltip: 2300;
+$zindex-dropdown: 2200;
+$zindex-header: 2100;
+$zindex-sidebar: 2000;
+
+// spacing
+$spacing: 1rem;
+$spacing-double: $spacing * 2;
+$spacing-third: $spacing * 3;
+$spacing-half: $spacing / 2;
+$spacing-and-half: $spacing + $spacing-half;
+
+// dimensions
+$header-h: 5rem;
+$footer-h: 5rem;
+
+// fonts
+@import url(https://fonts.googleapis.com/css?family=Lato:400,300,300italic,400italic,700,700italic);
+$font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-heavy: 700;
+$font-height: 1.5;
+
+$h1-font-size: 2.2rem;
+$h2-font-size: 2rem;
+$h3-font-size: 1.8rem;
+$h4-font-size: 1.6rem;
+$h5-font-size: 1.5rem;
+$h6-font-size: 1.4rem;
+
+// colors
+$primary-color:         #6494BC;
+$success-color:         #80AD80;
+$info-color:            #5bc0de;
+$warning-color:         #f0ad4e;
+$danger-color:          #d9534f;   
+
+$brand-primary-color: #000000;
+$brand-secondary-color: #000000;
+$font-color:  lighten($brand-primary-color, 5%);
+$light-font-color:          #ffffff;  
+$dark-font-color:          #000000;   
+$body-bcg-color:  #ffffff;
+$border-color: lighten($brand-primary-color, 80%);
+$light-bcg-color: #E6E6E6;
+$dark-bcg-color: #CCCCCC;
+$darkest-bcg-color: #000;
+$heading-color: lighten($font-color, 20%);
+$a-color:  lighten($font-color, 20%);
+$a-hover-color:  lighten($font-color, 10%); 
+$focus-color:  $info-color;
+
+// effects
+$border-radius: 2px;
+$box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.29);
+$overlay-bcg-color: rgba(37, 37, 37, 0.5);

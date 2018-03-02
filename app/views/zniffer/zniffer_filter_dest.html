@@ -1,32 +1,20 @@
 <div class="app-dropdown-content">
-    <div class="form-group">
-     <!-- Value -->
-     <input class="form-control" type="text" placeholder="{{_t('use_charcter_delimit')}}"
-       ng-model="zniffer.filter.dest.value" ng-change="onChangeZnifferFilter('dest')" />
-   </div>
+  <div class="form-group">
+    <!-- Value -->
+    <input class="form-control" type="text" placeholder="{{_t('use_charcter_delimit')}}" ng-model="zniffer.filter.dest.value"
+      ng-change="onChangeZnifferFilter('dest')" />
+  </div>
   <!-- Hide -->
-  <div class="checkbox" ng-if="zniffer.filter.dest.value">
-      <label>
-        <input type="checkbox" type="checkbox" ng-model="zniffer.filter.dest.hide" ng-change="onChangeZnifferFilter('dest')" /> {{_t('hide')}}
-      </label>
-    </div>
- </div>
- <div class="appdropdown-footer">
-    <!-- Close -->
-     <div class="btn-group" ng-show="!zniffer.filter.dest.value.length || 0 == zniffer.filter.dest.value.length">
-         <button class="btn btn-default" type="button" bb-dropdown=".position-relative"  ng-click="deleteZnifferFilter('dest')" title="{{_t('reset_filter')}}">
-             <i class="fa fa-times"></i>
-           </button>
-       </div>
-     <div class="btn-group" ng-show="zniffer.filter.dest.value.length > 0">
-       <!-- Reset -->
-     <button class="btn btn-default" type="button" bb-dropdown=".position-relative"  ng-click="deleteZnifferFilter('dest')" title="{{_t('reset_filter')}}">
-         <i class="fa fa-trash text-danger"></i>
-       </button>
-       <!-- Save -->
-       <button class="btn btn-success" type="button" bb-dropdown=".position-relative" ng-click="setZnifferFilter('dest')" title="{{_t('th_ok')}}">
-         <i class="fa fa-check"></i>
-       </button>
-     </div>
-     
-   </div>
+  <div class="form-group_" ng-if="zniffer.filter.dest.value">
+    <label class="switch" aria-label="{{_t('hide')}}">
+      <input type="checkbox" ng-model="zniffer.filter.dest.hide" ng-change="onChangeZnifferFilter('dest')">
+      <span class="slider"></span>
+    </label>
+  </div>
+</div>
+<div class="appdropdown-footer">
+  <!-- Save -->
+  <button class="btn btn-success" type="button" bb-dropdown=".position-relative" ng-click="setZnifferFilter('dest')" title="{{_t('th_ok')}}">
+    <i class="fa fa-check"></i>
+  </button>
+</div>

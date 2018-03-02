@@ -1,0 +1,9 @@
+/* Section
+-------------------------------------------------- */
+
+section {
+  margin-bottom: $spacing-third;
+  &.has-border {
+    padding: $spacing;
+  }
+}

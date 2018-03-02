@@ -1,0 +1,56 @@
+
+/* Progress
+/* Simulate the look and feel of progress bar using div and span inside the progress tag. Modern 
+/* browsers will ignore the content inside the progress tag. Older browsers that cannot identify 
+/* progress element will ignore the tag and render the markup inside it.
+/* More info: https://css-tricks.com/html5-progress-element/
+-------------------------------------------------- */
+.progress-wrap {
+    .progress {
+        background-color: $progress-bcg-color;
+        width: 100%;
+        height: $progress-h;
+        position: relative;
+        display: block;
+        >span {
+            height: $progress-h;
+            background-color: $progress-color;
+            display: block;
+        }
+    }
+    &.is-primary{
+        .progress {
+            >span {
+                background-color: $primary-color;
+            }
+        }
+    }
+    &.is-info{
+        .progress {
+            >span {
+                background-color: $info-color;
+            }
+        }
+    }
+    &.is-success{
+        .progress {
+            >span {
+                background-color: $success-color;
+            }
+        }
+    }
+    &.is-warning{
+        .progress {
+            >span {
+                background-color: $warning-color;
+            }
+        }
+    }
+    &.is-danger{
+        .progress {
+            >span {
+                background-color: $danger-color;
+            }
+        }
+    }
+}

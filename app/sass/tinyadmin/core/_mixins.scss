@@ -1,0 +1,188 @@
+//
+// Mixins
+// --------------------------------------------------
+// Clearfix
+@mixin clearFix() {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+// Calculate the grid col
+@mixin gridCalc($grid-width, $grid-gutter) {
+  .col-1 {
+    width: ($grid-width / 12) - ($grid-gutter * 11 / 12);
+  }
+  .col-2 {
+    width: ($grid-width / 6) - ($grid-gutter * 10 / 12);
+  }
+  .col-3 {
+    width: ($grid-width / 4) - ($grid-gutter * 9 / 12);
+  }
+  .col-4 {
+    width: ($grid-width / 3) - ($grid-gutter * 8 / 12);
+  }
+  .col-5 {
+    width: ($grid-width / (12 / 5)) - ($grid-gutter * 7 / 12);
+  }
+  .col-6 {
+    width: ($grid-width / 2) - ($grid-gutter * 6 / 12);
+  }
+  .col-7 {
+    width: ($grid-width / (12 / 7)) - ($grid-gutter * 5 / 12);
+  }
+  .col-8 {
+    width: ($grid-width / (12 / 8)) - ($grid-gutter * 4 / 12);
+  }
+  .col-9 {
+    width: ($grid-width / (12 / 9)) - ($grid-gutter * 3 / 12);
+  }
+  .col-10 {
+    width: ($grid-width / (12 / 10)) - ($grid-gutter * 2 / 12);
+  }
+  .col-11 {
+    width: ($grid-width / (12 / 11)) - ($grid-gutter * 1 / 12);
+  }
+  .col-12 {
+    width: $grid-width;
+  }
+}
+
+// Display flex
+@mixin displayFlex() {
+  display: -webkit-flex;
+  display: flex;
+}
+
+// Flex direction
+@mixin flexDirection($direction) {
+  -webkit-flex-direction: $direction;
+  flex-direction: $direction;
+}
+
+// Flex grow
+@mixin flexGrow($grow) {
+  flex-grow: $grow;
+}
+
+// Justify content
+@mixin justifyContent($justify) {
+  -webkit-justify-content: $justify;
+  justify-content: $justify;
+}
+
+// Align content
+@mixin alignContent($align) {
+  -webkit-align-content: $align;
+  align-content: $align;
+}
+
+// Align items
+@mixin alignItems($align) {
+  -webkit-align-items: $align;
+  align-items: $align;
+}
+
+// Flex flow
+@mixin flexFlow($flow) {
+  -webkit-flex-flow: $flow;
+  flex-flow: $flow;
+}
+
+// Border radius
+@mixin borderRadius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+}
+
+// Border radius with values
+@mixin borderRadiusVal($top-left, $top-right, $bottom-right, $bottom-left) {
+  -webkit-border-radius: $top-left $top-right $bottom-right $bottom-left;
+  -moz-border-radius: $top-left $top-right $bottom-right $bottom-left;
+  border-radius: $top-left $top-right $bottom-right $bottom-left;
+}
+
+// Shadow
+@mixin boxShadow($param) {
+  -webkit-box-shadow: $param;
+  -moz-box-shadow: $param;
+  box-shadow: $param;
+}
+
+// Progress
+@mixin progress($progress-bcg-color, $progress-color) {
+  &::-webkit-progress-bar {
+    background-color: $progress-bcg-color;
+  }
+  &::-webkit-progress-value {
+    background: $progress-color;
+  }
+  &::-moz-progress-bar {
+    background: $progress-color;
+  }
+}
+
+// Checkbox scale
+@mixin checkboxScale($scale, $spacing) {
+  -ms-transform: scale($scale);
+  /* IE */
+  -moz-transform: scale($scale);
+  /* FF */
+  -webkit-transform: scale($scale);
+  /* Safari and Chrome */
+  -o-transform: scale($scale);
+  /* Opera */
+  padding: $spacing;
+  margin: 0 $spacing/2 0;
+}
+
+// Radio scale
+@mixin radioScale($scale, $spacing) {
+  transform: scale($scale, $scale);
+  -moz-transform: scale($scale, $scale);
+  -ms-transform: scale($scale, $scale);
+  -webkit-transform: scale($scale, $scale);
+  -o-transform: scale($scale, $scale);
+  padding: $spacing;
+  margin: 0 $spacing 0;
+}
+
+// Text overflow
+@mixin textOverflow() {
+  white-space: nowrap;
+  /* force single line */
+  overflow: hidden;
+  /* don't show excess chars */
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  /* Opera */
+}
+
+// Texty inputs and textarea
+@mixin inputText() {
+  input[type=text],
+  input[type=password],
+  input[type=color],
+  input[type=date],
+  input[type=datetime-local],
+  input[type=email],
+  input[type=month],
+  input[type=number],
+  input[type=range],
+  input[type=search],
+  input[type=tel],
+  input[type=time],
+  input[type=url],
+  input[type=week],
+  textarea {
+    @content;
+  }
+}
+
+// Media queries - min
+@mixin mqMin($min) {
+  @media only screen and (min-width: $min) {
+    @content;
+  }
+}

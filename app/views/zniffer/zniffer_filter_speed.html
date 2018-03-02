@@ -8,27 +8,16 @@
     </select>
   </div>
   <!-- Hide -->
-  <div class="checkbox" ng-if="zniffer.filter.speed.value">
-    <label>
-      <input type="checkbox" type="checkbox" ng-model="zniffer.filter.speed.hide"  ng-change="onChangeZnifferFilter('speed')" /> {{_t('hide')}}
+  <div class="form-group_" ng-if="zniffer.filter.speed.value">
+    <label class="switch" aria-label="{{_t('hide')}}">
+      <input type="checkbox" ng-model="zniffer.filter.speed.hide" ng-change="onChangeZnifferFilter('speed')">
+      <span class="slider"></span>
     </label>
   </div>
 </div>
 <div class="appdropdown-footer">
-  <!-- Close -->
-  <div class="btn-group" ng-show="!zniffer.filter.speed.value.length || 0 == zniffer.filter.speed.value.length">
-    <button class="btn btn-default" type="button" bb-dropdown=".position-relative" ng-click="deleteZnifferFilter('speed')" title="{{_t('reset_filter')}}">
-      <i class="fa fa-times"></i>
-    </button>
-  </div>
-  <div class="btn-group" ng-show="zniffer.filter.speed.value.length > 0">
-    <!-- Reset -->
-    <button class="btn btn-default" type="button" bb-dropdown=".position-relative" ng-click="deleteZnifferFilter('speed')" title="{{_t('reset_filter')}}">
-      <i class="fa fa-trash text-danger"></i>
-    </button>
-    <!-- Save -->
-    <button class="btn btn-success" type="button" bb-dropdown=".position-relative" ng-click="setZnifferFilter('speed')" title="{{_t('th_ok')}}">
-      <i class="fa fa-check"></i>
-    </button>
-  </div>
+  <!-- Save -->
+  <button class="btn btn-success" type="button" bb-dropdown=".position-relative" ng-click="setZnifferFilter('speed')" title="{{_t('th_ok')}}">
+    <i class="fa fa-check"></i>
+  </button>
 </div>

@@ -1,32 +1,21 @@
 <div class="app-dropdown-content">
-    <div class="form-group">
-       <!-- Value -->
+  <div class="form-group">
+    <!-- Value -->
     <select class="form-control" ng-model="zniffer.filter.hops.value">
-        <option value="">--- {{_t('all')}} ---</option>
-        <option value="{{v}}" ng-repeat="v in zniffer.cfg.hops track by $index" ng-selected="v == zniffer.filter.hops.value">{{v}}</option>
-      </select>
-    <!-- Hide -->
-    <div class="checkbox" ng-if="zniffer.filter.hops.value">
-      <label>
-        <input type="checkbox" type="checkbox" ng-model="zniffer.filter.hops.hide" /> {{_t('hide')}}
-      </label>
-    </div>
+      <option value="">--- {{_t('all')}} ---</option>
+      <option value="{{v}}" ng-repeat="v in zniffer.cfg.hops track by $index" ng-selected="v == zniffer.filter.hops.value">{{v}}</option>
+    </select>
+  </div>
+  <!-- Hide -->
+  <div class="form-group_" ng-if="zniffer.filter.hops.value">
+    <label class="switch" aria-label="{{_t('hide')}}">
+      <input type="checkbox" ng-model="zniffer.filter.hops.hide" ng-change="onChangeZnifferFilter('hops')">
+      <span class="slider"></span>
+    </label>
   </div>
   <div class="appdropdown-footer">
-    <!-- Close -->
-    <div class="btn-group" ng-show="!zniffer.filter.hops.value.length || 0 == zniffer.filter.hops.value.length">
-      <button class="btn btn-default" type="button" bb-dropdown=".position-relative" ng-click="deleteZnifferFilter('hops')" title="{{_t('reset_filter')}}">
-        <i class="fa fa-times"></i>
-      </button>
-    </div>
-    <div class="btn-group" ng-show="zniffer.filter.hops.value.length > 0">
-      <!-- Reset -->
-      <button class="btn btn-default" type="button" bb-dropdown=".position-relative" ng-click="deleteZnifferFilter('hops')" title="{{_t('reset_filter')}}">
-        <i class="fa fa-trash text-danger"></i>
-      </button>
-      <!-- Save -->
-      <button class="btn btn-success" type="button" bb-dropdown=".position-relative" ng-click="setZnifferFilter('hops')" title="{{_t('th_ok')}}">
-        <i class="fa fa-check"></i>
-      </button>
-    </div>
+    <!-- Save -->
+    <button class="btn btn-success" type="button" bb-dropdown=".position-relative" ng-click="setZnifferFilter('hops')" title="{{_t('th_ok')}}">
+      <i class="fa fa-check"></i>
+    </button>
   </div>

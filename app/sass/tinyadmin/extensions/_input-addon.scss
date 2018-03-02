@@ -1,0 +1,73 @@
+/* Input with addon
+-------------------------------------------------- */
+$addon-w: 2.4rem;
+$addon-h: 2.6rem;
+.addon {
+  position: relative;
+  display: table;
+  width: 100%;
+  border-collapse: separate;
+  margin-bottom: $spacing-double;
+  figure {
+    display: table-cell;
+    width:$addon-w;
+    padding: $input-tb-spacing $input-rl-spacing;
+    border: 1px solid $input-border-color;
+    border-radius: $input-border-radius;
+    box-sizing: border-box;
+    background-color: $input-bcg-color;
+    font-size: $input-font-size;
+    line-height: $input-line-height;
+    &:first-child {
+      border-right: 0;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    &:last-child {
+      border-left: 0;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0; 
+    }
+    &.has-button{
+      padding: 0;
+    }
+    button{
+      display: inline-block;
+      height: 100%;
+      min-height: $addon-h;
+      width: 100%;
+      background: transparent;
+      border: 0;
+      padding: $input-tb-spacing $input-rl-spacing;
+      margin: 0;
+    }
+   
+  }
+  input {
+    display: table-cell;
+    margin: 0 !important;
+    &:last-child{
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+    &:first-child{
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    &:not(:first-child):not(:last-child) {
+      border-radius: 0;
+  }
+  }
+}
+
+/* Inline form
+-------------------------------------------------- */
+.inline {
+  @include mqMin($break-s) {
+    .addon {
+      display: inline-table;
+     width: auto;
+     }
+   
+  }
+}

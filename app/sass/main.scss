@@ -29,7 +29,7 @@
 @import "common/_report";
 @import "common/_table";
 @import "common/_button";
-@import "common/_switcher";
+//@import "common/_switcher";
 @import "common/_form";
 @import "common/_tabs";
 @import "common/_panel";
@@ -71,6 +71,9 @@
 
 // Mobile
 @import "responsive/_responsive";
+
+// Tiny admin
+@import "tinyadmin/tinyadmin";
 
 // Print
 @import "modules/_print";

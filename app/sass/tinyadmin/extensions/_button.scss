@@ -1,0 +1,12 @@
+/* Button - custom styles
+-------------------------------------------------- */
+
+//Submit button is allways primary
+button[type="submit"]{
+  border-color: transparent;
+  color: $btn-inverse-color;
+  background-color: $primary-color;
+  &:hover{
+      background-color: darken( $primary-color, 20%);
+  }
+}

@@ -1,36 +1,24 @@
 <div class="app-dropdown-content">
-    <div class="form-group">
-      <!-- Value -->
-      <input class="form-control" type="text" placeholder="{{_t('enter_search_query')}}" 
-      ng-model="autocomplete.term" bb-key-event="searchMe()"
-      />
-    </div>
+  <div class="form-group">
+    <!-- Value -->
+    <input class="form-control" type="text" placeholder="{{_t('enter_search_query')}}" ng-model="autocomplete.term" bb-key-event="searchMe()"
+    />
+  </div>
 
-    <div class="zniffer-autocomplete" title="{{v.application}}" ng-repeat="v in autocomplete.results | orderBy:'application' track by $index">
-        {{v.application}}
-     </div>
-    <!-- Hide -->
-    <!-- <div class="checkbox" ng-if="zniffer.filter.application.value">
-      <label>
-        <input type="checkbox" type="checkbox" ng-model="zniffer.filter.application.hide" /> {{_t('hide')}}
-      </label>
-    </div> -->
+  <div class="zniffer-autocomplete" title="{{v.application}}" ng-repeat="v in autocomplete.results | orderBy:'application' track by $index">
+    {{v.application}}
   </div>
-  <div class="appdropdown-footer">
-    <!-- Close -->
-    <div class="btn-group" ng-show="!zniffer.filter.application.value.length || 0 == zniffer.filter.application.value.length">
-      <button class="btn btn-default" type="button" bb-dropdown=".position-relative" ng-click="deleteZnifferFilter('application')" title="{{_t('reset_filter')}}">
-        <i class="fa fa-times"></i>
-      </button>
-    </div>
-    <div class="btn-group" ng-show="zniffer.filter.application.value.length > 0">
-      <!-- Reset -->
-      <button class="btn btn-default" type="button" bb-dropdown=".position-relative" ng-click="deleteZnifferFilter('application')" title="{{_t('reset_filter')}}">
-        <i class="fa fa-trash text-danger"></i>
-      </button>
-      <!-- Save -->
-      <button class="btn btn-success" type="button" bb-dropdown=".position-relative" ng-click="setZnifferFilter('application')" title="{{_t('th_ok')}}">
-        <i class="fa fa-check"></i>
-      </button>
-    </div>
+  <!-- Hide -->
+  <div class="form-group_" ng-if="zniffer.filter.application.value">
+    <label class="switch" aria-label="{{_t('hide')}}">
+      <input type="checkbox" ng-model="zniffer.filter.application.hide" ng-change="onChangeZnifferFilter('application')">
+      <span class="slider"></span>
+    </label>
   </div>
+</div>
+<div class="appdropdown-footer">
+  <!-- Save -->
+  <button class="btn btn-success" type="button" bb-dropdown=".position-relative" ng-click="setZnifferFilter('application')" title="{{_t('th_ok')}}">
+    <i class="fa fa-check"></i>
+  </button>
+</div>

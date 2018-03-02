@@ -115,6 +115,9 @@ appController.controller('ZnifferController', function ($scope, $interval, $time
     application: function (data, filter) {
       return _.filter(data, function (v) {
         var re = new RegExp(filter.value, "ig");
+        if (filter.hide) {
+          return re.test(v.application) ? false : v;
+        }
         return re.test(v.application) ? v : false;
       });
     },
@@ -133,9 +136,9 @@ appController.controller('ZnifferController', function ($scope, $interval, $time
     $scope.autocomplete.results = _.uniq(deviceService.autocomplete($scope.autocomplete.source, $scope.autocomplete), function (v) {
       return v.application;
     });
-    if(_.size($scope.autocomplete.results) ||  $scope.autocomplete.term === ''){
-     //$scope.loadCommunicationHistory();
-     $scope.setZnifferFilter('application');
+    if (_.size($scope.autocomplete.results) || $scope.autocomplete.term === '') {
+      //$scope.loadCommunicationHistory();
+      $scope.setZnifferFilter('application');
     }
     return;
   };
@@ -199,13 +202,13 @@ appController.controller('ZnifferController', function ($scope, $interval, $time
           application: v.application
         }
       });
-       // The filter is set
+      // The filter is set
       angular.forEach($scope.zniffer.filter, function (v, k) {
         if ($scope.filterBy[k] && v.value) {
           znifferData = $scope.filterBy[k](znifferData, v);
         }
       });
-       // Addto scope
+      // Addto scope
       $scope.zniffer.all = znifferData;
     });
   };
@@ -227,10 +230,19 @@ appController.controller('ZnifferController', function ($scope, $interval, $time
       dataService.refreshApi('zniffer_url', null, true).then(function (response) {
         $scope.zniffer.updateTime = response.data.updateTime;
         var znifferData = deviceService.setZnifferData(response.data.data).value();
-        /* if (!_.size(znifferData)) {
-          console.log('No live zniffer data')
+         if (!_.size(znifferData)) {
+          //console.log('No live zniffer data')
           return;
-        } */
+        }
+        // Create source for autocomplete
+        var source = _.map(znifferData, function (v) {
+          return {
+            id: v.id,
+            application: v.application
+          }
+        });
+        
+        $scope.autocomplete.source.push(source); 
         // The filter is set
         angular.forEach($scope.zniffer.filter, function (v, k) {
           if ($scope.filterBy[k] && v.value) {
@@ -283,9 +295,15 @@ appController.controller('ZnifferController', function ($scope, $interval, $time
    * @returns {undefined}
    */
   $scope.setZnifferFilter = function (key) {
-    // Removing filter if value is empty or not exists
+    if (!$scope.zniffer.filter[key]) {
+      return;
+    }
+    // Removing filter if value is empty
     if (!$scope.zniffer.filter[key].value) {
       $scope.zniffer.filter = _.omit($scope.zniffer.filter, key);
+      if (key === 'application') {
+        $scope.autocomplete.term = '';
+      }
     }
     // Set filter
     $cookies.znifferFilter = JSON.stringify($scope.zniffer.filter);
@@ -293,20 +311,6 @@ appController.controller('ZnifferController', function ($scope, $interval, $time
     //$scope.runZniffer($scope.zniffer.updateTime);
   };
 
-  /**
-   * Delete zniffer filter
-   * @returns {undefined}
-   */
-  $scope.deleteZnifferFilter = function (key) {
-    if(key === 'application'){
-      $scope.autocomplete.term = '';
-    }
-    $scope.zniffer.filter = _.omit($scope.zniffer.filter, key);
-    $cookies.znifferFilter = angular.toJson($scope.zniffer.filter);
-    $scope.loadCommunicationHistory();
-    //$scope.runZniffer($scope.zniffer.updateTime);
-   
-  };
   /**
    * Reset zniffer filter to empty object
    * @returns {undefined}

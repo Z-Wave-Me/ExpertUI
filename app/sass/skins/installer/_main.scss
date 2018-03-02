@@ -1,31 +1,36 @@
 /* Zwave alliance
 -------------------------------------------------- */
 
-$alliance-blue : #083366;
+$alliance-blue: #083366;
 $alliance-green: #47AA42;
 $alliance-green-bcg: lighten($alliance-green, 40%);
 $alliance-green-border: lighten($alliance-green, 20%);
 $alliance-orange: #F89847;
-
 /* Main navigation
 -------------------------------------------------- */
-
 
 #main_navigation_wrap {
   /*background-color: $header-bcg-color;
   border-bottom: solid 1px $header-border-color;
   height: $header-h;*/
-  background: #1f355e; /* Old browsers */
-  background: -moz-linear-gradient(top,  #1f355e 0%, #174a7c 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#1f355e), color-stop(100%,#174a7c)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  #1f355e 0%,#174a7c 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  #1f355e 0%,#174a7c 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  #1f355e 0%,#174a7c 100%); /* IE10+ */
-  background: linear-gradient(to bottom,  #1f355e 0%,#174a7c 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1f355e', endColorstr='#174a7c',GradientType=0 ); /* IE6-9 */
+  background: #1f355e;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #1f355e 0%, #174a7c 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #1f355e), color-stop(100%, #174a7c));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #1f355e 0%, #174a7c 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #1f355e 0%, #174a7c 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #1f355e 0%, #174a7c 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #1f355e 0%, #174a7c 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1f355e', endColorstr='#174a7c', GradientType=0);
+  /* IE6-9 */
   border-bottom: solid 4px $header-border-color;
 }
-
 
 #main_navigation {
   margin-bottom: 0;
@@ -110,6 +115,14 @@ a {
 .product-logo {
   max-width: 150px;
   max-height: 150px;
+}
+
+/* Dropdown */
+
+.appdropdown-footer {
+  padding: $spacing-half;
+  background-color: lighten($alliance-green-bcg, 10%);
+  border-top: solid 1px $alliance-green-border;
 }
 
 /* Init */
@@ -262,7 +275,9 @@ a {
 .accordion-entry {
   border-color: $alliance-green-border;
 }
+
 /* Tooltip */
+
 .tooltip-wrap {
   .tooltip {
     background-color: $alliance-blue;

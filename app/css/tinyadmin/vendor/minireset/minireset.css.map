@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,2EAA2E;;AAC3E;;;;;;;;;;;;;;;;;;;;;;EAsBG;EACD,MAAM,EAAE,CAAC;EACT,OAAO,EAAE,CAAC;;;AAGZ;;;;;;;;GAQG;AAEH;;GAEG;;AAEH;;;QAGS;EACP,MAAM,EAAE,CAAC;;;;AAGX,IAAK;EACH,UAAU,EAAE,UAAU;;;;AAGxB,oBAAqB;EACnB,UAAU,EAAE,OAAO;;;;AAGrB;;;;;KAKM;EACJ,MAAM,EAAE,IAAI;EACZ,SAAS,EAAE,IAAI;;;;AAGjB,MAAO;EACL,MAAM,EAAE,CAAC;;;;AAGX,KAAM;EACJ,eAAe,EAAE,QAAQ;EACzB,cAAc,EAAE,CAAC;;;;AAGnB;EACG;EACD,OAAO,EAAE,CAAC;EACV,UAAU,EAAE,IAAI",
+"sources": ["../../../../sass/tinyadmin/vendor/minireset/minireset.scss"],
+"names": [],
+"file": "minireset.css"
+}
