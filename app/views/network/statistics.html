@@ -5,7 +5,7 @@
 
     <div class="text-right print-hide">
         <button class="btn btn-primary" id="btn_update_all_1"
-                ng-click="loadNetworkStatistics()"
+                ng-click="updateNetworkStatistics()"
                 ng-disabled="rowSpinner['loadNetStatistics']">
             <bb-row-spinner
                     spinner="rowSpinner['loadNetStatistics']"
@@ -14,7 +14,7 @@
             </bb-row-spinner>
         </button>
         <button class="btn btn-primary" id="btn_update_all_1"
-                ng-click="updateNetworkStatistics('ClearNetworkStats()')"
+                ng-click="resetNetworkStatistics('ClearNetworkStats()')"
                 ng-disabled="rowSpinner['ClearNetworkStats()']">
             <bb-row-spinner
                     spinner="rowSpinner['ClearNetworkStats()']"
