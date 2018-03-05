@@ -17092,6 +17092,228 @@ section.has-border {
   padding: 1rem;
 }
 
+/* Padding
+-------------------------------------------------- */
+/* line 4, ../sass/tinyadmin/core/_modifiers.scss */
+.pad-spacing {
+  padding: 1rem;
+}
+
+/* line 7, ../sass/tinyadmin/core/_modifiers.scss */
+.pad-spacing-double {
+  padding: 2rem;
+}
+
+/* line 10, ../sass/tinyadmin/core/_modifiers.scss */
+.pad-spacing-half {
+  padding: 0.5rem;
+}
+
+/*Fonts
+-------------------------------------------------- */
+/* line 16, ../sass/tinyadmin/core/_modifiers.scss */
+.font-light {
+  font-weight: 300;
+}
+
+/* line 20, ../sass/tinyadmin/core/_modifiers.scss */
+.font-regular {
+  font-weight: 400;
+}
+
+/* line 24, ../sass/tinyadmin/core/_modifiers.scss */
+.font-heavy {
+  font-weight: 700;
+}
+
+/* Text align
+-------------------------------------------------- */
+/* line 30, ../sass/tinyadmin/core/_modifiers.scss */
+.left {
+  text-align: left;
+}
+
+/* line 33, ../sass/tinyadmin/core/_modifiers.scss */
+.right {
+  text-align: right;
+}
+
+/* line 36, ../sass/tinyadmin/core/_modifiers.scss */
+.center {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* line 41, ../sass/tinyadmin/core/_modifiers.scss */
+.justify {
+  text-align: justify;
+}
+
+/* line 44, ../sass/tinyadmin/core/_modifiers.scss */
+.hidden-sm {
+  display: none;
+}
+
+/* Text color
+-------------------------------------------------- */
+/* line 50, ../sass/tinyadmin/core/_modifiers.scss */
+.txt-light {
+  color: #ffffff;
+}
+
+/* line 53, ../sass/tinyadmin/core/_modifiers.scss */
+.txt-dark {
+  color: #000000;
+}
+
+/* line 56, ../sass/tinyadmin/core/_modifiers.scss */
+.txt-primary {
+  color: #6494BC;
+}
+
+/* line 59, ../sass/tinyadmin/core/_modifiers.scss */
+.txt-info {
+  color: #5bc0de;
+}
+
+/* line 62, ../sass/tinyadmin/core/_modifiers.scss */
+.txt-success {
+  color: #80AD80;
+}
+
+/* line 65, ../sass/tinyadmin/core/_modifiers.scss */
+.txt-warning {
+  color: #f0ad4e;
+}
+
+/* line 68, ../sass/tinyadmin/core/_modifiers.scss */
+.txt-danger {
+  color: #d9534f;
+}
+
+/* Truncate text
+-------------------------------------------------- */
+/* line 74, ../sass/tinyadmin/core/_modifiers.scss */
+.truncate-100px {
+  width: 100px;
+  white-space: nowrap;
+  /* force single line */
+  overflow: hidden;
+  /* don't show excess chars */
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  /* Opera */
+}
+
+/* line 77, ../sass/tinyadmin/core/_modifiers.scss */
+.truncate-200px {
+  width: 200px;
+  white-space: nowrap;
+  /* force single line */
+  overflow: hidden;
+  /* don't show excess chars */
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  /* Opera */
+}
+
+/* Has border
+-------------------------------------------------- */
+/* line 83, ../sass/tinyadmin/core/_modifiers.scss */
+.has-border {
+  border: solid 1px #87cf83;
+}
+
+/* Border color
+-------------------------------------------------- */
+/* line 89, ../sass/tinyadmin/core/_modifiers.scss */
+.bor-primary {
+  border-color: #6494BC;
+}
+
+/* line 92, ../sass/tinyadmin/core/_modifiers.scss */
+.bor-info {
+  border-color: #5bc0de;
+}
+
+/* line 95, ../sass/tinyadmin/core/_modifiers.scss */
+.bor-success {
+  border-color: #80AD80;
+}
+
+/* line 98, ../sass/tinyadmin/core/_modifiers.scss */
+.bor-warning {
+  border-color: #f0ad4e;
+}
+
+/* line 101, ../sass/tinyadmin/core/_modifiers.scss */
+.bor-danger {
+  border-color: #d9534f;
+}
+
+/* Background color
+-------------------------------------------------- */
+/* line 107, ../sass/tinyadmin/core/_modifiers.scss */
+.bcg-light {
+  background-color: #ceebcd;
+}
+
+/* line 110, ../sass/tinyadmin/core/_modifiers.scss */
+.bcg-dark {
+  background-color: #6494BC;
+}
+
+/* line 113, ../sass/tinyadmin/core/_modifiers.scss */
+.bcg-primary {
+  background-color: #6494BC;
+}
+
+/* line 116, ../sass/tinyadmin/core/_modifiers.scss */
+.bcg-info {
+  background-color: #5bc0de;
+}
+
+/* line 119, ../sass/tinyadmin/core/_modifiers.scss */
+.bcg-success {
+  background-color: #80AD80;
+}
+
+/* line 122, ../sass/tinyadmin/core/_modifiers.scss */
+.bcg-warning {
+  background-color: #f0ad4e;
+}
+
+/* line 125, ../sass/tinyadmin/core/_modifiers.scss */
+.bcg-danger {
+  background-color: #d9534f;
+}
+
+/* Box shadow
+-------------------------------------------------- */
+/* line 131, ../sass/tinyadmin/core/_modifiers.scss */
+.box-shadow {
+  -webkit-box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.29);
+  -moz-box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.29);
+  box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.29);
+}
+
+/* Circle
+-------------------------------------------------- */
+/* line 137, ../sass/tinyadmin/core/_modifiers.scss */
+.circle {
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+}
+
+/* Cursor
+-------------------------------------------------- */
+/* line 143, ../sass/tinyadmin/core/_modifiers.scss */
+.cur-pointer {
+  cursor: pointer;
+}
+
 /* @import "core/_body";
 @import "core/_helpers";
 @import "core/_grid";

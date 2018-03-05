@@ -148,8 +148,9 @@
   margin: 0 $spacing 0;
 }
 
-// Text overflow
-@mixin textOverflow() {
+// Truncate string with ellipsis
+@mixin truncateString($width) {
+  width: $width;
   white-space: nowrap;
   /* force single line */
   overflow: hidden;

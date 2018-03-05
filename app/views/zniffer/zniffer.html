@@ -22,7 +22,7 @@
   <!-- <pre>{{zniffer.filter|json}}</pre> -->
  
   <!-- Table -->
-  <table class="table table-condensed table-hover zniffer-{{zniffer.trace}}">
+  <table class="table table-condensed table-hover zniffer-{{zniffer.trace}}" style="width: 100%;">
     <col class="zniffer-col" ng-class="{'has-filter': zniffer.filter['type'].value}" />
     <col class="zniffer-col" ng-class="{'has-filter': zniffer.filter['date'].value}" />
     <col class="zniffer-col" />
@@ -141,7 +141,7 @@
         <td>{{v.rssi||'-'}}</td>
         <td>{{v.hops||'-'}}</td>
         <td>{{v.encaps||'-'}}</td>
-        <td title="{{v.bytes}}">{{v.application}}</td>
+        <td title="{{v.application}}"><div class="truncate-200px">{{v.application}}</div></td>
       </tr>
     </tbody>
   </table>

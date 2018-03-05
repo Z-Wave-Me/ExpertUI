@@ -1,0 +1,145 @@
+
+/* Padding
+-------------------------------------------------- */
+.pad-spacing {
+  padding: $spacing;
+}
+.pad-spacing-double {
+  padding: $spacing-double;
+}
+.pad-spacing-half {
+  padding: $spacing-half;
+}
+
+/*Fonts
+-------------------------------------------------- */
+.font-light {
+  font-weight: $font-weight-light;
+}
+
+.font-regular {
+  font-weight: $font-weight-regular;
+}
+
+.font-heavy {
+  font-weight: $font-weight-heavy;
+}
+
+/* Text align
+-------------------------------------------------- */
+.left {
+  text-align: left;
+}
+.right {
+  text-align: right;
+}
+.center {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.justify {
+  text-align: justify;
+}
+.hidden-sm {
+  display: none;
+}
+
+/* Text color
+-------------------------------------------------- */
+.txt-light{
+  color: $light-font-color;
+}
+.txt-dark{
+  color: $dark-font-color;
+}
+.txt-primary{
+  color: $primary-color;
+}
+.txt-info{
+  color: $info-color;
+}
+.txt-success{
+  color: $success-color;
+}
+.txt-warning{
+  color: $warning-color;
+}
+.txt-danger{
+  color: $danger-color; 
+}
+
+/* Truncate text
+-------------------------------------------------- */
+.truncate-100px{
+  @include truncateString(100px);
+}
+.truncate-200px{
+  @include truncateString(200px);
+}
+
+/* Has border
+-------------------------------------------------- */
+.has-border{
+  border: solid 1px $border-color;
+}
+
+/* Border color
+-------------------------------------------------- */
+.bor-primary{
+  border-color: $primary-color;
+}
+.bor-info{
+  border-color: $info-color;
+}
+.bor-success{
+  border-color: $success-color;
+}
+.bor-warning{
+  border-color: $warning-color;
+}
+.bor-danger{
+  border-color: $danger-color;
+}
+
+/* Background color
+-------------------------------------------------- */
+.bcg-light{
+  background-color: $light-bcg-color;
+}
+.bcg-dark{
+  background-color: $primary-color;
+}
+.bcg-primary{
+  background-color: $primary-color;
+}
+.bcg-info{
+  background-color: $info-color;
+}
+.bcg-success{
+  background-color: $success-color;
+}
+.bcg-warning{
+  background-color: $warning-color;
+}
+.bcg-danger{
+  background-color: $danger-color;
+}
+
+/* Box shadow
+-------------------------------------------------- */
+.box-shadow{
+  @include boxShadow(1px 1px 5px 0px rgba(50, 50, 50, 0.29));
+}
+
+/* Circle
+-------------------------------------------------- */
+.circle{
+  @include borderRadius(50%);
+}
+
+/* Cursor
+-------------------------------------------------- */
+.cur-pointer{
+  cursor: pointer;
+}
