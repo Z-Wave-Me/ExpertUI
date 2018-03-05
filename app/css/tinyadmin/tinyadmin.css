@@ -118,11 +118,107 @@ th {
 -------------------------------------------------- */
 /* line 4, ../../sass/tinyadmin/core/_section.scss */
 section {
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 /* line 6, ../../sass/tinyadmin/core/_section.scss */
 section.has-border {
   padding: 1rem;
+}
+
+/* Tooltip
+-------------------------------------------------- */
+/* line 8, ../../sass/tinyadmin/core/_tooltip.scss */
+.tooltip-wrap {
+  position: relative;
+  display: inline-block;
+  cursor: help;
+}
+/* line 14, ../../sass/tinyadmin/core/_tooltip.scss */
+.tooltip-wrap.on-hover:hover .tooltip {
+  display: block;
+}
+/* line 19, ../../sass/tinyadmin/core/_tooltip.scss */
+.tooltip-wrap .tooltip {
+  white-space: normal;
+  display: none;
+  position: absolute;
+  width: 24rem;
+  padding: 1rem;
+  background-color: #4d4d4d;
+  color: #ffffff;
+  z-index: 2300;
+  text-align: left;
+  -webkit-box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.29);
+  -moz-box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.29);
+  box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.29);
+  /* Arrow */
+  /* Right tooltip */
+  /* Left tooltip */
+  /* Top tooltip */
+  /* Bottom tooltip */
+}
+/* line 31, ../../sass/tinyadmin/core/_tooltip.scss */
+.tooltip-wrap .tooltip::after {
+  content: " ";
+  position: absolute;
+  border-width: 0.5rem;
+  border-style: solid;
+}
+/* line 38, ../../sass/tinyadmin/core/_tooltip.scss */
+.tooltip-wrap .tooltip.right {
+  top: -0.5rem;
+  left: 105%;
+  /* Arrow To the left of the tooltip */
+}
+/* line 42, ../../sass/tinyadmin/core/_tooltip.scss */
+.tooltip-wrap .tooltip.right::after {
+  top: 2rem;
+  right: 100%;
+  margin-top: -0.5rem;
+  border-color: transparent #4d4d4d transparent transparent;
+}
+/* line 51, ../../sass/tinyadmin/core/_tooltip.scss */
+.tooltip-wrap .tooltip.left {
+  top: -0.5rem;
+  margin-top: -0.5rem;
+  right: 105%;
+  /* Arrow To the right of the tooltip */
+}
+/* line 56, ../../sass/tinyadmin/core/_tooltip.scss */
+.tooltip-wrap .tooltip.left::after {
+  top: 2rem;
+  left: 100%;
+  border-color: transparent transparent transparent #4d4d4d;
+}
+/* line 64, ../../sass/tinyadmin/core/_tooltip.scss */
+.tooltip-wrap .tooltip.top {
+  bottom: 100%;
+  left: 50%;
+  /* Use half of the width (120/2 = 60), to center the tooltip */
+  margin-left: -12rem;
+  /* Arrow To the bottom of the tooltip */
+}
+/* line 70, ../../sass/tinyadmin/core/_tooltip.scss */
+.tooltip-wrap .tooltip.top::after {
+  top: 100%;
+  left: 50%;
+  margin-left: -0.5rem;
+  border-color: #4d4d4d transparent transparent transparent;
+}
+/* line 78, ../../sass/tinyadmin/core/_tooltip.scss */
+.tooltip-wrap .tooltip.bottom {
+  top: 100%;
+  left: 50%;
+  /* Use half of the width (120/2 = 60), to center the tooltip */
+  margin-left: -12rem;
+  /* Arrow To the top of the tooltip */
+}
+/* line 84, ../../sass/tinyadmin/core/_tooltip.scss */
+.tooltip-wrap .tooltip.bottom::after {
+  bottom: 100%;
+  left: 50%;
+  margin-left: -0.5rem;
+  border-color: transparent transparent #4d4d4d transparent;
 }
 
 /* Padding
@@ -475,6 +571,18 @@ section.has-border {
 .page-topbar {
   padding-bottom: 0;
   border-bottom: 0;
+}
+
+/* Tooltip
+-------------------------------------------------- */
+/* line 4, ../../sass/tinyadmin/custom/_tooltip.scss */
+.tooltip-wrap .tooltip {
+  color: #ffffff;
+  background-color: #083366;
+}
+/* line 7, ../../sass/tinyadmin/custom/_tooltip.scss */
+.tooltip-wrap .tooltip.center {
+  text-align: center;
 }
 
 /*# sourceMappingURL=tinyadmin.css.map */

@@ -156,7 +156,7 @@
                                     <a href="#network/timing" ng-class="isActive('timing',2)">{{ _t('nav_timing_info') }}</a>
                                 </li>
                                 <li>
-                                    <a href="#network/routemap" dng-class="isActive('routemap',2)">{{ _t('route_map') }}</a>
+                                    <a href="#network/routemap" ng-class="isActive('routemap',2)">{{ _t('route_map') }}</a>
                                     <!-- <a href="#network/map" dng-class="isActive('map',2)">{{ _t('route_map') }}</a> -->
                                 </li>
                                 <li>
@@ -170,17 +170,17 @@
                     <!-- Analytics -->
                     <li class="navibar-divider"  ng-if="cfg.analytics.show"> </li>
                     <li class="navibar-item" ng-click="expandNavi('naviInstaller', $event)" ng-if="cfg.analytics.show">
-                        <a class="navibar-item-root" href="" title="{{_t('nav_installer')}}" ng-class="isActive('installer',1)">
+                        <a class="navibar-item-root" href="" title="{{_t('nav_installer')}}" ng-class="isActive('analytics',1)">
                             <i class="fa fa-signal"></i> <span class="main-nav-name">{{ _t('nav_installer')}}</span>
                         </a>
                         <div class="sub-navigation sub-navigation-left" ng-if="naviExpanded.naviInstaller">
                             <ul>
-                                <li><a href="#zniffer" ng-class="isActive('zniffer',2)">{{ _t('nav_zniffer') }}</a></li>
-                                <li><a href="#rssibackground" ng-class="isActive('rssi',2)">{{ _t('nav_rssi') }}</a></li>
-                                <li><a href="#rssimeter" ng-class="isActive('rssimeter',2)">{{ _t('nav_rssimeter') }}</a></li>
+                                <li><a href="#analytics/zniffer" ng-class="isActive('zniffer',2)">{{ _t('nav_zniffer') }}</a></li>
+                                <li><a href="#analytics/rssibackground" ng-class="isActive('rssibackground',2)">{{ _t('nav_rssi') }}</a></li>
+                                <li><a href="#analytics/rssimeter" ng-class="isActive('rssimeter',2)">{{ _t('nav_rssimeter') }}</a></li>
                                <!--  <li><a href="#installer/history" ng-class="isActive('history',2)">{{ _t('nav_history') }}</a></li> -->
                                 <li>
-                                    <a href="#network/statistics" ng-class="isActive('statistics',2)">{{ _t('statistics') }}</a>
+                                    <a href="#analytics/statistics" ng-class="isActive('statistics',2)">{{ _t('statistics') }}</a>
                                 </li>
                             </ul>
                         </div>

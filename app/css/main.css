@@ -15166,190 +15166,6 @@ http://codepen.io/MattIn4D/pen/LiKFC
   line-height: 30px;
 }
 
-/* Tooltip
--------------------------------------------------- */
-/* line 8, ../sass/common/_tooltip.scss */
-.tooltip-wrap {
-  position: relative;
-  display: inline-block;
-  cursor: help;
-}
-/* line 14, ../sass/common/_tooltip.scss */
-.tooltip-wrap.on-hover:hover .tooltip {
-  display: block;
-}
-/* line 19, ../sass/common/_tooltip.scss */
-.tooltip-wrap .tooltip {
-  white-space: normal;
-  display: none;
-  position: absolute;
-  width: 200px;
-  padding: 10px;
-  background-color: #4d4d4d;
-  color: #fff;
-  z-index: 1070;
-  text-align: left;
-  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-  -moz-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-  /* Arrow */
-  /* Right tooltip */
-  /* Left tooltip */
-  /* Top tooltip */
-  /* Bottom tooltip */
-}
-/* line 29, ../sass/common/_tooltip.scss */
-.tooltip-wrap .tooltip.text-center {
-  text-align: center;
-}
-/* line 34, ../sass/common/_tooltip.scss */
-.tooltip-wrap .tooltip::after {
-  content: " ";
-  position: absolute;
-  border-width: 5px;
-  border-style: solid;
-}
-/* line 41, ../sass/common/_tooltip.scss */
-.tooltip-wrap .tooltip.right {
-  top: -5px;
-  left: 105%;
-  /* Arrow To the left of the tooltip */
-}
-/* line 45, ../sass/common/_tooltip.scss */
-.tooltip-wrap .tooltip.right::after {
-  top: 20px;
-  right: 100%;
-  margin-top: -5px;
-  border-color: transparent #4d4d4d transparent transparent;
-}
-/* line 54, ../sass/common/_tooltip.scss */
-.tooltip-wrap .tooltip.left {
-  top: -5px;
-  margin-top: -5px;
-  right: 105%;
-  /* Arrow To the right of the tooltip */
-}
-/* line 59, ../sass/common/_tooltip.scss */
-.tooltip-wrap .tooltip.left::after {
-  top: 20px;
-  left: 100%;
-  border-color: transparent transparent transparent #4d4d4d;
-}
-/* line 67, ../sass/common/_tooltip.scss */
-.tooltip-wrap .tooltip.top {
-  bottom: 100%;
-  left: 50%;
-  /* Use half of the width (120/2 = 60), to center the tooltip */
-  margin-left: -100px;
-  /* Arrow To the bottom of the tooltip */
-}
-/* line 73, ../sass/common/_tooltip.scss */
-.tooltip-wrap .tooltip.top::after {
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-color: #4d4d4d transparent transparent transparent;
-}
-/* line 81, ../sass/common/_tooltip.scss */
-.tooltip-wrap .tooltip.bottom {
-  top: 100%;
-  left: 50%;
-  /* Use half of the width (120/2 = 60), to center the tooltip */
-  margin-left: -100px;
-  /* Arrow To the top of the tooltip */
-}
-/* line 87, ../sass/common/_tooltip.scss */
-.tooltip-wrap .tooltip.bottom::after {
-  bottom: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-color: transparent transparent #4d4d4d transparent;
-}
-
-/* FIXME:
--------------------------------------------------- */
-/* line 100, ../sass/common/_tooltip.scss */
-.tooltip-wrap_ {
-  position: relative;
-  display: inline-block;
-}
-/* line 104, ../sass/common/_tooltip.scss */
-.tooltip-wrap_:hover .tooltip {
-  display: inline-block;
-}
-
-/* line 110, ../sass/common/_tooltip.scss */
-.tooltip_ {
-  display: none;
-  position: absolute;
-  width: 200px;
-  padding: 10px;
-  background: #4d4d4d;
-  color: #fff;
-  z-index: 1070;
-}
-/* line 119, ../sass/common/_tooltip.scss */
-.tooltip_::after {
-  content: " ";
-  position: absolute;
-  margin-left: -10px;
-  border-width: 10px;
-  border-style: solid;
-  border-color: transparent;
-}
-/* line 127, ../sass/common/_tooltip.scss */
-.tooltip_.right {
-  top: 0;
-  left: 100%;
-}
-/* line 130, ../sass/common/_tooltip.scss */
-.tooltip_.right:after {
-  top: 50%;
-  right: 100%;
-  /* To the left of the tooltip */
-  border-color: transparent #4d4d4d transparent transparent;
-}
-/* line 137, ../sass/common/_tooltip.scss */
-.tooltip_.left {
-  top: 0;
-  right: 100%;
-}
-/* line 140, ../sass/common/_tooltip.scss */
-.tooltip_.left:after {
-  top: 50%;
-  left: 100%;
-  /* To the right of the tooltip */
-  border-color: transparent transparent transparent #4d4d4d;
-}
-/* line 147, ../sass/common/_tooltip.scss */
-.tooltip_.top {
-  bottom: 100%;
-  left: 50%;
-  margin-left: -100px;
-  /* Use half of the width (120/2 = 60), to center the tooltip */
-}
-/* line 152, ../sass/common/_tooltip.scss */
-.tooltip_.top::after {
-  top: 100%;
-  /* At the bottom of the tooltip */
-  left: 50%;
-  border-color: #4d4d4d transparent transparent transparent;
-}
-/* line 159, ../sass/common/_tooltip.scss */
-.tooltip_.bottom {
-  top: 100%;
-  left: 50%;
-  margin-left: -100px;
-  /* Use half of the width (120/2 = 60), to center the tooltip */
-}
-/* line 164, ../sass/common/_tooltip.scss */
-.tooltip_.bottom::after {
-  bottom: 100%;
-  /* At the top of the window */
-  left: 50%;
-  border-color: transparent transparent #4d4d4d transparent;
-}
-
 /* Homepage
 -------------------------------------------------- */
 /* line 3, ../sass/modules/_home.scss */
@@ -16382,12 +16198,6 @@ a {
   border-color: #87cf83;
 }
 
-/* Tooltip */
-/* line 282, ../sass/skins/installer/_main.scss */
-.tooltip-wrap .tooltip {
-  background-color: #083366;
-}
-
 /*
  * The responsive style for the front-end
  */
@@ -17085,11 +16895,107 @@ th {
 -------------------------------------------------- */
 /* line 4, ../sass/tinyadmin/core/_section.scss */
 section {
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 /* line 6, ../sass/tinyadmin/core/_section.scss */
 section.has-border {
   padding: 1rem;
+}
+
+/* Tooltip
+-------------------------------------------------- */
+/* line 8, ../sass/tinyadmin/core/_tooltip.scss */
+.tooltip-wrap {
+  position: relative;
+  display: inline-block;
+  cursor: help;
+}
+/* line 14, ../sass/tinyadmin/core/_tooltip.scss */
+.tooltip-wrap.on-hover:hover .tooltip {
+  display: block;
+}
+/* line 19, ../sass/tinyadmin/core/_tooltip.scss */
+.tooltip-wrap .tooltip {
+  white-space: normal;
+  display: none;
+  position: absolute;
+  width: 24rem;
+  padding: 1rem;
+  background-color: #4d4d4d;
+  color: #ffffff;
+  z-index: 2300;
+  text-align: left;
+  -webkit-box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.29);
+  -moz-box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.29);
+  box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.29);
+  /* Arrow */
+  /* Right tooltip */
+  /* Left tooltip */
+  /* Top tooltip */
+  /* Bottom tooltip */
+}
+/* line 31, ../sass/tinyadmin/core/_tooltip.scss */
+.tooltip-wrap .tooltip::after {
+  content: " ";
+  position: absolute;
+  border-width: 0.5rem;
+  border-style: solid;
+}
+/* line 38, ../sass/tinyadmin/core/_tooltip.scss */
+.tooltip-wrap .tooltip.right {
+  top: -0.5rem;
+  left: 105%;
+  /* Arrow To the left of the tooltip */
+}
+/* line 42, ../sass/tinyadmin/core/_tooltip.scss */
+.tooltip-wrap .tooltip.right::after {
+  top: 2rem;
+  right: 100%;
+  margin-top: -0.5rem;
+  border-color: transparent #4d4d4d transparent transparent;
+}
+/* line 51, ../sass/tinyadmin/core/_tooltip.scss */
+.tooltip-wrap .tooltip.left {
+  top: -0.5rem;
+  margin-top: -0.5rem;
+  right: 105%;
+  /* Arrow To the right of the tooltip */
+}
+/* line 56, ../sass/tinyadmin/core/_tooltip.scss */
+.tooltip-wrap .tooltip.left::after {
+  top: 2rem;
+  left: 100%;
+  border-color: transparent transparent transparent #4d4d4d;
+}
+/* line 64, ../sass/tinyadmin/core/_tooltip.scss */
+.tooltip-wrap .tooltip.top {
+  bottom: 100%;
+  left: 50%;
+  /* Use half of the width (120/2 = 60), to center the tooltip */
+  margin-left: -12rem;
+  /* Arrow To the bottom of the tooltip */
+}
+/* line 70, ../sass/tinyadmin/core/_tooltip.scss */
+.tooltip-wrap .tooltip.top::after {
+  top: 100%;
+  left: 50%;
+  margin-left: -0.5rem;
+  border-color: #4d4d4d transparent transparent transparent;
+}
+/* line 78, ../sass/tinyadmin/core/_tooltip.scss */
+.tooltip-wrap .tooltip.bottom {
+  top: 100%;
+  left: 50%;
+  /* Use half of the width (120/2 = 60), to center the tooltip */
+  margin-left: -12rem;
+  /* Arrow To the top of the tooltip */
+}
+/* line 84, ../sass/tinyadmin/core/_tooltip.scss */
+.tooltip-wrap .tooltip.bottom::after {
+  bottom: 100%;
+  left: 50%;
+  margin-left: -0.5rem;
+  border-color: transparent transparent #4d4d4d transparent;
 }
 
 /* Padding
@@ -17442,6 +17348,18 @@ section.has-border {
 .page-topbar {
   padding-bottom: 0;
   border-bottom: 0;
+}
+
+/* Tooltip
+-------------------------------------------------- */
+/* line 4, ../sass/tinyadmin/custom/_tooltip.scss */
+.tooltip-wrap .tooltip {
+  color: #ffffff;
+  background-color: #083366;
+}
+/* line 7, ../sass/tinyadmin/custom/_tooltip.scss */
+.tooltip-wrap .tooltip.center {
+  text-align: center;
 }
 
 /* Print

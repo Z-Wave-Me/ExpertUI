@@ -1,28 +1,23 @@
 <!-- Link health -->
 <div ng-controller="LinkStatusController">
-    <div class="page-header row">
-        <div class="col-sm-8 header-col ">
-            <h1>{{ _t('nav_linkhealth_info')}}</h1>
+    <section class="page-topbar">
+        <h1>{{ _t('nav_linkhealth_info')}}</h1>
+        <!-- Control -->
+        <div class="btn-group">
+            <!-- Info view -->
+            <button class="btn btn-default"
+                    ng-class="linkStatus.showInfo ? 'active': ''"
+                    ng-click="changeView(true)">
+                <i class="fa fa-th-list"></i> {{_t('info_link_status')}}
+            </button>
+            <!-- Table view view -->
+            <button class="btn btn-default"
+                    ng-class="!linkStatus.showInfo ? 'active': ''"
+                    ng-click="changeView(false)">
+                <i class="fa fa-th-large"></i> {{_t('nav_linkhealth_info')}}
+            </button>
         </div>
-        <div class="col-sm-4 text-right header-col">
-            <div class="btn-group">
-                <!-- Info view -->
-                <button class="btn btn-default"
-                        ng-class="linkStatus.showInfo ? 'active': ''"
-                        ng-click="changeView(true)">
-                    <i class="fa fa-th-list"></i> {{_t('info_link_status')}}
-                </button>
-                <!-- Table view view -->
-                <button class="btn btn-default"
-                        ng-class="!linkStatus.showInfo ? 'active': ''"
-                        ng-click="changeView(false)">
-                    <i class="fa fa-th-large"></i> {{_t('nav_linkhealth_info')}}
-                </button>
-            </div>
-
-        </div>
-
-    </div>
+      </section>
     <bb-alert alert="alert"></bb-alert>
 
     <!--<pre>{{linkStatus|json}}</pre>-->

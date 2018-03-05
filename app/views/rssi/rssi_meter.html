@@ -1,25 +1,21 @@
 <div class="" ng-controller="ZnifferRSSIMeterController">
-    <div class="form-inline">
-        <div class="form-group">
-            <div class="btn-group">
-                <button class="btn btn-default" title="Start new trace"
-                        ng-class="rssi.trace === 'start' ? 'btn-success' : ''"
-                        ng-disabled="rssi.trace === 'start'"
-                        ng-click="setTrace('start')">
-                    <i class="fa fa-play"></i>
-                </button>
-                <button class="btn btn-default" title="Pause trace"
-                        ng-class="rssi.trace === 'pause' ? 'btn-warning' : ''"
-                        ng-disabled="rssi.trace === 'pause'"
-                        ng-click="setTrace('pause')">
-                    <i class="fa fa-pause"></i>
-                </button>
-            </div>
-        </div>
-        <!--<i class="fa fa-spinner fa-spin" ng-if="zniffer.spin"></i>-->
-    </div>
-   <div id="gauge2" class="gauge">
-    </div>
-    <div id="gauge1" class="gauge">
+  <section class="page-topbar">
+    <h1>{{ _t('nav_rssimeter')}}
+        <i class="fa fa-spinner fa-spin" ng-if="rssi.trace === 'start'"></i>
+    </h1>
+    <!-- Control -->
+    <div class="form-group">
+        <button class="btn btn-default" title="{{ _t('start_trace')}}" ng-if="rssi.trace === 'pause'" ng-click="setTrace('start')">
+          <i class="fa fa-play"></i> <span class="btn-name">{{ _t('start_trace')}}</span>
+        </button>
+        <button class="btn btn-default" title="{{ _t('pause_trace')}}" ng-if="rssi.trace === 'start'" ng-click="setTrace('pause')">
+          <i class="fa fa-pause"></i> <span class="btn-name">{{ _t('pause_trace')}}</span>
+        </button>
       </div>
+  </section>
+
+  <div id="gauge2" class="gauge">
+  </div>
+  <div id="gauge1" class="gauge">
+  </div>
 </div>

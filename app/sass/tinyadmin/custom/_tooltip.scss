@@ -1,0 +1,11 @@
+/* Tooltip
+-------------------------------------------------- */
+.tooltip-wrap {
+  .tooltip {
+    color: $light-font-color;
+    background-color: $brand-primary-color;
+    &.center{
+      text-align: center;
+    }
+  }
+}

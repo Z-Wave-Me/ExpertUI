@@ -99,7 +99,7 @@ angApp.config(['$routeProvider',
         })
         /* .when('/network/map', {
             templateUrl: 'app/views/network/map.html'
-        }) */.when('/network/statistics', {
+        }) */.when('/analytics/statistics', {
             requireLogin: true,
             templateUrl: 'app/views/network/statistics.html',
         }).when('/network/linkstatus', {
@@ -109,15 +109,15 @@ angApp.config(['$routeProvider',
             requireLogin: true,
             templateUrl: 'app/views/network/link_health.html'
         }).// IZniffer
-        when('/zniffer', {
+        when('/analytics/zniffer', {
             requireLogin: true,
             templateUrl: 'app/views/zniffer/zniffer.html'
         }).// Installer - RSSI */
-        when('/rssibackground', {
+        when('/analytics/rssibackground', {
             requireLogin: true,
             templateUrl: 'app/views/rssi/rssi_background.html'
         }).
-        when('/rssimeter', {
+        when('/analytics/rssimeter', {
             requireLogin: true,
             templateUrl: 'app/views/rssi/rssi_meter.html'
         }).// Settings
