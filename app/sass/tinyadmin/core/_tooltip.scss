@@ -5,6 +5,7 @@ $tooltip-spacing: $spacing;
 $tooltip-w: 24rem;
 $tooltip-color: $light-font-color;
 $tooltip-bcg-color: lighten($darkest-bcg-color, 30%);
+$tooltip-line-height: $font-height;
 .tooltip-wrap {
   position: relative;
   display: inline-block;
@@ -26,6 +27,7 @@ $tooltip-bcg-color: lighten($darkest-bcg-color, 30%);
     color: $tooltip-color;
     z-index: $zindex-tooltip;
     text-align: left;
+    line-height: $tooltip-line-height;
     @include boxShadow($box-shadow);
     /* Arrow */
     &::after {

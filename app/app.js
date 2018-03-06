@@ -55,6 +55,14 @@ angApp.run(function ($rootScope, $location, $http, $q, deviceService, cfg) {
       request.timeout = request.cancel.promise;
     });
     /**
+     * Reset all error messages
+     */
+    angular.extend(cfg.route.fatalError, {
+      message: false,
+        info: false,
+    });
+
+    /**
      * Check if page access is banned for the app type
      */
     if (next.appTypeBanned && next.appTypeBanned.indexOf(cfg.app_type) > -1) {
@@ -87,7 +95,8 @@ angApp.config(function ($provide, $httpProvider, cfg) {
   $httpProvider.defaults.timeout = 5000;
   // Intercept http calls.
   $provide.factory('MyHttpInterceptor', function ($q, $location, $window, deviceService) {
-    var path = $location.path().split('/');
+    var path = $location.path().split('/'),
+    errorInfo = false;
     return {
       // On request success
       request: function (config) {
@@ -106,12 +115,13 @@ angApp.config(function ($provide, $httpProvider, cfg) {
       },
       // On response failture
       responseError: function (rejection) {
+        errorInfo = rejection.status + (rejection.message ? ' ' + rejection.message : '') 
         deviceService.logError(rejection);
         switch (rejection.status) {
           case 0:
             angular.extend(cfg.route.fatalError, {
               message: 'The request failed because server does not responding',
-              hide: false
+              info: errorInfo
             });
             break;
           case 401:
@@ -122,7 +132,8 @@ angApp.config(function ($provide, $httpProvider, cfg) {
             break;
           default:
             angular.extend(cfg.route.fatalError, {
-              message: 'Communication or binding error'
+              message: 'Communication or binding error',
+              info: errorInfo
             });
             break;
         }

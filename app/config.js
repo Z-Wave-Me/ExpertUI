@@ -209,6 +209,7 @@ var config_data = {
       fatalError: {
         type: 'system', // system|network
         message: false,
+        info: false,
         hide: false
       },
     },

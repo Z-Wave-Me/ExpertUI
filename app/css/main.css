@@ -16904,17 +16904,17 @@ section.has-border {
 
 /* Tooltip
 -------------------------------------------------- */
-/* line 8, ../sass/tinyadmin/core/_tooltip.scss */
+/* line 9, ../sass/tinyadmin/core/_tooltip.scss */
 .tooltip-wrap {
   position: relative;
   display: inline-block;
   cursor: help;
 }
-/* line 14, ../sass/tinyadmin/core/_tooltip.scss */
+/* line 15, ../sass/tinyadmin/core/_tooltip.scss */
 .tooltip-wrap.on-hover:hover .tooltip {
   display: block;
 }
-/* line 19, ../sass/tinyadmin/core/_tooltip.scss */
+/* line 20, ../sass/tinyadmin/core/_tooltip.scss */
 .tooltip-wrap .tooltip {
   white-space: normal;
   display: none;
@@ -16925,6 +16925,7 @@ section.has-border {
   color: #ffffff;
   z-index: 2300;
   text-align: left;
+  line-height: 1.5;
   -webkit-box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.29);
   -moz-box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.29);
   box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.29);
@@ -16934,40 +16935,40 @@ section.has-border {
   /* Top tooltip */
   /* Bottom tooltip */
 }
-/* line 31, ../sass/tinyadmin/core/_tooltip.scss */
+/* line 33, ../sass/tinyadmin/core/_tooltip.scss */
 .tooltip-wrap .tooltip::after {
   content: " ";
   position: absolute;
   border-width: 0.5rem;
   border-style: solid;
 }
-/* line 38, ../sass/tinyadmin/core/_tooltip.scss */
+/* line 40, ../sass/tinyadmin/core/_tooltip.scss */
 .tooltip-wrap .tooltip.right {
   top: -0.5rem;
   left: 105%;
   /* Arrow To the left of the tooltip */
 }
-/* line 42, ../sass/tinyadmin/core/_tooltip.scss */
+/* line 44, ../sass/tinyadmin/core/_tooltip.scss */
 .tooltip-wrap .tooltip.right::after {
   top: 2rem;
   right: 100%;
   margin-top: -0.5rem;
   border-color: transparent #4d4d4d transparent transparent;
 }
-/* line 51, ../sass/tinyadmin/core/_tooltip.scss */
+/* line 53, ../sass/tinyadmin/core/_tooltip.scss */
 .tooltip-wrap .tooltip.left {
   top: -0.5rem;
   margin-top: -0.5rem;
   right: 105%;
   /* Arrow To the right of the tooltip */
 }
-/* line 56, ../sass/tinyadmin/core/_tooltip.scss */
+/* line 58, ../sass/tinyadmin/core/_tooltip.scss */
 .tooltip-wrap .tooltip.left::after {
   top: 2rem;
   left: 100%;
   border-color: transparent transparent transparent #4d4d4d;
 }
-/* line 64, ../sass/tinyadmin/core/_tooltip.scss */
+/* line 66, ../sass/tinyadmin/core/_tooltip.scss */
 .tooltip-wrap .tooltip.top {
   bottom: 100%;
   left: 50%;
@@ -16975,14 +16976,14 @@ section.has-border {
   margin-left: -12rem;
   /* Arrow To the bottom of the tooltip */
 }
-/* line 70, ../sass/tinyadmin/core/_tooltip.scss */
+/* line 72, ../sass/tinyadmin/core/_tooltip.scss */
 .tooltip-wrap .tooltip.top::after {
   top: 100%;
   left: 50%;
   margin-left: -0.5rem;
   border-color: #4d4d4d transparent transparent transparent;
 }
-/* line 78, ../sass/tinyadmin/core/_tooltip.scss */
+/* line 80, ../sass/tinyadmin/core/_tooltip.scss */
 .tooltip-wrap .tooltip.bottom {
   top: 100%;
   left: 50%;
@@ -16990,7 +16991,7 @@ section.has-border {
   margin-left: -12rem;
   /* Arrow To the top of the tooltip */
 }
-/* line 84, ../sass/tinyadmin/core/_tooltip.scss */
+/* line 86, ../sass/tinyadmin/core/_tooltip.scss */
 .tooltip-wrap .tooltip.bottom::after {
   bottom: 100%;
   left: 50%;
@@ -17356,10 +17357,37 @@ section.has-border {
 .tooltip-wrap .tooltip {
   color: #ffffff;
   background-color: #083366;
+  /* Right tooltip */
+  /* Left tooltip */
+  /* Top tooltip */
+  /* Bottom tooltip */
 }
 /* line 7, ../sass/tinyadmin/custom/_tooltip.scss */
 .tooltip-wrap .tooltip.center {
   text-align: center;
+}
+/* line 12, ../sass/tinyadmin/custom/_tooltip.scss */
+.tooltip-wrap .tooltip.right::after {
+  border-color: transparent #083366 transparent transparent;
+}
+/* line 18, ../sass/tinyadmin/custom/_tooltip.scss */
+.tooltip-wrap .tooltip.left::after {
+  border-color: transparent transparent transparent #083366;
+}
+/* line 24, ../sass/tinyadmin/custom/_tooltip.scss */
+.tooltip-wrap .tooltip.top::after {
+  border-color: #083366 transparent transparent transparent;
+}
+/* line 30, ../sass/tinyadmin/custom/_tooltip.scss */
+.tooltip-wrap .tooltip.bottom::after {
+  border-color: transparent transparent #083366 transparent;
+}
+
+/* Header tooltip
+-------------------------------------------------- */
+/* line 42, ../sass/tinyadmin/custom/_tooltip.scss */
+.navibar-item-root.tooltip-wrap .tooltip > * {
+  display: block;
 }
 
 /* Print

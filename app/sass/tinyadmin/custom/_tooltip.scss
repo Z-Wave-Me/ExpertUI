@@ -5,7 +5,43 @@
     color: $light-font-color;
     background-color: $brand-primary-color;
     &.center{
-      text-align: center;
+      text-align: center; 
+    }
+    /* Right tooltip */
+    &.right {
+     &::after {
+        border-color: transparent $brand-primary-color transparent transparent;
+      }
+    }
+    /* Left tooltip */
+    &.left {
+      &::after {
+        border-color: transparent transparent transparent $brand-primary-color;
+      }
+    }
+    /* Top tooltip */
+    &.top {
+       &::after {
+        border-color: $brand-primary-color transparent transparent transparent;
+      }
+    }
+    /* Bottom tooltip */
+    &.bottom {
+      &::after {
+        border-color: transparent transparent $brand-primary-color transparent;
+      }
+    }
+  }
+}
+
+/* Header tooltip
+-------------------------------------------------- */
+.navibar-item-root{
+  &.tooltip-wrap {
+    .tooltip {
+      > * {
+        display: block;
+      }
     }
   }
 }
