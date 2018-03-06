@@ -19,7 +19,7 @@ var config_data = {
     'reorg_interval': 3000, // Set interval in miliseconds to refresh reorganizations
     'route_update_timeout': 15000, // Maximum time in miliseconds to wait for an update-route
     'pending_timeout_limit': 20000,// Displays a RAZ connection error after reaching the limit (milisecons)
-    'local_data_url': 'app/data/',
+    'local_data_url': 'storage/data/',
     'server_url': '', // Remote JSON
     'dongle': 'zway', // Default dongle
     'dongle_list': [], // Dongle list
