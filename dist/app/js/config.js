@@ -7,8 +7,8 @@ var config_data = {
     'environment': 'live',
     'dev_host': [],
     'app_name': 'Z-Wave CIT',
-    'app_version': '1.1.0-RC-5',
-    'app_built': '05-03-2018 10:13:32',
+    'app_version': '1.1.0-RC-6',
+    'app_built': '06-03-2018 14:24:35',
     'app_id': 'CIT',
     'custom_ip': false,
     'user_field': 'USERXXXX',
@@ -320,7 +320,7 @@ var config_data = {
     'custom_cfg': {
       'default': {
         'logo': 'app/images/zplus.jpg',
-        'footer_text': '&COPY; 2017 by Z-Wave.Me',
+        'footer_text': '&COPY; 2018 by Z-Wave.Me',
         'logout': '/smarthome/#/logout',
         'version_type': '',
         'title': 'Z-Wave Expert UI',
@@ -330,7 +330,7 @@ var config_data = {
       },
       'installer': {
         'logo': 'app/images/z-wave-aliance-logo.png',
-        'footer_text': '&COPY; 2017 Z-Wave Alliance',
+        'footer_text': '&COPY; 2018 Z-Wave Alliance',
         'logout': '#/logout',
         'version_type': '',
         'title': 'Z-Wave CIT',
