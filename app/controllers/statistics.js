@@ -70,7 +70,7 @@ appController.controller('NetworkStatisticsController', function ($scope, $filte
       objRxFailures['success'] = percentFormat(statisticsObj.rx_ok);
       objRxFailures['successRound'] =  Math.floor(objRxFailures['success']);
       objRxFailures['failCRC16'] = percentFormat(statisticsObj.rx_crc16_error);
-      objRxFailures['failCRC16Round'] = 100 - (objRxFailures['failCRCRound']  +  objRxFailures['successRound']);
+      objRxFailures['failCRC16Round'] = (objRxFailures['failCRCRound']  +  objRxFailures['successRound']) == 0 ? 0 : 100 - (objRxFailures['failCRCRound']  +  objRxFailures['successRound']);
       objRxFailures['okValue'] = RFRxFrames;
       objRxFailures['failCRCValue'] = RFRxLRCErrors;
       objRxFailures['failCRC16Value'] = RFRxCRC16Errors;
