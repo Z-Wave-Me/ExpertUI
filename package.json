@@ -1,12 +1,12 @@
 {
   "name": "Z-Wave CIT",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "v": "1.1.0",
   "rc": 6,
   "description": "This User Interfaces allows to operate a Smart Home Network based on Z-Wave devices.",
   "main": "index.html",
   "app_type": "installer",
-  "built": "06-03-2018 14:24:35",
+  "built": "06-03-2018 14:38:29",
   "type_cfg": {
     "default": {
       "dir": "dist",
