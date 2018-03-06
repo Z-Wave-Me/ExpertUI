@@ -66,8 +66,11 @@ appController.controller('NetworkStatisticsController', function ($scope, $filte
 
       var objRxFailures = {};
       objRxFailures['failCRC'] = percentFormat(statisticsObj.rx_crc_error);
-      objRxFailures['failCRC16'] = percentFormat(statisticsObj.rx_crc16_error);
+      objRxFailures['failCRCRound'] =  Math.floor(objRxFailures['failCRC']);
       objRxFailures['success'] = percentFormat(statisticsObj.rx_ok);
+      objRxFailures['successRound'] =  Math.floor(objRxFailures['success']);
+      objRxFailures['failCRC16'] = percentFormat(statisticsObj.rx_crc16_error);
+      objRxFailures['failCRC16Round'] = 100 - (objRxFailures['failCRCRound']  +  objRxFailures['successRound']);
       objRxFailures['okValue'] = RFRxFrames;
       objRxFailures['failCRCValue'] = RFRxLRCErrors;
       objRxFailures['failCRC16Value'] = RFRxCRC16Errors;
@@ -83,8 +86,10 @@ appController.controller('NetworkStatisticsController', function ($scope, $filte
 
       // Foreign Network Impact
       var objForeignNetworkImpact = {};
-      objForeignNetworkImpact['fail'] = percentFormat(statisticsObj.network_impact_foreign);
       objForeignNetworkImpact['success'] = percentFormat(statisticsObj.network_impact_own);
+      objForeignNetworkImpact['successRound'] = Math.floor(objForeignNetworkImpact['success']);
+      objForeignNetworkImpact['fail'] = percentFormat(statisticsObj.network_impact_foreign);
+      objForeignNetworkImpact['failRound'] = 100 - objForeignNetworkImpact['successRound'];
       objForeignNetworkImpact['foreign_value'] = RFRxForeignHomeID;
       objForeignNetworkImpact['own_value'] = RFRxFrames;
 

@@ -24,115 +24,87 @@
       </button>
   </div>
 
-  <!-- ------------------------------------------ Data Rate on Send ------------------------------------------ -->
-  <!--<pre>{{netStat.dataRate|json}}</pre>-->
-  <div class="statistic-entry">
-      <div class="statistic-title">{{_t('cit_RFTxLBTBackOffs')}}&nbsp;
-          <span class="label label-default">{{netStat.dataRate.dateTime.today}}</span>
-      </div>
+ <!-- ------------------------------------------ Data Rate on Send ------------------------------------------ -->
+    <!--<pre>{{netStat.dataRate|json}}</pre>-->
+    <div class="statistic-entry">
+        <div class="statistic-title">{{_t('cit_RFTxLBTBackOffs')}}&nbsp;
+            <span class="label label-default">{{netStat.dataRate.dateTime.today}}</span>
+        </div>
 
-      
-          <div class="page-navi-content">
-              <span class="text-success">{{ _t('RFTxFrames')}}: <strong>{{netStat.dataRate.sendValue}}</strong></span><br/>
-              <span class="text-danger">{{_t('RFTxLBTBackOffs_error')}}:  <strong>{{_t(netStat.dataRate.backOffValue)}}</strong></span>
-          </div>
+        
+            <div class="page-navi-content">
+                <span class="text-success">{{ _t('RFTxFrames')}}: <strong>{{netStat.dataRate.sendValue}}</strong></span><br/>
+                <span class="text-danger">{{_t('RFTxLBTBackOffs_error')}}:  <strong>{{_t(netStat.dataRate.backOffValue)}}</strong></span>
+            </div>
+    </div>
+    <!-- ------------------------------------------ Success on Reception ------------------------------------------ -->
+    <!-- <pre>{{netStat.successReception|json}}</pre> -->
+    <div class="statistic-entry">
+        <div class="statistic-title">{{_t('RFRxLRCErrors')}}&nbsp;
+            <span class="label label-default">{{netStat.successReception.dateTime.today}}</span>
+        </div>
+        <div class="progress clickable" ng-click="expandNavi('RFRxLRCErrors', $event)">
+            <!-- Success-->
+            <div class="progress-bar progress-bar-success"
+                 title="{{_t('success_on_reception')}} {{netStat.successReception.success}}%"
+                 style="width: {{netStat.successReception.successRound}}%">
+                <span>{{netStat.successReception.success}}% {{_t('success_reception')}}</span>
+            </div>
+            <!-- CRC errors-->
+            <div class="progress-bar progress-bar-danger"
+                 title="{{_t('failCRCName')}} {{netStat.successReception.failCRC}}%"
+                 style="width: {{netStat.successReception.failCRCRound}}%">
+                <span>{{netStat.successReception.failCRC}}% {{_t('failCRC')}}</span>
+            </div>
+            <!-- CRC16 errors-->
+            <div class="progress-bar progress-bar-warning"
+                 title="{{_t('failCRC16Name')}} {{netStat.successReception.failCRC16}}%"
+                 style="width: {{netStat.successReception.failCRC16Round}}%"
+                 ng-if="netStat.successReception.failCRC16Round > 0">
+                <span>{{netStat.successReception.failCRC16}}% {{_t('failCRC16')}}</span>
+            </div>
+        </div>
+        <div class="page-navi" ng-if="naviExpanded['RFRxLRCErrors']">
+            <div class="page-navi-in">
+                <div class="page-navi-content">
+                    <!-- Success-->
+                    <span class="text-success">{{ _t('success_on_reception')}}: <strong>{{netStat.successReception.okValue}}</strong></span><br/>
+                    <!-- CRC errors-->
+                    <span class="text-danger">{{_t('failCRCName')}}:  <strong>{{_t(netStat.successReception.failCRCValue)}}</strong></span><br/>
+                    <!-- CRC16 errors-->
+                    <span class="text-warning">{{_t('failCRC16Name')}}:  <strong>{{_t(netStat.successReception.failCRC16Value)}}</strong></span>
+                </div>
+            </div>
+        </div>
+    </div>
 
-      <!--<pre>{{netStat.dataRate|json}}</pre>-->
-  <!--   <div class="progress clickable" ng-click="expandNavi('RFTxLBTBackOffs', $event)"> -->
-          <!-- SUCCESS -->
-         <!-- <div class="progress-bar progress-bar-success" style="width: {{netStat.dataRate.success}}%">
-              <span title="{{netStat.dataRate.success}}% {{_t('RFTxFrames')}}">
-                  {{netStat.dataRate.success}}% {{_t('RFTxFrames')}}
-              </span>
-          </div>-->
-          <!-- FAILED -->
-      <!--
-          <div class="progress-bar progress-bar-danger" style="width: {{netStat.dataRate.fail}}%">
-              <span title="{{netStat.dataRate.fail}}% {{_t('RFTxLBTBackOffs_error')}}">
-                  {{netStat.dataRate.fail}}% {{_t('RFTxLBTBackOffs_error')}}
-              </span>
-          </div>
-      </div>-->
-      <!-- Info -->
-          <!--
-      <div class="page-navi" ng-if="naviExpanded['RFTxLBTBackOffs']">
-          <div class="page-navi-in">
-              <div class="page-navi-content">
-                  <span class="text-success">{{ _t('RFTxFrames')}}: <strong>{{netStat.dataRate.sendValue}}</strong></span><br/>
-                  <span class="text-danger">{{_t('RFTxLBTBackOffs_error')}}:  <strong>{{_t(netStat.dataRate.backOffValue)}}</strong></span>
-              </div>
-          </div>
-      </div>-->
-  </div>
-  <!-- ------------------------------------------ Success on Reception ------------------------------------------ -->
-  <!--<pre>{{netStat.successReception|json}}</pre>-->
-  <div class="statistic-entry">
-      <div class="statistic-title">{{_t('RFRxLRCErrors')}}&nbsp;
-          <span class="label label-default">{{netStat.successReception.dateTime.today}}</span>
-      </div>
-     <!-- <pre>{{netStat.successReception|json}}</pre>-->
-      <div class="progress clickable" ng-click="expandNavi('RFRxLRCErrors', $event)">
-          <!-- Success-->
-          <div class="progress-bar progress-bar-success"
-               title="{{_t('success_on_reception')}} {{netStat.successReception.success}}%"
-               style="width: {{netStat.successReception.success}}%">
-              <span>{{netStat.successReception.success}}% {{_t('success_reception')}}</span>
-          </div>
-          <!-- CRC errors-->
-          <div class="progress-bar progress-bar-danger"
-               title="{{_t('failCRCName')}} {{netStat.successReception.failCRC}}%"
-               style="width: {{netStat.successReception.failCRC}}%">
-              <span>{{netStat.successReception.failCRC}}% {{_t('failCRC')}}</span>
-          </div>
-          <!-- CRC16 errors-->
-          <div class="progress-bar progress-bar-warning"
-               title="{{_t('failCRC16Name')}} {{netStat.successReception.failCRC16}}%"
-               style="width: {{netStat.successReception.failCRC16}}%">
-              <span>{{netStat.successReception.failCRC16}}% {{_t('failCRC16')}}</span>
-          </div>
-      </div>
-      <div class="page-navi" ng-if="naviExpanded['RFRxLRCErrors']">
-          <div class="page-navi-in">
-              <div class="page-navi-content">
-                  <!-- Success-->
-                  <span class="text-success">{{ _t('success_on_reception')}}: <strong>{{netStat.successReception.okValue}}</strong></span><br/>
-                  <!-- CRC errors-->
-                  <span class="text-danger">{{_t('failCRCName')}}:  <strong>{{_t(netStat.successReception.failCRCValue)}}</strong></span><br/>
-                  <!-- CRC16 errors-->
-                  <span class="text-warning">{{_t('failCRC16Name')}}:  <strong>{{_t(netStat.successReception.failCRC16Value)}}</strong></span>
-              </div>
-          </div>
-      </div>
-  </div>
-
-  <!-- ------------------------------------------ Foreign Network Impact ------------------------------------------ -->
-  <!--<pre>{{netStat.foreignNetwork|json}}</pre>-->
-  <div class="statistic-entry">
-      <div class="statistic-title">{{_t('RFRxForeignHomeID')}}&nbsp;
-          <span class="label label-default">{{netStat.foreignNetwork.dateTime.today}}</span>
-      </div>
-      <!--<pre>{{netStat.foreignNetwork|json}}</pre>-->
-      <div class="progress clickable" ng-click="expandNavi('RFRxForeignHomeID', $event)">
-          <!-- SUCCESS -->
-          <div class="progress-bar progress-bar-success" style="width: {{netStat.foreignNetwork.success}}%">
-              <span title="{{netStat.foreignNetwork.success}}% {{_t('own')}}">
-                  {{netStat.foreignNetwork.success}}% {{_t('own')}}
-              </span>
-          </div>
-          <!-- FAILED -->
-          <div class="progress-bar progress-bar-danger" style="width: {{netStat.foreignNetwork.fail}}%">
-              <span title="{{netStat.foreignNetwork.fail}}% {{_t('foreign')}}">
-                  {{netStat.foreignNetwork.fail}}% {{_t('foreign')}}
-              </span>
-          </div>
-      </div>
-      <div class="page-navi" ng-if="naviExpanded['RFRxForeignHomeID']">
-          <div class="page-navi-in">
-              <div class="page-navi-content">
-                  <span class="text-success">{{ _t('own_frames_desc')}}: <strong>{{netStat.foreignNetwork.own_value}}</strong></span><br/>
-                  <span class="text-danger">{{_t('foreign_frames_desc')}}:  <strong>{{_t(netStat.foreignNetwork.foreign_value)}}</strong></span>
-              </div>
-          </div>
-      </div>
-  </div>
+    <!-- ------------------------------------------ Foreign Network Impact ------------------------------------------ -->
+    <!-- <pre>{{netStat.foreignNetwork|json}}</pre> -->
+    <div class="statistic-entry">
+        <div class="statistic-title">{{_t('RFRxForeignHomeID')}}&nbsp;
+            <span class="label label-default">{{netStat.foreignNetwork.dateTime.today}}</span>
+        </div>
+        <div class="progress clickable" ng-click="expandNavi('RFRxForeignHomeID', $event)">
+            <!-- SUCCESS -->
+            <div class="progress-bar progress-bar-success" style="width: {{netStat.foreignNetwork.success}}%">
+                <span title="{{netStat.foreignNetwork.successRound}}% {{_t('own')}}">
+                    {{netStat.foreignNetwork.success}}% {{_t('own')}}
+                </span>
+            </div>
+            <!-- FAILED -->
+            <div class="progress-bar progress-bar-danger" style="width: {{netStat.foreignNetwork.fail}}%">
+                <span title="{{netStat.foreignNetwork.failRound}}% {{_t('foreign')}}">
+                    {{netStat.foreignNetwork.fail}}% {{_t('foreign')}}
+                </span>
+            </div>
+        </div>
+        <div class="page-navi" ng-if="naviExpanded['RFRxForeignHomeID']">
+            <div class="page-navi-in">
+                <div class="page-navi-content">
+                    <span class="text-success">{{ _t('own_frames_desc')}}: <strong>{{netStat.foreignNetwork.own_value}}</strong></span><br/>
+                    <span class="text-danger">{{_t('foreign_frames_desc')}}:  <strong>{{_t(netStat.foreignNetwork.foreign_value)}}</strong></span>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
