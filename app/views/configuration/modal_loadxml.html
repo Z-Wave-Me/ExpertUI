@@ -13,7 +13,7 @@
                     ng-model="deviceXml.input.fileName">
                 <option value="">---</option>
                 <option ng-init="selectCfg = {
-                                'name':((v.brandName == '' && v.productName == '')?('Unnamed ZDDX: ' + v.fileName):(v.brandName + ' ' + v.productName))}"
+                                'name':((v.brandName == '' && v.productName == '')?('Unnamed ZDDX: ' + v.fileName):('Code: ' + v.Productcode + ' ' + v.brandName + ' ' + v.productName))}"
                         ng-repeat="v in deviceXml.all | orderBy:'brandName':false track by $index"
                         ng-selected="deviceZddxFile == v.fileName"
                         value="{{v.fileName}}">{{selectCfg.name}}
@@ -27,6 +27,9 @@
         </div>
         <div class="appmodal-footer">
             <!-- Close -->
+
+        <pre>{{deviceXml.all | json}}</pre>
+
             <button type="button" class="btn btn-default" ng-click="handleModal('loadXmlModal', $event)">
                 <i class="fa fa-times text-danger"></i> <span class="btn-name">{{_t('btn_cancel')}}</span>
             </button>
