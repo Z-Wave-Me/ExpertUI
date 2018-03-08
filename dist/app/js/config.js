@@ -7,8 +7,8 @@ var config_data = {
     'environment': 'live',
     'dev_host': [],
     'app_name': 'Z-Wave CIT',
-    'app_version': '1.1.0-RC-5',
-    'app_built': '08-03-2018 15:46:05',
+    'app_version': '1.1.0-RC-7',
+    'app_built': '08-03-2018 15:12:20',
     'app_id': 'CIT',
     'custom_ip': false,
     'user_field': 'USERXXXX',
@@ -53,6 +53,7 @@ var config_data = {
     'reorg_log_url': '/ZWaveAPI/GetReorganizationLog', // Url to load log
     'zddx_create_url': '/ZWaveAPI/CreateZDDX/', // Create zddx file
     'get_network_statistics': '/ZWaveAPI/GetStatisticsData', // get network statistics
+    'reset_network_statistics': '/ZWaveAPI/ResetStatisticsData', // reset network statistics
 
     // Other APIs
     'packet_log': '/ZWaveAPI/PacketLog', // Get Packet log
@@ -321,7 +322,7 @@ var config_data = {
     'custom_cfg': {
       'default': {
         'logo': 'app/images/zplus.jpg',
-        'footer_text': '&COPY; 2018 by Z-Wave.Me',
+        'footer_text': '&COPY; 2015-2018 by Z-Wave.Me',
         'logout': '/smarthome/#/logout',
         'version_type': '',
         'title': 'Z-Wave Expert UI',
@@ -331,7 +332,7 @@ var config_data = {
       },
       'installer': {
         'logo': 'app/images/z-wave-aliance-logo.png',
-        'footer_text': '&COPY; 2018 Z-Wave Alliance',
+        'footer_text': '&COPY; 2017-2018 Z-Wave Alliance',
         'logout': '#/logout',
         'version_type': '',
         'title': 'Z-Wave CIT',

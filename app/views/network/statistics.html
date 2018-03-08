@@ -26,7 +26,26 @@
         </div>
       </section>
 
-    <bb-alert alert="alert"></bb-alert>
+  <div class="text-right print-hide">
+      <button class="btn btn-primary" id="btn_update_all_1"
+              ng-click="updateNetworkStatistics()"
+              ng-disabled="rowSpinner['loadNetStatistics']">
+          <bb-row-spinner
+                  spinner="rowSpinner['loadNetStatistics']"
+                  label="_t('update')"
+                  icon="'fa-circle-o'">
+          </bb-row-spinner>
+      </button>
+      <button class="btn btn-primary" id="btn_update_all_1"
+              ng-click="resetNetworkStatistics()"
+              ng-disabled="rowSpinner['resetNetStatistics']">
+          <bb-row-spinner
+                  spinner="rowSpinner['resetNetStatistics']"
+                  label="_t('reset')"
+                  icon="'fa-refresh'">
+          </bb-row-spinner>
+      </button>
+  </div>
 
     <!-- ------------------------------------------ Data Rate on Send ------------------------------------------ -->
     <!--<pre>{{netStat.dataRate|json}}</pre>-->
