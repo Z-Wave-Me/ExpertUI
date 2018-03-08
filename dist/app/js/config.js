@@ -7,8 +7,8 @@ var config_data = {
     'environment': 'live',
     'dev_host': [],
     'app_name': 'Z-Wave CIT',
-    'app_version': '1.1.0-RC-4',
-    'app_built': '14-02-2018 14:31:12',
+    'app_version': '1.1.0-RC-5',
+    'app_built': '08-03-2018 15:46:05',
     'app_id': 'CIT',
     'custom_ip': false,
     'user_field': 'USERXXXX',
@@ -19,7 +19,7 @@ var config_data = {
     'reorg_interval': 3000, // Set interval in miliseconds to refresh reorganizations
     'route_update_timeout': 15000, // Maximum time in miliseconds to wait for an update-route
     'pending_timeout_limit': 20000,// Displays a RAZ connection error after reaching the limit (milisecons)
-    'local_data_url': 'app/data/',
+    'local_data_url': 'storage/data/',
     'server_url': '', // Remote JSON
     'dongle': 'zway', // Default dongle
     'dongle_list': [], // Dongle list
@@ -91,7 +91,7 @@ var config_data = {
     'lang_dir': 'app/lang/', // Language directory
     'lang': 'en', // Default language
     'lang_list': ['en', 'de', 'fr', 'es', 'ru', 'cz', 'sk', 'sv', 'cn'], // List of languages
-    'page_results_history': 20, // List of languages
+    'page_results_history': 100, // Zniffer history pagination
     'frequency': {
       0: 'EU',
       1: 'RU',
@@ -209,6 +209,7 @@ var config_data = {
       fatalError: {
         type: 'system', // system|network
         message: false,
+        info: false,
         hide: false
       },
     },
@@ -320,7 +321,7 @@ var config_data = {
     'custom_cfg': {
       'default': {
         'logo': 'app/images/zplus.jpg',
-        'footer_text': '&COPY; 2017 by Z-Wave.Me',
+        'footer_text': '&COPY; 2018 by Z-Wave.Me',
         'logout': '/smarthome/#/logout',
         'version_type': '',
         'title': 'Z-Wave Expert UI',
@@ -330,7 +331,7 @@ var config_data = {
       },
       'installer': {
         'logo': 'app/images/z-wave-aliance-logo.png',
-        'footer_text': '&COPY; 2017 Z-Wave Alliance',
+        'footer_text': '&COPY; 2018 Z-Wave Alliance',
         'logout': '#/logout',
         'version_type': '',
         'title': 'Z-Wave CIT',
