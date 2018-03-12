@@ -91,7 +91,7 @@ var config_data = {
         'smarthome_login': '/smarthome/#/?fromexpert', // Smarthome login page
         'lang_dir': 'app/lang/', // Language directory
         'lang': 'en', // Default language
-        'lang_list': ['en', 'de', 'fr', 'es', 'ru', 'cz', 'sk', 'sv', 'cn'], // List of languages
+        'lang_list': ['en', 'de', 'fr', 'es', 'ru', 'cz', 'sk', 'sv', 'cn','pt'], // List of languages
         'page_results_history': 20, // List of languages
         'frequency': {
             0: 'EU',
