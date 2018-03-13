@@ -123,7 +123,7 @@ angApp.config(['$routeProvider',
         }).// Settings
         when('/settings', {
             requireLogin: true,
-            templateUrl: 'app/views/settings/settings_installer.html'
+            templateUrl: 'app/views/settings/settings.html'
         }).// Print
         when('/print', {
             requireLogin: true,

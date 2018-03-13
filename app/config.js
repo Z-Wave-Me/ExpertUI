@@ -5,7 +5,7 @@
 var config_data = {
   'cfg': {
     'environment': '@@dev',
-    'dev_host': [],
+    'dev_host': ['192.168.10.214'],
     'app_name': '@@app_name',
     'app_version': '@@app_version',
     'app_built': '@@app_built',
@@ -82,6 +82,7 @@ var config_data = {
     'identifier_update': '/ZAutomation/api/v1/system/certfxUpdateIdentifier', // Identifier update
     'cit_forward_login': '/ZAutomation/api/v1/system/certfxAuthForwarding', // forward cit login
     'cit_unregister': '/ZAutomation/api/v1/system/certfxUnregister', // unregister cit
+    'cit_wifi': '/ZAutomation/api/v1/system/ethernet/settings ', // set wifi
     //'reorg_log_url': '/config/reorg.log', // Url for store reorg log data
     'zddx_url': '/ZDDX/', // Url for zddx xml files
     'notes_url': '/config/notes.log', // Url for store notes data

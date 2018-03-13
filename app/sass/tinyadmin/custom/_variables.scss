@@ -69,7 +69,7 @@ $darkest-bcg-color: #000;
 $heading-color: lighten($font-color, 20%);
 $a-color:  lighten($font-color, 20%);
 $a-hover-color:  lighten($font-color, 10%); 
-$focus-color:  $info-color;
+$focus-color:  $brand-additive-color;
 
 // effects
 $border-radius: 4px;

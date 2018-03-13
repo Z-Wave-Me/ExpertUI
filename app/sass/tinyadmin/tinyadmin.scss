@@ -6,7 +6,7 @@
 /* Vendors
 -------------------------------------------------- */
 //@import "vendor/normalize/normalize";
-@import "vendor/minireset/minireset";
+//@import "vendor/minireset/minireset";
 //@import "vendor/font-awesome-4.7.0/scss/font-awesome";
 
 /* SmartHome UI variables nad functions
@@ -15,8 +15,9 @@
 
 /* core
 -------------------------------------------------- */
+@import "core/_section"; 
 @import "core/_page-topbar";
-@import "core/_section";  
+@import "core/_accordion";  
 @import "core/_tooltip"; 
 @import "core/_modifiers";
 /* @import "core/_body";

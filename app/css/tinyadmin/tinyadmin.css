@@ -7,99 +7,22 @@
 -------------------------------------------------- */
 /* Vendors
 -------------------------------------------------- */
-/*! minireset.css v0.0.3 | MIT License | github.com/jgthms/minireset.css */
-@import url(https://fonts.googleapis.com/css?family=Lato:400,300,300italic,400italic,700,700italic);
-/* line 2, ../../sass/tinyadmin/vendor/minireset/minireset.scss */
-html,
-body,
-p,
-ol,
-ul,
-li,
-dl,
-dt,
-dd,
-blockquote,
-figure,
-fieldset,
-legend,
-textarea,
-pre,
-iframe,
-hr,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 0;
-  padding: 0;
-}
-
-/*h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-size: 100%;
-  font-weight: normal;
-}*/
-/*ul {
-  list-style: none;
-}*/
-/* line 43, ../../sass/tinyadmin/vendor/minireset/minireset.scss */
-button,
-input,
-select,
-textarea {
-  margin: 0;
-}
-
-/* line 50, ../../sass/tinyadmin/vendor/minireset/minireset.scss */
-html {
-  box-sizing: border-box;
-}
-
-/* line 54, ../../sass/tinyadmin/vendor/minireset/minireset.scss */
-*, *:before, *:after {
-  box-sizing: inherit;
-}
-
-/* line 58, ../../sass/tinyadmin/vendor/minireset/minireset.scss */
-img,
-embed,
-iframe,
-object,
-audio,
-video {
-  height: auto;
-  max-width: 100%;
-}
-
-/* line 68, ../../sass/tinyadmin/vendor/minireset/minireset.scss */
-iframe {
-  border: 0;
-}
-
-/* line 72, ../../sass/tinyadmin/vendor/minireset/minireset.scss */
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-/* line 77, ../../sass/tinyadmin/vendor/minireset/minireset.scss */
-td,
-th {
-  padding: 0;
-  text-align: left;
-}
-
 /* SmartHome UI variables nad functions
 -------------------------------------------------- */
 /* core
 -------------------------------------------------- */
+/* Section
+-------------------------------------------------- */
+@import url(https://fonts.googleapis.com/css?family=Lato:400,300,300italic,400italic,700,700italic);
+/* line 4, ../../sass/tinyadmin/core/_section.scss */
+section {
+  margin-bottom: 2rem;
+}
+/* line 6, ../../sass/tinyadmin/core/_section.scss */
+section.has-border {
+  padding: 1rem;
+}
+
 /* Page topbar
 -------------------------------------------------- */
 /* line 4, ../../sass/tinyadmin/core/_page-topbar.scss */
@@ -114,15 +37,47 @@ th {
   border-bottom: solid 1px #87cf83;
 }
 
-/* Section
+/* accordion
 -------------------------------------------------- */
-/* line 4, ../../sass/tinyadmin/core/_section.scss */
-section {
-  margin-bottom: 2rem;
+/* line 7, ../../sass/tinyadmin/core/_accordion.scss */
+.accordion-toggle > button {
+  all: inherit;
+  border: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  font-weight: normal;
+  cursor: pointer;
 }
-/* line 6, ../../sass/tinyadmin/core/_section.scss */
-section.has-border {
+/* line 16, ../../sass/tinyadmin/core/_accordion.scss */
+.accordion-toggle > button::after {
+  margin-left: 1rem;
   padding: 1rem;
+  font-size: 130%;
+}
+/* line 21, ../../sass/tinyadmin/core/_accordion.scss */
+.accordion-toggle > button[aria-expanded="false"] {
+  border-bottom: solid 1px #87cf83;
+}
+/* line 23, ../../sass/tinyadmin/core/_accordion.scss */
+.accordion-toggle > button[aria-expanded="false"]::after {
+  content: "+";
+}
+/* line 28, ../../sass/tinyadmin/core/_accordion.scss */
+.accordion-toggle > button[aria-expanded="true"]::after {
+  content: "-";
+}
+/* line 35, ../../sass/tinyadmin/core/_accordion.scss */
+.accordion-toggle > button:focus::after {
+  font-weight: bold;
+  color: #F89847;
+}
+
+/* line 43, ../../sass/tinyadmin/core/_accordion.scss */
+.accordion {
+  border-bottom: solid 1px #87cf83;
+  padding-bottom: 1rem;
 }
 
 /* Tooltip
@@ -570,8 +525,28 @@ section.has-border {
 -------------------------------------------------- */
 /* line 3, ../../sass/tinyadmin/custom/_page-topbar.scss */
 .page-topbar {
+  margin-bottom: 0;
   padding-bottom: 0;
   border-bottom: 0;
+}
+
+/* accordion
+-------------------------------------------------- */
+/* line 3, ../../sass/tinyadmin/custom/_accordion.scss */
+.accordion-toggle {
+  margin: 0;
+  padding: 0;
+  font-size: 130%;
+}
+/* line 9, ../../sass/tinyadmin/custom/_accordion.scss */
+.accordion-toggle > button[aria-expanded="false"]::after {
+  font-family: fontawesome;
+  content: "\f078";
+}
+/* line 15, ../../sass/tinyadmin/custom/_accordion.scss */
+.accordion-toggle > button[aria-expanded="true"]::after {
+  font-family: fontawesome;
+  content: "\f077";
 }
 
 /* Tooltip

@@ -1,5 +1,9 @@
 {
  "--- newtrans": "---",
+ "wifi":"WiFi",
+ "ipaddress":"IP address",
+ "netmask":"Net mask",
+ "gateway":"Gateway",
  "incoming_outgoing":"IN/OUT",
  "incoming":"Incoming",
  "outgoing":"Outgoing",

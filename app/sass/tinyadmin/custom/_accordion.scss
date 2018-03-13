@@ -1,0 +1,21 @@
+/* accordion
+-------------------------------------------------- */
+.accordion-toggle{
+  margin: 0;
+  padding: 0;
+  font-size: 130%;
+ > button{
+    &[aria-expanded="false"]{
+     &::after{
+      font-family: fontawesome;
+      content: "\f078";
+      }
+    }
+    &[aria-expanded="true"]{
+      &::after{
+        font-family: fontawesome;
+        content: "\f077";
+      }
+    }
+  }
+}
