@@ -283,6 +283,7 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         var hasSecurityS2Cc = deviceService.hasCommandClass(node,159);
         var securityS2Key = deviceService.getS2GrantedKeys(hasSecurityS2Cc);
         var productCode = '';
+        var manualUrl = '';
 
         var hasWakeup = !isListening && !node.data.sensor250.value && !node.data.sensor1000.value;
         if (isNaN(deviceDescriptionAppVersion))
@@ -334,8 +335,14 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
                 productName = zddXml.ZWaveDevice.deviceDescription.productName;
             }
 
-            if (angular.isDefined(zddXml.ZWaveDevice.resourceLinks)) {
+            if (angular.isDefined(zddXml.ZWaveDevice.resourceLinks.deviceImage)) {
                 deviceImage = zddXml.ZWaveDevice.resourceLinks.deviceImage._url;
+            }
+            if (angular.isDefined(zddXml.ZWaveDevice.resourceLinks.manualUrl)) {
+                manualUrl = zddXml.ZWaveDevice.resourceLinks.manualUrl._url;
+            }
+            if (angular.isDefined(zddXml.ZWaveDevice.deviceDescription.productCode)) {
+                productCode = zddXml.ZWaveDevice.deviceDescription.productCode;
             }
             /**
              * TODO: finish ZWavePlusRoles
@@ -379,6 +386,7 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         obj["u"] = {"key": "granted_keys", "val": securityS2Key.join()};
         obj["v"] = {"key": "Certification", "val": certification};
         obj["w"] = {"key": "Productcode", "val": productCode};
+        obj["x"] = {"key": "Manual", "val": "<a href='"+manualUrl+"' target=blank>Open Productinformation</a>" };
         return obj;
 
     }
