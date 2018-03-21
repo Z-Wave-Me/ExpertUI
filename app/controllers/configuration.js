@@ -37,6 +37,7 @@ appController.controller('LoadDeviceXmlController', function($scope,$routeParams
     $scope.deviceXml = {
         all: [],
         find: [],
+        filter: [], 
         input: {
             fileName: 0
         }
@@ -45,17 +46,58 @@ appController.controller('LoadDeviceXmlController', function($scope,$routeParams
      * Load devices descriptions
      * @param {int} nodeId
      */
+
+     $scope.loadDeviceXml = function (nodeId)
+     {
+        var cmd = 'devices[' + nodeId + '].GuessXML()';
+        dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
+           
+           //"ccName": "ManufacturerSpecific",
+           var deviceManufacturerSpecific = _.findWhere($scope.interviewCommands, {ccName: "ManufacturerSpecific"});
+           var deviceVendorId = deviceManufacturerSpecific.cmdData.vendorId.value;
+           var deviceProductId = deviceManufacturerSpecific.cmdData.productId.value;
+           var deviceProductTypeId = deviceManufacturerSpecific.cmdData.productType.value;
+
+           var preFilter = _.where(response.data, {manufacturerId: deviceVendorId});
+           
+           $scope.deviceXml.all = _.reject(preFilter, function(s)
+            {
+                return s.deviceImage.indexOf("pepper1.net") == -1 && s.brandName != "" && s.productName != "" ? false : true;
+
+            });
+    
+
+
+           
+           $scope.deviceXml.filter = _.findWhere($scope.deviceXml.all, {manufacturerId: deviceVendorId, productTypeId: deviceProductTypeId, productId: deviceProductId});
+           
+           if($scope.deviceXml.filter)
+           {
+            $scope.deviceXml.find = $scope.deviceXml.filter;
+           }
+
+           
+        }, function (error) {
+            $scope.toggleRowSpinner();
+        });
+
+
+     }
+
+     $scope.loadDeviceXml($routeParams.nodeId);
+
+/*
+
     $scope.loadDeviceXml = function (nodeId) {
         var cmd = 'devices[' + nodeId + '].GuessXML()';
        dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
            $scope.deviceXml.all = response.data;
         }, function (error) {
             $scope.toggleRowSpinner();
-            alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
         });
     };
     $scope.loadDeviceXml($routeParams.nodeId);
-
+*/
     /**
      * Change device XML
      * @param {object} input
@@ -86,7 +128,6 @@ appController.controller('LoadDeviceXmlController', function($scope,$routeParams
             }, timeout);
         }, function (error) {
             $scope.toggleRowSpinner();
-            alertify.alertError($scope._t('error_update_data') + '\n' + cmd);
         });
     };
 });
