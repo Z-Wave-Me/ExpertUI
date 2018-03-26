@@ -275,6 +275,10 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         var deviceDescriptionAppVersion = parseInt(node.data.applicationMajor.value, 10);
         var deviceDescriptionAppSubVersion = parseInt(node.data.applicationMinor.value, 10);
         var isListening = node.data.isListening.value;
+        var manualUrl = "";
+        var certNr = "";
+        var productCode = "";
+
         // Security S2
         var hasSecurityS2Cc = deviceService.hasCommandClass(node,159);
         var securityS2Key = deviceService.getS2GrantedKeys(hasSecurityS2Cc);
@@ -317,6 +321,8 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
             inclusionNote = deviceService.configGetZddxLang($filter('hasNode')(zddXml, 'ZWaveDevice.deviceDescription.inclusionNote.lang'), $scope.lang);
             wakeupNote = deviceService.configGetZddxLang($filter('hasNode')(zddXml, 'ZWaveDevice.deviceDescription.wakeupNote.lang'), $scope.lang);
 
+
+
             if ('brandName' in zddXml.ZWaveDevice.deviceDescription) {
                 brandName = zddXml.ZWaveDevice.deviceDescription.brandName;
             }
@@ -325,9 +331,23 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
                 productName = zddXml.ZWaveDevice.deviceDescription.productName;
             }
 
-            if (angular.isDefined(zddXml.ZWaveDevice.resourceLinks)) {
+            if (angular.isDefined(zddXml.ZWaveDevice.resourceLinks.deviceImage)) {
                 deviceImage = zddXml.ZWaveDevice.resourceLinks.deviceImage._url;
             }
+
+            if (angular.isDefined(zddXml.ZWaveDevice.resourceLinks.manualUrl)) {
+                manualUrl = zddXml.ZWaveDevice.resourceLinks.manualUrl._url;
+            }
+
+            if (angular.isDefined(zddXml.ZWaveDevice.deviceData.certNumber)) {
+                certNumber = zddXml.ZWaveDevice.deviceData.certNumber;
+            }
+
+            if (angular.isDefined(zddXml.ZWaveDevice.resourceLinks.manualUrl)) {
+                productCode = zddXml.ZWaveDevice.deviceDescription.productCode;
+            }
+
+
             /**
              * TODO: finish ZWavePlusRoles
              */
@@ -368,6 +388,18 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
             obj["s"] = {"key": "device_security_interview", "val": '<i class="' + $filter('checkedIcon')(securityInterview === true ? false : true) + '"></i>'};
         }
         obj["u"] = {"key": "granted_keys", "val": securityS2Key.join()};
+
+        if(manualUrl)
+        {
+        obj["v"] = {"key": "Productinformation", "val": "<a href='" + manualUrl + "' target=blank> Productinformation </a>"};
+        }
+        else
+        {
+         obj["v"] = {"key": "Productinformation", "val": "no Data"};   
+        }
+        obj["w"] = {"key": "Certification-Nr.", "val": certNumber};
+        obj["x"] = {"key": "Productcode", "val": productCode};
+
         return obj;
 
     }
