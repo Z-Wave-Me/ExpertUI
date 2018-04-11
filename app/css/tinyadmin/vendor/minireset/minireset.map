@@ -1,0 +1,12 @@
+{
+	"version": 3,
+	"file": "../../../../sass/tinyadmin/vendor/minireset/minireset.css",
+	"sources": [
+		"../../../../sass/tinyadmin/vendor/minireset/minireset.scss"
+	],
+	"sourcesContent": [
+		"/*! minireset.css v0.0.3 | MIT License | github.com/jgthms/minireset.css */\r\nhtml,\r\nbody,\r\np,\r\nol,\r\nul,\r\nli,\r\ndl,\r\ndt,\r\ndd,\r\nblockquote,\r\nfigure,\r\nfieldset,\r\nlegend,\r\ntextarea,\r\npre,\r\niframe,\r\nhr,\r\nh1,\r\nh2,\r\nh3,\r\nh4,\r\nh5,\r\nh6 {\r\n  margin: 0;\r\n  padding: 0;\r\n}\r\n\r\n/*h1,\r\nh2,\r\nh3,\r\nh4,\r\nh5,\r\nh6 {\r\n  font-size: 100%;\r\n  font-weight: normal;\r\n}*/\r\n\r\n/*ul {\r\n  list-style: none;\r\n}*/\r\n\r\nbutton,\r\ninput,\r\nselect,\r\ntextarea {\r\n  margin: 0;\r\n}\r\n\r\nhtml {\r\n  box-sizing: border-box;\r\n}\r\n\r\n*, *:before, *:after {\r\n  box-sizing: inherit;\r\n}\r\n\r\nimg,\r\nembed,\r\niframe,\r\nobject,\r\naudio,\r\nvideo {\r\n  height: auto;\r\n  max-width: 100%;\r\n}\r\n\r\niframe {\r\n  border: 0;\r\n}\r\n\r\ntable {\r\n  border-collapse: collapse;\r\n  border-spacing: 0;\r\n}\r\n\r\ntd,\r\nth {\r\n  padding: 0;\r\n  text-align: left;\r\n}"
+	],
+	"mappings": "AAAA,2EAA2E;;AAC3E,AAAA,IAAI;AACJ,AAAA,IAAI;AACJ,AAAA,CAAC;AACD,AAAA,EAAE;AACF,AAAA,EAAE;AACF,AAAA,EAAE;AACF,AAAA,EAAE;AACF,AAAA,EAAE;AACF,AAAA,EAAE;AACF,AAAA,UAAU;AACV,AAAA,MAAM;AACN,AAAA,QAAQ;AACR,AAAA,MAAM;AACN,AAAA,QAAQ;AACR,AAAA,GAAG;AACH,AAAA,MAAM;AACN,AAAA,EAAE;AACF,AAAA,EAAE;AACF,AAAA,EAAE;AACF,AAAA,EAAE;AACF,AAAA,EAAE;AACF,AAAA,EAAE;AACF,AAAA,EAAE,CAAC;EACD,MAAM,EAAE,CAAE;EACV,OAAO,EAAE,CAAE;CACZ;;AAED;;;;;;;;GAQG;AAEH;;GAEG;;AAEH,AAAA,MAAM;AACN,AAAA,KAAK;AACL,AAAA,MAAM;AACN,AAAA,QAAQ,CAAC;EACP,MAAM,EAAE,CAAE;CACX;;;AAED,AAAA,IAAI,CAAC;EACH,UAAU,EAAE,UAAW;CACxB;;;AAED,AAAA,CAAC,EAAE,AAAC,CAAA,AAAA,OAAO,EAAE,AAAC,CAAA,AAAA,MAAM,CAAC;EACnB,UAAU,EAAE,OAAQ;CACrB;;;AAED,AAAA,GAAG;AACH,AAAA,KAAK;AACL,AAAA,MAAM;AACN,AAAA,MAAM;AACN,AAAA,KAAK;AACL,AAAA,KAAK,CAAC;EACJ,MAAM,EAAE,IAAK;EACb,SAAS,EAAE,IAAK;CACjB;;;AAED,AAAA,MAAM,CAAC;EACL,MAAM,EAAE,CAAE;CACX;;;AAED,AAAA,KAAK,CAAC;EACJ,eAAe,EAAE,QAAS;EAC1B,cAAc,EAAE,CAAE;CACnB;;;AAED,AAAA,EAAE;AACF,AAAA,EAAE,CAAC;EACD,OAAO,EAAE,CAAE;EACX,UAAU,EAAE,IAAK;CAClB",
+	"names": []
+}

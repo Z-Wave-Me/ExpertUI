@@ -1,5 +1,5 @@
 /*! minireset.css v0.0.3 | MIT License | github.com/jgthms/minireset.css */
-/* line 2, ../../../../sass/tinyadmin/vendor/minireset/minireset.scss */
+/* line 2, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/vendor/minireset/minireset.scss */
 html,
 body,
 p,
@@ -39,7 +39,7 @@ h6 {
 /*ul {
   list-style: none;
 }*/
-/* line 43, ../../../../sass/tinyadmin/vendor/minireset/minireset.scss */
+/* line 43, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/vendor/minireset/minireset.scss */
 button,
 input,
 select,
@@ -47,17 +47,17 @@ textarea {
   margin: 0;
 }
 
-/* line 50, ../../../../sass/tinyadmin/vendor/minireset/minireset.scss */
+/* line 50, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/vendor/minireset/minireset.scss */
 html {
   box-sizing: border-box;
 }
 
-/* line 54, ../../../../sass/tinyadmin/vendor/minireset/minireset.scss */
+/* line 54, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/vendor/minireset/minireset.scss */
 *, *:before, *:after {
   box-sizing: inherit;
 }
 
-/* line 58, ../../../../sass/tinyadmin/vendor/minireset/minireset.scss */
+/* line 58, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/vendor/minireset/minireset.scss */
 img,
 embed,
 iframe,
@@ -68,22 +68,22 @@ video {
   max-width: 100%;
 }
 
-/* line 68, ../../../../sass/tinyadmin/vendor/minireset/minireset.scss */
+/* line 68, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/vendor/minireset/minireset.scss */
 iframe {
   border: 0;
 }
 
-/* line 72, ../../../../sass/tinyadmin/vendor/minireset/minireset.scss */
+/* line 72, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/vendor/minireset/minireset.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/* line 77, ../../../../sass/tinyadmin/vendor/minireset/minireset.scss */
+/* line 77, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/vendor/minireset/minireset.scss */
 td,
 th {
   padding: 0;
   text-align: left;
 }
 
-/*# sourceMappingURL=minireset.css.map */
+/*# sourceMappingURL=../../../../css/tinyadmin/vendor/minireset/minireset.map */
