@@ -65,6 +65,8 @@ var config_data = {
     'wifi_settings': '/ZAutomation/api/v1/system/wifi/settings', // Set wifi settings ssid and password
     'login': '/ZAutomation/api/v1/login', // Get time
     'instances': '/ZAutomation/api/v1/instances',
+    'modules': '/ZAutomation/api/v1/modules',
+    'remoteId': '/ZAutomation/api/v1/system/remote-id',
     'upload_file': '/ZAutomation/api/v1/upload/file', // upload a file
     'load_image': '/ZAutomation/api/v1/load/image/', // load image from automation storage
     'app_built_info': 'app/info.json', // App build info

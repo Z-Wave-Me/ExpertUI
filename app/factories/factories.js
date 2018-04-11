@@ -46,6 +46,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         getApi: getApi,
         refreshApi: refreshApi,
         postApi: postApi,
+        putApi: putApi,
         postToRemote: postToRemote,
         getRemoteData: getRemoteData,
         sessionApi: sessionApi,
@@ -441,6 +442,27 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             data: data,
             timeout: cfg.pending_timeout_limit,
             url: cfg.server_url + cfg[api] + (params ? params : '')
+        }).then(function (response) {
+            return response;
+        }, function (response) {// something went wrong
+            return $q.reject(response);
+        });
+    }
+
+    /**
+     * Put ZAutomation api data
+     * @param {string} api
+     * @param {int} id
+     * @param {object} data
+     * @param {string} params
+     * @returns {unresolved}
+     */
+    function putApi(api, id, data, params) {
+        return $http({
+            method: "put",
+            data: data,
+            timeout: cfg.pending_timeout_limit,
+            url: cfg.server_url + cfg[api] + (id ? '/' + id : '') + (params ? params : '')
         }).then(function (response) {
             return response;
         }, function (response) {// something went wrong
