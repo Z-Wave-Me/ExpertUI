@@ -705,7 +705,7 @@ appController.controller('SettingsRemoteController', function ($scope, $q, $wind
 
                 $scope.remoteAccess.show = true;
             } else if (instance.state === 'rejected') {
-                $scope.remoteAccess.alert = {message: $scope._t('remote_access_not_installed'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+                $scope.remoteAccess.alert = {message: $scope._t('remote_access_not_active'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
             }
 
             // Success - remoteId

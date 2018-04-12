@@ -555,14 +555,14 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
                 line = (languages[key] !== '' ? languages[key] : key);
             }
         }
-        return setLangLine(line, replacement,key);
+        return setLangLine(line, replacement);
     }
     ;
 
     /**
      * Set lang line params
      */
-    function setLangLine(line, replacement,key) {
+    function setLangLine(line, replacement) {
         for (var val in replacement) {
             line = line.split(val).join(replacement[val]);
         }
