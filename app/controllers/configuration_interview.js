@@ -388,17 +388,14 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
             obj["s"] = {"key": "device_security_interview", "val": '<i class="' + $filter('checkedIcon')(securityInterview === true ? false : true) + '"></i>'};
         }
         obj["u"] = {"key": "granted_keys", "val": securityS2Key.join()};
-
-        if(manualUrl)
-        {
-        obj["v"] = {"key": "Productinformation", "val": "<a href='" + manualUrl + "' target=blank> Productinformation </a>"};
-        }
-        else
-        {
-         obj["v"] = {"key": "Productinformation", "val": "no Data"};   
-        }
         obj["w"] = {"key": "Certification-Nr.", "val": certNumber};
         obj["x"] = {"key": "Productcode", "val": productCode};
+
+        lang = $scope.lang.toUpperCase();
+
+        obj["y"] = {"key": "Manual", "val": "<a href='http://manuals-backend.z-wave.info/make.php?lang="+lang+"&cert=" + certNumber + "' target=_blank> Manual </a>"};
+
+        
 
         return obj;
 
