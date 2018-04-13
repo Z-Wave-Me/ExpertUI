@@ -212,12 +212,15 @@ appController.controller('ControlController', function ($scope, $interval, $time
         var dskPin = parseInt($scope.controlDh.inclusion.input.dskPin, 10),
                 nodeId = $scope.controlDh.inclusion.lastIncludedDeviceId.toString(10),
                 publicKey = [];
-
+                
+        dskPin = $filter('zeroFill')(dskPin,5);
+        //console.log( dskPin)
         if (confirmed) {
-            publicKey = $scope.controlDh.inclusion.input.publicKey;
+            publicKey = [];
             publicKey[0] = (dskPin >> 8) & 0xff;
             publicKey[1] = dskPin & 0xff;
         }
+        console.log(publicKey.join(','))
         var cmd = 'devices[' + nodeId + '].SecurityS2.data.publicKeyVerified=[' + publicKey.join(',') + '];';
         $scope.runZwaveCmd(cmd);
         $timeout(function () {
