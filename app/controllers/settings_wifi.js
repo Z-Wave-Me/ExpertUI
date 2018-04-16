@@ -15,19 +15,29 @@ appController.controller('SettingsWifiController', function ($scope, $timeout, $
    * Load wifi data
    */
   $scope.loadWifi = function () {
-    $scope.settingsWifi.input = {
+    /* $scope.settingsWifi.input = {
       ip: _.map('127.0.0.1'.split('.'), function (v) {
         return parseInt(v, 10);;
       }),
       netmask:  _.map('185.142.0.1'.split('.'), function (v) {
-        return parseInt(v, 10);;
+        return parseInt(v, 10);
       }),
       gateway: _.map('192.168.10.214'.split('.'), function (v) {
         return parseInt(v, 10);;
       })
-    }
+    } */
     dataService.getApi('cit_wifi').then(function (response) {
-      
+      $scope.settingsWifi.input = {
+        ip: _.map(response.data.data.ip.split('.'), function (v) {
+          return parseInt(v, 10);;
+        }),
+        netmask:  _.map(response.data.data.netmask.split('.'), function (v) {
+          return parseInt(v, 10);
+        }),
+        gateway: _.map(response.data.data.gateway.split('.'), function (v) {
+          return parseInt(v, 10);;
+        })
+      }
     });
   };
   $scope.loadWifi();
@@ -35,7 +45,6 @@ appController.controller('SettingsWifiController', function ($scope, $timeout, $
    * Store wifi data
    */
   $scope.storeWifi = function (data) {
-    console.log(data)
     var input = {
       ip: _.map(data.ip, function (v) {
         return v;
