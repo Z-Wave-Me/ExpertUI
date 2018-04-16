@@ -13,9 +13,9 @@
                     ng-model="deviceXml.input.fileName">
                 <option value="">---</option>
                 <option ng-init="selectCfg = {
-                                'name':((v.brandName == '' && v.productName == '')?('Unnamed ZDDX: ' + v.fileName):(v.brandName + ' ' + v.productName))}"
+                                'name':((v.brandName == '' && v.productName == '')?('Unnamed ZDDX: ' + v.fileName):(v.productCode + ' - ' + v.brandName + ' ' + v.productName + ' ( RF: ' + v.rfFrequency + ')'))}"
                         ng-repeat="v in deviceXml.all | orderBy:'brandName':false track by $index"
-                        ng-selected="deviceZddxFile == v.fileName"
+                        ng-selected="deviceZddxFile == v.fileName || v == deviceXml.filter" 
                         value="{{v.fileName}}">{{selectCfg.name}}
                 </option>
             </select>
@@ -25,6 +25,7 @@
                 </div>
             </div>
         </div>
+
         <div class="appmodal-footer">
             <!-- Close -->
             <button type="button" class="btn btn-default" ng-click="handleModal('loadXmlModal', $event)">

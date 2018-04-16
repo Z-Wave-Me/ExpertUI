@@ -37,6 +37,7 @@ appController.controller('LoadDeviceXmlController', function($scope,$routeParams
     $scope.deviceXml = {
         all: [],
         find: [],
+        filter: [], 
         input: {
             fileName: 0
         }
@@ -45,6 +46,52 @@ appController.controller('LoadDeviceXmlController', function($scope,$routeParams
      * Load devices descriptions
      * @param {int} nodeId
      */
+
+     $scope.loadDeviceXml = function (nodeId)
+     {
+        var cmd = 'devices[' + nodeId + '].GuessXML()';
+        dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
+           
+           //"ccName": "ManufacturerSpecific",
+           var deviceManufacturerSpecific = _.findWhere($scope.interviewCommands, {ccName: "ManufacturerSpecific"});
+           var deviceVendorId = deviceManufacturerSpecific.cmdData.vendorId.value;
+           var deviceProductId = deviceManufacturerSpecific.cmdData.productId.value;
+           var deviceProductTypeId = deviceManufacturerSpecific.cmdData.productType.value;
+
+           var preFilter = _.where(response.data, {manufacturerId: deviceVendorId});
+           
+           $scope.deviceXml.all = _.reject(preFilter, function(s)
+            {
+                return s.deviceImage.indexOf("pepper1.net") == -1 && s.brandName != "" && s.productName != "" ? false : true;
+
+            });
+    
+
+
+           
+           $scope.deviceXml.filter = _.findWhere($scope.deviceXml.all, {manufacturerId: deviceVendorId, productTypeId: deviceProductTypeId, productId: deviceProductId});
+
+
+           
+           if($scope.deviceXml.filter)
+           {
+            $scope.deviceXml.find = $scope.deviceXml.filter;
+            $scope.deviceXml.input.fileName = $scope.deviceXml.filter.fileName;
+           }
+
+
+           
+        }, function (error) {
+            $scope.toggleRowSpinner();
+        });
+
+
+     }
+
+     $scope.loadDeviceXml($routeParams.nodeId);
+
+/*
+
     $scope.loadDeviceXml = function (nodeId) {
         var cmd = 'devices[' + nodeId + '].GuessXML()';
        dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
@@ -54,7 +101,7 @@ appController.controller('LoadDeviceXmlController', function($scope,$routeParams
         });
     };
     $scope.loadDeviceXml($routeParams.nodeId);
-
+*/
     /**
      * Change device XML
      * @param {object} input
@@ -74,6 +121,10 @@ appController.controller('LoadDeviceXmlController', function($scope,$routeParams
      */
     $scope.storeDeviceXml = function (input,modal) {
         var timeout = 1000;
+
+        console.log(input);
+        console.log(modal);
+
         var cmd = 'devices[' + $routeParams.nodeId + '].LoadXMLFile("' + input.fileName + '")';
         $scope.toggleRowSpinner(modal);
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
