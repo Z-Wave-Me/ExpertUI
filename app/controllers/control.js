@@ -214,9 +214,8 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 publicKey = [];
                 
         dskPin = $filter('zeroFill')(dskPin,5);
-        //console.log( dskPin)
         if (confirmed) {
-            publicKey = [];
+            publicKey = $scope.controlDh.inclusion.input.publicKey;
             publicKey[0] = (dskPin >> 8) & 0xff;
             publicKey[1] = dskPin & 0xff;
         }
