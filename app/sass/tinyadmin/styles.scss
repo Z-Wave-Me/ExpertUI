@@ -6,7 +6,7 @@
 /* Vendors
 -------------------------------------------------- */
 //@import "vendor/normalize/normalize";
-@import "vendor/minireset/minireset";
+//@import "vendor/minireset/minireset";
 //@import "vendor/font-awesome-4.7.0/scss/font-awesome";
 
 /* SmartHome UI variables nad functions
@@ -15,53 +15,54 @@
 
 /* core
 -------------------------------------------------- */
+@import "core/_helpers";
 @import "core/_page-topbar";
 @import "core/_section";  
 @import "core/_tooltip"; 
-@import "core/_modifiers";
+@import "core/_table";
+
 /* @import "core/_body";
 @import "core/_helpers";
-@import "core/_grid";
+@import "core/_typo";
 @import "core/_nav";
 @import "core/_header";
 @import "core/_aside";
-@import "core/_main";
 @import "core/_footer";
 @import "core/_page-topbar";
 @import "core/_img"; 
-@import "core/_table"; 
-@import "core/_page";
+@import "core/_table";
 @import "core/_section";  
 @import "core/_button"; 
 @import "core/_form";
+@import "core/_input-addon";
+@import "core/_switch";
 @import "core/_tag";
 @import "core/_list";
 @import "core/_definition-list";
 @import "core/_list-panel";
-@import "core/_box";
 @import "core/_panel";
-@import "core/_card";
+@import "core/_flip";
+@import "core/_flexcard";
 @import "core/_dropdown";
-@import "core/_infowindow";
 @import "core/_accordion"; 
 @import "core/_tab"; 
 @import "core/_loader";
-@import "core/_alert";
+@import "core/_notification";
+@import "core/_message";
 @import "core/_modal";
 @import "core/_pagination";
 @import "core/_autocomplete";
 @import "core/_progress";
-@import "core/_modifiers";
 @import "core/_tooltip"; */
 
-/* Extensions
+/* Modifiers
 -------------------------------------------------- */
-@import "extensions/_extensions";
-
-/* Fallback
--------------------------------------------------- */
-//@import "fallbacks/_fallbacks";
+@import "core/_modifiers";
 
 /* Custom
 -------------------------------------------------- */
-@import "custom/_custom"; 
+@import "custom/_variables";
+@import "custom/_page-topbar";
+@import "custom/_tooltip";
+@import "custom/_table";
+

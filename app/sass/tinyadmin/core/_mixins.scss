@@ -187,3 +187,10 @@
     @content;
   }
 }
+
+// Media queries - max
+@mixin mqMax($max) {
+  @media only screen and (max-width: $max) {
+    @content;
+  }
+}

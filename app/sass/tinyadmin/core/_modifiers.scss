@@ -27,22 +27,19 @@
 
 /* Text align
 -------------------------------------------------- */
-.left {
+.txt-left {
   text-align: left;
 }
-.right {
+.text-right {
   text-align: right;
 }
-.center {
+.txt-center {
   text-align: center;
   margin-left: auto;
   margin-right: auto;
 }
-.justify {
+.txt-justify {
   text-align: justify;
-}
-.hidden-sm {
-  display: none;
 }
 
 /* Text color
