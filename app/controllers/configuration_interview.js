@@ -395,8 +395,6 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
 
         obj["y"] = {"key": "Manual", "val": "<a href='http://manuals-backend.z-wave.info/make.php?lang="+lang+"&cert=" + certNumber + "' target=_blank> Manual </a>"};
 
-        
-
         return obj;
 
     }
