@@ -76,7 +76,10 @@ angApp.config(['$routeProvider',
         }).when('/device/security', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/device/security.html'
-        }).// Config
+        }).when('/device/dsklist', {
+          requireLogin: requireLogin,
+          templateUrl: 'app/views/device/dsklist.html'
+      }).// Config
         when('/config/configuration/:nodeId?', {
             requireLogin: requireLogin,
             template: ' ',
