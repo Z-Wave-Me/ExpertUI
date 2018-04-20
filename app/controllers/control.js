@@ -124,7 +124,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 setControllerData(response.data.joined);
                 setDeviceData(response.data.joined);
                 setInclusionData(response.data.joined, response.data.update);
-                if ($scope.controlDh.inclusion.lastIncludedDeviceId != 0 && cfg.app_type != 'installer') {
+                if ($scope.controlDh.inclusion.lastIncludedDeviceId != 0) {
                     console.log('Waiting 5 seconds and than check interview')
                     var nodeInstances = $filter('hasNode')(response, 'data.joined.devices.' + $scope.controlDh.inclusion.lastIncludedDeviceId + '.instances');
                     $timeout(function () {
@@ -686,12 +686,6 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
             //console.log('Run cmd: ', cfg.store_url + cmd)
             $scope.controlDh.includeToNetworkTimeout = $timeout(function () {
                 dataService.runZwaveCmd(cfg.store_url + 'controller.SetLearnMode(0)');
-                //console.log('Running controller.SetLearnMode(0) after timeout')
-                // if(cfg.app_type === 'installer'){
-                //     $window.location.reload();
-                // }else{
-                //     $scope.controlDh.network.modal = true;
-                // }
                 $scope.controlDh.network.modal = true;
             }, timeout);
         }, function (error) {

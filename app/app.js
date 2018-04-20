@@ -53,12 +53,6 @@ angApp.run(function ($rootScope, $location, $http, $q, deviceService, cfg) {
             request.timeout = request.cancel.promise;
         });
         /**
-         * Check if page access is banned for the app type
-         */
-        if (next.appTypeBanned && next.appTypeBanned.indexOf(cfg.app_type) > -1) {
-            $location.path( '/error/404');
-        }
-        /**
         * Check if access is allowed for the page
         */
         if (next.requireLogin) {
@@ -106,14 +100,7 @@ angApp.config(function ($provide, $httpProvider, cfg) {
             responseError: function (rejection) {
                 deviceService.logError(rejection);
                 if (rejection.status === 401) {
-                    switch(cfg.app_type){
-                        case 'installer':
-                            deviceService.logOut();
-                            break;
-                        default:
-                            $window.location.href = cfg.smarthome_login;
-                            break;
-                    }
+                  $window.location.href = cfg.smarthome_login;
                 }
                 // Return the promise rejection.
                 return $q.reject(rejection);

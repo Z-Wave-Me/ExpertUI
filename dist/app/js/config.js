@@ -9,7 +9,7 @@ var config_data = {
         'dev_host': [],
         'app_name': 'Z-Wave Expert',
         'app_version': '1.3.1',
-        'app_built': '28-02-2018 14:26:14',
+        'app_built': '20-04-2018 15:34:20',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -91,7 +91,7 @@ var config_data = {
         'smarthome_login': '/smarthome/#/?fromexpert', // Smarthome login page
         'lang_dir': 'app/lang/', // Language directory
         'lang': 'en', // Default language
-        'lang_list': ['en', 'de', 'fr', 'es', 'ru', 'cz', 'sk', 'sv', 'cn'], // List of languages
+        'lang_list': ['en', 'de', 'fr', 'es', 'ru', 'cz', 'sk', 'sv', 'cn','pt'], // List of languages
         'page_results_history': 20, // List of languages
         'frequency': {
             0: 'EU',

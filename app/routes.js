@@ -6,20 +6,15 @@
 //Define Routing for app
 angApp.config(['$routeProvider',
     function ($routeProvider) {
-        var requireLogin = (config_data.cfg.app_type === 'installer');
-        var appType = config_data.cfg.app_type === 'installer'? 'installer' : 'default';
+        var requireLogin = false;
         $routeProvider.// Login
         when('/', {
-            templateUrl: 'app/views/auth/auth_' + appType + '.html'
-        })./* CIT init
-        when('/init', {
-            templateUrl: 'app/views/auth/init_installer.html',
-            appTypeBanned: ['default','wd','popp','jb'],
-        }).*/
+            templateUrl: 'app/views/auth/auth.html'
+        }).
         // Home
         when('/home', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/home/home_' + appType + '.html'
+            templateUrl: 'app/views/home/home.html'
         }).// License
         when('/licence', {
             requireLogin: requireLogin,
@@ -35,28 +30,22 @@ angApp.config(['$routeProvider',
         }).// Controll
         when('/control/switch', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/controll/switch.html',
-            appTypeBanned: ['installer']
+            templateUrl: 'app/views/controll/switch.html'
         }).when('/control/sensors', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/controll/sensors.html',
-            appTypeBanned: ['installer']
+            templateUrl: 'app/views/controll/sensors.html'
         }).when('/control/meters', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/controll/meters.html',
-            appTypeBanned: ['installer']
+            templateUrl: 'app/views/controll/meters.html'
         }).when('/control/thermostat', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/controll/thermostat.html',
-            appTypeBanned: ['installer']
+            templateUrl: 'app/views/controll/thermostat.html'
         }).when('/control/locks', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/controll/locks.html',
-            appTypeBanned: ['installer']
+            templateUrl: 'app/views/controll/locks.html'
         }).when('/control/notifications', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/controll/notifications.html',
-            appTypeBanned: ['installer']
+            templateUrl: 'app/views/controll/notifications.html'
         }).// Device
         when('/device/status', {
             requireLogin: requireLogin,
@@ -109,7 +98,7 @@ angApp.config(['$routeProvider',
         }).// Network
         when('/network/control', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/network/control/control_' + appType + '.html'
+            templateUrl: 'app/views/network/control/control.html'
         }).when('/network/neighbors', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/network/neighbors.html'
@@ -117,14 +106,13 @@ angApp.config(['$routeProvider',
             requireLogin: requireLogin,
             templateUrl: 'app/views/network/routing.html'
         }).when('/network/reorganization', {
-            templateUrl: 'app/views/network/reorganization.html',
-            appTypeBanned: ['installer'],
+            templateUrl: 'app/views/network/reorganization.html'
         }).when('/network/timing', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/network/timing.html'
         }).when('/network/controller', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/network/controller_' + appType + '.html'
+            templateUrl: 'app/views/network/controller.html'
         }).when('/network/queue', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/network/queue.html'
@@ -134,40 +122,30 @@ angApp.config(['$routeProvider',
             templateUrl: 'app/views/network/map.html'
         }).when('/network/statistics', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/network/statistics.html',
-            appTypeBanned: []
+            templateUrl: 'app/views/network/statistics.html'
         }).when('/network/linkstatus', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/network/linkstatus.html',
-            appTypeBanned: [/*'default'*/]
-        }).when('/network/linkhealth/:nodeId?', {
-            requireLogin: requireLogin,
-            templateUrl: 'app/views/network/link_health.html',
-            appTypeBanned: ['default','wd','popp','jb']
+            templateUrl: 'app/views/network/linkstatus.html'
         }).// Installer - zniffer
         when('/installer/zniffer', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/installer/zniffer.html',
-            appTypeBanned: []
+            templateUrl: 'app/views/installer/zniffer.html'
         }).// Installer - history
         when('/installer/history', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/installer/history.html',
-            appTypeBanned: []
+            templateUrl: 'app/views/installer/history.html'
         }).// Installer - RSSI
         when('/installer/rssi', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/installer/rssi_background.html',
-            appTypeBanned: []
+            templateUrl: 'app/views/installer/rssi_background.html'
         }).
         when('/installer/rssimeter', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/installer/rssi_meter.html',
-            appTypeBanned: []
+            templateUrl: 'app/views/installer/rssi_meter.html'
         }).// Settings
         when('/settings', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/settings/settings_' + appType + '.html'
+            templateUrl: 'app/views/settings/settings.html'
         }).// Print
         when('/print', {
             requireLogin: requireLogin,
@@ -176,11 +154,6 @@ angApp.config(['$routeProvider',
         when('/error/:code?', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/error.html'
-        }).// Logout
-        when('/logout', {
-            requireLogin: requireLogin,
-            appTypeBanned: ['default','wd','popp','jb'],
-            templateUrl: 'app/views/auth/logout_installer.html'
         }).otherwise({
             redirectTo: '/home'
         });
