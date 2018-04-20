@@ -20,7 +20,7 @@ var config_data = {
         'reorg_interval': 3000, // Set interval in miliseconds to refresh reorganizations
         'route_update_timeout': 15000, // Maximum time in miliseconds to wait for an update-route
         //'server_url': 'http://zwave.dyndns.org:8083/', // Remote JSON
-        'local_data_url': 'app/data/',
+        'local_data_url': 'storage/data/',
         'server_url': '', // Remote JSON
         'dongle': 'zway', // Default dongle
         'dongle_list': [],// Dongle list
@@ -54,6 +54,8 @@ var config_data = {
         'reorg_log_url': '/ZWaveAPI/GetReorganizationLog', // Url to load log
         'zddx_create_url': '/ZWaveAPI/CreateZDDX/', // Create zddx file
         'get_network_statistics': '/ZWaveAPI/GetStatisticsData', // get network statistics
+        'get_dsk': '/ZWaveAPI/GetDSKCollection', // Get DSK collection,
+        'remove_dsk': 'ZWaveAPI/RemoveDSKEntry?id=', // Remove DSK
 
         // Other APIs
         'packet_log': '/ZWaveAPI/PacketLog', // Get Packet log
