@@ -10,8 +10,7 @@
                 (#{{v.id}}) {{v.name}}
                 <div ng-repeat="t in v.report" ng-switch="t">
                     <!-- Battery  -->
-                    <a class="text-danger" href="#device/battery" ng-switch-when="txt_low_battery"
-                       ng-hide="cfg.app_type === 'installer'">
+                    <a class="text-danger" href="#device/battery" ng-switch-when="txt_low_battery">
                         - {{_t(t)}}.
                     </a>
                     <!-- Changed Configuration  -->

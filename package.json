@@ -6,15 +6,11 @@
   "description": "This User Interfaces allows to operate a Smart Home Network based on Z-Wave devices.",
   "main": "index.html",
   "app_type": "default",
-  "built": "28-02-2018 14:26:15",
+  "built": "20-04-2018 15:34:20",
   "type_cfg": {
     "default": {
       "dir": "dist",
       "name": "Z-Wave Expert"
-    },
-    "installer": {
-      "dir": "cit",
-      "name": "Z-Wave CIT"
     }
   },
   "devDependencies": {

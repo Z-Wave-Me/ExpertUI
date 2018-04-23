@@ -88,7 +88,7 @@
 </div>
 
 <!-- inclusionS2GrantKeysModal -->
-<div id="inclusionS2GrantKeys" class="appmodal" ng-if="controlDh.inclusion.grantKeys.show && cfg.app_type != 'installer'">
+<div id="inclusionS2GrantKeys" class="appmodal" ng-if="controlDh.inclusion.grantKeys.show">
     <!-- <div class="appmodal-in">-->
     <form class="appmodal-in" name="form_inclusionS2GrantKeys" id="form_inclusionS2GrantKeys" ng-submit="">
     <div class="appmodal-header">
@@ -127,7 +127,7 @@
     <!--</div>-->
 </div><!-- /#inclusionS2GrantKeysModal -->
 <!-- inclusionVerifyDSKModal -->
-<div id="inclusionVerifyDSKModal" class="appmodal" ng-if="controlDh.inclusion.grantKeys.anyChecked && controlDh.inclusion.verifyDSK.show && cfg.app_type != 'installer'">
+<div id="inclusionVerifyDSKModal" class="appmodal" ng-if="controlDh.inclusion.grantKeys.anyChecked && controlDh.inclusion.verifyDSK.show">
     <div class="appmodal-in">
         <form name="dskForm">
         <div class="appmodal-header">

@@ -62,7 +62,7 @@
                              label="_t('device_description_device_type')"></sort-by>
                 </th>
                 <!-- Granted keys -->
-                <th ng-if="cfg.app_type !== 'installer'">
+                <th>
                    {{_t('keys')}}
                 </th>
             </tr>
@@ -112,7 +112,7 @@
                 <!-- type -->
                 <td data-title="{{ _t('device_description_device_type')}}"><span ng-bind="v.deviceType"></span>&nbsp;
                 <!-- securityS2Key -->
-                <td data-title="{{ _t('keys')}}" ng-if="cfg.app_type !== 'installer'"><span ng-bind="v.securityS2Key"></span>&nbsp;
+                <td data-title="{{ _t('keys')}}"><span ng-bind="v.securityS2Key"></span>&nbsp;
 
                 </td>
             </tr>

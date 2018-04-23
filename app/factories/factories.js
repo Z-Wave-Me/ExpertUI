@@ -442,27 +442,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         }).then(function (response) {
             return response;
         }, function (response) {// something went wrong
-            if(response.status == 401 && cfg.app_type == "installer") {
-                var auth = cfg.auth;
-
-                logInApi(auth).then(function (response) {
-                    var user = response.data.data;
-                    deviceService.setZWAYSession(user.sid);
-                    deviceService.setUser(user);
-
-                    postApi(api,data,params);
-
-                }, function (error) {
-                    var message = $scope._t('error_load_data');
-                    if (error.status == 401) {
-                        message = $scope._t('error_load_user');
-                    }
-                    alertify.alertError(message);
-                });
-
-            } else {
-                return $q.reject(response);
-            }
+          return $q.reject(response);
         });
     }
 

@@ -355,10 +355,6 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     }, function (error) {});
 
   };
-  // System info only for installer
-  if (cfg.app_type === 'installer') {
-    $scope.loadSystemInfo();
-  }
 
 
   /**
@@ -447,7 +443,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
 
       angular.extend(cfg.controller, cfgController);
 
-      if ((cfg.app_type === 'installer') || (!showAnalytics && ZWaveAPIData.controller.data.capabilities.value.indexOf(59) > -1)) {
+      if ((!showAnalytics && ZWaveAPIData.controller.data.capabilities.value.indexOf(59) > -1)) {
         angular.extend(cfg.analytics, {
           show: true
         });
@@ -469,14 +465,6 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     $scope.jobQueueInterval = $interval(refresh, cfg.queue_interval);
   };
   /**
-   * Route on change Success
-   */
-  $rootScope.$on("$routeChangeSuccess", function (event, current, previous) {
-    if (cfg.app_type === 'installer') {
-      $scope.loadSystemInfo();
-    }
-  });
-  /**
    * Load common APIs for pages, where authorization is required
    */
   //if ($scope.getBodyId() !== '') {
@@ -486,11 +474,6 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
     $scope.setTimeStamp();
     $scope.loadBusyIndicator();
     $scope.loadBoxApiData();
-    /*if(cfg.app_type === 'installer'){
-
-     $scope.loadBoxApiData();
-     }
-     */
   }
 
   /// --- Private functions --- ///
