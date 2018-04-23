@@ -34,13 +34,9 @@ appController.controller('DskListController', function($scope, $filter, $timeout
    */
   var loadDskList = function () {
     $scope.loadZwaveData();
-   /* dataService.getApi('get_dsk', null, true).then(function (response) {
-      var data = response.data;*/
-    dataService.getApiLocal('dsk-collection.json').then(function (response) {
+   dataService.getApi('get_dsk', null, true).then(function (response) {
+    //dataService.getApiLocal('dsk-collection.json').then(function (response) {
       var data = response.data;
-      //console.log(data)
-      // There are no data
-     
       if (_.isEmpty(data)) {
         $scope.alert = {message: $scope._t('empty_dsk_list'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
         return;
@@ -56,7 +52,6 @@ appController.controller('DskListController', function($scope, $filter, $timeout
           typeId: typeId,
           dskArray: v.ZW_QR_DSK.split('-'),
           timeformat:  $filter('getDateTimeObj')(v.timestamp/1000)
-          //timeformat: $filter('dateTimeFromTimestamp')(v.timestamp)
         }
 
         return v;
