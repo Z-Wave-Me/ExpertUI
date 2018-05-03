@@ -232,6 +232,54 @@ table.has-hover tbody tr:hover {
   background-color: #eff6fe;
 }
 
+/* accordion
+-------------------------------------------------- */
+/* line 7, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_accordion.scss */
+.accordion-toggle > button {
+  all: inherit;
+  border: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+/* line 16, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_accordion.scss */
+.accordion-toggle > button::after {
+  margin-left: 1rem;
+  padding: 1rem;
+  font-size: 130%;
+}
+
+/* line 21, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_accordion.scss */
+.accordion-toggle > button[aria-expanded="false"] {
+  border-bottom: solid 1px #87cf83;
+}
+
+/* line 23, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_accordion.scss */
+.accordion-toggle > button[aria-expanded="false"]::after {
+  content: "+";
+}
+
+/* line 28, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_accordion.scss */
+.accordion-toggle > button[aria-expanded="true"]::after {
+  content: "-";
+}
+
+/* line 35, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_accordion.scss */
+.accordion-toggle > button:focus::after {
+  font-weight: bold;
+  color: #F89847;
+}
+
+/* line 43, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_accordion.scss */
+.accordion {
+  border-bottom: solid 1px #87cf83;
+  padding-bottom: 1rem;
+}
+
 /* @import "core/_body";
 @import "core/_helpers";
 @import "core/_typo";
@@ -548,6 +596,27 @@ table.has-hover tbody tr:hover {
 /* line 5, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/custom/_table.scss */
 table th {
   color: #083366;
+}
+
+/* accordion
+-------------------------------------------------- */
+/* line 3, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/custom/_accordion.scss */
+.accordion-toggle {
+  margin: 0;
+  padding: 0;
+  font-size: 130%;
+}
+
+/* line 9, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/custom/_accordion.scss */
+.accordion-toggle > button[aria-expanded="false"]::after {
+  font-family: fontawesome;
+  content: "\f078";
+}
+
+/* line 15, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/custom/_accordion.scss */
+.accordion-toggle > button[aria-expanded="true"]::after {
+  font-family: fontawesome;
+  content: "\f077";
 }
 
 /*# sourceMappingURL=../../css/tinyadmin/styles.map */

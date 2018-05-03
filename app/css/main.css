@@ -14888,6 +14888,19 @@ input[type=checkbox] {
 }
 
 /* line 34, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+/* line 39, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+input[type=number] {
+  -moz-appearance: textfield;
+  appearance: none;
+  margin: 0;
+}
+
+/* line 45, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
 input[type=radio] {
   transform: scale(1.8, 1.8);
   -moz-transform: scale(1.8, 1.8);
@@ -14898,24 +14911,24 @@ input[type=radio] {
     margin: 0 $spacing 0; */
 }
 
-/* line 43, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+/* line 54, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
 .ip-number {
   display: inline-block;
   padding: 5px;
   width: 4em;
 }
 
-/* line 51, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+/* line 62, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
 .ip-group span::after {
   content: ' . ';
 }
 
-/* line 55, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+/* line 66, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
 .ip-group span:last-child::after {
   content: '';
 }
 
-/* line 65, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+/* line 76, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
 .os-iphone input[type=checkbox], .os-ipad input[type=checkbox], .os-ipod input[type=checkbox] {
   -ms-transform: scale(1.3);
   /* IE */
@@ -14929,7 +14942,7 @@ input[type=radio] {
   margin: 0 10px 0;
 }
 
-/* line 73, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+/* line 84, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
 .os-iphone input[type=radio], .os-ipad input[type=radio], .os-ipod input[type=radio] {
   transform: scale(1.2, 1.2);
   -moz-transform: scale(1.2, 1.2);
@@ -14940,32 +14953,32 @@ input[type=radio] {
   margin: 0 10px 0;
 }
 
-/* line 85, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+/* line 96, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
 .form-page {
   margin-bottom: 20px;
   background-color: #FFFFFF;
   border: solid 1px #9fd8ef;
 }
 
-/* line 90, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+/* line 101, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
 .form-page .form-group {
   border-bottom: solid 1px #9fd8ef;
   padding-bottom: 10px;
 }
 
-/* line 93, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+/* line 104, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
 .form-page .form-group.last {
   border-bottom: 0;
   padding-bottom: 0;
   margin-bottom: 0;
 }
 
-/* line 99, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+/* line 110, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
 .form-page label {
   font-weight: normal;
 }
 
-/* line 104, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+/* line 115, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
 .inputfile {
   width: 0.1px;
   height: 0.1px;
@@ -14975,42 +14988,42 @@ input[type=radio] {
   z-index: -1;
 }
 
-/* line 113, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+/* line 124, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
 .inputfile + label {
   cursor: pointer;
 }
 
-/* line 117, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+/* line 128, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
 fieldset, .fieldset {
   padding: 10px;
 }
 
-/* line 120, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+/* line 131, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
 .isrequired {
   font-weight: bold !important;
 }
 
-/* line 124, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+/* line 135, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
 .isrequired::before {
   content: "*";
 }
 
-/* line 128, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+/* line 139, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
 .input-valid-false {
   border: solid 1px red;
 }
 
-/* line 133, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+/* line 144, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
 .form-control-sm {
   width: 30% !important;
 }
 
-/* line 137, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+/* line 148, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
 .form-control-md {
   width: 50% !important;
 }
 
-/* line 141, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+/* line 152, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
 .submit-entry {
   text-align: right;
   display: block;
@@ -15018,23 +15031,23 @@ fieldset, .fieldset {
   border-top: solid 1px #9fd8ef;
 }
 
-/* line 149, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+/* line 160, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
 fieldset.submit-entry {
   margin: 0 !important;
 }
 
-/* line 152, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+/* line 163, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
 .form-control-hidden {
   display: none !important;
 }
 
-/* line 155, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+/* line 166, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
 .form-control-img {
   cursor: pointer;
   border: solid 4px transparent;
 }
 
-/* line 160, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+/* line 171, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
 .control-active {
   border: solid 4px black !important;
 }
@@ -17466,6 +17479,54 @@ table.has-hover tbody tr:hover {
   background-color: #eff6fe;
 }
 
+/* accordion
+-------------------------------------------------- */
+/* line 7, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_accordion.scss */
+.accordion-toggle > button {
+  all: inherit;
+  border: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+/* line 16, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_accordion.scss */
+.accordion-toggle > button::after {
+  margin-left: 1rem;
+  padding: 1rem;
+  font-size: 130%;
+}
+
+/* line 21, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_accordion.scss */
+.accordion-toggle > button[aria-expanded="false"] {
+  border-bottom: solid 1px #87cf83;
+}
+
+/* line 23, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_accordion.scss */
+.accordion-toggle > button[aria-expanded="false"]::after {
+  content: "+";
+}
+
+/* line 28, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_accordion.scss */
+.accordion-toggle > button[aria-expanded="true"]::after {
+  content: "-";
+}
+
+/* line 35, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_accordion.scss */
+.accordion-toggle > button:focus::after {
+  font-weight: bold;
+  color: #F89847;
+}
+
+/* line 43, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_accordion.scss */
+.accordion {
+  border-bottom: solid 1px #87cf83;
+  padding-bottom: 1rem;
+}
+
 /* @import "core/_body";
 @import "core/_helpers";
 @import "core/_typo";
@@ -17782,6 +17843,27 @@ table.has-hover tbody tr:hover {
 /* line 5, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/custom/_table.scss */
 table th {
   color: #083366;
+}
+
+/* accordion
+-------------------------------------------------- */
+/* line 3, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/custom/_accordion.scss */
+.accordion-toggle {
+  margin: 0;
+  padding: 0;
+  font-size: 130%;
+}
+
+/* line 9, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/custom/_accordion.scss */
+.accordion-toggle > button[aria-expanded="false"]::after {
+  font-family: fontawesome;
+  content: "\f078";
+}
+
+/* line 15, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/custom/_accordion.scss */
+.accordion-toggle > button[aria-expanded="true"]::after {
+  font-family: fontawesome;
+  content: "\f077";
 }
 
 /* Print

@@ -31,6 +31,17 @@ input[type=checkbox]{
     /* padding: $spacing;
     margin: 0 $spacing 0; */
 }
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+}
+
+input[type=number] { 
+    -moz-appearance: textfield;
+    appearance: none;
+    margin: 0; 
+}
+
 input[type=radio] { 
     transform: scale($radio-scale, $radio-scale); 
     -moz-transform: scale($radio-scale, $radio-scale); 
