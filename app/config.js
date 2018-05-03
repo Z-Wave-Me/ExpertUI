@@ -331,7 +331,7 @@ var config_data = {
         'title': 'Z-Wave Expert UI',
         'controller_name': 'Z-Way',
         'hardware_vendor': 'RaZberry by Z-Wave.Me',
-        'latest_version_url': 'https://razberry.z-wave.me/z-way/razberry/latest/VERSION'
+        'latest_version_url': 'https://storage.z-wave.me/z-way/razberry/latest/VERSION'
       },
       'installer': {
         'logo': 'app/images/z-wave-aliance-logo.png',
@@ -341,7 +341,7 @@ var config_data = {
         'title': 'Z-Wave CIT',
         'controller_name': 'CIT',
         'hardware_vendor': 'Z-Wave Alliance',
-        'latest_version_url': 'https://razberry.z-wave.me/z-way/cit/latest/VERSION'
+        'latest_version_url': 'https://storage.z-wave.me/z-way/cit/latest/VERSION'
       }
     }
 

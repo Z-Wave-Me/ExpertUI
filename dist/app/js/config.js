@@ -7,8 +7,8 @@ var config_data = {
     'environment': 'live',
     'dev_host': [],
     'app_name': 'Z-Wave CIT',
-    'app_version': '1.1.0-RC-9',
-    'app_built': '03-05-2018 10:56:03',
+    'app_version': '1.1.0-RC-10',
+    'app_built': '03-05-2018 13:48:46',
     'app_id': 'CIT',
     'custom_ip': false,
     'user_field': 'USERXXXX',
@@ -331,7 +331,7 @@ var config_data = {
         'title': 'Z-Wave Expert UI',
         'controller_name': 'Z-Way',
         'hardware_vendor': 'RaZberry by Z-Wave.Me',
-        'latest_version_url': 'https://razberry.z-wave.me/z-way/razberry/latest/VERSION'
+        'latest_version_url': 'https://storage.z-wave.me/z-way/razberry/latest/VERSION'
       },
       'installer': {
         'logo': 'app/images/z-wave-aliance-logo.png',
@@ -341,7 +341,7 @@ var config_data = {
         'title': 'Z-Wave CIT',
         'controller_name': 'CIT',
         'hardware_vendor': 'Z-Wave Alliance',
-        'latest_version_url': 'https://razberry.z-wave.me/z-way/cit/latest/VERSION'
+        'latest_version_url': 'https://storage.z-wave.me/z-way/cit/latest/VERSION'
       }
     }
 
