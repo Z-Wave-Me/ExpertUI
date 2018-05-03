@@ -22,7 +22,8 @@
   <!-- <pre>{{zniffer.filter|json}}</pre> -->
  
   <!-- Table -->
-  <table class="table table-condensed table-hover zniffer-{{zniffer.trace}}" style="width: 100%;">
+  <div class="v-scroll">
+  <table class="is-condensed has-hover table_ table-condensed_ table-hover_ zniffer-{{zniffer.trace}}" style="width: 100%;">
     <col class="zniffer-col" ng-class="{'has-filter': zniffer.filter['type'].value}" />
     <col class="zniffer-col" ng-class="{'has-filter': zniffer.filter['date'].value}" />
     <col class="zniffer-col" />
@@ -45,8 +46,8 @@
           <div class="app-dropdown left" ng-include="'app/views/zniffer/zniffer_filter_type.html'" hidden></div>
         </th>
         <!-- date -->
-        <th class="position-relative">
-          <span class="clickable" aria-expanded="false" bb-dropdown=".position-relative">
+        <th class="position-relative s-hide">
+         <span class="clickable" aria-expanded="false" bb-dropdown=".position-relative">
             <i class="fa fa-filter"></i> {{ _t('date')}}
           </span>
           <!-- Dropdown -->
@@ -75,7 +76,7 @@
           <div class="app-dropdown left" ng-include="'app/views/zniffer/zniffer_filter_dest.html'" hidden></div>
         </th>
         <!-- speed -->
-        <th class="position-relative">
+        <th class="position-relative s-hide">
           <span class="clickable" aria-expanded="false" bb-dropdown=".position-relative">
             <i class="fa fa-filter"></i> {{ _t('speed')}}
           </span>
@@ -97,7 +98,7 @@
           <!--  <div class="app-dropdown left" ng-include="'app/views/zniffer/zniffer_filter_hops.html'" hidden></div> -->
         </th>
         <!-- encaps -->
-        <th class="position-relative">
+        <th class="position-relative s-hide">
           <span class="clickable" aria-expanded="false" bb-dropdown=".position-relative">
             <i class="fa fa-filter"></i> {{ _t('encapsulation')}}
           </span>
@@ -121,7 +122,7 @@
         <td>
           <i title="{{_t(v.type)}}" class="fa" ng-class="v.type === 'incoming' ? 'fa-long-arrow-right' : 'fa-long-arrow-left'"></i>
         </td>
-        <td>{{v.dateTime.date}}</td>
+        <td class="s-hide">{{v.dateTime.date}}</td>
         <td>{{v.dateTime.time}}</td>
         <td>
           <span class="tooltip-wrap on-hover">
@@ -135,16 +136,17 @@
             <span class="tooltip top center">{{zniffer.devices[v.dest].givenName}}</span>
           </span>
         </td>
-        <td>{{v.speed||'-'}}
+        <td class="s-hide">{{v.speed||'-'}}
           <span ng-show="v.speed">{{_t('kbps')}}</span>
         </td>
         <td>{{v.rssi||'-'}}</td>
         <td>{{v.hops||'-'}}</td>
         <td>{{v.encaps||'-'}}</td>
-        <td title="{{v.application}}"><div class="truncate-200px">{{v.application}}</div></td>
+        <td class="s-hide" title="{{v.application}}"><div class="truncate-200px">{{v.application}}</div></td>
       </tr>
     </tbody>
   </table>
+</div>
   <div class="text-center mobile-padding">
     <dir-pagination-controls boundary-links="true"></dir-pagination-controls>
   </div>

@@ -61,7 +61,7 @@ h1 {
   color: $alliance-blue;
 }
 
-a {
+a, .order-by {
   color: $alliance-blue;
 }
 
@@ -92,6 +92,8 @@ a {
     }
   }
 }
+
+
 
 /* Dropdown menu */
 
@@ -151,6 +153,10 @@ a {
         }*/
 
 /* Table  */
+.table>thead>tr>th {
+  color: $alliance-blue;
+  border-color: $alliance-green-border;
+}
 
 .table>thead>tr>th {
   border-color: $alliance-green-border;

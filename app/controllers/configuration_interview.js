@@ -276,7 +276,7 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         var deviceDescriptionAppSubVersion = parseInt(node.data.applicationMinor.value, 10);
         var isListening = node.data.isListening.value;
         var manualUrl = "";
-        var certNumber = "";
+        var certNr = "";
         var productCode = "";
 
         // Security S2
