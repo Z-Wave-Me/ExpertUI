@@ -1,35 +1,63 @@
-<!-- Settings Remote Access  -->
-<!-- <h2 class="accordion-entry-title" ng-click="expandElement('settingsUnregister')">
-    <i class="fa fa-eraser fa-fw"></i>&nbsp;{{_t('cit_settings_unregister')}}
-    <i class="fa accordion-arrow" ng-class="expand.settingsUnregister? 'fa-chevron-up':'fa-chevron-down'"></i>
-</h2>
-<div class="accordion-entry-ctrl" ng-class="" ng-if="expand.settingsUnregister" ng-controller="SettingsUnregisterCITController" ng-submit="handleModal('citUnregisterModal', $event)"> -->
-    <!--<bb-loader></bb-loader>-->
-    <!-- <bb-alert alert="unregisterCit.alert"></bb-alert>
-    <form name="form_unregister" id="form_unregister" class="form form-page" ng-if="!unregisterCit.remoteConnection">
-        <fieldset>
-            <div class="form-group">
-                <bb-help-text trans="_t('cit_unregister_info')"></bb-help-text>
-            </div>
-        </fieldset>
-        <fieldset class="submit-entry">
-            <button type="submit" class="btn btn-submit" title="{{_t('cit_unregister_btn')}}" ng-disabled="!isOnline">
-                <i class="fa fa-eraser"></i> <span class="btn-name">{{_t('cit_unregister_btn')}}</span>
-            </button>
-        </fieldset>
-    </form> -->
-    <!-- assocAddModal -->
-    <!-- <div ng-include="'app/views/settings/modal_cit_unregister.html'"></div>
-</div> -->
-
 <!-- Admin remote view -->
-<h2 class="accordion-entry-title" ng-click="expandElement('remote')">
+<!-- <h2 class="accordion-entry-title" ng-click="expandElement('remote')">
     <i class="fa fa-rss fa-fw"></i> <span ng-bind="_t('remote_access_manage')"></span>
     <i class="fa accordion-arrow" ng-class="expand.remote? 'fa-chevron-up':'fa-chevron-down'"></i>
 </h2>
 <div class="accordion-entry-ctrl" ng-class="" ng-if_="expand.remote" ng-controller="SettingsRemoteController">
     <bb-loader></bb-loader>
     <form name="form_remote" id="form_remote" class="form form-page" ng-if="remoteAccess" ng-submit="putRemoteAccess(remoteAccess)" novalidate>
+        <fieldset> -->
+            <!-- <p ng-bind="_t('remote_access_info')"></p> -->
+            <!-- <div ng-if="remoteAccess">
+                <div class="form-group"> -->
+                    <!-- Remote access ID -->
+                    <!-- <p class="form-control-static">
+                        <span ng-bind="_t('remote_access_id')"></span>: <strong ng-bind="remoteAccess.remoteId"></strong>
+                    </p> -->
+                    <!-- <pre>{{remoteAccess|json}}</pre> -->
+                    <!-- <bb-alert alert="remoteAccess.alert"></bb-alert>
+                    <button class="btn btn-default" type="button" title="{{_t('activate_module',{__module__ : 'RemoteAccess'})}}"
+                            ng-click="activateRemoteAccess(remoteAccess.instance,(remoteAccess.instance.active ? false : true))"
+                            ng-class="remoteAccess.instance.active ? 'active' : ''"
+                            ng-disabled="!remoteAccess.remoteId || remoteAccess.instance.active">
+                        <i class="fa fa-rss" ng-class="remoteAccess.instance.active ? 'text-success' : 'text-danger'"></i>
+                        <span class="btn-name"
+                              ng-if="remoteAccess.instance.active === true">{{_t('remote_access_active')}}</span>
+                        <span class="btn-name"
+                              ng-if="remoteAccess.instance.active === false">{{_t('remote_access_inactive')}}</span>
+                        <span class="btn-name"
+                              ng-if="!remoteAccess.instance.active && remoteAccess.instance.active != false">{{_t('remote_access_install')}}</span>
+                    </button>
+                </div>
+                <div class="form-group" ng-if="remoteAccess.instance.active === true">
+                    <div>
+                        <label for="remote_support">
+                            <input type="checkbox" name="remote_support" value="true" id="remote_support" ng-model="remoteAccess.params.sshStatus" ng-checked="remoteAccess.params.sshStatus" /> 
+                            <span>{{_t('remote_access_support')}}</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset class="submit-entry">
+            <button type="submit" class="btn btn-submit" title="{{_t('btn_save')}}">
+                <i class="fa fa-check"></i> <span class="btn-name">{{_t('btn_save')}}</span>
+            </button>
+        </fieldset>
+    </form>
+</div> -->
+
+<!-- Settings remote support  -->
+ <!-- Title -->
+ <h2 class="accordion-toggle chevron">
+  <button type="button" aria-expanded="false" bb-accordion>
+    <span><i class="fa fa-level-up fa-fw"></i>&nbsp;{{_t('remote_access_manage')}}</span>
+  </button>
+</h2>
+<!-- Content -->
+<div class="accordion" ng-controller="SettingsRemoteController" hidden>
+  <!-- <bb-alert alert="remoteAccess.alert"></bb-alert> -->
+    <form name="form_remote" id="form_remote" class="form form-page" ng-submit="putRemoteAccess(remoteAccess)">
         <fieldset>
             <!-- <p ng-bind="_t('remote_access_info')"></p> -->
             <div ng-if="remoteAccess">
