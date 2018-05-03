@@ -7,8 +7,8 @@ var config_data = {
     'environment': 'live',
     'dev_host': [],
     'app_name': 'Z-Wave CIT',
-    'app_version': '1.1.0-RC-7',
-    'app_built': '08-03-2018 15:12:20',
+    'app_version': '1.1.0-RC-8',
+    'app_built': '03-05-2018 09:03:45',
     'app_id': 'CIT',
     'custom_ip': false,
     'user_field': 'USERXXXX',
@@ -65,6 +65,8 @@ var config_data = {
     'wifi_settings': '/ZAutomation/api/v1/system/wifi/settings', // Set wifi settings ssid and password
     'login': '/ZAutomation/api/v1/login', // Get time
     'instances': '/ZAutomation/api/v1/instances',
+    'modules': '/ZAutomation/api/v1/modules',
+    'remoteId': '/ZAutomation/api/v1/system/remote-id',
     'upload_file': '/ZAutomation/api/v1/upload/file', // upload a file
     'load_image': '/ZAutomation/api/v1/load/image/', // load image from automation storage
     'app_built_info': 'app/info.json', // App build info
@@ -82,6 +84,7 @@ var config_data = {
     'identifier_update': '/ZAutomation/api/v1/system/certfxUpdateIdentifier', // Identifier update
     'cit_forward_login': '/ZAutomation/api/v1/system/certfxAuthForwarding', // forward cit login
     'cit_unregister': '/ZAutomation/api/v1/system/certfxUnregister', // unregister cit
+    'cit_wifi': '/ZAutomation/api/v1/system/ethernet/settings ', // set wifi
     //'reorg_log_url': '/config/reorg.log', // Url for store reorg log data
     'zddx_url': '/ZDDX/', // Url for zddx xml files
     'notes_url': '/config/notes.log', // Url for store notes data
