@@ -14898,7 +14898,28 @@ input[type=radio] {
     margin: 0 $spacing 0; */
 }
 
+<<<<<<< HEAD
 /* line 46, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+=======
+/* line 43, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+.ip-number {
+  display: inline-block;
+  padding: 5px;
+  width: 4em;
+}
+
+/* line 51, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+.ip-group span::after {
+  content: ' . ';
+}
+
+/* line 55, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+.ip-group span:last-child::after {
+  content: '';
+}
+
+/* line 65, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+>>>>>>> citdev
 .os-iphone input[type=checkbox], .os-ipad input[type=checkbox], .os-ipod input[type=checkbox] {
   -ms-transform: scale(1.3);
   /* IE */
@@ -14912,7 +14933,11 @@ input[type=radio] {
   margin: 0 10px 0;
 }
 
+<<<<<<< HEAD
 /* line 54, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+=======
+/* line 73, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+>>>>>>> citdev
 .os-iphone input[type=radio], .os-ipad input[type=radio], .os-ipod input[type=radio] {
   transform: scale(1.2, 1.2);
   -moz-transform: scale(1.2, 1.2);
@@ -14923,32 +14948,52 @@ input[type=radio] {
   margin: 0 10px 0;
 }
 
+<<<<<<< HEAD
 /* line 66, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+=======
+/* line 85, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+>>>>>>> citdev
 .form-page {
   margin-bottom: 20px;
   background-color: #FFFFFF;
   border: solid 1px #9fd8ef;
 }
 
+<<<<<<< HEAD
 /* line 71, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+=======
+/* line 90, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+>>>>>>> citdev
 .form-page .form-group {
   border-bottom: solid 1px #9fd8ef;
   padding-bottom: 10px;
 }
 
+<<<<<<< HEAD
 /* line 74, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+=======
+/* line 93, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+>>>>>>> citdev
 .form-page .form-group.last {
   border-bottom: 0;
   padding-bottom: 0;
   margin-bottom: 0;
 }
 
+<<<<<<< HEAD
 /* line 80, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+=======
+/* line 99, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+>>>>>>> citdev
 .form-page label {
   font-weight: normal;
 }
 
+<<<<<<< HEAD
 /* line 85, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+=======
+/* line 104, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+>>>>>>> citdev
 .inputfile {
   width: 0.1px;
   height: 0.1px;
@@ -14958,42 +15003,74 @@ input[type=radio] {
   z-index: -1;
 }
 
+<<<<<<< HEAD
 /* line 94, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+=======
+/* line 113, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+>>>>>>> citdev
 .inputfile + label {
   cursor: pointer;
 }
 
+<<<<<<< HEAD
 /* line 98, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+=======
+/* line 117, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+>>>>>>> citdev
 fieldset, .fieldset {
   padding: 10px;
 }
 
+<<<<<<< HEAD
 /* line 101, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+=======
+/* line 120, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+>>>>>>> citdev
 .isrequired {
   font-weight: bold !important;
 }
 
+<<<<<<< HEAD
 /* line 105, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+=======
+/* line 124, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+>>>>>>> citdev
 .isrequired::before {
   content: "*";
 }
 
+<<<<<<< HEAD
 /* line 109, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+=======
+/* line 128, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+>>>>>>> citdev
 .input-valid-false {
   border: solid 1px red;
 }
 
+<<<<<<< HEAD
 /* line 114, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+=======
+/* line 133, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+>>>>>>> citdev
 .form-control-sm {
   width: 30% !important;
 }
 
+<<<<<<< HEAD
 /* line 118, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+=======
+/* line 137, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+>>>>>>> citdev
 .form-control-md {
   width: 50% !important;
 }
 
+<<<<<<< HEAD
 /* line 122, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+=======
+/* line 141, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+>>>>>>> citdev
 .submit-entry {
   text-align: right;
   display: block;
@@ -15001,23 +15078,39 @@ fieldset, .fieldset {
   border-top: solid 1px #9fd8ef;
 }
 
+<<<<<<< HEAD
 /* line 130, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+=======
+/* line 149, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+>>>>>>> citdev
 fieldset.submit-entry {
   margin: 0 !important;
 }
 
+<<<<<<< HEAD
 /* line 133, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+=======
+/* line 152, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+>>>>>>> citdev
 .form-control-hidden {
   display: none !important;
 }
 
+<<<<<<< HEAD
 /* line 136, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+=======
+/* line 155, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+>>>>>>> citdev
 .form-control-img {
   cursor: pointer;
   border: solid 4px transparent;
 }
 
+<<<<<<< HEAD
 /* line 141, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+=======
+/* line 160, C:/Development/git_repos/ExpertUI/app/sass/common/_form.scss */
+>>>>>>> citdev
 .control-active {
   border: solid 4px black !important;
 }
@@ -16443,7 +16536,11 @@ h1 {
 }
 
 /* line 64, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+<<<<<<< HEAD
 a {
+=======
+a, .order-by {
+>>>>>>> citdev
   color: #083366;
 }
 
@@ -16478,18 +16575,30 @@ a {
 }
 
 /* Dropdown menu */
+<<<<<<< HEAD
 /* line 98, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+=======
+/* line 100, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+>>>>>>> citdev
 .dropdown-menu {
   background-color: #47AA42;
   border: 1px solid #e3e3e3;
 }
 
+<<<<<<< HEAD
 /* line 103, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+=======
+/* line 105, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+>>>>>>> citdev
 .dropdown-menu > li > a {
   color: #083366;
 }
 
+<<<<<<< HEAD
 /* line 107, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+=======
+/* line 109, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+>>>>>>> citdev
 .dropdown-menu > li > a.active,
 .dropdown-menu > li > a.active:hover {
   color: #47AA42;
@@ -16497,14 +16606,22 @@ a {
 }
 
 /* Logo */
+<<<<<<< HEAD
 /* line 115, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+=======
+/* line 117, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+>>>>>>> citdev
 .product-logo {
   max-width: 150px;
   max-height: 150px;
 }
 
 /* Dropdown */
+<<<<<<< HEAD
 /* line 122, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+=======
+/* line 124, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+>>>>>>> citdev
 .appdropdown-footer {
   padding: 5px;
   background-color: #f2faf1;
@@ -16512,23 +16629,39 @@ a {
 }
 
 /* Init */
+<<<<<<< HEAD
 /* line 131, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+=======
+/* line 133, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+>>>>>>> citdev
 #cit_init .product-logo {
   margin: 20px 0;
 }
 
+<<<<<<< HEAD
 /* line 134, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+=======
+/* line 136, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+>>>>>>> citdev
 #cit_init .cit-welcome {
   margin: 20px 0 0 0;
 }
 
 /* Homepage */
+<<<<<<< HEAD
 /* line 141, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+=======
+/* line 143, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+>>>>>>> citdev
 .product-data-list {
   background-color: #ceebcd;
 }
 
+<<<<<<< HEAD
 /* line 145, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+=======
+/* line 147, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+>>>>>>> citdev
 .product-description {
   border-color: #87cf83;
 }
@@ -16537,12 +16670,27 @@ a {
             color: $alliance-green;
         }*/
 /* Table  */
+<<<<<<< HEAD
 /* line 155, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
 .table > thead > tr > th {
   border-color: #87cf83;
 }
 
 /* line 159, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+=======
+/* line 156, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+.table > thead > tr > th {
+  color: #083366;
+  border-color: #87cf83;
+}
+
+/* line 161, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+.table > thead > tr > th {
+  border-color: #87cf83;
+}
+
+/* line 165, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+>>>>>>> citdev
 .table > thead > tr > th,
 .table > tbody > tr > th,
 .table > tfoot > tr > th,
@@ -16553,61 +16701,105 @@ a {
 }
 
 /* Config */
+<<<<<<< HEAD
 /* line 170, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+=======
+/* line 176, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+>>>>>>> citdev
 .cfg-control-content {
   background-color: #ceebcd;
 }
 
 /*Form */
+<<<<<<< HEAD
 /* line 176, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+=======
+/* line 182, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+>>>>>>> citdev
 .form-control {
   border-color: #87cf83;
 }
 
+<<<<<<< HEAD
 /* line 180, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+=======
+/* line 186, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+>>>>>>> citdev
 .commands-data-control {
   background-color: #ceebcd;
 }
 
+<<<<<<< HEAD
 /* line 184, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+=======
+/* line 190, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+>>>>>>> citdev
 .commands-data {
   border-color: #87cf83;
 }
 
+<<<<<<< HEAD
 /* line 188, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+=======
+/* line 194, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+>>>>>>> citdev
 .cfg-block {
   border-color: #87cf83;
 }
 
+<<<<<<< HEAD
 /* line 192, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+=======
+/* line 198, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+>>>>>>> citdev
 .form-page {
   border-color: #87cf83;
 }
 
+<<<<<<< HEAD
 /* line 194, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+=======
+/* line 200, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+>>>>>>> citdev
 .form-page .form-group {
   border-color: #87cf83;
 }
 
+<<<<<<< HEAD
 /* line 199, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+=======
+/* line 205, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+>>>>>>> citdev
 .submit-entry {
   border-color: #87cf83;
   background-color: #ceebcd;
 }
 
 /* Tabs new */
+<<<<<<< HEAD
 /* line 207, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+=======
+/* line 213, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+>>>>>>> citdev
 .btn-goup-tabs .btn {
   border-color: #87cf83;
 }
 
+<<<<<<< HEAD
 /* line 210, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+=======
+/* line 216, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+>>>>>>> citdev
 .btn-goup-tabs .active .fa {
   color: #47AA42;
 }
 
 /* Tabs */
+<<<<<<< HEAD
 /* line 217, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+=======
+/* line 223, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+>>>>>>> citdev
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
@@ -16615,60 +16807,100 @@ a {
   border-color: #87cf83;
 }
 
+<<<<<<< HEAD
 /* line 224, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+=======
+/* line 230, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+>>>>>>> citdev
 .tab-content {
   border-color: transparent #87cf83 #87cf83;
 }
 
+<<<<<<< HEAD
 /* line 228, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+=======
+/* line 234, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+>>>>>>> citdev
 .nav-tabs {
   border-color: #87cf83;
 }
 
 /* Panel */
+<<<<<<< HEAD
 /* line 234, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+=======
+/* line 240, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+>>>>>>> citdev
 .panel {
   border-color: #87cf83;
 }
 
+<<<<<<< HEAD
 /* line 238, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+=======
+/* line 244, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+>>>>>>> citdev
 .panel-default > .panel-heading {
   background-color: #ceebcd;
   border-color: #87cf83;
 }
 
+<<<<<<< HEAD
 /* line 243, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+=======
+/* line 249, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+>>>>>>> citdev
 .panel-default > .panel-footer {
   background-color: #f2faf1;
   border-color: #87cf83;
 }
 
 /* List group */
+<<<<<<< HEAD
 /* line 250, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+=======
+/* line 256, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+>>>>>>> citdev
 .list-group-item {
   border-color: #87cf83;
 }
 
+<<<<<<< HEAD
 /* line 255, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+=======
+/* line 261, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+>>>>>>> citdev
 .list-report li {
   border-top: solid 1px #87cf83;
 }
 
 /* Welll */
+<<<<<<< HEAD
 /* line 262, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+=======
+/* line 268, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+>>>>>>> citdev
 .well {
   background-color: #ceebcd;
   border-color: #87cf83;
 }
 
 /* footer */
+<<<<<<< HEAD
 /* line 269, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+=======
+/* line 275, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+>>>>>>> citdev
 #footer {
   border-color: #87cf83;
 }
 
 /* Accordion */
+<<<<<<< HEAD
 /* line 275, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+=======
+/* line 281, C:/Development/git_repos/ExpertUI/app/sass/skins/installer/_main.scss */
+>>>>>>> citdev
 .accordion-entry {
   border-color: #87cf83;
 }
@@ -17223,9 +17455,69 @@ a {
 -------------------------------------------------- */
 /* core
 -------------------------------------------------- */
+<<<<<<< HEAD
 /* Page topbar
 -------------------------------------------------- */
 /* line 4, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_page-topbar.scss */
+=======
+/* Helpers
+-------------------------------------------------- */
+/*
+  Allow angular.js to be loaded in body, hiding cloaked elements until
+  templates compile.  The !important is important given that there may be
+  other selectors that are more specific or come later and might alter display.
+ -------------------------------------------------- */
+/* line 8, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_helpers.scss */
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
+/* Position
+-------------------------------------------------- */
+/* line 14, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_helpers.scss */
+.relative {
+  position: relative;
+}
+
+/* line 17, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_helpers.scss */
+.fixed {
+  position: fixed;
+}
+
+/* line 20, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_helpers.scss */
+.absolute {
+  position: absolute;
+}
+
+/* Hide on the small devices
+-------------------------------------------------- */
+@media only screen and (max-width: 767px) {
+  /* line 26, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_helpers.scss */
+  .s-hide {
+    display: none;
+  }
+}
+
+/* Hide on the large devices
+-------------------------------------------------- */
+@media only screen and (min-width: 768px) {
+  /* line 34, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_helpers.scss */
+  .l-hide {
+    display: none;
+  }
+}
+
+/* Displays a horizontal scroll bar if the screen is too smal
+-------------------------------------------------- */
+/* line 41, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_helpers.scss */
+.v-scroll {
+  overflow: auto;
+}
+
+/* Page topbar
+-------------------------------------------------- */
+/* line 3, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_page-topbar.scss */
+>>>>>>> citdev
 .page-topbar {
   display: -webkit-flex;
   display: flex;
@@ -17239,31 +17531,51 @@ a {
 
 /* Section
 -------------------------------------------------- */
+<<<<<<< HEAD
 /* line 4, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_section.scss */
+=======
+/* line 3, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_section.scss */
+>>>>>>> citdev
 section {
   margin-bottom: 2rem;
 }
 
+<<<<<<< HEAD
 /* line 6, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_section.scss */
+=======
+/* line 5, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_section.scss */
+>>>>>>> citdev
 section.has-border {
   padding: 1rem;
 }
 
 /* Tooltip
 -------------------------------------------------- */
+<<<<<<< HEAD
 /* line 9, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+=======
+/* line 5, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+>>>>>>> citdev
 .tooltip-wrap {
   position: relative;
   display: inline-block;
   cursor: help;
 }
 
+<<<<<<< HEAD
 /* line 15, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+=======
+/* line 11, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+>>>>>>> citdev
 .tooltip-wrap.on-hover:hover .tooltip {
   display: block;
 }
 
+<<<<<<< HEAD
 /* line 20, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+=======
+/* line 16, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+>>>>>>> citdev
 .tooltip-wrap .tooltip {
   white-space: normal;
   display: none;
@@ -17285,7 +17597,11 @@ section.has-border {
   /* Bottom tooltip */
 }
 
+<<<<<<< HEAD
 /* line 33, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+=======
+/* line 29, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+>>>>>>> citdev
 .tooltip-wrap .tooltip::after {
   content: " ";
   position: absolute;
@@ -17293,14 +17609,22 @@ section.has-border {
   border-style: solid;
 }
 
+<<<<<<< HEAD
 /* line 40, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+=======
+/* line 36, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+>>>>>>> citdev
 .tooltip-wrap .tooltip.right {
   top: -0.5rem;
   left: 105%;
   /* Arrow To the left of the tooltip */
 }
 
+<<<<<<< HEAD
 /* line 44, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+=======
+/* line 40, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+>>>>>>> citdev
 .tooltip-wrap .tooltip.right::after {
   top: 2rem;
   right: 100%;
@@ -17308,7 +17632,11 @@ section.has-border {
   border-color: transparent #4d4d4d transparent transparent;
 }
 
+<<<<<<< HEAD
 /* line 53, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+=======
+/* line 49, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+>>>>>>> citdev
 .tooltip-wrap .tooltip.left {
   top: -0.5rem;
   margin-top: -0.5rem;
@@ -17316,14 +17644,22 @@ section.has-border {
   /* Arrow To the right of the tooltip */
 }
 
+<<<<<<< HEAD
 /* line 58, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+=======
+/* line 54, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+>>>>>>> citdev
 .tooltip-wrap .tooltip.left::after {
   top: 2rem;
   left: 100%;
   border-color: transparent transparent transparent #4d4d4d;
 }
 
+<<<<<<< HEAD
 /* line 66, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+=======
+/* line 62, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+>>>>>>> citdev
 .tooltip-wrap .tooltip.top {
   bottom: 100%;
   left: 50%;
@@ -17332,7 +17668,11 @@ section.has-border {
   /* Arrow To the bottom of the tooltip */
 }
 
+<<<<<<< HEAD
 /* line 72, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+=======
+/* line 68, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+>>>>>>> citdev
 .tooltip-wrap .tooltip.top::after {
   top: 100%;
   left: 50%;
@@ -17340,7 +17680,11 @@ section.has-border {
   border-color: #4d4d4d transparent transparent transparent;
 }
 
+<<<<<<< HEAD
 /* line 80, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+=======
+/* line 76, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+>>>>>>> citdev
 .tooltip-wrap .tooltip.bottom {
   top: 100%;
   left: 50%;
@@ -17349,7 +17693,11 @@ section.has-border {
   /* Arrow To the top of the tooltip */
 }
 
+<<<<<<< HEAD
 /* line 86, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+=======
+/* line 82, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+>>>>>>> citdev
 .tooltip-wrap .tooltip.bottom::after {
   bottom: 100%;
   left: 50%;
@@ -17357,6 +17705,7 @@ section.has-border {
   border-color: transparent transparent #4d4d4d transparent;
 }
 
+<<<<<<< HEAD
 /* Padding
 -------------------------------------------------- */
 /* line 4, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
@@ -17577,40 +17926,73 @@ section.has-border {
 /* line 143, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
 .cur-pointer {
   cursor: pointer;
+=======
+/* Table
+-------------------------------------------------- */
+/* line 3, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_table.scss */
+table {
+  font-size: 100%;
+  width: 100%;
+  background-color: white;
+  margin-bottom: 1rem;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 10, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_table.scss */
+table th,
+table td {
+  border-bottom: 1px solid #87cf83;
+  text-align: left;
+  padding: 1rem;
+  vertical-align: top;
+}
+
+/* line 18, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_table.scss */
+table.is-condensed th,
+table.is-condensed td {
+  padding: 0.5rem;
+}
+
+/* line 25, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_table.scss */
+table.has-hover tbody tr:hover {
+  background-color: #eff6fe;
+>>>>>>> citdev
 }
 
 /* @import "core/_body";
 @import "core/_helpers";
-@import "core/_grid";
+@import "core/_typo";
 @import "core/_nav";
 @import "core/_header";
 @import "core/_aside";
-@import "core/_main";
 @import "core/_footer";
 @import "core/_page-topbar";
 @import "core/_img"; 
-@import "core/_table"; 
-@import "core/_page";
+@import "core/_table";
 @import "core/_section";  
 @import "core/_button"; 
 @import "core/_form";
+@import "core/_input-addon";
+@import "core/_switch";
 @import "core/_tag";
 @import "core/_list";
 @import "core/_definition-list";
 @import "core/_list-panel";
-@import "core/_box";
 @import "core/_panel";
-@import "core/_card";
+@import "core/_flip";
+@import "core/_flexcard";
 @import "core/_dropdown";
-@import "core/_infowindow";
 @import "core/_accordion"; 
 @import "core/_tab"; 
 @import "core/_loader";
-@import "core/_alert";
+@import "core/_notification";
+@import "core/_message";
 @import "core/_modal";
 @import "core/_pagination";
 @import "core/_autocomplete";
 @import "core/_progress";
+<<<<<<< HEAD
 @import "core/_modifiers";
 @import "core/_tooltip"; */
 /* Extensions
@@ -17701,6 +18083,228 @@ section.has-border {
 -------------------------------------------------- */
 /* Custom
 -------------------------------------------------- */
+=======
+@import "core/_tooltip"; */
+/* Modifiers
+-------------------------------------------------- */
+/* Padding
+-------------------------------------------------- */
+/* line 4, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.pad-spacing {
+  padding: 1rem;
+}
+
+/* line 7, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.pad-spacing-double {
+  padding: 2rem;
+}
+
+/* line 10, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.pad-spacing-half {
+  padding: 0.5rem;
+}
+
+/*Fonts
+-------------------------------------------------- */
+/* line 16, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.font-light {
+  font-weight: 300;
+}
+
+/* line 20, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.font-regular {
+  font-weight: 400;
+}
+
+/* line 24, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.font-heavy {
+  font-weight: 700;
+}
+
+/* Text align
+-------------------------------------------------- */
+/* line 30, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.txt-left {
+  text-align: left;
+}
+
+/* line 33, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.text-right {
+  text-align: right;
+}
+
+/* line 36, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.txt-center {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* line 41, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.txt-justify {
+  text-align: justify;
+}
+
+/* Text color
+-------------------------------------------------- */
+/* line 47, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.txt-light {
+  color: #ffffff;
+}
+
+/* line 50, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.txt-dark {
+  color: #000000;
+}
+
+/* line 53, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.txt-primary {
+  color: #6494BC;
+}
+
+/* line 56, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.txt-info {
+  color: #5bc0de;
+}
+
+/* line 59, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.txt-success {
+  color: #80AD80;
+}
+
+/* line 62, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.txt-warning {
+  color: #f0ad4e;
+}
+
+/* line 65, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.txt-danger {
+  color: #d9534f;
+}
+
+/* Truncate text
+-------------------------------------------------- */
+/* line 71, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.truncate-100px {
+  width: 100px;
+  white-space: nowrap;
+  /* force single line */
+  overflow: hidden;
+  /* don't show excess chars */
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  /* Opera */
+}
+
+/* line 74, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.truncate-200px {
+  width: 200px;
+  white-space: nowrap;
+  /* force single line */
+  overflow: hidden;
+  /* don't show excess chars */
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  /* Opera */
+}
+
+/* Has border
+-------------------------------------------------- */
+/* line 80, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.has-border {
+  border: solid 1px #87cf83;
+}
+
+/* Border color
+-------------------------------------------------- */
+/* line 86, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.bor-primary {
+  border-color: #6494BC;
+}
+
+/* line 89, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.bor-info {
+  border-color: #5bc0de;
+}
+
+/* line 92, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.bor-success {
+  border-color: #80AD80;
+}
+
+/* line 95, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.bor-warning {
+  border-color: #f0ad4e;
+}
+
+/* line 98, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.bor-danger {
+  border-color: #d9534f;
+}
+
+/* Background color
+-------------------------------------------------- */
+/* line 104, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.bcg-light {
+  background-color: #eff6fe;
+}
+
+/* line 107, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.bcg-dark {
+  background-color: #6494BC;
+}
+
+/* line 110, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.bcg-primary {
+  background-color: #6494BC;
+}
+
+/* line 113, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.bcg-info {
+  background-color: #5bc0de;
+}
+
+/* line 116, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.bcg-success {
+  background-color: #80AD80;
+}
+
+/* line 119, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.bcg-warning {
+  background-color: #f0ad4e;
+}
+
+/* line 122, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.bcg-danger {
+  background-color: #d9534f;
+}
+
+/* Box shadow
+-------------------------------------------------- */
+/* line 128, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.box-shadow {
+  -webkit-box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.29);
+  -moz-box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.29);
+  box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.29);
+}
+
+/* Circle
+-------------------------------------------------- */
+/* line 134, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.circle {
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+}
+
+/* Cursor
+-------------------------------------------------- */
+/* line 140, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+.cur-pointer {
+  cursor: pointer;
+}
+
+>>>>>>> citdev
 /* Custom
 -------------------------------------------------- */
 /* Global variables
@@ -17711,6 +18315,10 @@ section.has-border {
 -------------------------------------------------- */
 /* line 3, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/custom/_page-topbar.scss */
 .page-topbar {
+<<<<<<< HEAD
+=======
+  margin-bottom: 0;
+>>>>>>> citdev
   padding-bottom: 0;
   border-bottom: 0;
 }
@@ -17759,6 +18367,16 @@ section.has-border {
   display: block;
 }
 
+<<<<<<< HEAD
+=======
+/* Table
+-------------------------------------------------- */
+/* line 5, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/custom/_table.scss */
+table th {
+  color: #083366;
+}
+
+>>>>>>> citdev
 /* Print
 -------------------------------------------------- */
 /* line 5, C:/Development/git_repos/ExpertUI/app/sass/modules/_print.scss */

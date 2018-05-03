@@ -1,0 +1,48 @@
+/* accordion
+-------------------------------------------------- */
+$accordion-spacing: $spacing;
+$accordion-border-color: $border-color;
+$accordion-focus-color: $focus-color;
+.accordion-toggle{
+ > button{
+    all: inherit;
+    border: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    font-weight: normal;
+    cursor: pointer;
+    &::after{
+      margin-left: $accordion-spacing;
+      padding: $spacing;
+      font-size: 130%;
+    }
+    &[aria-expanded="false"]{
+      border-bottom: solid 1px $accordion-border-color;
+     &::after{
+        content: "+";
+      }
+    }
+    &[aria-expanded="true"]{
+      &::after{
+       
+        content: "-";
+      }
+    }
+    &:focus{
+     
+      &::after{
+        font-weight: bold;
+        color: $accordion-focus-color;
+      }
+      
+    }
+  }
+}
+.accordion{
+  border-bottom: solid 1px $accordion-border-color;
+  padding-bottom: $accordion-spacing;
+ 
+
+}

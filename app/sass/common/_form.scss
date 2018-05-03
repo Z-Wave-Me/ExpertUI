@@ -40,9 +40,28 @@ input[type=radio] {
     /* padding: $spacing;
     margin: 0 $spacing 0; */
 }
+.ip-number {
+  display: inline-block;
+  padding: $spacing-half;
+  width: 4em;
+}
+
+.ip-group {
+  span{
+    &::after{
+      content: ' . '
+    }
+    &:last-child{
+      &::after{
+        content: ''
+      }
+    }
+  }
+  
+}
 
 // IOS inputs
-.os-iphone,.os-ipad,.os-ipod{
+.os-iphone,.os-ipad,.os-ipod{ 
     input[type=checkbox]{
         -ms-transform: scale($checkbox-ios-scale); /* IE */
         -moz-transform: scale($checkbox-ios-scale); /* FF */

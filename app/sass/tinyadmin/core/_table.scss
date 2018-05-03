@@ -1,0 +1,30 @@
+/* Table
+-------------------------------------------------- */
+table {
+  font-size: 100%;
+  width: 100%;
+  background-color: white;
+  margin-bottom: $spacing;
+  border-collapse: collapse;
+  border-spacing: 0;
+  th,
+  td {
+    border-bottom: 1px solid $border-color;
+    text-align: left;
+    padding: $spacing;
+    vertical-align: top;
+  }
+  &.is-condensed {
+    th,
+    td {
+      padding: $spacing-half;
+    }
+  }
+  &.has-hover{
+    tbody{
+      tr:hover {
+        background-color: $light-bcg-color;
+      }
+    }
+  }
+}

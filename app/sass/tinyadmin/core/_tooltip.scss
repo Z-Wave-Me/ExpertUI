@@ -1,11 +1,7 @@
 /* Tooltip
 -------------------------------------------------- */
-
-$tooltip-spacing: $spacing;
 $tooltip-w: 24rem;
-$tooltip-color: $light-font-color;
 $tooltip-bcg-color: lighten($darkest-bcg-color, 30%);
-$tooltip-line-height: $font-height;
 .tooltip-wrap {
   position: relative;
   display: inline-block;
@@ -22,42 +18,42 @@ $tooltip-line-height: $font-height;
     display: none;
     position: absolute;
     width: $tooltip-w;
-    padding: $tooltip-spacing;
+    padding: $spacing;
     background-color: $tooltip-bcg-color;
-    color: $tooltip-color;
+    color: $light-font-color;
     z-index: $zindex-tooltip;
     text-align: left;
-    line-height: $tooltip-line-height;
+    line-height: $font-height;
     @include boxShadow($box-shadow);
     /* Arrow */
     &::after {
       content: " ";
       position: absolute;
-      border-width: $tooltip-spacing/2;
+      border-width: $spacing/2;
       border-style: solid;
     }
     /* Right tooltip */
     &.right {
-      top: -$tooltip-spacing/2;
+      top: -$spacing/2;
       left: 105%;
       /* Arrow To the left of the tooltip */
       &::after {
         //top: 50%;
-        top: $tooltip-spacing*2;
+        top: $spacing*2;
         right: 100%;
-        margin-top: -$tooltip-spacing/2;
+        margin-top: -$spacing/2;
         border-color: transparent $tooltip-bcg-color transparent transparent;
       }
     }
     /* Left tooltip */
     &.left {
-      top: -$tooltip-spacing/2;
-      margin-top: -$tooltip-spacing/2;
+      top: -$spacing/2;
+      margin-top: -$spacing/2;
       right: 105%;
       /* Arrow To the right of the tooltip */
       &::after {
         //top: 50%;
-        top: $tooltip-spacing*2;
+        top: $spacing*2;
         left: 100%;
         border-color: transparent transparent transparent $tooltip-bcg-color;
       }
@@ -72,7 +68,7 @@ $tooltip-line-height: $font-height;
       &::after {
         top: 100%;
         left: 50%;
-        margin-left: -$tooltip-spacing/2;
+        margin-left: -$spacing/2;
         border-color: $tooltip-bcg-color transparent transparent transparent;
       }
     }
@@ -86,7 +82,7 @@ $tooltip-line-height: $font-height;
       &::after {
         bottom: 100%;
         left: 50%;
-        margin-left: -$tooltip-spacing/2;
+        margin-left: -$spacing/2;
         border-color: transparent transparent $tooltip-bcg-color transparent;
       }
     }

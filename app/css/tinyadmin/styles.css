@@ -11,10 +11,71 @@
 -------------------------------------------------- */
 /* core
 -------------------------------------------------- */
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* Page topbar
 -------------------------------------------------- */
 @import url(https://fonts.googleapis.com/css?family=Lato:400,300,300italic,400italic,700,700italic);
 /* line 4, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_page-topbar.scss */
+=======
+/* Helpers
+-------------------------------------------------- */
+/*
+  Allow angular.js to be loaded in body, hiding cloaked elements until
+  templates compile.  The !important is important given that there may be
+  other selectors that are more specific or come later and might alter display.
+ -------------------------------------------------- */
+@import url(https://fonts.googleapis.com/css?family=Lato:400,300,300italic,400italic,700,700italic);
+/* line 8, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_helpers.scss */
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
+/* Position
+-------------------------------------------------- */
+/* line 14, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_helpers.scss */
+.relative {
+  position: relative;
+}
+
+/* line 17, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_helpers.scss */
+.fixed {
+  position: fixed;
+}
+
+/* line 20, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_helpers.scss */
+.absolute {
+  position: absolute;
+}
+
+/* Hide on the small devices
+-------------------------------------------------- */
+@media only screen and (max-width: 767px) {
+  /* line 26, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_helpers.scss */
+  .s-hide {
+    display: none;
+  }
+}
+
+/* Hide on the large devices
+-------------------------------------------------- */
+@media only screen and (min-width: 768px) {
+  /* line 34, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_helpers.scss */
+  .l-hide {
+    display: none;
+  }
+}
+
+/* Displays a horizontal scroll bar if the screen is too smal
+-------------------------------------------------- */
+/* line 41, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_helpers.scss */
+.v-scroll {
+  overflow: auto;
+}
+
+/* Page topbar
+-------------------------------------------------- */
+/* line 3, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_page-topbar.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .page-topbar {
   display: -webkit-flex;
   display: flex;
@@ -28,31 +89,51 @@
 
 /* Section
 -------------------------------------------------- */
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 4, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_section.scss */
+=======
+/* line 3, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_section.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 section {
   margin-bottom: 2rem;
 }
 
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 6, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_section.scss */
+=======
+/* line 5, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_section.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 section.has-border {
   padding: 1rem;
 }
 
 /* Tooltip
 -------------------------------------------------- */
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 9, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+=======
+/* line 5, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .tooltip-wrap {
   position: relative;
   display: inline-block;
   cursor: help;
 }
 
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 15, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+=======
+/* line 11, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .tooltip-wrap.on-hover:hover .tooltip {
   display: block;
 }
 
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 20, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+=======
+/* line 16, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .tooltip-wrap .tooltip {
   white-space: normal;
   display: none;
@@ -74,7 +155,11 @@ section.has-border {
   /* Bottom tooltip */
 }
 
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 33, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+=======
+/* line 29, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .tooltip-wrap .tooltip::after {
   content: " ";
   position: absolute;
@@ -82,14 +167,22 @@ section.has-border {
   border-style: solid;
 }
 
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 40, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+=======
+/* line 36, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .tooltip-wrap .tooltip.right {
   top: -0.5rem;
   left: 105%;
   /* Arrow To the left of the tooltip */
 }
 
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 44, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+=======
+/* line 40, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .tooltip-wrap .tooltip.right::after {
   top: 2rem;
   right: 100%;
@@ -97,7 +190,11 @@ section.has-border {
   border-color: transparent #4d4d4d transparent transparent;
 }
 
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 53, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+=======
+/* line 49, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .tooltip-wrap .tooltip.left {
   top: -0.5rem;
   margin-top: -0.5rem;
@@ -105,14 +202,22 @@ section.has-border {
   /* Arrow To the right of the tooltip */
 }
 
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 58, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+=======
+/* line 54, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .tooltip-wrap .tooltip.left::after {
   top: 2rem;
   left: 100%;
   border-color: transparent transparent transparent #4d4d4d;
 }
 
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 66, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+=======
+/* line 62, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .tooltip-wrap .tooltip.top {
   bottom: 100%;
   left: 50%;
@@ -121,7 +226,11 @@ section.has-border {
   /* Arrow To the bottom of the tooltip */
 }
 
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 72, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+=======
+/* line 68, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .tooltip-wrap .tooltip.top::after {
   top: 100%;
   left: 50%;
@@ -129,7 +238,11 @@ section.has-border {
   border-color: #4d4d4d transparent transparent transparent;
 }
 
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 80, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+=======
+/* line 76, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .tooltip-wrap .tooltip.bottom {
   top: 100%;
   left: 50%;
@@ -138,7 +251,11 @@ section.has-border {
   /* Arrow To the top of the tooltip */
 }
 
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 86, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+=======
+/* line 82, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .tooltip-wrap .tooltip.bottom::after {
   bottom: 100%;
   left: 50%;
@@ -146,6 +263,73 @@ section.has-border {
   border-color: transparent transparent #4d4d4d transparent;
 }
 
+/* Table
+-------------------------------------------------- */
+/* line 3, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_table.scss */
+table {
+  font-size: 100%;
+  width: 100%;
+  background-color: white;
+  margin-bottom: 1rem;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 10, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_table.scss */
+table th,
+table td {
+  border-bottom: 1px solid #87cf83;
+  text-align: left;
+  padding: 1rem;
+  vertical-align: top;
+}
+
+/* line 18, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_table.scss */
+table.is-condensed th,
+table.is-condensed td {
+  padding: 0.5rem;
+}
+
+/* line 25, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_table.scss */
+table.has-hover tbody tr:hover {
+  background-color: #eff6fe;
+}
+
+/* @import "core/_body";
+@import "core/_helpers";
+@import "core/_typo";
+@import "core/_nav";
+@import "core/_header";
+@import "core/_aside";
+@import "core/_footer";
+@import "core/_page-topbar";
+@import "core/_img"; 
+@import "core/_table";
+@import "core/_section";  
+@import "core/_button"; 
+@import "core/_form";
+@import "core/_input-addon";
+@import "core/_switch";
+@import "core/_tag";
+@import "core/_list";
+@import "core/_definition-list";
+@import "core/_list-panel";
+@import "core/_panel";
+@import "core/_flip";
+@import "core/_flexcard";
+@import "core/_dropdown";
+@import "core/_accordion"; 
+@import "core/_tab"; 
+@import "core/_loader";
+@import "core/_notification";
+@import "core/_message";
+@import "core/_modal";
+@import "core/_pagination";
+@import "core/_autocomplete";
+@import "core/_progress";
+@import "core/_tooltip"; */
+/* Modifiers
+-------------------------------------------------- */
 /* Padding
 -------------------------------------------------- */
 /* line 4, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
@@ -183,23 +367,36 @@ section.has-border {
 /* Text align
 -------------------------------------------------- */
 /* line 30, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 .left {
+=======
+.txt-left {
+>>>>>>> citdev:app/css/tinyadmin/styles.css
   text-align: left;
 }
 
 /* line 33, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 .right {
+=======
+.text-right {
+>>>>>>> citdev:app/css/tinyadmin/styles.css
   text-align: right;
 }
 
 /* line 36, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 .center {
+=======
+.txt-center {
+>>>>>>> citdev:app/css/tinyadmin/styles.css
   text-align: center;
   margin-left: auto;
   margin-right: auto;
 }
 
 /* line 41, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 .justify {
   text-align: justify;
 }
@@ -212,43 +409,80 @@ section.has-border {
 /* Text color
 -------------------------------------------------- */
 /* line 50, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+=======
+.txt-justify {
+  text-align: justify;
+}
+
+/* Text color
+-------------------------------------------------- */
+/* line 47, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .txt-light {
   color: #ffffff;
 }
 
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 53, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+=======
+/* line 50, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .txt-dark {
   color: #000000;
 }
 
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 56, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+=======
+/* line 53, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .txt-primary {
   color: #6494BC;
 }
 
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 59, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+=======
+/* line 56, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .txt-info {
   color: #5bc0de;
 }
 
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 62, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+=======
+/* line 59, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .txt-success {
   color: #80AD80;
 }
 
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 65, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+=======
+/* line 62, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .txt-warning {
   color: #f0ad4e;
 }
 
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 68, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+=======
+/* line 65, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .txt-danger {
   color: #d9534f;
 }
 
 /* Truncate text
 -------------------------------------------------- */
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 74, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+=======
+/* line 71, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .truncate-100px {
   width: 100px;
   white-space: nowrap;
@@ -260,7 +494,11 @@ section.has-border {
   /* Opera */
 }
 
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 77, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+=======
+/* line 74, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .truncate-200px {
   width: 200px;
   white-space: nowrap;
@@ -274,78 +512,134 @@ section.has-border {
 
 /* Has border
 -------------------------------------------------- */
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 83, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+=======
+/* line 80, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .has-border {
   border: solid 1px #87cf83;
 }
 
 /* Border color
 -------------------------------------------------- */
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 89, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+=======
+/* line 86, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .bor-primary {
   border-color: #6494BC;
 }
 
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 92, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+=======
+/* line 89, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .bor-info {
   border-color: #5bc0de;
 }
 
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 95, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+=======
+/* line 92, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .bor-success {
   border-color: #80AD80;
 }
 
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 98, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+=======
+/* line 95, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .bor-warning {
   border-color: #f0ad4e;
 }
 
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 101, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+=======
+/* line 98, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .bor-danger {
   border-color: #d9534f;
 }
 
 /* Background color
 -------------------------------------------------- */
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 107, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+=======
+/* line 104, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .bcg-light {
-  background-color: #ceebcd;
+  background-color: #eff6fe;
 }
 
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 110, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+=======
+/* line 107, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .bcg-dark {
   background-color: #6494BC;
 }
 
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 113, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+=======
+/* line 110, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .bcg-primary {
   background-color: #6494BC;
 }
 
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 116, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+=======
+/* line 113, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .bcg-info {
   background-color: #5bc0de;
 }
 
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 119, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+=======
+/* line 116, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .bcg-success {
   background-color: #80AD80;
 }
 
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 122, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+=======
+/* line 119, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .bcg-warning {
   background-color: #f0ad4e;
 }
 
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 125, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+=======
+/* line 122, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .bcg-danger {
   background-color: #d9534f;
 }
 
 /* Box shadow
 -------------------------------------------------- */
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 131, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+=======
+/* line 128, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .box-shadow {
   -webkit-box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.29);
   -moz-box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.29);
@@ -354,7 +648,11 @@ section.has-border {
 
 /* Circle
 -------------------------------------------------- */
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 137, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+=======
+/* line 134, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .circle {
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
@@ -363,11 +661,16 @@ section.has-border {
 
 /* Cursor
 -------------------------------------------------- */
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* line 143, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+=======
+/* line 140, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 .cur-pointer {
   cursor: pointer;
 }
 
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /* @import "core/_body";
 @import "core/_helpers";
 @import "core/_grid";
@@ -490,6 +793,8 @@ section.has-border {
 -------------------------------------------------- */
 /* Custom
 -------------------------------------------------- */
+=======
+>>>>>>> citdev:app/css/tinyadmin/styles.css
 /* Custom
 -------------------------------------------------- */
 /* Global variables
@@ -500,6 +805,7 @@ section.has-border {
 -------------------------------------------------- */
 /* line 3, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/custom/_page-topbar.scss */
 .page-topbar {
+  margin-bottom: 0;
   padding-bottom: 0;
   border-bottom: 0;
 }
@@ -548,4 +854,15 @@ section.has-border {
   display: block;
 }
 
+<<<<<<< HEAD:app/css/tinyadmin/tinyadmin.css
 /*# sourceMappingURL=../../css/tinyadmin/tinyadmin.map */
+=======
+/* Table
+-------------------------------------------------- */
+/* line 5, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/custom/_table.scss */
+table th {
+  color: #083366;
+}
+
+/*# sourceMappingURL=../../css/tinyadmin/styles.map */
+>>>>>>> citdev:app/css/tinyadmin/styles.css

@@ -1,18 +1,13 @@
-<!-- Settings languages  -->
-<h2 class="accordion-entry-title expanded-only_" ng-init_="expandElement('settingsLang')" ng-click="expandElement('settingsLang')">
-    <i class="fa fa-globe fa-fw"></i>&nbsp;{{_t('language')}}
-    <i class="fa accordion-arrow" ng-class="expand.settingsLang  ? 'fa-chevron-up':'fa-chevron-down'"></i>
+<!-- Title -->
+<h2 class="accordion-toggle chevron">
+  <button type="button" aria-expanded="false" bb-accordion>
+    <span>
+      <i class="fa fa-globe fa-fw"></i>&nbsp; {{_t('language')}}</span>
+  </button>
 </h2>
-<div class="accordion-entry-ctrl" ng-class="" ng-if="expand.settingsLang" ng-controller="SettingsLangController">
-    <div class="form-page">
-        <div class="fieldset settings-lang">
-            <a href="" title="{{v}}"
-               ng-repeat="v in lang_list"
-               ng-click="setLang(v)"
-               ng-class="v === lang ? 'active': ''">
-                <img ng-src="app/images/flags/{{v}}.png" alt="{{ v }}"/>
-            </a>
-        </div>
-    </div>
+<!-- Content -->
+<div class="accordion settings-lang" ng-controller="SettingsLangController" hidden>
+  <a href="" title="{{v}}" ng-repeat="v in lang_list" ng-click="setLang(v)" ng-class="v === lang ? 'active': ''">
+    <img ng-src="app/images/flags/{{v}}.png" alt="{{ v }}" />
+  </a>
 </div>
-
