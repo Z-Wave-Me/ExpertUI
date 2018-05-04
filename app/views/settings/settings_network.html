@@ -1,0 +1,14 @@
+<!-- Title -->
+<h2 class="accordion-toggle chevron">
+  <button type="button" aria-expanded="false" bb-accordion>
+    <span>
+      <i class="fa fa-wifi fa-fw"></i>&nbsp;{{_t('network_settings')}}</span>
+  </button>
+</h2>
+<!-- Content -->
+<div class="accordion" hidden>
+  <!-- Wifi  -->
+ <div ng-include="'app/views/settings/settings_wifi.html'"></div>
+   <!-- Ethernet  -->
+ <div ng-include="'app/views/settings/settings_ethernet.html'"></div>
+</div>

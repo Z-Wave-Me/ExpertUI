@@ -1,0 +1,77 @@
+<!-- <pre>{{ethernet|json}}</pre> -->
+<form name="form_settings_ethernet" id="form_settings_ethernet" class="form form-page" ng-controller="SettingsEthernetController"
+  ng-submit="storeSettings(ethernet.input)" novalidate>
+  <legend>{{_t('ethernet')}}</legend>
+  <fieldset class="form-group">
+    <!-- ip -->
+    <div class="form-group">
+      <div class="ip-group" bb-ip-navigate>
+        <label>{{_t('ipaddress')}}: </label>
+        <span>
+          <input id="ip_1" type="number" min="0" max="255" class="form-control ip-number" ng-model="ethernet.input.ip[0]" />
+        </span>
+        <span>
+          <input id="ip_2" type="number" min="0" max="255" class="form-control ip-number" ng-model="ethernet.input.ip[1]" />
+        </span>
+        <span>
+          <input id="ip_3" type="number" min="0" max="255" class="form-control ip-number" ng-model="ethernet.input.ip[2]" />
+        </span>
+        <span>
+          <input id="ip_4" type="number" min="0" max="255" class="form-control ip-number" ng-model="ethernet.input.ip[3]" />
+        </span>
+      </div>
+    </div>
+    <!-- netmask -->
+    <div class="form-group">
+      <div class="ip-group" bb-ip-navigate>
+        <label>{{_t('netmask')}}: </label>
+        <span>
+          <input id="netmask_1" type="number" min="0" max="255" class="form-control ip-number" ng-model="ethernet.input.netmask[0]"
+          />
+        </span>
+        <span>
+          <input id="netmask_2" type="number" min="0" max="255" class="form-control ip-number" ng-model="ethernet.input.netmask[1]"
+          />
+        </span>
+        <span>
+          <input id="netmask_3" type="number" min="0" max="255" class="form-control ip-number" ng-model="ethernet.input.netmask[2]"
+          />
+        </span>
+        <span>
+          <input id="netmask_4" type="number" min="0" max="255" class="form-control ip-number" ng-model="ethernet.input.netmask[3]"
+          />
+        </span>
+      </div>
+    </div>
+
+    <!-- gateway -->
+    <div class="form-group">
+      <div class="ip-group" bb-ip-navigate>
+        <label>{{_t('gateway')}}: </label>
+        <span>
+          <input id="gateway_1" type="number" min="0" max="255" class="form-control ip-number" ng-model="ethernet.input.gateway[0]"
+          />
+        </span>
+        <span>
+          <input id="gateway_2" type="number" min="0" max="255" class="form-control ip-number" ng-model="ethernet.input.gateway[1]"
+          />
+        </span>
+        <span>
+          <input id="gateway_3" type="number" min="0" max="255" class="form-control ip-number" ng-model="ethernet.input.gateway[2]"
+          />
+        </span>
+        <span>
+          <input id="gateway_4" type="number" min="0" max="255" class="form-control ip-number" ng-model="ethernet.input.gateway[3]"
+          />
+        </span>
+      </div>
+    </div>
+  </fieldset>
+  <fieldset class="submit-entry">
+    <!-- Save -->
+    <button type="submit" class="btn btn-submit" title="{{_t('btn_save')}}">
+      <i class="fa fa-check"></i>
+      <span class="btn-name">{{_t('btn_save')}}</span>
+    </button>
+  </fieldset>
+</form>
