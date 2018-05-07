@@ -14330,25 +14330,27 @@ img {
 /* line 73, ../sass/common/_button.scss */
 .btn-installed {
   border: 0 none;
-  background-color: none !important;
+  background: transparent !important;
+  padding: 0 !important;
 }
 
-/* line 78, ../sass/common/_button.scss */
+/* line 79, ../sass/common/_button.scss */
 .btn-disabled {
   border: 0 none;
-  background-color: transparent !important;
+  background: transparent !important;
+  padding: 0 !important;
 }
 
-/* line 83, ../sass/common/_button.scss */
+/* line 85, ../sass/common/_button.scss */
 .btn-small {
   font-size: 90%;
 }
-/* line 85, ../sass/common/_button.scss */
+/* line 87, ../sass/common/_button.scss */
 .btn-small .fa {
   font-size: 95%;
 }
 
-/* line 90, ../sass/common/_button.scss */
+/* line 92, ../sass/common/_button.scss */
 .btn-tag {
   display: block;
   position: relative;
@@ -14356,48 +14358,48 @@ img {
   font-size: 100%;
   margin: 0 0 10px 0;
 }
-/* line 96, ../sass/common/_button.scss */
+/* line 98, ../sass/common/_button.scss */
 .btn-tag .fa {
   position: absolute;
   top: 5px;
   right: 10px;
   font-size: 150%;
 }
-/* line 102, ../sass/common/_button.scss */
+/* line 104, ../sass/common/_button.scss */
 .btn-tag.active {
   background-color: #f2f2f2;
 }
 
 /* Button tabs
 -------------------------------------------------- */
-/* line 111, ../sass/common/_button.scss */
+/* line 113, ../sass/common/_button.scss */
 .tabs-wrap {
   margin: 0 0 10px 0;
 }
 
-/* line 114, ../sass/common/_button.scss */
+/* line 116, ../sass/common/_button.scss */
 .btn-goup-tabs {
   /* display: table;
    width: 100%;
    margin: 0 0 $spacing 0;*/
 }
-/* line 118, ../sass/common/_button.scss */
+/* line 120, ../sass/common/_button.scss */
 .btn-goup-tabs .btn {
   padding: 10px;
   font-size: 105%;
   background-color: #FFFFFF;
   border-color: #9fd8ef;
 }
-/* line 123, ../sass/common/_button.scss */
+/* line 125, ../sass/common/_button.scss */
 .btn-goup-tabs .btn.active {
   background-color: #f2f2f2;
 }
-/* line 126, ../sass/common/_button.scss */
+/* line 128, ../sass/common/_button.scss */
 .btn-goup-tabs .btn .fa {
   font-size: 110%;
   color: #404040;
 }
-/* line 131, ../sass/common/_button.scss */
+/* line 133, ../sass/common/_button.scss */
 .btn-goup-tabs .active .fa {
   color: #6494BC;
 }

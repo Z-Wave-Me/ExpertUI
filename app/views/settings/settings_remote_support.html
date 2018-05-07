@@ -19,9 +19,9 @@
                     </p>
                     <!-- <pre>{{remoteAccess|json}}</pre> -->
                     <bb-alert alert="remoteAccess.alert"></bb-alert>
-                    <button class="btn btn-default" type="button" title="{{_t('activate_module',{__module__ : 'RemoteAccess'})}}"
+                    <button class="btn" type="button" title="{{_t('activate_module',{__module__ : 'RemoteAccess'})}}"
                             ng-click="activateRemoteAccess(remoteAccess.instance,(remoteAccess.instance.active ? false : true))"
-                            ng-class="remoteAccess.instance.active ? 'active' : ''"
+                            ng-class="remoteAccess.instance.active ? 'btn-installed' : 'btn-default'"
                             ng-disabled="!remoteAccess.remoteId || remoteAccess.instance.active">
                         <i class="fa fa-rss" ng-class="remoteAccess.instance.active ? 'text-success' : 'text-danger'"></i>
                         <span class="btn-name"
