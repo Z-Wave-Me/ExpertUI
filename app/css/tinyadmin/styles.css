@@ -19,24 +19,24 @@
   other selectors that are more specific or come later and might alter display.
  -------------------------------------------------- */
 @import url(https://fonts.googleapis.com/css?family=Lato:400,300,300italic,400italic,700,700italic);
-/* line 8, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_helpers.scss */
+/* line 8, ../../sass/tinyadmin/core/_helpers.scss */
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
 }
 
 /* Position
 -------------------------------------------------- */
-/* line 14, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_helpers.scss */
+/* line 14, ../../sass/tinyadmin/core/_helpers.scss */
 .relative {
   position: relative;
 }
 
-/* line 17, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_helpers.scss */
+/* line 17, ../../sass/tinyadmin/core/_helpers.scss */
 .fixed {
   position: fixed;
 }
 
-/* line 20, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_helpers.scss */
+/* line 20, ../../sass/tinyadmin/core/_helpers.scss */
 .absolute {
   position: absolute;
 }
@@ -44,7 +44,7 @@
 /* Hide on the small devices
 -------------------------------------------------- */
 @media only screen and (max-width: 767px) {
-  /* line 26, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_helpers.scss */
+  /* line 26, ../../sass/tinyadmin/core/_helpers.scss */
   .s-hide {
     display: none;
   }
@@ -53,7 +53,7 @@
 /* Hide on the large devices
 -------------------------------------------------- */
 @media only screen and (min-width: 768px) {
-  /* line 34, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_helpers.scss */
+  /* line 34, ../../sass/tinyadmin/core/_helpers.scss */
   .l-hide {
     display: none;
   }
@@ -61,14 +61,14 @@
 
 /* Displays a horizontal scroll bar if the screen is too smal
 -------------------------------------------------- */
-/* line 41, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_helpers.scss */
+/* line 41, ../../sass/tinyadmin/core/_helpers.scss */
 .v-scroll {
   overflow: auto;
 }
 
 /* Page topbar
 -------------------------------------------------- */
-/* line 3, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_page-topbar.scss */
+/* line 3, ../../sass/tinyadmin/core/_page-topbar.scss */
 .page-topbar {
   display: -webkit-flex;
   display: flex;
@@ -82,31 +82,28 @@
 
 /* Section
 -------------------------------------------------- */
-/* line 3, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_section.scss */
+/* line 3, ../../sass/tinyadmin/core/_section.scss */
 section {
   margin-bottom: 2rem;
 }
-
-/* line 5, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_section.scss */
+/* line 5, ../../sass/tinyadmin/core/_section.scss */
 section.has-border {
   padding: 1rem;
 }
 
 /* Tooltip
 -------------------------------------------------- */
-/* line 5, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+/* line 5, ../../sass/tinyadmin/core/_tooltip.scss */
 .tooltip-wrap {
   position: relative;
   display: inline-block;
   cursor: help;
 }
-
-/* line 11, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+/* line 11, ../../sass/tinyadmin/core/_tooltip.scss */
 .tooltip-wrap.on-hover:hover .tooltip {
   display: block;
 }
-
-/* line 16, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+/* line 16, ../../sass/tinyadmin/core/_tooltip.scss */
 .tooltip-wrap .tooltip {
   white-space: normal;
   display: none;
@@ -127,46 +124,40 @@ section.has-border {
   /* Top tooltip */
   /* Bottom tooltip */
 }
-
-/* line 29, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+/* line 29, ../../sass/tinyadmin/core/_tooltip.scss */
 .tooltip-wrap .tooltip::after {
   content: " ";
   position: absolute;
   border-width: 0.5rem;
   border-style: solid;
 }
-
-/* line 36, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+/* line 36, ../../sass/tinyadmin/core/_tooltip.scss */
 .tooltip-wrap .tooltip.right {
   top: -0.5rem;
   left: 105%;
   /* Arrow To the left of the tooltip */
 }
-
-/* line 40, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+/* line 40, ../../sass/tinyadmin/core/_tooltip.scss */
 .tooltip-wrap .tooltip.right::after {
   top: 2rem;
   right: 100%;
   margin-top: -0.5rem;
   border-color: transparent #4d4d4d transparent transparent;
 }
-
-/* line 49, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+/* line 49, ../../sass/tinyadmin/core/_tooltip.scss */
 .tooltip-wrap .tooltip.left {
   top: -0.5rem;
   margin-top: -0.5rem;
   right: 105%;
   /* Arrow To the right of the tooltip */
 }
-
-/* line 54, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+/* line 54, ../../sass/tinyadmin/core/_tooltip.scss */
 .tooltip-wrap .tooltip.left::after {
   top: 2rem;
   left: 100%;
   border-color: transparent transparent transparent #4d4d4d;
 }
-
-/* line 62, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+/* line 62, ../../sass/tinyadmin/core/_tooltip.scss */
 .tooltip-wrap .tooltip.top {
   bottom: 100%;
   left: 50%;
@@ -174,16 +165,14 @@ section.has-border {
   margin-left: -12rem;
   /* Arrow To the bottom of the tooltip */
 }
-
-/* line 68, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+/* line 68, ../../sass/tinyadmin/core/_tooltip.scss */
 .tooltip-wrap .tooltip.top::after {
   top: 100%;
   left: 50%;
   margin-left: -0.5rem;
   border-color: #4d4d4d transparent transparent transparent;
 }
-
-/* line 76, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+/* line 76, ../../sass/tinyadmin/core/_tooltip.scss */
 .tooltip-wrap .tooltip.bottom {
   top: 100%;
   left: 50%;
@@ -191,8 +180,7 @@ section.has-border {
   margin-left: -12rem;
   /* Arrow To the top of the tooltip */
 }
-
-/* line 82, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_tooltip.scss */
+/* line 82, ../../sass/tinyadmin/core/_tooltip.scss */
 .tooltip-wrap .tooltip.bottom::after {
   bottom: 100%;
   left: 50%;
@@ -202,7 +190,7 @@ section.has-border {
 
 /* Table
 -------------------------------------------------- */
-/* line 3, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_table.scss */
+/* line 3, ../../sass/tinyadmin/core/_table.scss */
 table {
   font-size: 100%;
   width: 100%;
@@ -211,8 +199,7 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-
-/* line 10, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_table.scss */
+/* line 10, ../../sass/tinyadmin/core/_table.scss */
 table th,
 table td {
   border-bottom: 1px solid #87cf83;
@@ -220,21 +207,19 @@ table td {
   padding: 1rem;
   vertical-align: top;
 }
-
-/* line 18, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_table.scss */
+/* line 18, ../../sass/tinyadmin/core/_table.scss */
 table.is-condensed th,
 table.is-condensed td {
   padding: 0.5rem;
 }
-
-/* line 25, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_table.scss */
+/* line 25, ../../sass/tinyadmin/core/_table.scss */
 table.has-hover tbody tr:hover {
   background-color: #eff6fe;
 }
 
 /* accordion
 -------------------------------------------------- */
-/* line 7, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_accordion.scss */
+/* line 7, ../../sass/tinyadmin/core/_accordion.scss */
 .accordion-toggle > button {
   all: inherit;
   border: 0;
@@ -245,36 +230,31 @@ table.has-hover tbody tr:hover {
   font-weight: normal;
   cursor: pointer;
 }
-
-/* line 16, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_accordion.scss */
+/* line 16, ../../sass/tinyadmin/core/_accordion.scss */
 .accordion-toggle > button::after {
   margin-left: 1rem;
   padding: 1rem;
   font-size: 130%;
 }
-
-/* line 21, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_accordion.scss */
+/* line 21, ../../sass/tinyadmin/core/_accordion.scss */
 .accordion-toggle > button[aria-expanded="false"] {
   border-bottom: solid 1px #87cf83;
 }
-
-/* line 23, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_accordion.scss */
+/* line 23, ../../sass/tinyadmin/core/_accordion.scss */
 .accordion-toggle > button[aria-expanded="false"]::after {
   content: "+";
 }
-
-/* line 28, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_accordion.scss */
+/* line 28, ../../sass/tinyadmin/core/_accordion.scss */
 .accordion-toggle > button[aria-expanded="true"]::after {
   content: "-";
 }
-
-/* line 35, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_accordion.scss */
+/* line 35, ../../sass/tinyadmin/core/_accordion.scss */
 .accordion-toggle > button:focus::after {
   font-weight: bold;
   color: #F89847;
 }
 
-/* line 43, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_accordion.scss */
+/* line 43, ../../sass/tinyadmin/core/_accordion.scss */
 .accordion {
   border-bottom: solid 1px #87cf83;
   padding-bottom: 1rem;
@@ -317,102 +297,102 @@ table.has-hover tbody tr:hover {
 -------------------------------------------------- */
 /* Padding
 -------------------------------------------------- */
-/* line 4, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 4, ../../sass/tinyadmin/core/_modifiers.scss */
 .pad-spacing {
   padding: 1rem;
 }
 
-/* line 7, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 7, ../../sass/tinyadmin/core/_modifiers.scss */
 .pad-spacing-double {
   padding: 2rem;
 }
 
-/* line 10, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 10, ../../sass/tinyadmin/core/_modifiers.scss */
 .pad-spacing-half {
   padding: 0.5rem;
 }
 
 /*Fonts
 -------------------------------------------------- */
-/* line 16, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 16, ../../sass/tinyadmin/core/_modifiers.scss */
 .font-light {
   font-weight: 300;
 }
 
-/* line 20, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 20, ../../sass/tinyadmin/core/_modifiers.scss */
 .font-regular {
   font-weight: 400;
 }
 
-/* line 24, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 24, ../../sass/tinyadmin/core/_modifiers.scss */
 .font-heavy {
   font-weight: 700;
 }
 
 /* Text align
 -------------------------------------------------- */
-/* line 30, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 30, ../../sass/tinyadmin/core/_modifiers.scss */
 .txt-left {
   text-align: left;
 }
 
-/* line 33, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 33, ../../sass/tinyadmin/core/_modifiers.scss */
 .text-right {
   text-align: right;
 }
 
-/* line 36, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 36, ../../sass/tinyadmin/core/_modifiers.scss */
 .txt-center {
   text-align: center;
   margin-left: auto;
   margin-right: auto;
 }
 
-/* line 41, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 41, ../../sass/tinyadmin/core/_modifiers.scss */
 .txt-justify {
   text-align: justify;
 }
 
 /* Text color
 -------------------------------------------------- */
-/* line 47, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 47, ../../sass/tinyadmin/core/_modifiers.scss */
 .txt-light {
   color: #ffffff;
 }
 
-/* line 50, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 50, ../../sass/tinyadmin/core/_modifiers.scss */
 .txt-dark {
   color: #000000;
 }
 
-/* line 53, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 53, ../../sass/tinyadmin/core/_modifiers.scss */
 .txt-primary {
   color: #6494BC;
 }
 
-/* line 56, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 56, ../../sass/tinyadmin/core/_modifiers.scss */
 .txt-info {
   color: #5bc0de;
 }
 
-/* line 59, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 59, ../../sass/tinyadmin/core/_modifiers.scss */
 .txt-success {
   color: #80AD80;
 }
 
-/* line 62, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 62, ../../sass/tinyadmin/core/_modifiers.scss */
 .txt-warning {
   color: #f0ad4e;
 }
 
-/* line 65, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 65, ../../sass/tinyadmin/core/_modifiers.scss */
 .txt-danger {
   color: #d9534f;
 }
 
 /* Truncate text
 -------------------------------------------------- */
-/* line 71, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 71, ../../sass/tinyadmin/core/_modifiers.scss */
 .truncate-100px {
   width: 100px;
   white-space: nowrap;
@@ -424,7 +404,7 @@ table.has-hover tbody tr:hover {
   /* Opera */
 }
 
-/* line 74, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 74, ../../sass/tinyadmin/core/_modifiers.scss */
 .truncate-200px {
   width: 200px;
   white-space: nowrap;
@@ -438,78 +418,78 @@ table.has-hover tbody tr:hover {
 
 /* Has border
 -------------------------------------------------- */
-/* line 80, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 80, ../../sass/tinyadmin/core/_modifiers.scss */
 .has-border {
   border: solid 1px #87cf83;
 }
 
 /* Border color
 -------------------------------------------------- */
-/* line 86, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 86, ../../sass/tinyadmin/core/_modifiers.scss */
 .bor-primary {
   border-color: #6494BC;
 }
 
-/* line 89, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 89, ../../sass/tinyadmin/core/_modifiers.scss */
 .bor-info {
   border-color: #5bc0de;
 }
 
-/* line 92, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 92, ../../sass/tinyadmin/core/_modifiers.scss */
 .bor-success {
   border-color: #80AD80;
 }
 
-/* line 95, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 95, ../../sass/tinyadmin/core/_modifiers.scss */
 .bor-warning {
   border-color: #f0ad4e;
 }
 
-/* line 98, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 98, ../../sass/tinyadmin/core/_modifiers.scss */
 .bor-danger {
   border-color: #d9534f;
 }
 
 /* Background color
 -------------------------------------------------- */
-/* line 104, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 104, ../../sass/tinyadmin/core/_modifiers.scss */
 .bcg-light {
   background-color: #eff6fe;
 }
 
-/* line 107, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 107, ../../sass/tinyadmin/core/_modifiers.scss */
 .bcg-dark {
   background-color: #6494BC;
 }
 
-/* line 110, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 110, ../../sass/tinyadmin/core/_modifiers.scss */
 .bcg-primary {
   background-color: #6494BC;
 }
 
-/* line 113, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 113, ../../sass/tinyadmin/core/_modifiers.scss */
 .bcg-info {
   background-color: #5bc0de;
 }
 
-/* line 116, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 116, ../../sass/tinyadmin/core/_modifiers.scss */
 .bcg-success {
   background-color: #80AD80;
 }
 
-/* line 119, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 119, ../../sass/tinyadmin/core/_modifiers.scss */
 .bcg-warning {
   background-color: #f0ad4e;
 }
 
-/* line 122, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 122, ../../sass/tinyadmin/core/_modifiers.scss */
 .bcg-danger {
   background-color: #d9534f;
 }
 
 /* Box shadow
 -------------------------------------------------- */
-/* line 128, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 128, ../../sass/tinyadmin/core/_modifiers.scss */
 .box-shadow {
   -webkit-box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.29);
   -moz-box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.29);
@@ -518,7 +498,7 @@ table.has-hover tbody tr:hover {
 
 /* Circle
 -------------------------------------------------- */
-/* line 134, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 134, ../../sass/tinyadmin/core/_modifiers.scss */
 .circle {
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
@@ -527,7 +507,7 @@ table.has-hover tbody tr:hover {
 
 /* Cursor
 -------------------------------------------------- */
-/* line 140, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/core/_modifiers.scss */
+/* line 140, ../../sass/tinyadmin/core/_modifiers.scss */
 .cur-pointer {
   cursor: pointer;
 }
@@ -540,7 +520,7 @@ table.has-hover tbody tr:hover {
 -------------------------------------------------- */
 /* Custom:  Page topbar
 -------------------------------------------------- */
-/* line 3, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/custom/_page-topbar.scss */
+/* line 3, ../../sass/tinyadmin/custom/_page-topbar.scss */
 .page-topbar {
   margin-bottom: 0;
   padding-bottom: 0;
@@ -549,7 +529,7 @@ table.has-hover tbody tr:hover {
 
 /* Tooltip
 -------------------------------------------------- */
-/* line 4, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/custom/_tooltip.scss */
+/* line 4, ../../sass/tinyadmin/custom/_tooltip.scss */
 .tooltip-wrap .tooltip {
   color: #ffffff;
   background-color: #083366;
@@ -558,65 +538,58 @@ table.has-hover tbody tr:hover {
   /* Top tooltip */
   /* Bottom tooltip */
 }
-
-/* line 7, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/custom/_tooltip.scss */
+/* line 7, ../../sass/tinyadmin/custom/_tooltip.scss */
 .tooltip-wrap .tooltip.center {
   text-align: center;
 }
-
-/* line 12, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/custom/_tooltip.scss */
+/* line 12, ../../sass/tinyadmin/custom/_tooltip.scss */
 .tooltip-wrap .tooltip.right::after {
   border-color: transparent #083366 transparent transparent;
 }
-
-/* line 18, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/custom/_tooltip.scss */
+/* line 18, ../../sass/tinyadmin/custom/_tooltip.scss */
 .tooltip-wrap .tooltip.left::after {
   border-color: transparent transparent transparent #083366;
 }
-
-/* line 24, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/custom/_tooltip.scss */
+/* line 24, ../../sass/tinyadmin/custom/_tooltip.scss */
 .tooltip-wrap .tooltip.top::after {
   border-color: #083366 transparent transparent transparent;
 }
-
-/* line 30, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/custom/_tooltip.scss */
+/* line 30, ../../sass/tinyadmin/custom/_tooltip.scss */
 .tooltip-wrap .tooltip.bottom::after {
   border-color: transparent transparent #083366 transparent;
 }
 
 /* Header tooltip
 -------------------------------------------------- */
-/* line 42, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/custom/_tooltip.scss */
+/* line 42, ../../sass/tinyadmin/custom/_tooltip.scss */
 .navibar-item-root.tooltip-wrap .tooltip > * {
   display: block;
 }
 
 /* Table
 -------------------------------------------------- */
-/* line 5, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/custom/_table.scss */
+/* line 5, ../../sass/tinyadmin/custom/_table.scss */
 table th {
   color: #083366;
 }
 
 /* accordion
 -------------------------------------------------- */
-/* line 3, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/custom/_accordion.scss */
+/* line 3, ../../sass/tinyadmin/custom/_accordion.scss */
 .accordion-toggle {
   margin: 0;
   padding: 0;
   font-size: 130%;
 }
-
-/* line 9, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/custom/_accordion.scss */
+/* line 9, ../../sass/tinyadmin/custom/_accordion.scss */
 .accordion-toggle > button[aria-expanded="false"]::after {
   font-family: fontawesome;
   content: "\f078";
 }
-
-/* line 15, C:/Development/git_repos/ExpertUI/app/sass/tinyadmin/custom/_accordion.scss */
+/* line 15, ../../sass/tinyadmin/custom/_accordion.scss */
 .accordion-toggle > button[aria-expanded="true"]::after {
   font-family: fontawesome;
   content: "\f077";
 }
 
-/*# sourceMappingURL=../../css/tinyadmin/styles.map */
+/*# sourceMappingURL=styles.css.map */

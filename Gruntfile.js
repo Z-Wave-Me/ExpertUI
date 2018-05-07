@@ -102,6 +102,7 @@ module.exports = function (grunt) {
           'app/controllers/settings_lang.js',
           'app/controllers/settings_app.js',
           'app/controllers/settings_wifi.js',
+          'app/controllers/settings_ethernet.js',
           'app/controllers/settings_firmware.js',
           'app/controllers/settings_unregister.js',
           'app/controllers/settings_report.js',

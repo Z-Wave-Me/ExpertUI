@@ -20,30 +20,6 @@
                        ng-model="settings.input.cit_identifier"/>
                 <!--<bb-help-text trans="_t('cit_identifier_update_info')"></bb-help-text>-->
             </div>
-            <!-- ssid name -->
-            <div class="form-group form-inline">
-                <label>{{_t('ssid_name')}}: </label>
-                <input name="ssid_name" id="ssid_name" type="text"
-                       class="form-control"
-                       placeholder="{{_t('ssid_name')}}"
-                       value="{{settings.input.ssid_name}}"
-                       ng-model="settings.input.ssid_name"/>
-            </div>
-            <!-- wifi password -->
-            <div class="form-group form-inline">
-                <label>{{_t('wifi_password')}}: </label>
-                <input name="wifi_password" id="wifi_password" type="password"
-                       class="form-control"
-                       placeholder="{{_t('wifi_password')}}"
-                       value="{{settings.input.wifi_password}}"
-                       ng-model="settings.input.wifi_password"
-                       ng-blur="passwordBlur = true"
-                       ng-minlength="8"
-                       ng-maxlength="63"
-                       ng-change="settings.wifi_pwd_changed = true"/>
-                <bb-validator input-name='form_settings.wifi_password.$error.minlength' trans='_t("wifi_password_valid")' has-blur='passwordBlur'></bb-validator>
-                <bb-validator input-name='form_settings.wifi_password.$error.maxlength' trans='_t("wifi_password_valid")' has-blur='passwordBlur'></bb-validator>
-            </div>
             <!-- date format -->
             <div class="form-group form-inline">
                 <label>{{_t('date_format')}}: </label>

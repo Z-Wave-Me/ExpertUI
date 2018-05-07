@@ -32,12 +32,12 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
    */
   $scope.loadSettings = function() {
 
-      dataService.getApi('wifi_settings').then(function (response) {
+      /* dataService.getApi('wifi_settings').then(function (response) {
           $scope.settings.input.ssid_name = response.data.data.ssid;
           $scope.settings.lastSsid = response.data.data.ssid;
       }, function (error) {
           $scope.loading = false;
-      });
+      }); */
 
       $scope.settings.input = cfg.zwavecfg;
       $scope.settings.input.cit_identifier = cfg.system_info.cit_identifier;
@@ -115,7 +115,7 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
       }*/
 
 
-      if (($scope.settings.wifi_pwd_changed && input.wifi_password !== '') || input.ssid_name !== $scope.settings.lastSsid) {
+     /*  if (($scope.settings.wifi_pwd_changed && input.wifi_password !== '') || input.ssid_name !== $scope.settings.lastSsid) {
 
           var data = {
               "password": input.wifi_password,
@@ -133,7 +133,7 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
               $scope.settings.show_update_successful = false;
               alertify.alertError($scope._t('err_update_wifi'));
           });
-      }
+      } */
 
       // do not all store in expertConfig
       var newInput = _.pick(input,
