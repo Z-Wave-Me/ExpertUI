@@ -8,11 +8,11 @@ angApp.config(['$routeProvider',
     function ($routeProvider) {
         $routeProvider.// Login
         when('/', {
-            templateUrl: 'app/views/auth/auth_installer.html'
+            templateUrl: 'app/views/auth/auth.html'
         }).// Home
         when('/home', {
             requireLogin: true,
-            templateUrl: 'app/views/home/home_installer.html'
+            templateUrl: 'app/views/home/home.html'
         }).// License
         when('/licence', {
             requireLogin: true,
@@ -134,8 +134,10 @@ angApp.config(['$routeProvider',
             templateUrl: 'app/views/error.html'
         }).// Logout
         when('/logout', {
-            requireLogin: true,
-            templateUrl: 'app/views/auth/logout_installer.html'
+          template: ' ',
+          controller: 'LogoutController',
+            /* requireLogin: true,
+            templateUrl: 'app/views/auth/logout.html' */
         }).otherwise({
             redirectTo: '/home'
         });

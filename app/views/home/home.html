@@ -1,12 +1,10 @@
 <!-- Default Installer view -->
 <div ng-controller="HomeController">
     <div ng-controller="SetPromiscuousModeController" ng-init="setPromiscuousMode('SetPromiscuousMode(true)')"></div>
-    <!-- Custom IP -->
-    <div ng-include="'app/views/home/ip.html'"></div>
     <div class="row home-page_" ng-if="home.show">
         <div class="col-sm-6 home-page-image">
             <!-- Promo text -->
-            <div ng-include="'app/views/home/promo_installer.html'"></div>
+            <div ng-include="'app/views/home/promo.html'"></div>
             <!-- use cit -->
             <div ng-include="'app/views/home/use_cit.html'"></div>
             <!-- Networkname -->
