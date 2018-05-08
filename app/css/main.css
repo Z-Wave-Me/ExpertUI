@@ -17081,6 +17081,77 @@ table.has-hover tbody tr:hover {
   padding-bottom: 1rem;
 }
 
+/* Input switch
+-------------------------------------------------- */
+/* line 11, ../sass/tinyadmin/core/_switch.scss */
+.switch {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  width: 60px;
+  height: 34px;
+}
+/* line 17, ../sass/tinyadmin/core/_switch.scss */
+.switch input {
+  display: none;
+}
+/* line 19, ../sass/tinyadmin/core/_switch.scss */
+.switch input:checked + .slider:before {
+  background-color: #80AD80;
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+/* line 25, ../sass/tinyadmin/core/_switch.scss */
+.switch input:focus + .slider {
+  box-shadow: 0 0 1px #80AD80;
+}
+/* line 29, ../sass/tinyadmin/core/_switch.scss */
+.switch .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 4px;
+  background-color: #fff;
+  border: solid 1px #87cf83;
+  transition: .4s;
+  -webkit-box-shadow: inset 2px 2px 4px 0 rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: inset 2px 2px 4px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: inset 2px 2px 4px 0 rgba(0, 0, 0, 0.1);
+}
+/* line 41, ../sass/tinyadmin/core/_switch.scss */
+.switch .slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 3px;
+  border-radius: 4px;
+  border: solid 1px #87cf83;
+  background-color: #fff;
+  transition: .4s;
+  -webkit-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+}
+/* line 55, ../sass/tinyadmin/core/_switch.scss */
+.switch:after {
+  content: attr(aria-label);
+  position: absolute;
+  top: 0;
+  left: 65px;
+  right: 0;
+  bottom: 0;
+  margin: auto 0;
+  height: 50%;
+  font-size: 90%;
+  font-weight: normal;
+}
+
 /* @import "core/_body";
 @import "core/_helpers";
 @import "core/_typo";
