@@ -19,6 +19,15 @@ appController.controller('InitInstallerController', function ($scope, $location,
     hostname: $location.host()
   };
 
+  $scope.ethernet = {
+    set: false,
+    input: {
+      ip: {},
+      netmask: {},
+      gateway: {}
+    }
+  };
+
   var path = $location.path().split('/');
 
   /**
@@ -87,7 +96,7 @@ appController.controller('InitInstallerController', function ($scope, $location,
   /**
    * Login proccess
    */
-  $scope.authenticate = function (input) {
+  $scope.authenticate = function (input,ethernet) {
     $scope.auth.alert = {};
     $scope.toggleRowSpinner('installer_auth');
     var auth = {
@@ -97,7 +106,7 @@ appController.controller('InitInstallerController', function ($scope, $location,
 
     // test login without cit auth
     if (cfg.dev_host.indexOf($location.host()) > -1) {
-      $scope.login(auth);
+      $scope.login(auth,ethernet);
       return;
     }
 
@@ -110,12 +119,12 @@ appController.controller('InitInstallerController', function ($scope, $location,
           icon: 'fa-exclamation-triangle'
         };
       } else {
-        $scope.login(auth);
+        $scope.login(auth,ethernet);
       }
 
     }, function (error) {
       if (cfg.system_info.cit_authorized && error.status == 504) {
-        $scope.login(auth);
+        $scope.login(auth,ethernet);
       } else {
         var message = $scope._t('initial_fail'); // + ' ' + response.data.data.result_message;
         if (error.status == 500) {
@@ -136,11 +145,14 @@ appController.controller('InitInstallerController', function ($scope, $location,
   /**
    * Login proccess
    */
-  $scope.login = function (input) {
+  $scope.login = function (input,ethernet) {
     dataService.logInApi(input).then(function (response) {
       var user = response.data.data;
       deviceService.setZWAYSession(user.sid);
       deviceService.setUser(user);
+      if(ethernet.set){
+        $scope.storeEthernet(ethernet.input);
+      }
       $window.location.href = '#/home';
       $window.location.reload();
     }, function (error) {
@@ -163,6 +175,27 @@ appController.controller('InitInstallerController', function ($scope, $location,
       };
     }).finally(function () {
       $timeout($scope.toggleRowSpinner, 1000);
+    });
+  };
+
+  /**
+   * Store ethernet
+   */
+  $scope.storeEthernet = function (data) {
+    var input = {
+      ip: _.map(data.ip, function (v) {
+        return v;
+      }).join('.'),
+      netmask: _.map(data.netmask, function (v) {
+        return v;
+      }).join('.'),
+      gateway: _.map(data.gateway, function (v) {
+        return v;
+      }).join('.')
+    }
+
+   dataService.postApi('cit_wifi', input).then(function (response) {
+      deviceService.showNotifier({message: $scope._t('update_successful')});
     });
   };
 });

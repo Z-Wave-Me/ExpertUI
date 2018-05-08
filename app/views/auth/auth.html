@@ -4,45 +4,17 @@
     <div class="text-center">
         <img class="product-logo" ng-src="{{getCustomCfgVal('logo')}}" alt="Logo"/>
     </div>
-
-    <form name="form_init" id="form_login" class="form form-page" ng-submit="authenticate(auth.input)" novalidate>
+    <form name="form_init" id="form_login" class="form form-page" ng-submit="authenticate(auth.input,ethernet)" novalidate>
         <fieldset class="text-center cit-welcome">
             <h1 ng-if="!cfg.system_info.cit_authorized">{{_t('initial_welcome')}}</h1>
             <h1 ng-if="cfg.system_info.cit_authorized">{{cfg.system_info.cit_identifier}}</h1>
         </fieldset>
         <bb-alert alert="auth.alert"></bb-alert>
-        <fieldset>
-            <!-- login -->
-            <div class="form-group">
-                <input name="user" id="user" type="text" class="form-control" placeholder="{{_t('lb_login')}}"
-                       ng-model="auth.input.user" ng-blur="userBlur = true" ng-required="true" />
-                <bb-validator input-name='form_init.user.$error.required' trans='_t("field_required")' has-blur='userBlur'></bb-validator>
-            </div>
-            <!-- password -->
-            <div class="form-group">
-                <input name="pass" id="pass" type="password" class="form-control" placeholder="{{_t('lb_password')}}"
-                       ng-model="auth.input.pass" ng-blur="passBlur = true" ng-required="true" />
-                <bb-validator input-name='form_init.pass.$error.required' trans='_t("field_required")' has-blur='passBlur'></bb-validator>
-            </div>
-            <!-- identifier -->
-            <div class="form-group" ng-if="!cfg.system_info.cit_authorized">
-                <input name="cit_identifier" id="cit_identifier" type="text" class="form-control" placeholder="{{_t('cit_identifier')}}"
-                       ng-model="auth.input.cit_identifier" ng-blur="cit_identifierBlur = true" ng-required="true" />
-                <bb-validator input-name='form_init.cit_identifier.$error.required' trans='_t("field_required")' has-blur='passBlur'></bb-validator>
-                <bb-help-text trans="_t('cit_identifier_info')"></bb-help-text>
-            </div>
-            <!-- Ethernet with wify settings -->
-
-            
-            <!--<div class="text-center" ng-if="cfg.system_info.cit_authorized && (!auth.findcit_referrer || auth.hostname !== cfg.find_cit.hostname)"> with referrer -->
-            <div class="text-center" ng-if="cfg.system_info.cit_authorized">
-                <a ng-href="{{cfg.logout_redirect['findcit.z-wavealliance.org']}}" class="">
-                    <i class="fa fa-external-link"></i> {{cfg.find_cit.hostname}}
-                </a>
-            </div>
-            <div class="text-right"><small>{{_t('remote_id')}}: {{cfg.system_info.remote_id}}</small></div>
-        </fieldset>
-        <!-- password -->
+         <!-- login -->
+        <fieldset ng-include="'app/views/auth/login.html'"></fieldset>
+         <!-- ethernet -->
+         <fieldset ng-if="!cfg.system_info.cit_authorized" ng-include="'app/views/auth/ethernet.html'"></fieldset>
+        <!-- submit -->
         <fieldset class="submit-entry">
             <button type="submit" class="btn btn-submit" title="{{_t('lb_enter')}}" ng-disabled="form_init.$invalid || rowSpinner['installer_auth']">
                 <bb-row-spinner
