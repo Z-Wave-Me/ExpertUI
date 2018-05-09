@@ -77,7 +77,7 @@ angApp.config(['$routeProvider',
         }).// Network
         when('/network/control', {
             requireLogin: true,
-            templateUrl: 'app/views/network/control/control_installer.html'
+            templateUrl: 'app/views/network/control/control.html'
         }).when('/network/neighbors', {
             requireLogin: true,
             templateUrl: 'app/views/network/neighbors.html'
@@ -89,7 +89,7 @@ angApp.config(['$routeProvider',
             templateUrl: 'app/views/network/timing.html'
         }).when('/network/controller', {
             requireLogin: true,
-            templateUrl: 'app/views/network/controller_installer.html'
+            templateUrl: 'app/views/network/controller.html'
         }).when('/network/queue', {
             requireLogin: true,
             templateUrl: 'app/views/network/queue.html'
