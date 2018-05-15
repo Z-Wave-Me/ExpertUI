@@ -15,7 +15,7 @@ appController.controller('SettingsWifiController', function ($scope, $timeout, $
   $scope.loadSettings = function () {
     dataService.getApi('wifi_settings').then(function (response) {
       $scope.wifi.input.ssid = response.data.data.ssid;
-      $scope.orig.input.ssid = response.data.data.ssid;
+      $scope.orig.ssid = response.data.data.ssid;
     });
   };
   $scope.loadSettings();
@@ -25,7 +25,7 @@ appController.controller('SettingsWifiController', function ($scope, $timeout, $
    */
   $scope.storeSettings = function (input) {
     var data = {};
-    if (input.ssid !== $scope.orig.input.ssid) {
+    if (input.ssid !== $scope.orig.ssid) {
       data['ssid'] = input.ssid;
     }
     if (($scope.wifi.pwdChanged && input.password !== '')) {
