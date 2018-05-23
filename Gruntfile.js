@@ -109,6 +109,7 @@ module.exports = function (grunt) {
                     'app/controllers/status.js',
                     'app/controllers/battery.js',
                     'app/controllers/type.js',
+                    'app/controllers/dsklist.js',
                     'app/controllers/association.js',
                     'app/controllers/control.js',
                     'app/controllers/statistics.js',
