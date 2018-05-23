@@ -14732,22 +14732,28 @@ input:checked + .slider:before {
 }
 
 /* line 11, ../sass/common/_form.scss */
+.dsk-number {
+  display: inline-block;
+  width: 5em;
+}
+
+/* line 16, ../sass/common/_form.scss */
 .input-group-addon {
   border: solid 1px #9fd8ef;
   background-color: #EEEEEE;
 }
 
-/* line 16, ../sass/common/_form.scss */
+/* line 21, ../sass/common/_form.scss */
 textarea {
   min-height: 150px;
 }
 
-/* line 19, ../sass/common/_form.scss */
+/* line 24, ../sass/common/_form.scss */
 label {
   font-size: 105%;
 }
 
-/* line 22, ../sass/common/_form.scss */
+/* line 27, ../sass/common/_form.scss */
 input[type=checkbox] {
   -ms-transform: scale(2);
   /* IE */
@@ -14761,7 +14767,7 @@ input[type=checkbox] {
   margin: 0 10px 0;
 }
 
-/* line 30, ../sass/common/_form.scss */
+/* line 35, ../sass/common/_form.scss */
 input[type=radio] {
   transform: scale(1.8, 1.8);
   -moz-transform: scale(1.8, 1.8);
@@ -14772,7 +14778,7 @@ input[type=radio] {
   margin: 0 10px 0;
 }
 
-/* line 42, ../sass/common/_form.scss */
+/* line 47, ../sass/common/_form.scss */
 .os-iphone input[type=checkbox], .os-ipad input[type=checkbox], .os-ipod input[type=checkbox] {
   -ms-transform: scale(1.3);
   /* IE */
@@ -14785,7 +14791,7 @@ input[type=radio] {
   padding: 10px;
   margin: 0 10px 0;
 }
-/* line 50, ../sass/common/_form.scss */
+/* line 55, ../sass/common/_form.scss */
 .os-iphone input[type=radio], .os-ipad input[type=radio], .os-ipod input[type=radio] {
   transform: scale(1.2, 1.2);
   -moz-transform: scale(1.2, 1.2);
@@ -14796,29 +14802,29 @@ input[type=radio] {
   margin: 0 10px 0;
 }
 
-/* line 62, ../sass/common/_form.scss */
+/* line 67, ../sass/common/_form.scss */
 .form-page {
   margin-bottom: 20px;
   background-color: #FFFFFF;
   border: solid 1px #9fd8ef;
 }
-/* line 67, ../sass/common/_form.scss */
+/* line 72, ../sass/common/_form.scss */
 .form-page .form-group {
   border-bottom: solid 1px #9fd8ef;
   padding-bottom: 10px;
 }
-/* line 70, ../sass/common/_form.scss */
+/* line 75, ../sass/common/_form.scss */
 .form-page .form-group.last {
   border-bottom: 0;
   padding-bottom: 0;
   margin-bottom: 0;
 }
-/* line 76, ../sass/common/_form.scss */
+/* line 81, ../sass/common/_form.scss */
 .form-page label {
   font-weight: normal;
 }
 
-/* line 81, ../sass/common/_form.scss */
+/* line 86, ../sass/common/_form.scss */
 .inputfile {
   width: 0.1px;
   height: 0.1px;
@@ -14828,42 +14834,42 @@ input[type=radio] {
   z-index: -1;
 }
 
-/* line 90, ../sass/common/_form.scss */
+/* line 95, ../sass/common/_form.scss */
 .inputfile + label {
   cursor: pointer;
 }
 
-/* line 94, ../sass/common/_form.scss */
+/* line 99, ../sass/common/_form.scss */
 fieldset, .fieldset {
   padding: 10px;
 }
 
-/* line 97, ../sass/common/_form.scss */
+/* line 102, ../sass/common/_form.scss */
 .isrequired {
   font-weight: bold !important;
 }
 
-/* line 101, ../sass/common/_form.scss */
+/* line 106, ../sass/common/_form.scss */
 .isrequired::before {
   content: "*";
 }
 
-/* line 105, ../sass/common/_form.scss */
+/* line 110, ../sass/common/_form.scss */
 .input-valid-false {
   border: solid 1px red;
 }
 
-/* line 110, ../sass/common/_form.scss */
+/* line 115, ../sass/common/_form.scss */
 .form-control-sm {
   width: 30% !important;
 }
 
-/* line 114, ../sass/common/_form.scss */
+/* line 119, ../sass/common/_form.scss */
 .form-control-md {
   width: 50% !important;
 }
 
-/* line 118, ../sass/common/_form.scss */
+/* line 123, ../sass/common/_form.scss */
 .submit-entry {
   text-align: right;
   display: block;
@@ -14871,23 +14877,23 @@ fieldset, .fieldset {
   border-top: solid 1px #9fd8ef;
 }
 
-/* line 126, ../sass/common/_form.scss */
+/* line 131, ../sass/common/_form.scss */
 fieldset.submit-entry {
   margin: 0 !important;
 }
 
-/* line 129, ../sass/common/_form.scss */
+/* line 134, ../sass/common/_form.scss */
 .form-control-hidden {
   display: none !important;
 }
 
-/* line 132, ../sass/common/_form.scss */
+/* line 137, ../sass/common/_form.scss */
 .form-control-img {
   cursor: pointer;
   border: solid 4px transparent;
 }
 
-/* line 137, ../sass/common/_form.scss */
+/* line 142, ../sass/common/_form.scss */
 .control-active {
   border: solid 4px black !important;
 }
@@ -16279,6 +16285,87 @@ input[type="number"].input_number {
   width: 540px;
   height: 380px;
   float: left;
+}
+
+/* SmartStart
+-------------------------------------------------- */
+/* 
+-------------------------------------------------- */
+/* line 9, ../sass/modules/_smartstart.scss */
+.smart-start .container {
+  padding: 0;
+}
+/* line 12, ../sass/modules/_smartstart.scss */
+.smart-start .container .entry {
+  background-color: #E4F5FC;
+  padding: 20px;
+  text-align: center;
+  margin: 0 0 20px 0;
+}
+/* line 18, ../sass/modules/_smartstart.scss */
+.smart-start .container .entry .content {
+  margin: 20px;
+}
+/* line 22, ../sass/modules/_smartstart.scss */
+.smart-start .container .entry .image .fa {
+  font-size: 64px;
+  color: #80AD80;
+}
+/* line 25, ../sass/modules/_smartstart.scss */
+.smart-start .container .entry .image .fa.fa-exclamation {
+  color: #d9534f;
+}
+/* line 30, ../sass/modules/_smartstart.scss */
+.smart-start .container .entry.list {
+  text-align: left;
+  border: solid 1px #9fd8ef;
+  background-color: transparent;
+}
+/* line 34, ../sass/modules/_smartstart.scss */
+.smart-start .container .entry.list ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+/* line 38, ../sass/modules/_smartstart.scss */
+.smart-start .container .entry.list ul li {
+  padding: 10px;
+  width: auto;
+}
+/* line 41, ../sass/modules/_smartstart.scss */
+.smart-start .container .entry.list ul li.highlighted {
+  background-color: #dff0d8;
+}
+
+/* line 55, ../sass/modules/_smartstart.scss */
+.dsk-info {
+  margin: 20px 0 0 0;
+}
+/* line 57, ../sass/modules/_smartstart.scss */
+.dsk-info dl.inline-flex {
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+  width: 100%;
+  /* set the container width*/
+  max-width: 500px;
+  overflow: visible;
+}
+/* line 64, ../sass/modules/_smartstart.scss */
+.dsk-info dl.inline-flex dt {
+  flex: 0 0 20%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin: 0 0 10px 0;
+}
+/* line 70, ../sass/modules/_smartstart.scss */
+.dsk-info dl.inline-flex dd {
+  margin-left: auto;
+  text-align: left;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  flex: 0 0 80%;
+  margin: 0 0 10px 0;
 }
 
 /* Main navigation
