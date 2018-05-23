@@ -112,6 +112,7 @@ module.exports = function (grunt) {
                     'app/controllers/dsklist.js',
                     'app/controllers/association.js',
                     'app/controllers/control.js',
+                    'app/controllers/smartstart.js',
                     'app/controllers/statistics.js',
                     'app/controllers/neighbor.js',
                     'app/controllers/reorganization.js',

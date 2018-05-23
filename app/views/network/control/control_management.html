@@ -79,6 +79,29 @@
                 <i class="fa fa-stop-circle"></i> {{_t('nm_exclude_stop')}}
             </button>
         </div>
+        <!-- SmartStart  -->
+        <div class="cfg-block" ng-controller="SmartStartDeviceController">
+          <a class="btn btn-primary" id="btn_force_secure_lock" ng-href="#smartstartdsk">
+               <i class="fa fa-star"></i> Smart Start
+          </a>
+
+          <!-- Enable SmartStart  -->
+         <button class="btn btn-info"
+                 id="btn_enable_secure_lock"
+                 ng-show="!smartStartEnabled"
+                 title="{{_t('nm_smartstart_enable_tooltip')}}"
+                 ng-click="enableSmartStart()">
+             <i class="fa fa-play-circle"></i> {{_t('nm_smartstart_enable')}}
+         </button>
+         <!-- disable SmartStart -->
+         <button
+                 class="btn btn-warning"
+                 id="btn_disable_secure_lock"
+                 ng-show="smartStartEnabled"
+                 ng-click="disableSmartStart()">
+             <i class="fa fa-stop-circle"></i> {{_t('nm_smartstart_disable')}}
+         </button>
+     </div>
 
          <!-- Dsk list  -->
          <div>

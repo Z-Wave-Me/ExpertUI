@@ -1089,3 +1089,48 @@ appController.controller('S2DskController', function ($scope) {
         correctLevel: QRCode.CorrectLevel.H
     });
 });
+
+/**
+ * This turns the Z-wave controller into an inclusion/exclusion mode that allows including/excluding a device.
+ * @class IncludeDeviceController
+ *
+ */
+appController.controller('SmartStartDeviceController', function ($scope, $route, $timeout, cfg, dataService) {
+
+    $scope.smartStartEnabled = false;
+    /**
+     * Start Smart Scan.
+     * Turns the controller into an Smart Start inclusion mode that allows including a Smart start device.
+     */
+    $scope.enableSmartStart = function () {
+        timeout = 1000;
+        $scope.toggleRowSpinner('zway.SmartStartEnable()');
+        dataService.runZwaveCmd(cfg.enable_smart_start).then(function (response) {
+            $scope.smartStartEnabled = true;
+            $timeout($scope.toggleRowSpinner, timeout);
+        }, function (error) {
+            $scope.toggleRowSpinner();
+            if (!hideError) {
+                alertify.alertError($scope._t('error_update_data') + '\n' + 'zway.SmartStartEnable()');
+            }
+        });
+    };
+
+    /**
+     * Stop Smart Scan.
+     * Turns the controller back into default mode.
+     */
+    $scope.disableSmartStart = function (cmd) {
+        timeout = 1000;
+        $scope.toggleRowSpinner('controller.RemoveNodeFromNetwork(0)');
+        dataService.runZwaveCmd(cfg.store_url + 'controller.RemoveNodeFromNetwork(0)').then(function (response) {
+            $scope.smartStartEnabled = false;
+            $timeout($scope.toggleRowSpinner, timeout);
+        }, function (error) {
+            $scope.toggleRowSpinner();
+            if (!hideError) {
+                alertify.alertError($scope._t('error_update_data') + '\n' + 'controller.RemoveNodeFromNetwork(0)');
+            }
+        });
+    };
+});
