@@ -9,7 +9,7 @@ var config_data = {
         'dev_host': [],
         'app_name': 'Z-Wave Expert',
         'app_version': '1.3.1',
-        'app_built': '20-04-2018 15:34:20',
+        'app_built': '23-05-2018 11:47:30',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -20,7 +20,7 @@ var config_data = {
         'reorg_interval': 3000, // Set interval in miliseconds to refresh reorganizations
         'route_update_timeout': 15000, // Maximum time in miliseconds to wait for an update-route
         //'server_url': 'http://zwave.dyndns.org:8083/', // Remote JSON
-        'local_data_url': 'app/data/',
+        'local_data_url': 'storage/data/',
         'server_url': '', // Remote JSON
         'dongle': 'zway', // Default dongle
         'dongle_list': [],// Dongle list
@@ -54,6 +54,8 @@ var config_data = {
         'reorg_log_url': '/ZWaveAPI/GetReorganizationLog', // Url to load log
         'zddx_create_url': '/ZWaveAPI/CreateZDDX/', // Create zddx file
         'get_network_statistics': '/ZWaveAPI/GetStatisticsData', // get network statistics
+        'get_dsk': '/ZWaveAPI/GetDSKCollection', // Get DSK collection,
+        'remove_dsk': 'ZWaveAPI/RemoveDSKEntry?id=', // Remove DSK
 
         // Other APIs
         'packet_log': '/ZWaveAPI/PacketLog', // Get Packet log
@@ -82,6 +84,13 @@ var config_data = {
         'identifier_update': '/ZAutomation/api/v1/system/certfxUpdateIdentifier', // Identifier update
         'cit_forward_login':'/ZAutomation/api/v1/system/certfxAuthForwarding', // forward cit login
         'cit_unregister':'/ZAutomation/api/v1/system/certfxUnregister', // unregister cit
+        'get_dsk':'/ZWaveAPI/GetDSKCollection', // Get DSK collection
+        'add_dsk':'/ZWaveAPI/AddDSKEntry?dsk=', // Add DSK
+        'remove_dsk':'/ZWaveAPI/RemoveDSKEntry?dsk=', // Remove DSK
+        'get_dsk_provisioning_list':'/ZWaveAPI/GetDSKProvisioningList', // Show ProvisioningList (includes only DSKs)
+        'add_dsk_provisioning_list':'/ZWaveAPI/AddDSKProvisioningEntry?dsk=', // Add DSK to ProvisioningList (Response with added DSK) GET 
+        'remove_dsk_collection':'/JS/Run/saveObject("zwaydskCollection",null)', // Remove DSK collection
+        'enable_smart_start':'/JS/Run/zway.SmartStartEnable()', // enable SmartStart
         //'reorg_log_url': '/config/reorg.log', // Url for store reorg log data
         'zddx_url': '/ZDDX/', // Url for zddx xml files
         'notes_url': '/config/notes.log', // Url for store notes data
@@ -192,6 +201,10 @@ var config_data = {
         'auth': {
             'login': 'admin',
             'password': 'admin1'
+        },
+        // SmartStart
+        'smart_start':{
+            required_min_sdk:'6.8'// Required min SDK version
         },
         // Pages without authorization
         'no_auth_pages':['','init'],
@@ -326,7 +339,7 @@ var config_data = {
                 'title': 'Z-Wave Expert UI',
                 'controller_name': 'Z-Way',
                 'hardware_vendor': 'RaZberry by Z-Wave.Me',
-                'latest_version_url': 'https://razberry.z-wave.me/z-way/razberry/latest/VERSION'
+                'latest_version_url': 'https://storage.z-wave.me/z-way/razberry/latest/VERSION'
             },
             'installer': {
                 'logo': 'app/images/z-wave-aliance-logo.png',
@@ -336,7 +349,7 @@ var config_data = {
                 'title': 'Z-Wave CIT',
                 'controller_name': 'CIT',
                 'hardware_vendor': 'Z-Wave Alliance',
-                'latest_version_url': 'https://razberry.z-wave.me/z-way/cit/latest/VERSION'
+                'latest_version_url': 'https://storage.z-wave.me/z-way/cit/latest/VERSION'
                 },
             'wd': {
                 'logo': 'app/images/zplus.jpg',
@@ -355,7 +368,7 @@ var config_data = {
                 'title': 'Z-Wave Expert UI',
                 'controller_name': 'Z-Way',
                 'hardware_vendor': 'RaZberry by Z-Wave.Me',
-                'latest_version_url': 'https://razberry.z-wave.me/z-way/popp_rpi/latest/VERSION'
+                'latest_version_url': 'https://storage.z-wave.me/z-way/popp_rpi/latest/VERSION'
 
             },
             'jb': {
@@ -366,7 +379,7 @@ var config_data = {
                 'title': 'Z-Wave Expert UI',
                 'controller_name': 'Z-Way',
                 'hardware_vendor': 'RaZberry by Z-Wave.Me',
-                'latest_version_url': 'https://razberry.z-wave.me/z-way/poppbox/latest/VERSION'
+                'latest_version_url': 'https://storage.z-wave.me/z-way/poppbox/latest/VERSION'
             }
         }
 
