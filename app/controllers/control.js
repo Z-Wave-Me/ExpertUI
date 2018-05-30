@@ -482,8 +482,13 @@ appController.controller('ControlController', function ($scope, $interval, $time
             var givenName = $filter('deviceName')(deviceIncId, node);
             var updateTime = $filter('isTodayFromUnix')(data.controller.data.lastIncludedDevice.updateTime);
             //Run CMD
-            /*var cmd = 'devices[' + deviceIncId + '].data.givenName.value=\'' + givenName + '\'';
-             dataService.runZwaveCmd(cfg.store_url + cmd);*/
+            //console.log('node.data.givenName.value',node.data.givenName.value)
+            if(!node.data.givenName.value || node.data.givenName.value == ''){
+              var cmd = 'devices[' + deviceIncId + '].data.givenName.value=\'' + givenName + '\'';
+              dataService.runZwaveCmd(cfg.store_url + cmd);
+              //console.log('!node.data.givenName',cmd)
+            }
+           
             $scope.controlDh.inclusion.lastIncludedDeviceId = deviceIncId;
             $scope.controlDh.inclusion.lastIncludedDevice = {
                 message: $scope._t('nm_last_included_device') + '  (' + updateTime + ')  <a href="#configuration/interview/' + deviceIncId + '"><strong>' + givenName + '</strong></a>',
@@ -527,8 +532,9 @@ appController.controller('ControlController', function ($scope, $interval, $time
         
          console.log('Has securityS2  commandClass: ',securityS2);
         // Check requestedKeys
-        console.log('Check requestedKeys: securityS2.data.requestedKeys.value ',securityS2.data.requestedKeys.value);
+       
         if (securityS2 && securityS2.data.requestedKeys.value && !$scope.controlDh.inclusion.grantKeys.done) {
+          console.log('Check requestedKeys: securityS2.data.requestedKeys.value ',securityS2.data.requestedKeys.value);
             $scope.controlDh.inclusion.input.keysRequested.S0 = securityS2.data.requestedKeys.S0.value;
             $scope.controlDh.inclusion.input.keysRequested.S2Unauthenticated = securityS2.data.requestedKeys.S2Unauthenticated.value;
             $scope.controlDh.inclusion.input.keysRequested.S2Authenticated = securityS2.data.requestedKeys.S2Authenticated.value;
@@ -547,8 +553,9 @@ appController.controller('ControlController', function ($scope, $interval, $time
             return;
         }
          // Check publicKey
-         console.log('Check publicKey: securityS2.data.publicKey.value.length ',securityS2.data.requestedKeys.value);
+        
         if (securityS2 && securityS2.data.publicKey.value.length && !$scope.controlDh.inclusion.verifyDSK.done) {
+          console.log('Check publicKey: securityS2.data.publicKey.value.length ',securityS2.data.requestedKeys.value);
             $scope.controlDh.inclusion.input.publicKey = securityS2.data.publicKey.value;
             $scope.controlDh.inclusion.input.publicKeyAuthenticationRequired = securityS2.data.publicKeyAuthenticationRequired.value;
             $scope.controlDh.inclusion.input.dskPin = $scope.dskBlock($scope.controlDh.inclusion.input.publicKey, 1);
