@@ -8,8 +8,9 @@
  * @class DskListController
  *
  */
-appController.controller('DskListController', function($scope, $filter, $timeout,$interval,dataService, cfg,_) {
+appController.controller('SmartStartDskListController', function($scope, $filter, $timeout,$interval,dataService, cfg,_) {
   $scope.dsk = {
+    alert: {},
        all: [],
        devices:{}
   };
@@ -58,7 +59,8 @@ appController.controller('DskListController', function($scope, $filter, $timeout
       });;
 
     }, function (error) {
-      alertify.alertError($scope._t('error_load_data'));
+      //alertify.alertError();
+      $scope.dsk.alert = {message: $scope._t('error_load_data') + ' ' + error.data, status: 'alert-danger', icon: 'fa-exclamation-triangle'};
     });
   };
   $timeout(loadDskList);
