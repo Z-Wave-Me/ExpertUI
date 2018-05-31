@@ -16207,8 +16207,14 @@ input[type="number"].input_number {
 -------------------------------------------------- */
 /* line 3, ../sass/modules/_timing.scss */
 .timing-packet {
-  margin: 0 7px 0 0;
+  margin: 0 10px 0 0;
   /*   padding: 5px;*/
+}
+/* line 6, ../sass/modules/_timing.scss */
+.timing-packet.hour-ago-true {
+  background-color: #cbeaf6;
+  padding: 2px 5px;
+  margin-right: 0;
 }
 
 /*  Controller info
