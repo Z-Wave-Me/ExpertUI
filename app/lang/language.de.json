@@ -144,6 +144,7 @@
     "device_description_sdk_version": "SDK-Version",
     "device_description_wakeup_note": "Aktion zu Wakeup",
     "device_disappeared": "Gerät wurde aus Netzwerk entfernt",
+    "device_excluded": "Device is excluded",
     "device_included_info": "Starten sie den Exklusionsmodus auf dem primären Controller des Kunden und klicken Sie auf den unteren Button.",
     "device_interview_indicator": "Interview",
     "device_interview_stage_done": "Interview komplett",

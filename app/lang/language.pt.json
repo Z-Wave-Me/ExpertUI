@@ -144,6 +144,7 @@
     "device_description_sdk_version": "Versão do SDK",
     "device_description_wakeup_note": "Para acordar",
     "device_disappeared": "Dispositivo removido da rede",
+    "device_excluded": "Device is excluded",
     "device_included_info": "Inicie o modo de exclusão no controlador principal do cliente e clique no botão abaixo.",
     "device_interview_indicator": "Entrevista",
     "device_interview_stage_done": "Entrevista completa",

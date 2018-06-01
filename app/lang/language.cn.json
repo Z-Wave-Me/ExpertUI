@@ -144,6 +144,7 @@
     "device_description_sdk_version": "SDK版本",
     "device_description_wakeup_note": "唤醒",
     "device_disappeared": "从网络中移除设备",
+    "device_excluded": "Device is excluded",
     "device_included_info": "Start the exclusion mode on the customer's primary controller and click the button below.",
     "device_interview_indicator": "Interview",
     "device_interview_stage_done": "访问完成",

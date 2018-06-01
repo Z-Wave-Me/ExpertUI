@@ -144,6 +144,7 @@
     "device_description_sdk_version": "SDK verzia",
     "device_description_wakeup_note": "Zobudiť",
     "device_disappeared": "Zariadenie odstránené zo siete",
+    "device_excluded": "Device is excluded",
     "device_included_info": "Start the exclusion mode on the customer's primary controller and click the button below.",
     "device_interview_indicator": "Interview",
     "device_interview_stage_done": "Interview kompletné",

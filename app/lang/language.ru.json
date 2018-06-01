@@ -144,6 +144,7 @@
     "device_description_sdk_version": "Версия SDK",
     "device_description_wakeup_note": "Пробуждение",
     "device_disappeared": "Устройство уже не в сети",
+    "device_excluded": "Device is excluded",
     "device_included_info": "Start the exclusion mode on the customer's primary controller and click the button below.",
     "device_interview_indicator": " Интервью",
     "device_interview_stage_done": "Интервью прошло успешно",

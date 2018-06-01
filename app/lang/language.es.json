@@ -144,6 +144,7 @@
     "device_description_sdk_version": "Version SDK",
     "device_description_wakeup_note": "Para activar",
     "device_disappeared": "Device removed from network",
+    "device_excluded": "Device is excluded",
     "device_included_info": "Inicie el modo de exclusión en el controlador primario del cliente y haga clic en el botón a continuación.",
     "device_interview_indicator": "Entrevista",
     "device_interview_stage_done": "Interrogatorio completo",
