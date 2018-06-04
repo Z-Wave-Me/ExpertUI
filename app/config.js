@@ -85,7 +85,7 @@ var config_data = {
         'cit_forward_login':'/ZAutomation/api/v1/system/certfxAuthForwarding', // forward cit login
         'cit_unregister':'/ZAutomation/api/v1/system/certfxUnregister', // unregister cit
         'get_dsk':'/ZWaveAPI/GetDSKCollection', // Get DSK collection
-        'add_dsk':'/ZWaveAPI/AddDSKEntry?dsk=', // Add DSK
+        'add_dsk': '/ZWaveAPI/AddDSKEntry', // Add DSK
         'remove_dsk':'/ZWaveAPI/RemoveDSKEntry?dsk=', // Remove DSK
         'get_dsk_provisioning_list':'/ZWaveAPI/GetDSKProvisioningList', // Show ProvisioningList (includes only DSKs)
         'add_dsk_provisioning_list':'/ZWaveAPI/AddDSKProvisioningEntry?dsk=', // Add DSK to ProvisioningList (Response with added DSK) GET 
