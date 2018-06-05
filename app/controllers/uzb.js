@@ -21,6 +21,7 @@ appController.controller('UzbController', function ($scope, $timeout, $window, c
             $scope.token.load = token;
             var vendorId = parseInt(ZWaveAPIData.controller.data.manufacturerId.value, 10);
             //0x0115 = 277, 0x0147 = 327
+            // Todo: add vendor white list to config
             var allowedVendors = [277, 327];
             if (allowedVendors.indexOf(vendorId) === -1) {
                 $scope.alert = {

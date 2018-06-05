@@ -470,9 +470,6 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
 
                             var targetNodeId = data.nodes.value[i];
                             var targetNode= ZWaveAPIData.devices[targetNodeId];
-                            if(!targetNode){
-                                return;
-                            }
                             nodeIds.push(targetNodeId);
                             var targetInstanceId = 0;
                             instanceIds.push(targetInstanceId);
@@ -489,6 +486,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                             var inConfig = deviceService.isInCfgXml(toCfgXml, cfgXml);
                             var objAssoc = {};
                             objAssoc['id'] = targetNodeId;
+                            objAssoc['deviceExcluded'] = (!targetNode);
                             objAssoc['isNew'] = false;
                             objAssoc['groupId'] = groupId;
                             objAssoc['elId'] = groupId + '_' + targetNodeId + '_' + targetInstanceId + '_' + i;
@@ -536,9 +534,6 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                         for (var i = 0; i < Object.keys(dataMca.nodesInstances.value).length; i += 2) {
                             var targetNodeId = dataMca.nodesInstances.value[i];
                             var targetNode= ZWaveAPIData.devices[targetNodeId];
-                            if(!targetNode){
-                                return;
-                            }
                             nodeIds.push(targetNodeId);
                             var targetInstanceId = dataMca.nodesInstances.value[i + 1];
                             instanceIds.push(targetInstanceId);
@@ -554,6 +549,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                             var inConfig = deviceService.isInCfgXml(toCfgXml, cfgXml);
                             var objAssoc = {};
                             objAssoc['id'] = targetNodeId;
+                            objAssoc['deviceExcluded'] = (!targetNode);
                             objAssoc['isNew'] = false;
                             objAssoc['groupId'] = groupId;
                             objAssoc['elId'] = groupId + '_' + targetNodeId + '_' + targetInstanceId + '_' + i;

@@ -8,6 +8,11 @@
     height: auto;
 }
 
+.dsk-number {
+     display: inline-block;
+    width: 5em;
+}
+
 .input-group-addon {
     border: solid 1px $form-input-border-color;
     background-color: $form-addon-bcg-color;

@@ -1,9 +1,8 @@
 <!-- DskListController -->
-<div ng-controller="DskListController">
-  <div class="page-header">
-    <h1>{{_t('dsk_list')}}</h1>
-  </div>
-  <bb-alert alert="alert"></bb-alert>
+<div ng-controller="SmartStartDskListController">
+  <!-- Navigation -->
+  <div ng-include="'app/views/smartstart/navi.html'"></div>
+  <bb-alert alert="dsk.alert"></bb-alert>
   <div id="table_mobile" ng-if="_.size(dsk.all)">
     <table class="table table-striped table-condensed table-hover">
       <thead>

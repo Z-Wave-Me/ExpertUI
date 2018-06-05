@@ -65,10 +65,7 @@ angApp.config(['$routeProvider',
         }).when('/device/security', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/device/security.html'
-        }).when('/device/dsklist', {
-          requireLogin: requireLogin,
-          templateUrl: 'app/views/device/dsklist.html'
-      }).// Config
+        }).// Config
         when('/config/configuration/:nodeId?', {
             requireLogin: requireLogin,
             template: ' ',
@@ -129,6 +126,19 @@ angApp.config(['$routeProvider',
         }).when('/network/linkstatus', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/network/linkstatus.html'
+        }).//SmartStart with QR code
+        when('/smartstartqr', {
+            templateUrl: 'app/views/smartstart/smartstart_qr.html',
+            requireLogin: requireLogin
+        }).
+        //SmartStart with dsk
+        when('/smartstartdsk', {
+            templateUrl: 'app/views/smartstart/smartstart_dsk_entry.html',
+            requireLogin: requireLogin
+        }).//SmartStart with dsk
+        when('/smartstartlist', {
+            templateUrl: 'app/views/smartstart/smartstart_dsk_list.html',
+            requireLogin: requireLogin
         }).// Installer - zniffer
         when('/installer/zniffer', {
             requireLogin: requireLogin,
