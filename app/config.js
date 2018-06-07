@@ -20,7 +20,7 @@ var config_data = {
         'reorg_interval': 3000, // Set interval in miliseconds to refresh reorganizations
         'route_update_timeout': 15000, // Maximum time in miliseconds to wait for an update-route
         //'server_url': 'http://zwave.dyndns.org:8083/', // Remote JSON
-        'local_data_url': 'app/data/',
+        'local_data_url': 'storage/data/',
         'server_url': '', // Remote JSON
         'dongle': 'zway', // Default dongle
         'dongle_list': [],// Dongle list
@@ -54,6 +54,8 @@ var config_data = {
         'reorg_log_url': '/ZWaveAPI/GetReorganizationLog', // Url to load log
         'zddx_create_url': '/ZWaveAPI/CreateZDDX/', // Create zddx file
         'get_network_statistics': '/ZWaveAPI/GetStatisticsData', // get network statistics
+        'get_dsk': '/ZWaveAPI/GetDSKCollection', // Get DSK collection,
+        'remove_dsk': 'ZWaveAPI/RemoveDSKEntry?id=', // Remove DSK
 
         // Other APIs
         'packet_log': '/ZWaveAPI/PacketLog', // Get Packet log
@@ -82,6 +84,13 @@ var config_data = {
         'identifier_update': '/ZAutomation/api/v1/system/certfxUpdateIdentifier', // Identifier update
         'cit_forward_login':'/ZAutomation/api/v1/system/certfxAuthForwarding', // forward cit login
         'cit_unregister':'/ZAutomation/api/v1/system/certfxUnregister', // unregister cit
+        'get_dsk':'/ZWaveAPI/GetDSKCollection', // Get DSK collection
+        'add_dsk': '/ZWaveAPI/AddDSKEntry', // Add DSK
+        'remove_dsk':'/ZWaveAPI/RemoveDSKEntry?dsk=', // Remove DSK
+        'get_dsk_provisioning_list':'/ZWaveAPI/GetDSKProvisioningList', // Show ProvisioningList (includes only DSKs)
+        'add_dsk_provisioning_list':'/ZWaveAPI/AddDSKProvisioningEntry?dsk=', // Add DSK to ProvisioningList (Response with added DSK) GET 
+        'remove_dsk_collection':'/JS/Run/saveObject("zwaydskCollection",null)', // Remove DSK collection
+        'enable_smart_start':'/JS/Run/zway.SmartStartEnable()', // enable SmartStart
         //'reorg_log_url': '/config/reorg.log', // Url for store reorg log data
         'zddx_url': '/ZDDX/', // Url for zddx xml files
         'notes_url': '/config/notes.log', // Url for store notes data
@@ -91,7 +100,7 @@ var config_data = {
         'smarthome_login': '/smarthome/#/?fromexpert', // Smarthome login page
         'lang_dir': 'app/lang/', // Language directory
         'lang': 'en', // Default language
-        'lang_list': ['en', 'de', 'fr', 'es', 'ru', 'cz', 'sk', 'sv', 'cn'], // List of languages
+        'lang_list': ['en', 'de', 'fr', 'es', 'ru', 'cz', 'sk', 'sv', 'cn','pt'], // List of languages
         'page_results_history': 20, // List of languages
         'frequency': {
             0: 'EU',
@@ -193,6 +202,10 @@ var config_data = {
             'login': 'admin',
             'password': 'admin1'
         },
+        // SmartStart
+        'smart_start':{
+            required_min_sdk:'6.8'// Required min SDK version
+        },
         // Pages without authorization
         'no_auth_pages':['','init'],
         // Date format list
@@ -288,7 +301,7 @@ var config_data = {
                 extension: ['zbk']
             },
             'routemap': {
-                size: 512000, //Bytes
+                size: 5242880, //Bytes
                 type: ['image/jpeg'],
                 extension: ['jpg'],
                 dimension: '200 x 200'//px

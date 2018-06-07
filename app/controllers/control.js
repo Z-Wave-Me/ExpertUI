@@ -8,7 +8,7 @@
  * @class ControlController
  *
  */
-appController.controller('ControlController', function ($scope, $interval, $timeout, $filter,  $window,cfg, dataService, deviceService) {
+appController.controller('ControlController', function ($scope, $interval, $timeout, $filter, $window, cfg, dataService, deviceService) {
     $scope.controlDh = {
         process: false,
         interval: null,
@@ -45,7 +45,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 show: false,
                 done: false,
                 countDown: 20,
-               anyChecked: false
+                anyChecked: false
             },
             verifyDSK: {
                 interval: false,
@@ -78,8 +78,8 @@ appController.controller('ControlController', function ($scope, $interval, $time
             replaceNodes: [],
             failedBatteries: []
         },
-        factory:{
-           process: false,
+        factory: {
+            process: false,
             alert: $scope.alert,
         }
     };
@@ -93,8 +93,8 @@ appController.controller('ControlController', function ($scope, $interval, $time
     /**
      * Get block of DSK
      */
-    $scope.dskBlock = function(publicKey, block) {
-        if(!publicKey){
+    $scope.dskBlock = function (publicKey, block) {
+        if (!publicKey) {
             return '';
         }
         return (publicKey[(block - 1) * 2] * 256 + publicKey[(block - 1) * 2 + 1]);
@@ -124,9 +124,13 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 setControllerData(response.data.joined);
                 setDeviceData(response.data.joined);
                 setInclusionData(response.data.joined, response.data.update);
-                if($scope.controlDh.inclusion.lastIncludedDeviceId != 0 && cfg.app_type != 'installer'){
-                    var nodeInstances = $filter('hasNode')(response, 'data.joined.devices.' + $scope.controlDh.inclusion.lastIncludedDeviceId + '.instances')
-                    checkInterview(nodeInstances);
+                if ($scope.controlDh.inclusion.lastIncludedDeviceId != 0) {
+                    console.log('Waiting 5 seconds and than check interview')
+                    var nodeInstances = $filter('hasNode')(response, 'data.joined.devices.' + $scope.controlDh.inclusion.lastIncludedDeviceId + '.instances');
+                    $timeout(function () {
+                        checkInterview(nodeInstances);
+                    }, 5000);
+
                 }
 
             });
@@ -137,27 +141,27 @@ appController.controller('ControlController', function ($scope, $interval, $time
     /**
      * Handle inclusionS2GrantKeys
      */
-    $scope.handleInclusionS2GrantKeys = function (keysGranted,timedOut) {
+    $scope.handleInclusionS2GrantKeys = function (keysGranted, timedOut) {
         var alertMessage = '';
         // Is any checkbox checked?
-        angular.forEach(keysGranted,function(v){
-            if(v == true){
+        angular.forEach(keysGranted, function (v) {
+            if (v == true) {
                 $scope.controlDh.inclusion.grantKeys.anyChecked = true
                 return;
             }
         });
         // Is timed out
-        if(timedOut){
+        if (timedOut) {
             alertMessage += $scope._t('timedout') + '. ';
 
         }
         // Nothing is checked
-        if(!$scope.controlDh.inclusion.grantKeys.anyChecked){
+        if (!$scope.controlDh.inclusion.grantKeys.anyChecked) {
             alertMessage += $scope._t('no_s2_channel');
 
         }
         // Show an alert
-        if(alertMessage){
+        if (alertMessage) {
             $scope.controlDh.inclusion.alertS2 = {
                 message: alertMessage,
                 status: 'alert-danger',
@@ -166,15 +170,15 @@ appController.controller('ControlController', function ($scope, $interval, $time
         }
 
 
-       $scope.controlDh.inclusion.grantKeys.show = false;
+        $scope.controlDh.inclusion.grantKeys.show = false;
         $scope.controlDh.inclusion.grantKeys.done = true;
         $interval.cancel($scope.controlDh.inclusion.grantKeys.interval);
         var nodeId = $scope.controlDh.inclusion.lastIncludedDeviceId.toString(10),
-            cmd =
-                'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S0=' + keysGranted.S0 + '; '+
-                'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S2Unauthenticated=' + keysGranted.S2Unauthenticated + '; '+
-                'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S2Authenticated=' + keysGranted.S2Authenticated + '; '+
-                'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S2Access=' + keysGranted.S2Access + '; '+
+                cmd =
+                'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S0=' + keysGranted.S0 + '; ' +
+                'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S2Unauthenticated=' + keysGranted.S2Unauthenticated + '; ' +
+                'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S2Authenticated=' + keysGranted.S2Authenticated + '; ' +
+                'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S2Access=' + keysGranted.S2Access + '; ' +
                 'devices[' + nodeId + '].SecurityS2.data.grantedKeys=true';
         $scope.runZwaveCmd(cmd)
     };
@@ -182,10 +186,10 @@ appController.controller('ControlController', function ($scope, $interval, $time
     /**
      * Handle inclusionS2VerifyDSK
      */
-    $scope.handleInclusionVerifyDSK = function (confirmed,timedOut) {
+    $scope.handleInclusionVerifyDSK = function (confirmed, timedOut) {
         var alertMessage = '';
         // Is timed out
-        if(timedOut){
+        if (timedOut) {
             $scope.controlDh.inclusion.alertS2 = {
                 message: $scope._t('timedout'),
                 status: 'alert-danger',
@@ -194,7 +198,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
 
         }
         // Is confirmed
-        if(confirmed){
+        if (confirmed) {
             $scope.controlDh.inclusion.alertS2 = {
                 message: $scope._t('wait_key_veriffication'),
                 status: 'alert-warning',
@@ -206,17 +210,19 @@ appController.controller('ControlController', function ($scope, $interval, $time
         $scope.controlDh.inclusion.verifyDSK.done = true;
         $interval.cancel($scope.controlDh.inclusion.verifyDSK.interval);
         var dskPin = parseInt($scope.controlDh.inclusion.input.dskPin, 10),
-            nodeId = $scope.controlDh.inclusion.lastIncludedDeviceId.toString(10),
-            publicKey = [];
-
+                nodeId = $scope.controlDh.inclusion.lastIncludedDeviceId.toString(10),
+                publicKey = [];
+                
+        dskPin = $filter('zeroFill')(dskPin,5);
         if (confirmed) {
             publicKey = $scope.controlDh.inclusion.input.publicKey;
             publicKey[0] = (dskPin >> 8) & 0xff;
             publicKey[1] = dskPin & 0xff;
         }
+        console.log(publicKey.join(','))
         var cmd = 'devices[' + nodeId + '].SecurityS2.data.publicKeyVerified=[' + publicKey.join(',') + '];';
         $scope.runZwaveCmd(cmd);
-        $timeout(function(){
+        $timeout(function () {
             checkS2Interview(nodeId);
         }, 10000);
 
@@ -235,10 +241,10 @@ appController.controller('ControlController', function ($scope, $interval, $time
         var hasSUC = ZWaveAPIData.controller.data.SUCNodeId.value;
         var hasDevices = Object.keys(ZWaveAPIData.devices).length;
         var controllerState = ZWaveAPIData.controller.data.controllerState.value;
-        var  publicKey = $filter('hasNode')(ZWaveAPIData, 'devices.' + controllerNodeId + '.instances.0.commandClasses.159.data.publicKey');
-        //var  publicKey = [153, 208, 7, 160, 148, 242, 106, 250, 131, 14, 199, 190, 151, 144, 115, 18, 26, 150, 80, 131, 83, 143, 64, 149, 103, 61, 70, 243, 147, 85, 55, 108]
-
-        // Customsettings
+        var joiningS2 = $filter('hasNode')(ZWaveAPIData,'devices.' + controllerNodeId + '.data.joiningS2.value');
+        var publicKey = $filter('hasNode')(ZWaveAPIData,'devices.' + controllerNodeId + '.data.publicKey.value');
+        var publicKeyString = deviceService.mapPublicKey(publicKey||[]);
+       // Customsettings
         $scope.controlDh.controller.hasDevices = hasDevices > 1;
         $scope.controlDh.controller.disableSUCRequest = true;
         if (hasSUC && hasSUC != controllerNodeId) {
@@ -262,18 +268,21 @@ appController.controller('ControlController', function ($scope, $interval, $time
         $scope.controlDh.controller.SetPromiscuousMode = (ZWaveAPIData.controller.data.functionClassesNames.value.indexOf('SetPromiscuousMode') > -1 ? true : false);
         $scope.controlDh.controller.SUCNodeId = ZWaveAPIData.controller.data.SUCNodeId.value;
         $scope.controlDh.controller.isInOthersNetwork = ZWaveAPIData.controller.data.isInOthersNetwork.value;
-        if(_.size(publicKey)){
-            $scope.controlDh.controller.publicKey = publicKey;
-            $scope.controlDh.controller.publicKeyQr =
-                $scope.dskBlock(publicKey, 0) || ''
-                +  $scope.dskBlock(publicKey, 1).toString()
-                + $scope.dskBlock(publicKey, 2)
-                +  $scope.dskBlock(publicKey, 3)
-                +  $scope.dskBlock(publicKey, 4)
-                +  $scope.dskBlock(publicKey, 5)
-                +  $scope.dskBlock(publicKey, 6)
-                +  $scope.dskBlock(publicKey, 7)
-                +  $scope.dskBlock(publicKey, 8);
+        $scope.controlDh.controller.joiningS2 = joiningS2;
+        $scope.controlDh.controller.publicKey = publicKey;
+        $scope.controlDh.controller.publicKeyString = publicKeyString;
+        if (_.size(publicKey)) {
+          $scope.controlDh.controller.publicKeyStringHighligted =   $filter('highlightDsk')(publicKeyString);
+             $scope.controlDh.controller.publicKeyQr =
+                    $scope.dskBlock(publicKey, 0) || ''
+                    + $scope.dskBlock(publicKey, 1).toString()
+                    + $scope.dskBlock(publicKey, 2)
+                    + $scope.dskBlock(publicKey, 3)
+                    + $scope.dskBlock(publicKey, 4)
+                    + $scope.dskBlock(publicKey, 5)
+                    + $scope.dskBlock(publicKey, 6)
+                    + $scope.dskBlock(publicKey, 7)
+                    + $scope.dskBlock(publicKey, 8);
             $scope.controlDh.controller.publicKeyPin = (publicKey[0] << 8) + publicKey[1];
         }
 
@@ -285,12 +294,14 @@ appController.controller('ControlController', function ($scope, $interval, $time
             icon: 'fa-spinner fa-spin'
         };
 
-        if([1,5].indexOf(controllerState) == -1) {
-            if($scope.controlDh.includeToNetworkTimeout) {
+        if ([1, 5].indexOf(controllerState) == -1) {
+            if ($scope.controlDh.includeToNetworkTimeout) {
                 $timeout.cancel($scope.controlDh.includeToNetworkTimeout);
                 $scope.controlDh.network.modal = true;
             }
         }
+
+      
 
         // Controller state switch
         switch (controllerState) {
@@ -319,9 +330,9 @@ appController.controller('ControlController', function ($scope, $interval, $time
                                 icon: 'fa-smile-o'
                             };
                             $scope.controlDh.network.inclusionProcess = false;
-                            if($scope.controlDh.controller.isRealPrimary || !$scope.controlDh.controller.isInOthersNetwork) {
+                            if ($scope.controlDh.controller.isRealPrimary || !$scope.controlDh.controller.isInOthersNetwork) {
                                 // Reloading a page
-                                $timeout(function() {
+                                $timeout(function () {
                                     $window.location.reload();
                                 }, 3000);
                             }
@@ -333,7 +344,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
                     $scope.controlDh.network.alert = $scope.alert;
                 }
                 // Factory default
-                if($scope.controlDh.factory.process){
+                if ($scope.controlDh.factory.process) {
                     $scope.toggleRowSpinner('controller.SetDefault()');
                     $scope.controlDh.factory.process = false;
                     $scope.controlDh.factory.alert = {
@@ -342,9 +353,9 @@ appController.controller('ControlController', function ($scope, $interval, $time
                         icon: 'fa-spinner fa-spin'
                     };
                     // Reloading a page
-                    $timeout(function(){
+                    $timeout(function () {
                         $window.location.reload();
-                    }, 3000 );
+                    }, 3000);
                 }
                 break;
             case 1:
@@ -471,8 +482,13 @@ appController.controller('ControlController', function ($scope, $interval, $time
             var givenName = $filter('deviceName')(deviceIncId, node);
             var updateTime = $filter('isTodayFromUnix')(data.controller.data.lastIncludedDevice.updateTime);
             //Run CMD
-            /*var cmd = 'devices[' + deviceIncId + '].data.givenName.value=\'' + givenName + '\'';
-             dataService.runZwaveCmd(cfg.store_url + cmd);*/
+            //console.log('node.data.givenName.value',node.data.givenName.value)
+            if(!node.data.givenName.value || node.data.givenName.value == ''){
+              var cmd = 'devices[' + deviceIncId + '].data.givenName.value=\'' + givenName + '\'';
+              dataService.runZwaveCmd(cfg.store_url + cmd);
+              //console.log('!node.data.givenName',cmd)
+            }
+           
             $scope.controlDh.inclusion.lastIncludedDeviceId = deviceIncId;
             $scope.controlDh.inclusion.lastIncludedDevice = {
                 message: $scope._t('nm_last_included_device') + '  (' + updateTime + ')  <a href="#configuration/interview/' + deviceIncId + '"><strong>' + givenName + '</strong></a>',
@@ -507,14 +523,18 @@ appController.controller('ControlController', function ($scope, $interval, $time
      */
     function checkInterview(nodeInstances) {
         if ($scope.controlDh.inclusion.grantKeys.show
-            || $scope.controlDh.inclusion.verifyDSK.show
-            || ($scope.controlDh.inclusion.grantKeys.done  && $scope.controlDh.inclusion.verifyDSK.done)) {
+                || $scope.controlDh.inclusion.verifyDSK.show
+                || ($scope.controlDh.inclusion.grantKeys.done && $scope.controlDh.inclusion.verifyDSK.done)) {
             return;
         }
-
+        // Set securityS2
         var securityS2 = nodeInstances[0].commandClasses[159];
-
+        
+         console.log('Has securityS2  commandClass: ',securityS2);
+        // Check requestedKeys
+       
         if (securityS2 && securityS2.data.requestedKeys.value && !$scope.controlDh.inclusion.grantKeys.done) {
+          console.log('Check requestedKeys: securityS2.data.requestedKeys.value ',securityS2.data.requestedKeys.value);
             $scope.controlDh.inclusion.input.keysRequested.S0 = securityS2.data.requestedKeys.S0.value;
             $scope.controlDh.inclusion.input.keysRequested.S2Unauthenticated = securityS2.data.requestedKeys.S2Unauthenticated.value;
             $scope.controlDh.inclusion.input.keysRequested.S2Authenticated = securityS2.data.requestedKeys.S2Authenticated.value;
@@ -526,14 +546,16 @@ appController.controller('ControlController', function ($scope, $interval, $time
                     $interval.cancel($scope.controlDh.inclusion.grantKeys.interval);
                     // cancel
                     $scope.controlDh.inclusion.input.keysRequested.S0 = $scope.controlDh.inclusion.input.keysRequested.S2Unauthenticated = $scope.controlDh.inclusion.input.keysRequested.S2Authenticated = $scope.controlDh.inclusion.input.keysRequested.S2Access = false;
-                    $scope.handleInclusionS2GrantKeys($scope.controlDh.inclusion.input.keysRequested,true);
+                    $scope.handleInclusionS2GrantKeys($scope.controlDh.inclusion.input.keysRequested, true);
                 }
             };
             $scope.controlDh.inclusion.grantKeys.interval = $interval(countDownGrantKeys, 1000);
             return;
         }
-
+         // Check publicKey
+        
         if (securityS2 && securityS2.data.publicKey.value.length && !$scope.controlDh.inclusion.verifyDSK.done) {
+          console.log('Check publicKey: securityS2.data.publicKey.value.length ',securityS2.data.requestedKeys.value);
             $scope.controlDh.inclusion.input.publicKey = securityS2.data.publicKey.value;
             $scope.controlDh.inclusion.input.publicKeyAuthenticationRequired = securityS2.data.publicKeyAuthenticationRequired.value;
             $scope.controlDh.inclusion.input.dskPin = $scope.dskBlock($scope.controlDh.inclusion.input.publicKey, 1);
@@ -542,7 +564,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 $scope.controlDh.inclusion.verifyDSK.countDown--;
                 if ($scope.controlDh.inclusion.verifyDSK.countDown === 0) {
                     $interval.cancel($scope.controlDh.inclusion.verifyDSK.interval);
-                    $scope.handleInclusionVerifyDSK(false,true);
+                    $scope.handleInclusionVerifyDSK(false, true);
                 }
             };
             $scope.controlDh.inclusion.verifyDSK.interval = $interval(countDownVerifyDSK, 1000);
@@ -555,25 +577,26 @@ appController.controller('ControlController', function ($scope, $interval, $time
      */
     function  checkS2Interview(nodeId) {
         dataService.loadZwaveApiData(true).then(function (response) {
-                var interviewDone = $filter('hasNode')(response, 'devices.' + nodeId + '.instances.0.commandClasses.159.data.interviewDone.value');
-                console.log('S2 interview DONE: ' + interviewDone)
-                if(interviewDone){
-                    $scope.controlDh.inclusion.alertS2 = {
-                            message: $scope._t('auth_successful'),
-                            status: 'alert-success',
-                            icon: 'fa-smile-o'
-                        };
-                }else{
-                    $scope.controlDh.inclusion.alertS2 = {
-                        message: $scope._t('auth_failed'),
-                        status: 'alert-danger',
-                        icon: 'fa-exclamation-triangle'
-                    };
-                }
+            var interviewDone = $filter('hasNode')(response, 'devices.' + nodeId + '.instances.0.commandClasses.159.data.interviewDone.value');
+            console.log('S2 interview DONE: ' + interviewDone)
+            if (interviewDone) {
+                $scope.controlDh.inclusion.alertS2 = {
+                    message: $scope._t('auth_successful'),
+                    status: 'alert-success',
+                    icon: 'fa-smile-o'
+                };
+            } else {
+                $scope.controlDh.inclusion.alertS2 = {
+                    message: $scope._t('auth_failed'),
+                    status: 'alert-danger',
+                    icon: 'fa-exclamation-triangle'
+                };
+            }
 
 
-            }, function (error) {});
-    };
+        }, function (error) {});
+    }
+    ;
 });
 
 /**
@@ -668,14 +691,8 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
         }
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
             //console.log('Run cmd: ', cfg.store_url + cmd)
-            $scope.controlDh.includeToNetworkTimeout = $timeout(function() {
+            $scope.controlDh.includeToNetworkTimeout = $timeout(function () {
                 dataService.runZwaveCmd(cfg.store_url + 'controller.SetLearnMode(0)');
-                //console.log('Running controller.SetLearnMode(0) after timeout')
-                // if(cfg.app_type === 'installer'){
-                //     $window.location.reload();
-                // }else{
-                //     $scope.controlDh.network.modal = true;
-                // }
                 $scope.controlDh.network.modal = true;
             }, timeout);
         }, function (error) {
@@ -724,7 +741,7 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
  * @class BackupRestoreController
  *
  */
-appController.controller('BackupRestoreController', function ($scope, $upload, $window, $filter,$timeout,deviceService, cfg, _) {
+appController.controller('BackupRestoreController', function ($scope, $upload, $window, $filter, $timeout, deviceService, cfg, _) {
     $scope.restore = {
         allow: false,
         input: {
@@ -742,18 +759,18 @@ appController.controller('BackupRestoreController', function ($scope, $upload, $
         var url = cfg.server_url + cfg.restore_url + '?restore_chip_info=' + chip;
         var file;
         // Getting a file object
-         if($files.length > 0){
+        if ($files.length > 0) {
             file = $files[0];
-        }else{
+        } else {
             alertify.alertError($scope._t('restore_backup_failed'));
-             return;
+            return;
         }
         // File extension validation
         if (cfg.upload.restore_from_backup.extension.indexOf($filter('fileExtension')(file.name)) === -1) {
             alertify.alertError(
-                $scope._t('upload_format_unsupported', {'__extension__': $filter('fileExtension')(file.name)}) + ' ' +
-                $scope._t('upload_allowed_formats', {'__extensions__': cfg.upload.restore_from_backup.extension.toString()})
-            );
+                    $scope._t('upload_format_unsupported', {'__extension__': $filter('fileExtension')(file.name)}) + ' ' +
+                    $scope._t('upload_allowed_formats', {'__extensions__': cfg.upload.restore_from_backup.extension.toString()})
+                    );
             return;
         }
 
@@ -772,9 +789,9 @@ appController.controller('BackupRestoreController', function ($scope, $upload, $
             } else {// Success
                 deviceService.showNotifier({message: $scope._t('restore_done_reload_ui')});
                 // Reloading a page
-                $timeout( function(){
+                $timeout(function () {
                     $window.location.reload();
-                }, 3000 );
+                }, 3000);
 
             }
         }).error(function (data, status) {
@@ -790,7 +807,7 @@ appController.controller('BackupRestoreController', function ($scope, $upload, $
  * @class ZwaveChipRebootResetController
  *
  */
-appController.controller('ZwaveChipRebootResetController', function ($scope, cfg,dataService) {
+appController.controller('ZwaveChipRebootResetController', function ($scope, cfg, dataService) {
     /**
      * This function will perform a soft restart of the  firmware of the Z-Wave controller chip
      * without deleting any network information or setting.
@@ -810,12 +827,12 @@ appController.controller('ZwaveChipRebootResetController', function ($scope, cfg
             $scope.toggleRowSpinner(cmd);
         }, function (error) {
             $scope.toggleRowSpinner();
-          alertify.alertError($scope._t('error_update_data') + '\n' + cmd);
+            alertify.alertError($scope._t('error_update_data') + '\n' + cmd);
         });
-       /* $scope.$watchCollection('controlDh', function (newVal, oldVal) {
-            console.log(newVal.controller.controllerState)
-            console.log(oldVal.controller.controllerState)
-        });*/
+        /* $scope.$watchCollection('controlDh', function (newVal, oldVal) {
+         console.log(newVal.controller.controllerState)
+         console.log(oldVal.controller.controllerState)
+         });*/
         //console.log($scope.controlDh.controller.controllerState)
         // $scope.handleModal('restoreModal');
         //$window.location.reload();
@@ -844,7 +861,7 @@ appController.controller('ChangeFrequencyController', function ($scope, $timeout
     };
 
     if ($scope.frequency.currentFreq &&
-        ['unsupported', 'unknown', 'undefined'].indexOf($scope.frequency.currentFreq) < 0) {
+            ['unsupported', 'unknown', 'undefined'].indexOf($scope.frequency.currentFreq) < 0) {
         Object.keys($scope.frequency.arrays).forEach(function (freqBand) {
             if ($scope.frequency.arrays[freqBand].indexOf($scope.frequency.currentFreq) > -1) {
                 $scope.frequency.currentFreqArr = freqBand;
@@ -969,9 +986,9 @@ appController.controller('RequestNifAllController', function ($scope, $timeout, 
             $scope.controlDh.network.inclusionProcess = false;
             $scope.controlDh.network.modal = false;
             $scope.handleModal();
-            $timeout( function(){
+            $timeout(function () {
                 $window.location.reload();
-            }, 3000 );
+            }, 3000);
         }, function (error) {
             $scope.toggleRowSpinner();
             deviceService.showNotifier({message: $scope._t('error_nif_request'), type: 'error'});
@@ -1071,11 +1088,56 @@ appController.controller('SetPromiscuousModeController', function ($scope) {
  */
 appController.controller('S2DskController', function ($scope) {
     var qrcode = new QRCode("qrcode_network", {
-        text:  $scope.controlDh.controller.publicKeyQr,
+        text: $scope.controlDh.controller.publicKeyQr,
         width: 200,
         height: 200,
-        colorDark : "#000000",
-        colorLight : "#ffffff",
-        correctLevel : QRCode.CorrectLevel.H
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
     });
+});
+
+/**
+ * This turns the Z-wave controller into an inclusion/exclusion mode that allows including/excluding a device.
+ * @class IncludeDeviceController
+ *
+ */
+appController.controller('SmartStartDeviceController', function ($scope, $route, $timeout, cfg, dataService) {
+
+    $scope.smartStartEnabled = false;
+    /**
+     * Start Smart Scan.
+     * Turns the controller into an Smart Start inclusion mode that allows including a Smart start device.
+     */
+    $scope.enableSmartStart = function () {
+        timeout = 1000;
+        $scope.toggleRowSpinner('zway.SmartStartEnable()');
+        dataService.runZwaveCmd(cfg.enable_smart_start).then(function (response) {
+            $scope.smartStartEnabled = true;
+            $timeout($scope.toggleRowSpinner, timeout);
+        }, function (error) {
+            $scope.toggleRowSpinner();
+            if (!hideError) {
+                alertify.alertError($scope._t('error_update_data') + '\n' + 'zway.SmartStartEnable()');
+            }
+        });
+    };
+
+    /**
+     * Stop Smart Scan.
+     * Turns the controller back into default mode.
+     */
+    $scope.disableSmartStart = function (cmd) {
+        timeout = 1000;
+        $scope.toggleRowSpinner('controller.RemoveNodeFromNetwork(0)');
+        dataService.runZwaveCmd(cfg.store_url + 'controller.RemoveNodeFromNetwork(0)').then(function (response) {
+            $scope.smartStartEnabled = false;
+            $timeout($scope.toggleRowSpinner, timeout);
+        }, function (error) {
+            $scope.toggleRowSpinner();
+            if (!hideError) {
+                alertify.alertError($scope._t('error_update_data') + '\n' + 'controller.RemoveNodeFromNetwork(0)');
+            }
+        });
+    };
 });

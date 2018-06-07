@@ -1,0 +1,24 @@
+<!-- Default Home view -->
+
+<div ng-controller="HomeController">
+    <!-- Custom IP -->
+    <div ng-include="'app/views/home/ip.html'"></div>
+    <div class="row home-page_" ng-if="home.show">
+        <div class="col-sm-6 home-page-image">
+            <!-- Promo text -->
+            <div ng-include="'app/views/home/promo.html'"></div>
+            <!-- Notes -->
+            <div ng-include="'app/views/home/notes.html'"></div>
+        </div>
+        <div class="col-sm-6 product-data-list_ pull-right_">
+            <!-- Dongle -->
+            <div ng-include="'app/views/home/dongle.html'"></div>
+            <!-- Network Information -->
+            <div ng-include="'app/views/home/network_informations.html'"></div>
+            <!-- Network Healtht -->
+            <div ng-include="'app/views/home/network_health.html'"></div>
+            <!-- Device reset -->
+            <div ng-include="'app/views/home/device_reset.html'"></div>
+        </div>
+    </div>
+</div><!-- /ng-controller -->

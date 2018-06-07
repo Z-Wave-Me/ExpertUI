@@ -288,6 +288,10 @@ a, .order-by {
 .hidden-selectopt{
     display: none !important;
 }
+.line-through{
+  text-decoration: line-through;
+}
+
 
 /* Response
 -------------------------------------------------- */
@@ -369,4 +373,12 @@ a, .order-by {
             color: #a94442;
         }
     }
+}
+/* Dsk
+-------------------------------------------------- */
+.dsk-highlight{
+  span{
+    font-weight: bold;
+    font-size: 120%;
+  }
 }

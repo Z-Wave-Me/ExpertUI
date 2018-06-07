@@ -1,6 +1,7 @@
 .gitignore
 /_project/*
 /nbproject/*
+.**/
 /upload/*
 upload.php
 /test/*
@@ -11,3 +12,4 @@ npm-debug.log
 *.iml
 /.idea
 .**/
+/.history

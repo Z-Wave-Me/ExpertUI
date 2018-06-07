@@ -42,10 +42,9 @@
                                 <div>
                                     <div class="btn-group btn-group-assoc-devices {{d.status}}" role="group"
                                          ng-repeat="d in assocGroupsDevices[v.groupId] track by d.elId" id="{{d.elId}}">
-                                        <button type="button" class="btn btn-info">
+                                        <button type="button" class="btn btn-info excluded-{{d.deviceExcluded}}" ng-disabled="d.deviceExcluded">
                                             <!--inDevice: {{d.inDevice}}  | inConfig: {{d.inConfig}} | Status: {{d.status}}-->
                                             <i class="fa fa-exclamation-triangle text-danger"
-                                               ng-hide="cfg.app_type === 'installer'"
                                                ng-if="d.status !== 'true-true'"></i>
                                             <!--(#{{d.id}}<span ng-if="nodeCfg.hasMca && d.instance > 0">.{{d.instance}}</span>) {{d.name|cutText:true:20}}-->
                                             (#{{d.id}}<span ng-if="nodeCfg.hasMca">.{{d.instance}}</span>)
@@ -91,6 +90,10 @@
                         <div class="legend-row">
                             <i class="fa fa-square fa-lg blue-info"></i> {{_t('assoc_legend_4')}}
                         </div>
+                        <!-- excluded -->
+                        <div class="legend-row">
+                          <i class="fa fa-square fa-lg gray-light"></i> <span class="line-through">{{_t('device_excluded')}}</span>
+                      </div>
 
                     </div>
                     <!-- ////////////////////////////////////////////////////////////////////////////////////// -->

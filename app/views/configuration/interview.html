@@ -64,14 +64,24 @@
                                         <th>{{_t(v.key)}}</th>
                                         <td id="{{v.key}}">
                                             <div ng-switch on="v.key">
+
                                                 <!-- command_class -->
                                                 <div ng-switch-when="command_class">
-                                         <span ng-repeat="cc in interviewCommands">
-                                             <a href=""
-                                                ng-click="handleCmdClassModal('cmdClassModal',$event,cc.iId,cc.ccId, 'cmdData')">
-                                                 {{cc.ccName}}
-                                             </a> &#8226;&nbsp;
-                                         </span>
+                                                     <span ng-repeat="cc in interviewCommands">
+                                                         <a href=""
+                                                            ng-click="handleCmdClassModal('cmdClassModal',$event,cc.iId,cc.ccId, 'cmdData')">
+                                                             {{cc.ccName}}
+                                                         </a> &#8226;&nbsp;
+                                                     </span>
+
+                                                 <div ng-if="v.key == certification">
+
+                                                    <a href=""
+                                                            ng-click="handleCmdClassModal('cmdClassModal',$event,cc.iId,cc.ccId, 'cmdData')">
+                                                             {{cc.ccName}}
+                                                         </a> &#8226;&nbsp;
+
+                                                 </div>       
 
                                                 </div>
                                                 <!-- default -->
@@ -98,7 +108,6 @@
                                         </td>
 
                                     </tr>
-
                                     </tbody>
                                 </table>
                             </div>
@@ -151,7 +160,7 @@
                      </button>-->
                     <!-- zddx creator -->
                     <a href="{{cfg.server_url + cfg.zddx_create_url + deviceId}}" class="btn btn-default" id="btn_create_zddx"
-                       target="blank" ng-if="cfg.app_type !== 'installer'">
+                       target="blank">
                         <i class="fa fa-clone"></i> {{_t('btn_zddx_create')}}
                     </a>
                 </div>

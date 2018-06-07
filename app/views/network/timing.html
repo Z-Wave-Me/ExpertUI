@@ -1,95 +1,126 @@
 <!-- Statistics view -->
 <div ng-controller="TimingController">
-    <div class="page-header"><h1>{{_t('nav_timing_info')}}</h1></div>
+  <div class="page-header">
+    <h1>{{_t('nav_timing_info')}}</h1>
+  </div>
+  <div class="text-right">
+      <div class="btn-group">
+          <!-- All -->
+          <button class="btn btn-default" ng-class="{'active':!devices.filter}" ng-click="setFilter(false)">
+              {{_t('all')}}
+          </button>
+          <!-- 24h -->
+          <button class="btn btn-default" ng-class="{'active':devices.filter}" ng-click="setFilter(true)">
+              {{_t('h_24')}}
+          </button>
+      </div>
+    <!-- update -->
+    <button class="btn btn-primary" ng-click="updateTimingInfo('updateTimingInfo')" ng-disabled="rowSpinner['updateTimingInfo']">
+      <bb-row-spinner spinner="rowSpinner['updateTimingInfo']" label=" _t('update')" icon="'fa-circle-o'">
 
-    <bb-alert alert="alert"></bb-alert>
-    <div id="table_mobile"  ng-if="devices.show">
-        <table class="table table-striped table-condensed table-hover">
-            <thead>
-                <tr>
-                    <th>
-                        <a href="" ng-click="orderBy('id')">{{_t('th_node')}}  
-                            <span ng-show="predicate == 'id'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                        </a>
-                    </th>
-                    
-                     <th>
-                        <a href="" ng-click="orderBy('name')">{{ _t('device_name')}}
-                            <span ng-show="predicate == 'name'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                        </a>
-                    </th>
-                    
-                    <th>
-                         <a href="" ng-click="orderBy('type')">{{_t('th_type')}}  
-                            <span ng-show="predicate == 'type'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                        </a>
-                    </th>
-                    <th>
-                        <a href="" ng-click="orderBy('updateTime')">{{ _t('datetime')}}
-                            <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                        </a>
-                    </th>
-                    <th>
-                         <a href="" ng-click="orderBy('totalPackets')">{{_t('th_total')}} (pkts) 
-                            <span ng-show="predicate == 'totalPackets'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                        </a>
-                    </th>
-                     <th>
-                         <a href="" ng-click="orderBy('okPackets')">{{_t('th_ok')}}  
-                            <span ng-show="predicate == 'okPackets'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
-                        </a>
-                    </th>
-                    <th>
-                        {{_t('th_lastpackets')}}&nbsp;
-                    </th>
-                    <th class="mobile-show text-right">
-                        <button class="btn btn-primary"
-                                 ng-click="updateTimingInfo('updateTimingInfo')"
-                                 ng-disabled="rowSpinner['updateTimingInfo']">
-                        <bb-row-spinner
-                                spinner="rowSpinner['updateTimingInfo']"
-                                label=" _t('update')"
-                                icon="'fa-circle-o'">
+      </bb-row-spinner>
+    </button>
+    <!-- reset -->
+   <!--  <button class="btn btn-default" ng-click="resetTimingInfo('resetTimingInfo')" ng-disabled="rowSpinner['resetTimingInfo']">
+      <bb-row-spinner spinner="rowSpinner['resetTimingInfo']" label=" _t('reset')" icon="'fa-times text-danger'">
 
-                        </bb-row-spinner>
-                    </button>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="v in devices.all | orderBy:predicate:reverse track by $index" id="{{ v.rowId}}">
-                    <td data-title="{{_t('th_node')}}">{{ v.id}}</td>
-                    <td data-title="{{ _t('device_name')}}"><!-- <switch-type-icon generic="{{ v.genericType}}" specific="{{ v.specificType}}"></switch-type-icon> -->{{ v.name }}</td>
-                    <td data-title="{{_t('th_type')}}">
-                        <i class="fa" ng-class="v.icon" title="{{_t(v.type)}}"></i>
-                    </td>
-                    <td data-title="{{ _t('datetime')}}">
-                        <bb-date-time obj="v.dateTime" updated="v.isUpdated"></bb-date-time>
-                    </td>
-                   <td data-title="{{_t('th_total')}}">{{ v.totalPackets}} &nbsp;</td>
-                    <td data-title="{{_t('th_ok')}}">{{ v.okPackets}}% &nbsp;</td>
-                    <td data-title="{{_t('th_lastpackets')}}"><span ng-bind-html="v.lastPackets | toTrusted"></span> &nbsp;</td>
-                    <td>&nbsp;</td>
-                </tr>
-            </tbody>
-        </table>
+      </bb-row-spinner>
+    </button> -->
+  </div>
+
+  <bb-alert alert="alert"></bb-alert>
+  <div id="table_mobile" ng-if="devices.show">
+    <table class="table table-striped table-condensed table-hover">
+      <thead>
+        <tr>
+          <th>
+            <a href="" ng-click="orderBy('id')">{{_t('th_node')}}
+              <span ng-show="predicate == 'id'">
+                <i ng-show="!reverse" class="fa fa-sort-asc"></i>
+                <i ng-show="reverse" class="fa fa-sort-desc"></i>
+              </span>
+            </a>
+          </th>
+
+          <th>
+            <a href="" ng-click="orderBy('name')">{{ _t('device_name')}}
+              <span ng-show="predicate == 'name'">
+                <i ng-show="!reverse" class="fa fa-sort-asc"></i>
+                <i ng-show="reverse" class="fa fa-sort-desc"></i>
+              </span>
+            </a>
+          </th>
+
+          <th>
+            <a href="" ng-click="orderBy('type')">{{_t('th_type')}}
+              <span ng-show="predicate == 'type'">
+                <i ng-show="!reverse" class="fa fa-sort-asc"></i>
+                <i ng-show="reverse" class="fa fa-sort-desc"></i>
+              </span>
+            </a>
+          </th>
+          <th>
+            <a href="" ng-click="orderBy('updateTime')">{{ _t('datetime')}}
+              <span ng-show="predicate == 'updateTime'">
+                <i ng-show="!reverse" class="fa fa-sort-asc"></i>
+                <i ng-show="reverse" class="fa fa-sort-desc"></i>
+              </span>
+            </a>
+          </th>
+          <th>
+            <a href="" ng-click="orderBy('totalPackets')">{{_t('th_total')}} (pkts)
+              <span ng-show="predicate == 'totalPackets'">
+                <i ng-show="!reverse" class="fa fa-sort-asc"></i>
+                <i ng-show="reverse" class="fa fa-sort-desc"></i>
+              </span>
+            </a>
+          </th>
+          <th>
+            <a href="" ng-click="orderBy('okPackets')">{{_t('th_ok')}}
+              <span ng-show="predicate == 'okPackets'">
+                <i ng-show="!reverse" class="fa fa-sort-asc"></i>
+                <i ng-show="reverse" class="fa fa-sort-desc"></i>
+              </span>
+            </a>
+          </th>
+          <th>
+            {{_t('th_lastpackets')}}&nbsp;
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="v in devices.all | orderBy:predicate:reverse track by $index" id="{{ v.rowId}}">
+          <td data-title="{{_t('th_node')}}">{{ v.id}}</td>
+          <td data-title="{{ _t('device_name')}}">{{ v.name }}</td>
+          <td data-title="{{_t('th_type')}}">
+            <i class="fa" ng-class="v.icon" title="{{_t(v.type)}}"></i>
+          </td>
+          <td data-title="{{ _t('datetime')}}">
+            <bb-date-time obj="v.dateTime" updated="v.isUpdated"></bb-date-time>
+          </td>
+          <td data-title="{{_t('th_total')}}">{{ v.totalPackets}} &nbsp;</td>
+          <td data-title="{{_t('th_ok')}}">{{ v.okPackets}}% &nbsp;</td>
+          <td class="timing-packet-wrap" data-title="{{_t('th_lastpackets')}}" ng-bind-html="v.lastPackets | toTrusted"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend-entry">
+    <div class="legend-title">{{_t('timing_color_description')}}</div>
+    <!-- green -->
+    <div class="legend-row">
+      <i class="fa fa-square fa-lg green"></i> {{_t('timing_green')}}
     </div>
-
-    <!-- Legend -->
-    <div class="legend-entry">
-        <div class="legend-title">{{_t('timing_color_description')}}</div>
-            <!-- green -->
-        <div class="legend-row">
-        <i class="fa fa-square fa-lg green"></i> {{_t('timing_green')}}
-        </div>
-        <!-- black -->
-        <div class="legend-row">
-            <i class="fa fa-square fa-lg black"></i> {{_t('timing_black')}}
-        </div>
-        <!-- red -->
-        <div class="legend-row">
-            <i class="fa fa-square fa-lg red"></i> {{_t('timing_red')}}
-        </div>
+    <!-- black -->
+    <div class="legend-row">
+      <i class="fa fa-square fa-lg black"></i> {{_t('timing_black')}}
     </div>
-        
+    <!-- red -->
+    <div class="legend-row">
+      <i class="fa fa-square fa-lg red"></i> {{_t('timing_red')}}
+    </div>
+  </div>
+
 </div>

@@ -13,9 +13,9 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
         ids: [],
         all: [],
         interval: null,
-        show: false
+        show: false,
+        filter: true
     };
-    $scope.timing = [];
 
     /**
      * Cancel interval on page destroy
@@ -51,16 +51,14 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
                 return;
             }
             // Success - timing
-            if (timing.state === 'fulfilled') {
+            /* if (timing.state === 'fulfilled') {
                 $scope.timing = timing.value.data;
-
-                //setDeviceClasses(deviceClasses.value);
-            }
+            } */
 
             // Success - zwaveData
             if (zwaveData.state === 'fulfilled') {
                 //console.log(zwaveData.value)
-                setData(zwaveData.value);
+                setData(zwaveData.value,timing.value.data,true);
                 if(_.isEmpty($scope.devices.all)){
                     $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
                     return;
@@ -93,12 +91,25 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
                 });
                 // Update found - updating available devices
                 if(update){
-                    setData(response.data.joined);
+                  dataService.getApi('stat_url', null, true).then(function(timing) {
+                    setData(response.data.joined,timing.data);
+                  });
                 }
             });
         };
         $scope.devices.interval = $interval(refresh, $scope.cfg.interval);
     };
+
+     /**
+     * Set filter
+     * @param {boolean} val
+     */
+    $scope.setFilter = function(val) {
+      $scope.devices.filter = (val);
+      $interval.cancel($scope.devices.interval);
+      $scope.allSettled();
+  };
+
 
     /**
      * Update timing info
@@ -111,38 +122,50 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
         $timeout($scope.toggleRowSpinner, 1000);
     };
 
+    /**
+     * TODO: complete function when back-end clear function is finished
+     * Reset timing info
+     * @param {text} spin
+     */
+    $scope.resetTimingInfo = function(spin) {
+      $scope.toggleRowSpinner(spin);
+      $interval.cancel($scope.devices.interval);
+      $scope.allSettled();
+      $timeout($scope.toggleRowSpinner, 1000);
+  };
+
     /// --- Private functions --- ///
     /**
      * Set zwave data
-     * @param {object} ZWaveAPIData
+     *  @param {object} ZWaveAPIData
+     * @param {object} timing
+     * @param {bool} reverse
      */
-    function setData(ZWaveAPIData) {
+    function setData(ZWaveAPIData,timing) {
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
             if (deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
             }
-            /*if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
-                return;
-            }*/
             var node = ZWaveAPIData.devices[nodeId];
             var type = deviceService.deviceType(node);
             var totalPackets = 0;
             var okPackets = 0;
             var lastPackets = '';
-            var basicType = node.data.basicType.value;
-            var genericType = node.data.genericType.value;
-            var specificType = node.data.specificType.value;
             var lastCommunication = deviceService.lastCommunication(node);
+            var timingItems = timing[nodeId];
 
             // Packets
-            var timingItems =  $scope.timing[nodeId];
-
-            if (angular.isDefined(timingItems)) {
-                totalPackets = timingItems.length;
+            if(timingItems){
+              timingItems = timingItems.reverse();//(reverse ? timingItems.reverse() : timingItems);
+              totalPackets = timingItems.length;
                 okPackets = getOkPackets(timingItems);
                 lastPackets = getLastPackets(timingItems);
+            }
+
+            if (angular.isDefined(timingItems)) {
+                
             }
 
             // Set object
@@ -157,9 +180,6 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
             obj['totalPackets'] = totalPackets;
             obj['okPackets'] = okPackets;
             obj['lastPackets'] = lastPackets;
-            obj['basicType'] = basicType;
-            obj['genericType'] = genericType;
-            obj['specificType'] = specificType;
             var findIndex = _.findIndex($scope.devices.all, {rowId: obj.rowId});
             if(findIndex > -1){
                 angular.extend($scope.devices.all[findIndex],obj);
@@ -202,16 +222,29 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
     function getLastPackets(data) {
         var packets = '&nbsp;';
         var deliveryTime = 0;
+        var dateTime;
         var color;
-        angular.forEach(data.slice(-20), function(v, k) {
+        var now = Math.round(+new Date()/1000);
+        var oneDayAgo = now - 86400;
+        var oneHourAgo = now - 3600;
+        var oneHourOld;
+       
+        //angular.forEach(data.slice(-20), function(v, k) {
+        angular.forEach(data, function(v, k) {
+          v.date = parseInt(v.date);
+         if($scope.devices.filter && v.date < oneDayAgo){
+            return;
+          }
+          dateTime = $filter('getDateTimeObj')(v.date);
             deliveryTime = parseInt(v.deliveryTime);
+            
             if (!v.delivered) {
                 color = 'red';
             } else {
                 color = (deliveryTime > 100 ? 'black' : 'green');
             }
             var displayTime = deliveryTime / 10;
-            packets += '<span class="' + color + ' timing-packet">' + (displayTime.toFixed() < 1 ? 1 : displayTime.toFixed()) + '</span> ';
+            packets += '<span class="' + color + ' timing-packet hour-ago-'+(v.date > oneHourAgo)+'" title="'+ dateTime.date + ' ' + dateTime.time + '">' + (displayTime.toFixed() < 1 ? 1 : displayTime.toFixed()) + '</span>';
         });
         return packets;
 

@@ -1,6 +1,12 @@
 /* Timing
 -------------------------------------------------- */
 .timing-packet{
-    margin: 0 7px 0 0;
+    margin: 0 $spacing 0 0;
     /*   padding: 5px;*/
+    &.hour-ago-true{
+      background-color: lighten($app-border-color,10%);
+      //border: solid 1px $app-border-color;
+      padding: 2px 5px;
+      margin-right: 0;
+    }
 }

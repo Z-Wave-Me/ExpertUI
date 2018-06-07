@@ -8,15 +8,15 @@
  * @class bbGoBack
  */
 angApp.directive('bbGoBack', ['$window', function ($window) {
-    return {
-        restrict: 'A',
-        link: function (scope, elem, attrs) {
-            elem.bind('click', function () {
-                $window.history.back();
-            });
-        }
-    };
-}]);
+        return {
+            restrict: 'A',
+            link: function (scope, elem, attrs) {
+                elem.bind('click', function () {
+                    $window.history.back();
+                });
+            }
+        };
+    }]);
 
 /**
  * Displays an alert message within the div
@@ -43,8 +43,8 @@ angApp.directive('bbAlertText', function () {
         replace: true,
         scope: {alert: '='},
         template: '<span class="alert-text" ng-if="alert.message" ng-class="alert.status">'
-        + '<i class="fa" ng-class="alert.icon"></i> <span ng-bind-html="alert.message|toTrusted"></span>'
-        + '</span>'
+                + '<i class="fa" ng-class="alert.icon"></i> <span ng-bind-html="alert.message|toTrusted"></span>'
+                + '</span>'
     };
 });
 /**
@@ -62,9 +62,9 @@ angApp.directive('sortBy', function () {
             field: '='
         },
         template: '<span class="order-by clickable">{{label}}&nbsp<span ng-show="obj.field == field">'
-        + '<i ng-show="!obj.reverse" class="fa fa-sort-asc"></i><i ng-show="obj.reverse" class="fa fa-sort-desc"></i>'
-        + '</span></span>',
-        link: function(scope, element, attrs) {
+                + '<i ng-show="!obj.reverse" class="fa fa-sort-asc"></i><i ng-show="obj.reverse" class="fa fa-sort-desc"></i>'
+                + '</span></span>',
+        link: function (scope, element, attrs) {
             element.bind('click', function (e) {
                 scope.callback({field: scope.field});
             });
@@ -102,6 +102,34 @@ angApp.directive('bbLoader', function () {
                 + '</div></div>'
     };
 });
+/**
+ * Navigate DSK form fields with value === 5 or arrow keys
+ */
+angApp.directive('bbDskNavigate', function () {
+    return{
+        restrict: 'A',
+        link: function (scope, elem, attrs) {
+                elem.find('input').on('keyup', function (e) {
+                    //var target = angular.element('#'+e.target.id);
+                    switch (e.which) {
+                        case 39:// Focus next input with right arrow key
+                            $(this).closest('span').next().find('input').focus();
+                            break;
+                        case 37:// Focus previus input with left arrow key
+                            $(this).closest('span').prev().find('input').focus();
+                            break;
+                        default:// Focus next input if input value length = 5
+                            var elLength =  $(this).val().length;
+                            if(elLength === 5) {
+                                $(this).closest('span').next().find('input').focus();
+                            }
+                            
+                            break;
+                    }
+                });
+        }
+    };
+});
 
 /**
  * Displays a dta/time in the table row
@@ -116,8 +144,8 @@ angApp.directive('bbDateTime', function () {
             updated: '='
         },
         template: '<span class="is-updated-{{updated}}" title="Update: {{obj.date}} {{obj.time}}, invalid: {{obj.invalidateTime}}">' +
-        '{{obj.today}}' +
-        '</span>'
+                '{{obj.today}}' +
+                '</span>'
     };
 });
 
@@ -135,10 +163,10 @@ angApp.directive('bbRowSpinner', function () {
             icon: '='
         },
         template: '<span title="{{label}}">' +
-        '<i class="fa " ng-class="spinner ? \'fa-spinner fa-spin\':icon"></i>' +
-        '&nbsp;<span class="btn-label">' +
-        '{{label}}' +
-        '</span></span>'
+                '<i class="fa " ng-class="spinner ? \'fa-spinner fa-spin\':icon"></i>' +
+                '&nbsp;<span class="btn-label">' +
+                '{{label}}' +
+                '</span></span>'
     };
 });
 
@@ -292,7 +320,7 @@ angApp.directive('routingTypeIcon', function () {
 
                 if (isListening) { // mains powered
                     cls = 'fa-bolt text-warning';
-                     title = $scope._t('conf_apply_mains');
+                    title = $scope._t('conf_apply_mains');
                 } else if (hasWakeup) {
                     cls = 'fa-battery-full text-success';
                     title = $scope._t('battery_powered_device');
@@ -314,11 +342,11 @@ angApp.directive('routingTypeIcon', function () {
     };
 });
 
-angApp.directive('expertCommandInput', function (cfg,$filter) {
+angApp.directive('expertCommandInput', function (cfg, $filter) {
     // Get text input
     function getText(label, value, min, max, name) {
         var input = '';
-        var inName = $filter('stringToSlug')(name ? name : label,'_');
+        var inName = $filter('stringToSlug')(name ? name : label, '_');
         input += '<label>' + label + '</label> ';
         input += '<input class="form-control" name="' + inName + '" type="text" class="form-control" value="' + value + '" title=" min: ' + min + ', max: ' + max + '" />';
         return input;
@@ -354,11 +382,11 @@ angApp.directive('expertCommandInput', function (cfg,$filter) {
         var value = (currValue !== undefined ? currValue : defaultValue);
         angular.forEach(enums.enumof, function (v, k) {
             //var inName =  $filter('stringToSlug')(name ? v.name : label);
-            var inName = (name ? name + '_' +label : v.name);// + '_' +label;
-           /* var inName = v.name;
-                if(name){
-                    inName = name  + '_' +label;
-                }*/
+            var inName = (name ? name + '_' + label : v.name);// + '_' +label;
+            /* var inName = v.name;
+             if(name){
+             inName = name  + '_' +label;
+             }*/
             //console.log(inName);
             var title = v.label || '';
             var type = v.type;
