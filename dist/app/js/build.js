@@ -1,4 +1,4 @@
-/* Copyright:  Z-Wave Europe, Created: 15-05-2018 14:36:27 */
+/* Copyright:  Z-Wave Europe, Created: 07-06-2018 13:21:45 */
 /*! jQuery v1.11.1 | (c) 2005, 2014 jQuery Foundation, Inc. | jquery.org/license */
 !function(a,b){"object"==typeof module&&"object"==typeof module.exports?module.exports=a.document?b(a,!0):function(a){if(!a.document)throw new Error("jQuery requires a window with a document");return b(a)}:b(a)}("undefined"!=typeof window?window:this,function(a,b){var c=[],d=c.slice,e=c.concat,f=c.push,g=c.indexOf,h={},i=h.toString,j=h.hasOwnProperty,k={},l="1.11.1",m=function(a,b){return new m.fn.init(a,b)},n=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,o=/^-ms-/,p=/-([\da-z])/gi,q=function(a,b){return b.toUpperCase()};m.fn=m.prototype={jquery:l,constructor:m,selector:"",length:0,toArray:function(){return d.call(this)},get:function(a){return null!=a?0>a?this[a+this.length]:this[a]:d.call(this)},pushStack:function(a){var b=m.merge(this.constructor(),a);return b.prevObject=this,b.context=this.context,b},each:function(a,b){return m.each(this,a,b)},map:function(a){return this.pushStack(m.map(this,function(b,c){return a.call(b,c,b)}))},slice:function(){return this.pushStack(d.apply(this,arguments))},first:function(){return this.eq(0)},last:function(){return this.eq(-1)},eq:function(a){var b=this.length,c=+a+(0>a?b:0);return this.pushStack(c>=0&&b>c?[this[c]]:[])},end:function(){return this.prevObject||this.constructor(null)},push:f,sort:c.sort,splice:c.splice},m.extend=m.fn.extend=function(){var a,b,c,d,e,f,g=arguments[0]||{},h=1,i=arguments.length,j=!1;for("boolean"==typeof g&&(j=g,g=arguments[h]||{},h++),"object"==typeof g||m.isFunction(g)||(g={}),h===i&&(g=this,h--);i>h;h++)if(null!=(e=arguments[h]))for(d in e)a=g[d],c=e[d],g!==c&&(j&&c&&(m.isPlainObject(c)||(b=m.isArray(c)))?(b?(b=!1,f=a&&m.isArray(a)?a:[]):f=a&&m.isPlainObject(a)?a:{},g[d]=m.extend(j,f,c)):void 0!==c&&(g[d]=c));return g},m.extend({expando:"jQuery"+(l+Math.random()).replace(/\D/g,""),isReady:!0,error:function(a){throw new Error(a)},noop:function(){},isFunction:function(a){return"function"===m.type(a)},isArray:Array.isArray||function(a){return"array"===m.type(a)},isWindow:function(a){return null!=a&&a==a.window},isNumeric:function(a){return!m.isArray(a)&&a-parseFloat(a)>=0},isEmptyObject:function(a){var b;for(b in a)return!1;return!0},isPlainObject:function(a){var b;if(!a||"object"!==m.type(a)||a.nodeType||m.isWindow(a))return!1;try{if(a.constructor&&!j.call(a,"constructor")&&!j.call(a.constructor.prototype,"isPrototypeOf"))return!1}catch(c){return!1}if(k.ownLast)for(b in a)return j.call(a,b);for(b in a);return void 0===b||j.call(a,b)},type:function(a){return null==a?a+"":"object"==typeof a||"function"==typeof a?h[i.call(a)]||"object":typeof a},globalEval:function(b){b&&m.trim(b)&&(a.execScript||function(b){a.eval.call(a,b)})(b)},camelCase:function(a){return a.replace(o,"ms-").replace(p,q)},nodeName:function(a,b){return a.nodeName&&a.nodeName.toLowerCase()===b.toLowerCase()},each:function(a,b,c){var d,e=0,f=a.length,g=r(a);if(c){if(g){for(;f>e;e++)if(d=b.apply(a[e],c),d===!1)break}else for(e in a)if(d=b.apply(a[e],c),d===!1)break}else if(g){for(;f>e;e++)if(d=b.call(a[e],e,a[e]),d===!1)break}else for(e in a)if(d=b.call(a[e],e,a[e]),d===!1)break;return a},trim:function(a){return null==a?"":(a+"").replace(n,"")},makeArray:function(a,b){var c=b||[];return null!=a&&(r(Object(a))?m.merge(c,"string"==typeof a?[a]:a):f.call(c,a)),c},inArray:function(a,b,c){var d;if(b){if(g)return g.call(b,a,c);for(d=b.length,c=c?0>c?Math.max(0,d+c):c:0;d>c;c++)if(c in b&&b[c]===a)return c}return-1},merge:function(a,b){var c=+b.length,d=0,e=a.length;while(c>d)a[e++]=b[d++];if(c!==c)while(void 0!==b[d])a[e++]=b[d++];return a.length=e,a},grep:function(a,b,c){for(var d,e=[],f=0,g=a.length,h=!c;g>f;f++)d=!b(a[f],f),d!==h&&e.push(a[f]);return e},map:function(a,b,c){var d,f=0,g=a.length,h=r(a),i=[];if(h)for(;g>f;f++)d=b(a[f],f,c),null!=d&&i.push(d);else for(f in a)d=b(a[f],f,c),null!=d&&i.push(d);return e.apply([],i)},guid:1,proxy:function(a,b){var c,e,f;return"string"==typeof b&&(f=a[b],b=a,a=f),m.isFunction(a)?(c=d.call(arguments,2),e=function(){return a.apply(b||this,c.concat(d.call(arguments)))},e.guid=a.guid=a.guid||m.guid++,e):void 0},now:function(){return+new Date},support:k}),m.each("Boolean Number String Function Array Date RegExp Object Error".split(" "),function(a,b){h["[object "+b+"]"]=b.toLowerCase()});function r(a){var b=a.length,c=m.type(a);return"function"===c||m.isWindow(a)?!1:1===a.nodeType&&b?!0:"array"===c||0===b||"number"==typeof b&&b>0&&b-1 in a}var s=function(a){var b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u="sizzle"+-new Date,v=a.document,w=0,x=0,y=gb(),z=gb(),A=gb(),B=function(a,b){return a===b&&(l=!0),0},C="undefined",D=1<<31,E={}.hasOwnProperty,F=[],G=F.pop,H=F.push,I=F.push,J=F.slice,K=F.indexOf||function(a){for(var b=0,c=this.length;c>b;b++)if(this[b]===a)return b;return-1},L="checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|ismap|loop|multiple|open|readonly|required|scoped",M="[\\x20\\t\\r\\n\\f]",N="(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+",O=N.replace("w","w#"),P="\\["+M+"*("+N+")(?:"+M+"*([*^$|!~]?=)"+M+"*(?:'((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\"|("+O+"))|)"+M+"*\\]",Q=":("+N+")(?:\\((('((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\")|((?:\\\\.|[^\\\\()[\\]]|"+P+")*)|.*)\\)|)",R=new RegExp("^"+M+"+|((?:^|[^\\\\])(?:\\\\.)*)"+M+"+$","g"),S=new RegExp("^"+M+"*,"+M+"*"),T=new RegExp("^"+M+"*([>+~]|"+M+")"+M+"*"),U=new RegExp("="+M+"*([^\\]'\"]*?)"+M+"*\\]","g"),V=new RegExp(Q),W=new RegExp("^"+O+"$"),X={ID:new RegExp("^#("+N+")"),CLASS:new RegExp("^\\.("+N+")"),TAG:new RegExp("^("+N.replace("w","w*")+")"),ATTR:new RegExp("^"+P),PSEUDO:new RegExp("^"+Q),CHILD:new RegExp("^:(only|first|last|nth|nth-last)-(child|of-type)(?:\\("+M+"*(even|odd|(([+-]|)(\\d*)n|)"+M+"*(?:([+-]|)"+M+"*(\\d+)|))"+M+"*\\)|)","i"),bool:new RegExp("^(?:"+L+")$","i"),needsContext:new RegExp("^"+M+"*[>+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\\("+M+"*((?:-\\d)?\\d*)"+M+"*\\)|)(?=[^-]|$)","i")},Y=/^(?:input|select|textarea|button)$/i,Z=/^h\d$/i,$=/^[^{]+\{\s*\[native \w/,_=/^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/,ab=/[+~]/,bb=/'|\\/g,cb=new RegExp("\\\\([\\da-f]{1,6}"+M+"?|("+M+")|.)","ig"),db=function(a,b,c){var d="0x"+b-65536;return d!==d||c?b:0>d?String.fromCharCode(d+65536):String.fromCharCode(d>>10|55296,1023&d|56320)};try{I.apply(F=J.call(v.childNodes),v.childNodes),F[v.childNodes.length].nodeType}catch(eb){I={apply:F.length?function(a,b){H.apply(a,J.call(b))}:function(a,b){var c=a.length,d=0;while(a[c++]=b[d++]);a.length=c-1}}}function fb(a,b,d,e){var f,h,j,k,l,o,r,s,w,x;if((b?b.ownerDocument||b:v)!==n&&m(b),b=b||n,d=d||[],!a||"string"!=typeof a)return d;if(1!==(k=b.nodeType)&&9!==k)return[];if(p&&!e){if(f=_.exec(a))if(j=f[1]){if(9===k){if(h=b.getElementById(j),!h||!h.parentNode)return d;if(h.id===j)return d.push(h),d}else if(b.ownerDocument&&(h=b.ownerDocument.getElementById(j))&&t(b,h)&&h.id===j)return d.push(h),d}else{if(f[2])return I.apply(d,b.getElementsByTagName(a)),d;if((j=f[3])&&c.getElementsByClassName&&b.getElementsByClassName)return I.apply(d,b.getElementsByClassName(j)),d}if(c.qsa&&(!q||!q.test(a))){if(s=r=u,w=b,x=9===k&&a,1===k&&"object"!==b.nodeName.toLowerCase()){o=g(a),(r=b.getAttribute("id"))?s=r.replace(bb,"\\$&"):b.setAttribute("id",s),s="[id='"+s+"'] ",l=o.length;while(l--)o[l]=s+qb(o[l]);w=ab.test(a)&&ob(b.parentNode)||b,x=o.join(",")}if(x)try{return I.apply(d,w.querySelectorAll(x)),d}catch(y){}finally{r||b.removeAttribute("id")}}}return i(a.replace(R,"$1"),b,d,e)}function gb(){var a=[];function b(c,e){return a.push(c+" ")>d.cacheLength&&delete b[a.shift()],b[c+" "]=e}return b}function hb(a){return a[u]=!0,a}function ib(a){var b=n.createElement("div");try{return!!a(b)}catch(c){return!1}finally{b.parentNode&&b.parentNode.removeChild(b),b=null}}function jb(a,b){var c=a.split("|"),e=a.length;while(e--)d.attrHandle[c[e]]=b}function kb(a,b){var c=b&&a,d=c&&1===a.nodeType&&1===b.nodeType&&(~b.sourceIndex||D)-(~a.sourceIndex||D);if(d)return d;if(c)while(c=c.nextSibling)if(c===b)return-1;return a?1:-1}function lb(a){return function(b){var c=b.nodeName.toLowerCase();return"input"===c&&b.type===a}}function mb(a){return function(b){var c=b.nodeName.toLowerCase();return("input"===c||"button"===c)&&b.type===a}}function nb(a){return hb(function(b){return b=+b,hb(function(c,d){var e,f=a([],c.length,b),g=f.length;while(g--)c[e=f[g]]&&(c[e]=!(d[e]=c[e]))})})}function ob(a){return a&&typeof a.getElementsByTagName!==C&&a}c=fb.support={},f=fb.isXML=function(a){var b=a&&(a.ownerDocument||a).documentElement;return b?"HTML"!==b.nodeName:!1},m=fb.setDocument=function(a){var b,e=a?a.ownerDocument||a:v,g=e.defaultView;return e!==n&&9===e.nodeType&&e.documentElement?(n=e,o=e.documentElement,p=!f(e),g&&g!==g.top&&(g.addEventListener?g.addEventListener("unload",function(){m()},!1):g.attachEvent&&g.attachEvent("onunload",function(){m()})),c.attributes=ib(function(a){return a.className="i",!a.getAttribute("className")}),c.getElementsByTagName=ib(function(a){return a.appendChild(e.createComment("")),!a.getElementsByTagName("*").length}),c.getElementsByClassName=$.test(e.getElementsByClassName)&&ib(function(a){return a.innerHTML="<div class='a'></div><div class='a i'></div>",a.firstChild.className="i",2===a.getElementsByClassName("i").length}),c.getById=ib(function(a){return o.appendChild(a).id=u,!e.getElementsByName||!e.getElementsByName(u).length}),c.getById?(d.find.ID=function(a,b){if(typeof b.getElementById!==C&&p){var c=b.getElementById(a);return c&&c.parentNode?[c]:[]}},d.filter.ID=function(a){var b=a.replace(cb,db);return function(a){return a.getAttribute("id")===b}}):(delete d.find.ID,d.filter.ID=function(a){var b=a.replace(cb,db);return function(a){var c=typeof a.getAttributeNode!==C&&a.getAttributeNode("id");return c&&c.value===b}}),d.find.TAG=c.getElementsByTagName?function(a,b){return typeof b.getElementsByTagName!==C?b.getElementsByTagName(a):void 0}:function(a,b){var c,d=[],e=0,f=b.getElementsByTagName(a);if("*"===a){while(c=f[e++])1===c.nodeType&&d.push(c);return d}return f},d.find.CLASS=c.getElementsByClassName&&function(a,b){return typeof b.getElementsByClassName!==C&&p?b.getElementsByClassName(a):void 0},r=[],q=[],(c.qsa=$.test(e.querySelectorAll))&&(ib(function(a){a.innerHTML="<select msallowclip=''><option selected=''></option></select>",a.querySelectorAll("[msallowclip^='']").length&&q.push("[*^$]="+M+"*(?:''|\"\")"),a.querySelectorAll("[selected]").length||q.push("\\["+M+"*(?:value|"+L+")"),a.querySelectorAll(":checked").length||q.push(":checked")}),ib(function(a){var b=e.createElement("input");b.setAttribute("type","hidden"),a.appendChild(b).setAttribute("name","D"),a.querySelectorAll("[name=d]").length&&q.push("name"+M+"*[*^$|!~]?="),a.querySelectorAll(":enabled").length||q.push(":enabled",":disabled"),a.querySelectorAll("*,:x"),q.push(",.*:")})),(c.matchesSelector=$.test(s=o.matches||o.webkitMatchesSelector||o.mozMatchesSelector||o.oMatchesSelector||o.msMatchesSelector))&&ib(function(a){c.disconnectedMatch=s.call(a,"div"),s.call(a,"[s!='']:x"),r.push("!=",Q)}),q=q.length&&new RegExp(q.join("|")),r=r.length&&new RegExp(r.join("|")),b=$.test(o.compareDocumentPosition),t=b||$.test(o.contains)?function(a,b){var c=9===a.nodeType?a.documentElement:a,d=b&&b.parentNode;return a===d||!(!d||1!==d.nodeType||!(c.contains?c.contains(d):a.compareDocumentPosition&&16&a.compareDocumentPosition(d)))}:function(a,b){if(b)while(b=b.parentNode)if(b===a)return!0;return!1},B=b?function(a,b){if(a===b)return l=!0,0;var d=!a.compareDocumentPosition-!b.compareDocumentPosition;return d?d:(d=(a.ownerDocument||a)===(b.ownerDocument||b)?a.compareDocumentPosition(b):1,1&d||!c.sortDetached&&b.compareDocumentPosition(a)===d?a===e||a.ownerDocument===v&&t(v,a)?-1:b===e||b.ownerDocument===v&&t(v,b)?1:k?K.call(k,a)-K.call(k,b):0:4&d?-1:1)}:function(a,b){if(a===b)return l=!0,0;var c,d=0,f=a.parentNode,g=b.parentNode,h=[a],i=[b];if(!f||!g)return a===e?-1:b===e?1:f?-1:g?1:k?K.call(k,a)-K.call(k,b):0;if(f===g)return kb(a,b);c=a;while(c=c.parentNode)h.unshift(c);c=b;while(c=c.parentNode)i.unshift(c);while(h[d]===i[d])d++;return d?kb(h[d],i[d]):h[d]===v?-1:i[d]===v?1:0},e):n},fb.matches=function(a,b){return fb(a,null,null,b)},fb.matchesSelector=function(a,b){if((a.ownerDocument||a)!==n&&m(a),b=b.replace(U,"='$1']"),!(!c.matchesSelector||!p||r&&r.test(b)||q&&q.test(b)))try{var d=s.call(a,b);if(d||c.disconnectedMatch||a.document&&11!==a.document.nodeType)return d}catch(e){}return fb(b,n,null,[a]).length>0},fb.contains=function(a,b){return(a.ownerDocument||a)!==n&&m(a),t(a,b)},fb.attr=function(a,b){(a.ownerDocument||a)!==n&&m(a);var e=d.attrHandle[b.toLowerCase()],f=e&&E.call(d.attrHandle,b.toLowerCase())?e(a,b,!p):void 0;return void 0!==f?f:c.attributes||!p?a.getAttribute(b):(f=a.getAttributeNode(b))&&f.specified?f.value:null},fb.error=function(a){throw new Error("Syntax error, unrecognized expression: "+a)},fb.uniqueSort=function(a){var b,d=[],e=0,f=0;if(l=!c.detectDuplicates,k=!c.sortStable&&a.slice(0),a.sort(B),l){while(b=a[f++])b===a[f]&&(e=d.push(f));while(e--)a.splice(d[e],1)}return k=null,a},e=fb.getText=function(a){var b,c="",d=0,f=a.nodeType;if(f){if(1===f||9===f||11===f){if("string"==typeof a.textContent)return a.textContent;for(a=a.firstChild;a;a=a.nextSibling)c+=e(a)}else if(3===f||4===f)return a.nodeValue}else while(b=a[d++])c+=e(b);return c},d=fb.selectors={cacheLength:50,createPseudo:hb,match:X,attrHandle:{},find:{},relative:{">":{dir:"parentNode",first:!0}," ":{dir:"parentNode"},"+":{dir:"previousSibling",first:!0},"~":{dir:"previousSibling"}},preFilter:{ATTR:function(a){return a[1]=a[1].replace(cb,db),a[3]=(a[3]||a[4]||a[5]||"").replace(cb,db),"~="===a[2]&&(a[3]=" "+a[3]+" "),a.slice(0,4)},CHILD:function(a){return a[1]=a[1].toLowerCase(),"nth"===a[1].slice(0,3)?(a[3]||fb.error(a[0]),a[4]=+(a[4]?a[5]+(a[6]||1):2*("even"===a[3]||"odd"===a[3])),a[5]=+(a[7]+a[8]||"odd"===a[3])):a[3]&&fb.error(a[0]),a},PSEUDO:function(a){var b,c=!a[6]&&a[2];return X.CHILD.test(a[0])?null:(a[3]?a[2]=a[4]||a[5]||"":c&&V.test(c)&&(b=g(c,!0))&&(b=c.indexOf(")",c.length-b)-c.length)&&(a[0]=a[0].slice(0,b),a[2]=c.slice(0,b)),a.slice(0,3))}},filter:{TAG:function(a){var b=a.replace(cb,db).toLowerCase();return"*"===a?function(){return!0}:function(a){return a.nodeName&&a.nodeName.toLowerCase()===b}},CLASS:function(a){var b=y[a+" "];return b||(b=new RegExp("(^|"+M+")"+a+"("+M+"|$)"))&&y(a,function(a){return b.test("string"==typeof a.className&&a.className||typeof a.getAttribute!==C&&a.getAttribute("class")||"")})},ATTR:function(a,b,c){return function(d){var e=fb.attr(d,a);return null==e?"!="===b:b?(e+="","="===b?e===c:"!="===b?e!==c:"^="===b?c&&0===e.indexOf(c):"*="===b?c&&e.indexOf(c)>-1:"$="===b?c&&e.slice(-c.length)===c:"~="===b?(" "+e+" ").indexOf(c)>-1:"|="===b?e===c||e.slice(0,c.length+1)===c+"-":!1):!0}},CHILD:function(a,b,c,d,e){var f="nth"!==a.slice(0,3),g="last"!==a.slice(-4),h="of-type"===b;return 1===d&&0===e?function(a){return!!a.parentNode}:function(b,c,i){var j,k,l,m,n,o,p=f!==g?"nextSibling":"previousSibling",q=b.parentNode,r=h&&b.nodeName.toLowerCase(),s=!i&&!h;if(q){if(f){while(p){l=b;while(l=l[p])if(h?l.nodeName.toLowerCase()===r:1===l.nodeType)return!1;o=p="only"===a&&!o&&"nextSibling"}return!0}if(o=[g?q.firstChild:q.lastChild],g&&s){k=q[u]||(q[u]={}),j=k[a]||[],n=j[0]===w&&j[1],m=j[0]===w&&j[2],l=n&&q.childNodes[n];while(l=++n&&l&&l[p]||(m=n=0)||o.pop())if(1===l.nodeType&&++m&&l===b){k[a]=[w,n,m];break}}else if(s&&(j=(b[u]||(b[u]={}))[a])&&j[0]===w)m=j[1];else while(l=++n&&l&&l[p]||(m=n=0)||o.pop())if((h?l.nodeName.toLowerCase()===r:1===l.nodeType)&&++m&&(s&&((l[u]||(l[u]={}))[a]=[w,m]),l===b))break;return m-=e,m===d||m%d===0&&m/d>=0}}},PSEUDO:function(a,b){var c,e=d.pseudos[a]||d.setFilters[a.toLowerCase()]||fb.error("unsupported pseudo: "+a);return e[u]?e(b):e.length>1?(c=[a,a,"",b],d.setFilters.hasOwnProperty(a.toLowerCase())?hb(function(a,c){var d,f=e(a,b),g=f.length;while(g--)d=K.call(a,f[g]),a[d]=!(c[d]=f[g])}):function(a){return e(a,0,c)}):e}},pseudos:{not:hb(function(a){var b=[],c=[],d=h(a.replace(R,"$1"));return d[u]?hb(function(a,b,c,e){var f,g=d(a,null,e,[]),h=a.length;while(h--)(f=g[h])&&(a[h]=!(b[h]=f))}):function(a,e,f){return b[0]=a,d(b,null,f,c),!c.pop()}}),has:hb(function(a){return function(b){return fb(a,b).length>0}}),contains:hb(function(a){return function(b){return(b.textContent||b.innerText||e(b)).indexOf(a)>-1}}),lang:hb(function(a){return W.test(a||"")||fb.error("unsupported lang: "+a),a=a.replace(cb,db).toLowerCase(),function(b){var c;do if(c=p?b.lang:b.getAttribute("xml:lang")||b.getAttribute("lang"))return c=c.toLowerCase(),c===a||0===c.indexOf(a+"-");while((b=b.parentNode)&&1===b.nodeType);return!1}}),target:function(b){var c=a.location&&a.location.hash;return c&&c.slice(1)===b.id},root:function(a){return a===o},focus:function(a){return a===n.activeElement&&(!n.hasFocus||n.hasFocus())&&!!(a.type||a.href||~a.tabIndex)},enabled:function(a){return a.disabled===!1},disabled:function(a){return a.disabled===!0},checked:function(a){var b=a.nodeName.toLowerCase();return"input"===b&&!!a.checked||"option"===b&&!!a.selected},selected:function(a){return a.parentNode&&a.parentNode.selectedIndex,a.selected===!0},empty:function(a){for(a=a.firstChild;a;a=a.nextSibling)if(a.nodeType<6)return!1;return!0},parent:function(a){return!d.pseudos.empty(a)},header:function(a){return Z.test(a.nodeName)},input:function(a){return Y.test(a.nodeName)},button:function(a){var b=a.nodeName.toLowerCase();return"input"===b&&"button"===a.type||"button"===b},text:function(a){var b;return"input"===a.nodeName.toLowerCase()&&"text"===a.type&&(null==(b=a.getAttribute("type"))||"text"===b.toLowerCase())},first:nb(function(){return[0]}),last:nb(function(a,b){return[b-1]}),eq:nb(function(a,b,c){return[0>c?c+b:c]}),even:nb(function(a,b){for(var c=0;b>c;c+=2)a.push(c);return a}),odd:nb(function(a,b){for(var c=1;b>c;c+=2)a.push(c);return a}),lt:nb(function(a,b,c){for(var d=0>c?c+b:c;--d>=0;)a.push(d);return a}),gt:nb(function(a,b,c){for(var d=0>c?c+b:c;++d<b;)a.push(d);return a})}},d.pseudos.nth=d.pseudos.eq;for(b in{radio:!0,checkbox:!0,file:!0,password:!0,image:!0})d.pseudos[b]=lb(b);for(b in{submit:!0,reset:!0})d.pseudos[b]=mb(b);function pb(){}pb.prototype=d.filters=d.pseudos,d.setFilters=new pb,g=fb.tokenize=function(a,b){var c,e,f,g,h,i,j,k=z[a+" "];if(k)return b?0:k.slice(0);h=a,i=[],j=d.preFilter;while(h){(!c||(e=S.exec(h)))&&(e&&(h=h.slice(e[0].length)||h),i.push(f=[])),c=!1,(e=T.exec(h))&&(c=e.shift(),f.push({value:c,type:e[0].replace(R," ")}),h=h.slice(c.length));for(g in d.filter)!(e=X[g].exec(h))||j[g]&&!(e=j[g](e))||(c=e.shift(),f.push({value:c,type:g,matches:e}),h=h.slice(c.length));if(!c)break}return b?h.length:h?fb.error(a):z(a,i).slice(0)};function qb(a){for(var b=0,c=a.length,d="";c>b;b++)d+=a[b].value;return d}function rb(a,b,c){var d=b.dir,e=c&&"parentNode"===d,f=x++;return b.first?function(b,c,f){while(b=b[d])if(1===b.nodeType||e)return a(b,c,f)}:function(b,c,g){var h,i,j=[w,f];if(g){while(b=b[d])if((1===b.nodeType||e)&&a(b,c,g))return!0}else while(b=b[d])if(1===b.nodeType||e){if(i=b[u]||(b[u]={}),(h=i[d])&&h[0]===w&&h[1]===f)return j[2]=h[2];if(i[d]=j,j[2]=a(b,c,g))return!0}}}function sb(a){return a.length>1?function(b,c,d){var e=a.length;while(e--)if(!a[e](b,c,d))return!1;return!0}:a[0]}function tb(a,b,c){for(var d=0,e=b.length;e>d;d++)fb(a,b[d],c);return c}function ub(a,b,c,d,e){for(var f,g=[],h=0,i=a.length,j=null!=b;i>h;h++)(f=a[h])&&(!c||c(f,d,e))&&(g.push(f),j&&b.push(h));return g}function vb(a,b,c,d,e,f){return d&&!d[u]&&(d=vb(d)),e&&!e[u]&&(e=vb(e,f)),hb(function(f,g,h,i){var j,k,l,m=[],n=[],o=g.length,p=f||tb(b||"*",h.nodeType?[h]:h,[]),q=!a||!f&&b?p:ub(p,m,a,h,i),r=c?e||(f?a:o||d)?[]:g:q;if(c&&c(q,r,h,i),d){j=ub(r,n),d(j,[],h,i),k=j.length;while(k--)(l=j[k])&&(r[n[k]]=!(q[n[k]]=l))}if(f){if(e||a){if(e){j=[],k=r.length;while(k--)(l=r[k])&&j.push(q[k]=l);e(null,r=[],j,i)}k=r.length;while(k--)(l=r[k])&&(j=e?K.call(f,l):m[k])>-1&&(f[j]=!(g[j]=l))}}else r=ub(r===g?r.splice(o,r.length):r),e?e(null,g,r,i):I.apply(g,r)})}function wb(a){for(var b,c,e,f=a.length,g=d.relative[a[0].type],h=g||d.relative[" "],i=g?1:0,k=rb(function(a){return a===b},h,!0),l=rb(function(a){return K.call(b,a)>-1},h,!0),m=[function(a,c,d){return!g&&(d||c!==j)||((b=c).nodeType?k(a,c,d):l(a,c,d))}];f>i;i++)if(c=d.relative[a[i].type])m=[rb(sb(m),c)];else{if(c=d.filter[a[i].type].apply(null,a[i].matches),c[u]){for(e=++i;f>e;e++)if(d.relative[a[e].type])break;return vb(i>1&&sb(m),i>1&&qb(a.slice(0,i-1).concat({value:" "===a[i-2].type?"*":""})).replace(R,"$1"),c,e>i&&wb(a.slice(i,e)),f>e&&wb(a=a.slice(e)),f>e&&qb(a))}m.push(c)}return sb(m)}function xb(a,b){var c=b.length>0,e=a.length>0,f=function(f,g,h,i,k){var l,m,o,p=0,q="0",r=f&&[],s=[],t=j,u=f||e&&d.find.TAG("*",k),v=w+=null==t?1:Math.random()||.1,x=u.length;for(k&&(j=g!==n&&g);q!==x&&null!=(l=u[q]);q++){if(e&&l){m=0;while(o=a[m++])if(o(l,g,h)){i.push(l);break}k&&(w=v)}c&&((l=!o&&l)&&p--,f&&r.push(l))}if(p+=q,c&&q!==p){m=0;while(o=b[m++])o(r,s,g,h);if(f){if(p>0)while(q--)r[q]||s[q]||(s[q]=G.call(i));s=ub(s)}I.apply(i,s),k&&!f&&s.length>0&&p+b.length>1&&fb.uniqueSort(i)}return k&&(w=v,j=t),r};return c?hb(f):f}return h=fb.compile=function(a,b){var c,d=[],e=[],f=A[a+" "];if(!f){b||(b=g(a)),c=b.length;while(c--)f=wb(b[c]),f[u]?d.push(f):e.push(f);f=A(a,xb(e,d)),f.selector=a}return f},i=fb.select=function(a,b,e,f){var i,j,k,l,m,n="function"==typeof a&&a,o=!f&&g(a=n.selector||a);if(e=e||[],1===o.length){if(j=o[0]=o[0].slice(0),j.length>2&&"ID"===(k=j[0]).type&&c.getById&&9===b.nodeType&&p&&d.relative[j[1].type]){if(b=(d.find.ID(k.matches[0].replace(cb,db),b)||[])[0],!b)return e;n&&(b=b.parentNode),a=a.slice(j.shift().value.length)}i=X.needsContext.test(a)?0:j.length;while(i--){if(k=j[i],d.relative[l=k.type])break;if((m=d.find[l])&&(f=m(k.matches[0].replace(cb,db),ab.test(j[0].type)&&ob(b.parentNode)||b))){if(j.splice(i,1),a=f.length&&qb(j),!a)return I.apply(e,f),e;break}}}return(n||h(a,o))(f,b,!p,e,ab.test(a)&&ob(b.parentNode)||b),e},c.sortStable=u.split("").sort(B).join("")===u,c.detectDuplicates=!!l,m(),c.sortDetached=ib(function(a){return 1&a.compareDocumentPosition(n.createElement("div"))}),ib(function(a){return a.innerHTML="<a href='#'></a>","#"===a.firstChild.getAttribute("href")})||jb("type|href|height|width",function(a,b,c){return c?void 0:a.getAttribute(b,"type"===b.toLowerCase()?1:2)}),c.attributes&&ib(function(a){return a.innerHTML="<input/>",a.firstChild.setAttribute("value",""),""===a.firstChild.getAttribute("value")})||jb("value",function(a,b,c){return c||"input"!==a.nodeName.toLowerCase()?void 0:a.defaultValue}),ib(function(a){return null==a.getAttribute("disabled")})||jb(L,function(a,b,c){var d;return c?void 0:a[b]===!0?b.toLowerCase():(d=a.getAttributeNode(b))&&d.specified?d.value:null}),fb}(a);m.find=s,m.expr=s.selectors,m.expr[":"]=m.expr.pseudos,m.unique=s.uniqueSort,m.text=s.getText,m.isXMLDoc=s.isXML,m.contains=s.contains;var t=m.expr.match.needsContext,u=/^<(\w+)\s*\/?>(?:<\/\1>|)$/,v=/^.[^:#\[\.,]*$/;function w(a,b,c){if(m.isFunction(b))return m.grep(a,function(a,d){return!!b.call(a,d,a)!==c});if(b.nodeType)return m.grep(a,function(a){return a===b!==c});if("string"==typeof b){if(v.test(b))return m.filter(b,a,c);b=m.filter(b,a)}return m.grep(a,function(a){return m.inArray(a,b)>=0!==c})}m.filter=function(a,b,c){var d=b[0];return c&&(a=":not("+a+")"),1===b.length&&1===d.nodeType?m.find.matchesSelector(d,a)?[d]:[]:m.find.matches(a,m.grep(b,function(a){return 1===a.nodeType}))},m.fn.extend({find:function(a){var b,c=[],d=this,e=d.length;if("string"!=typeof a)return this.pushStack(m(a).filter(function(){for(b=0;e>b;b++)if(m.contains(d[b],this))return!0}));for(b=0;e>b;b++)m.find(a,d[b],c);return c=this.pushStack(e>1?m.unique(c):c),c.selector=this.selector?this.selector+" "+a:a,c},filter:function(a){return this.pushStack(w(this,a||[],!1))},not:function(a){return this.pushStack(w(this,a||[],!0))},is:function(a){return!!w(this,"string"==typeof a&&t.test(a)?m(a):a||[],!1).length}});var x,y=a.document,z=/^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]*))$/,A=m.fn.init=function(a,b){var c,d;if(!a)return this;if("string"==typeof a){if(c="<"===a.charAt(0)&&">"===a.charAt(a.length-1)&&a.length>=3?[null,a,null]:z.exec(a),!c||!c[1]&&b)return!b||b.jquery?(b||x).find(a):this.constructor(b).find(a);if(c[1]){if(b=b instanceof m?b[0]:b,m.merge(this,m.parseHTML(c[1],b&&b.nodeType?b.ownerDocument||b:y,!0)),u.test(c[1])&&m.isPlainObject(b))for(c in b)m.isFunction(this[c])?this[c](b[c]):this.attr(c,b[c]);return this}if(d=y.getElementById(c[2]),d&&d.parentNode){if(d.id!==c[2])return x.find(a);this.length=1,this[0]=d}return this.context=y,this.selector=a,this}return a.nodeType?(this.context=this[0]=a,this.length=1,this):m.isFunction(a)?"undefined"!=typeof x.ready?x.ready(a):a(m):(void 0!==a.selector&&(this.selector=a.selector,this.context=a.context),m.makeArray(a,this))};A.prototype=m.fn,x=m(y);var B=/^(?:parents|prev(?:Until|All))/,C={children:!0,contents:!0,next:!0,prev:!0};m.extend({dir:function(a,b,c){var d=[],e=a[b];while(e&&9!==e.nodeType&&(void 0===c||1!==e.nodeType||!m(e).is(c)))1===e.nodeType&&d.push(e),e=e[b];return d},sibling:function(a,b){for(var c=[];a;a=a.nextSibling)1===a.nodeType&&a!==b&&c.push(a);return c}}),m.fn.extend({has:function(a){var b,c=m(a,this),d=c.length;return this.filter(function(){for(b=0;d>b;b++)if(m.contains(this,c[b]))return!0})},closest:function(a,b){for(var c,d=0,e=this.length,f=[],g=t.test(a)||"string"!=typeof a?m(a,b||this.context):0;e>d;d++)for(c=this[d];c&&c!==b;c=c.parentNode)if(c.nodeType<11&&(g?g.index(c)>-1:1===c.nodeType&&m.find.matchesSelector(c,a))){f.push(c);break}return this.pushStack(f.length>1?m.unique(f):f)},index:function(a){return a?"string"==typeof a?m.inArray(this[0],m(a)):m.inArray(a.jquery?a[0]:a,this):this[0]&&this[0].parentNode?this.first().prevAll().length:-1},add:function(a,b){return this.pushStack(m.unique(m.merge(this.get(),m(a,b))))},addBack:function(a){return this.add(null==a?this.prevObject:this.prevObject.filter(a))}});function D(a,b){do a=a[b];while(a&&1!==a.nodeType);return a}m.each({parent:function(a){var b=a.parentNode;return b&&11!==b.nodeType?b:null},parents:function(a){return m.dir(a,"parentNode")},parentsUntil:function(a,b,c){return m.dir(a,"parentNode",c)},next:function(a){return D(a,"nextSibling")},prev:function(a){return D(a,"previousSibling")},nextAll:function(a){return m.dir(a,"nextSibling")},prevAll:function(a){return m.dir(a,"previousSibling")},nextUntil:function(a,b,c){return m.dir(a,"nextSibling",c)},prevUntil:function(a,b,c){return m.dir(a,"previousSibling",c)},siblings:function(a){return m.sibling((a.parentNode||{}).firstChild,a)},children:function(a){return m.sibling(a.firstChild)},contents:function(a){return m.nodeName(a,"iframe")?a.contentDocument||a.contentWindow.document:m.merge([],a.childNodes)}},function(a,b){m.fn[a]=function(c,d){var e=m.map(this,b,c);return"Until"!==a.slice(-5)&&(d=c),d&&"string"==typeof d&&(e=m.filter(d,e)),this.length>1&&(C[a]||(e=m.unique(e)),B.test(a)&&(e=e.reverse())),this.pushStack(e)}});var E=/\S+/g,F={};function G(a){var b=F[a]={};return m.each(a.match(E)||[],function(a,c){b[c]=!0}),b}m.Callbacks=function(a){a="string"==typeof a?F[a]||G(a):m.extend({},a);var b,c,d,e,f,g,h=[],i=!a.once&&[],j=function(l){for(c=a.memory&&l,d=!0,f=g||0,g=0,e=h.length,b=!0;h&&e>f;f++)if(h[f].apply(l[0],l[1])===!1&&a.stopOnFalse){c=!1;break}b=!1,h&&(i?i.length&&j(i.shift()):c?h=[]:k.disable())},k={add:function(){if(h){var d=h.length;!function f(b){m.each(b,function(b,c){var d=m.type(c);"function"===d?a.unique&&k.has(c)||h.push(c):c&&c.length&&"string"!==d&&f(c)})}(arguments),b?e=h.length:c&&(g=d,j(c))}return this},remove:function(){return h&&m.each(arguments,function(a,c){var d;while((d=m.inArray(c,h,d))>-1)h.splice(d,1),b&&(e>=d&&e--,f>=d&&f--)}),this},has:function(a){return a?m.inArray(a,h)>-1:!(!h||!h.length)},empty:function(){return h=[],e=0,this},disable:function(){return h=i=c=void 0,this},disabled:function(){return!h},lock:function(){return i=void 0,c||k.disable(),this},locked:function(){return!i},fireWith:function(a,c){return!h||d&&!i||(c=c||[],c=[a,c.slice?c.slice():c],b?i.push(c):j(c)),this},fire:function(){return k.fireWith(this,arguments),this},fired:function(){return!!d}};return k},m.extend({Deferred:function(a){var b=[["resolve","done",m.Callbacks("once memory"),"resolved"],["reject","fail",m.Callbacks("once memory"),"rejected"],["notify","progress",m.Callbacks("memory")]],c="pending",d={state:function(){return c},always:function(){return e.done(arguments).fail(arguments),this},then:function(){var a=arguments;return m.Deferred(function(c){m.each(b,function(b,f){var g=m.isFunction(a[b])&&a[b];e[f[1]](function(){var a=g&&g.apply(this,arguments);a&&m.isFunction(a.promise)?a.promise().done(c.resolve).fail(c.reject).progress(c.notify):c[f[0]+"With"](this===d?c.promise():this,g?[a]:arguments)})}),a=null}).promise()},promise:function(a){return null!=a?m.extend(a,d):d}},e={};return d.pipe=d.then,m.each(b,function(a,f){var g=f[2],h=f[3];d[f[1]]=g.add,h&&g.add(function(){c=h},b[1^a][2].disable,b[2][2].lock),e[f[0]]=function(){return e[f[0]+"With"](this===e?d:this,arguments),this},e[f[0]+"With"]=g.fireWith}),d.promise(e),a&&a.call(e,e),e},when:function(a){var b=0,c=d.call(arguments),e=c.length,f=1!==e||a&&m.isFunction(a.promise)?e:0,g=1===f?a:m.Deferred(),h=function(a,b,c){return function(e){b[a]=this,c[a]=arguments.length>1?d.call(arguments):e,c===i?g.notifyWith(b,c):--f||g.resolveWith(b,c)}},i,j,k;if(e>1)for(i=new Array(e),j=new Array(e),k=new Array(e);e>b;b++)c[b]&&m.isFunction(c[b].promise)?c[b].promise().done(h(b,k,c)).fail(g.reject).progress(h(b,j,i)):--f;return f||g.resolveWith(k,c),g.promise()}});var H;m.fn.ready=function(a){return m.ready.promise().done(a),this},m.extend({isReady:!1,readyWait:1,holdReady:function(a){a?m.readyWait++:m.ready(!0)},ready:function(a){if(a===!0?!--m.readyWait:!m.isReady){if(!y.body)return setTimeout(m.ready);m.isReady=!0,a!==!0&&--m.readyWait>0||(H.resolveWith(y,[m]),m.fn.triggerHandler&&(m(y).triggerHandler("ready"),m(y).off("ready")))}}});function I(){y.addEventListener?(y.removeEventListener("DOMContentLoaded",J,!1),a.removeEventListener("load",J,!1)):(y.detachEvent("onreadystatechange",J),a.detachEvent("onload",J))}function J(){(y.addEventListener||"load"===event.type||"complete"===y.readyState)&&(I(),m.ready())}m.ready.promise=function(b){if(!H)if(H=m.Deferred(),"complete"===y.readyState)setTimeout(m.ready);else if(y.addEventListener)y.addEventListener("DOMContentLoaded",J,!1),a.addEventListener("load",J,!1);else{y.attachEvent("onreadystatechange",J),a.attachEvent("onload",J);var c=!1;try{c=null==a.frameElement&&y.documentElement}catch(d){}c&&c.doScroll&&!function e(){if(!m.isReady){try{c.doScroll("left")}catch(a){return setTimeout(e,50)}I(),m.ready()}}()}return H.promise(b)};var K="undefined",L;for(L in m(k))break;k.ownLast="0"!==L,k.inlineBlockNeedsLayout=!1,m(function(){var a,b,c,d;c=y.getElementsByTagName("body")[0],c&&c.style&&(b=y.createElement("div"),d=y.createElement("div"),d.style.cssText="position:absolute;border:0;width:0;height:0;top:0;left:-9999px",c.appendChild(d).appendChild(b),typeof b.style.zoom!==K&&(b.style.cssText="display:inline;margin:0;border:0;padding:1px;width:1px;zoom:1",k.inlineBlockNeedsLayout=a=3===b.offsetWidth,a&&(c.style.zoom=1)),c.removeChild(d))}),function(){var a=y.createElement("div");if(null==k.deleteExpando){k.deleteExpando=!0;try{delete a.test}catch(b){k.deleteExpando=!1}}a=null}(),m.acceptData=function(a){var b=m.noData[(a.nodeName+" ").toLowerCase()],c=+a.nodeType||1;return 1!==c&&9!==c?!1:!b||b!==!0&&a.getAttribute("classid")===b};var M=/^(?:\{[\w\W]*\}|\[[\w\W]*\])$/,N=/([A-Z])/g;function O(a,b,c){if(void 0===c&&1===a.nodeType){var d="data-"+b.replace(N,"-$1").toLowerCase();if(c=a.getAttribute(d),"string"==typeof c){try{c="true"===c?!0:"false"===c?!1:"null"===c?null:+c+""===c?+c:M.test(c)?m.parseJSON(c):c}catch(e){}m.data(a,b,c)}else c=void 0}return c}function P(a){var b;for(b in a)if(("data"!==b||!m.isEmptyObject(a[b]))&&"toJSON"!==b)return!1;return!0}function Q(a,b,d,e){if(m.acceptData(a)){var f,g,h=m.expando,i=a.nodeType,j=i?m.cache:a,k=i?a[h]:a[h]&&h;
 if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c.pop()||m.guid++:h),j[k]||(j[k]=i?{}:{toJSON:m.noop}),("object"==typeof b||"function"==typeof b)&&(e?j[k]=m.extend(j[k],b):j[k].data=m.extend(j[k].data,b)),g=j[k],e||(g.data||(g.data={}),g=g.data),void 0!==d&&(g[m.camelCase(b)]=d),"string"==typeof b?(f=g[b],null==f&&(f=g[m.camelCase(b)])):f=g,f}}function R(a,b,c){if(m.acceptData(a)){var d,e,f=a.nodeType,g=f?m.cache:a,h=f?a[m.expando]:m.expando;if(g[h]){if(b&&(d=c?g[h]:g[h].data)){m.isArray(b)?b=b.concat(m.map(b,m.camelCase)):b in d?b=[b]:(b=m.camelCase(b),b=b in d?[b]:b.split(" ")),e=b.length;while(e--)delete d[b[e]];if(c?!P(d):!m.isEmptyObject(d))return}(c||(delete g[h].data,P(g[h])))&&(f?m.cleanData([a],!0):k.deleteExpando||g!=g.window?delete g[h]:g[h]=null)}}}m.extend({cache:{},noData:{"applet ":!0,"embed ":!0,"object ":"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"},hasData:function(a){return a=a.nodeType?m.cache[a[m.expando]]:a[m.expando],!!a&&!P(a)},data:function(a,b,c){return Q(a,b,c)},removeData:function(a,b){return R(a,b)},_data:function(a,b,c){return Q(a,b,c,!0)},_removeData:function(a,b){return R(a,b,!0)}}),m.fn.extend({data:function(a,b){var c,d,e,f=this[0],g=f&&f.attributes;if(void 0===a){if(this.length&&(e=m.data(f),1===f.nodeType&&!m._data(f,"parsedAttrs"))){c=g.length;while(c--)g[c]&&(d=g[c].name,0===d.indexOf("data-")&&(d=m.camelCase(d.slice(5)),O(f,d,e[d])));m._data(f,"parsedAttrs",!0)}return e}return"object"==typeof a?this.each(function(){m.data(this,a)}):arguments.length>1?this.each(function(){m.data(this,a,b)}):f?O(f,a,m.data(f,a)):void 0},removeData:function(a){return this.each(function(){m.removeData(this,a)})}}),m.extend({queue:function(a,b,c){var d;return a?(b=(b||"fx")+"queue",d=m._data(a,b),c&&(!d||m.isArray(c)?d=m._data(a,b,m.makeArray(c)):d.push(c)),d||[]):void 0},dequeue:function(a,b){b=b||"fx";var c=m.queue(a,b),d=c.length,e=c.shift(),f=m._queueHooks(a,b),g=function(){m.dequeue(a,b)};"inprogress"===e&&(e=c.shift(),d--),e&&("fx"===b&&c.unshift("inprogress"),delete f.stop,e.call(a,g,f)),!d&&f&&f.empty.fire()},_queueHooks:function(a,b){var c=b+"queueHooks";return m._data(a,c)||m._data(a,c,{empty:m.Callbacks("once memory").add(function(){m._removeData(a,b+"queue"),m._removeData(a,c)})})}}),m.fn.extend({queue:function(a,b){var c=2;return"string"!=typeof a&&(b=a,a="fx",c--),arguments.length<c?m.queue(this[0],a):void 0===b?this:this.each(function(){var c=m.queue(this,a,b);m._queueHooks(this,a),"fx"===a&&"inprogress"!==c[0]&&m.dequeue(this,a)})},dequeue:function(a){return this.each(function(){m.dequeue(this,a)})},clearQueue:function(a){return this.queue(a||"fx",[])},promise:function(a,b){var c,d=1,e=m.Deferred(),f=this,g=this.length,h=function(){--d||e.resolveWith(f,[f])};"string"!=typeof a&&(b=a,a=void 0),a=a||"fx";while(g--)c=m._data(f[g],a+"queueHooks"),c&&c.empty&&(d++,c.empty.add(h));return h(),e.promise(b)}});var S=/[+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|)/.source,T=["Top","Right","Bottom","Left"],U=function(a,b){return a=b||a,"none"===m.css(a,"display")||!m.contains(a.ownerDocument,a)},V=m.access=function(a,b,c,d,e,f,g){var h=0,i=a.length,j=null==c;if("object"===m.type(c)){e=!0;for(h in c)m.access(a,b,h,c[h],!0,f,g)}else if(void 0!==d&&(e=!0,m.isFunction(d)||(g=!0),j&&(g?(b.call(a,d),b=null):(j=b,b=function(a,b,c){return j.call(m(a),c)})),b))for(;i>h;h++)b(a[h],c,g?d:d.call(a[h],h,b(a[h],c)));return e?a:j?b.call(a):i?b(a[0],c):f},W=/^(?:checkbox|radio)$/i;!function(){var a=y.createElement("input"),b=y.createElement("div"),c=y.createDocumentFragment();if(b.innerHTML="  <link/><table></table><a href='/a'>a</a><input type='checkbox'/>",k.leadingWhitespace=3===b.firstChild.nodeType,k.tbody=!b.getElementsByTagName("tbody").length,k.htmlSerialize=!!b.getElementsByTagName("link").length,k.html5Clone="<:nav></:nav>"!==y.createElement("nav").cloneNode(!0).outerHTML,a.type="checkbox",a.checked=!0,c.appendChild(a),k.appendChecked=a.checked,b.innerHTML="<textarea>x</textarea>",k.noCloneChecked=!!b.cloneNode(!0).lastChild.defaultValue,c.appendChild(b),b.innerHTML="<input type='radio' checked='checked' name='t'/>",k.checkClone=b.cloneNode(!0).cloneNode(!0).lastChild.checked,k.noCloneEvent=!0,b.attachEvent&&(b.attachEvent("onclick",function(){k.noCloneEvent=!1}),b.cloneNode(!0).click()),null==k.deleteExpando){k.deleteExpando=!0;try{delete b.test}catch(d){k.deleteExpando=!1}}}(),function(){var b,c,d=y.createElement("div");for(b in{submit:!0,change:!0,focusin:!0})c="on"+b,(k[b+"Bubbles"]=c in a)||(d.setAttribute(c,"t"),k[b+"Bubbles"]=d.attributes[c].expando===!1);d=null}();var X=/^(?:input|select|textarea)$/i,Y=/^key/,Z=/^(?:mouse|pointer|contextmenu)|click/,$=/^(?:focusinfocus|focusoutblur)$/,_=/^([^.]*)(?:\.(.+)|)$/;function ab(){return!0}function bb(){return!1}function cb(){try{return y.activeElement}catch(a){}}m.event={global:{},add:function(a,b,c,d,e){var f,g,h,i,j,k,l,n,o,p,q,r=m._data(a);if(r){c.handler&&(i=c,c=i.handler,e=i.selector),c.guid||(c.guid=m.guid++),(g=r.events)||(g=r.events={}),(k=r.handle)||(k=r.handle=function(a){return typeof m===K||a&&m.event.triggered===a.type?void 0:m.event.dispatch.apply(k.elem,arguments)},k.elem=a),b=(b||"").match(E)||[""],h=b.length;while(h--)f=_.exec(b[h])||[],o=q=f[1],p=(f[2]||"").split(".").sort(),o&&(j=m.event.special[o]||{},o=(e?j.delegateType:j.bindType)||o,j=m.event.special[o]||{},l=m.extend({type:o,origType:q,data:d,handler:c,guid:c.guid,selector:e,needsContext:e&&m.expr.match.needsContext.test(e),namespace:p.join(".")},i),(n=g[o])||(n=g[o]=[],n.delegateCount=0,j.setup&&j.setup.call(a,d,p,k)!==!1||(a.addEventListener?a.addEventListener(o,k,!1):a.attachEvent&&a.attachEvent("on"+o,k))),j.add&&(j.add.call(a,l),l.handler.guid||(l.handler.guid=c.guid)),e?n.splice(n.delegateCount++,0,l):n.push(l),m.event.global[o]=!0);a=null}},remove:function(a,b,c,d,e){var f,g,h,i,j,k,l,n,o,p,q,r=m.hasData(a)&&m._data(a);if(r&&(k=r.events)){b=(b||"").match(E)||[""],j=b.length;while(j--)if(h=_.exec(b[j])||[],o=q=h[1],p=(h[2]||"").split(".").sort(),o){l=m.event.special[o]||{},o=(d?l.delegateType:l.bindType)||o,n=k[o]||[],h=h[2]&&new RegExp("(^|\\.)"+p.join("\\.(?:.*\\.|)")+"(\\.|$)"),i=f=n.length;while(f--)g=n[f],!e&&q!==g.origType||c&&c.guid!==g.guid||h&&!h.test(g.namespace)||d&&d!==g.selector&&("**"!==d||!g.selector)||(n.splice(f,1),g.selector&&n.delegateCount--,l.remove&&l.remove.call(a,g));i&&!n.length&&(l.teardown&&l.teardown.call(a,p,r.handle)!==!1||m.removeEvent(a,o,r.handle),delete k[o])}else for(o in k)m.event.remove(a,o+b[j],c,d,!0);m.isEmptyObject(k)&&(delete r.handle,m._removeData(a,"events"))}},trigger:function(b,c,d,e){var f,g,h,i,k,l,n,o=[d||y],p=j.call(b,"type")?b.type:b,q=j.call(b,"namespace")?b.namespace.split("."):[];if(h=l=d=d||y,3!==d.nodeType&&8!==d.nodeType&&!$.test(p+m.event.triggered)&&(p.indexOf(".")>=0&&(q=p.split("."),p=q.shift(),q.sort()),g=p.indexOf(":")<0&&"on"+p,b=b[m.expando]?b:new m.Event(p,"object"==typeof b&&b),b.isTrigger=e?2:3,b.namespace=q.join("."),b.namespace_re=b.namespace?new RegExp("(^|\\.)"+q.join("\\.(?:.*\\.|)")+"(\\.|$)"):null,b.result=void 0,b.target||(b.target=d),c=null==c?[b]:m.makeArray(c,[b]),k=m.event.special[p]||{},e||!k.trigger||k.trigger.apply(d,c)!==!1)){if(!e&&!k.noBubble&&!m.isWindow(d)){for(i=k.delegateType||p,$.test(i+p)||(h=h.parentNode);h;h=h.parentNode)o.push(h),l=h;l===(d.ownerDocument||y)&&o.push(l.defaultView||l.parentWindow||a)}n=0;while((h=o[n++])&&!b.isPropagationStopped())b.type=n>1?i:k.bindType||p,f=(m._data(h,"events")||{})[b.type]&&m._data(h,"handle"),f&&f.apply(h,c),f=g&&h[g],f&&f.apply&&m.acceptData(h)&&(b.result=f.apply(h,c),b.result===!1&&b.preventDefault());if(b.type=p,!e&&!b.isDefaultPrevented()&&(!k._default||k._default.apply(o.pop(),c)===!1)&&m.acceptData(d)&&g&&d[p]&&!m.isWindow(d)){l=d[g],l&&(d[g]=null),m.event.triggered=p;try{d[p]()}catch(r){}m.event.triggered=void 0,l&&(d[g]=l)}return b.result}},dispatch:function(a){a=m.event.fix(a);var b,c,e,f,g,h=[],i=d.call(arguments),j=(m._data(this,"events")||{})[a.type]||[],k=m.event.special[a.type]||{};if(i[0]=a,a.delegateTarget=this,!k.preDispatch||k.preDispatch.call(this,a)!==!1){h=m.event.handlers.call(this,a,j),b=0;while((f=h[b++])&&!a.isPropagationStopped()){a.currentTarget=f.elem,g=0;while((e=f.handlers[g++])&&!a.isImmediatePropagationStopped())(!a.namespace_re||a.namespace_re.test(e.namespace))&&(a.handleObj=e,a.data=e.data,c=((m.event.special[e.origType]||{}).handle||e.handler).apply(f.elem,i),void 0!==c&&(a.result=c)===!1&&(a.preventDefault(),a.stopPropagation()))}return k.postDispatch&&k.postDispatch.call(this,a),a.result}},handlers:function(a,b){var c,d,e,f,g=[],h=b.delegateCount,i=a.target;if(h&&i.nodeType&&(!a.button||"click"!==a.type))for(;i!=this;i=i.parentNode||this)if(1===i.nodeType&&(i.disabled!==!0||"click"!==a.type)){for(e=[],f=0;h>f;f++)d=b[f],c=d.selector+" ",void 0===e[c]&&(e[c]=d.needsContext?m(c,this).index(i)>=0:m.find(c,this,null,[i]).length),e[c]&&e.push(d);e.length&&g.push({elem:i,handlers:e})}return h<b.length&&g.push({elem:this,handlers:b.slice(h)}),g},fix:function(a){if(a[m.expando])return a;var b,c,d,e=a.type,f=a,g=this.fixHooks[e];g||(this.fixHooks[e]=g=Z.test(e)?this.mouseHooks:Y.test(e)?this.keyHooks:{}),d=g.props?this.props.concat(g.props):this.props,a=new m.Event(f),b=d.length;while(b--)c=d[b],a[c]=f[c];return a.target||(a.target=f.srcElement||y),3===a.target.nodeType&&(a.target=a.target.parentNode),a.metaKey=!!a.metaKey,g.filter?g.filter(a,f):a},props:"altKey bubbles cancelable ctrlKey currentTarget eventPhase metaKey relatedTarget shiftKey target timeStamp view which".split(" "),fixHooks:{},keyHooks:{props:"char charCode key keyCode".split(" "),filter:function(a,b){return null==a.which&&(a.which=null!=b.charCode?b.charCode:b.keyCode),a}},mouseHooks:{props:"button buttons clientX clientY fromElement offsetX offsetY pageX pageY screenX screenY toElement".split(" "),filter:function(a,b){var c,d,e,f=b.button,g=b.fromElement;return null==a.pageX&&null!=b.clientX&&(d=a.target.ownerDocument||y,e=d.documentElement,c=d.body,a.pageX=b.clientX+(e&&e.scrollLeft||c&&c.scrollLeft||0)-(e&&e.clientLeft||c&&c.clientLeft||0),a.pageY=b.clientY+(e&&e.scrollTop||c&&c.scrollTop||0)-(e&&e.clientTop||c&&c.clientTop||0)),!a.relatedTarget&&g&&(a.relatedTarget=g===a.target?b.toElement:g),a.which||void 0===f||(a.which=1&f?1:2&f?3:4&f?2:0),a}},special:{load:{noBubble:!0},focus:{trigger:function(){if(this!==cb()&&this.focus)try{return this.focus(),!1}catch(a){}},delegateType:"focusin"},blur:{trigger:function(){return this===cb()&&this.blur?(this.blur(),!1):void 0},delegateType:"focusout"},click:{trigger:function(){return m.nodeName(this,"input")&&"checkbox"===this.type&&this.click?(this.click(),!1):void 0},_default:function(a){return m.nodeName(a.target,"a")}},beforeunload:{postDispatch:function(a){void 0!==a.result&&a.originalEvent&&(a.originalEvent.returnValue=a.result)}}},simulate:function(a,b,c,d){var e=m.extend(new m.Event,c,{type:a,isSimulated:!0,originalEvent:{}});d?m.event.trigger(e,null,b):m.event.dispatch.call(b,e),e.isDefaultPrevented()&&c.preventDefault()}},m.removeEvent=y.removeEventListener?function(a,b,c){a.removeEventListener&&a.removeEventListener(b,c,!1)}:function(a,b,c){var d="on"+b;a.detachEvent&&(typeof a[d]===K&&(a[d]=null),a.detachEvent(d,c))},m.Event=function(a,b){return this instanceof m.Event?(a&&a.type?(this.originalEvent=a,this.type=a.type,this.isDefaultPrevented=a.defaultPrevented||void 0===a.defaultPrevented&&a.returnValue===!1?ab:bb):this.type=a,b&&m.extend(this,b),this.timeStamp=a&&a.timeStamp||m.now(),void(this[m.expando]=!0)):new m.Event(a,b)},m.Event.prototype={isDefaultPrevented:bb,isPropagationStopped:bb,isImmediatePropagationStopped:bb,preventDefault:function(){var a=this.originalEvent;this.isDefaultPrevented=ab,a&&(a.preventDefault?a.preventDefault():a.returnValue=!1)},stopPropagation:function(){var a=this.originalEvent;this.isPropagationStopped=ab,a&&(a.stopPropagation&&a.stopPropagation(),a.cancelBubble=!0)},stopImmediatePropagation:function(){var a=this.originalEvent;this.isImmediatePropagationStopped=ab,a&&a.stopImmediatePropagation&&a.stopImmediatePropagation(),this.stopPropagation()}},m.each({mouseenter:"mouseover",mouseleave:"mouseout",pointerenter:"pointerover",pointerleave:"pointerout"},function(a,b){m.event.special[a]={delegateType:b,bindType:b,handle:function(a){var c,d=this,e=a.relatedTarget,f=a.handleObj;return(!e||e!==d&&!m.contains(d,e))&&(a.type=f.origType,c=f.handler.apply(this,arguments),a.type=b),c}}}),k.submitBubbles||(m.event.special.submit={setup:function(){return m.nodeName(this,"form")?!1:void m.event.add(this,"click._submit keypress._submit",function(a){var b=a.target,c=m.nodeName(b,"input")||m.nodeName(b,"button")?b.form:void 0;c&&!m._data(c,"submitBubbles")&&(m.event.add(c,"submit._submit",function(a){a._submit_bubble=!0}),m._data(c,"submitBubbles",!0))})},postDispatch:function(a){a._submit_bubble&&(delete a._submit_bubble,this.parentNode&&!a.isTrigger&&m.event.simulate("submit",this.parentNode,a,!0))},teardown:function(){return m.nodeName(this,"form")?!1:void m.event.remove(this,"._submit")}}),k.changeBubbles||(m.event.special.change={setup:function(){return X.test(this.nodeName)?(("checkbox"===this.type||"radio"===this.type)&&(m.event.add(this,"propertychange._change",function(a){"checked"===a.originalEvent.propertyName&&(this._just_changed=!0)}),m.event.add(this,"click._change",function(a){this._just_changed&&!a.isTrigger&&(this._just_changed=!1),m.event.simulate("change",this,a,!0)})),!1):void m.event.add(this,"beforeactivate._change",function(a){var b=a.target;X.test(b.nodeName)&&!m._data(b,"changeBubbles")&&(m.event.add(b,"change._change",function(a){!this.parentNode||a.isSimulated||a.isTrigger||m.event.simulate("change",this.parentNode,a,!0)}),m._data(b,"changeBubbles",!0))})},handle:function(a){var b=a.target;return this!==b||a.isSimulated||a.isTrigger||"radio"!==b.type&&"checkbox"!==b.type?a.handleObj.handler.apply(this,arguments):void 0},teardown:function(){return m.event.remove(this,"._change"),!X.test(this.nodeName)}}),k.focusinBubbles||m.each({focus:"focusin",blur:"focusout"},function(a,b){var c=function(a){m.event.simulate(b,a.target,m.event.fix(a),!0)};m.event.special[b]={setup:function(){var d=this.ownerDocument||this,e=m._data(d,b);e||d.addEventListener(a,c,!0),m._data(d,b,(e||0)+1)},teardown:function(){var d=this.ownerDocument||this,e=m._data(d,b)-1;e?m._data(d,b,e):(d.removeEventListener(a,c,!0),m._removeData(d,b))}}}),m.fn.extend({on:function(a,b,c,d,e){var f,g;if("object"==typeof a){"string"!=typeof b&&(c=c||b,b=void 0);for(f in a)this.on(f,b,c,a[f],e);return this}if(null==c&&null==d?(d=b,c=b=void 0):null==d&&("string"==typeof b?(d=c,c=void 0):(d=c,c=b,b=void 0)),d===!1)d=bb;else if(!d)return this;return 1===e&&(g=d,d=function(a){return m().off(a),g.apply(this,arguments)},d.guid=g.guid||(g.guid=m.guid++)),this.each(function(){m.event.add(this,a,d,c,b)})},one:function(a,b,c,d){return this.on(a,b,c,d,1)},off:function(a,b,c){var d,e;if(a&&a.preventDefault&&a.handleObj)return d=a.handleObj,m(a.delegateTarget).off(d.namespace?d.origType+"."+d.namespace:d.origType,d.selector,d.handler),this;if("object"==typeof a){for(e in a)this.off(e,b,a[e]);return this}return(b===!1||"function"==typeof b)&&(c=b,b=void 0),c===!1&&(c=bb),this.each(function(){m.event.remove(this,a,c,b)})},trigger:function(a,b){return this.each(function(){m.event.trigger(a,b,this)})},triggerHandler:function(a,b){var c=this[0];return c?m.event.trigger(a,b,c,!0):void 0}});function db(a){var b=eb.split("|"),c=a.createDocumentFragment();if(c.createElement)while(b.length)c.createElement(b.pop());return c}var eb="abbr|article|aside|audio|bdi|canvas|data|datalist|details|figcaption|figure|footer|header|hgroup|mark|meter|nav|output|progress|section|summary|time|video",fb=/ jQuery\d+="(?:null|\d+)"/g,gb=new RegExp("<(?:"+eb+")[\\s/>]","i"),hb=/^\s+/,ib=/<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/gi,jb=/<([\w:]+)/,kb=/<tbody/i,lb=/<|&#?\w+;/,mb=/<(?:script|style|link)/i,nb=/checked\s*(?:[^=]|=\s*.checked.)/i,ob=/^$|\/(?:java|ecma)script/i,pb=/^true\/(.*)/,qb=/^\s*<!(?:\[CDATA\[|--)|(?:\]\]|--)>\s*$/g,rb={option:[1,"<select multiple='multiple'>","</select>"],legend:[1,"<fieldset>","</fieldset>"],area:[1,"<map>","</map>"],param:[1,"<object>","</object>"],thead:[1,"<table>","</table>"],tr:[2,"<table><tbody>","</tbody></table>"],col:[2,"<table><tbody></tbody><colgroup>","</colgroup></table>"],td:[3,"<table><tbody><tr>","</tr></tbody></table>"],_default:k.htmlSerialize?[0,"",""]:[1,"X<div>","</div>"]},sb=db(y),tb=sb.appendChild(y.createElement("div"));rb.optgroup=rb.option,rb.tbody=rb.tfoot=rb.colgroup=rb.caption=rb.thead,rb.th=rb.td;function ub(a,b){var c,d,e=0,f=typeof a.getElementsByTagName!==K?a.getElementsByTagName(b||"*"):typeof a.querySelectorAll!==K?a.querySelectorAll(b||"*"):void 0;if(!f)for(f=[],c=a.childNodes||a;null!=(d=c[e]);e++)!b||m.nodeName(d,b)?f.push(d):m.merge(f,ub(d,b));return void 0===b||b&&m.nodeName(a,b)?m.merge([a],f):f}function vb(a){W.test(a.type)&&(a.defaultChecked=a.checked)}function wb(a,b){return m.nodeName(a,"table")&&m.nodeName(11!==b.nodeType?b:b.firstChild,"tr")?a.getElementsByTagName("tbody")[0]||a.appendChild(a.ownerDocument.createElement("tbody")):a}function xb(a){return a.type=(null!==m.find.attr(a,"type"))+"/"+a.type,a}function yb(a){var b=pb.exec(a.type);return b?a.type=b[1]:a.removeAttribute("type"),a}function zb(a,b){for(var c,d=0;null!=(c=a[d]);d++)m._data(c,"globalEval",!b||m._data(b[d],"globalEval"))}function Ab(a,b){if(1===b.nodeType&&m.hasData(a)){var c,d,e,f=m._data(a),g=m._data(b,f),h=f.events;if(h){delete g.handle,g.events={};for(c in h)for(d=0,e=h[c].length;e>d;d++)m.event.add(b,c,h[c][d])}g.data&&(g.data=m.extend({},g.data))}}function Bb(a,b){var c,d,e;if(1===b.nodeType){if(c=b.nodeName.toLowerCase(),!k.noCloneEvent&&b[m.expando]){e=m._data(b);for(d in e.events)m.removeEvent(b,d,e.handle);b.removeAttribute(m.expando)}"script"===c&&b.text!==a.text?(xb(b).text=a.text,yb(b)):"object"===c?(b.parentNode&&(b.outerHTML=a.outerHTML),k.html5Clone&&a.innerHTML&&!m.trim(b.innerHTML)&&(b.innerHTML=a.innerHTML)):"input"===c&&W.test(a.type)?(b.defaultChecked=b.checked=a.checked,b.value!==a.value&&(b.value=a.value)):"option"===c?b.defaultSelected=b.selected=a.defaultSelected:("input"===c||"textarea"===c)&&(b.defaultValue=a.defaultValue)}}m.extend({clone:function(a,b,c){var d,e,f,g,h,i=m.contains(a.ownerDocument,a);if(k.html5Clone||m.isXMLDoc(a)||!gb.test("<"+a.nodeName+">")?f=a.cloneNode(!0):(tb.innerHTML=a.outerHTML,tb.removeChild(f=tb.firstChild)),!(k.noCloneEvent&&k.noCloneChecked||1!==a.nodeType&&11!==a.nodeType||m.isXMLDoc(a)))for(d=ub(f),h=ub(a),g=0;null!=(e=h[g]);++g)d[g]&&Bb(e,d[g]);if(b)if(c)for(h=h||ub(a),d=d||ub(f),g=0;null!=(e=h[g]);g++)Ab(e,d[g]);else Ab(a,f);return d=ub(f,"script"),d.length>0&&zb(d,!i&&ub(a,"script")),d=h=e=null,f},buildFragment:function(a,b,c,d){for(var e,f,g,h,i,j,l,n=a.length,o=db(b),p=[],q=0;n>q;q++)if(f=a[q],f||0===f)if("object"===m.type(f))m.merge(p,f.nodeType?[f]:f);else if(lb.test(f)){h=h||o.appendChild(b.createElement("div")),i=(jb.exec(f)||["",""])[1].toLowerCase(),l=rb[i]||rb._default,h.innerHTML=l[1]+f.replace(ib,"<$1></$2>")+l[2],e=l[0];while(e--)h=h.lastChild;if(!k.leadingWhitespace&&hb.test(f)&&p.push(b.createTextNode(hb.exec(f)[0])),!k.tbody){f="table"!==i||kb.test(f)?"<table>"!==l[1]||kb.test(f)?0:h:h.firstChild,e=f&&f.childNodes.length;while(e--)m.nodeName(j=f.childNodes[e],"tbody")&&!j.childNodes.length&&f.removeChild(j)}m.merge(p,h.childNodes),h.textContent="";while(h.firstChild)h.removeChild(h.firstChild);h=o.lastChild}else p.push(b.createTextNode(f));h&&o.removeChild(h),k.appendChecked||m.grep(ub(p,"input"),vb),q=0;while(f=p[q++])if((!d||-1===m.inArray(f,d))&&(g=m.contains(f.ownerDocument,f),h=ub(o.appendChild(f),"script"),g&&zb(h),c)){e=0;while(f=h[e++])ob.test(f.type||"")&&c.push(f)}return h=null,o},cleanData:function(a,b){for(var d,e,f,g,h=0,i=m.expando,j=m.cache,l=k.deleteExpando,n=m.event.special;null!=(d=a[h]);h++)if((b||m.acceptData(d))&&(f=d[i],g=f&&j[f])){if(g.events)for(e in g.events)n[e]?m.event.remove(d,e):m.removeEvent(d,e,g.handle);j[f]&&(delete j[f],l?delete d[i]:typeof d.removeAttribute!==K?d.removeAttribute(i):d[i]=null,c.push(f))}}}),m.fn.extend({text:function(a){return V(this,function(a){return void 0===a?m.text(this):this.empty().append((this[0]&&this[0].ownerDocument||y).createTextNode(a))},null,a,arguments.length)},append:function(){return this.domManip(arguments,function(a){if(1===this.nodeType||11===this.nodeType||9===this.nodeType){var b=wb(this,a);b.appendChild(a)}})},prepend:function(){return this.domManip(arguments,function(a){if(1===this.nodeType||11===this.nodeType||9===this.nodeType){var b=wb(this,a);b.insertBefore(a,b.firstChild)}})},before:function(){return this.domManip(arguments,function(a){this.parentNode&&this.parentNode.insertBefore(a,this)})},after:function(){return this.domManip(arguments,function(a){this.parentNode&&this.parentNode.insertBefore(a,this.nextSibling)})},remove:function(a,b){for(var c,d=a?m.filter(a,this):this,e=0;null!=(c=d[e]);e++)b||1!==c.nodeType||m.cleanData(ub(c)),c.parentNode&&(b&&m.contains(c.ownerDocument,c)&&zb(ub(c,"script")),c.parentNode.removeChild(c));return this},empty:function(){for(var a,b=0;null!=(a=this[b]);b++){1===a.nodeType&&m.cleanData(ub(a,!1));while(a.firstChild)a.removeChild(a.firstChild);a.options&&m.nodeName(a,"select")&&(a.options.length=0)}return this},clone:function(a,b){return a=null==a?!1:a,b=null==b?a:b,this.map(function(){return m.clone(this,a,b)})},html:function(a){return V(this,function(a){var b=this[0]||{},c=0,d=this.length;if(void 0===a)return 1===b.nodeType?b.innerHTML.replace(fb,""):void 0;if(!("string"!=typeof a||mb.test(a)||!k.htmlSerialize&&gb.test(a)||!k.leadingWhitespace&&hb.test(a)||rb[(jb.exec(a)||["",""])[1].toLowerCase()])){a=a.replace(ib,"<$1></$2>");try{for(;d>c;c++)b=this[c]||{},1===b.nodeType&&(m.cleanData(ub(b,!1)),b.innerHTML=a);b=0}catch(e){}}b&&this.empty().append(a)},null,a,arguments.length)},replaceWith:function(){var a=arguments[0];return this.domManip(arguments,function(b){a=this.parentNode,m.cleanData(ub(this)),a&&a.replaceChild(b,this)}),a&&(a.length||a.nodeType)?this:this.remove()},detach:function(a){return this.remove(a,!0)},domManip:function(a,b){a=e.apply([],a);var c,d,f,g,h,i,j=0,l=this.length,n=this,o=l-1,p=a[0],q=m.isFunction(p);if(q||l>1&&"string"==typeof p&&!k.checkClone&&nb.test(p))return this.each(function(c){var d=n.eq(c);q&&(a[0]=p.call(this,c,d.html())),d.domManip(a,b)});if(l&&(i=m.buildFragment(a,this[0].ownerDocument,!1,this),c=i.firstChild,1===i.childNodes.length&&(i=c),c)){for(g=m.map(ub(i,"script"),xb),f=g.length;l>j;j++)d=i,j!==o&&(d=m.clone(d,!0,!0),f&&m.merge(g,ub(d,"script"))),b.call(this[j],d,j);if(f)for(h=g[g.length-1].ownerDocument,m.map(g,yb),j=0;f>j;j++)d=g[j],ob.test(d.type||"")&&!m._data(d,"globalEval")&&m.contains(h,d)&&(d.src?m._evalUrl&&m._evalUrl(d.src):m.globalEval((d.text||d.textContent||d.innerHTML||"").replace(qb,"")));i=c=null}return this}}),m.each({appendTo:"append",prependTo:"prepend",insertBefore:"before",insertAfter:"after",replaceAll:"replaceWith"},function(a,b){m.fn[a]=function(a){for(var c,d=0,e=[],g=m(a),h=g.length-1;h>=d;d++)c=d===h?this:this.clone(!0),m(g[d])[b](c),f.apply(e,c.get());return this.pushStack(e)}});var Cb,Db={};function Eb(b,c){var d,e=m(c.createElement(b)).appendTo(c.body),f=a.getDefaultComputedStyle&&(d=a.getDefaultComputedStyle(e[0]))?d.display:m.css(e[0],"display");return e.detach(),f}function Fb(a){var b=y,c=Db[a];return c||(c=Eb(a,b),"none"!==c&&c||(Cb=(Cb||m("<iframe frameborder='0' width='0' height='0'/>")).appendTo(b.documentElement),b=(Cb[0].contentWindow||Cb[0].contentDocument).document,b.write(),b.close(),c=Eb(a,b),Cb.detach()),Db[a]=c),c}!function(){var a;k.shrinkWrapBlocks=function(){if(null!=a)return a;a=!1;var b,c,d;return c=y.getElementsByTagName("body")[0],c&&c.style?(b=y.createElement("div"),d=y.createElement("div"),d.style.cssText="position:absolute;border:0;width:0;height:0;top:0;left:-9999px",c.appendChild(d).appendChild(b),typeof b.style.zoom!==K&&(b.style.cssText="-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;display:block;margin:0;border:0;padding:1px;width:1px;zoom:1",b.appendChild(y.createElement("div")).style.width="5px",a=3!==b.offsetWidth),c.removeChild(d),a):void 0}}();var Gb=/^margin/,Hb=new RegExp("^("+S+")(?!px)[a-z%]+$","i"),Ib,Jb,Kb=/^(top|right|bottom|left)$/;a.getComputedStyle?(Ib=function(a){return a.ownerDocument.defaultView.getComputedStyle(a,null)},Jb=function(a,b,c){var d,e,f,g,h=a.style;return c=c||Ib(a),g=c?c.getPropertyValue(b)||c[b]:void 0,c&&(""!==g||m.contains(a.ownerDocument,a)||(g=m.style(a,b)),Hb.test(g)&&Gb.test(b)&&(d=h.width,e=h.minWidth,f=h.maxWidth,h.minWidth=h.maxWidth=h.width=g,g=c.width,h.width=d,h.minWidth=e,h.maxWidth=f)),void 0===g?g:g+""}):y.documentElement.currentStyle&&(Ib=function(a){return a.currentStyle},Jb=function(a,b,c){var d,e,f,g,h=a.style;return c=c||Ib(a),g=c?c[b]:void 0,null==g&&h&&h[b]&&(g=h[b]),Hb.test(g)&&!Kb.test(b)&&(d=h.left,e=a.runtimeStyle,f=e&&e.left,f&&(e.left=a.currentStyle.left),h.left="fontSize"===b?"1em":g,g=h.pixelLeft+"px",h.left=d,f&&(e.left=f)),void 0===g?g:g+""||"auto"});function Lb(a,b){return{get:function(){var c=a();if(null!=c)return c?void delete this.get:(this.get=b).apply(this,arguments)}}}!function(){var b,c,d,e,f,g,h;if(b=y.createElement("div"),b.innerHTML="  <link/><table></table><a href='/a'>a</a><input type='checkbox'/>",d=b.getElementsByTagName("a")[0],c=d&&d.style){c.cssText="float:left;opacity:.5",k.opacity="0.5"===c.opacity,k.cssFloat=!!c.cssFloat,b.style.backgroundClip="content-box",b.cloneNode(!0).style.backgroundClip="",k.clearCloneStyle="content-box"===b.style.backgroundClip,k.boxSizing=""===c.boxSizing||""===c.MozBoxSizing||""===c.WebkitBoxSizing,m.extend(k,{reliableHiddenOffsets:function(){return null==g&&i(),g},boxSizingReliable:function(){return null==f&&i(),f},pixelPosition:function(){return null==e&&i(),e},reliableMarginRight:function(){return null==h&&i(),h}});function i(){var b,c,d,i;c=y.getElementsByTagName("body")[0],c&&c.style&&(b=y.createElement("div"),d=y.createElement("div"),d.style.cssText="position:absolute;border:0;width:0;height:0;top:0;left:-9999px",c.appendChild(d).appendChild(b),b.style.cssText="-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;display:block;margin-top:1%;top:1%;border:1px;padding:1px;width:4px;position:absolute",e=f=!1,h=!0,a.getComputedStyle&&(e="1%"!==(a.getComputedStyle(b,null)||{}).top,f="4px"===(a.getComputedStyle(b,null)||{width:"4px"}).width,i=b.appendChild(y.createElement("div")),i.style.cssText=b.style.cssText="-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;display:block;margin:0;border:0;padding:0",i.style.marginRight=i.style.width="0",b.style.width="1px",h=!parseFloat((a.getComputedStyle(i,null)||{}).marginRight)),b.innerHTML="<table><tr><td></td><td>t</td></tr></table>",i=b.getElementsByTagName("td"),i[0].style.cssText="margin:0;border:0;padding:0;display:none",g=0===i[0].offsetHeight,g&&(i[0].style.display="",i[1].style.display="none",g=0===i[0].offsetHeight),c.removeChild(d))}}}(),m.swap=function(a,b,c,d){var e,f,g={};for(f in b)g[f]=a.style[f],a.style[f]=b[f];e=c.apply(a,d||[]);for(f in b)a.style[f]=g[f];return e};var Mb=/alpha\([^)]*\)/i,Nb=/opacity\s*=\s*([^)]*)/,Ob=/^(none|table(?!-c[ea]).+)/,Pb=new RegExp("^("+S+")(.*)$","i"),Qb=new RegExp("^([+-])=("+S+")","i"),Rb={position:"absolute",visibility:"hidden",display:"block"},Sb={letterSpacing:"0",fontWeight:"400"},Tb=["Webkit","O","Moz","ms"];function Ub(a,b){if(b in a)return b;var c=b.charAt(0).toUpperCase()+b.slice(1),d=b,e=Tb.length;while(e--)if(b=Tb[e]+c,b in a)return b;return d}function Vb(a,b){for(var c,d,e,f=[],g=0,h=a.length;h>g;g++)d=a[g],d.style&&(f[g]=m._data(d,"olddisplay"),c=d.style.display,b?(f[g]||"none"!==c||(d.style.display=""),""===d.style.display&&U(d)&&(f[g]=m._data(d,"olddisplay",Fb(d.nodeName)))):(e=U(d),(c&&"none"!==c||!e)&&m._data(d,"olddisplay",e?c:m.css(d,"display"))));for(g=0;h>g;g++)d=a[g],d.style&&(b&&"none"!==d.style.display&&""!==d.style.display||(d.style.display=b?f[g]||"":"none"));return a}function Wb(a,b,c){var d=Pb.exec(b);return d?Math.max(0,d[1]-(c||0))+(d[2]||"px"):b}function Xb(a,b,c,d,e){for(var f=c===(d?"border":"content")?4:"width"===b?1:0,g=0;4>f;f+=2)"margin"===c&&(g+=m.css(a,c+T[f],!0,e)),d?("content"===c&&(g-=m.css(a,"padding"+T[f],!0,e)),"margin"!==c&&(g-=m.css(a,"border"+T[f]+"Width",!0,e))):(g+=m.css(a,"padding"+T[f],!0,e),"padding"!==c&&(g+=m.css(a,"border"+T[f]+"Width",!0,e)));return g}function Yb(a,b,c){var d=!0,e="width"===b?a.offsetWidth:a.offsetHeight,f=Ib(a),g=k.boxSizing&&"border-box"===m.css(a,"boxSizing",!1,f);if(0>=e||null==e){if(e=Jb(a,b,f),(0>e||null==e)&&(e=a.style[b]),Hb.test(e))return e;d=g&&(k.boxSizingReliable()||e===a.style[b]),e=parseFloat(e)||0}return e+Xb(a,b,c||(g?"border":"content"),d,f)+"px"}m.extend({cssHooks:{opacity:{get:function(a,b){if(b){var c=Jb(a,"opacity");return""===c?"1":c}}}},cssNumber:{columnCount:!0,fillOpacity:!0,flexGrow:!0,flexShrink:!0,fontWeight:!0,lineHeight:!0,opacity:!0,order:!0,orphans:!0,widows:!0,zIndex:!0,zoom:!0},cssProps:{"float":k.cssFloat?"cssFloat":"styleFloat"},style:function(a,b,c,d){if(a&&3!==a.nodeType&&8!==a.nodeType&&a.style){var e,f,g,h=m.camelCase(b),i=a.style;if(b=m.cssProps[h]||(m.cssProps[h]=Ub(i,h)),g=m.cssHooks[b]||m.cssHooks[h],void 0===c)return g&&"get"in g&&void 0!==(e=g.get(a,!1,d))?e:i[b];if(f=typeof c,"string"===f&&(e=Qb.exec(c))&&(c=(e[1]+1)*e[2]+parseFloat(m.css(a,b)),f="number"),null!=c&&c===c&&("number"!==f||m.cssNumber[h]||(c+="px"),k.clearCloneStyle||""!==c||0!==b.indexOf("background")||(i[b]="inherit"),!(g&&"set"in g&&void 0===(c=g.set(a,c,d)))))try{i[b]=c}catch(j){}}},css:function(a,b,c,d){var e,f,g,h=m.camelCase(b);return b=m.cssProps[h]||(m.cssProps[h]=Ub(a.style,h)),g=m.cssHooks[b]||m.cssHooks[h],g&&"get"in g&&(f=g.get(a,!0,c)),void 0===f&&(f=Jb(a,b,d)),"normal"===f&&b in Sb&&(f=Sb[b]),""===c||c?(e=parseFloat(f),c===!0||m.isNumeric(e)?e||0:f):f}}),m.each(["height","width"],function(a,b){m.cssHooks[b]={get:function(a,c,d){return c?Ob.test(m.css(a,"display"))&&0===a.offsetWidth?m.swap(a,Rb,function(){return Yb(a,b,d)}):Yb(a,b,d):void 0},set:function(a,c,d){var e=d&&Ib(a);return Wb(a,c,d?Xb(a,b,d,k.boxSizing&&"border-box"===m.css(a,"boxSizing",!1,e),e):0)}}}),k.opacity||(m.cssHooks.opacity={get:function(a,b){return Nb.test((b&&a.currentStyle?a.currentStyle.filter:a.style.filter)||"")?.01*parseFloat(RegExp.$1)+"":b?"1":""},set:function(a,b){var c=a.style,d=a.currentStyle,e=m.isNumeric(b)?"alpha(opacity="+100*b+")":"",f=d&&d.filter||c.filter||"";c.zoom=1,(b>=1||""===b)&&""===m.trim(f.replace(Mb,""))&&c.removeAttribute&&(c.removeAttribute("filter"),""===b||d&&!d.filter)||(c.filter=Mb.test(f)?f.replace(Mb,e):f+" "+e)}}),m.cssHooks.marginRight=Lb(k.reliableMarginRight,function(a,b){return b?m.swap(a,{display:"inline-block"},Jb,[a,"marginRight"]):void 0}),m.each({margin:"",padding:"",border:"Width"},function(a,b){m.cssHooks[a+b]={expand:function(c){for(var d=0,e={},f="string"==typeof c?c.split(" "):[c];4>d;d++)e[a+T[d]+b]=f[d]||f[d-2]||f[0];return e}},Gb.test(a)||(m.cssHooks[a+b].set=Wb)}),m.fn.extend({css:function(a,b){return V(this,function(a,b,c){var d,e,f={},g=0;if(m.isArray(b)){for(d=Ib(a),e=b.length;e>g;g++)f[b[g]]=m.css(a,b[g],!1,d);return f}return void 0!==c?m.style(a,b,c):m.css(a,b)},a,b,arguments.length>1)},show:function(){return Vb(this,!0)},hide:function(){return Vb(this)},toggle:function(a){return"boolean"==typeof a?a?this.show():this.hide():this.each(function(){U(this)?m(this).show():m(this).hide()})}});function Zb(a,b,c,d,e){return new Zb.prototype.init(a,b,c,d,e)}m.Tween=Zb,Zb.prototype={constructor:Zb,init:function(a,b,c,d,e,f){this.elem=a,this.prop=c,this.easing=e||"swing",this.options=b,this.start=this.now=this.cur(),this.end=d,this.unit=f||(m.cssNumber[c]?"":"px")
@@ -5592,12 +5592,6 @@ angApp.run(function ($rootScope, $location, $http, $q, deviceService, cfg) {
             request.timeout = request.cancel.promise;
         });
         /**
-         * Check if page access is banned for the app type
-         */
-        if (next.appTypeBanned && next.appTypeBanned.indexOf(cfg.app_type) > -1) {
-            $location.path( '/error/404');
-        }
-        /**
         * Check if access is allowed for the page
         */
         if (next.requireLogin) {
@@ -5645,14 +5639,7 @@ angApp.config(function ($provide, $httpProvider, cfg) {
             responseError: function (rejection) {
                 deviceService.logError(rejection);
                 if (rejection.status === 401) {
-                    switch(cfg.app_type){
-                        case 'installer':
-                            deviceService.logOut();
-                            break;
-                        default:
-                            $window.location.href = cfg.smarthome_login;
-                            break;
-                    }
+                  $window.location.href = cfg.smarthome_login;
                 }
                 // Return the promise rejection.
                 return $q.reject(rejection);
@@ -5671,20 +5658,15 @@ angApp.config(function ($provide, $httpProvider, cfg) {
 //Define Routing for app
 angApp.config(['$routeProvider',
     function ($routeProvider) {
-        var requireLogin = (config_data.cfg.app_type === 'installer');
-        var appType = config_data.cfg.app_type === 'installer'? 'installer' : 'default';
+        var requireLogin = false;
         $routeProvider.// Login
         when('/', {
-            templateUrl: 'app/views/auth/auth_' + appType + '.html'
-        })./* CIT init
-        when('/init', {
-            templateUrl: 'app/views/auth/init_installer.html',
-            appTypeBanned: ['default','wd','popp','jb'],
-        }).*/
+            templateUrl: 'app/views/auth/auth.html'
+        }).
         // Home
         when('/home', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/home/home_' + appType + '.html'
+            templateUrl: 'app/views/home/home.html'
         }).// License
         when('/licence', {
             requireLogin: requireLogin,
@@ -5700,28 +5682,22 @@ angApp.config(['$routeProvider',
         }).// Controll
         when('/control/switch', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/controll/switch.html',
-            appTypeBanned: ['installer']
+            templateUrl: 'app/views/controll/switch.html'
         }).when('/control/sensors', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/controll/sensors.html',
-            appTypeBanned: ['installer']
+            templateUrl: 'app/views/controll/sensors.html'
         }).when('/control/meters', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/controll/meters.html',
-            appTypeBanned: ['installer']
+            templateUrl: 'app/views/controll/meters.html'
         }).when('/control/thermostat', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/controll/thermostat.html',
-            appTypeBanned: ['installer']
+            templateUrl: 'app/views/controll/thermostat.html'
         }).when('/control/locks', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/controll/locks.html',
-            appTypeBanned: ['installer']
+            templateUrl: 'app/views/controll/locks.html'
         }).when('/control/notifications', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/controll/notifications.html',
-            appTypeBanned: ['installer']
+            templateUrl: 'app/views/controll/notifications.html'
         }).// Device
         when('/device/status', {
             requireLogin: requireLogin,
@@ -5774,7 +5750,7 @@ angApp.config(['$routeProvider',
         }).// Network
         when('/network/control', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/network/control/control_' + appType + '.html'
+            templateUrl: 'app/views/network/control/control.html'
         }).when('/network/neighbors', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/network/neighbors.html'
@@ -5782,14 +5758,13 @@ angApp.config(['$routeProvider',
             requireLogin: requireLogin,
             templateUrl: 'app/views/network/routing.html'
         }).when('/network/reorganization', {
-            templateUrl: 'app/views/network/reorganization.html',
-            appTypeBanned: ['installer'],
+            templateUrl: 'app/views/network/reorganization.html'
         }).when('/network/timing', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/network/timing.html'
         }).when('/network/controller', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/network/controller_' + appType + '.html'
+            templateUrl: 'app/views/network/controller.html'
         }).when('/network/queue', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/network/queue.html'
@@ -5799,40 +5774,43 @@ angApp.config(['$routeProvider',
             templateUrl: 'app/views/network/map.html'
         }).when('/network/statistics', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/network/statistics.html',
-            appTypeBanned: []
+            templateUrl: 'app/views/network/statistics.html'
         }).when('/network/linkstatus', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/network/linkstatus.html',
-            appTypeBanned: [/*'default'*/]
-        }).when('/network/linkhealth/:nodeId?', {
-            requireLogin: requireLogin,
-            templateUrl: 'app/views/network/link_health.html',
-            appTypeBanned: ['default','wd','popp','jb']
+            templateUrl: 'app/views/network/linkstatus.html'
+        }).//SmartStart with QR code
+        when('/smartstartqr', {
+            templateUrl: 'app/views/smartstart/smartstart_qr.html',
+            requireLogin: requireLogin
+        }).
+        //SmartStart with dsk
+        when('/smartstartdsk', {
+            templateUrl: 'app/views/smartstart/smartstart_dsk_entry.html',
+            requireLogin: requireLogin
+        }).//SmartStart with dsk
+        when('/smartstartlist', {
+            templateUrl: 'app/views/smartstart/smartstart_dsk_list.html',
+            requireLogin: requireLogin
         }).// Installer - zniffer
         when('/installer/zniffer', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/installer/zniffer.html',
-            appTypeBanned: []
+            templateUrl: 'app/views/installer/zniffer.html'
         }).// Installer - history
         when('/installer/history', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/installer/history.html',
-            appTypeBanned: []
+            templateUrl: 'app/views/installer/history.html'
         }).// Installer - RSSI
         when('/installer/rssi', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/installer/rssi_background.html',
-            appTypeBanned: []
+            templateUrl: 'app/views/installer/rssi_background.html'
         }).
         when('/installer/rssimeter', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/installer/rssi_meter.html',
-            appTypeBanned: []
+            templateUrl: 'app/views/installer/rssi_meter.html'
         }).// Settings
         when('/settings', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/settings/settings_' + appType + '.html'
+            templateUrl: 'app/views/settings/settings.html'
         }).// Print
         when('/print', {
             requireLogin: requireLogin,
@@ -5841,11 +5819,6 @@ angApp.config(['$routeProvider',
         when('/error/:code?', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/error.html'
-        }).// Logout
-        when('/logout', {
-            requireLogin: requireLogin,
-            appTypeBanned: ['default','wd','popp','jb'],
-            templateUrl: 'app/views/auth/logout_installer.html'
         }).otherwise({
             redirectTo: '/home'
         });
@@ -5853,33 +5826,13 @@ angApp.config(['$routeProvider',
 angular.module('myAppTemplates', []).run(['$templateCache', function($templateCache) {
   'use strict';
 
-  $templateCache.put('app/views/auth/_auth_installer.html',
-    "<div ng-controller=AuthInstallerController></div>"
-  );
-
-
-  $templateCache.put('app/views/auth/_init_installer.html',
-    "<div id=cit_init class=container-500 ng-controller=InitInstallerController><div class=text-center><img class=product-logo ng-src=\"{{getCustomCfgVal('logo')}}\" alt=Logo></div><form name=form_init id=form_login class=\"form form-page\" ng-submit=initialize(init.input) novalidate><fieldset class=\"text-center cit-welcome\"><h1 ng-if=!cfg.system_info.cit_authorized>{{_t('initial_welcome')}}</h1><h1 ng-if=cfg.system_info.cit_authorized>{{cfg.system_info.cit_identifier}}</h1></fieldset><bb-alert alert=init.alert></bb-alert><fieldset><div class=form-group><input name=user id=user class=form-control placeholder=\"{{_t('lb_login')}}\" ng-model=init.input.user ng-blur=\"userBlur = true\" ng-required=true><bb-validator input-name=form_init.user.$error.required trans='_t(\"field_required\")' has-blur=userBlur></bb-validator></div><div class=form-group><input name=pass id=pass type=password class=form-control placeholder=\"{{_t('lb_password')}}\" ng-model=init.input.pass ng-blur=\"passBlur = true\" ng-required=true><bb-validator input-name=form_init.pass.$error.required trans='_t(\"field_required\")' has-blur=passBlur></bb-validator></div><div class=form-group ng-if=!cfg.system_info.cit_authorized><input name=cit_identifier id=cit_identifier class=form-control placeholder=\"{{_t('cit_identifier')}}\" ng-model=init.input.cit_identifier ng-blur=\"cit_identifierBlur = true\" ng-required=true><bb-validator input-name=form_init.cit_identifier.$error.required trans='_t(\"field_required\")' has-blur=passBlur></bb-validator><bb-help-text trans=\"_t('cit_identifier_info')\"></bb-help-text></div><div class=text-right><small>{{_t('remote_id')}}: {{cfg.system_info.remote_id}}</small></div></fieldset><fieldset class=submit-entry><button type=submit class=\"btn btn-submit\" title=\"{{_t('lb_enter')}}\" ng-disabled=\"form_init.$invalid || rowSpinner['installer_auth']\"><bb-row-spinner spinner=\"rowSpinner['installer_auth']\" label=\"cfg.system_info.cit_authorized ? _t('login') : _t('initialize')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></fieldset></form></div>"
-  );
-
-
-  $templateCache.put('app/views/auth/auth_default.html',
+  $templateCache.put('app/views/auth/auth.html',
     "<div ng-controller=AuthController></div>"
   );
 
 
-  $templateCache.put('app/views/auth/auth_installer.html',
-    "<div id=cit_init class=container-500 ng-controller=InitInstallerController><div class=text-center><img class=product-logo ng-src=\"{{getCustomCfgVal('logo')}}\" alt=Logo></div><form name=form_init id=form_login class=\"form form-page\" ng-submit=authenticate(auth.input) novalidate><fieldset class=\"text-center cit-welcome\"><h1 ng-if=!cfg.system_info.cit_authorized>{{_t('initial_welcome')}}</h1><h1 ng-if=cfg.system_info.cit_authorized>{{cfg.system_info.cit_identifier}}</h1></fieldset><bb-alert alert=auth.alert></bb-alert><fieldset><div class=form-group><input name=user id=user class=form-control placeholder=\"{{_t('lb_login')}}\" ng-model=auth.input.user ng-blur=\"userBlur = true\" ng-required=true><bb-validator input-name=form_init.user.$error.required trans='_t(\"field_required\")' has-blur=userBlur></bb-validator></div><div class=form-group><input name=pass id=pass type=password class=form-control placeholder=\"{{_t('lb_password')}}\" ng-model=auth.input.pass ng-blur=\"passBlur = true\" ng-required=true><bb-validator input-name=form_init.pass.$error.required trans='_t(\"field_required\")' has-blur=passBlur></bb-validator></div><div class=form-group ng-if=!cfg.system_info.cit_authorized><input name=cit_identifier id=cit_identifier class=form-control placeholder=\"{{_t('cit_identifier')}}\" ng-model=auth.input.cit_identifier ng-blur=\"cit_identifierBlur = true\" ng-required=true><bb-validator input-name=form_init.cit_identifier.$error.required trans='_t(\"field_required\")' has-blur=passBlur></bb-validator><bb-help-text trans=\"_t('cit_identifier_info')\"></bb-help-text></div><div class=text-center ng-if=cfg.system_info.cit_authorized><a ng-href=\"{{cfg.logout_redirect['findcit.z-wavealliance.org']}}\"><i class=\"fa fa-external-link\"></i> {{cfg.find_cit.hostname}}</a></div><div class=text-right><small>{{_t('remote_id')}}: {{cfg.system_info.remote_id}}</small></div></fieldset><fieldset class=submit-entry><button type=submit class=\"btn btn-submit\" title=\"{{_t('lb_enter')}}\" ng-disabled=\"form_init.$invalid || rowSpinner['installer_auth']\"><bb-row-spinner spinner=\"rowSpinner['installer_auth']\" label=\"cfg.system_info.cit_authorized ? _t('lb_login') : _t('initialize')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></fieldset></form></div>"
-  );
-
-
-  $templateCache.put('app/views/auth/logout_installer.html',
-    "<div ng-controller=LogoutInstallerController></div>"
-  );
-
-
   $templateCache.put('app/views/configuration/assoc.html',
-    "<div id=AssociationTable ng-controller=ConfigAssocController><div ng-include=\"'app/views/configuration/navi.html'\"></div><div class=\"row row-configuration\"><div class=\"col-md-3 menu-vertical\"><div ng-include=\"'app/views/configuration/menu.html'\"></div></div><div class=\"col-md-9 col-content\"><bb-alert alert=alert></bb-alert><div ng-show=deviceId><div class=table-responsive ng-if=\"assocGroups.length > 0\"><button class=\"btn btn-primary\" type=button ng-click=\"updateFromDevice('updateFromDevice')\" ng-disabled=\"rowSpinner['updateFromDevice']\"><bb-row-spinner spinner=\"rowSpinner['updateFromDevice']\" label=\"_t('btn_update_from_device')\" icon=\"'fa-files-o'\"></bb-row-spinner></button><br><br><div class=\"alert alert-warning\" ng-if=\"nodeCfg.hasBattery && nodeCfg.notAwake.length > 0\"><i class=\"fa fa-info-circle text-warning\"></i> {{_t('conf_apply_battery')}}</div><table class=\"table table-striped_ table-condensed\"><tbody><tr ng-repeat=\"v in assocGroups track by $index\"><td class=association-text><h5>{{v.groupId}}. {{v.label}} ({{ _t('assoc_max')}} {{v.max}} {{ _t('assoc_nodes')}}) <span>| <i class=\"fa fa-clock-o\"></i> <span class={{v.timeClass}}>{{v.updateTime| isTodayFromUnix}}</span></span></h5><div><div class=\"btn-group btn-group-assoc-devices {{d.status}}\" role=group ng-repeat=\"d in assocGroupsDevices[v.groupId] track by d.elId\" id={{d.elId}}><button type=button class=\"btn btn-info\"><i class=\"fa fa-exclamation-triangle text-danger\" ng-hide=\"cfg.app_type === 'installer'\" ng-if=\"d.status !== 'true-true'\"></i>(#{{d.id}}<span ng-if=nodeCfg.hasMca>.{{d.instance}}</span>) {{d.name|cutText:true:20}}</button> <button type=button class=\"btn btn-primary\" ng-click=deleteAssoc(d) ng-if=!d.isNew><i class=\"fa fa-times text-danger\"></i></button></div></div><p class=text-alert-list ng-if=\"v.remaining < 1\"><i class=\"fa fa-exclamation-circle text-warning\"></i> {{_t('assoc_max_nodes_reached')}}</p></td><td class=association-action style=\"text-align: right; width: 20%\"><button class=\"btn btn-primary\" type=button ng-if=\"v.remaining > 0\" ng-click=\"handleAssocModal('assocAddModal',$event,v)\" ng-disabled=\"rowSpinner['group_' + v.groupId]\"><bb-row-spinner spinner=\"rowSpinner['group_' + v.groupId]\" icon=\"'fa-plus'\"></bb-row-spinner></button></td></tr></tbody></table><div class=legend-entry><div class=legend-row><i class=\"fa fa-square fa-lg orange\"></i> {{_t('assoc_legend_2')}}</div><div class=legend-row><i class=\"fa fa-square fa-lg gray-light\"></i> {{_t('assoc_legend_3')}}</div><div class=legend-row><i class=\"fa fa-square fa-lg blue-info\"></i> {{_t('assoc_legend_4')}}</div></div><div ng-include=\"'app/views/configuration/modal_assoc_add.html'\"></div></div></div></div></div></div>"
+    "<div id=AssociationTable ng-controller=ConfigAssocController><div ng-include=\"'app/views/configuration/navi.html'\"></div><div class=\"row row-configuration\"><div class=\"col-md-3 menu-vertical\"><div ng-include=\"'app/views/configuration/menu.html'\"></div></div><div class=\"col-md-9 col-content\"><bb-alert alert=alert></bb-alert><div ng-show=deviceId><div class=table-responsive ng-if=\"assocGroups.length > 0\"><button class=\"btn btn-primary\" type=button ng-click=\"updateFromDevice('updateFromDevice')\" ng-disabled=\"rowSpinner['updateFromDevice']\"><bb-row-spinner spinner=\"rowSpinner['updateFromDevice']\" label=\"_t('btn_update_from_device')\" icon=\"'fa-files-o'\"></bb-row-spinner></button><br><br><div class=\"alert alert-warning\" ng-if=\"nodeCfg.hasBattery && nodeCfg.notAwake.length > 0\"><i class=\"fa fa-info-circle text-warning\"></i> {{_t('conf_apply_battery')}}</div><table class=\"table table-striped_ table-condensed\"><tbody><tr ng-repeat=\"v in assocGroups track by $index\"><td class=association-text><h5>{{v.groupId}}. {{v.label}} ({{ _t('assoc_max')}} {{v.max}} {{ _t('assoc_nodes')}}) <span>| <i class=\"fa fa-clock-o\"></i> <span class={{v.timeClass}}>{{v.updateTime| isTodayFromUnix}}</span></span></h5><div><div class=\"btn-group btn-group-assoc-devices {{d.status}}\" role=group ng-repeat=\"d in assocGroupsDevices[v.groupId] track by d.elId\" id={{d.elId}}><button type=button class=\"btn btn-info excluded-{{d.deviceExcluded}}\" ng-disabled=d.deviceExcluded><i class=\"fa fa-exclamation-triangle text-danger\" ng-if=\"d.status !== 'true-true'\"></i>(#{{d.id}}<span ng-if=nodeCfg.hasMca>.{{d.instance}}</span>) {{d.name|cutText:true:20}}</button> <button type=button class=\"btn btn-primary\" ng-click=deleteAssoc(d) ng-if=!d.isNew><i class=\"fa fa-times text-danger\"></i></button></div></div><p class=text-alert-list ng-if=\"v.remaining < 1\"><i class=\"fa fa-exclamation-circle text-warning\"></i> {{_t('assoc_max_nodes_reached')}}</p></td><td class=association-action style=\"text-align: right; width: 20%\"><button class=\"btn btn-primary\" type=button ng-if=\"v.remaining > 0\" ng-click=\"handleAssocModal('assocAddModal',$event,v)\" ng-disabled=\"rowSpinner['group_' + v.groupId]\"><bb-row-spinner spinner=\"rowSpinner['group_' + v.groupId]\" icon=\"'fa-plus'\"></bb-row-spinner></button></td></tr></tbody></table><div class=legend-entry><div class=legend-row><i class=\"fa fa-square fa-lg orange\"></i> {{_t('assoc_legend_2')}}</div><div class=legend-row><i class=\"fa fa-square fa-lg gray-light\"></i> {{_t('assoc_legend_3')}}</div><div class=legend-row><i class=\"fa fa-square fa-lg blue-info\"></i> {{_t('assoc_legend_4')}}</div><div class=legend-row><i class=\"fa fa-square fa-lg gray-light\"></i> <span class=line-through>{{_t('device_excluded')}}</span></div></div><div ng-include=\"'app/views/configuration/modal_assoc_add.html'\"></div></div></div></div></div></div>"
   );
 
 
@@ -5924,12 +5877,12 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/configuration/health.html',
-    "<div ng-controller=ConfigHealthController><div ng-include=\"'app/views/configuration/navi.html'\"></div><div class=\"row row-configuration\"><div class=\"col-md-3 menu-vertical\"><div ng-include=\"'app/views/configuration/menu.html'\"></div></div><div class=\"col-md-9 col-content\"><bb-alert alert=alert></bb-alert><div ng-show=\"deviceId && !_.isEmpty(health.neighbours)\"><div id=table_mobile><div class=\"alert ng-scope alert-warning\" ng-if=!health.device.hasPowerLevel><i class=\"fa fa-exclamation-circle\"></i> {{_t('link_health_no_powerlevel')}}</div><table class=\"table table-striped table-condensed table-hover\"><thead class=cf><tr><th><a href=\"\" ng-click=\"orderBy('id')\">{{ _t('link_to_node')}} <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('type')\">{{_t('device_description_device_type')}} <span ng-show=\"predicate == 'type'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th>{{ _t('linkquality')}}</th><th class=mobile-show><button class=\"btn btn-primary\" id=btn_test_all_1 ng-if=health.device.hasPowerLevel ng-click=\"testAllLinks('all_1')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner icon=\"'fa-circle-o'\" spinner=\"rowSpinner['all_1']\" label=\"_t('test_all_links')\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in health.neighbours| orderBy:predicate:reverse track by $index\" id={{v.rowId}}><td data-title=#><button class=\"btn btn-default btn-sm btn-{{v.type}}\">{{ v.id}}</button></td><td data-title=\"{{ _t('device_description_device_type')}}\">{{ v.name}}</td><td data-title=\"{{ _t('type')}}\"><i class=fa ng-class=v.icon title={{_t(v.type)}}></i></td><td data-title=\"{{ _t('datetime')}}\"><span class=\"row-time {{v.indicator.updateTimeColor}}\" ng-if=v.powerLevel>{{ v.indicator.updateTime | isTodayFromUnix }} </span><span class=\"row-time {{health.timing.indicator.updateTimeColor}}\" ng-if=\"!v.powerLevel && v.id === health.ctrlNodeId\">{{ health.timing.indicator.updateTime | isTodayFromUnix }}</span></td><td data-title=\"{{ _t('linkquality')}}\"><i class=\"fa fa-circle fa-2x clickable {{v.indicator.color}}\" ng-if=v.powerLevel ng-click=\"handlePowerLevelModal('healthPowerLevelModal', $event, v)\"></i> <i class=\"fa fa-circle fa-2x clickable {{health.timing.indicator.color}}\" ng-if=\"!v.powerLevel && v.id === health.ctrlNodeId\" ng-click=\"handleTimingModal('healthTimingModal', $event, v)\"></i></td><td data-title=\"\" ng-switch on=v.deviceType><button class=\"btn btn-default\" id=\"btn_test_{{ v.id}}\" ng-if=health.device.hasPowerLevel ng-click=runZwaveCmd(v.cmdTestNode) ng-disabled=rowSpinner[v.cmdTestNode]><bb-row-spinner icon=\"'fa-circle-o text-success'\" spinner=rowSpinner[v.cmdTestNode] label=\"_t('test_link')\"></bb-row-spinner></button> <button class=\"btn btn-default\" id=\"btn_nop_{{ v.id}}\" ng-if=\"!health.device.hasPowerLevel && v.type === 'static'\" ng-click=runZwaveNopCmd(v.cmdNop) ng-disabled=rowSpinner[v.cmdNop]><bb-row-spinner icon=\"'fa-circle-o text-success'\" spinner=rowSpinner[v.cmdNop] label=\"_t('nop')\"></bb-row-spinner></button></td></tr></tbody></table></div><div class=\"legend-entry legend-inline\"><div class=legend-row><button class=\"btn btn-default btn-sm btn-static\">&nbsp;</button> {{_t('static')}}</div><div class=legend-row><button class=\"btn btn-default btn-sm btn-portable\">&nbsp;</button> {{_t('portable')}}</div><div class=legend-row><button class=\"btn btn-default btn-sm btn-battery\">&nbsp;</button> {{_t('battery')}}</div><div class=legend-row><button class=\"btn btn-default btn-sm btn-flirs\">&nbsp;</button> {{_t('flirs')}}</div><div class=legend-row><button class=\"btn btn-default btn-sm btn-mains\">&nbsp;</button> {{_t('mains')}}</div><div class=legend-row><button class=\"btn btn-default btn-sm btn-unknown\">&nbsp;</button> {{_t('unknown')}}</div></div></div><div id=healthPowerLevelModal class=appmodal ng-if=modalArr.healthPowerLevelModal><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handlePowerLevelModal('healthPowerLevelModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{health.device.find.name|cutText:true:30}}</h3></div><div class=appmodal-body ng-bind-html=\"health.device.commandClass | toTrusted\"></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handlePowerLevelModal('healthPowerLevelModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_close')}}</span></button></div></div></div><div id=healthTimingModal class=appmodal ng-if=modalArr.healthTimingModal><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handleTimingModal('healthTimingModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{health.device.find.name|cutText:true:30}}</h3></div><div class=appmodal-body><p><strong>{{_t('th_total')}} (pkts)</strong>: {{health.timing.find.totalPackets}}</p><p><strong>{{_t('th_ok')}}</strong>: {{health.timing.find.okPackets}}%</p><p><strong>{{_t('th_lastpackets')}}</strong>: <span ng-bind-html=\"health.timing.find.lastPackets | toTrusted\"></span></p><p><strong>{{_t('timing_color_description')}}:</strong><br><i class=\"fa fa-square fa-lg\" style=\"color: green\"></i> {{_t('timing_green')}}<br><i class=\"fa fa-square fa-lg\" style=\"color: black\"></i> {{_t('timing_black')}}<br><i class=\"fa fa-square fa-lg\" style=\"color: red\"></i> {{_t('timing_red')}}.<br></p></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleTimingModal('healthTimingModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_close')}}</span></button></div></div></div></div></div></div>"
+    "<div ng-controller=ConfigHealthController><div ng-include=\"'app/views/configuration/navi.html'\"></div><div class=\"row row-configuration\"><div class=\"col-md-3 menu-vertical\"><div ng-include=\"'app/views/configuration/menu.html'\"></div></div><div class=\"col-md-9 col-content\"><bb-alert alert=alert></bb-alert><div ng-show=\"deviceId && !_.isEmpty(health.neighbours)\"><div id=table_mobile><div class=\"alert ng-scope alert-warning\" ng-if=!health.device.hasPowerLevel><i class=\"fa fa-exclamation-circle\"></i> {{_t('link_health_no_powerlevel')}}</div><table class=\"table table-striped table-condensed table-hover\"><thead class=cf><tr><th><a href=\"\" ng-click=\"orderBy('id')\">{{ _t('link_to_node')}} <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('type')\">{{_t('device_description_device_type')}} <span ng-show=\"predicate == 'type'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th>{{ _t('linkquality')}}</th><th class=mobile-show><button class=\"btn btn-primary\" id=btn_test_all_1 ng-if=health.device.hasPowerLevel ng-click=\"testAllLinks('all_1')\" ng-disabled=\"rowSpinner['all_1']\"><bb-row-spinner icon=\"'fa-circle-o'\" spinner=\"rowSpinner['all_1']\" label=\"_t('test_all_links')\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in health.neighbours| orderBy:predicate:reverse track by $index\" id={{v.rowId}}><td data-title=#><button class=\"btn btn-default btn-sm btn-{{v.type}}\">{{ v.id}}</button></td><td data-title=\"{{ _t('device_description_device_type')}}\">{{ v.name}}</td><td data-title=\"{{ _t('type')}}\"><i class=fa ng-class=v.icon title={{_t(v.type)}}></i></td><td data-title=\"{{ _t('datetime')}}\"><span class=\"row-time {{v.indicator.updateTimeColor}}\" ng-if=v.powerLevel>{{ v.indicator.updateTime | isTodayFromUnix }} </span><span class=\"row-time {{health.timing.indicator.updateTimeColor}}\" ng-if=\"!v.powerLevel && v.id === health.ctrlNodeId\">{{ health.timing.indicator.updateTime | isTodayFromUnix }}</span></td><td data-title=\"{{ _t('linkquality')}}\"><i class=\"fa fa-circle fa-2x clickable {{v.indicator.color}}\" ng-if=v.powerLevel ng-click=\"handlePowerLevelModal('healthPowerLevelModal', $event, v)\"></i> <i class=\"fa fa-circle fa-2x clickable {{health.timing.indicator.color}}\" ng-if=\"!v.powerLevel && v.id === health.ctrlNodeId\" ng-click=\"handleTimingModal('healthTimingModal', $event, v)\"></i></td><td data-title=\"\" ng-switch on=v.deviceType><button class=\"btn btn-default\" id=\"btn_test_{{ v.id}}\" ng-if=health.device.hasPowerLevel ng-click=runZwaveCmd(v.cmdTestNode,2000) ng-disabled=rowSpinner[v.cmdTestNode]><bb-row-spinner icon=\"'fa-circle-o text-success'\" spinner=rowSpinner[v.cmdTestNode] label=\"_t('test_link')\"></bb-row-spinner></button> <button class=\"btn btn-default\" id=\"btn_nop_{{ v.id}}\" ng-if=\"!health.device.hasPowerLevel && v.type === 'static'\" ng-click=runZwaveNopCmd(v.cmdNop) ng-disabled=rowSpinner[v.cmdNop]><bb-row-spinner icon=\"'fa-circle-o text-success'\" spinner=rowSpinner[v.cmdNop] label=\"_t('nop')\"></bb-row-spinner></button></td></tr></tbody></table></div><div class=\"legend-entry legend-inline\"><div class=legend-row><button class=\"btn btn-default btn-sm btn-static\">&nbsp;</button> {{_t('static')}}</div><div class=legend-row><button class=\"btn btn-default btn-sm btn-portable\">&nbsp;</button> {{_t('portable')}}</div><div class=legend-row><button class=\"btn btn-default btn-sm btn-battery\">&nbsp;</button> {{_t('battery')}}</div><div class=legend-row><button class=\"btn btn-default btn-sm btn-flirs\">&nbsp;</button> {{_t('flirs')}}</div><div class=legend-row><button class=\"btn btn-default btn-sm btn-mains\">&nbsp;</button> {{_t('mains')}}</div><div class=legend-row><button class=\"btn btn-default btn-sm btn-unknown\">&nbsp;</button> {{_t('unknown')}}</div></div></div><div id=healthPowerLevelModal class=appmodal ng-if=modalArr.healthPowerLevelModal><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handlePowerLevelModal('healthPowerLevelModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{health.device.find.name|cutText:true:30}}</h3></div><div class=appmodal-body ng-bind-html=\"health.device.commandClass | toTrusted\"></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handlePowerLevelModal('healthPowerLevelModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_close')}}</span></button></div></div></div><div id=healthTimingModal class=appmodal ng-if=modalArr.healthTimingModal><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handleTimingModal('healthTimingModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{health.device.find.name|cutText:true:30}}</h3></div><div class=appmodal-body><p><strong>{{_t('th_total')}} (pkts)</strong>: {{health.timing.find.totalPackets}}</p><p><strong>{{_t('th_ok')}}</strong>: {{health.timing.find.okPackets}}%</p><p><strong>{{_t('th_lastpackets')}}</strong>: <span ng-bind-html=\"health.timing.find.lastPackets | toTrusted\"></span></p><p><strong>{{_t('timing_color_description')}}:</strong><br><i class=\"fa fa-square fa-lg\" style=\"color: green\"></i> {{_t('timing_green')}}<br><i class=\"fa fa-square fa-lg\" style=\"color: black\"></i> {{_t('timing_black')}}<br><i class=\"fa fa-square fa-lg\" style=\"color: red\"></i> {{_t('timing_red')}}.<br></p></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleTimingModal('healthTimingModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_close')}}</span></button></div></div></div></div></div></div>"
   );
 
 
   $templateCache.put('app/views/configuration/interview.html',
-    "<div ng-controller=ConfigInterviewController><div ng-include=\"'app/views/configuration/navi.html'\"></div><div class=\"row row-configuration\"><div class=\"col-md-3 menu-vertical\"><div ng-include=\"'app/views/configuration/menu.html'\"></div></div><div class=\"col-md-9 col-content\"><bb-alert alert=alert></bb-alert><div ng-show=deviceId><div class=cfg-block><div class=row><div class=col-md-12><div class=table-responsive_><table class=\"table table-striped table-condensed table-cfg-interview\"><tbody><tr><th>{{_t('device_node_name')}}</th><td><div ng-hide=goDeviceName ng-click=\"goDeviceName = true\">{{deviceName}} <button type=button class=\"btn btn-default\" ng-hide=\"cfg.controller.zwayNodeId == deviceId\" ng-click=\"goDeviceName = true\" ng-disabled=\"rowSpinner['deviceName']\"><bb-row-spinner spinner=\"rowSpinner['deviceName']\" icon=\"'fa-pencil'\"></bb-row-spinner></button></div><form name=form_rename id=form_rename ng-model=form_rename class=\"form _form-inline\" ng-show=goDeviceName ng-submit=\"renameDevice(form_rename,deviceName,'deviceName');goDeviceName = !goDeviceName\" novalidate><div class=input-group><input name=device_name id=device_name class=form-control value={{deviceName}} ng-model=deviceName><div class=input-group-btn><button type=submit class=\"btn btn-primary\" title=\"{{_t('btn_save')}}\"><i class=\"fa fa-circle-o\"></i> <span class=btn-name>{{_t('btn_save')}}</span></button></div></div></form></td></tr><tr ng-repeat=\"v in descriptionCont track by $index\" ng-hide=\"v.val === '' || v.val === false || v.val === null\"><th>{{_t(v.key)}}</th><td id={{v.key}}><div ng-switch on=v.key><div ng-switch-when=command_class><span ng-repeat=\"cc in interviewCommands\"><a href=\"\" ng-click=\"handleCmdClassModal('cmdClassModal',$event,cc.iId,cc.ccId, 'cmdData')\">{{cc.ccName}} </a>&#8226;&nbsp;</span></div><div class=config-interview-val ng-switch-default ng-bind-html=\"v.val | toTrusted\"></div></div></td></tr><tr ng-if=showInterview><th>{{_t('device_interview_indicator')}}</th><td><div class=progress ng-if=\"zwaveInterview.progress >= 0 && zwaveInterview.progress < 101\"><div class=progress-bar style=\"min-height:40px;min-width: 2em; width: {{zwaveInterview.progress}}%\" ng-class=\"zwaveInterview.progress < 100 ? 'progress-bar-danger progress-bar-striped active' : 'progress-bar-success'\">{{zwaveInterview.progress}}%</div></div></td></tr></tbody></table></div></div></div></div><div class=cfg-block><button id=btn_request_nif class=\"btn btn-primary\" ng-click=\"requestNodeInformation('devices[' + deviceId + '].RequestNodeInformation()')\" ng-disabled=\"rowSpinner['devices[' + deviceId + '].RequestNodeInformation()']\"><bb-row-spinner spinner=\"rowSpinner['devices[' + deviceId + '].RequestNodeInformation()']\" label=\"_t('config_ui_request_node_info')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button> <button class=\"btn btn-primary\" id=btn_interview_force ng-click=\"interviewForce('devices[' + deviceId + '].InterviewForce()')\" ng-disabled=\"rowSpinner['devices[' + deviceId + '].InterviewForce()']\" ng-if=showInterview><bb-row-spinner spinner=\"rowSpinner['devices[' + deviceId + '].InterviewForce()']\" label=\"_t('config_ui_force_interview')\" icon=\"'fa-fire'\"></bb-row-spinner></button> <button id=btn_show_interview_result class=\"btn btn-default\" ng-click=\"handleModal('interviewModal',$event)\" ng-if=showInterview><i class=\"fa fa-clone\"></i> {{_t('config_ui_show_interview_results')}}</button> <button id=btn_show_description class=\"btn btn-default\" ng-click=\"handleModal('loadXmlModal', $event)\"><i class=\"fa fa-clone\"></i> {{_t('config_ui_select_xml')}}</button> <a href=\"{{cfg.server_url + cfg.zddx_create_url + deviceId}}\" class=\"btn btn-default\" id=btn_create_zddx target=blank ng-if=\"cfg.app_type !== 'installer'\"><i class=\"fa fa-clone\"></i> {{_t('btn_zddx_create')}}</a></div></div><div ng-include=\"'app/views/configuration/modal_interview.html'\"></div><div ng-include=\"'app/views/configuration/modal_cmdclass.html'\"></div><div ng-include=\"'app/views/configuration/modal_loadxml.html'\"></div></div></div></div>"
+    "<div ng-controller=ConfigInterviewController><div ng-include=\"'app/views/configuration/navi.html'\"></div><div class=\"row row-configuration\"><div class=\"col-md-3 menu-vertical\"><div ng-include=\"'app/views/configuration/menu.html'\"></div></div><div class=\"col-md-9 col-content\"><bb-alert alert=alert></bb-alert><div ng-show=deviceId><div class=cfg-block><div class=row><div class=col-md-12><div class=table-responsive_><table class=\"table table-striped table-condensed table-cfg-interview\"><tbody><tr><th>{{_t('device_node_name')}}</th><td><div ng-hide=goDeviceName ng-click=\"goDeviceName = true\">{{deviceName}} <button type=button class=\"btn btn-default\" ng-hide=\"cfg.controller.zwayNodeId == deviceId\" ng-click=\"goDeviceName = true\" ng-disabled=\"rowSpinner['deviceName']\"><bb-row-spinner spinner=\"rowSpinner['deviceName']\" icon=\"'fa-pencil'\"></bb-row-spinner></button></div><form name=form_rename id=form_rename ng-model=form_rename class=\"form _form-inline\" ng-show=goDeviceName ng-submit=\"renameDevice(form_rename,deviceName,'deviceName');goDeviceName = !goDeviceName\" novalidate><div class=input-group><input name=device_name id=device_name class=form-control value={{deviceName}} ng-model=deviceName><div class=input-group-btn><button type=submit class=\"btn btn-primary\" title=\"{{_t('btn_save')}}\"><i class=\"fa fa-circle-o\"></i> <span class=btn-name>{{_t('btn_save')}}</span></button></div></div></form></td></tr><tr ng-repeat=\"v in descriptionCont track by $index\" ng-hide=\"v.val === '' || v.val === false || v.val === null\"><th>{{_t(v.key)}}</th><td id={{v.key}}><div ng-switch on=v.key><div ng-switch-when=command_class><span ng-repeat=\"cc in interviewCommands\"><a href=\"\" ng-click=\"handleCmdClassModal('cmdClassModal',$event,cc.iId,cc.ccId, 'cmdData')\">{{cc.ccName}} </a>&#8226;&nbsp;</span><div ng-if=\"v.key == certification\"><a href=\"\" ng-click=\"handleCmdClassModal('cmdClassModal',$event,cc.iId,cc.ccId, 'cmdData')\">{{cc.ccName}} </a>&#8226;&nbsp;</div></div><div class=config-interview-val ng-switch-default ng-bind-html=\"v.val | toTrusted\"></div></div></td></tr><tr ng-if=showInterview><th>{{_t('device_interview_indicator')}}</th><td><div class=progress ng-if=\"zwaveInterview.progress >= 0 && zwaveInterview.progress < 101\"><div class=progress-bar style=\"min-height:40px;min-width: 2em; width: {{zwaveInterview.progress}}%\" ng-class=\"zwaveInterview.progress < 100 ? 'progress-bar-danger progress-bar-striped active' : 'progress-bar-success'\">{{zwaveInterview.progress}}%</div></div></td></tr></tbody></table></div></div></div></div><div class=cfg-block><button id=btn_request_nif class=\"btn btn-primary\" ng-click=\"requestNodeInformation('devices[' + deviceId + '].RequestNodeInformation()')\" ng-disabled=\"rowSpinner['devices[' + deviceId + '].RequestNodeInformation()']\"><bb-row-spinner spinner=\"rowSpinner['devices[' + deviceId + '].RequestNodeInformation()']\" label=\"_t('config_ui_request_node_info')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button> <button class=\"btn btn-primary\" id=btn_interview_force ng-click=\"interviewForce('devices[' + deviceId + '].InterviewForce()')\" ng-disabled=\"rowSpinner['devices[' + deviceId + '].InterviewForce()']\" ng-if=showInterview><bb-row-spinner spinner=\"rowSpinner['devices[' + deviceId + '].InterviewForce()']\" label=\"_t('config_ui_force_interview')\" icon=\"'fa-fire'\"></bb-row-spinner></button> <button id=btn_show_interview_result class=\"btn btn-default\" ng-click=\"handleModal('interviewModal',$event)\" ng-if=showInterview><i class=\"fa fa-clone\"></i> {{_t('config_ui_show_interview_results')}}</button> <button id=btn_show_description class=\"btn btn-default\" ng-click=\"handleModal('loadXmlModal', $event)\"><i class=\"fa fa-clone\"></i> {{_t('config_ui_select_xml')}}</button> <a href=\"{{cfg.server_url + cfg.zddx_create_url + deviceId}}\" class=\"btn btn-default\" id=btn_create_zddx target=blank><i class=\"fa fa-clone\"></i> {{_t('btn_zddx_create')}}</a></div></div><div ng-include=\"'app/views/configuration/modal_interview.html'\"></div><div ng-include=\"'app/views/configuration/modal_cmdclass.html'\"></div><div ng-include=\"'app/views/configuration/modal_loadxml.html'\"></div></div></div></div>"
   );
 
 
@@ -5956,7 +5909,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
   $templateCache.put('app/views/configuration/modal_loadxml.html',
     "<div id=loadXmlModa class=appmodal ng-if=modalArr.loadXmlModal><div class=appmodal-in ng-controller=LoadDeviceXmlController><div class=appmodal-header><span class=appmodal-close ng-click=\"handleModal('loadXmlModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{_t('config_ui_select_xml')}}</h3></div><div class=\"appmodal-body modal-h-600\"><p ng-bind-html=\"_t('select_zddx_help') | toTrusted\"></p><select id=select_zddx_help class=form-control ng-change=changeDeviceXml(deviceXml.input) ng-model=deviceXml.input.fileName><option value=\"\">---</option><option ng-init=\"selectCfg = {\r" +
     "\n" +
-    "                                'name':((v.brandName == '' && v.productName == '')?('Unnamed ZDDX: ' + v.fileName):(v.brandName + ' ' + v.productName))}\" ng-repeat=\"v in deviceXml.all | orderBy:'brandName':false track by $index\" ng-selected=\"deviceZddxFile == v.fileName\" value={{v.fileName}}>{{selectCfg.name}}</option></select><div id=device_select_image_container ng-if=\"!_.isEmpty(deviceXml.find) && deviceXml.find.deviceImage\"><div id=device_select_image><img ng-src={{deviceXml.find.deviceImage}}></div></div></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleModal('loadXmlModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button> <button class=\"btn btn-primary\" ng-if=!_.isEmpty(deviceXml.find) ng-click=\"storeDeviceXml(deviceXml.input,'storeDeviceXml')\" ng-disabled=\"rowSpinner['storeDeviceXml']\"><bb-row-spinner spinner=\"rowSpinner['storeDeviceXml']\" label=\"_t('btn_save')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></div></div></div>"
+    "                                'name':((v.brandName == '' && v.productName == '')?('Unnamed ZDDX: ' + v.fileName):(v.productCode + ' - ' + v.brandName + ' ' + v.productName + ' ( RF: ' + v.rfFrequency + ')'))}\" ng-repeat=\"v in deviceXml.all | orderBy:'brandName':false track by $index\" ng-selected=\"deviceZddxFile == v.fileName || v == deviceXml.filter\" value={{v.fileName}}>{{selectCfg.name}}</option></select><div id=device_select_image_container ng-if=\"!_.isEmpty(deviceXml.find) && deviceXml.find.deviceImage\"><div id=device_select_image><img ng-src={{deviceXml.find.deviceImage}}></div></div></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleModal('loadXmlModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button> <button class=\"btn btn-primary\" ng-if=!_.isEmpty(deviceXml.find) ng-click=\"storeDeviceXml(deviceXml.input,'storeDeviceXml')\" ng-disabled=\"rowSpinner['storeDeviceXml']\"><bb-row-spinner spinner=\"rowSpinner['storeDeviceXml']\" label=\"_t('btn_save')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></div></div></div>"
   );
 
 
@@ -6037,12 +5990,12 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/device/status.html',
-    "<div ng-controller=StatusController><div class=page-header><h1>{{_t('nav_status')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=statuses.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'idSort'\" label=\"'#'\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'name'\" label=\"_t('device_name')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'type'\" label=\"_t('th_type')\"></sort-by></th><th ng-hide=\"cfg.app_type === 'installer'\"><sort-by callback=orderBy(field) obj=orderByArr field=\"'sleeping'\" label=\"_t('th_sleeping')\"></sort-by></th><th>&nbsp;</th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'updateTime'\" label=\"_t('datetime')\"></sort-by></th><th class=print-hide>&nbsp;</th><th class=\"mobile-show td-action print-hide\"><button class=\"btn btn-primary\" id=btn_ping_all_1 ng-click=\"pingAllDevices('btn_ping_all_1','urlToStore')\" ng-disabled=\"rowSpinner['btn_ping_all_1']\"><bb-row-spinner spinner=\"rowSpinner['btn_ping_all_1']\" label=\"_t('btn_checkall')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in statuses.all | orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=#>{{ v.id}}</td><td data-title=\"{{ _t('device_name')}}\"><a href=#configuration/interview/{{v.id}}>{{ v.name}}</a></td><td data-title=\"{{_t('th_type')}}\"><i class=fa ng-class=v.icon title={{_t(v.type)}}></i></td><td data-title=\"{{ _t('th_sleeping')}}\" class=row-sleeping ng-hide=\"cfg.app_type === 'installer'\"><span ng-show=v.sleeping><i class=\"fa fa-clock-o fa-lg\" title=\"{{_t('battery_operated_device_with_wakeup')}}\"></i> <span title=\"{{_t('sleeping_since_approximately')}}\" ng-show=v.sleeping.approx>{{v.sleeping.approx}}</span> <span title=\"{{_t('sleeping_since')}}\">{{v.sleeping.lastSleep}}</span> &#8594; <span title=\"{{_t('next_wakeup')}}\">{{v.approx + v.sleeping.nextWakeup}}</span> </span>&nbsp;</td><td><i class=\"fa fa-ban fa-lg text-danger\" title=\"{{_t('device_is_dead')}}\" ng-show=v.isFailed></i> <i class=\"fa fa-check fa-lg text-success\" title=\"{{_t('device_is_operating')}}\" ng-hide=v.isFailed></i></td><td data-title=\"{{ _t('last_communication')}}\"><bb-date-time obj=v.dateTime updated=v.isUpdated></bb-date-time></td><td class=\"row-interview print-hide\"><button class=\"btn btn-default\" title=\"{{_t('device_is_not_fully_interviewed')}}\" ng-hide=\"v.interviewDone || v.isController\" ng-click=\"handleModalInterview('interviewModal',$event,$index,v.id,v.name)\" title={{v.interview}}><i class=\"fa fa-search-minus fa-lg text-danger\"></i></button> &nbsp;</td><td class=\"row-ping td-action print-hide\"><button class=\"btn btn-default\" id=\"btn_ping_{{ v.rowId}}\" title=\"{{_t('pingDevice')}}\" title=\"{{ _t('pingDevice')}}\" ng-show=v.urlToStore ng-click=pingDevice(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] icon=\"'fa-circle-o text-success'\"></bb-row-spinner></button></td></tr></tbody></table></div><div ng-include=\"'app/views/device/modal_status_interview.html'\"></div></div>"
+    "<div ng-controller=StatusController><div class=page-header><h1>{{_t('nav_status')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=statuses.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'idSort'\" label=\"'#'\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'name'\" label=\"_t('device_name')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'type'\" label=\"_t('th_type')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'sleeping'\" label=\"_t('th_sleeping')\"></sort-by></th><th>&nbsp;</th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'updateTime'\" label=\"_t('datetime')\"></sort-by></th><th class=print-hide>&nbsp;</th><th class=\"mobile-show td-action print-hide\"><button class=\"btn btn-primary\" id=btn_ping_all_1 ng-click=\"pingAllDevices('btn_ping_all_1','urlToStore')\" ng-disabled=\"rowSpinner['btn_ping_all_1']\"><bb-row-spinner spinner=\"rowSpinner['btn_ping_all_1']\" label=\"_t('btn_checkall')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in statuses.all | orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=#>{{ v.id}}</td><td data-title=\"{{ _t('device_name')}}\"><a href=#configuration/interview/{{v.id}}>{{ v.name}}</a></td><td data-title=\"{{_t('th_type')}}\"><i class=fa ng-class=v.icon title={{_t(v.type)}}></i></td><td data-title=\"{{ _t('th_sleeping')}}\" class=row-sleeping><span ng-show=v.sleeping><i class=\"fa fa-clock-o fa-lg\" title=\"{{_t('battery_operated_device_with_wakeup')}}\"></i> <span title=\"{{_t('sleeping_since_approximately')}}\" ng-show=v.sleeping.approx>{{v.sleeping.approx}}</span> <span title=\"{{_t('sleeping_since')}}\">{{v.sleeping.lastSleep}}</span> &#8594; <span title=\"{{_t('next_wakeup')}}\">{{v.approx + v.sleeping.nextWakeup}}</span> </span>&nbsp;</td><td><i class=\"fa fa-ban fa-lg text-danger\" title=\"{{_t('device_is_dead')}}\" ng-show=v.isFailed></i> <i class=\"fa fa-check fa-lg text-success\" title=\"{{_t('device_is_operating')}}\" ng-hide=v.isFailed></i></td><td data-title=\"{{ _t('last_communication')}}\"><bb-date-time obj=v.dateTime updated=v.isUpdated></bb-date-time></td><td class=\"row-interview print-hide\"><button class=\"btn btn-default\" title=\"{{_t('device_is_not_fully_interviewed')}}\" ng-hide=\"v.interviewDone || v.isController\" ng-click=\"handleModalInterview('interviewModal',$event,$index,v.id,v.name)\" title={{v.interview}}><i class=\"fa fa-search-minus fa-lg text-danger\"></i></button> &nbsp;</td><td class=\"row-ping td-action print-hide\"><button class=\"btn btn-default\" id=\"btn_ping_{{ v.rowId}}\" title=\"{{_t('pingDevice')}}\" title=\"{{ _t('pingDevice')}}\" ng-show=v.urlToStore ng-click=pingDevice(v.urlToStore) ng-disabled=rowSpinner[v.urlToStore]><bb-row-spinner spinner=rowSpinner[v.urlToStore] icon=\"'fa-circle-o text-success'\"></bb-row-spinner></button></td></tr></tbody></table></div><div ng-include=\"'app/views/device/modal_status_interview.html'\"></div></div>"
   );
 
 
   $templateCache.put('app/views/device/type.html',
-    "<div ng-controller=TypeController><div class=page-header><h1>{{_t('nav_type_info')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=devices.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'idSort'\" label=\"'#'\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'name'\" label=\"_t('device_name')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'security'\" label=\"_t('th_security')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'mwief'\" label=\"_t('th_mwief')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'zWavePlus'\" label=\"_t('th_zwaveplus')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'sdk'\" label=\"_t('th_sdk')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'vendorName'\" label=\"_t('th_vendor')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'productName'\" label=\"_t('th_product')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'appVersion'\" label=\"_t('th_appversion')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'type'\" label=\"_t('device_description_device_type')\"></sort-by></th><th ng-if=\"cfg.app_type !== 'installer'\">{{_t('keys')}}</th></tr></thead><tbody><tr ng-repeat=\"v in devices.all | orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=# ng-bind=v.id></td><td data-title=\"{{ _t('device_name')}}\"><a href=#configuration/interview/{{v.id}} ng-bind=v.name></a></td><td data-title=\"{{ _t('th_security')}}\" title=\"{{v.hasSecurityS2Cc ? 'S2 Secure' : ''}}\"><i class=\"fa fa-unlock-alt fa-lg orange\" ng-show=\"v.securityType == 'security-0'\"></i> <i class=\"fa fa-lock fa-lg green\" ng-show=\"v.securityType == 'security-1'\"></i> <span class=\"security-2 {{v.securityInterview}} fa-stack fa-lg\" ng-show=\"v.securityType == 'security-2'\"><i class=\"fa fa-lock fa-stack-1x icon-bottom\"></i> <i class=\"fa fa-lock fa-stack-1x icon-top\"></i> </span>&nbsp;</td><td data-title=\"{{ _t('th_mwief')}}\"><i class=\"{{v.mwief| mwiefIcon}}\"></i>&nbsp;</td><td data-title=\"{{ _t('th_zwaveplus')}}\"><i class=\"{{ v.ZWavePlusInfo | zWavePlusIcon}}\"></i>&nbsp;</td><td data-title=\"{{ _t('th_sdk')}}\"><span ng-show=v.fromSdk ng-bind=v.sdk></span> <span ng-show=!v.fromSdk>(<em ng-bind=v.sdk></em>)</span></td><td data-title=\"{{ _t('th_vendor')}}\"><span ng-bind=v.vendorName></span>&nbsp;</td><td data-title=\"{{ _t('th_product')}}\"><span ng-bind=productNames[v.id]></span>&nbsp;</td><td data-title=\"{{ _t('th_appversion')}}\"><span ng-bind=v.appVersion></span>&nbsp;</td><td data-title=\"{{ _t('device_description_device_type')}}\"><span ng-bind=v.deviceType></span>&nbsp;</td><td data-title=\"{{ _t('keys')}}\" ng-if=\"cfg.app_type !== 'installer'\"><span ng-bind=v.securityS2Key></span>&nbsp;</td></tr></tbody></table></div></div>"
+    "<div ng-controller=TypeController><div class=page-header><h1>{{_t('nav_type_info')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=devices.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'idSort'\" label=\"'#'\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'name'\" label=\"_t('device_name')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'security'\" label=\"_t('th_security')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'mwief'\" label=\"_t('th_mwief')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'zWavePlus'\" label=\"_t('th_zwaveplus')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'sdk'\" label=\"_t('th_sdk')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'vendorName'\" label=\"_t('th_vendor')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'productName'\" label=\"_t('th_product')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'appVersion'\" label=\"_t('th_appversion')\"></sort-by></th><th><sort-by callback=orderBy(field) obj=orderByArr field=\"'type'\" label=\"_t('device_description_device_type')\"></sort-by></th><th>{{_t('keys')}}</th></tr></thead><tbody><tr ng-repeat=\"v in devices.all | orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=# ng-bind=v.id></td><td data-title=\"{{ _t('device_name')}}\"><a href=#configuration/interview/{{v.id}} ng-bind=v.name></a></td><td data-title=\"{{ _t('th_security')}}\" title=\"{{v.hasSecurityS2Cc ? 'S2 Secure' : ''}}\"><i class=\"fa fa-unlock-alt fa-lg orange\" ng-show=\"v.securityType == 'security-0'\"></i> <i class=\"fa fa-lock fa-lg green\" ng-show=\"v.securityType == 'security-1'\"></i> <span class=\"security-2 {{v.securityInterview}} fa-stack fa-lg\" ng-show=\"v.securityType == 'security-2'\"><i class=\"fa fa-lock fa-stack-1x icon-bottom\"></i> <i class=\"fa fa-lock fa-stack-1x icon-top\"></i> </span>&nbsp;</td><td data-title=\"{{ _t('th_mwief')}}\"><i class=\"{{v.mwief| mwiefIcon}}\"></i>&nbsp;</td><td data-title=\"{{ _t('th_zwaveplus')}}\"><i class=\"{{ v.ZWavePlusInfo | zWavePlusIcon}}\"></i>&nbsp;</td><td data-title=\"{{ _t('th_sdk')}}\"><span ng-show=v.fromSdk ng-bind=v.sdk></span> <span ng-show=!v.fromSdk>(<em ng-bind=v.sdk></em>)</span></td><td data-title=\"{{ _t('th_vendor')}}\"><span ng-bind=v.vendorName></span>&nbsp;</td><td data-title=\"{{ _t('th_product')}}\"><span ng-bind=productNames[v.id]></span>&nbsp;</td><td data-title=\"{{ _t('th_appversion')}}\"><span ng-bind=v.appVersion></span>&nbsp;</td><td data-title=\"{{ _t('device_description_device_type')}}\"><span ng-bind=v.deviceType></span>&nbsp;</td><td data-title=\"{{ _t('keys')}}\"><span ng-bind=v.securityS2Key></span>&nbsp;</td></tr></tbody></table></div></div>"
   );
 
 
@@ -6061,38 +6014,18 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
   );
 
 
-  $templateCache.put('app/views/home/_device_reset.html',
-    "<div class=\"panel panel-default\"><div class=panel-heading><i class=\"fa fa-info-circle\"></i> {{_t('device_reset_locally')}}</div><div class=panel-body><ul class=list-report><li ng-repeat=\"v in localyResetDevices\">(#{{v.id}}) {{v.name}}</li><li ng-show=\"localyResetDevices.length < 1\">{{_t('no_device_reset_locally')}}</li></ul></div></div>"
-  );
-
-
-  $templateCache.put('app/views/home/_network_health.html',
-    "<div class=\"panel panel-default\"><div class=panel-heading><i class=\"fa fa-plus-square\"></i> {{_t('txt_net_health')}}</div><div class=panel-body><ul class=list-report><li ng-if=lowBatteryDevices.length><p ng-repeat=\"v in lowBatteryDevices\"><a class=text-danger href=#device/battery>(#{{v.id}}) {{v.name}} {{_t('txt_low_battery')}} ({{v.battery_charge}}%)</a></p></li><li ng-if=\"cfg.app_type !== 'installer' && notInterviewDevices.length\"><p ng-repeat=\"v in notInterviewDevices\"><a class=text-danger href=#help/{{v.id}}>(#{{v.id}}) {{v.name}} {{_t('txt_interview_not')}}</a></p></li><li ng-show=assocRemovedDevices.length><p ng-repeat=\"v in assocRemovedDevices\"><a class=text-danger href=#configuration/interview/{{v.id}}>(#{{v.id}}) {{v.name}} {{_t('txt_assoc_removed')}}:</a><br><em ng-repeat=\"a in v.assoc\">{{a.name}},</em></p></li><li ng-show=failedDevices.length><p ng-repeat=\"v in failedDevices\"><a class=text-danger href=#help/{{v.id}}>(#{{v.id}}) {{v.name}} {{_t('txt_failed')}}</a></p></li><li ng-show=notConfigDevices.length><p ng-repeat=\"v in notConfigDevices| unique:id\"><a class=text-danger href=#configuration/interview/{{v.id}}>(#{{v.id}}) {{v.name}} {{_t('device_changed_configuration')}}</a></p></li></ul></div></div>"
-  );
-
-
-  $templateCache.put('app/views/home/_network_informations.html',
-    "<div class=\"panel panel-default\"><div class=panel-heading><i class=\"fa fa-info-circle\"></i> {{_t('txt_network_info')}} (<em>{{home.networkInformation.sum}} {{_t('txt_devices_present')}})</em></div><div class=panel-body><ul class=list-report><li><strong>{{home.networkInformation.mains}}</strong> {{_t('txt_devices_mains')}}</li><li><strong>{{home.networkInformation.battery}}</strong> {{_t('txt_devices_battery')}}</li><li><strong>{{home.networkInformation.flirs}}</strong> {{_t('txt_devices_flirs')}}</li></ul></div></div>"
-  );
-
-
   $templateCache.put('app/views/home/device_reset.html',
     "<div class=\"panel panel-default\"><div class=panel-heading><i class=\"fa fa-info-circle\"></i> {{_t('device_reset_locally')}}</div><div class=panel-body><ul class=list-report ng-if=!_.isEmpty(home.localyReset)><li ng-repeat=\"v in home.localyReset\">(#{{v.id}}) {{v.name}}</li></ul><div ng-if=_.isEmpty(home.localyReset)>{{_t('no_device_reset_locally')}}</div></div></div>"
   );
 
 
   $templateCache.put('app/views/home/dongle.html',
-    "<div class=\"panel panel-default\" ng-controller=DongleController ng-if=\"cfg.app_type !== 'installer'\"><div class=panel-heading><i class=\"fa fa-code-fork\"></i> {{_t('zwave_network')}}</div><div class=panel-body><div ng-if=\"homeDongle.data.length < 2\"><strong>{{cfg.dongle}}</strong></div><div ng-if=\"homeDongle.data.length > 1\"><select class=form-control ng-model=homeDongle.model.dongle ng-change=setHomeDongle()><option value=\"\" class=hidden-selectopt>--- Select one ---</option><option ng-repeat=\"v in homeDongle.data\" ng-selected=\"homeDongle.model.current == v\" value={{v}}>{{v}}</option></select></div></div></div>"
+    "<div class=\"panel panel-default\" ng-controller=DongleController><div class=panel-heading><i class=\"fa fa-code-fork\"></i> {{_t('zwave_network')}}</div><div class=panel-body><div ng-if=\"homeDongle.data.length < 2\"><strong>{{cfg.dongle}}</strong></div><div ng-if=\"homeDongle.data.length > 1\"><select class=form-control ng-model=homeDongle.model.dongle ng-change=setHomeDongle()><option value=\"\" class=hidden-selectopt>--- Select one ---</option><option ng-repeat=\"v in homeDongle.data\" ng-selected=\"homeDongle.model.current == v\" value={{v}}>{{v}}</option></select></div></div></div>"
   );
 
 
-  $templateCache.put('app/views/home/home_default.html',
-    "<div ng-controller=HomeController><div ng-include=\"'app/views/home/ip.html'\"></div><div class=\"row home-page_\" ng-if=home.show><div class=\"col-sm-6 home-page-image\"><div ng-include=\"'app/views/home/promo_default.html'\"></div><div ng-include=\"'app/views/home/notes.html'\"></div></div><div class=\"col-sm-6 product-data-list_ pull-right_\"><div ng-include=\"'app/views/home/dongle.html'\"></div><div ng-include=\"'app/views/home/network_informations.html'\"></div><div ng-include=\"'app/views/home/network_health.html'\"></div><div ng-include=\"'app/views/home/device_reset.html'\"></div></div></div></div>"
-  );
-
-
-  $templateCache.put('app/views/home/home_installer.html',
-    "<div ng-controller=HomeController><div ng-controller=SetPromiscuousModeController ng-init=\"setPromiscuousMode('SetPromiscuousMode(true)')\"></div><div ng-include=\"'app/views/home/ip.html'\"></div><div class=\"row home-page_\" ng-if=home.show><div class=\"col-sm-6 home-page-image\"><div ng-include=\"'app/views/home/promo_installer.html'\"></div><div ng-include=\"'app/views/home/use_cit.html'\"></div><div ng-include=\"'app/views/home/network_name.html'\"></div><div ng-include=\"'app/views/home/notes.html'\"></div></div><div class=\"col-sm-6 product-data-list_ pull-right_\"><div ng-include=\"'app/views/home/network_informations.html'\"></div><div ng-include=\"'app/views/network/control/control_different.html'\" ng-controller=ControlController></div><div ng-include=\"'app/views/network/control/control_restore.html'\" ng-controller=ControlController></div></div></div></div>"
+  $templateCache.put('app/views/home/home.html',
+    "<div ng-controller=HomeController><div ng-include=\"'app/views/home/ip.html'\"></div><div class=\"row home-page_\" ng-if=home.show><div class=\"col-sm-6 home-page-image\"><div ng-include=\"'app/views/home/promo.html'\"></div><div ng-include=\"'app/views/home/notes.html'\"></div></div><div class=\"col-sm-6 product-data-list_ pull-right_\"><div ng-include=\"'app/views/home/dongle.html'\"></div><div ng-include=\"'app/views/home/network_informations.html'\"></div><div ng-include=\"'app/views/home/network_health.html'\"></div><div ng-include=\"'app/views/home/device_reset.html'\"></div></div></div></div>"
   );
 
 
@@ -6102,17 +6035,12 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/home/network_health.html',
-    "<div class=\"panel panel-default\"><div class=panel-heading><i class=\"fa fa-plus-square\"></i> {{_t('txt_net_health')}}</div><div class=panel-body><ul class=list-report><li ng-repeat=\"v in home.devices\" ng-hide=\"!_.size(v.report) || v.isController\">(#{{v.id}}) {{v.name}}<div ng-repeat=\"t in v.report\" ng-switch=t><a class=text-danger href=#device/battery ng-switch-when=txt_low_battery ng-hide=\"cfg.app_type === 'installer'\">- {{_t(t)}}. </a><a class=text-danger href=#configuration/interview/{{v.id}} ng-switch-when=device_changed_configuration>- {{_t(t)}}. </a><a class=text-danger href=#configuration/interview/{{v.id}} ng-switch-when=txt_assoc_removed>- {{_t(t)}}. </a><a class=text-danger href=#help/{{v.id}} ng-switch-default=\"\">- {{_t(t)}}.</a></div></li></ul></div></div>"
+    "<div class=\"panel panel-default\"><div class=panel-heading><i class=\"fa fa-plus-square\"></i> {{_t('txt_net_health')}}</div><div class=panel-body><ul class=list-report><li ng-repeat=\"v in home.devices\" ng-hide=\"!_.size(v.report) || v.isController\">(#{{v.id}}) {{v.name}}<div ng-repeat=\"t in v.report\" ng-switch=t><a class=text-danger href=#device/battery ng-switch-when=txt_low_battery>- {{_t(t)}}. </a><a class=text-danger href=#configuration/interview/{{v.id}} ng-switch-when=device_changed_configuration>- {{_t(t)}}. </a><a class=text-danger href=#configuration/interview/{{v.id}} ng-switch-when=txt_assoc_removed>- {{_t(t)}}. </a><a class=text-danger href=#help/{{v.id}} ng-switch-default=\"\">- {{_t(t)}}.</a></div></li></ul></div></div>"
   );
 
 
   $templateCache.put('app/views/home/network_informations.html',
     "<div class=\"panel panel-default\"><div class=panel-heading><i class=\"fa fa-info-circle\"></i> {{_t('txt_network_info')}} (<em>{{home.networkSum}} {{_t('txt_devices_present')}})</em></div><div class=panel-body><ul class=list-report><li><strong>{{home.networkInformation.mains}}</strong> {{_t('txt_devices_mains')}}</li><li><strong>{{home.networkInformation.battery}}</strong> {{_t('txt_devices_battery')}}</li><li><strong>{{home.networkInformation.flirs}}</strong> {{_t('txt_devices_flirs')}}</li></ul></div></div>"
-  );
-
-
-  $templateCache.put('app/views/home/network_name.html',
-    "<div class=\"panel panel-default\" ng-controller=DataHolderController><div class=panel-heading><i class=\"fa fa-code-fork\"></i> {{_t('network_name')}}</div><div class=panel-body><div ng-hide=goNetworkName ng-click=\"goNetworkName = true\">{{dataHolder.controller.homeName}} <button type=button class=\"btn btn-default\" ng-click=\"goNetworkName = true\" ng-disabled=\"rowSpinner['spinNetworkName']\"><bb-row-spinner spinner=\"rowSpinner['spinNetworkName']\" icon=\"'fa-pencil'\"></bb-row-spinner></button></div><form name=form_network_name id=form_network_name class=form ng-show=goNetworkName ng-submit=\"storeNetworkName(form_network_name,dataHolder.controller.homeName,'spinNetworkName');goNetworkName = !goNetworkName\" novalidate><div class=input-group><input name=network_name class=form-control placeholder=\"{{_t('network_name')}}\" ng-model=dataHolder.controller.homeName value={{dataHolder.controller.homeName}}><div class=input-group-btn><button type=submit class=\"btn btn-primary\" title=\"{{_t('btn_save')}}\"><i class=\"fa fa-circle-o\"></i> <span class=btn-name>{{_t('btn_save')}}</span></button></div></div></form></div></div>"
   );
 
 
@@ -6123,18 +6051,8 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
   );
 
 
-  $templateCache.put('app/views/home/promo_default.html',
+  $templateCache.put('app/views/home/promo.html',
     "<img class=product-logo ng-src=\"{{getCustomCfgVal('logo')}}\" alt=Logo><p></p><div class=product-description ng-bind-html=\"_t('txt_homepage_promo_default') | toTrusted\"></div>"
-  );
-
-
-  $templateCache.put('app/views/home/promo_installer.html',
-    "<img class=product-logo ng-src=\"{{getCustomCfgVal('logo')}}\" alt=Logo><p></p><div class=product-description ng-bind-html=\"_t('txt_homepage_promo_installer') | toTrusted\"></div>"
-  );
-
-
-  $templateCache.put('app/views/home/use_cit.html',
-    "<div class=\"panel panel-default\" ng-controller=DataHolderController><div class=panel-heading><i class=\"fa fa-info-circle\"></i> {{_t('use_cit')}}</div><div class=panel-body><a class=\"btn btn-default\" href=/cit/storage/data/docs/user_guide.pdf target=_blank><i class=\"fa fa-book\"></i> {{_t('user_guide')}}</a></div></div>"
   );
 
 
@@ -6164,22 +6082,22 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/installer/zniffer.html',
-    "<div ng-controller=ZnifferController><div ng-if=\"cfg.app_type === 'installer'\" ng-controller=SetPromiscuousModeController ng-init=\"setPromiscuousMode('SetPromiscuousMode(true)')\"></div><div class=page-header><h1>{{ _t('nav_zniffer')}}</h1></div><div class=form-inline><div class=form-group><div class=btn-group><button class=\"btn btn-default\" title=\"Start new trace\" ng-class=\"zniffer.trace === 'start' ? 'btn-success' : ''\" ng-disabled=\"zniffer.trace === 'start'\" ng-click=\"setTrace('start')\"><i class=fa ng-class=\"zniffer.trace === 'start' ? 'fa-circle-o-notch fa-spin' : 'fa-play'\"></i></button> <button class=\"btn btn-default\" title=\"Pause trace\" ng-class=\"zniffer.trace === 'pause' ? 'btn-warning' : ''\" ng-disabled=\"zniffer.trace === 'pause'\" ng-click=\"setTrace('pause')\"><i class=\"fa fa-pause\"></i></button> <button class=\"btn btn-default\" title=\"Stop trace\" ng-class=\"zniffer.trace === 'stop' ? 'btn-danger' : ''\" ng-disabled=\"zniffer.trace === 'stop'\" ng-click=\"setTrace('stop')\"><i class=\"fa fa-stop\"></i></button></div></div></div><table class=\"table table-condensed table-hover\"><thead><tr><th>&nbsp;</th><th>{{ _t('date')}}</th><th>{{ _t('time')}}</th><th><div class=input-group><i class=\"fa fa-filter clickable\" ng-class=\"zniffer.filter.model['src'].value !== '' ? 'text-success' : ''\" ng-click=\"expandFilter('znifferFilterSrc', $event)\"></i> {{ _t('src')}}<div class=\"app-dropdown app-dropdown-left\" ng-if=filterExpanded.znifferFilterSrc><div class=app-dropdown-content><div class=form-group><input class=form-control id=filter_src placeholder=\"{{_t('enter_value')}}. {{_t('use_charcter_delimit')}}\" ng-model=zniffer.filter.model.src.value></div><div class=\"form-group form-inline\"><input class=form-control_ type=radio name=src_show value=1 ng-model=zniffer.filter.model.src.show ng-checked=\"zniffer.filter.model.src.show == '1'\"> {{_t('show')}} <input class=form-control_ type=radio name=src_show value=0 ng-model=zniffer.filter.model.src.show ng-checked=\"zniffer.filter.model.src.show == '0'\"> {{_t('hide')}}</div></div><div class=appdropdown-footer ng-click=resetZnifferFilter()><button class=\"btn btn-default\" type=button ng-click=\"expandFilter('znifferFilterSrc', $event);resetZnifferFilter('src')\"><i class=\"fa fa-times text-danger\"></i> {{_t('reset_filter')}}</button> <button class=\"btn btn-success\" type=button ng-click=\"expandFilter('znifferFilterSrc', $event);setZnifferFilter('src')\"><i class=\"fa fa-check\"></i> {{_t('th_ok')}}</button></div></div></div></th><th><div class=input-group><i class=\"fa fa-filter clickable\" ng-class=\"zniffer.filter.model['dest'].value !== '' ? 'text-success' : ''\" ng-click=\"expandFilter('znifferFilterDest', $event)\"></i> {{ _t('dest')}}<div class=\"app-dropdown app-dropdown-left\" ng-if=filterExpanded.znifferFilterDest><div class=app-dropdown-content><div class=form-group><input class=form-control id=filter_dest placeholder=\"{{_t('enter_value')}}. {{_t('use_charcter_delimit')}}\" ng-model=zniffer.filter.model.dest.value></div><div class=\"form-group form-inline\"><input class=form-control_ type=radio name=dest_show value=1 ng-model=zniffer.filter.model.dest.show ng-checked=\"zniffer.filter.model.dest.show == '1'\"> {{_t('show')}} <input class=form-control_ type=radio name=dest_show value=0 ng-model=zniffer.filter.model.dest.show ng-checked=\"zniffer.filter.model.dest.show == '0'\"> {{_t('hide')}}</div></div><div class=appdropdown-footer ng-click=resetZnifferFilter()><button class=\"btn btn-default\" type=button ng-click=\"expandFilter('znifferFilterDest', $event);resetZnifferFilter('dest')\"><i class=\"fa fa-times text-danger\"></i> {{_t('reset_filter')}}</button> <button class=\"btn btn-success\" type=button ng-click=\"expandFilter('znifferFilterDest', $event);setZnifferFilter('dest')\"><i class=\"fa fa-check\"></i> {{_t('th_ok')}}</button></div></div></div></th><th>{{ _t('speed')}}</th><th>{{ _t('rssi')}}</th><th>{{ _t('hops')}}</th><th>{{ _t('encapsulation')}}</th><th>{{ _t('application')}}</th><th class=text-right><button class=\"btn btn-default\" type=button ng-show=!_.isEmpty(zniffer.filter.used) ng-click=resetZnifferFilterAll()><i class=\"fa fa-times text-danger\"></i> {{_t('reset_all_filters')}}</button></th></tr></thead><tbody><tr class=zniffer-row-{{v.data}} ng-repeat=\"v in zniffer.all| orderBy: '-id' track by $index\"><td><i title={{v.type}} class=\"fa fa-long-arrow-right\" ng-if=\"v.type === 'incoming'\"></i> <i title={{v.type}} class=\"fa fa-long-arrow-left\" ng-if=\"v.type === 'outgoing'\"></i></td><td>{{v.dateTime.date}}</td><td>{{v.dateTime.time}}</td><td ng-class=\"zniffer.filter.model['src'].value !== '' ? 'bcg-success' : ''\">{{v.src}}</td><td ng-class=\"zniffer.filter.model['dest'].value !== '' ? 'bcg-success' : ''\">{{v.dest}}</td><td>{{v.speed||'-'}}</td><td>{{v.rssi||'-'}}</td><td>{{v.hops||'-'}}</td><td>{{v.encaps||'-'}}</td><td title={{v.bytes}}>{{v.application}}</td><td>&nbsp;</td></tr></tbody></table></div>"
+    "<div ng-controller=ZnifferController><div class=page-header><h1>{{ _t('nav_zniffer')}}</h1></div><div class=form-inline><div class=form-group><div class=btn-group><button class=\"btn btn-default\" title=\"Start new trace\" ng-class=\"zniffer.trace === 'start' ? 'btn-success' : ''\" ng-disabled=\"zniffer.trace === 'start'\" ng-click=\"setTrace('start')\"><i class=fa ng-class=\"zniffer.trace === 'start' ? 'fa-circle-o-notch fa-spin' : 'fa-play'\"></i></button> <button class=\"btn btn-default\" title=\"Pause trace\" ng-class=\"zniffer.trace === 'pause' ? 'btn-warning' : ''\" ng-disabled=\"zniffer.trace === 'pause'\" ng-click=\"setTrace('pause')\"><i class=\"fa fa-pause\"></i></button> <button class=\"btn btn-default\" title=\"Stop trace\" ng-class=\"zniffer.trace === 'stop' ? 'btn-danger' : ''\" ng-disabled=\"zniffer.trace === 'stop'\" ng-click=\"setTrace('stop')\"><i class=\"fa fa-stop\"></i></button></div></div></div><table class=\"table table-condensed table-hover\"><thead><tr><th>&nbsp;</th><th>{{ _t('date')}}</th><th>{{ _t('time')}}</th><th><div class=input-group><i class=\"fa fa-filter clickable\" ng-class=\"zniffer.filter.model['src'].value !== '' ? 'text-success' : ''\" ng-click=\"expandFilter('znifferFilterSrc', $event)\"></i> {{ _t('src')}}<div class=\"app-dropdown app-dropdown-left\" ng-if=filterExpanded.znifferFilterSrc><div class=app-dropdown-content><div class=form-group><input class=form-control id=filter_src placeholder=\"{{_t('enter_value')}}. {{_t('use_charcter_delimit')}}\" ng-model=zniffer.filter.model.src.value></div><div class=\"form-group form-inline\"><input class=form-control_ type=radio name=src_show value=1 ng-model=zniffer.filter.model.src.show ng-checked=\"zniffer.filter.model.src.show == '1'\"> {{_t('show')}} <input class=form-control_ type=radio name=src_show value=0 ng-model=zniffer.filter.model.src.show ng-checked=\"zniffer.filter.model.src.show == '0'\"> {{_t('hide')}}</div></div><div class=appdropdown-footer ng-click=resetZnifferFilter()><button class=\"btn btn-default\" type=button ng-click=\"expandFilter('znifferFilterSrc', $event);resetZnifferFilter('src')\"><i class=\"fa fa-times text-danger\"></i> {{_t('reset_filter')}}</button> <button class=\"btn btn-success\" type=button ng-click=\"expandFilter('znifferFilterSrc', $event);setZnifferFilter('src')\"><i class=\"fa fa-check\"></i> {{_t('th_ok')}}</button></div></div></div></th><th><div class=input-group><i class=\"fa fa-filter clickable\" ng-class=\"zniffer.filter.model['dest'].value !== '' ? 'text-success' : ''\" ng-click=\"expandFilter('znifferFilterDest', $event)\"></i> {{ _t('dest')}}<div class=\"app-dropdown app-dropdown-left\" ng-if=filterExpanded.znifferFilterDest><div class=app-dropdown-content><div class=form-group><input class=form-control id=filter_dest placeholder=\"{{_t('enter_value')}}. {{_t('use_charcter_delimit')}}\" ng-model=zniffer.filter.model.dest.value></div><div class=\"form-group form-inline\"><input class=form-control_ type=radio name=dest_show value=1 ng-model=zniffer.filter.model.dest.show ng-checked=\"zniffer.filter.model.dest.show == '1'\"> {{_t('show')}} <input class=form-control_ type=radio name=dest_show value=0 ng-model=zniffer.filter.model.dest.show ng-checked=\"zniffer.filter.model.dest.show == '0'\"> {{_t('hide')}}</div></div><div class=appdropdown-footer ng-click=resetZnifferFilter()><button class=\"btn btn-default\" type=button ng-click=\"expandFilter('znifferFilterDest', $event);resetZnifferFilter('dest')\"><i class=\"fa fa-times text-danger\"></i> {{_t('reset_filter')}}</button> <button class=\"btn btn-success\" type=button ng-click=\"expandFilter('znifferFilterDest', $event);setZnifferFilter('dest')\"><i class=\"fa fa-check\"></i> {{_t('th_ok')}}</button></div></div></div></th><th>{{ _t('speed')}}</th><th>{{ _t('rssi')}}</th><th>{{ _t('hops')}}</th><th>{{ _t('encapsulation')}}</th><th>{{ _t('application')}}</th><th class=text-right><button class=\"btn btn-default\" type=button ng-show=!_.isEmpty(zniffer.filter.used) ng-click=resetZnifferFilterAll()><i class=\"fa fa-times text-danger\"></i> {{_t('reset_all_filters')}}</button></th></tr></thead><tbody><tr class=zniffer-row-{{v.data}} ng-repeat=\"v in zniffer.all| orderBy: '-id' track by $index\"><td><i title={{v.type}} class=\"fa fa-long-arrow-right\" ng-if=\"v.type === 'incoming'\"></i> <i title={{v.type}} class=\"fa fa-long-arrow-left\" ng-if=\"v.type === 'outgoing'\"></i></td><td>{{v.dateTime.date}}</td><td>{{v.dateTime.time}}</td><td ng-class=\"zniffer.filter.model['src'].value !== '' ? 'bcg-success' : ''\">{{v.src}}</td><td ng-class=\"zniffer.filter.model['dest'].value !== '' ? 'bcg-success' : ''\">{{v.dest}}</td><td>{{v.speed||'-'}}</td><td>{{v.rssi||'-'}}</td><td>{{v.hops||'-'}}</td><td>{{v.encaps||'-'}}</td><td title={{v.bytes}}>{{v.application}}</td><td>&nbsp;</td></tr></tbody></table></div>"
   );
 
 
-  $templateCache.put('app/views/network/control/control_controller_maintance.html',
-    "<div class=\"panel panel-default\" ng-controller=ZwaveChipRebootResetController><div class=panel-heading><i class=\"fa fa-gear\"></i> {{_t('nm_ctrl_maintance')}}</div><div class=panel-body><div class=\"cfg-block form-inline\"><p class=input-help>{{_t('nm_chip_reboot_war')}}</p><button class=\"btn btn-primary\" id=btn_chip_reboot ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"serialAPISoftReset('SerialAPISoftReset()')\" ng-disabled=\"rowSpinner['SerialAPISoftReset()']\"><bb-row-spinner spinner=\"rowSpinner['SerialAPISoftReset()']\" label=\"_t('nm_soft_reset_controller')\" icon=\"'fa-refresh'\"></bb-row-spinner></button></div><div class=\"cfg-block form-inline\"><p class=input-help ng-hide=\"cfg.app_type === 'installer'\">{{_t('nm_chip_reset_war')}}</p><p class=input-help ng-if=\"cfg.app_type === 'installer'\">{{_t('nm_chip_reset_war_ima')}}</p><bb-alert alert=controlDh.factory.alert></bb-alert><button class=\"btn btn-danger\" ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || rowSpinner['controller.SetDefault()']\" ng-click=\"handleModal('rebootResetModal', $event)\"><bb-row-spinner spinner=\"rowSpinner['controller.SetDefault()']\" label=\"_t('nm_reset_controller')\" icon=\"'fa-exclamation-triangle'\"></bb-row-spinner></button></div></div></div><div id=rebootResetModal class=appmodal ng-if=modalArr.rebootResetModal ng-controller=ZwaveChipRebootResetController><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handleModal('rebootResetModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{_t('nm_reset_controller')}}</h3></div><div class=appmodal-body><div class=\"alert alert-warning\"><p>{{_t('nm_controller_reset_war')}}</p><p></p><p><input type=checkbox name=reset_confirm id=reset_confirm value=1 ng-click=\"goSetDefault = !goSetDefault\"> {{_t('yes')}}</p><p></p></div></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleModal('rebootResetModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button> <button type=button class=\"btn btn-danger\" id=btn_reset_controller ng-show=goSetDefault ng-click=\"setDefault('controller.SetDefault()');handleModal('rebootResetModal', $event)\" ng-disabled=\"rowSpinner['controller.SetDefault()']\"><bb-row-spinner spinner=\"rowSpinner['controller.SetDefault()']\" label=\"_t('nm_reset_controller')\" icon=\"'fa-exclamation-triangle'\"></bb-row-spinner></button></div></div></div>"
-  );
-
-
-  $templateCache.put('app/views/network/control/control_default.html',
+  $templateCache.put('app/views/network/control/control.html',
     "<div ng-controller=ControlController><div class=page-header><h1>{{_t('nav_control')}}</h1></div><div class=row id=row_controll><div class=\"col-md-6 col-lg-6\"><div ng-include=\"'app/views/network/control/control_management.html'\"></div><div ng-include=\"'app/views/network/control/control_different.html'\"></div><div ng-include=\"'app/views/network/control/control_restore.html'\"></div><div ng-include=\"'app/views/network/control/control_frequency.html'\"></div></div><div class=\"col-md-6 col-lg-6\"><div ng-include=\"'app/views/network/control/control_network_maintance.html'\"></div><div ng-include=\"'app/views/network/control/control_sucsic.html'\"></div><div ng-include=\"'app/views/network/control/control_controller_maintance.html'\"></div></div></div></div>"
   );
 
 
+  $templateCache.put('app/views/network/control/control_controller_maintance.html',
+    "<div class=\"panel panel-default\" ng-controller=ZwaveChipRebootResetController><div class=panel-heading><i class=\"fa fa-gear\"></i> {{_t('nm_ctrl_maintance')}}</div><div class=panel-body><div class=\"cfg-block form-inline\"><p class=input-help>{{_t('nm_chip_reboot_war')}}</p><button class=\"btn btn-primary\" id=btn_chip_reboot ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"serialAPISoftReset('SerialAPISoftReset()')\" ng-disabled=\"rowSpinner['SerialAPISoftReset()']\"><bb-row-spinner spinner=\"rowSpinner['SerialAPISoftReset()']\" label=\"_t('nm_soft_reset_controller')\" icon=\"'fa-refresh'\"></bb-row-spinner></button></div><div class=\"cfg-block form-inline\"><bb-alert alert=controlDh.factory.alert></bb-alert><button class=\"btn btn-danger\" ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || rowSpinner['controller.SetDefault()']\" ng-click=\"handleModal('rebootResetModal', $event)\"><bb-row-spinner spinner=\"rowSpinner['controller.SetDefault()']\" label=\"_t('nm_reset_controller')\" icon=\"'fa-exclamation-triangle'\"></bb-row-spinner></button></div></div></div><div id=rebootResetModal class=appmodal ng-if=modalArr.rebootResetModal ng-controller=ZwaveChipRebootResetController><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handleModal('rebootResetModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{_t('nm_reset_controller')}}</h3></div><div class=appmodal-body><div class=\"alert alert-warning\"><p>{{_t('nm_controller_reset_war')}}</p><p></p><p><input type=checkbox name=reset_confirm id=reset_confirm value=1 ng-click=\"goSetDefault = !goSetDefault\"> {{_t('yes')}}</p><p></p></div></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleModal('rebootResetModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button> <button type=button class=\"btn btn-danger\" id=btn_reset_controller ng-show=goSetDefault ng-click=\"setDefault('controller.SetDefault()');handleModal('rebootResetModal', $event)\" ng-disabled=\"rowSpinner['controller.SetDefault()']\"><bb-row-spinner spinner=\"rowSpinner['controller.SetDefault()']\" label=\"_t('nm_reset_controller')\" icon=\"'fa-exclamation-triangle'\"></bb-row-spinner></button></div></div></div>"
+  );
+
+
   $templateCache.put('app/views/network/control/control_different.html',
-    "<div class=\"panel panel-default\" ng-controller=IncludeDifferentNetworkController><div class=panel-heading><i class=\"fa fa-sitemap\"></i> {{_t('nm_inc_into_nw')}}</div><div class=panel-body><span ng-if=\"controlDh.controller.isRealPrimary && (!controlDh.controller.hasDevices)\"><p class=input-help>{{_t('device_not_included_info')}}</p><bb-alert alert=controlDh.network.alert></bb-alert><button class=\"btn btn-primary\" id=btn_learn_start ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || (controlDh.controller.SUCNodeId == controlDh.controller.nodeId && controlDh.controller.isSIS && controlDh.controller.hasDevices) || controlDh.controller.isInOthersNetwork\" ng-show=\"[9].indexOf(controlDh.controller.controllerState) == -1 && controlDh.network.inclusionProcess !== 'processing'\" ng-click=\"includeToNetwork('controller.SetLearnMode(1)')\"><i class=\"fa fa-play-circle\"></i> {{_t('include_into_network')}}</button> <button class=\"btn btn-danger\" id=btn_learn_stop ng-show=\"[9].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"includeToNetwork('controller.SetLearnMode(0)')\"><i class=\"fa fa-stop-circle\"></i> {{_t('include_into_network_stop')}}</button> </span><span ng-if=\"controlDh.controller.isRealPrimary && (controlDh.controller.hasDevices)\"><p class=input-help>{{_t('device_included_info')}}</p><button class=\"btn btn-primary\" id=btn_learn_start_2 disabled>{{_t('leave_network')}}</button> </span><span ng-if=!controlDh.controller.isRealPrimary><p class=input-help>{{_t('device_included_info')}}</p><div ng-hide=\"controlDh.network.modal && [0].indexOf(controlDh.controller.controllerState) > -1\"><bb-alert alert=controlDh.network.alert></bb-alert></div><div><bb-alert alert=controlDh.alert></bb-alert></div><button class=\"btn btn-info\" id=btn_learn_start ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || !controlDh.controller.isInOthersNetwork\" ng-hide=\"(controlDh.network.inclusionProcess == 'processing' && !controlDh.network.modal) || [9].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"includeToNetwork('controller.SetLearnMode(1)',_t('before_leaving_network'))\"><i class=\"fa fa-play-circle\"></i> {{_t('leave_network')}}</button> <button class=\"btn btn-danger\" id=btn_learn_stop ng-show=\"[9].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"includeToNetwork('controller.SetLearnMode(0)')\"><i class=\"fa fa-stop-circle\"></i> {{_t('leave_network_stop')}}</button> </span><button class=\"btn btn-default\" ng-show=\"_.size(controlDh.controller.publicKey) && !controlDh.controller.isRealPrimary\" ng-click=\"handleModal('networkS2Modal')\">S2 DSK</button><div class=cfg-block-top-border ng-if=\"cfg.app_type == 'default'\" ng-include=\"'app/views/network/control/control_network_maintance_ctrlchange.html'\"></div></div><div id=successNetworkIncludeModal class=appmodal ng-if=\"controlDh.network.modal && controlDh.network.inclusionProcess !== 'processing' && (!controlDh.controller.isRealPrimary || controlDh.controller.isInOthersNetwork)\"><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"closeNetworkModal('successNetworkIncludeModal', $event)\" ng-hide=controlDh.process><i class=\"fa fa-times\"></i></span><h3>{{_t('include_into_network')}}</h3></div><div class=appmodal-body><div class=\"alert alert-success\"><i class=\"fa fa-smile-o\"></i> {{_t('success_controller_include')}}</div><div class=cfg-block><button class=\"btn btn-primary\" ng-click=\"handleModal('restoreModal', $event)\" ng-disabled=controlDh.process><i class=\"fa fa-repeat\"></i> {{_t('make_restore')}}</button></div><div class=cfg-block ng-controller=RequestNifAllController><button class=\"btn btn-primary\" id=btn_request_nif ng-click=\"requestNifAll('requestNifAll');\" ng-disabled=\"rowSpinner['requestNifAll']\"><bb-row-spinner spinner=\"rowSpinner['requestNifAll']\" label=\"_t('detect_all_nodes')\" icon=\"'fa-search-plus'\"></bb-row-spinner></button></div><div class=cfg-block><button type=button class=\"btn btn-primary\" ng-click=\"closeNetworkModal('successNetworkIncludeModal', $event)\" ng-disabled=controlDh.process><i class=\"fa fa-arrow-right\"></i> <span class=btn-name>{{_t('just_proceed')}}</span></button></div></div></div></div><div id=inclusionVerifyDSKModal class=appmodal ng-if=modalArr.networkS2Modal><div class=appmodal-in><form name=dskForm><div class=appmodal-header><h3>{{_t('S2 DSK')}}</h3></div><div class=\"appmodal-body modal-h-600 form-group form-inline\" ng-controller=S2DskController><div class=qrcode-wrap><div id=qrcode_network></div></div><div class=dsk-wrap><span class=dsk-block>{{dskBlock(controlDh.controller.publicKey, 0)|| ''}}</span> <span class=dsk-block>{{dskBlock(controlDh.controller.publicKey, 1)}}</span> <span class=dsk-block>{{dskBlock(controlDh.controller.publicKey, 2)}}</span> <span class=dsk-block>{{dskBlock(controlDh.controller.publicKey, 3)}}</span> <span class=dsk-block>{{dskBlock(controlDh.controller.publicKey, 4)}}</span> <span class=dsk-block>{{dskBlock(controlDh.controller.publicKey, 5)}}</span> <span class=dsk-block>{{dskBlock(controlDh.controller.publicKey, 6)}}</span> <span class=dsk-block>{{dskBlock(controlDh.controller.publicKey, 7)}}</span> <span class=dsk-block>{{dskBlock(controlDh.controller.publicKey, 8)}}</span></div></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=handleModal()><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button></div></form></div></div></div><div ng-include=\"'app/views/network/control/control_restore_modal.html'\"></div>"
+    "<div class=\"panel panel-default\" ng-controller=IncludeDifferentNetworkController><div class=panel-heading><i class=\"fa fa-sitemap\"></i> {{_t('nm_inc_into_nw')}}</div><div class=panel-body><div class=cfg-block ng-if=controlDh.controller.joiningS2><p>DSK key:</p><p class=dsk-highlight ng-bind-html=controlDh.controller.publicKeyStringHighligted|toTrusted></p></div><span ng-if=\"controlDh.controller.isRealPrimary && (!controlDh.controller.hasDevices)\"><p class=input-help>{{_t('device_not_included_info')}}</p><bb-alert alert=controlDh.network.alert></bb-alert><button class=\"btn btn-primary\" id=btn_learn_start ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || (controlDh.controller.SUCNodeId == controlDh.controller.nodeId && controlDh.controller.isSIS && controlDh.controller.hasDevices) || controlDh.controller.isInOthersNetwork\" ng-show=\"[9].indexOf(controlDh.controller.controllerState) == -1 && controlDh.network.inclusionProcess !== 'processing'\" ng-click=\"includeToNetwork('controller.SetLearnMode(1)')\"><i class=\"fa fa-play-circle\"></i> {{_t('include_into_network')}}</button> <button class=\"btn btn-danger\" id=btn_learn_stop ng-show=\"[9].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"includeToNetwork('controller.SetLearnMode(0)')\"><i class=\"fa fa-stop-circle\"></i> {{_t('include_into_network_stop')}}</button> </span><span ng-if=\"controlDh.controller.isRealPrimary && (controlDh.controller.hasDevices)\"><p class=input-help>{{_t('device_included_info')}}</p><button class=\"btn btn-primary\" id=btn_learn_start_2 disabled>{{_t('leave_network')}}</button> </span><span ng-if=!controlDh.controller.isRealPrimary><p class=input-help>{{_t('device_included_info')}}</p><div ng-hide=\"controlDh.network.modal && [0].indexOf(controlDh.controller.controllerState) > -1\"><bb-alert alert=controlDh.network.alert></bb-alert></div><div><bb-alert alert=controlDh.alert></bb-alert></div><button class=\"btn btn-info\" id=btn_learn_start ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || !controlDh.controller.isInOthersNetwork\" ng-hide=\"(controlDh.network.inclusionProcess == 'processing' && !controlDh.network.modal) || [9].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"includeToNetwork('controller.SetLearnMode(1)',_t('before_leaving_network'))\"><i class=\"fa fa-play-circle\"></i> {{_t('leave_network')}}</button> <button class=\"btn btn-danger\" id=btn_learn_stop ng-show=\"[9].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"includeToNetwork('controller.SetLearnMode(0)')\"><i class=\"fa fa-stop-circle\"></i> {{_t('leave_network_stop')}}</button> </span><button class=\"btn btn-default\" ng-show=\"_.size(controlDh.controller.publicKey) && !controlDh.controller.isRealPrimary\" ng-click=\"handleModal('networkS2Modal')\">S2 DSK</button><div class=cfg-block-top-border ng-include=\"'app/views/network/control/control_network_maintance_ctrlchange.html'\"></div></div><div id=successNetworkIncludeModal class=appmodal ng-if=\"controlDh.network.modal && controlDh.network.inclusionProcess !== 'processing' && (!controlDh.controller.isRealPrimary || controlDh.controller.isInOthersNetwork)\"><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"closeNetworkModal('successNetworkIncludeModal', $event)\" ng-hide=controlDh.process><i class=\"fa fa-times\"></i></span><h3>{{_t('include_into_network')}}</h3></div><div class=appmodal-body><div class=\"alert alert-success\"><i class=\"fa fa-smile-o\"></i> {{_t('success_controller_include')}}</div><div class=cfg-block ng-if=controlDh.controller.joiningS2><p>DSK key:</p><p class=dsk-highlight ng-bind-html=controlDh.controller.publicKeyStringHighligted|toTrusted></p></div><div class=cfg-block><button class=\"btn btn-primary\" ng-click=\"handleModal('restoreModal', $event)\" ng-disabled=controlDh.process><i class=\"fa fa-repeat\"></i> {{_t('make_restore')}}</button></div><div class=cfg-block ng-controller=RequestNifAllController><button class=\"btn btn-primary\" id=btn_request_nif ng-click=\"requestNifAll('requestNifAll');\" ng-disabled=\"rowSpinner['requestNifAll']\"><bb-row-spinner spinner=\"rowSpinner['requestNifAll']\" label=\"_t('detect_all_nodes')\" icon=\"'fa-search-plus'\"></bb-row-spinner></button></div><div class=cfg-block><button type=button class=\"btn btn-primary\" ng-click=\"closeNetworkModal('successNetworkIncludeModal', $event)\" ng-disabled=controlDh.process><i class=\"fa fa-arrow-right\"></i> <span class=btn-name>{{_t('just_proceed')}}</span></button></div></div></div></div><div id=inclusionVerifyDSKModal class=appmodal ng-if=modalArr.networkS2Modal><div class=appmodal-in><form name=dskForm><div class=appmodal-header><h3>{{_t('S2 DSK')}}</h3></div><div class=\"appmodal-body modal-h-600 form-group form-inline\" ng-controller=S2DskController><div class=qrcode-wrap><div id=qrcode_network></div></div><div class=dsk-wrap><span class=dsk-block>{{dskBlock(controlDh.controller.publicKey, 0)|| ''}}</span> <span class=dsk-block>{{dskBlock(controlDh.controller.publicKey, 1)}}</span> <span class=dsk-block>{{dskBlock(controlDh.controller.publicKey, 2)}}</span> <span class=dsk-block>{{dskBlock(controlDh.controller.publicKey, 3)}}</span> <span class=dsk-block>{{dskBlock(controlDh.controller.publicKey, 4)}}</span> <span class=dsk-block>{{dskBlock(controlDh.controller.publicKey, 5)}}</span> <span class=dsk-block>{{dskBlock(controlDh.controller.publicKey, 6)}}</span> <span class=dsk-block>{{dskBlock(controlDh.controller.publicKey, 7)}}</span> <span class=dsk-block>{{dskBlock(controlDh.controller.publicKey, 8)}}</span></div></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=handleModal()><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button></div></form></div></div></div><div ng-include=\"'app/views/network/control/control_restore_modal.html'\"></div>"
   );
 
 
@@ -6201,12 +6119,12 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/network/control/control_management.html',
-    "<div class=\"panel panel-default panel-highlighted\"><div class=panel-heading><i class=\"fa fa-cubes\"></i> {{_t('nm_device_management')}}</div><div class=panel-body><div class=cfg-block ng-controller=SetSecureInclusionController>{{_t('nm_force_unsecure')}}<div class=btn-group><button type=button class=\"btn btn-primary\" id=btn_force_secure_lock ng-class=\"controlDh.controller.secureInclusion ? 'active' : ''\" ng-click=\"setSecureInclusion('controller.data.secureInclusion=true')\" ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || rowSpinner['controller.data.secureInclusion=true']\"><bb-row-spinner spinner=\"rowSpinner['controller.data.secureInclusion=true']\" label=\"_t('btn_secure')\" icon=\"'fa-lock'\"></bb-row-spinner></button> <button type=button class=\"btn btn-primary\" id=btn_force_unsecure_lock ng-class=\"!controlDh.controller.secureInclusion ? 'active' : ''\" ng-click=\"setSecureInclusion('controller.data.secureInclusion=false')\" ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || rowSpinner['controller.data.secureInclusion=false']\"><bb-row-spinner spinner=\"rowSpinner['controller.data.secureInclusion=false']\" label=\"_t('btn_unsecure')\" icon=\"'fa-unlock'\"></bb-row-spinner></button></div></div><div class=cfg-block ng-controller=IncludeExcludeDeviceController><p class=input-help ng-show=\"controlDh.controller.isSIS || controlDh.controller.isPrimary\">{{_t('nm_learn_mode_you_are_primary_no_sis')}}</p><p class=input-help ng-show=\"!controlDh.controller.isSIS && !controlDh.controller.isPrimary\">{{_t('nm_learn_mode_you_are_secondary_can_not_add')}}</p><div ng-hide=\"controlDh.inclusion.lastIncludedDevice.message || controlDh.inclusion.lastExcludedDevice.message\"><bb-alert alert=controlDh.inclusion.alertPrimary></bb-alert><bb-alert alert=controlDh.inclusion.alert></bb-alert></div><bb-alert alert=controlDh.inclusion.lastIncludedDevice></bb-alert><bb-alert alert=controlDh.inclusion.lastExcludedDevice></bb-alert><bb-alert alert=controlDh.inclusion.alertS2></bb-alert><button class=\"btn btn-primary\" id=btn_nm_include_start title=\"{{_t('nm_include_start_tooltip')}}\" ng-disabled=\"[5, 6, 7, 20].indexOf(controlDh.controller.controllerState) > -1 || (!controlDh.controller.isRealPrimary && !controlDh.controller.isSIS)\" ng-show=\"[1, 2, 3, 4].indexOf(controlDh.controller.controllerState) == -1\" ng-click=\"addNodeToNetwork('controller.AddNodeToNetwork(1)')\"><i class=\"fa fa-play-circle\"></i> {{_t('nm_include_start')}}</button> <button class=\"btn btn-danger\" id=btn_nm_include_stop ng-show=\"[1, 2, 3, 4].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"addNodeToNetwork('controller.AddNodeToNetwork(0)')\"><i class=\"fa fa-stop-circle\"></i> {{_t('nm_include_stop')}}</button> <button class=\"btn btn-info\" id=nm_exclude_start title=\"{{_t('nm_exclude_start_tooltip')}}\" ng-disabled=\"[1, 2, 3, 4, 20].indexOf(controlDh.controller.controllerState) > -1 || (!controlDh.controller.isRealPrimary && !controlDh.controller.isSIS)\" ng-show=\"[5, 6, 7].indexOf(controlDh.controller.controllerState) == -1\" ng-click=\"removeNodeToNetwork('controller.RemoveNodeFromNetwork(1)')\"><i class=\"fa fa-play-circle\"></i> {{_t('nm_exclude_start')}}</button> <button class=\"btn btn-danger\" id=nm_exclude_stop ng-show=\"[5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"removeNodeToNetwork('controller.RemoveNodeFromNetwork(0)')\"><i class=\"fa fa-stop-circle\"></i> {{_t('nm_exclude_stop')}}</button></div></div></div><div id=inclusionS2GrantKeys class=appmodal ng-if=\"controlDh.inclusion.grantKeys.show && cfg.app_type != 'installer'\"><form class=appmodal-in name=form_inclusionS2GrantKeys id=form_inclusionS2GrantKeys ng-submit=\"\"><div class=appmodal-header><h3>{{_t('granted_keys')}}</h3></div><div class=appmodal-body><p>{{_t('select_auth_for_device')}}:</p><div class=\"alert alert-warning\">{{controlDh.inclusion.grantKeys.countDown}}s {{_t('remain')}}</div><div><input type=checkbox name=grantS0 value=false id=grantS0 ng-model=controlDh.inclusion.input.keysGranted.S0 ng-disabled=!controlDh.inclusion.input.keysRequested.S0><label ng-class=\"{diabled_label: !controlDh.inclusion.input.keysRequested.S0}\">{{_t('S0')}}</label></div><div><input type=checkbox name=grantS2Unauthenticated value=false id=grantS2Unauthenticated ng-model=controlDh.inclusion.input.keysGranted.S2Unauthenticated ng-disabled=!controlDh.inclusion.input.keysRequested.S2Unauthenticated><label ng-class=\"{diabled_label: !controlDh.inclusion.input.keysRequested.S2Unauthenticated}\">{{_t('S2_Unauthenticated')}}</label></div><div><input type=checkbox name=grantS2Authenticated value=false id=grantS2Authenticated ng-model=controlDh.inclusion.input.keysGranted.S2Authenticated ng-disabled=!controlDh.inclusion.input.keysRequested.S2Authenticated><label ng-class=\"{diabled_label: !controlDh.inclusion.input.keysRequested.S2Authenticated}\">{{_t('S2_Authenticated')}}</label></div><div><input type=checkbox name=grantS2Access value=false id=grantS2Access ng-model=controlDh.inclusion.input.keysGranted.S2Access ng-disabled=!controlDh.inclusion.input.keysRequested.S2Access><label ng-class=\"{diabled_label: !controlDh.inclusion.input.keysRequested.S2Access}\">{{_t('S2_Access')}}</label></div></div><div class=appmodal-footer><button type=button class=\"btn btn-submit\" ng-click=handleInclusionS2GrantKeys(controlDh.inclusion.input.keysGranted)><i class=\"fa fa-check\"></i> <span class=btn-name>{{_t('ok')}}</span></button></div></form></div><div id=inclusionVerifyDSKModal class=appmodal ng-if=\"controlDh.inclusion.grantKeys.anyChecked && controlDh.inclusion.verifyDSK.show && cfg.app_type != 'installer'\"><div class=appmodal-in><form name=dskForm><div class=appmodal-header><h3>{{_t('verify_device_pin')}}</h3></div><div class=\"appmodal-body form-group form-inline\"><p>{{_t('verify_included_pin')}}</p><div class=\"alert alert-warning\">{{controlDh.inclusion.verifyDSK.countDown}}s remain</div><label>{{_t('pin')}}</label><input name=dsk_pin id=dsk_pin type=number size=5 class=\"form-control input_number input-valid-{{dskForm.dsk_pin.$valid}}\" min=0 max=65533 ng-show=controlDh.inclusion.input.publicKeyAuthenticationRequired ng-model=controlDh.inclusion.input.dskPin required> <input name=dsk_1 id=dsk_1 type=number size=5 class=\"form-control input_number\" ng-value=\"dskBlock(controlDh.inclusion.input.publicKey, 1)\" disabled ng-show=!controlDh.inclusion.input.publicKeyAuthenticationRequired> - <input name=dsk_2 id=dsk_2 type=number size=5 class=\"form-control input_number\" ng-value=\"dskBlock(controlDh.inclusion.input.publicKey, 2)\" disabled> - <input name=dsk_3 id=dsk_3 type=number size=5 class=\"form-control input_number\" ng-value=\"dskBlock(controlDh.inclusion.input.publicKey, 3)\" disabled> - <input name=dsk_4 id=dsk_4 type=number size=5 class=\"form-control input_number\" ng-value=\"dskBlock(controlDh.inclusion.input.publicKey, 4)\" disabled> - <input name=dsk_5 id=dsk_5 type=number size=5 class=\"form-control input_number\" ng-value=\"dskBlock(controlDh.inclusion.input.publicKey, 5)\" disabled> - <input name=dsk_6 id=dsk_6 type=number size=5 class=\"form-control input_number\" ng-value=\"dskBlock(controlDh.inclusion.input.publicKey, 6)\" disabled> - <input name=dsk_7 id=dsk_7 type=number size=5 class=\"form-control input_number\" ng-value=\"dskBlock(controlDh.inclusion.input.publicKey, 7)\" disabled> - <input name=dsk_8 id=dsk_8 type=number size=5 class=\"form-control input_number\" ng-value=\"dskBlock(controlDh.inclusion.input.publicKey, 8)\" disabled></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=handleInclusionVerifyDSK(false)><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button> <button type=button class=\"btn btn-submit\" ng-click=handleInclusionVerifyDSK(true)><i class=\"fa fa-check\"></i> <span class=btn-name>{{_t('confirm')}}</span></button></div></form></div></div>"
+    "<div class=\"panel panel-default panel-highlighted\"><div class=panel-heading><i class=\"fa fa-cubes\"></i> {{_t('nm_device_management')}}</div><div class=panel-body><div class=cfg-block ng-controller=SetSecureInclusionController>{{_t('nm_force_unsecure')}}<div class=btn-group><button type=button class=\"btn btn-primary\" id=btn_force_secure_lock ng-class=\"controlDh.controller.secureInclusion ? 'active' : ''\" ng-click=\"setSecureInclusion('controller.data.secureInclusion=true')\" ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || rowSpinner['controller.data.secureInclusion=true']\"><bb-row-spinner spinner=\"rowSpinner['controller.data.secureInclusion=true']\" label=\"_t('btn_secure')\" icon=\"'fa-lock'\"></bb-row-spinner></button> <button type=button class=\"btn btn-primary\" id=btn_force_unsecure_lock ng-class=\"!controlDh.controller.secureInclusion ? 'active' : ''\" ng-click=\"setSecureInclusion('controller.data.secureInclusion=false')\" ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || rowSpinner['controller.data.secureInclusion=false']\"><bb-row-spinner spinner=\"rowSpinner['controller.data.secureInclusion=false']\" label=\"_t('btn_unsecure')\" icon=\"'fa-unlock'\"></bb-row-spinner></button></div></div><div class=cfg-block ng-controller=IncludeExcludeDeviceController><p class=input-help ng-show=\"controlDh.controller.isSIS || controlDh.controller.isPrimary\">{{_t('nm_learn_mode_you_are_primary_no_sis')}}</p><p class=input-help ng-show=\"!controlDh.controller.isSIS && !controlDh.controller.isPrimary\">{{_t('nm_learn_mode_you_are_secondary_can_not_add')}}</p><div ng-hide=\"controlDh.inclusion.lastIncludedDevice.message || controlDh.inclusion.lastExcludedDevice.message\"><bb-alert alert=controlDh.inclusion.alertPrimary></bb-alert><bb-alert alert=controlDh.inclusion.alert></bb-alert></div><bb-alert alert=controlDh.inclusion.lastIncludedDevice></bb-alert><bb-alert alert=controlDh.inclusion.lastExcludedDevice></bb-alert><bb-alert alert=controlDh.inclusion.alertS2></bb-alert><button class=\"btn btn-primary\" id=btn_nm_include_start title=\"{{_t('nm_include_start_tooltip')}}\" ng-disabled=\"[5, 6, 7, 20].indexOf(controlDh.controller.controllerState) > -1 || (!controlDh.controller.isRealPrimary && !controlDh.controller.isSIS)\" ng-show=\"[1, 2, 3, 4].indexOf(controlDh.controller.controllerState) == -1\" ng-click=\"addNodeToNetwork('controller.AddNodeToNetwork(1)')\"><i class=\"fa fa-play-circle\"></i> {{_t('nm_include_start')}}</button> <button class=\"btn btn-danger\" id=btn_nm_include_stop ng-show=\"[1, 2, 3, 4].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"addNodeToNetwork('controller.AddNodeToNetwork(0)')\"><i class=\"fa fa-stop-circle\"></i> {{_t('nm_include_stop')}}</button> <button class=\"btn btn-info\" id=nm_exclude_start title=\"{{_t('nm_exclude_start_tooltip')}}\" ng-disabled=\"[1, 2, 3, 4, 20].indexOf(controlDh.controller.controllerState) > -1 || (!controlDh.controller.isRealPrimary && !controlDh.controller.isSIS)\" ng-show=\"[5, 6, 7].indexOf(controlDh.controller.controllerState) == -1\" ng-click=\"removeNodeToNetwork('controller.RemoveNodeFromNetwork(1)')\"><i class=\"fa fa-play-circle\"></i> {{_t('nm_exclude_start')}}</button> <button class=\"btn btn-danger\" id=nm_exclude_stop ng-show=\"[5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"removeNodeToNetwork('controller.RemoveNodeFromNetwork(0)')\"><i class=\"fa fa-stop-circle\"></i> {{_t('nm_exclude_stop')}}</button></div></div></div><div id=inclusionS2GrantKeys class=appmodal ng-if=controlDh.inclusion.grantKeys.show><form class=appmodal-in name=form_inclusionS2GrantKeys id=form_inclusionS2GrantKeys ng-submit=\"\"><div class=appmodal-header><h3>{{_t('granted_keys')}}</h3></div><div class=appmodal-body><p>{{_t('select_auth_for_device')}}:</p><div class=\"alert alert-warning\">{{controlDh.inclusion.grantKeys.countDown}}s {{_t('remain')}}</div><div><input type=checkbox name=grantS0 value=false id=grantS0 ng-model=controlDh.inclusion.input.keysGranted.S0 ng-disabled=!controlDh.inclusion.input.keysRequested.S0><label ng-class=\"{diabled_label: !controlDh.inclusion.input.keysRequested.S0}\">{{_t('S0')}}</label></div><div><input type=checkbox name=grantS2Unauthenticated value=false id=grantS2Unauthenticated ng-model=controlDh.inclusion.input.keysGranted.S2Unauthenticated ng-disabled=!controlDh.inclusion.input.keysRequested.S2Unauthenticated><label ng-class=\"{diabled_label: !controlDh.inclusion.input.keysRequested.S2Unauthenticated}\">{{_t('S2_Unauthenticated')}}</label></div><div><input type=checkbox name=grantS2Authenticated value=false id=grantS2Authenticated ng-model=controlDh.inclusion.input.keysGranted.S2Authenticated ng-disabled=!controlDh.inclusion.input.keysRequested.S2Authenticated><label ng-class=\"{diabled_label: !controlDh.inclusion.input.keysRequested.S2Authenticated}\">{{_t('S2_Authenticated')}}</label></div><div><input type=checkbox name=grantS2Access value=false id=grantS2Access ng-model=controlDh.inclusion.input.keysGranted.S2Access ng-disabled=!controlDh.inclusion.input.keysRequested.S2Access><label ng-class=\"{diabled_label: !controlDh.inclusion.input.keysRequested.S2Access}\">{{_t('S2_Access')}}</label></div></div><div class=appmodal-footer><button type=button class=\"btn btn-submit\" ng-click=handleInclusionS2GrantKeys(controlDh.inclusion.input.keysGranted)><i class=\"fa fa-check\"></i> <span class=btn-name>{{_t('ok')}}</span></button></div></form></div><div id=inclusionVerifyDSKModal class=appmodal ng-if=\"controlDh.inclusion.grantKeys.anyChecked && controlDh.inclusion.verifyDSK.show\"><div class=appmodal-in><form name=dskForm><div class=appmodal-header><h3>{{_t('verify_device_pin')}}</h3></div><div class=\"appmodal-body form-group form-inline\"><p>{{_t('verify_included_pin')}}</p><div class=\"alert alert-warning\">{{controlDh.inclusion.verifyDSK.countDown}}s remain</div><label>{{_t('pin')}}</label><input name=dsk_pin id=dsk_pin type=number size=5 class=\"form-control input_number input-valid-{{dskForm.dsk_pin.$valid}}\" min=0 max=65533 ng-show=controlDh.inclusion.input.publicKeyAuthenticationRequired ng-model=controlDh.inclusion.input.dskPin required> <input name=dsk_1 id=dsk_1 type=number size=5 class=\"form-control input_number\" ng-value=\"dskBlock(controlDh.inclusion.input.publicKey, 1)\" disabled ng-show=!controlDh.inclusion.input.publicKeyAuthenticationRequired> - <input name=dsk_2 id=dsk_2 type=number size=5 class=\"form-control input_number\" ng-value=\"dskBlock(controlDh.inclusion.input.publicKey, 2)\" disabled> - <input name=dsk_3 id=dsk_3 type=number size=5 class=\"form-control input_number\" ng-value=\"dskBlock(controlDh.inclusion.input.publicKey, 3)\" disabled> - <input name=dsk_4 id=dsk_4 type=number size=5 class=\"form-control input_number\" ng-value=\"dskBlock(controlDh.inclusion.input.publicKey, 4)\" disabled> - <input name=dsk_5 id=dsk_5 type=number size=5 class=\"form-control input_number\" ng-value=\"dskBlock(controlDh.inclusion.input.publicKey, 5)\" disabled> - <input name=dsk_6 id=dsk_6 type=number size=5 class=\"form-control input_number\" ng-value=\"dskBlock(controlDh.inclusion.input.publicKey, 6)\" disabled> - <input name=dsk_7 id=dsk_7 type=number size=5 class=\"form-control input_number\" ng-value=\"dskBlock(controlDh.inclusion.input.publicKey, 7)\" disabled> - <input name=dsk_8 id=dsk_8 type=number size=5 class=\"form-control input_number\" ng-value=\"dskBlock(controlDh.inclusion.input.publicKey, 8)\" disabled></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=handleInclusionVerifyDSK(false)><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button> <button type=button class=\"btn btn-submit\" ng-click=handleInclusionVerifyDSK(true)><i class=\"fa fa-check\"></i> <span class=btn-name>{{_t('confirm')}}</span></button></div></form></div></div>"
   );
 
 
   $templateCache.put('app/views/network/control/control_network_maintance.html',
-    "<div class=\"panel panel-default\"><div class=panel-heading><i class=\"fa fa-sitemap\"></i> {{_t('nm_net_maintance')}}</div><div class=panel-body><div><div class=\"cfg-block form-inline\"><p class=input-help>{{_t('nm_remove_node_war')}}</p><select name=remove_failed_node id=remove_failed_node class=form-control ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-hide=_.isEmpty(controlDh.nodes.failedNodes) ng-model=controlDh.input.failedNodes><option ng-hide=\"controlDh.removed.failedNodes.indexOf(v) > -1\" ng-repeat=\"v in controlDh.nodes.failedNodes track by $index\" value={{v}}>{{v}}</option></select>&nbsp; <button class=\"btn btn-primary\" id=btn_remove_failed_mode ng-click=\"handleModal('failedNodeModal', $event)\" ng-disabled=!controlDh.input.failedNodes><bb-row-spinner spinner=\"rowSpinner['devices[' + controlDh.input.failedNodes + '].RemoveFailedNode()']\" label=\"_t('nm_remove_failed')\" icon=\"'fa-minus-circle'\"></bb-row-spinner></button></div><div class=\"cfg-block form-inline\" ng-controller=ReplaceFailedNodeController><p class=input-help>{{_t('nm_replace_node_war')}}</p><div class=\"alert nm-response alert-danger\" ng-show=\"[17, 18].indexOf(controllerState) != -1\">{{_t('nm_controller_state_' + controllerState)}}</div><select name=replace_failed_node id=replace_failed_node class=form-control ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-hide=_.isEmpty(controlDh.nodes.failedNodes) ng-model=controlDh.input.replaceNodes><option ng-hide=\"controlDh.removed.replaceNodes.indexOf(v) > -1\" ng-repeat=\"v in controlDh.nodes.failedNodes track by $index\" value={{v}}>{{v}}</option></select>&nbsp; <button class=\"btn btn-primary\" id=btn_replace_failed_node ng-click=\"replaceFailedNode('ReplaceFailedNode(' + controlDh.input.replaceNodes + ')')\" ng-disabled=!controlDh.input.replaceNodes><bb-row-spinner spinner=\"rowSpinner['ReplaceFailedNode(' + controlDh.input.replaceNodes + ')']\" label=\"_t('nm_replace_node')\" icon=\"'fa-exchange'\"></bb-row-spinner>{{_t('')}}</button></div><div class=\"cfg-block form-inline\"><p class=input-help>{{_t('nm_mark_node_war')}}</p><select name=mark_battery_failed id=mark_battery_failed class=form-control ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-hide=_.isEmpty(controlDh.nodes.failedBatteries) ng-change=changeSelectNode(modelBatteryFailed) ng-model=controlDh.input.failedBatteries><option ng-hide=\"controlDh.removed.failedBatteries.indexOf(v) > -1\" ng-repeat=\"v in controlDh.nodes.failedBatteries track by $index\" value={{v}}>{{v}}</option></select>&nbsp; <button class=\"btn btn-primary\" ng-click=\"handleModal('failedBatteryModal', $event)\" ng-disabled=!controlDh.input.failedBatteries><bb-row-spinner spinner=\"rowSpinner['devices[' + controlDh.input.failedBatteries + '].SendNoOperation()']\" label=\"_t('nm_mark_battery_as_failed')\" icon=\"'fa-thumb-tack'\"></bb-row-spinner></button></div></div><div><div ng-if=\"cfg.app_type == 'installer'\" ng-include=\"'app/views/network/control/control_network_maintance_ctrlchange.html'\"></div><div class=\"cfg-block form-inline\" ng-controller=RequestNifAllController><p class=input-help>{{_t('nm_nif_all_war')}}</p><button class=\"btn btn-primary\" id=btn_request_nif ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"requestNifAll('requestNifAll')\" ng-disabled=\"rowSpinner['requestNifAll']\"><bb-row-spinner spinner=\"rowSpinner['requestNifAll']\" label=\"_t('nm_request_all_node_information')\" icon=\"'fa-search-plus'\"></bb-row-spinner></button></div></div></div></div><div id=failedNodeModal class=appmodal ng-if=modalArr.failedNodeModal ng-controller=RemoveFailedNodeController><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handleModal('failedNodeModal', $event);controlDh.input.failedNodes = 0\"><i class=\"fa fa-times\"></i></span><h3>{{_t('nm_remove_failed') + ' #' + controlDh.input.failedNodes}}</h3></div><div class=appmodal-body><div class=\"alert alert-warning\"><input type=checkbox name=remove_node_confirm id=remove_node_confirm value=1 ng-click=\"goFailedNode = !goFailedNode\"> <span ng-bind-html=\"_t('are_you_sure_remove_node') | toTrusted\"></span> <strong>{{deviceInfo.name}}</strong><p>{{_t('txt_controller_delete_node')}}</p></div></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleModal('failedNodeModal', $event);controlDh.input.failedNodes = 0\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button> <button type=button class=\"btn btn-danger\" id=btn_reset_controller ng-show=goFailedNode ng-click=\"removeFailedNode('devices[' + controlDh.input.failedNodes + '].RemoveFailedNode()',handleModal('failedNodeModal', $event))\"><i class=\"fa fa-exclamation-triangle\"></i> {{_t('nm_remove_failed')}}</button></div></div></div><div id=failedBatteryModal class=appmodal ng-if=modalArr.failedBatteryModal ng-controller=BatteryDeviceFailedController><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handleModal('failedBatteryModal', $event);controlDh.input.failedBatteries = 0\"><i class=\"fa fa-times\"></i></span><h3>{{_t('nm_mark_battery_as_failed') + ' #' + controlDh.input.failedBatteries}}</h3></div><div class=appmodal-body>{{_t('nm_mark_node_war_modal')}}</div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleModal('failedBatteryModal', $event);controlDh.input.failedBatteries = 0\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button> <button type=button class=\"btn btn-primary\" id=btn_reset_controller ng-click=\"markFailedNode(\r" +
+    "<div class=\"panel panel-default\"><div class=panel-heading><i class=\"fa fa-sitemap\"></i> {{_t('nm_net_maintance')}}</div><div class=panel-body><div><div class=\"cfg-block form-inline\"><p class=input-help>{{_t('nm_remove_node_war')}}</p><select name=remove_failed_node id=remove_failed_node class=form-control ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-hide=_.isEmpty(controlDh.nodes.failedNodes) ng-model=controlDh.input.failedNodes><option ng-hide=\"controlDh.removed.failedNodes.indexOf(v) > -1\" ng-repeat=\"v in controlDh.nodes.failedNodes track by $index\" value={{v}}>{{v}}</option></select>&nbsp; <button class=\"btn btn-primary\" id=btn_remove_failed_mode ng-click=\"handleModal('failedNodeModal', $event)\" ng-disabled=!controlDh.input.failedNodes><bb-row-spinner spinner=\"rowSpinner['devices[' + controlDh.input.failedNodes + '].RemoveFailedNode()']\" label=\"_t('nm_remove_failed')\" icon=\"'fa-minus-circle'\"></bb-row-spinner></button></div><div class=\"cfg-block form-inline\" ng-controller=ReplaceFailedNodeController><p class=input-help>{{_t('nm_replace_node_war')}}</p><div class=\"alert nm-response alert-danger\" ng-show=\"[17, 18].indexOf(controllerState) != -1\">{{_t('nm_controller_state_' + controllerState)}}</div><select name=replace_failed_node id=replace_failed_node class=form-control ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-hide=_.isEmpty(controlDh.nodes.failedNodes) ng-model=controlDh.input.replaceNodes><option ng-hide=\"controlDh.removed.replaceNodes.indexOf(v) > -1\" ng-repeat=\"v in controlDh.nodes.failedNodes track by $index\" value={{v}}>{{v}}</option></select>&nbsp; <button class=\"btn btn-primary\" id=btn_replace_failed_node ng-click=\"replaceFailedNode('ReplaceFailedNode(' + controlDh.input.replaceNodes + ')')\" ng-disabled=!controlDh.input.replaceNodes><bb-row-spinner spinner=\"rowSpinner['ReplaceFailedNode(' + controlDh.input.replaceNodes + ')']\" label=\"_t('nm_replace_node')\" icon=\"'fa-exchange'\"></bb-row-spinner>{{_t('')}}</button></div><div class=\"cfg-block form-inline\"><p class=input-help>{{_t('nm_mark_node_war')}}</p><select name=mark_battery_failed id=mark_battery_failed class=form-control ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-hide=_.isEmpty(controlDh.nodes.failedBatteries) ng-change=changeSelectNode(modelBatteryFailed) ng-model=controlDh.input.failedBatteries><option ng-hide=\"controlDh.removed.failedBatteries.indexOf(v) > -1\" ng-repeat=\"v in controlDh.nodes.failedBatteries track by $index\" value={{v}}>{{v}}</option></select>&nbsp; <button class=\"btn btn-primary\" ng-click=\"handleModal('failedBatteryModal', $event)\" ng-disabled=!controlDh.input.failedBatteries><bb-row-spinner spinner=\"rowSpinner['devices[' + controlDh.input.failedBatteries + '].SendNoOperation()']\" label=\"_t('nm_mark_battery_as_failed')\" icon=\"'fa-thumb-tack'\"></bb-row-spinner></button></div></div><div><div class=\"cfg-block form-inline\" ng-controller=RequestNifAllController><p class=input-help>{{_t('nm_nif_all_war')}}</p><button class=\"btn btn-primary\" id=btn_request_nif ng-disabled=\"[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"requestNifAll('requestNifAll')\" ng-disabled=\"rowSpinner['requestNifAll']\"><bb-row-spinner spinner=\"rowSpinner['requestNifAll']\" label=\"_t('nm_request_all_node_information')\" icon=\"'fa-search-plus'\"></bb-row-spinner></button></div></div></div></div><div id=failedNodeModal class=appmodal ng-if=modalArr.failedNodeModal ng-controller=RemoveFailedNodeController><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handleModal('failedNodeModal', $event);controlDh.input.failedNodes = 0\"><i class=\"fa fa-times\"></i></span><h3>{{_t('nm_remove_failed') + ' #' + controlDh.input.failedNodes}}</h3></div><div class=appmodal-body><div class=\"alert alert-warning\"><input type=checkbox name=remove_node_confirm id=remove_node_confirm value=1 ng-click=\"goFailedNode = !goFailedNode\"> <span ng-bind-html=\"_t('are_you_sure_remove_node') | toTrusted\"></span> <strong>{{deviceInfo.name}}</strong><p>{{_t('txt_controller_delete_node')}}</p></div></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleModal('failedNodeModal', $event);controlDh.input.failedNodes = 0\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button> <button type=button class=\"btn btn-danger\" id=btn_reset_controller ng-show=goFailedNode ng-click=\"removeFailedNode('devices[' + controlDh.input.failedNodes + '].RemoveFailedNode()',handleModal('failedNodeModal', $event))\"><i class=\"fa fa-exclamation-triangle\"></i> {{_t('nm_remove_failed')}}</button></div></div></div><div id=failedBatteryModal class=appmodal ng-if=modalArr.failedBatteryModal ng-controller=BatteryDeviceFailedController><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handleModal('failedBatteryModal', $event);controlDh.input.failedBatteries = 0\"><i class=\"fa fa-times\"></i></span><h3>{{_t('nm_mark_battery_as_failed') + ' #' + controlDh.input.failedBatteries}}</h3></div><div class=appmodal-body>{{_t('nm_mark_node_war_modal')}}</div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleModal('failedBatteryModal', $event);controlDh.input.failedBatteries = 0\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button> <button type=button class=\"btn btn-primary\" id=btn_reset_controller ng-click=\"markFailedNode(\r" +
     "\n" +
     "                    ['devices[' + controlDh.input.failedBatteries + '].SendNoOperation()',\r" +
     "\n" +
@@ -6230,7 +6148,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/network/control/control_restore_modal.html',
-    "<div id=restoreModal class=appmodal ng-if=modalArr.restoreModal ng-controller=BackupRestoreController><div class=appmodal-in><form name=form_notes id=form_modal class=form ng-model=notes.input ng-submit=\"handleModal('restoreModal', $event);storeSettings(settings.input)\" novalidate><div class=appmodal-header><span class=appmodal-close ng-click=\"handleModal('restoreModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{_t('nm_restore_backup_upload')}}</h3></div><div class=appmodal-body><bb-loader></bb-loader><div class=restore-backup-control ng-if_=\"restoreBackupStatus == 0\"><div class=\"alert alert-warning\"><input type=checkbox name=restore_confirm value=1 id=restore_confirm ng-click=\"restore.allow = !restore.allow\"> {{_t(cfg.app_type == 'installer' ? 'are_you_sure_restore_cit' : 'are_you_sure_restore')}}</div><div ng-if=restore.allow><p><bb-help-text trans=\"_t('restore_secondary_primary')\"></bb-help-text></p><p ng-if=\"cfg.app_type !== 'installer' && controlDh.controller.isRealPrimary\"><input type=checkbox name=restore_chip_info id=restore_chip_info value=1 ng-true-value=1 ng-false-value=0 ng-model=restore.input.restore_chip_info> {{_t('restore_backup_chip')}}</p><p class=text-center><input id=btn_upload type=file name=file onchange=angular.element(this).scope().restoreFromBackup(this.files)></p></div></div></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleModal('restoreModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button></div></form></div></div>"
+    "<div id=restoreModal class=appmodal ng-if=modalArr.restoreModal ng-controller=BackupRestoreController><div class=appmodal-in><form name=form_notes id=form_modal class=form ng-model=notes.input ng-submit=\"handleModal('restoreModal', $event);storeSettings(settings.input)\" novalidate><div class=appmodal-header><span class=appmodal-close ng-click=\"handleModal('restoreModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{_t('nm_restore_backup_upload')}}</h3></div><div class=appmodal-body><bb-loader></bb-loader><div class=restore-backup-control ng-if_=\"restoreBackupStatus == 0\"><div class=\"alert alert-warning\"><input type=checkbox name=restore_confirm value=1 id=restore_confirm ng-click=\"restore.allow = !restore.allow\"> {{_t('are_you_sure_restore')}}</div><div ng-if=restore.allow><p><bb-help-text trans=\"_t('restore_secondary_primary')\"></bb-help-text></p><p ng-if=controlDh.controller.isRealPrimary><input type=checkbox name=restore_chip_info id=restore_chip_info value=1 ng-true-value=1 ng-false-value=0 ng-model=restore.input.restore_chip_info> {{_t('restore_backup_chip')}}</p><p class=text-center><input id=btn_upload type=file name=file onchange=angular.element(this).scope().restoreFromBackup(this.files)></p></div></div></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleModal('restoreModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button></div></form></div></div>"
   );
 
 
@@ -6239,13 +6157,8 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
   );
 
 
-  $templateCache.put('app/views/network/controller_default.html',
+  $templateCache.put('app/views/network/controller.html',
     "<div ng-controller=ControllerController><div class=page-header><h1>{{_t('nav_controller_info')}}</h1></div><div class=\"well well-sm\"><a href=#network/queue target=_blank class=\"btn btn-primary\"><i class=\"fa fa-search\"></i> {{_t('nm_inspect_queue_title')}}</a> <em>{{_t('txt_inspect_queue')}}</em></div><div class=\"table-responsive table-controller\"><h3>{{_t('ctrl_info_role_title')}}</h3><table class=\"table table-condensed\"><tbody><tr><td id=ctrl_info_nodeid_title class=controller-th>{{_t('ctrl_info_nodeid_title')}}</td><td id=ctrl_info_nodeid_value>{{master['controller.data.nodeId']}}</td></tr><tr><td id=ctrl_info_homeid_title class=controller-th>{{_t('ctrl_info_homeid_title')}}</td><td id=ctrl_info_homeid_value>{{master['txtHomeId']}}</td></tr><tr><td id=ctrl_info_primary_title class=controller-th>{{_t('ctrl_info_primary_title')}}</td><td id=ctrl_info_primary_value>{{master['controller.data.isPrimary']? 'Yes': 'No'}}</td></tr><tr><td id=ctrl_info_real_primary_title class=controller-th>{{_t('ctrl_info_real_primary_title')}}</td><td id=ctrl_info_real_primary_value>{{master['controller.data.isRealPrimary']? 'Yes': 'No'}}</td></tr><tr><td id=ctrl_info_suc_sis_title class=controller-th>{{_t('ctrl_info_suc_sis_title')}}</td><td id=ctrl_info_suc_sis_value>{{master['txtSucSis']}}</td></tr></tbody></table><h3>{{_t('ctrl_info_hw_title')}}</h3><table class=\"table table-condensed\"><tbody><tr><td id=ctrl_info_hw_vendor_title class=controller-th>{{_t('ctrl_info_hw_vendor_title')}}</td><td id=ctrl_info_hw_vendor_value>{{master['controller.data.vendor']}}</td></tr><tr><td id=ctrl_info_hw_product_title class=controller-th>{{_t('ctrl_info_hw_product_title')}}</td><td id=ctrl_info_hw_product_value>{{master['controller.data.manufacturerProductType']}} / {{master['controller.data.manufacturerProductId']}}</td></tr><tr><td id=ctrl_info_hw_chip_title class=controller-th>{{_t('ctrl_info_hw_chip_title')}}</td><td id=ctrl_info_hw_chip_value>{{master['controller.data.ZWaveChip']}}</td></tr></tbody></table><h3>{{_t('ctrl_info_sw_title')}}</h3><table class=\"table table-condensed\"><tbody><tr><td id=ctrl_info_sw_lib_title class=controller-th>{{_t('ctrl_info_sw_lib_title')}}</td><td id=ctrl_info_sw_lib_value>{{master['controller.data.libType']}}</td></tr><tr><td id=ctrl_info_sw_sdk_title class=controller-th>{{_t('ctrl_info_sw_sdk_title')}}</td><td id=ctrl_info_sw_sdk_value>{{master['controller.data.SDK']}}</td></tr><tr><td id=ctrl_info_sw_api_title class=controller-th>{{_t('ctrl_info_sw_api_title')}}</td><td id=ctrl_info_sw_api_value>{{master['controller.data.APIVersion']}}</td></tr></tbody></table><h3>{{_t('ctrl_info_sw_caps_title')}}</h3><table class=\"table table-condensed\"><tbody><tr><td id=ctrl_info_uuid_title class=controller-th>{{_t('ctrl_info_uuid_title')}}</td><td id=ctrl_info_uuid_value>{{master['controller.data.uuid']}}</td></tr><tr><td id=ctrl_info_caps_subvendor_title class=controller-th>{{_t('ctrl_info_caps_subvendor_title')}}</td><td id=ctrl_info_caps_subvendor_value>{{master['controller.data.caps.subvendor']}}</td></tr><tr><td id=ctrl_info_caps_nodes_title class=controller-th>{{_t('ctrl_info_caps_nodes_title')}}</td><td id=ctrl_info_caps_nodes_value>{{master['controller.data.caps.nodes']}}</td></tr><tr><td id=ctrl_info_caps_cap_title class=controller-th>{{_t('ctrl_info_caps_cap_title')}}</td><td id=ctrl_info_caps_cap_value>{{master['controller.data.caps.cap']}}</td></tr></tbody></table><h3>{{_t('ctrl_info_sw_rev_title')}}</h3><table class=\"table table-condensed\"><tbody><tr><td id=ctrl_info_sw_rev_ver_title class=controller-th>{{_t('ctrl_info_sw_rev_ver_title')}}</td><td id=ctrl_info_sw_rev_ver_value>{{master['controller.data.softwareRevisionVersion']}}</td></tr><tr><td id=ctrl_info_sw_rev_id_title class=controller-th>{{_t('ctrl_info_sw_rev_id_title')}}</td><td id=ctrl_info_sw_rev_id_value>{{master['controller.data.softwareRevisionId']}}</td></tr><tr><td id=ctrl_info_sw_rev_date_title class=controller-th>{{_t('ctrl_info_sw_rev_date_title')}}</td><td id=ctrl_info_sw_rev_date_value>{{master['controller.data.softwareRevisionDate']}}</td></tr></tbody></table><h3>{{_t('ui')}}</h3><table class=\"table table-condensed\"><tbody><tr><td id=ctrl_ui_version class=controller-th>{{_t('ui_version')}}</td><td id=ctrl_ui_version_value>{{cfg.app_version}}</td></tr><tr><td id=ctrl_ui_version class=controller-th>{{_t('built_date')}}</td><td id=ctrl_ui_version_value>{{builtInfo.built}}</td></tr></tbody></table></div><div class=\"well well-sm\"><button class=\"btn btn-primary\" ng-controller=SendNodeInformationController data-ng-click=\"sendNodeInformation('controller.SendNodeInformation()')\" ng-disabled=\"rowSpinner['controller.SendNodeInformation()']\"><bb-row-spinner spinner=\"rowSpinner['controller.SendNodeInformation()']\" label=\"_t('nm_send_node_information')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button> <button class=btn ng-class=\"cfg.zwavecfg.debug === true ? 'btn-success active': 'btn-primary'\" ng-click=\"setDebugMode(cfg.zwavecfg.debug === true ? false : true,'debugMode')\" ng-disabled=\"rowSpinner['debugMode']\"><bb-row-spinner spinner=\"rowSpinner['debugMode']\" label=\"_t('debug_mode')\" icon=\"'fa-bug'\"></bb-row-spinner></button> <button class=\"btn btn-default\" ng-controller=DataHolderInfoController ng-click=\"dataHolderModal('dataHolderModal',$event, ZWaveAPIData.controller.data)\"><i class=\"fa fa-clone\"></i> {{_t('ctrl_info_data')}}</button> <button class=\"btn btn-default\" ng-controller=DataHolderInfoController ng-click=\"dataHolderModal('dataHolderModal',$event, ZWaveAPIData.devices[ZWaveAPIData.controller.data.nodeId.value].data)\"><i class=\"fa fa-clone\"></i> {{_t('ctrl_info_device_data')}}</button> <a href=#uzb class=\"btn btn-default\"><i class=\"fa fa-long-arrow-up\"></i> {{_t('upgrade_bootloader_firmware')}} </a><a href=#licence class=\"btn btn-default\" ng-if=\"master['controller.data.manufacturerProductId'] == 1 && master['controller.data.manufacturerId'] == 277 && master['controller.data.manufacturerProductType'] == 1024 && master['controller.data.ZWaveChip'] == 'ZW0500'\"><i class=\"fa fa-level-up\"></i> {{_t('licence_upgrade')}}</a></div><div class=\"panel panel-default\"><div class=panel-heading><h3 class=panel-title>{{_t('ctrl_info_func_list_title')}}</h3></div><div class=panel-body ng-bind-html=\"funcList | toTrusted\"></div></div><div id=dataHolderModal class=\"appmodal appmodal-100\" ng-show=modalArr.dataHolderModal><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handleModal('dataHolderModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{_t('th_command_class')}}</h3></div><div class=\"appmodal-body modal-h-400\">{{dataHolderInfo.all}}</div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleModal('dataHolderModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button></div></div></div></div>"
-  );
-
-
-  $templateCache.put('app/views/network/controller_installer.html',
-    "<div ng-controller=ControllerController><div class=page-header><h1>{{_t('nav_controller_info')}}</h1></div><div class=\"well well-sm\"><a href=#network/queue target=_blank class=\"btn btn-primary\" _ngs-click=openQueue()><i class=\"fa fa-search\"></i> {{_t('nm_inspect_queue_title')}}</a> <em>{{_t('txt_inspect_queue')}}</em></div><div class=\"table-responsive table-controller\"><h3>{{_t('ctrl_info_role_title')}}</h3><table class=\"table table-condensed\"><tbody><tr><td id=ctrl_info_nodeid_title class=controller-th>{{_t('ctrl_info_nodeid_title')}}</td><td id=ctrl_info_nodeid_value>{{master['controller.data.nodeId']}}</td></tr><tr><td id=ctrl_info_homeid_title class=controller-th>{{_t('ctrl_info_homeid_title')}}</td><td id=ctrl_info_homeid_value><span ng-if=\"boxData.controller.isPrimary && boxData.controller.hasDevices\">{{_t('my_own')}} </span><span ng-if=\"!boxData.controller.isPrimary || !boxData.controller.hasDevices\">{{_t('other_network')}}</span></td></tr><tr><td id=ctrl_info_primary_title class=controller-th>{{_t('ctrl_info_primary_title')}}</td><td id=ctrl_info_primary_value>{{master['controller.data.isPrimary']? 'Yes': 'No'}}</td></tr><tr><td id=ctrl_info_real_primary_title class=controller-th>{{_t('ctrl_info_real_primary_title')}}</td><td id=ctrl_info_real_primary_value>{{master['controller.data.isRealPrimary']? 'Yes - ' + _t('secondary_inclusion_controller') : 'No'}}</td></tr><tr><td id=ctrl_info_suc_sis_title class=controller-th>{{_t('ctrl_info_suc_sis_title')}}</td><td id=ctrl_info_suc_sis_value>{{master['txtSucSis']}}</td></tr></tbody></table><h3>{{_t('ctrl_info_hw_title')}}</h3><table class=\"table table-condensed\"><tbody><tr><td id=ctrl_info_hw_vendor_title class=controller-th>{{_t('ctrl_info_hw_vendor_title')}}</td><td id=ctrl_info_hw_vendor_value>{{getCustomCfgVal('hardware_vendor')}}</td></tr><tr><td id=ctrl_info_hw_product_title class=controller-th>{{_t('ctrl_info_hw_product_title')}}</td><td id=ctrl_info_hw_product_value>0001 / 0001</td></tr><tr><td id=ctrl_info_hw_chip_title class=controller-th>{{_t('ctrl_info_hw_chip_title')}}</td><td id=ctrl_info_hw_chip_value>{{master['controller.data.ZWaveChip']}}</td></tr></tbody></table><h3>{{_t('ctrl_info_sw_title')}}</h3><table class=\"table table-condensed\"><tbody><tr><td id=ctrl_info_sw_lib_title class=controller-th>{{_t('ctrl_info_sw_lib_title')}}</td><td id=ctrl_info_sw_lib_value>{{master['controller.data.libType']}}</td></tr><tr><td id=ctrl_info_sw_sdk_title class=controller-th>{{_t('ctrl_info_sw_sdk_title')}}</td><td id=ctrl_info_sw_sdk_value>{{master['controller.data.SDK']}}</td></tr><tr><td id=ctrl_info_sw_api_title class=controller-th>{{_t('ctrl_info_sw_api_title')}}</td><td id=ctrl_info_sw_api_value>{{master['controller.data.APIVersion']}}</td></tr></tbody></table><h3>{{_t('ctrl_info_sw_rev_title')}}</h3><table class=\"table table-condensed\"><tbody><tr><td id=ctrl_info_sw_rev_ver_title class=controller-th>{{_t('ctrl_info_sw_rev_ver_title')}}</td><td id=ctrl_info_sw_rev_ver_value>{{master['controller.data.softwareRevisionVersion']}}</td></tr><tr><td id=ctrl_info_sw_rev_id_title class=controller-th>{{_t('ctrl_info_sw_rev_id_title')}}</td><td id=ctrl_info_sw_rev_id_value>{{master['controller.data.softwareRevisionId']}}</td></tr><tr><td id=ctrl_info_sw_rev_date_title class=controller-th>{{_t('ctrl_info_sw_rev_date_title')}}</td><td id=ctrl_info_sw_rev_date_value>{{master['controller.data.softwareRevisionDate']}}</td></tr></tbody></table><h3>{{_t('ui')}}</h3><table class=\"table table-condensed\"><tbody><tr><td id=ctrl_ui_version class=controller-th>{{_t('ui_version')}}</td><td id=ctrl_ui_version_value>{{cfg.app_version}}</td></tr><tr><td id=ctrl_ui_version class=controller-th>{{_t('built_date')}}</td><td id=ctrl_ui_version_value>{{builtInfo.built}}</td></tr></tbody></table><h3>{{_t('nm_frequency_title')}}</h3><table class=\"table table-condensed\"><tbody><tr><td class=controller-th>{{_t('current_frequency')}}</td><td>{{master['controller.data.frequency']}}</td></tr></tbody></table></div></div>"
   );
 
 
@@ -6301,12 +6214,12 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/network/statistics.html',
-    "<div ng-controller=NetworkStatisticsController><div class=page-header><h1>{{_t('statistics')}}</h1></div><bb-alert alert=alert></bb-alert><div class=\"text-right print-hide\"><button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=loadNetworkStatistics() ng-disabled=\"rowSpinner['loadNetStatistics']\"><bb-row-spinner spinner=\"rowSpinner['loadNetStatistics']\" label=\"_t('update')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button> <button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=\"updateNetworkStatistics('ClearNetworkStats()')\" ng-disabled=\"rowSpinner['ClearNetworkStats()']\"><bb-row-spinner spinner=\"rowSpinner['ClearNetworkStats()']\" label=\"_t('reset')\" icon=\"'fa-refresh'\"></bb-row-spinner></button></div><div class=statistic-entry><div ng-if=\"cfg.app_type === 'installer'\" class=statistic-title>{{_t('cit_RFTxLBTBackOffs')}}&nbsp; <span class=\"label label-default\">{{netStat.dataRate.dateTime.today}}</span></div><div ng-if=\"cfg.app_type !== 'installer'\" class=statistic-title>{{_t('RFTxLBTBackOffs')}}&nbsp; <span class=\"label label-default\">{{netStat.dataRate.dateTime.today}}</span></div><div class=page-navi-content><span class=text-success>{{ _t('RFTxFrames')}}: <strong>{{netStat.dataRate.sendValue}}</strong></span><br><span class=text-danger>{{_t('RFTxLBTBackOffs_error')}}: <strong>{{_t(netStat.dataRate.backOffValue)}}</strong></span></div></div><div class=statistic-entry><div class=statistic-title>{{_t('RFRxLRCErrors')}}&nbsp; <span class=\"label label-default\">{{netStat.successReception.dateTime.today}}</span></div><div class=\"progress clickable\" ng-click=\"expandNavi('RFRxLRCErrors', $event)\"><div class=\"progress-bar progress-bar-success\" title=\"{{_t('success_on_reception')}} {{netStat.successReception.success}}%\" style=\"width: {{netStat.successReception.success}}%\"><span>{{netStat.successReception.success}}% {{_t('success_reception')}}</span></div><div class=\"progress-bar progress-bar-danger\" title=\"{{_t('failCRCName')}} {{netStat.successReception.failCRC}}%\" style=\"width: {{netStat.successReception.failCRC}}%\"><span>{{netStat.successReception.failCRC}}% {{_t('failCRC')}}</span></div><div class=\"progress-bar progress-bar-warning\" title=\"{{_t('failCRC16Name')}} {{netStat.successReception.failCRC16}}%\" style=\"width: {{netStat.successReception.failCRC16}}%\"><span>{{netStat.successReception.failCRC16}}% {{_t('failCRC16')}}</span></div></div><div class=page-navi ng-if=\"naviExpanded['RFRxLRCErrors']\"><div class=page-navi-in><div class=page-navi-content><span class=text-success>{{ _t('success_on_reception')}}: <strong>{{netStat.successReception.okValue}}</strong></span><br><span class=text-danger>{{_t('failCRCName')}}: <strong>{{_t(netStat.successReception.failCRCValue)}}</strong></span><br><span class=text-warning>{{_t('failCRC16Name')}}: <strong>{{_t(netStat.successReception.failCRC16Value)}}</strong></span></div></div></div></div><div class=statistic-entry><div class=statistic-title>{{_t('RFRxForeignHomeID')}}&nbsp; <span class=\"label label-default\">{{netStat.foreignNetwork.dateTime.today}}</span></div><div class=\"progress clickable\" ng-click=\"expandNavi('RFRxForeignHomeID', $event)\"><div class=\"progress-bar progress-bar-success\" style=\"width: {{netStat.foreignNetwork.success}}%\"><span title=\"{{netStat.foreignNetwork.success}}% {{_t('own')}}\">{{netStat.foreignNetwork.success}}% {{_t('own')}}</span></div><div class=\"progress-bar progress-bar-danger\" style=\"width: {{netStat.foreignNetwork.fail}}%\"><span title=\"{{netStat.foreignNetwork.fail}}% {{_t('foreign')}}\">{{netStat.foreignNetwork.fail}}% {{_t('foreign')}}</span></div></div><div class=page-navi ng-if=\"naviExpanded['RFRxForeignHomeID']\"><div class=page-navi-in><div class=page-navi-content><span class=text-success>{{ _t('own_frames_desc')}}: <strong>{{netStat.foreignNetwork.own_value}}</strong></span><br><span class=text-danger>{{_t('foreign_frames_desc')}}: <strong>{{_t(netStat.foreignNetwork.foreign_value)}}</strong></span></div></div></div></div></div>"
+    "<div ng-controller=NetworkStatisticsController><div class=page-header><h1>{{_t('statistics')}}</h1></div><bb-alert alert=alert></bb-alert><div class=\"text-right print-hide\"><button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=updateNetworkStatistics() ng-disabled=\"rowSpinner['loadNetStatistics']\"><bb-row-spinner spinner=\"rowSpinner['loadNetStatistics']\" label=\"_t('update')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button> <button class=\"btn btn-primary\" id=btn_update_all_1 ng-click=\"resetNetworkStatistics('ClearNetworkStats()')\" ng-disabled=\"rowSpinner['ClearNetworkStats()']\"><bb-row-spinner spinner=\"rowSpinner['ClearNetworkStats()']\" label=\"_t('reset')\" icon=\"'fa-refresh'\"></bb-row-spinner></button></div><div class=statistic-entry><div class=statistic-title>{{_t('RFTxLBTBackOffs')}}&nbsp; <span class=\"label label-default\">{{netStat.dataRate.dateTime.today}}</span></div><div class=page-navi-content><span class=text-success>{{ _t('RFTxFrames')}}: <strong>{{netStat.dataRate.sendValue}}</strong></span><br><span class=text-danger>{{_t('RFTxLBTBackOffs_error')}}: <strong>{{_t(netStat.dataRate.backOffValue)}}</strong></span></div></div><div class=statistic-entry><div class=statistic-title>{{_t('RFRxLRCErrors')}}&nbsp; <span class=\"label label-default\">{{netStat.successReception.dateTime.today}}</span></div><div class=\"progress clickable\" ng-click=\"expandNavi('RFRxLRCErrors', $event)\"><div class=\"progress-bar progress-bar-success\" title=\"{{_t('success_on_reception')}} {{netStat.successReception.success}}%\" style=\"width: {{netStat.successReception.success}}%\"><span>{{netStat.successReception.success}}% {{_t('success_reception')}}</span></div><div class=\"progress-bar progress-bar-danger\" title=\"{{_t('failCRCName')}} {{netStat.successReception.failCRC}}%\" style=\"width: {{netStat.successReception.failCRC}}%\"><span>{{netStat.successReception.failCRC}}% {{_t('failCRC')}}</span></div><div class=\"progress-bar progress-bar-warning\" title=\"{{_t('failCRC16Name')}} {{netStat.successReception.failCRC16}}%\" style=\"width: {{netStat.successReception.failCRC16}}%\"><span>{{netStat.successReception.failCRC16}}% {{_t('failCRC16')}}</span></div></div><div class=page-navi ng-if=\"naviExpanded['RFRxLRCErrors']\"><div class=page-navi-in><div class=page-navi-content><span class=text-success>{{ _t('success_on_reception')}}: <strong>{{netStat.successReception.okValue}}</strong></span><br><span class=text-danger>{{_t('failCRCName')}}: <strong>{{_t(netStat.successReception.failCRCValue)}}</strong></span><br><span class=text-warning>{{_t('failCRC16Name')}}: <strong>{{_t(netStat.successReception.failCRC16Value)}}</strong></span></div></div></div></div><div class=statistic-entry><div class=statistic-title>{{_t('RFRxForeignHomeID')}}&nbsp; <span class=\"label label-default\">{{netStat.foreignNetwork.dateTime.today}}</span></div><div class=\"progress clickable\" ng-click=\"expandNavi('RFRxForeignHomeID', $event)\"><div class=\"progress-bar progress-bar-success\" style=\"width: {{netStat.foreignNetwork.success}}%\"><span title=\"{{netStat.foreignNetwork.success}}% {{_t('own')}}\">{{netStat.foreignNetwork.success}}% {{_t('own')}}</span></div><div class=\"progress-bar progress-bar-danger\" style=\"width: {{netStat.foreignNetwork.fail}}%\"><span title=\"{{netStat.foreignNetwork.fail}}% {{_t('foreign')}}\">{{netStat.foreignNetwork.fail}}% {{_t('foreign')}}</span></div></div><div class=page-navi ng-if=\"naviExpanded['RFRxForeignHomeID']\"><div class=page-navi-in><div class=page-navi-content><span class=text-success>{{ _t('own_frames_desc')}}: <strong>{{netStat.foreignNetwork.own_value}}</strong></span><br><span class=text-danger>{{_t('foreign_frames_desc')}}: <strong>{{_t(netStat.foreignNetwork.foreign_value)}}</strong></span></div></div></div></div></div>"
   );
 
 
   $templateCache.put('app/views/network/timing.html',
-    "<div ng-controller=TimingController><div class=page-header><h1>{{_t('nav_timing_info')}}</h1></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=devices.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><a href=\"\" ng-click=\"orderBy('id')\">{{_t('th_node')}} <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('type')\">{{_t('th_type')}} <span ng-show=\"predicate == 'type'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('totalPackets')\">{{_t('th_total')}} (pkts) <span ng-show=\"predicate == 'totalPackets'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('okPackets')\">{{_t('th_ok')}} <span ng-show=\"predicate == 'okPackets'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i><i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th>{{_t('th_lastpackets')}}&nbsp;</th><th class=\"mobile-show text-right\"><button class=\"btn btn-primary\" ng-click=\"updateTimingInfo('updateTimingInfo')\" ng-disabled=\"rowSpinner['updateTimingInfo']\"><bb-row-spinner spinner=\"rowSpinner['updateTimingInfo']\" label=\" _t('update')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></th></tr></thead><tbody><tr ng-repeat=\"v in devices.all | orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=\"{{_t('th_node')}}\">{{ v.id}}</td><td data-title=\"{{ _t('device_name')}}\">{{ v.name }}</td><td data-title=\"{{_t('th_type')}}\"><i class=fa ng-class=v.icon title={{_t(v.type)}}></i></td><td data-title=\"{{ _t('datetime')}}\"><bb-date-time obj=v.dateTime updated=v.isUpdated></bb-date-time></td><td data-title=\"{{_t('th_total')}}\">{{ v.totalPackets}} &nbsp;</td><td data-title=\"{{_t('th_ok')}}\">{{ v.okPackets}}% &nbsp;</td><td data-title=\"{{_t('th_lastpackets')}}\"><span ng-bind-html=\"v.lastPackets | toTrusted\"></span> &nbsp;</td><td>&nbsp;</td></tr></tbody></table></div><div class=legend-entry><div class=legend-title>{{_t('timing_color_description')}}</div><div class=legend-row><i class=\"fa fa-square fa-lg green\"></i> {{_t('timing_green')}}</div><div class=legend-row><i class=\"fa fa-square fa-lg black\"></i> {{_t('timing_black')}}</div><div class=legend-row><i class=\"fa fa-square fa-lg red\"></i> {{_t('timing_red')}}</div></div></div>"
+    "<div ng-controller=TimingController><div class=page-header><h1>{{_t('nav_timing_info')}}</h1></div><div class=text-right><div class=btn-group><button class=\"btn btn-default\" ng-class=\"{'active':!devices.filter}\" ng-click=setFilter(false)>{{_t('all')}}</button> <button class=\"btn btn-default\" ng-class=\"{'active':devices.filter}\" ng-click=setFilter(true)>{{_t('h_24')}}</button></div><button class=\"btn btn-primary\" ng-click=\"updateTimingInfo('updateTimingInfo')\" ng-disabled=\"rowSpinner['updateTimingInfo']\"><bb-row-spinner spinner=\"rowSpinner['updateTimingInfo']\" label=\" _t('update')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></div><bb-alert alert=alert></bb-alert><div id=table_mobile ng-if=devices.show><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th><a href=\"\" ng-click=\"orderBy('id')\">{{_t('th_node')}} <span ng-show=\"predicate == 'id'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i> <i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('name')\">{{ _t('device_name')}} <span ng-show=\"predicate == 'name'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i> <i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('type')\">{{_t('th_type')}} <span ng-show=\"predicate == 'type'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i> <i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('updateTime')\">{{ _t('datetime')}} <span ng-show=\"predicate == 'updateTime'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i> <i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('totalPackets')\">{{_t('th_total')}} (pkts) <span ng-show=\"predicate == 'totalPackets'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i> <i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th><a href=\"\" ng-click=\"orderBy('okPackets')\">{{_t('th_ok')}} <span ng-show=\"predicate == 'okPackets'\"><i ng-show=!reverse class=\"fa fa-sort-asc\"></i> <i ng-show=reverse class=\"fa fa-sort-desc\"></i></span></a></th><th>{{_t('th_lastpackets')}}&nbsp;</th></tr></thead><tbody><tr ng-repeat=\"v in devices.all | orderBy:predicate:reverse track by $index\" id=\"{{ v.rowId}}\"><td data-title=\"{{_t('th_node')}}\">{{ v.id}}</td><td data-title=\"{{ _t('device_name')}}\">{{ v.name }}</td><td data-title=\"{{_t('th_type')}}\"><i class=fa ng-class=v.icon title={{_t(v.type)}}></i></td><td data-title=\"{{ _t('datetime')}}\"><bb-date-time obj=v.dateTime updated=v.isUpdated></bb-date-time></td><td data-title=\"{{_t('th_total')}}\">{{ v.totalPackets}} &nbsp;</td><td data-title=\"{{_t('th_ok')}}\">{{ v.okPackets}}% &nbsp;</td><td class=timing-packet-wrap data-title=\"{{_t('th_lastpackets')}}\" ng-bind-html=\"v.lastPackets | toTrusted\"></td></tr></tbody></table></div><div class=legend-entry><div class=legend-title>{{_t('timing_color_description')}}</div><div class=legend-row><i class=\"fa fa-square fa-lg green\"></i> {{_t('timing_green')}}</div><div class=legend-row><i class=\"fa fa-square fa-lg black\"></i> {{_t('timing_black')}}</div><div class=legend-row><i class=\"fa fa-square fa-lg red\"></i> {{_t('timing_red')}}</div></div></div>"
   );
 
 
@@ -6316,7 +6229,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/pages/uzb.html',
-    "<div data-ng-controller=UzbController><bb-loader></bb-loader><div class=page-header><h1>{{_t('upgrade_bootloader_firmware')}}</h1></div><p>{{_t('txt_uzb_info')}}</p><bb-alert alert=alert></bb-alert><div><table class=\"table table-striped table-condensed table-hover\" ng-if=\"uzbUpgrade.length > 0\"><tbody><tr ng-repeat=\"v in uzbUpgrade| orderBy:predicate:reverse\" id=row_{{v.id}} ngif=\"v.file == 'bin'\"><td style=\"white-space: nowrap\"><strong>{{v.released | date:'yyyy-MM-dd'}}</strong></td><td>{{v.appVersionMajor + '.' + v.appVersionMinor}}</td><td>{{v.comment}}</td><td ng-show=token.load>{{token.load}}</td><td class=td-action><button class=\"btn btn-default\" id=btn_boot_{{v.id}} ng-click=\"upgrade('zme_bootloader_upgrade', cfg.uzb_url + v.fileURL)\" ng-if=\"v.type == 'bootloader'\" ng-disabled=\"rowSpinner['zme_bootloader_upgrade']\"><bb-row-spinner spinner=\"rowSpinner['zme_bootloader_upgrade']\" label=\"_t('upgrade_bootloader')\" icon=\"'fa-arrow-up text-primary'\"></bb-row-spinner></button> <button class=\"btn btn-default\" id=btn_firmware_{{v.id}} ng-click=\"upgrade('zme_firmware_upgrade', cfg.uzb_url + v.fileURL)\" ng-if=\"v.type=='firmware'\" ng-disabled=\"rowSpinner['zme_firmware_upgrade']\"><bb-row-spinner spinner=\"rowSpinner['zme_firmware_upgrade']\" label=\"_t('upgrade_firmware')\" icon=\"'fa-arrow-up text-info'\"></bb-row-spinner></button></td></tr></tbody></table></div><div class=form-page><div class=\"fieldset text-right\"><input class=inputfile type=file name=file id=upload_bootloader ng-click=\"icons.find = v\" onchange=\"angular.element(this).scope().uploadFile('upload_bootloader',this.files)\"><label for=upload_bootloader class=\"btn btn-primary\" title=\"{{_t('upload_bootloader')}}\" ng-disabled=\"rowSpinner['upload_bootloader']\"><bb-row-spinner spinner=\"rowSpinner['upload_bootloader']\" label=\"_t('upload_bootloader')\" icon=\"'fa-upload'\"></bb-row-spinner></label><input class=inputfile type=file name=file id=upload_firmware ng-click=\"icons.find = v\" onchange=\"angular.element(this).scope().uploadFile('upload_firmware',this.files)\"><label for=upload_firmware class=\"btn btn-info\" title=\"{{_t('upload_firmware')}}\" ng-disabled=\"rowSpinner['upload_firmware']\"><bb-row-spinner spinner=\"rowSpinner['upload_firmware']\" label=\"_t('upload_firmware')\" icon=\"'fa-upload'\"></bb-row-spinner></label></div></div><div class=\"panel panel-default panel-highlighted\"><div class=panel-heading><i class=\"fa fa-tag\"></i> {{_t('nav_firmware_token')}}</div><div class=\"panel-body form-inline\"><p>{{_t('add_token_info')}}</p><form id=form_token class=form novalidate ng-submit=addToken(token.input)><div class=input-group><input name=token id=token class=form-control placeholder=\"{{_t('insert_token')}}\" ng-model=token.input.token> <span class=input-group-btn><button class=\"btn btn-info\" type=submit><bb-row-spinner spinner=\"rowSpinner['add_token']\" label=\"_t('go')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></span></div></form></div></div></div>"
+    "<div data-ng-controller=UzbController><bb-loader></bb-loader><div class=page-header><h1>{{_t('upgrade_bootloader_firmware')}}</h1></div><p>{{_t('txt_uzb_info')}}</p><bb-alert alert=alert></bb-alert><div><table class=\"table table-striped table-condensed table-hover\" ng-if=\"uzbUpgrade.length > 0\"><tbody><tr ng-repeat=\"v in uzbUpgrade| orderBy:predicate:reverse\" id=row_{{v.id}} ngif=\"v.file == 'bin'\"><td style=\"white-space: nowrap\"><strong>{{v.released | date:'yyyy-MM-dd'}}</strong></td><td>{{v.appVersionMajor + '.' + v.appVersionMinor}}</td><td><i class=\"fa fa-arrow-circle-up\" style=\"color: green\" ng-if=\"v.appVersionMajor*1000 + v.appVersionMinor*1 < v.targetAppVersionMajor*1000 + v.targetAppVersionMinor*1\"></i> <i class=\"fa fa-arrow-circle-right\" style=\"color: gray\" ng-if=\"v.appVersionMajor*1000 + v.appVersionMinor*1 == v.targetAppVersionMajor*1000 + v.targetAppVersionMinor*1\"></i> <i class=\"fa fa-arrow-circle-down\" style=\"color: red\" ng-if=\"v.appVersionMajor*1000 + v.appVersionMinor*1 > v.targetAppVersionMajor*1000 + v.targetAppVersionMinor*1\"></i></td><td>{{v.targetAppVersionMajor + '.' + v.targetAppVersionMinor}}</td><td>{{v.comment}}</td><td ng-show=token.load>{{token.load}}</td><td class=td-action><button class=\"btn btn-default\" id=btn_boot_{{v.id}} ng-click=\"upgrade('zme_bootloader_upgrade', cfg.uzb_url + v.fileURL)\" ng-if=\"v.type == 'bootloader'\" ng-disabled=\"rowSpinner['zme_bootloader_upgrade']\"><bb-row-spinner spinner=\"rowSpinner['zme_bootloader_upgrade']\" label=\"_t('upgrade_bootloader')\" icon=\"'fa-arrow-up text-primary'\"></bb-row-spinner></button> <button class=\"btn btn-default\" id=btn_firmware_{{v.id}} ng-click=\"upgrade('zme_firmware_upgrade', cfg.uzb_url + v.fileURL)\" ng-if=\"v.type=='firmware'\" ng-disabled=\"rowSpinner['zme_firmware_upgrade']\"><bb-row-spinner spinner=\"rowSpinner['zme_firmware_upgrade']\" label=\"_t('upgrade_firmware')\" icon=\"'fa-arrow-up text-info'\"></bb-row-spinner></button></td></tr></tbody></table></div><div class=form-page><div class=\"fieldset text-right\"><input class=inputfile type=file name=file id=upload_bootloader ng-click=\"icons.find = v\" onchange=\"angular.element(this).scope().uploadFile('upload_bootloader',this.files)\"><label for=upload_bootloader class=\"btn btn-primary\" title=\"{{_t('upload_bootloader')}}\" ng-disabled=\"rowSpinner['upload_bootloader']\"><bb-row-spinner spinner=\"rowSpinner['upload_bootloader']\" label=\"_t('upload_bootloader')\" icon=\"'fa-upload'\"></bb-row-spinner></label><input class=inputfile type=file name=file id=upload_firmware ng-click=\"icons.find = v\" onchange=\"angular.element(this).scope().uploadFile('upload_firmware',this.files)\"><label for=upload_firmware class=\"btn btn-info\" title=\"{{_t('upload_firmware')}}\" ng-disabled=\"rowSpinner['upload_firmware']\"><bb-row-spinner spinner=\"rowSpinner['upload_firmware']\" label=\"_t('upload_firmware')\" icon=\"'fa-upload'\"></bb-row-spinner></label></div></div><div class=\"panel panel-default panel-highlighted\"><div class=panel-heading><i class=\"fa fa-tag\"></i> {{_t('nav_firmware_token')}}</div><div class=\"panel-body form-inline\"><p>{{_t('add_token_info')}}</p><form id=form_token class=form novalidate ng-submit=addToken(token.input)><div class=input-group><input name=token id=token class=form-control placeholder=\"{{_t('insert_token')}}\" ng-model=token.input.token> <span class=input-group-btn><button class=\"btn btn-info\" type=submit><bb-row-spinner spinner=\"rowSpinner['add_token']\" label=\"_t('go')\" icon=\"'fa-circle-o'\"></bb-row-spinner></button></span></div></form></div></div></div>"
   );
 
 
@@ -6325,43 +6238,18 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
   );
 
 
-  $templateCache.put('app/views/settings/modal_cit_unregister.html',
-    "<div id=citUnregisterModal class=appmodal ng-show=modalArr.citUnregisterModal><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=cancel($event)><i class=\"fa fa-times\"></i></span><h3><i class=\"fa fa-exclamation-circle\"></i> {{getCustomCfgVal('title')}}</h3></div><div class=appmodal-body><div class=\"alert alert-info\">{{_t('cit_auth_prompt')}}</div><fieldset><div class=form-group><input name=user id=user ng-model=unregisterCit.input.user class=\"form-control ng-dirty ng-valid ng-valid-required\" placeholder=\"{{_t('lb_login')}}\" ng-blur=\"userBlur = true\" ng-required=true required></div><div class=form-group><input name=pass id=pass ng-model=unregisterCit.input.pass type=password class=\"form-control ng-dirty ng-valid ng-valid-required\" placeholder=\"{{_t('lb_password')}}\" ng-blur=\"passBlur = true\" ng-required=true required></div></fieldset></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=confirmUnregistration($event)><i class=\"fa fa-check\"></i> <span class=btn-name>{{_t('ok')}}</span></button> <button type=button class=\"btn btn-default\" ng-click=cancel($event)><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button></div></div></div>"
-  );
-
-
   $templateCache.put('app/views/settings/modal_timezone.html',
     "<div id=timezoneModal class=appmodal ng-show=modalArr.timezoneModal><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"handleModal('timezoneModal', $event)\"><i class=\"fa fa-times\"></i></span><h3><i class=\"fa fa-exclamation-circle\"></i> {{getCustomCfgVal('title')}}</h3></div><div class=appmodal-body><div class=\"alert alert-warning\"><i class=\"fa fa-spinner fa-spin fa-lg\"></i> {{ _t('z_way_restart', {__val__: settings.countdown,__level__: _t('seconds')})}}</div></div><div class=appmodal-footer><button type=button class=\"btn btn-default\" ng-click=\"handleModal('interviewModal', $event)\"><i class=\"fa fa-times text-danger\"></i> <span class=btn-name>{{_t('btn_cancel')}}</span></button></div></div></div>"
   );
 
 
-  $templateCache.put('app/views/settings/settings_app_default.html',
+  $templateCache.put('app/views/settings/settings.html',
+    "<div class=page-header><h1>{{_t('settings')}}</h1></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_lang.html'\"></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_app.html'\"></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_report.html'\"></div>"
+  );
+
+
+  $templateCache.put('app/views/settings/settings_app.html',
     "<h2 class=accordion-entry-title ng-click=\"expandElement('settingsApp')\"><i class=\"fa fa-cogs fa-fw\"></i>&nbsp;{{_t('app_settings')}} <i class=\"fa accordion-arrow\" ng-class=\"expand.settingsApp ? 'fa-chevron-up':'fa-chevron-down'\"></i></h2><div class=accordion-entry-ctrl ng-class=\"\" ng-if=expand.settingsApp ng-controller=SettingsAppFormatController><bb-loader></bb-loader><form name=form_settings id=form_settings class=\"form form-page\" ng-submit=storeSettings(settings.input) novalidate><fieldset><div class=\"form-group form-inline\"><label>{{_t('date_format')}}:</label><select name=date_format name=date_format class=form-control ng-model=settings.input.date_format><option ng-repeat=\"v in cfg.date_format_list\" value={{v}} ng-selected=\"v === cfg.zwavecfg.date_format\">{{v}}</option></select></div><div class=\"form-group form-inline\"><label>{{_t('time_format')}}:</label><select name=time_format name=time_format class=form-control ng-model=settings.input.time_format><option ng-repeat=\"v in cfg.time_format_list\" value={{v}} ng-selected=\"v === cfg.zwavecfg.time_format\">{{v}} {{_t('hours')}}</option></select></div><div class=\"form-group form-inline\" ng-if=\"['default','popp'].indexOf(cfg.app_type) > -1\"><label>{{_t('timezone')}}:</label><select name=time_zone name=time_zone class=form-control ng-model=settings.input.time_zone><option ng-repeat=\"v in cfg.time_zone_list\" value={{v}} ng-selected=\"v === cfg.zwavecfg.time_zone\">{{v}}</option></select></div></fieldset><fieldset class=submit-entry><button type=submit class=\"btn btn-submit\" title=\"{{_t('btn_save')}}\"><i class=\"fa fa-check\"></i> <span class=btn-name>{{_t('btn_save')}}</span></button></fieldset></form><div ng-include=\"'app/views/settings/modal_timezone.html'\" ng-if=\"['default','popp'].indexOf(cfg.app_type) > -1\"></div></div>"
-  );
-
-
-  $templateCache.put('app/views/settings/settings_app_installer.html',
-    "<h2 class=accordion-entry-title ng-click=\"expandElement('settingsApp')\"><i class=\"fa fa-cogs fa-fw\"></i>&nbsp;{{_t('app_settings')}} <i class=\"fa accordion-arrow\" ng-class=\"expand.settingsApp ? 'fa-chevron-up':'fa-chevron-down'\"></i></h2><div class=accordion-entry-ctrl ng-class=\"\" ng-if=expand.settingsApp ng-controller=SettingsAppController><bb-loader></bb-loader><form name=form_settings id=form_settings class=\"form form-page\" ng-submit=\"storeSettings(settings.input, $event)\" novalidate><fieldset><div class=\"form-group form-inline\"><label for=network_name>{{_t('cit_identifier')}}:</label><input name=network_name id=network_name class=form-control value={{settings.input.cit_identifier}} ng-model=settings.input.cit_identifier></div><div class=\"form-group form-inline\"><label>{{_t('ssid_name')}}:</label><input name=ssid_name id=ssid_name class=form-control placeholder=\"{{_t('ssid_name')}}\" value={{settings.input.ssid_name}} ng-model=settings.input.ssid_name></div><div class=\"form-group form-inline\"><label>{{_t('wifi_password')}}:</label><input name=wifi_password id=wifi_password type=password class=form-control placeholder=\"{{_t('wifi_password')}}\" value={{settings.input.wifi_password}} ng-model=settings.input.wifi_password ng-blur=\"passwordBlur = true\" ng-minlength=8 ng-maxlength=63 ng-change=\"settings.wifi_pwd_changed = true\"><bb-validator input-name=form_settings.wifi_password.$error.minlength trans='_t(\"wifi_password_valid\")' has-blur=passwordBlur></bb-validator><bb-validator input-name=form_settings.wifi_password.$error.maxlength trans='_t(\"wifi_password_valid\")' has-blur=passwordBlur></bb-validator></div><div class=\"form-group form-inline\"><label>{{_t('date_format')}}:</label><select name=date_format name=date_format class=form-control ng-model=settings.input.date_format><option ng-repeat=\"v in cfg.date_format_list\" value={{v}} ng-selected=\"v === cfg.zwavecfg.date_format\">{{v}}</option></select></div><div class=\"form-group form-inline\"><label>{{_t('time_format')}}:</label><select name=time_format name=time_format class=form-control ng-model=settings.input.time_format><option ng-repeat=\"v in cfg.time_format_list\" value={{v}} ng-selected=\"v === cfg.zwavecfg.time_format\">{{v}} {{_t('hours')}}</option></select></div><div class=\"form-group form-inline\"><label>{{_t('ntp_set_mode')}}</label><div class=btn-group><button type=button class=btn id=btn_promi_on ng-click=\"setNTPMode('enable')\" ng-disabled=settings.ntp.active ng-class=\"!settings.ntp.active? 'btn-primary' : 'btn-default'\"><bb-row-spinner spinner=\"rowSpinner['enable']\" label=\"_t('on')\"></bb-row-spinner></button> <button type=button class=\"btn btn-default\" id=btn_promi_off ng-click=\"setNTPMode('disable')\" ng-disabled=!settings.ntp.active ng-class=\"settings.ntp.active? 'btn-primary' : 'btn-default'\"><bb-row-spinner spinner=\"rowSpinner['disable']\" label=\"_t('off')\"></bb-row-spinner></button></div><bb-help-text trans=\"_t('ntp_set_mode_info')\"></bb-help-text></div><div class=\"form-group form-inline\"><label>{{_t('timezone')}}:</label><select name=time_zone class=form-control ng-model=settings.input.time_zone ng-disabled=\"!settings.show_tz || settings.ntp_switch === 'disable'\" ng-change=\"settings.reboot_tz = (settings.input.time_zone !== settings.lastTZ)\"><option ng-repeat=\"v in cfg.time_zone_list\" value={{v}} ng-selected=\"v === settings.lastTZ.replace('_',' ')\">{{v}}</option></select><bb-help-text trans=\"_t('tz_set_info',{__ctz__: settings.lastTZ})\"></bb-help-text></div><div class=\"form-group form-inline\"><label>{{_t('ntp_synchronize')}}</label><button class=\"btn btn-primary\" type=button title=\"{{_t('btn_synchronize_ntp')}}\" ng-click=synchronizeNTP() ng-disabled=!settings.ntp.active><i class=\"fa fa-repeat\"></i> <span class=btn-name>{{_t('btn_synchronize_ntp')}}</span></button><bb-help-text trans=\"_t('ntp_synchronize_info')\"></bb-help-text></div><div class=\"alert alert-warning\" ng-if=\"settings.reboot || settings.reboot_tz\">{{_t('settings_box_reboot')}}</div></fieldset><fieldset class=submit-entry><button type=submit class=\"btn btn-submit\" title=\"{{_t('btn_save')}}\"><i class=\"fa fa-check\"></i> <span class=btn-name>{{_t('btn_save')}}</span></button></fieldset></form><div ng-include=\"'app/views/settings/modal_timezone.html'\"></div></div>"
-  );
-
-
-  $templateCache.put('app/views/settings/settings_default.html',
-    "<div class=page-header><h1>{{_t('settings')}}</h1></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_lang.html'\"></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_app_default.html'\"></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_report.html'\"></div>"
-  );
-
-
-  $templateCache.put('app/views/settings/settings_firmware.html',
-    "<h2 class=accordion-entry-title ng-click=\"expandElement('settingsFirmware')\"><i class=\"fa fa-level-up fa-fw\"></i>&nbsp;{{_t('nav_firmware_update')}} <i class=\"fa accordion-arrow\" ng-class=\"expand.settingsFirmware  ? 'fa-chevron-up':'fa-chevron-down'\"></i></h2><div class=accordion-entry-ctrl ng-class=\"\" ng-if=expand.settingsFirmware ng-controller=SettingsFirmwareController><bb-alert alert=firmwareUpdate.alert></bb-alert><form name=form_firmware id=form_firmware class=\"form form-page\" ng-submit=updateFirmware() ng-if=!firmwareUpdate.remoteConnection><fieldset><p class=form-control-static><span ng-bind=\"_t('current_firmware')\"></span>: {{firmwareUpdate.softwareCurrentVersion}}</p><div class=form-group><bb-help-text trans=\"_t('firmware_update_info')\"></bb-help-text></div></fieldset><fieldset class=submit-entry><button type=button class=\"btn btn-submit\" title=\"{{_t('update_to_latest')}}\" ng-click=\"setAccess('?allow_access=1',true);handleModal('firmwareUpdateModal', $event)\"><i class=\"fa fa-level-up\"></i> <span class=btn-name>{{_t('update_to_latest')}}</span></button></fieldset></form><div id=firmwareUpdateModal class=\"appmodal appmodal-100\" ng-if=\"modalArr.firmwareUpdateModal && firmwareUpdate.show\"><div class=appmodal-in><div class=appmodal-header><span class=appmodal-close ng-click=\"redirectAfterUpdate();setAccess('?allow_access=0');handleModal('firmwareUpdateModal', $event)\"><i class=\"fa fa-times\"></i></span><h3>{{_t('nav_firmware_update')}}</h3></div><div class=\"appmodal-body text-center\"><iframe ng-src={{firmwareUpdate.url}} height=600 style=\"width: 100%\" ng-if=firmwareUpdate.loaded></iframe></div></div></div><div ng-include=\"'app/views/settings/modal_timezone.html'\"></div></div>"
-  );
-
-
-  $templateCache.put('app/views/settings/settings_frequency.html',
-    "<h2 class=\"accordion-entry-title expanded-only_\" ng-init_=\"expandElement('settingsFrequency')\" ng-click=\"expandElement('settingsFrequency')\"><i class=\"fa fa-map-marker fa-fw\"></i>&nbsp;{{_t('nm_frequency_title')}} <i class=\"fa accordion-arrow\" ng-class=\"expand.settingsFrequency  ? 'fa-chevron-up':'fa-chevron-down'\"></i></h2><div class=accordion-entry-ctrl ng-class=\"\" ng-if=expand.settingsFrequency ng-controller=ChangeFrequencyController><div>{{_t('current_frequency')}}: <strong>{{frequency.currentFreq}}</strong></div><div class=text-alert-list><i class=\"fa fa-info-circle text-info\"></i> {{_t('frequency_info')}}</div><div class=\"cfg-block form-inline block-frequency\" ng-if=\"frequency.currentFreqArr === 'EuRuInCn' || frequency.currentFreqArr === null\"><button class=btn id=btn_nm_freq_change_eu ng-class=\"controlDh.controller.frequency === cfg.frequency[0] ? 'btn-default' : 'btn-primary'\" ng-disabled=\"rowSpinner['ZMEFreqChange(0)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"zmeFreqChange('ZMEFreqChange(0)')\"><bb-row-spinner spinner=\"rowSpinner['ZMEFreqChange(0)']\"></bb-row-spinner>EU</button> <button class=btn id=btn_nm_freq_change_ru ng-class=\"controlDh.controller.frequency === cfg.frequency[1] ? 'btn-default' : 'btn-primary'\" ng-disabled=\"rowSpinner['ZMEFreqChange(1)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"zmeFreqChange('ZMEFreqChange(1)')\"><bb-row-spinner spinner=\"rowSpinner['ZMEFreqChange(1)']\"></bb-row-spinner>RU</button> <button class=btn id=btn_nm_freq_change_in ng-class=\"controlDh.controller.frequency === cfg.frequency[2] ? 'btn-default' : 'btn-primary'\" ng-disabled=\"rowSpinner['ZMEFreqChange(2)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"zmeFreqChange('ZMEFreqChange(2)')\"><bb-row-spinner spinner=\"rowSpinner['ZMEFreqChange(2)']\"></bb-row-spinner>IN</button> <button class=btn id=btn_nm_freq_change_cn ng-class=\"controlDh.controller.frequency === cfg.frequency[6] ? 'btn-default' : 'btn-primary'\" ng-disabled=\"rowSpinner['ZMEFreqChange(6)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"zmeFreqChange('ZMEFreqChange(6)')\"><bb-row-spinner spinner=\"rowSpinner['ZMEFreqChange(6)']\"></bb-row-spinner>CN</button></div><div class=\"cfg-block form-inline\" ng-if=\"frequency.currentFreqArr === 'UsIl' || frequency.currentFreqArr === null\"><button class=btn id=btn_nm_freq_change_us ng-class=\"controlDh.controller.frequency === cfg.frequency[3] ? 'btn-default' : 'btn-primary'\" ng-disabled=\"rowSpinner['ZMEFreqChange(3)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"zmeFreqChange('ZMEFreqChange(3)')\"><bb-row-spinner spinner=\"rowSpinner['ZMEFreqChange(3)']\"></bb-row-spinner>US</button> <button class=btn id=btn_nm_freq_change_il ng-class=\"controlDh.controller.frequency === cfg.frequency[9] ? 'btn-default' : 'btn-primary'\" ng-disabled=\"rowSpinner['ZMEFreqChange(9)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"zmeFreqChange('ZMEFreqChange(9)')\"><bb-row-spinner spinner=\"rowSpinner['ZMEFreqChange(9)']\"></bb-row-spinner>IL</button></div><div class=\"cfg-block form-inline\" ng-if=\"frequency.currentFreqArr === 'AnzHk' || frequency.currentFreqArr === null\"><button class=btn id=btn_nm_freq_change_anz ng-class=\"controlDh.controller.frequency === cfg.frequency[4] ? 'btn-default' : 'btn-primary'\" ng-disabled=\"rowSpinner['ZMEFreqChange(4)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"zmeFreqChange('ZMEFreqChange(4)')\"><bb-row-spinner spinner=\"rowSpinner['ZMEFreqChange(4)']\"></bb-row-spinner>ANZ/BR</button> <button class=btn id=btn_nm_freq_change_hk ng-class=\"controlDh.controller.frequency === cfg.frequency[5] ? 'btn-default' : 'btn-primary'\" ng-disabled=\"rowSpinner['ZMEFreqChange(5)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"zmeFreqChange('ZMEFreqChange(5)')\"><bb-row-spinner spinner=\"rowSpinner['ZMEFreqChange(5)']\"></bb-row-spinner>HK</button></div><div class=\"cfg-block form-inline\" ng-if=\"frequency.currentFreqArr === 'KrJp' || frequency.currentFreqArr === null\"><button class=btn id=btn_nm_freq_change_kr ng-class=\"controlDh.controller.frequency === cfg.frequency[8] ? 'btn-default' : 'btn-primary'\" ng-disabled=\"rowSpinner['ZMEFreqChange(8)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"zmeFreqChange('ZMEFreqChange(8)')\"><bb-row-spinner spinner=\"rowSpinner['ZMEFreqChange(8)']\"></bb-row-spinner>KR</button> <button class=btn id=btn_nm_freq_change_jp ng-class=\"controlDh.controller.frequency === cfg.frequency[7] ? 'btn-default' : 'btn-primary'\" ng-disabled=\"rowSpinner['ZMEFreqChange(7)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1\" ng-click=\"zmeFreqChange('ZMEFreqChange(7)')\"><bb-row-spinner spinner=\"rowSpinner['ZMEFreqChange(7)']\"></bb-row-spinner>JP</button></div></div>"
-  );
-
-
-  $templateCache.put('app/views/settings/settings_installer.html',
-    "<div class=page-header><h1>{{_t('settings')}}</h1></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_lang.html'\"></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_app_installer.html'\"></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_firmware.html'\"></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_frequency.html'\" ng-controller=ControlController></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_unregister.html'\"></div><div class=accordion-entry ng-include=\"'app/views/settings/settings_report.html'\"></div>"
   );
 
 
@@ -6375,8 +6263,23 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
   );
 
 
-  $templateCache.put('app/views/settings/settings_unregister.html',
-    "<h2 class=accordion-entry-title ng-click=\"expandElement('settingsUnregister')\"><i class=\"fa fa-eraser fa-fw\"></i>&nbsp;{{_t('cit_settings_unregister')}} <i class=\"fa accordion-arrow\" ng-class=\"expand.settingsUnregister? 'fa-chevron-up':'fa-chevron-down'\"></i></h2><div class=accordion-entry-ctrl ng-class=\"\" ng-if=expand.settingsUnregister ng-controller=SettingsUnregisterCITController ng-submit=\"handleModal('citUnregisterModal', $event)\"><bb-alert alert=unregisterCit.alert></bb-alert><form name=form_unregister id=form_unregister class=\"form form-page\" ng-if=!unregisterCit.remoteConnection><fieldset><div class=form-group><bb-help-text trans=\"_t('cit_unregister_info')\"></bb-help-text></div></fieldset><fieldset class=submit-entry><button type=submit class=\"btn btn-submit\" title=\"{{_t('cit_unregister_btn')}}\" ng-disabled=!isOnline><i class=\"fa fa-eraser\"></i> <span class=btn-name>{{_t('cit_unregister_btn')}}</span></button></fieldset></form><div ng-include=\"'app/views/settings/modal_cit_unregister.html'\"></div></div>"
+  $templateCache.put('app/views/smartstart/navi.html',
+    "<div class=\"tabs-wrap form-inline\"><div class=\"btn-group btn-group-justified btn-goup-tabs\"><a class=\"btn btn-default\" title=\"{{_t('New Device Key')}}\" href=#smartstartdsk ng-class=\"routeMatch('/smartstartdsk') ? 'active' : ''\"><i class=\"fa fa-key\"></i> <span class=btn-name>{{_t('new_device_key')}}</span> </a><a class=\"btn btn-default\" title=\"{{_t('Scan QR code')}}\" href=#smartstartqr ng-class=\"routeMatch('/smartstartqr') ? 'active' : ''\"><i class=\"fa fa-qrcode\"></i> <span class=btn-name>{{_t('scan_qr_code')}}</span> </a><a class=\"btn btn-default\" title=\"{{_t('Device Key List')}}\" href=#smartstartlist ng-class=\"routeMatch('/smartstartlist') ? 'active' : ''\"><i class=\"fa fa-list\"></i> <span class=btn-name>{{_t('device_key_list')}}</span></a></div></div>"
+  );
+
+
+  $templateCache.put('app/views/smartstart/smartstart_dsk_entry.html',
+    "<div class=smart-start ng-controller=SmartStartDskEntryController><bb-alert alert=dsk.alert></bb-alert><div class=container ng-switch=dsk.state ng-if=_.isEmpty(dsk.alert)><div ng-include=\"'app/views/smartstart/navi.html'\"></div><div class=\"entry add-dsk\"><p class=content>{{_t('enter_dsk')}}</p><form name=form_dsk class=form-inline_ ng-submit=addDsk()><div class=form-group bb-dsk-navigate><span><input id=dsk_1 maxlength=5 class=\"form-control dsk-number\" ng-model=dsk.input.dsk_1 ng-paste=fillInput($event)></span>- <span><input id=dsk_2 maxlength=5 class=\"form-control dsk-number\" ng-model=dsk.input.dsk_2 ng-paste=fillInput($event)></span>- <span><input id=dsk_3 maxlength=5 class=\"form-control dsk-number\" ng-model=dsk.input.dsk_3 ng-paste=fillInput($event)></span>- <span><input id=dsk_4 maxlength=5 class=\"form-control dsk-number\" ng-model=dsk.input.dsk_4 ng-paste=fillInput($event)></span>- <span><input id=dsk_5 maxlength=5 class=\"form-control dsk-number\" ng-model=dsk.input.dsk_5 ng-paste=fillInput($event)></span>- <span><input id=dsk_6 maxlength=5 class=\"form-control dsk-number\" ng-model=dsk.input.dsk_6 ng-paste=fillInput($event)></span>- <span><input id=dsk_7 maxlength=5 class=\"form-control dsk-number\" ng-model=dsk.input.dsk_7 ng-paste=fillInput($event)></span>- <span><input id=dsk_8 maxlength=5 class=\"form-control dsk-number\" ng-model=dsk.input.dsk_8 ng-paste=fillInput($event)></span></div><div class=form-group><button class=\"btn btn-success\"><bb-row-spinner spinner=rowSpinner[cfg.add_dsk] label=\"_t('Register')\" icon=\"'fa-plus'\"></bb-row-spinner></button></div></form></div><div class=\"entry list\" ng-switch-when=success-register><div class=\"alert alert-success\"><i class=\"fa fa-check\"></i> Device has been included in the network and is ready for use.<div>{{dsk.response}}</div></div></div></div></div>"
+  );
+
+
+  $templateCache.put('app/views/smartstart/smartstart_dsk_list.html',
+    "<div ng-controller=SmartStartDskListController><div ng-include=\"'app/views/smartstart/navi.html'\"></div><bb-alert alert=dsk.alert></bb-alert><div id=table_mobile ng-if=_.size(dsk.all)><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th>#</th><th>{{_t('device_name')}}</th><th>{{_t('key')}}</th><th>{{_t('nav_status')}}</th><th>{{_t('datetime')}}</th><th>&nbsp;</th></tr></thead><tbody><tr ng-repeat=\"v in dsk.all track by $index\"><td data-title=#>{{v.nodeId}}</td><td data-title=\"{{_t('device_name')}}\">{{dsk.devices[v.nodeId].name}}</td><td data-title=\"{{_t('key')}}\">{{v.ZW_QR_DSK}}</td><td data-title=\"{{_t('nav_status')}}\"><span class=\"label label-primary\" ng-class=\"v.state == 'included' ? 'label-primary':'label-warning'\"><span class=btn-name>{{v.state}}</span></span></td><td data-title=\"{{_t('datetime')}}\"><bb-date-time obj=v.added.timeformat updated=v.isUpdated></bb-date-time></td><td class=td-action data-title=\"\"><button class=\"btn btn-default\" title=\"{{_t('dialog_remove')}}\" ng-click=\"removeDsk(v,_t('lb_delete_confirm'))\" ng-disabled=!v.isSmartStart><i class=\"fa fa-trash text-danger\"></i></button></td></tr></tbody></table></div></div>"
+  );
+
+
+  $templateCache.put('app/views/smartstart/smartstart_qr.html',
+    "<div class=smart-start ng-controller=SmartStartQrController><div class=container ng-switch=qrcode.state><div ng-include=\"'app/views/smartstart/navi.html'\"></div><div class=\"entry scan-qrcode start\" ng-switch-default><p class=content>Use your smartphone to scan the QR code. You'll find this code somewhere on the box...</p><button class=\"btn btn-success\" ng-click=scan()>Scan QR code</button></div><div class=\"entry scan-qrcode scanning\" ng-switch-when=scanning><div class=image><i class=\"fa fa-spinner fa-spin\"></i></div><p class=content>Scanning QR code. Please wait...</p></div><div class=\"entry scan-qrcode error\" ng-switch-when=error><div class=image><i class=\"fa fa-exclamation\"></i></div><p class=content>Something went wrong. What happened and What to do...</p><button class=\"btn btn-success\" ng-click=resetState()>Try to scan again</button> <a class=\"btn btn-default\" href=#smartstartdsk>Enter DSK manually</a></div><div class=\"entry scan-qrcode success-scan\" ng-switch-when=success-scan><div class=\"image clickable\" ng-click=discover()><i class=\"fa fa-power-off\"></i></div><p class=content>Device is ready for inclusion. Install and power up the device</p></div><div class=\"entry scan-qrcode discovering\" ng-switch-when=discovering><div class=image><i class=\"fa fa-spinner fa-spin\"></i></div><p class=content>Discovering device... please wait</p></div><div class=\"entry scan-qrcode success-install\" ng-switch-when=success-discover><div class=image><i class=\"fa fa-check\"></i></div><p class=content>Device has been included in the network and is ready for use</p><button class=\"btn btn-success\" ng-click=resetState()>OK</button></div></div></div>"
   );
 
 }]);
@@ -6419,15 +6322,15 @@ angular.module('qAllSettled', []).config(function($provide) {
  * @class bbGoBack
  */
 angApp.directive('bbGoBack', ['$window', function ($window) {
-    return {
-        restrict: 'A',
-        link: function (scope, elem, attrs) {
-            elem.bind('click', function () {
-                $window.history.back();
-            });
-        }
-    };
-}]);
+        return {
+            restrict: 'A',
+            link: function (scope, elem, attrs) {
+                elem.bind('click', function () {
+                    $window.history.back();
+                });
+            }
+        };
+    }]);
 
 /**
  * Displays an alert message within the div
@@ -6454,8 +6357,8 @@ angApp.directive('bbAlertText', function () {
         replace: true,
         scope: {alert: '='},
         template: '<span class="alert-text" ng-if="alert.message" ng-class="alert.status">'
-        + '<i class="fa" ng-class="alert.icon"></i> <span ng-bind-html="alert.message|toTrusted"></span>'
-        + '</span>'
+                + '<i class="fa" ng-class="alert.icon"></i> <span ng-bind-html="alert.message|toTrusted"></span>'
+                + '</span>'
     };
 });
 /**
@@ -6473,9 +6376,9 @@ angApp.directive('sortBy', function () {
             field: '='
         },
         template: '<span class="order-by clickable">{{label}}&nbsp<span ng-show="obj.field == field">'
-        + '<i ng-show="!obj.reverse" class="fa fa-sort-asc"></i><i ng-show="obj.reverse" class="fa fa-sort-desc"></i>'
-        + '</span></span>',
-        link: function(scope, element, attrs) {
+                + '<i ng-show="!obj.reverse" class="fa fa-sort-asc"></i><i ng-show="obj.reverse" class="fa fa-sort-desc"></i>'
+                + '</span></span>',
+        link: function (scope, element, attrs) {
             element.bind('click', function (e) {
                 scope.callback({field: scope.field});
             });
@@ -6513,6 +6416,34 @@ angApp.directive('bbLoader', function () {
                 + '</div></div>'
     };
 });
+/**
+ * Navigate DSK form fields with value === 5 or arrow keys
+ */
+angApp.directive('bbDskNavigate', function () {
+    return{
+        restrict: 'A',
+        link: function (scope, elem, attrs) {
+                elem.find('input').on('keyup', function (e) {
+                    //var target = angular.element('#'+e.target.id);
+                    switch (e.which) {
+                        case 39:// Focus next input with right arrow key
+                            $(this).closest('span').next().find('input').focus();
+                            break;
+                        case 37:// Focus previus input with left arrow key
+                            $(this).closest('span').prev().find('input').focus();
+                            break;
+                        default:// Focus next input if input value length = 5
+                            var elLength =  $(this).val().length;
+                            if(elLength === 5) {
+                                $(this).closest('span').next().find('input').focus();
+                            }
+                            
+                            break;
+                    }
+                });
+        }
+    };
+});
 
 /**
  * Displays a dta/time in the table row
@@ -6527,8 +6458,8 @@ angApp.directive('bbDateTime', function () {
             updated: '='
         },
         template: '<span class="is-updated-{{updated}}" title="Update: {{obj.date}} {{obj.time}}, invalid: {{obj.invalidateTime}}">' +
-        '{{obj.today}}' +
-        '</span>'
+                '{{obj.today}}' +
+                '</span>'
     };
 });
 
@@ -6546,10 +6477,10 @@ angApp.directive('bbRowSpinner', function () {
             icon: '='
         },
         template: '<span title="{{label}}">' +
-        '<i class="fa " ng-class="spinner ? \'fa-spinner fa-spin\':icon"></i>' +
-        '&nbsp;<span class="btn-label">' +
-        '{{label}}' +
-        '</span></span>'
+                '<i class="fa " ng-class="spinner ? \'fa-spinner fa-spin\':icon"></i>' +
+                '&nbsp;<span class="btn-label">' +
+                '{{label}}' +
+                '</span></span>'
     };
 });
 
@@ -6703,7 +6634,7 @@ angApp.directive('routingTypeIcon', function () {
 
                 if (isListening) { // mains powered
                     cls = 'fa-bolt text-warning';
-                     title = $scope._t('conf_apply_mains');
+                    title = $scope._t('conf_apply_mains');
                 } else if (hasWakeup) {
                     cls = 'fa-battery-full text-success';
                     title = $scope._t('battery_powered_device');
@@ -6725,11 +6656,11 @@ angApp.directive('routingTypeIcon', function () {
     };
 });
 
-angApp.directive('expertCommandInput', function (cfg,$filter) {
+angApp.directive('expertCommandInput', function (cfg, $filter) {
     // Get text input
     function getText(label, value, min, max, name) {
         var input = '';
-        var inName = $filter('stringToSlug')(name ? name : label,'_');
+        var inName = $filter('stringToSlug')(name ? name : label, '_');
         input += '<label>' + label + '</label> ';
         input += '<input class="form-control" name="' + inName + '" type="text" class="form-control" value="' + value + '" title=" min: ' + min + ', max: ' + max + '" />';
         return input;
@@ -6765,11 +6696,11 @@ angApp.directive('expertCommandInput', function (cfg,$filter) {
         var value = (currValue !== undefined ? currValue : defaultValue);
         angular.forEach(enums.enumof, function (v, k) {
             //var inName =  $filter('stringToSlug')(name ? v.name : label);
-            var inName = (name ? name + '_' +label : v.name);// + '_' +label;
-           /* var inName = v.name;
-                if(name){
-                    inName = name  + '_' +label;
-                }*/
+            var inName = (name ? name + '_' + label : v.name);// + '_' +label;
+            /* var inName = v.name;
+             if(name){
+             inName = name  + '_' +label;
+             }*/
             //console.log(inName);
             var title = v.label || '';
             var type = v.type;
@@ -8933,29 +8864,7 @@ angApp.filter('fileExtension', function () {
         }
 
         // extract extension ignoring `.`
-        return basename.slice(pos + 1);
-    };
-});
-
-/**
- * Get a file extension from the path
- * @function fileExtension
- */
-angApp.filter('fileExtension', function () {
-    return function (path) {
-        // extract file name from full path ...
-        // (supports `\\` and `/` separators)
-        var basename = path.split(/[\\/]/).pop(),
-            // get last position of `.`
-            pos = basename.lastIndexOf(".");
-        // if file name is empty or ...
-        //  `.` not found (-1) or comes first (0)
-        if (basename === '' || pos < 1) {
-            return '';
-        }
-
-        // extract extension ignoring `.`
-        return basename.slice(pos + 1);
+        return basename.slice(pos + 1).toLowerCase();
     };
 });
 
@@ -8985,6 +8894,18 @@ angApp.filter('zeroFill', function () {
         len = len || 5;
         return (Array(len).join("0") + num).slice(-len);
     };
+});
+
+/**
+ * Highlight first five digits in the DSK
+ * @function highlight
+ */
+angApp.filter('highlightDsk', function () {
+  return function (dsk) {
+      var array = dsk.split('-');
+      array[0] = '<span>' + array[0] + '</span>';
+      return array.join('-');
+  };
 });
 
 /**
@@ -9431,27 +9352,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         }).then(function (response) {
             return response;
         }, function (response) {// something went wrong
-            if(response.status == 401 && cfg.app_type == "installer") {
-                var auth = cfg.auth;
-
-                logInApi(auth).then(function (response) {
-                    var user = response.data.data;
-                    deviceService.setZWAYSession(user.sid);
-                    deviceService.setUser(user);
-
-                    postApi(api,data,params);
-
-                }, function (error) {
-                    var message = $scope._t('error_load_data');
-                    if (error.status == 401) {
-                        message = $scope._t('error_load_user');
-                    }
-                    alertify.alertError(message);
-                });
-
-            } else {
-                return $q.reject(response);
-            }
+          return $q.reject(response);
         });
     }
 
@@ -9668,22 +9569,22 @@ var appService = angular.module('appService', []);
 /**
  * Device service
  */
-appService.service('deviceService', function($filter, $log, $cookies,$window,$location,cfg,_) {
+appService.service('deviceService', function ($filter, $log, $cookies, $window, $location, cfg, _) {
     /// --- Public functions --- ///
 
     /**
      * Mobile device detect
      */
-    this.isMobile = function(a) {
+    this.isMobile = function (a) {
         return isMobile(a);
     };
     /**
      * Get language line by key
      */
-    this.getLangLine = function(key, languages,replacement) {
-        return getLangLine(key, languages,replacement);
+    this.getLangLine = function (key, languages, replacement) {
+        return getLangLine(key, languages, replacement);
     };
-    
+
     /**
      * Render alertify notifier
      * @param {object} notifier
@@ -9700,7 +9601,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
     /**
      * Show connection error
      */
-    this.showConnectionError = function(error) {
+    this.showConnectionError = function (error) {
         $('#update_time_tick').html('<i class="fa fa-minus-circle fa-lg text-danger"></i>');
         return this.logError(error, 'Unable to recieve HTTP data');
     };
@@ -9708,7 +9609,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
     /**
      * Log error
      */
-    this.logError = function(error, message) {
+    this.logError = function (error, message) {
         message = message || 'ERROR:';
         $log.error('---------- ' + message + ' ----------', error);
     };
@@ -9716,36 +9617,36 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
     /**
      * Set dongle
      */
-    this.setDongle = function(dongle) {
+    this.setDongle = function (dongle) {
         angular.extend(cfg, {
-            'update_url': '/ZWave.' + dongle+ '/Data/',
-            'store_url': '/ZWave.' + dongle+ '/Run/',
-            'restore_url': '/ZWave.' + dongle+ '/Restore',
-            'queue_url': '/ZWave.' + dongle+ '/InspectQueue',
-            'fw_update_url': '/ZWave.' + dongle+ '/FirmwareUpdate',
-            'zme_bootloader_upgrade': '/ZWave.' + dongle+ '/ZMEBootloaderUpgrade',
-            'zme_firmware_upgrade': '/ZWave.' + dongle+ '/ZMEFirmwareUpgrade',
-            'upload_bootloader': '/ZWave.' + dongle+ '/ZMEBootloaderUpgrade',
-            'upload_firmware': '/ZWave.' + dongle+ '/ZMEFirmwareUpgrade',
-            'license_load_url': '/ZWave.' + dongle+ '/ZMELicense',
-            'stat_url': '/ZWave.' + dongle+ '/CommunicationStatistics',
-            'postfixget_url': '/ZWave.' + dongle+ '/PostfixGet',
-            'postfixadd_url': '/ZWave.' + dongle+ '/PostfixAdd',
-            'postfixremove_url': '/ZWave.' + dongle+ '/PostfixRemove',
-            'checklinks': '/ZWave.' + dongle+ '/CheckAllLinks',
-            'zniffer_url': '/ZWave.' + dongle+ '/Zniffer',
-            'communication_history_url': '/ZWave.' + dongle+ '/CommunicationHistory',
-            'rssi_chart': '/ZWave.' + dongle+ '/RSSIGet',
-            'configget_url': '/ZWave.' + dongle+ '/ExpertConfigGet',
-            'configupdate_url': '/ZWave.' + dongle+ '/ExpertConfigUpdate',
-            'call_all_nif': '/ZWave.' + dongle+ '/CallForAllNIF',
-            'test_node': '/ZWave.' + dongle+ '/TestNode/',
-            'network_statistics': '/ZWave.' + dongle+ '/Run/',
-            'post_report_api': '/ZWave.' + dongle+ '/sendZWayReport',
-            'reorg_run_url': '/ZWave.' + dongle+ '/NetworkReorganization',
-            'reorg_log_url': '/ZWave.' + dongle+ '/GetReorganizationLog',
-            'zddx_create_url': '/ZWave.' + dongle+ '/CreateZDDX/',
-            'get_network_statistics': '/ZWave.' + dongle+ '/GetStatisticsData'
+            'update_url': '/ZWave.' + dongle + '/Data/',
+            'store_url': '/ZWave.' + dongle + '/Run/',
+            'restore_url': '/ZWave.' + dongle + '/Restore',
+            'queue_url': '/ZWave.' + dongle + '/InspectQueue',
+            'fw_update_url': '/ZWave.' + dongle + '/FirmwareUpdate',
+            'zme_bootloader_upgrade': '/ZWave.' + dongle + '/ZMEBootloaderUpgrade',
+            'zme_firmware_upgrade': '/ZWave.' + dongle + '/ZMEFirmwareUpgrade',
+            'upload_bootloader': '/ZWave.' + dongle + '/ZMEBootloaderUpgrade',
+            'upload_firmware': '/ZWave.' + dongle + '/ZMEFirmwareUpgrade',
+            'license_load_url': '/ZWave.' + dongle + '/ZMELicense',
+            'stat_url': '/ZWave.' + dongle + '/CommunicationStatistics',
+            'postfixget_url': '/ZWave.' + dongle + '/PostfixGet',
+            'postfixadd_url': '/ZWave.' + dongle + '/PostfixAdd',
+            'postfixremove_url': '/ZWave.' + dongle + '/PostfixRemove',
+            'checklinks': '/ZWave.' + dongle + '/CheckAllLinks',
+            'zniffer_url': '/ZWave.' + dongle + '/Zniffer',
+            'communication_history_url': '/ZWave.' + dongle + '/CommunicationHistory',
+            'rssi_chart': '/ZWave.' + dongle + '/RSSIGet',
+            'configget_url': '/ZWave.' + dongle + '/ExpertConfigGet',
+            'configupdate_url': '/ZWave.' + dongle + '/ExpertConfigUpdate',
+            'call_all_nif': '/ZWave.' + dongle + '/CallForAllNIF',
+            'test_node': '/ZWave.' + dongle + '/TestNode/',
+            'network_statistics': '/ZWave.' + dongle + '/Run/',
+            'post_report_api': '/ZWave.' + dongle + '/sendZWayReport',
+            'reorg_run_url': '/ZWave.' + dongle + '/NetworkReorganization',
+            'reorg_log_url': '/ZWave.' + dongle + '/GetReorganizationLog',
+            'zddx_create_url': '/ZWave.' + dongle + '/CreateZDDX/',
+            'get_network_statistics': '/ZWave.' + dongle + '/GetStatisticsData'
 
         });
     };
@@ -9814,7 +9715,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
         // Check if host is in the logout redirect list
         var redirect = cfg.logout_redirect[$location.host()];
         // Redirect to an url from list
-        if(redirect){
+        if (redirect) {
             $window.location.href = redirect;
             return;
         }
@@ -9825,10 +9726,10 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
     /**
      * Check if is not device
      */
-    this.notDevice = function(ZWaveAPIData, node, nodeId) {
+    this.notDevice = function (ZWaveAPIData, node, nodeId) {
         /*if (nodeId == 255 || nodeId == ZWaveAPIData.controller.data.nodeId.value || node.data.isVirtual.value) {
-            return true;
-        }*/
+         return true;
+         }*/
         if (nodeId == 255 || node.data.isVirtual.value) {
             return true;
         }
@@ -9838,7 +9739,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
     /**
      * Get device type
      */
-    this.deviceType = function(node) {
+    this.deviceType = function (node) {
         var type;
         var isListening = node.data.isListening.value;
         var isFLiRS = !isListening && (node.data.sensor250.value || node.data.sensor1000.value);
@@ -9864,7 +9765,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
     /**
      * Get last communication
      */
-    this.lastCommunication = function(node) {
+    this.lastCommunication = function (node) {
         var lastReceive = parseInt(node.data.lastReceived.updateTime, 10) || 0;
         var lastSend = parseInt(node.data.lastSend.updateTime, 10) || 0;
         return (lastSend > lastReceive) ? lastSend : lastReceive;
@@ -9873,42 +9774,42 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
     /**
      * Check if device isFailed
      */
-    this.isFailed = function(node) {
+    this.isFailed = function (node) {
         return node.data.isFailed.value;
     };
 
     /**
      * Check if device isListening
      */
-    this.isListening = function(node) {
+    this.isListening = function (node) {
         return node.data.isListening.value;
     };
 
     /**
      * Check if device isFLiRS
      */
-    this.isFLiRS = function(node) {
+    this.isFLiRS = function (node) {
         return  (node.data.sensor250.value || node.data.sensor1000.value);
-       // return !node.data.isListening.value && (node.data.sensor250.value || node.data.sensor1000.value);
+        // return !node.data.isListening.value && (node.data.sensor250.value || node.data.sensor1000.value);
     };
 
     /**
      * Check if device is reset locally
      */
-    this.isLocalyReset = function(node) {
+    this.isLocalyReset = function (node) {
         return isLocalyReset(node);
     };
 
     /**
      * Check if device has a given command class
      */
-    this.hasCommandClass = function(node,ccId) {
+    this.hasCommandClass = function (node, ccId) {
         var hasCc = false;
-        angular.forEach(node.instances, function(instance, instanceId) {
-        if(instance.commandClasses[ccId]){
-            hasCc = instance.commandClasses[ccId];
-            return;
-           }
+        angular.forEach(node.instances, function (instance, instanceId) {
+            if (instance.commandClasses[ccId]) {
+                hasCc = instance.commandClasses[ccId];
+                return;
+            }
         });
         return hasCc;
     };
@@ -9916,13 +9817,13 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
     /**
      * Check if all device interviews are done
      */
-    this.allInterviewsDone = function(instances) {
-        var  interviewDone = true;
+    this.allInterviewsDone = function (instances) {
+        var interviewDone = true;
         for (var iId in instances) {
             for (var ccId in instances[iId].commandClasses) {
                 var isDone = instances[iId].commandClasses[ccId].data.interviewDone.value;
                 if (isDone === false) {
-                   return false
+                    return false
                 }
             }
         }
@@ -9934,22 +9835,32 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
      * @param {Object} hasSecurityS2Cc
      * @returns {Array}
      */
-    this.getS2GrantedKeys = function(hasSecurityS2Cc) {
+    this.getS2GrantedKeys = function (hasSecurityS2Cc) {
         var securityS2Key = [];
         if($filter('hasNode')(hasSecurityS2Cc,'data.interviewDone.value')){
+          if($filter('hasNode')(hasSecurityS2Cc,'data.grantedKeys.S0.value')){
             securityS2Key.push('S0');
+           }
             if($filter('hasNode')(hasSecurityS2Cc,'data.grantedKeys.S2Unauthenticated.value')){
                 securityS2Key.push('S2 Unauthenticated');
             }
-            if($filter('hasNode')(hasSecurityS2Cc,'data.grantedKeys.S2Authenticated.value')){
+            if ($filter('hasNode')(hasSecurityS2Cc, 'data.grantedKeys.S2Authenticated.value')) {
                 securityS2Key.push('S2 Authenticated');
             }
-            if($filter('hasNode')(hasSecurityS2Cc,'data.grantedKeys.S2Access.value')){
+            if ($filter('hasNode')(hasSecurityS2Cc, 'data.grantedKeys.S2Access.value')) {
                 securityS2Key.push('S2 Access');
             }
         }
         return securityS2Key;
     };
+
+     /**
+     * Get ZWAY session
+     * @returns {string}
+     */
+    this.mapPublicKey = function (publicKey) {
+      return publicKey.map(function(x, i, a) { if (i % 2 == 0) return x * 256 + a[i + 1]; }).filter(function(x) { return x != undefined; }).map(function(x) { return ("00000" + x).slice(-5); }).slice(0, 8).join('-');
+  };
 
     /**
      * Get a value from custom config
@@ -9962,14 +9873,14 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
         }
         return '';
     };
-    
+
     /**
      * Get percentage of delivered packets
      */
-    this.getOkPackets = function(data) {
+    this.getOkPackets = function (data) {
         var isDelivered = 0;
         var notDelivered = 0;
-        angular.forEach(data, function(v, k) {
+        angular.forEach(data, function (v, k) {
             if (v.delivered == true) {
                 isDelivered++;
             } else {
@@ -9984,15 +9895,15 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
         }
         return percent;
     };
-    
-     /**
+
+    /**
      * Get list of last packets
      */
-    this.getLastPackets = function(data) {
+    this.getLastPackets = function (data) {
         var packets = '&nbsp;';
         var deliveryTime = 0;
         var color;
-        angular.forEach(data.slice(-20), function(v, k) {
+        angular.forEach(data.slice(-20), function (v, k) {
             deliveryTime = parseInt(v.deliveryTime);
             if (!v.delivered) {
                 color = 'red';
@@ -10005,11 +9916,11 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
         return packets;
 
     };
-    
-     /**
+
+    /**
      * Set Zniffer data
      */
-    this.setZnifferData = function(data) {
+    this.setZnifferData = function (data) {
         return _.chain(data)
                 .flatten()
                 .filter(function (v) {
@@ -10022,45 +9933,156 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
 
     };
 
+   /**
+    * Compare version
+    * http://locutus.io/php/info/version_compare/
+    * @param {string} v1
+    * @param {string} v2
+    * @param {string} operator
+    * @returns {Boolean|Number}
+    */
+    this.compareVersion = function (v1, v2, operator) {
+        
+
+        // Important: compare must be initialized at 0.
+        var i
+        var x
+        var compare = 0
+
+        // vm maps textual PHP versions to negatives so they're less than 0.
+        // PHP currently defines these as CASE-SENSITIVE. It is important to
+        // leave these as negatives so that they can come before numerical versions
+        // and as if no letters were there to begin with.
+        // (1alpha is < 1 and < 1.1 but > 1dev1)
+        // If a non-numerical value can't be mapped to this table, it receives
+        // -7 as its value.
+        var vm = {
+            'dev': -6,
+            'alpha': -5,
+            'a': -5,
+            'beta': -4,
+            'b': -4,
+            'RC': -3,
+            'rc': -3,
+            '#': -2,
+            'p': 1,
+            'pl': 1
+        }
+
+        // This function will be called to prepare each version argument.
+        // It replaces every _, -, and + with a dot.
+        // It surrounds any nonsequence of numbers/dots with dots.
+        // It replaces sequences of dots with a single dot.
+        //    version_compare('4..0', '4.0') === 0
+        // Important: A string of 0 length needs to be converted into a value
+        // even less than an unexisting value in vm (-7), hence [-8].
+        // It's also important to not strip spaces because of this.
+        //   version_compare('', ' ') === 1
+        var _prepVersion = function (v) {
+            v = ('' + v).replace(/[_\-+]/g, '.')
+            v = v.replace(/([^.\d]+)/g, '.$1.').replace(/\.{2,}/g, '.')
+            return (!v.length ? [-8] : v.split('.'))
+        }
+        // This converts a version component to a number.
+        // Empty component becomes 0.
+        // Non-numerical component becomes a negative number.
+        // Numerical component becomes itself as an integer.
+        var _numVersion = function (v) {
+            return !v ? 0 : (isNaN(v) ? vm[v] || -7 : parseInt(v, 10))
+        }
+
+        v1 = _prepVersion(v1)
+        v2 = _prepVersion(v2)
+        x = Math.max(v1.length, v2.length)
+        for (i = 0; i < x; i++) {
+            if (v1[i] === v2[i]) {
+                continue
+            }
+            v1[i] = _numVersion(v1[i])
+            v2[i] = _numVersion(v2[i])
+            if (v1[i] < v2[i]) {
+                compare = -1
+                break
+            } else if (v1[i] > v2[i]) {
+                compare = 1
+                break
+            }
+        }
+        if (!operator) {
+            return compare
+        }
+
+        // Important: operator is CASE-SENSITIVE.
+        // "No operator" seems to be treated as "<."
+        // Any other values seem to make the function return null.
+        switch (operator) {
+            case '>':
+            case 'gt':
+                return (compare > 0)
+            case '>=':
+            case 'ge':
+                return (compare >= 0)
+            case '<=':
+            case 'le':
+                return (compare <= 0)
+            case '===':
+            case '=':
+            case 'eq':
+                return (compare === 0)
+            case '<>':
+            case '!==':
+            case 'ne':
+                return (compare !== 0)
+            case '':
+            case '<':
+            case 'lt':
+                return (compare < 0)
+            default:
+                return null
+        }
+
+    };
+
+
     /**
      * Get language from zddx
      */
-    this.configGetZddxLang = function(node, lang) {
+    this.configGetZddxLang = function (node, lang) {
         return configGetZddxLang(node, lang);
     };
 
     /**
      * Get config navigation devices
      */
-    this.configGetNav = function(ZWaveAPIData) {
+    this.configGetNav = function (ZWaveAPIData) {
         return configGetNav(ZWaveAPIData);
     };
-    
+
     /**
      *  Get expert commands
      */
-    this.configGetCommands = function(methods, ZWaveAPIData) {
+    this.configGetCommands = function (methods, ZWaveAPIData) {
         return configGetCommands(methods, ZWaveAPIData);
     };
 
     /**
      *  Get interview ommands
      */
-    this.configGetInterviewCommands = function(node, updateTime) {
+    this.configGetInterviewCommands = function (node, updateTime) {
         return configGetInterviewCommands(node, updateTime);
     };
 
     /**
      *  Get CommandClass
      */
-    this.configGetCommandClass = function(data, name, space) {
+    this.configGetCommandClass = function (data, name, space) {
         return configGetCommandClass(data, name, space);
     };
 
     /**
      *  Set CommandClass
      */
-    this.configSetCommandClass = function(data, updateTime) {
+    this.configSetCommandClass = function (data, updateTime) {
         return configSetCommandClass(data, updateTime);
     };
 
@@ -10068,14 +10090,14 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
     /**
      *  Get interview stage
      */
-    this.configInterviewStage = function(ZWaveAPIData, id, languages) {
+    this.configInterviewStage = function (ZWaveAPIData, id, languages) {
         return configInterviewStage(ZWaveAPIData, id, languages);
     };
 
     /**
      *  Set device state
      */
-    this.configDeviceState = function(node, languages) {
+    this.configDeviceState = function (node, languages) {
         return configDeviceState(node, languages);
     };
 
@@ -10083,49 +10105,49 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
     /**
      * Config cont
      */
-    this.configConfigCont = function(node, nodeId, zddXml, cfgXml, lang, languages) {
+    this.configConfigCont = function (node, nodeId, zddXml, cfgXml, lang, languages) {
         return configConfigCont(node, nodeId, zddXml, cfgXml, lang, languages);
     };
 
     /**
      *  Switch all cont
      */
-    this.configSwitchAllCont = function(node, nodeId, ZWaveAPIData, cfgXml) {
+    this.configSwitchAllCont = function (node, nodeId, ZWaveAPIData, cfgXml) {
         return configSwitchAllCont(node, nodeId, ZWaveAPIData, cfgXml);
     };
 
     /**
      * Protection cont
      */
-    this.configProtectionCont = function(node, nodeId, ZWaveAPIData, cfgXml) {
+    this.configProtectionCont = function (node, nodeId, ZWaveAPIData, cfgXml) {
         return configProtectionCont(node, nodeId, ZWaveAPIData, cfgXml);
     };
 
     /**
      * Wakeup cont
      */
-    this.configWakeupCont = function(node, nodeId, ZWaveAPIData, cfgXml) {
+    this.configWakeupCont = function (node, nodeId, ZWaveAPIData, cfgXml) {
         return configWakeupCont(node, nodeId, ZWaveAPIData, cfgXml);
     };
 
     /**
      * Get xml config param
      */
-    this.getCfgXmlParam = function(cfgXml, nodeId, instance, commandClass, command) {
+    this.getCfgXmlParam = function (cfgXml, nodeId, instance, commandClass, command) {
         return getCfgXmlParam(cfgXml, nodeId, instance, commandClass, command);
     };
 
     /**
      * Check if device is in config
      */
-    this.isInCfgXml = function(data, cfgXml) {
+    this.isInCfgXml = function (data, cfgXml) {
         return isInCfgXml(data, cfgXml);
     };
 
     /**
      * Get assoc xml config param
      */
-    this.getCfgXmlAssoc = function(cfgXml, nodeId, instance, commandClass, command, groupId) {
+    this.getCfgXmlAssoc = function (cfgXml, nodeId, instance, commandClass, command, groupId) {
         return getCfgXmlAssoc(cfgXml, nodeId, instance, commandClass, command, groupId);
     };
 
@@ -10133,20 +10155,20 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
     /**
      *Build config XML file
      */
-    this.buildCfgXml = function(data, cfgXml, id, commandclass) {
+    this.buildCfgXml = function (data, cfgXml, id, commandclass) {
         return buildCfgXml(data, cfgXml, id, commandclass);
     };
 
     /**
      *Build assoc config XML file
      */
-    this.buildCfgXmlAssoc = function(data, cfgXml) {
+    this.buildCfgXmlAssoc = function (data, cfgXml) {
         return buildCfgXmlAssoc(data, cfgXml);
     };
     /**
      *Delete from CFG XML - asoc
      */
-    this.deleteCfgXmlAssoc = function(data, cfgXml) {
+    this.deleteCfgXmlAssoc = function (data, cfgXml) {
         return deleteCfgXmlAssoc(data, cfgXml);
     };
 
@@ -10165,21 +10187,21 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
     /**
      * Get language line by key
      */
-    function getLangLine(key, languages,replacement) {
+    function getLangLine(key, languages, replacement) {
         var line = key;
         if (angular.isObject(languages)) {
             if (angular.isDefined(languages[key])) {
                 line = (languages[key] !== '' ? languages[key] : key);
             }
         }
-        return setLangLine(line, replacement,key);
+        return setLangLine(line, replacement, key);
     }
     ;
 
     /**
      * Set lang line params
      */
-    function setLangLine(line, replacement,key) {
+    function setLangLine(line, replacement, key) {
         for (var val in replacement) {
             line = line.split(val).join(replacement[val]);
         }
@@ -10231,13 +10253,13 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
         var devices = [];
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         // Loop throught devices
-        angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+        angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
             if (nodeId == 255 || node.data.isVirtual.value) {
                 return;
             }
             /*if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
-                return;
-            }*/
+             return;
+             }*/
             var node = ZWaveAPIData.devices[nodeId];
             // Set object
             var obj = {};
@@ -10254,7 +10276,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
      */
     function configGetCommands(methods, ZWaveAPIData) {
         var methodsArr = [];
-        angular.forEach(methods, function(params, method) {
+        angular.forEach(methods, function (params, method) {
             //str.split(',');
             var cmd = {};
             var values = repr_array(method_defaultValues(ZWaveAPIData, methods[method]));
@@ -10275,7 +10297,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
      *  Get interview Commands
      */
     function configGetInterviewCommands(node, updateTime) {
-        if(!node){
+        if (!node) {
             return [];
         }
         var interviews = [];
@@ -10309,7 +10331,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
             return '';
         }
         var html = '<div class="cc-data-element">' + space + name + ': <span class="' + ((data.updateTime > data.invalidateTime) ? 'green' : 'red') + '">' + ((typeof (data.value) !== 'undefined' && data.value != null) ? data.value.toString() : 'None') + '</span>' + ' (<span class="' + ((data.updateTime > data.invalidateTime) ? '' : 'red') + '">' + $filter('isTodayFromUnix')(data.updateTime) + '</span>)</div>';
-        angular.forEach(data, function(el, key) {
+        angular.forEach(data, function (el, key) {
 
             if (key != 'type' && key != 'updateTime' && key != 'invalidateTime' && key != 'value' && // these are internal values
                     key != 'capabilitiesNames') { // these make the dialog monstrious
@@ -10401,7 +10423,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
         // Loop throught params
         var parCnt = 0;
         var cfgFile = getCfgXmlParam(cfgXml, nodeId, '0', '70', 'Set');
-        angular.forEach(params, function(conf_html, i) {
+        angular.forEach(params, function (conf_html, i) {
             //console.log(zddXml);
             if (!angular.isObject(conf_html)) {
                 return;
@@ -10443,7 +10465,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
             if (cfgFile[conf_num] !== undefined) {
                 config_config_value = cfgFile[conf_num];
             } else {
-               if (config_zwave_value !== null) {
+                if (config_zwave_value !== null) {
                     config_config_value = config_zwave_value;
                 } else {
                     config_config_value = conf_default;
@@ -10469,7 +10491,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
                     var param_struct_arr = [];
                     var conf_param_options = '';
 
-                    angular.forEach(conf['value'], function(value_html, i) {
+                    angular.forEach(conf['value'], function (value_html, i) {
                         var value = value_html;
                         var value_from = parseInt(value['_from'], 16);
                         var value_to = parseInt(value['_to'], 16);
@@ -10489,7 +10511,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
                             }
                         param_struct_arr.push({
                             label: value_description,
-                             name:  'constant_input_' + nodeId + '_' + conf_num,
+                            name: 'constant_input_' + nodeId + '_' + conf_num,
                             type: {
                                 fix: {
                                     value: value_repr
@@ -10541,7 +10563,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
                         };
                         break;
                     }
-                    angular.forEach(rangeParam, function(value_html, ri) {
+                    angular.forEach(rangeParam, function (value_html, ri) {
                         //console.log(ri);
                         var value = value_html;
 
@@ -10572,7 +10594,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
                                 var rangeVal = {
                                     label: value_description,
                                     name: 'range_input_' + nodeId + '_' + conf_num,
-                                    textName: 'range_input_text_' + rangeParamCnt +'_' + nodeId + '_' + conf_num,
+                                    textName: 'range_input_text_' + rangeParamCnt + '_' + nodeId + '_' + conf_num,
                                     type: {
                                         range: {
                                             min: value_from,
@@ -10582,8 +10604,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
                                 };
                                 param_struct_arr.push(rangeVal);
                             }
-                        }
-                        else // this is a fix value
+                        } else // this is a fix value
                         if (value_description != '') {
                             param_struct_arr.push({
                                 label: value_description,
@@ -10595,7 +10616,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
                                 }
                             });
                         }
-                    rangeParamCnt++;
+                        rangeParamCnt++;
                     });
 
                     if (param_struct_arr.length > 1)
@@ -10653,7 +10674,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
                         } while ((1 << (bit++)) < conf_default);
                     }
                     ;
-                    angular.forEach(conf['value'], function(value_html, i) {
+                    angular.forEach(conf['value'], function (value_html, i) {
                         var value = value_html;
                         var value_from = parseInt(value['_from'], 16);
                         var value_to = parseInt(value['_to'], 16);
@@ -10703,10 +10724,10 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
                     if (conf_default !== null) {
                         conf_default_value = conf_default;
                         //conf_default_value = '';
-                        for (var ii in conf_default_value_arr){
+                        for (var ii in conf_default_value_arr) {
                             conf_default_value += conf_default_value_arr[ii] + ', ';
                         }
-                        if (conf_default_value.length){
+                        if (conf_default_value.length) {
                             conf_default_value = conf_default_value.substr(0, conf_default_value.length - 2);
                         }
 
@@ -10728,7 +10749,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
                         confNum: conf_num,
                         confSize: conf_size
                     };
-                   break;
+                    break;
                 default:
                     return;
                     //conf_cont.append('<span>' + $.translate('unhandled_type_parameter') + ': ' + conf_type + '</span>');
@@ -10884,18 +10905,16 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
         //console.log(cfgXml)
         var collection = [];
         var cfg = $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration');
-        var parseParam = function(v,nodeId, instance, commandClass, command){
+        var parseParam = function (v, nodeId, instance, commandClass, command) {
             if (v['_id'] == nodeId && v['_instance'] == instance && v['_commandclass'] == commandClass && v['_command'] == command) {
 
                 var array = JSON.parse(v['_parameter']);
                 if (array.length > 2) {
                     collection[array[0]] = array[1];
-                }
-                else if (array.length == 2) {
+                } else if (array.length == 2) {
                     collection = array;
 
-                }
-                else {
+                } else {
                     collection[0] = array[0];
                     return;
                 }
@@ -10905,13 +10924,13 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
             return [];
         }
         // Get data for given device by id
-        if(_.isArray(cfg) ){
-            angular.forEach(cfg, function(v, k) {
-                parseParam(v,nodeId, instance, commandClass, command);
+        if (_.isArray(cfg)) {
+            angular.forEach(cfg, function (v, k) {
+                parseParam(v, nodeId, instance, commandClass, command);
 
             });
-        }else{
-           parseParam(cfg,nodeId, instance, commandClass, command);
+        } else {
+            parseParam(cfg, nodeId, instance, commandClass, command);
         }
 
         return collection;
@@ -10938,7 +10957,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
                 }
                 return false;
             }
-            angular.forEach(hasCfgXml, function(v, k) {
+            angular.forEach(hasCfgXml, function (v, k) {
 
                 var obj = {};
                 obj['id'] = v['_id'];
@@ -10969,7 +10988,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
         var collection = [];
         collection[groupId] = {
             nodes: [],
-             nodeInstances: []
+            nodeInstances: []
         };
         if (!(_.isArray(cfg))) {
             if (cfg['_id'] == nodeId && cfg['_instance'] == instance && cfg['_commandclass'] == commandClass && cfg['_command'] == command) {
@@ -10987,16 +11006,16 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
 
                 }
                 if (array.length > 2) {
-                        obj['groupId'] = array[0];
-                        obj['deviceId'] = array[1];
-                        obj['instanceId'] = array[2];
-                        if (array[0] == groupId && array[1] > 0) {
-                            collection[groupId].nodeInstances.push(array[1] + '_' + array[2]);
-                        }
+                    obj['groupId'] = array[0];
+                    obj['deviceId'] = array[1];
+                    obj['instanceId'] = array[2];
+                    if (array[0] == groupId && array[1] > 0) {
+                        collection[groupId].nodeInstances.push(array[1] + '_' + array[2]);
                     }
                 }
+            }
         } else {
-            angular.forEach(cfg, function(v, k) {
+            angular.forEach(cfg, function (v, k) {
                 if (v['_id'] == nodeId && v['_instance'] == instance && v['_commandclass'] == commandClass && v['_command'] == command) {
                     var obj = {};
                     var array = JSON.parse(v['_parameter']);
@@ -11004,11 +11023,11 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
                         obj['groupId'] = array[0];
                         obj['deviceId'] = array[1];
                         if (array[0] == groupId && array[1] > 0) {
-                             collection[groupId].nodes.push(array[1]);
+                            collection[groupId].nodes.push(array[1]);
                         }
                     }
                     if (array.length > 2) {
-                        obj['groupId'] = array[0]; 
+                        obj['groupId'] = array[0];
                         obj['deviceId'] = array[1];
                         obj['instanceId'] = array[2];
                         if (array[0] == groupId && array[1] > 0) {
@@ -11017,7 +11036,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
                     }
                 }
 
-            }); 
+            });
         }
         return collection;
 
@@ -11029,26 +11048,26 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
     function buildCfgXml(data, cfgXml, id, commandclass) {
         var hasCfgXml = false;
         var assocCc = [133, 142];
-       /* var formData = [];
-        if (commandclass == '84') {
-            var par1 = JSON.parse(data[0]['parameter']);
-            var par2 = JSON.parse(data[1]['parameter']);
-            var wakeData = {
-                'id': id,
-                'instance': data[0]['instance'],
-                'commandclass': commandclass,
-                'command': data[0]['command'],
-                'parameter': '[' + par1 + ',' + par2 + ']'
-            };
-            formData.push(wakeData);
-        } else {
-            formData = data;
-        }
-        var xmlData = formData;*/
+        /* var formData = [];
+         if (commandclass == '84') {
+         var par1 = JSON.parse(data[0]['parameter']);
+         var par2 = JSON.parse(data[1]['parameter']);
+         var wakeData = {
+         'id': id,
+         'instance': data[0]['instance'],
+         'commandclass': commandclass,
+         'command': data[0]['command'],
+         'parameter': '[' + par1 + ',' + par2 + ']'
+         };
+         formData.push(wakeData);
+         } else {
+         formData = data;
+         }
+         var xmlData = formData;*/
         var xmlData = data;
         if (angular.isObject(cfgXml) && $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration')) {
             hasCfgXml = cfgXml.config.devices.deviceconfiguration;
-            angular.forEach(hasCfgXml, function(v, k) {
+            angular.forEach(hasCfgXml, function (v, k) {
                 var obj = {};
                 if (v['_id'] == id && v['_commandclass'] == commandclass) {
                     return;
@@ -11077,7 +11096,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
         if (angular.isObject(cfgXml) && $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration')) {
             hasCfgXml = cfgXml.config.devices.deviceconfiguration;
             if (_.isArray(hasCfgXml)) {
-                angular.forEach(hasCfgXml, function(v, k) {
+                angular.forEach(hasCfgXml, function (v, k) {
                     var obj = {};
                     obj['id'] = v['_id'];
                     obj['instance'] = v['_instance'];
@@ -11111,12 +11130,12 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
      *Delete from cfg xml file - assoc
      */
     function deleteCfgXmlAssoc(data, cfgXml) {
-        
+
         var xmlData = [];
         var hasCfgXml = $filter('hasNode')(cfgXml, 'config.devices.deviceconfiguration');
         if (hasCfgXml) {
             if (_.isArray(hasCfgXml)) {
-                angular.forEach(hasCfgXml, function(v, k) {
+                angular.forEach(hasCfgXml, function (v, k) {
                     var obj = {};
                     obj['id'] = v['_id'];
                     obj['instance'] = v['_instance'];
@@ -11138,7 +11157,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
                 obj['commandclass'] = hasCfgXml['_commandclass'];
                 obj['command'] = hasCfgXml['_command'];
                 obj['parameter'] = hasCfgXml['_parameter'];
-               
+
                 if (JSON.stringify(obj) !== JSON.stringify(data)) {
                     xmlData.push(obj);
                 }
@@ -11153,7 +11172,7 @@ appService.service('deviceService', function($filter, $log, $cookies,$window,$lo
      */
     function buildCfgXmlFile(xmlData) {
         var xml = '<config><devices>' + "\n";
-        angular.forEach(xmlData, function(v, k) {
+        angular.forEach(xmlData, function (v, k) {
             if (_.isNumber(parseInt(v.id, 10))) {
                 xml += '<deviceconfiguration id="' + v.id + '" instance="' + v.instance + '" commandclass="' + v.commandclass + '" command="' + v.command + '" parameter="' + v.parameter + '"/>' + "\n";
             }
@@ -11195,506 +11214,496 @@ var appController = angular.module('appController', []);
  * @class BaseController
  */
 appController.controller('BaseController', function ($scope, $rootScope, $cookies, $filter, $location, $anchorScroll, $window, $route, $interval, $timeout, cfg, dataService, deviceService, myCache) {
-    cfg.route.host = $location.host();
-    // Global config
-    $scope.cfg = cfg;
-    $scope.isOnline = false;
-    $scope.nowDate = new Date();
-    $scope.loading = false;
-    $scope.alert = {message: false, status: 'is-hidden', icon: false};
-    $scope.alertCitLicence = false;
-    $scope.languages = {};
+  cfg.route.host = $location.host();
+  // Global config
+  $scope.cfg = cfg;
+  $scope.isOnline = false;
+  $scope.nowDate = new Date();
+  $scope.loading = false;
+  $scope.alert = {
+    message: false,
+    status: 'is-hidden',
+    icon: false
+  };
+  $scope.alertCitLicence = false;
+  $scope.languages = {};
+  $scope.orderByArr = {
+    field: '',
+    reverse: false
+  }
+  $scope.user = deviceService.getUser();
+  // Custom IP
+  $scope.customIP = {
+    'url': cfg.server_url,
+    'message': false,
+    'connected': false
+  };
+  $scope.showHome = true;
+  if (cfg.custom_ip === true) {
+    $scope.showHome = false;
+  }
+
+  // Url array
+  $scope.urlArray = [];
+
+
+  // Show page content
+  $scope.showContent = false;
+
+  // Version
+  $scope.version = "";
+
+  // Lang settings
+  $scope.lang_list = cfg.lang_list;
+  // Set language
+  $scope.lang = (angular.isDefined($cookies.lang) ? $cookies.lang : cfg.lang);
+  //TODO: deprecated
+  /*$('.current-lang').html($scope.lang);
+   $scope.changeLang = function (lang) {
+   $window.alert($scope._t('language_select_reload_interface'));
+   $cookies.lang = lang;
+   $scope.lang = lang;
+   };*/
+  // Load language files
+  $scope.loadLang = function (lang) {
+    // Is lang in language list?
+    var lang = (cfg.lang_list.indexOf(lang) > -1 ? lang : cfg.lang);
+    dataService.getLanguageFile(lang).then(function (response) {
+      angular.extend($scope.languages, response.data);
+    }, function (error) {});
+  };
+  $scope.loadLang($scope.lang);
+
+  // Get language lines
+  $scope._t = function (key, replacement) {
+    return deviceService.getLangLine(key, $scope.languages, replacement);
+  };
+
+  // Order by
+  $scope.orderBy = function (field) {
     $scope.orderByArr = {
-        field: '',
-        reverse: false
+      field: field,
+      reverse: !$scope.orderByArr.reverse
     }
-    $scope.user = deviceService.getUser();
-    // Custom IP
-    $scope.customIP = {
-        'url': cfg.server_url,
-        'message': false,
-        'connected': false
-    };
-    $scope.showHome = true;
-    if (cfg.custom_ip === true) {
-        $scope.showHome = false;
+    $scope.predicate = field;
+    $scope.reverse = !$scope.reverse;
+  };
+  // Get body ID
+  $scope.getBodyId = function () {
+    var path = $location.path();
+    var lastSegment = path.split('/').pop();
+    $scope.urlArray = path.split('/');
+    return lastSegment;
+  };
+  /*
+   * Menu active class
+   */
+  $scope.isActive = function (route, segment) {
+    var path = $location.path().split('/');
+    return (route === path[segment] ? 'active' : '');
+  };
+
+  /**
+   * Check if route match the pattern.
+   * @param {string} path
+   * @returns {Boolean}
+   */
+  $scope.routeMatch = function (path) {
+    if ($route.current && $route.current.regexp) {
+      return $route.current.regexp.test(path);
     }
+    return false;
+  };
 
-    // Url array
-    $scope.urlArray = [];
+  /**
+   *
+   * Mobile detect
+   */
+  $scope.isMobile = deviceService.isMobile(navigator.userAgent || navigator.vendor || window.opera);
 
+  $scope.scrollTo = function (id) {
+    $location.hash(id);
+    $anchorScroll();
+  };
 
-    // Show page content
-    $scope.showContent = false;
+  /**
+   *Reload data
+   */
+  $scope.reloadData = function () {
 
-    // Version
-    $scope.version = "";
+    myCache.removeAll();
+    $route.reload();
+  };
 
-// Lang settings
-    $scope.lang_list = cfg.lang_list;
-    // Set language
-    $scope.lang = (angular.isDefined($cookies.lang) ? $cookies.lang : cfg.lang);
-    //TODO: deprecated
-    /*$('.current-lang').html($scope.lang);
-     $scope.changeLang = function (lang) {
-     $window.alert($scope._t('language_select_reload_interface'));
-     $cookies.lang = lang;
-     $scope.lang = lang;
-     };*/
-    // Load language files
-    $scope.loadLang = function (lang) {
-        // Is lang in language list?
-        var lang = (cfg.lang_list.indexOf(lang) > -1 ? lang : cfg.lang);
-        dataService.getLanguageFile(lang).then(function (response) {
-            angular.extend($scope.languages, response.data);
-        }, function (error) {
-        });
-    };
-    $scope.loadLang($scope.lang);
-
-    // Get language lines
-    $scope._t = function (key, replacement) {
-        return deviceService.getLangLine(key, $scope.languages, replacement);
-    };
-
-    // Order by
-    $scope.orderBy = function (field) {
-        $scope.orderByArr = {
-            field: field,
-            reverse: !$scope.orderByArr.reverse
-        }
-        $scope.predicate = field;
-        $scope.reverse = !$scope.reverse;
-    };
-    // Get body ID
-    $scope.getBodyId = function () {
-        var path = $location.path();
-        var lastSegment = path.split('/').pop();
-        $scope.urlArray = path.split('/');
-        return lastSegment;
-    };
-    /*
-     * Menu active class
-     */
-    $scope.isActive = function (route, segment) {
-        var path = $location.path().split('/');
-        return (route === path[segment] ? 'active' : '');
-    };
-
-    /**
-     * Check if route match the pattern.
-     * @param {string} path
-     * @returns {Boolean}
-     */
-    $scope.routeMatch = function (path) {
-        if ($route.current && $route.current.regexp) {
-            return $route.current.regexp.test(path);
-        }
-        return false;
-    };
-
-    /**
-     *
-     * Mobile detect
-     */
-    $scope.isMobile = deviceService.isMobile(navigator.userAgent || navigator.vendor || window.opera);
-
-    $scope.scrollTo = function (id) {
-        $location.hash(id);
-        $anchorScroll();
-    };
-
-    /**
-     *Reload data
-     */
-    $scope.reloadData = function () {
-
-        myCache.removeAll();
-        $route.reload();
-    };
-
+  $scope.naviExpanded = {};
+  /**
+   * Expand/collapse navigation
+   * @param {string} key
+   * @param {object} $event
+   * @param {boolean} status
+   * @returns {undefined}
+   */
+  $scope.expandNavi = function (key, $event, status) {
+    if ($scope.naviExpanded[key]) {
+      $scope.naviExpanded = {};
+      $event.stopPropagation();
+      return;
+    }
     $scope.naviExpanded = {};
-    /**
-     * Expand/collapse navigation
-     * @param {string} key
-     * @param {object} $event
-     * @param {boolean} status
-     * @returns {undefined}
-     */
-    $scope.expandNavi = function (key, $event, status) {
-        if ($scope.naviExpanded[key]) {
-            $scope.naviExpanded = {};
-            $event.stopPropagation();
-            return;
-        }
-        $scope.naviExpanded = {};
-        if (typeof status === 'boolean') {
-            $scope.naviExpanded[key] = status;
-        } else {
-            $scope.naviExpanded[key] = !$scope.naviExpanded[key];
-        }
-        $event.stopPropagation();
-    };
-    // Collapse element/menu when clicking outside
-    window.onclick = function () {
-        if ($scope.naviExpanded) {
-            angular.copy({}, $scope.naviExpanded);
-            $scope.$apply();
-        }
-    };
+    if (typeof status === 'boolean') {
+      $scope.naviExpanded[key] = status;
+    } else {
+      $scope.naviExpanded[key] = !$scope.naviExpanded[key];
+    }
+    $event.stopPropagation();
+  };
+  // Collapse element/menu when clicking outside
+  window.onclick = function () {
+    if ($scope.naviExpanded) {
+      angular.copy({}, $scope.naviExpanded);
+      $scope.$apply();
+    }
+  };
 
-    $scope.modalArr = {};
-    /**
-     * Open/close a modal window
-     * @param {string} key
-     * @param {object} $event
-     * @param {boolean} status
-     * @returns {undefined}
-     */
-    $scope.handleModal = function (key, $event, status) {
-        if (typeof status === 'boolean') {
-            $scope.modalArr[key] = status;
-        } else {
-            if (key) {
-                $scope.modalArr[key] = !($scope.modalArr[key]);
-            } else {
-                $scope.modalArr = {};
-            }
+  $scope.modalArr = {};
+  /**
+   * Open/close a modal window
+   * @param {string} key
+   * @param {object} $event
+   * @param {boolean} status
+   * @returns {undefined}
+   */
+  $scope.handleModal = function (key, $event, status) {
+    if (typeof status === 'boolean') {
+      $scope.modalArr[key] = status;
+    } else {
+      if (key) {
+        $scope.modalArr[key] = !($scope.modalArr[key]);
+      } else {
+        $scope.modalArr = {};
+      }
 
-        }
-        if ($event) {
-            $event.stopPropagation();
-        }
+    }
+    if ($event) {
+      $event.stopPropagation();
+    }
 
-    };
-    // Collapse element/menu when clicking outside
-    window.onclick = function () {
-        if ($scope.naviExpanded) {
-            angular.copy({}, $scope.naviExpanded);
-            $scope.$apply();
-        }
-    };
+  };
+  // Collapse element/menu when clicking outside
+  window.onclick = function () {
+    if ($scope.naviExpanded) {
+      angular.copy({}, $scope.naviExpanded);
+      $scope.$apply();
+    }
+  };
 
+  $scope.filterExpanded = {};
+  /**
+   * Expand/collapse filter
+   * @param {string} key
+   * @param {object} $event
+   * @param {boolean} status
+   * @returns {undefined}
+   */
+  $scope.expandFilter = function (key, $event, status) {
+    if ($scope.filterExpanded[key]) {
+      $scope.filterExpanded = {};
+      $event.stopPropagation();
+      return;
+    }
     $scope.filterExpanded = {};
-    /**
-     * Expand/collapse filter
-     * @param {string} key
-     * @param {object} $event
-     * @param {boolean} status
-     * @returns {undefined}
-     */
-    $scope.expandFilter = function (key, $event, status) {
-        if ($scope.filterExpanded[key]) {
-            $scope.filterExpanded = {};
-            $event.stopPropagation();
-            return;
-        }
-        $scope.filterExpanded = {};
-        if (typeof status === 'boolean') {
-            $scope.filterExpanded[key] = status;
-        } else {
-            $scope.filterExpanded[key] = !$scope.filterExpanded[key];
-        }
-        $event.stopPropagation();
-    };
-
-    $scope.expand = {};
-    /**
-     * Expand/collapse an element
-     * @param {string} key
-     * @returns {undefined}
-     */
-    $scope.expandElement = function (key) {
-        $scope.expand[key] = !($scope.expand[key]);
-    };
-
-    $scope.rowSpinner = [];
-    /**
-     * Toggle row spinner
-     * @param {string} key
-     * @returns {undefined}
-     */
-    $scope.toggleRowSpinner = function (key) {
-        if (!key) {
-            $scope.rowSpinner = [];
-            return;
-        }
-        $scope.rowSpinner[key] = !$scope.rowSpinner[key];
-    };
-
-    /**
-     * Get a value from custom config
-     * @param {string} key
-     * @returns {string}
-     */
-    $scope.getCustomCfgVal = function (key) {
-        return deviceService.getCustomCfgVal(key);
-    };
-    // Alertify defaults
-    alertify.defaults.glossary.title = cfg.app_name;
-    alertify.defaults.glossary.ok = 'OK';
-    alertify.defaults.glossary.cancel = 'CANCEL';
-
-    // Extend existing alert (ERROR) dialog
-    if (!alertify.alertError) {
-        //define a new errorAlert base on alert
-        alertify.dialog('alertError', function factory() {
-            return {
-                build: function () {
-                    var errorHeader = '<span class="fa fa-exclamation-triangle fa-lg text-danger" '
-                        + 'style="vertical-align:middle;">'
-                        + '</span> ' + $scope.getCustomCfgVal('title') + ' - ERROR';
-                    this.setHeader(errorHeader);
-                }
-            };
-        }, true, 'alert');
+    if (typeof status === 'boolean') {
+      $scope.filterExpanded[key] = status;
+    } else {
+      $scope.filterExpanded[key] = !$scope.filterExpanded[key];
     }
+    $event.stopPropagation();
+  };
 
-    // Extend existing alert (WARNING) dialog
-    if (!alertify.alertWarning) {
-        alertify.dialog('alertWarning', function factory() {
-            return {
-                build: function () {
-                    var errorHeader = '<span class="fa fa-exclamation-circle fa-lg text-warning" '
-                        + 'style="vertical-align:middle;">'
-                        + '</span> ' + $scope.getCustomCfgVal('title') + ' - WARNING';
-                    this.setHeader(errorHeader);
-                }
-            };
-        }, true, 'alert');
+  $scope.expand = {};
+  /**
+   * Expand/collapse an element
+   * @param {string} key
+   * @returns {undefined}
+   */
+  $scope.expandElement = function (key) {
+    $scope.expand[key] = !($scope.expand[key]);
+  };
+
+  $scope.rowSpinner = [];
+  /**
+   * Toggle row spinner
+   * @param {string} key
+   * @returns {undefined}
+   */
+  $scope.toggleRowSpinner = function (key) {
+    if (!key) {
+      $scope.rowSpinner = [];
+      return;
     }
+    $scope.rowSpinner[key] = !$scope.rowSpinner[key];
+  };
 
-    /// --- Common APIs  --- ///
-    /**
-     * Run zwave command
-     * @param {string} cmd
-     * @param {int} timeout
-     */
-    $scope.runZwaveCmd = function (cmd, timeout, hideError) {
-        timeout = timeout || 1000;
-        $scope.toggleRowSpinner(cmd);
-        dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
-            $timeout($scope.toggleRowSpinner, timeout);
-        }, function (error) {
-            $scope.toggleRowSpinner();
-            if (!hideError) {
-                alertify.alertError($scope._t('error_update_data') + '\n' + cmd);
-            }
+  /**
+   * Get a value from custom config
+   * @param {string} key
+   * @returns {string}
+   */
+  $scope.getCustomCfgVal = function (key) {
+    return deviceService.getCustomCfgVal(key);
+  };
+  // Alertify defaults
+  alertify.defaults.glossary.title = cfg.app_name;
+  alertify.defaults.glossary.ok = 'OK';
+  alertify.defaults.glossary.cancel = 'CANCEL';
 
-        });
-    };
-
-    /**
-     * Build version for CIT footer
-     * @returns {undefined}
-     */
-    $scope.buildVersion = function() {
-
-        var current_firmware = $scope.cfg.system_info.current_firmware;
-        var app_version = $scope.cfg.app_version
-        var part_ui = app_version.split("-");
-        var part_os = current_firmware.split("-");
-        var os = part_os[0];
-        var ui = part_ui[0];
-
-        $scope.version = $scope._t("version", {
-            "__ui__": ui,
-            "__os__": os
-        });
-    };
-
-
-    /**
-     * Load system info
-     * @returns {undefined}
-     */
-    $scope.loadSystemInfo = function () {
-        dataService.getApi('system_info_url').then(function (response) {
-            //angular.extend($scope.systemInfo, response.data.data);
-            angular.extend(cfg.system_info, response.data.data);
-            $scope.buildVersion();
-            // Is CIT server online?
-            $scope.isOnline = cfg.system_info.cit_server_reachable;
-            // box is not registered
-            if (!cfg.system_info.cit_authorized) {
-                $scope.alertCitLicence = 'cit_not_registered';
-                return;
-            }
-            //  license has been expired
-            if (cfg.system_info.cit_license_countDown == 0) {
-                $scope.alertCitLicence = 'cit_licence_expired';
-                return;
-            }
-            //  license will be expire soon
-            if (cfg.system_info.cit_license_countDown < 5) {
-                $scope.alertCitLicence = 'cit_licence_update';
-                return;
-            }
-
-
-        }, function (error) {
-        });
-
-    };
-    // System info only for installer
-    if (cfg.app_type === 'installer') {
-        $scope.loadSystemInfo();
-    }
-
-
-    /**
-     * Set zwave configuration
-     * @returns {undefined}
-     */
-    $scope.loadZwaveConfig = function (nocache) {
-        // Set config
-        dataService.getApi('configget_url', null, nocache).then(function (response) {
-            angular.extend(cfg.zwavecfg, response.data);
-        }, function (error) {
-        });
-    };
-
-    /**
-     * Load zwave dongles
-     */
-    $scope.setDongle = function () {
-        dataService.getApi('zwave_list').then(function (response) {
-            if (response.data.length === 1) {
-                angular.extend(cfg, {dongle: response.data[0]});
-                $cookies.dongle = response.data[0];
-            }
-            angular.extend(cfg, {dongle_list: response.data});
-
-        }, function (error) {
-        }).finally(function () {
-            deviceService.setDongle(cfg.dongle);
-        });
-    };
-
-
-    /**
-     * Set timestamp and ping server if request fails
-     * @returns {undefined}
-     */
-    $scope.setTimeStamp = function () {
-        dataService.getApi('time', null, true).then(function (response) {
-            $interval.cancel($scope.timeZoneInterval);
-            angular.extend(cfg.route.time, {string: $filter('setTimeFromBox')(response.data.data.localTimeUT, true)},
-                {timestamp: response.data.data.localTimeUT},
-                {offset: response.data.data.localTimeZoneOffset});
-            var refresh = function () {
-                cfg.route.time.timestamp += (cfg.interval < 1000 ? 1 : Math.floor(cfg.interval / 1000));
-                cfg.route.time.string = $filter('setTimeFromBox')(cfg.route.time.timestamp);
-            };
-
-            cfg.zwavecfg.time_zone = response.data.data.localTimeZone;
-            $scope.timeZoneInterval = $interval(refresh, cfg.interval);
-        }, function (error) {
-        });
-
-    };
-
-
-    /**
-     * Load Box API data
-     */
-    $scope.boxData = {
-        controller: {}
-    };
-    $scope.loadBoxApiData = function () {
-        dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
-            var hasDevices = Object.keys(ZWaveAPIData.devices).length;
-            var homeId = ZWaveAPIData.controller.data.homeId.value;
-            var zwayNodeId = ZWaveAPIData.controller.data.nodeId.value;
-            var APIVersion = ZWaveAPIData.controller.data.APIVersion.value;
-            var showAnalytics = cfg.analytics.show;
-            // Changes MK
-            //$scope.boxData.controller.controllerState = ZWaveAPIData.controller.data.controllerState.value;
-            // Rewrite config
-            var cfgController = {
-                homeName: ZWaveAPIData.controller.data.homeName.value || cfg.controller.homeName,
-                isRealPrimary: ZWaveAPIData.controller.data.isRealPrimary.value,
-                homeId: homeId,
-                homeIdHex: '0x' + ('00000000' + (homeId + (homeId < 0 ? 0x100000000 : 0)).toString(16)).slice(-8),
-                hasDevices: hasDevices < 2 ? false : true,
-                zwayNodeId: zwayNodeId,
-                APIVersion: APIVersion
-            }
-
-            angular.extend(cfg.controller, cfgController);
-
-            if ((cfg.app_type === 'installer') || (!showAnalytics && ZWaveAPIData.controller.data.capabilities.value.indexOf(59) > -1)) {
-                angular.extend(cfg.analytics, {show: true});
-            }
-        }, function (error) {
-            //alertify.alertError($scope._t('error_load_data'));
-
-        });
-    };
-    /**
-     * Load queue data
-     */
-    $scope.loadBusyIndicator = function () {
-        var refresh = function () {
-            dataService.refreshApi('queue_url').then(function (response) {
-                setBusyIndicator(response.data);
-            });
-        };
-        $scope.jobQueueInterval = $interval(refresh, cfg.queue_interval);
-    };
-    /**
-     * Route on change Success
-     */
-    $rootScope.$on("$routeChangeSuccess", function (event, current, previous) {
-        if (cfg.app_type === 'installer') {
-            $scope.loadSystemInfo();
+  // Extend existing alert (ERROR) dialog
+  if (!alertify.alertError) {
+    //define a new errorAlert base on alert
+    alertify.dialog('alertError', function factory() {
+      return {
+        build: function () {
+          var errorHeader = '<span class="fa fa-exclamation-triangle fa-lg text-danger" ' +
+            'style="vertical-align:middle;">' +
+            '</span> ' + $scope.getCustomCfgVal('title') + ' - ERROR';
+          this.setHeader(errorHeader);
         }
+      };
+    }, true, 'alert');
+  }
+
+  // Extend existing alert (WARNING) dialog
+  if (!alertify.alertWarning) {
+    alertify.dialog('alertWarning', function factory() {
+      return {
+        build: function () {
+          var errorHeader = '<span class="fa fa-exclamation-circle fa-lg text-warning" ' +
+            'style="vertical-align:middle;">' +
+            '</span> ' + $scope.getCustomCfgVal('title') + ' - WARNING';
+          this.setHeader(errorHeader);
+        }
+      };
+    }, true, 'alert');
+  }
+
+  /// --- Common APIs  --- ///
+  /**
+   * Run zwave command
+   * @param {string} cmd
+   * @param {int} timeout
+   */
+  $scope.runZwaveCmd = function (cmd, timeout, hideError) {
+    timeout = timeout || 1000;
+    $scope.toggleRowSpinner(cmd);
+    dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {}, function (error) {
+      if (!hideError) {
+        alertify.alertError($scope._t('error_update_data') + '\n' + cmd);
+      }
+
+    }).finally(function () {
+      $timeout($scope.toggleRowSpinner, timeout);
     });
-    /**
-     * Load common APIs for pages, where authorization is required
-     */
-    //if ($scope.getBodyId() !== '') {
-    if (cfg.no_auth_pages.indexOf($scope.getBodyId()) === -1) {
-        $scope.loadZwaveConfig();
-        $scope.setDongle();
-        $scope.setTimeStamp();
-        $scope.loadBusyIndicator();
-        $scope.loadBoxApiData();
-        /*if(cfg.app_type === 'installer'){
+  };
 
-         $scope.loadBoxApiData();
-         }
-         */
-    }
+  /**
+   * Build version for CIT footer
+   * @returns {undefined}
+   */
+  $scope.buildVersion = function () {
 
-    /// --- Private functions --- ///
-    /**
-     * Set busy indicator
-     * @param {object} ZWaveAPIData
-     */
-    function setBusyIndicator(data) {
-        var ret = {
-            queueLength: data.length,
-            busyLength: 0,
-            result: 0
-        }
-        angular.forEach(data, function (job, jobIndex) {
-            // job[1][1] = W
-            // job[1][2] = S
-            // job[1][4] = D
+    var current_firmware = $scope.cfg.system_info.current_firmware;
+    var app_version = $scope.cfg.app_version
+    var part_ui = app_version.split("-");
+    var part_os = current_firmware.split("-");
+    var os = part_os[0];
+    var ui = part_ui[0];
 
-            //if((job[1][1] === 0 || job[1][2] === 0 || job[1][4] === 0) || (job[1][1] === 0 && job[1][2] === 0 && job[1][4] === 0)){
-            if (job[1][1] === 0 && job[1][2] === 0 && job[1][4] === 0) {
-                ret.busyLength += 1;
-            }
+    $scope.version = $scope._t("version", {
+      "__ui__": ui,
+      "__os__": os
+    });
+  };
+
+
+  /**
+   * Load system info
+   * @returns {undefined}
+   */
+  $scope.loadSystemInfo = function () {
+    dataService.getApi('system_info_url').then(function (response) {
+      //angular.extend($scope.systemInfo, response.data.data);
+      angular.extend(cfg.system_info, response.data.data);
+      $scope.buildVersion();
+      // Is CIT server online?
+      $scope.isOnline = cfg.system_info.cit_server_reachable;
+      // box is not registered
+      if (!cfg.system_info.cit_authorized) {
+        $scope.alertCitLicence = 'cit_not_registered';
+        return;
+      }
+      //  license has been expired
+      if (cfg.system_info.cit_license_countDown == 0) {
+        $scope.alertCitLicence = 'cit_licence_expired';
+        return;
+      }
+      //  license will be expire soon
+      if (cfg.system_info.cit_license_countDown < 5) {
+        $scope.alertCitLicence = 'cit_licence_update';
+        return;
+      }
+
+
+    }, function (error) {});
+
+  };
+
+
+  /**
+   * Set zwave configuration
+   * @returns {undefined}
+   */
+  $scope.loadZwaveConfig = function (nocache) {
+    // Set config
+    dataService.getApi('configget_url', null, nocache).then(function (response) {
+      angular.extend(cfg.zwavecfg, response.data);
+    }, function (error) {});
+  };
+
+  /**
+   * Load zwave dongles
+   */
+  $scope.setDongle = function () {
+    dataService.getApi('zwave_list').then(function (response) {
+      if (response.data.length === 1) {
+        angular.extend(cfg, {
+          dongle: response.data[0]
         });
-        //ret.result = (ret.queueLength - ret.busyLength);
-        ret.result = ret.busyLength;
-        angular.extend(cfg.busy_indicator, ret);
+        $cookies.dongle = response.data[0];
+      }
+      angular.extend(cfg, {
+        dongle_list: response.data
+      });
+
+    }, function (error) {}).finally(function () {
+      deviceService.setDongle(cfg.dongle);
+    });
+  };
+
+
+  /**
+   * Set timestamp and ping server if request fails
+   * @returns {undefined}
+   */
+  $scope.setTimeStamp = function () {
+    dataService.getApi('time', null, true).then(function (response) {
+      $interval.cancel($scope.timeZoneInterval);
+      angular.extend(cfg.route.time, {
+        string: $filter('setTimeFromBox')(response.data.data.localTimeUT, true)
+      }, {
+        timestamp: response.data.data.localTimeUT
+      }, {
+        offset: response.data.data.localTimeZoneOffset
+      });
+      var refresh = function () {
+        cfg.route.time.timestamp += (cfg.interval < 1000 ? 1 : Math.floor(cfg.interval / 1000));
+        cfg.route.time.string = $filter('setTimeFromBox')(cfg.route.time.timestamp);
+      };
+
+      cfg.zwavecfg.time_zone = response.data.data.localTimeZone;
+      $scope.timeZoneInterval = $interval(refresh, cfg.interval);
+    }, function (error) {});
+
+  };
+
+
+  /**
+   * Load Box API data
+   */
+  $scope.boxData = {
+    controller: {}
+  };
+  $scope.loadBoxApiData = function () {
+    dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
+      var hasDevices = Object.keys(ZWaveAPIData.devices).length;
+      var homeId = ZWaveAPIData.controller.data.homeId.value;
+      var zwayNodeId = ZWaveAPIData.controller.data.nodeId.value;
+      var APIVersion = ZWaveAPIData.controller.data.APIVersion.value;
+      var showAnalytics = cfg.analytics.show;
+      // Changes MK
+      //$scope.boxData.controller.controllerState = ZWaveAPIData.controller.data.controllerState.value;
+      // Rewrite config
+      var cfgController = {
+        homeName: ZWaveAPIData.controller.data.homeName.value || cfg.controller.homeName,
+        isRealPrimary: ZWaveAPIData.controller.data.isRealPrimary.value,
+        homeId: homeId,
+        homeIdHex: '0x' + ('00000000' + (homeId + (homeId < 0 ? 0x100000000 : 0)).toString(16)).slice(-8),
+        hasDevices: hasDevices < 2 ? false : true,
+        zwayNodeId: zwayNodeId,
+        APIVersion: APIVersion
+      }
+
+      angular.extend(cfg.controller, cfgController);
+
+      if ((!showAnalytics && ZWaveAPIData.controller.data.capabilities.value.indexOf(59) > -1)) {
+        angular.extend(cfg.analytics, {
+          show: true
+        });
+      }
+    }, function (error) {
+      //alertify.alertError($scope._t('error_load_data'));
+
+    });
+  };
+  /**
+   * Load queue data
+   */
+  $scope.loadBusyIndicator = function () {
+    var refresh = function () {
+      dataService.refreshApi('queue_url').then(function (response) {
+        setBusyIndicator(response.data);
+      });
+    };
+    $scope.jobQueueInterval = $interval(refresh, cfg.queue_interval);
+  };
+  /**
+   * Load common APIs for pages, where authorization is required
+   */
+  //if ($scope.getBodyId() !== '') {
+  if (cfg.no_auth_pages.indexOf($scope.getBodyId()) === -1) {
+    $scope.loadZwaveConfig();
+    $scope.setDongle();
+    $scope.setTimeStamp();
+    $scope.loadBusyIndicator();
+    $scope.loadBoxApiData();
+  }
+
+  /// --- Private functions --- ///
+  /**
+   * Set busy indicator
+   * @param {object} ZWaveAPIData
+   */
+  function setBusyIndicator(data) {
+    var ret = {
+      queueLength: data.length,
+      busyLength: 0,
+      result: 0
     }
+    angular.forEach(data, function (job, jobIndex) {
+      // job[1][1] = W
+      // job[1][2] = S
+      // job[1][4] = D
+
+      //if((job[1][1] === 0 || job[1][2] === 0 || job[1][4] === 0) || (job[1][1] === 0 && job[1][2] === 0 && job[1][4] === 0)){
+      if (job[1][1] === 0 && job[1][2] === 0 && job[1][4] === 0) {
+        ret.busyLength += 1;
+      }
+    });
+    //ret.result = (ret.queueLength - ret.busyLength);
+    ret.result = ret.busyLength;
+    angular.extend(cfg.busy_indicator, ret);
+  }
 
 });
-
 /**
  * @overview The uncategorized controllers.
  * @author Martin Vach
@@ -12011,233 +12020,11 @@ appController.controller('DataHolderInfoController', function($scope, $filter, d
  * @class AuthController
  *
  */
-appController.controller('InitInstallerController', function ($scope, $location, $timeout, $window, $cookies, $routeParams, cfg, dataService, deviceService) {
-    $scope.auth = {
-        input: {
-            user: '',
-            pass: '',
-            cit_identifier: cfg.system_info.cit_identifier || ''
-        },
-        alert: {},
-        findcit_referrer: false,
-        hostname: $location.host()
-    };
-
-    var path = $location.path().split('/');
-
-    /**
-     * Set referrer
-     */
-    $scope.setReferrerCookie = function () {
-        $cookies.findcit_referrer = $window.document.referrer;
-    };
-    $scope.setReferrerCookie();
-
-    /**
-     * Get session (ie for users holding only a session id, or users that require no login)
-     */
-    $scope.getSession = function () {
-        var hasCookie = ($cookies.user) ? true : false;
-        if (hasCookie) {
-            dataService.sessionApi().then(function (response) {
-                var user = response.data.data;
-                deviceService.setZWAYSession(user.sid);
-                deviceService.setUser(user);
-                $window.location.href = '#/home';
-                $window.location.reload();
-            });
-        }
-    };
-
-    /**
-     * Get referrer from cookie and parse it
-     */
-    /*$scope.forward = function () {
-        dataService.getApi('system_info_url',false,true).then(function (response) {
-            $scope.auth.cit_login_forward = response.data.data.cit_forward_auth? response.data.data.cit_forward_auth : undefined;
-            console.log(response)
-            if ($scope.auth.cit_login_forward && $scope.auth.cit_login_forward.allowed) {
-                $scope.toggleRowSpinner('installer_auth');
-                $scope.login({
-                    'login': $scope.auth.cit_login_forward.user,
-                    'password': 'password'
-                });
-            }
-
-        }, function (error) {
-        });
-
-    };
-    $scope.forward();*/
-
-
-    /**
-     * Get referrer from cookie and parse it
-     */
-    $scope.getReferrer = function () {
-        if($cookies.findcit_referrer){
-            var parseUrl = new URL($cookies.findcit_referrer);
-            $scope.auth.findcit_referrer = (parseUrl.hostname === cfg.find_cit.hostname);
-        }
-    };
-    $scope.getReferrer();
-
-    if ((typeof $routeParams.logout === 'undefined' ||
-        !$routeParams.logout || path[1] === '') &&
-        $scope.cfg.find_hosts.indexOf($location.host()) === -1) {
-        $scope.getSession();
-    }
-
-    /**
-     * Login proccess
-     */
-    $scope.authenticate = function (input) {
-        $scope.auth.alert = {};
-        $scope.toggleRowSpinner('installer_auth');
-        var auth = {
-            'login': input.user.toLowerCase(),
-            'password': input.pass
-        };
-
-        // test login without cit auth
-        if(cfg.dev_host.indexOf($location.host()) > -1){
-            $scope.login(auth);
-            return;
-        }
-
-        // cit authentication
-        dataService.postApi('installer_auth', input).then(function (response) {
-            if (!response.data.data.result) {
-                $scope.auth.alert = {
-                    message: $scope._t(response.data.data.key) + ' ' + response.data.data.result_message,
-                    status: 'alert-danger',
-                    icon: 'fa-exclamation-triangle'
-                };
-            } else {
-                $scope.login(auth);
-            }
-
-        }, function (error) {
-            if (cfg.system_info.cit_authorized && error.status == 504) {
-                $scope.login(auth);
-            } else {
-                console.log(error);
-                var message = $scope._t('initial_fail');// + ' ' + response.data.data.result_message;
-                if (error.status == 500) {
-                    message = $scope._t('error_load_data');
-                }
-                $scope.auth.alert = {message: message, status: 'alert-danger', icon: 'fa-exclamation-triangle'};
-            }
-
-        }).finally(function () {
-            $timeout($scope.toggleRowSpinner, 1000);
-        });
-    };
-
-    /**
-     * Login proccess
-     */
-    $scope.login = function (input) {
-        dataService.logInApi(input).then(function (response) {
-            var user = response.data.data;
-            deviceService.setZWAYSession(user.sid);
-            deviceService.setUser(user);
-            $window.location.href = '#/home';
-            $window.location.reload();
-        }, function (error) {
-            var redirect = cfg.logout_redirect[$location.host()];
-            $scope.loading = false;
-            var message = $scope._t('error_load_data');
-            if (error.status == 401) {
-                message = $scope._t('error_load_cit_user');
-            }
-
-            // Redirect to an url from list
-            if (redirect) {
-                $window.location.href = redirect;
-                return;
-            }
-            $scope.auth.alert = {message: message, status: 'alert-danger', icon: 'fa-exclamation-triangle'};
-        }).finally(function () {
-            $timeout($scope.toggleRowSpinner, 1000);
-        });
-    };
-});
-
-/**
- * Auth default controller
- * @class AuthController
- *
- */
 appController.controller('AuthController', function ($location, $window, $timeout) {
     $location.path('/home');
     $timeout(function() {
         $window.location.reload();
     }, 1);
-});
-
-/**
- * Auth installer controller
- * @class AuthInstallerController
- *
- */
-appController.controller('AuthInstallerController', function ($scope, $location, cfg, $window, cfg, dataService, deviceService) {
-    $scope.input = cfg.auth;
-    //$location.path('/init');
-
-    /**
-     * Login proccess
-     */
-    $scope.login = function (input) {
-        $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin', message: $scope._t('loading')};
-        dataService.logInApi(input).then(function (response) {
-            var user = response.data.data;
-            deviceService.setZWAYSession(user.sid);
-            deviceService.setUser(user);
-            $location.path('/home');
-            //window.location = '#/home';
-            $window.location.reload();
-        }, function (error) {
-            var redirect = cfg.logout_redirect[$location.host()];
-            $scope.loading = false;
-            var message = $scope._t('error_load_data');
-            if (error.status == 401) {
-                message = $scope._t('error_load_user');
-            }
-
-            // Redirect to an url from list
-            if (redirect) {
-                $window.location.href = redirect;
-                return;
-            }
-            alertify.alertError(message);
-        });
-    };
-    //cfg.system_info.cit_authorized = true;
-    // Redirect to init page
-    if (!cfg.system_info.cit_authorized) {
-        $location.path('/init');
-        $window.location.reload();
-    } else { // Login
-        $scope.login($scope.input);
-    }
-
-
-});
-
-/**
- * Logout installer controller
- * @class LogoutInstallerController
- *
- */
-appController.controller('LogoutInstallerController', function (dataService, deviceService) {
-    dataService.getApi('logout_url').then(function (response) {
-    }, function (error) {
-    })
-        .finally(function () {
-            deviceService.logOut();
-        });
-
 });
 /**
  * @overview This controller renders and handles settings and configuration.
@@ -15576,7 +15363,7 @@ appController.controller('AssociationsController', function($scope, $filter, $ti
  * @class ControlController
  *
  */
-appController.controller('ControlController', function ($scope, $interval, $timeout, $filter,  $window,cfg, dataService, deviceService) {
+appController.controller('ControlController', function ($scope, $interval, $timeout, $filter, $window, cfg, dataService, deviceService) {
     $scope.controlDh = {
         process: false,
         interval: null,
@@ -15613,7 +15400,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 show: false,
                 done: false,
                 countDown: 20,
-               anyChecked: false
+                anyChecked: false
             },
             verifyDSK: {
                 interval: false,
@@ -15646,8 +15433,8 @@ appController.controller('ControlController', function ($scope, $interval, $time
             replaceNodes: [],
             failedBatteries: []
         },
-        factory:{
-           process: false,
+        factory: {
+            process: false,
             alert: $scope.alert,
         }
     };
@@ -15661,8 +15448,8 @@ appController.controller('ControlController', function ($scope, $interval, $time
     /**
      * Get block of DSK
      */
-    $scope.dskBlock = function(publicKey, block) {
-        if(!publicKey){
+    $scope.dskBlock = function (publicKey, block) {
+        if (!publicKey) {
             return '';
         }
         return (publicKey[(block - 1) * 2] * 256 + publicKey[(block - 1) * 2 + 1]);
@@ -15692,9 +15479,13 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 setControllerData(response.data.joined);
                 setDeviceData(response.data.joined);
                 setInclusionData(response.data.joined, response.data.update);
-                if($scope.controlDh.inclusion.lastIncludedDeviceId != 0 && cfg.app_type != 'installer'){
-                    var nodeInstances = $filter('hasNode')(response, 'data.joined.devices.' + $scope.controlDh.inclusion.lastIncludedDeviceId + '.instances')
-                    checkInterview(nodeInstances);
+                if ($scope.controlDh.inclusion.lastIncludedDeviceId != 0) {
+                    console.log('Waiting 5 seconds and than check interview')
+                    var nodeInstances = $filter('hasNode')(response, 'data.joined.devices.' + $scope.controlDh.inclusion.lastIncludedDeviceId + '.instances');
+                    $timeout(function () {
+                        checkInterview(nodeInstances);
+                    }, 5000);
+
                 }
 
             });
@@ -15705,27 +15496,27 @@ appController.controller('ControlController', function ($scope, $interval, $time
     /**
      * Handle inclusionS2GrantKeys
      */
-    $scope.handleInclusionS2GrantKeys = function (keysGranted,timedOut) {
+    $scope.handleInclusionS2GrantKeys = function (keysGranted, timedOut) {
         var alertMessage = '';
         // Is any checkbox checked?
-        angular.forEach(keysGranted,function(v){
-            if(v == true){
+        angular.forEach(keysGranted, function (v) {
+            if (v == true) {
                 $scope.controlDh.inclusion.grantKeys.anyChecked = true
                 return;
             }
         });
         // Is timed out
-        if(timedOut){
+        if (timedOut) {
             alertMessage += $scope._t('timedout') + '. ';
 
         }
         // Nothing is checked
-        if(!$scope.controlDh.inclusion.grantKeys.anyChecked){
+        if (!$scope.controlDh.inclusion.grantKeys.anyChecked) {
             alertMessage += $scope._t('no_s2_channel');
 
         }
         // Show an alert
-        if(alertMessage){
+        if (alertMessage) {
             $scope.controlDh.inclusion.alertS2 = {
                 message: alertMessage,
                 status: 'alert-danger',
@@ -15734,15 +15525,15 @@ appController.controller('ControlController', function ($scope, $interval, $time
         }
 
 
-       $scope.controlDh.inclusion.grantKeys.show = false;
+        $scope.controlDh.inclusion.grantKeys.show = false;
         $scope.controlDh.inclusion.grantKeys.done = true;
         $interval.cancel($scope.controlDh.inclusion.grantKeys.interval);
         var nodeId = $scope.controlDh.inclusion.lastIncludedDeviceId.toString(10),
-            cmd =
-                'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S0=' + keysGranted.S0 + '; '+
-                'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S2Unauthenticated=' + keysGranted.S2Unauthenticated + '; '+
-                'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S2Authenticated=' + keysGranted.S2Authenticated + '; '+
-                'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S2Access=' + keysGranted.S2Access + '; '+
+                cmd =
+                'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S0=' + keysGranted.S0 + '; ' +
+                'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S2Unauthenticated=' + keysGranted.S2Unauthenticated + '; ' +
+                'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S2Authenticated=' + keysGranted.S2Authenticated + '; ' +
+                'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S2Access=' + keysGranted.S2Access + '; ' +
                 'devices[' + nodeId + '].SecurityS2.data.grantedKeys=true';
         $scope.runZwaveCmd(cmd)
     };
@@ -15750,10 +15541,10 @@ appController.controller('ControlController', function ($scope, $interval, $time
     /**
      * Handle inclusionS2VerifyDSK
      */
-    $scope.handleInclusionVerifyDSK = function (confirmed,timedOut) {
+    $scope.handleInclusionVerifyDSK = function (confirmed, timedOut) {
         var alertMessage = '';
         // Is timed out
-        if(timedOut){
+        if (timedOut) {
             $scope.controlDh.inclusion.alertS2 = {
                 message: $scope._t('timedout'),
                 status: 'alert-danger',
@@ -15762,7 +15553,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
 
         }
         // Is confirmed
-        if(confirmed){
+        if (confirmed) {
             $scope.controlDh.inclusion.alertS2 = {
                 message: $scope._t('wait_key_veriffication'),
                 status: 'alert-warning',
@@ -15774,17 +15565,19 @@ appController.controller('ControlController', function ($scope, $interval, $time
         $scope.controlDh.inclusion.verifyDSK.done = true;
         $interval.cancel($scope.controlDh.inclusion.verifyDSK.interval);
         var dskPin = parseInt($scope.controlDh.inclusion.input.dskPin, 10),
-            nodeId = $scope.controlDh.inclusion.lastIncludedDeviceId.toString(10),
-            publicKey = [];
-
+                nodeId = $scope.controlDh.inclusion.lastIncludedDeviceId.toString(10),
+                publicKey = [];
+                
+        dskPin = $filter('zeroFill')(dskPin,5);
         if (confirmed) {
             publicKey = $scope.controlDh.inclusion.input.publicKey;
             publicKey[0] = (dskPin >> 8) & 0xff;
             publicKey[1] = dskPin & 0xff;
         }
+        console.log(publicKey.join(','))
         var cmd = 'devices[' + nodeId + '].SecurityS2.data.publicKeyVerified=[' + publicKey.join(',') + '];';
         $scope.runZwaveCmd(cmd);
-        $timeout(function(){
+        $timeout(function () {
             checkS2Interview(nodeId);
         }, 10000);
 
@@ -15803,10 +15596,10 @@ appController.controller('ControlController', function ($scope, $interval, $time
         var hasSUC = ZWaveAPIData.controller.data.SUCNodeId.value;
         var hasDevices = Object.keys(ZWaveAPIData.devices).length;
         var controllerState = ZWaveAPIData.controller.data.controllerState.value;
-        var  publicKey = $filter('hasNode')(ZWaveAPIData, 'devices.' + controllerNodeId + '.instances.0.commandClasses.159.data.publicKey');
-        //var  publicKey = [153, 208, 7, 160, 148, 242, 106, 250, 131, 14, 199, 190, 151, 144, 115, 18, 26, 150, 80, 131, 83, 143, 64, 149, 103, 61, 70, 243, 147, 85, 55, 108]
-
-        // Customsettings
+        var joiningS2 = $filter('hasNode')(ZWaveAPIData,'devices.' + controllerNodeId + '.data.joiningS2.value');
+        var publicKey = $filter('hasNode')(ZWaveAPIData,'devices.' + controllerNodeId + '.data.publicKey.value');
+        var publicKeyString = deviceService.mapPublicKey(publicKey||[]);
+       // Customsettings
         $scope.controlDh.controller.hasDevices = hasDevices > 1;
         $scope.controlDh.controller.disableSUCRequest = true;
         if (hasSUC && hasSUC != controllerNodeId) {
@@ -15830,18 +15623,21 @@ appController.controller('ControlController', function ($scope, $interval, $time
         $scope.controlDh.controller.SetPromiscuousMode = (ZWaveAPIData.controller.data.functionClassesNames.value.indexOf('SetPromiscuousMode') > -1 ? true : false);
         $scope.controlDh.controller.SUCNodeId = ZWaveAPIData.controller.data.SUCNodeId.value;
         $scope.controlDh.controller.isInOthersNetwork = ZWaveAPIData.controller.data.isInOthersNetwork.value;
-        if(_.size(publicKey)){
-            $scope.controlDh.controller.publicKey = publicKey;
-            $scope.controlDh.controller.publicKeyQr =
-                $scope.dskBlock(publicKey, 0) || ''
-                +  $scope.dskBlock(publicKey, 1).toString()
-                + $scope.dskBlock(publicKey, 2)
-                +  $scope.dskBlock(publicKey, 3)
-                +  $scope.dskBlock(publicKey, 4)
-                +  $scope.dskBlock(publicKey, 5)
-                +  $scope.dskBlock(publicKey, 6)
-                +  $scope.dskBlock(publicKey, 7)
-                +  $scope.dskBlock(publicKey, 8);
+        $scope.controlDh.controller.joiningS2 = joiningS2;
+        $scope.controlDh.controller.publicKey = publicKey;
+        $scope.controlDh.controller.publicKeyString = publicKeyString;
+        if (_.size(publicKey)) {
+          $scope.controlDh.controller.publicKeyStringHighligted =   $filter('highlightDsk')(publicKeyString);
+             $scope.controlDh.controller.publicKeyQr =
+                    $scope.dskBlock(publicKey, 0) || ''
+                    + $scope.dskBlock(publicKey, 1).toString()
+                    + $scope.dskBlock(publicKey, 2)
+                    + $scope.dskBlock(publicKey, 3)
+                    + $scope.dskBlock(publicKey, 4)
+                    + $scope.dskBlock(publicKey, 5)
+                    + $scope.dskBlock(publicKey, 6)
+                    + $scope.dskBlock(publicKey, 7)
+                    + $scope.dskBlock(publicKey, 8);
             $scope.controlDh.controller.publicKeyPin = (publicKey[0] << 8) + publicKey[1];
         }
 
@@ -15853,12 +15649,14 @@ appController.controller('ControlController', function ($scope, $interval, $time
             icon: 'fa-spinner fa-spin'
         };
 
-        if([1,5].indexOf(controllerState) == -1) {
-            if($scope.controlDh.includeToNetworkTimeout) {
+        if ([1, 5].indexOf(controllerState) == -1) {
+            if ($scope.controlDh.includeToNetworkTimeout) {
                 $timeout.cancel($scope.controlDh.includeToNetworkTimeout);
                 $scope.controlDh.network.modal = true;
             }
         }
+
+      
 
         // Controller state switch
         switch (controllerState) {
@@ -15887,9 +15685,9 @@ appController.controller('ControlController', function ($scope, $interval, $time
                                 icon: 'fa-smile-o'
                             };
                             $scope.controlDh.network.inclusionProcess = false;
-                            if($scope.controlDh.controller.isRealPrimary || !$scope.controlDh.controller.isInOthersNetwork) {
+                            if ($scope.controlDh.controller.isRealPrimary || !$scope.controlDh.controller.isInOthersNetwork) {
                                 // Reloading a page
-                                $timeout(function() {
+                                $timeout(function () {
                                     $window.location.reload();
                                 }, 3000);
                             }
@@ -15901,7 +15699,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
                     $scope.controlDh.network.alert = $scope.alert;
                 }
                 // Factory default
-                if($scope.controlDh.factory.process){
+                if ($scope.controlDh.factory.process) {
                     $scope.toggleRowSpinner('controller.SetDefault()');
                     $scope.controlDh.factory.process = false;
                     $scope.controlDh.factory.alert = {
@@ -15910,9 +15708,9 @@ appController.controller('ControlController', function ($scope, $interval, $time
                         icon: 'fa-spinner fa-spin'
                     };
                     // Reloading a page
-                    $timeout(function(){
+                    $timeout(function () {
                         $window.location.reload();
-                    }, 3000 );
+                    }, 3000);
                 }
                 break;
             case 1:
@@ -16039,8 +15837,13 @@ appController.controller('ControlController', function ($scope, $interval, $time
             var givenName = $filter('deviceName')(deviceIncId, node);
             var updateTime = $filter('isTodayFromUnix')(data.controller.data.lastIncludedDevice.updateTime);
             //Run CMD
-            /*var cmd = 'devices[' + deviceIncId + '].data.givenName.value=\'' + givenName + '\'';
-             dataService.runZwaveCmd(cfg.store_url + cmd);*/
+            //console.log('node.data.givenName.value',node.data.givenName.value)
+            if(!node.data.givenName.value || node.data.givenName.value == ''){
+              var cmd = 'devices[' + deviceIncId + '].data.givenName.value=\'' + givenName + '\'';
+              dataService.runZwaveCmd(cfg.store_url + cmd);
+              //console.log('!node.data.givenName',cmd)
+            }
+           
             $scope.controlDh.inclusion.lastIncludedDeviceId = deviceIncId;
             $scope.controlDh.inclusion.lastIncludedDevice = {
                 message: $scope._t('nm_last_included_device') + '  (' + updateTime + ')  <a href="#configuration/interview/' + deviceIncId + '"><strong>' + givenName + '</strong></a>',
@@ -16075,14 +15878,18 @@ appController.controller('ControlController', function ($scope, $interval, $time
      */
     function checkInterview(nodeInstances) {
         if ($scope.controlDh.inclusion.grantKeys.show
-            || $scope.controlDh.inclusion.verifyDSK.show
-            || ($scope.controlDh.inclusion.grantKeys.done  && $scope.controlDh.inclusion.verifyDSK.done)) {
+                || $scope.controlDh.inclusion.verifyDSK.show
+                || ($scope.controlDh.inclusion.grantKeys.done && $scope.controlDh.inclusion.verifyDSK.done)) {
             return;
         }
-
+        // Set securityS2
         var securityS2 = nodeInstances[0].commandClasses[159];
-
+        
+         console.log('Has securityS2  commandClass: ',securityS2);
+        // Check requestedKeys
+       
         if (securityS2 && securityS2.data.requestedKeys.value && !$scope.controlDh.inclusion.grantKeys.done) {
+          console.log('Check requestedKeys: securityS2.data.requestedKeys.value ',securityS2.data.requestedKeys.value);
             $scope.controlDh.inclusion.input.keysRequested.S0 = securityS2.data.requestedKeys.S0.value;
             $scope.controlDh.inclusion.input.keysRequested.S2Unauthenticated = securityS2.data.requestedKeys.S2Unauthenticated.value;
             $scope.controlDh.inclusion.input.keysRequested.S2Authenticated = securityS2.data.requestedKeys.S2Authenticated.value;
@@ -16094,14 +15901,16 @@ appController.controller('ControlController', function ($scope, $interval, $time
                     $interval.cancel($scope.controlDh.inclusion.grantKeys.interval);
                     // cancel
                     $scope.controlDh.inclusion.input.keysRequested.S0 = $scope.controlDh.inclusion.input.keysRequested.S2Unauthenticated = $scope.controlDh.inclusion.input.keysRequested.S2Authenticated = $scope.controlDh.inclusion.input.keysRequested.S2Access = false;
-                    $scope.handleInclusionS2GrantKeys($scope.controlDh.inclusion.input.keysRequested,true);
+                    $scope.handleInclusionS2GrantKeys($scope.controlDh.inclusion.input.keysRequested, true);
                 }
             };
             $scope.controlDh.inclusion.grantKeys.interval = $interval(countDownGrantKeys, 1000);
             return;
         }
-
+         // Check publicKey
+        
         if (securityS2 && securityS2.data.publicKey.value.length && !$scope.controlDh.inclusion.verifyDSK.done) {
+          console.log('Check publicKey: securityS2.data.publicKey.value.length ',securityS2.data.requestedKeys.value);
             $scope.controlDh.inclusion.input.publicKey = securityS2.data.publicKey.value;
             $scope.controlDh.inclusion.input.publicKeyAuthenticationRequired = securityS2.data.publicKeyAuthenticationRequired.value;
             $scope.controlDh.inclusion.input.dskPin = $scope.dskBlock($scope.controlDh.inclusion.input.publicKey, 1);
@@ -16110,7 +15919,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 $scope.controlDh.inclusion.verifyDSK.countDown--;
                 if ($scope.controlDh.inclusion.verifyDSK.countDown === 0) {
                     $interval.cancel($scope.controlDh.inclusion.verifyDSK.interval);
-                    $scope.handleInclusionVerifyDSK(false,true);
+                    $scope.handleInclusionVerifyDSK(false, true);
                 }
             };
             $scope.controlDh.inclusion.verifyDSK.interval = $interval(countDownVerifyDSK, 1000);
@@ -16123,25 +15932,26 @@ appController.controller('ControlController', function ($scope, $interval, $time
      */
     function  checkS2Interview(nodeId) {
         dataService.loadZwaveApiData(true).then(function (response) {
-                var interviewDone = $filter('hasNode')(response, 'devices.' + nodeId + '.instances.0.commandClasses.159.data.interviewDone.value');
-                console.log('S2 interview DONE: ' + interviewDone)
-                if(interviewDone){
-                    $scope.controlDh.inclusion.alertS2 = {
-                            message: $scope._t('auth_successful'),
-                            status: 'alert-success',
-                            icon: 'fa-smile-o'
-                        };
-                }else{
-                    $scope.controlDh.inclusion.alertS2 = {
-                        message: $scope._t('auth_failed'),
-                        status: 'alert-danger',
-                        icon: 'fa-exclamation-triangle'
-                    };
-                }
+            var interviewDone = $filter('hasNode')(response, 'devices.' + nodeId + '.instances.0.commandClasses.159.data.interviewDone.value');
+            console.log('S2 interview DONE: ' + interviewDone)
+            if (interviewDone) {
+                $scope.controlDh.inclusion.alertS2 = {
+                    message: $scope._t('auth_successful'),
+                    status: 'alert-success',
+                    icon: 'fa-smile-o'
+                };
+            } else {
+                $scope.controlDh.inclusion.alertS2 = {
+                    message: $scope._t('auth_failed'),
+                    status: 'alert-danger',
+                    icon: 'fa-exclamation-triangle'
+                };
+            }
 
 
-            }, function (error) {});
-    };
+        }, function (error) {});
+    }
+    ;
 });
 
 /**
@@ -16236,14 +16046,8 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
         }
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
             //console.log('Run cmd: ', cfg.store_url + cmd)
-            $scope.controlDh.includeToNetworkTimeout = $timeout(function() {
+            $scope.controlDh.includeToNetworkTimeout = $timeout(function () {
                 dataService.runZwaveCmd(cfg.store_url + 'controller.SetLearnMode(0)');
-                //console.log('Running controller.SetLearnMode(0) after timeout')
-                // if(cfg.app_type === 'installer'){
-                //     $window.location.reload();
-                // }else{
-                //     $scope.controlDh.network.modal = true;
-                // }
                 $scope.controlDh.network.modal = true;
             }, timeout);
         }, function (error) {
@@ -16292,7 +16096,7 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
  * @class BackupRestoreController
  *
  */
-appController.controller('BackupRestoreController', function ($scope, $upload, $window, $filter,$timeout,deviceService, cfg, _) {
+appController.controller('BackupRestoreController', function ($scope, $upload, $window, $filter, $timeout, deviceService, cfg, _) {
     $scope.restore = {
         allow: false,
         input: {
@@ -16310,18 +16114,18 @@ appController.controller('BackupRestoreController', function ($scope, $upload, $
         var url = cfg.server_url + cfg.restore_url + '?restore_chip_info=' + chip;
         var file;
         // Getting a file object
-         if($files.length > 0){
+        if ($files.length > 0) {
             file = $files[0];
-        }else{
+        } else {
             alertify.alertError($scope._t('restore_backup_failed'));
-             return;
+            return;
         }
         // File extension validation
         if (cfg.upload.restore_from_backup.extension.indexOf($filter('fileExtension')(file.name)) === -1) {
             alertify.alertError(
-                $scope._t('upload_format_unsupported', {'__extension__': $filter('fileExtension')(file.name)}) + ' ' +
-                $scope._t('upload_allowed_formats', {'__extensions__': cfg.upload.restore_from_backup.extension.toString()})
-            );
+                    $scope._t('upload_format_unsupported', {'__extension__': $filter('fileExtension')(file.name)}) + ' ' +
+                    $scope._t('upload_allowed_formats', {'__extensions__': cfg.upload.restore_from_backup.extension.toString()})
+                    );
             return;
         }
 
@@ -16340,9 +16144,9 @@ appController.controller('BackupRestoreController', function ($scope, $upload, $
             } else {// Success
                 deviceService.showNotifier({message: $scope._t('restore_done_reload_ui')});
                 // Reloading a page
-                $timeout( function(){
+                $timeout(function () {
                     $window.location.reload();
-                }, 3000 );
+                }, 3000);
 
             }
         }).error(function (data, status) {
@@ -16358,7 +16162,7 @@ appController.controller('BackupRestoreController', function ($scope, $upload, $
  * @class ZwaveChipRebootResetController
  *
  */
-appController.controller('ZwaveChipRebootResetController', function ($scope, cfg,dataService) {
+appController.controller('ZwaveChipRebootResetController', function ($scope, cfg, dataService) {
     /**
      * This function will perform a soft restart of the  firmware of the Z-Wave controller chip
      * without deleting any network information or setting.
@@ -16378,12 +16182,12 @@ appController.controller('ZwaveChipRebootResetController', function ($scope, cfg
             $scope.toggleRowSpinner(cmd);
         }, function (error) {
             $scope.toggleRowSpinner();
-          alertify.alertError($scope._t('error_update_data') + '\n' + cmd);
+            alertify.alertError($scope._t('error_update_data') + '\n' + cmd);
         });
-       /* $scope.$watchCollection('controlDh', function (newVal, oldVal) {
-            console.log(newVal.controller.controllerState)
-            console.log(oldVal.controller.controllerState)
-        });*/
+        /* $scope.$watchCollection('controlDh', function (newVal, oldVal) {
+         console.log(newVal.controller.controllerState)
+         console.log(oldVal.controller.controllerState)
+         });*/
         //console.log($scope.controlDh.controller.controllerState)
         // $scope.handleModal('restoreModal');
         //$window.location.reload();
@@ -16412,7 +16216,7 @@ appController.controller('ChangeFrequencyController', function ($scope, $timeout
     };
 
     if ($scope.frequency.currentFreq &&
-        ['unsupported', 'unknown', 'undefined'].indexOf($scope.frequency.currentFreq) < 0) {
+            ['unsupported', 'unknown', 'undefined'].indexOf($scope.frequency.currentFreq) < 0) {
         Object.keys($scope.frequency.arrays).forEach(function (freqBand) {
             if ($scope.frequency.arrays[freqBand].indexOf($scope.frequency.currentFreq) > -1) {
                 $scope.frequency.currentFreqArr = freqBand;
@@ -16537,9 +16341,9 @@ appController.controller('RequestNifAllController', function ($scope, $timeout, 
             $scope.controlDh.network.inclusionProcess = false;
             $scope.controlDh.network.modal = false;
             $scope.handleModal();
-            $timeout( function(){
+            $timeout(function () {
                 $window.location.reload();
-            }, 3000 );
+            }, 3000);
         }, function (error) {
             $scope.toggleRowSpinner();
             deviceService.showNotifier({message: $scope._t('error_nif_request'), type: 'error'});
@@ -16639,13 +16443,296 @@ appController.controller('SetPromiscuousModeController', function ($scope) {
  */
 appController.controller('S2DskController', function ($scope) {
     var qrcode = new QRCode("qrcode_network", {
-        text:  $scope.controlDh.controller.publicKeyQr,
+        text: $scope.controlDh.controller.publicKeyQr,
         width: 200,
         height: 200,
-        colorDark : "#000000",
-        colorLight : "#ffffff",
-        correctLevel : QRCode.CorrectLevel.H
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
     });
+});
+
+/**
+ * This turns the Z-wave controller into an inclusion/exclusion mode that allows including/excluding a device.
+ * @class IncludeDeviceController
+ *
+ */
+appController.controller('SmartStartDeviceController', function ($scope, $route, $timeout, cfg, dataService) {
+
+    $scope.smartStartEnabled = false;
+    /**
+     * Start Smart Scan.
+     * Turns the controller into an Smart Start inclusion mode that allows including a Smart start device.
+     */
+    $scope.enableSmartStart = function () {
+        timeout = 1000;
+        $scope.toggleRowSpinner('zway.SmartStartEnable()');
+        dataService.runZwaveCmd(cfg.enable_smart_start).then(function (response) {
+            $scope.smartStartEnabled = true;
+            $timeout($scope.toggleRowSpinner, timeout);
+        }, function (error) {
+            $scope.toggleRowSpinner();
+            if (!hideError) {
+                alertify.alertError($scope._t('error_update_data') + '\n' + 'zway.SmartStartEnable()');
+            }
+        });
+    };
+
+    /**
+     * Stop Smart Scan.
+     * Turns the controller back into default mode.
+     */
+    $scope.disableSmartStart = function (cmd) {
+        timeout = 1000;
+        $scope.toggleRowSpinner('controller.RemoveNodeFromNetwork(0)');
+        dataService.runZwaveCmd(cfg.store_url + 'controller.RemoveNodeFromNetwork(0)').then(function (response) {
+            $scope.smartStartEnabled = false;
+            $timeout($scope.toggleRowSpinner, timeout);
+        }, function (error) {
+            $scope.toggleRowSpinner();
+            if (!hideError) {
+                alertify.alertError($scope._t('error_update_data') + '\n' + 'controller.RemoveNodeFromNetwork(0)');
+            }
+        });
+    };
+});
+/**
+ * @overview Handles Z-Wave SmartStart process.
+ * @author Martin Vach
+ */
+
+
+/**
+ * The controller that include device with DSK.
+ * @class SmartStartDskController
+ */
+appController.controller('SmartStartDskEntryController', function($scope, $timeout, cfg, dataService, deviceService, _) {
+	$scope.dsk = {
+		alert: {},
+		input: {
+			dsk_1: '',
+			dsk_2: '',
+			dsk_3: '',
+			dsk_4: '',
+			dsk_5: '',
+			dsk_6: '',
+			dsk_7: '',
+			dsk_8: ''
+		},
+		state: null,
+		list: [],
+		response: ''
+	};
+	// Copy original input values
+	$scope.origInput = angular.copy($scope.dsk.input);
+	/**
+	 * Split string into 8 substrings and then fill DSK inputs
+	 */
+	$scope.fillInput = function(e) {
+			var txt = e.originalEvent.clipboardData.getData('text/plain');
+			if (txt) {
+				angular.forEach(txt.split('-'), function(v, k) {
+					$scope.dsk.input['dsk_' + (k + 1)] = v.substring(0, 5);
+				});
+			}
+
+		}
+		/**
+		 * Check if SDK version match
+		 */
+		//console.log(deviceService.compareVersion(cfg.SDKVersion, cfg.smart_start.required_min_sdk, '>='))
+	$scope.checkSdkVersion = function() {
+			if (!deviceService.compareVersion(cfg.SDKVersion, cfg.smart_start.required_min_sdk, '>=')) {
+				$scope.dsk.alert = {
+					message: $scope._t('Your device does not support SmartStart. Please upgrade your firmware'),
+					status: 'alert-warning',
+					icon: 'fa-exclamation-circle'
+				};
+			}
+		}
+		//$scope.checkSdkVersion();
+
+	/**
+	 * Add DSK 
+	 * @returns {undefined}
+	 */
+	$scope.addDsk = function() {
+		var dsk = {
+			dsk: _.map($scope.dsk.input, function(v) {
+				return v;
+			}).join('-')
+		};
+
+		$scope.dsk.state = 'registering';
+		$scope.toggleRowSpinner(cfg.add_dsk);
+		dataService.postApi('add_dsk', dsk, false).then(function(response) {
+
+			$timeout(function() {
+				// Set state
+				$scope.dsk.state = 'success-register';
+				// Reset model
+				$scope.dsk.input = angular.copy($scope.origInput);
+				// Set response
+				$scope.dsk.response = response.data[0];
+
+			}, 1000);
+
+		}, function(error) {
+			$scope.dsk.state = null;
+			alertify.alertError($scope._t('error_update_data'));
+		}).finally(function() {
+			$timeout($scope.toggleRowSpinner, 1000);
+		});
+	};
+
+
+});
+/**
+ * @overview This controller renders and handles dsk list.
+ * @author Martin Vach
+ */
+
+/**
+ * DSK list controller
+ * @class DskListController
+ *
+ */
+appController.controller('SmartStartDskListController', function($scope, $filter, $timeout, $interval, dataService, cfg, _) {
+	$scope.dsk = {
+		alert: {},
+		all: [],
+		devices: {}
+	};
+
+	/**
+	 * Load zwave data
+	 */
+	$scope.loadZwaveData = function() {
+		dataService.loadZwaveApiData().then(function(ZWaveAPIData) {
+			angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
+				$scope.dsk.devices[nodeId] = {
+					id: nodeId,
+					name: $filter('deviceName')(nodeId, node)
+				};
+			});
+		});
+	};
+
+
+	/**
+	 * Load DSK list
+	 */
+	var loadDskList = function() {
+		$scope.loadZwaveData();
+		dataService.getApi('get_dsk', null, true).then(function(response) {
+			//dataService.getApiLocal('dsk-collection.json').then(function (response) {
+			var data = response.data;
+			if (_.isEmpty(data)) {
+				$scope.alert = {
+					message: $scope._t('empty_dsk_list'),
+					status: 'alert-warning',
+					icon: 'fa-exclamation-circle'
+				};
+				return;
+			}
+			$scope.dsk.all = _.filter(data, function(v) {
+
+				var typeId = $filter('decToHex')(parseInt(v.ZW_QR_TLVVAL_PRODUCTID_ZWPRODUCTTYPE), 2, '0x');
+				var pIdArray = v.p_id.split('.');
+				var pId = parseInt(pIdArray[0]) + '.' + parseInt(pIdArray[1]) + '.' + parseInt(pIdArray[2]);
+				//var pId = parseInt(pIdArray[0]) + '.' + parseInt(pIdArray[1]) + '.' + parseInt(pIdArray[2]) + (pIdArray[3] ? '.' + parseInt(pIdArray[3]) : '');
+				//getDeviceInfo(pId);
+				//console.log('pId',pId.map(parseInt,10))
+
+				// Extending an object
+				v.added = {
+					pId: pId,
+					typeId: typeId,
+					dskArray: v.ZW_QR_DSK.split('-'),
+					timeformat: $filter('getDateTimeObj')(v.timestamp / 1000)
+
+				}
+
+				return v;
+			});;
+
+		}, function(error) {
+			//alertify.alertError();
+			$scope.dsk.alert = {
+				message: $scope._t('error_load_data') + ' ' + error.data,
+				status: 'alert-danger',
+				icon: 'fa-exclamation-triangle'
+			};
+		});
+	};
+	$timeout(loadDskList);
+
+	/**
+	 * Remove a DSK item
+	 * @param {object} input
+	 * @param {string} message
+	 * @returns {undefined}
+	 */
+	$scope.removeDsk = function(input, message) {
+		/* if (!input.isSmartStart) {
+		  alertify.alertError($scope._t('delete_no_smartstart_warning'));
+		  return;
+		} */
+
+		alertify.confirm(message, function() {
+			dataService.getApi('remove_dsk', input.id, true).then(function(response) {
+				var index = _.findIndex($scope.dsk.all, {
+					id: input.id
+				});
+				if (index > -1) {
+					$scope.dsk.all.splice(index, 1);
+				}
+			}, function(error) {
+				alertify.alertError($scope._t('error_delete_data'));
+			});
+		});
+	};
+
+});
+/**
+ * The controller that include device by scanning QR code.
+ * @class SmartStartQrController
+ */
+appController.controller('SmartStartQrController', function ($scope, $timeout) {
+  $scope.qrcode = {
+      input: {
+          qrcode: ''
+      },
+      state: 'start'
+  };
+
+  /**
+   * Reset state to start
+   */
+  $scope.resetState = function () {
+      $scope.qrcode.state = 'start';
+      $scope.reloadData();
+  };
+  /**
+   * Scan QR code
+   */
+  $scope.scan = function (error) {
+      $scope.qrcode.state = 'scanning';
+      $timeout(function () {
+          $scope.qrcode.state = (error ? 'error' : 'success-scan');
+      }, 4000);
+  };
+
+  /**
+   * Discover the device
+   */
+  $scope.discover = function () {
+      $scope.qrcode.state = 'discovering';
+      $timeout(function () {
+          $scope.qrcode.state = 'success-discover';
+      }, 2000);
+  };
+
 });
 /**
  * @overview This controller renders and handles network statistics.
@@ -16657,7 +16744,7 @@ appController.controller('S2DskController', function ($scope) {
  * @class NetworkStatisticsController
  *
  */
-appController.controller('NetworkStatisticsController', function ($scope, $filter, $timeout, $interval, dataService, cfg, _, deviceService) {
+appController.controller('NetworkStatisticsController', function ($scope, $filter, $timeout, $interval, $window,dataService, cfg, _, deviceService) {
 
     $scope.netStat = {
         dataRate: {},
@@ -16748,12 +16835,18 @@ appController.controller('NetworkStatisticsController', function ($scope, $filte
         });
     };
     $scope.loadNetworkStatistics();
-
     /**
      * Update network statistics
+     */
+    $scope.updateNetworkStatistics = function () {
+      $window.location.reload();
+  };
+
+    /**
+     * Reset network statistics
      * @param {string} cmd
      */
-    $scope.updateNetworkStatistics = function (cmd) {
+    $scope.resetNetworkStatistics = function (cmd) {
         var timeout = 1000;
         $scope.runZwaveCmd(cmd, timeout);
         $timeout(function () {
@@ -17158,9 +17251,9 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
         ids: [],
         all: [],
         interval: null,
-        show: false
+        show: false,
+        filter: true
     };
-    $scope.timing = [];
 
     /**
      * Cancel interval on page destroy
@@ -17196,16 +17289,14 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
                 return;
             }
             // Success - timing
-            if (timing.state === 'fulfilled') {
+            /* if (timing.state === 'fulfilled') {
                 $scope.timing = timing.value.data;
-
-                //setDeviceClasses(deviceClasses.value);
-            }
+            } */
 
             // Success - zwaveData
             if (zwaveData.state === 'fulfilled') {
                 //console.log(zwaveData.value)
-                setData(zwaveData.value);
+                setData(zwaveData.value,timing.value.data,true);
                 if(_.isEmpty($scope.devices.all)){
                     $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
                     return;
@@ -17238,12 +17329,25 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
                 });
                 // Update found - updating available devices
                 if(update){
-                    setData(response.data.joined);
+                  dataService.getApi('stat_url', null, true).then(function(timing) {
+                    setData(response.data.joined,timing.data);
+                  });
                 }
             });
         };
         $scope.devices.interval = $interval(refresh, $scope.cfg.interval);
     };
+
+     /**
+     * Set filter
+     * @param {boolean} val
+     */
+    $scope.setFilter = function(val) {
+      $scope.devices.filter = (val);
+      $interval.cancel($scope.devices.interval);
+      $scope.allSettled();
+  };
+
 
     /**
      * Update timing info
@@ -17256,38 +17360,50 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
         $timeout($scope.toggleRowSpinner, 1000);
     };
 
+    /**
+     * TODO: complete function when back-end clear function is finished
+     * Reset timing info
+     * @param {text} spin
+     */
+    $scope.resetTimingInfo = function(spin) {
+      $scope.toggleRowSpinner(spin);
+      $interval.cancel($scope.devices.interval);
+      $scope.allSettled();
+      $timeout($scope.toggleRowSpinner, 1000);
+  };
+
     /// --- Private functions --- ///
     /**
      * Set zwave data
-     * @param {object} ZWaveAPIData
+     *  @param {object} ZWaveAPIData
+     * @param {object} timing
+     * @param {bool} reverse
      */
-    function setData(ZWaveAPIData) {
+    function setData(ZWaveAPIData,timing) {
         var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function(node, nodeId) {
             if (deviceService.notDevice(ZWaveAPIData, node, nodeId)) {
                 return;
             }
-            /*if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
-                return;
-            }*/
             var node = ZWaveAPIData.devices[nodeId];
             var type = deviceService.deviceType(node);
             var totalPackets = 0;
             var okPackets = 0;
             var lastPackets = '';
-            var basicType = node.data.basicType.value;
-            var genericType = node.data.genericType.value;
-            var specificType = node.data.specificType.value;
             var lastCommunication = deviceService.lastCommunication(node);
+            var timingItems = timing[nodeId];
 
             // Packets
-            var timingItems =  $scope.timing[nodeId];
-
-            if (angular.isDefined(timingItems)) {
-                totalPackets = timingItems.length;
+            if(timingItems){
+              timingItems = timingItems.reverse();//(reverse ? timingItems.reverse() : timingItems);
+              totalPackets = timingItems.length;
                 okPackets = getOkPackets(timingItems);
                 lastPackets = getLastPackets(timingItems);
+            }
+
+            if (angular.isDefined(timingItems)) {
+                
             }
 
             // Set object
@@ -17302,9 +17418,6 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
             obj['totalPackets'] = totalPackets;
             obj['okPackets'] = okPackets;
             obj['lastPackets'] = lastPackets;
-            obj['basicType'] = basicType;
-            obj['genericType'] = genericType;
-            obj['specificType'] = specificType;
             var findIndex = _.findIndex($scope.devices.all, {rowId: obj.rowId});
             if(findIndex > -1){
                 angular.extend($scope.devices.all[findIndex],obj);
@@ -17347,16 +17460,29 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
     function getLastPackets(data) {
         var packets = '&nbsp;';
         var deliveryTime = 0;
+        var dateTime;
         var color;
-        angular.forEach(data.slice(-20), function(v, k) {
+        var now = Math.round(+new Date()/1000);
+        var oneDayAgo = now - 86400;
+        var oneHourAgo = now - 3600;
+        var oneHourOld;
+       
+        //angular.forEach(data.slice(-20), function(v, k) {
+        angular.forEach(data, function(v, k) {
+          v.date = parseInt(v.date);
+         if($scope.devices.filter && v.date < oneDayAgo){
+            return;
+          }
+          dateTime = $filter('getDateTimeObj')(v.date);
             deliveryTime = parseInt(v.deliveryTime);
+            
             if (!v.delivered) {
                 color = 'red';
             } else {
                 color = (deliveryTime > 100 ? 'black' : 'green');
             }
             var displayTime = deliveryTime / 10;
-            packets += '<span class="' + color + ' timing-packet">' + (displayTime.toFixed() < 1 ? 1 : displayTime.toFixed()) + '</span> ';
+            packets += '<span class="' + color + ' timing-packet hour-ago-'+(v.date > oneHourAgo)+'" title="'+ dateTime.date + ' ' + dateTime.time + '">' + (displayTime.toFixed() < 1 ? 1 : displayTime.toFixed()) + '</span>';
         });
         return packets;
 
@@ -17373,222 +17499,227 @@ appController.controller('TimingController', function($scope, $filter, $q,$timeo
  *
  */
 appController.controller('LinkStatusController', function ($scope, $routeParams, $timeout, $location, $cookies, $filter, $interval, cfg, deviceService, dataService) {
-    $scope.linkStatus = {
-        all: [],
-        interval: null,
-        show: false,
-        showInfo: true
+  $scope.linkStatus = {
+    all: [],
+    interval: null,
+    show: false,
+    showInfo: true
 
-    };
-    $scope.htmlNeighbors = {};
-    $scope.testLink = {};
-    // Cancel interval on page destroy
-    $scope.$on('$destroy', function () {
-        $interval.cancel($scope.linkStatus.interval);
-    });
+  };
+  $scope.htmlNeighbors = {};
+  $scope.testLink = {};
+  // Cancel interval on page destroy
+  $scope.$on('$destroy', function () {
+    $interval.cancel($scope.linkStatus.interval);
+  });
 
-    /**
-     * Chenge view info and table = true /table only = false
-     * @param {string} view
-     */
-    $scope.changeView = function (status) {
-        if (typeof status === 'boolean') {
-            $scope.linkStatus.showInfo = status;
-        } else {
-            $scope.rlinkStatus.showInfo = !$scope.linkStatus.showInfo;
-        }
-    };
+  /**
+   * Chenge view info and table = true /table only = false
+   * @param {string} view
+   */
+  $scope.changeView = function (status) {
+    if (typeof status === 'boolean') {
+      $scope.linkStatus.showInfo = status;
+    } else {
+      $scope.rlinkStatus.showInfo = !$scope.linkStatus.showInfo;
+    }
+  };
 
-    /**
-     * Load zwave data
-     */
-    $scope.loadZwaveData = function () {
-        dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
-            setData(ZWaveAPIData);
-            // There is controller only
-            if (_.size($scope.linkStatus.all) < 2) {
-                $scope.alert = {
-                    message: $scope._t('device_404'),
-                    status: 'alert-warning',
-                    icon: 'fa-exclamation-circle'
-                };
-                return;
-            }
-            setCells($scope.linkStatus.all);
-            $scope.linkStatus.show = true;
-
-        }, function (error) {
-            alertify.alertError($scope._t('error_load_data'));
-        });
-    };
-    $scope.loadZwaveData();
-
-    /**
-     * Refresh zwave data
-     */
-    $scope.refreshZwaveData = function () {
-
-        var refresh = function () {
-            //var findZwaveStr = 'devices.' + 86;
-            dataService.loadJoinedZwaveData().then(function (response) {
-                var update = false;
-               angular.forEach(response.data.update, function(v, k) {
-                    var nodeId = k.split('.')[1];
-                    if($scope.testLink[nodeId]){
-                        update = true;
-                        return;
-                    }
-                });
-                if(update){
-                    setData(response.data.joined);
-                    setCells($scope.linkStatus.all);
-                }
-            });
+  /**
+   * Load zwave data
+   */
+  $scope.loadZwaveData = function () {
+    dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
+      setData(ZWaveAPIData);
+      // There is controller only
+      if (_.size($scope.linkStatus.all) < 2) {
+        $scope.alert = {
+          message: $scope._t('device_404'),
+          status: 'alert-warning',
+          icon: 'fa-exclamation-circle'
         };
-        $scope.linkStatus.interval = $interval(refresh, $scope.cfg.interval);
-    };
+        return;
+      }
+      setCells($scope.linkStatus.all);
+      $scope.linkStatus.show = true;
 
-    /**
-     * Test all links
-     * @param {string} id
-     */
-    $scope.testAllLinks = function(nodeId) {
-        $interval.cancel($scope.linkStatus.interval);
-        $scope.toggleRowSpinner(nodeId);
-        var data = {"nodeId": nodeId};
-        dataService.postApi('checklinks', data).then(function () {
-            $scope.refreshZwaveData();
-            $scope.toggleRowSpinner();
-        }, function () {
-            alertify.alertError($scope._t('error_update_data'));
-            $scope.toggleRowSpinner();
+    }, function (error) {
+      alertify.alertError($scope._t('error_load_data'));
+    });
+  };
+  $scope.loadZwaveData();
+
+  /**
+   * Refresh zwave data
+   */
+  $scope.refreshZwaveData = function () {
+
+    var refresh = function () {
+      //var findZwaveStr = 'devices.' + 86;
+      dataService.loadJoinedZwaveData().then(function (response) {
+        var update = false;
+        angular.forEach(response.data.update, function (v, k) {
+          var nodeId = k.split('.')[1];
+          if ($scope.testLink[nodeId]) {
+            update = true;
+            return;
+          }
         });
-    };
-
-
-    /**
-     * todo: Whay 21 times?
-     * Run NOP command
-     * @param {string} cmd
-     */
-    $scope.runZwaveNop = function (cmd) {
-        $interval.cancel($scope.linkStatus.interval);
-        for (i = 0; i < 21; i++) {
-            $scope.runZwaveCmd(cmd,3000,true);
+        if (update) {
+          setData(response.data.joined);
+          setCells($scope.linkStatus.all);
         }
-        $scope.refreshZwaveData();
+      });
     };
+    $scope.linkStatus.interval = $interval(refresh, $scope.cfg.interval);
+  };
 
-    /// --- Private functions --- ///
+  /**
+   * Test all links
+   * @param {string} id
+   */
+  $scope.testAllLinks = function (nodeId) {
+    $interval.cancel($scope.linkStatus.interval);
+    $scope.toggleRowSpinner(nodeId);
+    var data = {
+      "nodeId": nodeId
+    };
+    dataService.postApi('checklinks', data).then(function () {
+      $scope.refreshZwaveData();
+    }, function () {
+      alertify.alertError($scope._t('error_update_data'));
 
-    /**
-     * Set zwave data
-     * @param {object} ZWaveAPIData
-     */
-    function setData(ZWaveAPIData) {
-        var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
-        // Loop throught devices
-        angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
-            if (nodeId == 255 || node.data.isVirtual.value) {
-                return;
+    }).finally(function () {
+      $timeout($scope.toggleRowSpinner, 2000);
+    });
+  };
+
+  /**
+   * todo: Whay 21 times?
+   * Run NOP command
+   * @param {string} cmd
+   */
+  $scope.runZwaveNop = function (cmd) {
+    $interval.cancel($scope.linkStatus.interval);
+    for (i = 0; i < 21; i++) {
+      $scope.runZwaveCmd(cmd, 3000, true);
+    }
+    $scope.refreshZwaveData();
+  };
+
+  /// --- Private functions --- ///
+
+  /**
+   * Set zwave data
+   * @param {object} ZWaveAPIData
+   */
+  function setData(ZWaveAPIData) {
+    var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
+    // Loop throught devices
+    angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
+      if (nodeId == 255 || node.data.isVirtual.value) {
+        return;
+      }
+      var hasPowerLevel = node.instances[0].commandClasses[115];
+
+      // Loop throught instances
+      angular.forEach(node.instances, function (instance, instanceId) {
+        if (instanceId == 0 && node.instances.length > 1) {
+          return;
+        }
+        var lastReceive = parseInt(node.data.lastReceived.updateTime, 10) || 0;
+        var lastSend = parseInt(node.data.lastSend.updateTime, 10) || 0;
+        var lastCommunication = (lastSend > lastReceive) ? lastSend : lastReceive;
+        var dateTime;
+        var isUpdated;
+        if (hasPowerLevel) {
+          isUpdated = ((hasPowerLevel.data.updateTime > hasPowerLevel.data.invalidateTime) ? true : false);
+          dateTime = $filter('getDateTimeObj')(hasPowerLevel.data.updateTime, hasPowerLevel.data.invalidateTime);
+        }
+        var type = deviceService.deviceType(node);
+        var obj = {};
+        obj['id'] = nodeId;
+        obj['rowId'] = 'row_' + nodeId;
+        obj['isController'] = controllerNodeId == nodeId;
+        obj['name'] = $filter('deviceName')(nodeId, node);
+        obj['type'] = type;
+        obj['hasPowerLevel'] = hasPowerLevel;
+        obj['icon'] = $filter('getDeviceTypeIcon')(type);
+        obj['isFailed'] = node.data.isFailed.value;
+        obj['neighbours'] = node.data.neighbours.value;
+        obj['updateTime'] = lastCommunication;
+        obj['dateTime'] = $filter('getDateTimeObj')(lastCommunication);
+        obj['isUpdated'] = isUpdated;
+        obj['cmdNop'] = 'devices[' + nodeId + '].SendNoOperation()';
+        var findIndex = _.findIndex($scope.linkStatus.all, {
+          rowId: obj.rowId
+        });
+        if (findIndex > -1) {
+          angular.extend($scope.linkStatus.all[findIndex], obj);
+
+        } else {
+          $scope.linkStatus.all.push(obj);
+        }
+      });
+    });
+  }
+
+  /**
+   * Set table cell state
+   * @param {object} nodes
+   * @returns {Array}
+   */
+  function setCells(nodes) {
+    //console.log(nodes)
+    angular.forEach(nodes, function (node, i) {
+      //console.log(node.id,node.neighbours)
+      $scope.htmlNeighbors[node.id] = '';
+      $scope.testLink[node.id] = [];
+      var powerLevel = node.hasPowerLevel ? node.hasPowerLevel.data : [];
+      //console.log(node.hasPowerLevel)
+      angular.forEach(nodes, function (v, k) {
+        var tooltip = node.id + ': ' + node.name + ' - ' + v.id + ': ' + v.name + ' ';
+        //var cssClass = node.hasPowerLevel ? 'rtUnavailable' : 'rtWhite';
+        var cssClass = 'rtWhite';
+
+        if (node.hasPowerLevel) { // Cols for powerLevel
+          var nodePowerLevel = powerLevel[v.id];
+          //console.log(node.neighbours.indexOf(parseInt(v.id)))
+          if (node.neighbours.indexOf(parseInt(v.id)) > -1) {
+            cssClass = 'rtUnavailable';
+            //console.log(node.id + ' | '+ v.id+' In neighbours',node.neighbours)
+          }
+          /*else{
+                                  console.log(node.id + ' | '+ v.id+' NOT in neighbours',node.neighbours)
+                              }*/
+          // cssClass = (node.neighbours.indexOf(parseInt(v.id)) === -1 ? 'rtOrange' : 'rtUnavailable');
+
+          if (nodePowerLevel) {
+            $scope.testLink[node.id].push(v.id);
+            //console.log(node.id + ' | ' + v.id + ': ',powerLevel[v.id])
+            if (nodePowerLevel.acknowledgedFrames.value > -1 && nodePowerLevel.acknowledgedFrames.value < 6) {
+              cssClass = 'rtRed';
+            } else if (nodePowerLevel.acknowledgedFrames.value > 5 && nodePowerLevel.acknowledgedFrames.value < 18) {
+              cssClass = 'rtOrange';
+            } else if (nodePowerLevel.acknowledgedFrames.value > 17) {
+              cssClass = 'rtGreen';
             }
-            var hasPowerLevel = node.instances[0].commandClasses[115];
+          }
+        } else { // Without powelLevel
+          if (v.isController) {
+            //console.log(node.id +' : ' + v.id,v.isFailed)
+            cssClass = node.isFailed ? 'rtUnavailable' : 'rtGreen';
+          }
 
-            // Loop throught instances
-            angular.forEach(node.instances, function (instance, instanceId) {
-                if (instanceId == 0 && node.instances.length > 1) {
-                    return;
-                }
-                var lastReceive = parseInt(node.data.lastReceived.updateTime, 10) || 0;
-                var lastSend = parseInt(node.data.lastSend.updateTime, 10) || 0;
-                var lastCommunication = (lastSend > lastReceive) ? lastSend : lastReceive;
-                var dateTime;
-                var isUpdated;
-                if (hasPowerLevel) {
-                    isUpdated = ((hasPowerLevel.data.updateTime > hasPowerLevel.data.invalidateTime) ? true : false);
-                    dateTime = $filter('getDateTimeObj')(hasPowerLevel.data.updateTime, hasPowerLevel.data.invalidateTime);
-                }
-                var type = deviceService.deviceType(node);
-                var obj = {};
-                obj['id'] = nodeId;
-                obj['rowId'] = 'row_' + nodeId;
-                obj['isController'] = controllerNodeId == nodeId;
-                obj['name'] = $filter('deviceName')(nodeId, node);
-                obj['type'] = type;
-                obj['hasPowerLevel'] = hasPowerLevel;
-                obj['icon'] = $filter('getDeviceTypeIcon')(type);
-                obj['isFailed'] = node.data.isFailed.value;
-                obj['neighbours'] = node.data.neighbours.value;
-                obj['updateTime'] = lastCommunication;
-                obj['dateTime'] = $filter('getDateTimeObj')(lastCommunication);
-                obj['isUpdated'] = isUpdated;
-                obj['cmdNop'] = 'devices[' + nodeId + '].SendNoOperation()';
-                var findIndex = _.findIndex($scope.linkStatus.all, {rowId: obj.rowId});
-                if (findIndex > -1) {
-                    angular.extend($scope.linkStatus.all[findIndex], obj);
-
-                } else {
-                    $scope.linkStatus.all.push(obj);
-                }
-            });
-        });
-    }
-
-    /**
-     * Set table cell state
-     * @param {object} nodes
-     * @returns {Array}
-     */
-    function setCells(nodes) {
-        //console.log(nodes)
-        angular.forEach(nodes, function (node, i) {
-            //console.log(node.id,node.neighbours)
-            $scope.htmlNeighbors[node.id] = '';
-            $scope.testLink[node.id] = [];
-            var powerLevel = node.hasPowerLevel ? node.hasPowerLevel.data : [];
-            //console.log(node.hasPowerLevel)
-            angular.forEach(nodes, function (v, k) {
-                var tooltip = node.id + ': ' + node.name + ' - ' + v.id + ': ' + v.name + ' ';
-                //var cssClass = node.hasPowerLevel ? 'rtUnavailable' : 'rtWhite';
-                var cssClass = 'rtWhite';
-
-                if(node.hasPowerLevel){ // Cols for powerLevel
-                    var nodePowerLevel = powerLevel[v.id];
-                    //console.log(node.neighbours.indexOf(parseInt(v.id)))
-                    if(node.neighbours.indexOf(parseInt(v.id)) > -1){
-                        cssClass = 'rtUnavailable';
-                        //console.log(node.id + ' | '+ v.id+' In neighbours',node.neighbours)
-                    }/*else{
-                        console.log(node.id + ' | '+ v.id+' NOT in neighbours',node.neighbours)
-                    }*/
-                   // cssClass = (node.neighbours.indexOf(parseInt(v.id)) === -1 ? 'rtOrange' : 'rtUnavailable');
-
-                    if(nodePowerLevel){
-                        $scope.testLink[node.id].push(v.id);
-                        //console.log(node.id + ' | ' + v.id + ': ',powerLevel[v.id])
-                        if (nodePowerLevel.acknowledgedFrames.value > -1 && nodePowerLevel.acknowledgedFrames.value < 6) {
-                            cssClass = 'rtRed';
-                        } else if (nodePowerLevel.acknowledgedFrames.value > 5 && nodePowerLevel.acknowledgedFrames.value < 18) {
-                            cssClass = 'rtOrange';
-                        } else if (nodePowerLevel.acknowledgedFrames.value > 17) {
-                            cssClass = 'rtGreen';
-                        }
-                    }
-                }else{// Without powelLevel
-                    if(v.isController){
-                        //console.log(node.id +' : ' + v.id,v.isFailed)
-                        cssClass = node.isFailed ? 'rtUnavailable' : 'rtGreen';
-                    }
-
-                }
-                if(node.id === v.id ){
-                    cssClass = 'rtWhite';
-                }
-                var out = '<span class="rt-cell ' + cssClass + '" title="' + tooltip + '">' +  '&nbsp' + '</span>';
-                $scope.htmlNeighbors[node.id] += out;
-            });
-        });
-    }
+        }
+        if (node.id === v.id) {
+          cssClass = 'rtWhite';
+        }
+        var out = '<span class="rt-cell ' + cssClass + '" title="' + tooltip + '">' + '&nbsp' + '</span>';
+        $scope.htmlNeighbors[node.id] += out;
+      });
+    });
+  }
 });
 /**
  * Application ControllerInfo controller
@@ -18038,6 +18169,7 @@ appController.controller('UzbController', function ($scope, $timeout, $window, c
             $scope.token.load = token;
             var vendorId = parseInt(ZWaveAPIData.controller.data.manufacturerId.value, 10);
             //0x0115 = 277, 0x0147 = 327
+            // Todo: add vendor white list to config
             var allowedVendors = [277, 327];
             if (allowedVendors.indexOf(vendorId) === -1) {
                 $scope.alert = {
@@ -19429,6 +19561,7 @@ appController.controller('LoadDeviceXmlController', function($scope,$routeParams
     $scope.deviceXml = {
         all: [],
         find: [],
+        filter: [], 
         input: {
             fileName: 0
         }
@@ -19437,17 +19570,62 @@ appController.controller('LoadDeviceXmlController', function($scope,$routeParams
      * Load devices descriptions
      * @param {int} nodeId
      */
+
+     $scope.loadDeviceXml = function (nodeId)
+     {
+        var cmd = 'devices[' + nodeId + '].GuessXML()';
+        dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
+           
+           //"ccName": "ManufacturerSpecific",
+           var deviceManufacturerSpecific = _.findWhere($scope.interviewCommands, {ccName: "ManufacturerSpecific"});
+           var deviceVendorId = deviceManufacturerSpecific.cmdData.vendorId.value;
+           var deviceProductId = deviceManufacturerSpecific.cmdData.productId.value;
+           var deviceProductTypeId = deviceManufacturerSpecific.cmdData.productType.value;
+
+           var preFilter = _.where(response.data, {manufacturerId: deviceVendorId});
+           
+           $scope.deviceXml.all = _.reject(preFilter, function(s)
+            {
+                return s.deviceImage.indexOf("pepper1.net") == -1 && s.brandName != "" && s.productName != "" ? false : true;
+
+            });
+    
+
+
+           
+           $scope.deviceXml.filter = _.findWhere($scope.deviceXml.all, {manufacturerId: deviceVendorId, productTypeId: deviceProductTypeId, productId: deviceProductId});
+
+
+           
+           if($scope.deviceXml.filter)
+           {
+            $scope.deviceXml.find = $scope.deviceXml.filter;
+            $scope.deviceXml.input.fileName = $scope.deviceXml.filter.fileName;
+           }
+
+
+           
+        }, function (error) {
+            $scope.toggleRowSpinner();
+        });
+
+
+     }
+
+     $scope.loadDeviceXml($routeParams.nodeId);
+
+/*
+
     $scope.loadDeviceXml = function (nodeId) {
         var cmd = 'devices[' + nodeId + '].GuessXML()';
        dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
            $scope.deviceXml.all = response.data;
         }, function (error) {
             $scope.toggleRowSpinner();
-            alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
         });
     };
     $scope.loadDeviceXml($routeParams.nodeId);
-
+*/
     /**
      * Change device XML
      * @param {object} input
@@ -19467,6 +19645,10 @@ appController.controller('LoadDeviceXmlController', function($scope,$routeParams
      */
     $scope.storeDeviceXml = function (input,modal) {
         var timeout = 1000;
+
+        console.log(input);
+        console.log(modal);
+
         var cmd = 'devices[' + $routeParams.nodeId + '].LoadXMLFile("' + input.fileName + '")';
         $scope.toggleRowSpinner(modal);
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
@@ -19478,7 +19660,6 @@ appController.controller('LoadDeviceXmlController', function($scope,$routeParams
             }, timeout);
         }, function (error) {
             $scope.toggleRowSpinner();
-            alertify.alertError($scope._t('error_update_data') + '\n' + cmd);
         });
     };
 });
@@ -19553,8 +19734,6 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
                 refreshData(node, nodeId, response.data.joined);
                 $scope.ZWaveAPIData = ZWaveAPIData;
             });*/
-        }, function(error) {
-            alertify.alertError($scope._t('error_load_data'));
         });
     };
     $scope.load($routeParams.nodeId);
@@ -19656,7 +19835,6 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
             }, timeout);
         }, function (error) {
             $scope.toggleRowSpinner();
-            alertify.alertError($scope._t('error_load_data') + '\n' + cmd);
         });
     };
 
@@ -19763,6 +19941,10 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         var deviceDescriptionAppVersion = parseInt(node.data.applicationMajor.value, 10);
         var deviceDescriptionAppSubVersion = parseInt(node.data.applicationMinor.value, 10);
         var isListening = node.data.isListening.value;
+        var manualUrl = "";
+        var certNumber = "";
+        var productCode = "";
+
         // Security S2
         var hasSecurityS2Cc = deviceService.hasCommandClass(node,159);
         var securityS2Key = deviceService.getS2GrantedKeys(hasSecurityS2Cc);
@@ -19805,6 +19987,8 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
             inclusionNote = deviceService.configGetZddxLang($filter('hasNode')(zddXml, 'ZWaveDevice.deviceDescription.inclusionNote.lang'), $scope.lang);
             wakeupNote = deviceService.configGetZddxLang($filter('hasNode')(zddXml, 'ZWaveDevice.deviceDescription.wakeupNote.lang'), $scope.lang);
 
+
+
             if ('brandName' in zddXml.ZWaveDevice.deviceDescription) {
                 brandName = zddXml.ZWaveDevice.deviceDescription.brandName;
             }
@@ -19813,9 +19997,24 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
                 productName = zddXml.ZWaveDevice.deviceDescription.productName;
             }
 
-            if (angular.isDefined(zddXml.ZWaveDevice.resourceLinks)) {
+            if (angular.isDefined(zddXml.ZWaveDevice.resourceLinks.deviceImage)) {
                 deviceImage = zddXml.ZWaveDevice.resourceLinks.deviceImage._url;
             }
+
+            if (angular.isDefined(zddXml.ZWaveDevice.resourceLinks.manualUrl)) {
+                manualUrl = zddXml.ZWaveDevice.resourceLinks.manualUrl._url;
+            }
+
+            if (angular.isDefined(zddXml.ZWaveDevice.deviceData.certNumber)) {
+                certNumber = zddXml.ZWaveDevice.deviceData.certNumber;
+            }
+
+            if (angular.isDefined(zddXml.ZWaveDevice.resourceLinks.manualUrl)) {
+                productCode = zddXml.ZWaveDevice.deviceDescription.productCode;
+            }
+
+
+
             /**
              * TODO: finish ZWavePlusRoles
              */
@@ -19856,6 +20055,16 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
             obj["s"] = {"key": "device_security_interview", "val": '<i class="' + $filter('checkedIcon')(securityInterview === true ? false : true) + '"></i>'};
         }
         obj["u"] = {"key": "granted_keys", "val": securityS2Key.join()};
+
+        if(certNumber != ""){obj["w"] = {"key": "Certification-Nr.", "val": certNumber};}
+
+        
+        obj["x"] = {"key": "Productcode", "val": productCode};
+
+        lang = $scope.lang.toUpperCase();
+
+         if(certNumber != ""){obj["y"] = {"key": "Manual", "val": "<a href='http://manuals-backend.z-wave.info/make.php?lang="+lang+"&cert=" + certNumber + "' target=_blank> Manual </a>"}};
+
         return obj;
 
     }
@@ -20366,17 +20575,6 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                 $scope.alert = {message: $scope._t('configuration_not_supported'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
                 return;
             }
-            /*if (cfg.app_type === 'installer') {
-                if (!$scope.configCont && !$scope.wakeupCont && !$scope.protectionCont && !$scope.switchAllCont) {
-                    $location.path('/configuration/commands/' + $routeParams.nodeId);
-                    return;
-                }
-            }else{
-                if (!$scope.configCont && !$scope.wakeupCont && !$scope.protectionCont && !$scope.switchAllCont) {
-                    $scope.alert = {message: $scope._t('no_device_service'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
-                    return;
-                }
-            }*/
 
         }, function(error) {
             var cfgXml = {};
@@ -20384,17 +20582,10 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             $scope.wakeupCont = deviceService.configWakeupCont(node, nodeId, ZWaveAPIData, cfgXml);
             $scope.protectionCont = deviceService.configProtectionCont(node, nodeId, ZWaveAPIData, cfgXml);
             $scope.switchAllCont = deviceService.configSwitchAllCont(node, nodeId, ZWaveAPIData, cfgXml);
-            if (cfg.app_type === 'installer') {
-                if (!$scope.configCont && !$scope.wakeupCont && !$scope.protectionCont && !$scope.switchAllCont) {
-                    $location.path('/configuration/commands/' + $routeParams.nodeId);
-                    return;
-                }
-            }else{
-                if (!$scope.configCont && !$scope.wakeupCont && !$scope.protectionCont && !$scope.switchAllCont) {
-                    $scope.alert = {message: $scope._t('no_device_service'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
-                    return;
-                }
-            }
+            if (!$scope.configCont && !$scope.wakeupCont && !$scope.protectionCont && !$scope.switchAllCont) {
+              $scope.alert = {message: $scope._t('no_device_service'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+              return;
+          }
         });
     }
     function configurationCc(commandClass, instanceId,nodeId, ZWaveAPIData) {
@@ -21225,9 +21416,6 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
 
                             var targetNodeId = data.nodes.value[i];
                             var targetNode= ZWaveAPIData.devices[targetNodeId];
-                            if(!targetNode){
-                                return;
-                            }
                             nodeIds.push(targetNodeId);
                             var targetInstanceId = 0;
                             instanceIds.push(targetInstanceId);
@@ -21244,6 +21432,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                             var inConfig = deviceService.isInCfgXml(toCfgXml, cfgXml);
                             var objAssoc = {};
                             objAssoc['id'] = targetNodeId;
+                            objAssoc['deviceExcluded'] = (!targetNode);
                             objAssoc['isNew'] = false;
                             objAssoc['groupId'] = groupId;
                             objAssoc['elId'] = groupId + '_' + targetNodeId + '_' + targetInstanceId + '_' + i;
@@ -21291,9 +21480,6 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                         for (var i = 0; i < Object.keys(dataMca.nodesInstances.value).length; i += 2) {
                             var targetNodeId = dataMca.nodesInstances.value[i];
                             var targetNode= ZWaveAPIData.devices[targetNodeId];
-                            if(!targetNode){
-                                return;
-                            }
                             nodeIds.push(targetNodeId);
                             var targetInstanceId = dataMca.nodesInstances.value[i + 1];
                             instanceIds.push(targetInstanceId);
@@ -21309,6 +21495,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                             var inConfig = deviceService.isInCfgXml(toCfgXml, cfgXml);
                             var objAssoc = {};
                             objAssoc['id'] = targetNodeId;
+                            objAssoc['deviceExcluded'] = (!targetNode);
                             objAssoc['isNew'] = false;
                             objAssoc['groupId'] = groupId;
                             objAssoc['elId'] = groupId + '_' + targetNodeId + '_' + targetInstanceId + '_' + i;
@@ -21658,284 +21845,304 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
  *
  */
 appController.controller('ConfigHealthController', function ($scope, $routeParams, $timeout, $location, $cookies, $filter, $interval, cfg, deviceService, dataService) {
-    $scope.apiDataInterval;
-    $scope.devices = [];
-    $scope.deviceName = '';
-    $scope.deviceId = 0;
-    //$scope.activeTab = 'health';
-    $scope.activeUrl = 'configuration/health/';
-    $cookies.tab_config = 'health';
-    $cookies.interval = 'health';
-    $scope.health = {
-        ctrlNodeId: 1,
-        alert: {message: false, status: 'is-hidden', icon: false},
-        device: {
-            neighbours: [],
-            node: {},
-            find: {},
-            hasPowerLevel: false,
-            commandClass: false
-        },
-        cmd: {
-            testNodeInstance: 0
-        },
-        neighbours: [],
-        timing: {
-            all: {},
-            indicator: {},
-            find: {
-            }
-        }
+  $scope.apiDataInterval;
+  $scope.devices = [];
+  $scope.deviceName = '';
+  $scope.deviceId = 0;
+  //$scope.activeTab = 'health';
+  $scope.activeUrl = 'configuration/health/';
+  $cookies.tab_config = 'health';
+  $cookies.interval = 'health';
+  $scope.health = {
+    ctrlNodeId: 1,
+    alert: {
+      message: false,
+      status: 'is-hidden',
+      icon: false
+    },
+    device: {
+      neighbours: [],
+      node: {},
+      find: {},
+      hasPowerLevel: false,
+      commandClass: false
+    },
+    cmd: {
+      testNodeInstance: 0
+    },
+    neighbours: [],
+    timing: {
+      all: {},
+      indicator: {},
+      find: {}
+    }
+  };
+  // Cancel interval on page destroy
+  $scope.$on('$destroy', function () {
+    $interval.cancel($scope.apiDataInterval);
+  });
+
+  // Redirect to device
+  $scope.redirectToDevice = function (deviceId) {
+    if (deviceId) {
+      $location.path($scope.activeUrl + deviceId);
+    }
+  };
+
+  // Load timing data
+  $scope.loadTiming = function () {
+    //$scope.health.alert = {message: $scope._t('not_linked_devices'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+    dataService.getApi('stat_url', null, true).then(function (response) {
+      $scope.health.timing.all = response.data;
+      $scope.health.timing.indicator.color = setTimingIndicatorColor(response.data[$routeParams.nodeId]);
+    }, function (error) {
+      alertify.alertError($scope._t('error_load_data'));
+      return;
+    });
+  };
+  $scope.loadTiming();
+
+  // Load data
+  $scope.load = function () {
+    //$scope.health.alert = {message: $scope._t('not_linked_devices'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
+
+    dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
+      $scope.devices = deviceService.configGetNav(ZWaveAPIData);
+      if (_.isEmpty($scope.devices)) {
+        $scope.alert = {
+          message: $scope._t('device_404'),
+          status: 'alert-warning',
+          icon: 'fa-exclamation-circle'
+        };
+        return;
+      }
+      $scope.health.ctrlNodeId = ZWaveAPIData.controller.data.nodeId.value;
+      var node = ZWaveAPIData.devices[$routeParams.nodeId];
+      /*if (!node || deviceService.notDevice(ZWaveAPIData, node, $routeParams.nodeId)) {
+          return;
+      }*/
+      var neighbours = $filter('hasNode')(node.data, 'neighbours.value');
+      $scope.health.device.neighbours = $filter('hasNode')(node.data, 'neighbours.value');
+
+      // Remember device id
+      $cookies.configuration_id = $routeParams.nodeId;
+      $cookies.config_url = $scope.activeUrl + $routeParams.nodeId;
+      $scope.deviceId = $routeParams.nodeId;
+      $scope.health.device.node = node;
+      $scope.deviceName = $filter('deviceName')($routeParams.nodeId, node);
+      setDevice(node);
+      setData(ZWaveAPIData, neighbours);
+      $scope.refreshData();
+
+    }, function (error) {
+      alertify.alertError($scope._t('error_load_data'));
+      return;
+    });
+  };
+  $scope.load();
+
+  /**
+   * Refresh data
+   */
+  $scope.refreshData = function () {
+    var refresh = function () {
+      dataService.loadJoinedZwaveData().then(function (response) {
+        setData(response.data.joined);
+      });
     };
-    // Cancel interval on page destroy
-    $scope.$on('$destroy', function () {
-        $interval.cancel($scope.apiDataInterval);
+    $scope.apiDataInterval = $interval(refresh, $scope.cfg.interval);
+  };
+  // Run Zwave NOP Command
+  $scope.runZwaveNopCmd = function (cmd) {
+    for (i = 0; i < 21; i++) {
+      $scope.runZwaveCmd(cmd);
+    }
+  };
+
+  // Handle power level modal window
+  $scope.handlePowerLevelModal = function (name, event, device) {
+    $scope.handleModal(name, event);
+    $scope.health.device.find = device;
+    if (!device) {
+      $scope.health.device.commandClass = {};
+      return;
+    }
+    var cc = deviceService.configGetCommandClass($scope.health.device.hasPowerLevel[device.id], '/', '');
+    $scope.health.device.commandClass = deviceService.configSetCommandClass(cc);
+  };
+
+  // Handle timing modal window
+  $scope.handleTimingModal = function (name, event, device) {
+    $scope.handleModal(name, event);
+    $scope.health.device.find = device;
+    if (!device) {
+      $scope.health.timing.find = {};
+      return;
+    }
+    $scope.loadTiming();
+    var timingItems = $scope.health.timing.all[$routeParams.nodeId];
+    if (!timingItems || _.isEmpty(timingItems)) {
+      return;
+    }
+    $scope.health.timing.find = {
+      totalPackets: timingItems.length,
+      okPackets: deviceService.getOkPackets(timingItems),
+      lastPackets: deviceService.getLastPackets(timingItems)
+    };
+  };
+
+  /**
+   * Test all links
+   * @param {string} id
+   * @param {string} urlType
+   */
+  $scope.testAllLinks = function (id) {
+    $scope.toggleRowSpinner(id);
+    var data = {
+      "nodeId": $scope.deviceId
+    };
+    dataService.postApi('checklinks', data).then(function (response) {
+      deviceService.showNotifier({
+        message: $scope._t('test_all_links_complete')
+      });
+    }, function (error) {
+      deviceService.showNotifier({
+        message: $scope._t('error_update_data'),
+        type: 'error'
+      });
+    }).finally(function () {
+      $timeout($scope.toggleRowSpinner, 2000);
+    });
+  };
+
+  /// --- Private functions --- ///
+  /**
+   * Set configuration device
+   * @param {object} node
+   * @returns {undefined}
+   */
+  function setDevice(node) {
+    angular.forEach(node.instances, function (instance, instanceId) {
+      if (instance.commandClasses[115]) {
+        $scope.health.device.hasPowerLevel = instance.commandClasses[115].data;
+        $scope.health.cmd.testNodeInstance = instanceId;
+      }
+    });
+  }
+
+  /**
+   * Set list of the linked devices
+   * @param {object} ZWaveAPIData
+   * @returns {undefined}
+   */
+  function setData(ZWaveAPIData, neighbours) {
+    angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
+      if (nodeId === $routeParams.nodeId) {
+        $scope.health.timing.indicator.updateTime = node.data.lastReceived.updateTime;
+        $scope.health.timing.indicator.updateTimeColor = (node.data.lastReceived.updateTime > node.data.lastReceived.invalidateTime ? '' : 'red');
+      }
+
+      nodeId = parseInt(nodeId);
+      if ($scope.health.device.neighbours.indexOf(nodeId) === -1) {
+        return;
+      }
+      //console.log(node)
+      var centralController = true;
+      var type = deviceService.deviceType(node);
+      var indicator;
+      var powerLevel = $scope.health.device.hasPowerLevel[nodeId];
+      if (powerLevel) {
+        indicator = setPowerLevelIndicator(powerLevel);
+      }
+      var obj = {
+        id: nodeId,
+        name: $filter('deviceName')(nodeId, node),
+        updateTime: node.data.updateTime,
+        type: type,
+        icon: $filter('getDeviceTypeIcon')(type),
+        centralController: centralController,
+        powerLevel: powerLevel,
+        indicator: indicator,
+        cmdTestNode: 'devices[' + $routeParams.nodeId + '].instances[' + $scope.health.cmd.testNodeInstance + '].commandClasses[115].TestNodeSet(' + nodeId + ',6,20)',
+        cmdNop: 'devices[' + $routeParams.nodeId + '].instances[' + $scope.health.cmd.testNodeInstance + '].commandClasses[32].Get()'
+      };
+      var index = _.findIndex($scope.health.neighbours, {
+        id: nodeId
+      });
+      if ($scope.health.neighbours[index]) {
+        angular.extend($scope.health.neighbours[index], obj);
+      } else {
+        $scope.health.neighbours.push(obj);
+      }
+
     });
 
-    // Redirect to device
-    $scope.redirectToDevice = function (deviceId) {
-        if (deviceId) {
-            $location.path($scope.activeUrl + deviceId);
-        }
-    };
-
-    // Load timing data
-    $scope.loadTiming = function () {
-        //$scope.health.alert = {message: $scope._t('not_linked_devices'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
-        dataService.getApi('stat_url', null, true).then(function (response) {
-            $scope.health.timing.all = response.data;
-            $scope.health.timing.indicator.color = setTimingIndicatorColor(response.data[$routeParams.nodeId]);
-        }, function (error) {
-            alertify.alertError($scope._t('error_load_data'));
-            return;
-        });
-    };
-    $scope.loadTiming();
-
-    // Load data
-    $scope.load = function () {
-        //$scope.health.alert = {message: $scope._t('not_linked_devices'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
-
-        dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
-            $scope.devices = deviceService.configGetNav(ZWaveAPIData);
-            if(_.isEmpty($scope.devices)){
-                $scope.alert = {message: $scope._t('device_404'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
-                return;
-            }
-            $scope.health.ctrlNodeId = ZWaveAPIData.controller.data.nodeId.value;
-            var node = ZWaveAPIData.devices[$routeParams.nodeId];
-            /*if (!node || deviceService.notDevice(ZWaveAPIData, node, $routeParams.nodeId)) {
-                return;
-            }*/
-            var neighbours = $filter('hasNode')(node.data, 'neighbours.value');
-            $scope.health.device.neighbours = $filter('hasNode')(node.data, 'neighbours.value');
-
-            // Remember device id
-            $cookies.configuration_id = $routeParams.nodeId;
-            $cookies.config_url = $scope.activeUrl + $routeParams.nodeId;
-            $scope.deviceId = $routeParams.nodeId;
-            $scope.health.device.node = node;
-            $scope.deviceName = $filter('deviceName')($routeParams.nodeId, node);
-            setDevice(node);
-            setData(ZWaveAPIData, neighbours);
-            $scope.refreshData();
-
-        }, function (error) {
-            alertify.alertError($scope._t('error_load_data'));
-            return;
-        });
-    };
-    $scope.load();
-
-    /**
-     * Refresh data
-     */
-    $scope.refreshData = function () {
-        var refresh = function () {
-            dataService.loadJoinedZwaveData().then(function (response) {
-                setData(response.data.joined);
-            });
-        };
-        $scope.apiDataInterval = $interval(refresh, $scope.cfg.interval);
-    };
-    // Run Zwave NOP Command
-    $scope.runZwaveNopCmd = function (cmd) {
-        for (i = 0; i < 21; i++) {
-            $scope.runZwaveCmd(cmd);
-        }
-    };
-
-    // Handle power level modal window
-    $scope.handlePowerLevelModal = function (name, event, device) {
-        $scope.handleModal(name, event);
-        $scope.health.device.find = device;
-        if (!device) {
-            $scope.health.device.commandClass = {};
-            return;
-        }
-        var cc = deviceService.configGetCommandClass($scope.health.device.hasPowerLevel[device.id], '/', '');
-        $scope.health.device.commandClass = deviceService.configSetCommandClass(cc);
-    };
-
-    // Handle timing modal window
-    $scope.handleTimingModal = function (name, event, device) {
-        $scope.handleModal(name, event);
-        $scope.health.device.find = device;
-        if (!device) {
-            $scope.health.timing.find = {};
-            return;
-        }
-        $scope.loadTiming();
-        var timingItems = $scope.health.timing.all[$routeParams.nodeId];
-        if (!timingItems || _.isEmpty(timingItems)) {
-            return;
-        }
-        $scope.health.timing.find = {
-            totalPackets: timingItems.length,
-            okPackets: deviceService.getOkPackets(timingItems),
-            lastPackets: deviceService.getLastPackets(timingItems)
-        };
-    };
-
-    /**
-     * Test all links
-     * @param {string} id
-     * @param {string} urlType
-     */
-    $scope.testAllLinks = function(id) {
-        $scope.toggleRowSpinner(id);
-        var data = {"nodeId": $scope.deviceId};
-        dataService.postApi('checklinks', data).then(function (response) {
-            deviceService.showNotifier({message: $scope._t('test_all_links_complete')});
-            $scope.toggleRowSpinner();
-        }, function (error) {
-            deviceService.showNotifier({message: $scope._t('error_update_data'),type: 'error'});
-            $scope.toggleRowSpinner();
-        });
-    };
-
-    /// --- Private functions --- ///
-    /**
-     * Set configuration device
-     * @param {object} node
-     * @returns {undefined}
-     */
-    function setDevice(node) {
-        angular.forEach(node.instances, function (instance, instanceId) {
-            if (instance.commandClasses[115]) {
-                $scope.health.device.hasPowerLevel = instance.commandClasses[115].data;
-                $scope.health.cmd.testNodeInstance = instanceId;
-            }
-        });
+    if ($scope.health.neighbours.length == 0) {
+      $scope.alert = {
+        message: $scope._t('not_linked_devices'),
+        status: 'alert-warning',
+        icon: 'fa-exclamation-circle'
+      };
     }
-
-    /**
-     * Set list of the linked devices
-     * @param {object} ZWaveAPIData
-     * @returns {undefined}
-     */
-    function setData(ZWaveAPIData, neighbours) {
-        angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
-            if (nodeId === $routeParams.nodeId) {
-                $scope.health.timing.indicator.updateTime = node.data.lastReceived.updateTime;
-                $scope.health.timing.indicator.updateTimeColor = (node.data.lastReceived.updateTime > node.data.lastReceived.invalidateTime ? '' : 'red');
-            }
-
-            nodeId = parseInt(nodeId);
-            if ($scope.health.device.neighbours.indexOf(nodeId) === -1) {
-                return;
-            }
-            //console.log(node)
-            var centralController = true;
-            var type = deviceService.deviceType(node);
-            var indicator;
-            var powerLevel = $scope.health.device.hasPowerLevel[nodeId];
-            if (powerLevel) {
-                indicator = setPowerLevelIndicator(powerLevel);
-            }
-            var obj = {
-                id: nodeId,
-                name: $filter('deviceName')(nodeId, node),
-                updateTime: node.data.updateTime,
-                type: type,
-                icon: $filter('getDeviceTypeIcon')(type),
-                centralController: centralController,
-                powerLevel: powerLevel,
-                indicator: indicator,
-                cmdTestNode: 'devices[' + $routeParams.nodeId + '].instances[' + $scope.health.cmd.testNodeInstance + '].commandClasses[115].TestNodeSet(' + nodeId + ',6,20)',
-                cmdNop: 'devices[' + $routeParams.nodeId + '].instances[' + $scope.health.cmd.testNodeInstance + '].commandClasses[32].Get()'
-            };
-            var index = _.findIndex($scope.health.neighbours, {id: nodeId});
-            if ($scope.health.neighbours[index]) {
-                angular.extend($scope.health.neighbours[index], obj);
-            } else {
-                $scope.health.neighbours.push(obj);
-            }
-
-        });
-
-        if($scope.health.neighbours.length == 0) {
-            $scope.alert = {message: $scope._t('not_linked_devices'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
-        }
+  }
+  /**
+   * Set power level indicator
+   * @param {object} data
+   * @returns {object}
+   */
+  function setPowerLevelIndicator(data) {
+    var indicator = {
+      color: 'gray',
+      updateTime: false,
+      updateTimeColor: ''
+    };
+    var traffic = 'gray';
+    if (!data || _.isEmpty(data) || data.acknowledgedFrames.value === null) {
+      return indicator;
     }
-    /**
-     * Set power level indicator
-     * @param {object} data
-     * @returns {object}
-     */
-    function setPowerLevelIndicator(data) {
-        var indicator = {
-            color: 'gray',
-            updateTime: false,
-            updateTimeColor: ''
-        };
-        var traffic = 'gray';
-        if (!data || _.isEmpty(data) || data.acknowledgedFrames.value === null) {
-            return indicator;
-        }
-        if (data.acknowledgedFrames.value > -1 && data.acknowledgedFrames.value < 6) {
-            indicator.color = 'red';
-        } else if (data.acknowledgedFrames.value > 5 && data.acknowledgedFrames.value < 18) {
-            indicator.color = 'orange';
-        } else if (data.acknowledgedFrames.value > 17) {
-            indicator.color = 'green';
-        }
-        indicator.updateTime = data.acknowledgedFrames.updateTime;
-        indicator.updateTimeColor = (data.acknowledgedFrames.updateTime > data.acknowledgedFrames.invalidateTime ? '' : 'red');
-        return  indicator;
+    if (data.acknowledgedFrames.value > -1 && data.acknowledgedFrames.value < 6) {
+      indicator.color = 'red';
+    } else if (data.acknowledgedFrames.value > 5 && data.acknowledgedFrames.value < 18) {
+      indicator.color = 'orange';
+    } else if (data.acknowledgedFrames.value > 17) {
+      indicator.color = 'green';
     }
-    /**
-     * Set power level indicator
-     * @param {int} nodeId
-     * @returns {object}
-     */
-    function setTimingIndicatorColor(data) {
-        var color = 'gray';
-        if (!data || _.isEmpty(data)) {
-            return color;
-        }
-        //console.log(data)
-        //return;
+    indicator.updateTime = data.acknowledgedFrames.updateTime;
+    indicator.updateTimeColor = (data.acknowledgedFrames.updateTime > data.acknowledgedFrames.invalidateTime ? '' : 'red');
+    return indicator;
+  }
+  /**
+   * Set power level indicator
+   * @param {int} nodeId
+   * @returns {object}
+   */
+  function setTimingIndicatorColor(data) {
+    var color = 'gray';
+    if (!data || _.isEmpty(data)) {
+      return color;
+    }
+    //console.log(data)
+    //return;
 
-        var cnt = 0;
-        var sum = 0;
-        var avg;
-        angular.forEach(data.slice(-20), function (v, k) {
-            var val = 0;
-            if (v.delivered) {
-                val = parseInt(v.deliveryTime);
-                sum += val;
-            }
-            cnt++;
-        });
-        avg = (sum / cnt).toFixed();
-        if (avg > 0) {
-            color = (avg > 100 ? 'black' : 'green');
-        } else {
-            color = 'red';
-        }
-        return color;
+    var cnt = 0;
+    var sum = 0;
+    var avg;
+    angular.forEach(data.slice(-20), function (v, k) {
+      var val = 0;
+      if (v.delivered) {
+        val = parseInt(v.deliveryTime);
+        sum += val;
+      }
+      cnt++;
+    });
+    avg = (sum / cnt).toFixed();
+    if (avg > 0) {
+      color = (avg > 100 ? 'black' : 'green');
+    } else {
+      color = 'red';
     }
+    return color;
+  }
 });
 /**
  * @overview This controller renders and handles device postfix stuff.
