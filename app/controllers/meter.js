@@ -146,9 +146,9 @@ appController.controller('MetersController', function($scope, $filter, $timeout,
                         obj['id'] = k;
                         obj['idSort'] = $filter('zeroFill')(k);
                         obj['iId'] = instanceId;
-                        obj['cmd'] = meters.name + '.' + meter.name;
+                        obj['cmd'] = meters.name + '_' + k + '_' + instanceId + '_' + scaleId;
                         obj['cmdId'] = 0x30;
-                        obj['rowId'] = meters.name + '_' + meter.name + '_' + k;
+                        obj['rowId'] = meters.name + '_' + k + '_' + instanceId + '_' + scaleId;
                         obj['name'] = $filter('deviceName')(k, device);
                         obj['type'] = meters.name;
                         obj['purpose'] = meter.sensorTypeString.value;
