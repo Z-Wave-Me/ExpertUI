@@ -8,8 +8,8 @@ var config_data = {
         'environment': 'live',
         'dev_host': [],
         'app_name': 'Z-Wave Expert',
-        'app_version': '1.3.1',
-        'app_built': '23-05-2018 11:47:30',
+        'app_version': '1.4.0',
+        'app_built': '26-06-2018 15:20:01',
         'app_id': 'ExpertUI',
         'custom_ip': false,
         'user_field': 'USERXXXX',
@@ -85,7 +85,7 @@ var config_data = {
         'cit_forward_login':'/ZAutomation/api/v1/system/certfxAuthForwarding', // forward cit login
         'cit_unregister':'/ZAutomation/api/v1/system/certfxUnregister', // unregister cit
         'get_dsk':'/ZWaveAPI/GetDSKCollection', // Get DSK collection
-        'add_dsk':'/ZWaveAPI/AddDSKEntry?dsk=', // Add DSK
+        'add_dsk': '/ZWaveAPI/AddDSKEntry', // Add DSK
         'remove_dsk':'/ZWaveAPI/RemoveDSKEntry?dsk=', // Remove DSK
         'get_dsk_provisioning_list':'/ZWaveAPI/GetDSKProvisioningList', // Show ProvisioningList (includes only DSKs)
         'add_dsk_provisioning_list':'/ZWaveAPI/AddDSKProvisioningEntry?dsk=', // Add DSK to ProvisioningList (Response with added DSK) GET 
