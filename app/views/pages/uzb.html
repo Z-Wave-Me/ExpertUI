@@ -12,11 +12,11 @@
                 <td style="white-space: nowrap;"><strong>{{v.released | date:'yyyy-MM-dd'}}</strong></td>
                 <td>{{v.appVersionMajor + '.' + v.appVersionMinor}}</td>
                 <td>
-                    <i class="fa fa-arrow-circle-up" style="color: green" ng-if="v.appVersionMajor*1000 + v.appVersionMinor*1 < v.targetAppVersionMajor*1000 + v.targetAppVersionMinor*1"></i>
-                    <i class="fa fa-arrow-circle-right" style="color: gray" ng-if="v.appVersionMajor*1000 + v.appVersionMinor*1 == v.targetAppVersionMajor*1000 + v.targetAppVersionMinor*1"></i>
-                    <i class="fa fa-arrow-circle-down" style="color: red" ng-if="v.appVersionMajor*1000 + v.appVersionMinor*1 > v.targetAppVersionMajor*1000 + v.targetAppVersionMinor*1"></i>
+                    <i class="fa fa-arrow-circle-up" style="color: green" ng-if="v.targetAppVersionMajor && v.appVersionMajor*1000 + v.appVersionMinor*1 < v.targetAppVersionMajor*1000 + v.targetAppVersionMinor*1"></i>
+                    <i class="fa fa-arrow-circle-right" style="color: gray" ng-if="v.targetAppVersionMajor && v.appVersionMajor*1000 + v.appVersionMinor*1 == v.targetAppVersionMajor*1000 + v.targetAppVersionMinor*1"></i>
+                    <i class="fa fa-arrow-circle-down" style="color: red" ng-if="v.targetAppVersionMajor && v.appVersionMajor*1000 + v.appVersionMinor*1 > v.targetAppVersionMajor*1000 + v.targetAppVersionMinor*1"></i>
                 </td>
-                <td>{{v.targetAppVersionMajor + '.' + v.targetAppVersionMinor}}</td>
+                <td>{{(v.targetAppVersionMajor ? v.targetAppVersionMajor + '.' + v.targetAppVersionMinor : '')}}</td>
                 <td>{{v.comment}}</td>
                 <td ng-show="token.load">{{token.load}}</td>
                 <td class="td-action">

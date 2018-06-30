@@ -369,7 +369,6 @@ var config_data = {
 				'controller_name': 'Z-Way',
 				'hardware_vendor': 'RaZberry by Z-Wave.Me',
 				'latest_version_url': 'https://storage.z-wave.me/z-way/popp_rpi/latest/VERSION'
-
 			},
 			'jb': {
 				'logo': 'app/images/zplus.jpg',

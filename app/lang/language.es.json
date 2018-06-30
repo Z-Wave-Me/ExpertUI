@@ -247,7 +247,7 @@
     "fw_update_err_wrong_fw_target": "La imagen transferida no coincide con el objetivo del firmware. No se ha actualizado.",
     "fw_update_err_wrong_manufacturer_id": "La imagen transferida no coincide con el identificador del fabricante. No se ha actualizado.",
     "fw_update_receive_err": "El dispositivo no ha podido recibir los datos del firmware solicitados. No se ha actualizado.",
-    "fw_upgrade_from_file": "Archivo (*.hex,*.bin,*.ota)",
+    "fw_upgrade_from_file": "Archivo (*.hex,*.bin,*.ota,*.otz)",
     "fw_upgrade_from_url": "URL",
     "gateway": "Gateway",
     "go": "IR",
