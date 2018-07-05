@@ -183,14 +183,14 @@ appController.controller('ThermostatController', function($scope, $filter, $time
             if (nodeId == 255 || nodeId == controllerNodeId || node.data.isVirtual.value) {
                 return;
             }
-
+            
             // Loop throught instances
             var cnt = 1;
             angular.forEach(node.instances, function(instance, instanceId) {
                 //0x40 = 64
                 //0x43 = 67
-                var hasThermostatMode = deviceService.hasCommandClass(node,64);
-                var hasThermostatSetpoint = deviceService.hasCommandClass(node,67);
+                var hasThermostatMode = deviceService.hasCommandClass(node,64,instanceId);
+                var hasThermostatSetpoint = deviceService.hasCommandClass(node,67,instanceId);
                 // we don't want devices without ThermostatSetpoint AND ThermostatMode CCs
                 if (!hasThermostatSetpoint && !hasThermostatMode) {
                     return;
@@ -237,11 +237,14 @@ appController.controller('ThermostatController', function($scope, $filter, $time
                 // Set object
                 var obj = {};
 
+                var thermostats = instance.commandClasses[ccId];
+
                 obj['id'] = nodeId;
+                obj['iId'] = instanceId;
                 obj['idSort'] = $filter('zeroFill')(nodeId);
-                obj['cmd'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.' + curThermMode;
+                obj['cmd'] = thermostats.name + '_' + nodeId + '_' + instanceId;
                 obj['ccId'] = ccId;
-                obj['rowId'] = 'row_' + nodeId + '_' + cnt;
+                obj['rowId'] = thermostats.name + '_' + nodeId + '_' + instanceId;
                 obj['name'] = $filter('deviceName')(nodeId, node);
                 obj['curThermMode'] = curThermMode;
                 obj['level'] = level;
@@ -254,7 +257,7 @@ appController.controller('ThermostatController', function($scope, $filter, $time
                 obj['isUpdated'] = (updateTime > invalidateTime ? true : false);
                 obj['urlToStore'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + 0x40 + ']'; // ThermostatMode 0x40
                 obj['urlChangeTemperature'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']'; //ThermostatSetpoint 0x43
-                obj['cmdToUpdate'] = 'devices.' + nodeId + '.instances.' + instanceId + '.commandClasses.' + ccId + '.data.' + curThermMode;
+                obj['cmdToUpdate'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].data.' + curThermMode;
                 obj['modeType'] = modeType;
                 obj['isThermostatMode'] = isThermostatMode;
                 obj['isThermostatSetpoint'] = isThermostatSetpoint;
