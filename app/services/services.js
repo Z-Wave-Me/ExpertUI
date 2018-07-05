@@ -241,14 +241,18 @@ appService.service('deviceService', function ($filter, $log, $cookies, $window, 
     /**
      * Check if device has a given command class
      */
-    this.hasCommandClass = function (node, ccId) {
+    this.hasCommandClass = function (node, ccId, instId) {
         var hasCc = false;
-        angular.forEach(node.instances, function (instance, instanceId) {
-            if (instance.commandClasses[ccId]) {
-                hasCc = instance.commandClasses[ccId];
-                return;
-            }
-        });
+        if (instId) {
+            hasCc = node.instances[instId] && node.instances[instId].commandClasses[ccId];
+        } else {
+            angular.forEach(node.instances, function (instance, instanceId) {
+                if (instance.commandClasses[ccId]) {
+                    hasCc = instance.commandClasses[ccId];
+                    return;
+                }
+            });
+        }
         return hasCc;
     };
 
