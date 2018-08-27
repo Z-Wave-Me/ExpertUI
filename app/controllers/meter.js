@@ -158,13 +158,13 @@ appController.controller('MetersController', function($scope, $filter, $timeout,
                         obj['updateTime'] = meter.updateTime;
                         obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
                         obj['dateTime'] = $filter('getDateTimeObj')(meter.updateTime,obj['invalidateTime']);
-                        obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[' + instanceId + '].commandClasses[50].Get()';
-                        obj['cmdToUpdate'] = 'devices.' + k + '.instances.' + instanceId + '.commandClasses.' + 0x32 + '.data.' + scaleId;
-                        if (ZWaveAPIData.devices[obj['id']].instances[instanceId].commandClasses[0x32].data.version.value < 2
-                                || !ZWaveAPIData.devices[obj['id']].instances[instanceId].commandClasses[0x32].data.resettable.value) {
+                        obj['urlToStore'] = 'devices[' + k + '].instances[' + instanceId + '].commandClasses[50].Get()';
+                        obj['cmdToUpdate'] = 'devices[' + k + '].instances[' + instanceId + '].commandClasses.' + 0x32 + '.data.' + scaleId;
+                        if (ZWaveAPIData.devices[k].instances[instanceId].commandClasses[0x32].data.version.value < 2
+                                || !ZWaveAPIData.devices[k].instances[instanceId].commandClasses[0x32].data.resettable.value) {
                             obj['urlToReset'] = null;
                         } else {
-                            obj['urlToReset'] = 'devices[' + obj['id'] + '].instances[' + instanceId + '].commandClasses[50].Reset()';
+                            obj['urlToReset'] = 'devices[' + k + '].instances[' + instanceId + '].commandClasses[50].Reset()';
                         }
 
                         var findIndex = _.findIndex($scope.meters.all, {rowId: obj.rowId});
