@@ -9,7 +9,7 @@ var config_data = {
 		'dev_host': [],
 		'app_name': 'Z-Wave Expert',
 		'app_version': '1.3.3',
-		'app_built': '19-06-2018 07:45:43',
+		'app_built': '14-11-2018 09:32:54',
 		'app_id': 'ExpertUI',
 		'custom_ip': false,
 		'user_field': 'USERXXXX',
@@ -369,7 +369,6 @@ var config_data = {
 				'controller_name': 'Z-Way',
 				'hardware_vendor': 'RaZberry by Z-Wave.Me',
 				'latest_version_url': 'https://storage.z-wave.me/z-way/popp_rpi/latest/VERSION'
-
 			},
 			'jb': {
 				'logo': 'app/images/zplus.jpg',
