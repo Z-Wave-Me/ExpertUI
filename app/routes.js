@@ -120,9 +120,6 @@ angApp.config(['$routeProvider',
             templateUrl: 'app/views/network/routemap.html'
         }).when('/network/map', {
             templateUrl: 'app/views/network/map.html'
-        }).when('/network/statistics', {
-            requireLogin: requireLogin,
-            templateUrl: 'app/views/network/statistics.html'
         }).when('/network/linkstatus', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/network/linkstatus.html'
@@ -155,6 +152,9 @@ angApp.config(['$routeProvider',
         when('/installer/rssimeter', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/installer/rssi_meter.html'
+        }).when('/installer/statistics', {
+            requireLogin: requireLogin,
+            templateUrl: 'app/views/installer/statistics.html'
         }).// Settings
         when('/settings', {
             requireLogin: requireLogin,
