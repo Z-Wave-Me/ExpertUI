@@ -148,7 +148,7 @@
     "device_included_info": "Start the exclusion mode on the customer's primary controller and click the button below.",
     "device_interview_indicator": "Interview",
     "device_interview_stage_done": "访问完成",
-    "device_interview_stage_failed": "激活",
+    "device_interview_stage_failed": "Device interview stage failed",
     "device_interview_stage_not_complete": "设备访问未完成",
     "device_is_active": "设备目前唤醒状态",
     "device_is_dead": "设备死机",
