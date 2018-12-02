@@ -351,7 +351,6 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
         //  zddXmlFile not available
         if (!zddXmlFile || zddXmlFile === 'undefined') {
             $scope.assocGroups = getAssocGroups(node, null, nodeId, ZWaveAPIData, cfgXml);
-            console.log($scope.assocGroupsDevices);
             if ($scope.assocGroups.length < 1) {
                 $scope.alert = {message: $scope._t('no_association_groups_found'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
             }
@@ -493,11 +492,11 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                             objAssoc['elId'] = groupId + '_' + targetNodeId + '_' + targetInstanceId + '_' + i;
                             objAssoc['name'] = $filter('deviceName')(targetNodeId, targetNode);
                             objAssoc['instance'] = targetInstanceId;
-                            objAssoc['cc'] = 85;
+                            objAssoc['cc'] = '85';
                             objAssoc['node'] = {
                                 id: nodeId,
                                 instance: index,
-                                cc: 85
+                                cc: '85'
                             };
                             // objAssoc['inDevice'] =  savedNodesInDevice.indexOf(targetNodeId) > -1 ? true : false;
                             // objAssoc['inConfig'] = inConfig;
