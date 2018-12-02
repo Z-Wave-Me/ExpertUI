@@ -155,6 +155,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
     //Show modal window with a list of the devices to assocciate
     $scope.handleAssocModal = function(modal,$event,group) {
         $scope.input.groupCfg = group;
+        $scope.input.instance = group.instance;
         $scope.input.groupId = group.groupId;
         $scope.assocAddDevices = [];
         // Prepare devices and nodes
@@ -217,7 +218,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
     $scope.storeAssoc = function(input) {
         $scope.toggleRowSpinner('group_' + input.groupCfg.groupId);
         var addDevice = {};
-        var instances = '0';
+        var instances = input.instance;
         var commandClasses = '85';
         var commandClassesH = 0x85;
         var toInstance = '';
