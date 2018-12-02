@@ -30,13 +30,13 @@
                         <tr ng-repeat="v in assocGroups track by $index">
                             <td class="association-text">
                                 <h5>
-                                    {{v.groupId}}. {{v.label}} ({{ _t('assoc_max')}} {{v.max}} {{ _t('assoc_nodes')}})
+                                    {{v.instance > 0 ? v.instance + ":" : ""}}{{v.groupId}}. {{v.label}} ({{ _t('assoc_max')}} {{v.max}} {{ _t('assoc_nodes')}})
                                     <span> | <i class="fa fa-clock-o"></i> <span class="{{v.timeClass}}">{{v.updateTime| isTodayFromUnix}}</span></span>
                                 </h5>
 
                                 <div>
                                     <div class="btn-group btn-group-assoc-devices {{d.status}}" role="group"
-                                         ng-repeat="d in assocGroupsDevices[v.groupId] track by d.elId" id="{{d.elId}}">
+                                         ng-repeat="d in assocGroupsDevices[v.instance + ':' + v.groupId] track by d.elId" id="{{d.elId}}">
                                         <button type="button" class="btn btn-info excluded-{{d.deviceExcluded}}" ng-disabled="d.deviceExcluded">
                                             <i class="fa fa-exclamation-triangle text-danger"
                                                ng-if="d.status !== 'true-true'"></i>

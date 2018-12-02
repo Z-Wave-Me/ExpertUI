@@ -243,7 +243,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             instance: parseInt(input.toInstance, 10),
             name: _.findWhere($scope.assocAddDevices, {id: input.toNode}).name
         };
-         angular.extend($scope.assocGroupsDevices[input.groupId], addDevice);
+         angular.extend($scope.assocGroupsDevices[instances + ':' + input.groupId], addDevice);
 
 
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function(response) {
@@ -435,7 +435,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                     label = getGroupLabel(groupZdd[groupId], group, instance);
                     max = $filter('hasNode')(groupZdd[groupId], '_maxNodes');
                     //console.log(groupId,group)
-                    $scope.assocGroupsDevices[groupId] = {};
+                    $scope.assocGroupsDevices[index + ':' + groupId] = {};
                     /**
                      * Plain assoc
                      */
@@ -503,7 +503,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                             // objAssoc['inConfig'] = inConfig;
                             objAssoc['status'] = (savedNodesInDevice.indexOf(targetNodeId) > -1 ? true : false) + '-' + inConfig;
                             assocDevices.push(objAssoc);
-                           $scope.assocGroupsDevices[groupId][targetNodeId] = objAssoc;
+                           $scope.assocGroupsDevices[index + ':' + groupId][targetNodeId] = objAssoc;
                         }
                     }
                     /**
@@ -562,7 +562,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                             objAssoc['status'] = (savedNodesInstancesInDevice.indexOf(idNodeInstance) > -1 ? true : false) + '-' + inConfig;
                             assocDevices.push(objAssoc);
                           
-                            $scope.assocGroupsDevices[groupId][String(targetNodeId) + String(i)] = objAssoc;
+                            $scope.assocGroupsDevices[index + ':' + groupId][String(targetNodeId) + String(i)] = objAssoc;
                         }
                     }
                    
