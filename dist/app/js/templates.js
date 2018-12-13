@@ -1,4 +1,4 @@
-/* Copyright:  Z-Wave Europe, Created: 23-08-2018 16:02:17 */
+/* Copyright:  Z-Wave Europe, Created: 13-12-2018 15:01:34 */
 angular.module('myAppTemplates', []).run(['$templateCache', function($templateCache) {
   'use strict';
 
@@ -450,7 +450,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/smartstart/smartstart_dsk_list.html',
-    "<div ng-controller=SmartStartDskListController><div ng-include=\"'app/views/smartstart/navi.html'\"></div><bb-alert alert=dsk.alert></bb-alert><div id=table_mobile ng-if=_.size(dsk.all)><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th>#</th><th>{{_t('device_name')}}</th><th>{{_t('key')}}</th><th>{{_t('nav_status')}}</th><th>{{_t('datetime')}}</th><th>&nbsp;</th></tr></thead><tbody><tr ng-repeat=\"v in dsk.all track by $index\"><td data-title=#>{{v.nodeId}}</td><td data-title=\"{{_t('device_name')}}\">{{dsk.devices[v.nodeId].name}}</td><td data-title=\"{{_t('key')}}\">{{v.ZW_QR_DSK}}</td><td data-title=\"{{_t('nav_status')}}\"><span class=\"label label-primary\" ng-class=\"v.state == 'included' ? 'label-primary':'label-warning'\"><span class=btn-name>{{v.state}}</span></span></td><td data-title=\"{{_t('datetime')}}\"><bb-date-time obj=v.added.timeformat updated=v.isUpdated></bb-date-time></td><td class=td-action data-title=\"\"><button class=\"btn btn-default\" title=\"{{_t('dialog_remove')}}\" ng-click=\"removeDsk(v,_t('lb_delete_confirm'))\" ng-disabled=!v.isSmartStart><i class=\"fa fa-trash text-danger\"></i></button></td></tr></tbody></table></div></div>"
+    "<div ng-controller=SmartStartDskListController><div ng-include=\"'app/views/smartstart/navi.html'\"></div><bb-alert alert=dsk.alert></bb-alert><div id=table_mobile ng-if=_.size(dsk.all)><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th>#</th><th>{{_t('device_name')}}</th><th>{{_t('key')}}</th><th>{{_t('nav_status')}}</th><th>{{_t('datetime')}}</th><th>&nbsp;</th></tr></thead><tbody><tr ng-repeat=\"v in dsk.all track by $index\"><td data-title=#>{{v.nodeId}}</td><td data-title=\"{{_t('device_name')}}\">{{dsk.devices[v.nodeId].name}}</td><td data-title=\"{{_t('key')}}\">{{v.DSK}}</td><td data-title=\"{{_t('nav_status')}}\"><span class=\"label label-primary\" ng-class=\"v.state == 'included' ? 'label-primary':'label-warning'\"><span class=btn-name>{{v.state}}</span></span></td><td data-title=\"{{_t('datetime')}}\"><bb-date-time obj=v.added.timeformat updated=v.isUpdated></bb-date-time></td><td class=td-action data-title=\"\"><button class=\"btn btn-default\" title=\"{{_t('dialog_remove')}}\" ng-click=\"removeDsk(v,_t('lb_delete_confirm'))\" ng-disabled=!v.isSmartStart><i class=\"fa fa-trash text-danger\"></i></button></td></tr></tbody></table></div></div>"
   );
 
 
