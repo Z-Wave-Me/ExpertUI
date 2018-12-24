@@ -461,6 +461,7 @@
     "no": "无",
     "noavailable_firmware_update": "使用最新的固件",
     "nodes_associations": "Nodes associations",
+    "nodes_problematic": "Show problematic",
     "nodes_is_repeating": "Nodes this node is repeating for",
     "nodes_neighbours": "Node neighbours",
     "nop": "NOP",

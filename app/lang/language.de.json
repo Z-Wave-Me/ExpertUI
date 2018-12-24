@@ -461,6 +461,7 @@
     "no": "Nein",
     "noavailable_firmware_update": "Ihre Hardware besitzt bereits die aktuellste Firmware",
     "nodes_associations": "Nodes associations",
+    "nodes_problematic": "Show problematic",
     "nodes_is_repeating": "Nodes this node is repeating for",
     "nodes_neighbours": "Node neighbours",
     "nop": "NOP",

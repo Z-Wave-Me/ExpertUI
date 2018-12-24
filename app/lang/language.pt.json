@@ -461,6 +461,7 @@
     "no": "Não",
     "noavailable_firmware_update": "O seu stick usa o firmware mais recente",
     "nodes_associations": "Associações de nós",
+    "nodes_problematic": "Show problematic",
     "nodes_is_repeating": "Nós para onde este nó está a repetir",
     "nodes_neighbours": "Nós vizinhos",
     "nop": "NOP",

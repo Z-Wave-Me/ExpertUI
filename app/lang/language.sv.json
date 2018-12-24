@@ -461,6 +461,7 @@
     "no": "NEJ",
     "noavailable_firmware_update": "Your stick uses the latest firmware",
     "nodes_associations": "Nodes associations",
+    "nodes_problematic": "Show problematic",
     "nodes_is_repeating": "Nodes this node is repeating for",
     "nodes_neighbours": "Node neighbours",
     "nop": "NOP",
