@@ -344,7 +344,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
                 });
                 result.update = response.data;
                 response.data = result;
-                updatedTime = ($filter('hasNode')(response, 'data.update.updateTime') || $filter('hasNode')(response, 'updateTime') || Math.round(+new Date() / 1000));
+                updatedTime = ($filter('hasNode')(response, 'data.update.updateTime') || $filter('hasNode')(response, 'data.updateTime') || Math.round(+new Date() / 1000));
                 myCache.put(cacheName, apiData);
                 return response;
             } else {
