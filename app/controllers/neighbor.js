@@ -201,7 +201,7 @@ appController.controller('NeighborController', function ($scope, $filter, $timeo
                 }*/
                 if (node.id == v.id) {
                     cssClass = 'rtWhite';
-                } else if (v.node.data.neighbours.value.indexOf(parseInt(node.id, 10)) != -1) {
+                } else if (node.node.data.neighbours.value.indexOf(parseInt(v.id, 10)) != -1) {
                     cssClass = 'rtDirect';
                 }  else {
                     cssClass = 'rtNotLinked';
