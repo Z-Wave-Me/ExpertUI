@@ -678,7 +678,7 @@
     "txt_net_health": "Zdraví Sítě",
     "txt_notes": "Poznámky",
     "txt_queue_length": "Délka fronty",
-    "txt_uzb_info": "Firmware vašeho Z-Wave vysílače má přístup k aktualizaci. Aktualizaci byste měli provést, pokud je požadována supportem, je možné, že určitý firmware bude vyžadovat upgrade nejprve board loader-a.",
+    "txt_uzb_info": "Firmware vašeho Z-Wave vysílače má přístup k aktualizaci. Aktualizaci byste měli provést, pokud je požadována supportem, je možné, že určitý firmware bude vyžadovat upgrade nejprve bootloader-a.",
     "type_battery": "Baterie",
     "type_battery_wakup": "Baterie \/ Buzení",
     "type_flirs": "FLiRS",

@@ -678,7 +678,7 @@
     "txt_net_health": "Nätverkshälsa",
     "txt_notes": "Noteringar",
     "txt_queue_length": "Kölängd",
-    "txt_uzb_info": "The firmware of your Z-Wave transceiver is upgradable using this interface. You should only perform an upgrade if asked by support. its possible that certain firmware upgrade require to upgrade the board loader part of the firmare first.",
+    "txt_uzb_info": "The firmware of your Z-Wave transceiver is upgradable using this interface. You should only perform an upgrade if asked by support. Its possible that certain firmware upgrade require to upgrade the bootloader part of the firmware first.",
     "type_battery": "Batteri",
     "type_battery_wakup": "Batteri\/Uppvakning",
     "type_flirs": "FLiRS",

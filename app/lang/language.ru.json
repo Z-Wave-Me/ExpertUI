@@ -655,7 +655,7 @@
     "timedout": "Timed Out",
     "timezone": "Временная зона",
     "time_format": "Формат времени",
-    "timing_blue" : "Пакеты за последний час выделены голубым"
+    "timing_blue" : "Пакеты за последний час выделены голубым",
     "timing_black": "Контроллер не смог связаться с устройством за 3 попытки и использовал другой маршрут, который привел к успешной передачи сигнала",
     "timing_color_description": "Цветовая маркировка для оценки скорости доставки пакетов",
     "timing_green": "Время отклика не выходит за рамки допустимого интервала",
@@ -679,7 +679,7 @@
     "txt_net_health": "Здоровье сети",
     "txt_notes": "Заметки",
     "txt_queue_length": "Длина очереди",
-    "txt_uzb_info": "The firmware of your Z-Wave transceiver is upgradable using this interface. You should only perform an upgrade if asked by support. its possible that certain firmware upgrade require to upgrade the board loader part of the firmare first. ",
+    "txt_uzb_info": "The firmware of your Z-Wave transceiver is upgradable using this interface. You should only perform an upgrade if asked by support. Its possible that certain firmware upgrade require to upgrade the bootloader part of the firmware first. ",
     "type_battery": "Батарейки",
     "type_battery_wakup": "На батарейках\/спящее",
     "type_flirs": "FLiRS",

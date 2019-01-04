@@ -314,7 +314,7 @@
     "licence_key_insert": "Lizenzschlüssel eingeben",
     "licence_key_verification": "Prüfung des Lizenzschlüssels",
     "licence_upgrade": "Lizenzerweiterung",
-    "licence_upgrade_info": "Ihr genutzter Z-Wave transceiver besitzt eine firmareinterne Funktionsverwaltung. Damit können bestimmte Funktionen und Begrenzungen wie die maximal Anzahl steuerbarer Geräte aktiviert oder deaktiviert werden.",
+    "licence_upgrade_info": "Ihr genutzter Z-Wave transceiver besitzt eine firmwareinterne Funktionsverwaltung. Damit können bestimmte Funktionen und Begrenzungen wie die maximal Anzahl steuerbarer Geräte aktiviert oder deaktiviert werden.",
     "licence_upgrade_key": " Wenn Sie einen Lizenz-Schlüssel zur Erweiterung von solchen Funktionen erworben haben, können Sie diesen Schlüssel hier eingeben, um die Funktionalität und Leistung ihrer Hardware und vom Z-Way zu erweitern.",
     "linkquality": "Link Qualität",
     "link_health": "Link Gesundheit",
