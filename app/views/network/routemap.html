@@ -3,11 +3,48 @@
     <!-- Control panel -->
     <div id="controlPanel">
         <form name="control">
-            <label><input type="checkbox" name="ShowAllRoutes" id="ShowAllRoutes" checked>{{_t('all_routes')}}</label>
-            <label><input type="checkbox" name="ShowNeighbours" id="ShowNeighbours" checked>{{_t('nodes_neighbours')}}</label>
-            <label><input type="checkbox" name="ShowRepeatingFor" id="ShowRepeatingFor" checked>{{_t('nodes_is_repeating')}}</label>
-            <label><input type="checkbox" name="ShowAssociations" id="ShowAssociations" checked>{{_t('nodes_associations')}}</label>
-            <span id="IMAMessage"></span>
+            <h4 title="Use keys i, o, a, n to switch between modes">{{_t('route_map_mode')}}</h4>
+            <label><input type="radio" name="ShowMode" id="ShowModeOutgoingRoutes" checked><span ng-bind-html="_t('route_map_mode_o') | toTrusted"></span></label>
+            <div id="ShowModeAllRoutesParams" class="ShowModeParams">
+            </div>
+            <label><input type="radio" name="ShowMode" id="ShowModeIncomingRoutes"><span ng-bind-html="_t('route_map_mode_i') | toTrusted"></span></label>
+            <div id="ShowModeAllRoutesParams" class="ShowModeParams">
+            </div>
+            <label><input type="radio" name="ShowMode" id="ShowModeAllRoutes"><span ng-bind-html="_t('route_map_mode_a') | toTrusted"></span></label>
+            <div id="ShowModeAllRoutesParams" class="ShowModeParams">
+            </div>
+            <label><input type="radio" name="ShowMode" id="ShowModeNodeRoutes"><span ng-bind-html="_t('route_map_mode_n') | toTrusted"></span></label>
+            <div id="ShowModeAllRoutesParams" class="ShowModeParams">
+                <label><input type="checkbox" name="ShowAllRoutes" id="ShowAllRoutes" checked>{{_t('all_routes')}}</label><br/>
+            </div>
+            <label><input type="checkbox" name="ShowRepeatingFor" id="ShowRepeatingFor" checked>{{_t('nodes_is_repeating')}}</label><br/>
+            <label><input type="checkbox" name="ShowAssociations" id="ShowAssociations" checked>{{_t('nodes_associations')}}</label><br/>
+            <!-- <label><input type="checkbox" name="ShowProblematic" id="ShowProblematic" checked>{{_t('nodes_problematic')}}</label><br/> -->
+            
+            <h4>Legend</h4>
+            <table>
+                <tr class="ShowModeAnnotation ShowModeOutgoingRoutes ShowModeAnnotationTitle"><td colspan="2">{{_t('route_map_annotation_o')}}</td></tr>
+                <tr class="ShowModeAnnotation ShowModeIncomingRoutes ShowModeAnnotationTitle"><td colspan="2">{{_t('route_map_annotation_i')}}</td></tr>
+                <tr class="ShowModeAnnotation ShowModeAllRoutes ShowModeAnnotationTitle"><td colspan="2">{{_t('route_map_annotation_a')}}<td></tr>
+                <tr class="ShowModeAnnotation ShowModeNodeRoutes ShowModeAnnotationTitle"><td colspan="2">{{_t('route_map_annotation_n')}}</td></tr>
+                <tr class="ShowModeAnnotation ShowModeOutgoingRoutes ShowModeIncomingRoutes ShowModeAllRoutes ShowModeNodeRoutes"><td>{{_t('route_map_annotation_ns')}}</td><td>{{_t('route_map_annotation_ns_text')}}</td></tr>
+                <tr class="ShowModeAnnotation ShowModeOutgoingRoutes ShowModeIncomingRoutes ShowModeAllRoutes ShowModeNodeRoutes"><td>{{_t('route_map_annotation_nc')}}</td><td><span ng-bind-html="_t('route_map_annotation_nc_text') | toTrusted"></span></td></tr>
+                <tr class="ShowModeAnnotation ShowModeOutgoingRoutes ShowModeIncomingRoutes ShowModeAllRoutes ShowModeNodeRoutes"><td>{{_t('route_map_annotation_nst')}}</td><td><span ng-bind-html="_t('route_map_annotation_nst_text') | toTrusted"></span></td></tr>
+                <tr class="ShowModeAnnotation ShowModeOutgoingRoutes ShowModeIncomingRoutes"><td>{{_t('route_map_annotation_lw')}}</td><td>{{_t('route_map_annotation_lw_text1')}}</td></tr>
+                <tr class="ShowModeAnnotation ShowModeAllRoutes ShowModeNodeRoutes"><td>{{_t('route_map_annotation_lw')}}</td><td>{{_t('route_map_annotation_lw_text2')}}</td></tr>
+                <tr class="ShowModeAnnotation ShowModeOutgoingRoutes ShowModeIncomingRoutes ShowModeAllRoutes ShowModeNodeRoutes"><td>{{_t('route_map_annotation_ld')}}</td><td>{{_t('route_map_annotation_ld_text')}}</td></tr>
+            </table>
+            
+            <span id="IMA_too_few_nodes">{{_t('route_map_annotation_ima_few')}}</span>
+            <span id="IMA_absent">{{_t('route_map_annotation_ima_absent')}}</span>
+            
+            <!-- Manual route-->
+            &nbsp;
+            <button class="btn btn-default" id="ManualRouteDraw"
+                    ng-click="routeMap.startManualRoute()">
+                <span><i class="fa fa-gear"></i> {{_t('manual_route_draw')}}</span>
+            </button>
+            
             <!-- Show annotations-->
             &nbsp;
             <button class="btn btn-default" id="ShowAnnotations"
@@ -78,68 +115,72 @@
         <!-- Annotation panel -->
         <div class="col-md-3" ng-if="routeMap.showAnnotations">
             <div id="annotationPanel">
-                <!--Source -->
+                <!--Node info -->
                 <h4 class="annotation-title">{{_t('source')}}</h4>
-                <table id="annotation-src" class="table table-condensed">
+                <table id="annotation-node-info" class="table table-condensed">
                     <tr>
                         <th>{{_t('id')}}</th>
-                        <td id="annotation-src-id"></td>
+                        <td id="annotation-id"></td>
                     </tr>
                     <tr>
                         <th>{{_t('name')}}</th>
-                        <td id="annotation-src-name"></td>
+                        <td id="annotation-name"></td>
                     </tr>
                     <tr>
                         <th>{{_t('th_type')}}</th>
-                        <td id="annotation-src-type"></td>
+                        <td id="annotation-type"></td>
                     </tr>
                     <tr>
                         <th>{{_t('nav_status')}}</th>
-                        <td id="annotation-src-dead"></td>
+                        <td id="annotation-dead"></td>
                     </tr>
                     <tr>
                         <th>{{_t('nav_associations')}}</th>
-                        <td id="annotation-src-associations"></td>
-                    </tr>
-                    <tr>
-                        <th>{{_t('routes_for')}}</th>
-                        <td id="annotation-src-routes-for"></td>
-                    </tr>
-                </table>
-                <!-- Destination -->
-                <h4 class="annotation-title">{{_t('destination')}}</h4>
-                <table id="annotation-dst" class="table table-condensed">
-                    <tr>
-                        <th>{{_t('id')}}</th>
-                        <td id="annotation-dst-id"></td>
-                    </tr>
-                    <tr>
-                        <th>{{_t('name')}}</th>
-                        <td id="annotation-dst-name"></td>
-                    </tr>
-                    <tr>
-                        <th>{{_t('th_type')}}</th>
-                        <td id="annotation-dst-type"></td>
-                    </tr>
-                    <tr>
-                        <th>{{_t('nav_status')}}</th>
-                        <td id="annotation-dst-dead"></td>
+                        <td id="annotation-associations"></td>
                     </tr>
                 </table>
                 <!-- Route  -->
                 <h4 class="annotation-title">{{_t('route_source_destination')}}</h4>
-                <table id="annotation-src-dst" class="table table-condensed">
+                <table id="annotation-route-info" class="table table-condensed">
                     <tr>
-                        <th>{{_t('rerouted')}} %</th>
-                        <td id="annotation-src-dst-n-reroutes"></td>
+                        <th>{{_t('routes_to')}}</th>
+                        <td id="annotation-routes-to"></td>
                     </tr>
                     <tr>
-                        <th>{{_t('min_hops')}}</th>
-                        <td id="annotation-src-dst-min-hops"></td>
+                        <th>{{_t('routes_from')}}</th>
+                        <td id="annotation-routes-from"></td>
                     </tr>
                     <tr>
-                        <th>{{_t('max_hops')}}</th>
-                        <td id="annotation-src-dst-max-hops"></td>
+                        <th>{{_t('routes_for')}}</th>
+                        <td id="annotation-routes-for"></td>
+                    </tr>
+                    <tr>
+                        <th>{{_t('routes_delivery_rate')}}</th>
+                        <td id="annotation-delivery-rate"></td>
+                    </tr>
+                    <tr title="{{_t('rerouted_title')}}">
+                        <th>{{_t('rerouted')}}</th>
+                        <td id="annotation-n-reroutes"></td>
+                    </tr>
+                    <tr title="{{_t('routes_reroute_ef')}}">
+                        <th>{{_t('routes_reroute_ef')}}</th>
+                        <td id="annotation-explore-frames"></td>
+                    </tr>
+                </table>
+                <!-- Global stats  -->
+                <h4 class="annotation-title">{{_t('routes_stats')}}</h4>
+                <table id="packetStats" class="table table-condensed">
+                    <tr>
+                        <th>{{_t('routes_gathering_period')}}</th>
+                        <td id="gathering-period">{{routeMap.stats.gatheringPeriod}}</td>
+                    </tr>
+                    <tr>
+                        <th>{{_t('routes_packets_num')}}</th>
+                        <td id="packets-num">{{routeMap.stats.packetsNum}}</td>
+                    </tr>
+                    <tr>
+                        <th>{{_t('routes_missing_stats')}}</th>
+                        <td id="missing-stats">{{routeMap.stats.missingStats}}</td>
                     </tr>
                 </table>
             </div>

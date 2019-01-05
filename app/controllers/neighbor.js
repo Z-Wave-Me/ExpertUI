@@ -195,18 +195,18 @@ appController.controller('NeighborController', function ($scope, $filter, $timeo
                 var hasAssoc = false;
                 var cssClass = 'rtUnavailable';
                 //Check for associations
-                /*if ($filter('associationExists')(node.node, v.id)) {
+                if ($filter('associationExists')(node.node, v.id)) {
                     hasAssoc = true;
                     tooltip += ' (' + $scope._t('rt_associated') + ')';
-                }*/
+                }
                 if (node.id == v.id) {
                     cssClass = 'rtWhite';
-                } else if (v.node.data.neighbours.value.indexOf(parseInt(node.id, 10)) != -1) {
+                } else if (node.node.data.neighbours.value.indexOf(parseInt(v.id, 10)) != -1) {
                     cssClass = 'rtDirect';
                 }  else {
                     cssClass = 'rtNotLinked';
                 }
-                var out = '<span class="rt-cell ' + cssClass + '" title="' + tooltip + '">' + (hasAssoc ? "*" : "&nbsp") + '</span>';
+                var out = '<span class="rt-cell ' + cssClass + '" title="' + tooltip + '">' + (hasAssoc ? "&bull;" : "&nbsp;") + '</span>';
                 //console.log(out)
                 $scope.htmlNeighbors[node.id] += out;
             });

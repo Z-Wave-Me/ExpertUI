@@ -14,6 +14,10 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
         bcgImage: 'app/images/transparent.png',
         showAnnotations: false,
         moveNodes: false,
+        stats:  {},
+        startManualRoute: function() {
+            zrp.manualRouteStart(null, $scope.manualRouteSet);
+        },
         startMove: function() {
             zrp.allowMoveNodes(true);
         },
@@ -66,6 +70,8 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
                 var packets = packetApi.value.data.data;
                 if (_.size(packets)) {
                     zrp = new ZWaveRoutesPlotLib(new ZWaveNetworkAnalyticsLib(ZWaveAPIData.value, packets, positions));
+                    
+                    $scope.routeMap.stats = zrp.getStats();
                 }
             }
 
@@ -136,5 +142,23 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
         }, function (error) {
             alertify.alertError($scope._t('error_update_data'));
         });
+    }
+    
+    $scope.manualRouteSet = function(route){
+        if (route.length < 2) {
+            console.log("Bad route");
+            return;
+        }
+        
+        var dst = route.pop();
+        var src = route.shift();
+        for (var i = 0; i < 4; i++) {
+            if (!route[i]) route[i] = 0;
+        }
+        if (src === this.zna.getMyNodeId()) {
+            dataService.runZwaveCmd(cfg.store_url + 'SetPriorityRoute(' + dst + ', ' + route.join(',') + ', 0)');
+        } else {
+            dataService.runZwaveCmd(cfg.store_url + 'AssignPriorityReturnRoute(' + src + ', ' + dst + ', ' + route.join(',') + ', 0)');
+        }
     }
 });
