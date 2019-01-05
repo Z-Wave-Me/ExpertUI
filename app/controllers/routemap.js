@@ -14,8 +14,9 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
         bcgImage: 'app/images/transparent.png',
         showAnnotations: false,
         moveNodes: false,
+        stats:  {},
         startManualRoute: function() {
-            zrp.manualRouteStart(null, $scope.manualRouteSet)
+            zrp.manualRouteStart(null, $scope.manualRouteSet);
         },
         startMove: function() {
             zrp.allowMoveNodes(true);
@@ -69,6 +70,8 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
                 var packets = packetApi.value.data.data;
                 if (_.size(packets)) {
                     zrp = new ZWaveRoutesPlotLib(new ZWaveNetworkAnalyticsLib(ZWaveAPIData.value, packets, positions));
+                    
+                    $scope.routeMap.stats = zrp.getStats();
                 }
             }
 

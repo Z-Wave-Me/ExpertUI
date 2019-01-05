@@ -168,19 +168,19 @@
                     </tr>
                 </table>
                 <!-- Global stats  -->
-                <h4 class="annotation-title">{{_t('')}}</h4>
+                <h4 class="annotation-title">{{_t('routes_stats')}}</h4>
                 <table id="packetStats" class="table table-condensed">
                     <tr>
                         <th>{{_t('routes_gathering_period')}}</th>
-                        <td id="gathering-period"></td>
+                        <td id="gathering-period">{{routeMap.stats.gatheringPeriod}}</td>
                     </tr>
                     <tr>
                         <th>{{_t('routes_packets_num')}}</th>
-                        <td id="packets-num"></td>
+                        <td id="packets-num">{{routeMap.stats.packetsNum}}</td>
                     </tr>
                     <tr>
                         <th>{{_t('routes_missing_stats')}}</th>
-                        <td id="missing-stats"></td>
+                        <td id="missing-stats">{{routeMap.stats.missingStats}}</td>
                     </tr>
                 </table>
             </div>
