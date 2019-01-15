@@ -16647,6 +16647,9 @@ input[type="number"].input_number {
 .annotation-title {
   font-weight: bold;
 }
+.ShowModeParams {
+    padding-left: 1em;
+}
 
 /* line 16, C:/Development/git_repos/ExpertUI/app/sass/modules/_routemap.scss */
 #controlPanel {
