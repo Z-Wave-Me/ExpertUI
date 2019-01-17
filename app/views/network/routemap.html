@@ -1,97 +1,223 @@
 <!-- Route map -->
 <div ng-controller="RouteMapController">
-    <!-- Control panel -->
-    <div id="controlPanel">
-        <form name="control">
-            <h4 title="Use keys i, o, a, n to switch between modes">{{_t('route_map_mode')}}</h4>
-            <label><input type="radio" name="ShowMode" id="ShowModeOutgoingRoutes" checked><span ng-bind-html="_t('route_map_mode_o') | toTrusted"></span></label>
-            <div id="ShowModeAllRoutesParams" class="ShowModeParams">
+    <div class="accordion-entry">
+        <h2 class="accordion-entry-title" ng-click="expandElement('settingsRoutemap')">
+            <i class="fa fa-cogs fa-fw"></i>&nbsp;{{_t('route_map_settings')}}
+            <i class="fa accordion-arrow" ng-class="expand.settingsRoutemap ? 'fa-chevron-up':'fa-chevron-down'"></i>
+        </h2>
+        <div class="accordion-entry-ctrl" ng-show="expand.settingsRoutemap">
+            <div id="controlPanel">
+                <form name="control">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h4 title="{{_t('control')}}">{{_t('route_map_control')}}</h4>
+                            <!-- Manual route-->
+                            <div class="btn-row">
+                                <button class="btn btn-default" id="ManualRouteDraw"
+                                        ng-click="routeMap.startManualRoute()">
+                                    <span><i class="fa fa-gear"></i> {{_t('manual_route_draw')}}</span>
+                                </button>
+                            </div>
+                            <!-- Show annotations-->
+                            <div class="btn-row">
+                                <button class="btn btn-default" id="ShowAnnotations"
+                                        ng-class="routeMap.showAnnotations ? 'active' : ''"
+                                        ng-click="routeMap.showAnnotations = !routeMap.showAnnotations">
+                                    <span ng-if="!routeMap.showAnnotations">
+                                        <i class="fa fa-eye"></i>
+                                        {{_t('show_annotations')}}
+                                    </span>
+                                    <span ng-if="routeMap.showAnnotations">
+                                        <i class="fa fa-eye-slash"></i>
+                                        {{_t('hide_annotations')}}
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="btn-row">
+                                <!-- Allow node moving -->
+                                <button class="btn btn-default" id="AllowNodeMoving"
+                                        ng-if="!routeMap.moveNodes"
+                                        ng-click="routeMap.startMove(); routeMap.moveNodes = true;">
+                                    <span>
+                                        <i class="fa fa-share-alt"></i>
+                                        {{_t('allow_node_moving')}}
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="btn-row">
+                                <span ng-if="routeMap.moveNodes">
+                                    <!-- Cancel -->
+                                    <button class="btn btn-default" id="CancelNodeMoving"
+                                            ng-click="routeMap.cancelMoveNodes(); routeMap.moveNodes = false;">
+                                        <i class="fa fa-remove"></i> {{_t('btn_cancel')}}
+                                    </button> &nbsp;
+                                    <!-- Save -->
+                                    <button class="btn btn-success" id="SaveNodePosition"
+                                            ng-click="routeMap.finishMoveNodes(); routeMap.moveNodes = false;">
+                                        <i class="fa fa-check"></i> {{_t('btn_save')}}
+                                    </button> &nbsp;
+                                    <!-- Reset -->
+                                    <button class="btn btn-warning" id="ResetNodePosition"
+                                            ng-click="routeMap.resetMoveNodes(); routeMap.moveNodes = false;">
+                                        <i class="fa fa-refresh"></i> {{_t('reset')}}
+                                    </button>
+                                </span>
+                            </div>
+                            <div class="btn-row">
+                                <button class="btn btn-default" id="ShowLegend"
+                                        ng-class="routeMap.showLegend ? 'active' : ''"
+                                        ng-click="routeMap.showLegend = !routeMap.showLegend">
+                                    <span ng-if="!routeMap.showLegend">
+                                        <i class="fa fa-eye"></i>
+                                        {{_t('show_legend')}}
+                                    </span>
+                                    <span ng-if="routeMap.showLegend">
+                                        <i class="fa fa-eye-slash"></i>
+                                        {{_t('hide_legend')}}
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <h4 title="{{_t('route_map_mode_title')}}">{{_t('route_map_mode')}}</h4> <!-- Use keys i, o, a, n to switch between modes -->
+                            <label>
+                                <input type="radio" name="ShowMode" id="ShowModeOutgoingRoutes" checked>
+                                <span ng-bind-html="_t('route_map_mode_o') | toTrusted"></span>
+                            </label>
+                            <div id="ShowModeAllRoutesParams" class="ShowModeParams">
+                            </div>
+                            <label>
+                                <input type="radio" name="ShowMode" id="ShowModeIncomingRoutes">
+                                <span ng-bind-html="_t('route_map_mode_i') | toTrusted"></span>
+                            </label>
+                            <div id="ShowModeAllRoutesParams" class="ShowModeParams">
+                            </div>
+                            <label>
+                                <input type="radio" name="ShowMode" id="ShowModeAllRoutes">
+                                <span ng-bind-html="_t('route_map_mode_a') | toTrusted"></span>
+                            </label>
+                            <div id="ShowModeAllRoutesParams" class="ShowModeParams"></div>
+                            <label>
+                                <input type="radio" name="ShowMode" id="ShowModeNodeRoutes">
+                                <span ng-bind-html="_t('route_map_mode_n') | toTrusted"></span>
+                            </label>
+                            <div id="ShowModeAllRoutesParams" class="ShowModeParams">
+                                <label>
+                                    <input type="checkbox" name="ShowAllRoutes" id="ShowAllRoutes" checked>
+                                    {{_t('all_routes')}}
+                                </label><br/>
+                            </div>
+                            <label>
+                                <input type="checkbox" name="ShowRepeatingFor" id="ShowRepeatingFor" checked>
+                                {{_t('nodes_is_repeating')}}
+                            </label><br/>
+                            <label>
+                                <input type="checkbox" name="ShowAssociations" id="ShowAssociations" checked>
+                                {{_t('nodes_associations')}}
+                            </label><br/>
+                            <span id="IMA_too_few_nodes">{{_t('route_map_annotation_ima_few')}}</span>
+                            <span id="IMA_absent">{{_t('route_map_annotation_ima_absent')}}</span>
+                        </div>
+                        <div class="col-md-3">
+                            <h4 title="{{_t('route_map_image')}}">{{_t('route_map_image')}}</h4>
+                            <div class="btn-row">
+                                <input class="inputfile" type="file" name="file" id="file"
+                                       onchange="angular.element(this).scope().uploadFloorImage(this.files,angular.element(this).scope().routeMap.info,'routemap_upload')"/>
+                                <label for="file" class="btn btn-default" title="{{_t('upload_image')}}">
+                                    <bb-row-spinner
+                                            spinner="rowSpinner['routemap_upload']"
+                                            label="_t('upload_image')"
+                                            icon="'fa-upload'">
+                                    </bb-row-spinner>
+                                </label>
+                                <bb-help-text
+                                    trans="_t('upload_allowed_size', {'__size__': routeMap.info.maxSize})">
+                                </bb-help-text>
+                                <bb-help-text
+                                    trans="_t('upload_allowed_formats', {'__extensions__': routeMap.info.extensions})">
+                                </bb-help-text>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <label><input type="radio" name="ShowMode" id="ShowModeIncomingRoutes"><span ng-bind-html="_t('route_map_mode_i') | toTrusted"></span></label>
-            <div id="ShowModeAllRoutesParams" class="ShowModeParams">
-            </div>
-            <label><input type="radio" name="ShowMode" id="ShowModeAllRoutes"><span ng-bind-html="_t('route_map_mode_a') | toTrusted"></span></label>
-            <div id="ShowModeAllRoutesParams" class="ShowModeParams">
-            </div>
-            <label><input type="radio" name="ShowMode" id="ShowModeNodeRoutes"><span ng-bind-html="_t('route_map_mode_n') | toTrusted"></span></label>
-            <div id="ShowModeAllRoutesParams" class="ShowModeParams">
-                <label><input type="checkbox" name="ShowAllRoutes" id="ShowAllRoutes" checked>{{_t('all_routes')}}</label><br/>
-            </div>
-            <label><input type="checkbox" name="ShowRepeatingFor" id="ShowRepeatingFor" checked>{{_t('nodes_is_repeating')}}</label><br/>
-            <label><input type="checkbox" name="ShowAssociations" id="ShowAssociations" checked>{{_t('nodes_associations')}}</label><br/>
-            <!-- <label><input type="checkbox" name="ShowProblematic" id="ShowProblematic" checked>{{_t('nodes_problematic')}}</label><br/> -->
-            
-            <h4>Legend</h4>
-            <table>
-                <tr class="ShowModeAnnotation ShowModeOutgoingRoutes ShowModeAnnotationTitle"><td colspan="2">{{_t('route_map_annotation_o')}}</td></tr>
-                <tr class="ShowModeAnnotation ShowModeIncomingRoutes ShowModeAnnotationTitle"><td colspan="2">{{_t('route_map_annotation_i')}}</td></tr>
-                <tr class="ShowModeAnnotation ShowModeAllRoutes ShowModeAnnotationTitle"><td colspan="2">{{_t('route_map_annotation_a')}}<td></tr>
-                <tr class="ShowModeAnnotation ShowModeNodeRoutes ShowModeAnnotationTitle"><td colspan="2">{{_t('route_map_annotation_n')}}</td></tr>
-                <tr class="ShowModeAnnotation ShowModeOutgoingRoutes ShowModeIncomingRoutes ShowModeAllRoutes ShowModeNodeRoutes"><td>{{_t('route_map_annotation_ns')}}</td><td>{{_t('route_map_annotation_ns_text')}}</td></tr>
-                <tr class="ShowModeAnnotation ShowModeOutgoingRoutes ShowModeIncomingRoutes ShowModeAllRoutes ShowModeNodeRoutes"><td>{{_t('route_map_annotation_nc')}}</td><td><span ng-bind-html="_t('route_map_annotation_nc_text') | toTrusted"></span></td></tr>
-                <tr class="ShowModeAnnotation ShowModeOutgoingRoutes ShowModeIncomingRoutes ShowModeAllRoutes ShowModeNodeRoutes"><td>{{_t('route_map_annotation_nst')}}</td><td><span ng-bind-html="_t('route_map_annotation_nst_text') | toTrusted"></span></td></tr>
-                <tr class="ShowModeAnnotation ShowModeOutgoingRoutes ShowModeIncomingRoutes"><td>{{_t('route_map_annotation_lw')}}</td><td>{{_t('route_map_annotation_lw_text1')}}</td></tr>
-                <tr class="ShowModeAnnotation ShowModeAllRoutes ShowModeNodeRoutes"><td>{{_t('route_map_annotation_lw')}}</td><td>{{_t('route_map_annotation_lw_text2')}}</td></tr>
-                <tr class="ShowModeAnnotation ShowModeOutgoingRoutes ShowModeIncomingRoutes ShowModeAllRoutes ShowModeNodeRoutes"><td>{{_t('route_map_annotation_ld')}}</td><td>{{_t('route_map_annotation_ld_text')}}</td></tr>
-            </table>
-            
-            <span id="IMA_too_few_nodes">{{_t('route_map_annotation_ima_few')}}</span>
-            <span id="IMA_absent">{{_t('route_map_annotation_ima_absent')}}</span>
-            
-            <!-- Manual route-->
-            &nbsp;
-            <button class="btn btn-default" id="ManualRouteDraw"
-                    ng-click="routeMap.startManualRoute()">
-                <span><i class="fa fa-gear"></i> {{_t('manual_route_draw')}}</span>
-            </button>
-            
-            <!-- Show annotations-->
-            &nbsp;
-            <button class="btn btn-default" id="ShowAnnotations"
-                    ng-class="routeMap.showAnnotations ? 'active' : ''"
-                    ng-click="routeMap.showAnnotations = !routeMap.showAnnotations">
-                <span ng-if="!routeMap.showAnnotations"><i class="fa fa-eye"></i> {{_t('show_annotations')}}</span>
-                <span ng-if="routeMap.showAnnotations"><i class="fa fa-eye-slash"></i> {{_t('hide_annotations')}}</span>
-            </button>
-
-            &nbsp;
-            <!-- Allow node moving -->
-            <button class="btn btn-default" id="AllowNodeMoving"
-                    ng-if="!routeMap.moveNodes"
-                    ng-click="routeMap.startMove(); routeMap.moveNodes = true;">
-                <span><i class="fa fa-share-alt"></i> {{_t('allow_node_moving')}}</span>
-            </button>
-            <span ng-if="routeMap.moveNodes">
-                <!-- Cancel -->
-                <button class="btn btn-default" id="CancelNodeMoving"
-                        ng-click="routeMap.cancelMoveNodes(); routeMap.moveNodes = false;">
-                <i class="fa fa-remove"></i> {{_t('btn_cancel')}}
-                    </button> &nbsp;
-                <!-- Save -->
-                <button class="btn btn-success" id="SaveNodePosition"
-                        ng-click="routeMap.finishMoveNodes(); routeMap.moveNodes = false;">
-                <i class="fa fa-check"></i> {{_t('btn_save')}}
-            </button> &nbsp;
-                <!-- Reset -->
-                <button class="btn btn-warning" id="ResetNodePosition"
-                        ng-click="routeMap.resetMoveNodes(); routeMap.moveNodes = false;">
-                <i class="fa fa-refresh"></i> {{_t('reset')}}
-            </button>
-
-            </span>
-            &nbsp;
-            <input class="inputfile" type="file" name="file" id="file"
-                   onchange="angular.element(this).scope().uploadFloorImage(this.files,angular.element(this).scope().cfg.upload.routemap,'routemap_upload')"/>
-            <label for="file" class="btn btn-default" title="{{_t('upload_image')}}">
-                <bb-row-spinner
-                        spinner="rowSpinner['routemap_upload']"
-                        label="_t('upload_image')"
-                        icon="'fa-upload'">
-                </bb-row-spinner>
-            </label>
-        </form>
+        </div>
     </div>
     <div class="row">
+        <!-- legend -->
+        <div class="legend" ng-if="routeMap.showLegend">
+            <h3>{{_t('legend')}}</h3>
+            <div class="legend-entry">
+                <div class="legend-row ShowModeAnnotation ShowModeOutgoingRoutes ShowModeAnnotationTitle">
+                    {{_t('route_map_annotation_o')}}
+                </div>
+                <div class="legend-row ShowModeAnnotation ShowModeOutgoingRoutes ShowModeAnnotationTitle">
+                    {{_t('route_map_annotation_i')}}
+                </div>
+                <div class="legend-row ShowModeAnnotation ShowModeOutgoingRoutes ShowModeAnnotationTitle">
+                    {{_t('route_map_annotation_a')}}
+                </div>
+                <div class="legend-row ShowModeAnnotation ShowModeOutgoingRoutes ShowModeAnnotationTitle">
+                    {{_t('route_map_annotation_n')}}
+                </div>
+            </div>
+            <!-- Node-->
+            <div class="legend-entry legend-inline">
+                <!-- Node size -->
+                <div class="legend-title">{{_t('route_map_annotation_ns')}}</div>
+                <div class="legend-row">
+                    <i class="node" style="background-color: black;"></i>
+                    {{_t('route_map_annotation_ns_text')}}
+                </div>
+                <!-- Node color -->
+                <div class="legend-title">{{_t('route_map_annotation_nc')}}</div>
+                <div class="legend-row">
+                    <i class="node" style="background-color: black;"></i>
+                    <font color="black">{{_t('route_map_annotation_nc_mp')}}</font>
+                </div>
+                <div class="legend-row">
+                    <i class="node" style="background-color: lightblue;"></i>
+                    <font color="lightblue">{{_t('route_map_annotation_nc_s')}}</font>
+                </div>
+                <div class="legend-row">
+                    <i class="node" style="background-color: darkgreen;"></i>
+                    <font color="darkgreen">{{_t('route_map_annotation_nc_flirs')}}</font>
+                </div>
+                <div class="legend-row">
+                    <i class="node" style="background-color: sandybrown;"></i>
+                    <font color="sandybrown">{{_t('route_map_annotation_nc_repeat')}}</font>
+                </div>
+                <!-- Node stroke -->
+                <div class="legend-title">{{_t('route_map_annotation_nst')}}</div>
+                <div class="legend-row">
+                    <i class="node" style="background-color: lightgray; border: 2px solid red;"></i>
+                    <font color="red">{{_t('route_map_annotation_nst_assoc')}}</font>
+                </div>
+                <div class="legend-row">
+                    <i class="node" style="background-color: lightgray; border: 2px solid orange;"></i>
+                    <font color="orange">{{_t('route_map_annotation_nst_problems')}}</font>
+                </div>
+            </div>
+            <!-- line -->
+            <div class="legend-entry legend-inline">
+                <!-- line dash -->
+                <div class="legend-title">{{_t('route_map_annotation_ld')}}</div>
+                <div class="legend-row">
+                    <i class="dashed-line"></i>
+                    {{_t('route_map_annotation_ld_text')}}
+                </div>
+                <!-- line with -->
+                <div class="legend-title">{{_t('route_map_annotation_lw')}}</div>
+                <div class="legend-row">
+                    <i class="strong-line"></i>
+                    {{_t('route_map_annotation_lw_text1')}}
+                </div>
+                <div class="legend-row">
+                    <i class="thin-line"></i>
+                    {{_t('route_map_annotation_lw_text2')}}
+                </div>
+            </div>
+        </div>
         <!-- Graph -->
         <div ng-class="routeMap.showAnnotations ? 'col-md-9' : 'col-md-12'">
             <div id="graph">
@@ -184,13 +310,8 @@
                     </tr>
                 </table>
             </div>
-
         </div>
-
     </div>
-
-
-
 </div>
 
 

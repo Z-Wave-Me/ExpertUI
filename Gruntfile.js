@@ -162,7 +162,8 @@ module.exports = function (grunt) {
                         src: [
                             'app/images/**',
                             //'app/views/**',
-                            'app/lang/**'
+                            'app/lang/**',
+                            'favicon.ico'
                         ], dest: app_cfg.dir + '/'
                     },
                     {src: ['storage/**'], dest: app_cfg.dir + '/'},
