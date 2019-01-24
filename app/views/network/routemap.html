@@ -84,13 +84,13 @@
                                 <input type="radio" name="ShowMode" id="ShowModeOutgoingRoutes" checked>
                                 <span ng-bind-html="_t('route_map_mode_o') | toTrusted"></span>
                             </label>
-                            <div id="ShowModeAllRoutesParams" class="ShowModeParams">
+                            <div id="ShowModeOutgoingRoutesParams" class="ShowModeParams">
                             </div>
                             <label>
                                 <input type="radio" name="ShowMode" id="ShowModeIncomingRoutes">
                                 <span ng-bind-html="_t('route_map_mode_i') | toTrusted"></span>
                             </label>
-                            <div id="ShowModeAllRoutesParams" class="ShowModeParams">
+                            <div id="ShowModeIncomingRoutesParams" class="ShowModeParams">
                             </div>
                             <label>
                                 <input type="radio" name="ShowMode" id="ShowModeAllRoutes">
@@ -101,7 +101,7 @@
                                 <input type="radio" name="ShowMode" id="ShowModeNodeRoutes">
                                 <span ng-bind-html="_t('route_map_mode_n') | toTrusted"></span>
                             </label>
-                            <div id="ShowModeAllRoutesParams" class="ShowModeParams">
+                            <div id="ShowModeNodeRoutesParams" class="ShowModeParams">
                                 <label>
                                     <input type="checkbox" name="ShowAllRoutes" id="ShowAllRoutes" checked>
                                     {{_t('all_routes')}}
@@ -115,8 +115,6 @@
                                 <input type="checkbox" name="ShowAssociations" id="ShowAssociations" checked>
                                 {{_t('nodes_associations')}}
                             </label><br/>
-                            <span id="IMA_too_few_nodes">{{_t('route_map_annotation_ima_few')}}</span>
-                            <span id="IMA_absent">{{_t('route_map_annotation_ima_absent')}}</span>
                         </div>
                         <div class="col-md-3">
                             <h4 title="{{_t('route_map_image')}}">{{_t('route_map_image')}}</h4>
@@ -139,6 +137,10 @@
                             </div>
                         </div>
                     </div>
+                    <div class="btn-warning">
+                        <div id="IMA_too_few_nodes">{{_t('route_map_annotation_ima_few')}}</div>
+                        <div id="IMA_absent">{{_t('route_map_annotation_ima_absent')}}</div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -151,13 +153,13 @@
                 <div class="legend-row ShowModeAnnotation ShowModeOutgoingRoutes ShowModeAnnotationTitle">
                     {{_t('route_map_annotation_o')}}
                 </div>
-                <div class="legend-row ShowModeAnnotation ShowModeOutgoingRoutes ShowModeAnnotationTitle">
+                <div class="legend-row ShowModeAnnotation ShowModeIncomingRoutes ShowModeAnnotationTitle">
                     {{_t('route_map_annotation_i')}}
                 </div>
-                <div class="legend-row ShowModeAnnotation ShowModeOutgoingRoutes ShowModeAnnotationTitle">
+                <div class="legend-row ShowModeAnnotation ShowModeAllRoutes ShowModeAnnotationTitle">
                     {{_t('route_map_annotation_a')}}
                 </div>
-                <div class="legend-row ShowModeAnnotation ShowModeOutgoingRoutes ShowModeAnnotationTitle">
+                <div class="legend-row ShowModeAnnotation ShowModeNodeRoutes ShowModeAnnotationTitle">
                     {{_t('route_map_annotation_n')}}
                 </div>
             </div>
@@ -165,35 +167,35 @@
             <div class="legend-entry legend-inline">
                 <!-- Node size -->
                 <div class="legend-title">{{_t('route_map_annotation_ns')}}</div>
-                <div class="legend-row">
+                <div class="legend-row ShowModeAnnotation ShowModeOutgoingRoutes ShowModeIncomingRoutes ShowModeAllRoutes ShowModeNodeRoutes">
                     <i class="node" style="background-color: black;"></i>
                     {{_t('route_map_annotation_ns_text')}}
                 </div>
                 <!-- Node color -->
                 <div class="legend-title">{{_t('route_map_annotation_nc')}}</div>
-                <div class="legend-row">
+                <div class="legend-row ShowModeAnnotation ShowModeOutgoingRoutes ShowModeIncomingRoutes ShowModeAllRoutes ShowModeNodeRoutes">
                     <i class="node" style="background-color: black;"></i>
                     <font color="black">{{_t('route_map_annotation_nc_mp')}}</font>
                 </div>
-                <div class="legend-row">
+                <div class="legend-row ShowModeAnnotation ShowModeOutgoingRoutes ShowModeIncomingRoutes ShowModeAllRoutes ShowModeNodeRoutes">
                     <i class="node" style="background-color: lightblue;"></i>
                     <font color="lightblue">{{_t('route_map_annotation_nc_s')}}</font>
                 </div>
-                <div class="legend-row">
+                <div class="legend-row ShowModeAnnotation ShowModeOutgoingRoutes ShowModeIncomingRoutes ShowModeAllRoutes ShowModeNodeRoutes">
                     <i class="node" style="background-color: darkgreen;"></i>
                     <font color="darkgreen">{{_t('route_map_annotation_nc_flirs')}}</font>
                 </div>
-                <div class="legend-row">
+                <div class="legend-row ShowModeAnnotation ShowModeOutgoingRoutes ShowModeIncomingRoutes ShowModeAllRoutes ShowModeNodeRoutes">
                     <i class="node" style="background-color: sandybrown;"></i>
                     <font color="sandybrown">{{_t('route_map_annotation_nc_repeat')}}</font>
                 </div>
                 <!-- Node stroke -->
                 <div class="legend-title">{{_t('route_map_annotation_nst')}}</div>
-                <div class="legend-row">
+                <div class="legend-row ShowModeAnnotation ShowModeOutgoingRoutes ShowModeIncomingRoutes ShowModeAllRoutes ShowModeNodeRoutes">
                     <i class="node" style="background-color: lightgray; border: 2px solid red;"></i>
                     <font color="red">{{_t('route_map_annotation_nst_assoc')}}</font>
                 </div>
-                <div class="legend-row">
+                <div class="legend-row ShowModeAnnotation ShowModeOutgoingRoutes ShowModeIncomingRoutes ShowModeAllRoutes ShowModeNodeRoutes">
                     <i class="node" style="background-color: lightgray; border: 2px solid orange;"></i>
                     <font color="orange">{{_t('route_map_annotation_nst_problems')}}</font>
                 </div>
@@ -202,18 +204,19 @@
             <div class="legend-entry legend-inline">
                 <!-- line dash -->
                 <div class="legend-title">{{_t('route_map_annotation_ld')}}</div>
-                <div class="legend-row">
+                <div class="legend-row ShowModeAnnotation ShowModeOutgoingRoutes ShowModeIncomingRoutes ShowModeAllRoutes ShowModeNodeRoutes">
                     <i class="dashed-line"></i>
                     {{_t('route_map_annotation_ld_text')}}
                 </div>
                 <!-- line with -->
                 <div class="legend-title">{{_t('route_map_annotation_lw')}}</div>
-                <div class="legend-row">
+                <div class="legend-row ShowModeAnnotation ShowModeOutgoingRoutes ShowModeIncomingRoutes">
                     <i class="strong-line"></i>
                     {{_t('route_map_annotation_lw_text1')}}
                 </div>
                 <div class="legend-row">
-                    <i class="thin-line"></i>
+                    <i class="strong-line"></i>
+                    <i class="thin-line ShowModeAnnotation ShowModeAllRoutes ShowModeNodeRoutes"></i>
                     {{_t('route_map_annotation_lw_text2')}}
                 </div>
             </div>

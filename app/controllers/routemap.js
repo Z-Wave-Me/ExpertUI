@@ -108,7 +108,7 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
      */
     $scope.uploadFloorImage = function (files,info,spinner) {
         // Check allowed file formats
-        if (info.extension.indexOf($filter('fileExtension')(files[0].name)) === -1) {
+        if (info.extensions.indexOf($filter('fileExtension')(files[0].name)) === -1) {
             alertify.alertError(
                 $scope._t('upload_format_unsupported', {'__extension__': $filter('fileExtension')(files[0].name)}) + ' ' +
                 $scope._t('upload_allowed_formats', {'__extensions__': info.extensions})
