@@ -150,6 +150,7 @@
     "device_interview_stage_done": "Intervju färdig",
     "device_interview_stage_failed": "Device interview stage failed",
     "device_interview_stage_not_complete": "Device interview stage is not complete",
+    "device_interview_wait_s2": "Please wait for S2 interview to complete",
     "device_is_active": "Device is currently awake",
     "device_is_dead": "Device seems to be dead",
     "device_is_not_fully_interviewed": "Enhetsintervju är inte färdig",

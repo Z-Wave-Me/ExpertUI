@@ -150,6 +150,7 @@
     "device_interview_stage_done": "Интервью прошло успешно",
     "device_interview_stage_failed": "Интервью прервано после многих попыток",
     "device_interview_stage_not_complete": "Интервью ещё не окончено. Возможно, требуется разбудить устройство",
+    "device_interview_wait_s2": "Пожалуйста, дождитесь окончания интервью S2",
     "device_is_active": "Устройство сейчас бодрствует",
     "device_is_dead": "Похоже, устройство неисправно",
     "device_is_not_fully_interviewed": "Интервью с устройством не завершено",

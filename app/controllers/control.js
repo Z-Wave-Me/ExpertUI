@@ -224,7 +224,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
         $scope.runZwaveCmd(cmd);
         $timeout(function () {
             checkS2Interview(nodeId);
-        }, 10000);
+        }, 20000);
 
     };
 
@@ -495,6 +495,10 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 status: 'alert-success',
                 icon: 'fa-smile-o'
             };
+            
+            if (node.instances[0].commandClasses[159]) {
+                $scope.controlDh.inclusion.alertS2Interview = alertify.notify($scope._t('device_interview_wait_s2'), 'warning');
+            }
         }
 
         /**
@@ -530,11 +534,15 @@ appController.controller('ControlController', function ($scope, $interval, $time
         // Set securityS2
         var securityS2 = nodeInstances[0].commandClasses[159];
         
-         console.log('Has securityS2  commandClass: ',securityS2);
+        console.log('Has securityS2  commandClass: ',securityS2);
         // Check requestedKeys
-       
+        
+        if ($scope.controlDh.inclusion.alertS2Interview) {
+            $scope.controlDh.inclusion.alertS2Interview.close();
+        }
+        
         if (securityS2 && securityS2.data.requestedKeys.value && !$scope.controlDh.inclusion.grantKeys.done) {
-          console.log('Check requestedKeys: securityS2.data.requestedKeys.value ',securityS2.data.requestedKeys.value);
+            console.log('Check requestedKeys: securityS2.data.requestedKeys.value ', securityS2.data.requestedKeys.value);
             $scope.controlDh.inclusion.input.keysRequested.S0 = securityS2.data.requestedKeys.S0.value;
             $scope.controlDh.inclusion.input.keysRequested.S2Unauthenticated = securityS2.data.requestedKeys.S2Unauthenticated.value;
             $scope.controlDh.inclusion.input.keysRequested.S2Authenticated = securityS2.data.requestedKeys.S2Authenticated.value;
@@ -592,11 +600,8 @@ appController.controller('ControlController', function ($scope, $interval, $time
                     icon: 'fa-exclamation-triangle'
                 };
             }
-
-
         }, function (error) {});
     }
-    ;
 });
 
 /**
