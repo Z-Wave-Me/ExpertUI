@@ -295,7 +295,7 @@ var config_data = {
 		// Upload settings
 		'upload': {
 			'fw_or_bootloader': {
-				extension: ['bin', 'hex', 'ota']
+				extension: ['bin', 'hex', 'ota', 'otz']
 			},
 			'restore_from_backup': {
 				extension: ['zbk']

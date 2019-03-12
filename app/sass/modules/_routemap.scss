@@ -13,6 +13,9 @@
 .annotation-title {
     font-weight: bold;
 }
+.ShowModeParams {
+    padding-left: 1em;
+}
 #controlPanel {
     //position: absolute;
     padding: $spacing;
@@ -22,9 +25,16 @@
     label{
         font-weight: normal;
     }
+
+    .row {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+    .btn-row {
+        margin-bottom: 10px;
+    }
 }
 #annotationPanel {
-    //position: absolute;
     right: 0;
 }
 #plan {

@@ -13,3 +13,4 @@ npm-debug.log
 /.idea
 .**/
 /.history
+sftp-config.json

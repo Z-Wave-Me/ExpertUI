@@ -9,7 +9,7 @@ var config_data = {
 		'dev_host': [],
 		'app_name': 'Z-Wave Expert',
 		'app_version': '1.3.3',
-		'app_built': '15-01-2019 11:06:38',
+		'app_built': '12-03-2019 11:37:14',
 		'app_id': 'ExpertUI',
 		'custom_ip': false,
 		'user_field': 'USERXXXX',
@@ -295,7 +295,7 @@ var config_data = {
 		// Upload settings
 		'upload': {
 			'fw_or_bootloader': {
-				extension: ['bin', 'hex', 'ota']
+				extension: ['bin', 'hex', 'ota', 'otz']
 			},
 			'restore_from_backup': {
 				extension: ['zbk']

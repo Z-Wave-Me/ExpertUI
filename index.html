@@ -2,7 +2,10 @@
 <html lang="en" ng-app="angApp" ng-controller="BaseController">
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{getCustomCfgVal('title')}}</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <!-- build:section dist_head --><!-- /build -->
     <!-- build:remove -->
     <!-- Z-Wave css -->
@@ -212,7 +215,7 @@
                                 <li><a href="#installer/rssimeter" ng-class="isActive('rssimeter',2)">{{ _t('nav_rssimeter') }}</a></li>
                                 <li><a href="#installer/history" ng-class="isActive('history',2)">{{ _t('nav_history') }}</a></li>
                                 <li>
-                                    <a href="#network/statistics" ng-class="isActive('statistics',2)">{{ _t('statistics') }}</a>
+                                    <a href="#installer/statistics" ng-class="isActive('statistics',2)">{{ _t('statistics') }}</a>
                                 </li>
 
                                 <!--<li><a href="#installer/spectrum" ng-class="isActive('spectrum',2)">{{ _t('nav_spectrum_analyzer') }}</a></li>-->

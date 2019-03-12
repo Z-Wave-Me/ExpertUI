@@ -12,8 +12,17 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
     $scope.routeMap = {
         ///ZAutomation/api/v1/load/image/DSC01425.jpg
         bcgImage: 'app/images/transparent.png',
+        info: {
+            maxSize: $filter('fileSizeString')(cfg.upload.routemap.size),
+            extensions: cfg.upload.routemap.extension.toString()
+        },
         showAnnotations: false,
+        showLegend: true,
         moveNodes: false,
+        stats:  {},
+        startManualRoute: function() {
+            zrp.manualRouteStart(null, $scope.manualRouteSet);
+        },
         startMove: function() {
             zrp.allowMoveNodes(true);
         },
@@ -32,6 +41,23 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
     };
 
     /**
+     * remove event listner on page destroy
+     */
+    $scope.$on('$destroy', function() {
+        $window.removeEventListener("keydown", handleKeyDown);
+    });
+
+    /**
+     * add event listener
+     */
+    $window.addEventListener("keydown", handleKeyDown);
+
+    /**
+     * expand settings on controller load
+     */
+    $scope.expandElement('settingsRoutemap');
+
+    /**
      * Load all promises
      * @returns {undefined}
      */
@@ -39,7 +65,6 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
         var promises = [
             dataService.loadZwaveApiData(),
             dataService.getApi('packet_log')
-
         ];
 
         $q.allSettled(promises).then(function (response) {
@@ -66,6 +91,8 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
                 var packets = packetApi.value.data.data;
                 if (_.size(packets)) {
                     zrp = new ZWaveRoutesPlotLib(new ZWaveNetworkAnalyticsLib(ZWaveAPIData.value, packets, positions));
+
+                    $scope.routeMap.stats = zrp.getStats();
                 }
             }
 
@@ -81,10 +108,10 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
      */
     $scope.uploadFloorImage = function (files,info,spinner) {
         // Check allowed file formats
-        if (info.extension.indexOf($filter('fileExtension')(files[0].name)) === -1) {
+        if (info.extensions.indexOf($filter('fileExtension')(files[0].name)) === -1) {
             alertify.alertError(
                 $scope._t('upload_format_unsupported', {'__extension__': $filter('fileExtension')(files[0].name)}) + ' ' +
-                $scope._t('upload_allowed_formats', {'__extensions__': info.extension.toString()})
+                $scope._t('upload_allowed_formats', {'__extensions__': info.extensions})
             );
             return;
 
@@ -92,7 +119,7 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
         // Check allowed file size
         if (files[0].size > info.size) {
             alertify.alertError(
-                $scope._t('upload_allowed_size', {'__size__': $filter('fileSizeString')(info.size)}) + ' ' +
+                $scope._t('upload_allowed_size', {'__size__': info.maxSize}) + ' ' +
                 $scope._t('upload_size_is', {'__size__': $filter('fileSizeString')(files[0].size)})
             );
             return;
@@ -136,5 +163,32 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
         }, function (error) {
             alertify.alertError($scope._t('error_update_data'));
         });
+    }
+
+    $scope.manualRouteSet = function(route){
+        if (route.length < 2) {
+            console.log("Bad route");
+            return;
+        }
+
+        var dst = route.pop();
+        var src = route.shift();
+        for (var i = 0; i < 4; i++) {
+            if (!route[i]) route[i] = 0;
+        }
+        if (src === this.zna.getMyNodeId()) {
+            dataService.runZwaveCmd(cfg.store_url + 'SetPriorityRoute(' + dst + ', ' + route.join(',') + ', 0)');
+        } else {
+            dataService.runZwaveCmd(cfg.store_url + 'AssignPriorityReturnRoute(' + src + ', ' + dst + ', ' + route.join(',') + ', 0)');
+        }
+    }
+
+    function handleKeyDown(event) {
+        27 === event.keyCode && zrp.manualRouteMode && zrp.manualRouteTerminate(!1); // ESC
+        13 === event.keyCode && zrp.manualRouteMode && zrp.manualRouteTerminate(!0); // Enter
+        79 === event.keyCode && angular.element("#ShowModeOutgoingRoutes").click();  // o
+        73 === event.keyCode && angular.element("#ShowModeIncomingRoutes").click();  // i
+        78 === event.keyCode && angular.element("#ShowModeNodeRoutes").click();      // n
+        65 === event.keyCode && angular.element("#ShowModeAllRoutes").click()        // a
     }
 });

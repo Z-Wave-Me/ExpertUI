@@ -1,60 +1,229 @@
 <!-- Route map -->
 <div ng-controller="RouteMapController">
-    <!-- Control panel -->
-    <div id="controlPanel">
-        <form name="control">
-            <label><input type="checkbox" name="ShowAllRoutes" id="ShowAllRoutes" checked>{{_t('all_routes')}}</label>
-            <label><input type="checkbox" name="ShowNeighbours" id="ShowNeighbours" checked>{{_t('nodes_neighbours')}}</label>
-            <label><input type="checkbox" name="ShowRepeatingFor" id="ShowRepeatingFor" checked>{{_t('nodes_is_repeating')}}</label>
-            <label><input type="checkbox" name="ShowAssociations" id="ShowAssociations" checked>{{_t('nodes_associations')}}</label>
-            <span id="IMAMessage"></span>
-            <!-- Show annotations-->
-            &nbsp;
-            <button class="btn btn-default" id="ShowAnnotations"
-                    ng-class="routeMap.showAnnotations ? 'active' : ''"
-                    ng-click="routeMap.showAnnotations = !routeMap.showAnnotations">
-                <span ng-if="!routeMap.showAnnotations"><i class="fa fa-eye"></i> {{_t('show_annotations')}}</span>
-                <span ng-if="routeMap.showAnnotations"><i class="fa fa-eye-slash"></i> {{_t('hide_annotations')}}</span>
-            </button>
-
-            &nbsp;
-            <!-- Allow node moving -->
-            <button class="btn btn-default" id="AllowNodeMoving"
-                    ng-if="!routeMap.moveNodes"
-                    ng-click="routeMap.startMove(); routeMap.moveNodes = true;">
-                <span><i class="fa fa-share-alt"></i> {{_t('allow_node_moving')}}</span>
-            </button>
-            <span ng-if="routeMap.moveNodes">
-                <!-- Cancel -->
-                <button class="btn btn-default" id="CancelNodeMoving"
-                        ng-click="routeMap.cancelMoveNodes(); routeMap.moveNodes = false;">
-                <i class="fa fa-remove"></i> {{_t('btn_cancel')}}
-                    </button> &nbsp;
-                <!-- Save -->
-                <button class="btn btn-success" id="SaveNodePosition"
-                        ng-click="routeMap.finishMoveNodes(); routeMap.moveNodes = false;">
-                <i class="fa fa-check"></i> {{_t('btn_save')}}
-            </button> &nbsp;
-                <!-- Reset -->
-                <button class="btn btn-warning" id="ResetNodePosition"
-                        ng-click="routeMap.resetMoveNodes(); routeMap.moveNodes = false;">
-                <i class="fa fa-refresh"></i> {{_t('reset')}}
-            </button>
-
-            </span>
-            &nbsp;
-            <input class="inputfile" type="file" name="file" id="file"
-                   onchange="angular.element(this).scope().uploadFloorImage(this.files,angular.element(this).scope().cfg.upload.routemap,'routemap_upload')"/>
-            <label for="file" class="btn btn-default" title="{{_t('upload_image')}}">
-                <bb-row-spinner
-                        spinner="rowSpinner['routemap_upload']"
-                        label="_t('upload_image')"
-                        icon="'fa-upload'">
-                </bb-row-spinner>
-            </label>
-        </form>
+    <div class="accordion-entry">
+        <h2 class="accordion-entry-title" ng-click="expandElement('settingsRoutemap')">
+            <i class="fa fa-cogs fa-fw"></i>&nbsp;{{_t('route_map_settings')}}
+            <i class="fa accordion-arrow" ng-class="expand.settingsRoutemap ? 'fa-chevron-up':'fa-chevron-down'"></i>
+        </h2>
+        <div class="accordion-entry-ctrl" ng-show="expand.settingsRoutemap">
+            <div id="controlPanel">
+                <form name="control">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h4 title="{{_t('control')}}">{{_t('route_map_control')}}</h4>
+                            <!-- Manual route-->
+                            <div class="btn-row">
+                                <button class="btn btn-default" id="ManualRouteDraw"
+                                        ng-click="routeMap.startManualRoute()">
+                                    <span><i class="fa fa-gear"></i> {{_t('manual_route_draw')}}</span>
+                                </button>
+                            </div>
+                            <!-- Show annotations-->
+                            <div class="btn-row">
+                                <button class="btn btn-default" id="ShowAnnotations"
+                                        ng-class="routeMap.showAnnotations ? 'active' : ''"
+                                        ng-click="routeMap.showAnnotations = !routeMap.showAnnotations">
+                                    <span ng-if="!routeMap.showAnnotations">
+                                        <i class="fa fa-eye"></i>
+                                        {{_t('show_annotations')}}
+                                    </span>
+                                    <span ng-if="routeMap.showAnnotations">
+                                        <i class="fa fa-eye-slash"></i>
+                                        {{_t('hide_annotations')}}
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="btn-row">
+                                <!-- Allow node moving -->
+                                <button class="btn btn-default" id="AllowNodeMoving"
+                                        ng-if="!routeMap.moveNodes"
+                                        ng-click="routeMap.startMove(); routeMap.moveNodes = true;">
+                                    <span>
+                                        <i class="fa fa-share-alt"></i>
+                                        {{_t('allow_node_moving')}}
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="btn-row">
+                                <span ng-if="routeMap.moveNodes">
+                                    <!-- Cancel -->
+                                    <button class="btn btn-default" id="CancelNodeMoving"
+                                            ng-click="routeMap.cancelMoveNodes(); routeMap.moveNodes = false;">
+                                        <i class="fa fa-remove"></i> {{_t('btn_cancel')}}
+                                    </button> &nbsp;
+                                    <!-- Save -->
+                                    <button class="btn btn-success" id="SaveNodePosition"
+                                            ng-click="routeMap.finishMoveNodes(); routeMap.moveNodes = false;">
+                                        <i class="fa fa-check"></i> {{_t('btn_save')}}
+                                    </button> &nbsp;
+                                    <!-- Reset -->
+                                    <button class="btn btn-warning" id="ResetNodePosition"
+                                            ng-click="routeMap.resetMoveNodes(); routeMap.moveNodes = false;">
+                                        <i class="fa fa-refresh"></i> {{_t('reset')}}
+                                    </button>
+                                </span>
+                            </div>
+                            <div class="btn-row">
+                                <button class="btn btn-default" id="ShowLegend"
+                                        ng-class="routeMap.showLegend ? 'active' : ''"
+                                        ng-click="routeMap.showLegend = !routeMap.showLegend">
+                                    <span ng-if="!routeMap.showLegend">
+                                        <i class="fa fa-eye"></i>
+                                        {{_t('show_legend')}}
+                                    </span>
+                                    <span ng-if="routeMap.showLegend">
+                                        <i class="fa fa-eye-slash"></i>
+                                        {{_t('hide_legend')}}
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <h4 title="{{_t('route_map_mode_title')}}">{{_t('route_map_mode')}}</h4> <!-- Use keys i, o, a, n to switch between modes -->
+                            <label>
+                                <input type="radio" name="ShowMode" id="ShowModeOutgoingRoutes" checked>
+                                <span ng-bind-html="_t('route_map_mode_o') | toTrusted"></span>
+                            </label>
+                            <div id="ShowModeOutgoingRoutesParams" class="ShowModeParams">
+                            </div>
+                            <label>
+                                <input type="radio" name="ShowMode" id="ShowModeIncomingRoutes">
+                                <span ng-bind-html="_t('route_map_mode_i') | toTrusted"></span>
+                            </label>
+                            <div id="ShowModeIncomingRoutesParams" class="ShowModeParams">
+                            </div>
+                            <label>
+                                <input type="radio" name="ShowMode" id="ShowModeAllRoutes">
+                                <span ng-bind-html="_t('route_map_mode_a') | toTrusted"></span>
+                            </label>
+                            <div id="ShowModeAllRoutesParams" class="ShowModeParams"></div>
+                            <label>
+                                <input type="radio" name="ShowMode" id="ShowModeNodeRoutes">
+                                <span ng-bind-html="_t('route_map_mode_n') | toTrusted"></span>
+                            </label>
+                            <div id="ShowModeNodeRoutesParams" class="ShowModeParams">
+                                <label>
+                                    <input type="checkbox" name="ShowAllRoutes" id="ShowAllRoutes" checked>
+                                    {{_t('all_routes')}}
+                                </label><br/>
+                            </div>
+                            <label>
+                                <input type="checkbox" name="ShowRepeatingFor" id="ShowRepeatingFor" checked>
+                                {{_t('nodes_is_repeating')}}
+                            </label><br/>
+                            <label>
+                                <input type="checkbox" name="ShowAssociations" id="ShowAssociations" checked>
+                                {{_t('nodes_associations')}}
+                            </label><br/>
+                        </div>
+                        <div class="col-md-3">
+                            <h4 title="{{_t('route_map_image')}}">{{_t('route_map_image')}}</h4>
+                            <div class="btn-row">
+                                <input class="inputfile" type="file" name="file" id="file"
+                                       onchange="angular.element(this).scope().uploadFloorImage(this.files,angular.element(this).scope().routeMap.info,'routemap_upload')"/>
+                                <label for="file" class="btn btn-default" title="{{_t('upload_image')}}">
+                                    <bb-row-spinner
+                                            spinner="rowSpinner['routemap_upload']"
+                                            label="_t('upload_image')"
+                                            icon="'fa-upload'">
+                                    </bb-row-spinner>
+                                </label>
+                                <bb-help-text
+                                    trans="_t('upload_allowed_size', {'__size__': routeMap.info.maxSize})">
+                                </bb-help-text>
+                                <bb-help-text
+                                    trans="_t('upload_allowed_formats', {'__extensions__': routeMap.info.extensions})">
+                                </bb-help-text>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btn-warning">
+                        <div id="IMA_too_few_nodes">{{_t('route_map_annotation_ima_few')}}</div>
+                        <div id="IMA_absent">{{_t('route_map_annotation_ima_absent')}}</div>
+                        <div id="manualRouteErrorBatteryToBattery" class="alert alert-error">{{_t('manual_route_error_battery_to_battery')}}</div>
+                        <div id="manualRouteSet" class="alert alert-success">{{_t('manual_route_set')}}</div>
+                        <div id="manualRouteInfo" class="alert alert-warning">{{_t('manual_route_info')}}</div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
     <div class="row">
+        <!-- legend -->
+        <div class="legend" ng-if="routeMap.showLegend">
+            <h3>{{_t('legend')}}</h3>
+            <div class="legend-entry">
+                <div class="legend-row ShowModeAnnotation ShowModeOutgoingRoutes ShowModeAnnotationTitle">
+                    {{_t('route_map_annotation_o')}}
+                </div>
+                <div class="legend-row ShowModeAnnotation ShowModeIncomingRoutes ShowModeAnnotationTitle">
+                    {{_t('route_map_annotation_i')}}
+                </div>
+                <div class="legend-row ShowModeAnnotation ShowModeAllRoutes ShowModeAnnotationTitle">
+                    {{_t('route_map_annotation_a')}}
+                </div>
+                <div class="legend-row ShowModeAnnotation ShowModeNodeRoutes ShowModeAnnotationTitle">
+                    {{_t('route_map_annotation_n')}}
+                </div>
+            </div>
+            <!-- Node-->
+            <div class="legend-entry legend-inline">
+                <!-- Node size -->
+                <div class="legend-title">{{_t('route_map_annotation_ns')}}</div>
+                <div class="legend-row ShowModeAnnotation ShowModeOutgoingRoutes ShowModeIncomingRoutes ShowModeAllRoutes ShowModeNodeRoutes">
+                    <i class="node" style="background-color: black;"></i>
+                    {{_t('route_map_annotation_ns_text')}}
+                </div>
+                <!-- Node color -->
+                <div class="legend-title">{{_t('route_map_annotation_nc')}}</div>
+                <div class="legend-row ShowModeAnnotation ShowModeOutgoingRoutes ShowModeIncomingRoutes ShowModeAllRoutes ShowModeNodeRoutes">
+                    <i class="node" style="background-color: black;"></i>
+                    <font color="black">{{_t('route_map_annotation_nc_mp')}}</font>
+                </div>
+                <div class="legend-row ShowModeAnnotation ShowModeOutgoingRoutes ShowModeIncomingRoutes ShowModeAllRoutes ShowModeNodeRoutes">
+                    <i class="node" style="background-color: lightblue;"></i>
+                    <font color="lightblue">{{_t('route_map_annotation_nc_s')}}</font>
+                </div>
+                <div class="legend-row ShowModeAnnotation ShowModeOutgoingRoutes ShowModeIncomingRoutes ShowModeAllRoutes ShowModeNodeRoutes">
+                    <i class="node" style="background-color: darkgreen;"></i>
+                    <font color="darkgreen">{{_t('route_map_annotation_nc_flirs')}}</font>
+                </div>
+                <div class="legend-row ShowModeAnnotation ShowModeOutgoingRoutes ShowModeIncomingRoutes ShowModeAllRoutes ShowModeNodeRoutes">
+                    <i class="node" style="background-color: sandybrown;"></i>
+                    <font color="sandybrown">{{_t('route_map_annotation_nc_repeat')}}</font>
+                </div>
+                <!-- Node stroke -->
+                <div class="legend-title">{{_t('route_map_annotation_nst')}}</div>
+                <div class="legend-row ShowModeAnnotation ShowModeOutgoingRoutes ShowModeIncomingRoutes ShowModeAllRoutes ShowModeNodeRoutes">
+                    <i class="node" style="background-color: lightgray; border: 2px solid red;"></i>
+                    <font color="red">{{_t('route_map_annotation_nst_assoc')}}</font>
+                </div>
+                <div class="legend-row ShowModeAnnotation ShowModeOutgoingRoutes ShowModeIncomingRoutes ShowModeAllRoutes ShowModeNodeRoutes">
+                    <i class="node" style="background-color: lightgray; border: 2px solid orange;"></i>
+                    <font color="orange">{{_t('route_map_annotation_nst_problems')}}</font>
+                </div>
+            </div>
+            <!-- line -->
+            <div class="legend-entry legend-inline">
+                <!-- line dash -->
+                <div class="legend-title">{{_t('route_map_annotation_ld')}}</div>
+                <div class="legend-row ShowModeAnnotation ShowModeOutgoingRoutes ShowModeIncomingRoutes ShowModeAllRoutes ShowModeNodeRoutes">
+                    <i class="dashed-line"></i>
+                    {{_t('route_map_annotation_ld_text')}}
+                </div>
+                <!-- line with -->
+                <div class="legend-title">{{_t('route_map_annotation_lw')}}</div>
+                <div class="legend-row ShowModeAnnotation ShowModeOutgoingRoutes ShowModeIncomingRoutes">
+                    <i class="strong-line"></i>
+                    {{_t('route_map_annotation_lw_text1')}}
+                </div>
+                <div class="legend-row">
+                    <i class="strong-line"></i>
+                    <i class="thin-line ShowModeAnnotation ShowModeAllRoutes ShowModeNodeRoutes"></i>
+                    {{_t('route_map_annotation_lw_text2')}}
+                </div>
+            </div>
+        </div>
         <!-- Graph -->
         <div ng-class="routeMap.showAnnotations ? 'col-md-9' : 'col-md-12'">
             <div id="graph">
@@ -78,78 +247,77 @@
         <!-- Annotation panel -->
         <div class="col-md-3" ng-if="routeMap.showAnnotations">
             <div id="annotationPanel">
-                <!--Source -->
+                <!--Node info -->
                 <h4 class="annotation-title">{{_t('source')}}</h4>
-                <table id="annotation-src" class="table table-condensed">
+                <table id="annotation-node-info" class="table table-condensed">
                     <tr>
                         <th>{{_t('id')}}</th>
-                        <td id="annotation-src-id"></td>
+                        <td id="annotation-id"></td>
                     </tr>
                     <tr>
                         <th>{{_t('name')}}</th>
-                        <td id="annotation-src-name"></td>
+                        <td id="annotation-name"></td>
                     </tr>
                     <tr>
                         <th>{{_t('th_type')}}</th>
-                        <td id="annotation-src-type"></td>
+                        <td id="annotation-type"></td>
                     </tr>
                     <tr>
                         <th>{{_t('nav_status')}}</th>
-                        <td id="annotation-src-dead"></td>
+                        <td id="annotation-dead"></td>
                     </tr>
                     <tr>
                         <th>{{_t('nav_associations')}}</th>
-                        <td id="annotation-src-associations"></td>
-                    </tr>
-                    <tr>
-                        <th>{{_t('routes_for')}}</th>
-                        <td id="annotation-src-routes-for"></td>
-                    </tr>
-                </table>
-                <!-- Destination -->
-                <h4 class="annotation-title">{{_t('destination')}}</h4>
-                <table id="annotation-dst" class="table table-condensed">
-                    <tr>
-                        <th>{{_t('id')}}</th>
-                        <td id="annotation-dst-id"></td>
-                    </tr>
-                    <tr>
-                        <th>{{_t('name')}}</th>
-                        <td id="annotation-dst-name"></td>
-                    </tr>
-                    <tr>
-                        <th>{{_t('th_type')}}</th>
-                        <td id="annotation-dst-type"></td>
-                    </tr>
-                    <tr>
-                        <th>{{_t('nav_status')}}</th>
-                        <td id="annotation-dst-dead"></td>
+                        <td id="annotation-associations"></td>
                     </tr>
                 </table>
                 <!-- Route  -->
                 <h4 class="annotation-title">{{_t('route_source_destination')}}</h4>
-                <table id="annotation-src-dst" class="table table-condensed">
+                <table id="annotation-route-info" class="table table-condensed">
                     <tr>
-                        <th>{{_t('rerouted')}} %</th>
-                        <td id="annotation-src-dst-n-reroutes"></td>
+                        <th>{{_t('routes_to')}}</th>
+                        <td id="annotation-routes-to"></td>
                     </tr>
                     <tr>
-                        <th>{{_t('min_hops')}}</th>
-                        <td id="annotation-src-dst-min-hops"></td>
+                        <th>{{_t('routes_from')}}</th>
+                        <td id="annotation-routes-from"></td>
                     </tr>
                     <tr>
-                        <th>{{_t('max_hops')}}</th>
-                        <td id="annotation-src-dst-max-hops"></td>
+                        <th>{{_t('routes_for')}}</th>
+                        <td id="annotation-routes-for"></td>
+                    </tr>
+                    <tr>
+                        <th>{{_t('routes_delivery_rate')}}</th>
+                        <td id="annotation-delivery-rate"></td>
+                    </tr>
+                    <tr title="{{_t('rerouted_title')}}">
+                        <th>{{_t('rerouted')}}</th>
+                        <td id="annotation-n-reroutes"></td>
+                    </tr>
+                    <tr title="{{_t('routes_reroute_ef')}}">
+                        <th>{{_t('routes_reroute_ef')}}</th>
+                        <td id="annotation-explore-frames"></td>
+                    </tr>
+                </table>
+                <!-- Global stats  -->
+                <h4 class="annotation-title">{{_t('routes_stats')}}</h4>
+                <table id="packetStats" class="table table-condensed">
+                    <tr>
+                        <th>{{_t('routes_gathering_period')}}</th>
+                        <td id="gathering-period">{{routeMap.stats.gatheringPeriod}}</td>
+                    </tr>
+                    <tr>
+                        <th>{{_t('routes_packets_num')}}</th>
+                        <td id="packets-num">{{routeMap.stats.packetsNum}}</td>
+                    </tr>
+                    <tr>
+                        <th>{{_t('routes_missing_stats')}}</th>
+                        <td id="missing-stats">{{routeMap.stats.missingStats}}</td>
                     </tr>
                 </table>
             </div>
-
         </div>
-
     </div>
-
-
-
 </div>
 
 
