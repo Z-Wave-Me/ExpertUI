@@ -48,9 +48,10 @@ appController.controller('SmartStartDskListController', function($scope, $filter
 			}
 			$scope.dsk.all = _.filter(data, function(v) {
 
-				var typeId = $filter('decToHex')(parseInt(v.ZW_QR_TLVVAL_PRODUCTID_ZWPRODUCTTYPE), 2, '0x');
-				var pIdArray = v.p_id.split('.');
-				var pId = parseInt(pIdArray[0]) + '.' + parseInt(pIdArray[1]) + '.' + parseInt(pIdArray[2]);
+				var typeIdGeneric = v.DeviceTypeGenericDeviceClass;
+				var typeIdSpecific = v.DeviceTypeSpecificDeviceClass;
+				var pIdArray = v.PId.split('.');
+				var pId = parseInt(pIdArray[0],10) + '.' + parseInt(pIdArray[1],10) + '.' + parseInt(pIdArray[2],10);
 				//var pId = parseInt(pIdArray[0]) + '.' + parseInt(pIdArray[1]) + '.' + parseInt(pIdArray[2]) + (pIdArray[3] ? '.' + parseInt(pIdArray[3]) : '');
 				//getDeviceInfo(pId);
 				//console.log('pId',pId.map(parseInt,10))
@@ -58,8 +59,9 @@ appController.controller('SmartStartDskListController', function($scope, $filter
 				// Extending an object
 				v.added = {
 					pId: pId,
-					typeId: typeId,
-					dskArray: v.ZW_QR_DSK.split('-'),
+					typeIdGeneric: typeIdGeneric,
+					typeIdSpecific: typeIdSpecific,
+					dskArray: v.DSK.split('-'),
 					timeformat: $filter('getDateTimeObj')(v.timestamp / 1000)
 
 				}

@@ -26,7 +26,7 @@
             <select name="devices" class="form-control" ng-model="firmware.input.targetId">
                <option value="" ng-selected="v.id != deviceId">--- {{_t('target_id')}} ---</option>
                <option value="{{k}}"
-                       ng-repeat="(k,v) in cfg.firmware_target"
+                       ng-repeat="(k,v) in firmware.firmware_targets"
                        ng-selected="k === 0">{{k}}: {{_t(v)}}
                </option>
            </select>

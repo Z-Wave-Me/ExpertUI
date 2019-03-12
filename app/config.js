@@ -242,8 +242,6 @@ var config_data = {
 		analytics: {
 			show: false
 		},
-		// Firmware target
-		firmware_target: ['zwave_chip', 'additional_chip'],
 		// Expert commands table with values
 		expert_cmd: {
 			Configuration: {

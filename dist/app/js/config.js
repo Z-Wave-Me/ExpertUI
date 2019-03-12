@@ -8,8 +8,8 @@ var config_data = {
 		'environment': 'live',
 		'dev_host': [],
 		'app_name': 'Z-Wave Expert',
-		'app_version': '1.3.3',
-		'app_built': '12-03-2019 11:37:14',
+		'app_version': '1.4.0',
+		'app_built': '12-03-2019 12:17:16',
 		'app_id': 'ExpertUI',
 		'custom_ip': false,
 		'user_field': 'USERXXXX',
@@ -242,8 +242,6 @@ var config_data = {
 		analytics: {
 			show: false
 		},
-		// Firmware target
-		firmware_target: ['zwave_chip', 'additional_chip'],
 		// Expert commands table with values
 		expert_cmd: {
 			Configuration: {
