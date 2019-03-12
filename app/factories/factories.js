@@ -23,7 +23,7 @@ appFactory.factory('_', function () {
  * Data service
  */
 appFactory.factory('dataService', function ($http, $q, $interval, $filter, $location, $window, deviceService, myCache, cfg) {
-    var updatedTime = Math.round(+new Date() / 1000);
+    var updatedTime = 0;
     var apiData;
     /**
      * Public functions

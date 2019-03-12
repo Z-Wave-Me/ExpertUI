@@ -150,6 +150,7 @@
     "device_interview_stage_done": "Entrevista completa",
     "device_interview_stage_failed": "A fase de entrevista do dispositivo falhou",
     "device_interview_stage_not_complete": "A fase de entrevista do dispositivo não está completa",
+    "device_interview_wait_s2": "Please wait for S2 interview to complete",
     "device_is_active": "O dispositivo está atualmente desperto",
     "device_is_dead": "O Dispositivo parece estar morto",
     "device_is_not_fully_interviewed": "A entrevista do dispositivo não está completa",

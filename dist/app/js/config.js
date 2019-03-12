@@ -8,8 +8,8 @@ var config_data = {
 		'environment': 'live',
 		'dev_host': [],
 		'app_name': 'Z-Wave Expert',
-		'app_version': '1.3.3',
-		'app_built': '27-01-2019 22:53:35',
+		'app_version': '1.4.0',
+		'app_built': '12-03-2019 11:48:23',
 		'app_id': 'ExpertUI',
 		'custom_ip': false,
 		'user_field': 'USERXXXX',
@@ -295,7 +295,7 @@ var config_data = {
 		// Upload settings
 		'upload': {
 			'fw_or_bootloader': {
-				extension: ['bin', 'hex', 'ota']
+				extension: ['bin', 'hex', 'ota', 'otz']
 			},
 			'restore_from_backup': {
 				extension: ['zbk']

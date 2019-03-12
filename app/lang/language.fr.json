@@ -154,7 +154,7 @@
     "device_is_active": "Device is currently awake",
     "device_is_dead": "Device seems to be dead",
     "device_is_not_fully_interviewed": "Device interview is not complete",
-    "device_is_operating": "active",
+    "device_is_operating": "The device works properly",
     "device_is_sleeping": "deep sleep",
     "device_key_list": "Device Key List",
     "device_name": "Device name",
