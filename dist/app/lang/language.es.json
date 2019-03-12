@@ -492,6 +492,8 @@
     "open": "Abierto",
     "open_from_inside": "Abierto desde el interior",
     "open_from_outside": "Abierto desde el exterior",
+    "ota_additional_target": "Additional chip",
+    "ota_zwave_chip": "Z-Wave chip",
     "other_network": "Otra red",
     "outgoing": "Outgoing",
     "ownframes": "Propias",

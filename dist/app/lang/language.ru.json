@@ -493,6 +493,8 @@
     "open": "Открыто",
     "open_from_inside": "Открыто изнутри",
     "open_from_outside": "Открыто снаружи",
+    "ota_additional_target": "Дополнительный чип",
+    "ota_zwave_chip": "Чип Z-Wave",
     "other_network": "Другая сеть",
     "outgoing": "Исходящий",
     "ownframes": "Свой",
