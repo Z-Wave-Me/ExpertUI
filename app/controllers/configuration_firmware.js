@@ -25,6 +25,7 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
             file: null
         },
         interval: null,
+        firmware_targets: [$scope._t('ota_zwave_chip')],
         update: {
             show : false,
             status: '',
@@ -64,19 +65,15 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
             $scope.deviceName = $filter('deviceName')(nodeId, node);
             if(deviceService.hasCommandClass(node,122)){
                 $scope.firmware.show = true;
+                var fwCount = node.instances[0].commandClasses[122].data.firmwareCount.value;
+                if (fwCount) // FirmwareUpdate v1 did't had this DH
+                    for (var fw_num = 1; fw_num <= fwCount; fw_num++)
+                        $scope.firmware.firmware_targets.push($scope._t('ota_additional_target') + ' ' + fw_num.toString());
                 $scope.refreshZwaveData($scope.deviceId);
             }else{
                 $scope.alert = {message: $scope._t('no_device_service'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
                 return;
             }
-           /* if ('122' in node.instances[0].commandClasses) {
-                $scope.firmware.show = true;
-                $scope.refreshZwaveData($scope.deviceId);
-            }else{
-                $scope.alert = {message: $scope._t('no_device_service'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
-                return;
-            }*/
-
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
         });
