@@ -44,14 +44,14 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 interval: false,
                 show: false,
                 done: false,
-                countDown: 20,
+                countDown: 240,
                 anyChecked: false
             },
             verifyDSK: {
                 interval: false,
                 show: false,
                 done: false,
-                countDown: 20
+                countDown: 240
             }
         },
         network: {
