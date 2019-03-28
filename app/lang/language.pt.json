@@ -161,6 +161,7 @@
     "device_node_id": "ID de dispositivo",
     "device_node_name": "Nome do dispositivo",
     "device_not_included_info": "Inicie o modo de inclusão ou aprendizagem no controlador principal do cliente e clique no botão abaixo.",
+    "device_not_included_description": "To include into network, the controller must be reset.",
     "device_rename_tooltip": "Renomear dispositivo",
     "device_reset_locally": "Reset local do dispositivo",
     "device_security_interview": "Entrevista de segurança",

@@ -161,6 +161,7 @@
     "device_node_id": "Id zařízení",
     "device_node_name": "Název zařízení",
     "device_not_included_info": "Start the inclusion or learning mode on the customer's primary controller and click the button below.",
+    "device_not_included_description": "To include into network, the controller must be reset.",
     "device_rename_tooltip": "Přejmenujte zařízení",
     "device_reset_locally": "Lokální reset zařízení",
     "device_security_interview": "Zabezpečené interview",

@@ -161,6 +161,7 @@
     "device_node_id": "Geräte-Id",
     "device_node_name": "Geräte-Name",
     "device_not_included_info": "Starten Sie den Inklusions- oder Lernmodus auf dem primären Controller des Kunden und klicken Sie auf den unteren Button.",
+    "device_not_included_description": "To include into network, the controller must be reset.",
     "device_rename_tooltip": "Gerät umbenennen",
     "device_reset_locally": "Gerät lokal zurücksetzen",
     "device_security_interview": "Sicherheitsinterview",

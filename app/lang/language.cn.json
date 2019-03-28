@@ -161,6 +161,7 @@
     "device_node_id": "设备ID",
     "device_node_name": "设备名称",
     "device_not_included_info": "Start the inclusion or learning mode on the customer's primary controller and click the button below.",
+    "device_not_included_description": "To include into network, the controller must be reset.",
     "device_rename_tooltip": "重命名",
     "device_reset_locally": "当地重新配置",
     "device_security_interview": "安全访问",

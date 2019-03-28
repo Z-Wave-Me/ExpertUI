@@ -161,6 +161,7 @@
     "device_node_id": "Id устройства",
     "device_node_name": "Имя устройства",
     "device_not_included_info": "Запустите режим включения или обучения на основном контроллере клиента и нажмите кнопку ниже.",
+    "device_not_included_description": "Для добавления в сеть контроллер должен быть сброшен на заводские настройки.",
     "device_rename_tooltip": "Переименовать",
     "device_reset_locally": "Устройство сброшено локально",
     "device_security_interview": "Интервью с шифрованием",
