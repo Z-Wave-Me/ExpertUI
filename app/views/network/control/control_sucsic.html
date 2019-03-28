@@ -32,7 +32,7 @@
             <!-- SetSUCNodeId -->
             <button class="btn btn-primary"
                     data-ng-click="setSUCNodeId('controller.SetSUCNodeId(' + controlDh.input.sucSis + ')')"
-                    ng-disabled="rowSpinner['controller.SetSUCNodeId(' + controlDh.input.sucSis + ')'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1">
+                    ng-disabled="(!controlDh.controller.disableSUCRequest) || rowSpinner['controller.SetSUCNodeId(' + controlDh.input.sucSis + ')'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1">
 
                 <bb-row-spinner
                         spinner="rowSpinner['controller.SetSUCNodeId(' + controlDh.input.sucSis + ')']"
@@ -43,7 +43,7 @@
             <!-- SetSISNodeId -->
             <button class="btn btn-primary"
                     data-ng-click="setSISNodeId('controller.SetSISNodeId(' + controlDh.input.sucSis + ')')"
-                    ng-disabled="rowSpinner['controller.SetSISNodeId(' + controlDh.input.sucSis + ')']|| [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1">
+                    ng-disabled="(!controlDh.controller.disableSUCRequest) || rowSpinner['controller.SetSISNodeId(' + controlDh.input.sucSis + ')']|| [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1">
 
                 <bb-row-spinner
                         spinner="rowSpinner['controller.SetSISNodeId(' + controlDh.input.sucSis + ')']"
@@ -54,7 +54,7 @@
             <!-- DisableSUCNodeId -->
             <button class="btn btn-primary"
                     data-ng-click="disableSUCNodeId('controller.DisableSUCNodeId(' + controlDh.input.sucSis + ')')"
-                    ng-disabled="rowSpinner['controller.DisableSUCNodeId(' + controlDh.input.sucSis + ')'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1">
+                    ng-disabled="(!controlDh.controller.disableSUCRequest) || rowSpinner['controller.DisableSUCNodeId(' + controlDh.input.sucSis + ')'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1">
 
                 <bb-row-spinner
                         spinner="rowSpinner['controller.DisableSUCNodeId(' + controlDh.input.sucSis + ')']"
