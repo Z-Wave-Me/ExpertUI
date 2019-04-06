@@ -260,6 +260,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
         $scope.controlDh.controller.frequency = $filter('hasNode')(ZWaveAPIData, 'controller.data.frequency.value');
         $scope.controlDh.controller.controllerState = controllerState;
         $scope.controlDh.controller.secureInclusion = ZWaveAPIData.controller.data.secureInclusion.value;
+        $scope.controlDh.controller.S2RequireCSA = ZWaveAPIData.controller.data.S2RequireCSA.value;
         $scope.controlDh.controller.isPrimary = ZWaveAPIData.controller.data.isPrimary.value;
         $scope.controlDh.controller.isRealPrimary = ZWaveAPIData.controller.data.isRealPrimary.value;
         $scope.controlDh.controller.isSIS = ZWaveAPIData.controller.data.SISPresent.value;
@@ -736,6 +737,16 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
         $scope.controlDh.network.modal = false;
         $window.location.reload();
 
+    };
+
+    /**
+     * Set join as Normal/CSA mode.
+     * state=true Set as CSA.
+     * state=false Set as normal.
+     * @param {string} cmd
+     */
+    $scope.setCSA = function (cmd) {
+        $scope.runZwaveCmd(cmd);
     };
 
     /// --- Private functions --- ///

@@ -9,6 +9,34 @@
         </div>
       
         <!-- Not included in network -->
+        <!-- Normal/CSA  -->
+        <div class="cfg-block" ng-if="controlDh.controller.isRealPrimary && (!controlDh.controller.hasDevices)">
+            <p class="input-help">{{_t('nm_about_csa')}}</p>
+            <div class="btn-group">
+                <!-- Normal -->
+                <button type="button" class="btn btn-primary" id="btn_no_csa"
+                        ng-class="!controlDh.controller.S2RequireCSA ? 'active' : ''"
+                        ng-click="setCSA('controller.data.S2RequireCSA=false')"
+                        ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || rowSpinner['controller.data.S2RequireCSA=false']">
+                    <bb-row-spinner
+                            spinner="rowSpinner['controller.data.S2RequireCSA=false']"
+                            label="_t('nm_btn_no_csa')"
+                            icon="'fa-lock'">
+                    </bb-row-spinner>
+                </button>
+                <!-- CSA -->
+                <button type="button" class="btn btn-primary" id="btn_csa"
+                        ng-class="controlDh.controller.S2RequireCSA ? 'active' : ''"
+                        ng-click="setCSA('controller.data.S2RequireCSA=true')"
+                        ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || rowSpinner['controller.data.S2RequireCSA=true']">
+                    <bb-row-spinner
+                            spinner="rowSpinner['controller.data.S2RequireCSA=true']"
+                            label="_t('nm_btn_csa')"
+                            icon="'fa-lock'">
+                    </bb-row-spinner>
+                </button>
+            </div>
+        </div>
         <!-- Learn mode -->
         <span ng-if="controlDh.controller.isRealPrimary && (!controlDh.controller.hasDevices)">
             <p class="input-help">{{_t('device_not_included_info')}}</p>
