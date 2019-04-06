@@ -263,7 +263,6 @@ appController.controller('ControlController', function ($scope, $interval, $time
         $scope.controlDh.controller.isPrimary = ZWaveAPIData.controller.data.isPrimary.value;
         $scope.controlDh.controller.isRealPrimary = ZWaveAPIData.controller.data.isRealPrimary.value;
         $scope.controlDh.controller.isSIS = ZWaveAPIData.controller.data.SISPresent.value;
-        $scope.controlDh.controller.secureInclusion = ZWaveAPIData.controller.data.secureInclusion.value;
         $scope.controlDh.controller.homeName = ZWaveAPIData.controller.data.homeName.value || cfg.controller.homeName;
         $scope.controlDh.controller.SetPromiscuousMode = (ZWaveAPIData.controller.data.functionClassesNames.value.indexOf('SetPromiscuousMode') > -1 ? true : false);
         $scope.controlDh.controller.SUCNodeId = ZWaveAPIData.controller.data.SUCNodeId.value;
@@ -523,7 +522,6 @@ appController.controller('ControlController', function ($scope, $interval, $time
 
     /**
      * Check interview
-     * @param {int} nodeId
      */
     function checkInterview(nodeInstances) {
         if ($scope.controlDh.inclusion.grantKeys.show
@@ -534,7 +532,8 @@ appController.controller('ControlController', function ($scope, $interval, $time
         // Set securityS2
         var securityS2 = nodeInstances[0].commandClasses[159];
         
-        console.log('Has securityS2  commandClass: ',securityS2);
+        console.log('Has securityS2  commandClass: ', securityS2);
+        
         // Check requestedKeys
         
         if ($scope.controlDh.inclusion.alertS2Interview) {
@@ -560,10 +559,11 @@ appController.controller('ControlController', function ($scope, $interval, $time
             $scope.controlDh.inclusion.grantKeys.interval = $interval(countDownGrantKeys, 1000);
             return;
         }
-         // Check publicKey
+        
+        // Check publicKey
         
         if (securityS2 && securityS2.data.publicKey.value.length && !$scope.controlDh.inclusion.verifyDSK.done) {
-          console.log('Check publicKey: securityS2.data.publicKey.value.length ',securityS2.data.requestedKeys.value);
+            console.log('Check publicKey: securityS2.data.publicKey.value.length ', securityS2.data.requestedKeys.value);
             $scope.controlDh.inclusion.input.publicKey = securityS2.data.publicKey.value;
             $scope.controlDh.inclusion.input.publicKeyAuthenticationRequired = securityS2.data.publicKeyAuthenticationRequired.value;
             $scope.controlDh.inclusion.input.dskPin = $scope.dskBlock($scope.controlDh.inclusion.input.publicKey, 1);
@@ -583,7 +583,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
     /**
      * Check S2 CC interview
      */
-    function  checkS2Interview(nodeId) {
+    function checkS2Interview(nodeId) {
         dataService.loadZwaveApiData(true).then(function (response) {
             var interviewDone = $filter('hasNode')(response, 'devices.' + nodeId + '.instances.0.commandClasses.159.data.interviewDone.value');
             console.log('S2 interview DONE: ' + interviewDone)
@@ -655,10 +655,10 @@ appController.controller('IncludeExcludeDeviceController', function ($scope, $ro
 });
 
 /**
- * It will change Z-wave controller own Home ID to the Home ID of the new network
+ * It will change Z-Wave controller own Home ID to the Home ID of the new network
  * and it will learn all network information from the including controller of the new network.
  * All existing relationships to existing nodes will get lost
- * when the Z-Way controller joins a dierent network
+ * when the Z-Way controller joins a different network
  * @class IncludeDifferentNetworkController
  *
  */
