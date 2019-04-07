@@ -20,6 +20,8 @@ appController.controller('ControlController', function ($scope, $interval, $time
             lastIncludedDevice: $scope.alert,
             lastExcludedDevice: $scope.alert,
             lastIncludedDeviceId: 0,
+            securityAbandoned: false,
+            secureChannelEstablished: false,
             alert: $scope.alert,
             alertPrimary: $scope.alert,
             alertS2: $scope.alert,
@@ -279,6 +281,12 @@ appController.controller('ControlController', function ($scope, $interval, $time
         $scope.controlDh.controller.joiningS2 = joiningS2;
         $scope.controlDh.controller.publicKey = publicKey;
         $scope.controlDh.controller.publicKeyString = publicKeyString;
+        
+        if (ZWaveAPIData.devices[nodeId]) {
+            var ctrlPublicKey = ZWaveAPIData.devices[nodeId].data.publicKey.value;
+            $scope.controlDh.controller.controllerPinCSA = $scope.dskBlock(ctrlPublicKey, 0) + "-" + $scope.dskBlock(ctrlPublicKey, 1);
+        }
+        
         if (_.size(publicKey)) {
           $scope.controlDh.controller.publicKeyStringHighligted =   $filter('highlightDsk')(publicKeyString);
              $scope.controlDh.controller.publicKeyQr =
@@ -518,6 +526,10 @@ appController.controller('ControlController', function ($scope, $interval, $time
             if (node.instances[0].commandClasses[159]) {
                 $scope.controlDh.inclusion.alertS2Interview = alertify.notify($scope._t('device_interview_wait_s2'), 'warning');
             }
+            
+            // !!!!!!!!!!!!!!! ZWaveAPIData is not defined here
+            $scope.controlDh.inclusion.securityAbandoned = ZWaveAPIData.devices[deviceIncId].instances[0].commandClasses[159].data.securityAbandoned.value;
+            $scope.controlDh.inclusion.secureChannelEstablished = ZWaveAPIData.devices[deviceIncId].instances[0].commandClasses[159].data.secureChannelEstablished.value;
         }
 
         /**
