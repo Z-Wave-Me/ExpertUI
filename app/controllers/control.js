@@ -48,14 +48,14 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 interval: false,
                 show: false,
                 done: false,
-                countDown: 20,
+                countDown: 240,
                 anyChecked: false
             },
             verifyDSK: {
                 interval: false,
                 show: false,
                 done: false,
-                countDown: 20
+                countDown: 240
             }
         },
         network: {
@@ -101,7 +101,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
         if (!publicKey) {
             return '';
         }
-        return (publicKey[(block - 1) * 2] * 256 + publicKey[(block - 1) * 2 + 1]);
+        return ('00000' + (publicKey[(block - 1) * 2] * 256 + publicKey[(block - 1) * 2 + 1]).toString()).substr(-5);
     };
 
     /**
@@ -291,7 +291,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
           $scope.controlDh.controller.publicKeyStringHighligted =   $filter('highlightDsk')(publicKeyString);
              $scope.controlDh.controller.publicKeyQr =
                     $scope.dskBlock(publicKey, 0) || ''
-                    + $scope.dskBlock(publicKey, 1).toString()
+                    + $scope.dskBlock(publicKey, 1)
                     + $scope.dskBlock(publicKey, 2)
                     + $scope.dskBlock(publicKey, 3)
                     + $scope.dskBlock(publicKey, 4)
