@@ -160,10 +160,12 @@
             <label>{{_t('pin')}}</label>
             <input name="dsk_pin" id="dsk_pin" type="number" size="5" class="form-control input_number input-valid-{{dskForm.dsk_pin.$valid}}" min="0" max="65533" ng-show="controlDh.inclusion.input.publicKeyAuthenticationRequired"
                    ng-model="controlDh.inclusion.input.dskPin" required />
-
             <input name="dsk_1" id="dsk_1" type="number" size="5" class="form-control input_number" ng-value="dskBlock(controlDh.inclusion.input.publicKey, 1)" disabled="true" ng-show="!controlDh.inclusion.input.publicKeyAuthenticationRequired" />
             -
-            <input name="dsk_2" id="dsk_2" type="number" size="5" class="form-control input_number" ng-value="dskBlock(controlDh.inclusion.input.publicKey, 2)" disabled="true" />
+            <input name="dsk_pin2" id="dsk_pin2" type="number" size="5" class="form-control input_number input-valid-{{dskForm.dsk_pin.$valid}}" min="0" max="65533" ng-show="controlDh.inclusion.input.publicKeyAuthenticationRequired && controlDh.inclusion.input.csa"
+                   ng-model="controlDh.inclusion.input.dskPin2" required />
+            <input name="dsk_2" id="dsk_2" type="number" size="5" class="form-control input_number" ng-value="dskBlock(controlDh.inclusion.input.publicKey, 2)" disabled="true"
+                   ng-show="!controlDh.inclusion.input.csa"/>
             -
             <input name="dsk_3" id="dsk_3" type="number" size="5" class="form-control input_number" ng-value="dskBlock(controlDh.inclusion.input.publicKey, 3)" disabled="true" />
             -

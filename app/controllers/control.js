@@ -38,6 +38,8 @@ appController.controller('ControlController', function ($scope, $interval, $time
                     S2Access: 'false'
                 },
                 dskPin: 0,
+                dskPin2: 0,
+                csa: false,
                 publicKey: null
             },
             grantKeys: {
@@ -210,14 +212,21 @@ appController.controller('ControlController', function ($scope, $interval, $time
         $scope.controlDh.inclusion.verifyDSK.done = true;
         $interval.cancel($scope.controlDh.inclusion.verifyDSK.interval);
         var dskPin = parseInt($scope.controlDh.inclusion.input.dskPin, 10),
+                dskPin2 = parseInt($scope.controlDh.inclusion.input.dskPin2, 10),
                 nodeId = $scope.controlDh.inclusion.lastIncludedDeviceId.toString(10),
                 publicKey = [];
                 
         dskPin = $filter('zeroFill')(dskPin,5);
+        dskPin2 = $filter('zeroFill')(dskPin2,5);
+        
         if (confirmed) {
             publicKey = $scope.controlDh.inclusion.input.publicKey;
             publicKey[0] = (dskPin >> 8) & 0xff;
             publicKey[1] = dskPin & 0xff;
+            if ($scope.controlDh.inclusion.input.csa) {
+                publicKey[2] = (dskPin2 >> 8) & 0xff;
+                publicKey[3] = dskPin2 & 0xff;
+            }
         }
         console.log(publicKey.join(','))
         var cmd = 'devices[' + nodeId + '].SecurityS2.data.publicKeyVerified=[' + publicKey.join(',') + '];';
@@ -285,7 +294,18 @@ appController.controller('ControlController', function ($scope, $interval, $time
             $scope.controlDh.controller.publicKeyPin = (publicKey[0] << 8) + publicKey[1];
         }
 
-
+        if (joiningS2 && $scope.controlDh.controller.S2RequireCSA) {
+            var secureControllerId = 0;
+            for (var d in ZWaveAPIData.devices) {
+                if (ZWaveAPIData.devices[d].instances[0].commandClasses[159] && ZWaveAPIData.devices[d].instances[0].commandClasses[159].data.publicKeyAuthenticationRequired && ZWaveAPIData.devices[d].instances[0].commandClasses[159].data.publicKeyAuthenticationRequired.value) {
+                    secureControllerId = d;
+                }
+            }
+            
+            if (secureControllerId) {
+                checkS2CSA(secureControllerId, ZWaveAPIData);
+            }
+        }
 
         $scope.controlDh.inclusion.alert = {
             message: $scope._t('nm_controller_state_' + controllerState),
@@ -567,6 +587,44 @@ appController.controller('ControlController', function ($scope, $interval, $time
             $scope.controlDh.inclusion.input.publicKey = securityS2.data.publicKey.value;
             $scope.controlDh.inclusion.input.publicKeyAuthenticationRequired = securityS2.data.publicKeyAuthenticationRequired.value;
             $scope.controlDh.inclusion.input.dskPin = $scope.dskBlock($scope.controlDh.inclusion.input.publicKey, 1);
+            $scope.controlDh.inclusion.input.csa = false;
+            $scope.controlDh.inclusion.verifyDSK.show = true;
+            var countDownVerifyDSK = function () {
+                $scope.controlDh.inclusion.verifyDSK.countDown--;
+                if ($scope.controlDh.inclusion.verifyDSK.countDown === 0) {
+                    $interval.cancel($scope.controlDh.inclusion.verifyDSK.interval);
+                    $scope.handleInclusionVerifyDSK(false, true);
+                }
+            };
+            $scope.controlDh.inclusion.verifyDSK.interval = $interval(countDownVerifyDSK, 1000);
+            return;
+        }
+    }
+    
+    /**
+     * Check S2 CSA
+     */
+    function checkS2CSA(secureControllerId, ZWaveAPIData) {
+        if ($scope.controlDh.inclusion.verifyDSK.show || $scope.controlDh.inclusion.verifyDSK.done) {
+            return;
+        }
+        
+        var securityS2 = ZWaveAPIData.devices[secureControllerId].instances[0].commandClasses[159];
+        
+        console.log('Verifying DSK in CSA mode for node ' + secureControllerId);
+        
+        // Check publicKey
+        
+        if (securityS2 && securityS2.data.publicKey.value.length && !$scope.controlDh.inclusion.verifyDSK.done) {
+            // got handleInclusionVerifyDSK() to work properly
+            $scope.controlDh.inclusion.grantKeys.anyChecked = true;
+            $scope.controlDh.inclusion.lastIncludedDeviceId = secureControllerId;
+            // init input fields
+            $scope.controlDh.inclusion.input.publicKey = securityS2.data.publicKey.value;
+            $scope.controlDh.inclusion.input.publicKeyAuthenticationRequired = true;
+            $scope.controlDh.inclusion.input.dskPin = $scope.dskBlock($scope.controlDh.inclusion.input.publicKey, 1);
+            $scope.controlDh.inclusion.input.dskPin2 = $scope.dskBlock($scope.controlDh.inclusion.input.publicKey, 2);
+            $scope.controlDh.inclusion.input.csa = true;
             $scope.controlDh.inclusion.verifyDSK.show = true;
             var countDownVerifyDSK = function () {
                 $scope.controlDh.inclusion.verifyDSK.countDown--;
