@@ -236,18 +236,17 @@ appController.controller('ControlController', function ($scope, $interval, $time
      * @param {object} ZWaveAPIData
      */
     function setControllerData(ZWaveAPIData) {
-        var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         var nodeId = ZWaveAPIData.controller.data.nodeId.value;
         var hasSUC = ZWaveAPIData.controller.data.SUCNodeId.value;
         var hasDevices = Object.keys(ZWaveAPIData.devices).length;
         var controllerState = ZWaveAPIData.controller.data.controllerState.value;
-        var joiningS2 = $filter('hasNode')(ZWaveAPIData,'devices.' + controllerNodeId + '.data.joiningS2.value');
-        var publicKey = $filter('hasNode')(ZWaveAPIData,'devices.' + controllerNodeId + '.data.publicKey.value');
+        var joiningS2 = $filter('hasNode')(ZWaveAPIData,'devices.' + nodeId + '.data.joiningS2.value');
+        var publicKey = $filter('hasNode')(ZWaveAPIData,'devices.' + nodeId + '.data.publicKey.value');
         var publicKeyString = deviceService.mapPublicKey(publicKey||[]);
        // Customsettings
         $scope.controlDh.controller.hasDevices = hasDevices > 1;
         $scope.controlDh.controller.disableSUCRequest = true;
-        if (hasSUC && hasSUC != controllerNodeId) {
+        if (hasSUC && hasSUC != nodeId) {
             $scope.controlDh.controller.disableSUCRequest = false;
         }
         if ($scope.controlDh.nodes.sucSis.indexOf(nodeId) === -1) {

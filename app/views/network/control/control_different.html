@@ -3,8 +3,8 @@
     <div class="panel-heading"><i class="fa fa-sitemap"></i> {{_t('nm_inc_into_nw')}}</div>
     <div class="panel-body">
 
-       <!-- Show DSK  -->
-       <div class="cfg-block" ng-if="controlDh.controller.joiningS2">
+        <!-- Show DSK  -->
+        <div class="cfg-block" ng-if="controlDh.controller.joiningS2">
           <p>DSK key:</p> <p class="dsk-highlight" ng-bind-html="controlDh.controller.publicKeyStringHighligted|toTrusted"></p>
         </div>
       
@@ -107,10 +107,10 @@
                     <i class="fa fa-smile-o"></i> {{_t('success_controller_include')}}
 
                 </div>
-                 <!-- Show DSK  -->
-          <div class="cfg-block" ng-if="controlDh.controller.joiningS2">
-              <p>DSK key:</p> <p class="dsk-highlight" ng-bind-html="controlDh.controller.publicKeyStringHighligted|toTrusted"></p>
-            </div>
+                <!-- Show DSK  -->
+                <div class="cfg-block" ng-if="controlDh.controller.joiningS2">
+                    <p>DSK key:</p> <p class="dsk-highlight" ng-bind-html="controlDh.controller.publicKeyStringHighligted|toTrusted"></p>
+                </div>
                 <div class="cfg-block">
                     <!-- restore -->
                     <button class="btn btn-primary"
