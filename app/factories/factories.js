@@ -307,7 +307,8 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             }
         }, function (response) {
             // something went wrong
-            return $q.reject(response);
+            // do not return error here to still allow showing the list of Z-Wave Bindings
+            // return $q.reject(response);
         });
     }
 

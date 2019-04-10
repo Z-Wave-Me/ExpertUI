@@ -3240,17 +3240,7 @@ function renderMethodSpec(ccId, data) {
 		case 0x81:
 			return {
 				"Get": [],
-				"Set": [
-					{
-						"label": "timestamp",
-						"type": {
-							"range": {
-								"min": 0,
-								"max": 0xffffffff
-							}
-						}
-					}
-				],
+				"Set": []
 			};
 		default: return {};
 	}

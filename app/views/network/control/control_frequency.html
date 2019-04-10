@@ -23,7 +23,7 @@
         <div class="text-alert-list">
             <i class="fa fa-info-circle text-info"></i> {{_t('frequency_info')}}
         </div>
-        <div class="cfg-block form-inline block-frequency" ng-if="frequency.currentFreqArr === 'EuRuInCn' || (cfg.zwavecfg.debug && frequency.currentFreqArr === null)">
+        <div class="cfg-block form-inline block-frequency" ng-if="frequency.currentFreqArr === 'EuRuInCn' || cfg.zwavecfg.debug || frequency.currentFreqArr === null">
             <!-- EU -->
             <button
                     class="btn"
@@ -61,7 +61,7 @@
                 <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(6)']"></bb-row-spinner>CN
             </button>
         </div>
-        <div class="cfg-block form-inline" ng-if="frequency.currentFreqArr === 'UsIl' || (cfg.zwavecfg.debug && frequency.currentFreqArr === null)">
+        <div class="cfg-block form-inline" ng-if="frequency.currentFreqArr === 'UsIl' || cfg.zwavecfg.debug || frequency.currentFreqArr === null">
             <!-- US -->
             <button
                     class="btn"
@@ -81,7 +81,7 @@
                 <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(9)']"></bb-row-spinner>IL
             </button>
         </div>
-        <div class="cfg-block form-inline" ng-if="frequency.currentFreqArr === 'AnzHk' || (cfg.zwavecfg.debug && frequency.currentFreqArr === null)">
+        <div class="cfg-block form-inline" ng-if="frequency.currentFreqArr === 'AnzHk' || cfg.zwavecfg.debug || frequency.currentFreqArr === null">
             <!-- ANZ/BR -->
             <button
                     class="btn"
@@ -101,7 +101,7 @@
                 <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(5)']"></bb-row-spinner>HK
             </button>
         </div>
-        <div class="cfg-block form-inline" ng-if="frequency.currentFreqArr === 'KrJp' || (cfg.zwavecfg.debug && frequency.currentFreqArr === null)">
+        <div class="cfg-block form-inline" ng-if="frequency.currentFreqArr === 'KrJp' || cfg.zwavecfg.debug || frequency.currentFreqArr === null">
             <!-- KR -->
             <button
                     class="btn"
