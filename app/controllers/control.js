@@ -568,7 +568,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
         
         // Check requestedKeys
         
-        if ($scope.controlDh.inclusion.alertS2Interview) {
+        if ($scope.controlDh.inclusion.alertS2Interview && $scope.controlDh.inclusion.alertS2Interview.close) {
             $scope.controlDh.inclusion.alertS2Interview.close();
         }
         
