@@ -34,10 +34,14 @@
         <!-- Include/Exclude  -->
         <div class="cfg-block" ng-controller="IncludeExcludeDeviceController">
             <!-- Basic info  -->
-            <p class="input-help" ng-show="controlDh.controller.isSIS || controlDh.controller.isPrimary">
+            <p class="input-help" ng-show="!controlDh.controller.isSIS && controlDh.controller.isRealPrimary">
                 {{_t('nm_learn_mode_you_are_primary_no_sis')}}</p>
-            <p class="input-help" ng-show="!controlDh.controller.isSIS && !controlDh.controller.isPrimary">
+            <p class="input-help" ng-show="controlDh.controller.isSIS && controlDh.controller.isRealPrimary">
+                {{_t('nm_learn_mode_you_are_primary_and_sis')}}</p>
+            <p class="input-help" ng-show="!controlDh.controller.isSIS && !controlDh.controller.isRealPrimary">
                 {{_t('nm_learn_mode_you_are_secondary_can_not_add')}}</p>
+            <p class="input-help" ng-show="controlDh.controller.isSIS && !controlDh.controller.isRealPrimary">
+                {{_t('nm_learn_mode_you_are_secondary_can_add')}}</p>
             <div ng-hide="controlDh.inclusion.lastIncludedDevice.message || controlDh.inclusion.lastExcludedDevice.message">
                 <!-- Info about siss/primary  -->
                 <bb-alert alert="controlDh.inclusion.alertPrimary"></bb-alert>
