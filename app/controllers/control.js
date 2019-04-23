@@ -506,15 +506,15 @@ appController.controller('ControlController', function ($scope, $interval, $time
 
         if (deviceIncId) {
             var node = data.devices[deviceIncId];
-            //var givenName = $filter('deviceName')(deviceIncId, node);
+            var givenName = $filter('deviceName')(deviceIncId, node);
             var updateTime = $filter('isTodayFromUnix')(data.controller.data.lastIncludedDevice.updateTime);
-            //Run CMD
-            //console.log('node.data.givenName.value',node.data.givenName.value)
-            /*if(!node.data.givenName.value || node.data.givenName.value == ''){
+            /*
+            // givenName set is not done in HA
+            if(!node.data.givenName.value || node.data.givenName.value == ''){
               var cmd = 'devices[' + deviceIncId + '].data.givenName.value=\'' + givenName + '\'';
               dataService.runZwaveCmd(cfg.store_url + cmd);
-              //console.log('!node.data.givenName',cmd)
-            }*/
+            }
+            */
            
             $scope.controlDh.inclusion.lastIncludedDeviceId = deviceIncId;
             $scope.controlDh.inclusion.lastIncludedDevice = {
