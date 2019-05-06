@@ -244,8 +244,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             instance: parseInt(input.toInstance, 10),
             name: _.findWhere($scope.assocAddDevices, {id: input.toNode}).name
         };
-         angular.extend($scope.assocGroupsDevices[instances + ':' + input.groupId], addDevice);
-
+        angular.extend($scope.assocGroupsDevices[instances + ':' + input.groupId], addDevice);
 
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function(response) {
             $scope.closeAssocModal();
@@ -253,7 +252,6 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                  var xmlFile = deviceService.buildCfgXmlAssoc(data,$scope.cfgXml);
                 dataService.putCfgXml(xmlFile);
             }
-
         }, function(error) {
             $window.alert($scope._t('error_handling_data') + '\n' + cmd);
             $scope.loadZwaveData($routeParams.nodeId);
@@ -470,7 +468,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                         for (var i = 0; i < $filter('unique')(groupDevices).length; i++) {
 
                             var targetNodeId = data.nodes.value[i];
-                            var targetNode= ZWaveAPIData.devices[targetNodeId];
+                            var targetNode = ZWaveAPIData.devices[targetNodeId];
                             nodeIds.push(targetNodeId);
                             var targetInstanceId = 0;
                             instanceIds.push(targetInstanceId);
@@ -503,7 +501,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                             // objAssoc['inConfig'] = inConfig;
                             objAssoc['status'] = (savedNodesInDevice.indexOf(targetNodeId) > -1 ? true : false) + '-' + inConfig;
                             assocDevices.push(objAssoc);
-                           $scope.assocGroupsDevices[index + ':' + groupId][targetNodeId] = objAssoc;
+                            $scope.assocGroupsDevices[index + ':' + groupId][targetNodeId] = objAssoc;
                         }
                     }
                     /**
