@@ -490,7 +490,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                             objAssoc['deviceExcluded'] = (!targetNode);
                             objAssoc['isNew'] = false;
                             objAssoc['groupId'] = groupId;
-                            objAssoc['elId'] = groupId + '_' + targetNodeId + '_' + targetInstanceId + '_' + i;
+                            objAssoc['elId'] = groupId + '_' + targetNodeId + '_' + 'A' + '_' + i;
                             objAssoc['name'] = $filter('deviceName')(targetNodeId, targetNode);
                             objAssoc['instance'] = targetInstanceId;
                             objAssoc['cc'] = '85';
