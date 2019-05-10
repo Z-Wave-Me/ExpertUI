@@ -47,6 +47,7 @@
     "btn_licence_buy": "Comprar extensão",
     "btn_licence_verify": "Verificar",
     "btn_minus": "-",
+    "btn_no_pin_s2" : "No PIN",
     "btn_open": "Abrir",
     "btn_plus": "+",
     "btn_save": "Guardar",
@@ -161,6 +162,7 @@
     "device_node_id": "ID de dispositivo",
     "device_node_name": "Nome do dispositivo",
     "device_not_included_info": "Inicie o modo de inclusão ou aprendizagem no controlador principal do cliente e clique no botão abaixo.",
+    "device_not_included_description": "To include into network, the controller must be reset.",
     "device_rename_tooltip": "Renomear dispositivo",
     "device_reset_locally": "Reset local do dispositivo",
     "device_security_interview": "Entrevista de segurança",
@@ -781,5 +783,10 @@
     "zwave_network": "Z-Wave Network",
     "zwave_reinstalled": "O ZWave será reinicializado. Recarregue a página após 15-20 segundos para verificar se as correções estão atualizadas.",
     "zwave_role_type": "Z-Wave + Tipo de Função",
+    "nm_about_csa": "S2 Authentication is done by entering this controller's PIN code in the primary controller (normal authentication) or by entering primary controller's PIN code in this controller (Client Side Authentication).",
+    "nm_btn_no_csa": "Normal authentication",
+    "nm_btn_csa": "Client Side Authentication",
+    "nm_include_start_tooltip": "Add new device to the network",
+    "nm_exclude_start_tooltip": "Remove a device from the network",
     "z_way_restart": "O sistema será agora automaticamente reiniciado. A redirecionar para o Homesite em __val__ __level__."
 }

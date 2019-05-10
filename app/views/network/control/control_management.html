@@ -34,10 +34,14 @@
         <!-- Include/Exclude  -->
         <div class="cfg-block" ng-controller="IncludeExcludeDeviceController">
             <!-- Basic info  -->
-            <p class="input-help" ng-show="controlDh.controller.isSIS || controlDh.controller.isPrimary">
+            <p class="input-help" ng-show="!controlDh.controller.isSIS && controlDh.controller.isRealPrimary">
                 {{_t('nm_learn_mode_you_are_primary_no_sis')}}</p>
-            <p class="input-help" ng-show="!controlDh.controller.isSIS && !controlDh.controller.isPrimary">
+            <p class="input-help" ng-show="controlDh.controller.isSIS && controlDh.controller.isRealPrimary">
+                {{_t('nm_learn_mode_you_are_primary_and_sis')}}</p>
+            <p class="input-help" ng-show="!controlDh.controller.isSIS && !controlDh.controller.isRealPrimary">
                 {{_t('nm_learn_mode_you_are_secondary_can_not_add')}}</p>
+            <p class="input-help" ng-show="controlDh.controller.isSIS && !controlDh.controller.isRealPrimary">
+                {{_t('nm_learn_mode_you_are_secondary_can_add')}}</p>
             <div ng-hide="controlDh.inclusion.lastIncludedDevice.message || controlDh.inclusion.lastExcludedDevice.message">
                 <!-- Info about siss/primary  -->
                 <bb-alert alert="controlDh.inclusion.alertPrimary"></bb-alert>
@@ -186,13 +190,13 @@
             <input name="dsk_8" id="dsk_8" type="number" size="5" class="form-control input_number" ng-value="dskBlock(controlDh.inclusion.input.publicKey, 8)" disabled="true" />
         </div>
         <div class="appmodal-footer">
-            <!-- No Pin -->
-            <button type="button" class="btn btn-default" ng-click="handleInclusionVerifyDSK(true)" ng-hide="controlDh.inclusion.input.publicKeyAuthenticationRequired">
-                <i class="fa fa-times text-danger"></i> <span class="btn-name">{{_t('btn_no_pin_s2')}}</span>
-            </button>
             <!-- Cancel -->
             <button type="button" class="btn btn-default" ng-click="handleInclusionVerifyDSK(false)">
                 <i class="fa fa-times text-danger"></i> <span class="btn-name">{{_t('btn_cancel')}}</span>
+            </button>
+            <!-- Confirm without PIN -->
+            <button type="button" class="btn btn-submit" ng-click="handleInclusionVerifyDSK(true)" ng-hide="controlDh.inclusion.input.publicKeyAuthenticationRequired">
+                <i class="fa fa-check-circle"></i> <span class="btn-name">{{_t('btn_no_pin_s2')}}</span>
             </button>
             <!-- Confirm -->
             <button type="button" class="btn btn-submit" ng-click="handleInclusionVerifyDSK(true)">

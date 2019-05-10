@@ -786,5 +786,10 @@
     "zwave_network": "Z-Wave-Netzwerk",
     "zwave_reinstalled": "ZWave Service wird reinitialisiert. Laden sie die Seite nach 15-20 Sekunden neu, um zu sehen ob die Fixes aktuell sind.",
     "zwave_role_type": "Z-Wave+ Rolle",
+    "nm_about_csa": "S2 Authentication is done by entering this controller's PIN code in the primary controller (normal authentication) or by entering primary controller's PIN code in this controller (Client Side Authentication).",
+    "nm_btn_no_csa": "Normal authentication",
+    "nm_btn_csa": "Client Side Authentication",
+    "nm_include_start_tooltip": "Add new device to the network",
+    "nm_exclude_start_tooltip": "Remove a device from the network",
     "z_way_restart": "Das System wird nun automatisch neu gestartet. Sie werden in __val__ __level__ zur Homesite weitergeleitet."
 }
