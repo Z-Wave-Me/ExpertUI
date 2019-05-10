@@ -2,12 +2,13 @@
 <div class="panel panel-default" ng-controller="IncludeDifferentNetworkController">
     <div class="panel-heading"><i class="fa fa-sitemap"></i> {{_t('nm_inc_into_nw')}}</div>
     <div class="panel-body">
-
+        <!-- <pre>{{controlDh | json}}</pre> -->
+        <!-- <pre>{{ controlDh.inclusion | json }}</pre> -->
         <!-- Show DSK  -->
         <div class="cfg-block" ng-if="controlDh.controller.joiningS2">
           <p>DSK key:</p> <p class="dsk-highlight" ng-bind-html="controlDh.controller.publicKeyStringHighligted|toTrusted"></p>
         </div>
-      
+
         <!-- Not included in network -->
         <!-- Normal/CSA  -->
         <div class="cfg-block" ng-if="controlDh.controller.isRealPrimary && (!controlDh.controller.hasDevices)">
@@ -83,7 +84,7 @@
                 <i class="fa fa-stop-circle"></i> {{_t('leave_network_stop')}}
             </button>
         </span>
-       
+
         <!-- S2 DSK -->
         <button class="btn btn-default"
                 ng-show="_.size(controlDh.controller.publicKey) && !controlDh.controller.isRealPrimary"
@@ -137,7 +138,7 @@
                         <i class="fa fa-arrow-right"></i> <span class="btn-name">{{_t('just_proceed')}}</span>
                     </button>
                 </div>
-                
+
 
             </div>
             <!-- <div class="appmodal-footer">
@@ -164,7 +165,6 @@
                         <div id="qrcode_network"></div>
                     </div>
                     <div class="dsk-wrap">
-                        <span class="dsk-block">{{dskBlock(controlDh.controller.publicKey, 0)|| ''}}</span>
                         <span class="dsk-block">{{dskBlock(controlDh.controller.publicKey, 1)}}</span>
                         <span class="dsk-block">{{dskBlock(controlDh.controller.publicKey, 2)}}</span>
                         <span class="dsk-block">{{dskBlock(controlDh.controller.publicKey, 3)}}</span>

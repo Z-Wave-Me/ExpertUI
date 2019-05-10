@@ -79,12 +79,12 @@
                 <i class="fa fa-stop-circle"></i> {{_t('nm_exclude_stop')}}
             </button>
         </div>
-        
+
         <!-- Show own DSK for CSA mode  -->
         <div class="cfg-block" ng-if="controlDh.inclusion.input.csa && !controlDh.inclusion.securityAbandoned && !controlDh.inclusion.secureChannelEstablished">
           <p>Enter PIN code on the device:</p> <p class="dsk-highlight" ng-bind-html="controlDh.controller.controllerPinCSA|toTrusted"></p>
         </div>
-        
+
         <!-- SmartStart  -->
         <!-- <div class="cfg-block" ng-controller="SmartStartDeviceController">
           <a class="btn btn-primary" id="btn_force_secure_lock" ng-href="#smartstartdsk">
@@ -106,7 +106,7 @@
                  ng-show="smartStartEnabled"
                  ng-click="disableSmartStart()">
              <i class="fa fa-stop-circle"></i> {{_t('nm_smartstart_disable')}}
-         </button> 
+         </button>
      </div>-->
     </div>
 </div>
