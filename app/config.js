@@ -300,8 +300,8 @@ var config_data = {
 			},
 			'routemap': {
 				size: 5242880, //Bytes
-				type: ['image/jpeg'],
-				extension: ['jpg'],
+				type: ['image/jpeg', 'image/jpeg', 'image/png', 'image/gif'],
+				extension: ['jpg', 'jpeg', 'png', 'gif'],
 				dimension: '200 x 200' //px
 			}
 		},
