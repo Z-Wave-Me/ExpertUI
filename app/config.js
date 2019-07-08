@@ -95,6 +95,7 @@ var config_data = {
 		'zddx_url': '/ZDDX/', // Url for zddx xml files
 		'notes_url': '/config/notes.log', // Url for store notes data
 		'uzb_url': 'https://service.z-wave.me/expertui/uzb/', // Url for uzb data
+		'get_licence_scratchid': 'https://service.z-wave.me/license/index.php', // Get licence scratch id
 		'license_url': 'https://service.z-wave.me/licence/upgrade.php', // Url for license key
 		'buy_licence_key': 'https://www.z-wave.me/index.php?id=41', // Buy licence key url
 		'smarthome_login': '/smarthome/#/?fromexpert', // Smarthome login page
