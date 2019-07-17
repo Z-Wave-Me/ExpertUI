@@ -32,6 +32,19 @@ appController.controller('LicenseController', function($scope, $timeout, dataSer
         "selldate": null,
         "usedate": null
     };
+
+    /**
+     * Set licence ID
+     * @param {object} controllerInfo
+     * @returns {undefined}
+     */
+    $scope.setLicenceScratchId = function(controllerInfo) {
+        dataService.getLicenseScratchId(controllerInfo.uuid).then(function (scratch_id) {
+            controllerInfo.scratch = scratch_id;
+        }, function (error) {
+        });
+    };
+
     /**
      * Load zwave data
      */
@@ -44,19 +57,23 @@ appController.controller('LicenseController', function($scope, $timeout, dataSer
             $scope.formData.uuid = ZWaveAPIData.controller.data.uuid.value;
             $scope.formData.appVersionMajor = parseInt(appVersion[0], 10);
             $scope.formData.appVersionMinor = parseInt(appVersion[1], 10);
-
+            $scope.setLicenceScratchId($scope.formData);
         });
     };
     $scope.loadZwaveData();
     /**
      * Get license key
      */
-    $scope.getLicense = function(input) {
+    $scope.getLicense = function(input, isDemo) {
         // Clear messages
         $scope.proccessVerify.message = false;
         $scope.proccessUpdate.message = false;
-        if (!input.scratch) {
-            return;
+        if (isDemo) {
+            input.scratch = 0;
+        } else {
+            if (!input.scratch) {
+                return;
+            }
         }
         $scope.proccessVerify = {'message': $scope._t('verifying_licence_key'), 'status': 'fa fa-spinner fa-spin'};
         dataService.getLicense(input).then(function(response) {

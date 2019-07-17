@@ -20,6 +20,8 @@ appController.controller('ControlController', function ($scope, $interval, $time
             lastIncludedDevice: $scope.alert,
             lastExcludedDevice: $scope.alert,
             lastIncludedDeviceId: 0,
+            securityAbandoned: false,
+            secureChannelEstablished: false,
             alert: $scope.alert,
             alertPrimary: $scope.alert,
             alertS2: $scope.alert,
@@ -38,20 +40,22 @@ appController.controller('ControlController', function ($scope, $interval, $time
                     S2Access: 'false'
                 },
                 dskPin: 0,
+                dskPin2: 0,
+                csa: false,
                 publicKey: null
             },
             grantKeys: {
                 interval: false,
                 show: false,
                 done: false,
-                countDown: 20,
+                countDown: 240,
                 anyChecked: false
             },
             verifyDSK: {
                 interval: false,
                 show: false,
                 done: false,
-                countDown: 20
+                countDown: 240
             }
         },
         network: {
@@ -97,7 +101,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
         if (!publicKey) {
             return '';
         }
-        return (publicKey[(block - 1) * 2] * 256 + publicKey[(block - 1) * 2 + 1]);
+        return ('00000' + (publicKey[(block - 1) * 2] * 256 + publicKey[(block - 1) * 2 + 1]).toString()).substr(-5);
     };
 
     /**
@@ -210,14 +214,21 @@ appController.controller('ControlController', function ($scope, $interval, $time
         $scope.controlDh.inclusion.verifyDSK.done = true;
         $interval.cancel($scope.controlDh.inclusion.verifyDSK.interval);
         var dskPin = parseInt($scope.controlDh.inclusion.input.dskPin, 10),
+                dskPin2 = parseInt($scope.controlDh.inclusion.input.dskPin2, 10),
                 nodeId = $scope.controlDh.inclusion.lastIncludedDeviceId.toString(10),
                 publicKey = [];
                 
         dskPin = $filter('zeroFill')(dskPin,5);
+        dskPin2 = $filter('zeroFill')(dskPin2,5);
+        
         if (confirmed) {
             publicKey = $scope.controlDh.inclusion.input.publicKey;
             publicKey[0] = (dskPin >> 8) & 0xff;
             publicKey[1] = dskPin & 0xff;
+            if ($scope.controlDh.inclusion.input.csa) {
+                publicKey[2] = (dskPin2 >> 8) & 0xff;
+                publicKey[3] = dskPin2 & 0xff;
+            }
         }
         console.log(publicKey.join(','))
         var cmd = 'devices[' + nodeId + '].SecurityS2.data.publicKeyVerified=[' + publicKey.join(',') + '];';
@@ -236,18 +247,17 @@ appController.controller('ControlController', function ($scope, $interval, $time
      * @param {object} ZWaveAPIData
      */
     function setControllerData(ZWaveAPIData) {
-        var controllerNodeId = ZWaveAPIData.controller.data.nodeId.value;
         var nodeId = ZWaveAPIData.controller.data.nodeId.value;
         var hasSUC = ZWaveAPIData.controller.data.SUCNodeId.value;
         var hasDevices = Object.keys(ZWaveAPIData.devices).length;
         var controllerState = ZWaveAPIData.controller.data.controllerState.value;
-        var joiningS2 = $filter('hasNode')(ZWaveAPIData,'devices.' + controllerNodeId + '.data.joiningS2.value');
-        var publicKey = $filter('hasNode')(ZWaveAPIData,'devices.' + controllerNodeId + '.data.publicKey.value');
+        var joiningS2 = $filter('hasNode')(ZWaveAPIData,'devices.' + nodeId + '.data.joiningS2.value');
+        var publicKey = $filter('hasNode')(ZWaveAPIData,'devices.' + nodeId + '.data.publicKey.value');
         var publicKeyString = deviceService.mapPublicKey(publicKey||[]);
        // Customsettings
         $scope.controlDh.controller.hasDevices = hasDevices > 1;
         $scope.controlDh.controller.disableSUCRequest = true;
-        if (hasSUC && hasSUC != controllerNodeId) {
+        if (hasSUC && hasSUC != nodeId) {
             $scope.controlDh.controller.disableSUCRequest = false;
         }
         if ($scope.controlDh.nodes.sucSis.indexOf(nodeId) === -1) {
@@ -260,10 +270,10 @@ appController.controller('ControlController', function ($scope, $interval, $time
         $scope.controlDh.controller.frequency = $filter('hasNode')(ZWaveAPIData, 'controller.data.frequency.value');
         $scope.controlDh.controller.controllerState = controllerState;
         $scope.controlDh.controller.secureInclusion = ZWaveAPIData.controller.data.secureInclusion.value;
+        $scope.controlDh.controller.S2RequireCSA = ZWaveAPIData.controller.data.S2RequireCSA.value;
         $scope.controlDh.controller.isPrimary = ZWaveAPIData.controller.data.isPrimary.value;
         $scope.controlDh.controller.isRealPrimary = ZWaveAPIData.controller.data.isRealPrimary.value;
         $scope.controlDh.controller.isSIS = ZWaveAPIData.controller.data.SISPresent.value;
-        $scope.controlDh.controller.secureInclusion = ZWaveAPIData.controller.data.secureInclusion.value;
         $scope.controlDh.controller.homeName = ZWaveAPIData.controller.data.homeName.value || cfg.controller.homeName;
         $scope.controlDh.controller.SetPromiscuousMode = (ZWaveAPIData.controller.data.functionClassesNames.value.indexOf('SetPromiscuousMode') > -1 ? true : false);
         $scope.controlDh.controller.SUCNodeId = ZWaveAPIData.controller.data.SUCNodeId.value;
@@ -271,11 +281,16 @@ appController.controller('ControlController', function ($scope, $interval, $time
         $scope.controlDh.controller.joiningS2 = joiningS2;
         $scope.controlDh.controller.publicKey = publicKey;
         $scope.controlDh.controller.publicKeyString = publicKeyString;
+
+        if (ZWaveAPIData.devices[nodeId]) {
+            var ctrlPublicKey = ZWaveAPIData.devices[nodeId].data.publicKey.value;
+            $scope.controlDh.controller.controllerPinCSA = $scope.dskBlock(ctrlPublicKey, 1) + "-" + $scope.dskBlock(ctrlPublicKey, 2);
+        }
+
         if (_.size(publicKey)) {
           $scope.controlDh.controller.publicKeyStringHighligted =   $filter('highlightDsk')(publicKeyString);
              $scope.controlDh.controller.publicKeyQr =
-                    $scope.dskBlock(publicKey, 0) || ''
-                    + $scope.dskBlock(publicKey, 1).toString()
+                      $scope.dskBlock(publicKey, 1)
                     + $scope.dskBlock(publicKey, 2)
                     + $scope.dskBlock(publicKey, 3)
                     + $scope.dskBlock(publicKey, 4)
@@ -286,7 +301,18 @@ appController.controller('ControlController', function ($scope, $interval, $time
             $scope.controlDh.controller.publicKeyPin = (publicKey[0] << 8) + publicKey[1];
         }
 
-
+        if (joiningS2 && $scope.controlDh.controller.S2RequireCSA) {
+            var secureControllerId = 0;
+            for (var d in ZWaveAPIData.devices) {
+                if (ZWaveAPIData.devices[d].instances[0].commandClasses[159] && ZWaveAPIData.devices[d].instances[0].commandClasses[159].data.publicKeyAuthenticationRequired && ZWaveAPIData.devices[d].instances[0].commandClasses[159].data.publicKeyAuthenticationRequired.value) {
+                    secureControllerId = d;
+                }
+            }
+            
+            if (secureControllerId) {
+                checkS2CSA(secureControllerId, ZWaveAPIData);
+            }
+        }
 
         $scope.controlDh.inclusion.alert = {
             message: $scope._t('nm_controller_state_' + controllerState),
@@ -479,15 +505,15 @@ appController.controller('ControlController', function ($scope, $interval, $time
 
         if (deviceIncId) {
             var node = data.devices[deviceIncId];
-            //var givenName = $filter('deviceName')(deviceIncId, node);
+            var givenName = $filter('deviceName')(deviceIncId, node);
             var updateTime = $filter('isTodayFromUnix')(data.controller.data.lastIncludedDevice.updateTime);
-            //Run CMD
-            //console.log('node.data.givenName.value',node.data.givenName.value)
-            /*if(!node.data.givenName.value || node.data.givenName.value == ''){
+            /*
+            // givenName set is not done in HA
+            if(!node.data.givenName.value || node.data.givenName.value == ''){
               var cmd = 'devices[' + deviceIncId + '].data.givenName.value=\'' + givenName + '\'';
               dataService.runZwaveCmd(cfg.store_url + cmd);
-              //console.log('!node.data.givenName',cmd)
-            }*/
+            }
+            */
            
             $scope.controlDh.inclusion.lastIncludedDeviceId = deviceIncId;
             $scope.controlDh.inclusion.lastIncludedDevice = {
@@ -495,9 +521,15 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 status: 'alert-success',
                 icon: 'fa-smile-o'
             };
-            
+
             if (node.instances[0].commandClasses[159]) {
-                $scope.controlDh.inclusion.alertS2Interview = alertify.notify($scope._t('device_interview_wait_s2'), 'warning');
+                alertify.alertWarning($scope._t('device_interview_wait_s2'));
+                //$scope.controlDh.inclusion.alertS2Interview = alertify.notify($scope._t('device_interview_wait_s2'), 'warning');
+
+                $scope.controlDh.inclusion.securityAbandoned = node.instances[0].commandClasses[159].data.securityAbandoned.value;
+                $scope.controlDh.inclusion.secureChannelEstablished = node.data.secureChannelEstablished.value;
+                // console.log("$scope.controlDh.inclusion.secureChannelEstablished", $scope.controlDh.inclusion.secureChannelEstablished);
+                // console.log("$scope.controlDh.inclusion.securityAbandoned", $scope.controlDh.inclusion.securityAbandoned);
             }
         }
 
@@ -523,24 +555,25 @@ appController.controller('ControlController', function ($scope, $interval, $time
 
     /**
      * Check interview
-     * @param {int} nodeId
      */
     function checkInterview(nodeInstances) {
         if ($scope.controlDh.inclusion.grantKeys.show
                 || $scope.controlDh.inclusion.verifyDSK.show
-                || ($scope.controlDh.inclusion.grantKeys.done && $scope.controlDh.inclusion.verifyDSK.done)) {
+                || ($scope.controlDh.inclusion.grantKeys.done && $scope.controlDh.inclusion.verifyDSK.done))
+        {
             return;
         }
         // Set securityS2
         var securityS2 = nodeInstances[0].commandClasses[159];
-        
-        console.log('Has securityS2  commandClass: ',securityS2);
+
+        console.log('Has securityS2  commandClass: ', securityS2);
+
         // Check requestedKeys
-        
-        if ($scope.controlDh.inclusion.alertS2Interview) {
-            $scope.controlDh.inclusion.alertS2Interview.close();
-        }
-        
+
+        // if ($scope.controlDh.inclusion.alertS2Interview) {
+        //     $scope.controlDh.inclusion.alertS2Interview.close();
+        // }
+
         if (securityS2 && securityS2.data.requestedKeys.value && !$scope.controlDh.inclusion.grantKeys.done) {
             console.log('Check requestedKeys: securityS2.data.requestedKeys.value ', securityS2.data.requestedKeys.value);
             $scope.controlDh.inclusion.input.keysRequested.S0 = securityS2.data.requestedKeys.S0.value;
@@ -560,13 +593,53 @@ appController.controller('ControlController', function ($scope, $interval, $time
             $scope.controlDh.inclusion.grantKeys.interval = $interval(countDownGrantKeys, 1000);
             return;
         }
-         // Check publicKey
-        
+
+        // Check publicKey
+
         if (securityS2 && securityS2.data.publicKey.value.length && !$scope.controlDh.inclusion.verifyDSK.done) {
-          console.log('Check publicKey: securityS2.data.publicKey.value.length ',securityS2.data.requestedKeys.value);
+            console.log('Check publicKey: securityS2.data.publicKey.value.length ', securityS2.data.requestedKeys.value);
             $scope.controlDh.inclusion.input.publicKey = securityS2.data.publicKey.value;
             $scope.controlDh.inclusion.input.publicKeyAuthenticationRequired = securityS2.data.publicKeyAuthenticationRequired.value;
             $scope.controlDh.inclusion.input.dskPin = $scope.dskBlock($scope.controlDh.inclusion.input.publicKey, 1);
+            $scope.controlDh.inclusion.input.csa = false;
+            $scope.controlDh.inclusion.verifyDSK.show = true;
+            var countDownVerifyDSK = function () {
+                $scope.controlDh.inclusion.verifyDSK.countDown--;
+                if ($scope.controlDh.inclusion.verifyDSK.countDown === 0) {
+                    $interval.cancel($scope.controlDh.inclusion.verifyDSK.interval);
+                    $scope.handleInclusionVerifyDSK(false, true);
+                }
+            };
+            $scope.controlDh.inclusion.verifyDSK.interval = $interval(countDownVerifyDSK, 1000);
+            return;
+        }
+    }
+
+    /**
+     * Check S2 CSA
+     */
+    function checkS2CSA(secureControllerId, ZWaveAPIData) {
+
+        if ($scope.controlDh.inclusion.verifyDSK.show || $scope.controlDh.inclusion.verifyDSK.done) {
+            return;
+        }
+
+        var securityS2 = ZWaveAPIData.devices[secureControllerId].instances[0].commandClasses[159];
+
+        console.log('Verifying DSK in CSA mode for node ' + secureControllerId);
+
+        // Check publicKey
+
+        if (securityS2 && securityS2.data.publicKey.value.length && !$scope.controlDh.inclusion.verifyDSK.done) {
+            // got handleInclusionVerifyDSK() to work properly
+            $scope.controlDh.inclusion.grantKeys.anyChecked = true;
+            $scope.controlDh.inclusion.lastIncludedDeviceId = secureControllerId;
+            // init input fields
+            $scope.controlDh.inclusion.input.publicKey = securityS2.data.publicKey.value;
+            $scope.controlDh.inclusion.input.publicKeyAuthenticationRequired = true;
+            $scope.controlDh.inclusion.input.dskPin = $scope.dskBlock($scope.controlDh.inclusion.input.publicKey, 1);
+            $scope.controlDh.inclusion.input.dskPin2 = $scope.dskBlock($scope.controlDh.inclusion.input.publicKey, 2);
+            $scope.controlDh.inclusion.input.csa = true;
             $scope.controlDh.inclusion.verifyDSK.show = true;
             var countDownVerifyDSK = function () {
                 $scope.controlDh.inclusion.verifyDSK.countDown--;
@@ -583,7 +656,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
     /**
      * Check S2 CC interview
      */
-    function  checkS2Interview(nodeId) {
+    function checkS2Interview(nodeId) {
         dataService.loadZwaveApiData(true).then(function (response) {
             var interviewDone = $filter('hasNode')(response, 'devices.' + nodeId + '.instances.0.commandClasses.159.data.interviewDone.value');
             console.log('S2 interview DONE: ' + interviewDone)
@@ -655,10 +728,10 @@ appController.controller('IncludeExcludeDeviceController', function ($scope, $ro
 });
 
 /**
- * It will change Z-wave controller own Home ID to the Home ID of the new network
+ * It will change Z-Wave controller own Home ID to the Home ID of the new network
  * and it will learn all network information from the including controller of the new network.
  * All existing relationships to existing nodes will get lost
- * when the Z-Way controller joins a dierent network
+ * when the Z-Way controller joins a different network
  * @class IncludeDifferentNetworkController
  *
  */
@@ -736,6 +809,16 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
         $scope.controlDh.network.modal = false;
         $window.location.reload();
 
+    };
+
+    /**
+     * Set join as Normal/CSA mode.
+     * state=true Set as CSA.
+     * state=false Set as normal.
+     * @param {string} cmd
+     */
+    $scope.setCSA = function (cmd) {
+        $scope.runZwaveCmd(cmd);
     };
 
     /// --- Private functions --- ///

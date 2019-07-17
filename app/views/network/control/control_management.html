@@ -34,10 +34,14 @@
         <!-- Include/Exclude  -->
         <div class="cfg-block" ng-controller="IncludeExcludeDeviceController">
             <!-- Basic info  -->
-            <p class="input-help" ng-show="controlDh.controller.isSIS || controlDh.controller.isPrimary">
+            <p class="input-help" ng-show="!controlDh.controller.isSIS && controlDh.controller.isRealPrimary">
                 {{_t('nm_learn_mode_you_are_primary_no_sis')}}</p>
-            <p class="input-help" ng-show="!controlDh.controller.isSIS && !controlDh.controller.isPrimary">
+            <p class="input-help" ng-show="controlDh.controller.isSIS && controlDh.controller.isRealPrimary">
+                {{_t('nm_learn_mode_you_are_primary_and_sis')}}</p>
+            <p class="input-help" ng-show="!controlDh.controller.isSIS && !controlDh.controller.isRealPrimary">
                 {{_t('nm_learn_mode_you_are_secondary_can_not_add')}}</p>
+            <p class="input-help" ng-show="controlDh.controller.isSIS && !controlDh.controller.isRealPrimary">
+                {{_t('nm_learn_mode_you_are_secondary_can_add')}}</p>
             <div ng-hide="controlDh.inclusion.lastIncludedDevice.message || controlDh.inclusion.lastExcludedDevice.message">
                 <!-- Info about siss/primary  -->
                 <bb-alert alert="controlDh.inclusion.alertPrimary"></bb-alert>
@@ -79,6 +83,12 @@
                 <i class="fa fa-stop-circle"></i> {{_t('nm_exclude_stop')}}
             </button>
         </div>
+
+        <!-- Show own DSK for CSA mode  -->
+        <div class="cfg-block" ng-if="controlDh.inclusion.input.csa && !controlDh.inclusion.securityAbandoned && !controlDh.inclusion.secureChannelEstablished">
+          <p>Enter PIN code on the device:</p> <p class="dsk-highlight" ng-bind-html="controlDh.controller.controllerPinCSA|toTrusted"></p>
+        </div>
+
         <!-- SmartStart  -->
         <!-- <div class="cfg-block" ng-controller="SmartStartDeviceController">
           <a class="btn btn-primary" id="btn_force_secure_lock" ng-href="#smartstartdsk">
@@ -100,7 +110,7 @@
                  ng-show="smartStartEnabled"
                  ng-click="disableSmartStart()">
              <i class="fa fa-stop-circle"></i> {{_t('nm_smartstart_disable')}}
-         </button> 
+         </button>
      </div>-->
     </div>
 </div>
@@ -160,10 +170,12 @@
             <label>{{_t('pin')}}</label>
             <input name="dsk_pin" id="dsk_pin" type="number" size="5" class="form-control input_number input-valid-{{dskForm.dsk_pin.$valid}}" min="0" max="65533" ng-show="controlDh.inclusion.input.publicKeyAuthenticationRequired"
                    ng-model="controlDh.inclusion.input.dskPin" required />
-
             <input name="dsk_1" id="dsk_1" type="number" size="5" class="form-control input_number" ng-value="dskBlock(controlDh.inclusion.input.publicKey, 1)" disabled="true" ng-show="!controlDh.inclusion.input.publicKeyAuthenticationRequired" />
             -
-            <input name="dsk_2" id="dsk_2" type="number" size="5" class="form-control input_number" ng-value="dskBlock(controlDh.inclusion.input.publicKey, 2)" disabled="true" />
+            <input name="dsk_pin2" id="dsk_pin2" type="number" size="5" class="form-control input_number input-valid-{{dskForm.dsk_pin.$valid}}" min="0" max="65533" ng-show="controlDh.inclusion.input.publicKeyAuthenticationRequired && controlDh.inclusion.input.csa"
+                   ng-model="controlDh.inclusion.input.dskPin2" required />
+            <input name="dsk_2" id="dsk_2" type="number" size="5" class="form-control input_number" ng-value="dskBlock(controlDh.inclusion.input.publicKey, 2)" disabled="true"
+                   ng-show="!controlDh.inclusion.input.csa"/>
             -
             <input name="dsk_3" id="dsk_3" type="number" size="5" class="form-control input_number" ng-value="dskBlock(controlDh.inclusion.input.publicKey, 3)" disabled="true" />
             -
@@ -181,6 +193,10 @@
             <!-- Cancel -->
             <button type="button" class="btn btn-default" ng-click="handleInclusionVerifyDSK(false)">
                 <i class="fa fa-times text-danger"></i> <span class="btn-name">{{_t('btn_cancel')}}</span>
+            </button>
+            <!-- Confirm without PIN -->
+            <button type="button" class="btn btn-submit" ng-click="handleInclusionVerifyDSK(true)" ng-hide="controlDh.inclusion.input.publicKeyAuthenticationRequired">
+                <i class="fa fa-check-circle"></i> <span class="btn-name">{{_t('btn_no_pin_s2')}}</span>
             </button>
             <!-- Confirm -->
             <button type="button" class="btn btn-submit" ng-click="handleInclusionVerifyDSK(true)">

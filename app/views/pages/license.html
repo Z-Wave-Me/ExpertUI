@@ -27,7 +27,7 @@
                         ng-disabled="controllerIsZeroUuid"
                         ng-model="formData.scratch" />
                     <button class="btn btn-primary verify-ctrl" ng-click="getLicense(formData)" ng-disabled="controllerIsZeroUuid"> {{_t('btn_licence_verify')}}</button>
-
+                    <button class="btn btn-primary verify-ctrl" ng-click="getLicense(formData, true)" ng-disabled="controllerIsZeroUuid || formData.scratch"> {{_t('btn_licence_demo')}}</button>
                 </div> 
             </div>
             <p ng-if="proccessVerify.message">

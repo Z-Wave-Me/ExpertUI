@@ -2,13 +2,43 @@
 <div class="panel panel-default" ng-controller="IncludeDifferentNetworkController">
     <div class="panel-heading"><i class="fa fa-sitemap"></i> {{_t('nm_inc_into_nw')}}</div>
     <div class="panel-body">
-
-       <!-- Show DSK  -->
-       <div class="cfg-block" ng-if="controlDh.controller.joiningS2">
+        <!-- <pre>{{controlDh | json}}</pre> -->
+        <!-- <pre>{{ controlDh.inclusion | json }}</pre> -->
+        <!-- Show DSK  -->
+        <div class="cfg-block" ng-if="controlDh.controller.joiningS2">
           <p>DSK key:</p> <p class="dsk-highlight" ng-bind-html="controlDh.controller.publicKeyStringHighligted|toTrusted"></p>
         </div>
-      
+
         <!-- Not included in network -->
+        <!-- Normal/CSA  -->
+        <div class="cfg-block" ng-if="controlDh.controller.isRealPrimary && (!controlDh.controller.hasDevices)">
+            <p class="input-help">{{_t('nm_about_csa')}}</p>
+            <div class="btn-group">
+                <!-- Normal -->
+                <button type="button" class="btn btn-primary" id="btn_no_csa"
+                        ng-class="!controlDh.controller.S2RequireCSA ? 'active' : ''"
+                        ng-click="setCSA('controller.data.S2RequireCSA=false')"
+                        ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || rowSpinner['controller.data.S2RequireCSA=false']">
+                    <bb-row-spinner
+                            spinner="rowSpinner['controller.data.S2RequireCSA=false']"
+                            label="_t('nm_btn_no_csa')"
+                            icon="'fa-lock'">
+                    </bb-row-spinner>
+                </button>
+                <!-- CSA -->
+                <button type="button" class="btn btn-primary" id="btn_csa"
+                        ng-class="controlDh.controller.S2RequireCSA ? 'active' : ''"
+                        ng-click="setCSA('controller.data.S2RequireCSA=true')"
+                        ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || rowSpinner['controller.data.S2RequireCSA=true']">
+                    <bb-row-spinner
+                            spinner="rowSpinner['controller.data.S2RequireCSA=true']"
+                            label="_t('nm_btn_csa')"
+                            icon="'fa-lock'">
+                    </bb-row-spinner>
+                </button>
+            </div>
+        </div>
+        <!-- Learn mode -->
         <span ng-if="controlDh.controller.isRealPrimary && (!controlDh.controller.hasDevices)">
             <p class="input-help">{{_t('device_not_included_info')}}</p>
             <bb-alert alert="controlDh.network.alert"></bb-alert>
@@ -26,9 +56,10 @@
         </span>
         <!-- included in network - disabled-->
         <span ng-if="controlDh.controller.isRealPrimary && (controlDh.controller.hasDevices)">
-            <p class="input-help">{{_t('device_included_info')}}</p>
-            <button class="btn btn-primary" id="btn_learn_start_2" disabled>{{_t('leave_network')}}
+            <p class="input-help">{{_t('device_not_included_info')}}</p>
+            <button class="btn btn-primary" id="btn_learn_start_2" disabled>{{_t('include_into_network')}}
             </button>
+            <p class="input-help">{{_t('device_not_included_description')}}</p>
         </span>
 
         <!-- already included in network - displays exclude from network -->
@@ -53,7 +84,7 @@
                 <i class="fa fa-stop-circle"></i> {{_t('leave_network_stop')}}
             </button>
         </span>
-       
+
         <!-- S2 DSK -->
         <button class="btn btn-default"
                 ng-show="_.size(controlDh.controller.publicKey) && !controlDh.controller.isRealPrimary"
@@ -78,10 +109,10 @@
                     <i class="fa fa-smile-o"></i> {{_t('success_controller_include')}}
 
                 </div>
-                 <!-- Show DSK  -->
-          <div class="cfg-block" ng-if="controlDh.controller.joiningS2">
-              <p>DSK key:</p> <p class="dsk-highlight" ng-bind-html="controlDh.controller.publicKeyStringHighligted|toTrusted"></p>
-            </div>
+                <!-- Show DSK  -->
+                <div class="cfg-block" ng-if="controlDh.controller.joiningS2">
+                    <p>DSK key:</p> <p class="dsk-highlight" ng-bind-html="controlDh.controller.publicKeyStringHighligted|toTrusted"></p>
+                </div>
                 <div class="cfg-block">
                     <!-- restore -->
                     <button class="btn btn-primary"
@@ -107,7 +138,7 @@
                         <i class="fa fa-arrow-right"></i> <span class="btn-name">{{_t('just_proceed')}}</span>
                     </button>
                 </div>
-                
+
 
             </div>
             <!-- <div class="appmodal-footer">
@@ -134,7 +165,6 @@
                         <div id="qrcode_network"></div>
                     </div>
                     <div class="dsk-wrap">
-                        <span class="dsk-block">{{dskBlock(controlDh.controller.publicKey, 0)|| ''}}</span>
                         <span class="dsk-block">{{dskBlock(controlDh.controller.publicKey, 1)}}</span>
                         <span class="dsk-block">{{dskBlock(controlDh.controller.publicKey, 2)}}</span>
                         <span class="dsk-block">{{dskBlock(controlDh.controller.publicKey, 3)}}</span>

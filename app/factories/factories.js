@@ -35,6 +35,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         putCfgXml: putCfgXml,
         getUzb: getUzb,
         updateUzb: updateUzb,
+        getLicenseScratchId: getLicenseScratchId,
         getLicense: getLicense,
         zmeCapabilities: zmeCapabilities,
         getLanguageFile: getLanguageFile,
@@ -166,6 +167,27 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         });
     }
 
+    /**
+     * Get scratch
+     */
+    function getLicenseScratchId(data) {
+        return $http({
+            method: 'get',
+            url: cfg.get_licence_scratchid + '?uuid=' + data
+        }).then(function (response) {
+            if (response.data != "") {
+                return response.data.scratch_id;
+            } else {
+                // invalid response
+                return $q.reject(response);
+            }
+        }, function (response) {
+            //debugger;
+            // something went wrong
+            return $q.reject(response);
+        });
+    }
+    
     /**
      * Get license key
      */
@@ -307,7 +329,8 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             }
         }, function (response) {
             // something went wrong
-            return $q.reject(response);
+            // do not return error here to still allow showing the list of Z-Wave Bindings
+            // return $q.reject(response);
         });
     }
 
