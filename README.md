@@ -2,6 +2,40 @@ zwave-expertui
 ==============
 
 This User Interfaces allows to operate a Smart Home Network based on Z-Wave devices. It utilizes the software architecture "Z-Way", certified as Z-Wave Plus Controller.
+
+## v1.5.0
+#### Features:
+ - Adding PNG and GIF to Route Map image type
+ - Allow chip selection for Over-The-Air update of the device
+ - Added .otz to the f/w possible extension
+ - Route Map improved
+ - Added button NO PIN to Verify device PIN dialog in unauthenticated mode
+ - Added UI for secondary in Security S2 CSA mode
+ - Demo license button added
+ - Frequencies groups all visible in debug mode
+ - S2 Require CSA switch added
+ - SUC/SIS management disabling/enabling buttons
+ - Enter/Leave different Networks description
+ - Added Clock configuration
+ - Notify user to wait for S2 interview
+
+#### Fixes:
+ - Fixed error in Associations tab
+ - Fix to show/hide Include/Exclude buttons in secondary/primary role
+ - Fixed convertion of S2 pin code to 5 digits
+ - Increasing timers grantKeys and verifyDSK up to 240
+ - Uncommented Association dots in routing table. Legend added
+ - Allow select Z-Wave dongle if currenly selected is absent
+ - Fixed routing table orientation (transponded)
+ - Fixed bugs in data.updateTime
+ - Fixed update problem
+ - Fixed Set of Associations on channels
+ - Fixed #N.0 on plain association to #N
+ - Fixed Association view when EP contains Association CC
+ - EUI-173: After changing givenName is used function .devices.SaveData() #265
+ - EUI-171: Fixing assoc bug.  $scope.assocGroupsDevices are now defined as object
+ - EUI-170: Adjust controls for multiple thermostat instances, minor fixes in meter.js
+
 ## v1.3.1
 #### New features
 - Route map with possibility to upload own floor plan from PC.

@@ -8,8 +8,8 @@ var config_data = {
 		'environment': 'live',
 		'dev_host': [],
 		'app_name': 'Z-Wave Expert',
-		'app_version': '1.4.0',
-		'app_built': '15-05-2019 01:38:43',
+		'app_version': '1.5.0',
+		'app_built': '18-07-2019 01:48:51',
 		'app_id': 'ExpertUI',
 		'custom_ip': false,
 		'user_field': 'USERXXXX',
@@ -95,6 +95,7 @@ var config_data = {
 		'zddx_url': '/ZDDX/', // Url for zddx xml files
 		'notes_url': '/config/notes.log', // Url for store notes data
 		'uzb_url': 'https://service.z-wave.me/expertui/uzb/', // Url for uzb data
+		'get_licence_scratchid': 'https://service.z-wave.me/license/index.php', // Get licence scratch id
 		'license_url': 'https://service.z-wave.me/licence/upgrade.php', // Url for license key
 		'buy_licence_key': 'https://www.z-wave.me/index.php?id=41', // Buy licence key url
 		'smarthome_login': '/smarthome/#/?fromexpert', // Smarthome login page
@@ -300,8 +301,8 @@ var config_data = {
 			},
 			'routemap': {
 				size: 5242880, //Bytes
-				type: ['image/jpeg'],
-				extension: ['jpg'],
+				type: ['image/jpeg', 'image/jpeg', 'image/png', 'image/gif'],
+				extension: ['jpg', 'jpeg', 'png', 'gif'],
 				dimension: '200 x 200' //px
 			}
 		},
