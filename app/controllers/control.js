@@ -282,7 +282,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
         $scope.controlDh.controller.publicKey = publicKey;
         $scope.controlDh.controller.publicKeyString = publicKeyString;
 
-        if (ZWaveAPIData.devices[nodeId]) {
+        if (ZWaveAPIData.devices[nodeId] && ZWaveAPIData.devices[nodeId].data.publicKey) {
             var ctrlPublicKey = ZWaveAPIData.devices[nodeId].data.publicKey.value;
             $scope.controlDh.controller.controllerPinCSA = $scope.dskBlock(ctrlPublicKey, 1) + "-" + $scope.dskBlock(ctrlPublicKey, 2);
         }
