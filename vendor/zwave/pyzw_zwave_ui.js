@@ -1149,6 +1149,137 @@ function renderMethodSpec(ccId, data) {
 				]
 			};
 
+		// SoundSwitch
+		case 0x79:
+			return {
+				"TonePlayGet": [],
+				"TonePlaySet": [
+					{
+						"label": "Tone",
+						"type": {
+							"enumof": [
+								{
+									"label": "Stop",
+									"type": {
+										"fix": 	{
+											"value": 0
+										}
+									}
+								},
+								{
+									"label": "",
+									"type": {
+										"range": {
+											"min": 1,
+											"max": 254
+										}
+									}
+								},
+								{
+									"label": "Default",
+									"type": {
+										"fix": 	{
+											"value": 255
+										}
+									}
+								}
+							]
+						}
+					},
+					{
+						"label": "Volume",
+						"type": {
+							"enumof": [
+								{
+									"label": "Default",
+									"type": {
+										"fix": 	{
+											"value": 0
+										}
+									}
+								},
+									{
+									"label": "",
+									"type": {
+										"range": {
+											"min": 	1,
+											"max": 100
+										}
+									}
+								},
+									{
+									"label": "Last",
+									"type": {
+										"fix": {
+											"value": 255
+										}
+									}
+								}
+							]
+						}
+					}
+				],
+				"ConfigurationGet": [],
+				"ConfigurationSet": [
+					{
+						"label": "Tone",
+						"type": {
+							"enumof": [
+								{
+									"label": "Don't change, adjust only volume",
+									"type": {
+										"fix": 	{
+											"value": 0
+										}
+									}
+								},
+								{
+									"label": "",
+									"type": {
+										"range": {
+											"min": 1,
+											"max": 254
+										}
+									}
+								}
+							]
+						}
+					},
+					{
+						"label": "Volume",
+						"type": {
+							"enumof": [
+								{
+									"label": "Mute",
+									"type": {
+										"fix": 	{
+											"value": 0
+										}
+									}
+								},
+									{
+									"label": "",
+									"type": {
+										"range": {
+											"min": 	1,
+											"max": 100
+										}
+									}
+								},
+									{
+									"label": "Last",
+									"type": {
+										"fix": {
+											"value": 255
+										}
+									}
+								}
+							]
+						}
+					}
+				]
+			};
+
 		// SensorMultilevel
 		case 0x31:
 			return {
