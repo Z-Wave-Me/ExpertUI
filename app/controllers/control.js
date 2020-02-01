@@ -238,6 +238,55 @@ appController.controller('ControlController', function ($scope, $interval, $time
         }, 20000);
 
     };
+    
+    $scope.handleInclusionCSA = function (confirmed, timedOut) {
+        var alertMessage = '';
+        // Is timed out
+        if (timedOut) {
+            $scope.controlDh.inclusion.alertS2 = {
+                message: $scope._t('timedout'),
+                status: 'alert-danger',
+                icon: false
+            };
+
+        }
+        // Is confirmed
+        if (confirmed) {
+            $scope.controlDh.inclusion.alertS2 = {
+                message: $scope._t('wait_key_veriffication'),
+                status: 'alert-warning',
+                icon: 'fa-spinner fa-spin'
+            };
+
+        }
+        $scope.controlDh.inclusion.verifyDSK.show = false;
+        $scope.controlDh.inclusion.verifyDSK.done = true;
+        $interval.cancel($scope.controlDh.inclusion.verifyDSK.interval);
+        var dskPin = parseInt($scope.controlDh.inclusion.input.dskPin, 10),
+                dskPin2 = parseInt($scope.controlDh.inclusion.input.dskPin2, 10),
+                nodeId = $scope.controlDh.inclusion.lastIncludedDeviceId.toString(10),
+                publicKey = [];
+                
+        dskPin = $filter('zeroFill')(dskPin,5);
+        dskPin2 = $filter('zeroFill')(dskPin2,5);
+        
+        if (confirmed) {
+            publicKey = $scope.controlDh.inclusion.input.publicKey;
+            publicKey[0] = (dskPin >> 8) & 0xff;
+            publicKey[1] = dskPin & 0xff;
+            if ($scope.controlDh.inclusion.input.csa) {
+                publicKey[2] = (dskPin2 >> 8) & 0xff;
+                publicKey[3] = dskPin2 & 0xff;
+            }
+        }
+        console.log(publicKey.join(','))
+        var cmd = 'devices[' + nodeId + '].SecurityS2.data.publicKeyVerified=[' + publicKey.join(',') + '];';
+        $scope.runZwaveCmd(cmd);
+        $timeout(function () {
+            checkS2Interview(nodeId);
+        }, 20000);
+
+    };
 
 
 
@@ -593,10 +642,25 @@ appController.controller('ControlController', function ($scope, $interval, $time
             $scope.controlDh.inclusion.grantKeys.interval = $interval(countDownGrantKeys, 1000);
             return;
         }
+        
+        // Show controllers CSA PIN
+        if (securityS2.data.csa.value && !$scope.controlDh.inclusion.controllerCSA && !$scope.controlDh.inclusion.securityAbandoned && !$scope.controlDh.inclusion.secureChannelEstablished) {
+            $scope.controlDh.inclusion.controllerCSA = true;
+        
+            $scope.controlDh.inclusion.alertS2 = {
+                message: $scope._t('wait_key_veriffication'),
+                status: 'alert-warning',
+                icon: 'fa-spinner fa-spin'
+            };
+        
+            $timeout(function () {
+                checkS2Interview($scope.controlDh.inclusion.lastIncludedDeviceId.toString(10));
+            }, 20000);
+        }
 
         // Check publicKey
 
-        if (securityS2 && securityS2.data.publicKey.value.length && !$scope.controlDh.inclusion.verifyDSK.done) {
+        if (securityS2 && securityS2.data.publicKey.value.length && !$scope.controlDh.inclusion.verifyDSK.done && !securityS2.data.csa.value) {
             console.log('Check publicKey: securityS2.data.publicKey.value.length ', securityS2.data.requestedKeys.value);
             $scope.controlDh.inclusion.input.publicKey = securityS2.data.publicKey.value;
             $scope.controlDh.inclusion.input.publicKeyAuthenticationRequired = securityS2.data.publicKeyAuthenticationRequired.value;

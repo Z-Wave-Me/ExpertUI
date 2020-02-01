@@ -426,6 +426,7 @@
     "nm_excluded_from_network": "odebrané ze sítě",
     "nm_exclude_start": "Začít Sejmutí (Exclusion)",
     "nm_exclude_stop": "Zastavit Sejmutí (Exclusion)",
+    "nm_csa_pin": "Enter PIN code on the device:",
     "nm_force_unsecure": "Nucené nezajištěné přidání (inclusion)",
     "nm_frequency_title": "Změna Operační frekvence",
     "nm_get_suc_nodeid": "Získat SUC node Id",

@@ -423,6 +423,7 @@
     "nm_excluded_from_network": "odobraté zo siete",
     "nm_exclude_start": "Začat Odobratie(Exclusion)",
     "nm_exclude_stop": "Zastaviť Odobratie(Exclusion)",
+    "nm_csa_pin": "Enter PIN code on the device:",
     "nm_force_unsecure": "Nútené nezabezpečené pridanie(inclusion)",
     "nm_frequency_title": "Zmena Operačnej frekvencie",
     "nm_get_suc_nodeid": "Získať SUC node Id",

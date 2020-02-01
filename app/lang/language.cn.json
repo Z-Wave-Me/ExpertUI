@@ -426,6 +426,7 @@
     "nm_excluded_from_network": "从网络中移除",
     "nm_exclude_start": "开始移除",
     "nm_exclude_stop": "停止移除",
+    "nm_csa_pin": "Enter PIN code on the device:",
     "nm_force_unsecure": "强制不安全添加",
     "nm_frequency_title": "操作频率改变",
     "nm_get_suc_nodeid": "获取SUC节点ID",

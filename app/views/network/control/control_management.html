@@ -85,8 +85,8 @@
         </div>
 
         <!-- Show own DSK for CSA mode  -->
-        <div class="cfg-block" ng-if="controlDh.inclusion.input.csa && !controlDh.inclusion.securityAbandoned && !controlDh.inclusion.secureChannelEstablished">
-          <p>Enter PIN code on the device:</p> <p class="dsk-highlight" ng-bind-html="controlDh.controller.controllerPinCSA|toTrusted"></p>
+        <div class="cfg-block" ng-if="controlDh.inclusion.controllerCSA && !controlDh.inclusion.securityAbandoned && !controlDh.inclusion.secureChannelEstablished">
+          <p>{{_t('nm_csa_pin')}}</p> <p class="dsk-highlight" ng-bind-html="controlDh.controller.controllerPinCSA|toTrusted"></p>
         </div>
 
         <!-- SmartStart  -->

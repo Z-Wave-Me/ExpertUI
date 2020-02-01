@@ -423,6 +423,7 @@
     "nm_excluded_from_network": "exkluderad från nätverk",
     "nm_exclude_start": "Starta exkludering",
     "nm_exclude_stop": "Stopa exkludering",
+    "nm_csa_pin": "Enter PIN code on the device:",
     "nm_force_unsecure": "Tvinga osäker inkludering",
     "nm_frequency_title": "Operating frequency Change",
     "nm_get_suc_nodeid": "Get SUC node Id",

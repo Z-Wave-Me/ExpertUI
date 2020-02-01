@@ -423,6 +423,7 @@
     "nm_excluded_from_network": "Excluído da rede",
     "nm_exclude_start": "Início da Exclusão",
     "nm_exclude_stop": "Parar Exclusão",
+    "nm_csa_pin": "Enter PIN code on the device:",
     "nm_force_unsecure": "Forçar a inclusão insegura",
     "nm_frequency_title": "Frequência de operação",
     "nm_get_suc_nodeid": "Obter ID do nó SUC",
