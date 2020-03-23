@@ -40,7 +40,7 @@
                                         <button type="button" class="btn btn-info excluded-{{d.deviceExcluded}}" ng-disabled="d.deviceExcluded">
                                             <i class="fa fa-exclamation-triangle text-danger"
                                                ng-if="d.status !== 'true-true'"></i>
-                                            (#{{d.id}}<span ng-if="nodeCfg.hasMca && d.cc == '8e'">.{{d.instance}}</span>)
+                                            (#{{d.id}}<span ng-if="nodeCfg.hasMCA && d.cc == '8e'">.{{d.instance}}</span>)
                                             {{d.name|cutText:true:20}}
                                         </button>
                                         <button type="button" class="btn btn-primary" ng-click="deleteAssoc(d)"

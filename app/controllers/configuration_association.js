@@ -22,7 +22,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
     $scope.nodeCfg = {
         id: 0,
         instance: 0,
-        hasMca: false,
+        hasMCA: false,
         name: null,
         hasBattery: false,
         isAwake: false,
@@ -75,7 +75,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             $scope.node = node;
             angular.extend($scope.nodeCfg, {
                 id: nodeId,
-                hasMca: 142 in node.instances[0].commandClasses,
+                hasMCA: 142 in node.instances[0].commandClasses,
                 name: $filter('deviceName')(nodeId, node),
                 hasBattery: 0x80 in node.instances[0].commandClasses,
             });
@@ -166,10 +166,10 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             var obj = {};
             obj['id'] = nodeId;
             obj['name'] = $filter('deviceName')(nodeId, node);
-            obj['hasMca'] = 142 in node.instances[0].commandClasses;
+            obj['hasMC'] = 96 in node.instances[0].commandClasses;
             obj['instances'] = getNodeInstances(node, nodeId);
-            if ($scope.nodeCfg.hasMca) {
-                if (obj['hasMca']) {
+            if ($scope.nodeCfg.hasMCA) {
+                if (obj['hasMC']) {
                     $scope.assocAddDevices.push(obj);
                 } else {
                     if (group.nodeIds.indexOf(parseInt(nodeId)) === -1) {
@@ -201,8 +201,8 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
 
     };
     //Show node instances (if any)
-    $scope.showAssocNodeInstance = function(nodeId, hasMca) {
-        if (!hasMca) {
+    $scope.showAssocNodeInstance = function(nodeId, hasMCA) {
+        if (!hasMCA) {
             return;
         }
         // Prepare devices and nodes
