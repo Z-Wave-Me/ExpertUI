@@ -506,8 +506,6 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         });
     }
     function configurationCc(commandClass, instanceId,nodeId, ZWaveAPIData) {
-        //console.log(node);
-
         var ccId = 112;
         var methods = getMethodSpec(ZWaveAPIData, nodeId, instanceId, ccId, null);
         var command = deviceService.configGetCommands(methods, ZWaveAPIData);

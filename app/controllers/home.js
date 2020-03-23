@@ -213,7 +213,6 @@ appController.controller('HomeController', function ($scope, $filter, $timeout, 
     function deviceChangedConfig(ZWaveAPIData) {
         // Loop throught devices
         dataService.xmlToJson(cfg.server_url + '/config/Configuration.xml').then(function (response) {
-            //dataService.getCfgXml(function(cfgXml) {
             angular.forEach(response.config.devices.deviceconfiguration, function (cfg, cfgId) {
                 var node = ZWaveAPIData.devices[cfg['_id']];
                 if (!node || !$filter('hasNode')(node, 'instances.0.commandClasses.112')) {
