@@ -337,19 +337,19 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         productName = zddXml.ZWaveDevice.deviceDescription.productName;
       }
 
-      if (angular.isDefined(zddXml.ZWaveDevice.resourceLinks.deviceImage)) {
+      if ('resourceLinks' in zddXml.ZWaveDevice && angular.isDefined(zddXml.ZWaveDevice.resourceLinks.deviceImage)) {
         deviceImage = zddXml.ZWaveDevice.resourceLinks.deviceImage._url;
       }
 
-      if (angular.isDefined(zddXml.ZWaveDevice.resourceLinks.manualUrl)) {
+      if ('resourceLinks' in zddXml.ZWaveDevice && angular.isDefined(zddXml.ZWaveDevice.resourceLinks.manualUrl)) {
         manualUrl = zddXml.ZWaveDevice.resourceLinks.manualUrl._url;
       }
 
-      if (angular.isDefined(zddXml.ZWaveDevice.deviceData.certNumber)) {
+      if ('deviceData' in zddXml.ZWaveDevice && angular.isDefined(zddXml.ZWaveDevice.deviceData.certNumber)) {
         certNumber = zddXml.ZWaveDevice.deviceData.certNumber;
       }
 
-      if (angular.isDefined(zddXml.ZWaveDevice.resourceLinks.manualUrl)) {
+      if ('productCode' in zddXml.ZWaveDevice.deviceDescription) {
         productCode = zddXml.ZWaveDevice.deviceDescription.productCode;
       }
 
