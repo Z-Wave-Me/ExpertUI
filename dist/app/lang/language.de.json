@@ -426,6 +426,7 @@
     "nm_excluded_from_network": "aus Netzwerk exkludiert.",
     "nm_exclude_start": "Starte Exklusion",
     "nm_exclude_stop": "Stopp Exklusion",
+    "nm_csa_pin": "Enter PIN code on the device:",
     "nm_force_unsecure": "Erzwinge eine normale (nicht verschlüsselte) Inklusion",
     "nm_frequency_title": "Änderung der Z-Wave Frequenz",
     "nm_get_suc_nodeid": "Ermittle Gerätenummer des SUC",

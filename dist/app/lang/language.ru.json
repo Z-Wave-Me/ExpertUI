@@ -424,6 +424,7 @@
     "nm_excluded_from_network": "исключено из сети",
     "nm_exclude_start": "Исключить устройство",
     "nm_exclude_stop": "Остановить исключение",
+    "nm_csa_pin": "Enter PIN code on the device:",
     "nm_force_unsecure": "Включать без шифрования",
     "nm_frequency_title": "Рабочая частота",
     "nm_get_suc_nodeid": "Получить номер устройства SUC",
