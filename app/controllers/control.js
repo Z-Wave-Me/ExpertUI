@@ -536,23 +536,21 @@ appController.controller('ControlController', function ($scope, $interval, $time
      * @param {object} data
      */
     function setInclusionData(data, update) {
-        var deviceIncId, deviceExcId;
-        // console.log('Learn mode 2: ' + $scope.learnMode);
+        var deviceIncId = null, deviceExcId = null;
         if ('controller.data.lastIncludedDevice' in update) {
             deviceIncId = update['controller.data.lastIncludedDevice'].value;
         }
         if ('controller.data.lastExcludedDevice' in update) {
             deviceExcId = update['controller.data.lastExcludedDevice'].value;
         }
-        if (!deviceIncId && !deviceExcId) {
-            //console.log('Not Exclude/Include')
+        if (deviceIncId === null && deviceExcId === null) {
             return;
         }
         /**
          * Last icluded device
          */
 
-        if (deviceIncId) {
+        if (deviceIncId !== null) {
             var node = data.devices[deviceIncId];
             var givenName = $filter('deviceName')(deviceIncId, node);
             var updateTime = $filter('isTodayFromUnix')(data.controller.data.lastIncludedDevice.updateTime);
@@ -585,7 +583,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
         /**
          * Last excluded device
          */
-        if (deviceExcId) {
+        if (deviceExcId !== null) { // 0 is valid and means excluded from foreign
             var updateTime = $filter('isTodayFromUnix')(data.controller.data.lastExcludedDevice.updateTime);
             if (deviceExcId != 0) {
                 var txt = $scope._t('txt_device') + ' # ' + deviceExcId + ' ' + $scope._t('nm_excluded_from_network');
