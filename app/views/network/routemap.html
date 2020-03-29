@@ -108,6 +108,10 @@
                                 </label><br/>
                             </div>
                             <label>
+                                <input type="checkbox" name="ShowPriorityRoute" id="ShowPriorityRoute" checked>
+                                {{_t('priority_route')}}
+                            </label><br/>
+                            <label>
                                 <input type="checkbox" name="ShowRepeatingFor" id="ShowRepeatingFor" checked>
                                 {{_t('nodes_is_repeating')}}
                             </label><br/>
@@ -221,6 +225,11 @@
                     <i class="strong-line"></i>
                     <i class="thin-line ShowModeAnnotation ShowModeAllRoutes ShowModeNodeRoutes"></i>
                     {{_t('route_map_annotation_lw_text2')}}
+                </div>
+                <div class="legend-row">
+                    <i class="strong-line strong-line-yellow"></i>
+                    <i class="thin-line ShowModeAnnotation ShowModeNodeRoutes"></i>
+                    {{_t('route_map_annotation_lc_text1')}}
                 </div>
             </div>
         </div>

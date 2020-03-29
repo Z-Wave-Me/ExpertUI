@@ -16,7 +16,7 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
             maxSize: $filter('fileSizeString')(cfg.upload.routemap.size),
             extensions: cfg.upload.routemap.extension.toString()
         },
-        showAnnotations: false,
+        showAnnotations: true,
         showLegend: true,
         moveNodes: false,
         stats:  {},
@@ -176,11 +176,8 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
         for (var i = 0; i < 4; i++) {
             if (!route[i]) route[i] = 0;
         }
-        if (src === this.zna.getMyNodeId()) {
-            dataService.runZwaveCmd(cfg.store_url + 'SetPriorityRoute(' + dst + ', ' + route.join(',') + ', 0)');
-        } else {
-            dataService.runZwaveCmd(cfg.store_url + 'AssignPriorityReturnRoute(' + src + ', ' + dst + ', ' + route.join(',') + ', 0)');
-        }
+        
+        dataService.runZwaveCmd(cfg.store_url + 'devices[' + src + '].AssignPriorityReturnRoute(' + dst + ', ' + route.join(',') + ')');
     }
 
     function handleKeyDown(event) {

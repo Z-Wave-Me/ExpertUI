@@ -15943,6 +15943,10 @@ http://codepen.io/MattIn4D/pen/LiKFC
   border-top: 7px solid #000000;
 }
 
+.strong-line-yellow {
+  border-top: 7px solid yellow;
+}
+
 /* line 74, E:/GitHub/ExpertUI/app/sass/common/_legend.scss */
 .thin-line {
   display: inline-block;
