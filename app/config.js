@@ -193,6 +193,7 @@ var config_data = {
 		},
 		// busy_indicator
 		'busy_indicator': {
+			queuePause: false,
 			queueLength: 0,
 			busyLength: 0,
 			result: 0,

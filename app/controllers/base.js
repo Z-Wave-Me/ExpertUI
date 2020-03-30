@@ -458,6 +458,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
    */
   $scope.loadBusyIndicator = function () {
     var refresh = function () {
+      if (cfg.busy_indicator.queuePause) return;
       dataService.refreshApi('queue_url').then(function (response) {
         setBusyIndicator(response.data);
       });
