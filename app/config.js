@@ -18,7 +18,6 @@ var config_data = {
 		'zniffer_interval': 3000, // Set interval in milisecondsfor zniffer
 		'queue_interval': 1000, // Set interval in miliseconds to refresh queue data
 		'reorg_interval': 3000, // Set interval in miliseconds to refresh reorganizations
-		'route_update_timeout': 15000, // Maximum time in miliseconds to wait for an update-route
 		//'server_url': 'http://zwave.dyndns.org:8083/', // Remote JSON
 		'local_data_url': 'storage/data/',
 		'server_url': '', // Remote JSON

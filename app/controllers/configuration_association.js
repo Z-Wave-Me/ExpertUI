@@ -36,7 +36,6 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
     $scope.cfgXml = {};
     $scope.input = {
         nodeId: 0,
-        goupCfg: false,
         //goupId: 0,
         toNode: false,
         toInstance: false
