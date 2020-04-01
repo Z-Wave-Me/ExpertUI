@@ -53,7 +53,7 @@
             <tbody>
             <tr ng-repeat="v in notifications.all | orderBy:predicate:reverse track by $index" id="{{ v.rowId}}">
                 <!-- id -->
-                <td data-title="#">{{ v.id}}</td>
+                <td data-title="#">{{ v.id}}<span ng-show="v.iId != 0">.{{v.iId}}</span></td>
                 <!-- name -->
                 <td data-title="{{ _t('device_name')}}">{{ v.name}}</td>
                 <!-- notification -->
