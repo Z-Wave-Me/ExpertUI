@@ -9,7 +9,7 @@ var config_data = {
 		'dev_host': [],
 		'app_name': 'Z-Wave Expert',
 		'app_version': '1.5.1',
-		'app_built': '23-03-2020 13:53:36',
+		'app_built': '02-04-2020 23:26:07',
 		'app_id': 'ExpertUI',
 		'custom_ip': false,
 		'user_field': 'USERXXXX',
@@ -18,7 +18,6 @@ var config_data = {
 		'zniffer_interval': 3000, // Set interval in milisecondsfor zniffer
 		'queue_interval': 1000, // Set interval in miliseconds to refresh queue data
 		'reorg_interval': 3000, // Set interval in miliseconds to refresh reorganizations
-		'route_update_timeout': 15000, // Maximum time in miliseconds to wait for an update-route
 		//'server_url': 'http://zwave.dyndns.org:8083/', // Remote JSON
 		'local_data_url': 'storage/data/',
 		'server_url': '', // Remote JSON
@@ -46,6 +45,7 @@ var config_data = {
 		'rssi_chart': '/ZWaveAPI/RSSIGet', // chart of rssi channels 1 and 2
 		'configget_url': '/ZWaveAPI/ExpertConfigGet', // Config get
 		'configupdate_url': '/ZWaveAPI/ExpertConfigUpdate', // Config update
+		'config_storage_url': '/ZWaveAPI/ExpertConfigStorage', // Settings storage
 		'call_all_nif': '/ZWaveAPI/CallForAllNIF', // Call niff for all devices
 		'test_node': '/ZWaveAPI/TestNode/', // Test node command
 		'network_statistics': '/ZWaveAPI/Run/', // Set time zone
@@ -193,6 +193,7 @@ var config_data = {
 		},
 		// busy_indicator
 		'busy_indicator': {
+			queuePause: false,
 			queueLength: 0,
 			busyLength: 0,
 			result: 0,
