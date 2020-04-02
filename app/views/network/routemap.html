@@ -326,6 +326,31 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <h2>
+            <i class="fa fa-map fa-fw"></i> {{_t('priority_routes')}}
+        </h2>
+        <table class="table table-condensed">
+            <thead>
+                <th>{{ _t('source')}}</th>
+                <th>{{ _t('route_source_destination')}}</th>
+                <th>{{ _t('destination')}}</th>
+                <th></th>
+            </thead>
+            <tbody>
+            <tr ng-repeat="v in routeMap.priorityRoutes track by $index" id="{{v.rowId}}">
+                <td>{{v.src}}</td>
+                <td>{{v.repeaters.join("&nbsp;&rarr;&nbsp;")}}</td>
+                <td>{{v.dst}}</td>
+                <td>
+                    <button class="btn btn-default" ng-click="manualRouteDelete(v.src, v.dst)">
+                        <i class="fa fa-remove"></i> {{_t('btn_remove')}}
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 

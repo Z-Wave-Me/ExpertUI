@@ -18,6 +18,7 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
         showAnnotations: true,
         showLegend: true,
         moveNodes: false,
+        priorityRoutes: [],
         stats:  {},
         startManualRoute: function() {
             zrp.manualRouteStart(null, $scope.manualRouteSet);
@@ -92,6 +93,7 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
                     zrp = new ZWaveRoutesPlotLib(new ZWaveNetworkAnalyticsLib(ZWaveAPIData.value, packets, positions));
 
                     $scope.routeMap.stats = zrp.getStats();
+                    $scope.priorityRoutesUpdate();
                 }
             }
 
@@ -164,7 +166,7 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
         });
     }
 
-    $scope.manualRouteSet = function(route){
+    $scope.manualRouteSet = function(route, deleted) {
         if (route.length < 2) {
             console.log("Bad route");
             return;
@@ -172,12 +174,41 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
 
         var dst = route.pop();
         var src = route.shift();
-        for (var i = 0; i < 4; i++) {
-            if (!route[i]) route[i] = 0;
+        if (deleted) {
+            route = [0xff, 0xff, 0xff, 0xff];
+        } else {
+            for (var i = 0; i < 4; i++) {
+                if (!route[i]) route[i] = 0;
+            }
         }
         
-        dataService.runZwaveCmd(cfg.store_url + 'devices[' + src + '].AssignPriorityReturnRoute(' + dst + ', ' + route.join(',') + ')');
-    }
+        dataService.runZwaveCmd(cfg.store_url + 'devices[' + src + '].AssignPriorityReturnRoute(' + dst + ', ' + route.join(',') + ')').then(function (response) {
+            if (deleted) {
+                zrp.updatePriorityRoute(src, dst, undefined); // undefined repeaters means delete
+            }
+            $scope.priorityRoutesUpdate(); // update the table
+        }, function (error) {
+        });
+    };
+        
+    $scope.manualRouteDelete = function(src, dst) {
+        $scope.manualRouteSet([src, dst], true);
+    };
+    
+    $scope.priorityRoutesUpdate = function() {
+        var routes = zrp.getPriorityRoutes();
+        
+        $scope.routeMap.priorityRoutes = [];
+        angular.forEach(routes, function (v, src) {
+            angular.forEach(v, function(route, dst) {
+                $scope.routeMap.priorityRoutes.push({
+                    src: src,
+                    dst: dst,
+                    repeaters: route
+                });
+            });
+        });
+    };
 
     function handleKeyDown(event) {
         27 === event.keyCode && zrp.manualRouteMode && zrp.manualRouteTerminate(!1); // ESC

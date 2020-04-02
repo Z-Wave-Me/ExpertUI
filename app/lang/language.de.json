@@ -337,6 +337,7 @@
     "manual_route_set": "New manual route saved",
     "manual_route_info": "Select a manual route by clicking on nodes from source to destination via desired repeaters. Press Enter to validate the route, Esc to cancel.",
     "priority_route": "Manual route",
+    "priority_routes": "Manual routes",
     "max_hops": "Max hops",
     "min_hops": "Min hops",
     "my_own": "Mein eigenes",
