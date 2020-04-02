@@ -222,14 +222,12 @@
                     <i class="strong-line"></i>
                     {{_t('route_map_annotation_lw_text1')}}
                 </div>
-                <div class="legend-row">
+                <div class="legend-row ShowModeAnnotation ShowModeAllRoutes ShowModeNodeRoutes">
                     <i class="strong-line"></i>
-                    <i class="thin-line ShowModeAnnotation ShowModeAllRoutes ShowModeNodeRoutes"></i>
                     {{_t('route_map_annotation_lw_text2')}}
                 </div>
-                <div class="legend-row">
+                <div class="legend-row ShowModeAnnotation ShowModeOutgoingRoutes ShowModeIncomingRoutes">
                     <i class="strong-line strong-line-yellow"></i>
-                    <i class="thin-line ShowModeAnnotation ShowModeNodeRoutes"></i>
                     {{_t('route_map_annotation_lc_text1')}}
                 </div>
             </div>
@@ -258,7 +256,7 @@
         <div class="col-md-3" ng-if="routeMap.showAnnotations">
             <div id="annotationPanel">
                 <!--Node info -->
-                <h4 class="annotation-title">{{_t('source')}}</h4>
+                <h4 class="annotation-title"><i class="fa fa-circle fa-fw"></i> {{_t('source')}}</h4>
                 <table id="annotation-node-info" class="table table-condensed">
                     <tr>
                         <th>{{_t('id')}}</th>
@@ -282,7 +280,7 @@
                     </tr>
                 </table>
                 <!-- Route  -->
-                <h4 class="annotation-title">{{_t('route_source_destination')}}</h4>
+                <h4 class="annotation-title"><i class="fa fa-location-arrow fa-fw"></i> {{_t('route_source_destination')}}</h4>
                 <table id="annotation-route-info" class="table table-condensed">
                     <tr>
                         <th>{{_t('routes_to')}}</th>
@@ -310,7 +308,7 @@
                     </tr>
                 </table>
                 <!-- Global stats  -->
-                <h4 class="annotation-title">{{_t('routes_stats')}}</h4>
+                <h4 class="annotation-title"><i class="fa fa-calculator fa-fw"></i> {{_t('routes_stats')}}</h4>
                 <table id="packetStats" class="table table-condensed">
                     <tr>
                         <th>{{_t('routes_gathering_period')}}</th>

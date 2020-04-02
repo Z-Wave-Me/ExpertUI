@@ -10,7 +10,6 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
     var zrp;
 
     $scope.routeMap = {
-        ///ZAutomation/api/v1/load/image/DSC01425.jpg
         bcgImage: 'app/images/transparent.png',
         info: {
             maxSize: $filter('fileSizeString')(cfg.upload.routemap.size),
