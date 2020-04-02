@@ -142,8 +142,6 @@ appController.controller('NotificationController', function ($scope, $filter, $t
 
                 var obj = {};
                 obj['id'] = parseInt(nodeId, 10);
-                obj['iId'] = instanceId;
-                obj['iId'] = instanceId;
                 obj['rowId'] = hasNotification.name + '_' + nodeId + '_' + instanceId + '_' + '113' + '_';
                 obj['instanceId'] = instanceId;
                 obj['name'] = $filter('deviceName')(nodeId, node);
