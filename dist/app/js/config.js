@@ -9,7 +9,7 @@ var config_data = {
 		'dev_host': [],
 		'app_name': 'Z-Wave Expert',
 		'app_version': '1.5.1',
-		'app_built': '02-04-2020 23:26:07',
+		'app_built': '03-04-2020 13:45:41',
 		'app_id': 'ExpertUI',
 		'custom_ip': false,
 		'user_field': 'USERXXXX',
@@ -45,7 +45,6 @@ var config_data = {
 		'rssi_chart': '/ZWaveAPI/RSSIGet', // chart of rssi channels 1 and 2
 		'configget_url': '/ZWaveAPI/ExpertConfigGet', // Config get
 		'configupdate_url': '/ZWaveAPI/ExpertConfigUpdate', // Config update
-		'config_storage_url': '/ZWaveAPI/ExpertConfigStorage', // Settings storage
 		'call_all_nif': '/ZWaveAPI/CallForAllNIF', // Call niff for all devices
 		'test_node': '/ZWaveAPI/TestNode/', // Test node command
 		'network_statistics': '/ZWaveAPI/Run/', // Set time zone
