@@ -398,14 +398,18 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
 
     // obj["j"] = {"key": "device_description_interview", "val": deviceService.configInterviewStage(ZWaveAPIData, nodeId, $scope.languages)};
     //obj["k"] = {"key": "device_interview_indicator", "val": interviewDone};
-    obj["l"] = {
-      "key": "device_sleep_state",
-      "val": deviceService.configDeviceState(node, $scope.languages)
-    };
-    obj["m"] = {
-      "key": "device_description_app_version",
-      "val": deviceDescriptionAppVersion + '.' + deviceDescriptionAppSubVersion
-    };
+    
+    // don't show it from controller itself
+    if (ZWaveAPIData.controller.data.nodeId.value != nodeId) { // non-strict comparison since nodeId is a key string
+      obj["l"] = {
+        "key": "device_sleep_state",
+        "val": deviceService.configDeviceState(node, $scope.languages)
+      };
+      obj["m"] = {
+        "key": "device_description_app_version",
+        "val": deviceDescriptionAppVersion + '.' + deviceDescriptionAppSubVersion
+      };
+    }
     obj["o"] = {
       "key": "device_description_sdk_version",
       "val": sdk

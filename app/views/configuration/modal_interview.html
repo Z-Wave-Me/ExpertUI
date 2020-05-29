@@ -18,7 +18,7 @@
                     <tr>
                         <th>{{_t('th_instance')}}</th>
                         <th>{{_t('th_command_class')}}</th>
-                        <th>{{_t('th_result')}}</th>
+                        <th ng-if="showInterview">{{_t('th_result')}}</th>
                     </thead>
                     <tbody>
                     <tr ng-repeat="v in interviewCommands track by $index" id="{{v.ccId}}">
@@ -32,7 +32,8 @@
                             <a href=""
                                ng-click="handleCmdClassModal('cmdClassModal',$event,v.iId,v.ccId, 'cmdData')">{{v.ccName}}</a>
                         </td>
-                        <td data-title="{{_t('th_result')}}">
+                        <td data-title="{{_t('th_result')}}"
+                            ng-if="showInterview">
                             <span ng-if="v.interviewDone"><i class="fa fa-check text-success"></i></span>
                             <button id="btn_force_interview_{{v.ccId}}" class="btn btn-primary btn-sm"
                                     ng-init="apiUrl = 'devices[' +deviceId + '].instances[' + v.iId+'].commandClasses[' + v.ccId + '].Interview()'"

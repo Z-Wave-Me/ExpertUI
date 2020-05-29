@@ -122,7 +122,8 @@
                     <!-- call nift -->
                     <button id="btn_request_nif" class="btn btn-primary"
                             ng-click="requestNodeInformation('devices[' + deviceId + '].RequestNodeInformation()')"
-                            ng-disabled="rowSpinner['devices[' + deviceId + '].RequestNodeInformation()']">
+                            ng-disabled="rowSpinner['devices[' + deviceId + '].RequestNodeInformation()']"
+                            ng-if="showInterview">
 
                         <bb-row-spinner
                                 spinner="rowSpinner['devices[' + deviceId + '].RequestNodeInformation()']"
@@ -144,13 +145,13 @@
                     </button>
                     <!-- interview result -->
                     <button id="btn_show_interview_result" class="btn btn-default"
-                            ng-click="handleModal('interviewModal',$event)"
-                            ng-if="showInterview">
+                            ng-click="handleModal('interviewModal',$event)">
                         <i class="fa fa-clone"></i> {{_t('config_ui_show_interview_results')}}
                     </button>
                     <!-- device description -->
                     <button id="btn_show_description" class="btn btn-default"
-                            ng-click="handleModal('loadXmlModal', $event)">
+                            ng-click="handleModal('loadXmlModal', $event)"
+                            ng-if="showInterview">
                         <i class="fa fa-clone"></i> {{_t('config_ui_select_xml')}}
                     </button>
 
@@ -160,7 +161,8 @@
                      </button>-->
                     <!-- zddx creator -->
                     <a href="{{cfg.server_url + cfg.zddx_create_url + deviceId}}" class="btn btn-default" id="btn_create_zddx"
-                       target="blank">
+                       target="blank"
+                       ng-if="showInterview">
                         <i class="fa fa-clone"></i> {{_t('btn_zddx_create')}}
                     </a>
                 </div>
