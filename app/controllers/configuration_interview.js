@@ -201,9 +201,6 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
     $scope.interviewCommands = deviceService.configGetInterviewCommands(node, ZWaveAPIData.updateTime);
     $scope.interviewCommandsDevice = node.data;
     if (zddXmlFile && zddXmlFile !== 'undefined') {
-      var cachedZddXml = myCache.get(zddXmlFile);
-      // Uncached file
-      //if (!cachedZddXml) {
       $http.get($scope.cfg.server_url + $scope.cfg.zddx_url + zddXmlFile).then(function (response) {
         var x2js = new X2JS();
         var zddXml = x2js.xml_str2json(response.data);
@@ -212,13 +209,7 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
 
 
       });
-      // todo: deprecated
-      //} else {
-      //$scope.descriptionCont = setCont(node, nodeId, cachedZddXml, ZWaveAPIData, refresh);
-      //}
-
     } else {
-
       $scope.descriptionCont = setCont(node, nodeId, null, ZWaveAPIData, refresh);
     }
   }
