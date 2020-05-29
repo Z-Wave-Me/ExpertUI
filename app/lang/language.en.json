@@ -395,7 +395,7 @@
     "nm_backup_download": "Create Backup",
     "nm_backup_title": "Backup and Restore",
     "nm_change_controller_war": "This starts an inclusion process for a new controller. This new controller will become the new primary controller of your network.",
-    "nm_chip_reboot_war": "This button resets the serial communication between the controller software and the Z-Wave transceiver firmware. Its save to use",
+    "nm_chip_reboot_war": "This button resets the serial communication between the controller software and the Z-Wave transceiver firmware. It's save to use",
     "nm_chip_reset_war": "This resets the whole network and deletes all reference s to existing devices. Handle with extreme care.",
     "nm_chip_reset_war_ima": "Handle with extreme care.  This function will reset the Certified Installer Toolkit to a factory default state. If the CIT is a part of a customer network, it will transmit a Device Reset Locally command to notify the customer's primary controller that it is leaving the network.  Please use the customer's controller to exclude this device from the network under normal circumstances instead of using this command.",
     "nm_controller_change_start": "Start Controller Change",
