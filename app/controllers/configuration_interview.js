@@ -206,8 +206,8 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         var zddXml = x2js.xml_str2json(response.data);
         myCache.put(zddXmlFile, zddXml);
         $scope.descriptionCont = setCont(node, nodeId, zddXml, ZWaveAPIData, refresh);
-
-
+      }, function (response) {
+        $scope.descriptionCont = setCont(node, nodeId, null, ZWaveAPIData, refresh);
       });
     } else {
       $scope.descriptionCont = setCont(node, nodeId, null, ZWaveAPIData, refresh);
