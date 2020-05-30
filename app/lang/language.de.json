@@ -436,6 +436,7 @@
     "nm_get_suc_nodeid": "Ermittle Gerätenummer des SUC",
     "nm_include_start": "Starte Inklusion",
     "nm_include_stop": "Stopp Inklusion",
+    "nm_include_limit_reached": "Your RaZberry or UZB <a href=\"#/licence\">requires a license</a>",
     "nm_inc_into_nw": "Verbinde \/ Verlasse anderes Netzwerk",
     "nm_inc_into_nw_desc": "Diese Modus ermöglicht dem Controller sich mit einem anderem Netzwerk als normale Node zu verbinden bzw. es wieder zu verlassen.",
     "nm_inspect_queue_title": "Zeige Nachrichtenwarteschlange",

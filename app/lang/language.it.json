@@ -436,6 +436,7 @@
     "nm_get_suc_nodeid": "Get SUC node Id",
     "nm_include_start": "Start Inclusion",
     "nm_include_stop": "Stop Inclusion",
+    "nm_include_limit_reached": "Your RaZberry or UZB <a href=\"#/licence\">requires a license</a>",
     "nm_inc_into_nw": "Enter \/ Leave different Networks",
     "nm_inc_into_nw_desc": "This modes allows this controller to enter and leave a different network as normal node.",
     "nm_inspect_queue_title": "View Job Queue",

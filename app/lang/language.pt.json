@@ -436,6 +436,7 @@
     "nm_get_suc_nodeid": "Obter ID do nó SUC",
     "nm_include_start": "Início da Inclusão",
     "nm_include_stop": "Parar Inclusão",
+    "nm_include_limit_reached": "Your RaZberry or UZB <a href=\"#/licence\">requires a license</a>",
     "nm_inc_into_nw": "Entrar \/ Sair de diferentes redes",
     "nm_inc_into_nw_desc": "Este modo permite que este controlador entre e saia de uma rede como um nó normal.",
     "nm_inspect_queue_title": "Exibir fila de tarefas",
