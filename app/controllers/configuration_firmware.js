@@ -40,7 +40,21 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
 
     };
 
-
+    /**
+     * Load firmwares from the storage data
+     */
+    function loadFirmwares(urlParams) {
+        $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin'};
+        dataService.getFirmwares(urlParams).then(function (response) {
+            if (response.length > 0) {
+                $scope.firmwares = response;
+            }
+            $scope.loading = false;
+        }, function (error) {
+            $scope.loading = false;
+            alertify.alertError($scope._t('error_handling_data_remote'));
+        });
+    };
 
     // Load data
     $scope.load = function (nodeId) {
@@ -74,6 +88,22 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
                 $scope.alert = {message: $scope._t('no_device_service'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
                 return;
             }
+
+            var manufacturerId = node.data.manufacturerId.value;
+            var productTypeId = node.data.manufacturerProductType.value;
+            var productId = node.data.manufacturerProductId.value
+            var appVersionMajor = node.data.applicationMajor.value;
+            var appVersionMinor = node.data.applicationMinor.value;
+            var fromFrequency = ZWaveAPIData.controller.data.frequency.value;
+            var urlParams = 
+                '?manufacturerId=' + manufacturerId +
+                '&productTypeId=' + productTypeId +
+                '&productId=' + productId +
+                '&appVersionMajor=' + appVersionMajor +
+                '&appVersionMinor=' + appVersionMinor +
+                '&fromFrequency=' + fromFrequency;
+
+            loadFirmwares(urlParams);
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
         });

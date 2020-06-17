@@ -34,6 +34,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         getCfgXml: getCfgXml,
         putCfgXml: putCfgXml,
         getUzb: getUzb,
+        getFirmwares: getFirmwares,
         updateUzb: updateUzb,
         getLicenseScratchId: getLicenseScratchId,
         getLicense: getLicense,
@@ -125,6 +126,25 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         }, function (error) {// something went wrong
 
             return $q.reject(error);
+        });
+    }
+    /**
+     * Get device firmwares
+     */
+    function getFirmwares(params) {
+        return $http({
+            method: 'get',
+            url: cfg.firmwares_url + params
+        }).then(function (response) {
+            if (typeof response.data.data === 'object') {
+                return response.data.data;
+            } else {
+                // invalid response
+                return $q.reject(response);
+            }
+        }, function (response) {
+            // something went wrong
+            return $q.reject(response);
         });
     }
     /**

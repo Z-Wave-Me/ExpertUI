@@ -93,6 +93,8 @@ var config_data = {
 		//'reorg_log_url': '/config/reorg.log', // Url for store reorg log data
 		'zddx_url': '/ZDDX/', // Url for zddx xml files
 		'notes_url': '/config/notes.log', // Url for store notes data
+		'firmwares_url': 'https://service.z-wave.me/zw-firmwares', // Url for Z-Wave.Me firmware database
+		'firmwares_storage_url': 'https://service.z-wave.me/zw-firmwares/storage/', // Url for Z-Wave.Me firmware storage
 		'uzb_url': 'https://service.z-wave.me/expertui/uzb/', // Url for uzb data
 		'get_licence_scratchid': 'https://service.z-wave.me/license/index.php', // Get licence scratch id
 		'license_url': 'https://service.z-wave.me/licence/upgrade.php', // Url for license key
