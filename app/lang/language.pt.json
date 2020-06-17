@@ -769,6 +769,7 @@
     "upload_allowed_size": "O arquivo carregado deve ser menor do que __size__.",
     "upload_bootloader": "Carregar bootloader",
     "upload_firmware": "Carregar firmware",
+    "upload_file": "Upload from file:",
     "upload_format_unsupported": "O formato (__extensão__) não é suportado.",
     "upload_image": "Carregar imagem",
     "upload_image_failed": "O carregamento da imagem falhou",

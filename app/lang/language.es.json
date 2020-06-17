@@ -769,6 +769,7 @@
     "upload_allowed_size": "El archivo cargado debe tener un tamaño inferior a __size__.",
     "upload_bootloader": "Cargar gestor de arranque",
     "upload_firmware": "Cargar firmware",
+    "upload_file": "Upload from file:",
     "upload_format_unsupported": "El formato (__extension__) no es compatible.",
     "upload_image": "Cargar imagen",
     "upload_image_failed": "Se ha producido un error al cargar la imagen",

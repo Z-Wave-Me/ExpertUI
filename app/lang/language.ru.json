@@ -770,6 +770,7 @@
     "upload_allowed_size": "Загруженный файл должен быть меньше __size__.",
     "upload_bootloader": "Загрузить bootloader",
     "upload_firmware": "Загрузить прошивку",
+    "upload_file": "Загрузить из файла:",
     "upload_format_unsupported": "Формат (__extension__) не поддерживается.",
     "upload_image": "Загрузить изображение",
     "upload_image_failed": "Загрузка изображения не удалась",
