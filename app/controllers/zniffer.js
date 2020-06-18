@@ -123,8 +123,6 @@ appController.controller('ZnifferController', function ($scope, $interval, $time
             if ($http.pendingRequests.length > 0) {
                 return;
             }
-            //var time = 1472729277;//(updateTime ? '/' + updateTime : '');
-            //var time = updateTime;//(updateTime ? '/' + updateTime : '');
 
             dataService.refreshApi('zniffer_url',null,true).then(function (response) {
                 $scope.zniffer.updateTime = response.data.updateTime;
@@ -134,12 +132,10 @@ appController.controller('ZnifferController', function ($scope, $interval, $time
                 if(filterBySrc){
                     var srcs =  filterBySrc.value.split(',');
                     if(filterBySrc.show === '1'){
-                        //console.log('SRC - Show only: ',srcs)
                         znifferData = _.filter(znifferData, function (v) {
                             return srcs.indexOf(v.src.toString()) > -1;
                         });
                     }else{
-                        //console.log('SRC - HIDE: ',srcs)
                         znifferData = _.filter(znifferData, function (v) {
                             return srcs.indexOf(v.src.toString()) === -1;
                         });
@@ -150,12 +146,10 @@ appController.controller('ZnifferController', function ($scope, $interval, $time
                 if(filterByDest){
                     var dests =  filterByDest.value.split(',');
                     if(filterByDest.show === '1'){
-                        //console.log('SRC - Show only: ',dests)
                         znifferData = _.filter(znifferData, function (v) {
                             return dests.indexOf(v.dest.toString()) > -1;
                         });
                     }else{
-                        c//onsole.log('SRC - HIDE: ',dests)
                         znifferData = _.filter(znifferData, function (v) {
                             return dests.indexOf(v.dest.toString()) === -1;
                         });
@@ -194,13 +188,13 @@ appController.controller('ZnifferController', function ($scope, $interval, $time
     $scope.setTrace = function (trace) {
         switch (trace) {
             case 'pause':
-                 $scope.zniffer.trace = 'pause';
+                $scope.zniffer.trace = 'pause';
                 $interval.cancel($scope.zniffer.interval);
                 break;
             case 'stop':
                 $scope.zniffer.trace = 'stop';
                 angular.copy([], $scope.zniffer.all);
-                 $interval.cancel($scope.zniffer.interval);
+                $interval.cancel($scope.zniffer.interval);
                 myCache.remove('zniffer_inout');
                 $timeout(function(){angular.copy([], $scope.zniffer.all);}, 3000);
                 break;
@@ -404,7 +398,6 @@ appController.controller('ZnifferHistoryController', function ($scope, $interval
     $scope.setCurrentPage = function (val) {
         $scope.currentPage = val;
     };
-
 });
 
 /**
