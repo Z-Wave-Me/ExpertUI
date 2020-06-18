@@ -24,7 +24,20 @@
                         ng-click="setTrace('stop')">
                     <i class="fa fa-stop"></i>
                 </button>
-
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-default" title="Enable promiscuous mode"
+                        ng-if="!zniffer.promiscModeEnabled"
+                        ng-disabled="!zniffer.promiscModeAvailable"
+                        ng-click="setPromisc(true)">
+                    <i class="fa fa-eye"></i>
+                </button>
+                <button class="btn btn-default" title="Disable promiscuous mode"
+                        ng-if="zniffer.promiscModeEnabled"
+                        ng-disabled="!zniffer.promiscModeAvailable"
+                        ng-click="setPromisc(false)">
+                    <i class="fa fa-eye-slash"></i>
+                </button>
             </div>
         </div>
     </div>

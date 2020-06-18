@@ -39,6 +39,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
         getLicenseScratchId: getLicenseScratchId,
         getLicense: getLicense,
         zmeCapabilities: zmeCapabilities,
+        setPromisc: setPromisc,
         getLanguageFile: getLanguageFile,
         logInApi:  logInApi,
         getApiLocal: getApiLocal,
@@ -253,6 +254,17 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
 
     }
 
+    function setPromisc(val) {
+        return $http({
+            method: 'GET',
+            url: cfg.server_url + cfg.zniffer_set_promisc_url + (val ? true : false)
+        }).then(function (response) {
+            return response;
+        }, function (response) {
+            // something went wrong
+            return $q.reject(response);
+        });
+    }
 
     /**
      * Get a file with language keys values from the app/lang directory

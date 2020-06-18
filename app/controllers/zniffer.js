@@ -88,6 +88,19 @@ appController.controller('ZnifferController', function ($scope, $interval, $time
     $scope.loadCachedZniffer();
 
     /**
+     * Load data
+     *
+     */
+    $scope.loadZwaveData = function() {
+        dataService.loadZwaveApiData(true).then(function(ZWaveAPIData) {
+            var appVersion = parseFloat(ZWaveAPIData.controller.data.APIVersion.value);
+            $scope.zniffer.promiscModeAvailable = appVersion >= 5.39; // Promisc appeared in this version
+            $scope.zniffer.promiscModeEnabled = ZWaveAPIData.controller.data.promiscMode.value;
+        });
+    };
+    $scope.loadZwaveData();
+
+    /**
      * Run Zniffer
      * @returns {undefined}
      */
@@ -244,6 +257,13 @@ appController.controller('ZnifferController', function ($scope, $interval, $time
         $scope.updateAfterFilter();
     };
 
+    $scope.setPromisc = function(promiscMode) {
+        dataService.setPromisc(promiscMode).then(function (response) {
+            $scope.loadZwaveData();
+        }, function (error) {
+            $scope.loadZwaveData();
+        });
+    };
 });
 
 /**

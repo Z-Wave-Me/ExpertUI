@@ -41,6 +41,7 @@ var config_data = {
 		'postfixremove_url': '/ZWaveAPI/PostfixRemove', // Postfix Remove
 		'checklinks': '/ZWaveAPI/CheckAllLinks', // check link health
 		'zniffer_url': '/ZWaveAPI/Zniffer', // Zniffer
+		'zniffer_set_promisc_url': '/ZWaveAPI/Zniffer/SetPromisc/', // Zniffer Set Promiscuous Mode
 		'communication_history_url': '/ZWaveAPI/CommunicationHistory', // Communication History
 		'rssi_chart': '/ZWaveAPI/RSSIGet', // chart of rssi channels 1 and 2
 		'configget_url': '/ZWaveAPI/ExpertConfigGet', // Config get
