@@ -7,7 +7,7 @@
         <!--<pre>{{home.devices|json}}</pre>-->
         <ul class="list-report">
             <li ng-repeat="v in home.devices" ng-hide="!_.size(v.report) || v.isController">
-                (#{{v.id}}) {{v.name}}
+                <a href="#/config/configuration/{{v.id}}">(#{{v.id}}) {{v.name}}</a>
                 <div ng-repeat="t in v.report" ng-switch="t">
                     <!-- Battery  -->
                     <a class="text-danger" href="#device/battery" ng-switch-when="txt_low_battery">
