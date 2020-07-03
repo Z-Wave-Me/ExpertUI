@@ -406,8 +406,6 @@ appController.controller('ZnifferHistoryController', function ($scope, $interval
  * @author Niels Roche
  */
 appController.controller('ZnifferRSSIController', function ($scope, $interval, $filter, cfg, dataService, myCache, _) {
-    var GOOD_LEVEL = -75; // dBm
-    
     var cOptions = {
         title:{
             text: ""
@@ -426,7 +424,7 @@ appController.controller('ZnifferRSSIController', function ($scope, $interval, $
             tickThickness: 2,
             includeZero: false,
             stripLines:[{
-                value: GOOD_LEVEL,
+                value: -80, // dBm
                 color:"#800000",
                 lineDashType: "dash"
             }]
