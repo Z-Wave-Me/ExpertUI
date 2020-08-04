@@ -9,7 +9,7 @@ var config_data = {
 		'dev_host': [],
 		'app_name': 'Z-Wave Expert',
 		'app_version': '1.5.1',
-		'app_built': '03-04-2020 13:45:41',
+		'app_built': '04-08-2020 19:55:04',
 		'app_id': 'ExpertUI',
 		'custom_ip': false,
 		'user_field': 'USERXXXX',
@@ -41,6 +41,7 @@ var config_data = {
 		'postfixremove_url': '/ZWaveAPI/PostfixRemove', // Postfix Remove
 		'checklinks': '/ZWaveAPI/CheckAllLinks', // check link health
 		'zniffer_url': '/ZWaveAPI/Zniffer', // Zniffer
+		'zniffer_set_promisc_url': '/ZWaveAPI/Zniffer/SetPromisc/', // Zniffer Set Promiscuous Mode
 		'communication_history_url': '/ZWaveAPI/CommunicationHistory', // Communication History
 		'rssi_chart': '/ZWaveAPI/RSSIGet', // chart of rssi channels 1 and 2
 		'configget_url': '/ZWaveAPI/ExpertConfigGet', // Config get
@@ -93,6 +94,8 @@ var config_data = {
 		//'reorg_log_url': '/config/reorg.log', // Url for store reorg log data
 		'zddx_url': '/ZDDX/', // Url for zddx xml files
 		'notes_url': '/config/notes.log', // Url for store notes data
+		'firmwares_url': 'https://service.z-wave.me/zw-firmwares', // Url for Z-Wave.Me firmware database
+		'firmwares_storage_url': 'https://service.z-wave.me/zw-firmwares/storage/', // Url for Z-Wave.Me firmware storage
 		'uzb_url': 'https://service.z-wave.me/expertui/uzb/', // Url for uzb data
 		'get_licence_scratchid': 'https://service.z-wave.me/license/index.php', // Get licence scratch id
 		'license_url': 'https://service.z-wave.me/licence/upgrade.php', // Url for license key
