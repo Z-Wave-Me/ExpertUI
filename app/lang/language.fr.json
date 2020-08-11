@@ -252,7 +252,7 @@
     "fw_update_err_wrong_fw_target": "The transferred image does not match the Firmware Target. Not updated.",
     "fw_update_err_wrong_manufacturer_id": "The transferred image does not match the Manufacturer ID. Not updated.",
     "fw_update_receive_err": "The device was unable to receive the requested firmware data. Not updated.",
-    "fw_upgrade_from_file": "File (*.hex,*.bin,*.ota,*.otz)",
+    "fw_upgrade_from_file": "File (*.hex,*.bin,*.ota,*.otz,*.gbl)",
     "fw_upgrade_from_url": "URL",
     "gateway": "Gateway",
     "go": "GO",
