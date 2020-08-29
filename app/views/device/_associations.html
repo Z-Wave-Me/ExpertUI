@@ -8,14 +8,14 @@
             <tr>
                 <th>
                     <a href="" ng-click="orderBy('id')">#
-                        <span ng-show="predicate == 'id'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i
-                                ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        <span ng-show="predicate == 'id'"><i ng-show="!reverse" class="fa fa-sort-up"></i><i
+                                ng-show="reverse" class="fa fa-sort-down"></i></span>
                     </a>
                 </th>
                 <th style="width: 20%;">
                     <a href="" ng-click="orderBy('name')">{{ _t('device_name')}}
-                        <span ng-show="predicate == 'name'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i
-                                ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                        <span ng-show="predicate == 'name'"><i ng-show="!reverse" class="fa fa-sort-up"></i><i
+                                ng-show="reverse" class="fa fa-sort-down"></i></span>
                     </a>
                 </th>
                 <th>{{ _t('th_assoc_group_name')}}</th>
@@ -52,7 +52,7 @@
                     </div>
                 </td>
                 <td class="td-action">
-                    <a class="btn btn-default" href="#configuration/interview/{{v.id}}"><i class="fa fa-pencil text-success"></i> {{ _t('btn_change')}}</a>&nbsp;
+                    <a class="btn btn-default" href="#configuration/interview/{{v.id}}"><i class="fa fa-pencil-alt text-success"></i> {{ _t('btn_change')}}</a>&nbsp;
                 </td>
             </tr>
             </tbody>

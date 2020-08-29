@@ -62,7 +62,7 @@
             &nbsp;
             <button class="btn btn-default" id="ManualRouteDraw"
                     ng-click="routeMap.startManualRoute()">
-                <span><i class="fa fa-gear"></i> {{_t('manual_route_draw')}}</span>
+                <span><i class="fa fa-cog"></i> {{_t('manual_route_draw')}}</span>
             </button>
 
             <!-- Show annotations-->
@@ -94,7 +94,7 @@
                 <!-- Cancel -->
                 <button class="btn btn-default" id="CancelNodeMoving"
                         ng-click="routeMap.cancelMoveNodes(); routeMap.moveNodes = false;">
-                    <i class="fa fa-remove"></i> {{_t('btn_cancel')}}
+                    <i class="fa fa-times"></i> {{_t('btn_cancel')}}
                 </button> &nbsp;
                 <!-- Save -->
                 <button class="btn btn-success" id="SaveNodePosition"
@@ -104,7 +104,7 @@
                 <!-- Reset -->
                 <button class="btn btn-warning" id="ResetNodePosition"
                         ng-click="routeMap.resetMoveNodes(); routeMap.moveNodes = false;">
-                    <i class="fa fa-refresh"></i> {{_t('reset')}}
+                    <i class="fa fa-sync"></i> {{_t('reset')}}
                 </button>
             </span>
             &nbsp;

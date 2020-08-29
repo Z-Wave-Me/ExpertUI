@@ -62,7 +62,7 @@ angApp.directive('sortBy', function () {
             field: '='
         },
         template: '<span class="order-by clickable">{{label}}&nbsp<span ng-show="obj.field == field">'
-                + '<i ng-show="!obj.reverse" class="fa fa-sort-asc"></i><i ng-show="obj.reverse" class="fa fa-sort-desc"></i>'
+                + '<i ng-show="!obj.reverse" class="fa fa-sort-up"></i><i ng-show="obj.reverse" class="fa fa-sort-down"></i>'
                 + '</span></span>',
         link: function (scope, element, attrs) {
             element.bind('click', function (e) {
@@ -328,7 +328,7 @@ angApp.directive('routingTypeIcon', function () {
                     cls = 'fa-fire text-info';
                     title = $scope._t('FLiRS_device');
                 } else if (isPortableRemoteControl) {
-                    cls = 'fa-feed text-primary';
+                    cls = 'fa-rss text-primary';
                     title = $scope._t('battery_operated_remote_control');
                 } else {
                     cls = '';

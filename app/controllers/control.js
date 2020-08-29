@@ -405,7 +405,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
                             $scope.controlDh.network.alert = {
                                 message: $scope._t('success_controller_include'),
                                 status: 'alert-success',
-                                icon: 'fa-smile-o'
+                                icon: 'fa-smile'
                             };
                             $scope.controlDh.network.inclusionProcess = false;
                             if ($scope.controlDh.controller.isRealPrimary || !$scope.controlDh.controller.isInOthersNetwork) {
@@ -487,7 +487,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 $scope.controlDh.factory.alert = {
                     message: $scope._t('nm_controller_state_20'),
                     status: 'alert-success',
-                    icon: 'fa-smile-o'
+                    icon: 'fa-smile'
                 };
                 break;
 
@@ -569,7 +569,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
             $scope.controlDh.inclusion.lastIncludedDevice = {
                 message: $scope._t('nm_last_included_device') + '  (' + updateTime + ')  <a href="#configuration/interview/' + deviceIncId + '"><strong>' + givenName + '</strong></a>',
                 status: 'alert-success',
-                icon: 'fa-smile-o'
+                icon: 'fa-smile'
             };
 
             if (node.instances[0].commandClasses[159]) {
@@ -598,7 +598,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
             $scope.controlDh.inclusion.lastExcludedDevice = {
                 message: txt + ' (' + updateTime + ')',
                 status: 'alert-success',
-                icon: 'fa-smile-o'
+                icon: 'fa-smile'
             };
         }
     }
@@ -729,7 +729,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 $scope.controlDh.inclusion.alertS2 = {
                     message: $scope._t('auth_successful'),
                     status: 'alert-success',
-                    icon: 'fa-smile-o'
+                    icon: 'fa-smile'
                 };
             } else {
                 $scope.controlDh.inclusion.alertS2 = {

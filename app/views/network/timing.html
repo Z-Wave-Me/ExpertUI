@@ -16,7 +16,7 @@
       </div>
     <!-- update -->
     <button class="btn btn-primary" ng-click="updateTimingInfo('updateTimingInfo')" ng-disabled="rowSpinner['updateTimingInfo']">
-      <bb-row-spinner spinner="rowSpinner['updateTimingInfo']" label=" _t('update')" icon="'fa-circle-o'">
+      <bb-row-spinner spinner="rowSpinner['updateTimingInfo']" label=" _t('update')" icon="'fa-circle'">
 
       </bb-row-spinner>
     </button>
@@ -36,8 +36,8 @@
           <th>
             <a href="" ng-click="orderBy('id')">{{_t('th_node')}}
               <span ng-show="predicate == 'id'">
-                <i ng-show="!reverse" class="fa fa-sort-asc"></i>
-                <i ng-show="reverse" class="fa fa-sort-desc"></i>
+                <i ng-show="!reverse" class="fa fa-sort-up"></i>
+                <i ng-show="reverse" class="fa fa-sort-down"></i>
               </span>
             </a>
           </th>
@@ -45,8 +45,8 @@
           <th>
             <a href="" ng-click="orderBy('name')">{{ _t('device_name')}}
               <span ng-show="predicate == 'name'">
-                <i ng-show="!reverse" class="fa fa-sort-asc"></i>
-                <i ng-show="reverse" class="fa fa-sort-desc"></i>
+                <i ng-show="!reverse" class="fa fa-sort-up"></i>
+                <i ng-show="reverse" class="fa fa-sort-down"></i>
               </span>
             </a>
           </th>
@@ -54,32 +54,32 @@
           <th>
             <a href="" ng-click="orderBy('type')">{{_t('th_type')}}
               <span ng-show="predicate == 'type'">
-                <i ng-show="!reverse" class="fa fa-sort-asc"></i>
-                <i ng-show="reverse" class="fa fa-sort-desc"></i>
+                <i ng-show="!reverse" class="fa fa-sort-up"></i>
+                <i ng-show="reverse" class="fa fa-sort-down"></i>
               </span>
             </a>
           </th>
           <th>
             <a href="" ng-click="orderBy('updateTime')">{{ _t('datetime')}}
               <span ng-show="predicate == 'updateTime'">
-                <i ng-show="!reverse" class="fa fa-sort-asc"></i>
-                <i ng-show="reverse" class="fa fa-sort-desc"></i>
+                <i ng-show="!reverse" class="fa fa-sort-up"></i>
+                <i ng-show="reverse" class="fa fa-sort-down"></i>
               </span>
             </a>
           </th>
           <th>
             <a href="" ng-click="orderBy('totalPackets')">{{_t('th_total')}} (pkts)
               <span ng-show="predicate == 'totalPackets'">
-                <i ng-show="!reverse" class="fa fa-sort-asc"></i>
-                <i ng-show="reverse" class="fa fa-sort-desc"></i>
+                <i ng-show="!reverse" class="fa fa-sort-up"></i>
+                <i ng-show="reverse" class="fa fa-sort-down"></i>
               </span>
             </a>
           </th>
           <th>
             <a href="" ng-click="orderBy('okPackets')">{{_t('th_ok')}}
               <span ng-show="predicate == 'okPackets'">
-                <i ng-show="!reverse" class="fa fa-sort-asc"></i>
-                <i ng-show="reverse" class="fa fa-sort-desc"></i>
+                <i ng-show="!reverse" class="fa fa-sort-up"></i>
+                <i ng-show="reverse" class="fa fa-sort-down"></i>
               </span>
             </a>
           </th>

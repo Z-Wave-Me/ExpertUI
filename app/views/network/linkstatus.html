@@ -36,17 +36,17 @@
                     <th class="th-id">&nbsp;</th>
                     <th class="neighbor-hide">
                         <a href="" ng-click="orderBy('name')">{{ _t('device_name')}}
-                            <span ng-show="predicate == 'name'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                            <span ng-show="predicate == 'name'"><i ng-show="!reverse" class="fa fa-sort-up"></i><i ng-show="reverse" class="fa fa-sort-down"></i></span>
                         </a>
                     </th>
                     <th class="neighbor-hide">
                         <a href="" ng-click="orderBy('type')">{{_t('device_description_device_type')}}
-                            <span ng-show="predicate == 'type'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                            <span ng-show="predicate == 'type'"><i ng-show="!reverse" class="fa fa-sort-up"></i><i ng-show="reverse" class="fa fa-sort-down"></i></span>
                         </a>
                     </th>
                     <th class="neighbor-hide">
                         <a href="" ng-click="orderBy('updateTime')">{{ _t('rt_header_update_time')}}
-                            <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                            <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-up"></i><i ng-show="reverse" class="fa fa-sort-down"></i></span>
                         </a>
                     </th>
                     <th class="neighbor-hide print-hide">&nbsp; </a>
@@ -81,7 +81,7 @@
                                 ng-click="testAllLinks(v.id)"
                                 ng-disabled="rowSpinner[v.id]">
                             <bb-row-spinner
-                                    icon="'fa-circle-o'"
+                                    icon="'fa-circle'"
                                     spinner="rowSpinner[v.id]"
                                     label="_t('test_link')">
                             </bb-row-spinner>
@@ -92,7 +92,7 @@
                                 ng-click="runZwaveNop(v.cmdNop)"
                                 ng-disabled="rowSpinner[v.cmdNop]">
                             <bb-row-spinner
-                                    icon="'fa-circle-o text-success'"
+                                    icon="'fa-circle text-success'"
                                     spinner="rowSpinner[v.cmdNop]"
                                     label="_t('nop')">
                             </bb-row-spinner>
@@ -105,17 +105,17 @@
                     <th class="th-id">&nbsp;</th>
                     <th class="neighbor-hide">
                         <a href="" ng-click="orderBy('name')">{{ _t('device_name')}}
-                            <span ng-show="predicate == 'name'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                            <span ng-show="predicate == 'name'"><i ng-show="!reverse" class="fa fa-sort-up"></i><i ng-show="reverse" class="fa fa-sort-down"></i></span>
                         </a>
                     </th>
                     <th class="neighbor-hide">
                         <a href="" ng-click="orderBy('type')">{{_t('device_description_device_type')}}
-                            <span ng-show="predicate == 'type'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                            <span ng-show="predicate == 'type'"><i ng-show="!reverse" class="fa fa-sort-up"></i><i ng-show="reverse" class="fa fa-sort-down"></i></span>
                         </a>
                     </th>
                     <th class="neighbor-hide">
                         <a href="" ng-click="orderBy('updateTime')">{{ _t('rt_header_update_time')}}
-                            <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-asc"></i><i ng-show="reverse" class="fa fa-sort-desc"></i></span>
+                            <span ng-show="predicate == 'updateTime'"><i ng-show="!reverse" class="fa fa-sort-up"></i><i ng-show="reverse" class="fa fa-sort-down"></i></span>
                         </a>
                     </th>
                     <th class="neighbor-hide">&nbsp; </a>

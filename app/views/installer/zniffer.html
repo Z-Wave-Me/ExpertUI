@@ -9,7 +9,7 @@
                         ng-class="zniffer.trace === 'start' ? 'btn-success' : ''"
                         ng-disabled="zniffer.trace === 'start'"
                         ng-click="setTrace('start')">
-                    <i class="fa" ng-class="zniffer.trace === 'start' ? 'fa-circle-o-notch fa-spin' : 'fa-play'"></i>
+                    <i class="fa" ng-class="zniffer.trace === 'start' ? 'fa-circle-notch fa-spin' : 'fa-play'"></i>
                 </button>
 
                 <button class="btn btn-default" title="Pause trace"
@@ -162,8 +162,8 @@
         <tbody>
             <tr class="zniffer-row-{{v.data}}" ng-repeat="v in zniffer.all| orderBy: '-id' track by $index">
                 <td>
-                    <i title="{{v.type}}" class="fa fa-long-arrow-right" ng-if="v.type === 'incoming'"></i>
-                    <i title="{{v.type}}" class="fa fa-long-arrow-left" ng-if="v.type === 'outgoing'"></i> 
+                    <i title="{{v.type}}" class="fa fa-long-arrow-alt-right" ng-if="v.type === 'incoming'"></i>
+                    <i title="{{v.type}}" class="fa fa-long-arrow-alt-left" ng-if="v.type === 'outgoing'"></i> 
                 </td>
                 <td>{{v.dateTime.date}}</td>
                 <td>{{v.dateTime.time}}</td>

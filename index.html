@@ -125,7 +125,7 @@
                     <li class="navibar-item" ng-click="expandNavi('naviControl', $event)">
                         <a class="navibar-item-root" href="" title="{{ _t('nav_control')"
                            ng-class="isActive('control',1)">
-                            <i class="fa fa-sliders"></i> <span class="main-nav-name">{{ _t('nav_control')}}</span>
+                            <i class="fa fa-sliders-h"></i> <span class="main-nav-name">{{ _t('nav_control')}}</span>
                         </a>
                         <div class="sub-navigation sub-navigation-left" ng-if="naviExpanded.naviControl">
                             <ul>
@@ -234,7 +234,7 @@
                     <li class="navibar-divider navi-timestamp"></li>
                     <li class="navibar-item navi-timestamp">
                         <span class="timestamp" ng-if="cfg.route.time.string">
-                        <i class="fa fa-clock-o"></i> {{cfg.route.time.string}}
+                        <i class="fa fa-clock"></i> {{cfg.route.time.string}}
                     </span>
                     </li>
 
@@ -267,7 +267,7 @@
         <div class="container">
             <span class="copyright" ng-bind-html="getCustomCfgVal('footer_text') | toTrusted"></span>
             <span class="copyright">{{version}}</span>
-            <span class="timestamp" ng-if="cfg.route.time.string"><i class="fa fa-clock-o"></i> {{cfg.route.time.string}}</span>
+            <span class="timestamp" ng-if="cfg.route.time.string"><i class="fa fa-clock"></i> {{cfg.route.time.string}}</span>
             <span class="timestamp"> | </span>
             <span class="timestamp" ng-include="'app/views/indicator.html'"></span>
         </div>

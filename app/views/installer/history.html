@@ -124,8 +124,8 @@
             <tr class="zniffer-row-{{v.data}}" 
                 dir-paginate="v in zniffer.all| orderBy: '-id' | itemsPerPage: pageSize" current-page="currentPage" id="row_{{v.id}}">
                 <td>
-                    <i title="{{v.type}}" class="fa fa-long-arrow-right" ng-if="v.type === 'incoming'"></i>
-                    <i title="{{v.type}}" class="fa fa-long-arrow-left" ng-if="v.type === 'outgoing'"></i> 
+                    <i title="{{v.type}}" class="fa fa-long-arrow-alt-right" ng-if="v.type === 'incoming'"></i>
+                    <i title="{{v.type}}" class="fa fa-long-arrow-alt-left" ng-if="v.type === 'outgoing'"></i> 
                 </td>
                 <td>{{v.dateTime.date}}</td>
                 <td>{{v.dateTime.time}}</td>

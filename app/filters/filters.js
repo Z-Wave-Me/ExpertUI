@@ -659,15 +659,15 @@ angApp.filter('getBatteryIcon', function () {
         if (level >= 95) {
             icon = 'fa-battery-full text-success';
         } else if (level >= 70 && level < 95) {
-            icon = 'fa-battery-3 text-success';
+            icon = 'fa-battery-three-quarters text-success';
         } else if (level >= 50 && level < 70) {
-            icon = 'fa-battery-2 text-primary';
+            icon = 'fa-battery-half text-primary';
         } else if (level > 30 && level <= 50) {
-            icon = 'fa-battery-2 text-info';
+            icon = 'fa-battery-half text-info';
         } else if (level >= 1 && level <= 30) {
-            icon = 'fa-battery-1 text-danger';
+            icon = 'fa-battery-quarters text-danger';
         } else {
-            icon = 'fa-battery-0 text-danger';
+            icon = 'fa-battery-empty text-danger';
         }
         return icon;
     };
@@ -692,7 +692,7 @@ angApp.filter('getDeviceTypeIcon', function () {
                 icon = 'fa-battery-full text-success';
                 break;
             case 'portable':
-                icon = 'fa-feed text-primary';
+                icon = 'fa-rss text-primary';
                 break;
             default:
                 icon = 'fa-ellipsis-h';
