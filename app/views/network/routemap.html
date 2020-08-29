@@ -2,7 +2,7 @@
 <div ng-controller="RouteMapController">
     <div class="accordion-entry">
         <h2 class="accordion-entry-title" ng-click="expandElement('settingsRoutemap')">
-            <i class="fa fa-cogs fa-fw"></i>&nbsp;{{_t('route_map_settings')}}
+            <i class="fa fa-map-marked fa-fw"></i>&nbsp;{{_t('route_map_settings')}}
             <i class="fa accordion-arrow" ng-class="expand.settingsRoutemap ? 'fa-chevron-up':'fa-chevron-down'"></i>
         </h2>
         <div class="accordion-entry-ctrl" ng-show="expand.settingsRoutemap">
@@ -15,7 +15,7 @@
                             <div class="btn-row">
                                 <button class="btn btn-default" id="ManualRouteDraw"
                                         ng-click="routeMap.startManualRoute()">
-                                    <span><i class="fa fa-cog"></i> {{_t('manual_route_draw')}}</span>
+                                    <span><i class="fa fa-route"></i> {{_t('manual_route_draw')}}</span>
                                 </button>
                             </div>
                             <!-- Show annotations-->
@@ -328,7 +328,7 @@
     </div>
     <div class="row">
         <h2>
-            <i class="fa fa-map fa-fw"></i> {{_t('priority_routes')}}
+            <i class="fa fa-route fa-fw"></i> {{_t('priority_routes')}}
         </h2>
         <table class="table table-condensed">
             <thead>

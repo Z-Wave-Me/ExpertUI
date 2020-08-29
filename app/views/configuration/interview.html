@@ -128,7 +128,7 @@
                         <bb-row-spinner
                                 spinner="rowSpinner['devices[' + deviceId + '].RequestNodeInformation()']"
                                 label="_t('config_ui_request_node_info')"
-                                icon="'fa-circle'">
+                                icon="'fa-redo'">
                         </bb-row-spinner>
                     </button>
                     <!-- force interview-->
@@ -140,19 +140,19 @@
                         <bb-row-spinner
                                 spinner="rowSpinner['devices[' + deviceId + '].InterviewForce()']"
                                 label="_t('config_ui_force_interview')"
-                                icon="'fa-fire'">
+                                icon="'fa-sync'">
                         </bb-row-spinner>
                     </button>
                     <!-- interview result -->
                     <button id="btn_show_interview_result" class="btn btn-default"
                             ng-click="handleModal('interviewModal',$event)">
-                        <i class="fa fa-clone"></i> {{_t('config_ui_show_interview_results')}}
+                        <i class="fa fa-tasks"></i> {{_t('config_ui_show_interview_results')}}
                     </button>
                     <!-- device description -->
                     <button id="btn_show_description" class="btn btn-default"
                             ng-click="handleModal('loadXmlModal', $event)"
                             ng-if="showInterview">
-                        <i class="fa fa-clone"></i> {{_t('config_ui_select_xml')}}
+                        <i class="fa fa-list"></i> {{_t('config_ui_select_xml')}}
                     </button>
 
                     <!-- <button id="btn_show_description" class="btn btn-default"
@@ -163,7 +163,7 @@
                     <a href="{{cfg.server_url + cfg.zddx_create_url + deviceId}}" class="btn btn-default" id="btn_create_zddx"
                        target="blank"
                        ng-if="showInterview">
-                        <i class="fa fa-clone"></i> {{_t('btn_zddx_create')}}
+                        <i class="fa fa-file-code"></i> {{_t('btn_zddx_create')}}
                     </a>
                 </div>
 
