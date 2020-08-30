@@ -3,6 +3,38 @@ zwave-expertui
 
 This User Interfaces allows to operate a Smart Home Network based on Z-Wave devices. It utilizes the software architecture "Z-Way", certified as Z-Wave Plus Controller.
 
+## v1.6.0
+### New features
+- Added Promiscuous mode to Zniffer page
+- Added list of available firmwares from Z-Wave.Me Firmware Storage
+- Added *.gbl to OTA file list for 7th gen firmwares
+- Added Noise Level dashed line delimiting good from bad
+- Make clickable problematic nodes on home page
+- Rescaled Background RSSI measurement
+- Added description to Include device button in case of license limit
+
+### Fixes:
+- Don't show useless fields for controller itself in Interview tab (isFailed, Interview status, Request NIF, ...)
+- Don't crash Interview tab on missing ZDDX file - just continue
+- Updated to Font Awesome 5
+- UZB/RaZ firmware upgrade better translation
+
+## v1.5.2
+### New features:
+- Improved Route Map - priority route
+- Reorg refactored
+- Added Instance Id to the list of locks nad notifications
+- InspectQueue pause button
+
+### Fixes:
+- Fixed missing notification about exclusion of foreign device
+- Fixed broken Interiew tab on missing ZDDX entries resourceLinks and others
+- Fixed A/MCA problem in Association tab
+- Fixed CSA inclusion
+- Notifications channels fixed
+- Route Map fixes
+
+
 ## v1.5.1
 #### Fixes:
 - Fixed missing PUK in the UI
