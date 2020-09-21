@@ -55,14 +55,16 @@
 
                                                 </div>
                                             </form>
-
+                                        </td>
+                                        <td rowspan="5" id="td-image">
+                                            <img src="{{deviceImage}}" class="config-device-img" alt="Image"/>
                                         </td>
                                     </tr>
                                     <!-- list -->
                                     <tr ng-repeat="v in descriptionCont track by $index"
                                         ng-hide="v.val === '' || v.val === false || v.val === null">
                                         <th>{{_t(v.key)}}</th>
-                                        <td id="{{v.key}}">
+                                        <td id="{{v.key}}" ng-attr-colspan="{{$index>4?2:0}}">
                                             <div ng-switch on="v.key">
 
                                                 <!-- command_class -->
@@ -89,11 +91,12 @@
                                                      ng-bind-html="v.val | toTrusted"></div>
                                             </div>
                                         </td>
+
                                     </tr>
                                     <!-- device_interview_indicator -->
                                     <tr ng-if="showInterview">
                                         <th>{{_t('device_interview_indicator')}}</th>
-                                        <td>
+                                        <td colspan="2">
                                             <!--<div class="text-danger" ng-if="zwaveInterview.progress < 1">
                                                 {{_t('device_interview_stage_failed')}}
                                             </div>-->
@@ -106,7 +109,6 @@
                                                 </div>
                                             </div>
                                         </td>
-
                                     </tr>
                                     </tbody>
                                 </table>

@@ -364,11 +364,6 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
       "key": "device_node_id",
       "val": nodeId
     };
-    //obj["b"] = {"key": "device_node_name", "val": $filter('deviceName')(nodeId, node)};
-    obj["c"] = {
-      "key": "device_node_type",
-      "val": ''
-    };
     obj["d"] = {
       "key": "device_description_brand",
       "val": brandName
