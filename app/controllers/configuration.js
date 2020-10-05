@@ -72,7 +72,6 @@ appController.controller('LoadDeviceXmlController', function($scope,$routeParams
            $scope.deviceXml.filter = _.findWhere($scope.deviceXml.all, {manufacturerId: deviceVendorId, productTypeId: deviceProductTypeId, productId: deviceProductId});
 
 
-           
            if($scope.deviceXml.filter)
            {
             $scope.deviceXml.find = $scope.deviceXml.filter;
