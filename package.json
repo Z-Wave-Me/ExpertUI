@@ -5,7 +5,7 @@
   "description": "This User Interfaces allows to operate a Smart Home Network based on Z-Wave devices.",
   "main": "index.html",
   "app_type": "default",
-  "built": "31-08-2020 01:20:09",
+  "built": "25-10-2020 21:00:33",
   "type_cfg": {
     "default": {
       "dir": "dist",
@@ -50,7 +50,7 @@
     "z-wave",
     "smart home"
   ],
-  "author": "Martin Vach (info@vades.net)",
+  "author": "Serguei Poltorak (ps@z-wave.me) and Martin Vach (info@vades.net)",
   "license": "GNU",
   "bugs": {
     "url": "https://github.com/Z-Wave-Me/ExpertUI/issues"
