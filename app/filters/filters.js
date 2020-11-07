@@ -665,7 +665,7 @@ angApp.filter('getBatteryIcon', function () {
         } else if (level > 30 && level <= 50) {
             icon = 'fa-battery-half text-info';
         } else if (level >= 1 && level <= 30) {
-            icon = 'fa-battery-quarters text-danger';
+            icon = 'fa-battery-quarter text-danger';
         } else {
             icon = 'fa-battery-empty text-danger';
         }
