@@ -10,17 +10,6 @@
             ng-submit="submitApplyConfigCfg(formName,{'id': deviceId,'instance': '0','commandclass': '70','command': 'Set'}, configCont, hasBattery,false,false,false,'saveIntoDevice')"
             novalidate>
         <div class="cfg-block">
-            <!-- update from device -->
-            <button class="btn btn-primary" type="button"
-                    ng-click="updateFromDeviceCfg('devices[' + deviceId + '].instances[0].commandClasses[0x70].Get', configCont, deviceId, formName,'updateFromDevice')"
-                    ng-disabled="rowSpinner['updateFromDevice']">
-                <bb-row-spinner
-                        spinner="rowSpinner['updateFromDevice']"
-                        label="_t('btn_update_from_device')"
-                        icon="'fa-copy-o'">
-                </bb-row-spinner>
-            </button>
-
             <!-- save into device -->
             <button class="btn btn-primary" type="submit"
                     ng-disabled="rowSpinner['saveIntoDevice']">
@@ -28,6 +17,17 @@
                         spinner="rowSpinner['saveIntoDevice']"
                         label="_t('apply_config')"
                         icon="'fa-save'">
+                </bb-row-spinner>
+            </button>
+
+            <!-- update from device -->
+            <button class="btn btn-primary" type="button"
+                    ng-click="updateFromDeviceCfg('devices[' + deviceId + '].instances[0].commandClasses[0x70].Get', configCont, deviceId, formName,'updateFromDevice')"
+                    ng-disabled="rowSpinner['updateFromDevice']">
+                <bb-row-spinner
+                        spinner="rowSpinner['updateFromDevice']"
+                        label="_t('btn_update_from_device')"
+                        icon="'fa-download'">
                 </bb-row-spinner>
             </button>
 
@@ -76,6 +76,17 @@
                         spinner="rowSpinner['save_' + v.confNum]"
                         label="_t('apply_config_into_device')"
                         icon="'fa-save text-success'">
+                </bb-row-spinner>
+            </button>
+
+            <!-- get this param -->
+            <button class="btn btn-default" type="button"
+                    ng-click="submitApplyConfigCfg(formName, {'id': deviceId, 'instance': '0', 'commandclass': '70', 'command': 'Get'}, configCont, hasBattery, v.confNum,false,false,'get_' + v.confNum)"
+                    ng-disabled="rowSpinner['get_' + v.confNum]">
+                <bb-row-spinner
+                        spinner="rowSpinner['get_' + v.confNum]"
+                        label="_t('update_from_device')"
+                        icon="'fa-download text-success'">
                 </bb-row-spinner>
             </button>
 
