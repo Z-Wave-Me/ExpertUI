@@ -33,6 +33,8 @@ else
 	echo "Building test version"
 fi
 
+(cd app/sass/; ./compile.sh)
+
 grunt
 
 if [ "$1" == "dist" ]; then
@@ -43,7 +45,7 @@ if [ "$1" == "dist" ]; then
 fi
 
 if [ -n "$TAG" ]; then
-	git add README.md app/css/main.css.orig app/info.json package.json dist/ &&
+	git add README.md app/info.json package.json dist/ &&
 	git commit -m "dist" && git tag "$TAG" &&
 	git push && git push --tags &&
 	git checkout master && git merge dev && git push && git checkout dev # merge with master
