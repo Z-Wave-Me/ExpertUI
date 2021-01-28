@@ -2,6 +2,9 @@
 <div data-ng-controller="UzbController">
     <bb-loader></bb-loader>
     <!-- /////////////////////////// Firmware update /////////////////////////// -->
+    <div class="alert alert-info">
+        <span class="help-text"><i class="fa fa-lg fa-info-circle"></i>
+            {{_t('current_firmware')}}: {{currentVersion}} [Bootloader: {{bootloaderVersion}}]</span></div>
     <div class="page-header"><h1>{{_t('upgrade_bootloader_firmware')}}</h1></div>
     <p>{{_t('txt_uzb_info')}}</p>
     <bb-alert alert="alert"></bb-alert>

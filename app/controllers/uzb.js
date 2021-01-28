@@ -31,6 +31,8 @@ appController.controller('UzbController', function ($scope, $timeout, $window, c
                 };
                 return;
             }
+            $scope.currentVersion = ZWaveAPIData.controller.data.APIVersion.value.replace(/^0+/, '');
+            $scope.bootloaderVersion = ZWaveAPIData.controller.data.bootloaderCRC.value;
             var tokenParam = (token ? '&token=' + token : '');
             var appVersion = ZWaveAPIData.controller.data.APIVersion.value.split('.');
             var appVersionMajor = parseInt(appVersion[0], 10);
