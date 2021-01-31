@@ -2,6 +2,8 @@
 -------------------------------------------------- */
 .btn{
     padding: $app-input-padding;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
 }
 .panel,.cfg-block {
     .btn{
