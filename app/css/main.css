@@ -11735,7 +11735,9 @@ img {
 /* Button
 -------------------------------------------------- */
 .btn {
-  padding: 12px 14px; }
+  padding: 12px 14px;
+  overflow-x: hidden;
+  text-overflow: ellipsis; }
 
 .panel .btn, .cfg-block .btn {
   margin: 0 5px 10px 0; }
