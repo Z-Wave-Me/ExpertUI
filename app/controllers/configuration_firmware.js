@@ -39,7 +39,7 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
         }
 
     };
-
+    $scope.firmwareVersion = '';
     /**
      * Load firmwares from the storage data
      */
@@ -94,6 +94,8 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
             var productId = node.data.manufacturerProductId.value
             var appVersionMajor = node.data.applicationMajor.value;
             var appVersionMinor = node.data.applicationMinor.value;
+            $scope.firmwareVersion = appVersionMajor + '.' + appVersionMinor;
+            console.log('version', $scope.firmwareVersion);
             var fromFrequency = ZWaveAPIData.controller.data.frequency.value;
             var urlParams = 
                 '?manufacturerId=' + manufacturerId +
@@ -251,9 +253,6 @@ appController.controller('ConfigFirmwareController', function ($scope, $routePar
                     $scope.firmware.update.show = false;
                 }
             }
-
-            return;
-
         });
     }
 
