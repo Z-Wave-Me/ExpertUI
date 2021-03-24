@@ -61,6 +61,13 @@
       border-right: 1px solid $header-delim-r-color;
     }
   }
+  @media only screen and (max-width: 480px) {
+    ul.navibar {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+  }
   .navibar-item-root,.timestamp{
      padding: 0 $spacing + $spacing-half;
      display: inline-block;
