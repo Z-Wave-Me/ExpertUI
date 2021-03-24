@@ -23,7 +23,11 @@
     font-size: $app-navi-icon-size;
   }
 }
-
+@media only screen and (max-width: 320px) {
+  #header {
+    font-size: 100%;
+  }
+}
 /* Main navigation
 -------------------------------------------------- */
 #main_navigation_wrap {
@@ -38,6 +42,7 @@
   ul.navibar {
     list-style: none;
     margin: 0;
+    padding: 0;
     .navibar-item{
      // position: relative;
   float: left;
