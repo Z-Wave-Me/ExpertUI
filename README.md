@@ -5,9 +5,10 @@ This User Interfaces allows to operate a Smart Home Network based on Z-Wave devi
 
 ## v1.5.5
 #### New features:
-- Aadd bootloader and firmware versions
+- Added bootloader and firmware versions on the firmware upgrade page
 #### Fixes:
 - Fix settings title overflow
+- Adaptive menu on mobil devices
 
 ## v1.5.4
 #### Fixes:

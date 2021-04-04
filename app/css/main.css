@@ -11323,11 +11323,6 @@ a, .order-by {
       height: 50px;
       border-left: 1px solid #1C3B67;
       border-right: 1px solid #1e578c; }
-  @media only screen and (max-width: 480px) {
-    #main_navigation ul.navibar {
-      display: flex;
-      justify-content: space-around;
-      align-items: center; } }
   #main_navigation .navibar-item-root, #main_navigation .timestamp {
     padding: 0 15px;
     display: inline-block;
@@ -13810,7 +13805,14 @@ input[type="number"].input_number {
     display: none !important; }
 
   .navi-timestamp {
-    display: none !important; } }
+    display: none !important; }
+
+  ul.navibar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
+    ul.navibar .navibar-item-root {
+      padding: 0 !important; } }
 /* Extra Small Devices, Phones */
 /* Custom, iPhone Retina */
 /* Print
