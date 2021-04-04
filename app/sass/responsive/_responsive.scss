@@ -111,7 +111,14 @@
     .navi-timestamp{
         display: none !important;
     }
-
+    ul.navibar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .navibar-item-root {
+            padding: 0 !important;
+        }
+    }
 
 }
 /* Extra Small Devices, Phones */

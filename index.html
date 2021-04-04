@@ -114,6 +114,7 @@
         <div id="main_navigation" class="container">
             <div id="navigation_left">
                 <ul class="navibar">
+                    <li class="navibar-divider"> </li>
                     <!-- Home -->
                     <li class="navibar-item">
                         <a class="navibar-item-root"href="#home" title="{{_t('nav_home')}}" ng-class="isActive('home')">
@@ -231,7 +232,7 @@
                     </li>
 
                     <!-- Time -->
-                    <li class="navibar-divider navi-timestamp"></li>
+                    <li class="navibar-divider"></li>
                     <li class="navibar-item navi-timestamp">
                         <span class="timestamp" ng-if="cfg.route.time.string">
                         <i class="fa fa-clock"></i> {{cfg.route.time.string}}
