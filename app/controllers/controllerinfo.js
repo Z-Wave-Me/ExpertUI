@@ -108,14 +108,24 @@ appController.controller('ControllerController', function($scope, $window, $filt
         $scope.master['controller.data.SDK'] = ZWaveAPIData.controller.data.SDK.value;
         $scope.master['controller.data.APIVersion'] = ZWaveAPIData.controller.data.APIVersion.value;
         $scope.master['controller.data.uuid'] = ZWaveAPIData.controller.data.uuid.value;
-        if (ZWaveAPIData.controller.data.caps.value) {
-            $scope.master['controller.data.caps.subvendor'] = '0x' + dec2hex((ZWaveAPIData.controller.data.caps.value[0] << 8) + ZWaveAPIData.controller.data.caps.value[1]);
-            $scope.master['controller.data.caps.nodes'] = nodeLimit(dec2hex(ZWaveAPIData.controller.data.caps.value[2]).slice(-2));
-            $scope.master['controller.data.caps.cap'] = caps(ZWaveAPIData.controller.data.caps.value);
+        if (ZWaveAPIData.controller.data.firmware.caps.maxNodes.value) {
+            $scope.master['controller.data.firmware.caps.subvendor'] = '0x' + dec2hex((ZWaveAPIData.controller.data.firmware.caps.value[0] << 8) + ZWaveAPIData.controller.data.firmware.caps.value[1]);
+            $scope.master['controller.data.firmware.caps.nodes'] = ZWaveAPIData.controller.data.firmware.caps.maxNodes.value;
+            $scope.master['controller.data.firmware.caps.staticApi'] = ZWaveAPIData.controller.data.firmware.caps.staticApi.value;
+            $scope.master['controller.data.firmware.caps.maxPower'] = ZWaveAPIData.controller.data.firmware.caps.maxPower.value;
+            $scope.master['controller.data.firmware.caps.backup'] = ZWaveAPIData.controller.data.firmware.caps.backup.value;
+            $scope.master['controller.data.firmware.caps.wup'] = ZWaveAPIData.controller.data.firmware.caps.wup.value;
+            $scope.master['controller.data.firmware.caps.advancedIMA'] = ZWaveAPIData.controller.data.firmware.caps.advancedIMA.value;
+            $scope.master['controller.data.firmware.caps.longRange'] = ZWaveAPIData.controller.data.firmware.caps.longRange.value;
+            $scope.master['controller.data.firmware.caps.ultraUART'] = ZWaveAPIData.controller.data.firmware.caps.ultraUART.value;
+            $scope.master['controller.data.firmware.caps.swapSubvendor'] = ZWaveAPIData.controller.data.firmware.caps.swapSubvendor.value;
+            $scope.master['controller.data.firmware.caps.promisc'] = ZWaveAPIData.controller.data.firmware.caps.promisc.value;
+            $scope.master['controller.data.firmware.caps.zniffer'] = ZWaveAPIData.controller.data.firmware.caps.zniffer.value;
+            $scope.master['controller.data.firmware.caps.jammingDetection'] = ZWaveAPIData.controller.data.firmware.caps.jammingDetection.value;
         } else {
-            $scope.master['controller.data.caps.subvendor'] = '';
-            $scope.master['controller.data.caps.nodes'] = '';
-            $scope.master['controller.data.caps.cap'] = '';
+            $scope.master['controller.data.firmware.caps.subvendor'] = '0x' + dec2hex((ZWaveAPIData.controller.data.firmware.caps.value[0] << 8) + ZWaveAPIData.controller.data.firmware.caps.value[1]);
+            $scope.master['controller.data.firmware.caps.nodes'] = nodeLimit(dec2hex(ZWaveAPIData.controller.data.firmware.caps.value[2]).slice(-2));
+            $scope.master['controller.data.firmware.caps.cap'] = caps(ZWaveAPIData.controller.data.firmware.caps.value);
         }
         $scope.master['controller.data.softwareRevisionVersion'] = ZWaveAPIData.controller.data.softwareRevisionVersion.value;
         $scope.master['controller.data.softwareRevisionId'] = ZWaveAPIData.controller.data.softwareRevisionId.value;

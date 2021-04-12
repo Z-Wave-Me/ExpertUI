@@ -79,17 +79,60 @@
                 <td id="ctrl_info_uuid_value">{{master['controller.data.uuid']}}</td>
             </tr>
             <tr>
-                <td id="ctrl_info_caps_subvendor_title" class="controller-th">{{_t('ctrl_info_caps_subvendor_title')}}
-                </td>
-                <td id="ctrl_info_caps_subvendor_value">{{master['controller.data.caps.subvendor']}}</td>
+                <td id="ctrl_info_caps_subvendor_title" class="controller-th">{{_t('ctrl_info_caps_subvendor_title')}}</td>
+                <td id="ctrl_info_caps_subvendor_value">{{master['controller.data.firmware.caps.subvendor']}}</td>
             </tr>
             <tr>
                 <td id="ctrl_info_caps_nodes_title" class="controller-th">{{_t('ctrl_info_caps_nodes_title')}}</td>
-                <td id="ctrl_info_caps_nodes_value">{{master['controller.data.caps.nodes']}}</td>
+                <td id="ctrl_info_caps_nodes_value">{{master['controller.data.firmware.caps.nodes']}}</td>
+            </tr>
+            <tr>
+                <td class="controller-th">{{_t('ctrl_info_caps_staticApi_title')}}</td>
+                <td><i class="fa fa-{{master['controller.data.firmware.caps.staticApi'] ? 'check' : 'times'}}"></i></td>
+            </tr>
+            <tr>
+                <td class="controller-th">{{_t('ctrl_info_caps_maxPower_title')}}</td>
+                <td><i class="fa fa-{{master['controller.data.firmware.caps.maxPower'] ? 'check' : 'times'}}"></i></td>
+            </tr>
+            <tr>
+                <td class="controller-th">{{_t('ctrl_info_caps_backup_title')}}</td>
+                <td><i class="fa fa-{{master['controller.data.firmware.caps.backup'] ? 'check' : 'times'}}"></i></td>
+            </tr>
+            <tr>
+                <td class="controller-th">{{_t('ctrl_info_caps_wup_title')}}</td>
+                <td><i class="fa fa-{{master['controller.data.firmware.caps.wup'] ? 'check' : 'times'}}"></i></td>
+            </tr>
+            <tr>
+                <td class="controller-th">{{_t('ctrl_info_caps_advancedIMA_title')}}</td>
+                <td><i class="fa fa-{{master['controller.data.firmware.caps.advancedIMA'] ? 'check' : 'times'}}"></i></td>
+            </tr>
+            <tr>
+                <td class="controller-th">{{_t('ctrl_info_caps_longRange_title')}}</td>
+                <td><i class="fa fa-{{master['controller.data.firmware.caps.longRange'] ? 'check' : 'times'}}"></i></td>
+            </tr>
+            <tr>
+                <td class="controller-th">{{_t('ctrl_info_caps_ultraUART_title')}}</td>
+                <td><i class="fa fa-{{master['controller.data.firmware.caps.ultraUART'] ? 'check' : 'times'}}"></i></td>
+            </tr>
+            <tr>
+                <td class="controller-th">{{_t('ctrl_info_caps_swapSubvendor_title')}}</td>
+                <td><i class="fa fa-{{master['controller.data.firmware.caps.swapSubvendor'] ? 'check' : 'times'}}"></i></td>
+            </tr>
+            <tr>
+                <td class="controller-th">{{_t('ctrl_info_caps_promisc_title')}}</td>
+                <td><i class="fa fa-{{master['controller.data.firmware.caps.promisc'] ? 'check' : 'times'}}"></i></td>
+            </tr>
+            <tr>
+                <td class="controller-th">{{_t('ctrl_info_caps_zniffer_title')}}</td>
+                <td><i class="fa fa-{{master['controller.data.firmware.caps.zniffer'] ? 'check' : 'times'}}"></i></td>
+            </tr>
+            <tr>
+                <td class="controller-th">{{_t('ctrl_info_caps_jammingDetection_title')}}</td>
+                <td><i class="fa fa-{{master['controller.data.firmware.caps.jammingDetection'] ? 'check' : 'times'}}"></i></td>
             </tr>
             <tr>
                 <td id="ctrl_info_caps_cap_title" class="controller-th">{{_t('ctrl_info_caps_cap_title')}}</td>
-                <td id="ctrl_info_caps_cap_value">{{master['controller.data.caps.cap']}}</td>
+                <td id="ctrl_info_caps_cap_value">{{master['controller.data.firmware.caps.cap']}}</td>
             </tr>
             </tbody>
         </table>
