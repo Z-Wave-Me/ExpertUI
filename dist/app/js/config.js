@@ -9,7 +9,7 @@ var config_data = {
 		'dev_host': [],
 		'app_name': 'Z-Wave Expert',
 		'app_version': 'v1.5.5',
-		'app_built': '04-04-2021 03:53:07',
+		'app_built': '12-04-2021 18:02:43',
 		'app_id': 'ExpertUI',
 		'custom_ip': false,
 		'user_field': 'USERXXXX',
@@ -80,10 +80,6 @@ var config_data = {
 		'ntpdate_service': '/ZAutomation/api/v1/system/time/ntp/', // Url to check and control ntp date service
 		'box_reboot': '/ZAutomation/api/v1/system/reboot', // reboot box
 		'system_info_url': '/ZAutomation/api/v1/system/info', // Sytem info
-		'installer_auth': '/ZAutomation/api/v1/system/certfxAuth', // Installer initialization
-		'identifier_update': '/ZAutomation/api/v1/system/certfxUpdateIdentifier', // Identifier update
-		'cit_forward_login': '/ZAutomation/api/v1/system/certfxAuthForwarding', // forward cit login
-		'cit_unregister': '/ZAutomation/api/v1/system/certfxUnregister', // unregister cit
 		'get_dsk': '/ZWaveAPI/GetDSKCollection', // Get DSK collection
 		'add_dsk': '/ZWaveAPI/AddDSKEntry', // Add DSK
 		'remove_dsk': '/ZWaveAPI/RemoveDSKEntry?dsk=', // Remove DSK
@@ -311,23 +307,13 @@ var config_data = {
 		},
 		// List of the find hosts
 		'find_hosts': [
-			'find.z-wave.me',
-			'find.popp.eu',
-			'findcit.z-wavealliance.org'
+			'find.z-wave.me'
 		],
-		// Find cit host name
-		'find_cit': {
-			//'hostname':'find.zwave.me',
-			'hostname': 'findcit.z-wavealliance.org'
-		},
 		// Redirect to the url after logout
 		'logout_redirect': {
-			//'findcit.z-wavealliance.org': 'https://find.zwave.me/zboxweb',
-			'findcit.z-wavealliance.org': 'https://findcit.z-wavealliance.org/zboxweb'
 		},
 		// Url to check if is on-line
 		'ping': {
-			'findcit': 'https://findcit.z-wavealliance.org'
 		},
 		// ---------------------------------- Custom config for specifics app_type ---------------------------------- //
 		// Application type : default/installer/wd/popp/jb
@@ -342,16 +328,6 @@ var config_data = {
 				'controller_name': 'Z-Way',
 				'hardware_vendor': 'RaZberry by Z-Wave.Me',
 				'latest_version_url': 'https://storage.z-wave.me/z-way/razberry/latest/VERSION'
-			},
-			'installer': {
-				'logo': 'app/images/z-wave-aliance-logo.png',
-				'footer_text': '&COPY; 2020 Z-Wave Alliance',
-				'logout': '#/logout',
-				'version_type': '',
-				'title': 'Z-Wave CIT',
-				'controller_name': 'CIT',
-				'hardware_vendor': 'Z-Wave Alliance',
-				'latest_version_url': 'https://storage.z-wave.me/z-way/cit/latest/VERSION'
 			},
 			'wd': {
 				'logo': 'app/images/zplus.jpg',
