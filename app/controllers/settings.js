@@ -89,25 +89,10 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
         });
 
         $scope.settings.input = cfg.zwavecfg;
-        $scope.settings.input.cit_identifier = cfg.system_info.cit_identifier;
-        $scope.settings.lastCITIdentifier = cfg.system_info.cit_identifier;
         $scope.settings.lastTZ = cfg.zwavecfg.time_zone.replace(/_/g, ' ');
 
         // add logged in user login input by default
         $scope.settings.input.user = $scope.user && $scope.user.login? $scope.user.login : '';
-
-        //// get system info settings
-        /*dataService.getApi('cit_forward_login').then(function (response) {
-            if (response.data.data && response.data.data.forwardCITAuth) {
-                $scope.settings.input.forward_login = response.data.data.forwardCITAuth;
-            } else {
-                $scope.settings.input.forward_login = false
-            }
-        }, function (error) {
-            $scope.settings.input.forward_login = false
-            $scope.loading = false;
-            alertify.alertError($scope._t('err_cit_get_forward_login'));
-        });*/
     };
 
     $scope.loadSettings();
@@ -125,44 +110,6 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
                 deviceService.showNotifier({message: $scope._t('update_successful')});
             }
         });
-
-        if($scope.settings.lastCITIdentifier !== $scope.settings.input.cit_identifier) {
-
-            var data = {
-                "user": input.user,
-                "pass": input.pass,
-                "cit_identifier": input.cit_identifier
-            };
-
-            dataService.postApi('identifier_update', data).then(function (response) {
-                if (!response.data.data.result) {
-                    $scope.settings.show_update_successful = false;
-                    alertify.alertError($scope._t('err_cit_update_identifier') + ' ' + response.data.data.result_message);
-                } else {
-                    $scope.settings.show_update_successful = true;
-                    $scope.settings.lastCITIdentifier = $scope.settings.input.cit_identifier;
-                }
-                $scope.settings.updateCITIdentifier = false;
-            }, function (error) {
-                $scope.settings.show_update_successful = false;
-
-                $scope.settings.input.cit_identifier = $scope.settings.lastCITIdentifier;
-                alertify.alertError($scope._t('err_cit_update_identifier'));
-
-                $scope.settings.updateCITIdentifier = false;
-            });
-        }
-
-        /*if ($scope.settings.input.forward_login !== $scope.settings.forward_login_old) {
-
-            dataService.postApi('cit_forward_login', {forwardCITAuth: $scope.settings.input.forward_login}).then(function (response) {
-                $scope.settings.show_update_successful = true;
-            }, function (error) {
-                $scope.settings.show_update_successful = false;
-                alertify.alertError($scope._t('err_cit_set_forward_login'));
-            });
-        }*/
-
 
         if (($scope.settings.wifi_pwd_changed && input.wifi_password !== '') || input.ssid_name !== $scope.settings.lastSsid) {
 
@@ -193,8 +140,7 @@ appController.controller('SettingsAppController', function ($scope, $timeout, $w
             'time_zone',
             'notes',
             'ssid_name',
-            'currentDateTime',
-            'cit_identifier');
+            'currentDateTime');
 
 
         dataService.postApi('configupdate_url', newInput).then(function (response) {
@@ -414,10 +360,6 @@ appController.controller('SettingsFirmwareController', function ($scope, $sce, $
         $scope.firmwareUpdate.alert = {message: $scope._t('firmware_update_remote'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
     }
 
-    if (!$scope.isOnline) {
-        $scope.firmwareUpdate.alert = {message: $scope._t('findcit_no_connection',{__server__: cfg.ping.findcit}), status: 'alert-warning', icon: 'fa-exclamation-circle'};
-    }
-
     /**
      * Load latest version
      */
@@ -474,60 +416,6 @@ appController.controller('SettingsFirmwareController', function ($scope, $sce, $
         });
     };
 
-});
-
-appController.controller('SettingsUnregisterCITController', function ($scope, $timeout, $window, $interval, $location, $q, $filter,cfg,dataService,deviceService) {
-    $scope.unregisterCit = {
-        input: {
-            user: $scope.user && $scope.user.login? $scope.user.login : '',
-            pass: ''
-        }
-    };
-
-    if (!$scope.isOnline) {
-        $scope.unregisterCit.alert = {message: $scope._t('findcit_no_connection',{__server__: cfg.ping.findcit}), status: 'alert-warning', icon: 'fa-exclamation-circle'};
-    }
-
-    $scope.cancel = function($event) {
-        $scope.unregisterCit.input.pass = "";
-        $scope.handleModal('citUnregisterModal', $event);
-    };
-
-    $scope.confirmUnregistration = function($event) {
-        $scope.unregisterCIT($scope.unregisterCit.input);
-
-        $scope.handleModal('citidentifierModal', $event);
-    };
-
-    /**
-     * Store settings
-     * @param {object} input
-     */
-    $scope.unregisterCIT = function(input,$event) {
-
-        $scope.loading = {status: 'loading-spin', icon: 'fa-spinner fa-spin', message: $scope._t('updating')};
-
-        if ($scope.unregisterCit.input.user && $scope.unregisterCit.input.user !== '' &&
-            $scope.unregisterCit.input.pass && $scope.unregisterCit.input.pass !== '') {
-            dataService.postApi('cit_unregister', $scope.unregisterCit.input).then(function (response) {
-                if (!response.data.data.result) {
-                    alertify.alertError($scope._t('err_cit_unregister') + ' ' + response.data.data.result_message);
-                } else {
-                    deviceService.showNotifier({message: $scope._t('update_successful')});
-                }
-                $scope.loading = false;
-                $scope.unregisterCit.input.pass = "";
-            }, function (error) {
-                alertify.alertError($scope._t('err_cit_unregister'));
-                $scope.loading = false;
-                $scope.unregisterCit.input.pass = "";
-            });
-        } else {
-            alertify.alertError($scope._t('err_cit_unregister'));
-            $scope.loading = false;
-            $scope.unregisterCit.input.pass = "";
-        }
-    };
 });
 
 /**

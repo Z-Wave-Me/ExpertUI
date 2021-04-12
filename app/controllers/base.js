@@ -333,27 +333,7 @@ appController.controller('BaseController', function ($scope, $rootScope, $cookie
       //angular.extend($scope.systemInfo, response.data.data);
       angular.extend(cfg.system_info, response.data.data);
       $scope.buildVersion();
-      // Is CIT server online?
-      $scope.isOnline = cfg.system_info.cit_server_reachable;
-      // box is not registered
-      if (!cfg.system_info.cit_authorized) {
-        $scope.alertCitLicence = 'cit_not_registered';
-        return;
-      }
-      //  license has been expired
-      if (cfg.system_info.cit_license_countDown == 0) {
-        $scope.alertCitLicence = 'cit_licence_expired';
-        return;
-      }
-      //  license will be expire soon
-      if (cfg.system_info.cit_license_countDown < 5) {
-        $scope.alertCitLicence = 'cit_licence_update';
-        return;
-      }
-
-
     }, function (error) {});
-
   };
 
 

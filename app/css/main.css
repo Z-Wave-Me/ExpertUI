@@ -13338,10 +13338,6 @@ input[type="number"].input_number {
   .app-type-installer .product-logo {
     max-width: 150px;
     max-height: 150px; }
-  .app-type-installer #cit_init .product-logo {
-    margin: 20px 0; }
-  .app-type-installer #cit_init .cit-welcome {
-    margin: 20px 0 0 0; }
   .app-type-installer .product-data-list {
     background-color: #ceebcd; }
   .app-type-installer .product-description {
