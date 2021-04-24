@@ -32,12 +32,12 @@ appController.controller('UzbController', function ($scope, $timeout, $window, c
                 return;
             }
             $scope.currentVersion = ZWaveAPIData.controller.data.APIVersion.value.replace(/^0+/, '');
-            $scope.bootloaderVersion = ZWaveAPIData.controller.data.bootloaderCRC.value;
+            $scope.bootloaderVersion = ZWaveAPIData.controller.data.bootloader.crc.value;
             var tokenParam = (token ? '&token=' + token : '');
             var appVersion = ZWaveAPIData.controller.data.APIVersion.value.split('.');
             var appVersionMajor = parseInt(appVersion[0], 10);
             var appVersionMinor = parseInt(appVersion[1], 10);
-            var bootloaderCRC = ZWaveAPIData.controller.data.bootloaderCRC.value;
+            var bootloaderCRC = ZWaveAPIData.controller.data.bootloader.crc.value;
             var urlParams = '?vendorId=' + vendorId + '&appVersionMajor=' + appVersionMajor + '&appVersionMinor=' + appVersionMinor+ '&bootloaderCRC=' + bootloaderCRC + tokenParam + '&zway=' + ZWaveAPIData.controller.data.softwareRevisionVersion.value + '&uuid=' + ZWaveAPIData.controller.data.uuid.value;
             //return;
             // Load uzb
