@@ -58,19 +58,9 @@ appController.controller('LoadDeviceXmlController', function($scope,$routeParams
            var deviceProductId = deviceManufacturerSpecific.cmdData.productId.value;
            var deviceProductTypeId = deviceManufacturerSpecific.cmdData.productType.value;
 
-           var preFilter = _.where(response.data, {manufacturerId: deviceVendorId});
-           
-           $scope.deviceXml.all = _.reject(preFilter, function(s)
-            {
-                return s.deviceImage.indexOf("pepper1.net") == -1 && s.brandName != "" && s.productName != "" ? false : true;
-
-            });
+           $scope.deviceXml.all = _.where(response.data, {manufacturerId: deviceVendorId});
     
-
-
-           
            $scope.deviceXml.filter = _.findWhere($scope.deviceXml.all, {manufacturerId: deviceVendorId, productTypeId: deviceProductTypeId, productId: deviceProductId});
-
 
            if($scope.deviceXml.filter)
            {
