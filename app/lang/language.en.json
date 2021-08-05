@@ -790,5 +790,6 @@
     "nm_btn_csa": "Client Side Authentication",
     "nm_include_start_tooltip": "Add new device to the network",
     "nm_exclude_start_tooltip": "Remove a device from the network",
-    "z_way_restart": "The system will now be automatically restarted. Redirect to homesite in __val__ __level__."
+    "z_way_restart": "The system will now be automatically restarted. Redirect to homesite in __val__ __level__.",
+    "rssi_report": "Signal strength"
 }
