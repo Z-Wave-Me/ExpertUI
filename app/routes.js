@@ -155,6 +155,9 @@ angApp.config(['$routeProvider',
         }).when('/installer/statistics', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/installer/statistics.html'
+        }).when('/rssi/report', {
+            requireLogin: requireLogin,
+            templateUrl: 'app/views/rssi/report.html'
         }).// Settings
         when('/settings', {
             requireLogin: requireLogin,
