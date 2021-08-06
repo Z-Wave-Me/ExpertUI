@@ -156,6 +156,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
         $scope.input.groupId = group.groupId;
         $scope.assocAddDevices = [];
         // Prepare devices and nodes
+        console.log($scope.ZWaveAPIData.devices);
         angular.forEach($scope.ZWaveAPIData.devices, function(node, nodeId) {
             if (nodeId == 255 || node.data.isVirtual.value || nodeId == $scope.deviceId) {
                 return;
@@ -165,19 +166,20 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             obj['name'] = $filter('deviceName')(nodeId, node);
             obj['hasMC'] = 96 in node.instances[0].commandClasses;
             obj['instances'] = getNodeInstances(node, nodeId);
-            if ($scope.nodeCfg.hasMCA) {
-                if (obj['hasMC']) {
-                    $scope.assocAddDevices.push(obj);
-                } else {
-                    if (group.nodeIds.indexOf(parseInt(nodeId)) === -1) {
-                        $scope.assocAddDevices.push(obj);
-                    }
-                }
-            } else {
-                if (group.nodeIds.indexOf(parseInt(nodeId)) === -1) {
-                    $scope.assocAddDevices.push(obj);
-                }
-            }
+            // deprecated remove 12.2021
+            // if ($scope.nodeCfg.hasMCA) {
+            //     if (obj['hasMC']) {
+            //         $scope.assocAddDevices.push(obj);
+            //     } else {
+            //         if (group.nodeIds.indexOf(parseInt(nodeId)) === -1) {
+            //             $scope.assocAddDevices.push(obj);
+            //         }
+            //     }
+            // } else {
+            //     if (group.nodeIds.indexOf(parseInt(nodeId)) === -1) {
+            $scope.assocAddDevices.push(obj);
+                // }
+            // }
         });
         $scope.handleModal(modal,$event);
 
@@ -210,7 +212,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
             }
         });
     };
-    
+
     //Store assoc device from group
     $scope.storeAssoc = function(input) {
         $scope.toggleRowSpinner('group_' + input.groupCfg.groupId);
@@ -519,11 +521,11 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                             //objAssoc['inConfig'] = inConfig;
                             objAssoc['status'] = (savedNodesInstancesInDevice.indexOf(idNodeInstance) > -1 ? true : false) + '-' + inConfig;
                             assocDevices.push(objAssoc);
-                          
+
                             $scope.assocGroupsDevices[index + ':' + groupId][String(targetNodeId) + String(i)] = objAssoc;
                         }
                     }
-                   
+
 
                     if ((updateTime < invalidateTime) || (updateTimeMca < invalidateTimeMca)) {
                         timeClass = 'red';
@@ -550,7 +552,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
                         remaining: (data.max.value - $filter('unique')(nodeIds).length)
                     };
                     assocGroups.push(obj);
-                  
+
                 }
             }
 
