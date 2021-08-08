@@ -39,9 +39,10 @@ appController.controller('RSSIReportController', function ($scope, $filter, $tim
                         // incoming packet
                         rssi = p.RSSI;
                         if (!p.hops) return; // skip incoming packets with unknown hops - we don't know to which device the RSSI corr
-                        node = p.hops.length === 0 ? p.nodeId : p.hops[p.length - 1]; // direct or last hop
+                        node = p.hops.length === 0 ? p.nodeId : p.hops[p.hops.length - 1]; // direct or last hop
                     }
                     if (rssi === 125 || rssi === 126 || rssi === 127) return; // handle only valid values
+                    if (rssi > 127) rssi -= 256; // convert to signed
                     if (!packetsPerDev[node]) packetsPerDev[node] = [];
                     packetsPerDev[node].push(rssi);
                 })
@@ -63,12 +64,17 @@ appController.controller('RSSIReportController', function ($scope, $filter, $tim
     }
 
     const fillWidth = function (data) {
-        const maxRSSI = -20;
         const minRSSI = -90;
+        const maxRSSI = Math.max(-10, Math.max.apply(null, data.map(el => el.RSSI + el.std)))
         return data.map(el => {
-            if (el.RSSI) {
-                el.width = Math.trunc(-el.RSSI / (maxRSSI - minRSSI) * 100);
+            if (el.RSSI || el.RSSI === 0) {
+                if (el.RSSI > minRSSI) {
+                    el.width = Math.trunc((el.RSSI - minRSSI) / (maxRSSI - minRSSI) * 100);
+                } else {
+                    el.width = 1;
+                }
             } else {
+                // no data
                 el.width = 100;
                 el.RSSI = 0;
             }
