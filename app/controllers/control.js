@@ -301,6 +301,8 @@ appController.controller('ControlController', function ($scope, $interval, $time
         var hasSUC = ZWaveAPIData.controller.data.SUCNodeId.value;
         var hasDevices = Object.keys(ZWaveAPIData.devices).length;
         var limitReached = ZWaveAPIData.controller.data.manufacturerId.value != 0x147 && ((ZWaveAPIData.controller.data.firmware.caps.value[0] == 0 && ZWaveAPIData.controller.data.firmware.caps.value[1] == 0) || Object.keys(ZWaveAPIData.devices).length >= ZWaveAPIData.controller.data.firmware.caps.value[2]);
+        var longRangeEnabled = ZWaveAPIData.controller.data.longRange && ZWaveAPIData.controller.data.longRange.enabled.value || false;
+        var longRangeInclusion = ZWaveAPIData.controller.data.longRange && ZWaveAPIData.controller.data.longRange.inclusion.value || false;
         var controllerState = ZWaveAPIData.controller.data.controllerState.value;
         var joiningS2 = $filter('hasNode')(ZWaveAPIData,'devices.' + nodeId + '.data.joiningS2.value');
         var publicKey = $filter('hasNode')(ZWaveAPIData,'devices.' + nodeId + '.data.publicKey.value');
@@ -308,6 +310,8 @@ appController.controller('ControlController', function ($scope, $interval, $time
        // Customsettings
         $scope.controlDh.controller.hasDevices = hasDevices > 1;
         $scope.controlDh.controller.limitReached = limitReached;
+        $scope.controlDh.controller.longRangeEnabled = longRangeEnabled;
+        $scope.controlDh.controller.longRangeInclusion = longRangeInclusion;
         $scope.controlDh.controller.disableSUCRequest = true;
         if (hasSUC && hasSUC != nodeId) {
             $scope.controlDh.controller.disableSUCRequest = false;
@@ -755,6 +759,23 @@ appController.controller('SetSecureInclusionController', function ($scope) {
      * @param {string} cmd
      */
     $scope.setSecureInclusion = function (cmd) {
+        $scope.runZwaveCmd(cmd);
+    };
+});
+
+/**
+ * Shall inclusion be done using Long Range
+ * @class SetLongRangeInclusionController
+ *
+ */
+appController.controller('SetLongRangeInclusionController', function ($scope) {
+    /**
+     * Set inclusion as Classic/Long Range.
+     * state=true Set as Long Range.
+     * state=false Set as Classic.
+     * @param {string} cmd
+     */
+    $scope.setLongRangeInclusion = function (cmd) {
         $scope.runZwaveCmd(cmd);
     };
 });

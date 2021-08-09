@@ -31,6 +31,36 @@
             </div>
         </div>
 
+        <!-- Classic/LongRange  -->
+        <div class="cfg-block" ng-controller="SetLongRangeInclusionController" ng-disabled="!controlDh.controller.longRangeEnabled">
+            {{_t('nm_force_long_range')}}
+            <div class="btn-group">
+                <!-- Classic -->
+                <button type="button" class="btn btn-primary" id="btn_force_lr_classic"
+                        ng-class="!controlDh.controller.longRangeInclusion ? 'active' : ''"
+                        ng-click="setLongRangeInclusion('controller.data.longRange.inclusion=false')"
+                        ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || rowSpinner['controller.data.longRange.inclusion=false']">
+                    <bb-row-spinner
+                            spinner="rowSpinner['controller.data.longRange.inclusion=false']"
+                            label="_t('btn_lr_classic')"
+                            icon="'fa-spider-web'">
+                    </bb-row-spinner>
+                </button>
+                <!-- LongRange -->
+                <button type="button" class="btn btn-primary" id="btn_force_lr_longRange"
+                        ng-class="controlDh.controller.longRangeInclusion ? 'active' : ''"
+                        ng-click="setLongRangeInclusion('controller.data.longRange.inclusion=true')"
+                        ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || rowSpinner['controller.data.longRange.inclusion=true']">
+                    <bb-row-spinner
+                            spinner="rowSpinner['controller.data.longRange.inclusion=true']"
+                            label="_t('btn_lr_long_range')"
+                            icon="'fa-asterisk'">
+                    </bb-row-spinner>
+                </button>
+            </div>
+            <p class="input-help" ng-hide="controlDh.controller.longRangeEnabled"><i class="fas fa-exclamation-triangle"></i> {{_t('nm_force_long_range_unsupported')}}</p>
+        </div>
+
         <!-- Include/Exclude  -->
         <div class="cfg-block" ng-controller="IncludeExcludeDeviceController">
             <!-- Basic info  -->
