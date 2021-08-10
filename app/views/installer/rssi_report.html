@@ -11,15 +11,16 @@
         <tr ng-repeat="v in report | orderBy:predicate:reverse track by $index">
             <td ng-style="{'width': '10ch'}" title="{{v.nodeId}}">{{v.nodeId}}</td>
             <td ng-style="{'width': '20ch'}" title="{{v.name}}">{{v.name}}</td>
-            <td title="{{_t('RSSI')}}">
+            <td title="{{_t('RSSI')}}" ng-style="{'position': 'relative'}">
                 <div class="progress-bar progress-bar-success" ng-if="v.RSSI" ng-style="{'width': v.width + '%'}">
                     <span>{{v.RSSI}}</span></div>
-                <div class="progress-bar progress-bar-info" ng-if="v.RSSI === 0" ng-style="{'width': v.width + '%'}">
+                <div class="progress-bar progress-bar-no-data" ng-if="v.RSSI === 0" ng-style="{'width': v.width + '%'}">
                     <span>{{_t('noData')}}</span>
                 </div>
-                <div class="progress-bar progress-bar-warning std-label" ng-if="v.std" ng-style="{'width': v.std + '%'}" data-std="&pm;{{v.std}}">
-                    <span>&#160;</span></div>
-
+                <div class="progress-bar progress-bar-warning std-label" ng-if="v.std" ng-style="{'width': v.std + '%'}" data-std="&pm;{{v.std}}"
+                title="{{_t('rssiStd')}}">
+                    &#160;</div>
+                <div class="background-rssi" ng-style="{'left': backgroundRssi.toFixed(0) + '%'}" title="{{_t('BackgroundNoiseLevel')}}"></div>
             </td>
         </tr>
         </tbody>

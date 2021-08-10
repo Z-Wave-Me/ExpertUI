@@ -11,23 +11,41 @@ appController.controller('RSSIReportController', function ($scope, $filter, $tim
     const allSettled = function () {
         var promises = [
             dataService.loadZwaveApiData(),
-            dataService.getApi('packet_log')
+            dataService.getApi('packet_log', '', true),
+            dataService.getApi('rssi_chart','', true)
         ];
 
         $q.allSettled(promises).then(function (response) {
             var ZWaveAPIData = response[0];
             var packetApi = response[1];
-
+            const rssiChart = response[2];
             // zwaveData and packet error message
-            if (ZWaveAPIData.state === 'rejected' || packetApi.state === 'rejected') {
+            if (ZWaveAPIData.state === 'rejected' || packetApi.state === 'rejected' || rssiChart.state === 'rejected') {
                 alertify.alertError($scope._t('error_load_data'));
                 return;
             }
 
             // Success - zwaveData
-            if (ZWaveAPIData.state === 'fulfilled' && packetApi.state === 'fulfilled') {
+            if (ZWaveAPIData.state === 'fulfilled' && packetApi.state === 'fulfilled' && rssiChart.state === 'fulfilled') {
                 const packetsPerDev = {}
                 const report = []
+                const windowsWidth = 3600000;
+                const acc = {};
+                rssiChart.value.data.data.
+                    filter(e => (cfg.route.time.timestamp - e.time) <= windowsWidth).forEach(function (entry) {
+                        for (let key in entry) {
+                            if (key.startsWith('channel') && entry[key]) {
+                                if (!acc[key]) {
+                                    acc[key] = [0, 0];
+                                }
+                                acc[key][0] += entry[key];
+                                ++acc[key][1];
+                            }
+                        }
+                });
+                $scope.backgroundRssi = Math.max.apply(null, Object.values(acc).map(function ([value, count]) {
+                                    return value/count;
+                                }));
                 packetApi.value.data.data.forEach(function (p) {
                     var node;
                     var rssi;
@@ -66,6 +84,9 @@ appController.controller('RSSIReportController', function ($scope, $filter, $tim
     const fillWidth = function (data) {
         const minRSSI = -90;
         const maxRSSI = Math.max(-10, Math.max.apply(null, data.map(el => el.RSSI + el.std)))
+        if ($scope.backgroundRssi) {
+            $scope.backgroundRssi = Math.trunc(($scope.backgroundRssi - minRSSI) / (maxRSSI - minRSSI) * 100);
+        }
         return data.map(el => {
             if (el.RSSI || el.RSSI === 0) {
                 if (el.RSSI > minRSSI) {
