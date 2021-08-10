@@ -42,3 +42,12 @@
         transform: translate(-50%, -50%);
     }
 }
+.progress-bar-no-data {
+    background-color: lightgray;
+}
+.background-rssi {
+    width: 2px;
+    height: 1.17rem;
+    position: absolute;
+    border-left: 2px dashed grey;
+}
