@@ -8,21 +8,44 @@
  * @class NetworkStatisticsController
  *
  */
-appController.controller('NetworkStatisticsController', function ($scope, $filter, $timeout, $interval, $window,dataService, cfg, _, deviceService) {
+appController.controller('NetworkStatisticsController', function ($scope, $filter, $timeout, $interval, $window,dataService, cfg, _) {
 
     $scope.netStat = {
         dataRate: {},
         successReception: {},
         foreignNetwork: {}
     };
-    /**
-     * Load network statistics
-     */
-    $scope.loadNetworkStatistics = function () {
-        var timeout = 1000;
-        $scope.toggleRowSpinner('loadNetStatistics');
 
-        dataService.getApi('get_network_statistics', null, true).then(function (response) {
+    var updateInterval;
+    var updateTime = 30000; // 30 sec update time
+    /**
+     * init update interval on page load
+     */
+    this.$onInit = function () {
+        updateInterval = $interval( function () {
+            loadNetworkStatistics();
+        }, updateTime);
+    }
+
+    this.$onInit();
+    /**
+     * cancel interval when leave page
+     */
+    $scope.$on('$destroy', function () {
+        if (angular.isDefined(updateInterval)) {
+            $interval.cancel(updateInterval);
+            updateInterval = undefined;
+        }
+    });
+    /**
+     * Load / clear network statistics
+     *  @param action ='get | 'clear'
+     *  @return serverResponse
+     */
+    var loadNetworkStatistics = function (action = 'get') {
+        $scope.toggleRowSpinner(action + 'NetStatistics');
+
+        dataService.getApi(action + '_network_statistics', null, true).then(function (response) {
             var percentFormat = function (num) {
                 if (num === 0) {
                     return 0;
@@ -90,32 +113,24 @@ appController.controller('NetworkStatisticsController', function ($scope, $filte
 
             objForeignNetworkImpact['dateTime'] = $filter('getDateTimeObj')(response.data.RFRxForeignHomeID.updateTime);
             $scope.netStat.foreignNetwork = objForeignNetworkImpact;
-
-            $timeout($scope.toggleRowSpinner, timeout);
-
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
             $scope.toggleRowSpinner();
-        });
+        }).finally($scope.toggleRowSpinner);
     };
-    $scope.loadNetworkStatistics();
+    loadNetworkStatistics();
     /**
      * Update network statistics
      */
     $scope.updateNetworkStatistics = function () {
-      $window.location.reload();
+        loadNetworkStatistics();
   };
 
     /**
      * Reset network statistics
-     * @param {string} cmd
      */
-    $scope.resetNetworkStatistics = function (cmd) {
-        var timeout = 1000;
-        $scope.runZwaveCmd(cmd, timeout);
-        $timeout(function () {
-            $scope.loadNetworkStatistics()
-        }, timeout);
+    $scope.resetNetworkStatistics = function () {
+        loadNetworkStatistics('clear')
     };
 
 });

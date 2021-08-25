@@ -6,12 +6,12 @@
   <bb-alert alert="alert"></bb-alert>
 
   <div class="text-right print-hide">
-    <button class="btn btn-primary" id="btn_update_all_1" ng-click="updateNetworkStatistics()" ng-disabled="rowSpinner['loadNetStatistics']">
-      <bb-row-spinner spinner="rowSpinner['loadNetStatistics']" label="_t('update')" icon="'fa-circle'">
+    <button class="btn btn-primary" ng-click="updateNetworkStatistics()" ng-disabled="rowSpinner['getNetStatistics']">
+      <bb-row-spinner spinner="rowSpinner['getNetStatistics']" label="_t('update')" icon="'fa-circle'">
       </bb-row-spinner>
     </button>
-    <button class="btn btn-primary" id="btn_update_all_1" ng-click="resetNetworkStatistics('ClearNetworkStats()')" ng-disabled="rowSpinner['ClearNetworkStats()']">
-      <bb-row-spinner spinner="rowSpinner['ClearNetworkStats()']" label="_t('reset')" icon="'fa-sync'">
+    <button class="btn btn-primary" ng-click="resetNetworkStatistics()" ng-disabled="rowSpinner['clearNetworkStatistics']">
+      <bb-row-spinner spinner="rowSpinner['clearNetworkStatistics']" label="_t('reset')" icon="'fa-sync'">
       </bb-row-spinner>
     </button>
   </div>
