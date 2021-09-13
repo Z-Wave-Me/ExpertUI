@@ -3,7 +3,7 @@
 .app-row-report{
     border-top: solid 1px $report-border-color;
     background-color: $report-bcg-color;
-    border-bottom: solid 1px $report-border-color;    
+    border-bottom: solid 1px $report-border-color;
 }
 .report-entry {
     border-bottom: solid 1px $report-border-color;
@@ -18,7 +18,7 @@
     }
     .report-body{}
     .report-ctrl{
-       
+
         min-width: 110px;
         display: block;
         text-align: right;
@@ -30,4 +30,24 @@
     .report-col-w30{
         width: 30%;
     }
+}
+.std-label {
+    position: relative;
+    &::before {
+        color: black;
+        content: attr(data-std);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+.progress-bar-no-data {
+    background-color: lightgray;
+}
+.background-rssi {
+    width: 2px;
+    height: 1.37rem;
+    position: absolute;
+    border-left: 2px dashed grey;
 }

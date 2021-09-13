@@ -84,7 +84,8 @@ appService.service('deviceService', function ($filter, $log, $cookies, $window, 
             'reorg_run_url': '/ZWave.' + dongle + '/NetworkReorganization',
             'reorg_log_url': '/ZWave.' + dongle + '/GetReorganizationLog',
             'zddx_create_url': '/ZWave.' + dongle + '/CreateZDDX/',
-            'get_network_statistics': '/ZWave.' + dongle + '/GetStatisticsData'
+            'get_network_statistics': '/ZWave.' + dongle + '/GetStatisticsData',
+            'clear_network_statistics': '/ZWave.' + dongle + '/ClearStatisticsData',
 
         });
     };
@@ -384,7 +385,7 @@ appService.service('deviceService', function ($filter, $log, $cookies, $window, 
     * @returns {Boolean|Number}
     */
     this.compareVersion = function (v1, v2, operator) {
-        
+
 
         // Important: compare must be initialized at 0.
         var i
@@ -790,7 +791,7 @@ appService.service('deviceService', function ($filter, $log, $cookies, $window, 
     function configSetCommandClass(data, updateTime) {
         var html = data;
         /*if(updateTime){
-         html += '<p class="help-block"><em>' + $filter('dateFromUnix')(updateTime )+ '<em></p>'; 
+         html += '<p class="help-block"><em>' + $filter('dateFromUnix')(updateTime )+ '<em></p>';
          }*/
         return html;
     }
@@ -1586,7 +1587,7 @@ appService.service('deviceService', function ($filter, $log, $cookies, $window, 
                     obj['parameter'] = v['_parameter'];
                     if (JSON.stringify(obj) !== JSON.stringify(data)) {
                         xmlData.push(obj);
-                        /* 
+                        /*
                          console.log('XML:',JSON.stringify(obj))
                          console.log('DATA:',JSON.stringify(data))*/
                     }

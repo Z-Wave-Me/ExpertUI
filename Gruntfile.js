@@ -136,6 +136,7 @@ module.exports = function (grunt) {
                     'app/controllers/configuration_firmware.js',
                     'app/controllers/configuration_health.js',
                     'app/controllers/configuration_postfix.js',
+                    'app/controllers/rssi-report.controller.js',
                     'app/jquery/jquery-app.js'
 
                 ],

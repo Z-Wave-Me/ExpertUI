@@ -352,7 +352,7 @@
     "nav_help": "Проблемы с устройствами Z-Wave",
     "nav_history": "История Zniffer",
     "nav_home": "Домой",
-    "nav_installer": "Инсталлятор",
+    "nav_installer": "Аналитика",
     "nav_linkhealth_info": "Статус связи",
     "nav_locks": "Замки",
     "nav_login": "Вход",
@@ -792,5 +792,10 @@
     "nm_btn_csa": "Аутентификация на стороне клиента",
     "nm_include_start_tooltip": "Добавить новое устройство в сеть",
     "nm_exclude_start_tooltip": "Удалить устройство из сети",
-    "z_way_restart": "Система будет автоматически перезапущена. Перенаправить на домашний сайт в __val__ __level__."
+    "z_way_restart": "Система будет автоматически перезапущена. Перенаправить на домашний сайт в __val__ __level__.",
+    "rssi_report": "Мощность сигнала",
+    "noData": "Нет данных",
+    "BackgroundNoiseLevel": "Уровень фонового шума",
+    "rssiStd": "Отклонение",
+    "nodeId": "Id"
 }
