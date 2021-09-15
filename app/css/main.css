@@ -19913,6 +19913,25 @@ img {
   .report-entry .report-col-w30 {
     width: 30%; }
 
+.std-label {
+  position: relative; }
+  .std-label::before {
+    color: black;
+    content: attr(data-std);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); }
+
+.progress-bar-no-data {
+  background-color: lightgray; }
+
+.background-rssi {
+  width: 2px;
+  height: 1.37rem;
+  position: absolute;
+  border-left: 2px dashed grey; }
+
 /* Table
 -------------------------------------------------- */
 .table {

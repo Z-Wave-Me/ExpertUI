@@ -3,6 +3,13 @@ zwave-expertui
 
 This User Interfaces allows to operate a Smart Home Network based on Z-Wave devices. It utilizes the software architecture "Z-Way", certified as Z-Wave Plus Controller.
 
+## v1.5.7
+#### New features:
+#### Fixes:
+- Added automatical update of statistics, clear fixed
+- Added background RSSI page
+- In the Association tab, if a node is added, allow adding another channel to the same group
+
 ## v1.5.6
 #### New features:
 - Added support of RaZberry 7 and RaZberry 7 Pro
