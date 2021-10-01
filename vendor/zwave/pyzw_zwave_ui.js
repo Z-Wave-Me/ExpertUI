@@ -369,7 +369,81 @@ function renderMethodSpec(ccId, data) {
 								}
 							]
 						}
-					},													
+					},
+					{
+						"label": "Ignore",
+						"type": {
+							"enumof": [
+								{
+									"label": "No",
+									"type": {
+										"fix": 	{
+											"value": 0
+										}
+									}
+								},
+								{
+									"label": "Tes",
+									"type": {
+										"fix": 	{
+											"value": 1
+										}
+									}
+								}
+							]
+						}
+					},
+					{
+						"label": "Start Level",
+						"type": {
+							"range": {
+								"min": 	0,
+								"max": 	255
+							}
+						}
+					},
+					{
+						"label": "Duration",
+						"type": {
+							"enumof": [
+								{
+									"label": "immediately",
+									"type": {
+									"fix": 	{
+										"value": 0
+										}
+									}
+								},
+									{
+									"label": "in seconds",
+									"type": {
+										"range": {
+											"min": 	1,
+											"max": 127
+										}
+									}
+								},
+									{
+									"label": "in minutes",
+									"type": {
+										"range": {
+											"min": 	1,
+											"max": 127,
+											"shift": 127
+										}
+									}
+								},
+								{
+									"label": "use device default",
+									"type": {
+										"fix": 	{
+											"value": 255
+										}
+									}
+								}
+							]
+						}
+					}
 				],
 				"StopStateChange": [
 					{
@@ -399,7 +473,7 @@ function renderMethodSpec(ccId, data) {
 									}
 								)()
 						}
-					}								
+					}
 				]
 			};
  
@@ -1045,6 +1119,48 @@ function renderMethodSpec(ccId, data) {
 								},
 								{
 									"label": "On",
+									"type": {
+										"fix": 	{
+											"value": 255
+										}
+									}
+								}
+							]
+						}
+					},
+					{
+						"label": "Duration",
+						"type": {
+							"enumof": [
+								{
+									"label": "immediately",
+									"type": {
+									"fix": 	{
+										"value": 0
+										}
+									}
+								},
+									{
+									"label": "in seconds",
+									"type": {
+										"range": {
+											"min": 	1,
+											"max": 127
+										}
+									}
+								},
+									{
+									"label": "in minutes",
+									"type": {
+										"range": {
+											"min": 	1,
+											"max": 127,
+											"shift": 127
+										}
+									}
+								},
+								{
+									"label": "use device default",
 									"type": {
 										"fix": 	{
 											"value": 255
