@@ -2722,7 +2722,8 @@ function renderMethodSpec(ccId, data) {
 							}
 						}
 					}
-				]
+				],
+				"DefaultReset": []
 			};
 
 		// Association
