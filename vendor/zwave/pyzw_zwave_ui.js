@@ -371,38 +371,6 @@ function renderMethodSpec(ccId, data) {
 						}
 					},
 					{
-						"label": "Ignore",
-						"type": {
-							"enumof": [
-								{
-									"label": "No",
-									"type": {
-										"fix": 	{
-											"value": 0
-										}
-									}
-								},
-								{
-									"label": "Tes",
-									"type": {
-										"fix": 	{
-											"value": 1
-										}
-									}
-								}
-							]
-						}
-					},
-					{
-						"label": "Start Level",
-						"type": {
-							"range": {
-								"min": 	0,
-								"max": 	255
-							}
-						}
-					},
-					{
 						"label": "Duration",
 						"type": {
 							"enumof": [
@@ -442,6 +410,38 @@ function renderMethodSpec(ccId, data) {
 									}
 								}
 							]
+						}
+					},
+					{
+						"label": "Ignore",
+						"type": {
+							"enumof": [
+								{
+									"label": "No",
+									"type": {
+										"fix": 	{
+											"value": 0
+										}
+									}
+								},
+								{
+									"label": "Yes",
+									"type": {
+										"fix": 	{
+											"value": 1
+										}
+									}
+								}
+							]
+						}
+					},
+					{
+						"label": "Start Level",
+						"type": {
+							"range": {
+								"min": 	0,
+								"max": 	255
+							}
 						}
 					}
 				],
