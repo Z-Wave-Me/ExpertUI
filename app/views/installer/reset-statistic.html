@@ -1,0 +1,16 @@
+<div ng-controller="ResetStatistic">
+    <div ng-if='stats'  class="text-right print-hide">
+        <div>
+            {{_t('routes_packets_num')}}:             <strong>{{stats.packetsNum}}</strong>
+        </div>
+        <div>
+            {{_t('routes_gathering_period')}}:             <strong>{{stats.gatheringPeriod}}</strong>
+        </div>
+        <button class="btn btn-primary" ng-click="resetNetworkStatistics()"
+                ng-disabled="rowSpinner['clearNetworkStatistics']">
+            <bb-row-spinner spinner="rowSpinner['clearNetworkStatistics']" label="_t('reset')" icon="'fa-sync'">
+            </bb-row-spinner>
+        </button>
+    </div>
+
+</div>
