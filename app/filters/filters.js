@@ -954,3 +954,20 @@ angApp.filter('highlightDsk', function () {
       return array.join('-');
   };
 });
+
+
+angApp.filter('packets', function () {
+    return function (input, param) {
+        if (typeof input === 'string')
+            return input;
+        if (isNaN(input) || !isFinite(input))
+            return '-';
+        if (param === 'rssi')
+            return input.toFixed(1)
+        if (['duplicate', 'explore', 'delivered', 'rerouted'].includes(param))
+            return (input * 100).toFixed(1) + ' %'
+        if (param === 'period')
+            return input.toFixed(0) + ' ms'
+        return input;
+    }
+})

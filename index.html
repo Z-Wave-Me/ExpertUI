@@ -102,7 +102,9 @@
     <script src="app/controllers/configuration_firmware.js"></script>
     <script src="app/controllers/configuration_health.js"></script>
     <script src="app/controllers/configuration_postfix.js"></script>
+    <script src="app/controllers/reset-statistic.js"></script>
     <script src="app/controllers/rssi-report.controller.js"></script>
+    <script src="app/controllers/packets.js"></script>
     <script src="app/jquery/jquery-app.js"></script>
     <!-- /build -->
 </head>
@@ -220,6 +222,9 @@
                                 </li>
                                 <li>
                                     <a href="#installer/rssi_report" ng-class="isActive('rssi_report', 2)">{{ _t('rssi_report')}}</a>
+                                </li>
+                                <li>
+                                    <a href="#installer/packets" ng-class="isActive('packets', 2)">{{ _t('packets')}}</a>
                                 </li>
                                 <!--<li><a href="#installer/spectrum" ng-class="isActive('spectrum',2)">{{ _t('nav_spectrum_analyzer') }}</a></li>-->
                             </ul>
