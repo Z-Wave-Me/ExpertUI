@@ -33,7 +33,7 @@ appController.controller('RSSIReportController', function ($scope, $filter, $tim
                 const acc = {};
                 rssiChart.value.data.data.
                     filter(e => (cfg.route.time.timestamp - e.time) <= windowsWidth).forEach(function (entry) {
-                        for (let key in entry) {
+                        for (const key in entry) {
                             if (key.startsWith('channel') && entry[key]) {
                                 if (!acc[key]) {
                                     acc[key] = [0, 0];
