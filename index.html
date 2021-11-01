@@ -189,9 +189,6 @@
                                 <li>
                                     <a href="#network/timing" ng-class="isActive('timing',2)">{{ _t('nav_timing_info') }}</a>
                                 </li>
-                                <li>
-                                    <a href="#network/routemap" dng-class="isActive('routemap',2)">{{ _t('route_map') }}</a>
-                                </li>
                                 <!--<li>
                                     <a href="#network/map" dng-class="isActive('map',2)">{{ _t('nav_network_map') }}</a>
                                 </li>-->
@@ -213,6 +210,9 @@
                         </a>
                         <div class="sub-navigation sub-navigation-left" ng-if="naviExpanded.naviInstaller">
                             <ul>
+                                <li>
+                                    <a href="#installer/routemap" ng-class="isActive('routemap',2)">{{ _t('route_map') }}</a>
+                                </li>
                                 <li><a href="#installer/zniffer" ng-class="isActive('zniffer',2)">{{ _t('nav_zniffer') }}</a></li>
                                 <li><a href="#installer/rssi" ng-class="isActive('rssi',2)">{{ _t('nav_rssi') }}</a></li>
                                 <li><a href="#installer/rssimeter" ng-class="isActive('rssimeter',2)">{{ _t('nav_rssimeter') }}</a></li>

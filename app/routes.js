@@ -116,8 +116,6 @@ angApp.config(['$routeProvider',
         }).when('/network/queue', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/network/queue.html'
-        }).when('/network/routemap', {
-            templateUrl: 'app/views/network/routemap.html'
         }).when('/network/map', {
             templateUrl: 'app/views/network/map.html'
         }).when('/network/linkstatus', {
@@ -136,6 +134,8 @@ angApp.config(['$routeProvider',
         when('/smartstartlist', {
             templateUrl: 'app/views/smartstart/smartstart_dsk_list.html',
             requireLogin: requireLogin
+        }).when('/installer/routemap', {
+            templateUrl: 'app/views/network/routemap.html'
         }).// Installer - zniffer
         when('/installer/zniffer', {
             requireLogin: requireLogin,
