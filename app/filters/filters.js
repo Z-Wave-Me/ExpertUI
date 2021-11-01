@@ -955,19 +955,33 @@ angApp.filter('highlightDsk', function () {
   };
 });
 
-
-angApp.filter('packets', function () {
+angApp.filter('packets', function ($sce) {
     return function (input, param) {
         if (typeof input === 'string')
-            return input;
+            return $sce.trustAsHtml('<snap>' + input + '</snap>');
         if (isNaN(input) || !isFinite(input))
-            return '-';
-        if (param === 'rssi')
-            return input.toFixed(1)
-        if (['duplicate', 'explore', 'delivered', 'rerouted'].includes(param))
-            return (input * 100).toFixed(1) + ' %'
-        if (param === 'period')
-            return input.toFixed(0) + ' ms'
-        return input;
+            return $sce.trustAsHtml('<snap color="red">-</snap>');
+        if (param === 'rssi') {
+            if (input > -70) {
+                return $sce.trustAsHtml('<snap class="text-danger">' + input.toFixed(1) + '</snap>')
+            }
+            return $sce.trustAsHtml('<snap>' + input.toFixed(1) + '</snap>')
+        }
+        if (['duplicate', 'explore', , 'rerouted'].includes(param)) {
+            if (input > .2)
+                return $sce.trustAsHtml('<snap class="text-danger">' + (input * 100).toFixed(1) + ' %</snap>')
+            return $sce.trustAsHtml('<snap>' + (input * 100).toFixed(1) + ' %</snap>')
+        }
+        if (['delivered'].includes(param)){
+            if (input <.95)
+                return $sce.trustAsHtml('<snap class="text-danger">' + (input * 100).toFixed(1) + ' %</snap>')
+            return $sce.trustAsHtml('<snap>' + (input * 100).toFixed(1) + ' %</snap>')
+        }
+        if (param === 'period') {
+            if (input < 60)
+                return $sce.trustAsHtml('<snap class="text-danger">' + (input).toFixed(0) +  ' s</snap>' )
+            return $sce.trustAsHtml('<snap>' + (input).toFixed(0) + ' s</snap>')
+        }
+        return $sce.trustAsHtml('<snap>' + input + '</snap>');
     }
 })

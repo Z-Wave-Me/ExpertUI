@@ -10,11 +10,7 @@
         </thead>
         <tbody>
         <tr ng-repeat="v in statistics | orderBy:predicate:reverse track by $index">
-
-            <td ng-repeat="head in statisticsHead" title="{{v[head]}}">
-
-                {{v[head] | packets: head}}
-            </td>
+            <td ng-repeat="head in statisticsHead" ng-style="{'text-align': 'center'}" title="{{v[head]}}" ng-bind-html="v[head] | packets: head"></td>
         </tr>
         </tbody>
     </table>
