@@ -54,7 +54,7 @@ appController.controller('PacketsController', function ($scope, dataService, $fi
             }, {}))
             .map(([id, data]) => ([
                 id, {
-                    packets: data.rssi.length,
+                    packetsIn: data.rssi.length,
                     rssi: data.rssi.reduce((acc, cur) => acc + cur, 0) / data.rssi.length,
                     duplicate: data.duplicate / data.rssi.length,
                     explore: data.explore / data.rssi.length
@@ -78,7 +78,11 @@ appController.controller('PacketsController', function ($scope, dataService, $fi
             }, {}))
             .map(([id, data]) => ([
                 id,
-                {delivered: data.delivered / data.total, rerouted: data.rerouted/ data.total}
+                {
+                    packetsOut: data.total,
+                    delivered: data.delivered / data.total,
+                    rerouted: data.rerouted/ data.total,
+                }
             ])))
     }
     (function () {
