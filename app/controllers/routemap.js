@@ -39,7 +39,7 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
             $window.location.reload();
         }
     };
-
+    $scope.stats = {}
     /**
      * remove event listner on page destroy
      */
@@ -93,6 +93,7 @@ appController.controller('RouteMapController', function ($scope, $q,$interval, $
                     zrp = new ZWaveRoutesPlotLib(new ZWaveNetworkAnalyticsLib(ZWaveAPIData.value, packets, positions));
 
                     $scope.routeMap.stats = zrp.getStats();
+                    $scope.stats = $scope.routeMap.stats;
                     $scope.priorityRoutesUpdate();
                 }
             }
