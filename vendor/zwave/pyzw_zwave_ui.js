@@ -620,10 +620,25 @@ function renderMethodSpec(ccId, data) {
 					{
 						"label": "User",
 						"type":	{
-							"range": {
-								"min": 	0,
-								"max": 	99
-							}
+							"enumof": [
+								{
+									"label": "All usercodes",
+									"type": {
+										"fix": 	{
+											"value": 0
+										}
+									}
+								},
+								{
+									"label": "Id",
+									"type": {
+										"range": {
+											"min": 	1,
+											"max":  65535
+										}
+									}
+								}
+							]
 						}
 					}
 				],
@@ -645,7 +660,7 @@ function renderMethodSpec(ccId, data) {
 									"type": {
 										"range": {
 											"min": 	1,
-											"max": 	99
+											"max":  65535
 										}
 									}
 								}
@@ -680,17 +695,86 @@ function renderMethodSpec(ccId, data) {
 									}
 								},
 								{
-									"label": "Reserved",
+									"label": "Disabled",
 									"type": {
 										"fix": 	{
 											"value": 2
+										}
+									}
+								},
+								{
+									"label": "Messaging",
+									"type": {
+										"fix": 	{
+											"value": 3
+										}
+									}
+								},
+								{
+									"label": "Passage",
+									"type": {
+										"fix": 	{
+											"value": 4
 										}
 									}
 								}
 							]
 						}
 					}
-				]
+				],
+				"MasterCodeGet": [],
+				"MasterCodeSet": [
+					{
+						"label": "Code (4...10 Digits)",
+						"type": {
+							"string": {
+							}
+						}
+					}
+				],
+				"KeypadModeGet": [],
+				"KeypadModeSet": [
+					{
+						"label": "Mode",
+						"type": {
+							"enumof": [
+								{
+									"label": "Normal",
+									"type": {
+										"fix": 	{
+											"value": 0
+										}
+									}
+								},
+								{
+									"label": "Vacation",
+									"type": {
+										"fix": 	{
+											"value": 1
+										}
+									}
+								},
+								{
+									"label": "Privacy",
+									"type": {
+										"fix": 	{
+											"value": 2
+										}
+									}
+								},
+								{
+									"label": "Locked out",
+									"type": {
+										"fix": 	{
+											"value": 3
+										}
+									}
+								}
+							]
+						}
+					}
+				],
+				"ChecksumGet": []
 			};
 			
 		// Time Parameters
@@ -2361,96 +2445,107 @@ function renderMethodSpec(ccId, data) {
 			
 		// Alarm
 		case 0x71:
-			var ret = {
-				"Get": [
-					{
-						"label": "Type",
-						"type": {
-							"enumof": (
-									function() {
-										try {
-											var arr = [];
-											var key;
-											for (key in data) {
-												var ikey = parseInt(key);
-												if (!isNaN(ikey)) {
-													arr.push({
-														"label": data[ikey].typeString.value,
-														"type": {
-															"fix": 	{
-																"value": ikey
-															}
-														}
-													});
-												}
-											}
-											return arr;
-										} catch(err) {}
-										return [];
-									}
-								)()
-						}
-					}
-				]
-			};
-			
-			if (data.version.value > 1) {
-				ret["Set"] = [
-					{
-						"label": "Type",
-						"type": {
-							"enumof": (
-									function() {
-										try {
-											var arr = [];
-											var key;
-											for (key in data) {
-												var ikey = parseInt(key);
-												if (!isNaN(ikey)) {
-													arr.push({
-														"label": data[ikey].typeString.value,
-														"type": {
-															"fix": 	{
-																"value": ikey
-															}
-														}
-													});
-												}
-											}
-											return arr;
-										} catch(err) {}
-										return [];
-									}
-								)()
-						}
-					},
-					{
-						"label": "Status",
-						"type": {
-							"enumof": [
-								{
-									"label": "Disable",
-									"type": {
-										"fix": 	{
-											"value": 0
-										}
-									}
-								},
-								{
-									"label": "Enable",
-									"type": {
-										"fix": 	{
-											"value": 255
-										}
-									}
+			if (data.version.value < 2) {
+				return {
+					"Get": [
+						{
+							"label": "Type",
+							"type": {
+								"range": {
+									"min": 1,
+									"max": 255
 								}
-							]
+							}
 						}
-					}
-				];
+					]
+				};
+			} else {
+				return {
+					"Get": [
+						{
+							"label": "Type",
+							"type": {
+								"enumof": (
+										function() {
+											try {
+												var arr = [];
+												var key;
+												for (key in data) {
+													var ikey = parseInt(key);
+													if (!isNaN(ikey)) {
+														arr.push({
+															"label": data[ikey].typeString.value,
+															"type": {
+																"fix": 	{
+																	"value": ikey
+																}
+															}
+														});
+													}
+												}
+												return arr;
+											} catch(err) {}
+											return [];
+										}
+									)()
+							}
+						}
+					],
+					"Set": [
+						{
+							"label": "Type",
+							"type": {
+								"enumof": (
+										function() {
+											try {
+												var arr = [];
+												var key;
+												for (key in data) {
+													var ikey = parseInt(key);
+													if (!isNaN(ikey)) {
+														arr.push({
+															"label": data[ikey].typeString.value,
+															"type": {
+																"fix": 	{
+																	"value": ikey
+																}
+															}
+														});
+													}
+												}
+												return arr;
+											} catch(err) {}
+											return [];
+										}
+									)()
+							}
+						},
+						{
+							"label": "Status",
+							"type": {
+								"enumof": [
+									{
+										"label": "Disable",
+										"type": {
+											"fix": 	{
+												"value": 0
+											}
+										}
+									},
+									{
+										"label": "Enable",
+										"type": {
+											"fix": 	{
+												"value": 255
+											}
+										}
+									}
+								]
+							}
+						}
+					]
+				};
 			}
-			
-			return ret;
 		
 		// AlarmSensor
 		case 0x9c:
@@ -3045,32 +3140,47 @@ function renderMethodSpec(ccId, data) {
 		// Indicator			
 		case 0x87:
 			return {
-				"Get": [],
-				"Set": [
+				"Get": [
 					{
-						"label": "Active",
+						"label": "Indicator ID",
 						"type": {
-							"enumof": [
-								{
-									"label": "Off",
-									"type": {
-										"fix": 	{
-											"value": 0
-										}
-									}
-								},
-								{
-									"label": "On",
-									"type": {
-										"fix": 	{
-											"value": 255
-										}
-									}
-								}
-							]
+							"range": 	{
+								"min": 1,
+								"max": 255
+							}
 						}
 					}
-				]
+				],
+				"Set": [
+					{
+						"label": "Indicator ID",
+						"type": {
+							"range": 	{
+								"min": 1,
+								"max": 255
+							}
+						}
+					},
+					{
+						"label": "Property ID",
+						"type": {
+							"range": 	{
+								"min": 0,
+								"max": 255
+							}
+						}
+					},
+					{
+						"label": "State",
+						"type": {
+							"range": 	{
+								"min": 0,
+								"max": 255
+							}
+						}
+					}
+				],
+				"Identify": []
 			};
 
 		/*
