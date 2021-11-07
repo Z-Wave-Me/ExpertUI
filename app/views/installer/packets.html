@@ -1,0 +1,17 @@
+<div ng-controller="PacketsController">
+    <div ng-include="'app/views/installer/reset-statistic.html'"></div>
+    <table class="table table-striped table-condensed table-hover">
+        <thead>
+        <tr>
+            <th ng-repeat="head in statisticsHead" title="{{_t(head)}}">
+                <sort-by callback="orderBy(head)" field="head" label="'# ' + _t(head)" obj="report"></sort-by>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="v in statistics | orderBy:predicate:reverse track by $index">
+            <td ng-repeat="head in statisticsHead" ng-style="{'text-align': 'center'}" title="{{v[head]}}" ng-bind-html="v[head] | packets: head"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
