@@ -962,7 +962,7 @@ angApp.filter('packets', function ($sce) {
         if (isNaN(input) || !isFinite(input))
             return $sce.trustAsHtml('<snap color="red">-</snap>');
         if (param === 'rssi') {
-            if (input > -70) {
+            if (input < -70) {
                 return $sce.trustAsHtml('<snap class="text-danger">' + input.toFixed(1) + '</snap>')
             }
             return $sce.trustAsHtml('<snap>' + input.toFixed(1) + '</snap>')
