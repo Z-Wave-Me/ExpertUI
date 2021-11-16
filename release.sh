@@ -33,7 +33,7 @@ else
 	echo "Building test version"
 fi
 
-(cd app/sass/; ./compile.sh)
+(cd app/sass/; ./compile.sh) || exit -1
 
 grunt
 
