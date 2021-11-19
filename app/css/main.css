@@ -26008,6 +26008,13 @@ img {
   width: 30%;
 }
 
+.packets-table td {
+  text-align: right;
+}
+.packets-table td:nth-child(2) {
+  text-align: left;
+}
+
 /* Button
 -------------------------------------------------- */
 .btn {
