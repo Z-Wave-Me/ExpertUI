@@ -9,9 +9,9 @@ appController.controller('PacketsController', function ($scope, dataService, $fi
         'rssi',
         'duplicate',
         'explore',
+        'period',
         'packetsOut',
         'delivered',
-        'period',
         'rerouted',
         '_isFailed',]
     function extractPackages(data) {
