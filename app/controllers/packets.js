@@ -3,8 +3,17 @@ appController.controller('PacketsController', function ($scope, dataService, $fi
     $scope.statisticsHead = []
     $scope.stats = {}
     const TIMEOUT = 5;
-    let time;
-
+    const FIELDS = ['id',
+        'name',
+        'packetsIn',
+        'rssi',
+        'duplicate',
+        'explore',
+        'period',
+        'packetsOut',
+        'delivered',
+        'rerouted',
+        '_isFailed',]
     function extractPackages(data) {
         return Object.fromEntries(Object.entries(data
             .filter(el => !el.returnRSSI)
@@ -64,6 +73,13 @@ appController.controller('PacketsController', function ($scope, dataService, $fi
             ])))
     }
 
+    const filterDevices = (devices, controllerNodeId) =>
+        (id) => !(+id === 255 ||
+            +id === controllerNodeId ||
+            devices[+id].data.isVirtual.value ||
+            !Object.values(devices[+id].instances).every(instance => 0x25 in instance.commandClasses ||
+                0x26 in instance.commandClasses));
+
     function outgoingStatistics(data) {
         return Object.fromEntries(Object.entries(data
             .filter(el => el.returnRSSI)
@@ -92,26 +108,25 @@ appController.controller('PacketsController', function ($scope, dataService, $fi
     (function () {
         Promise.all([dataService.getApi('packet_log', '', true), dataService.loadZwaveApiData()])
             .then(([response, ZWaveAPIData]) => {
-                return [response.data.data, ZWaveAPIData.devices]
-            }).then(function ([data, devices]) {
-            time = performance.now()
+                return [response.data.data, ZWaveAPIData.devices, ZWaveAPIData.controller.data.nodeId.value]
+            }).then(function ([data, devices, controllerNodeId]) {
             $scope.stats.packetsNum = data.length;
             $scope.stats.gatheringPeriod = ((data.at(-1).updateTime - data.at(0).updateTime) / 60 / 60).toFixed(0)
             const packages = extractPackages(data);
             const outgoing = outgoingStatistics(data);
             const rssi = extractRSSI(data);
-            $scope.statistics = Object.entries(packages).map(([id, pack]) => ({
+            const defaultValue = Object.fromEntries(FIELDS.map(key => [key, NaN]))
+            $scope.statistics = Object.keys(devices).filter(filterDevices(devices, controllerNodeId)).map((id) => ({
+                ...defaultValue,
                 id: +id,
                 name: $filter('deviceName')(id, devices[id]),
                 ...rssi[id],
-                ...pack,
+                ...packages[id],
                 ...outgoing[id],
+                _isFailed: devices[id].data.isFailed.value
             }))
-            $scope.statisticsHead = Object.keys($scope.statistics.at(0) ?? {})
+            $scope.statisticsHead = FIELDS.filter(key => !key.startsWith('_'))
         })
             .catch(console.error)
-        // .finally(() => {
-        //     console.log('Used ', (performance.now() - time).toFixed(2), ' ms')
-        // })
     })()
 })
