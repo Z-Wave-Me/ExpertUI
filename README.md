@@ -5,6 +5,7 @@ This User Interfaces allows to operate a Smart Home Network based on Z-Wave devi
 
 ## v1.5.8
 #### New features:
+- Added new Packets Statistics page
 - Added new Signal strength page
 - Add reset button on route map page
 - Move route map to analytics
