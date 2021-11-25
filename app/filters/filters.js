@@ -956,18 +956,21 @@ angApp.filter('highlightDsk', function () {
 });
 
 angApp.filter('packets', function ($sce) {
-    return function (input, param) {
-        if (typeof input === 'string')
+    return function (input, param, isFailed = false) {
+        if (typeof input === 'string') {
+            if (isFailed)
+                return $sce.trustAsHtml('<snap style="color: darkred">' + input + ' <i class="fa fa-exclamation-triangle" style="padding-left: .5rem"></i></snap>');
             return $sce.trustAsHtml('<snap>' + input + '</snap>');
+        }
         if (isNaN(input) || !isFinite(input))
-            return $sce.trustAsHtml('<snap color="red">-</snap>');
+            return $sce.trustAsHtml('<snap color="red">---</snap>');
         if (param === 'rssi') {
             if (input < -70) {
                 return $sce.trustAsHtml('<snap class="text-danger">' + input.toFixed(1) + '</snap>')
             }
             return $sce.trustAsHtml('<snap>' + input.toFixed(1) + '</snap>')
         }
-        if (['duplicate', 'explore', , 'rerouted'].includes(param)) {
+        if (['duplicate', 'explore', 'rerouted'].includes(param)) {
             if (input > .2)
                 return $sce.trustAsHtml('<snap class="text-danger">' + (input * 100).toFixed(1) + ' %</snap>')
             return $sce.trustAsHtml('<snap>' + (input * 100).toFixed(1) + ' %</snap>')
