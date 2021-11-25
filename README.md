@@ -3,8 +3,16 @@ zwave-expertui
 
 This User Interfaces allows to operate a Smart Home Network based on Z-Wave devices. It utilizes the software architecture "Z-Way", certified as Z-Wave Plus Controller.
 
-## v1.5.7
+## v1.5.8
 #### New features:
+- Added new Signal strength page
+- Add reset button on route map page
+- Move route map to analytics
+#### Fixes:
+- UserCode v2, Indicator v4, Alarm v1/v2+, SwitchColor, DefaultReset, SwitchBinary Expert Commands UI fixed
+- Fixed web icon for LR
+
+## v1.5.7
 #### Fixes:
 - Added automatical update of statistics, clear fixed
 - Added background RSSI page
