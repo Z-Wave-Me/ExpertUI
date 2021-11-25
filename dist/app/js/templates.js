@@ -1,4 +1,4 @@
-/* Copyright: Z-Wave.Me, Created: 16-11-2021 23:13:06 */
+/* Copyright: Z-Wave.Me, Created: 26-11-2021 01:38:03 */
 angular.module('myAppTemplates', []).run(['$templateCache', function($templateCache) {
   'use strict';
 
@@ -233,7 +233,7 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
 
 
   $templateCache.put('app/views/installer/packets.html',
-    "<div ng-controller=PacketsController><div ng-include=\"'app/views/installer/reset-statistic.html'\"></div><table class=\"table table-striped table-condensed table-hover\"><thead><tr><th ng-repeat=\"head in statisticsHead\" title={{_t(head)}}><sort-by callback=orderBy(head) field=head label=\"'# ' + _t(head)\" obj=report></sort-by></th></tr></thead><tbody><tr ng-repeat=\"v in statistics | orderBy:predicate:reverse track by $index\"><td ng-repeat=\"head in statisticsHead\" ng-style=\"{'text-align': 'center'}\" title={{v[head]}} ng-bind-html=\"v[head] | packets: head\"></td></tr></tbody></table></div>"
+    "<div ng-controller=PacketsController><div ng-include=\"'app/views/installer/reset-statistic.html'\"></div><table class=\"table table-striped table-condensed table-hover packets-table\"><thead><tr><th ng-repeat=\"head in statisticsHead\" title={{_t(head)}}><sort-by callback=orderBy(head) field=head label=\"'# ' + _t(head)\" obj=report></sort-by></th></tr></thead><tbody><tr ng-repeat=\"v in statistics | orderBy:predicate:reverse track by $index\"><td ng-repeat=\"head in statisticsHead\" title={{v[head]}} ng-bind-html=\"v[head] | packets: head: v._isFailed\"></td></tr></tbody></table></div>"
   );
 
 
