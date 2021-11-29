@@ -3321,11 +3321,11 @@ function renderMethodSpec(ccId, data) {
 						}
 					},
 					{
-						"label": "Outside state",
+						"label": "Outside handle enabled",
 						"type": {
 							"enumof": [
 								{
-									"label": "Door Unsecured",
+									"label": "Handles disabled",
 									"type": {
 										"fix": 	{
 											"value": 0
@@ -3333,50 +3333,122 @@ function renderMethodSpec(ccId, data) {
 									}
 								},
 								{
-									"label": "Door Unsecured with timeout",
+									"label": "Handle 1 enabled",
 									"type": {
 										"fix": 	{
-											"value": 0x1
+											"value": 1
 										}
 									}
 								},
 								{
-									"label": "Door Unsecured for inside Door Handles",
+									"label": "Handle 2 enabled",
 									"type": {
 										"fix": 	{
-											"value": 0x10
+											"value": 2
 										}
 									}
 								},
 								{
-									"label": "Door Unsecured for inside Door Handles with timeout",
+									"label": "Handle 3 enabled",
 									"type": {
 										"fix": 	{
-											"value": 0x11
+											"value": 4
 										}
 									}
 								},
 								{
-									"label": "Door Unsecured for outside Door Handles",
+									"label": "Handle 4 enabled",
 									"type": {
 										"fix": 	{
-											"value": 0x20
+											"value": 8
 										}
 									}
 								},
 								{
-									"label": "Door Unsecured for outside Door Handles with timeout",
+									"label": "Handles 1 and 2 enabled",
 									"type": {
 										"fix": 	{
-											"value": 0x21
+											"value": 3
 										}
 									}
 								},
 								{
-									"label": "Door Secured",
+									"label": "Handles 1 and 3 enabled",
 									"type": {
 										"fix": 	{
-											"value": 0xff
+											"value": 5
+										}
+									}
+								},
+								{
+									"label": "Handles 1 and 4 enabled",
+									"type": {
+										"fix": 	{
+											"value": 9
+										}
+									}
+								},
+								{
+									"label": "Handles 2 and 3 enabled",
+									"type": {
+										"fix": 	{
+											"value": 6
+										}
+									}
+								},
+								{
+									"label": "Handles 2 and 4 enabled",
+									"type": {
+										"fix": 	{
+											"value": 10
+										}
+									}
+								},
+								{
+									"label": "Handles 3 and 4 enabled",
+									"type": {
+										"fix": 	{
+											"value": 12
+										}
+									}
+								},
+								{
+									"label": "Handles 1, 2 and 3 enabled",
+									"type": {
+										"fix": 	{
+											"value": 7
+										}
+									}
+								},
+								{
+									"label": "Handles 1, 2 and 4 enabled",
+									"type": {
+										"fix": 	{
+											"value": 11
+										}
+									}
+								},
+								{
+									"label": "Handles 1, 3 and 4 enabled",
+									"type": {
+										"fix": 	{
+											"value": 13
+										}
+									}
+								},
+								{
+									"label": "Handles 2, 3 and 4 enabled",
+									"type": {
+										"fix": 	{
+											"value": 14
+										}
+									}
+								},
+								{
+									"label": "Handles 1, 2, 3 and 4 enabled",
+									"type": {
+										"fix": 	{
+											"value": 15
 										}
 									}
 								}
@@ -3388,7 +3460,7 @@ function renderMethodSpec(ccId, data) {
 						"type": {
 							"enumof": [
 								{
-									"label": "Door Unsecured",
+									"label": "Handles disabled",
 									"type": {
 										"fix": 	{
 											"value": 0
@@ -3396,50 +3468,122 @@ function renderMethodSpec(ccId, data) {
 									}
 								},
 								{
-									"label": "Door Unsecured with timeout",
+									"label": "Handle 1 enabled",
 									"type": {
 										"fix": 	{
-											"value": 0x1
+											"value": 1
 										}
 									}
 								},
 								{
-									"label": "Door Unsecured for inside Door Handles",
+									"label": "Handle 2 enabled",
 									"type": {
 										"fix": 	{
-											"value": 0x10
+											"value": 2
 										}
 									}
 								},
 								{
-									"label": "Door Unsecured for inside Door Handles with timeout",
+									"label": "Handle 3 enabled",
 									"type": {
 										"fix": 	{
-											"value": 0x11
+											"value": 4
 										}
 									}
 								},
 								{
-									"label": "Door Unsecured for outside Door Handles",
+									"label": "Handle 4 enabled",
 									"type": {
 										"fix": 	{
-											"value": 0x20
+											"value": 8
 										}
 									}
 								},
 								{
-									"label": "Door Unsecured for outside Door Handles with timeout",
+									"label": "Handles 1 and 2 enabled",
 									"type": {
 										"fix": 	{
-											"value": 0x21
+											"value": 3
 										}
 									}
 								},
 								{
-									"label": "Door Secured",
+									"label": "Handles 1 and 3 enabled",
 									"type": {
 										"fix": 	{
-											"value": 0xff
+											"value": 5
+										}
+									}
+								},
+								{
+									"label": "Handles 1 and 4 enabled",
+									"type": {
+										"fix": 	{
+											"value": 9
+										}
+									}
+								},
+								{
+									"label": "Handles 2 and 3 enabled",
+									"type": {
+										"fix": 	{
+											"value": 6
+										}
+									}
+								},
+								{
+									"label": "Handles 2 and 4 enabled",
+									"type": {
+										"fix": 	{
+											"value": 10
+										}
+									}
+								},
+								{
+									"label": "Handles 3 and 4 enabled",
+									"type": {
+										"fix": 	{
+											"value": 12
+										}
+									}
+								},
+								{
+									"label": "Handles 1, 2 and 3 enabled",
+									"type": {
+										"fix": 	{
+											"value": 7
+										}
+									}
+								},
+								{
+									"label": "Handles 1, 2 and 4 enabled",
+									"type": {
+										"fix": 	{
+											"value": 11
+										}
+									}
+								},
+								{
+									"label": "Handles 1, 3 and 4 enabled",
+									"type": {
+										"fix": 	{
+											"value": 13
+										}
+									}
+								},
+								{
+									"label": "Handles 2, 3 and 4 enabled",
+									"type": {
+										"fix": 	{
+											"value": 14
+										}
+									}
+								},
+								{
+									"label": "Handles 1, 2, 3 and 4 enabled",
+									"type": {
+										"fix": 	{
+											"value": 15
 										}
 									}
 								}
@@ -3447,21 +3591,76 @@ function renderMethodSpec(ccId, data) {
 						}
 					},
 					{
-						"label": "Timeout, minutes",
+						"label": "Timeout, seconds",
 						"type": {
 							"range": {
-								"min": 	1,
-								"max": 254
+								"min": 0,
+								"max": 14639
 							}
 						}
 					},
 					{
-						"label": "Timeout, seconds",
+						"label": "Autolock Time, seconds",
 						"type": {
 							"range": {
-								"min": 	1,
-								"max": 59
+								"min": 0,
+								"max": 65535
 							}
+						}
+					},
+					{
+						"label": "Hold and release Time, seconds",
+						"type": {
+							"range": {
+								"min": 0,
+								"max": 65535
+							}
+						}
+					},
+					{
+						"label": "Twist Assist",
+						"type": {
+							"enumof": [
+								{
+									"label": "Disabled",
+									"type": {
+										"fix": 	{
+											"value": 0
+										}
+									}
+								},
+								{
+									"label": "Enabled",
+									"type": {
+										"fix": 	{
+											"value": 1
+										}
+									}
+								}
+							]
+						}
+					},
+					{
+						"label": "Block to block",
+						"type": {
+							"enumof": [
+								{
+									"label": "Disabled",
+									"type": {
+										"fix": 	{
+											"value": 0
+										}
+									}
+								},
+								{
+									"label": "Enabled",
+									"type": {
+										"fix": 	{
+											"value": 1
+										}
+									}
+								}
+							]
 						}
 					}
 				]
