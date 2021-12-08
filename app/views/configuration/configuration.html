@@ -7,7 +7,7 @@
         </div>
         <div class="col-md-9 col-content">
             <bb-alert alert="alert"></bb-alert>
-            <div ng-show="deviceId">
+            <div ng-if="deviceId">
                 <!-- Generic configuration fom expert commands -->
                 <div ng-include="'app/views/configuration/configuration_commands.html'"></div>
                 <!-- Device description -->
