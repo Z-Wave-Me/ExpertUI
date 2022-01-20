@@ -1,7 +1,8 @@
 appController.controller('PacketsController', function ($scope, dataService, $filter,) {
     $scope.statistics = [];
-    $scope.statisticsHead = []
-    $scope.stats = {}
+    $scope.statisticsHead = [];
+    $scope.predicate = 'id';
+    $scope.stats = {};
     const TIMEOUT = 5;
     const FIELDS = ['id',
         'name',
