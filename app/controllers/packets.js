@@ -1,7 +1,8 @@
 appController.controller('PacketsController', function ($scope, dataService, $filter,) {
     $scope.statistics = [];
-    $scope.statisticsHead = []
-    $scope.stats = {}
+    $scope.statisticsHead = [];
+    $scope.predicate = 'id';
+    $scope.stats = {};
     const TIMEOUT = 5;
     const FIELDS = ['id',
         'name',
@@ -111,7 +112,7 @@ appController.controller('PacketsController', function ($scope, dataService, $fi
                 return [response.data.data, ZWaveAPIData.devices, ZWaveAPIData.controller.data.nodeId.value]
             }).then(function ([data, devices, controllerNodeId]) {
             $scope.stats.packetsNum = data.length;
-            $scope.stats.gatheringPeriod = ((data.at(-1).updateTime - data.at(0).updateTime) / 60 / 60).toFixed(0)
+            $scope.stats.gatheringPeriod = $scope.stats.packetsNum ? ((data.at(-1).updateTime - data.at(0).updateTime) / 60 / 60).toFixed(0) : 0;
             const packages = extractPackages(data);
             const outgoing = outgoingStatistics(data);
             const rssi = extractRSSI(data);
