@@ -3,6 +3,6 @@ appController.controller('ResetStatistic', function ($scope, dataService) {
     $scope.resetNetworkStatistics = function () {
         console.log('reseted')
         $scope.rowSpinner['clearNetworkStatistics'] = true;
-        dataService.getApi('ClearPacketLog', '', true).finally(() => window.location.reload())
+        dataService.getApi('clearPacketLog', '', true).finally(() => window.location.reload())
     }
 })
