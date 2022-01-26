@@ -85,7 +85,7 @@ appController.controller('RSSIReportController', function ($scope, $filter, $tim
         const minRSSI = -90;
         const maxRSSI = Math.max(-10, Math.max.apply(null, data.map(el => el.RSSI + el.std)))
         if ($scope.backgroundRssi) {
-            $scope.backgroundRssi = Math.max(minRSSI, Math.trunc(($scope.backgroundRssi - minRSSI) / (maxRSSI - minRSSI) * 100));
+            $scope.backgroundRssi = Math.max(0, Math.trunc(($scope.backgroundRssi - minRSSI) / (maxRSSI - minRSSI) * 100));
         }
         return data.map(el => {
             if (el.RSSI || el.RSSI === 0) {
