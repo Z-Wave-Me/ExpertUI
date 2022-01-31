@@ -9,7 +9,7 @@ var config_data = {
 		'dev_host': [],
 		'app_name': 'Z-Wave Expert',
 		'app_version': 'v1.5.8',
-		'app_built': '29-11-2021 15:33:51',
+		'app_built': '31-01-2022 17:40:55',
 		'app_id': 'ExpertUI',
 		'custom_ip': false,
 		'user_field': 'USERXXXX',
@@ -54,11 +54,12 @@ var config_data = {
 		'reorg_log_url': '/ZWaveAPI/GetReorganizationLog', // Url to load log
 		'zddx_create_url': '/ZWaveAPI/CreateZDDX/', // Create zddx file
 		'get_network_statistics': '/ZWaveAPI/GetStatisticsData', // get network statistics
-		'get_dsk': '/ZWaveAPI/GetDSKCollection', // Get DSK collection,
-		'remove_dsk': 'ZWaveAPI/RemoveDSKEntry?id=', // Remove DSK
+		// 'get_dsk': '/ZWaveAPI/GetDSKCollection', // Get DSK collection,
+		// 'remove_dsk': 'ZWaveAPI/RemoveDSKEntry?id=', // Remove DSK
 
 		// Other APIs
 		'packet_log': '/ZWaveAPI/PacketLog', // Get Packet log
+		'clearPacketLog': '/ZWaveAPI/ClearPacketLog', // Reset Statistic
 		'session': '/ZAutomation/api/v1/session',
 		'zwave_list': '/ZWave/list', // Zwave list of dongles
 		'firmwareupdate': '/ZAutomation/api/v1/system/webif-access',
