@@ -62,7 +62,6 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
                     if (devices_htmlSelect_filter($scope.ZWaveAPIData, 'span', v.id, 'node')) {
                         return;
                     }
-                    ;
                     devices.push(v);
                 });
                 //console.log(devices)
@@ -443,31 +442,47 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             zddXmlFile = node.data.ZDDXMLFile.value;
             $scope.deviceZddxFile = node.data.ZDDXMLFile.value;
         }
-
         $scope.interviewCommands = deviceService.configGetInterviewCommands(node, ZWaveAPIData.updateTime);
         $scope.interviewCommandsDevice = node.data;
-        if (zddXmlFile && zddXmlFile !== 'undefined') {
-            var cachedZddXml = myCache.get(zddXmlFile);
-            // Uncached file
-            if (!cachedZddXml) {
-                $http.get($scope.cfg.server_url + $scope.cfg.zddx_url + zddXmlFile).then(function (response) {
-                    var x2js = new X2JS();
-                    var zddXml = x2js.xml_str2json(response.data);
-                    myCache.put(zddXmlFile, zddXml);
-                    setCont(node, nodeId, zddXml, ZWaveAPIData);
-
-
-                });
-            } else {
-                setCont(node, nodeId, cachedZddXml, ZWaveAPIData);
+        new Promise(function (resolve) {
+            resolve(zddXmlFile)
+        }).then(function (configName) {
+                if (configName) {
+                    return myCache.get(zddXmlFile) || $http.get($scope.cfg.server_url + $scope.cfg.zddx_url + configName)
+                        .then(function (response) {
+                            const zddXml = new X2JS().xml_str2json(response.data);
+                            myCache.put(zddXmlFile, zddXml);
+                            return zddXml
+                        }).catch(function (error) {
+                            return null;
+                        })
+                }
+                return null
             }
-
-        } else {
-
-            setCont(node, nodeId, null, ZWaveAPIData);
-        }
+        ).then(function (config) {
+            setCont(node, nodeId, config, ZWaveAPIData);
+        })
+        // TODO Deprecated to remove 8/12/2021
+        // if (zddXmlFile && zddXmlFile !== 'undefined') {
+        //     var cachedZddXml = myCache.get(zddXmlFile);
+        //     // Uncached file
+        //     if (!cachedZddXml) {
+        //         $http.get($scope.cfg.server_url + $scope.cfg.zddx_url + zddXmlFile).then(function (response) {
+        //             var x2js = new X2JS();
+        //             var zddXml = x2js.xml_str2json(response.data);
+        //             myCache.put(zddXmlFile, zddXml);
+        //             setCont(node, nodeId, zddXml, ZWaveAPIData);
+        //         },
+        //             function (error) {
+        //                 setCont(node, nodeId, null, ZWaveAPIData);
+        //             });
+        //     } else {
+        //         setCont(node, nodeId, cachedZddXml, ZWaveAPIData);
+        //     }
+        // } else {
+        //     setCont(node, nodeId, null, ZWaveAPIData);
+        // }
     }
-
     /**
      * Set all conts
      */
@@ -477,9 +492,7 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             // Loop throught instances
             angular.forEach(node.instances, function (instance, instanceId) {
                 if (instance.commandClasses[112]) {
-
                     $scope.hasConfigurationCc =  configurationCc(instance.commandClasses[112], instanceId,nodeId, ZWaveAPIData);
-                    return;
                 }
             });
         }
@@ -490,7 +503,6 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             $scope.switchAllCont = deviceService.configSwitchAllCont(node, nodeId, ZWaveAPIData, cfgXml);
             if (!$scope.configCont && !$scope.wakeupCont && !$scope.protectionCont && !$scope.switchAllCont) {
                 $scope.alert = {message: $scope._t('configuration_not_supported'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
-                return;
             }
 
         }, function(error) {
@@ -501,7 +513,6 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
             $scope.switchAllCont = deviceService.configSwitchAllCont(node, nodeId, ZWaveAPIData, cfgXml);
             if (!$scope.configCont && !$scope.wakeupCont && !$scope.protectionCont && !$scope.switchAllCont) {
               $scope.alert = {message: $scope._t('no_device_service'), status: 'alert-warning', icon: 'fa-exclamation-circle'};
-              return;
           }
         });
     }
@@ -522,7 +533,4 @@ appController.controller('ConfigConfigurationController', function ($scope, $rou
         obj['updateTime'] = ZWaveAPIData.updateTime;
         return obj;
     }
-
-
-
 });
