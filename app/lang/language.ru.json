@@ -56,6 +56,8 @@
     "btn_save": "Сохранить",
     "btn_save_name": "Сохранить имя",
     "btn_secure": "С шифрованием",
+    "btn_secure_s2": "С шифрованием S2",
+    "btn_secure_s2_s0": "С шифрованием S2 & S0",
     "btn_select": "Выбрать",
     "btn_show_lifeline": "Показать Lifeline",
     "btn_switched_down": "Вниз",

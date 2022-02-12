@@ -56,6 +56,8 @@
     "btn_save": "Save",
     "btn_save_name": "Save name",
     "btn_secure": "Secure",
+    "btn_secure_s2": "Secure S2",
+    "btn_secure_s2_s0": "Secure S2 & S0",
     "btn_select": "Select",
     "btn_show_lifeline": "Show lifeline",
     "btn_switched_down": "Down",

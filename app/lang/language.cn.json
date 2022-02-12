@@ -56,6 +56,8 @@
     "btn_save": "保存",
     "btn_save_name": "保存名字",
     "btn_secure": "安全",
+    "btn_secure_s2": "安全 S2",
+    "btn_secure_s2_s0": "安全 S2 & S0",
     "btn_select": "选择",
     "btn_show_lifeline": "显示",
     "btn_switched_down": "下",
