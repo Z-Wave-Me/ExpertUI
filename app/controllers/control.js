@@ -43,7 +43,8 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 dskPin: 0,
                 dskPin2: 0,
                 csa: false,
-                publicKey: null
+                publicKey: null,
+                publicKeyKnownPIN: 0
             },
             grantKeys: {
                 interval: false,
@@ -238,6 +239,10 @@ appController.controller('ControlController', function ($scope, $interval, $time
             checkS2Interview(nodeId);
         }, 20000);
 
+    };
+    
+    $scope.setKnownPin = function() {
+        $scope.controlDh.inclusion.input.dskPin = $scope.controlDh.inclusion.input.publicKeyKnownPIN;
     };
     
     $scope.handleInclusionCSA = function (confirmed, timedOut) {
@@ -703,6 +708,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
             $scope.controlDh.inclusion.input.publicKey = securityS2.data.publicKey.value;
             $scope.controlDh.inclusion.input.publicKeyAuthenticationRequired = securityS2.data.publicKeyAuthenticationRequired.value;
             $scope.controlDh.inclusion.input.dskPin = $scope.dskBlock($scope.controlDh.inclusion.input.publicKey, 1);
+            $scope.controlDh.inclusion.input.publicKeyKnownPIN = ('00000' + securityS2.data.publicKeyKnownPIN.value).slice(-5);
             $scope.controlDh.inclusion.input.csa = false;
             $scope.controlDh.inclusion.verifyDSK.show = true;
             var countDownVerifyDSK = function () {
