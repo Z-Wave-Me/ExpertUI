@@ -157,7 +157,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
         });
         // Is timed out
         if (timedOut) {
-            alertMessage += $scope._t('timedout') + '. ';
+            alertMessage += $scope._t('s2_timeout') + '. ';
 
         }
         // Nothing is checked
@@ -196,7 +196,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
         // Is timed out
         if (timedOut) {
             $scope.controlDh.inclusion.alertS2 = {
-                message: $scope._t('timedout'),
+                message: $scope._t('s2_timeout'),
                 status: 'alert-danger',
                 icon: false
             };
@@ -245,7 +245,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
         // Is timed out
         if (timedOut) {
             $scope.controlDh.inclusion.alertS2 = {
-                message: $scope._t('timedout'),
+                message: $scope._t('s2_timeout'),
                 status: 'alert-danger',
                 icon: false
             };
@@ -576,14 +576,14 @@ appController.controller('ControlController', function ($scope, $interval, $time
                 icon: 'fa-smile'
             };
 
-            if (node.instances[0].commandClasses[159]) {
-                alertify.alertWarning($scope._t('device_interview_wait_s2'));
-                //$scope.controlDh.inclusion.alertS2Interview = alertify.notify($scope._t('device_interview_wait_s2'), 'warning');
-
-                $scope.controlDh.inclusion.securityAbandoned = node.instances[0].commandClasses[159].data.securityAbandoned.value;
+            if (node.instances[0].commandClasses[152] || node.instances[0].commandClasses[159]) {
                 $scope.controlDh.inclusion.secureChannelEstablished = node.data.secureChannelEstablished.value;
-                // console.log("$scope.controlDh.inclusion.secureChannelEstablished", $scope.controlDh.inclusion.secureChannelEstablished);
-                // console.log("$scope.controlDh.inclusion.securityAbandoned", $scope.controlDh.inclusion.securityAbandoned);
+                if (node.instances[0].commandClasses[159]) {
+                    alertify.alertWarning($scope._t('device_interview_wait_s2'));
+                    $scope.controlDh.inclusion.securityAbandoned = node.instances[0].commandClasses[159].data.securityAbandoned.value;
+                } else {
+                    $scope.controlDh.inclusion.securityAbandoned = node.instances[0].commandClasses[152].data.securityAbandoned.value;
+                }
             }
         }
 
@@ -617,17 +617,42 @@ appController.controller('ControlController', function ($scope, $interval, $time
         {
             return;
         }
-        // Set securityS2
+        
+        var securityS0 = nodeInstances[0].commandClasses[152];
         var securityS2 = nodeInstances[0].commandClasses[159];
 
+        // Security S0
+        
+        if (securityS0 && !securityS2) {
+            if (!$scope.controlDh.inclusion.secureChannelEstablished && !securityS0.data.securityAbandoned.value) {
+                $scope.controlDh.inclusion.alertS2 = {
+                    message: $scope._t('wait_key_veriffication'),
+                    status: 'alert-warning',
+                    icon: 'fa-spinner fa-spin'
+                };
+            }
+            if ($scope.controlDh.inclusion.secureChannelEstablished) {
+                $scope.controlDh.inclusion.alertS2 = {
+                    message: $scope._t('s0_included'),
+                    status: 'alert-success',
+                    icon: 'fa-smile'
+                };
+            }
+            if (securityS0.data.securityAbandoned.value) {
+                $scope.controlDh.inclusion.alertS2 = {
+                    message: $scope._t('s0_timeout'),
+                    status: 'alert-danger',
+                    icon: 'fa-exclamation-triangle'
+                };
+            }
+        }
+        
+        // Security S2
+        
         console.log('Has securityS2  commandClass: ', securityS2);
 
         // Check requestedKeys
-
-        // if ($scope.controlDh.inclusion.alertS2Interview) {
-        //     $scope.controlDh.inclusion.alertS2Interview.close();
-        // }
-
+        
         if (securityS2 && securityS2.data.requestedKeys.value && !$scope.controlDh.inclusion.grantKeys.done) {
             console.log('Check requestedKeys: securityS2.data.requestedKeys.value ', securityS2.data.requestedKeys.value);
             $scope.controlDh.inclusion.input.keysRequested.S0 = securityS2.data.requestedKeys.S0.value;
@@ -647,9 +672,17 @@ appController.controller('ControlController', function ($scope, $interval, $time
             $scope.controlDh.inclusion.grantKeys.interval = $interval(countDownGrantKeys, 1000);
             return;
         }
+
+        if (securityS2 && securityS2.data.securityAbandoned.value) {
+            $scope.controlDh.inclusion.alertS2 = {
+                message: $scope._t('s2_timeout'),
+                status: 'alert-danger',
+                icon: false
+            };
+        }
         
-        // Show controllers CSA PIN
-        if (securityS2.data.csa.value && !$scope.controlDh.inclusion.controllerCSA && !$scope.controlDh.inclusion.securityAbandoned && !$scope.controlDh.inclusion.secureChannelEstablished) {
+         // Show controllers CSA PIN
+        if (securityS2 && securityS2.data.csa.value && !$scope.controlDh.inclusion.controllerCSA && !$scope.controlDh.inclusion.securityAbandoned && !$scope.controlDh.inclusion.secureChannelEstablished) {
             $scope.controlDh.inclusion.controllerCSA = true;
         
             $scope.controlDh.inclusion.alertS2 = {

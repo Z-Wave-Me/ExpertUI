@@ -27593,6 +27593,9 @@ input[type=number].input_number {
   padding: 0 2px;
   font-size: 120%;
 }
+.dsk-wrap .dsk-first-block {
+  text-decoration: underline;
+}
 
 /* Zniffer
 -------------------------------------------------- */

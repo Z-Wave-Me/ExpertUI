@@ -6,24 +6,35 @@
         <div class="cfg-block" ng-controller="SetSecureInclusionController">
             {{_t('nm_force_unsecure')}}
             <div class="btn-group">
-                <!-- Secure -->
+                <!-- Secure S2 & S0 -->
                 <button type="button" class="btn btn-primary" id="btn_force_secure_lock"
-                        ng-class="controlDh.controller.secureInclusion ? 'active' : ''"
-                        ng-click="setSecureInclusion('controller.data.secureInclusion=true')"
+                        ng-class="controlDh.controller.secureInclusion == 2 ? 'active' : ''"
+                        ng-click="setSecureInclusion('controller.data.secureInclusion=2')"
                         ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || rowSpinner['controller.data.secureInclusion=true']">
                     <bb-row-spinner
-                            spinner="rowSpinner['controller.data.secureInclusion=true']"
-                            label="_t('btn_secure')"
+                            spinner="rowSpinner['controller.data.secureInclusion=2']"
+                            label="_t('btn_secure_s2_s0')"
+                            icon="'fa-lock'">
+                    </bb-row-spinner>
+                </button>
+                <!-- Secure S2 -->
+                <button type="button" class="btn btn-primary" id="btn_force_secure_lock"
+                        ng-class="controlDh.controller.secureInclusion == 1 ? 'active' : ''"
+                        ng-click="setSecureInclusion('controller.data.secureInclusion=1')"
+                        ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || rowSpinner['controller.data.secureInclusion=true']">
+                    <bb-row-spinner
+                            spinner="rowSpinner['controller.data.secureInclusion=1']"
+                            label="_t('btn_secure_s2')"
                             icon="'fa-lock'">
                     </bb-row-spinner>
                 </button>
                 <!-- Unsecure -->
                 <button type="button" class="btn btn-primary" id="btn_force_unsecure_lock"
-                        ng-class="!controlDh.controller.secureInclusion ? 'active' : ''"
-                        ng-click="setSecureInclusion('controller.data.secureInclusion=false')"
+                        ng-class="controlDh.controller.secureInclusion == 0 ? 'active' : ''"
+                        ng-click="setSecureInclusion('controller.data.secureInclusion=0')"
                         ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || rowSpinner['controller.data.secureInclusion=false']">
                     <bb-row-spinner
-                            spinner="rowSpinner['controller.data.secureInclusion=false']"
+                            spinner="rowSpinner['controller.data.secureInclusion=0']"
                             label="_t('btn_unsecure')"
                             icon="'fa-unlock'">
                     </bb-row-spinner>
