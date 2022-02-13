@@ -76,13 +76,13 @@
         <!-- Include/Exclude  -->
         <div class="cfg-block" ng-controller="IncludeExcludeDeviceController">
             <!-- Basic info  -->
-            <p class="input-help" ng-show="!controlDh.controller.isSIS && controlDh.controller.isRealPrimary">
+            <p class="input-help" ng-if="!controlDh.controller.isSIS && controlDh.controller.isRealPrimary">
                 {{_t('nm_learn_mode_you_are_primary_no_sis')}}</p>
-            <p class="input-help" ng-show="controlDh.controller.isSIS && controlDh.controller.isRealPrimary">
+            <p class="input-help" ng-if="controlDh.controller.isSIS && controlDh.controller.isRealPrimary">
                 {{_t('nm_learn_mode_you_are_primary_and_sis')}}</p>
-            <p class="input-help" ng-show="!controlDh.controller.isSIS && !controlDh.controller.isRealPrimary">
+            <p class="input-help" ng-if="!controlDh.controller.isSIS && !controlDh.controller.isRealPrimary">
                 {{_t('nm_learn_mode_you_are_secondary_can_not_add')}}</p>
-            <p class="input-help" ng-show="controlDh.controller.isSIS && !controlDh.controller.isRealPrimary">
+            <p class="input-help" ng-if="controlDh.controller.isSIS && !controlDh.controller.isRealPrimary">
                 {{_t('nm_learn_mode_you_are_secondary_can_add')}}</p>
             <div ng-hide="controlDh.inclusion.lastIncludedDevice.message || controlDh.inclusion.lastExcludedDevice.message">
                 <!-- Info about sis/primary  -->
@@ -99,32 +99,32 @@
             <!-- include start -->
             <button class="btn btn-primary" id="btn_nm_include_start" title="{{_t('nm_include_start_tooltip')}}"
                     ng-disabled="[5, 6, 7, 20].indexOf(controlDh.controller.controllerState) > -1 || (!controlDh.controller.isRealPrimary && !controlDh.controller.isSIS) || controlDh.controller.limitReached"
-                    ng-show="[1, 2, 3, 4].indexOf(controlDh.controller.controllerState) == -1"
-                    ng-click="addNodeToNetwork('controller.AddNodeToNetwork(1)')">
+                    ng-if="[1, 2, 3, 4].indexOf(controlDh.controller.controllerState) == -1"
+                    ng-click="addNodeToNetwork(1)">
                 <i class="fa fa-play-circle"></i> {{_t('nm_include_start')}}
             </button>
             <!-- include stop -->
             <button
                     class="btn btn-danger"
                     id="btn_nm_include_stop"
-                    ng-show="[1, 2, 3, 4].indexOf(controlDh.controller.controllerState) > -1"
-                    ng-click="addNodeToNetwork('controller.AddNodeToNetwork(0)')">
+                    ng-if="[1, 2, 3, 4].indexOf(controlDh.controller.controllerState) > -1"
+                    ng-click="addNodeToNetwork(0)">
                 <i class="fa fa-stop-circle"></i> {{_t('nm_include_stop')}}
             </button>
             <!-- exclude start -->
             <button class="btn btn-info" id="nm_exclude_start" title="{{_t('nm_exclude_start_tooltip')}}"
                     ng-disabled="[1, 2, 3, 4, 20].indexOf(controlDh.controller.controllerState) > -1 || (!controlDh.controller.isRealPrimary && !controlDh.controller.isSIS)"
-                    ng-show="[5, 6, 7].indexOf(controlDh.controller.controllerState) == -1"
+                    ng-if="[5, 6, 7].indexOf(controlDh.controller.controllerState) == -1"
                     ng-click="removeNodeToNetwork('controller.RemoveNodeFromNetwork(1)')">
                 <i class="fa fa-play-circle"></i> {{_t('nm_exclude_start')}}
             </button>
             <!-- exclude stop -->
             <button class="btn btn-danger" id="nm_exclude_stop"
-                    ng-show="[5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
+                    ng-if="[5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
                     ng-click="removeNodeToNetwork('controller.RemoveNodeFromNetwork(0)')">
                 <i class="fa fa-stop-circle"></i> {{_t('nm_exclude_stop')}}
             </button>
-            <p class="input-help" ng-show="controlDh.controller.limitReached" ng-bind-html="_t('nm_include_limit_reached') | toTrusted"></p>
+            <p class="input-help" ng-if="controlDh.controller.limitReached" ng-bind-html="_t('nm_include_limit_reached') | toTrusted"></p>
         </div>
 
         <!-- Show own DSK for CSA mode  -->
@@ -211,14 +211,14 @@
             <div class="alert alert-warning">{{controlDh.inclusion.verifyDSK.countDown}}s remain</div>
             <!-- name -->
             <label>{{_t('pin')}}</label>
-            <input name="dsk_pin" id="dsk_pin" type="number" size="5" class="form-control input_number input-valid-{{dskForm.dsk_pin.$valid}}" min="0" max="65533" ng-show="controlDh.inclusion.input.publicKeyAuthenticationRequired"
+            <input name="dsk_pin" id="dsk_pin" type="number" size="5" class="form-control input_number input-valid-{{dskForm.dsk_pin.$valid}}" min="0" max="65533" ng-if="controlDh.inclusion.input.publicKeyAuthenticationRequired"
                    ng-model="controlDh.inclusion.input.dskPin" required />
-            <input name="dsk_1" id="dsk_1" type="number" size="5" class="form-control input_number" ng-value="dskBlock(controlDh.inclusion.input.publicKey, 1)" disabled="true" ng-show="!controlDh.inclusion.input.publicKeyAuthenticationRequired" />
+            <input name="dsk_1" id="dsk_1" type="number" size="5" class="form-control input_number" ng-value="dskBlock(controlDh.inclusion.input.publicKey, 1)" disabled="true" ng-if="!controlDh.inclusion.input.publicKeyAuthenticationRequired" />
             -
-            <input name="dsk_pin2" id="dsk_pin2" type="number" size="5" class="form-control input_number input-valid-{{dskForm.dsk_pin.$valid}}" min="0" max="65533" ng-show="controlDh.inclusion.input.publicKeyAuthenticationRequired && controlDh.inclusion.input.csa"
+            <input name="dsk_pin2" id="dsk_pin2" type="number" size="5" class="form-control input_number input-valid-{{dskForm.dsk_pin.$valid}}" min="0" max="65533" ng-if="controlDh.inclusion.input.publicKeyAuthenticationRequired && controlDh.inclusion.input.csa"
                    ng-model="controlDh.inclusion.input.dskPin2" required />
             <input name="dsk_2" id="dsk_2" type="number" size="5" class="form-control input_number" ng-value="dskBlock(controlDh.inclusion.input.publicKey, 2)" disabled="true"
-                   ng-show="!controlDh.inclusion.input.csa"/>
+                   ng-if="!controlDh.inclusion.input.csa"/>
             -
             <input name="dsk_3" id="dsk_3" type="number" size="5" class="form-control input_number" ng-value="dskBlock(controlDh.inclusion.input.publicKey, 3)" disabled="true" />
             -
