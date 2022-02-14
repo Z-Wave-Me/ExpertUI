@@ -26859,6 +26859,19 @@ http://codepen.io/MattIn4D/pen/LiKFC
   color: #357fbe;
 }
 
+.security-modal {
+  display: flex;
+}
+.security-modal .security-button {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.security-modal .security-button > button {
+  align-self: center;
+}
+
 .appmodal-footer {
   border-top: solid 1px #9fd8ef;
   text-align: right;
