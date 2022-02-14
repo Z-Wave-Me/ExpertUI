@@ -287,7 +287,13 @@ appController.controller('ControlController', function ($scope, $interval, $time
 
     };
 
-
+    $scope.selectAllSecurity = function () {
+        ['S0', 'S2Unauthenticated', 'S2Authenticated', 'S2Access'].map(function (key) {
+            if ($scope.controlDh.inclusion.input.keysRequested[key]) {
+                $scope.controlDh.inclusion.input.keysGranted[key] = true;
+            }
+        });
+    }
 
     /// --- Private functions --- ///
     /**

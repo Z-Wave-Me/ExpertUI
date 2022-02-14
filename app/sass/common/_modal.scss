@@ -73,6 +73,18 @@
 }
 
 .appmodal-body{}
+.security-modal {
+  display: flex;
+  .security-button {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    & > button {
+      align-self: center;
+    }
+  }
+}
 
 .appmodal-footer{
   border-top: solid 1px $modal-border-color;  
