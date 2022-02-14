@@ -803,5 +803,6 @@
     "noData": "Нет данных",
     "BackgroundNoiseLevel": "Уровень фонового шума",
     "rssiStd": "Отклонение",
-    "nodeId": "Id"
+    "nodeId": "Id",
+    "selectAll": "Выбрать все"
 }
