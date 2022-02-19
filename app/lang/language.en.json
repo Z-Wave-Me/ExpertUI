@@ -805,5 +805,6 @@
     "noData": "No Data",
     "BackgroundNoiseLevel": "Background Noise Level",
     "rssiStd": "Deviation",
-    "nodeId": "Id"
+    "nodeId": "Id",
+    "selectAll": "Select All"
 }

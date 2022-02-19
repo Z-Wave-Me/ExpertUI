@@ -136,9 +136,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
                     $timeout(function () {
                         checkInterview(nodeInstances);
                     }, 5000);
-
                 }
-
             });
         };
         $scope.controlDh.interval = $interval(refresh, $scope.cfg.interval);
@@ -294,7 +292,13 @@ appController.controller('ControlController', function ($scope, $interval, $time
 
     };
 
-
+    $scope.selectAllSecurity = function () {
+        ['S0', 'S2Unauthenticated', 'S2Authenticated', 'S2Access'].map(function (key) {
+            if ($scope.controlDh.inclusion.input.keysRequested[key]) {
+                $scope.controlDh.inclusion.input.keysGranted[key] = true;
+            }
+        });
+    }
 
     /// --- Private functions --- ///
     /**
@@ -538,8 +542,6 @@ appController.controller('ControlController', function ($scope, $interval, $time
                     }
                 }
             }
-            ;
-
         });
     }
 
@@ -627,7 +629,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
         var securityS2 = nodeInstances[0].commandClasses[159];
 
         // Security S0
-        
+
         if (securityS0 && !securityS2) {
             if (!$scope.controlDh.inclusion.secureChannelEstablished && !securityS0.data.securityAbandoned.value) {
                 $scope.controlDh.inclusion.alertS2 = {
@@ -635,6 +637,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
                     status: 'alert-warning',
                     icon: 'fa-spinner fa-spin'
                 };
+                return;
             }
             if ($scope.controlDh.inclusion.secureChannelEstablished) {
                 $scope.controlDh.inclusion.alertS2 = {
@@ -642,6 +645,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
                     status: 'alert-success',
                     icon: 'fa-smile'
                 };
+                return;
             }
             if (securityS0.data.securityAbandoned.value) {
                 $scope.controlDh.inclusion.alertS2 = {
@@ -649,6 +653,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
                     status: 'alert-danger',
                     icon: 'fa-exclamation-triangle'
                 };
+                return;
             }
         }
         
@@ -830,11 +835,11 @@ appController.controller('IncludeExcludeDeviceController', function ($scope, $ro
      * Turns the controller into an inclusion mode that allows including a device.
      * flag=1 for starting the inclusion mode
      * flag=0 for stopping the inclusion mode
-     * @param {string} cmd
+     * @param {number} flag
      */
-    $scope.addNodeToNetwork = function (cmd) {
-        //$scope.controlDh.inclusion.lastIncludedDevice = false;
-        $scope.runZwaveCmd(cmd);
+    $scope.addNodeToNetwork = function (flag) {
+        // $scope.controlDh.inclusion.lastIncludedDeviceId = 0;
+        $scope.runZwaveCmd('controller.AddNodeToNetwork(' + flag + ')');
         $route.reload();
     };
 

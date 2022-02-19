@@ -507,7 +507,7 @@ angApp.directive('expertCommandInput', function (cfg, $filter) {
         var input = '';
         var inName = $filter('stringToSlug')(name ? name : label);
         input += '<label>' + label + '</label> ';
-        input += '<input class="form-control" name="' + inName + '" type="text" class="form-control" value="' + value + '" />';
+        input += '<input class="form-control" name="' + inName + '_string" type="text" class="form-control" value="' + value + '" />';
         return input;
     }
 

@@ -123,7 +123,10 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
             if (v.value === 'N/A') {
                 return;
             }
-            dataJoined.push($filter('setConfigValue')(v.value));
+            if (v.name.endsWith('_string')) {
+                v.value = '\'' + v.value + '\'';
+            }
+            dataJoined.push(v.value);
 
         });
         var request = cmd + '(' + dataJoined.join() + ')';
