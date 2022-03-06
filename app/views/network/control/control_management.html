@@ -250,8 +250,8 @@
                 <i class="fa fa-check-circle"></i> <span class="btn-name">{{_t('btn_no_pin_s2')}}</span>
             </button>
             <!-- Confirm with suggested PIN -->
-            <button type="button" class="btn btn-submit" ng-click="setKnownPin(); handleInclusionVerifyDSK(true)" ng-hide="!controlDh.inclusion.input.publicKeyAuthenticationRequired || controlDh.inclusion.input.publicKeyKnownPIN == 0">
-                <i class="fa fa-check"></i> <span class="btn-name">{{_t('confirm') + ' ' + controlDh.inclusion.input.publicKeyKnownPIN}}</span>
+            <button type="button" class="btn btn-submit" ng-click="setKnownPin(); handleInclusionVerifyDSK(true)" ng-hide="!controlDh.inclusion.input.publicKeyAuthenticationRequired || controlDh.inclusion.input.publicKeyKnownPIN === ''">
+                <i class="fa fa-check"></i> <span class="btn-name-not-to-hide-in-mobile">{{controlDh.inclusion.input.publicKeyKnownPIN}}</span>
             </button>
             <!-- Confirm -->
             <button type="button" class="btn btn-submit" ng-click="handleInclusionVerifyDSK(true)">
