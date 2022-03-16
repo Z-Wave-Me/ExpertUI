@@ -71,6 +71,15 @@
                     ng-click="zmeFreqChange('ZMEFreqChange(3)')">
                 <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(3)']"></bb-row-spinner>US
             </button>
+            <!-- US LR -->
+            <button
+                    class="btn"
+                    id="btn_nm_freq_change_us_lr"
+                    ng-class="controlDh.controller.frequency === cfg.frequency[11] ? 'btn-default' : 'btn-primary'"
+                    ng-disabled="rowSpinner['ZMEFreqChange(11)'] || [1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1"
+                    ng-click="zmeFreqChange('ZMEFreqChange(11)')">
+                <bb-row-spinner spinner="rowSpinner['ZMEFreqChange(11)']"></bb-row-spinner>US Long Range
+            </button>
             <!-- IL -->
             <button
                     class="btn"
