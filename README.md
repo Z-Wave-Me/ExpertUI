@@ -3,6 +3,20 @@ zwave-expertui
 
 This User Interfaces allows to operate a Smart Home Network based on Z-Wave devices. It utilizes the software architecture "Z-Way", certified as Z-Wave Plus Controller.
 
+## v1.5.9
+#### New features:
+- Button to select all security keys
+- Save PIN code from previous inclusions to suggest on re-inclusion
+- Secure/unsecure inclusion toggle now have option for S2/unsecure (to exclude S0)
+- US Long Range requency
+- Packet statistics reset button
+#### Fixes:
+- Rework of inclusion messages
+- Routemap fixes
+- Packets statistics page
+- Disable Learn mode if SIS and has devices
+- Fix empty configuration page if xml file does not exist
+
 ## v1.5.8
 #### New features:
 - Added new Packets Statistics page
