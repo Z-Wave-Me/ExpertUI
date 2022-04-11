@@ -243,54 +243,55 @@ var config_data = {
 		analytics: {
 			show: false
 		},
+		// TODO Deprecated 11.04.22
 		// Expert commands table with values
-		expert_cmd: {
-			Configuration: {
-				valArray: true,
-				ccName: 'Configuration',
-				th: ['val']
-			},
-			Association: {
-				valArray: true,
-				ccName: 'Association',
-				th: ['nodes']
-			},
-			SensorBinary: {
-				valArray: true,
-				ccName: 'SensorBinary',
-				th: ['level']
-			},
-			ThermostatSetPoint: {
-				valArray: true,
-				ccName: 'ThermostatSetPoint',
-				th: ['val']
-			},
-			Basic: {
-				valArray: false,
-				ccName: 'Basic',
-				th: ['level']
-			},
-			SwitchBinary: {
-				valArray: false,
-				ccName: 'SwitchBinary',
-				th: ['level']
-			},
-			SwitchAll: {
-				valArray: false,
-				ccName: 'SwitchAll',
-				th: ['mode']
-			},
-			Wakeup: {
-				valArray: false,
-				ccName: 'Wakeup',
-				th: ['interval', 'nodeId']
-			},
-			PowerLevel: {
-				valArray: false,
-				ccName: 'PowerLevel',
-				th: ['level', 'timeout']
-			}
-		},
+		// expert_cmd: {
+		// 	Configuration: {
+		// 		valArray: true,
+		// 		ccName: 'Configuration',
+		// 		th: ['val']
+		// 	},
+		// 	Association: {
+		// 		valArray: true,
+		// 		ccName: 'Association',
+		// 		th: ['nodes']
+		// 	},
+		// 	SensorBinary: {
+		// 		valArray: true,
+		// 		ccName: 'SensorBinary',
+		// 		th: ['level']
+		// 	},
+		// 	ThermostatSetPoint: {
+		// 		valArray: true,
+		// 		ccName: 'ThermostatSetPoint',
+		// 		th: ['val']
+		// 	},
+		// 	Basic: {
+		// 		valArray: false,
+		// 		ccName: 'Basic',
+		// 		th: ['level']
+		// 	},
+		// 	SwitchBinary: {
+		// 		valArray: false,
+		// 		ccName: 'SwitchBinary',
+		// 		th: ['level']
+		// 	},
+		// 	SwitchAll: {
+		// 		valArray: false,
+		// 		ccName: 'SwitchAll',
+		// 		th: ['mode']
+		// 	},
+		// 	Wakeup: {
+		// 		valArray: false,
+		// 		ccName: 'Wakeup',
+		// 		th: ['interval', 'nodeId']
+		// 	},
+		// 	PowerLevel: {
+		// 		valArray: false,
+		// 		ccName: 'PowerLevel',
+		// 		th: ['level', 'timeout']
+		// 	}
+		// },
 		// Upload settings
 		'upload': {
 			'fw_or_bootloader': {

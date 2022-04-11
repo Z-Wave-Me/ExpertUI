@@ -8,7 +8,7 @@
  * @class ConfigCommandsController
  *
  */
-appController.controller('ConfigCommandsController', function ($scope, $routeParams, $location, $cookies, $interval, $timeout, $filter, cfg, dataService, deviceService, _) {
+appController.controller('ConfigCommandsController', function ($scope, $routeParams, $location, $cookies, $interval, $timeout, $filter, cfg, dataService, deviceService, _, configurationCommandsService) {
     $scope.devices = [];
     $scope.deviceName = '';
     $scope.commands = [];
@@ -39,6 +39,9 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
         }
     };
 
+    $scope.commandName = function (classCommand) {
+        return configurationCommandsService.serverCommand(classCommand)
+    }
     // Load data
     $scope.loadData = function (nodeId) {
         dataService.loadZwaveApiData().then(function (ZWaveAPIData) {
@@ -62,7 +65,6 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
                     if (devices_htmlSelect_filter($scope.ZWaveAPIData, 'span', v.id, 'node')) {
                         return;
                     }
-                    ;
                     var obj = {};
                     obj['id'] = v.id;
                     obj['name'] = v.name;
@@ -139,6 +141,31 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
         });
     };
 
+
+    $scope.storeExpertProperty = function (form, prop) {
+        // $scope.toggleRowSpinner(prop);
+        var data = $('#' + form).serializeArray();
+        var dataJoined = [];
+        angular.forEach(data, function (v, k) {
+            if (v.value !== 'N/A') {
+                if (v.name.endsWith('_string')) {
+                    v.value = '\'' + v.value + '\'';
+                }
+                dataJoined.push(v.value);
+            }
+        });
+        var request = prop + '.value=' +  dataJoined.join();
+        // dataService.runZwaveCmd(cfg.store_url + request).then(function (response) {
+        //     $timeout($scope.toggleRowSpinner, 3000);
+        // }, function (error) {
+        //     var message = (_.isString(error.data) ? error.data : $scope._t('error_update_data')) + '\n' + request;
+        //     alertify.alertError(message);
+        //     $scope.toggleRowSpinner();
+        // });
+        console.log(request)
+        console.log(prop)
+        console.log(dataJoined)
+    }
     /**
      * Show modal CommandClass dialog
      */
@@ -176,29 +203,21 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
     /**
      * Set zwave data
      * @param {object} ZWaveAPIData
+     * @param  {{instances: {commandClasses: object} }} node
      */
     function setData(ZWaveAPIData, node) {
         angular.forEach(node.instances, function (instance, instanceId) {
             angular.forEach(instance.commandClasses, function (commandClass, ccId) {
-                var nodeId = $scope.deviceId;
-                var methods = getMethodSpec(ZWaveAPIData, nodeId, instanceId, ccId, null);
-                var command = deviceService.configGetCommands(methods, ZWaveAPIData);
-                var obj = {};
-                obj['nodeId'] = nodeId;
-                obj['rowId'] = 'row_' + nodeId + '_' + instanceId + '_' + ccId;
-                obj['instanceId'] = instanceId;
-                obj['ccId'] = ccId;
-                obj['cmd'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']';
-                obj['cmdData'] = instance.commandClasses[ccId].data;
-                obj['cmdDataIn'] = instance.data;
-                obj['commandClass'] = commandClass.name;
-                obj['command'] = command;
-                obj['updateTime'] = ZWaveAPIData.updateTime;
-
+                var obj = configurationCommandsService.getCommand(ZWaveAPIData, {
+                    deviceId: $scope.deviceId ,
+                    instanceId,
+                    ccId,
+                    commandClass,
+                    instance
+                })
                 var findIndex = _.findIndex($scope.commands, {rowId: obj.rowId});
                 if (findIndex > -1) {
                     angular.extend($scope.commands[findIndex], obj);
-
                 } else {
                     $scope.commands.push(obj);
                 }
@@ -213,7 +232,7 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
     function setCcTable(data) {
 
         angular.forEach(data, function (v, k) {
-            var cmdCfg = cfg.expert_cmd[v.ccName];
+            var cmdCfg = configurationCommandsService.serverCommand(v.ccName);
             if (cmdCfg) {
                 var obj = {};
                 obj['ccName'] = v.ccName;
@@ -227,9 +246,7 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
                     setCcTableRowsArray(v.cmdData, cmdCfg);
                 } else {
                     setCcTableRows(v.cmdData, cmdCfg)
-
                 }
-
             }
         });
     }

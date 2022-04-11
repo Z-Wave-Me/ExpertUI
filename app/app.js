@@ -14,7 +14,8 @@ var angApp = angular.module('angApp', [
     'qAllSettled',
     'angularFileUpload',
     'myAppTemplates',
-    'doubleScrollBars'
+    'doubleScrollBars',
+    'appConfigurationCommands'
 ]);
 
 /**
