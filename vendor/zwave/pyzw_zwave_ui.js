@@ -1029,6 +1029,50 @@ function renderMethodSpec(ccId, data) {
 		// SwitchMultilevel
 		case 0x26:
 			return {
+				"data": {
+					"overrideDefaultDuration": {
+						"label": "If not specifically specified in Set, use this duration instead of the device default value",
+						"type": {
+							"enumof": [
+								{
+									"label": "immediately",
+									"type": {
+										"fix": 	{
+											"value": 0
+										}
+									}
+								},
+								{
+									"label": "in seconds",
+									"type": {
+										"range": {
+											"min": 	1,
+											"max": 127
+										}
+									}
+								},
+								{
+									"label": "in minutes",
+									"type": {
+										"range": {
+											"min": 	1,
+											"max": 127,
+											"shift": 127
+										}
+									}
+								},
+								{
+									"label": "use device default",
+									"type": {
+										"fix": 	{
+											"value": null
+										}
+									}
+								}
+							]
+						}
+					}
+				},
 				"Get": [],
 				"Set": [
 					{
@@ -1165,7 +1209,7 @@ function renderMethodSpec(ccId, data) {
 										"range": {
 											"min": 	1,
 											"max": 127,
-										"shift": 	127
+											"shift": 127
 										}
 									}
 								},
@@ -3798,6 +3842,35 @@ function renderMethodSpec(ccId, data) {
 			return {
 				"Get": [],
 				"Set": []
+			};
+		// MultiChannel
+		case 0x60:
+			return {
+				"data": {
+					"disableMulticast": {
+						"label": "Allow use of multi addressing for identical commands to multiple channels",
+						"type": {
+							"enumof": [
+								{
+									"label": "Allow",
+									"type": {
+										"fix": 	{
+											"value": false
+										}
+									}
+								},
+								{
+									"label": "Disable",
+									"type": {
+										"fix": 	{
+											"value": true
+										}
+									}
+								}
+							]
+						}
+					}
+				},
 			};
 		default: return {};
 	}
