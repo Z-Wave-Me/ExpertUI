@@ -40,10 +40,10 @@
                             <div ng-show="ccTable[v.commandClass]">
                                 <!--<pre>{{ccTable[v.commandClass]|json}}</pre>-->
                                 <table class="table table-condensed" ng-if="_.size(ccTable[v.commandClass].rows)">
-                                    <thead ng-if="cfg.expert_cmd[v.commandClass].valArray">
+                                    <thead ng-if="commandName(v.commandClass).valArray">
                                     <tr>
                                         <th>#</th>
-                                        <th>{{cfg.expert_cmd[v.commandClass].th[0]}}</th>
+                                        <th>{{commandName(v.commandClass).th[0]}}</th>
                                         <th>&nbsp;</th>
 
                                     </tr>
@@ -104,6 +104,42 @@
                                 </form>
                             </div>
                             &nbsp;
+                            <div class="commands-data" ng-repeat="c in v.dataParam"
+                                 ng-init="(formName = 'form_' + c.data.method + '_' + v.rowId) &&
+                                 (commandStore[formName] = {test: 12})">
+                                <form
+                                        name="{{formName}}"
+                                        id="{{formName}}"
+                                        class="form form_commands"
+                                        role="form"
+                                        ng-submit="storeExpertProperty(formName, v.cmd)"
+                                        novalidate>
+                                    <div class="commands-data-control">
+                                        <div class="form-inline" ng-repeat="(pk,p) in c.data.params">
+                                            <expert-command-input-alt
+                                                    collection='p'
+                                                    values='c.data.values[pk]'
+                                                    devices='devices'
+                                                    name='c.data.method'
+                                                    get-node-devices='getNodeDevices'
+                                                    model="commandStore[formName]">
+                                            </expert-command-input-alt>
+<!--                                            {{commandStore[formName] | json}}-->
+                                            <!-- {{pk}} {{p}}
+                                            {{c.data.values[pk]}}-->
+
+                                        </div>
+                                        <button class="btn btn-primary" type="submit"
+                                                ng-disabled="rowSpinner[v.cmd + '.' + c.data.method]">
+                                            <bb-row-spinner
+                                                    spinner="rowSpinner[v.cmd + '.' + c.data.method]"
+                                                    label="c.data.method"
+                                                    icon="'fa-long-arrow-alt-right'">
+                                            </bb-row-spinner>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                     </tbody>

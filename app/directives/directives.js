@@ -381,7 +381,7 @@ angApp.directive('expertCommandInput', function (cfg, $filter) {
         var cnt = 1;
         var value = (currValue !== undefined ? currValue : defaultValue);
         angular.forEach(enums.enumof, function (v, k) {
-            //var inName =  $filter('stringToSlug')(name ? v.name : label);
+            // var inName =  $filter('stringToSlug')(name ? v.name : label);
             var inName = (name ? name + '_' + label : v.name);// + '_' +label;
             /* var inName = v.name;
              if(name){
@@ -567,6 +567,7 @@ angApp.directive('expertCommandInput', function (cfg, $filter) {
             divId: '='
         },
         link: function (scope, element, attrs) {
+
             var input = '';
             if (!scope.collection) {
                 return;
@@ -606,6 +607,310 @@ angApp.directive('expertCommandInput', function (cfg, $filter) {
 
     };
 });
+angApp.directive('expertCommandInputAlt', function (cfg, $filter) {
+    // Get text input
+    function getText(label, value, min, max, name) {
+        var input = '';
+        var inName = $filter('stringToSlug')(name ? name : label, '_');
+        input += '<label>' + label + '</label> ';
+        input += '<input class="form-control" name="' + inName + '" type="text" class="form-control" value="' + value + '" title=" min: ' + min + ', max: ' + max + '" />';
+        return input;
+    }
+    // Get node
+    function getNode(label, devices, currValue, name) {
+        var input = '';
+        var inName = $filter('stringToSlug')(name ? name : label);
+
+        input += '<label>' + label + '</label> ';
+        input += '<select name="select_' + inName + '" class="form-control">';
+        angular.forEach(devices, function (v, k) {
+            var selected = (v.id == currValue ? ' selected' : '');
+            input += '<option value="' + v.id + '"' + selected + '>' + v.name + '</option>';
+        });
+
+        input += '</select>';
+
+        return input;
+    }
+
+    // Get enumerators
+    function getEnum(label, enums, defaultValue, name, hideRadio, currValue) {
+
+        var input = '';
+        if (!enums) {
+            return;
+        }
+
+        //var inName = $filter('stringToSlug')(name ? name : label);
+        input += '<label>' + label + '</label><br />';
+        var cnt = 1;
+        var value = (currValue !== undefined ? currValue : defaultValue);
+        angular.forEach(enums.enumof, function (v, k) {
+            // var inName =  $filter('stringToSlug')(name ? v.name : label);
+            var inName = (name ? name + '_' + label : v.name);// + '_' +label;
+            /* var inName = v.name;
+             if(name){
+             inName = name  + '_' +label;
+             }*/
+            //console.log(inName);
+            var title = v.label || '';
+            var type = v.type;
+            var enumVal = $filter('hasNode')(v, 'type.fix.value');
+            var checked = (cnt == 1 ? ' checked="checked"' : '');
+            var isCurrent = (cnt == 1 ? ' commads-is-current' : '');
+
+            if ('fix' in type) {
+                if (defaultValue) {
+                    if (isNaN(parseInt(defaultValue, 10))) {
+                        isCurrent = (v.label == defaultValue ? ' commads-is-current' : '');
+                    } else {
+                        isCurrent = '';
+                    }
+                }
+
+                if (!isNaN(parseInt(value, 10))) {
+                    checked = (enumVal == value ? ' checked="checked"' : '');
+                }
+                input += '<input name="' + inName + '" class="commands-data-chbx" type="radio" value="' + type.fix.value + '"' + checked + ' /> (' + type.fix.value + ') <span class="commands-label' + isCurrent + '">' + title + '</span><br />';
+            } else if ('range' in type) {
+                //var textName =  $filter('stringToSlug')(name ? v.textName : label);
+                var textName = v.textName || inName;
+                var min = type.range.min;
+                var max = type.range.max;
+                var disabled = ' disabled="true"';
+                var setVal = (value ? value : min);
+                if (defaultValue) {
+                    if (defaultValue >= min && defaultValue <= max) {
+                        disabled = '';
+                        isCurrent = ' commads-is-current';
+                    }
+
+                } else {
+                    isCurrent = '';
+                }
+                if (value) {
+                    if (value >= min && value <= max) {
+                        checked = ' checked="checked"';
+                        disabled = '';
+                    }
+
+                } else {
+                    checked = '';
+                }
+
+                if (hideRadio) {
+                    disabled = '';
+                }
+
+//                input += '<input name="radio_' + inName + '" class="commands-data-chbx" type="radio" value=""' + checked + ' /> ' + title + ' <input type="text" name="radio_' + inName + '_txt" class="form-control commands-data-txt-chbx" value="' + min + '" title=" min: ' + min + ', max: ' + max + '"'+ disabled + ' /><br />';
+                if (!hideRadio) {
+                    input += '<div><input name="' + inName + '" class="commands-data-chbx commands-data-chbx-hastxt" type="radio" value="N/A"' + checked + ' /> <span class="commands-label' + isCurrent + '">' + title + '</span> <input type="text" name="' + textName + '" class="form-control commands-data-txt-chbx" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '"' + disabled + ' /> (min: ' + min + ', max: ' + max + ')</div>';
+                } else {
+                    input += (title !== '' ? '<span class="commands-title-block">' + title + ' </span>' : '') + '<input type="text" name="' + textName + '" class="form-control" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '" /> (min: ' + min + ', max: ' + max + ')<br />';
+                }
+
+
+            } else {
+                input = '';
+            }
+            cnt++;
+
+        });
+        return input;
+    }
+
+    // Get dropdown list
+    function getDropdown(label, enums, defaultValue, name, currValue) {
+        var input = '';
+        var cValue = (currValue !== undefined ? currValue : defaultValue);
+        var inName = $filter('stringToSlug')(name ? name : label);
+        input += '<label>' + label + '</label><br />';
+        input += '<select name="select_' + inName + '" class="form-control">';
+        var cnt = 1;
+        angular.forEach(enums.enumof, function (v, k) {
+            var title = v.label;
+            var type = v.type;
+            var value;
+            if ('fix' in type) {
+                value = type.fix.value;
+            } else if ('range' in type) {
+                value = type.range.min;
+            }
+
+            if (value) {
+                var selected = (type.fix.value == cValue ? ' selected' : '');
+            }
+            input += '<option value="' + value + '"' + selected + '> ' + title + '</option>';
+            cnt++;
+
+        });
+        input += '</select">';
+        return input;
+    }
+
+    // Get constant
+    function getConstant(label, type, defaultValue, name, currValue) {
+        var input = '';
+        var inName = $filter('stringToSlug')(name ? name : label);
+        input += '<label>' + label + '</label><br />';
+        if (type.constant.length > 0) {
+            input += '<select name="select_' + inName + '" class="form-control">';
+            angular.forEach(type.constant, function (v, k) {
+
+                input += '<option value="' + v.type.constant.value + '"> ' + v.label + '</option>';
+            });
+
+
+            input += '</select">';
+        }
+        //console.log(type,defaultValue);
+        input += '<em>Constant type</em>';
+        return input;
+    }
+    // Get string
+    function getString(label, value, name) {
+        var input = '';
+        var inName = $filter('stringToSlug')(name ? name : label);
+        input += '<label>' + label + '</label> ';
+        input += '<input class="form-control" name="' + inName + '_string" type="text" class="form-control" value="' + value + '" />';
+        return input;
+    }
+
+    // Get bitset
+    function getBitset(label, enums, currValue, name) {
+        if (!enums) {
+            return;
+        }
+        var input = '';
+        var bitArray = $filter('getBitArray')(currValue, 32);
+        input += '<label>' + label + '</label><br />';
+        var setVal = 0;//(currValue !== undefined ? currValue : 0);
+        angular.forEach(enums.bitset, function (v, k) {
+            // var inName =  $filter('stringToSlug')(name ? v.name : label);
+            var inName = name ? name : v.name;
+            var title = v.label || '---';
+            var type = v.type;
+            var inBitArray = bitArray[k];
+            var checked = (inBitArray ? ' checked="checked"' : '');
+            if ('bitrange' in type) {
+                var min = type.bitrange.bit_from;
+                var max = type.bitrange.bit_to;
+                input += '<div><input type="text" name="' + inName + '" class="form-control commands-data-txt-chbx_" value="' + setVal + '" title=" min: ' + min + ', max: ' + max + '" /> (min: ' + min + ', max: ' + max + ')</div>';
+            } else if ('bitcheck' in type) {
+                input += '<input name="' + inName + '" class="commands-data-chbx" type="checkbox" value="' + type.bitcheck.bit + '"' + checked + ' /> (' + type.bitcheck.bit + ')'
+                  + '<span class="commands-label"> ' + title + '</span><br />';
+            } else {
+                input += '';
+            }
+        });
+        return input;
+    }
+
+    // Get default
+    function getDefault(label) {
+
+        var input = '';
+        input += '<label>' + label + '</label><br />';
+        return input;
+    }
+
+    return {
+        restrict: "E",
+        replace: true,
+        templateUrl: './app/views/configuration/expert-command-input.html',
+        scope: {
+            collection: '=',
+            devices: '=',
+            getNodeDevices: '=',
+            values: '=',
+            isDropdown: '=',
+            defaultValue: '=',
+            showDefaultValue: '=',
+            currValue: '=',
+            name: '=',
+            divId: '=',
+            model: '='
+        },
+        controller: ['$scope', function ($scope) {
+            $scope.data = {};
+
+            $scope.label = $scope.collection.label;
+            $scope.value = $scope.values ?? $scope.defaultValue;
+            $scope.hideRadio = $scope.collection.hideRadio;
+            $scope.inputName = [$scope.name, $scope.type].join('&')
+            $scope.type = Object.keys($scope.collection.type)[0];
+
+
+            $scope.$on('zWaveInput', function (event, data) {
+                angular.extend($scope.data, data);
+                if ($scope.type === 'enumof') {
+                    $scope.model =
+                      {
+                          [$scope.name]: $scope.data[$scope.enumOf.field]
+                      }
+                }
+            })
+            if ($scope.type === 'enumof') {
+                $scope.enumOf = {
+                    field: $scope.collection.type.enumof[0].label
+                }
+                $scope.$watch('enumOf.field', function () {
+                    $scope.model = {
+                        [$scope.name]: $scope.data[$scope.enumOf.field]
+                    }
+                })
+            } else {
+                $scope.model = {
+                    [$scope.name]:  $scope.data
+                }
+            }
+        }],
+    };
+})
+
+angApp.directive('zWaveInput', function () {
+    return {
+        restrict : 'E',
+        template: `
+          <span class="commands-label" ng-class="{'commads-is-current': !disabled}" ng-if="_type ==='fix'">({{'' + type.fix.value}}) {{label}}</span>
+          
+          <span  ng-if="_type === 'range'" class="form-control commands-data-txt-chbx" >
+          <span>({{local.data}}) {{label}} ({{type.range.min}} - {{type.range.max}})</span>
+          <input
+            type="range" max='{{type.range.max}}' min='{{type.range.min}}'
+            ng-disabled="!!disabled"
+            ng-model="local.data"
+            >
+            </span>
+          <input ng-if="_type === 'string'" class="form-control commands-data-txt-chbx" ng-model="local.data" ng-disabled="!!disabled">
+`,
+        scope : {
+            type: '=',
+            disabled: '=',
+            value: '=',
+            label: '=',
+        },
+        controller : ['$scope', function($scope) {
+            $scope._type = Object.keys($scope.type)[0]
+            if ($scope._type === 'fix') {
+                $scope.value = $scope.type.fix.value;
+            }
+            if ($scope._type === 'range' && $scope.value < $scope.type.range.min) {
+                $scope.value = $scope.type.range.min;
+            }
+            $scope.local = {
+                data: $scope.value
+            };
+            $scope.$watch('local.data', function() {
+                if ($scope._type === 'string') {
+                    $scope.$emit('zWaveInput', {[$scope.label]: JSON.stringify($scope.local.data)});
+                } else {
+                    $scope.$emit('zWaveInput', {[$scope.label]: $scope.local.data});
+                }
+            });
+        }]
+    }
+})
 
 angApp.directive('configDefaultValue', function () {
     return {

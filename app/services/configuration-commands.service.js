@@ -1174,7 +1174,22 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   }
                 ]
               }
-            }]
+            }],
+            // 'test': [{
+            //   "label": "Node ID",
+            //   "type": {
+            //     "range": {
+            //       "min": 0,
+            //       "max": 232
+            //     }
+            //   }
+            // }],
+            // 'test2': [{
+            //   label: 'lool',
+            //       type: {
+            //               string: {}
+            //       }
+            //     }]
           },
           "Get": [],
           "Set": [

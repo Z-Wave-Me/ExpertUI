@@ -722,15 +722,15 @@ appService.service('deviceService', function ($filter, $log, $cookies, $window, 
         angular.forEach(methods, function (params, method) {
             //str.split(',');
             var cmd = {};
-            var values = repr_array(method_defaultValues(ZWaveAPIData, methods[method]));
+            var defaultValues = method_defaultValues(ZWaveAPIData, methods[method]);
             cmd['data'] = {
                 'method': method,
                 'params': methods[method],
-                'values': method_defaultValues(ZWaveAPIData, methods[method])
+                'values': defaultValues
             };
             cmd['method'] = method;
             cmd['params'] = methods[method];
-            cmd['values'] = repr_array(method_defaultValues(ZWaveAPIData, methods[method]));
+            cmd['values'] = repr_array(defaultValues);
             methodsArr.push(cmd);
         });
         return methodsArr;

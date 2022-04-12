@@ -38,7 +38,9 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
             $location.path($scope.activeUrl + deviceId);
         }
     };
-
+    $scope.testF = function () {
+        console.warn($scope.data);
+    }
     $scope.commandName = function (classCommand) {
         return configurationCommandsService.serverCommand(classCommand)
     }
@@ -140,31 +142,20 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
             $scope.toggleRowSpinner();
         });
     };
-
+    $scope.commandStore = {}
 
     $scope.storeExpertProperty = function (form, prop) {
-        // $scope.toggleRowSpinner(prop);
-        var data = $('#' + form).serializeArray();
-        var dataJoined = [];
-        angular.forEach(data, function (v, k) {
-            if (v.value !== 'N/A') {
-                if (v.name.endsWith('_string')) {
-                    v.value = '\'' + v.value + '\'';
-                }
-                dataJoined.push(v.value);
-            }
+        $scope.toggleRowSpinner(prop);
+        var [key, value] = Object.entries($scope.commandStore[form])[0];
+        var request = `${prop}.data.${key}.value=${value}`;
+
+        dataService.runZwaveCmd(cfg.store_url + request).then(function (response) {
+            $scope.toggleRowSpinner(prop)
+        }, function (error) {
+            var message = (_.isString(error.data) ? error.data : $scope._t('error_update_data')) + '\n' + request;
+            alertify.alertError(message);
+            $scope.toggleRowSpinner(prop);
         });
-        var request = prop + '.value=' +  dataJoined.join();
-        // dataService.runZwaveCmd(cfg.store_url + request).then(function (response) {
-        //     $timeout($scope.toggleRowSpinner, 3000);
-        // }, function (error) {
-        //     var message = (_.isString(error.data) ? error.data : $scope._t('error_update_data')) + '\n' + request;
-        //     alertify.alertError(message);
-        //     $scope.toggleRowSpinner();
-        // });
-        console.log(request)
-        console.log(prop)
-        console.log(dataJoined)
     }
     /**
      * Show modal CommandClass dialog

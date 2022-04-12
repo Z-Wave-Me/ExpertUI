@@ -1,0 +1,11 @@
+<div class="form-group">
+    <label>{{label}}</label>
+    <z-wave-input ng-if="['fix', 'range', 'string'].includes(type)" type="collection.type" label="label" value="value"></z-wave-input>
+
+    <div ng-if="type ==='enumof'">
+        <div ng-repeat="field in collection.type.enumof">
+            <input name="{{inputName}}" class="commands-data-chbx" type="radio" ng-model="enumOf.field" ng-value="field.label">
+            <z-wave-input type="field.type" label="field.label" value="value" disabled="enumOf.field !== field.label">
+        </div>
+    </div>
+</div>
