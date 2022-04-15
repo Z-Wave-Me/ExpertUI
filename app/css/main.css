@@ -26138,6 +26138,49 @@ img {
   color: #6494BC;
 }
 
+.enable-user-select {
+  -moz-user-select: all;
+  -webkit-user-select: all;
+  -ms-user-select: all;
+  user-select: all;
+}
+
+.highlight-command {
+  display: flex;
+  flex: 1 1 auto;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background-color: #f7f7f9;
+  border: 1px solid #e1e1e8;
+  border-radius: 4px;
+  overflow: scroll;
+  text-overflow: ellipsis;
+  font-size: 0.8rem;
+}
+
+.panel-command {
+  border-color: #ddd;
+  margin-bottom: -2px;
+}
+.panel-command > .panel-heading {
+  color: #333333;
+  background-color: #f5f5f5;
+  border-color: #ddd;
+}
+.panel-command > .panel-heading + .panel-collapse > .panel-body {
+  border-top-color: #ddd;
+}
+.panel-command > .panel-heading .badge {
+  color: #f5f5f5;
+  background-color: #333333;
+}
+.panel-command > .panel-footer + .panel-collapse > .panel-body {
+  border-bottom-color: #ddd;
+}
+.panel-command .btn {
+  margin: 0;
+}
+
 /*.btn-tabs-2{
     .btn{
         width: 50%;
@@ -26539,6 +26582,12 @@ fieldset.submit-entry {
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
 }
 
+.panel .panel-heading.command {
+  display: flex;
+  align-content: center;
+  gap: 1rem;
+}
+
 /* Dropdown
 -------------------------------------------------- */
 .app-dropdown {
@@ -26682,6 +26731,14 @@ fieldset.submit-entry {
 }
 .accordion-entry-title.expanded-only {
   cursor: text;
+}
+
+.command-arrow {
+  transform: rotate3d(1, 0, 0, 0deg);
+  transition: 0.6s;
+}
+.command-arrow.rotated {
+  transform: rotate3d(1, 0, 0, 180deg);
 }
 
 /* List groups
@@ -27290,6 +27347,43 @@ http://codepen.io/MattIn4D/pen/LiKFC
 
 .commands-title-block {
   display: block;
+}
+
+.commands-table {
+  display: grid;
+  grid-template-columns: minmax(0, 100%);
+  gap: 1rem 1rem;
+}
+.commands-table.with {
+  grid-template-columns: 1fr minmax(0, 100%);
+}
+.commands-table:nth-child(1) {
+  padding: 0.5em;
+}
+.commands-table-info {
+  width: min-content;
+}
+
+.command-list {
+  background-color: #f5f5f5;
+  opacity: 1;
+}
+.command-list > label {
+  display: flex;
+  align-items: center;
+}
+
+.commands-label {
+  white-space: nowrap;
+}
+
+.commands-body {
+  flex: 1 1 auto;
+}
+
+.command-disable {
+  opacity: 0.7;
+  background-color: initial;
 }
 
 /* Link health
