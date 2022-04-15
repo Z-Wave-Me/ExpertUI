@@ -1641,3 +1641,4 @@ appService.service('deviceService', function ($filter, $log, $cookies, $window, 
         });
     }
 });
+

@@ -27,3 +27,10 @@
         cursor: text;
     }
 }
+.command-arrow {
+    transform: rotate3d(1,0,0, 0deg);
+    transition: .6s;
+    &.rotated {
+        transform: rotate3d(1,0,0, 180deg);
+    }
+}

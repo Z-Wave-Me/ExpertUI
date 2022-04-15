@@ -64,6 +64,8 @@ configurationCommandsModule.service('configurationCommandsService', function () 
     var nodeId = device.deviceId;
     var methods = getMethodSpec(ZWaveAPIData, nodeId, device.instanceId, device.ccId, null);
     var dataParams = getMethodSpec(ZWaveAPIData, nodeId, device.instanceId, device.ccId, null, true)
+    var command = configGetCommands(methods, ZWaveAPIData);
+    var dataParam = configGetCommands(dataParams, ZWaveAPIData);
     return {
       nodeId,
       rowId: 'row_' + nodeId + '_' + device.instanceId + '_' + device.ccId,
@@ -73,9 +75,12 @@ configurationCommandsModule.service('configurationCommandsService', function () 
       cmdData: device.commandClass.data,
       cmdDataIn: device.instance.data,
       commandClass: device.commandClass.name,
-      command: configGetCommands(methods, ZWaveAPIData),
-      dataParam: configGetCommands(dataParams, ZWaveAPIData),
-      updateTime: ZWaveAPIData.updateTime
+      command,
+      dataParam,
+      updateTime: ZWaveAPIData.updateTime,
+      hidden: command.length === 0 && dataParam.length === 0,
+      methods,
+      dataParams
     }
   }
 
@@ -152,9 +157,6 @@ configurationCommandsModule.service('configurationCommandsService', function () 
         return {
           "Get": [],
           "TestNodeGet": [],
-
-
-
           "TestNodeSet": [
             {
               "label": "Node ID",
@@ -1163,18 +1165,18 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                         "shift": 127
                       }
                     }
-                  },
-                  {
-                    "label": "use device default",
-                    "type": {
-                      "fix": 	{
-                        "value": null
-                      }
-                    }
                   }
                 ]
               }
-            }],
+            }, {
+                "label": "test",
+                "type": {
+                  "range": {
+                    "min": 0,
+                    "max": 232
+                  }
+                }
+              }],
             // 'test': [{
             //   "label": "Node ID",
             //   "type": {

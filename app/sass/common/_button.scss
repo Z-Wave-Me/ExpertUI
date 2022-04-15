@@ -134,6 +134,31 @@
         color: $tabs-icon-active-color;
     }
 }
+.enable-user-select {
+    -moz-user-select: all;
+    -webkit-user-select: all;
+    -ms-user-select: all;
+    user-select: all;
+}
+.highlight-command {
+    display: flex;
+    flex: 1 1 auto;
+    gap: .5rem;
+    padding: .5rem;
+    background-color: #f7f7f9;
+    border: 1px solid #e1e1e8;
+    border-radius: 4px;
+    overflow: scroll;
+    text-overflow: ellipsis;
+    font-size: .8rem;
+}
+.panel-command {
+    @include panel-variant($panel-default-border, $panel-default-text, $panel-default-heading-bg, $panel-default-border);
+    margin-bottom: -2px;
+    .btn {
+        margin: 0;
+    }
+}
 /*.btn-tabs-2{
     .btn{
         width: 50%;

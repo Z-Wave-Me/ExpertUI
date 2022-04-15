@@ -1,11 +1,21 @@
-<div class="form-group">
+<div>
     <label>{{label}}</label>
-    <z-wave-input ng-if="['fix', 'range', 'string'].includes(type)" type="collection.type" label="label" value="value"></z-wave-input>
-
-    <div ng-if="type ==='enumof'">
-        <div ng-repeat="field in collection.type.enumof">
-            <input name="{{inputName}}" class="commands-data-chbx" type="radio" ng-model="enumOf.field" ng-value="field.label">
-            <z-wave-input type="field.type" label="field.label" value="value" disabled="enumOf.field !== field.label">
-        </div>
-    </div>
+    <ul class="list-group" ng-if="type !=='enumof'">
+        <li class="list-group-item command-list">
+            <z-wave-input ng-if="['fix', 'range', 'string'].includes(type)" type="data.type" label="label" value="value" index="0"></z-wave-input>
+        </li>
+    </ul>
+    <ul ng-if="type ==='enumof'" class="list-group">
+        <li ng-repeat="field in data.type.enumof track by $index" class="list-group-item command-list" ng-class="{'command-disable': model.selected !== $index}">
+            <label>
+            <input type="radio" ng-model="model.selected" ng-value="$index" ng-change="updateIndex()">
+            <z-wave-input
+                    type="field.type"
+                    label="field.label"
+                    value="field.value"
+                    disabled="model.selected !== $index"
+                    index="$index">
+            </label>
+        </li>
+    </ul>
 </div>

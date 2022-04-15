@@ -30,3 +30,36 @@
 .commands-title-block{
   display: block;
 }
+.commands-table {
+  display: grid;
+  grid-template-columns: minmax(0, 100%);
+
+  &.with {
+    grid-template-columns: 1fr minmax(0, 100%);
+  }
+  gap: 1rem 1rem;
+  &:nth-child(1){
+    padding: .5em;
+  }
+  &-info {
+    width: min-content;
+  }
+}
+.command-list {
+  background-color: $breadcrumb-bg;
+  opacity: 1;
+  &>label {
+    display: flex;
+    align-items: center;
+  }
+}
+.commands-label {
+  white-space: nowrap;
+}
+.commands-body {
+  flex: 1 1 auto;
+}
+.command-disable {
+  opacity: .7;
+  background-color: initial;
+}

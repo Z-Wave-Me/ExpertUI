@@ -86,6 +86,9 @@ angApp.config(['$routeProvider',
         }).when('/configuration/commands/:nodeId?', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/configuration/commands.html'
+        }).when('/configuration/commands-old/:nodeId?', {
+            requireLogin: requireLogin,
+            templateUrl: 'app/views/configuration/commands-old.html'
         }).when('/configuration/firmware/:nodeId?', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/configuration/firmware.html'
