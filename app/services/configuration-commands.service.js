@@ -1,139 +1,251 @@
-var configurationCommandsModule = angular.module('appConfigurationCommands', []);
+var configurationCommandsModule = angular.module('appConfigurationCommands', ['dataHolderModule', 'appService']);
 
-configurationCommandsModule.service('configurationCommandsService', function () {
+configurationCommandsModule.service('configurationCommandsService', ['dataHolderService', 'deviceService', '$interval', 'cfg', '$rootScope', function (dataHolderService, deviceService, $interval, cfg, $rootScope) {
+  const self = this;
+  self.ccTable = {};
   var _methods_specs_rendered = null;
+  function groupBy(arr, field){
+    return arr?.reduce((acc, cur) => {
+      const {[field]: key, ...other} = cur;
+      return {...acc, [key]: acc[key] ? [...acc[key], other] : [other]}
+    }, {});
+  }
+  /**
+   * @typedef {string} commandClass
+   * @return {{commandClass: {[values]: string[], [arrays]: string[]}}}
+   */
   var serverCommands = function () {
     return {
       Configuration: {
-        valArray: true,
-        ccName: 'Configuration',
-        th: ['val']
+        arrays: ['val'],
       },
       Association: {
-        valArray: true,
-        ccName: 'Association',
-        th: ['nodes']
+        arrays: ['nodes']
       },
       SensorBinary: {
-        valArray: true,
-        ccName: 'SensorBinary',
-        th: ['level']
+        arrays: ['level']
       },
       ThermostatSetPoint: {
-        valArray: true,
-        ccName: 'ThermostatSetPoint',
-        th: ['val']
+        arrays: ['val'],
       },
       Basic: {
-        valArray: false,
-        ccName: 'Basic',
-        th: ['level']
+        values: ['level']
       },
       SwitchBinary: {
-        valArray: false,
-        ccName: 'SwitchBinary',
-        th: ['level']
+        values: ['level']
       },
       SwitchAll: {
-        valArray: false,
-        ccName: 'SwitchAll',
-        th: ['mode']
+        values: ['mode'],
       },
       Wakeup: {
-        valArray: false,
-        ccName: 'Wakeup',
-        th: ['interval', 'nodeId']
+        values: ['interval', 'nodeId']
       },
       PowerLevel: {
-        valArray: false,
-        ccName: 'PowerLevel',
-        th: ['level', 'timeout']
+        values: ['level', 'timeout']
       }
     }
   }
 
   this.serverCommand = function (commandClass) {
-    return serverCommands()[commandClass]
+    return serverCommands()[commandClass] ?? {};
   }
   /**
    *
    * @param ZWaveAPIData
    * @param  {{deviceId, instanceId, ccId, commandClass, instance}} device
    */
-  this.getCommand = function (ZWaveAPIData, device) {
-    var nodeId = device.deviceId;
-    var methods = getMethodSpec(ZWaveAPIData, nodeId, device.instanceId, device.ccId, null);
-    var dataParams = getMethodSpec(ZWaveAPIData, nodeId, device.instanceId, device.ccId, null, true)
-    var command = configGetCommands(methods, ZWaveAPIData);
-    var dataParam = configGetCommands(dataParams, ZWaveAPIData);
+  // this.getCommand = function (ZWaveAPIData, device) {
+  //   var nodeId = device.deviceId;
+  //   var methods = getMethodSpec(ZWaveAPIData, nodeId, device.instanceId, device.ccId, null);
+  //   var dataParams = getMethodSpec(ZWaveAPIData, nodeId, device.instanceId, device.ccId, null, true)
+  //   var command = configGetCommands(methods, ZWaveAPIData);
+  //   var dataParam = configGetCommands(dataParams, ZWaveAPIData);
+  //   return {
+  //     nodeId,
+  //     rowId: 'row_' + nodeId + '_' + device.instanceId + '_' + device.ccId,
+  //     instanceId: device.instanceId,
+  //     ccId: device.ccId,
+  //     cmd: 'devices[' + nodeId + '].instances[' + device.instanceId + '].commandClasses[' + device.ccId + ']',
+  //     cmdData: device.commandClass.data,
+  //     cmdDataIn: device.instance.data,
+  //     commandClass: device.commandClass.name,
+  //     command,
+  //     dataParam,
+  //     updateTime: ZWaveAPIData.updateTime,
+  //     hidden: command.length === 0 && dataParam.length === 0,
+  //     methods,
+  //     dataParams
+  //   }
+  // }
+
+
+  this.getCommands = function (nodeId) {
+    self.nodeId = nodeId;
+    return dataHolderService.update().then(() => {
+      const node = dataHolderService.getRealNodeById(nodeId);
+      if (!node) throw new Error('No Device');
+      return Object.entries(node.instances).reduce((acc, [instanceId, instance]) => {
+        const classCommands = Object.entries(instance.commandClasses)
+          .reduce((acc, [ccId, {data, name}]) => {
+            const methods = configureCommand(ccId, data);
+            acc.push({
+              ccId,
+              name,
+              methods,
+              visible: !!Object.keys(methods).length,
+              instance: instanceId,
+              accessors: [],
+              path: `devices[${nodeId}].instances[${instanceId}].commandClasses[${ccId}]`
+            })
+            self.ccTable[`${name}@${instanceId}`] = {
+              instanceId,
+              ccId,
+              name,
+              data,
+              nodeData: instance.data,
+              updateTime: node.data.updateTime,
+              table: valueExtractor(data, self.serverCommand(name),
+                `devices[${nodeId}].instances[${instanceId}].commandClasses[${ccId}].data`)
+            };
+            return acc;
+          }, [])
+        return [...acc, ...classCommands];
+      }, []);
+    })
+  }
+
+  function updateCcTable(node) {
+    Object.entries(node.instances).map(([instanceId, instance]) => {
+      Object.entries(instance.commandClasses)
+        .map(([ccId, {data, name}]) => {
+          self.ccTable[`${name}@${instanceId}`] = {
+            instanceId,
+            ccId,
+            name,
+            data,
+            nodeData: instance.data,
+            updateTime: node.data.updateTime,
+            table: valueExtractor(data, self.serverCommand(name),
+              `devices[${self.nodeId}].instances[${instanceId}].commandClasses[${ccId}].data`)
+          };
+        })
+    })
+  }
+  function packIt(targetField, data, key, value, cmd) {
     return {
-      nodeId,
-      rowId: 'row_' + nodeId + '_' + device.instanceId + '_' + device.ccId,
-      instanceId: device.instanceId,
-      ccId: device.ccId,
-      cmd: 'devices[' + nodeId + '].instances[' + device.instanceId + '].commandClasses[' + device.ccId + ']',
-      cmdData: device.commandClass.data,
-      cmdDataIn: device.instance.data,
-      commandClass: device.commandClass.name,
-      command,
-      dataParam,
-      updateTime: ZWaveAPIData.updateTime,
-      hidden: command.length === 0 && dataParam.length === 0,
-      methods,
-      dataParams
+      targetField,
+      data: value.value === null || value.value === '' ? '-': value.value,
+      key,
+      updateTime: value.updateTime,
+      isUpdated: value.updateTime > value.invalidateTime,
+      cmd
     }
   }
 
-  function configGetCommands(methods, ZWaveAPIData) {
-    var methodsArr = [];
-    angular.forEach(methods, function (params, method) {
-      //str.split(',');
-      var defaultValues = methodDefaultValues(ZWaveAPIData, methods[method]);
-      var cmd = {
-        data: {
-          method,
-          params: methods[method],
-          values: defaultValues
-        },
-        method,
-        params: methods[method],
-        values: reprArray(defaultValues)
-      };
-      methodsArr.push(cmd);
-    });
-    return methodsArr;
-  }
-  function getMethodSpec(ZWaveAPIData,devId, instId, ccId, method, property) {
-    if (_methods_specs_rendered === null) {
-      renderAllMethodSpec(ZWaveAPIData);
-    }
-
-    try {
-      if (!(devId in _methods_specs_rendered)) {
-        _methods_specs_rendered[devId] = {};
-      }
-      if (!(instId in _methods_specs_rendered[devId])) {
-        _methods_specs_rendered[devId][instId] = {};
-      }
-      if (!(ccId in _methods_specs_rendered[devId][instId])) {
-        _methods_specs_rendered[devId][instId][ccId] = renderMethodSpec(parseInt(ccId, 10), ZWaveAPIData.devices[devId].instances[instId].commandClasses[ccId].data);
-      }
-
-      var methods = _methods_specs_rendered[devId][instId][ccId];
-      if (method) {
-        return methods[method];
+  function valueExtractor(data, {values, arrays}, baseCmd) {
+    return groupBy(Object.entries(data).map(([key, value]) => {
+      if (isNaN(+key)) {
+        return values?.filter(targetField => targetField === key).map(targetField => {
+          return packIt(targetField, data, key, value, `${baseCmd}.${targetField}.value`);
+        })
       } else {
-        if (property) {
-         return methods.Data;
-        }
-        return Object.fromEntries(Object.entries(methods).filter(function ([key]) {
-          return key !== 'Data'
-        }))
+        return Object.entries(value).map(([_key, value]) => {
+          return arrays?.filter(targetField => targetField === _key).map((targetField) => {
+            return packIt(targetField, data, key, value, `${baseCmd}[${key}].${targetField}.value`);
+          })
+        }).flat()
       }
-    } catch(err) {
-      return null;
-    }
+    }).flat().filter(data => data), 'targetField');
   }
+  function update() {
+    dataHolderService.loadJoined().then(function (response) {
+      const {joined, update} = response.data;
+      if (Object.keys(update).some((key) => key.split('.')[1] === self.nodeId)) {
+        updateCcTable(joined.devices[self.nodeId])
+      }
+    });
+    $rootScope.$broadcast('configuration-commands:cc-table:update', self.ccTable);
+  }
+  self._interval$ = null;
+
+  this.init = function (nodeId) {
+    self.nodeId = nodeId;
+    self.commands = self.getCommands(nodeId);
+    this.destroy();
+    $rootScope.$broadcast('configuration-commands:cc-table:update', self.ccTable);
+    self._interval$ = $interval(update, cfg.interval);
+    return self.commands;
+  }
+
+
+  this.destroy = function () {
+    $interval.cancel(self._interval$);
+    self._interval$ = null;
+  }
+  function configureCommand(ccId, commandClassesData) {
+    return Object.entries(renderMethodSpec(parseInt(ccId, 10), commandClassesData))
+      .reduce((acc, [name, data]) => {
+        const isMethod = Array.isArray(data);
+        const fields = isMethod ? data : [data];
+        acc[name] = {
+          isMethod,
+          fields,
+        }
+        return acc;
+      }, {})
+  }
+
+  // function configGetCommands(methods, ZWaveAPIData) {
+  //   var methodsArr = [];
+  //   angular.forEach(methods, function (params, method) {
+  //     //str.split(',');
+  //     var defaultValues = {}// methodDefaultValues(ZWaveAPIData, methods[method]);
+  //     var cmd = {
+  //       data: {
+  //         method,
+  //         params: methods[method],
+  //         values: defaultValues
+  //       },
+  //       method,
+  //       params: methods[method],
+  //       values: reprArray(defaultValues)
+  //     };
+  //     methodsArr.push(cmd);
+  //   });
+  //   return methodsArr;
+  // }
+  //
+  // function getMethodSpec(ZWaveAPIData, devId, instId, ccId, method, property) {
+  //   if (_methods_specs_rendered === null) {
+  //     renderAllMethodSpec(ZWaveAPIData);
+  //   }
+  //
+  //   try {
+  //     if (!(devId in _methods_specs_rendered)) {
+  //       _methods_specs_rendered[devId] = {};
+  //     }
+  //     if (!(instId in _methods_specs_rendered[devId])) {
+  //       _methods_specs_rendered[devId][instId] = {};
+  //     }
+  //     if (!(ccId in _methods_specs_rendered[devId][instId])) {
+  //       _methods_specs_rendered[devId][instId][ccId] = renderMethodSpec(parseInt(ccId, 10), ZWaveAPIData.devices[devId].instances[instId].commandClasses[ccId].data);
+  //     }
+  //
+  //     var methods = _methods_specs_rendered[devId][instId][ccId];
+  //     if (method) {
+  //       return methods[method];
+  //     } else {
+  //       if (property) {
+  //         return methods.Data;
+  //       }
+  //       return Object.fromEntries(Object.entries(methods).filter(function ([key]) {
+  //         return key !== 'Data'
+  //       }))
+  //     }
+  //   } catch (err) {
+  //     return null;
+  //   }
+  // }
 
   function renderAllMethodSpec(ZWaveAPIData) {
     _methods_specs_rendered = {};
@@ -173,71 +285,71 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "type": {
                 "enumof": [
                   {
-                    "label": "-9dbm ", "type":{
-                      "fix": 	{
+                    "label": "-9dbm ", "type": {
+                      "fix": {
                         "value": 9
                       }
                     }
                   },
                   {
-                    "label": "-8dbm ", "type":{
-                      "fix": 	{
+                    "label": "-8dbm ", "type": {
+                      "fix": {
                         "value": 8
                       }
                     }
                   },
                   {
-                    "label": "-7dbm ", "type":{
-                      "fix": 	{
+                    "label": "-7dbm ", "type": {
+                      "fix": {
                         "value": 7
                       }
                     }
                   },
                   {
-                    "label": "-6dbm ", "type":{
-                      "fix": 	{
+                    "label": "-6dbm ", "type": {
+                      "fix": {
                         "value": 6
                       }
                     }
                   },
                   {
-                    "label": "-5dbm ", "type":{
-                      "fix": 	{
+                    "label": "-5dbm ", "type": {
+                      "fix": {
                         "value": 5
                       }
                     }
                   },
                   {
-                    "label": "-4dbm ", "type":{
-                      "fix": 	{
+                    "label": "-4dbm ", "type": {
+                      "fix": {
                         "value": 4
                       }
                     }
                   },
                   {
-                    "label": "-3dbm ", "type":{
-                      "fix": 	{
+                    "label": "-3dbm ", "type": {
+                      "fix": {
                         "value": 3
                       }
                     }
                   },
                   {
-                    "label": "-2dbm ", "type":{
-                      "fix": 	{
+                    "label": "-2dbm ", "type": {
+                      "fix": {
                         "value": 2
                       }
                     }
                   },
                   {
-                    "label": "-1dbm ", "type":{
-                      "fix": 	{
+                    "label": "-1dbm ", "type": {
+                      "fix": {
                         "value": 1
                       }
                     }
                   },
                   {
-                    "label": "Normal ", "type":{
-                      "fix": 	{
+                    "label": "Normal ", "type": {
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -256,80 +368,77 @@ configurationCommandsModule.service('configurationCommandsService', function () 
 
             }
           ],
-
-
-
-          "Set":[
+          "Set": [
             {
               "label": "PowerLevel",
               "type": {
                 "enumof": [
                   {
-                    "label": "-9dbm ", "type":{
-                      "fix": 	{
+                    "label": "-9dbm ", "type": {
+                      "fix": {
                         "value": 9
                       }
                     }
                   },
                   {
-                    "label": "-8dbm ", "type":{
-                      "fix": 	{
+                    "label": "-8dbm ", "type": {
+                      "fix": {
                         "value": 8
                       }
                     }
                   },
                   {
-                    "label": "-7dbm ", "type":{
-                      "fix": 	{
+                    "label": "-7dbm ", "type": {
+                      "fix": {
                         "value": 7
                       }
                     }
                   },
                   {
-                    "label": "-6dbm ", "type":{
-                      "fix": 	{
+                    "label": "-6dbm ", "type": {
+                      "fix": {
                         "value": 6
                       }
                     }
                   },
                   {
-                    "label": "-5dbm ", "type":{
-                      "fix": 	{
+                    "label": "-5dbm ", "type": {
+                      "fix": {
                         "value": 5
                       }
                     }
                   },
                   {
-                    "label": "-4dbm ", "type":{
-                      "fix": 	{
+                    "label": "-4dbm ", "type": {
+                      "fix": {
                         "value": 4
                       }
                     }
                   },
                   {
-                    "label": "-3dbm ", "type":{
-                      "fix": 	{
+                    "label": "-3dbm ", "type": {
+                      "fix": {
                         "value": 3
                       }
                     }
                   },
                   {
-                    "label": "-2dbm ", "type":{
-                      "fix": 	{
+                    "label": "-2dbm ", "type": {
+                      "fix": {
                         "value": 2
                       }
                     }
                   },
                   {
-                    "label": "-1dbm ", "type":{
-                      "fix": 	{
+                    "label": "-1dbm ", "type": {
+                      "fix": {
                         "value": 1
                       }
                     }
                   },
                   {
-                    "label": "Normal ", "type":{
-                      "fix": 	{
+                    "label": "Normal ", "type": {
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -359,7 +468,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "Color Capability",
               "type": {
                 "enumof": (
-                  function() {
+                  function () {
                     try {
                       var arr = [];
                       var key;
@@ -369,7 +478,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                           arr.push({
                             "label": data[ikey].capabilityString.value,
                             "type": {
-                              "fix": 	{
+                              "fix": {
                                 "value": ikey
                               }
                             }
@@ -377,7 +486,8 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                         }
                       }
                       return arr;
-                    } catch(err) {}
+                    } catch (err) {
+                    }
                     return [];
                   }
                 )()
@@ -389,7 +499,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "Color Capability",
               "type": {
                 "enumof": (
-                  function() {
+                  function () {
                     try {
                       var arr = [];
                       var key;
@@ -399,7 +509,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                           arr.push({
                             "label": data[ikey].capabilityString.value,
                             "type": {
-                              "fix": 	{
+                              "fix": {
                                 "value": ikey
                               }
                             }
@@ -407,7 +517,8 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                         }
                       }
                       return arr;
-                    } catch(err) {}
+                    } catch (err) {
+                    }
                     return [];
                   }
                 )()
@@ -417,8 +528,8 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "Value",
               "type": {
                 "range": {
-                  "min": 	0,
-                  "max": 	255
+                  "min": 0,
+                  "max": 255
                 }
               }
             }
@@ -428,7 +539,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "Color Capability",
               "type": {
                 "enumof": (
-                  function() {
+                  function () {
                     try {
                       var arr = [];
                       var key;
@@ -438,7 +549,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                           arr.push({
                             "label": data[ikey].capabilityString.value,
                             "type": {
-                              "fix": 	{
+                              "fix": {
                                 "value": ikey
                               }
                             }
@@ -446,7 +557,8 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                         }
                       }
                       return arr;
-                    } catch(err) {}
+                    } catch (err) {
+                    }
                     return [];
                   }
                 )()
@@ -459,7 +571,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Up",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -467,7 +579,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Down",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 1
                       }
                     }
@@ -482,7 +594,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "immediately",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -491,7 +603,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                     "label": "in seconds",
                     "type": {
                       "range": {
-                        "min": 	1,
+                        "min": 1,
                         "max": 127
                       }
                     }
@@ -500,7 +612,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                     "label": "in minutes",
                     "type": {
                       "range": {
-                        "min": 	1,
+                        "min": 1,
                         "max": 127,
                         "shift": 127
                       }
@@ -509,7 +621,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "use device default",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 255
                       }
                     }
@@ -524,7 +636,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "No",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -532,7 +644,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Yes",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 1
                       }
                     }
@@ -544,8 +656,8 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "Start Level",
               "type": {
                 "range": {
-                  "min": 	0,
-                  "max": 	255
+                  "min": 0,
+                  "max": 255
                 }
               }
             }
@@ -555,7 +667,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "Color Capability",
               "type": {
                 "enumof": (
-                  function() {
+                  function () {
                     try {
                       var arr = [];
                       var key;
@@ -565,7 +677,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                           arr.push({
                             "label": data[ikey].capabilityString.value,
                             "type": {
-                              "fix": 	{
+                              "fix": {
                                 "value": ikey
                               }
                             }
@@ -573,7 +685,8 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                         }
                       }
                       return arr;
-                    } catch(err) {}
+                    } catch (err) {
+                    }
                     return [];
                   }
                 )()
@@ -591,7 +704,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "Id",
               "type": {
                 "range": {
-                  "min": 	1,
+                  "min": 1,
                   "max": 255
                 }
               }
@@ -608,7 +721,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "Group",
               "type": {
                 "range": {
-                  "min": 	1,
+                  "min": 1,
                   "max": 255
                 }
               }
@@ -619,7 +732,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "Group",
               "type": {
                 "range": {
-                  "min": 	1,
+                  "min": 1,
                   "max": 255
                 }
               }
@@ -630,7 +743,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "Group",
               "type": {
                 "range": {
-                  "min": 	1,
+                  "min": 1,
                   "max": 255
                 }
               }
@@ -652,7 +765,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "Group",
               "type": {
                 "range": {
-                  "min": 	1,
+                  "min": 1,
                   "max": 255
                 }
               }
@@ -663,7 +776,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "Group",
               "type": {
                 "range": {
-                  "min": 	1,
+                  "min": 1,
                   "max": 255
                 }
               }
@@ -671,8 +784,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
             {
               "label": "Node",
               "type": {
-                "node": {
-                }
+                "node": {}
               }
             }
           ],
@@ -681,7 +793,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "Group",
               "type": {
                 "range": {
-                  "min": 	1,
+                  "min": 1,
                   "max": 255
                 }
               }
@@ -690,7 +802,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "Node",
               "type": {
                 "range": {
-                  "min": 	1,
+                  "min": 1,
                   "max": 255
                 }
               }
@@ -724,12 +836,12 @@ configurationCommandsModule.service('configurationCommandsService', function () 
           "Get": [
             {
               "label": "User",
-              "type":	{
+              "type": {
                 "enumof": [
                   {
                     "label": "All usercodes",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -738,8 +850,8 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                     "label": "Id",
                     "type": {
                       "range": {
-                        "min": 	1,
-                        "max":  65535
+                        "min": 1,
+                        "max": 65535
                       }
                     }
                   }
@@ -755,7 +867,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "All usercodes",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -764,8 +876,8 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                     "label": "Id",
                     "type": {
                       "range": {
-                        "min": 	1,
-                        "max":  65535
+                        "min": 1,
+                        "max": 65535
                       }
                     }
                   }
@@ -775,8 +887,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
             {
               "label": "Code (4...10 Digits)",
               "type": {
-                "string": {
-                }
+                "string": {}
               }
             },
             {
@@ -786,7 +897,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Not Set",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -794,7 +905,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Set",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 1
                       }
                     }
@@ -802,7 +913,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Disabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 2
                       }
                     }
@@ -810,7 +921,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Messaging",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 3
                       }
                     }
@@ -818,7 +929,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Passage",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 4
                       }
                     }
@@ -832,8 +943,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
             {
               "label": "Code (4...10 Digits)",
               "type": {
-                "string": {
-                }
+                "string": {}
               }
             }
           ],
@@ -846,7 +956,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Normal",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -854,7 +964,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Vacation",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 1
                       }
                     }
@@ -862,7 +972,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Privacy",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 2
                       }
                     }
@@ -870,7 +980,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Locked out",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 3
                       }
                     }
@@ -897,7 +1007,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "Type",
               "type": {
                 "enumof": (
-                  function() {
+                  function () {
                     try {
                       var arr = [];
                       var key;
@@ -907,7 +1017,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                           arr.push({
                             "label": data[ikey].modeName.value,
                             "type": {
-                              "fix": 	{
+                              "fix": {
                                 "value": ikey
                               }
                             }
@@ -915,7 +1025,8 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                         }
                       }
                       return arr;
-                    } catch(err) {}
+                    } catch (err) {
+                    }
                     return [];
                   }
                 )()
@@ -927,7 +1038,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "Type",
               "type": {
                 "enumof": (
-                  function() {
+                  function () {
                     try {
                       var arr = [];
                       var key;
@@ -937,7 +1048,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                           arr.push({
                             "label": data[ikey].modeName.value,
                             "type": {
-                              "fix": 	{
+                              "fix": {
                                 "value": ikey
                               }
                             }
@@ -945,7 +1056,8 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                         }
                       }
                       return arr;
-                    } catch(err) {}
+                    } catch (err) {
+                    }
                     return [];
                   }
                 )()
@@ -955,8 +1067,8 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "Value",
               "type": {
                 "range": {
-                  "min": 	0,
-                  "max": 	100
+                  "min": 0,
+                  "max": 100
                 }
               }
             }
@@ -973,23 +1085,25 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "Wakeup time, seconds",
               "type": {
                 "range": {
-                  "min": 	(
-                    function() {
+                  "min": (
+                    function () {
                       try {
                         if (data.version.value >= 2 && data.min.value !== null) {
                           return data.min.value;
                         }
-                      } catch(err) {}
+                      } catch (err) {
+                      }
                       return 0;
                     }
                   )(),
-                  "max": 	(
-                    function() {
+                  "max": (
+                    function () {
                       try {
                         if (data.version.value >= 2 && data.max.value !== null) {
                           return data.max.value;
                         }
-                      } catch(err) {}
+                      } catch (err) {
+                      }
                       return 256 * 256 * 256 - 1;
                     }
                   )()
@@ -1022,7 +1136,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "Type",
               "type": {
                 "enumof": (
-                  function() {
+                  function () {
                     try {
                       var arr = [];
                       var key;
@@ -1032,7 +1146,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                           arr.push({
                             "label": data[ikey].modeName.value,
                             "type": {
-                              "fix": 	{
+                              "fix": {
                                 "value": ikey
                               }
                             }
@@ -1040,7 +1154,8 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                         }
                       }
                       return arr;
-                    } catch(err) {}
+                    } catch (err) {
+                    }
                     return [];
                   }
                 )()
@@ -1061,7 +1176,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Off",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -1069,7 +1184,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "On",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 1
                       }
                     }
@@ -1081,7 +1196,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "Type",
               "type": {
                 "enumof": (
-                  function() {
+                  function () {
                     try {
                       var arr = [];
                       var key;
@@ -1091,7 +1206,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                           arr.push({
                             "label": data[ikey].modeName.value,
                             "type": {
-                              "fix": 	{
+                              "fix": {
                                 "value": ikey
                               }
                             }
@@ -1099,7 +1214,8 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                         }
                       }
                       return arr;
-                    } catch(err) {}
+                    } catch (err) {
+                    }
                     return [];
                   }
                 )()
@@ -1118,7 +1234,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
       case 0x42:
         return {
           "Get": [],
-          "LoggingGet" : [
+          "LoggingGet": [
             {
               "label": "States (bitmask)",
               "type": {
@@ -1134,49 +1250,49 @@ configurationCommandsModule.service('configurationCommandsService', function () 
       // SwitchMultilevel
       case 0x26:
         return {
-          "Data": {
-            "overrideDefaultDuration": [{
-              "label": "If not specifically specified in Set, use this duration instead of the device default value",
-              "type": {
-                "enumof": [
-                  {
-                    "label": "immediately",
-                    "type": {
-                      "fix": 	{
-                        "value": 0
-                      }
-                    }
-                  },
-                  {
-                    "label": "in seconds",
-                    "type": {
-                      "range": {
-                        "min": 	1,
-                        "max": 127
-                      }
-                    }
-                  },
-                  {
-                    "label": "in minutes",
-                    "type": {
-                      "range": {
-                        "min": 	1,
-                        "max": 127,
-                        "shift": 127
-                      }
+          "overrideDefaultDuration": {
+            "label": "If not specifically specified in Set, use this duration instead of the device default value",
+            "type": {
+              "enumof": [
+                {
+                  "label": "immediately",
+                  "type": {
+                    "fix": {
+                      "value": 0
                     }
                   }
-                ]
-              }
-            }, {
-                "label": "test",
-                "type": {
-                  "range": {
-                    "min": 0,
-                    "max": 232
+                },
+                {
+                  "label": "in seconds",
+                  "type": {
+                    "range": {
+                      "min": 1,
+                      "max": 127
+                    }
+                  }
+                },
+                {
+                  "label": "in minutes",
+                  "type": {
+                    "range": {
+                      "min": 1,
+                      "max": 127,
+                      "shift": 127
+                    }
                   }
                 }
-              }],
+              ]
+            }
+            // },
+            // {
+            //   "label": "test",
+            //   "type": {
+            //     "range": {
+            //       "min": 0,
+            //       "max": 232
+            //     }
+            //   }
+            // },
             // 'test': [{
             //   "label": "Node ID",
             //   "type": {
@@ -1202,7 +1318,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Off",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -1219,7 +1335,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Full",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 99
                       }
                     }
@@ -1227,7 +1343,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "On",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 255
                       }
                     }
@@ -1242,7 +1358,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "immediately",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -1251,7 +1367,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                     "label": "in seconds",
                     "type": {
                       "range": {
-                        "min": 	1,
+                        "min": 1,
                         "max": 127
                       }
                     }
@@ -1260,7 +1376,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                     "label": "in minutes",
                     "type": {
                       "range": {
-                        "min": 	1,
+                        "min": 1,
                         "max": 127,
                         "shift": 127
                       }
@@ -1269,7 +1385,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "use device default",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 255
                       }
                     }
@@ -1286,7 +1402,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Up",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -1294,7 +1410,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Down",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 1
                       }
                     }
@@ -1309,7 +1425,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "immediately",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -1318,7 +1434,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                     "label": "in seconds",
                     "type": {
                       "range": {
-                        "min": 	1,
+                        "min": 1,
                         "max": 127
                       }
                     }
@@ -1327,7 +1443,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                     "label": "in minutes",
                     "type": {
                       "range": {
-                        "min": 	1,
+                        "min": 1,
                         "max": 127,
                         "shift": 127
                       }
@@ -1336,7 +1452,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "use device default",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 255
                       }
                     }
@@ -1360,7 +1476,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Off",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -1368,7 +1484,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "On",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 255
                       }
                     }
@@ -1383,7 +1499,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "immediately",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -1392,7 +1508,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                     "label": "in seconds",
                     "type": {
                       "range": {
-                        "min": 	1,
+                        "min": 1,
                         "max": 127
                       }
                     }
@@ -1401,7 +1517,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                     "label": "in minutes",
                     "type": {
                       "range": {
-                        "min": 	1,
+                        "min": 1,
                         "max": 127,
                         "shift": 127
                       }
@@ -1410,7 +1526,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "use device default",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 255
                       }
                     }
@@ -1432,7 +1548,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Key Down",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -1440,7 +1556,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Key Up",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 1
                       }
                     }
@@ -1448,7 +1564,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Key Alive",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 2
                       }
                     }
@@ -1486,8 +1602,8 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "Button",
               "type": {
                 "enumof": (
-                  function() {
-                    var buttons = ["Mute","Volume down","Volume up","Channel up","Channel down","0","1","2","3","4","5","6","7","8","9","Last channel","Display","Favorite channel","Play","Stop","Pause","Fast forward","Rewind","Instant replay","Record","AC3","PVR menu","Guide","Menu","Menu up","Menu down","Menu left","Menu right","Page up","Page down","Select","Exit","Input","Power","Enter channel","10","11","12","13","14","15","16","+10","+20","+100","-/--","3-CH","3D","6-CH input","A","Add","Alarm","AM","Analog","Angle","Antenna","Antenna east","Antenna west","Aspect","Audio 1","Audio 2","Audio 3","Audio dubbing","Audio level down","Audio level up","Auto/Manual","Aux 1","Aux 2","B","Back","Background","Balance","Balance left","Balance right","Band","Bandwidth","Bass","Bass down","Bass up","Blank","Breeze mode","Bright","Brightness","Brightness down","Brightness up","Buy","C","Camera","Category down","Category up","Center","Center down","Center mode","Center up","Channel/Program","Clear","Close","Closed caption","Cold","Color","Color down","Color up","Component 1","Component 2","Component 3","Concert","Confirm","Continue","Contrast","Contrast down","Contrast up","Counter","Counter reset","D","Day down","Day up","Delay","Delay down","Delay up","Delete","Delimiter","Digest","Digital","Dim","Direct","Disarm","Disc","Disc 1","Disc 2","Disc 3","Disc 4","Disc 5","Disc 6","Disc down","Disc up","Disco","Edit","Effect down","Effect up","Eject","End","EQ","Fader","Fan","Fan high","Fan low","Fan medium","Fan speed","Fastext blue","Fastext green","Fastext purple","Fastext red","Fastext white","Fastext yellow","Favorite channel down","Favorite channel up","Finalize","Fine tune","Flat","FM","Focus down","Focus up","Freeze","Front","Game","GoTo","Hall","Heat","Help","Home","Index","Index forward","Index reverse","Interactive","Intro scan","Jazz","Karaoke","Keystone","Keystone down","Keystone up","Language","Left click","Level","Light","List","Live TV","Local/Dx","Loudness","Mail","Mark","Memory recall","Monitor","Movie","Multi room","Music","Music scan","Natural","Night","Noise reduction","Normalize","Discrete input CableTV","Discrete input CD 1","Discrete input CD 2","Discrete input CD Recorder","Discrete input DAT (Digital Audio Tape)","Discrete input DVD","Discrete input DVI","Discrete input HDTV","Discrete input LaserDisc","Discrete input MiniDisc","Discrete input PC","Discrete input Personal Video Recorder","Discrete input TV","Discrete input TV/VCR or TV/DVD","Discrete input VCR","One touch playback","One touch record","Open","Optical","Options","Orchestra","PAL/NTSC","Parental lock","PBC","Phono","Photos","Picture menu","Picture mode","Picture mute","PIP channel down","PIP channel up","PIP freeze","PIP input","PIP move","PIP Off","PIP On","PIP size","PIP split","PIP swap","Play mode","Play reverse","Power Off","Power On","PPV (Pay per view)","Preset","Program","Progressive scan","ProLogic","PTY","Quick skip","Random","RDS","Rear","Rear volume down","Rear volume up","Record mute","Record pause","Repeat","Repeat A-B","Resume","RGB","Right click","Rock","Rotate left","Rotate right","SAT","Scan","Scart","Scene","Scroll","Services","Setup menu","Sharp","Sharpness","Sharpness down","Sharpness up","Side A/B","Skip forward","Skip reverse","Sleep","Slow","Slow forward","Slow reverse","Sound menu","Sound mode","Speed","Speed down","Speed up","Sports","Stadium","Start","Start ID erase","Start ID renumber","Start ID write","Step","Stereo/Mono","Still forward","Still reverse","Subtitle","Subwoofer down","Subwoofer up","Super bass","Surround","Surround mode","S-Video","Sweep","Synchro record","Tape 1","Tape 1-2","Tape 2","Temperature down","Temperature up","Test tone","Text (Teletext)","Text expand","Text hold","Text index","Text mix","Text off","Text reveal","Text subpage","Text timer page","Text update","Theater","Theme","Thumbs down","Thumbs up","Tilt down","Tilt up","Time","Timer","Timer down","Timer up","Tint","Tint down","Tint up","Title","Track","Tracking","Tracking down","Tracking up","Treble","Treble down","Treble up","Tune down","Tune up","Tuner","VCR Plus+","Video 1","Video 2","Video 3","Video 4","Video 5","View","Voice","Zoom","Zoom in","Zoom out","eHome","Details","DVD menu","My TV","Recorded TV","My videos","DVD angle","DVD audio","DVD subtitle","Radio","#","*","OEM 1","OEM 2","Info","CAPS NUM","TV MODE","SOURCE","FILEMODE","Time seek","Mouse enable","Mouse disable","VOD","Thumbs Up","Thumbs Down","Apps","Mouse toggle","TV Mode","DVD Mode","STB Mode","AUX Mode","BluRay Mode","Reserved (Mode)","Reserved (Mode)","Reserved (Mode)","Reserved (Mode)","Reserved (Mode)","Reserved (Mode)","Reserved (Mode)","Reserved (Mode)","Standby 1","Standby 2","Standby 3","HDMI 1","HDMI 2","HDMI 3","HDMI 4","HDMI 5","HDMI 6","HDMI 7","HDMI 8","HDMI 9","USB 1","USB 2","USB 3","USB 4","USB 5","ZOOM 4:3 Normal","ZOOM 4:3 Zoom","ZOOM 16:9 Normal","ZOOM 16:9 Zoom","ZOOM 16:9 Wide 1","ZOOM 16:9 Wide 2","ZOOM 16:9 Wide 3","ZOOM Cinema","ZOOM 16:9 Default","Reserved (ZOOM mode)","Reserved (ZOOM mode)","Auto Zoom","ZOOM Set as Default Zoom","Mute On","Mute Off","AUDIO Mode AUDYSSEY AUDIO OFF","AUDIO Mode AUDYSSEY AUDIO LO","AUDIO Mode AUDYSSEY AUDIO MED","AUDIO Mode AUDYSSEY AUDIO HI","Reserved","Reserved","AUDIO Mode SRS SURROUND ON","AUDIO Mode SRS SURROUND OFF","Reserved","Reserved","Reserved","Picture Mode Home","Picture Mode Retail","Picture Mode Vivid","Picture Mode Standard","Picture Mode Theater","Picture Mode Sports","Picture Mode Energy savings","Picture Mode Custom","Cool","Medium","Warm_D65","CC ON","CC OFF","Video Mute ON","Video Mute OFF","Next Event","Previous Event","CEC device list","MTS SAP"];
+                  function () {
+                    var buttons = ["Mute", "Volume down", "Volume up", "Channel up", "Channel down", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Last channel", "Display", "Favorite channel", "Play", "Stop", "Pause", "Fast forward", "Rewind", "Instant replay", "Record", "AC3", "PVR menu", "Guide", "Menu", "Menu up", "Menu down", "Menu left", "Menu right", "Page up", "Page down", "Select", "Exit", "Input", "Power", "Enter channel", "10", "11", "12", "13", "14", "15", "16", "+10", "+20", "+100", "-/--", "3-CH", "3D", "6-CH input", "A", "Add", "Alarm", "AM", "Analog", "Angle", "Antenna", "Antenna east", "Antenna west", "Aspect", "Audio 1", "Audio 2", "Audio 3", "Audio dubbing", "Audio level down", "Audio level up", "Auto/Manual", "Aux 1", "Aux 2", "B", "Back", "Background", "Balance", "Balance left", "Balance right", "Band", "Bandwidth", "Bass", "Bass down", "Bass up", "Blank", "Breeze mode", "Bright", "Brightness", "Brightness down", "Brightness up", "Buy", "C", "Camera", "Category down", "Category up", "Center", "Center down", "Center mode", "Center up", "Channel/Program", "Clear", "Close", "Closed caption", "Cold", "Color", "Color down", "Color up", "Component 1", "Component 2", "Component 3", "Concert", "Confirm", "Continue", "Contrast", "Contrast down", "Contrast up", "Counter", "Counter reset", "D", "Day down", "Day up", "Delay", "Delay down", "Delay up", "Delete", "Delimiter", "Digest", "Digital", "Dim", "Direct", "Disarm", "Disc", "Disc 1", "Disc 2", "Disc 3", "Disc 4", "Disc 5", "Disc 6", "Disc down", "Disc up", "Disco", "Edit", "Effect down", "Effect up", "Eject", "End", "EQ", "Fader", "Fan", "Fan high", "Fan low", "Fan medium", "Fan speed", "Fastext blue", "Fastext green", "Fastext purple", "Fastext red", "Fastext white", "Fastext yellow", "Favorite channel down", "Favorite channel up", "Finalize", "Fine tune", "Flat", "FM", "Focus down", "Focus up", "Freeze", "Front", "Game", "GoTo", "Hall", "Heat", "Help", "Home", "Index", "Index forward", "Index reverse", "Interactive", "Intro scan", "Jazz", "Karaoke", "Keystone", "Keystone down", "Keystone up", "Language", "Left click", "Level", "Light", "List", "Live TV", "Local/Dx", "Loudness", "Mail", "Mark", "Memory recall", "Monitor", "Movie", "Multi room", "Music", "Music scan", "Natural", "Night", "Noise reduction", "Normalize", "Discrete input CableTV", "Discrete input CD 1", "Discrete input CD 2", "Discrete input CD Recorder", "Discrete input DAT (Digital Audio Tape)", "Discrete input DVD", "Discrete input DVI", "Discrete input HDTV", "Discrete input LaserDisc", "Discrete input MiniDisc", "Discrete input PC", "Discrete input Personal Video Recorder", "Discrete input TV", "Discrete input TV/VCR or TV/DVD", "Discrete input VCR", "One touch playback", "One touch record", "Open", "Optical", "Options", "Orchestra", "PAL/NTSC", "Parental lock", "PBC", "Phono", "Photos", "Picture menu", "Picture mode", "Picture mute", "PIP channel down", "PIP channel up", "PIP freeze", "PIP input", "PIP move", "PIP Off", "PIP On", "PIP size", "PIP split", "PIP swap", "Play mode", "Play reverse", "Power Off", "Power On", "PPV (Pay per view)", "Preset", "Program", "Progressive scan", "ProLogic", "PTY", "Quick skip", "Random", "RDS", "Rear", "Rear volume down", "Rear volume up", "Record mute", "Record pause", "Repeat", "Repeat A-B", "Resume", "RGB", "Right click", "Rock", "Rotate left", "Rotate right", "SAT", "Scan", "Scart", "Scene", "Scroll", "Services", "Setup menu", "Sharp", "Sharpness", "Sharpness down", "Sharpness up", "Side A/B", "Skip forward", "Skip reverse", "Sleep", "Slow", "Slow forward", "Slow reverse", "Sound menu", "Sound mode", "Speed", "Speed down", "Speed up", "Sports", "Stadium", "Start", "Start ID erase", "Start ID renumber", "Start ID write", "Step", "Stereo/Mono", "Still forward", "Still reverse", "Subtitle", "Subwoofer down", "Subwoofer up", "Super bass", "Surround", "Surround mode", "S-Video", "Sweep", "Synchro record", "Tape 1", "Tape 1-2", "Tape 2", "Temperature down", "Temperature up", "Test tone", "Text (Teletext)", "Text expand", "Text hold", "Text index", "Text mix", "Text off", "Text reveal", "Text subpage", "Text timer page", "Text update", "Theater", "Theme", "Thumbs down", "Thumbs up", "Tilt down", "Tilt up", "Time", "Timer", "Timer down", "Timer up", "Tint", "Tint down", "Tint up", "Title", "Track", "Tracking", "Tracking down", "Tracking up", "Treble", "Treble down", "Treble up", "Tune down", "Tune up", "Tuner", "VCR Plus+", "Video 1", "Video 2", "Video 3", "Video 4", "Video 5", "View", "Voice", "Zoom", "Zoom in", "Zoom out", "eHome", "Details", "DVD menu", "My TV", "Recorded TV", "My videos", "DVD angle", "DVD audio", "DVD subtitle", "Radio", "#", "*", "OEM 1", "OEM 2", "Info", "CAPS NUM", "TV MODE", "SOURCE", "FILEMODE", "Time seek", "Mouse enable", "Mouse disable", "VOD", "Thumbs Up", "Thumbs Down", "Apps", "Mouse toggle", "TV Mode", "DVD Mode", "STB Mode", "AUX Mode", "BluRay Mode", "Reserved (Mode)", "Reserved (Mode)", "Reserved (Mode)", "Reserved (Mode)", "Reserved (Mode)", "Reserved (Mode)", "Reserved (Mode)", "Reserved (Mode)", "Standby 1", "Standby 2", "Standby 3", "HDMI 1", "HDMI 2", "HDMI 3", "HDMI 4", "HDMI 5", "HDMI 6", "HDMI 7", "HDMI 8", "HDMI 9", "USB 1", "USB 2", "USB 3", "USB 4", "USB 5", "ZOOM 4:3 Normal", "ZOOM 4:3 Zoom", "ZOOM 16:9 Normal", "ZOOM 16:9 Zoom", "ZOOM 16:9 Wide 1", "ZOOM 16:9 Wide 2", "ZOOM 16:9 Wide 3", "ZOOM Cinema", "ZOOM 16:9 Default", "Reserved (ZOOM mode)", "Reserved (ZOOM mode)", "Auto Zoom", "ZOOM Set as Default Zoom", "Mute On", "Mute Off", "AUDIO Mode AUDYSSEY AUDIO OFF", "AUDIO Mode AUDYSSEY AUDIO LO", "AUDIO Mode AUDYSSEY AUDIO MED", "AUDIO Mode AUDYSSEY AUDIO HI", "Reserved", "Reserved", "AUDIO Mode SRS SURROUND ON", "AUDIO Mode SRS SURROUND OFF", "Reserved", "Reserved", "Reserved", "Picture Mode Home", "Picture Mode Retail", "Picture Mode Vivid", "Picture Mode Standard", "Picture Mode Theater", "Picture Mode Sports", "Picture Mode Energy savings", "Picture Mode Custom", "Cool", "Medium", "Warm_D65", "CC ON", "CC OFF", "Video Mute ON", "Video Mute OFF", "Next Event", "Previous Event", "CEC device list", "MTS SAP"];
                     try {
                       var arr = [];
                       var masks = data.bitmask.value;
@@ -1496,7 +1612,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                           arr.push({
                             "label": buttons[i],
                             "type": {
-                              "fix": 	{
+                              "fix": {
                                 "value": (i + 1)
                               }
                             }
@@ -1504,7 +1620,8 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                         }
                       }
                       return arr;
-                    } catch(err) {}
+                    } catch (err) {
+                    }
                     return [];
                   }
                 )()
@@ -1525,7 +1642,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Stop",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -1542,7 +1659,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Default",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 255
                       }
                     }
@@ -1557,7 +1674,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Default",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -1566,7 +1683,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                     "label": "",
                     "type": {
                       "range": {
-                        "min": 	1,
+                        "min": 1,
                         "max": 100
                       }
                     }
@@ -1592,7 +1709,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Don't change, adjust only volume",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -1616,7 +1733,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Mute",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -1625,7 +1742,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                     "label": "",
                     "type": {
                       "range": {
-                        "min": 	1,
+                        "min": 1,
                         "max": 100
                       }
                     }
@@ -1672,77 +1789,77 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               }
             }
           ],
-          "Set":[
+          "Set": [
             {
               "label": "PowerLevel",
               "type": {
                 "enumof": [
                   {
-                    "label": "-9dbm ", "type":{
-                      "fix": 	{
+                    "label": "-9dbm ", "type": {
+                      "fix": {
                         "value": 9
                       }
                     }
                   },
                   {
-                    "label": "-8dbm ", "type":{
-                      "fix": 	{
+                    "label": "-8dbm ", "type": {
+                      "fix": {
                         "value": 8
                       }
                     }
                   },
                   {
-                    "label": "-7dbm ", "type":{
-                      "fix": 	{
+                    "label": "-7dbm ", "type": {
+                      "fix": {
                         "value": 7
                       }
                     }
                   },
                   {
-                    "label": "-6dbm ", "type":{
-                      "fix": 	{
+                    "label": "-6dbm ", "type": {
+                      "fix": {
                         "value": 6
                       }
                     }
                   },
                   {
-                    "label": "-5dbm ", "type":{
-                      "fix": 	{
+                    "label": "-5dbm ", "type": {
+                      "fix": {
                         "value": 5
                       }
                     }
                   },
                   {
-                    "label": "-4dbm ", "type":{
-                      "fix": 	{
+                    "label": "-4dbm ", "type": {
+                      "fix": {
                         "value": 4
                       }
                     }
                   },
                   {
-                    "label": "-3dbm ", "type":{
-                      "fix": 	{
+                    "label": "-3dbm ", "type": {
+                      "fix": {
                         "value": 3
                       }
                     }
                   },
                   {
-                    "label": "-2dbm ", "type":{
-                      "fix": 	{
+                    "label": "-2dbm ", "type": {
+                      "fix": {
                         "value": 2
                       }
                     }
                   },
                   {
-                    "label": "-1dbm ", "type":{
-                      "fix": 	{
+                    "label": "-1dbm ", "type": {
+                      "fix": {
                         "value": 1
                       }
                     }
                   },
                   {
-                    "label": "Normal ", "type":{
-                      "fix": 	{
+                    "label": "Normal ", "type": {
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -1770,8 +1887,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
             {
               "label": "Data in format [1,2,3,..,0xa,..]",
               "type": {
-                "string": {
-                }
+                "string": {}
               }
             }
           ]
@@ -1796,8 +1912,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
             {
               "label": "Data in format [1,2,3,..,0xa,..]",
               "type": {
-                "string": {
-                }
+                "string": {}
               }
             }
           ]
@@ -1817,7 +1932,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Not in switch all group",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0x00
                       }
                     }
@@ -1825,7 +1940,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "In switch all off group only",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0x01
                       }
                     }
@@ -1833,7 +1948,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "In switch all on group only",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0x02
                       }
                     }
@@ -1841,7 +1956,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "In switch all on and off groups",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0xff
                       }
                     }
@@ -1854,7 +1969,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
 
       // SensorConfiguration
       case 0x9e:
-        return	{
+        return {
           "Get": [],
           "Set": [
             {
@@ -1864,7 +1979,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Current",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 1
                       }
                     }
@@ -1872,7 +1987,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Default",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 2
                       }
                     }
@@ -1880,7 +1995,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Value",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -1908,7 +2023,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "User",
               "type": {
                 "range": {
-                  "min": 	0,
+                  "min": 0,
                   "max": 255
                 }
               }
@@ -1920,7 +2035,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "disable",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -1928,7 +2043,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "enable",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 1
                       }
                     }
@@ -1983,7 +2098,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Monday",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 1
                       }
                     }
@@ -1991,7 +2106,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Tuesday",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 2
                       }
                     }
@@ -1999,7 +2114,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Wednesday",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 3
                       }
                     }
@@ -2007,7 +2122,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Thursday",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 4
                       }
                     }
@@ -2015,7 +2130,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Friday",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 5
                       }
                     }
@@ -2023,7 +2138,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Saturday",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 6
                       }
                     }
@@ -2031,7 +2146,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Sunday",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -2216,7 +2331,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "Scene",
               "type": {
                 "range": {
-                  "min": 	1,
+                  "min": 1,
                   "max": 255
                 }
               }
@@ -2228,7 +2343,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "immediately",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -2237,7 +2352,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                     "label": "in seconds",
                     "type": {
                       "range": {
-                        "min": 	1,
+                        "min": 1,
                         "max": 127
                       }
                     }
@@ -2246,16 +2361,16 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                     "label": "in minutes",
                     "type": {
                       "range": {
-                        "min": 	1,
+                        "min": 1,
                         "max": 127,
-                        "shift": 	127
+                        "shift": 127
                       }
                     }
                   },
                   {
                     "label": "use device default",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 255
                       }
                     }
@@ -2285,7 +2400,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "Scene",
               "type": {
                 "range": {
-                  "min": 	1,
+                  "min": 1,
                   "max": 255
                 }
               }
@@ -2297,7 +2412,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Off",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -2314,7 +2429,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Full",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 99
                       }
                     }
@@ -2322,7 +2437,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "On",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 255
                       }
                     }
@@ -2337,7 +2452,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "immediately",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -2346,7 +2461,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                     "label": "in seconds",
                     "type": {
                       "range": {
-                        "min": 	1,
+                        "min": 1,
                         "max": 127
                       }
                     }
@@ -2355,16 +2470,16 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                     "label": "in minutes",
                     "type": {
                       "range": {
-                        "min": 	1,
+                        "min": 1,
                         "max": 127,
-                        "shift": 	127
+                        "shift": 127
                       }
                     }
                   },
                   {
                     "label": "use device default",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 255
                       }
                     }
@@ -2379,7 +2494,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Current in device",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0,
                       },
                     }
@@ -2387,7 +2502,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Defined",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 1 << 7,
                       }
                     }
@@ -2413,7 +2528,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                     {
                       "label": "Unprotected",
                       "type": {
-                        "fix": 	{
+                        "fix": {
                           "value": 0
                         }
                       }
@@ -2421,7 +2536,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                     {
                       "label": "Protection by sequence",
                       "type": {
-                        "fix": 	{
+                        "fix": {
                           "value": 1
                         }
                       }
@@ -2429,7 +2544,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                     {
                       "label": "No operation possible",
                       "type": {
-                        "fix": 	{
+                        "fix": {
                           "value": 2
                         }
                       }
@@ -2447,7 +2562,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                       {
                         "label": "Unprotected",
                         "type": {
-                          "fix": 	{
+                          "fix": {
                             "value": 0
                           }
                         }
@@ -2455,7 +2570,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                       {
                         "label": "No RF Control",
                         "type": {
-                          "fix": 	{
+                          "fix": {
                             "value": 1
                           }
                         }
@@ -2463,7 +2578,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                       {
                         "label": "No RF Communication",
                         "type": {
-                          "fix": 	{
+                          "fix": {
                             "value": 2
                           }
                         }
@@ -2483,7 +2598,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "No",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -2501,16 +2616,16 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                     "label": "Min",
                     "type": {
                       "range": {
-                        "min": 	2,
+                        "min": 2,
                         "max": 191,
-                        "shift": 	63
+                        "shift": 63
                       }
                     }
                   },
                   {
                     "label": "Infinite",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 255
                       }
                     }
@@ -2569,7 +2684,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "immediately",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -2578,7 +2693,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                     "label": "in seconds",
                     "type": {
                       "range": {
-                        "min": 	1,
+                        "min": 1,
                         "max": 127
                       }
                     }
@@ -2587,16 +2702,16 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                     "label": "in minutes",
                     "type": {
                       "range": {
-                        "min": 	1,
+                        "min": 1,
                         "max": 127,
-                        "shift": 	127
+                        "shift": 127
                       }
                     }
                   },
                   {
                     "label": "use device default",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 255
                       }
                     }
@@ -2630,7 +2745,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                 "label": "Type",
                 "type": {
                   "enumof": (
-                    function() {
+                    function () {
                       try {
                         var arr = [];
                         var key;
@@ -2640,7 +2755,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                             arr.push({
                               "label": data[ikey].typeString.value,
                               "type": {
-                                "fix": 	{
+                                "fix": {
                                   "value": ikey
                                 }
                               }
@@ -2648,7 +2763,8 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                           }
                         }
                         return arr;
-                      } catch(err) {}
+                      } catch (err) {
+                      }
                       return [];
                     }
                   )()
@@ -2660,7 +2776,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                 "label": "Type",
                 "type": {
                   "enumof": (
-                    function() {
+                    function () {
                       try {
                         var arr = [];
                         var key;
@@ -2670,7 +2786,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                             arr.push({
                               "label": data[ikey].typeString.value,
                               "type": {
-                                "fix": 	{
+                                "fix": {
                                   "value": ikey
                                 }
                               }
@@ -2678,7 +2794,8 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                           }
                         }
                         return arr;
-                      } catch(err) {}
+                      } catch (err) {
+                      }
                       return [];
                     }
                   )()
@@ -2691,7 +2808,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                     {
                       "label": "Disable",
                       "type": {
-                        "fix": 	{
+                        "fix": {
                           "value": 0
                         }
                       }
@@ -2699,7 +2816,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                     {
                       "label": "Enable",
                       "type": {
-                        "fix": 	{
+                        "fix": {
                           "value": 255
                         }
                       }
@@ -2732,7 +2849,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "Group",
               "type": {
                 "range": {
-                  "min": 	1,
+                  "min": 1,
                   "max": 255
                 }
               }
@@ -2743,7 +2860,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "Group",
               "type": {
                 "range": {
-                  "min": 	1,
+                  "min": 1,
                   "max": 255
                 }
               }
@@ -2751,15 +2868,14 @@ configurationCommandsModule.service('configurationCommandsService', function () 
             {
               "label": "Node",
               "type": {
-                "node": {
-                }
+                "node": {}
               }
             },
             {
               "label": "instance",
               "type": {
                 "range": {
-                  "min": 	1,
+                  "min": 1,
                   "max": 127
                 }
               }
@@ -2770,7 +2886,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "Group",
               "type": {
                 "range": {
-                  "min": 	1,
+                  "min": 1,
                   "max": 255
                 }
               }
@@ -2779,7 +2895,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "Node",
               "type": {
                 "range": {
-                  "min": 	1,
+                  "min": 1,
                   "max": 255
                 }
               }
@@ -2788,7 +2904,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "instance",
               "type": {
                 "range": {
-                  "min": 	1,
+                  "min": 1,
                   "max": 127
                 }
               }
@@ -2814,7 +2930,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Disable all",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -2822,7 +2938,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Disable all Sensor Alarms",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 1
                       }
                     }
@@ -2830,7 +2946,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Enable all",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 2
                       }
                     }
@@ -2838,7 +2954,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Enable all Sensor Alarms",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 3
                       }
                     }
@@ -2879,7 +2995,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Up",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -2887,7 +3003,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Down",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 255
                       }
                     }
@@ -2938,7 +3054,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "auto detect",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -2946,7 +3062,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "1 byte",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 1
                       }
                     }
@@ -2954,7 +3070,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "2 byte",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 2
                       }
                     }
@@ -2962,7 +3078,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "4 byte",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 4
                       }
                     }
@@ -2994,7 +3110,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "Group",
               "type": {
                 "range": {
-                  "min": 	1,
+                  "min": 1,
                   "max": 255
                 }
               }
@@ -3005,7 +3121,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "Group",
               "type": {
                 "range": {
-                  "min": 	1,
+                  "min": 1,
                   "max": 255
                 }
               }
@@ -3013,8 +3129,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
             {
               "label": "Node",
               "type": {
-                "node": {
-                }
+                "node": {}
               }
             }
           ],
@@ -3023,7 +3138,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "Group",
               "type": {
                 "range": {
-                  "min": 	1,
+                  "min": 1,
                   "max": 255
                 }
               }
@@ -3032,7 +3147,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
               "label": "Node",
               "type": {
                 "range": {
-                  "min": 	1,
+                  "min": 1,
                   "max": 255
                 }
               }
@@ -3058,7 +3173,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Close",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0x00
                       }
                     }
@@ -3066,7 +3181,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Open",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0xff
                       }
                     }
@@ -3083,7 +3198,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Not supported",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0x00
                       }
                     }
@@ -3091,7 +3206,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Audible notification",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0x01
                       }
                     }
@@ -3099,7 +3214,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Visual notification",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0x02
                       }
                     }
@@ -3116,7 +3231,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Not supported",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0x00
                       }
                     }
@@ -3124,7 +3239,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Audible notification",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0x01
                       }
                     }
@@ -3132,7 +3247,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Visual notification",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0x02
                       }
                     }
@@ -3147,7 +3262,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Off",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0x00
                       }
                     }
@@ -3155,7 +3270,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "On",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0xff
                       }
                     }
@@ -3176,8 +3291,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
             {
               "label": "Name",
               "type": {
-                "string": {
-                }
+                "string": {}
               }
             }
           ],
@@ -3185,8 +3299,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
             {
               "label": "Location",
               "type": {
-                "string": {
-                }
+                "string": {}
               }
             }
           ]
@@ -3203,7 +3316,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "For all entries",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -3211,7 +3324,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "",
                     "type": {
-                      "range": 	{
+                      "range": {
                         "min": 1,
                         "max": 255
                       }
@@ -3247,7 +3360,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Current only",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -3255,7 +3368,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "For all entries",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 255
                       }
                     }
@@ -3263,7 +3376,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "",
                     "type": {
-                      "range": 	{
+                      "range": {
                         "min": 1,
                         "max": 255
                       }
@@ -3281,7 +3394,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "For all supported",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -3289,7 +3402,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "",
                     "type": {
-                      "range": 	{
+                      "range": {
                         "min": 1,
                         "max": 255
                       }
@@ -3308,7 +3421,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
             {
               "label": "Indicator ID",
               "type": {
-                "range": 	{
+                "range": {
                   "min": 1,
                   "max": 255
                 }
@@ -3319,7 +3432,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
             {
               "label": "Indicator ID",
               "type": {
-                "range": 	{
+                "range": {
                   "min": 1,
                   "max": 255
                 }
@@ -3328,7 +3441,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
             {
               "label": "Property ID",
               "type": {
-                "range": 	{
+                "range": {
                   "min": 0,
                   "max": 255
                 }
@@ -3337,7 +3450,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
             {
               "label": "State",
               "type": {
-                "range": 	{
+                "range": {
                   "min": 0,
                   "max": 255
                 }
@@ -3402,7 +3515,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Door Unsecured",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -3410,7 +3523,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Door Unsecured with timeout",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0x1
                       }
                     }
@@ -3418,7 +3531,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Door Unsecured for inside Door Handles",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0x10
                       }
                     }
@@ -3426,7 +3539,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Door Unsecured for inside Door Handles with timeout",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0x11
                       }
                     }
@@ -3434,7 +3547,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Door Unsecured for outside Door Handles",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0x20
                       }
                     }
@@ -3442,7 +3555,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Door Unsecured for outside Door Handles with timeout",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0x21
                       }
                     }
@@ -3450,7 +3563,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Door Secured",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0xff
                       }
                     }
@@ -3468,7 +3581,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Constant operation",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 1
                       }
                     }
@@ -3476,7 +3589,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Timed operation",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 2
                       }
                     }
@@ -3491,7 +3604,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Handles disabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -3499,7 +3612,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Handle 1 enabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 1
                       }
                     }
@@ -3507,7 +3620,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Handle 2 enabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 2
                       }
                     }
@@ -3515,7 +3628,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Handle 3 enabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 4
                       }
                     }
@@ -3523,7 +3636,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Handle 4 enabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 8
                       }
                     }
@@ -3531,7 +3644,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Handles 1 and 2 enabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 3
                       }
                     }
@@ -3539,7 +3652,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Handles 1 and 3 enabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 5
                       }
                     }
@@ -3547,7 +3660,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Handles 1 and 4 enabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 9
                       }
                     }
@@ -3555,7 +3668,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Handles 2 and 3 enabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 6
                       }
                     }
@@ -3563,7 +3676,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Handles 2 and 4 enabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 10
                       }
                     }
@@ -3571,7 +3684,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Handles 3 and 4 enabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 12
                       }
                     }
@@ -3579,7 +3692,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Handles 1, 2 and 3 enabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 7
                       }
                     }
@@ -3587,7 +3700,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Handles 1, 2 and 4 enabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 11
                       }
                     }
@@ -3595,7 +3708,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Handles 1, 3 and 4 enabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 13
                       }
                     }
@@ -3603,7 +3716,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Handles 2, 3 and 4 enabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 14
                       }
                     }
@@ -3611,7 +3724,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Handles 1, 2, 3 and 4 enabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 15
                       }
                     }
@@ -3626,7 +3739,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Handles disabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -3634,7 +3747,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Handle 1 enabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 1
                       }
                     }
@@ -3642,7 +3755,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Handle 2 enabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 2
                       }
                     }
@@ -3650,7 +3763,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Handle 3 enabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 4
                       }
                     }
@@ -3658,7 +3771,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Handle 4 enabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 8
                       }
                     }
@@ -3666,7 +3779,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Handles 1 and 2 enabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 3
                       }
                     }
@@ -3674,7 +3787,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Handles 1 and 3 enabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 5
                       }
                     }
@@ -3682,7 +3795,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Handles 1 and 4 enabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 9
                       }
                     }
@@ -3690,7 +3803,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Handles 2 and 3 enabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 6
                       }
                     }
@@ -3698,7 +3811,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Handles 2 and 4 enabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 10
                       }
                     }
@@ -3706,7 +3819,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Handles 3 and 4 enabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 12
                       }
                     }
@@ -3714,7 +3827,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Handles 1, 2 and 3 enabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 7
                       }
                     }
@@ -3722,7 +3835,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Handles 1, 2 and 4 enabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 11
                       }
                     }
@@ -3730,7 +3843,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Handles 1, 3 and 4 enabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 13
                       }
                     }
@@ -3738,7 +3851,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Handles 2, 3 and 4 enabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 14
                       }
                     }
@@ -3746,7 +3859,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Handles 1, 2, 3 and 4 enabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 15
                       }
                     }
@@ -3788,7 +3901,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Disabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -3796,7 +3909,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Enabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 1
                       }
                     }
@@ -3811,7 +3924,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Disabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -3819,7 +3932,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Enabled",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 1
                       }
                     }
@@ -3842,7 +3955,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Off",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -3859,7 +3972,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Max",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 99
                       }
                     }
@@ -3867,7 +3980,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "On",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 255
                       }
                     }
@@ -3890,7 +4003,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "No override",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 0
                       }
                     }
@@ -3898,7 +4011,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Permanently",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 1
                       }
                     }
@@ -3906,7 +4019,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Temporary",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 2
                       }
                     }
@@ -3922,7 +4035,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Unused",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 127
                       }
                     }
@@ -3930,7 +4043,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Energy Saving",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 122
                       }
                     }
@@ -3938,7 +4051,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
                   {
                     "label": "Frost Protection",
                     "type": {
-                      "fix": 	{
+                      "fix": {
                         "value": 121
                       }
                     }
@@ -3966,40 +4079,41 @@ configurationCommandsModule.service('configurationCommandsService', function () 
       // MultiChannel
       case 0x60:
         return {
-          "Data": {
-            "disableMulticast": [{
-              "label": "Allow use of multi addressing for identical commands to multiple channels",
-              "type": {
-                "enumof": [
-                  {
-                    "label": "Allow",
-                    "type": {
-                      "fix": 	{
-                        "value": false
-                      }
-                    }
-                  },
-                  {
-                    "label": "Disable",
-                    "type": {
-                      "fix": 	{
-                        "value": true
-                      }
+          // "Data": {
+          "disableMulticast": {
+            "label": "Allow use of multi addressing for identical commands to multiple channels",
+            "type": {
+              "enumof": [
+                {
+                  "label": "Allow",
+                  "type": {
+                    "fix": {
+                      "value": false
                     }
                   }
-                ]
-              }
-            }]
-          },
-        };
-      default: return {};
+                },
+                {
+                  "label": "Disable",
+                  "type": {
+                    "fix": {
+                      "value": true
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      // };
+      default:
+        return {};
     }
   }
 
   // device filter for device select menu
-  function devicesHtmlSelectFilter(ZWaveAPIData,span,dev,type) {
+  function devicesHtmlSelectFilter(ZWaveAPIData, span, dev, type) {
     // return true means to skip this node
-    switch(type) {
+    switch (type) {
       case 'srcnode':
         // allow everything, since events can come from any device via timed_event
         return false;
@@ -4024,7 +4138,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
   }
 
   // returns array with default values: first value from the enum, minimum value for range, empty string for string, first nodeId for node, default schedule for the climate_schedule
-  function methodDefaultValues(ZWaveAPIData,method) {
+  function methodDefaultValues(ZWaveAPIData, method) {
 
     function methodDefaultValue(val) {
       if ('enumof' in val['type']) {
@@ -4041,7 +4155,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
         return "";
       if ('node' in val['type'])
         for (var dev in ZWaveAPIData.devices) {
-          if (devicesHtmlSelectFilter(ZWaveAPIData,null,dev,'node')) {
+          if (devicesHtmlSelectFilter(ZWaveAPIData, null, dev, 'node')) {
             continue;
           }
           return parseInt(dev);
@@ -4053,7 +4167,7 @@ configurationCommandsModule.service('configurationCommandsService', function () 
 //	method.forEach(function(val,parameter_index){
 //		parameters[parameter_index] = method_defaultValue(val);
 //	});
-    angular.forEach(method,function(val,parameter_index){
+    angular.forEach(method, function (val, parameter_index) {
       parameters[parameter_index] = methodDefaultValue(val);
     });
 
@@ -4061,30 +4175,30 @@ configurationCommandsModule.service('configurationCommandsService', function () 
   }
 
 // represent array with number, string and array elements in reversible way: use eval('[' + return_value + ']') to rever back to an array
-  function reprArray(arr) {
-    var repr = '';
-    for (var index in arr) {
-      if (repr !== '')
-        repr += ',';
-      switch (typeof(arr[index])) {
-        case 'number':
-          repr += arr[index].toString();
-          break;
-        case 'string':
-          repr += "'" + arr[index].replace(/'/g, "\'") + "'"; // " // just for joe to hilight syntax properly
-          break;
-        case 'object':
-          repr += '[' + reprArray(arr[index]) + ']';
-          break;
-        default:
-          if (arr[index] === null)
-            repr += 'null'; // for null object
-          else
-            error_msg('Unknown type of parameter: ' + typeof(arr[index]));
-      }
-    }
+//   function reprArray(arr) {
+//     var repr = '';
+//     for (var index in arr) {
+//       if (repr !== '')
+//         repr += ',';
+//       switch (typeof (arr[index])) {
+//         case 'number':
+//           repr += arr[index].toString();
+//           break;
+//         case 'string':
+//           repr += "'" + arr[index].replace(/'/g, "\'") + "'"; // " // just for joe to hilight syntax properly
+//           break;
+//         case 'object':
+//           repr += '[' + reprArray(arr[index]) + ']';
+//           break;
+//         default:
+//           if (arr[index] === null)
+//             repr += 'null'; // for null object
+//           else
+//             error_msg('Unknown type of parameter: ' + typeof (arr[index]));
+//       }
+//     }
+//
+//     return repr;
+//   }
 
-    return repr;
-  }
-
-})
+}])

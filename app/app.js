@@ -15,7 +15,8 @@ var angApp = angular.module('angApp', [
     'angularFileUpload',
     'myAppTemplates',
     'doubleScrollBars',
-    'appConfigurationCommands'
+    'appConfigurationCommands',
+    'dataHolderModule'
 ]);
 
 /**

@@ -32,11 +32,7 @@
 }
 .commands-table {
   display: grid;
-  grid-template-columns: minmax(0, 100%);
-
-  &.with {
-    grid-template-columns: 1fr minmax(0, 100%);
-  }
+  grid-template-columns: 1fr minmax(0, 95%);
   gap: 1rem 1rem;
   &:nth-child(1){
     padding: .5em;
@@ -48,9 +44,18 @@
 .command-list {
   background-color: $breadcrumb-bg;
   opacity: 1;
+  border: none;
+  border-radius: 0 !important;
+  border-bottom: 1px solid #ccc;
+  padding: 4px;
   &>label {
     display: flex;
+    margin: 0;
     align-items: center;
+    input {
+      padding: 5px 10px;
+      font-size: 100%;
+    }
   }
 }
 .commands-label {
@@ -63,3 +68,4 @@
   opacity: .7;
   background-color: initial;
 }
+

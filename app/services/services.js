@@ -501,6 +501,16 @@ appService.service('deviceService', function ($filter, $log, $cookies, $window, 
         return configGetNav(ZWaveAPIData);
     };
 
+    this.getNavConfig = function (devices, controllerNodeId) {
+        return Object.entries(devices).filter(([nodeId, node]) => nodeId !== 255 && !node.data.isVirtual.value)
+          .reduce((acc, [nodeId , node]) => {
+              return [...acc, {
+                  id: nodeId,
+                  name: $filter('deviceName')(nodeId, node),
+                  isController: controllerNodeId === nodeId
+              }]
+          }, [])
+    }
     /**
      *  Get expert commands
      */

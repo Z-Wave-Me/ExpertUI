@@ -34,10 +34,14 @@
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
 }
-.panel {
-    .panel-heading.command {
-        display: flex;
-        align-content: center;
-        gap: 1rem;
-    }
+.panel-heading.command {
+    padding: 5px 15px 5px 5px;
+    display: grid;
+    grid-template-columns: min-content min-content auto;
+    gap: 1rem;
+}
+.breadcrumb.command {
+    margin: 0;
+    padding: 0;
+    background: inherit;
 }

@@ -21,7 +21,7 @@ appController.controller('ConfigCommandsControllerOld', function ($scope, $route
 
     $scope.deviceId = 0;
     //$scope.activeTab = 'commands';
-    $scope.activeUrl = 'configuration/commands/';
+    $scope.activeUrl = 'configuration/commands-old/';
 
     $cookies.tab_config =  'commands';
 
