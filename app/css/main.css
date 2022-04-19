@@ -26156,6 +26156,10 @@ img {
   overflow: scroll;
   text-overflow: ellipsis;
   font-size: 0.8rem;
+  scrollbar-width: none;
+}
+.highlight-command::-webkit-scrollbar {
+  display: none;
 }
 
 .panel-command {
@@ -26179,6 +26183,7 @@ img {
 }
 .panel-command .btn {
   margin: 0;
+  padding: 0.25rem 0.75rem;
 }
 
 /*.btn-tabs-2{
@@ -26582,10 +26587,17 @@ fieldset.submit-entry {
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
 }
 
-.panel .panel-heading.command {
-  display: flex;
-  align-content: center;
+.panel-heading.command {
+  padding: 5px 15px 5px 5px;
+  display: grid;
+  grid-template-columns: min-content min-content auto;
   gap: 1rem;
+}
+
+.breadcrumb.command {
+  margin: 0;
+  padding: 0;
+  background: inherit;
 }
 
 /* Dropdown
@@ -27351,11 +27363,8 @@ http://codepen.io/MattIn4D/pen/LiKFC
 
 .commands-table {
   display: grid;
-  grid-template-columns: minmax(0, 100%);
+  grid-template-columns: 1fr minmax(0, 95%);
   gap: 1rem 1rem;
-}
-.commands-table.with {
-  grid-template-columns: 1fr minmax(0, 100%);
 }
 .commands-table:nth-child(1) {
   padding: 0.5em;
@@ -27367,10 +27376,19 @@ http://codepen.io/MattIn4D/pen/LiKFC
 .command-list {
   background-color: #f5f5f5;
   opacity: 1;
+  border: none;
+  border-radius: 0 !important;
+  border-bottom: 1px solid #ccc;
+  padding: 4px;
 }
 .command-list > label {
   display: flex;
+  margin: 0;
   align-items: center;
+}
+.command-list > label input {
+  padding: 5px 10px;
+  font-size: 100%;
 }
 
 .commands-label {
@@ -27384,6 +27402,11 @@ http://codepen.io/MattIn4D/pen/LiKFC
 .command-disable {
   opacity: 0.7;
   background-color: initial;
+}
+
+.command-title {
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
 /* Link health
