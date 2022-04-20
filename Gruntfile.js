@@ -84,14 +84,21 @@ module.exports = function (grunt) {
                     'app/app.js',
                     'app/routes.js',
                     app_cfg.dir + '/app/js/templates.js',
+                    // Modules
                     'app/modules/qAllSettled.js',
+                    // Directives
                     'app/directives/directives.js',
                     'app/directives/angular-slider.js',
                     'app/directives/dir-pagination.js',
                     'app/directives/double-scroll-bars.min.js',
+                    'app/directives/clipboard-copy.directive.js',
+                    'app/directives/expert-command.directive.js',
+                    //Filters
                     'app/filters/filters.js',
+                    //Services
                     'app/factories/factories.js',
                     'app/services/services.js',
+                    'app/services/data-holder.service.js',
                     // Controllers
                     'app/controllers/base.js',
                     'app/controllers/controllers.js',
@@ -134,7 +141,7 @@ module.exports = function (grunt) {
                     'app/controllers/configuration.js',
                     'app/controllers/configuration_interview.js',
                     'app/controllers/configuration_configuration.js',
-                    'app/controllers/configuration_commands.js',
+                    'app/controllers/configuration-commands.js',
                     'app/controllers/configuration_association.js',
                     'app/controllers/configuration_firmware.js',
                     'app/controllers/configuration_health.js',
