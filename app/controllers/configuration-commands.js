@@ -42,18 +42,19 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
     }
     function onInit() {
         configurationCommandsService.init($routeParams.nodeId).then(function (commands) {
+            // $scope.devices = dataHolderService.deviceList();
             $scope.commandsUpdated = commands;
+        }).catch(() => {
+            $scope.alert = {
+                message: $scope._t('device_404'),
+                status: 'alert-warning',
+                icon: 'fa-exclamation-circle'
+            };
+            $scope.deviceId = 0;
+        }).finally(() => {
             $scope.devices = dataHolderService.deviceList();
             $scope.selfExcludedStore = $scope.devices.filter(({id}) => id !== $scope.deviceId);
-            if (_.isEmpty($scope.devices)) {
-                $scope.alert = {
-                    message: $scope._t('device_404'),
-                    status: 'alert-warning',
-                    icon: 'fa-exclamation-circle'
-                };
-                $scope.deviceId = 0;
-            }
-        })
+        });
     }
     onInit();
 

@@ -49,38 +49,9 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
   this.serverCommand = function (commandClass) {
     return serverCommands()[commandClass] ?? {};
   }
-  /**
-   *
-   * @param ZWaveAPIData
-   * @param  {{deviceId, instanceId, ccId, commandClass, instance}} device
-   */
-  // this.getCommand = function (ZWaveAPIData, device) {
-  //   var nodeId = device.deviceId;
-  //   var methods = getMethodSpec(ZWaveAPIData, nodeId, device.instanceId, device.ccId, null);
-  //   var dataParams = getMethodSpec(ZWaveAPIData, nodeId, device.instanceId, device.ccId, null, true)
-  //   var command = configGetCommands(methods, ZWaveAPIData);
-  //   var dataParam = configGetCommands(dataParams, ZWaveAPIData);
-  //   return {
-  //     nodeId,
-  //     rowId: 'row_' + nodeId + '_' + device.instanceId + '_' + device.ccId,
-  //     instanceId: device.instanceId,
-  //     ccId: device.ccId,
-  //     cmd: 'devices[' + nodeId + '].instances[' + device.instanceId + '].commandClasses[' + device.ccId + ']',
-  //     cmdData: device.commandClass.data,
-  //     cmdDataIn: device.instance.data,
-  //     commandClass: device.commandClass.name,
-  //     command,
-  //     dataParam,
-  //     updateTime: ZWaveAPIData.updateTime,
-  //     hidden: command.length === 0 && dataParam.length === 0,
-  //     methods,
-  //     dataParams
-  //   }
-  // }
 
 
   this.getCommands = function (nodeId) {
-    self.nodeId = nodeId;
     return dataHolderService.update().then(() => {
       const node = dataHolderService.getRealNodeById(nodeId);
       if (!node) throw new Error('No Device');
@@ -111,7 +82,7 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
           }, [])
         return [...acc, ...classCommands];
       }, []);
-    })
+    });
   }
 
   function updateCcTable(node) {
@@ -170,11 +141,11 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
 
   this.init = function (nodeId) {
     self.nodeId = nodeId;
-    self.commands = self.getCommands(nodeId);
-    this.destroy();
-    $rootScope.$broadcast('configuration-commands:cc-table:update', self.ccTable);
-    self._interval$ = $interval(update, cfg.interval);
-    return self.commands;
+    return self.getCommands(nodeId).then((commands)=> {
+      $rootScope.$broadcast('configuration-commands:cc-table:update', self.ccTable);
+      self._interval$ = $interval(update, cfg.interval);
+      return commands;
+    })
   }
 
 
@@ -194,58 +165,6 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
         return acc;
       }, {})
   }
-
-  // function configGetCommands(methods, ZWaveAPIData) {
-  //   var methodsArr = [];
-  //   angular.forEach(methods, function (params, method) {
-  //     //str.split(',');
-  //     var defaultValues = {}// methodDefaultValues(ZWaveAPIData, methods[method]);
-  //     var cmd = {
-  //       data: {
-  //         method,
-  //         params: methods[method],
-  //         values: defaultValues
-  //       },
-  //       method,
-  //       params: methods[method],
-  //       values: reprArray(defaultValues)
-  //     };
-  //     methodsArr.push(cmd);
-  //   });
-  //   return methodsArr;
-  // }
-  //
-  // function getMethodSpec(ZWaveAPIData, devId, instId, ccId, method, property) {
-  //   if (_methods_specs_rendered === null) {
-  //     renderAllMethodSpec(ZWaveAPIData);
-  //   }
-  //
-  //   try {
-  //     if (!(devId in _methods_specs_rendered)) {
-  //       _methods_specs_rendered[devId] = {};
-  //     }
-  //     if (!(instId in _methods_specs_rendered[devId])) {
-  //       _methods_specs_rendered[devId][instId] = {};
-  //     }
-  //     if (!(ccId in _methods_specs_rendered[devId][instId])) {
-  //       _methods_specs_rendered[devId][instId][ccId] = renderMethodSpec(parseInt(ccId, 10), ZWaveAPIData.devices[devId].instances[instId].commandClasses[ccId].data);
-  //     }
-  //
-  //     var methods = _methods_specs_rendered[devId][instId][ccId];
-  //     if (method) {
-  //       return methods[method];
-  //     } else {
-  //       if (property) {
-  //         return methods.Data;
-  //       }
-  //       return Object.fromEntries(Object.entries(methods).filter(function ([key]) {
-  //         return key !== 'Data'
-  //       }))
-  //     }
-  //   } catch (err) {
-  //     return null;
-  //   }
-  // }
 
   function renderAllMethodSpec(ZWaveAPIData) {
     _methods_specs_rendered = {};
