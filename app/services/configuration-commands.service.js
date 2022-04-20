@@ -1236,31 +1236,6 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
                 }
               ]
             }
-            // },
-            // {
-            //   "label": "test",
-            //   "type": {
-            //     "range": {
-            //       "min": 0,
-            //       "max": 232
-            //     }
-            //   }
-            // },
-            // 'test': [{
-            //   "label": "Node ID",
-            //   "type": {
-            //     "range": {
-            //       "min": 0,
-            //       "max": 232
-            //     }
-            //   }
-            // }],
-            // 'test2': [{
-            //   label: 'lool',
-            //       type: {
-            //               string: {}
-            //       }
-            //     }]
           },
           "Get": [],
           "Set": [
@@ -4003,7 +3978,6 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
                 ]
               }
             },
-
             {
               "label": "State",
               "type": {
@@ -4055,7 +4029,6 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
       // MultiChannel
       case 0x60:
         return {
-          // "Data": {
           "disableMulticast": {
             "label": "Allow use of multi addressing for identical commands to multiple channels",
             "type": {
@@ -4080,7 +4053,6 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
             }
           }
         }
-      // };
       // MultiCmd
       case 0x8f:
         return {
