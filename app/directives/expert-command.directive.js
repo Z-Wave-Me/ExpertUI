@@ -79,9 +79,9 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
       $scope.model = {
         store
       }
-      this.updateIndex = function (index, value) {
-        store[index] = value;
-      }
+      // this.updateIndex = function (index, value) {
+      //   store[index] = value;
+      // }
       $scope.store = function () {
         if ($scope.status === 'ready') {
           $scope.status = 'loading';
@@ -97,13 +97,18 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
           }, 1500))
         }
       }
+      const destroy = $scope.$on('expertCommandInput', function (_, {index, value}) {
+          store[index] = value;
+      })
+      $scope.$on('$destroy', function() {
+        destroy();
+      });
     }]
   }
 }).directive('expertCommandInputAlt', function () {
   return {
     restrict: "E",
     replace: true,
-    require: '^^zWaveExpertCommand',
     templateUrl: './app/views/configuration/expert-command-input.html',
     scope: {
       data: '=',
@@ -119,13 +124,15 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
       };
       const length = Array.isArray(scope.data.type[scope.type]) ? scope.data.type[scope.type].length : 1;
       const store = Array.from({length})
-
-      scope.updateIndex = function () {
-        ctrl.updateIndex(scope.index, store[scope.model.selected])
-      }
-      scope.$on('zWaveInput', function (event, {index, data}) {
+      // scope.updateIndex = function () {
+      //   ctrl.updateIndex(scope.index, store[scope.model.selected])
+      // }
+      const off = scope.$on('zWaveInput', function (event, {index, data}) {
         store[index] = data;
-        scope.updateIndex()
+        scope.$emit('expertCommandInput', {index: scope.index, value: store[scope.model.selected]})
+      })
+      scope.$on("$destroy", function() {
+        off();
       })
     },
   };
@@ -192,9 +199,12 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
         data: scope.value
       };
 
-      scope.$watch('local.data', function () {
+      const destroy = scope.$watch('local.data', function () {
         scope.$emit('zWaveInput', {index: scope.index, data: converter(scope._type, scope.local.data)});
       });
+      scope.$on('destroy', function () {
+        destroy();
+      })
     }
   }
 }).filter('expertHTTPCommand', function (cfg) {
