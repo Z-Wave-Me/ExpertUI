@@ -28,9 +28,8 @@
                                 ng-click="handleCmdClassModal('cmdClassModal',$event, command.instance, command.ccId, 'commandClass')">
                             <span>{{command.name}}</span>
                         </button>
-
                         <div style="margin-left: auto;">
-                            <i ng-if="command.visible" class="fa accordion-arrow fa-chevron-down fa-lg command-arrow"
+                            <i ng-if="command.visible" class="fa accordion-arrow fa-chevron-down fa-lg command-arrow clickable"
                                ng-class="{'rotated': expanded[$index]}" style="line-height: 138%"></i>
                         </div>
                     </div>
