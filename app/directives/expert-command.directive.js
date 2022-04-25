@@ -250,6 +250,7 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
             ng-model="local.data" 
             class="commands-body form-control">
         </select>
+        <z-wave-bit-mask ng-if="_type === 'bitmask'" ng-model="local.data" size="type.bitmask.size"></z-wave-bit-mask>
       </div>
 `,
     scope: {
@@ -261,7 +262,7 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
       store: '='
     },
     link: function (scope, element, attr) {
-      scope.index = scope.index ?? 0;
+      console.warn(scope.type)
       function converter(type, data) {
         if (type === 'string')
           return JSON.stringify(data);
@@ -293,11 +294,68 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
       };
 
       const zWaveInput = scope.$watch('local.data', function () {
+        console.warn('update', scope.local.data);
         scope.$emit('zWaveInput', {index: scope.index, data: converter(scope._type, scope.local.data)});
       });
       scope.$on('destroy', function () {
         zWaveInput();
       })
+    }
+  }
+}).directive('zWaveBitMask', ['$timeout', function ($timeout) {
+  return {
+    restrict: 'E',
+    replace: true,
+    template: `
+      <div class="input-group commands-body">
+          <span class="input-group-addon">0b</span>
+          <input type="bitmask" class="form-control" ng-model="local.data" clean-input>
+      </div>`,
+    scope: {
+      value: '=ngModel',
+      size: '='
+    },
+    link: function (scope, element, attrs, ngModelController) {
+      scope.local = {
+        data: (+scope.value)
+          .toString(2)
+          .padStart(scope.size * 4, '0')
+          .match(/.{1,4}/g)
+          .join(' ')
+          .substring(0, scope.size * 5)
+      };
+      scope.$watch('local.data', function () {
+        console.warn('changed', scope.local.data);
+        scope.value = parseInt(scope.local.data.replace(/\s+/g, ''), 2);
+      })
+    }
+  }
+}]).directive('cleanInput', function() {
+  return {
+    require: 'ngModel',
+    link: function(scope, element, attrs, ngModelController) {
+      const el = element[0];
+      let keep;
+      function replace(x, pos) {
+        const delta = Math.trunc((pos - 1) / 5);
+        const withOutSpace = x.replace(/\s+/g, '').replace(/[^0^1]/g, '1');
+        return (withOutSpace.substring(0, pos - delta) + withOutSpace.substring(pos - delta + 1))
+          .substring(0, scope.size * 4)
+          .padEnd(scope.size * 4, '0')
+          .match(/.{1,4}/g).join(' ');
+      }
+      ngModelController.$parsers.push(function(val) {
+        if (keep === val) return val;
+        keep = scope.local.data;
+        const start = el.selectionStart
+        const cleaned = replace(val, start);
+        keep = cleaned;
+        const shift = start + +!(start % 5);
+        ngModelController.$setViewValue(cleaned);
+        ngModelController.$render();
+        el.setSelectionRange(shift , shift);
+        return cleaned;
+      });
     }
   }
 }).filter('expertHTTPCommand', function (cfg) {

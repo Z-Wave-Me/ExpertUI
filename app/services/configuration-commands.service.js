@@ -53,7 +53,8 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
     type: {
       [data.format.value === 'bitmask' ? 'bitmask' : 'range']: {
         max: data.max.value,
-        min: data.min.value
+        min: data.min.value,
+        size: data.size.value
       }
     },
     default: data.default.value,

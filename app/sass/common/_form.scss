@@ -142,3 +142,6 @@ fieldset.submit-entry{
 .control-active{
     border: solid 4px black !important;
 }
+input[type='bitmask'] {
+    font-family: monospace;
+}
