@@ -68,7 +68,6 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
   });
 
   this.getConfigCommands = function (nodeId) {
-    console.log(dataHolderService.getRealNodeById(nodeId).instances[0].commandClasses[112].data);
     return Object.entries(dataHolderService.getRealNodeById(nodeId).instances[0].commandClasses[112].data)
       .filter(([key]) => Number.isInteger(+key)).map(([key, data]) => ({...commandConverter(data), index: +key}))
   }

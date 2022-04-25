@@ -262,7 +262,6 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
       store: '='
     },
     link: function (scope, element, attr) {
-      console.warn(scope.type)
       function converter(type, data) {
         if (type === 'string')
           return JSON.stringify(data);
@@ -294,7 +293,6 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
       };
 
       const zWaveInput = scope.$watch('local.data', function () {
-        console.warn('update', scope.local.data);
         scope.$emit('zWaveInput', {index: scope.index, data: converter(scope._type, scope.local.data)});
       });
       scope.$on('destroy', function () {
@@ -309,23 +307,27 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
     template: `
       <div class="input-group commands-body">
           <span class="input-group-addon">0b</span>
-          <input type="bitmask" class="form-control" ng-model="local.data" clean-input>
+          <input type="bitmask" class="form-control" ng-model="local.data" clean-input ng-keydown="down($event)">
       </div>`,
     scope: {
       value: '=ngModel',
       size: '='
     },
-    link: function (scope, element, attrs, ngModelController) {
+    link: function (scope, element, attrs) {
       scope.local = {
         data: (+scope.value)
           .toString(2)
-          .padStart(scope.size * 4, '0')
+          .padStart(scope.size * 8, '0')
           .match(/.{1,4}/g)
           .join(' ')
-          .substring(0, scope.size * 5)
+          .substring(0, scope.size * 10)
       };
+      scope.down = function (event) {
+        if (event.key === 'Backspace' || event.keyCode === 32) {
+          event.preventDefault();
+        }
+      }
       scope.$watch('local.data', function () {
-        console.warn('changed', scope.local.data);
         scope.value = parseInt(scope.local.data.replace(/\s+/g, ''), 2);
       })
     }
@@ -340,13 +342,12 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
         const delta = Math.trunc((pos - 1) / 5);
         const withOutSpace = x.replace(/\s+/g, '').replace(/[^0^1]/g, '1');
         return (withOutSpace.substring(0, pos - delta) + withOutSpace.substring(pos - delta + 1))
-          .substring(0, scope.size * 4)
-          .padEnd(scope.size * 4, '0')
+          .substring(0, scope.size * 8)
+          .padEnd(scope.size * 8, '0')
           .match(/.{1,4}/g).join(' ');
       }
       ngModelController.$parsers.push(function(val) {
         if (keep === val) return val;
-        keep = scope.local.data;
         const start = el.selectionStart
         const cleaned = replace(val, start);
         keep = cleaned;
