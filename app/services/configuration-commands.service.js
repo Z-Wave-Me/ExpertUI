@@ -67,11 +67,9 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
   });
 
   this.getConfigCommands = function (nodeId) {
-    return Object.fromEntries(
-      Object.entries(dataHolderService.getRealNodeById(nodeId).instances[0].commandClasses[112].data)
-      .filter(([key]) => Number.isInteger(+key)).map(([key, data]) => {
-        return [key, commandConverter(data)];
-    }));
+    console.log(dataHolderService.getRealNodeById(nodeId).instances[0].commandClasses[112].data);
+    return Object.entries(dataHolderService.getRealNodeById(nodeId).instances[0].commandClasses[112].data)
+      .filter(([key]) => Number.isInteger(+key)).map(([key, data]) => ({...commandConverter(data), index: +key}))
   }
   this.getCommands = function (nodeId) {
     return dataHolderService.update().then(() => {
@@ -82,17 +80,17 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
           .reduce((acc, [ccId, {data, name}]) => {
             const methods = configureCommand(ccId, data);
             acc.push({
-              ccId,
+              ccId: +ccId,
               name,
               methods,
               visible: !!Object.keys(methods).length,
-              instance: instanceId,
+              instance: +instanceId,
               path: `devices[${nodeId}].instances[${instanceId}].commandClasses[${ccId}]`,
               version: data.version.value,
             })
             self.ccTable[`${name}@${instanceId}`] = {
-              instanceId,
-              ccId,
+              instanceId: +instanceId,
+              ccId: +ccId,
               name,
               data,
               nodeData: instance.data,

@@ -108,7 +108,7 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
     replace: true,
     template: `
       <div class="cfg-control-content">
-        <div><strong>{{index}} {{data.title}}</strong></div> 
+        <div><strong>{{data.index}} {{data.title}}</strong></div> 
         <z-wave-input style="flex-wrap: wrap;" type="data.type" value="data.value" index="0"></z-wave-input>
         <div class="cfg-info"><span ng-class="{'is-updated-false': !isDataActual}">Updated: {{data.updateTime * 1000 | date: 'dd.MM'}} </span> | Set value: <strong>{{data.value}}</strong> | Default value: {{data.default}}</div>
         <bb-help-text trans="data.description"></bb-help-text>
@@ -137,7 +137,6 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
     scope: {
       data: '=',
       options: '=',
-      index: '='
     },
     link: function (scope, element, attrs) {
       let store;
@@ -146,7 +145,7 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
         store = data;
       })
       const destroyUpdate = scope.$on('configuration-commands:cc-table:update', function (_, ccTable) {
-        const value = ccTable['Configuration@0'].data[scope.index].val;
+        const value = ccTable['Configuration@0'].data[scope.data.index].val;
         if (value.updateTime > scope.data.updateTime) {
           scope.data.value = value.value;
           scope.isDataActual = true;
@@ -172,21 +171,21 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
         }
       }
       scope.save = function () {
-        scope.store($filter('expertHTTPCommand')([scope.index, store, 0], {
+        scope.store($filter('expertHTTPCommand')([scope.data.index, store, 0], {
           path: scope.data.path,
           isMethod: true,
           action: 'Set',
         }), 'save');
       }
       scope.setDefault = function () {
-        scope.store($filter('expertHTTPCommand')([scope.index, scope.data.default, 0], {
+        scope.store($filter('expertHTTPCommand')([scope.data.index, scope.data.default, 0], {
           path: scope.data.path,
           isMethod: true,
           action: 'Set',
         }), 'setDefault')
       }
       scope.update = function () {
-        scope.store($filter('expertHTTPCommand')([scope.index], {
+        scope.store($filter('expertHTTPCommand')([scope.data.index], {
           path: scope.data.path,
           isMethod: true,
           action: 'Get',
@@ -303,17 +302,15 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
   }
 }).filter('expertHTTPCommand', function (cfg) {
   return function (values, options) {
-    const index = options.index === undefined ? '' : `[${options.index}]`
     if (options.isMethod)
       return `${cfg.store_url}${options.path}.${options.action}(${values.join(',')})`
-    return `${cfg.store_url}${options.path}.data${index}.${options.action}.value=${values[0]}`
+    return `${cfg.store_url}${options.path}.data.${options.action}.value=${values[0]}`
   }
 }).filter('expertJSCommand', function (cfg) {
   return function (values, options) {
-    const index = options.index === undefined ? '' : `[${options.index}]`
     if (options.isMethod)
       return `${cfg.dongle}.${options.path}.${options.action}(${values.join(',')})`
-    return `${cfg.dongle}.${options.path}.data${index}.${options.action}.value=${values[0]}`
+    return `${cfg.dongle}.${options.path}.data.${options.action}.value=${values[0]}`
   }
 })
 

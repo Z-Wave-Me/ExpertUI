@@ -1,8 +1,9 @@
 const dataHolderModule = angular.module('dataHolderModule', ['appFactory']);
 
 
-dataHolderModule.service('dataHolderService',['dataService', 'deviceService', '$rootScope', 'cfg','$interval','$http', '$filter', function (dataService, deviceService, $rootScope, cfg, $interval, $http, $filter) {
-    this.cache = {
+dataHolderModule.service('dataHolderService',['dataService', 'deviceService', '$rootScope', 'cfg','$interval','$http',
+  function (dataService, deviceService, $rootScope, cfg, $interval, $http) {
+  this.cache = {
       _loaded: {},
       get loaded() {
         return this._loaded;
@@ -14,7 +15,7 @@ dataHolderModule.service('dataHolderService',['dataService', 'deviceService', '$
       },
       updateTime: 0
     };
-    const self = this;
+
     this.update = function () {
       return dataService.loadZwaveApiData().then(ZWaveAPIData => {
         const {updateTime, ...data} = ZWaveAPIData;
@@ -34,25 +35,23 @@ dataHolderModule.service('dataHolderService',['dataService', 'deviceService', '$
       return null
     }
 
-
-
-    function updateZWaveData() {
+    this.updateZWaveData = () => {
         if ($rootScope.$$listenerCount['configuration-commands:z-wave-data:update']) {
           $http({
             method: 'post',
-            url: cfg.server_url + cfg.update_url + self.cache.updateTime,
-          }).then(function (response) {
+            url: cfg.server_url + cfg.update_url + this.cache.updateTime,
+          }).then((response) => {
             const {updateTime, ...data} = response.data;
-            self.cache.updateTime = updateTime;
+            this.cache.updateTime = updateTime;
             if (Object.keys(data).length) {
               const ids = new Set(Object.entries(data).map(entry => {
-                self.cache.loaded = entry;
+                this.cache.loaded = entry;
                 return entry[0].split('.')[1];
               }).filter(id => !isNaN(+id)));
-              $rootScope.$broadcast('configuration-commands:z-wave-data:update', {data: self.cache.loaded, ids});
+              $rootScope.$broadcast('configuration-commands:z-wave-data:update', {data: this.cache.loaded, ids});
             }
           });
         }
     }
-    $interval(updateZWaveData, cfg.interval)
+    $interval(this.updateZWaveData, cfg.interval)
 }])
