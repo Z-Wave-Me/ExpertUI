@@ -49,8 +49,30 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
   this.serverCommand = function (commandClass) {
     return serverCommands()[commandClass] ?? {};
   }
+  const commandConverter = (data) => ({
+    type: {
+      [data.format.value === 'bitmask' ? 'bitmask' : 'range']: {
+        max: data.max.value,
+        min: data.min.value
+      }
+    },
+    default: data.default.value,
+    title: data.title.value,
+    description: data.description.value,
+    readonly: data.readonly.value,
+    failed: data.val.updateTime > data.val.invalidateTime,
+    value: data.val.value,
+    updateTime: data.val.updateTime,
+    path: `devices[${self.nodeId}].instances[0].commandClasses[112]`
+  });
 
-
+  this.getConfigCommands = function (nodeId) {
+    return Object.fromEntries(
+      Object.entries(dataHolderService.getRealNodeById(nodeId).instances[0].commandClasses[112].data)
+      .filter(([key]) => Number.isInteger(+key)).map(([key, data]) => {
+        return [key, commandConverter(data)];
+    }));
+  }
   this.getCommands = function (nodeId) {
     return dataHolderService.update().then(() => {
       const node = dataHolderService.getRealNodeById(nodeId);
@@ -65,8 +87,8 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
               methods,
               visible: !!Object.keys(methods).length,
               instance: instanceId,
-              accessors: [],
-              path: `devices[${nodeId}].instances[${instanceId}].commandClasses[${ccId}]`
+              path: `devices[${nodeId}].instances[${instanceId}].commandClasses[${ccId}]`,
+              version: data.version.value,
             })
             self.ccTable[`${name}@${instanceId}`] = {
               instanceId,
@@ -89,6 +111,7 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
     Object.entries(node.instances).map(([instanceId, instance]) => {
       Object.entries(instance.commandClasses)
         .map(([ccId, {data, name}]) => {
+          // console.log(ccId, data, node);
           self.ccTable[`${name}@${instanceId}`] = {
             instanceId,
             ccId,
@@ -128,30 +151,29 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
       }
     }).flat().filter(data => data), 'targetField');
   }
-  function update() {
-    dataHolderService.loadJoined().then(function (response) {
-      const {joined, update} = response.data;
-      if (Object.keys(update).some((key) => key.split('.')[1] === self.nodeId)) {
-        updateCcTable(joined.devices[self.nodeId])
-      }
-    });
-    $rootScope.$broadcast('configuration-commands:cc-table:update', self.ccTable);
-  }
-  self._interval$ = null;
+
+  let dataUpdate = null
 
   this.init = function (nodeId) {
     self.nodeId = nodeId;
-    return self.getCommands(nodeId).then((commands)=> {
+    return self.getCommands(nodeId).then((commands) => {
       $rootScope.$broadcast('configuration-commands:cc-table:update', self.ccTable);
-      self._interval$ = $interval(update, cfg.interval);
+      dataUpdate = $rootScope.$on('configuration-commands:z-wave-data:update', function (_, {ids, data}) {
+        if (ids.has(self.nodeId)) {
+          updateCcTable(data.devices[self.nodeId])
+          $rootScope.$broadcast('configuration-commands:cc-table:update', self.ccTable);
+        }
+      });
       return commands;
     })
   }
 
 
   this.destroy = function () {
-    $interval.cancel(self._interval$);
-    self._interval$ = null;
+   if (dataUpdate) {
+     dataUpdate();
+     dataUpdate = null
+   }
   }
   function configureCommand(ccId, commandClassesData) {
     return Object.entries(renderMethodSpec(parseInt(ccId, 10), commandClassesData))

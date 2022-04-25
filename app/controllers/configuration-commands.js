@@ -42,8 +42,10 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
     }
     function onInit() {
         configurationCommandsService.init($routeParams.nodeId).then(function (commands) {
-            // $scope.devices = dataHolderService.deviceList();
             $scope.commandsUpdated = commands;
+            const configCommands = commands.find(({instance, ccId}) =>  ccId === '112' && instance === '0');
+            if (configCommands.version > 3) $scope.configCommands = configurationCommandsService.getConfigCommands($routeParams.nodeId);
+            else $scope.configCommands = configCommands
         }).catch(() => {
             $scope.alert = {
                 message: $scope._t('device_404'),

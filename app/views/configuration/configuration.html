@@ -9,7 +9,7 @@
             <bb-alert alert="alert"></bb-alert>
             <div ng-if="deviceId">
                 <!-- Generic configuration fom expert commands -->
-                <div ng-include="'app/views/configuration/configuration_commands.html'"></div>
+                <div ng-include="'app/views/configuration/configuration-commands-default.html'"></div>
                 <!-- Device description -->
                 <div ng-if="!configCont && deviceZddx.length > 0">
                     <button id="btn_show_description" class="btn btn-default"

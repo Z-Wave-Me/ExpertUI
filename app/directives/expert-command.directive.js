@@ -79,9 +79,6 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
       $scope.model = {
         store
       }
-      // this.updateIndex = function (index, value) {
-      //   store[index] = value;
-      // }
       $scope.store = function () {
         if ($scope.status === 'ready') {
           $scope.status = 'loading';
@@ -105,7 +102,100 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
       });
     }]
   }
-}).directive('expertCommandInputAlt', function () {
+}).directive('configurationConfig', function ($filter, dataService) {
+  return {
+    restrict: 'E',
+    replace: true,
+    template: `
+      <div class="cfg-control-content">
+        <div><strong>{{index}} {{data.title}}</strong></div> 
+        <z-wave-input style="flex-wrap: wrap;" type="data.type" value="data.value" index="0"></z-wave-input>
+        <div class="cfg-info"><span ng-class="{'is-updated-false': !isDataActual}">Updated: {{data.updateTime * 1000 | date: 'dd.MM'}} </span> | Set value: <strong>{{data.value}}</strong> | Default value: {{data.default}}</div>
+        <bb-help-text trans="data.description"></bb-help-text>
+        <button class="btn btn-default" type="button" ng-click="save()" ng-disabled="status !== 'ready'">
+            <bb-row-spinner
+              spinner="status === 'save@loading'"
+              label="_t('apply_config_into_device')"
+              icon="'fa-save text-success'">
+            </bb-row-spinner>
+        </button>
+        <button class="btn btn-default" type="button" ng-click="update()" ng-disabled="status !== 'ready'">
+            <bb-row-spinner 
+              spinner="status === 'update@loading'" 
+              label="_t('update_from_device')" 
+              icon="'fa-download text-success'">
+            </bb-row-spinner>
+        </button>
+        <button class="btn btn-default" type="button" ng-click="setDefault()" ng-disabled="status !== 'ready'">
+            <bb-row-spinner 
+              spinner="status === 'setDefault@loading'" 
+              label="_t('set_to_default')" 
+              icon="'fa-undo text-success'">
+            </bb-row-spinner>
+        </button>
+      </div>`,
+    scope: {
+      data: '=',
+      options: '=',
+      index: '='
+    },
+    link: function (scope, element, attrs) {
+      let store;
+      scope._t = scope.$parent._t;
+      const destroyInit = scope.$on('zWaveInput', function (_, {data}) {
+        store = data;
+      })
+      const destroyUpdate = scope.$on('configuration-commands:cc-table:update', function (_, ccTable) {
+        const value = ccTable['Configuration@0'].data[scope.index].val;
+        if (value.updateTime > scope.data.updateTime) {
+          scope.data.value = value.value;
+          scope.isDataActual = true;
+          scope.status = 'ready';
+        }
+      })
+      scope.$on('$destroy', function() {
+        destroyInit();
+        destroyUpdate();
+      });
+      scope.status = 'ready';
+      scope.isDataActual = true;
+      scope.store = function (request, buttonName) {
+        if (scope.status === 'ready') {
+          scope.status = buttonName + '@loading';
+          scope.isDataActual = false;
+          dataService.runZwaveCmd(request)
+            .then(function () {}, function (error) {
+            alertify.alertError((_.isString(error.data) ? error.data : scope.$parent._t('error_update_data')) + '\n' + request);
+          }).finally(setTimeout(function () {
+            scope.status = 'ready';
+          }, 1500));
+        }
+      }
+      scope.save = function () {
+        scope.store($filter('expertHTTPCommand')([scope.index, store, 0], {
+          path: scope.data.path,
+          isMethod: true,
+          action: 'Set',
+        }), 'save');
+      }
+      scope.setDefault = function () {
+        scope.store($filter('expertHTTPCommand')([scope.index, scope.data.default, 0], {
+          path: scope.data.path,
+          isMethod: true,
+          action: 'Set',
+        }), 'setDefault')
+      }
+      scope.update = function () {
+        scope.store($filter('expertHTTPCommand')([scope.index], {
+          path: scope.data.path,
+          isMethod: true,
+          action: 'Get',
+        }), 'update')
+      }
+    }
+  }
+})
+  .directive('expertCommandInputAlt', function () {
   return {
     restrict: "E",
     replace: true,
@@ -122,15 +212,16 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
       scope.model = {
         selected: 0
       };
+      scope.updateIndex = function () {
+        scope.$emit('expertCommandInput', {index: scope.index, value: store[scope.model.selected]})
+      }
       const length = Array.isArray(scope.data.type[scope.type]) ? scope.data.type[scope.type].length : 1;
       const store = Array.from({length})
-      // scope.updateIndex = function () {
-      //   ctrl.updateIndex(scope.index, store[scope.model.selected])
-      // }
       const off = scope.$on('zWaveInput', function (event, {index, data}) {
         store[index] = data;
-        scope.$emit('expertCommandInput', {index: scope.index, value: store[scope.model.selected]})
+        scope.updateIndex();
       })
+
       scope.$on("$destroy", function() {
         off();
       })
@@ -171,6 +262,7 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
       store: '='
     },
     link: function (scope, element, attr) {
+      scope.index = scope.index ?? 0;
       function converter(type, data) {
         if (type === 'string')
           return JSON.stringify(data);
@@ -186,38 +278,42 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
         return false
       }
       scope._type = Object.keys(scope.type)[0]
-      if (scope._type === 'fix') {
-        scope.value = scope.type.fix.value;
-      }
-      if (scope._type === 'range' && (scope.value === undefined || scope.value < scope.type.range.min)) {
-        scope.value = scope.type.range.min;
-      }
-      if (scope._type === 'node') {
-        scope.value = scope.store[0];
+      if (scope.value === undefined) {
+        if (scope._type === 'fix') {
+          scope.value = scope.type.fix.value;
+        }
+        if (scope._type === 'range' && (scope.value === undefined || scope.value < scope.type.range.min)) {
+          scope.value = scope.type.range.min;
+        }
+        if (scope._type === 'node') {
+          scope.value = scope.store[0];
+        }
       }
       scope.local = {
         data: scope.value
       };
 
-      const destroy = scope.$watch('local.data', function () {
+      const zWaveInput = scope.$watch('local.data', function () {
         scope.$emit('zWaveInput', {index: scope.index, data: converter(scope._type, scope.local.data)});
       });
       scope.$on('destroy', function () {
-        destroy();
+        zWaveInput();
       })
     }
   }
 }).filter('expertHTTPCommand', function (cfg) {
   return function (values, options) {
+    const index = options.index === undefined ? '' : `[${options.index}]`
     if (options.isMethod)
       return `${cfg.store_url}${options.path}.${options.action}(${values.join(',')})`
-    return `${cfg.store_url}${options.path}.data.${options.action}.value=${values[0]}`
+    return `${cfg.store_url}${options.path}.data${index}.${options.action}.value=${values[0]}`
   }
 }).filter('expertJSCommand', function (cfg) {
   return function (values, options) {
+    const index = options.index === undefined ? '' : `[${options.index}]`
     if (options.isMethod)
       return `${cfg.dongle}.${options.path}.${options.action}(${values.join(',')})`
-    return `${cfg.dongle}.${options.path}.data.${options.action}.value=${values[0]}`
+    return `${cfg.dongle}.${options.path}.data${index}.${options.action}.value=${values[0]}`
   }
 })
 
