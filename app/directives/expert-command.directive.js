@@ -109,7 +109,7 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
     template: `
       <div class="cfg-control-content">
         <div><strong>{{data.index}} {{data.title}}</strong></div> 
-        <z-wave-input style="flex-wrap: wrap;" type="data.type" value="data.value" index="0"></z-wave-input>
+        <z-wave-input style="flex-wrap: wrap;" type="data.type" ng-model="data.value" index="0"></z-wave-input>
         <div class="cfg-info"><span ng-class="{'is-updated-false': !isDataActual}">Updated: {{data.updateTime * 1000 | date: 'dd.MM'}} </span> | Set value: <strong>{{data.value}}</strong> | Default value: {{data.default}}</div>
         <bb-help-text trans="data.description"></bb-help-text>
         <button class="btn btn-default" type="button" ng-click="save()" ng-disabled="status !== 'ready'">
@@ -147,6 +147,7 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
       const destroyUpdate = scope.$on('configuration-commands:cc-table:update', function (_, ccTable) {
         const value = ccTable['Configuration@0'].data[scope.data.index].val;
         if (value.updateTime > scope.data.updateTime) {
+          console.warn('configuration-commands:cc-table:update', scope.data.value, value.value);
           scope.data.value = value.value;
           scope.isDataActual = true;
           scope.status = 'ready';
@@ -256,7 +257,7 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
     scope: {
       type: '=',
       disabled: '=',
-      value: '=',
+      value: '=ngModel',
       label: '=',
       index: '=',
       store: '='
@@ -288,6 +289,9 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
           scope.value = scope.store[0];
         }
       }
+      scope.$watch('value', function (){
+        scope.local.data = scope.value;
+      })
       scope.local = {
         data: scope.value
       };
@@ -314,13 +318,19 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
       size: '='
     },
     link: function (scope, element, attrs) {
-      scope.local = {
-        data: (+scope.value)
+      scope.$watch('value', function () {
+        scope.local.data = format()
+      })
+      function format() {
+        return (+scope.value)
           .toString(2)
           .padStart(scope.size * 8, '0')
           .match(/.{1,4}/g)
           .join(' ')
           .substring(0, scope.size * 10)
+      }
+      scope.local = {
+        data: format()
       };
       scope.down = function (event) {
         if (event.key === 'Backspace' || event.keyCode === 32) {
