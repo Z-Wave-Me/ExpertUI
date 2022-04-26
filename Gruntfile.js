@@ -71,6 +71,8 @@ module.exports = function (grunt) {
                     'vendor/angular/angular-1.2.14/angular-route.min.js',
                     'vendor/angular/angular-1.2.14/angular-resource.min.js',
                     'vendor/angular/angular-1.2.14/angular-cookies.min.js',
+                    'vendor/angular/angular-1.2.14/hammer.min.js',
+                    'vendor/angular/angular-1.2.14/angular.hammer.min.js',
                     // Bootstrap
                     'vendor/bootstrap/bootstrap.min.js',
                     // XML
