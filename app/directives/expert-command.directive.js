@@ -311,7 +311,7 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
     template: `
       <div class="input-group commands-body">
           <span class="input-group-addon">0b</span>
-          <input type="bitmask" class="form-control" ng-model="local.data" clean-input ng-keydown="down($event)">
+          <input type="bitmask" class="form-control commands-body" ng-model="local.data" clean-input ng-keydown="down($event)">
       </div>`,
     scope: {
       value: '=ngModel',

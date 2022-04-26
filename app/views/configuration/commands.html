@@ -37,7 +37,8 @@
                          ng-init="mobileHidden = true; haveTable = _.size(dataHolder.ccTable[command.name + '@' + command.instance].table)">
                         <div class="commands-table"
                              hm-swipeleft="mobileHidden = true"
-                             hm-swiperight="mobileHidden = false" hm-recognizer-options='[
+                             hm-swiperight="mobileHidden = false"
+                             hm-recognizer-options='[
                                         {"type":"swipe","directions":"DIRECTION_HORIZONTAL"}
                                     ]'>
                             <div ng-class="{'mobile-hidden': mobileHidden && haveTable}">
