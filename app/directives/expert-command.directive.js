@@ -4,7 +4,7 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
     replace: true,
     transclude: true,
     template: `
-      <div class="panel panel-default">
+      <div class="panel panel-default expert-command">
         <div class="panel-heading"><span class="panel-title">
         <ol class="breadcrumb command">
           <li>{{options.parent}}</li>
@@ -232,8 +232,8 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
     restrict: 'E',
     replace: true,
     template: `
-      <div style="display: flex; flex: 1 1 auto;gap: 1rem; align-items: center" 
-        class="input-group" 
+      <div 
+        class="input-group z-wave-input" 
         ng-class="{'has-error': invalid(local.data)}">
         <span class="commands-label" ng-if="_type ==='fix'">({{'' + type.fix.value}}) {{label}}</span>
         <span ng-if="_type === 'range'" class="commands-label">
@@ -412,19 +412,18 @@ angApp.directive('zWaveCommandDataViewer', function () {
       <table class="table table-striped table-condensed" ng-repeat="(key, value) in data">
           <thead>
             <tr>
-                <th>&nbsp;</th>
+                <th></th>
                 <th>#</th>
-                <th>{{key}}</th>
-                <th>&nbsp;</th>
+                <th colspan="2">{{key}}</th>
             </tr>
           </thead>
           <tbody>
             <tr ng-repeat="v in value">
                 <td><z-wave-clipboard-mini text="v.cmd | configCommandTableData: options.style"></z-wave-clipboard-mini></td>
-                <td style="white-space: nowrap;">
-                    <span ng-if="key !== v.key">{{v.key}}</span>&nbsp
+                <td style="white-space: nowrap;" ng-if="key !== v.key">
+                    <span>{{v.key}}</span>&nbsp
                 </td>
-                <td style="white-space: nowrap;">
+                <td style="white-space: nowrap;" colspan="{{key === v.key ? 2: 1}}">
                     <span>{{v.data}}</span>
                 </td>
                 <td style="white-space: nowrap;">
@@ -433,9 +432,7 @@ angApp.directive('zWaveCommandDataViewer', function () {
             </tr>
           </tbody>
       </table>
-    </div>`,
-    link: function (scope, element, attr) {
-    }
+    </div>`
   }
 }).filter('configCommandTableData', function (cfg) {
   return function (cmd, type) {

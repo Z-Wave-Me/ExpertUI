@@ -33,11 +33,19 @@
                                ng-class="{'rotated': expanded[$index]}" style="line-height: 138%"></i>
                         </div>
                     </div>
-                    <div class="collapse" id="{{$index}}" ng-if="command.visible">
-                        <div class="commands-table">
-                            <z-wave-command-data-viewer
-                                    data="dataHolder.ccTable[command.name + '@' + command.instance].table"
-                                    options="{style: locationOptions.commandStyle}"></z-wave-command-data-viewer>
+                    <div class="collapse" id="{{$index}}" ng-if="command.visible"
+                         ng-init="mobileHidden = true; haveTable = _.size(dataHolder.ccTable[command.name + '@' + command.instance].table)">
+                        <div class="commands-table" hm-swipeleft="mobileHidden = true" hm-swiperight="mobileHidden = false">
+                            <div ng-class="{'mobile-hidden': mobileHidden && haveTable}">
+                                <z-wave-command-data-viewer
+                                        data="dataHolder.ccTable[command.name + '@' + command.instance].table"
+                                        options="{style: locationOptions.commandStyle}"></z-wave-command-data-viewer>
+                            </div>
+                            <div ng-show="mobileHidden"
+                                 ng-if="haveTable"
+                                 class="side-panel label label-default">
+                                <i class="fa fa-lg fa-angle-right swipe-arrow"></i>
+                            </div>
                             <div>
                                 <z-wave-expert-command ng-repeat="(k, m) in command.methods track by $index"
                                                        data="m.fields"

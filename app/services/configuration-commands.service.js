@@ -168,9 +168,8 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
 
 
   this.destroy = function () {
-   if (dataUpdate) {
+    if (dataUpdate) {
      dataUpdate();
-     dataUpdate = null
    }
   }
   function configureCommand(ccId, commandClassesData) {

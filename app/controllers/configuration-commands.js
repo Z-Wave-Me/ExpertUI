@@ -74,5 +74,9 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
         }
         $scope.handleModal(target, $event);
     };
+    $scope.testng = function (event) {
+        console.warn('testing');
+        console.warn(event);
+    }
 
 });

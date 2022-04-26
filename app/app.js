@@ -7,6 +7,7 @@
 var angApp = angular.module('angApp', [
     'ngRoute',
     'ngCookies',
+    'hmTouchEvents',
     'appController',
     'appFactory',
     'appService',

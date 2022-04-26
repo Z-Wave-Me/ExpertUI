@@ -33,12 +33,17 @@
 .commands-table {
   display: grid;
   grid-template-columns: 1fr minmax(0, 95%);
-  gap: 1rem 1rem;
+  gap: var(--space) var(--space);
   &:nth-child(1){
     padding: .5em;
   }
   &-info {
     width: min-content;
+    @media (max-width: $mq-phone - 1px) {
+      th {
+        padding: 3px 1px !important;
+      }
+    }
   }
 }
 .command-list {
@@ -53,7 +58,6 @@
     margin: 0;
     align-items: center;
     input {
-      padding: 5px 10px;
       font-size: 100%;
     }
   }
@@ -64,8 +68,41 @@
 .commands-body {
   flex: 1 1 auto;
 }
+input.commands-body {
+  padding: var(--space);
+}
 .command-disable {
   opacity: .7;
   background-color: initial;
+}
+@keyframes swipe {
+  from {
+    left: 20%;
+  }
+  10% {
+    left: 30%;
+  }
+  90% {
+    left: 30%;
+  }
+  to {
+    left: 40%;
+  }
+}
+.swipe-arrow {
+  position: absolute;
+  top: 50%;
+  left: 30%;
+  transform: scaleY(3);
+  animation: swipe 3.5s ease-out infinite;
+}
+.side-panel {
+  position: relative;
+  background-color: #BDBDBC;
+}
+.mobile-hidden {
+  @media (max-width: $mq-phone - 1px) {
+      display: none;
+  }
 }
 

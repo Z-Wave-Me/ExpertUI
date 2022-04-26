@@ -18,13 +18,13 @@
 /* Body reset
 -------------------------------------------------- */
 html {
-    font-size: $app-body-font-size;
+    font-size: var(--font-size-regular);
     -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 body {
     font-family: $app-font-family-sans-serif;
-    font-size: $app-body-font-size;
+    font-size: var(--font-size-regular);
     line-height: $app-line-height-base;
     color: $app-body-color;
     background-color: $app-body-bcg-color;
@@ -56,23 +56,23 @@ h1, h2, h3,h4{
     color: $app-heading-color;
 }
 h1 {
-    font-size:$app-h1-font-size;
+    font-size: 1.6rem;
 }
 h1.btn-group{
-    margin: 0 $spacing-double 0 0;
+    margin: 0 calc(var(--space) * 2) 0 0;
 }
 
 h2 {
-    font-size: $app-h2-font-size;
-    margin: $spacing 0 $spacing-half 0;
+    font-size: 1.4rem;
+    margin: var(--space) 0 calc(var(--space) / 2) 0;
 }
 
 h3 {
-    font-size: $app-h3-font-size;
+    font-size: 1.2rem;
 }
 
 h4 {
-    font-size: $app-h4-font-size;
+    font-size: 1.1rem;
 }
 
 .item-cnt{
