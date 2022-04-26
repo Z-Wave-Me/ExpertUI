@@ -35,7 +35,11 @@
                     </div>
                     <div class="collapse" id="{{$index}}" ng-if="command.visible"
                          ng-init="mobileHidden = true; haveTable = _.size(dataHolder.ccTable[command.name + '@' + command.instance].table)">
-                        <div class="commands-table" hm-swipeleft="mobileHidden = true" hm-swiperight="mobileHidden = false">
+                        <div class="commands-table"
+                             hm-swipeleft="mobileHidden = true"
+                             hm-swiperight="mobileHidden = false" hm-recognizer-options='[
+                                        {"type":"swipe","directions":"DIRECTION_HORIZONTAL"}
+                                    ]'>
                             <div ng-class="{'mobile-hidden': mobileHidden && haveTable}">
                                 <z-wave-command-data-viewer
                                         data="dataHolder.ccTable[command.name + '@' + command.instance].table"
