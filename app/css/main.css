@@ -27510,6 +27510,15 @@ input.commands-body {
   }
 }
 
+.mobile-only {
+  display: none;
+}
+@media (max-width: 499px) {
+  .mobile-only {
+    display: block;
+  }
+}
+
 /* Link health
 -------------------------------------------------- */
 /* ID buttons */
