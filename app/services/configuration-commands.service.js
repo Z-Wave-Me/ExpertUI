@@ -34,6 +34,12 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
       SwitchBinary: {
         values: ['level']
       },
+      SwitchMultilevel: {
+        values: ['level']
+      },
+      SwitchColor: {
+        arrays: ['level']
+      },
       SwitchAll: {
         values: ['mode'],
       },
@@ -386,6 +392,14 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
             "label": "If not specifically specified in Set, use this duration instead of the device default value",
             "type": {
               "enumof": [
+                {
+                  "label": "use device default",
+                  "type": {
+                    "fix": {
+                      "value": null
+                    }
+                  }
+                },
                 {
                   "label": "immediately",
                   "type": {
@@ -1208,6 +1222,14 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
             "type": {
               "enumof": [
                 {
+                  "label": "use device default",
+                  "type": {
+                    "fix": {
+                      "value": null
+                    }
+                  }
+                },
+                {
                   "label": "immediately",
                   "type": {
                     "fix": {
@@ -1392,7 +1414,7 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
           "StopLevelChange": []
         };
 
-      // SwtichBinary
+      // SwitchBinary
       case 0x25:
         return {
           "Get": [],
