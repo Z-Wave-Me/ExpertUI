@@ -105,4 +105,9 @@ input.commands-body {
       display: none;
   }
 }
-
+.mobile-only {
+  display: none;
+  @media (max-width: $mq-phone - 1px) {
+    display: block;
+  }
+}

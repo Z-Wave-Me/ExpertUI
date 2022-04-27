@@ -1,0 +1,41 @@
+$mq-laptop: 1440px;
+$mq-desktop: 1680px;
+$mq-phone: 500px;
+
+:root {
+  --font-size-regular: 14px;
+  --space: 1rem;
+}
+
+@media (max-width: $mq-phone - 1px) {
+  :root {
+    --font-size-regular: 12px;
+    --space: .3rem;
+  }
+}
+
+@media (min-width: $mq-phone) and (max-width: $mq-laptop - 1px) {
+  :root {
+    --font-size-regular: 14px;
+    --space: .5rem;
+  }
+}
+
+@media (min-width: $mq-laptop) and (max-width: $mq-desktop - 1px) {
+  :root {
+    --font-size-regular: 16px;
+    --space: 1rem;
+  }
+}
+
+@media (min-width: $mq-desktop) {
+  :root {
+    --font-size-regular: 18px;
+    --space: 1.5rem;
+  }
+}
+
+.my-element {
+  font-size: var(--font-size-regular);
+  padding: 0 calc(var(--gutter) / 2);
+}

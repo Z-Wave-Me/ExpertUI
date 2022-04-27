@@ -19,6 +19,7 @@ dataHolderModule.service('dataHolderService',['dataService', 'deviceService', '$
     this.update = function () {
       return dataService.loadZwaveApiData().then(ZWaveAPIData => {
         const {updateTime, ...data} = ZWaveAPIData;
+        console.log(data);
         this.cache._loaded = data;
         this.cache.updateTime = updateTime;
         return ZWaveAPIData;
