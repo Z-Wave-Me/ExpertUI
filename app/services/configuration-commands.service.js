@@ -51,6 +51,94 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
       }
     }
   }
+  function nodeProperty() {
+    return [
+        {
+          label: "givenName",
+          type: {
+            string: {},
+          },
+          defaultValue: 'megaName'
+        },
+      {
+        label: 'vendorString',
+        type: {
+          enumof: [
+            {
+              "label": "-9dbm ", "type": {
+                "fix": {
+                  "value": 9
+                }
+              }
+            },
+            {
+              "label": "-8dbm ", "type": {
+                "fix": {
+                  "value": 8
+                }
+              }
+            },
+            {
+              "label": "-7dbm ", "type": {
+                "fix": {
+                  "value": 7
+                }
+              }
+            },
+            {
+              "label": "-6dbm ", "type": {
+                "fix": {
+                  "value": 6
+                }
+              }
+            },
+            {
+              "label": "-5dbm ", "type": {
+                "fix": {
+                  "value": 5
+                }
+              }
+            },
+            {
+              "label": "-4dbm ", "type": {
+                "fix": {
+                  "value": 4
+                }
+              }
+            },
+            {
+              "label": "-3dbm ", "type": {
+                "fix": {
+                  "value": 3
+                }
+              }
+            },
+            {
+              "label": "-2dbm ", "type": {
+                "fix": {
+                  "value": 2
+                }
+              }
+            },
+            {
+              "label": "-1dbm ", "type": {
+                "fix": {
+                  "value": 1
+                }
+              }
+            },
+            {
+              "label": "Normal ", "type": {
+                "fix": {
+                  "value": 0
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
 
   this.serverCommand = function (commandClass) {
     return serverCommands()[commandClass] ?? {};
@@ -76,6 +164,29 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
   this.getConfigCommands = function (nodeId) {
     return Object.entries(dataHolderService.getRealNodeById(nodeId).instances[0].commandClasses[112].data)
       .filter(([key]) => Number.isInteger(+key)).map(([key, data]) => ({...commandConverter(data), index: +key}))
+  }
+  this.node = function () {
+    const device = dataHolderService.getRealNodeById(self.nodeId).data;
+    self.ccTable[`${self.nodeId}@Property`] = {
+      table: nodeProperty().reduce((acc, cur) => {
+        return {...acc, [cur.label]: [{
+          data: device[cur.label]?.value,
+            key: cur.label,
+            updateTime: device[cur.label]?.updateTime,
+            isUpdated: device[cur.label]?.updateTime > device[cur.label]?.invalidateTime,
+            value: device[cur.label]?.value,
+            cmd: `devices[${self.nodeId}].data.${cur.label}.value`
+          }]
+      }
+      }, {})
+    };
+    return {
+      name: dataHolderService.getRealNodeById(self.nodeId).data.givenName.value,
+      path: `devices[${self.nodeId}]`,
+      properties: Object
+      .fromEntries(nodeProperty().map(entry => ([entry.label, {accessor: 'nodeProperty',
+        fields: [entry]}])))
+    }
   }
   this.getCommands = function (nodeId) {
     return dataHolderService.update().then(() => {
@@ -112,10 +223,21 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
   }
 
   function updateCcTable(node) {
+      self.ccTable[`${self.nodeId}@Property`] = {
+        table: nodeProperty().reduce((acc, cur) => {
+          return {...acc, [cur.label]: [{
+              data: node.data[cur.label]?.value,
+              key: cur.label,
+              updateTime: node.data[cur.label]?.updateTime,
+              isUpdated: node.data[cur.label]?.updateTime > node.data[cur.label]?.invalidateTime,
+              cmd: `devices[${self.nodeId}].data.${cur.label}.value`
+            }]
+          }
+        }, {})
+    }
     Object.entries(node.instances).map(([instanceId, instance]) => {
       Object.entries(instance.commandClasses)
         .map(([ccId, {data, name}]) => {
-          // console.log(ccId, data, node);
           self.ccTable[`${name}@${instanceId}`] = {
             instanceId,
             ccId,
@@ -181,10 +303,10 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
   function configureCommand(ccId, commandClassesData) {
     return Object.entries(renderMethodSpec(parseInt(ccId, 10), commandClassesData))
       .reduce((acc, [name, data]) => {
-        const isMethod = Array.isArray(data);
-        const fields = isMethod ? data : [data];
+        const accessor = Array.isArray(data) ? 'method': 'property';
+        const fields = accessor === 'method' ? data : [data];
         acc[name] = {
-          isMethod,
+          accessor,
           fields,
         }
         return acc;
@@ -401,8 +523,6 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
             }
           ]
         };
-
-
 
       //SwitchColor
       case 0x33:
@@ -681,7 +801,6 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
           ]
         };
 
-
       // Schedule (incomplete)
       case 0x53:
         return {
@@ -741,59 +860,6 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
       case 0x5e:
         return {
           "Get": []
-        };
-
-      case 0x85:
-        return {
-          "GroupingsGet": [],
-          "Get": [
-            {
-              "label": "Group",
-              "type": {
-                "range": {
-                  "min": 1,
-                  "max": 255
-                }
-              }
-            }
-          ],
-          "Set": [
-            {
-              "label": "Group",
-              "type": {
-                "range": {
-                  "min": 1,
-                  "max": 255
-                }
-              }
-            },
-            {
-              "label": "Node",
-              "type": {
-                "node": {}
-              }
-            }
-          ],
-          "Remove": [
-            {
-              "label": "Group",
-              "type": {
-                "range": {
-                  "min": 1,
-                  "max": 255
-                }
-              }
-            },
-            {
-              "label": "Node",
-              "type": {
-                "range": {
-                  "min": 1,
-                  "max": 255
-                }
-              }
-            }
-          ]
         };
 
       // Version

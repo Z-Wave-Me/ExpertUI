@@ -174,21 +174,21 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
       scope.save = function () {
         scope.store($filter('expertHTTPCommand')([scope.data.index, store, 0], {
           path: scope.data.path,
-          isMethod: true,
+          accessor: 'method',
           action: 'Set',
         }), 'save');
       }
       scope.setDefault = function () {
         scope.store($filter('expertHTTPCommand')([scope.data.index, scope.data.default, 0], {
           path: scope.data.path,
-          isMethod: true,
+          accessor: 'method',
           action: 'Set',
         }), 'setDefault')
       }
       scope.update = function () {
         scope.store($filter('expertHTTPCommand')([scope.data.index], {
           path: scope.data.path,
-          isMethod: true,
+          accessor: 'method',
           action: 'Get',
         }), 'update')
       }
@@ -371,13 +371,13 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
   }
 }).filter('expertHTTPCommand', function (cfg) {
   return function (values, options) {
-    if (options.isMethod)
+    if (options.accessor === 'method')
       return `${cfg.store_url}${options.path}.${options.action}(${values.join(',')})`
     return `${cfg.store_url}${options.path}.data.${options.action}.value=${values[0]}`
   }
 }).filter('expertJSCommand', function (cfg) {
   return function (values, options) {
-    if (options.isMethod)
+    if (options.accessor === 'method')
       return `${cfg.dongle}.${options.path}.${options.action}(${values.join(',')})`
     return `${cfg.dongle}.${options.path}.data.${options.action}.value=${values[0]}`
   }
@@ -427,7 +427,7 @@ angApp.directive('zWaveCommandDataViewer', function () {
                     <span>{{v.data}}</span>
                 </td>
                 <td style="white-space: nowrap;">
-                    <span ng-class="v.isUpdated ? 'green':'red'">{{v.updateTime | isTodayFromUnix}} </span>
+                    <span ng-class="v.isUpdated ? 'green':'red'">{{v.updateTime * 1000 | date: 'd.MM'}} </span>
                 </td>
             </tr>
           </tbody>
