@@ -2,9 +2,12 @@
 <div ng-controller="ConfigHealthController">
     <!-- Config navigation -->
     <div ng-include="'app/views/configuration/navi.html'"></div>
+    <div class="row hidden-md hidden-lg">
+        <z-wave-configuration-menu type="drop"></z-wave-configuration-menu>
+    </div>
     <div class="row row-configuration">
-        <div class="col-md-3 menu-vertical">
-            <div ng-include="'app/views/configuration/menu.html'"></div>
+        <div class="col-md-3 visible-md visible-lg">
+            <z-wave-configuration-menu type="list"></z-wave-configuration-menu>
         </div>
         <div class="col-md-9 col-content">
             <bb-alert alert="alert"></bb-alert>
@@ -139,7 +142,7 @@
                     <div class="legend-row">
                         <button class="btn btn-default btn-sm btn-flirs">&nbsp;</button>
                         {{_t('flirs')}}
-                    </div class="legend-line">
+                    </div>
                     <!-- mains -->
                     <div class="legend-row">
                         <button class="btn btn-default btn-sm btn-mains">&nbsp;</button>

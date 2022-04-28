@@ -1,9 +1,15 @@
 <!-- Configuration view -->
 <div ng-controller="ConfigConfigurationController">
     <div ng-include="'app/views/configuration/navi.html'"></div>
+<!--    <div class=" col-md-3">-->
+<!--        -->
+<!--    </div>-->
+    <div class="row hidden-md hidden-lg">
+        <z-wave-configuration-menu type="drop"></z-wave-configuration-menu>
+    </div>
     <div class="row row-configuration">
-        <div class="col-md-3 menu-vertical">
-            <div ng-include="'app/views/configuration/menu.html'"></div>
+        <div class="col-md-3 visible-md visible-lg">
+            <z-wave-configuration-menu type="list"></z-wave-configuration-menu>
         </div>
         <div class="col-md-9 col-content">
             <bb-alert alert="alert"></bb-alert>

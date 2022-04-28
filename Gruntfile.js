@@ -93,8 +93,8 @@ module.exports = function (grunt) {
                     'app/directives/angular-slider.js',
                     'app/directives/dir-pagination.js',
                     'app/directives/double-scroll-bars.min.js',
-                    'app/directives/clipboard-copy.directive.js',
-                    'app/directives/expert-command.directive.js',
+                    'app/directives/share/clipboard-copy.directive.js',
+                    'app/directives/configuration/expert-command.directive.js',
                     //Filters
                     'app/filters/filters.js',
                     //Services

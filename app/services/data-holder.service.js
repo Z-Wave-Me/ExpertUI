@@ -1,8 +1,8 @@
 const dataHolderModule = angular.module('dataHolderModule', ['appFactory']);
 
 
-dataHolderModule.service('dataHolderService',['dataService', 'deviceService', '$rootScope', 'cfg','$interval','$http',
-  function (dataService, deviceService, $rootScope, cfg, $interval, $http) {
+dataHolderModule.service('dataHolderService',['dataService', 'deviceService', '$rootScope', 'cfg','$interval','$http', '$filter',
+  function (dataService, deviceService, $rootScope, cfg, $interval, $http, $filter) {
   this.cache = {
       _loaded: {},
       get loaded() {
@@ -22,13 +22,25 @@ dataHolderModule.service('dataHolderService',['dataService', 'deviceService', '$
         console.log(data);
         this.cache._loaded = data;
         this.cache.updateTime = updateTime;
+        $rootScope.$broadcast('configuration-data:loaded');
         return ZWaveAPIData;
       });
     }
 
-    this.deviceList = function () {
-      return deviceService.getNavConfig(this.cache.loaded.devices, this.cache.loaded.controller.data.nodeId.value);
+    this.deviceList = () => {
+      if (this.cache.loaded.devices) {
+        return Object.entries(this.cache.loaded.devices).filter(([nodeId, node]) => nodeId !== 255 && !node.data.isVirtual.value)
+          .reduce((acc, [nodeId, node]) => {
+            return [...acc, {
+              id: +nodeId,
+              name: $filter('deviceName')(nodeId, node),
+              isController: this.cache.loaded.controller.data.nodeId.value === +nodeId
+            }]
+          }, [])
+      }
+      return null;
     }
+
     this.getRealNodeById = function (id) {
       const device = this.cache.loaded.devices[id];
       if (id !== 255 && device && !device.data.isVirtual.value)
@@ -54,5 +66,6 @@ dataHolderModule.service('dataHolderService',['dataService', 'deviceService', '$
           });
         }
     }
+    this.update();
     $interval(this.updateZWaveData, cfg.interval)
 }])
