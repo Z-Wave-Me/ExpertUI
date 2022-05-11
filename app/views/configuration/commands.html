@@ -16,8 +16,6 @@
                 <div class="panel-heading command">
                     <div>{{_t('th_instance')}}</div>
                     <div>{{_t('th_command_class')}}</div>
-                    {{nodeProps}}
-<!--                    {{commandsUpdated}}-->
                 </div>
                 <div ng-repeat="command in commandsUpdated track by $index" class="panel panel-command"
                      ng-init="expanded[$index] = false">
@@ -56,7 +54,6 @@
                                 <i class="fa fa-lg fa-angle-right swipe-arrow"></i>
                             </div>
                             <div>
-                                {{command.methods}}
                                 <z-wave-expert-command ng-repeat="(k, m) in command.methods track by $index"
                                                        data="m.fields"
                                                        options="{
