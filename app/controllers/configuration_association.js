@@ -207,7 +207,7 @@ appController.controller('ConfigAssocController', function($scope, $filter, $rou
         // Prepare devices and nodes
         angular.forEach($scope.assocAddDevices, function(v, k) {
             if (v.id == nodeId) {
-                $scope.assocAddInstances = Object.keys(v.instances).length > 0 ? v.instances : false;
+                $scope.assocAddInstances = Object.keys(v.instances).length > 0 ? v.instances : [{key: '0', val: '0'}];
                 return;
             }
         });
