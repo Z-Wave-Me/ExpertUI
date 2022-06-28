@@ -40,6 +40,9 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
       SwitchMultilevel: {
         values: ['level']
       },
+      SwitchColor: {
+        arrays: ['level']
+      },
       SwitchAll: {
         values: ['mode'],
       },
@@ -388,6 +391,48 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
       //SwitchColor
       case 0x33:
         return {
+          "overrideDefaultDuration": {
+            "label": "If not specifically specified in Set, use this duration instead of the device default value",
+            "type": {
+              "enumof": [
+                {
+                  "label": "use device default",
+                  "type": {
+                    "fix": {
+                      "value": null
+                    }
+                  }
+                },
+                {
+                  "label": "immediately",
+                  "type": {
+                    "fix": {
+                      "value": 0
+                    }
+                  }
+                },
+                {
+                  "label": "in seconds",
+                  "type": {
+                    "range": {
+                      "min": 1,
+                      "max": 127
+                    }
+                  }
+                },
+                {
+                  "label": "in minutes",
+                  "type": {
+                    "range": {
+                      "min": 1,
+                      "max": 127,
+                      "shift": 127
+                    }
+                  }
+                }
+              ]
+            }
+          },
           "Get": [
             {
               "label": "Color Capability",
@@ -1180,6 +1225,14 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
             "type": {
               "enumof": [
                 {
+                  "label": "use device default",
+                  "type": {
+                    "fix": {
+                      "value": null
+                    }
+                  }
+                },
+                {
                   "label": "immediately",
                   "type": {
                     "fix": {
@@ -1208,31 +1261,6 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
                 }
               ]
             }
-            // },
-            // {
-            //   "label": "test",
-            //   "type": {
-            //     "range": {
-            //       "min": 0,
-            //       "max": 232
-            //     }
-            //   }
-            // },
-            // 'test': [{
-            //   "label": "Node ID",
-            //   "type": {
-            //     "range": {
-            //       "min": 0,
-            //       "max": 232
-            //     }
-            //   }
-            // }],
-            // 'test2': [{
-            //   label: 'lool',
-            //       type: {
-            //               string: {}
-            //       }
-            //     }]
           },
           "Get": [],
           "Set": [
@@ -1389,7 +1417,7 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
           "StopLevelChange": []
         };
 
-      // SwtichBinary
+      // SwitchBinary
       case 0x25:
         return {
           "Get": [],
@@ -3023,7 +3051,30 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
               }
             }
           ],
-          "DefaultReset": []
+          "DefaultReset": [],
+          "preferBulk": {
+            "label": "Prefer Configuration Bulk Get instead of Configuration Get. For certification only.",
+            "type": {
+              "enumof": [
+                {
+                  "label": "use Configuration Get",
+                  "type": {
+                    "fix": {
+                      "value": false
+                    }
+                  }
+                },
+                {
+                  "label": "use Configuration Bulk Get",
+                  "type": {
+                    "fix": {
+                      "value": true
+                    }
+                  }
+                }
+              ]
+            }
+          },
         };
 
       // Association
@@ -3952,7 +4003,6 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
                 ]
               }
             },
-
             {
               "label": "State",
               "type": {
@@ -4004,7 +4054,6 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
       // MultiChannel
       case 0x60:
         return {
-          // "Data": {
           "disableMulticast": {
             "label": "Allow use of multi addressing for identical commands to multiple channels",
             "type": {
@@ -4029,7 +4078,88 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
             }
           }
         }
-      // };
+      // MultiCmd
+      case 0x8f:
+        return {
+          "maxNum": {
+            "label": "Improve network performance by joining multiple packets during send usinf Multi Command encapsulation",
+            "type": {
+              "enumof": [
+                {
+                  "label": "Disable",
+                  "type": {
+                    "fix": {
+                      "value": 1
+                    }
+                  }
+                },
+                {
+                  "label": "Maximal number of packets to encapsulate",
+                  "type": {
+                    "range": {
+                      "min": 2,
+                      "max": 10
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      // Security
+      case 0x98:
+        return {
+          "canStream": {
+            "label": "Improve network performance by requesting Nonce together with Message send. Some old devices might not support this feature.",
+            "type": {
+              "enumof": [
+                {
+                  "label": "Disable",
+                  "type": {
+                    "fix": {
+                      "value": false
+                    }
+                  }
+                },
+                {
+                  "label": "Enable",
+                  "type": {
+                    "fix": {
+                      "value": true
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      // Supervision
+      case 0x6c:
+        return {
+          "disabled": {
+            "label": "Improve network performance by using Supervision to wait for a confirmation on Set.",
+            "type": {
+              "enumof": [
+                {
+                  "label": "Disable",
+                  "type": {
+                    "fix": {
+                      "value": true
+                    }
+                  }
+                },
+                {
+                  "label": "Enable",
+                  "type": {
+                    "fix": {
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
       default:
         return {};
     }
