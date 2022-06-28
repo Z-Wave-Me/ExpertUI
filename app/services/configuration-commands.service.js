@@ -22,6 +22,9 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
       Association: {
         arrays: ['nodes']
       },
+      MultiChannelAssociation: {
+        arrays: ['nodesInstances']
+      },
       SensorBinary: {
         arrays: ['level']
       },
@@ -32,6 +35,9 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
         values: ['level']
       },
       SwitchBinary: {
+        values: ['level']
+      },
+      SwitchMultilevel: {
         values: ['level']
       },
       SwitchAll: {
