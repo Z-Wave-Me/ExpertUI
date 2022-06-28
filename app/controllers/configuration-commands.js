@@ -42,8 +42,11 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
     }
     function onInit() {
         configurationCommandsService.init($routeParams.nodeId).then(function (commands) {
-            // $scope.devices = dataHolderService.deviceList();
             $scope.commandsUpdated = commands;
+            $scope.node = configurationCommandsService.node();
+            const configCommands = commands.find(({instance, ccId}) =>  ccId === 112 && instance === 0);
+            if (configCommands.version > 3) $scope.configCommands = configurationCommandsService.getConfigCommands($routeParams.nodeId);
+            else $scope.configCommands = configCommands
         }).catch(() => {
             $scope.alert = {
                 message: $scope._t('device_404'),
@@ -52,8 +55,8 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
             };
             $scope.deviceId = 0;
         }).finally(() => {
-            $scope.devices = dataHolderService.deviceList();
-            $scope.selfExcludedStore = $scope.devices.filter(({id}) => id !== $scope.deviceId);
+            const deviceList = dataHolderService.deviceList();
+            $scope.selfExcludedStore = deviceList.filter(({id}) => id !== +$scope.deviceId);
         });
     }
     onInit();
@@ -72,5 +75,4 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
         }
         $scope.handleModal(target, $event);
     };
-
 });

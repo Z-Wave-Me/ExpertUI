@@ -370,6 +370,8 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
      * Get updated data and join with ZwaveData
      */
     function  loadJoinedZwaveData() {
+        // console.trace('call');
+        // console.warn('------------------------->', updatedTime);
         var cacheName = 'zwaveapidata';
         if(_.findWhere($http.pendingRequests,{failWait: cacheName})){
             return $q.reject('Pending');
@@ -384,6 +386,7 @@ appFactory.factory('dataService', function ($http, $q, $interval, $filter, $loca
             url: cfg.server_url + cfg.update_url + updatedTime,
             failWait:cacheName
         }).then(function (response) {
+            // console.warn('------------------------>>>> ', response.data);
             if (_.size(response.data)> 1 && apiData) {
                 //console.log('Response > 1')
                 angular.forEach(response.data, function (obj, path) {

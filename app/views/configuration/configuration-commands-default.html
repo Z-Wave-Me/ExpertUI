@@ -1,0 +1,21 @@
+<div class="cfg-block" ng-if="hasConfigurationCc.command" ng-controller="ConfigCommandsController">
+    <h4>{{hasConfigurationCc.commandClass}}</h4>
+    <div ng-if="deviceId">
+        <div  ng-if="configCommands.version" ng-init="command = configCommands">
+            <z-wave-expert-command
+                ng-repeat="(k, m) in command.methods track by $index"
+                data="m.fields"
+                options="{
+                   action:k,
+                   parent: command.name,
+                   path: command.path,
+                   type: m.type,
+                   store: selfExcludedStore
+                   }">
+            </z-wave-expert-command>
+        </div>
+        <div ng-if="!configCommands.version">
+            <configuration-config ng-repeat="data in configCommands | orderBy: 'index'" data="data"></configuration-config>
+        </div>
+    </div>
+</div>

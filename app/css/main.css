@@ -23683,6 +23683,40 @@ readers do not read off random characters that represent icons */
 
 /* Expert UI files
 -------------------------------------------------- */
+:root {
+  --font-size-regular: 14px;
+  --space: 1rem;
+}
+
+@media (max-width: 499px) {
+  :root {
+    --font-size-regular: 12px;
+    --space: .3rem;
+  }
+}
+@media (min-width: 500px) and (max-width: 1439px) {
+  :root {
+    --font-size-regular: 14px;
+    --space: .5rem;
+  }
+}
+@media (min-width: 1440px) and (max-width: 1679px) {
+  :root {
+    --font-size-regular: 16px;
+    --space: 1rem;
+  }
+}
+@media (min-width: 1680px) {
+  :root {
+    --font-size-regular: 18px;
+    --space: 1.5rem;
+  }
+}
+.my-element {
+  font-size: var(--font-size-regular);
+  padding: 0 calc(var(--gutter) / 2);
+}
+
 /* Global variables
 -------------------------------------------------- */
 /*-------------------------------------*/
@@ -25031,13 +25065,13 @@ body.ngrs-touching {
 /* Body reset
 -------------------------------------------------- */
 html {
-  font-size: 17px;
+  font-size: var(--font-size-regular);
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 17px;
+  font-size: var(--font-size-regular);
   line-height: 1.428571429;
   color: #0d0d0d;
   background-color: #FFFFFF;
@@ -25069,24 +25103,24 @@ h1, h2, h3, h4 {
 }
 
 h1 {
-  font-size: 160%;
+  font-size: 1.6rem;
 }
 
 h1.btn-group {
-  margin: 0 20px 0 0;
+  margin: 0 calc(var(--space) * 2) 0 0;
 }
 
 h2 {
-  font-size: 140%;
-  margin: 10px 0 5px 0;
+  font-size: 1.4rem;
+  margin: var(--space) 0 calc(var(--space) / 2) 0;
 }
 
 h3 {
-  font-size: 120%;
+  font-size: 1.2rem;
 }
 
 h4 {
-  font-size: 110%;
+  font-size: 1.1rem;
 }
 
 .item-cnt {
@@ -26018,22 +26052,23 @@ img {
 /* Button
 -------------------------------------------------- */
 .btn {
-  padding: 12px 14px;
+  padding: var(--space);
   overflow-x: hidden;
   text-overflow: ellipsis;
+  font-size: var(--font-size-regular);
 }
 
 .panel .btn, .cfg-block .btn {
-  margin: 0 5px 10px 0;
+  margin: 0 calc(var(--space) / 2) var(--space) 0;
 }
 .panel .btn-group .btn, .cfg-block .btn-group .btn {
-  margin: 0 0 10px 0;
+  margin: 0 0 var(--space) 0;
 }
 
 .btn-goup-block {
   display: table;
   width: 100%;
-  margin: 0 0 10px 0;
+  margin: 0 0 var(--space) 0;
 }
 .btn-goup-block .btn.active .fa {
   color: #80AD80;
@@ -26078,7 +26113,7 @@ img {
 
 .btn-installed {
   border: 0 none;
-  background-color: none !important;
+  background-color: unset !important;
 }
 
 .btn-disabled {
@@ -26098,13 +26133,13 @@ img {
   position: relative;
   text-align: left;
   font-size: 100%;
-  margin: 0 0 10px 0;
+  margin: 0 0 var(--space) 0;
 }
 .btn-tag .fa {
   position: absolute;
-  top: 5px;
-  right: 10px;
-  font-size: 150%;
+  top: calc(var(--space) / 2);
+  right: var(--space);
+  font-size: 1.5rem;
 }
 .btn-tag.active {
   background-color: #f2f2f2;
@@ -26113,7 +26148,7 @@ img {
 /* Button tabs
 -------------------------------------------------- */
 .tabs-wrap {
-  margin: 0 0 10px 0;
+  margin: 0 0 var(--space) 0;
 }
 
 .btn-goup-tabs {
@@ -26122,8 +26157,8 @@ img {
    margin: 0 0 $spacing 0;*/
 }
 .btn-goup-tabs .btn {
-  padding: 10px;
-  font-size: 105%;
+  padding: var(--space);
+  font-size: 1.05rem;
   background-color: #FFFFFF;
   border-color: #9fd8ef;
 }
@@ -26519,6 +26554,23 @@ fieldset.submit-entry {
   border: solid 4px black !important;
 }
 
+input[type=bitmask] {
+  font-family: monospace;
+}
+
+.z-wave-input {
+  display: flex;
+  flex: 1 1 auto;
+  overflow: hidden;
+  gap: var(--space);
+  align-items: center;
+}
+@media (max-width: 499px) {
+  .z-wave-input {
+    flex-wrap: wrap;
+  }
+}
+
 /* Tabs - old bootstrap tabs
 -------------------------------------------------- */
 .nav-tabs {
@@ -26566,7 +26618,7 @@ fieldset.submit-entry {
 
 .panel-default > .panel-heading {
   color: #2A6496;
-  font-size: 16px;
+  font-size: 1rem !important;
   font-weight: bold;
   background-color: #e4f5fc;
   border-color: #9fd8ef;
@@ -26598,6 +26650,19 @@ fieldset.submit-entry {
   margin: 0;
   padding: 0;
   background: inherit;
+}
+
+.expert-command .panel-body {
+  padding: var(--space);
+}
+.expert-command .list-group {
+  margin-bottom: calc(var(--space) * 2);
+}
+.expert-command .panel-title {
+  font-size: 1.1rem;
+}
+.expert-command input {
+  padding: var(--space);
 }
 
 /* Dropdown
@@ -27364,13 +27429,18 @@ http://codepen.io/MattIn4D/pen/LiKFC
 .commands-table {
   display: grid;
   grid-template-columns: 1fr minmax(0, 95%);
-  gap: 1rem 1rem;
+  gap: var(--space) var(--space);
 }
 .commands-table:nth-child(1) {
   padding: 0.5em;
 }
 .commands-table-info {
   width: min-content;
+}
+@media (max-width: 499px) {
+  .commands-table-info th {
+    padding: 3px 1px !important;
+  }
 }
 
 .command-list {
@@ -27387,7 +27457,6 @@ http://codepen.io/MattIn4D/pen/LiKFC
   align-items: center;
 }
 .command-list > label input {
-  padding: 5px 10px;
   font-size: 100%;
 }
 
@@ -27399,9 +27468,55 @@ http://codepen.io/MattIn4D/pen/LiKFC
   flex: 1 1 auto;
 }
 
+input.commands-body {
+  padding: var(--space);
+}
+
 .command-disable {
   opacity: 0.7;
   background-color: initial;
+}
+
+@keyframes swipe {
+  from {
+    left: 20%;
+  }
+  10% {
+    left: 30%;
+  }
+  90% {
+    left: 30%;
+  }
+  to {
+    left: 40%;
+  }
+}
+.swipe-arrow {
+  position: absolute;
+  top: 50%;
+  left: 30%;
+  transform: scaleY(3);
+  animation: swipe 3.5s ease-out infinite;
+}
+
+.side-panel {
+  position: relative;
+  background-color: #BDBDBC;
+}
+
+@media (max-width: 499px) {
+  .mobile-hidden {
+    display: none;
+  }
+}
+
+.mobile-only {
+  display: none;
+}
+@media (max-width: 499px) {
+  .mobile-only {
+    display: block;
+  }
 }
 
 /* Link health

@@ -37,6 +37,8 @@
     <script src="vendor/angular/angular-1.2.14/angular-route.min.js"></script>
     <script src="vendor/angular/angular-1.2.14/angular-resource.min.js"></script>
     <script src="vendor/angular/angular-1.2.14/angular-cookies.min.js"></script>
+    <script src="vendor/angular/angular-1.2.14/hammer.min.js"></script>
+    <script src="vendor/angular/angular-1.2.14/angular.hammer.min.js"></script>
     <!-- Bootstrap js -->
     <script src="vendor/bootstrap/bootstrap.min.js"></script>
     <!-- XML js -->
@@ -113,8 +115,9 @@
     <script src="app/controllers/packets.js"></script>
     <script src="app/jquery/jquery-app.js"></script>
     <!-- /build -->
-    <script src="app/directives/expert-command.directive.js"></script>
-    <script src="app/directives/clipboard-copy.directive.js"></script>
+    <script src="app/directives/configuration/expert-command.directive.js"></script>
+    <script src="app/directives/configuration/menu.directive.js"></script>
+    <script src="app/directives/share/clipboard-copy.directive.js"></script>
 
 </head>
 <body id="page_{{getBodyId()}}"
@@ -129,7 +132,7 @@
                     <li class="navibar-divider"> </li>
                     <!-- Home -->
                     <li class="navibar-item">
-                        <a class="navibar-item-root"href="#home" title="{{_t('nav_home')}}" ng-class="isActive('home')">
+                        <a class="navibar-item-root" href="#home" title="{{_t('nav_home')}}" ng-class="isActive('home')">
                             <i class="fa fa-home"></i>
                         </a>
                     </li>

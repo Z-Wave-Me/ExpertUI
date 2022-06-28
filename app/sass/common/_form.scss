@@ -142,3 +142,16 @@ fieldset.submit-entry{
 .control-active{
     border: solid 4px black !important;
 }
+input[type='bitmask'] {
+    font-family: monospace;
+}
+.z-wave-input {
+    display: flex;
+    flex: 1 1 auto;
+    overflow: hidden;
+    gap: var(--space);
+    align-items: center;
+    @media (max-width: $mq-phone - 1px) {
+       flex-wrap: wrap;
+    }
+}

@@ -1,9 +1,12 @@
 <!-- Interview view -->
 <div ng-controller="ConfigInterviewController">
     <div ng-include="'app/views/configuration/navi.html'"></div>
+    <div class="row hidden-md hidden-lg">
+        <z-wave-configuration-menu type="drop"></z-wave-configuration-menu>
+    </div>
     <div class="row row-configuration">
-        <div class="col-md-3 menu-vertical">
-            <div ng-include="'app/views/configuration/menu.html'"></div>
+        <div class="col-md-3 visible-md visible-lg">
+            <z-wave-configuration-menu type="list"></z-wave-configuration-menu>
         </div>
        <!-- <pre>{{descriptionCont|json}}</pre>-->
         <div class="col-md-9 col-content">

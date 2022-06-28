@@ -13,7 +13,7 @@
 }
 .panel-default > .panel-heading {
     color: #2A6496;
-    font-size: 16px;
+    font-size: 1rem !important;
     font-weight: bold;
     background-color: $app-color-secondary;
     border-color: $app-border-color;
@@ -44,4 +44,18 @@
     margin: 0;
     padding: 0;
     background: inherit;
+}
+.expert-command {
+    .panel-body {
+        padding: var(--space);
+    }
+    .list-group {
+        margin-bottom: calc(var(--space) * 2);
+    }
+    .panel-title {
+        font-size: 1.1rem;
+    }
+    input {
+        padding: var(--space);
+    }
 }

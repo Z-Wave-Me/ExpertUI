@@ -1,17 +1,18 @@
 /* Button
 -------------------------------------------------- */
 .btn{
-    padding: $app-input-padding;
+    padding: var(--space);
     overflow-x: hidden;
     text-overflow: ellipsis;
+    font-size: var(--font-size-regular);
 }
 .panel,.cfg-block {
     .btn{
-       margin: 0 $spacing-half $spacing 0;
+       margin: 0 calc(var(--space) / 2) var(--space) 0;
     }
     .btn-group{
         .btn{
-            margin: 0 0 $spacing 0;
+            margin: 0 0 var(--space) 0;
         }
     }
 }
@@ -19,7 +20,7 @@
 .btn-goup-block{
     display: table;
     width: 100%;
-    margin: 0 0 $spacing 0;
+    margin: 0 0 var(--space) 0;
     .btn{
         &.active .fa{
             color: $btn-icon-active-color;
@@ -74,7 +75,7 @@
 
 .btn-installed{
     border: 0 none;
-    background-color: none !important;
+    background-color: unset !important;
 }
 
 .btn-disabled{
@@ -94,12 +95,12 @@
     position: relative;
     text-align: left;
     font-size: $app-btn-tag-font-size;
-    margin: 0 0 $spacing 0;
+    margin: 0 0 var(--space) 0;
     .fa{
         position: absolute;
-        top: $spacing-half;
-        right: $spacing;
-        font-size: $app-btn-tag-icon-size;
+        top: calc(var(--space) / 2);
+        right: var(--space);
+        font-size: 1.5rem;
     }
     &.active {
         background-color: $tabs-active-bcg-color;
@@ -111,15 +112,15 @@
 /* Button tabs
 -------------------------------------------------- */
 .tabs-wrap{
-    margin: 0 0 $spacing 0;
+    margin: 0 0 var(--space) 0;
 }
 .btn-goup-tabs{
    /* display: table;
     width: 100%;
     margin: 0 0 $spacing 0;*/
     .btn{
-        padding: $spacing;
-        font-size: $tab-font-size;
+        padding: var(--space);
+        font-size: 1.05rem;
         background-color: $tabs-bcg-color;
         border-color: $app-border-color;
         &.active {

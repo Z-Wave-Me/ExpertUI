@@ -71,6 +71,8 @@ module.exports = function (grunt) {
                     'vendor/angular/angular-1.2.14/angular-route.min.js',
                     'vendor/angular/angular-1.2.14/angular-resource.min.js',
                     'vendor/angular/angular-1.2.14/angular-cookies.min.js',
+                    'vendor/angular/angular-1.2.14/hammer.min.js',
+                    'vendor/angular/angular-1.2.14/angular.hammer.min.js',
                     // Bootstrap
                     'vendor/bootstrap/bootstrap.min.js',
                     // XML
@@ -91,8 +93,8 @@ module.exports = function (grunt) {
                     'app/directives/angular-slider.js',
                     'app/directives/dir-pagination.js',
                     'app/directives/double-scroll-bars.min.js',
-                    'app/directives/clipboard-copy.directive.js',
-                    'app/directives/expert-command.directive.js',
+                    'app/directives/share/clipboard-copy.directive.js',
+                    'app/directives/configuration/expert-command.directive.js',
                     //Filters
                     'app/filters/filters.js',
                     //Services

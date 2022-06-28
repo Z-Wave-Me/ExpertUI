@@ -54,12 +54,143 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
       }
     }
   }
+  function nodeProperty() {
+    return [
+        {
+          label: "givenName",
+          type: {
+            string: {},
+          },
+          defaultValue: 'megaName'
+        },
+      {
+        label: 'vendorString',
+        type: {
+          enumof: [
+            {
+              "label": "-9dbm ", "type": {
+                "fix": {
+                  "value": 9
+                }
+              }
+            },
+            {
+              "label": "-8dbm ", "type": {
+                "fix": {
+                  "value": 8
+                }
+              }
+            },
+            {
+              "label": "-7dbm ", "type": {
+                "fix": {
+                  "value": 7
+                }
+              }
+            },
+            {
+              "label": "-6dbm ", "type": {
+                "fix": {
+                  "value": 6
+                }
+              }
+            },
+            {
+              "label": "-5dbm ", "type": {
+                "fix": {
+                  "value": 5
+                }
+              }
+            },
+            {
+              "label": "-4dbm ", "type": {
+                "fix": {
+                  "value": 4
+                }
+              }
+            },
+            {
+              "label": "-3dbm ", "type": {
+                "fix": {
+                  "value": 3
+                }
+              }
+            },
+            {
+              "label": "-2dbm ", "type": {
+                "fix": {
+                  "value": 2
+                }
+              }
+            },
+            {
+              "label": "-1dbm ", "type": {
+                "fix": {
+                  "value": 1
+                }
+              }
+            },
+            {
+              "label": "Normal ", "type": {
+                "fix": {
+                  "value": 0
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
 
   this.serverCommand = function (commandClass) {
     return serverCommands()[commandClass] ?? {};
   }
+  const commandConverter = (data) => ({
+    type: {
+      [data.format.value === 'bitmask' ? 'bitmask' : 'range']: {
+        max: data.max.value,
+        min: data.min.value,
+        size: data.size.value
+      }
+    },
+    default: data.default.value,
+    title: data.title.value,
+    description: data.description.value,
+    readonly: data.readonly.value,
+    failed: data.val.updateTime > data.val.invalidateTime,
+    value: data.val.value,
+    updateTime: data.val.updateTime,
+    path: `devices[${self.nodeId}].instances[0].commandClasses[112]`
+  });
 
-
+  this.getConfigCommands = function (nodeId) {
+    return Object.entries(dataHolderService.getRealNodeById(nodeId).instances[0].commandClasses[112].data)
+      .filter(([key]) => Number.isInteger(+key)).map(([key, data]) => ({...commandConverter(data), index: +key}))
+  }
+  this.node = function () {
+    const device = dataHolderService.getRealNodeById(self.nodeId).data;
+    self.ccTable[`${self.nodeId}@Property`] = {
+      table: nodeProperty().reduce((acc, cur) => {
+        return {...acc, [cur.label]: [{
+          data: device[cur.label]?.value,
+            key: cur.label,
+            updateTime: device[cur.label]?.updateTime,
+            isUpdated: device[cur.label]?.updateTime > device[cur.label]?.invalidateTime,
+            value: device[cur.label]?.value,
+            cmd: `devices[${self.nodeId}].data.${cur.label}.value`
+          }]
+      }
+      }, {})
+    };
+    return {
+      name: dataHolderService.getRealNodeById(self.nodeId).data.givenName.value,
+      path: `devices[${self.nodeId}]`,
+      properties: Object
+      .fromEntries(nodeProperty().map(entry => ([entry.label, {accessor: 'nodeProperty',
+        fields: [entry]}])))
+    }
+  }
   this.getCommands = function (nodeId) {
     return dataHolderService.update().then(() => {
       const node = dataHolderService.getRealNodeById(nodeId);
@@ -69,17 +200,17 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
           .reduce((acc, [ccId, {data, name}]) => {
             const methods = configureCommand(ccId, data);
             acc.push({
-              ccId,
+              ccId: +ccId,
               name,
               methods,
               visible: !!Object.keys(methods).length,
-              instance: instanceId,
-              accessors: [],
-              path: `devices[${nodeId}].instances[${instanceId}].commandClasses[${ccId}]`
+              instance: +instanceId,
+              path: `devices[${nodeId}].instances[${instanceId}].commandClasses[${ccId}]`,
+              version: data.version.value,
             })
             self.ccTable[`${name}@${instanceId}`] = {
-              instanceId,
-              ccId,
+              instanceId: +instanceId,
+              ccId: +ccId,
               name,
               data,
               nodeData: instance.data,
@@ -95,6 +226,18 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
   }
 
   function updateCcTable(node) {
+      self.ccTable[`${self.nodeId}@Property`] = {
+        table: nodeProperty().reduce((acc, cur) => {
+          return {...acc, [cur.label]: [{
+              data: node.data[cur.label]?.value,
+              key: cur.label,
+              updateTime: node.data[cur.label]?.updateTime,
+              isUpdated: node.data[cur.label]?.updateTime > node.data[cur.label]?.invalidateTime,
+              cmd: `devices[${self.nodeId}].data.${cur.label}.value`
+            }]
+          }
+        }, {})
+    }
     Object.entries(node.instances).map(([instanceId, instance]) => {
       Object.entries(instance.commandClasses)
         .map(([ccId, {data, name}]) => {
@@ -137,38 +280,36 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
       }
     }).flat().filter(data => data), 'targetField');
   }
-  function update() {
-    dataHolderService.loadJoined().then(function (response) {
-      const {joined, update} = response.data;
-      if (Object.keys(update).some((key) => key.split('.')[1] === self.nodeId)) {
-        updateCcTable(joined.devices[self.nodeId])
-      }
-    });
-    $rootScope.$broadcast('configuration-commands:cc-table:update', self.ccTable);
-  }
-  self._interval$ = null;
+
+  let dataUpdate = null
 
   this.init = function (nodeId) {
     self.nodeId = nodeId;
-    return self.getCommands(nodeId).then((commands)=> {
+    return self.getCommands(nodeId).then((commands) => {
       $rootScope.$broadcast('configuration-commands:cc-table:update', self.ccTable);
-      self._interval$ = $interval(update, cfg.interval);
+      dataUpdate = $rootScope.$on('configuration-commands:z-wave-data:update', function (_, {ids, data}) {
+        if (ids.has(self.nodeId)) {
+          updateCcTable(data.devices[self.nodeId])
+          $rootScope.$broadcast('configuration-commands:cc-table:update', self.ccTable);
+        }
+      });
       return commands;
     })
   }
 
 
   this.destroy = function () {
-    $interval.cancel(self._interval$);
-    self._interval$ = null;
+    if (dataUpdate) {
+     dataUpdate();
+   }
   }
   function configureCommand(ccId, commandClassesData) {
     return Object.entries(renderMethodSpec(parseInt(ccId, 10), commandClassesData))
       .reduce((acc, [name, data]) => {
-        const isMethod = Array.isArray(data);
-        const fields = isMethod ? data : [data];
+        const accessor = Array.isArray(data) ? 'method': 'property';
+        const fields = accessor === 'method' ? data : [data];
         acc[name] = {
-          isMethod,
+          accessor,
           fields,
         }
         return acc;
@@ -385,8 +526,6 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
             }
           ]
         };
-
-
 
       //SwitchColor
       case 0x33:
@@ -665,7 +804,6 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
           ]
         };
 
-
       // Schedule (incomplete)
       case 0x53:
         return {
@@ -725,59 +863,6 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
       case 0x5e:
         return {
           "Get": []
-        };
-
-      case 0x85:
-        return {
-          "GroupingsGet": [],
-          "Get": [
-            {
-              "label": "Group",
-              "type": {
-                "range": {
-                  "min": 1,
-                  "max": 255
-                }
-              }
-            }
-          ],
-          "Set": [
-            {
-              "label": "Group",
-              "type": {
-                "range": {
-                  "min": 1,
-                  "max": 255
-                }
-              }
-            },
-            {
-              "label": "Node",
-              "type": {
-                "node": {}
-              }
-            }
-          ],
-          "Remove": [
-            {
-              "label": "Group",
-              "type": {
-                "range": {
-                  "min": 1,
-                  "max": 255
-                }
-              }
-            },
-            {
-              "label": "Node",
-              "type": {
-                "range": {
-                  "min": 1,
-                  "max": 255
-                }
-              }
-            }
-          ]
         };
 
       // Version

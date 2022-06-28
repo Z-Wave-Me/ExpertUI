@@ -4,7 +4,7 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
     replace: true,
     transclude: true,
     template: `
-      <div class="panel panel-default">
+      <div class="panel panel-default expert-command">
         <div class="panel-heading"><span class="panel-title">
         <ol class="breadcrumb command">
           <li>{{options.parent}}</li>
@@ -79,9 +79,6 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
       $scope.model = {
         store
       }
-      this.updateIndex = function (index, value) {
-        store[index] = value;
-      }
       $scope.store = function () {
         if ($scope.status === 'ready') {
           $scope.status = 'loading';
@@ -97,13 +94,111 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
           }, 1500))
         }
       }
+      const destroy = $scope.$on('expertCommandInput', function (_, {index, value}) {
+          store[index] = value;
+      })
+      $scope.$on('$destroy', function() {
+        destroy();
+      });
     }]
   }
-}).directive('expertCommandInputAlt', function () {
+}).directive('configurationConfig', function ($filter, dataService) {
+  return {
+    restrict: 'E',
+    replace: true,
+    template: `
+      <div class="cfg-control-content">
+        <div><strong>{{data.index}} {{data.title}}</strong></div> 
+        <z-wave-input style="flex-wrap: wrap;" type="data.type" ng-model="data.value" index="0"></z-wave-input>
+        <div class="cfg-info"><span ng-class="{'is-updated-false': !isDataActual}">Updated: {{data.updateTime * 1000 | date: 'dd.MM'}} </span> | Set value: <strong>{{data.value}}</strong> | Default value: {{data.default}}</div>
+        <bb-help-text trans="data.description"></bb-help-text>
+        <button class="btn btn-default" type="button" ng-click="save()" ng-disabled="status !== 'ready'">
+            <bb-row-spinner
+              spinner="status === 'save@loading'"
+              label="_t('apply_config_into_device')"
+              icon="'fa-save text-success'">
+            </bb-row-spinner>
+        </button>
+        <button class="btn btn-default" type="button" ng-click="update()" ng-disabled="status !== 'ready'">
+            <bb-row-spinner 
+              spinner="status === 'update@loading'" 
+              label="_t('update_from_device')" 
+              icon="'fa-download text-success'">
+            </bb-row-spinner>
+        </button>
+        <button class="btn btn-default" type="button" ng-click="setDefault()" ng-disabled="status !== 'ready'">
+            <bb-row-spinner 
+              spinner="status === 'setDefault@loading'" 
+              label="_t('set_to_default')" 
+              icon="'fa-undo text-success'">
+            </bb-row-spinner>
+        </button>
+      </div>`,
+    scope: {
+      data: '=',
+      options: '=',
+    },
+    link: function (scope, element, attrs) {
+      let store;
+      scope._t = scope.$parent._t;
+      const destroyInit = scope.$on('zWaveInput', function (_, {data}) {
+        store = data;
+      })
+      const destroyUpdate = scope.$on('configuration-commands:cc-table:update', function (_, ccTable) {
+        const value = ccTable['Configuration@0'].data[scope.data.index].val;
+        if (value.updateTime > scope.data.updateTime) {
+          console.warn('configuration-commands:cc-table:update', scope.data.value, value.value);
+          scope.data.value = value.value;
+          scope.isDataActual = true;
+          scope.status = 'ready';
+        }
+      })
+      scope.$on('$destroy', function() {
+        destroyInit();
+        destroyUpdate();
+      });
+      scope.status = 'ready';
+      scope.isDataActual = true;
+      scope.store = function (request, buttonName) {
+        if (scope.status === 'ready') {
+          scope.status = buttonName + '@loading';
+          scope.isDataActual = false;
+          dataService.runZwaveCmd(request)
+            .then(function () {}, function (error) {
+            alertify.alertError((_.isString(error.data) ? error.data : scope.$parent._t('error_update_data')) + '\n' + request);
+          }).finally(setTimeout(function () {
+            scope.status = 'ready';
+          }, 1500));
+        }
+      }
+      scope.save = function () {
+        scope.store($filter('expertHTTPCommand')([scope.data.index, store, 0], {
+          path: scope.data.path,
+          accessor: 'method',
+          action: 'Set',
+        }), 'save');
+      }
+      scope.setDefault = function () {
+        scope.store($filter('expertHTTPCommand')([scope.data.index, scope.data.default, 0], {
+          path: scope.data.path,
+          accessor: 'method',
+          action: 'Set',
+        }), 'setDefault')
+      }
+      scope.update = function () {
+        scope.store($filter('expertHTTPCommand')([scope.data.index], {
+          path: scope.data.path,
+          accessor: 'method',
+          action: 'Get',
+        }), 'update')
+      }
+    }
+  }
+})
+  .directive('expertCommandInputAlt', function () {
   return {
     restrict: "E",
     replace: true,
-    require: '^^zWaveExpertCommand',
     templateUrl: './app/views/configuration/expert-command-input.html',
     scope: {
       data: '=',
@@ -117,15 +212,18 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
       scope.model = {
         selected: 0
       };
+      scope.updateIndex = function () {
+        scope.$emit('expertCommandInput', {index: scope.index, value: store[scope.model.selected]})
+      }
       const length = Array.isArray(scope.data.type[scope.type]) ? scope.data.type[scope.type].length : 1;
       const store = Array.from({length})
-
-      scope.updateIndex = function () {
-        ctrl.updateIndex(scope.index, store[scope.model.selected])
-      }
-      scope.$on('zWaveInput', function (event, {index, data}) {
+      const off = scope.$on('zWaveInput', function (event, {index, data}) {
         store[index] = data;
-        scope.updateIndex()
+        scope.updateIndex();
+      })
+
+      scope.$on("$destroy", function() {
+        off();
       })
     },
   };
@@ -134,8 +232,8 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
     restrict: 'E',
     replace: true,
     template: `
-      <div style="display: flex; flex: 1 1 auto;gap: 1rem; align-items: center" 
-        class="input-group" 
+      <div 
+        class="input-group z-wave-input" 
         ng-class="{'has-error': invalid(local.data)}">
         <span class="commands-label" ng-if="_type ==='fix'">({{'' + type.fix.value}}) {{label}}</span>
         <span ng-if="_type === 'range'" class="commands-label">
@@ -153,12 +251,13 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
             ng-model="local.data" 
             class="commands-body form-control">
         </select>
+        <z-wave-bit-mask ng-if="_type === 'bitmask'" ng-model="local.data" size="type.bitmask.size"></z-wave-bit-mask>
       </div>
 `,
     scope: {
       type: '=',
       disabled: '=',
-      value: '=',
+      value: '=ngModel',
       label: '=',
       index: '=',
       store: '='
@@ -179,33 +278,106 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
         return false
       }
       scope._type = Object.keys(scope.type)[0]
-      if (scope._type === 'fix') {
-        scope.value = scope.type.fix.value;
+      if (scope.value === undefined) {
+        if (scope._type === 'fix') {
+          scope.value = scope.type.fix.value;
+        }
+        if (scope._type === 'range' && (scope.value === undefined || scope.value < scope.type.range.min)) {
+          scope.value = scope.type.range.min;
+        }
+        if (scope._type === 'node') {
+          scope.value = scope.store[0];
+        }
       }
-      if (scope._type === 'range' && (scope.value === undefined || scope.value < scope.type.range.min)) {
-        scope.value = scope.type.range.min;
-      }
-      if (scope._type === 'node') {
-        scope.value = scope.store[0];
-      }
+      scope.$watch('value', function (){
+        scope.local.data = scope.value;
+      })
       scope.local = {
         data: scope.value
       };
 
-      scope.$watch('local.data', function () {
+      const zWaveInput = scope.$watch('local.data', function () {
         scope.$emit('zWaveInput', {index: scope.index, data: converter(scope._type, scope.local.data)});
+      });
+      scope.$on('destroy', function () {
+        zWaveInput();
+      })
+    }
+  }
+}).directive('zWaveBitMask', ['$timeout', function ($timeout) {
+  return {
+    restrict: 'E',
+    replace: true,
+    template: `
+      <div class="input-group commands-body">
+          <span class="input-group-addon">0b</span>
+          <input type="bitmask" class="form-control commands-body" ng-model="local.data" clean-input ng-keydown="down($event)">
+      </div>`,
+    scope: {
+      value: '=ngModel',
+      size: '='
+    },
+    link: function (scope, element, attrs) {
+      scope.$watch('value', function () {
+        scope.local.data = format()
+      })
+      function format() {
+        return (+scope.value)
+          .toString(2)
+          .padStart(scope.size * 8, '0')
+          .match(/.{1,4}/g)
+          .join(' ')
+          .substring(0, scope.size * 10)
+      }
+      scope.local = {
+        data: format()
+      };
+      scope.down = function (event) {
+        if (event.key === 'Backspace' || event.keyCode === 32) {
+          event.preventDefault();
+        }
+      }
+      scope.$watch('local.data', function () {
+        scope.value = parseInt(scope.local.data.replace(/\s+/g, ''), 2);
+      })
+    }
+  }
+}]).directive('cleanInput', function() {
+  return {
+    require: 'ngModel',
+    link: function(scope, element, attrs, ngModelController) {
+      const el = element[0];
+      let keep;
+      function replace(x, pos) {
+        const delta = Math.trunc((pos - 1) / 5);
+        const withOutSpace = x.replace(/\s+/g, '').replace(/[^0^1]/g, '1');
+        return (withOutSpace.substring(0, pos - delta) + withOutSpace.substring(pos - delta + 1))
+          .substring(0, scope.size * 8)
+          .padEnd(scope.size * 8, '0')
+          .match(/.{1,4}/g).join(' ');
+      }
+      ngModelController.$parsers.push(function(val) {
+        if (keep === val) return val;
+        const start = el.selectionStart
+        const cleaned = replace(val, start);
+        keep = cleaned;
+        const shift = start + +!(start % 5);
+        ngModelController.$setViewValue(cleaned);
+        ngModelController.$render();
+        el.setSelectionRange(shift , shift);
+        return cleaned;
       });
     }
   }
 }).filter('expertHTTPCommand', function (cfg) {
   return function (values, options) {
-    if (options.isMethod)
+    if (options.accessor === 'method')
       return `${cfg.store_url}${options.path}.${options.action}(${values.join(',')})`
     return `${cfg.store_url}${options.path}.data.${options.action}.value=${values[0]}`
   }
 }).filter('expertJSCommand', function (cfg) {
   return function (values, options) {
-    if (options.isMethod)
+    if (options.accessor === 'method')
       return `${cfg.dongle}.${options.path}.${options.action}(${values.join(',')})`
     return `${cfg.dongle}.${options.path}.data.${options.action}.value=${values[0]}`
   }
@@ -240,30 +412,27 @@ angApp.directive('zWaveCommandDataViewer', function () {
       <table class="table table-striped table-condensed" ng-repeat="(key, value) in data">
           <thead>
             <tr>
-                <th>&nbsp;</th>
+                <th></th>
                 <th>#</th>
-                <th>{{key}}</th>
-                <th>&nbsp;</th>
+                <th colspan="2">{{key}}</th>
             </tr>
           </thead>
           <tbody>
             <tr ng-repeat="v in value">
                 <td><z-wave-clipboard-mini text="v.cmd | configCommandTableData: options.style"></z-wave-clipboard-mini></td>
-                <td style="white-space: nowrap;">
-                    <span ng-if="key !== v.key">{{v.key}}</span>&nbsp
+                <td style="white-space: nowrap;" ng-if="key !== v.key">
+                    <span>{{v.key}}</span>&nbsp
                 </td>
-                <td style="white-space: nowrap;">
+                <td style="white-space: nowrap;" colspan="{{key === v.key ? 2: 1}}">
                     <span>{{v.data}}</span>
                 </td>
                 <td style="white-space: nowrap;">
-                    <span ng-class="v.isUpdated ? 'green':'red'">{{v.updateTime | isTodayFromUnix}} </span>
+                    <span ng-class="v.isUpdated ? 'green':'red'">{{v.updateTime * 1000 | date: 'd.MM'}} </span>
                 </td>
             </tr>
           </tbody>
       </table>
-    </div>`,
-    link: function (scope, element, attr) {
-    }
+    </div>`
   }
 }).filter('configCommandTableData', function (cfg) {
   return function (cmd, type) {
