@@ -1,9 +1,7 @@
-<!-- Configuration view -->
-<div ng-controller="ConfigConfigurationController">
+<!-- Commands view -->
+<div ng-controller="ConfigCommandsController">
+    <!-- Config navigation -->
     <div ng-include="'app/views/configuration/navi.html'"></div>
-<!--    <div class=" col-md-3">-->
-<!--        -->
-<!--    </div>-->
     <div class="row hidden-md hidden-lg">
         <z-wave-configuration-menu type="drop"></z-wave-configuration-menu>
     </div>
@@ -13,31 +11,108 @@
         </div>
         <div class="col-md-9 col-content">
             <bb-alert alert="alert"></bb-alert>
-            <div ng-if="deviceId">
-                <!-- Generic configuration fom expert commands -->
-                <div ng-include="'app/views/configuration/configuration-commands-default.html'"></div>
-                <!-- Device description -->
-                <div ng-if="!configCont && deviceZddx.length > 0">
-                    <button id="btn_show_description" class="btn btn-default"
-                            ng-click="handleModal('loadXmlModal', $event)">
-                        <i class="fa fa-clone"></i> {{_t('select_zddx_help')}}
-                    </button>
-                    <!-- Modal load xml -->
-                    <div ng-include="'app/views/configuration/modal_loadxml.html'"></div>
+            <div ng-if="!errorOnLoad">
+                <div class="panel-heading command">
+                    <div>{{_t('th_instance')}}</div>
+                    <div>{{_t('th_command_class')}}</div>
                 </div>
-
-                <!-- config_cont -->
-                <div ng-include="'app/views/configuration/configuration_config.html'"></div>
-
-                <!-- wakeup_cont -->
-                <div ng-include="'app/views/configuration/configuration_wakeup.html'"></div>
-
-                <!-- switchall_cont -->
-                <div ng-include="'app/views/configuration/configuration_switchall.html'"></div>
-
-                <!-- protection_cont -->
-                <div ng-include="'app/views/configuration/configuration_protection.html'"></div>
+                <div ng-repeat="command in commandsUpdated track by $index" class="panel panel-command"
+                     ng-init="expanded[$index] = false">
+                    <div class="panel-heading command" data-toggle="collapse" data-target="#{{$index}}"
+                         ng-click="expanded[$index] = !expanded[$index]" aria-expanded="true"
+                         aria-controls="collapseExample">
+                        <button class="btn btn-default command-button" title="{{_t('th_instance')}}"
+                                ng-click="handleCmdClassModal('cmdClassModal',$event, command.instance, command.ccId, 'instance')">
+                            <span>{{command.instance}}</span>
+                        </button>
+                        <button class="btn btn-default command-button" title="{{_t('th_command_class')}}"
+                                ng-click="handleCmdClassModal('cmdClassModal',$event, command.instance, command.ccId, 'commandClass')">
+                            <span>{{command.name}}</span>
+                        </button>
+                        <div style="margin-left: auto;">
+                            <i ng-if="command.visible" class="fa accordion-arrow fa-chevron-down fa-lg command-arrow clickable"
+                               ng-class="{'rotated': expanded[$index]}" style="line-height: 138%"></i>
+                        </div>
+                    </div>
+                    <div class="collapse" id="{{$index}}" ng-if="command.visible"
+                         ng-init="mobileHidden = true; haveTable = _.size(dataHolder.ccTable[command.name + '@' + command.instance].table)">
+                        <div class="commands-table"
+                             hm-swipeleft="mobileHidden = true"
+                             hm-swiperight="mobileHidden = false"
+                             hm-recognizer-options='[
+                                        {"type":"swipe","directions":"DIRECTION_HORIZONTAL"}
+                                    ]'>
+                            <div ng-class="{'mobile-hidden': mobileHidden && haveTable}">
+                                <z-wave-command-data-viewer
+                                        data="dataHolder.ccTable[command.name + '@' + command.instance].table"
+                                        options="{style: locationOptions.commandStyle}"></z-wave-command-data-viewer>
+                            </div>
+                            <div ng-show="mobileHidden"
+                                 ng-if="haveTable"
+                                 class="side-panel label label-default mobile-only">
+                                <i class="fa fa-lg fa-angle-right swipe-arrow"></i>
+                            </div>
+                            <div>
+                                <z-wave-expert-command ng-repeat="(k, m) in command.methods track by $index"
+                                                       data="m.fields"
+                                                       options="{
+                                                       action:k,
+                                                       parent: command.name,
+                                                       path: command.path,
+                                                       accessor: m.accessor,
+                                                       store: selfExcludedStore
+                                                       }"></z-wave-expert-command>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-command"
+                     ng-init="expanded['props'] = false">
+                    <div class="panel-heading command" data-toggle="collapse" data-target="#props"
+                         ng-click="expanded['props'] = !expanded['props']" aria-expanded="true"
+                         aria-controls="collapseExample">
+                        <div class="btn btn-default command-button">
+                            <span>Node Property</span>
+                        </div>
+                        <div></div>
+                        <div style="margin-left: auto;">
+                            <i class="fa accordion-arrow fa-chevron-down fa-lg command-arrow clickable"
+                               ng-class="{'rotated': expanded['props']}" style="line-height: 138%"></i>
+                        </div>
+                    </div>
+                    <div class="collapse" id="props"
+                         ng-init="mobileHidden = true;">
+                        <div class="commands-table"
+                             hm-swipeleft="mobileHidden = true"
+                             hm-swiperight="mobileHidden = false"
+                             hm-recognizer-options='[
+                                        {"type":"swipe","directions":"DIRECTION_HORIZONTAL"}
+                                    ]'>
+                            <div ng-class="{'mobile-hidden': mobileHidden}">
+                                <z-wave-command-data-viewer
+                                        data="dataHolder.ccTable[deviceId + '@Property'].table"
+                                        options="{style: locationOptions.commandStyle}"></z-wave-command-data-viewer>
+                            </div>
+                            <div ng-show="mobileHidden"
+                                 class="side-panel label label-default mobile-only">
+                                <i class="fa fa-lg fa-angle-right swipe-arrow"></i>
+                            </div>
+                            <div>
+                                <z-wave-expert-command ng-repeat="(k, m) in node.properties track by $index"
+                                                       data="m.fields"
+                                                       options="{
+                                                       action:k,
+                                                       parent: node.name,
+                                                       path: node.path,
+                                                       accessor: m.accessor
+                                                       }"></z-wave-expert-command>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <!-- Modal Command class -->
+            <div ng-include="'app/views/configuration/modal_cmdclass.html'"></div>
         </div>
     </div>
 </div><!-- /ng-controler -->

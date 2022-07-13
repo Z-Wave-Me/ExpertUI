@@ -15,6 +15,7 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
     $scope.devices = [];
     $scope.selfExcludedStore = [];
     $scope.activeUrl = 'configuration/commands/';
+    $scope.errorOnLoad = false;
     /**
      * Cancel interval on page destroy
      */
@@ -46,14 +47,14 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
             $scope.node = configurationCommandsService.node();
             const configCommands = commands.find(({instance, ccId}) =>  ccId === 112 && instance === 0);
             if (configCommands.version > 3) $scope.configCommands = configurationCommandsService.getConfigCommands($routeParams.nodeId);
-            else $scope.configCommands = configCommands
+            else $scope.configCommands = configCommands;
         }).catch(() => {
             $scope.alert = {
                 message: $scope._t('device_404'),
                 status: 'alert-warning',
                 icon: 'fa-exclamation-circle'
             };
-            $scope.deviceId = 0;
+            $scope.errorOnLoad = true;
         }).finally(() => {
             const deviceList = dataHolderService.deviceList();
             $scope.selfExcludedStore = deviceList.filter(({id}) => id !== +$scope.deviceId);
