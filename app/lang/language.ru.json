@@ -805,5 +805,7 @@
     "rssiStd": "Отклонение",
     "nodeId": "Id",
     "selectAll": "Выбрать все",
-    "copy_to_clipboard_success": "Скопировано в буфер"
+    "copy_to_clipboard_success": "Скопировано в буфер",
+    "getMoreOptions": "Расширенная информация",
+    "encryptionKeys": "Скачать ключи шифрования"
 }
