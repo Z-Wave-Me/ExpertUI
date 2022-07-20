@@ -70,7 +70,7 @@ var config_data = {
 		'instances': '/ZAutomation/api/v1/instances',
 		'upload_file': '/ZAutomation/api/v1/upload/file', // upload a file
 		'load_image': '/ZAutomation/api/v1/load/image/', // load image from automation storage
-		'encryptionKeys': '/ZAutomation/api/v1/encryptionKeys', // load image from automation storage
+		'encryptionKeys': '/ZWaveAPI/EncryptionKeys', // load image from automation storage
 		'app_built_info': 'app/info.json', // App build info
 		'post_report_url': 'https://service.z-wave.me/report/', // Post report url
 		'runjs_url': '/JS/Run/', // Url for running JS
