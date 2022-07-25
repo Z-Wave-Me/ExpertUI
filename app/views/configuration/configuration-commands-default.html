@@ -1,6 +1,6 @@
 <div class="cfg-block" ng-if="hasConfigurationCc.command" ng-controller="ConfigCommandsController">
     <h4>{{hasConfigurationCc.commandClass}}</h4>
-    <div ng-if="deviceId">
+    <div ng-if="!errorOnLoad">
         <div  ng-if="configCommands.version" ng-init="command = configCommands">
             <z-wave-expert-command
                 ng-repeat="(k, m) in command.methods track by $index"

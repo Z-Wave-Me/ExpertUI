@@ -12,7 +12,7 @@
         </div>
         <div class="col-md-9 col-content">
             <bb-alert alert="alert"></bb-alert>
-            <div ng-if="deviceId">
+            <div ng-if="!errorOnLoad">
                 <div class="panel-heading command">
                     <div>{{_t('th_instance')}}</div>
                     <div>{{_t('th_command_class')}}</div>
