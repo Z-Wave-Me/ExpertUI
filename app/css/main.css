@@ -23702,13 +23702,13 @@ readers do not read off random characters that represent icons */
 }
 @media (min-width: 1440px) and (max-width: 1679px) {
   :root {
-    --font-size-regular: 16px;
+    --font-size-regular: 14px;
     --space: 1rem;
   }
 }
 @media (min-width: 1680px) {
   :root {
-    --font-size-regular: 18px;
+    --font-size-regular: 16px;
     --space: 1.5rem;
   }
 }
