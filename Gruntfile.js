@@ -102,6 +102,7 @@ module.exports = function (grunt) {
                     'app/factories/factories.js',
                     'app/services/services.js',
                     'app/services/data-holder.service.js',
+                    'app/services/configuration-commands.service.js',
                     // Controllers
                     'app/controllers/base.js',
                     'app/controllers/controllers.js',

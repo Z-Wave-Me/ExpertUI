@@ -23,14 +23,14 @@ $mq-phone: 500px;
 
 @media (min-width: $mq-laptop) and (max-width: $mq-desktop - 1px) {
   :root {
-    --font-size-regular: 16px;
+    --font-size-regular: 14px;
     --space: 1rem;
   }
 }
 
 @media (min-width: $mq-desktop) {
   :root {
-    --font-size-regular: 18px;
+    --font-size-regular: 16px;
     --space: 1.5rem;
   }
 }
