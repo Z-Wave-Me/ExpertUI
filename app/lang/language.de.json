@@ -303,6 +303,7 @@
     "lb_login": "Login",
     "lb_password": "Passwort",
     "lb_submit": "Senden",
+    "lb_qrCodeVersion": "S2 DSK QR-code version",
     "leave": "Verlassen",
     "leave_network": "Netzwerk verlassen",
     "leave_network_stop": "Netzwerk verlassen stoppen",

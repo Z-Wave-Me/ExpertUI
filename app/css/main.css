@@ -25398,11 +25398,11 @@ a:focus, .order-by:focus {
 .qrcode-wrap {
   margin: 0 auto;
 }
-.qrcode-wrap #qrcode_network {
+.qrcode-wrap #qrcodev1_network, .qrcode-wrap #qrcodev2_network {
   margin: 20px auto 0 auto;
   text-align: center;
 }
-.qrcode-wrap #qrcode_network img {
+.qrcode-wrap #qrcodev1_network img, .qrcode-wrap #qrcodev2_network img {
   padding-left: 0;
   padding-right: 0;
   margin-left: auto;
