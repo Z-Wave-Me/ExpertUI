@@ -42,7 +42,6 @@ appController.controller('ReorganizationController', function ($scope, $filter, 
         dataService.getApi('reorg_run_url', null, true).then(function (response) {
             $scope.reorganizations.all = [];
             $scope.prepareLog();
-            $scope.loadReorganizationLog(true);
         }, function (error) {
             alertify.alertError($scope._t('error_load_data'));
         });
