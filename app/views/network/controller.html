@@ -213,6 +213,8 @@
             <i class="fa fa-list"></i> {{_t('ctrl_info_device_data')}}
         </button>
 
+        <!-- S0/S2 keys -->
+        <z-wave-encryption-keys ng-if="cfg.zwavecfg.debug"></z-wave-encryption-keys>
         
         <!-- Update firmware  -->
         <a href="#uzb" class="btn btn-default">
