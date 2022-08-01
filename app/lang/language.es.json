@@ -298,6 +298,7 @@
     "language_select_reload_interface": "Por favor, actualice la página para aplicar los cambios",
     "last_communication": "Ultima comunicacion",
     "lb_delete_confirm": "¿Está seguro de que quiere eliminar este elemento?",
+    "lb_device_settings": "Device settings",
     "lb_email": "Correo electrónico",
     "lb_enter": "Nombre de usuario",
     "lb_login": "Nombre de usuario",
