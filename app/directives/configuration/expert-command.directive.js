@@ -413,8 +413,9 @@ angApp.directive('zWaveCommandDataViewer', function () {
           <thead>
             <tr>
                 <th></th>
-                <th>#</th>
+                <th ng-if="options.mode !== 'property'">#</th>
                 <th colspan="2">{{key}}</th>
+                <th ng-if="options.mode === 'property'"></th>
             </tr>
           </thead>
           <tbody>

@@ -92,7 +92,7 @@
                             <div ng-class="{'mobile-hidden': mobileHidden}">
                                 <z-wave-command-data-viewer
                                         data="dataHolder.ccTable[deviceId + '@Property'].table"
-                                        options="{style: locationOptions.commandStyle}"></z-wave-command-data-viewer>
+                                        options="{style: locationOptions.commandStyle, mode: 'property'}"></z-wave-command-data-viewer>
                             </div>
                             <div ng-show="mobileHidden"
                                  class="side-panel label label-default mobile-only">
