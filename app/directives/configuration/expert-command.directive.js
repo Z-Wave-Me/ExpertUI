@@ -419,11 +419,11 @@ angApp.directive('zWaveCommandDataViewer', function () {
           </thead>
           <tbody>
             <tr ng-repeat="v in value">
-                <td><z-wave-clipboard-mini text="v.cmd | configCommandTableData: options.style"></z-wave-clipboard-mini></td>
+                <td style="width: 1rem"><z-wave-clipboard-mini text="v.cmd | configCommandTableData: options.style"></z-wave-clipboard-mini></td>
                 <td style="white-space: nowrap;" ng-if="key !== v.key">
                     <span>{{v.key}}</span>&nbsp
                 </td>
-                <td style="white-space: nowrap;" colspan="{{key === v.key ? 2: 1}}">
+                <td style="white-space: nowrap; width: 100%" colspan="{{key === v.key ? 2: 1}}">
                     <span>{{v.data|json}}</span>
                 </td>
                 <td style="white-space: nowrap;">
