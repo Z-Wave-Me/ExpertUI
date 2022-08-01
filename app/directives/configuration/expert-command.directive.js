@@ -199,7 +199,7 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
   return {
     restrict: "E",
     replace: true,
-    templateUrl: './app/views/configuration/expert-command-input.html',
+    templateUrl: 'app/views/configuration/expert-command-input.html',
     scope: {
       data: '=',
       index: '=',
