@@ -106,6 +106,7 @@ appController.controller('ControllerController', function($scope, $window, $filt
         $scope.master['controller.data.ZWaveChip'] = ZWaveAPIData.controller.data.ZWaveChip.value;
         $scope.master['controller.data.libType'] = ZWaveAPIData.controller.data.libType.value;
         $scope.master['controller.data.SDK'] = ZWaveAPIData.controller.data.SDK.value;
+        $scope.master['controller.data.majorSDK'] = ZWaveAPIData.controller.data.SDK.value.split('.')[0];
         $scope.master['controller.data.APIVersion'] = ZWaveAPIData.controller.data.APIVersion.value;
         $scope.master['controller.data.uuid'] = ZWaveAPIData.controller.data.uuid.value;
         if (ZWaveAPIData.controller.data.firmware.caps.maxNodes.value) {
@@ -128,10 +129,12 @@ appController.controller('ControllerController', function($scope, $window, $filt
             $scope.master['controller.data.firmware.caps.cap'] = caps(ZWaveAPIData.controller.data.firmware.caps.value);
         }
         $scope.master['controller.data.softwareRevisionVersion'] = ZWaveAPIData.controller.data.softwareRevisionVersion.value;
+        $scope.master['controller.data.firmware.caps.crc.value'] = ZWaveAPIData.controller.data.firmware.caps.crc.value;
         $scope.master['controller.data.softwareRevisionId'] = ZWaveAPIData.controller.data.softwareRevisionId.value;
         $scope.master['controller.data.softwareRevisionDate'] = ZWaveAPIData.controller.data.softwareRevisionDate.value;
         $scope.master['controller.data.softwareRevisionDate'] = ZWaveAPIData.controller.data.softwareRevisionDate.value;
         $scope.master['controller.data.frequency'] = ZWaveAPIData.controller.data.frequency.value;
+
         // Texts
         $scope.master['txtHomeId'] = '';
         $scope.master['txtSucSis'] = '';

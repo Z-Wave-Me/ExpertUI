@@ -2,8 +2,9 @@
 -------------------------------------------------- */
 .panel {
     border: 1px solid $app-border-color;
-    -webkit-box-shadow: 0;
-    box-shadow: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    overflow: hidden;
 }
 .panel-highlighted{
     border: 4px solid darken($app-border-color,20%);

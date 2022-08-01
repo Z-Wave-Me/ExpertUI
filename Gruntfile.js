@@ -97,6 +97,7 @@ module.exports = function (grunt) {
                     'app/directives/configuration/expert-command.directive.js',
                     'app/directives/configuration/menu.directive.js',
                     'app/directives/network/encryption-keys.directive.js',
+                    'app/directives/network/controller-info.directive.js',
                     //Filters
                     'app/filters/filters.js',
                     //Services
