@@ -15,6 +15,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
         includeToNetworkTimeout: null,
         show: false,
         alert: $scope.alert,
+        qrcodeVersion: 2,
         controller: {},
         limitReached: false,
         inclusion: {
@@ -96,6 +97,16 @@ appController.controller('ControlController', function ($scope, $interval, $time
         $interval.cancel($scope.controlDh.interval);
     });
 
+    $scope.wordBlock = function (val) {
+        return ('00000' + val.toString(10)).substr(-5);
+    };
+    
+    $scope.qrChecksum = async function(str) {
+        var sha1 = Array.from(new Uint8Array(await crypto.subtle.digest("SHA-1", new Uint8Array(str.split('').map(function(v) { return v.charCodeAt(0); })))));
+
+        return $scope.wordBlock(sha1[0] * 256 + sha1[1]);
+    };
+    
     /**
      * Get block of DSK
      */
@@ -103,8 +114,9 @@ appController.controller('ControlController', function ($scope, $interval, $time
         if (!publicKey) {
             return '';
         }
-        return ('00000' + (publicKey[(block - 1) * 2] * 256 + publicKey[(block - 1) * 2 + 1]).toString()).substr(-5);
+        return $scope.wordBlock(publicKey[(block - 1) * 2] * 256 + publicKey[(block - 1) * 2 + 1]);
     };
+    
 
     /**
      * Load zwave data
@@ -316,7 +328,18 @@ appController.controller('ControlController', function ($scope, $interval, $time
         var joiningS2 = $filter('hasNode')(ZWaveAPIData,'devices.' + nodeId + '.data.joiningS2.value');
         var publicKey = $filter('hasNode')(ZWaveAPIData,'devices.' + nodeId + '.data.publicKey.value');
         var publicKeyString = deviceService.mapPublicKey(publicKey||[]);
-       // Customsettings
+        
+        // S2 QR
+        var genericType = $filter('hasNode')(ZWaveAPIData,'devices.' + nodeId + '.data.genericType.value');
+        var specificType = $filter('hasNode')(ZWaveAPIData,'devices.' + nodeId + '.data.specificType.value');
+        var manufacturerId = $filter('hasNode')(ZWaveAPIData,'devices.' + nodeId + '.data.manufacturerId.value');
+        var productType = $filter('hasNode')(ZWaveAPIData,'devices.' + nodeId + '.data.manufacturerProductType.value');
+        var productId = $filter('hasNode')(ZWaveAPIData,'devices.' + nodeId + '.data.manufacturerProductId.value');
+        var appVersionMajor = $filter('hasNode')(ZWaveAPIData,'devices.' + nodeId + '.data.applicationMajor.value');
+        var appVersionMinor = $filter('hasNode')(ZWaveAPIData,'devices.' + nodeId + '.data.applicationMinor.value');
+        var installerIcon = $filter('hasNode')(ZWaveAPIData,'devices.' + nodeId + '.data.installerIcon.value');
+        
+        // Customsettings
         $scope.controlDh.controller.hasDevices = hasDevices > 1;
         $scope.controlDh.controller.limitReached = limitReached;
         $scope.controlDh.controller.longRangeEnabled = longRangeEnabled;
@@ -354,15 +377,45 @@ appController.controller('ControlController', function ($scope, $interval, $time
 
         if (_.size(publicKey)) {
           $scope.controlDh.controller.publicKeyStringHighligted =   $filter('highlightDsk')(publicKeyString);
-             $scope.controlDh.controller.publicKeyQr =
-                      $scope.dskBlock(publicKey, 1)
+             $scope.controlDh.controller.publicKeyQRv1 =
+                    'zws2dsk:'
+                    + $scope.dskBlock(publicKey, 1) + '-'
+                    + $scope.dskBlock(publicKey, 2) + '-'
+                    + $scope.dskBlock(publicKey, 3) + '-'
+                    + $scope.dskBlock(publicKey, 4) + '-'
+                    + $scope.dskBlock(publicKey, 5) + '-'
+                    + $scope.dskBlock(publicKey, 6) + '-'
+                    + $scope.dskBlock(publicKey, 7) + '-'
+                    + $scope.dskBlock(publicKey, 8);
+
+            var publicKeyQRv2part =
+                    + '135' // Requested keys: S0 + S2 Unauthenticated + S2 Authenticated + S2 Access
+                    + $scope.dskBlock(publicKey, 1)
                     + $scope.dskBlock(publicKey, 2)
                     + $scope.dskBlock(publicKey, 3)
                     + $scope.dskBlock(publicKey, 4)
                     + $scope.dskBlock(publicKey, 5)
                     + $scope.dskBlock(publicKey, 6)
                     + $scope.dskBlock(publicKey, 7)
-                    + $scope.dskBlock(publicKey, 8);
+                    + $scope.dskBlock(publicKey, 8)
+                    + '00' // Product Type
+                    + '10' // Len
+                    + $scope.wordBlock(genericType * 256 + specificType)
+                    + $scope.wordBlock(installerIcon)
+                    + '02' // Product ID
+                    + '20' // Len
+                    + $scope.wordBlock(manufacturerId)
+                    + $scope.wordBlock(productType)
+                    + $scope.wordBlock(productId)
+                    + $scope.wordBlock(appVersionMajor * 256 + appVersionMinor);
+            $scope.qrChecksum(publicKeyQRv2part).then(function(sha1) {
+                $scope.controlDh.controller.publicKeyQRv2 =
+                      '90' // Z
+                    + '00' // S2 (non-SmartStart) device
+                    + sha1 // checksum to be filled
+                    + publicKeyQRv2part;
+            });
+            
             $scope.controlDh.controller.publicKeyPin = (publicKey[0] << 8) + publicKey[1];
         }
 
@@ -1305,13 +1358,21 @@ appController.controller('SetPromiscuousModeController', function ($scope) {
  *
  */
 appController.controller('S2DskController', function ($scope) {
-    var qrcode = new QRCode("qrcode_network", {
-        text: $scope.controlDh.controller.publicKeyQr,
+    var qrcodev1 = new QRCode("qrcodev1_network", {
+        text: $scope.controlDh.controller.publicKeyQRv1,
         width: 200,
         height: 200,
         colorDark: "#000000",
         colorLight: "#ffffff",
         correctLevel: QRCode.CorrectLevel.H
+    });
+    var qrcodev2 = new QRCode("qrcodev2_network", {
+        text: $scope.controlDh.controller.publicKeyQRv2,
+        width: 200,
+        height: 200,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.L
     });
 });
 

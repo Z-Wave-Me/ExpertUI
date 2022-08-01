@@ -13,9 +13,6 @@
 <!-- JS -->
 <script src="app/js/build.js"></script>
 
-    <script src="../app/directives/configuration/expert-command.directive.js"></script>
-    <script src="../app/directives/share/clipboard-copy.directive.js"></script>
-
 </head>
 <body id="page_{{getBodyId()}}"
       class="is-mobile-{{isMobile}} custom-ip-{{cfg.custom_ip}} app-type-{{cfg.app_type}}">
@@ -29,7 +26,7 @@
                     <li class="navibar-divider"> </li>
                     <!-- Home -->
                     <li class="navibar-item">
-                        <a class="navibar-item-root"href="#home" title="{{_t('nav_home')}}" ng-class="isActive('home')">
+                        <a class="navibar-item-root" href="#home" title="{{_t('nav_home')}}" ng-class="isActive('home')">
                             <i class="fa fa-home"></i>
                         </a>
                     </li>

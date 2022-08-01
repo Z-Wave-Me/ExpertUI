@@ -95,6 +95,7 @@ module.exports = function (grunt) {
                     'app/directives/double-scroll-bars.min.js',
                     'app/directives/share/clipboard-copy.directive.js',
                     'app/directives/configuration/expert-command.directive.js',
+                    'app/directives/configuration/menu.directive.js',
                     'app/directives/network/encryption-keys.directive.js',
                     //Filters
                     'app/filters/filters.js',

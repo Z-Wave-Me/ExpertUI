@@ -161,25 +161,35 @@
                 </div>
                 <div class="appmodal-body modal-h-600 form-group form-inline" ng-controller="S2DskController">
                     <!-- name -->
-                    <div class="qrcode-wrap">
-                        <div id="qrcode_network"></div>
+                    
+                    <div class="qrcode-wrap" ng-show="controlDh.qrcodeVersion === 1">
+                        <div id="qrcodev1_network"></div>
+                    </div>
+                    <div class="qrcode-wrap" ng-show="controlDh.qrcodeVersion === 2">
+                        <div id="qrcodev2_network"></div>
                     </div>
                     <div class="dsk-wrap">
-                        <span class="dsk-block dsk-first-block">{{dskBlock(controlDh.controller.publicKey, 1)}}</span>
-                        <span class="dsk-block">{{dskBlock(controlDh.controller.publicKey, 2)}}</span>
-                        <span class="dsk-block">{{dskBlock(controlDh.controller.publicKey, 3)}}</span>
-                        <span class="dsk-block">{{dskBlock(controlDh.controller.publicKey, 4)}}</span>
-                        <span class="dsk-block">{{dskBlock(controlDh.controller.publicKey, 5)}}</span>
-                        <span class="dsk-block">{{dskBlock(controlDh.controller.publicKey, 6)}}</span>
-                        <span class="dsk-block">{{dskBlock(controlDh.controller.publicKey, 7)}}</span>
+                        <span class="dsk-block dsk-first-block">{{dskBlock(controlDh.controller.publicKey, 1)}}</span>-
+                        <span class="dsk-block">{{dskBlock(controlDh.controller.publicKey, 2)}}</span>-
+                        <span class="dsk-block">{{dskBlock(controlDh.controller.publicKey, 3)}}</span>-
+                        <span class="dsk-block">{{dskBlock(controlDh.controller.publicKey, 4)}}</span>-
+                        <span class="dsk-block">{{dskBlock(controlDh.controller.publicKey, 5)}}</span>-
+                        <span class="dsk-block">{{dskBlock(controlDh.controller.publicKey, 6)}}</span>-
+                        <span class="dsk-block">{{dskBlock(controlDh.controller.publicKey, 7)}}</span>-
                         <span class="dsk-block">{{dskBlock(controlDh.controller.publicKey, 8)}}</span>
                     </div>
-
                 </div>
                 <div class="appmodal-footer">
-                    <!-- Cancel -->
+                    <!-- Version -->
+                    <label class="switcher btn" title="{{_t.('lb_qrCodeVersion')}}"
+                           ng-class="controlDh.qrcodeVersion === 2 ? 'ison':'isoff'"
+                           ng-click="controlDh.qrcodeVersion = controlDh.qrcodeVersion === 2 ? 1 : 2">
+                       
+                        <div class="switcher-slider round"></div>
+                    </label>
+                    <!-- Close -->
                     <button type="button" class="btn btn-default" ng-click="handleModal()">
-                        <i class="fa fa-times text-danger"></i> <span class="btn-name">{{_t('btn_cancel')}}</span>
+                        <i class="fa fa-times text-success"></i> <span class="btn-name">{{_t('btn_close')}}</span>
                     </button>
                 </div>
             </form>

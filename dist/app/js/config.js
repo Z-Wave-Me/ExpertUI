@@ -9,7 +9,7 @@ var config_data = {
 		'dev_host': [],
 		'app_name': 'Z-Wave Expert',
 		'app_version': 'v1.5.9',
-		'app_built': '21-04-2022 03:06:07',
+		'app_built': '31-07-2022 04:07:55',
 		'app_id': 'ExpertUI',
 		'custom_ip': false,
 		'user_field': 'USERXXXX',
@@ -70,6 +70,7 @@ var config_data = {
 		'instances': '/ZAutomation/api/v1/instances',
 		'upload_file': '/ZAutomation/api/v1/upload/file', // upload a file
 		'load_image': '/ZAutomation/api/v1/load/image/', // load image from automation storage
+		'encryptionKeys': '/ZWaveAPI/EncryptionKeys', // load image from automation storage
 		'app_built_info': 'app/info.json', // App build info
 		'post_report_url': 'https://service.z-wave.me/report/', // Post report url
 		'runjs_url': '/JS/Run/', // Url for running JS
@@ -96,7 +97,7 @@ var config_data = {
 		'uzb_url': 'https://service.z-wave.me/expertui/uzb/', // Url for uzb data
 		'get_licence_scratchid': 'https://service.z-wave.me/license/index.php', // Get licence scratch id
 		'license_url': 'https://service.z-wave.me/licence/upgrade.php', // Url for license key
-		'buy_licence_key': 'https://www.z-wave.me/index.php?id=41', // Buy licence key url
+		'buy_licence_key': 'https://z-wave.me/z-way/buy-z-way-license/', // Buy licence key url
 		'smarthome_login': '/smarthome/#/?fromexpert', // Smarthome login page
 		'lang_dir': 'app/lang/', // Language directory
 		'lang': 'en', // Default language

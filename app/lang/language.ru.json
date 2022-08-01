@@ -304,6 +304,7 @@
     "lb_login": "Пользователь",
     "lb_password": "Пароль",
     "lb_submit": "Отправить",
+    "lb_qrCodeVersion": "Версия QR-кода S2 DSK",
     "leave": "Покинуть",
     "leave_network": "Удаление из сети",
     "leave_network_stop": "Остановить удаление из сети",

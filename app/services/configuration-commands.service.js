@@ -22,6 +22,12 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
       Association: {
         arrays: ['nodes']
       },
+      MultiChannelAssociation: {
+        arrays: ['nodesInstances']
+      },
+      Alarm: {
+        arrays: ['event', 'eventString', 'eventParameters', 'status']
+      },
       SensorBinary: {
         arrays: ['level']
       },
@@ -53,82 +59,53 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
   }
   function nodeProperty() {
     return [
-        {
-          label: "givenName",
-          type: {
-            string: {},
-          },
-          defaultValue: 'megaName'
-        },
       {
-        label: 'vendorString',
-        type: {
-          enumof: [
+        "label": "acceptSetSecurityLevel",
+        "type": {
+          "enumof": [
             {
-              "label": "-9dbm ", "type": {
+              "label": "Accept Set commands on the controller most secure level (default)",
+              "type": {
                 "fix": {
-                  "value": 9
+                  "value": null
                 }
               }
             },
             {
-              "label": "-8dbm ", "type": {
-                "fix": {
-                  "value": 8
-                }
-              }
-            },
-            {
-              "label": "-7dbm ", "type": {
-                "fix": {
-                  "value": 7
-                }
-              }
-            },
-            {
-              "label": "-6dbm ", "type": {
-                "fix": {
-                  "value": 6
-                }
-              }
-            },
-            {
-              "label": "-5dbm ", "type": {
-                "fix": {
-                  "value": 5
-                }
-              }
-            },
-            {
-              "label": "-4dbm ", "type": {
+              "label": "Accept Set commands on S2 Access",
+              "type": {
                 "fix": {
                   "value": 4
                 }
               }
             },
             {
-              "label": "-3dbm ", "type": {
-                "fix": {
-                  "value": 3
-                }
-              }
-            },
-            {
-              "label": "-2dbm ", "type": {
+              "label": "Accept Set commands on S2 Authenticated",
+              "type": {
                 "fix": {
                   "value": 2
                 }
               }
             },
             {
-              "label": "-1dbm ", "type": {
+              "label": "Accept Set commands on S2 Unauthenticated",
+              "type": {
                 "fix": {
                   "value": 1
                 }
               }
             },
             {
-              "label": "Normal ", "type": {
+              "label": "Accept Set commands on S0",
+              "type": {
+                "fix": {
+                  "value": 0x80
+                }
+              }
+            },
+            {
+              "label": "Accept Set commands without encryption",
+              "type": {
                 "fix": {
                   "value": 0
                 }
@@ -136,6 +113,139 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
             }
           ]
         }
+      },
+      {
+        "label": "acceptReportSecurityLevel",
+        "type": {
+          "enumof": [
+            {
+              "label": "Accept Report commands on device most secure level (default)",
+              "type": {
+                "fix": {
+                  "value": null
+                }
+              }
+            },
+            {
+              "label": "Accept Report commands on S2 Access",
+              "type": {
+                "fix": {
+                  "value": 4
+                }
+              }
+            },
+            {
+              "label": "Accept Report commands on S2 Authenticated",
+              "type": {
+                "fix": {
+                  "value": 2
+                }
+              }
+            },
+            {
+              "label": "Accept Report commands on S2 Unauthenticated",
+              "type": {
+                "fix": {
+                  "value": 1
+                }
+              }
+            },
+            {
+              "label": "Accept Report commands on S0",
+              "type": {
+                "fix": {
+                  "value": 0x80
+                }
+              }
+            },
+            {
+              "label": "Accept Report commands without encryption",
+              "type": {
+                "fix": {
+                  "value": 0
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "label": "mapBasicSetToSpecificReport",
+        "type": {
+          "enumof": [
+            {
+              "label": "Don't interpret Basic Set as a Report (default)",
+              "type": {
+                "fix": {
+                  "value": false
+                }
+              }
+            },
+            {
+              "label": "Interpret Basic Set as a sensor Report (for old buggy devices that don't send Reports)",
+              "type": {
+                "fix": {
+                  "value": true
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "label": "unsolicitedReportOnSet",
+        "type": {
+          "enumof": [
+            {
+              "label": "Don't rely on unsolicited Reports from the device and make an explicit Get after a Set",
+              "type": {
+                "fix": {
+                  "value": 0
+                }
+              }
+            },
+            {
+              "label": "Expect the device to send an unsolitied Report after Set to device's group #",
+              "type": {
+                "range": {
+                  "min": 1,
+                  "max": 255
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "label": "multicastGroup",
+        "type": {
+          "enumof": [
+            {
+              "label": "Multicast disabled",
+              "type": {
+                "fix": {
+                  "value": 0
+                }
+              }
+            },
+            {
+              "label": "Multicast group",
+              "type": {
+                "range": {
+                  "min": 1,
+                  "max": 100
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "label": "givenName",
+        "type": {
+          "string": {}
+        },
+        "defaultValue": "new name"
       }
     ]
   }
@@ -351,70 +461,80 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
               "type": {
                 "enumof": [
                   {
-                    "label": "-9dbm ", "type": {
+                    "label": "-9dbm ",
+                    "type": {
                       "fix": {
                         "value": 9
                       }
                     }
                   },
                   {
-                    "label": "-8dbm ", "type": {
+                    "label": "-8dbm ",
+                    "type": {
                       "fix": {
                         "value": 8
                       }
                     }
                   },
                   {
-                    "label": "-7dbm ", "type": {
+                    "label": "-7dbm ",
+                    "type": {
                       "fix": {
                         "value": 7
                       }
                     }
                   },
                   {
-                    "label": "-6dbm ", "type": {
+                    "label": "-6dbm ",
+                    "type": {
                       "fix": {
                         "value": 6
                       }
                     }
                   },
                   {
-                    "label": "-5dbm ", "type": {
+                    "label": "-5dbm ",
+                    "type": {
                       "fix": {
                         "value": 5
                       }
                     }
                   },
                   {
-                    "label": "-4dbm ", "type": {
+                    "label": "-4dbm ",
+                    "type": {
                       "fix": {
                         "value": 4
                       }
                     }
                   },
                   {
-                    "label": "-3dbm ", "type": {
+                    "label": "-3dbm ",
+                    "type": {
                       "fix": {
                         "value": 3
                       }
                     }
                   },
                   {
-                    "label": "-2dbm ", "type": {
+                    "label": "-2dbm ",
+                    "type": {
                       "fix": {
                         "value": 2
                       }
                     }
                   },
                   {
-                    "label": "-1dbm ", "type": {
+                    "label": "-1dbm ",
+                    "type": {
                       "fix": {
                         "value": 1
                       }
                     }
                   },
                   {
-                    "label": "Normal ", "type": {
+                    "label": "Normal ",
+                    "type": {
                       "fix": {
                         "value": 0
                       }
@@ -440,70 +560,80 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
               "type": {
                 "enumof": [
                   {
-                    "label": "-9dbm ", "type": {
+                    "label": "-9dbm ",
+                    "type": {
                       "fix": {
                         "value": 9
                       }
                     }
                   },
                   {
-                    "label": "-8dbm ", "type": {
+                    "label": "-8dbm ",
+                    "type": {
                       "fix": {
                         "value": 8
                       }
                     }
                   },
                   {
-                    "label": "-7dbm ", "type": {
+                    "label": "-7dbm ",
+                    "type": {
                       "fix": {
                         "value": 7
                       }
                     }
                   },
                   {
-                    "label": "-6dbm ", "type": {
+                    "label": "-6dbm ",
+                    "type": {
                       "fix": {
                         "value": 6
                       }
                     }
                   },
                   {
-                    "label": "-5dbm ", "type": {
+                    "label": "-5dbm ",
+                    "type": {
                       "fix": {
                         "value": 5
                       }
                     }
                   },
                   {
-                    "label": "-4dbm ", "type": {
+                    "label": "-4dbm ",
+                    "type": {
                       "fix": {
                         "value": 4
                       }
                     }
                   },
                   {
-                    "label": "-3dbm ", "type": {
+                    "label": "-3dbm ",
+                    "type": {
                       "fix": {
                         "value": 3
                       }
                     }
                   },
                   {
-                    "label": "-2dbm ", "type": {
+                    "label": "-2dbm ",
+                    "type": {
                       "fix": {
                         "value": 2
                       }
                     }
                   },
                   {
-                    "label": "-1dbm ", "type": {
+                    "label": "-1dbm ",
+                    "type": {
                       "fix": {
                         "value": 1
                       }
                     }
                   },
                   {
-                    "label": "Normal ", "type": {
+                    "label": "Normal ",
+                    "type": {
                       "fix": {
                         "value": 0
                       }
@@ -1830,70 +1960,80 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
               "type": {
                 "enumof": [
                   {
-                    "label": "-9dbm ", "type": {
+                    "label": "-9dbm ",
+                    "type": {
                       "fix": {
                         "value": 9
                       }
                     }
                   },
                   {
-                    "label": "-8dbm ", "type": {
+                    "label": "-8dbm ",
+                    "type": {
                       "fix": {
                         "value": 8
                       }
                     }
                   },
                   {
-                    "label": "-7dbm ", "type": {
+                    "label": "-7dbm ",
+                    "type": {
                       "fix": {
                         "value": 7
                       }
                     }
                   },
                   {
-                    "label": "-6dbm ", "type": {
+                    "label": "-6dbm ",
+                    "type": {
                       "fix": {
                         "value": 6
                       }
                     }
                   },
                   {
-                    "label": "-5dbm ", "type": {
+                    "label": "-5dbm ",
+                    "type": {
                       "fix": {
                         "value": 5
                       }
                     }
                   },
                   {
-                    "label": "-4dbm ", "type": {
+                    "label": "-4dbm ",
+                    "type": {
                       "fix": {
                         "value": 4
                       }
                     }
                   },
                   {
-                    "label": "-3dbm ", "type": {
+                    "label": "-3dbm ",
+                    "type": {
                       "fix": {
                         "value": 3
                       }
                     }
                   },
                   {
-                    "label": "-2dbm ", "type": {
+                    "label": "-2dbm ",
+                    "type": {
                       "fix": {
                         "value": 2
                       }
                     }
                   },
                   {
-                    "label": "-1dbm ", "type": {
+                    "label": "-1dbm ",
+                    "type": {
                       "fix": {
                         "value": 1
                       }
                     }
                   },
                   {
-                    "label": "Normal ", "type": {
+                    "label": "Normal ",
+                    "type": {
                       "fix": {
                         "value": 0
                       }
