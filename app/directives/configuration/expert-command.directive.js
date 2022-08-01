@@ -412,10 +412,9 @@ angApp.directive('zWaveCommandDataViewer', function () {
       <table class="table table-striped table-condensed" ng-repeat="(key, value) in data">
           <thead>
             <tr>
-                <th></th>
+                <th ng-if="options.mode !== 'property'"></th>
                 <th ng-if="options.mode !== 'property'">#</th>
-                <th colspan="2">{{key}}</th>
-                <th ng-if="options.mode === 'property'"></th>
+                <th colspan="{{options.mode === 'property' ? 4 : 2}}">{{key}}</th>
             </tr>
           </thead>
           <tbody>
@@ -425,7 +424,7 @@ angApp.directive('zWaveCommandDataViewer', function () {
                     <span>{{v.key}}</span>&nbsp
                 </td>
                 <td style="white-space: nowrap;" colspan="{{key === v.key ? 2: 1}}">
-                    <span>{{v.data}}</span>
+                    <span>{{v.data|json}}</span>
                 </td>
                 <td style="white-space: nowrap;">
                     <span ng-class="v.isUpdated ? 'green':'red'">{{v.updateTime * 1000 | date: 'd.MM'}} </span>
