@@ -134,6 +134,11 @@
                 <td id="ctrl_info_caps_cap_title" class="controller-th">{{_t('ctrl_info_caps_cap_title')}}</td>
                 <td id="ctrl_info_caps_cap_value">{{master['controller.data.firmware.caps.cap']}}</td>
             </tr>
+            <tr>
+                <td colspan="2" class="controller-th" ng-if="master['controller.data.majorSDK'] == 7">
+                    <z-wave-more-options></z-wave-more-options>
+                </td>
+            </tr>
             </tbody>
         </table>
         <!-- Z_Way Software Information -->
