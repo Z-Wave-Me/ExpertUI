@@ -140,6 +140,10 @@ angApp.config(['$routeProvider',
         when('/installer/zniffer', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/installer/zniffer.html'
+        }).//Installer - zniffer/A.R.T
+        when('/installer/zniffer-art', {
+            requireLogin: requireLogin,
+            templateUrl: 'app/views/installer/zniffer-art.html'
         }).// Installer - history
         when('/installer/history', {
             requireLogin: requireLogin,
