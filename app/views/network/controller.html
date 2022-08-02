@@ -75,7 +75,7 @@
         <table class="table table-condensed">
             <tbody>
             <tr>
-                <td id="ctrl_info_uuid_title" class="controller-th">{{_t('ctrl_info_uuid_title')}} {{master['controller.data.majorSDK']}}</td>
+                <td id="ctrl_info_uuid_title" class="controller-th">{{_t('ctrl_info_uuid_title')}}</td>
                 <td id="ctrl_info_uuid_value" ng-if="master['controller.data.majorSDK'] < 7">{{master['controller.data.uuid']}}</td>
                 <td ng-if="master['controller.data.majorSDK'] >= 7">{{master['controller.data.uuid16']}}</td>
             </tr>

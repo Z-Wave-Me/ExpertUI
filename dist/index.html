@@ -59,9 +59,7 @@
                             <ul>
                                 <li><a href="#device/status" ng-class="isActive('status',2)">{{ _t('nav_status') }}</a></li>
                                 <li><a href="#device/type" ng-class="isActive('type',2)">{{ _t('nav_type_info') }}</a></li>
-                                <li>
-                                    <a href="#device/battery" ng-class="isActive('battery',2)">{{ _t('nav_battery') }}</a>
-                                </li>
+                                <li><a href="#device/battery" ng-class="isActive('battery',2)">{{ _t('nav_battery') }}</a></li>
                                 <li><a href="#device/associations" ng-class="isActive('associations',2)">{{ _t('nav_active_associations') }}</a></li>
                             </ul>
                         </div>
@@ -86,7 +84,7 @@
                                 <li>
                                     <a href="#network/control" ng-class="isActive('control',2)">{{ _t('nav_control') }}</a>
                                 </li>
-                               <li>
+                                <li>
                                     <a href="#network/neighbors" ng-class="isActive('neighbors',2)">{{ _t('neighbors') }}</a>
                                 </li>
                                 <li>
@@ -116,23 +114,15 @@
                         </a>
                         <div class="sub-navigation sub-navigation-left" ng-if="naviExpanded.naviInstaller">
                             <ul>
-                                <li>
-                                    <a href="#installer/routemap" ng-class="isActive('routemap',2)">{{ _t('route_map') }}</a>
-                                </li>
+                                <li><a href="#installer/routemap" ng-class="isActive('routemap',2)">{{ _t('route_map') }}</a></li>
                                 <li><a href="#installer/zniffer" ng-class="isActive('zniffer',2)">{{ _t('nav_zniffer') }}</a></li>
+                                <li><a href="#installer/history" ng-class="isActive('history',2)">{{ _t('nav_history') }}</a></li>
+                                <li><a href="#installer/zniffer-art" ng-class="isActive('zniffer-art',2)">{{ _t('nav_zniffer-art') }}</a></li>
                                 <li><a href="#installer/rssi" ng-class="isActive('rssi',2)">{{ _t('nav_rssi') }}</a></li>
                                 <li><a href="#installer/rssimeter" ng-class="isActive('rssimeter',2)">{{ _t('nav_rssimeter') }}</a></li>
-                                <li><a href="#installer/history" ng-class="isActive('history',2)">{{ _t('nav_history') }}</a></li>
-                                <li>
-                                    <a href="#installer/statistics" ng-class="isActive('statistics',2)">{{ _t('statistics') }}</a>
-                                </li>
-                                <li>
-                                    <a href="#installer/rssi_report" ng-class="isActive('rssi_report', 2)">{{ _t('rssi_report')}}</a>
-                                </li>
-                                <li>
-                                    <a href="#installer/packets" ng-class="isActive('packets', 2)">{{ _t('packets')}}</a>
-                                </li>
-                                <!--<li><a href="#installer/spectrum" ng-class="isActive('spectrum',2)">{{ _t('nav_spectrum_analyzer') }}</a></li>-->
+                                <li><a href="#installer/statistics" ng-class="isActive('statistics',2)">{{ _t('statistics') }}</a></li>
+                                <li><a href="#installer/rssi_report" ng-class="isActive('rssi_report', 2)">{{ _t('rssi_report')}}</a></li>
+                                <li><a href="#installer/packets" ng-class="isActive('packets', 2)">{{ _t('packets')}}</a></li>
                             </ul>
                         </div>
                     </li>
