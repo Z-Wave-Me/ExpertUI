@@ -26607,7 +26607,6 @@ input[type=bitmask] {
   border: 1px solid #9fd8ef;
   -webkit-box-shadow: none;
   box-shadow: none;
-  overflow: hidden;
 }
 
 .panel-highlighted {
