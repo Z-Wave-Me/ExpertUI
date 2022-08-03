@@ -101,10 +101,10 @@ appController.controller('ControlController', function ($scope, $interval, $time
         return ('00000' + val.toString(10)).substr(-5);
     };
     
-    $scope.qrChecksum = async function(str) {
-        var sha1 = Array.from(new Uint8Array(await crypto.subtle.digest("SHA-1", new Uint8Array(str.split('').map(function(v) { return v.charCodeAt(0); })))));
+    $scope.qrChecksum = function(str) {
+        var sha = sha1.array(str);
 
-        return $scope.wordBlock(sha1[0] * 256 + sha1[1]);
+        return $scope.wordBlock(sha[0] * 256 + sha[1]);
     };
     
     /**
@@ -408,14 +408,12 @@ appController.controller('ControlController', function ($scope, $interval, $time
                     + $scope.wordBlock(productType)
                     + $scope.wordBlock(productId)
                     + $scope.wordBlock(appVersionMajor * 256 + appVersionMinor);
-            $scope.qrChecksum(publicKeyQRv2part).then(function(sha1) {
                 $scope.controlDh.controller.publicKeyQRv2 =
                       '90' // Z
                     + '00' // S2 (non-SmartStart) device
-                    + sha1 // checksum to be filled
+                    + $scope.qrChecksum(publicKeyQRv2part) // checksum to be filled
                     + publicKeyQRv2part;
-            });
-            
+
             $scope.controlDh.controller.publicKeyPin = (publicKey[0] << 8) + publicKey[1];
         }
 
