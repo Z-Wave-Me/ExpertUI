@@ -61,6 +61,7 @@ module.exports = function (grunt) {
                     'vendor/upload/angular-file-upload-shim.min.js',
                     'vendor/alertify/alertify.min.js',
                     'vendor/qrcode/qrcode.min.js',
+                    'vendor/sha1/sha1.min.js',
                     // Routemap
                     'vendor/routemap/d3.v4.min.js',
                     'vendor/routemap/ZWaveAnalytics.min.js',
