@@ -46,11 +46,15 @@ angApp.directive('zWaveConfigurationMenu', ['dataHolderService', '$route', '$loc
           subscription();
         })
       }
+      scope.$on('configuration-commands:z-wave-data:update', function () {
+        const deviceList =  dataHolderService.deviceList();
+        if (scope.deviceList.length !== deviceList.length)
+          scope.deviceList = deviceList;
+      })
       scope.name = function () {
-        // console.warn(typeof scope.param);
         const item = scope.deviceList?.find(({id}) => id === +scope.param);
         if (item) {
-          return `(#${item.id}) ${item.name}  `;
+          return `(#${item.id}) ${item.name}`;
         }
         return '...'
       }
