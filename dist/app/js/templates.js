@@ -1,4 +1,4 @@
-/* Copyright: Z-Wave.Me, Created: 02-08-2022 02:58:45 */
+/* Copyright: Z-Wave.Me, Created: 08-08-2022 15:11:38 */
 angular.module('myAppTemplates', []).run(['$templateCache', function($templateCache) {
   'use strict';
 
@@ -38,7 +38,8 @@ angular.module('myAppTemplates', []).run(['$templateCache', function($templateCa
     "                   parent: command.name,\n" +
     "                   path: command.path,\n" +
     "                   type: m.type,\n" +
-    "                   store: selfExcludedStore\n" +
+    "                   store: selfExcludedStore,\n" +
+    "                   accessor: m.accessor\n" +
     "                   }\"></z-wave-expert-command></div><div ng-if=!configCommands.version><configuration-config ng-repeat=\"data in configCommands | orderBy: 'index'\" data=data></configuration-config></div></div></div>"
   );
 
