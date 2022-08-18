@@ -812,5 +812,6 @@
     "selectAll": "Select All",
     "copy_to_clipboard_success": "Copy to clipboard",
     "getMoreOptions": "Get more options",
+    "newLicenceAvailable": "New licence available",
     "encryptionKeys": "Download Encryption Keys"
 }
