@@ -413,7 +413,7 @@ angApp.directive('zWaveCommandDataViewer', function () {
           <thead>
             <tr>
                 <th ng-if="options.mode !== 'property'"></th>
-                <th ng-if="options.mode !== 'property'">#</th>
+                <th ng-if="isArray(value)">#</th>
                 <th colspan="{{options.mode === 'property' ? 4 : 2}}">{{key}}</th>
             </tr>
           </thead>
@@ -432,7 +432,12 @@ angApp.directive('zWaveCommandDataViewer', function () {
             </tr>
           </tbody>
       </table>
-    </div>`
+    </div>`,
+    link: function (scope) {
+      scope.isArray = function (value) {
+        return !value.some(({key}) => isNaN(+key));
+      }
+    }
   }
 }).filter('configCommandTableData', function (cfg) {
   return function (cmd, type) {
