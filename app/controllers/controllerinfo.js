@@ -124,6 +124,8 @@ appController.controller('ControllerController', function($scope, $window, $filt
             $scope.master['controller.data.firmware.caps.promisc'] = ZWaveAPIData.controller.data.firmware.caps.promisc.value;
             $scope.master['controller.data.firmware.caps.zniffer'] = ZWaveAPIData.controller.data.firmware.caps.zniffer.value;
             $scope.master['controller.data.firmware.caps.jammingDetection'] = ZWaveAPIData.controller.data.firmware.caps.jammingDetection.value;
+            $scope.master['controller.data.firmware.caps.pti'] = ZWaveAPIData.controller.data.firmware.caps.pti.value;
+            $scope.master['controller.data.firmware.caps.modem'] = ZWaveAPIData.controller.data.firmware.caps.modem.value;
         } else {
             $scope.master['controller.data.firmware.caps.subvendor'] = '0x' + dec2hex((ZWaveAPIData.controller.data.firmware.caps.value[0] << 8) + ZWaveAPIData.controller.data.firmware.caps.value[1]);
             $scope.master['controller.data.firmware.caps.nodes'] = nodeLimit(dec2hex(ZWaveAPIData.controller.data.firmware.caps.value[2]).slice(-2));

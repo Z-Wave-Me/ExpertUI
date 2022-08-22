@@ -132,6 +132,14 @@
                 <td><i class="fa fa-{{master['controller.data.firmware.caps.jammingDetection'] ? 'check' : 'times'}}"></i></td>
             </tr>
             <tr>
+                <td class="controller-th">{{_t('ctrl_info_caps_pti_title')}}</td>
+                <td><i class="fa fa-{{master['controller.data.firmware.caps.pti'] ? 'check' : 'times'}}"></i></td>
+            </tr>
+            <tr>
+                <td class="controller-th">{{_t('ctrl_info_caps_modem_title')}}</td>
+                <td><i class="fa fa-{{master['controller.data.firmware.caps.modem'] ? 'check' : 'times'}}"></i></td>
+            </tr>
+            <tr>
                 <td id="ctrl_info_caps_cap_title" class="controller-th">{{_t('ctrl_info_caps_cap_title')}}</td>
                 <td id="ctrl_info_caps_cap_value">{{master['controller.data.firmware.caps.cap']}}</td>
             </tr>

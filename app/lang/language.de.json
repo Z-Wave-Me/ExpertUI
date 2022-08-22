@@ -98,6 +98,8 @@
     "ctrl_info_caps_promisc_title": "Promiscuous mode (Zniffer)",
     "ctrl_info_caps_zniffer_title": "Full Zniffer",
     "ctrl_info_caps_jammingDetection_title": "RF jamming detection",
+    "ctrl_info_caps_pti_title": "Zniffer in PTI mode",
+    "ctrl_info_caps_modem_title": "Zniffer and Advanced Radio Tool",
     "ctrl_info_data": "Controllerdaten des Controllers",
     "ctrl_info_device_data": "Gerätedaten des Controller",
     "ctrl_info_func_list_title": "API-Funktionen:",
