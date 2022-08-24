@@ -46,7 +46,7 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
             $scope.commandsUpdated = commands;
             $scope.node = configurationCommandsService.node();
             const configCommands = commands.find(({instance, ccId}) =>  ccId === 112 && instance === 0);
-            if (configCommands.version >= 3) $scope.configCommands = configurationCommandsService.getConfigCommands($routeParams.nodeId);
+            if (configCommands?.version >= 3) $scope.configCommands = configurationCommandsService.getConfigCommands($routeParams.nodeId);
             else $scope.configCommands = configCommands;
         }).catch(() => {
             $scope.alert = {
