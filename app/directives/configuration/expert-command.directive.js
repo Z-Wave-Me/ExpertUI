@@ -237,7 +237,7 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
         ng-class="{'has-error': invalid(local.data)}">
         <span class="commands-label" ng-if="_type ==='fix'">({{'' + type.fix.value}}) {{label}}</span>
         <span ng-if="_type === 'range'" class="commands-label">
-         {{label}} (max: {{type.range.min}}, min: {{type.range.max}})</span>
+         {{label}} (min: {{type.range.min}}, max: {{type.range.max}})</span>
         <input
           class="commands-body form-control"
           ng-if="_type === 'range'"
