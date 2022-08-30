@@ -98,6 +98,8 @@
     "ctrl_info_caps_promisc_title": "Режим прослушки (Zniffer)",
     "ctrl_info_caps_zniffer_title": "Полный Zniffer",
     "ctrl_info_caps_jammingDetection_title": "Детектирование подавления сети",
+    "ctrl_info_caps_pti_title": "Zniffer в режиме PTI",
+    "ctrl_info_caps_modem_title": "Zniffer и Advanced Radio Tool",
     "ctrl_info_data": "Показать данные контроллера",
     "ctrl_info_device_data": "Показать данные устройства контроллера",
     "ctrl_info_func_list_title": "Функции:",
@@ -810,5 +812,6 @@
     "selectAll": "Выбрать все",
     "copy_to_clipboard_success": "Скопировано в буфер",
     "getMoreOptions": "Расширенная информация",
-    "encryptionKeys": "Скачать ключи шифрования"
+    "newLicenceAvailable": "Доступна новая лицензия",
+    "encryptionKeys": "Скачать ключи шифрования",
 }
