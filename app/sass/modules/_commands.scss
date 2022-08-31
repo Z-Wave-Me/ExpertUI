@@ -68,6 +68,9 @@
 .commands-body {
   flex: 1 1 auto;
 }
+input.commands-body {
+  padding: 6px 12px;
+}
 .command-disable {
   opacity: .7;
   background-color: initial;
