@@ -9,7 +9,7 @@ angApp.directive('zWaveMoreOptions', function (dataService, _, $http) {
         <button class="btn btn-primary" ng-click="setLicense()">{{_t('btn_licence_verify')}}</button>
       </div>
     `,
-    link: function ($scope, element, attrs) {
+    link: function ($scope) {
       $scope.zWaveMoreOptionsUUID = $scope.master['controller.data.uuid'].replace(/^0+/, '');
       const currentCrc = $scope.master['controller.data.firmware.caps.crc.value'];
       $scope.updatable = false;
@@ -19,7 +19,7 @@ angApp.directive('zWaveMoreOptions', function (dataService, _, $http) {
       }).then(
         function (data) {
           if (data) {
-            if (data.data.crc !== '0' && data.data.crc !== currentCrc) {
+            if (data.data.crc !== '0' && +data.data.crc !== currentCrc) {
               $scope.updatable = true;
             }
             $scope.setLicense = function () {
