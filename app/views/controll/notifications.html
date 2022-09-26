@@ -74,7 +74,7 @@
                         <label class="switcher" title="{{_t(v.statusString)}}"
                                ng-class="v.status ? 'ison':'isoff'"
                                ng-hide="rowSpinner['btn_all_of'] || rowSpinner['btn_all_on']"
-                               ng-click="setStatus(
+                               ng-click="$event.stopPropagation(); setStatus(
                                v.status?  v.urlToOff : v.urlToOn);
                                v.status = !v.status">
 
