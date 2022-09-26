@@ -113,10 +113,11 @@ appController.controller('NotificationController', function ($scope, $filter, $t
     /**
      * Set zwave data
      * @param {object} ZWaveAPIData
+     * @param alarms
      */
     function setData(ZWaveAPIData, alarms) {
         $scope.controllerId = ZWaveAPIData.controller.data.nodeId.value;
-
+        // console.log(ZWaveAPIData, alarms);
         // Loop throught devices
         angular.forEach(ZWaveAPIData.devices, function (node, nodeId) {
             if (nodeId == 255 || nodeId == $scope.controllerId || node.data.isVirtual.value) {
@@ -146,19 +147,18 @@ appController.controller('NotificationController', function ($scope, $filter, $t
                 obj['instanceId'] = instanceId;
                 obj['name'] = $filter('deviceName')(nodeId, node);
                 obj['version'] = version;
-                if (version > 1) {
-                    notificationV2(obj, hasNotification.data, alarms);
-                } else {
-                    notificationV1(obj, hasNotification.data);
-                }
-
-
+                // if (version > 1) {
+                    notificationV2(obj, hasNotification.data);
+                // } else {
+                //     notificationV1(obj, hasNotification.data);
+                // }
             });
         });
     }
 
     /**
      * Set notifications version 1
+     * @param node
      * @param {object} data
      */
     function notificationV1(node, data) {
@@ -181,7 +181,7 @@ appController.controller('NotificationController', function ($scope, $filter, $t
         obj['statusString'] = '-';
         obj['invalidateTime'] = data.V1event.alarmType.invalidateTime;
         obj['updateTime'] = data.V1event.alarmType.updateTime;
-        obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
+        obj['isUpdated'] = obj['updateTime'] > obj['invalidateTime'];
         obj['dateTime'] = $filter('getDateTimeObj')(data.V1event.alarmType.updateTime,obj['updateTime']);
         obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[' + obj['instanceId'] + '].commandClasses[113].Get(' + typeId + ')';
         //console.log(obj)
@@ -195,59 +195,78 @@ appController.controller('NotificationController', function ($scope, $filter, $t
     }
 
 
+    function notificationV2Converter({
+                                         typeId,
+                                         typeString,
+                                         enableAlarms,
+                                         children,
+                                     }, node) {
+        const obj = {
+            id: node.id,
+            idSort: $filter('zeroFill')(node.id),
+            rowId: node.rowId + typeId,
+            instanceId: node.instanceId,
+            name: node.name,
+            version: node.version,
+            typeId,
+            children,
+            lastTriggeredEvent: children.filter(({status}) => status).reduce((prev, curr) => prev.updateTime > curr.updateTime ? prev : curr, {}),
+            typeString,
+            status: enableAlarms,
+            urlToOn: 'devices[' + node.id + '].instances[' + node.instanceId + '].commandClasses[113].Set(' + typeId + ',255)',
+            urlToOff: 'devices[' + node.id + '].instances[' + node.instanceId + '].commandClasses[113].Set(' + typeId + ',0)',
+            urlToStore: 'devices[' + node.id + '].instances[' + node.instanceId + '].commandClasses[113].Get(' + typeId + ')'
+        };
+        const findIndex = _.findIndex($scope.notifications.all, {rowId: obj.rowId});
+        if (findIndex > -1) {
+            angular.extend($scope.notifications.all[findIndex], obj);
+
+        } else {
+            $scope.notifications.all.push(obj);
+        }
+    }
+
     /**
      * Set notifications version 2
+     * @param node
      * @param {object} data
+     * @param alarms
      */
-    function notificationV2(node, data, alarms) {
-        angular.forEach(data, function (v, k) {
-            var typeId = parseInt(k, 10);
-            if (isNaN(typeId)) {
-                return;
+    function notificationV2(node, data) {
+        Object.entries(data).filter(([key]) => !isNaN(+key)).map(([typeId, value]) => {
+            const {typeString: {value: typeString}, status: {value: enableAlarms}} = value;
+            // TODO no more needed 26.09.2022
+            // const typeHex = $filter('decToHex')(typeId, 2, '0x');
+            // const eventHex = $filter('decToHex')(eventId, 2, '0x');
+            // const alarm = _.findWhere(alarms, {_id: typeHex});
+            // if (alarm) {
+            //     typeString = deviceService.configGetZddxLang(alarm.name.lang, $scope.lang);
+            //     const event = _.findWhere(alarm.Event, {_id: eventHex});
+            //     if (event) {
+            //         eventString = deviceService.configGetZddxLang(event.name.lang, $scope.lang);
+            //     }
+            // }
+            // console.log(typeId, eventId, status);
+            return {
+                typeId,
+                typeString,
+                enableAlarms,
+                children: Object.entries(value).filter(([key]) => !isNaN(+key))
+                  .map(([eventId, {
+                      eventString: {value: eventString},
+                      status: {updateTime, invalidateTime, value: status},
+                      isState: {value: isState}
+                  }]) => ({
+                      eventId,
+                      eventString,
+                      status,
+                      updateTime,
+                      isState,
+                      isUpdated: updateTime > invalidateTime,
+                      dateTime: $filter('getDateTimeObj')(updateTime, invalidateTime),
+                  })),
             }
-            var typeHex = $filter('decToHex')(typeId, 2, '0x');
-            var eventHex = $filter('decToHex')(v.event.value, 2, '0x');
-            var typeString = v.typeString.value;
-            var eventString = v.eventString.value;
-            var status= parseInt(v.status.value, 10);
-            var statusSet= status ? 0 : 255;
-            var alarm = _.findWhere(alarms, {_id: typeHex});
-            if (alarm) {
-                typeString = deviceService.configGetZddxLang(alarm.name.lang, $scope.lang);
-                var event = _.findWhere(alarm.Event, {_id: eventHex});
-                if (event) {
-                    eventString = deviceService.configGetZddxLang(event.name.lang, $scope.lang);
-                }
-            }
-
-            var obj = {};
-            obj['id'] = node.id;
-            obj['idSort'] = $filter('zeroFill')(node.id);
-            obj['rowId'] = node.rowId + typeId;
-            obj['instanceId'] = node.instanceId;
-            obj['name'] = node.name;
-            obj['version'] = node.version;
-            obj['typeId'] = typeId;
-            obj['typeString'] = typeString;
-            obj['event'] = v.event.value;
-            obj['eventString'] = eventString;
-            obj['status'] = v.status.value;
-            obj['statusString'] = (v.status.value === 255 ? 'on' : 'off');
-            obj['invalidateTime'] = v.invalidateTime;
-            obj['updateTime'] = v.updateTime;
-            obj['isUpdated'] = ((obj['updateTime'] > obj['invalidateTime']) ? true : false);
-            obj['dateTime'] = $filter('getDateTimeObj')(obj['updateTime'],obj['invalidateTime']);
-            obj['urlToStore'] = 'devices[' + obj['id'] + '].instances[' + obj['instanceId'] + '].commandClasses[113].Get(' + typeId + ')';
-            obj['urlToOn'] = 'devices[' + obj['id'] + '].instances[' + obj['instanceId'] + '].commandClasses[113].Set(' + typeId + ',255)';
-            obj['urlToOff'] = 'devices[' + obj['id'] + '].instances[' + obj['instanceId'] + '].commandClasses[113].Set(' + typeId + ',0)';
-            //console.log(obj)
-            var findIndex = _.findIndex($scope.notifications.all, {rowId: obj.rowId});
-            if (findIndex > -1) {
-                angular.extend($scope.notifications.all[findIndex], obj);
-
-            } else {
-                $scope.notifications.all.push(obj);
-            }
-        });
+        })
+          .map((data) => notificationV2Converter(data, node));
     }
 });

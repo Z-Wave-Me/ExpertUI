@@ -813,5 +813,7 @@
     "copy_to_clipboard_success": "Скопировано в буфер",
     "getMoreOptions": "Расширенная информация",
     "newLicenceAvailable": "Доступна новая лицензия",
-    "encryptionKeys": "Скачать ключи шифрования",
+    "idle": "Бездействующий",
+    "triggered": "Запущенный",
+    "encryptionKeys": "Скачать ключи шифрования"
 }

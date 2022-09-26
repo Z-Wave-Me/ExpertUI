@@ -815,5 +815,7 @@
     "copy_to_clipboard_success": "Copy to clipboard",
     "getMoreOptions": "Get more options",
     "newLicenceAvailable": "New licence available",
+    "idle": "Idle",
+    "triggered": "Triggered",
     "encryptionKeys": "Download Encryption Keys"
 }

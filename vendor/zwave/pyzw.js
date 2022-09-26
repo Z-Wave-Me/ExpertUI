@@ -55,7 +55,7 @@ function method_defaultValues(ZWaveAPIData,method) {
 //	method.forEach(function(val,parameter_index){
 //		parameters[parameter_index] = method_defaultValue(val);
 //	});
-        angular.forEach(method,function(val,parameter_index){
+	angular.forEach(method,function(val,parameter_index){
 		parameters[parameter_index] = method_defaultValue(val);
 	});
        
