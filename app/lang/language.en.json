@@ -817,5 +817,9 @@
     "newLicenceAvailable": "New licence available",
     "idle": "Idle",
     "triggered": "Triggered",
+    "lastEvent": "Last Event",
+    "collapseAll": "Collapse All",
+    "expandAll": "Expand All",
+    "expandLabel": "Expand by default",
     "encryptionKeys": "Download Encryption Keys"
 }

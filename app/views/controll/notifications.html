@@ -2,6 +2,19 @@
 <div ng-controller="NotificationController">
     <div class="page-header"><h1>{{_t('notifications')}}</h1></div>
     <bb-alert alert="alert"></bb-alert>
+    <div style="    display: flex;
+    align-items: center;
+    gap: 1rem;">
+        <span>{{_t('expandLabel')}}</span>
+        <label class="switcher" title="{{notificationsExpand ? _t('collapseAll') : _t('expandAll')}}"
+               ng-class="notificationsExpand ? 'ison':'isoff'"
+               ng-click="toggleDefault()">
+            <div class="switcher-slider round">
+                <span class="switcher-slider-in">{{notificationsExpand ? 'I':'0'}}</span>
+            </div>
+        </label>
+    </div>
+
     <div id="table_mobile" ng-if="notifications.show">
         <table class="table table-striped table-condensed table-hover">
             <thead>
@@ -23,7 +36,7 @@
                 <!-- event -->
                 <th>
                     <sort-by callback="orderBy(field)" obj="orderByArr" field="'eventString'"
-                             label="_t('event')"></sort-by>
+                             label="_t('lastEvent')"></sort-by>
                 </th>
                 <!-- time -->
                 <th>
@@ -53,7 +66,7 @@
             </thead>
             <tbody>
             <tr ng-repeat-start="v in notifications.all | orderBy:predicate:reverse track by $index" id="{{v.rowId}}"
-            ng-init="collapse = false" ng-click="collapse = !collapse" style="cursor: pointer">
+            ng-init="collapse = notificationsExpand" ng-click="collapse = !collapse" style="cursor: pointer">
                 <!-- id -->
                 <td data-title="#">{{v.id}}<span ng-show="v.instanceId != 0">.{{v.instanceId}}</span></td>
                 <!-- name -->

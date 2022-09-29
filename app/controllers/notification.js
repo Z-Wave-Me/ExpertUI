@@ -8,13 +8,13 @@
  * @class NotificationController
  *
  */
-appController.controller('NotificationController', function ($scope, $filter, $timeout, $interval, dataService, cfg, deviceService, _) {
+appController.controller('NotificationController', function ($scope, $filter, $timeout, $interval, dataService, cfg, deviceService, $cookies, $route, _) {
     $scope.notifications = {
         all: [],
         interval: null,
         show: false
     };
-
+    $scope.notificationsExpand = $cookies.notificationsExpand !== 'collapsed';
     /**
      * Cancel interval on page destroy
      */
@@ -268,5 +268,9 @@ appController.controller('NotificationController', function ($scope, $filter, $t
             }
         })
           .map((data) => notificationV2Converter(data, node));
+    }
+    $scope.toggleDefault = function () {
+        $cookies.notificationsExpand = $cookies.notificationsExpand === 'expanded' ? 'collapsed' : 'expanded';
+        $route.reload();
     }
 });
