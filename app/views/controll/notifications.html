@@ -118,10 +118,10 @@
                     </button>
                 </td>
                 <td style="    width: 3ch;
-    padding-top: 1.5ch;"><i class="fa accordion-arrow fa-chevron-down fa-lg command-arrow clickable"
+    padding-top: 1.5ch;"><i class="fa accordion-arrow fa-chevron-down fa-lg command-arrow clickable" ng-if="v.children.length"
                        ng-class="{'rotated': collapse}" style="line-height: 138%"></i></td>
             </tr>
-            <tr ng-repeat-end ng-if="collapse">
+            <tr ng-repeat-end ng-if="collapse && v.children.length">
                 <td></td>
                 <td colspan="100%" style="padding: 0">
                     <table class="table table-striped table-condensed table-hover">
