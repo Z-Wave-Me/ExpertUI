@@ -200,6 +200,8 @@ appController.controller('NotificationController', function ($scope, $filter, $t
                                          typeString,
                                          enableAlarms,
                                          children,
+                                         isUpdated,
+      dateTime
                                      }, node) {
         const obj = {
             id: node.id,
@@ -210,6 +212,8 @@ appController.controller('NotificationController', function ($scope, $filter, $t
             version: node.version,
             typeId,
             children,
+            isUpdated,
+            dateTime,
             lastTriggeredEvent: children.filter(({status}) => status).reduce((prev, curr) => prev.updateTime > curr.updateTime ? prev : curr, {}),
             typeString,
             status: enableAlarms,
@@ -234,7 +238,7 @@ appController.controller('NotificationController', function ($scope, $filter, $t
      */
     function notificationV2(node, data) {
         Object.entries(data).filter(([key]) => !isNaN(+key)).map(([typeId, value]) => {
-            const {typeString: {value: typeString}, status: {value: enableAlarms}} = value;
+            const {typeString: {value: typeString}, status: {value: enableAlarms}, updateTime, invalidateTime} = value;
             // TODO no more needed 26.09.2022
             // const typeHex = $filter('decToHex')(typeId, 2, '0x');
             // const eventHex = $filter('decToHex')(eventId, 2, '0x');
@@ -251,6 +255,8 @@ appController.controller('NotificationController', function ($scope, $filter, $t
                 typeId,
                 typeString,
                 enableAlarms,
+                isUpdated: updateTime > invalidateTime,
+                dateTime: $filter('getDateTimeObj')(updateTime, invalidateTime),
                 children: Object.entries(value).filter(([key]) => !isNaN(+key))
                   .map(([eventId, {
                       eventString: {value: eventString},
