@@ -1,19 +1,40 @@
-<div class="cfg-block" ng-if="hasConfigurationCc.command" ng-controller="ConfigCommandsController">
+<div class="cfg-block" ng-controller="ConfigCommandsController" ng-if="hasConfigurationCc.command">
     <h4>{{hasConfigurationCc.commandClass}}</h4>
     <div ng-if="!errorOnLoad">
-        <div  ng-if="configCommands.version" ng-init="command = configCommands">
-            <z-wave-expert-command
-                ng-repeat="(k, m) in command.methods track by $index"
-                data="m.fields"
-                options="{
-                   action:k,
-                   parent: command.name,
-                   path: command.path,
-                   type: m.type,
-                   store: selfExcludedStore,
-                   accessor: m.accessor
-                   }">
-            </z-wave-expert-command>
+        <div ng-if="configCommands.version"
+             ng-init="command = configCommands;
+                mobileHidden = true;
+                haveTable = _.size(dataHolder.ccTable[command.name + '@' + command.instance].table)"
+        >
+            <div class="commands-table"
+                 hm-recognizer-options='[
+                                        {"type":"swipe","directions":"DIRECTION_HORIZONTAL"}
+                                    ]'
+                 hm-swipeleft="mobileHidden = true"
+                 hm-swiperight="mobileHidden = false">
+
+                <div ng-class="{'mobile-hidden': mobileHidden}">
+                    <z-wave-command-data-viewer
+                            data="dataHolder.ccTable[command.name + '@' + command.instance].table"
+                            options="{style: locationOptions.commandStyle}"></z-wave-command-data-viewer>
+                </div>
+                <div class="side-panel label label-default mobile-only"
+                     ng-if="haveTable"
+                     ng-show="mobileHidden">
+                    <i class="fa fa-lg fa-angle-right swipe-arrow"></i>
+                </div>
+                <div>
+                    <z-wave-expert-command data="m.fields"
+                                           ng-repeat="(k, m) in command.methods track by $index"
+                                           options="{
+                                                action:k,
+                                                parent: command.name,
+                                                path: command.path,
+                                                type: m.type,
+                                                accessor: m.accessor
+                                                       }"></z-wave-expert-command>
+                </div>
+            </div>
         </div>
         <div ng-if="!configCommands.version">
             <configuration-config ng-repeat="data in configCommands | orderBy: 'index'" data="data"></configuration-config>

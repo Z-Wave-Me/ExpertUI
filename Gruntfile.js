@@ -1,3 +1,83 @@
+const zlib = require("zlib");
+const projectFiles = (app) => [
+    // Vendors
+    'vendor/justgagejs/justgage.js',
+    // Z-Wave old ExpertU
+    'vendor/zwave/pyzw.js',
+    'vendor/zwave/pyzw_zwave_ui.js',
+    // App
+    'app/app.js',
+    'app/routes.js',
+    app.dir + '/app/js/templates.js',
+    // Modules
+    'app/modules/qAllSettled.js',
+    // Directives
+    'app/directives/directives.js',
+    'app/directives/angular-slider.js',
+    'app/directives/dir-pagination.js',
+    'app/directives/double-scroll-bars.min.js',
+    'app/directives/share/clipboard-copy.directive.js',
+    'app/directives/configuration/expert-command.directive.js',
+    'app/directives/configuration/menu.directive.js',
+    'app/directives/network/encryption-keys.directive.js',
+    'app/directives/network/controller-info.directive.js',
+    //Filters
+    'app/filters/filters.js',
+    //Services
+    'app/factories/factories.js',
+    'app/services/services.js',
+    'app/services/data-holder.service.js',
+    'app/services/configuration-commands.service.js',
+    // Controllers
+    'app/controllers/base.js',
+    'app/controllers/controllers.js',
+    'app/controllers/expert_config.js',
+    'app/controllers/auth.js',
+    'app/controllers/settings.js',
+    'app/controllers/settings.js',
+    'app/controllers/dongle.js',
+    'app/controllers/switch.js',
+    'app/controllers/sensor.js',
+    'app/controllers/meter.js',
+    'app/controllers/thermostat.js',
+    'app/controllers/lock.js',
+    'app/controllers/notification.js',
+    'app/controllers/status.js',
+    'app/controllers/battery.js',
+    'app/controllers/type.js',
+    'app/controllers/association.js',
+    'app/controllers/control.js',
+    'app/controllers/smartstart_dsk_entry.js',
+    'app/controllers/smartstart_dsk_list.js',
+    'app/controllers/smartstart_qr.js',
+    'app/controllers/statistics.js',
+    'app/controllers/neighbor.js',
+    'app/controllers/reorganization.js',
+    'app/controllers/timing.js',
+    'app/controllers/linkstatus.js',
+    'app/controllers/packets.js',
+    'app/controllers/reset-statistic.js',
+    'app/controllers/rssi-report.controller.js',
+    'app/controllers/controllerinfo.js',
+    'app/controllers/queue.js',
+    'app/controllers/interviewcommand.js',
+    'app/controllers/license.js',
+    'app/controllers/uzb.js',
+    'app/controllers/zniffer.js',
+    'app/controllers/routemap.js',
+    'app/controllers/networkmap.js',
+    'app/controllers/home.js',
+    'app/controllers/configuration.js',
+    'app/controllers/configuration_interview.js',
+    'app/controllers/configuration_configuration.js',
+    'app/controllers/configuration-commands.js',
+    'app/controllers/configuration_association.js',
+    'app/controllers/configuration_firmware.js',
+    'app/controllers/configuration_health.js',
+    'app/controllers/configuration_postfix.js',
+    'app/controllers/rssi-report.controller.js',
+    'app/jquery/jquery-app.js']
+
 module.exports = function (grunt) {
     // Application type : default/installer
     var pkg = grunt.file.readJSON('package.json');
@@ -19,7 +99,9 @@ module.exports = function (grunt) {
         // Clean dir
         clean: {
             options: {force: true},
-            build: [app_cfg.dir + '/']
+            build: [app_cfg.dir + '/'],
+            doc: ['dist/storage/data/docs/'],
+            tmp: ['./tmp']
         },
         // NG templates
         ngtemplates: {
@@ -50,6 +132,10 @@ module.exports = function (grunt) {
                 ],
                 dest: app_cfg.dir + '/app/css/build.css'
             },
+            custom: {
+              src: projectFiles(app_cfg),
+              dest: './tmp/bundle.js'
+            },
             js: {
                 src: [
                     // Vendors
@@ -57,7 +143,6 @@ module.exports = function (grunt) {
                     'vendor/underscore/underscore-1.8.3/underscore-min.js',
                     'vendor/cytoscape/cytoscape.min.js',
                     'vendor/justgagejs/raphael-2.1.4.min.js',
-                    'vendor/justgagejs/justgage.js',
                     'vendor/upload/angular-file-upload-shim.min.js',
                     'vendor/alertify/alertify.min.js',
                     'vendor/qrcode/qrcode.min.js',
@@ -78,84 +163,10 @@ module.exports = function (grunt) {
                     'vendor/bootstrap/bootstrap.min.js',
                     // XML
                     'vendor/xml/xml2json.min.js',
-                    // Z-Wave old ExpertU
-                    'vendor/zwave/pyzw.js',
-                    'vendor/zwave/pyzw_zwave_ui.js',
                     // CANVAS JS
                     'vendor/canvasjs/canvasjs.min.js',
                     // APP
-                    'app/app.js',
-                    'app/routes.js',
-                    app_cfg.dir + '/app/js/templates.js',
-                    // Modules
-                    'app/modules/qAllSettled.js',
-                    // Directives
-                    'app/directives/directives.js',
-                    'app/directives/angular-slider.js',
-                    'app/directives/dir-pagination.js',
-                    'app/directives/double-scroll-bars.min.js',
-                    'app/directives/share/clipboard-copy.directive.js',
-                    'app/directives/configuration/expert-command.directive.js',
-                    'app/directives/configuration/menu.directive.js',
-                    'app/directives/network/encryption-keys.directive.js',
-                    'app/directives/network/controller-info.directive.js',
-                    //Filters
-                    'app/filters/filters.js',
-                    //Services
-                    'app/factories/factories.js',
-                    'app/services/services.js',
-                    'app/services/data-holder.service.js',
-                    'app/services/configuration-commands.service.js',
-                    // Controllers
-                    'app/controllers/base.js',
-                    'app/controllers/controllers.js',
-                    'app/controllers/expert_config.js',
-                    'app/controllers/auth.js',
-                    'app/controllers/settings.js',
-                    'app/controllers/settings.js',
-                    'app/controllers/dongle.js',
-                    'app/controllers/switch.js',
-                    'app/controllers/sensor.js',
-                    'app/controllers/meter.js',
-                    'app/controllers/thermostat.js',
-                    'app/controllers/lock.js',
-                    'app/controllers/notification.js',
-                    'app/controllers/status.js',
-                    'app/controllers/battery.js',
-                    'app/controllers/type.js',
-                    'app/controllers/association.js',
-                    'app/controllers/control.js',
-                    'app/controllers/smartstart_dsk_entry.js',
-                    'app/controllers/smartstart_dsk_list.js',
-                    'app/controllers/smartstart_qr.js',
-                    'app/controllers/statistics.js',
-                    'app/controllers/neighbor.js',
-                    'app/controllers/reorganization.js',
-                    'app/controllers/timing.js',
-                    'app/controllers/linkstatus.js',
-                    'app/controllers/packets.js',
-                    'app/controllers/reset-statistic.js',
-                    'app/controllers/rssi-report.controller.js',
-                    'app/controllers/controllerinfo.js',
-                    'app/controllers/queue.js',
-                    'app/controllers/interviewcommand.js',
-                    'app/controllers/license.js',
-                    'app/controllers/uzb.js',
-                    'app/controllers/zniffer.js',
-                    'app/controllers/routemap.js',
-                    'app/controllers/networkmap.js',
-                    'app/controllers/home.js',
-                    'app/controllers/configuration.js',
-                    'app/controllers/configuration_interview.js',
-                    'app/controllers/configuration_configuration.js',
-                    'app/controllers/configuration-commands.js',
-                    'app/controllers/configuration_association.js',
-                    'app/controllers/configuration_firmware.js',
-                    'app/controllers/configuration_health.js',
-                    'app/controllers/configuration_postfix.js',
-                    'app/controllers/rssi-report.controller.js',
-                    'app/jquery/jquery-app.js'
-
+                    'tmp/bundle.babel.min.js'
                 ],
                 dest: app_cfg.dir + '/app/js/build.js'
             }
@@ -171,6 +182,19 @@ module.exports = function (grunt) {
                 }
             }
         },
+        compress: {
+            build: {
+                options: {
+                    mode: 'gzip',
+                    level: zlib.constants.Z_BEST_COMPRESSION,
+                },
+                expand: true,
+                cwd: 'dist/',
+                src: ['**/*.{js,css,html,json,ico}'],
+                dest: 'dist/',
+                ext: (ext) =>  ext + '.gz'
+            },
+        },
         // Copy
         copy: {
             main: {
@@ -185,9 +209,6 @@ module.exports = function (grunt) {
                     },
                     {src: ['storage/**'], dest: app_cfg.dir + '/'},
                     {expand: true, src: ['app/config.js'], dest: app_cfg.dir + '/app/js/', flatten: true}
-                    /*{src: ['storage/img/**'], dest: app_cfg.dir + '/'},
-                     {src: ['storage/demo/**'], dest: app_cfg.dir + '/'},
-                     {src: ['storage/data/**'], dest: app_cfg.dir + '/'}*/
                 ]
             },
             info: {
@@ -230,7 +251,7 @@ module.exports = function (grunt) {
         },
         //CSSS min
         cssmin: {
-            my_target: {
+            build: {
                 options: {
                     banner: '/* <%= banner %> */',
                     keepSpecialComments: 0
@@ -329,21 +350,6 @@ module.exports = function (grunt) {
                 ]
             }
         },
-        modify_json: {
-            file: {
-                expand: true,
-                //cwd: 'test/',
-                src: ['package.json'],
-                options: {
-                    add: true,
-                    fields: {
-                        "rc": app_rc,
-                        "built": '<%= grunt.template.today("dd-mm-yyyy HH:MM:ss") %>'
-                    },
-                    indent: 2
-                }
-            }
-        },
         'release-it': {
             options: {
                 pkgFiles: ['package.json'],
@@ -353,10 +359,26 @@ module.exports = function (grunt) {
                 buildCommand: false
             }
         },
-        clean: {
-            options: {force: true},
-            build: ['dist/storage/data/docs/']
-        }
+        uglify : {
+            build: {
+                files: {
+                    './tmp/bundle.babel.min.js': './tmp/bundle.babel.js'
+                }
+            }
+        },
+        babel: {
+            options: {
+                presets: [ "@babel/preset-env"],
+                plugins: ['angularjs-annotate'],
+                compact : true
+            },
+            dist: {
+                files: {
+                    './tmp/bundle.babel.js':'./tmp/bundle.js',
+                },
+            },
+        },
+
     });
     // Load the plugin that provides the "uglify" task.
     grunt.loadNpmTasks('grunt-contrib-clean');
@@ -374,9 +396,25 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-html-build');
     grunt.loadNpmTasks('grunt-replace');
     grunt.loadNpmTasks('grunt-release-it');
-    grunt.loadNpmTasks('grunt-modify-json');
+    grunt.loadNpmTasks('grunt-babel');
+    grunt.loadNpmTasks('grunt-contrib-compress');
 
-    // Default task(s).
-    //grunt.registerTask('default', ['clean','concat','copy','cssmin','string-replace']);
-    grunt.registerTask('default', ['clean', 'ngtemplates', 'concat', 'json_generator', 'copy', 'cssmin', 'usebanner', 'htmlbuild', 'replace', 'modify_json', 'clean']);
+
+    grunt.registerTask('default', [
+      'clean:build',
+        'ngtemplates',
+        'concat:custom',
+        'babel',
+        'uglify:build',
+        'concat:css',
+        'concat:js',
+        'json_generator',
+        'copy',
+        'cssmin',
+        'usebanner',
+        'htmlbuild',
+        'replace',
+        'clean:doc',
+        'clean:tmp',
+        'compress:build']);
 };

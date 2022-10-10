@@ -41,12 +41,16 @@ appController.controller('ConfigCommandsController', function ($scope, $routePar
         $element.find('.collapse').removeClass('in');
         Object.keys($scope.expanded).map(key => $scope.expanded[key] = false)
     }
+    function smartConfigEnable(configCommands) {
+        return (configCommands?.version >= 3) && !Object.keys(configCommands).some((el) => !isNaN(+el));
+    }
+
     function onInit() {
         configurationCommandsService.init($routeParams.nodeId).then(function (commands) {
             $scope.commandsUpdated = commands;
             $scope.node = configurationCommandsService.node();
             const configCommands = commands.find(({instance, ccId}) =>  ccId === 112 && instance === 0);
-            if (configCommands?.version >= 3) $scope.configCommands = configurationCommandsService.getConfigCommands($routeParams.nodeId);
+            if (smartConfigEnable(configCommands)) $scope.configCommands = configurationCommandsService.getConfigCommands($routeParams.nodeId);
             else $scope.configCommands = configCommands;
         }).catch(() => {
             $scope.alert = {

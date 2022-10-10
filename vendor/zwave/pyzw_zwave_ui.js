@@ -1,6 +1,6 @@
 var _methods_specs_rendered = null;
 
-function getMethodSpec(ZWaveAPIData,devId, instId, ccId, method) {
+function getMethodSpec(ZWaveAPIData,devId, instId, ccId, method, property) {
 	if (_methods_specs_rendered === null) {
 		renderAllMethodSpec(ZWaveAPIData);
 	}
@@ -20,7 +20,9 @@ function getMethodSpec(ZWaveAPIData,devId, instId, ccId, method) {
 		if (method) {
 			return methods[method];
 		} else {
-			return methods;
+			return Object.fromEntries(Object.entries(methods).filter(function ([key, _]) {
+				return property ? key === 'data' : key !== 'data';
+			}))
 		}
 	} catch(err) {
 		return null;
@@ -1228,7 +1230,7 @@ function renderMethodSpec(ccId, data) {
 				"StopLevelChange": []
 			};
 
-		// SwtichBinary
+		// SwitchBinary
 		case 0x25:
 			return {
 				"Get": [],
@@ -2128,7 +2130,7 @@ function renderMethodSpec(ccId, data) {
 										"range": {
 											"min": 	1,
 											"max": 127,
-										"shift": 	127
+											"shift": 	127
 										}
 									}
 								},

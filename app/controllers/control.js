@@ -322,8 +322,8 @@ appController.controller('ControlController', function ($scope, $interval, $time
         var hasSUC = ZWaveAPIData.controller.data.SUCNodeId.value;
         var hasDevices = Object.keys(ZWaveAPIData.devices).length;
         var limitReached = ZWaveAPIData.controller.data.manufacturerId.value != 0x147 && ((ZWaveAPIData.controller.data.firmware.caps.value[0] == 0 && ZWaveAPIData.controller.data.firmware.caps.value[1] == 0) || Object.keys(ZWaveAPIData.devices).length >= ZWaveAPIData.controller.data.firmware.caps.value[2]);
-        var longRangeEnabled = ZWaveAPIData.controller.data.longRange && ZWaveAPIData.controller.data.longRange.enabled.value || false;
-        var longRangeInclusion = ZWaveAPIData.controller.data.longRange && ZWaveAPIData.controller.data.longRange.inclusion.value || false;
+        var longRangeEnabled = ZWaveAPIData.controller.data.longRange && ZWaveAPIData.controller.data.longRange.enabled.value;
+        var longRangeInclusion = ZWaveAPIData.controller.data.longRange && ZWaveAPIData.controller.data.longRange.inclusion.value;
         var controllerState = ZWaveAPIData.controller.data.controllerState.value;
         var joiningS2 = $filter('hasNode')(ZWaveAPIData,'devices.' + nodeId + '.data.joiningS2.value');
         var publicKey = $filter('hasNode')(ZWaveAPIData,'devices.' + nodeId + '.data.publicKey.value');

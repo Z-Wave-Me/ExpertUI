@@ -2,6 +2,19 @@
 <div ng-controller="NotificationController">
     <div class="page-header"><h1>{{_t('notifications')}}</h1></div>
     <bb-alert alert="alert"></bb-alert>
+    <div style="    display: flex;
+    align-items: center;
+    gap: 1rem;">
+        <span>{{_t('expandLabel')}}</span>
+        <label class="switcher" title="{{notificationsExpand ? _t('collapseAll') : _t('expandAll')}}"
+               ng-class="notificationsExpand ? 'ison':'isoff'"
+               ng-click="toggleDefault()">
+            <div class="switcher-slider round">
+                <span class="switcher-slider-in">{{notificationsExpand ? 'I':'0'}}</span>
+            </div>
+        </label>
+    </div>
+
     <div id="table_mobile" ng-if="notifications.show">
         <table class="table table-striped table-condensed table-hover">
             <thead>
@@ -23,7 +36,7 @@
                 <!-- event -->
                 <th>
                     <sort-by callback="orderBy(field)" obj="orderByArr" field="'eventString'"
-                             label="_t('event')"></sort-by>
+                             label="_t('lastEvent')"></sort-by>
                 </th>
                 <!-- time -->
                 <th>
@@ -48,10 +61,12 @@
                         </bb-row-spinner>
                     </button>
                 </th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="v in notifications.all | orderBy:predicate:reverse track by $index" id="{{v.rowId}}">
+            <tr ng-repeat-start="v in notifications.all | orderBy:predicate:reverse track by $index" id="{{v.rowId}}"
+            ng-init="collapse = notificationsExpand" ng-click="collapse = !collapse" style="cursor: pointer">
                 <!-- id -->
                 <td data-title="#">{{v.id}}<span ng-show="v.instanceId != 0">.{{v.instanceId}}</span></td>
                 <!-- name -->
@@ -59,23 +74,26 @@
                 <!-- notification -->
                 <td data-title="{{ _t('notification')}}" title="{{v.typeId}}">{{v.typeString}}</td>
                 <!-- event -->
-                <td data-title="{{ _t('event')}}" title="{{v.event}}">{{v.eventString}}</td>
+                <td data-title="{{ _t('event')}}" title="{{v.event}}">
+                    {{v.lastTriggeredEvent.eventString}}
+<!--                    <z-wave-notification-event event="v"></z-wave-notification-event>-->
+                </td>
                 <!-- time -->
                 <td data-title="{{ _t('datetime')}}">
                     <bb-date-time obj="v.dateTime" updated="v.isUpdated"></bb-date-time>
                 </td>
                 <!-- status -->
                 <td data-title="{{ _t('nav_status')}}">
-                    <div ng-if="v.version >1">
+                                        <div ng-if="v.version > 1">
                         <label class="switcher" title="{{_t(v.statusString)}}"
-                               ng-class="v.status === 255 ? 'ison':'isoff'"
+                               ng-class="v.status ? 'ison':'isoff'"
                                ng-hide="rowSpinner['btn_all_of'] || rowSpinner['btn_all_on']"
-                               ng-click="setStatus(
-                               v.status === 255?  v.urlToOff : v.urlToOn);
-                               v.status = (v.status === 255 ?  0 : 255)">
+                               ng-click="$event.stopPropagation(); setStatus(
+                               v.status?  v.urlToOff : v.urlToOn);
+                               v.status = !v.status">
 
                             <div class="switcher-slider round">
-                                <span class="switcher-slider-in">{{v.status === 255 ? 'I':'0'}}</span>
+                                <span class="switcher-slider-in">{{v.status ? 'I':'0'}}</span>
                             </div>
                         </label>
 
@@ -98,6 +116,52 @@
 
                         </bb-row-spinner>
                     </button>
+                </td>
+                <td style="    width: 3ch;
+    padding-top: 1.5ch;"><i class="fa accordion-arrow fa-chevron-down fa-lg command-arrow clickable" ng-if="v.children.length"
+                       ng-class="{'rotated': collapse}" style="line-height: 138%"></i></td>
+            </tr>
+            <tr ng-repeat-end ng-if="collapse && v.children.length">
+                <td></td>
+                <td colspan="100%" style="padding: 0">
+                    <table class="table table-striped table-condensed table-hover">
+                        <thead>
+                        <tr>
+                            <th>
+                                #
+                            </th>
+                            <th>
+                                {{_t('event')}}
+                            </th>
+                            <th>
+                                {{ _t('nav_status')}}
+                            </th>
+                            <th>
+                                Last time changed
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in v.children track by $index">
+                            <td>
+                                {{item.eventId}}
+                            </td>
+                            <td>
+                                {{item.eventString}}
+                            </td>
+                            <td>
+                                <span ng-if="item.isState">
+                                    <span ng-class="{'text-danger': item.status}">
+                                        {{ item.status ? _t('triggered') : _t('idle')}}
+                                    </span>
+                                </span>
+                            </td>
+                            <td>
+                                <bb-date-time obj="item.dateTime" updated="item.isUpdated"></bb-date-time>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </td>
             </tr>
             </tbody>

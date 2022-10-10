@@ -27469,7 +27469,7 @@ http://codepen.io/MattIn4D/pen/LiKFC
 }
 
 input.commands-body {
-  padding: var(--space);
+  padding: 6px 12px;
 }
 
 .command-disable {

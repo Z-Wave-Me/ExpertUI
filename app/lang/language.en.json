@@ -815,5 +815,11 @@
     "copy_to_clipboard_success": "Copy to clipboard",
     "getMoreOptions": "Get more options",
     "newLicenceAvailable": "New licence available",
+    "idle": "Idle",
+    "triggered": "Triggered",
+    "lastEvent": "Last Event",
+    "collapseAll": "Collapse All",
+    "expandAll": "Expand All",
+    "expandLabel": "Expand by default",
     "encryptionKeys": "Download Encryption Keys"
 }
