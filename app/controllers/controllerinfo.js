@@ -109,7 +109,7 @@ appController.controller('ControllerController', function($scope, $window, $filt
         $scope.master['controller.data.majorSDK'] = ZWaveAPIData.controller.data.SDK.value.split('.')[0];
         $scope.master['controller.data.APIVersion'] = ZWaveAPIData.controller.data.APIVersion.value;
         $scope.master['controller.data.uuid'] = ZWaveAPIData.controller.data.uuid.value;
-        $scope.master['controller.data.uuid16'] = ZWaveAPIData.controller.data.uuid.value.substring(16);
+        $scope.master['controller.data.uuid16'] = ZWaveAPIData.controller.data.uuid.value ? ZWaveAPIData.controller.data.uuid.value.substring(16) : null;
         if (ZWaveAPIData.controller.data.firmware.caps.maxNodes.value) {
             $scope.master['controller.data.firmware.caps.subvendor'] = '0x' + dec2hex((ZWaveAPIData.controller.data.firmware.caps.value[0] << 8) + ZWaveAPIData.controller.data.firmware.caps.value[1]);
             $scope.master['controller.data.firmware.caps.nodes'] = ZWaveAPIData.controller.data.firmware.caps.maxNodes.value;
@@ -127,9 +127,11 @@ appController.controller('ControllerController', function($scope, $window, $filt
             $scope.master['controller.data.firmware.caps.pti'] = ZWaveAPIData.controller.data.firmware.caps.pti.value;
             $scope.master['controller.data.firmware.caps.modem'] = ZWaveAPIData.controller.data.firmware.caps.modem.value;
         } else {
-            $scope.master['controller.data.firmware.caps.subvendor'] = '0x' + dec2hex((ZWaveAPIData.controller.data.firmware.caps.value[0] << 8) + ZWaveAPIData.controller.data.firmware.caps.value[1]);
-            $scope.master['controller.data.firmware.caps.nodes'] = nodeLimit(dec2hex(ZWaveAPIData.controller.data.firmware.caps.value[2]).slice(-2));
-            $scope.master['controller.data.firmware.caps.cap'] = caps(ZWaveAPIData.controller.data.firmware.caps.value);
+            if (ZWaveAPIData.controller.data.firmware.caps.value) {
+                $scope.master['controller.data.firmware.caps.subvendor'] = '0x' + dec2hex((ZWaveAPIData.controller.data.firmware.caps.value[0] << 8) + ZWaveAPIData.controller.data.firmware.caps.value[1]);
+                $scope.master['controller.data.firmware.caps.nodes'] = nodeLimit(dec2hex(ZWaveAPIData.controller.data.firmware.caps.value[2]).slice(-2));
+                $scope.master['controller.data.firmware.caps.cap'] = caps(ZWaveAPIData.controller.data.firmware.caps.value);
+            }
         }
         $scope.master['controller.data.softwareRevisionVersion'] = ZWaveAPIData.controller.data.softwareRevisionVersion.value;
         $scope.master['controller.data.firmware.caps.crc.value'] = ZWaveAPIData.controller.data.firmware.caps.crc.value;
