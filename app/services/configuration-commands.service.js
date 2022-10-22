@@ -389,7 +389,7 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
   function packIt(targetField, data, key, value, cmd) {
     return {
       targetField,
-      data: value.value === null || value.value === '' ? '-': value.value,
+      data: value.value,
       key,
       updateTime: value.updateTime,
       isUpdated: value.updateTime > value.invalidateTime,
