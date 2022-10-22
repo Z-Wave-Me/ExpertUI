@@ -28,11 +28,23 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
       Alarm: {
         arrays: ['event', 'eventString', 'eventParameters', 'status']
       },
+      Meter: {
+        arrays: ['val']
+      },
+      SensorMultilevel: {
+        arrays: ['val']
+      },
       SensorBinary: {
         arrays: ['level']
       },
       ThermostatSetPoint: {
         arrays: ['val'],
+      },
+      ThermostatMode: {
+        values: ['mode']
+      },
+      ThermostatFanMode: {
+        values: ['mode', 'on']
       },
       Basic: {
         values: ['level']
@@ -49,8 +61,20 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
       SwitchAll: {
         values: ['mode'],
       },
+      CentralScene: {
+        values: ['currentScene', 'keyAttribute']
+      },
+      DoorLock: {
+        values: ['mode', 'targetMode', 'insideHandlesMode', 'outsideHandlesMode', 'latchLocked', 'boltLocked', 'doorClosed', 'remainingLockTimeout', 'duration', 'operationType', 'insideHandlesEnabled', 'outsideHandlesEnabled', 'lockTimeout', 'autolockTime', 'holdReleaseTime', 'twistAssist', 'blockToBlock']
+      },
+      UserCode: {
+        arrays: ['status', 'hasCode']
+      },
       Wakeup: {
         values: ['interval', 'nodeId']
+      },
+      Battery: {
+        values: ['last']
       },
       PowerLevel: {
         values: ['level', 'timeout']
