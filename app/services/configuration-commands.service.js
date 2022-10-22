@@ -330,11 +330,13 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
         const classCommands = Object.entries(instance.commandClasses)
           .reduce((acc, [ccId, {data, name}]) => {
             const methods = configureCommand(ccId, data);
+            const values = valueExtractor(data, self.serverCommand(name),
+                `devices[${nodeId}].instances[${instanceId}].commandClasses[${ccId}].data`);
             acc.push({
               ccId: +ccId,
               name,
               methods,
-              visible: !!Object.keys(methods).length,
+              visible: !!Object.keys(methods).length || !!Object.keys(values).length,
               instance: +instanceId,
               path: `devices[${nodeId}].instances[${instanceId}].commandClasses[${ccId}]`,
               version: data.version.value,
@@ -346,8 +348,7 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
               data,
               nodeData: instance.data,
               updateTime: node.data.updateTime,
-              table: valueExtractor(data, self.serverCommand(name),
-                `devices[${nodeId}].instances[${instanceId}].commandClasses[${ccId}].data`)
+              table: values
             };
             return acc;
           }, [])
