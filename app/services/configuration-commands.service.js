@@ -26,7 +26,7 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
         arrays: ['nodesInstances']
       },
       Alarm: {
-        arrays: ['event', 'eventString', 'eventParameters', 'status']
+        arraysInArrays: ['status', 'parameters']
       },
       Meter: {
         arrays: ['val']
@@ -396,13 +396,23 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
     }
   }
 
-  function valueExtractor(data, {values, arrays}, baseCmd) {
+  function valueExtractor(data, {values, arrays, arraysInArrays}, baseCmd) {
     return groupBy(Object.entries(data).map(([key, value]) => {
       if (isNaN(+key)) {
         return values?.filter(targetField => targetField === key).map(targetField => {
           return packIt(targetField, data, key, value, `${baseCmd}.${targetField}.value`);
         })
       } else {
+        if (arraysInArrays) {
+          return Object.entries(value).map(([_key, value]) => {
+            if (!value) return [];
+            return Object.entries(value).map(([__key, value]) => {
+              return arraysInArrays.filter(targetField => targetField === __key).map((targetField) => {
+                return packIt(targetField, data, key + "." + _key, value, `${baseCmd}[${key}][${_key}].${targetField}.value`);
+              })
+            }).flat()
+          }).flat()
+        }
         return Object.entries(value).map(([_key, value]) => {
           return arrays?.filter(targetField => targetField === _key).map((targetField) => {
             return packIt(targetField, data, key, value, `${baseCmd}[${key}].${targetField}.value`);
