@@ -19,7 +19,7 @@ angApp.directive('zWaveMoreOptions', function (dataService, _, $http) {
       }).then(
         function (data) {
           if (data) {
-            if (data.data.crc !== '0' && +data.data.crc !== currentCrc) {
+            if (data.data.crc && data.data.crc !== '0' && +data.data.crc !== currentCrc) {
               $scope.updatable = true;
             }
             $scope.setLicense = function () {
