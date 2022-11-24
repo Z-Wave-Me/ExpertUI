@@ -169,15 +169,17 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
             }
             // Security S2
             var hasSecurityS2Cc = deviceService.hasCommandClass(node,159);
-            if(hasSecurityS2Cc){
+            var securityS2Key = [];
+            if (hasSecurityS2Cc){
                 security = true;
                 securityType = 'security-2';
                 securityInterview = $filter('hasNode')(hasSecurityS2Cc,'data.interviewDone.value');
+                securityS2Key = deviceService.getS2GrantedKeys(hasSecurityS2Cc);
+            } else {
+                if ($filter('hasNode')(deviceService.hasCommandClass(node, 152),'data.security.value')) {
+                    securityS2Key = ['S0']
+                }
             }
-            var securityS2Key = deviceService.getS2GrantedKeys(hasSecurityS2Cc);
-
-
-
 
             // todo: deprecated
             // DDR

@@ -84,7 +84,7 @@
                     </span>&nbsp;
                 </td>-->
                 <!-- security new -->
-                <td data-title="{{ _t('th_security')}}" title="{{v.hasSecurityS2Cc ? 'S2 Secure' : 'Unsecured'}}">
+                <td data-title="{{ _t('th_security')}}" title="{{v.hasSecurityS2Cc ? 'S2 Secure' : v.securityType == 'security-0' ? 'Unsecured' : 'S0 Secure' }}">
                     <i  class="fa fa-unlock-alt fa-lg orange" ng-if="v.securityType == 'security-0'"></i>
                     <i  class="fa fa-lock fa-lg green" ng-if="v.securityType == 'security-1'"></i>
                     <span class="security-2 {{v.securityInterview}} fa-stack fa-lg" ng-if="v.securityType == 'security-2'">
