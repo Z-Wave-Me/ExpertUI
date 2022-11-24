@@ -173,9 +173,24 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
                 security = true;
                 securityType = 'security-2';
                 securityInterview = $filter('hasNode')(hasSecurityS2Cc,'data.interviewDone.value');
+            } else {
+                if ($filter('hasNode')(deviceService.hasCommandClass(node, 152),'data.security.value')) {
+                    hasSecurityS2Cc = {
+                        data : {
+                            interviewDone: {
+                                value: true,
+                            },
+                            grantedKeys: {
+                                S0: {
+                                    value: true,
+                                }
+                            }
+                        }
+                    }
+                }
             }
-            var securityS2Key = deviceService.getS2GrantedKeys(hasSecurityS2Cc);
 
+            var securityS2Key = deviceService.getS2GrantedKeys(hasSecurityS2Cc);
 
 
 
