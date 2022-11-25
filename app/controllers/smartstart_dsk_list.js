@@ -36,7 +36,6 @@ appController.controller('SmartStartDskListController', function($scope, $filter
 	var loadDskList = function() {
 		$scope.loadZwaveData();
 		dataService.getApi('get_dsk', null, true).then(function(response) {
-			//dataService.getApiLocal('dsk-collection.json').then(function (response) {
 			var data = response.data;
 			if (_.isEmpty(data)) {
 				$scope.alert = {
