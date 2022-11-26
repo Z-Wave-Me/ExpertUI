@@ -101,7 +101,8 @@ module.exports = function (grunt) {
             options: {force: true},
             build: [app_cfg.dir + '/'],
             doc: ['dist/storage/data/docs/'],
-            tmp: ['./tmp']
+            tmp: ['./tmp'],
+            templates: [app_cfg.dir + '/app/js/templates.js',],
         },
         // NG templates
         ngtemplates: {
@@ -219,28 +220,6 @@ module.exports = function (grunt) {
             fonts: {
                 files: [
                     {expand: true, src: ['app/fonts/*'], dest: app_cfg.dir + '/app/fonts/', flatten: true}
-                ]
-            },
-            angmap: {
-                files: [
-                    {
-                        expand: true,
-                        src: ['vendor/angular/angular-1.2.14/angular-cookies.min.js.map'],
-                        dest: app_cfg.dir + '/app/js/',
-                        flatten: true
-                    },
-                    {
-                        expand: true,
-                        src: ['vendor/angular/angular-1.2.14/angular.min.js.map'],
-                        dest: app_cfg.dir + '/app/js/',
-                        flatten: true
-                    },
-                    {
-                        expand: true,
-                        src: ['vendor/angular/angular-1.2.14/angular-route.min.js.map'],
-                        dest: app_cfg.dir + '/app/js/',
-                        flatten: true
-                    }
                 ]
             },
             licence: {
@@ -416,5 +395,6 @@ module.exports = function (grunt) {
         'replace',
         'clean:doc',
         'clean:tmp',
+        'clean:templates',
         'compress:build']);
 };
