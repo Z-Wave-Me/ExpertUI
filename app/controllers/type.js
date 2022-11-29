@@ -160,20 +160,21 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
             var security = false;
             // Security type
             var securityType = 'security-0';
-            var securityInterview = false;
             var hasSecurityCc = deviceService.hasCommandClass(node,152);
             if(hasSecurityCc){
-                security = $filter('hasNode')(hasSecurityCc,'data.interviewDone.value');
-                securityType = 'security-1';
-                securityInterview = $filter('hasNode')(hasSecurityCc,'data.interviewDone.value');
+                security = $filter('hasNode')(hasSecurityCc,'data.interviewDone.value') && !$filter('hasNode')(hasSecurityCc,'data.securityAbandoned.value') && $filter('hasNode')(node,'data.secureChannelEstablished.value');
+                if (security) {
+                    securityType = 'security-1';
+                }
             }
             // Security S2
             var hasSecurityS2Cc = deviceService.hasCommandClass(node,159);
             var securityS2Key = [];
             if (hasSecurityS2Cc){
-                security = true;
-                securityType = 'security-2';
-                securityInterview = $filter('hasNode')(hasSecurityS2Cc,'data.interviewDone.value');
+                security = $filter('hasNode')(hasSecurityS2Cc,'data.interviewDone.value') && !$filter('hasNode')(hasSecurityS2Cc,'data.securityAbandoned.value') && $filter('hasNode')(node,'data.secureChannelEstablished.value');
+                if (security) {
+                    securityType = 'security-2';
+                }
                 securityS2Key = deviceService.getS2GrantedKeys(hasSecurityS2Cc);
             } else {
                 if ($filter('hasNode')(deviceService.hasCommandClass(node, 152),'data.security.value')) {
@@ -222,7 +223,6 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
             obj['name'] = $filter('deviceName')(nodeId, node);
             obj['hasSecurityS2Cc'] = hasSecurityS2Cc;
             obj['securityType'] = securityType;
-            obj['securityInterview'] = securityInterview;
             obj['security'] = security;
             obj['securityS2Key'] = securityS2Key.join();
             obj['mwief'] = mwief;

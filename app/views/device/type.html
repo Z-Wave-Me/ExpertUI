@@ -76,18 +76,10 @@
                     <a href="#configuration/interview/{{v.id}}" ng-bind="v.name"></a>
                 </td>
                 <!-- security -->
-               <!-- <td data-title="{{ _t('th_security')}}" title="{{v.hasSecurityS2Cc ? 'S2 Secure' : ''}}">
-                    <i ng-hide="v.hasSecurityS2Cc" class="{{ v.security | securityIcon }}"></i>
-                    <span class="fa-stack fa-lg" ng-show="v.hasSecurityS2Cc">
-                        <i class="fa fa-lock fa-stack-1x" style="color: darkgray;"></i>
-                        <i class="fa fa-lock fa-stack-1x text-success" style="left:4px; top:4px;"></i>
-                    </span>&nbsp;
-                </td>-->
-                <!-- security new -->
-                <td data-title="{{ _t('th_security')}}" title="{{v.hasSecurityS2Cc ? 'S2 Secure' : v.securityType == 'security-0' ? 'Unsecured' : 'S0 Secure' }}">
+                <td data-title="{{ _t('th_security')}}" title="{{v.securityType == 'security-2' ? 'S2 Secure' : (v.securityType == 'security-1' ? 'S0 Secure' : 'Unsecure') }}">
                     <i  class="fa fa-unlock-alt fa-lg orange" ng-if="v.securityType == 'security-0'"></i>
                     <i  class="fa fa-lock fa-lg green" ng-if="v.securityType == 'security-1'"></i>
-                    <span class="security-2 {{v.securityInterview}} fa-stack fa-lg" ng-if="v.securityType == 'security-2'">
+                    <span class="security-2 {{v.security}} fa-stack fa-lg" ng-if="v.securityType == 'security-2'">
                         <i class="fa fa-lock fa-stack-1x icon-bottom"></i>
                         <i class="fa fa-lock fa-stack-1x icon-top"></i>
                     </span>&nbsp;

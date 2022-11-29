@@ -296,8 +296,11 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
 
     }
     // Security interview
-    if (0x98 in node.instances[0].commandClasses) {
-      securityInterview = node.instances[0].commandClasses[0x98].data.securityAbandoned.value;
+    if (0x9F in node.instances[0].commandClasses) {
+      securityInterview = node.instances[0].commandClasses[0x9F].data.interviewDone.value && !node.instances[0].commandClasses[0x9F].data.securityAbandoned.value && node.data.secureChannelEstablished.value;
+    }
+    else if (0x98 in node.instances[0].commandClasses) {
+      securityInterview = node.instances[0].commandClasses[0x98].data.interviewDone.value && !node.instances[0].commandClasses[0x98].data.securityAbandoned.value && node.data.secureChannelEstablished.value;
     }
 
     var sdk;
@@ -426,7 +429,7 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
     if (typeof securityInterview === 'boolean') {
       obj["s"] = {
         "key": "device_security_interview",
-        "val": '<i class="' + $filter('checkedIcon')(securityInterview === true ? false : true) + '"></i>'
+        "val": '<i class="' + $filter('checkedIcon')(securityInterview) + '"></i>'
       };
     }
     obj["u"] = {
