@@ -581,7 +581,7 @@
     "route_map": "Route map",
     "route_map_annotation_a": "All existing routes in the network",
     "route_map_annotation_i": "Routes from a node to controller",
-    "route_map_annotation_ima_absent": "Your UZB\/RaZberry\/Hub do not have advanced network statistics. Upgrade the firmware",
+    "route_map_annotation_ima_absent": "Your UZB\/RaZberry\/Hub do not support advanced network statistics (upgrade the firmware) or you have disabled Packet Log in the Z-Wave Network Access app",
     "route_map_annotation_ima_few": "Too few nodes to make statistics",
     "route_map_annotation_ld": "Line dash",
     "route_map_annotation_ld_text": "represents failures on this segment",
