@@ -582,7 +582,7 @@
     "route_map": "Карта маршрутов",
     "route_map_annotation_a": "Все маршруты сети",
     "route_map_annotation_i": "Маршруты от узла к контроллеру",
-    "route_map_annotation_ima_absent": "Ваш UZB\/RaZberry\/Hub не имеет поддержки расширенного сбора статистки. Обновите прошивку",
+    "route_map_annotation_ima_absent": "Ваш UZB\/RaZberry\/Hub не поддерживает расширенного сбора статистки (обновите прошивку) или вы отключили Packet Log в Z-Wave Network Access",
     "route_map_annotation_ima_few": "Слишком мало статистики",
     "route_map_annotation_ld": "Пунктир линии",
     "route_map_annotation_ld_text": "представляет количество потерь на сегменте",
