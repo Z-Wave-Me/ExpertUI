@@ -53,7 +53,7 @@ appController.controller('QueueController', function($scope, $interval,cfg,dataS
         angular.forEach(data, function(job, jobIndex) {
             var buff = '';
             for (var b in job[5]) {
-                buff += job[5][b].toString(16) + ' ';
+                buff += ("00" + job[5][b].toString(16)).slice(-2) + ' ';
             }
             ;
             var progress;
