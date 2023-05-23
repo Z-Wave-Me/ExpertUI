@@ -4311,6 +4311,29 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
       // MultiChannel
       case 0x60:
         return {
+          "mapControllerInstanceToRoot": {
+            "label": "Map commands to controller channels to root (channel 0) to fix old broken devices that reports to channel 1, 2, ... even with no MultiChannelAssociation set",
+            "type": {
+              "enumof": [
+                {
+                  "label": "Follow the protocol",
+                  "type": {
+                    "fix": {
+                      "value": false
+                    }
+                  }
+                },
+                {
+                  "label": "Map to root",
+                  "type": {
+                    "fix": {
+                      "value": true
+                    }
+                  }
+                }
+              ]
+            }
+          },
           "disableMulticast": {
             "label": "Allow use of multi addressing for identical commands to multiple channels",
             "type": {
