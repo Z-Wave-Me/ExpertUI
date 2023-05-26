@@ -264,13 +264,11 @@ angApp.filter('isTodayFromUnix', function (cfg, $filter) {
         if (!input || isNaN(input)) {
             return '-';
         }
-        var d = new Date(input * 1000);
-
-        var browserTZO = parseInt(d.getTimezoneOffset() * 60 * 1000);
+        var browserTZO = parseInt((new Date()).getTimezoneOffset() * 60);
         //time zone value from config
-        var tzo = parseInt(cfg.route.time.offset * (-1) * 60 * 60 * 1000, 10);
+        var tzo = parseInt(cfg.route.time.offset * (-1) * 60 * 60, 10);
         //convert the offset to milliseconds, add to targetTime, and make a new Date
-        d = new Date(d.getTime() + tzo + browserTZO);
+        var d = new Date((input + tzo + browserTZO) * 1000);
 
         if (d.toDateString() == (new Date()).toDateString()) {
 
