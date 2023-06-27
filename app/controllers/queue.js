@@ -76,11 +76,25 @@ appController.controller('QueueController', function($scope, $interval,cfg,dataS
                 Resp: (job[1][7] ? (job[1][8] ? "+" : "-") : " "),
                 Cbk: (job[1][9] ? (job[1][10] ? "+" : "-") : " "),
                 Repl: (job[1][12] ? (job[1][13] ? "+" : "-") : " "),
-                Timeout:  parseFloat(job[0]).toFixed(2),
-                NodeId:  job[2],
-                Description:  job[3],
-                Progress:  progress,
-                Buffer:  buff
+                Timeout: parseFloat(job[0]).toFixed(2),
+                CallbackDone: (job[1][14] ? "+" : "-"),
+                IsGet: (job[1][15] ? "+" : "-"),
+                MultiCmd: (job[1][16] ? "+" : "-"),
+                SleepCheck: (job[1][17] ? "+" : "-"),
+                Block: (job[1][18] ? "+" : "-"),
+                SendToNode: (job[1][19] ? "+" : "-"),
+                SecurityFollowing: (job[1][20] ? "+" : "-"),
+                TTL: (job[1][21] ? "+" : "-"),
+                Priority: job[1][22],
+                S2KeyClass: job[1][23],
+                ExcplicitCbk: (job[1][24] ? "+" : "-"),
+                SpecialCbkPosition: job[1][25],
+                Ref: job[6].toString(35),
+                OnBehalfRefs: job[7].map(function(x) { return x.toString(35); }).join("<br />") ,
+                NodeId: job[2],
+                Description: job[3],
+                Progress: progress,
+                Buffer: buff
             };
             $scope.queueData.all.push(obj);
         });
