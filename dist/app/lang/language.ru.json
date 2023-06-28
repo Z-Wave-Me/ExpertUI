@@ -91,7 +91,7 @@
     "ctrl_info_caps_maxPower_title": "Повышение мощности радио",
     "ctrl_info_caps_backup_title": "Резервное копирование и восстановление",
     "ctrl_info_caps_wup_title": "Экономия батареек спящих устройств",
-    "ctrl_info_caps_advancedIMA_title": "Расширенная диагностическа сети",
+    "ctrl_info_caps_advancedIMA_title": "Расширенная диагностика сети",
     "ctrl_info_caps_longRange_title": "Z-Wave Long Range",
     "ctrl_info_caps_ultraUART_title": "Быстрая передача данных",
     "ctrl_info_caps_swapSubvendor_title": "Смена ID производителя",
