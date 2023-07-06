@@ -89,6 +89,7 @@ appController.controller('QueueController', function($scope, $interval,cfg,dataS
                 S2KeyClass: job[1][23],
                 ExcplicitCbk: (job[1][24] ? "+" : "-"),
                 SpecialCbkPosition: job[1][25],
+                Sent: job[1][26] ? "+" : "-",
                 Ref: job[6].toString(35),
                 OnBehalfRefs: job[7].map(function(x) { return x.toString(35); }).join("<br />") ,
                 NodeId: job[2],
