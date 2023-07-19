@@ -3,6 +3,13 @@ Z-Wave Expert UI for Z-Way controller
 
 This User Interfaces allows to operate a Smart Home Network based on Z-Wave devices. It utilizes the software architecture Z-Way, certified as Z-Wave Plus Controller.
 
+## v1.6.7
+#### New features:
+- Extended queue for debugging (in debug mode)
+- Added mapControllerInstanceToRoot parameter
+#### Fixes:
+- Fix queue monitor
+
 ## v1.6.3
 #### Fixes:
 - Improved Route Map annotation
