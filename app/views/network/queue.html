@@ -21,20 +21,21 @@
                 <th title="Awaiting/received a Reply">Repl</th>
                 <th>{{_t('th_timeout')}}</th>
                 <th>{{_t('th_nodeid')}}</th>
-                <th>Cbk Done</th>
-                <th>IsGet</th>
-                <th>MultiCmd</th>
-                <th>Sleep Check</th>
-                <th>Block</th>
-                <th>Send To Node</th>
-                <th>Sec Follow</th>
-                <th>TTL</th>
-                <th>Prio</th>
-                <th>S2 Key</th>
-                <th>Excplicit Cbk</th>
-                <th>Spec Cbk Pos</th>
-                <th>Ref</th>
-                <th>OnBehalf</th>
+                <th ng-show="cfg.zwavecfg.debug">Cbk Done</th>
+                <th ng-show="cfg.zwavecfg.debug">IsGet</th>
+                <th ng-show="cfg.zwavecfg.debug"B>MultiCmd</th>
+                <th ng-show="cfg.zwavecfg.debug">Sleep Check</th>
+                <th ng-show="cfg.zwavecfg.debug">Block</th>
+                <th ng-show="cfg.zwavecfg.debug">Sent</th>
+                <th ng-show="cfg.zwavecfg.debug">Send To Node</th>
+                <th ng-show="cfg.zwavecfg.debug">Sec Follow</th>
+                <th ng-show="cfg.zwavecfg.debug">TTL</th>
+                <th ng-show="cfg.zwavecfg.debug">Prio</th>
+                <th ng-show="cfg.zwavecfg.debug">S2 Key</th>
+                <th ng-show="cfg.zwavecfg.debug">Excplicit Cbk</th>
+                <th ng-show="cfg.zwavecfg.debug">Spec Cbk Pos</th>
+                <th ng-show="cfg.zwavecfg.debug">Ref</th>
+                <th ng-show="cfg.zwavecfg.debug">OnBehalf</th>
                 <th>{{_t('th_description')}}</th>
                 <th>{{_t('th_progress')}}</th>
                 <th>{{_t('th_buffer')}}</th>
@@ -54,23 +55,23 @@
                 <td>{{v.Repl}}</td>
                 <td>{{v.Timeout}}</td>
                 <td>{{v.NodeId}}</td>
-                <td>{{v.CallbackDone}}</td>
-                <td>{{v.IsGet}}</td>
-                <td>{{v.MultiCmd}}</td>
-                <td>{{v.SleepCheck}}</td>
-                <td>{{v.Block}}</td>
-                <td>{{v.Sent}}</td>
-                <td>{{v.SendToNode}}</td>
-                <td>{{v.SecurityFollowing}}</td>
-                <td>{{v.TTL}}</td>
-                <td>{{v.Priority}}</td>
-                <td>{{v.S2KeyClass}}</td>
-                <td>{{v.ExcplicitCbk}}</td>
-                <td>{{v.SpecialCbkPosition}}</td>
-                <td>{{v.Ref}}</td>
-                <td>{{v.OnBehalfRefs}}</td>
+                <td ng-show="cfg.zwavecfg.debug">{{v.CallbackDone}}</td>
+                <td ng-show="cfg.zwavecfg.debug">{{v.IsGet}}</td>
+                <td ng-show="cfg.zwavecfg.debug">{{v.MultiCmd}}</td>
+                <td ng-show="cfg.zwavecfg.debug">{{v.SleepCheck}}</td>
+                <td ng-show="cfg.zwavecfg.debug">{{v.Block}}</td>
+                <td ng-show="cfg.zwavecfg.debug">{{v.Sent}}</td>
+                <td ng-show="cfg.zwavecfg.debug">{{v.SendToNode}}</td>
+                <td ng-show="cfg.zwavecfg.debug">{{v.SecurityFollowing}}</td>
+                <td ng-show="cfg.zwavecfg.debug">{{v.TTL}}</td>
+                <td ng-show="cfg.zwavecfg.debug">{{v.Priority}}</td>
+                <td ng-show="cfg.zwavecfg.debug">{{v.S2KeyClass}}</td>
+                <td ng-show="cfg.zwavecfg.debug">{{v.ExcplicitCbk}}</td>
+                <td ng-show="cfg.zwavecfg.debug">{{v.SpecialCbkPosition}}</td>
+                <td ng-show="cfg.zwavecfg.debug">{{v.Ref}}</td>
+                <td ng-show="cfg.zwavecfg.debug">{{v.OnBehalfRefs}}</td>
                 <td ng-bind-html="v.Description | toTrusted"></td>
-                <td  ng-bind-html="v.Progress | toTrusted"></td>
+                <td ng-bind-html="v.Progress | toTrusted"></td>
                 <td>{{v.Buffer}}</td>
             </tbody>
         </table>
