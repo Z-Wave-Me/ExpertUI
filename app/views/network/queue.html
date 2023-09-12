@@ -10,6 +10,7 @@
             <thead>
             <tr>
                 <th title="Send count">n</th>
+                <th title="Req send count">rn</th>
                 <th title="Urgent">U</th>
                 <th title="Wait wakeup">W</th>
                 <th title="Wait security">S</th>
@@ -44,6 +45,7 @@
             <tbody>
             <tr ng-repeat="v in queueData.all track by $index">
                 <td>{{v.n}}</td>
+                <td>{{v.RequestsCount}}</td>
                 <td>{{v.U}}</td>
                 <td>{{v.W}}</td>
                 <td>{{v.S}}</td>
