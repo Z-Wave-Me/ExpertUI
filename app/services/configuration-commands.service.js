@@ -689,7 +689,7 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
           ]
         };
 
-      //SwitchColor
+      // SwitchColor
       case 0x33:
         return {
           "overrideDefaultDuration": {
@@ -1030,21 +1030,21 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
       // Version
       case 0x86:
         return {
-          /*
-				Version is not publically exported in Z-Way.C
-
-				"CommandClassVersionGet": [
-					{
-						"label":"CommandClass",
-						"type":	{
-							"range":	{
-								"min":	0x0001,
-								"max":	0xFFFF
-							}
-						}
+		/*
+		Version is not publically exported in Z-Way.C
+		
+		"CommandClassVersionGet": [
+			{
+				"label":"CommandClass",
+				"type":	{
+					"range":	{
+						"min":	0x0001,
+						"max":	0xFFFF
 					}
-				]
-				*/
+				}
+			}
+		]
+		*/
         };
 
       // UserCode
