@@ -4302,6 +4302,1009 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
             },
           ]
         };
+      // UserCredential
+      case 0x83:
+        return {
+          "AllUsersGet": [],
+          "UserGet": [
+            {
+              "label": "User Id",
+              "type": {
+                "range": {
+                  "min": 1,
+                  "max": (
+                    function () {
+                      try {
+                        return data.maxUsers.value;
+                      } catch (err) {
+                      }
+                    }
+                  )(),
+                }
+              }
+            },
+          ],
+          "UserGet": [
+            {
+              "label": "User Id",
+              "type": {
+                "range": {
+                  "min": 1,
+                  "max": (
+                    function () {
+                      try {
+                        return data.maxUsers.value;
+                      } catch (err) {
+                        return 0xffff;
+                      }
+                    }
+                  )(),
+                }
+              }
+            },
+          ],
+          "UserWithCredentials": [
+            {
+              "label": "User Id",
+              "type": {
+                "range": {
+                  "min": 1,
+                  "max": (
+                    function () {
+                      try {
+                        return data.maxUsers.value;
+                      } catch (err) {
+                        return 0xffff;
+                      }
+                    }
+                  )(),
+                }
+              }
+            },
+          ],
+          "UserAdd": [
+            {
+              "label": "User Id",
+              "type": {
+                "range": {
+                  "min": 1,
+                  "max": (
+                    function () {
+                      try {
+                        return data.maxUsers.value;
+                      } catch (err) {
+                        return 0xffff;
+                      }
+                    }
+                  )(),
+                }
+              }
+            },
+            {
+              "label": "User type",
+              "type": (
+                function () {
+                  var fallbackTypes = {
+                    "range": {
+                      "min": 0,
+                      "max": 9
+                    }
+                  };
+                  try {
+                    var userTypes = [];
+                    for (k in data.supportedUserTypes) {
+                      var userType = parseInt(k);
+                      if (!isNaN(userType)) {
+                        userTypes.push(
+                          {
+                            "label": data.supportedUserTypes[userType].value,
+                            "type": {
+                              "fix": {
+                                "value": userType
+                              }
+                            }
+                          }
+                        );
+                      }
+                    }
+                    if (userTypes.length) {
+                      return {
+                        "enumof": userTypes
+                      };
+                    } else {
+                      return fallbackTypes;
+                    }
+                  } catch (err) {
+                    return fallbackTypes;
+                  }
+                }
+              )(),
+            },
+            {
+              "label": "User State",
+              "type": {
+                "enumof": [
+                  {
+                    "label": "General",
+                    "type": {
+                      "fix": {
+                        "value": 0
+                      }
+                    }
+                  },
+                  {
+                    "label": "Programming",
+                    "type": {
+                      "fix": {
+                        "value": 3
+                      }
+                    }
+                  },
+                  {
+                    "label": "Non-Access",
+                    "type": {
+                      "fix": {
+                        "value": 4
+                      }
+                    }
+                  },
+                  {
+                    "label": "Duress",
+                    "type": {
+                      "fix": {
+                        "value": 5
+                      }
+                    }
+                  },
+                  {
+                    "label": "Disposable",
+                    "type": {
+                      "fix": {
+                        "value": 6
+                      }
+                    }
+                  },
+                  {
+                    "label": "Expiring",
+                    "type": {
+                      "fix": {
+                        "value": 7
+                      }
+                    }
+                  },
+                  {
+                    "label": "Remote only",
+                    "type": {
+                      "fix": {
+                        "value": 9
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Credential rule",
+              "type": (
+                function () {
+                  var fallbackRules = {
+                    "range": {
+                      "min": 0,
+                      "max": 9
+                    }
+                  };
+                  try {
+                    var credentialRules = [];
+                    for (k in data.supportedCredentialRules) {
+                      var credentialRule = parseInt(k);
+                      if (!isNaN(credentialRule)) {
+                        credentialRules.push(
+                          {
+                            "label": data.supportedCredentialRules[credentialRule].value,
+                            "type": {
+                              "fix": {
+                                "value": credentialRule
+                              }
+                            }
+                          }
+                        );
+                      }
+                    }
+                    if (credentialRules.length) {
+                      return {
+                        "enumof": credentialRules
+                      };
+                    } else {
+                      return fallbackRules;
+                    }
+                  } catch (err) {
+                    return fallbackRules;
+                  }
+                }
+              )(),
+            },
+            {
+              "label": "Expiration time",
+              "type": {
+                "range": {
+                  "min": 1,
+                  "max": 0xffff
+                }
+              }
+            },
+            {
+              "label": "Name encoding",
+              "type": {
+                "fix": {
+                  "value": 0,
+                }
+              }
+            },
+            {
+              "label": "Name",
+              "type": {
+                "string": {}
+              }
+            }
+          ],
+          "UserModify": [
+            {
+              "label": "User Id",
+              "type": {
+                "range": {
+                  "min": 1,
+                  "max": (
+                    function () {
+                      try {
+                        return data.maxUsers.value;
+                      } catch (err) {
+                        return 0xffff;
+                      }
+                    }
+                  )(),
+                }
+              }
+            },
+            {
+              "label": "User type",
+              "type": (
+                function () {
+                  var fallbackTypes = {
+                    "range": {
+                      "min": 0,
+                      "max": 9
+                    }
+                  };
+                  try {
+                    var userTypes = [];
+                    for (k in data.supportedUserTypes) {
+                      var userType = parseInt(k);
+                      if (!isNaN(userType)) {
+                        userTypes.push(
+                          {
+                            "label": data.supportedUserTypes[userType].value,
+                            "type": {
+                              "fix": {
+                                "value": userType
+                              }
+                            }
+                          }
+                        );
+                      }
+                    }
+                    if (userTypes.length) {
+                      return {
+                        "enumof": userTypes
+                      };
+                    } else {
+                      return fallbackTypes;
+                    }
+                  } catch (err) {
+                    return fallbackTypes;
+                  }
+                }
+              )(),
+            },
+            {
+              "label": "User State",
+              "type": {
+                "enumof": [
+                  {
+                    "label": "General",
+                    "type": {
+                      "fix": {
+                        "value": 0
+                      }
+                    }
+                  },
+                  {
+                    "label": "Programming",
+                    "type": {
+                      "fix": {
+                        "value": 3
+                      }
+                    }
+                  },
+                  {
+                    "label": "Non-Access",
+                    "type": {
+                      "fix": {
+                        "value": 4
+                      }
+                    }
+                  },
+                  {
+                    "label": "Duress",
+                    "type": {
+                      "fix": {
+                        "value": 5
+                      }
+                    }
+                  },
+                  {
+                    "label": "Disposable",
+                    "type": {
+                      "fix": {
+                        "value": 6
+                      }
+                    }
+                  },
+                  {
+                    "label": "Expiring",
+                    "type": {
+                      "fix": {
+                        "value": 7
+                      }
+                    }
+                  },
+                  {
+                    "label": "Remote only",
+                    "type": {
+                      "fix": {
+                        "value": 9
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Credential rule",
+              "type": (
+                function () {
+                  var fallbackRules = {
+                    "range": {
+                      "min": 0,
+                      "max": 9
+                    }
+                  };
+                  try {
+                    var credentialRules = [];
+                    for (k in data.supportedCredentialRules) {
+                      var credentialRule = parseInt(k);
+                      if (!isNaN(credentialRule)) {
+                        credentialRules.push(
+                          {
+                            "label": data.supportedCredentialRules[credentialRule].value,
+                            "type": {
+                              "fix": {
+                                "value": credentialRule
+                              }
+                            }
+                          }
+                        );
+                      }
+                    }
+                    if (credentialRules.length) {
+                      return {
+                        "enumof": credentialRules
+                      };
+                    } else {
+                      return fallbackRules;
+                    }
+                  } catch (err) {
+                    return fallbackRules;
+                  }
+                }
+              )(),
+            },
+            {
+              "label": "Expiration time",
+              "type": {
+                "range": {
+                  "min": 1,
+                  "max": 0xffff
+                }
+              }
+            },
+            {
+              "label": "Name encoding",
+              "type": {
+                "fix": {
+                  "value": 0,
+                }
+              }
+            },
+            {
+              "label": "Name",
+              "type": {
+                "string": {}
+              }
+            }
+          ],
+          "UserDelete": [
+            {
+              "label": "User Id",
+              "type": {
+                "range": {
+                  "min": 1,
+                  "max": (
+                    function () {
+                      try {
+                        return data.maxUsers.value;
+                      } catch (err) {
+                        return 0xffff;
+                      }
+                    }
+                  )(),
+                }
+              }
+            },
+          ],
+          "CredentialGet": [
+            {
+              "label": "User Id",
+              "type": {
+                "range": {
+                  "min": 1,
+                  "max": (
+                    function () {
+                      try {
+                        return data.maxUsers.value;
+                      } catch (err) {
+                        return 0xffff;
+                      }
+                    }
+                  )(),
+                }
+              }
+            },
+            {
+              "label": "Credential type",
+              "type": (
+                function () {
+                  var fallbackTypes = {
+                    "range": {
+                      "min": 1,
+                      "max": 255
+                    }
+                  };
+                  try {
+                    var credentialTypes = [];
+                    for (k in data.credentials) {
+                      var credentialType = parseInt(k);
+                      if (!isNaN(credentialType)) {
+                        credentialTypes.push(
+                          {
+                            "label": data.credentials[credentialType].typeName.value,
+                            "type": {
+                              "fix": {
+                                "value": credentialType
+                              }
+                            }
+                          }
+                        );
+                      }
+                    }
+                    if (credentialTypes.length) {
+                      return {
+                        "enumof": credentialTypes
+                      };
+                    } else {
+                      return fallbackTypes;
+                    }
+                  } catch (err) {
+                    return fallbackTypes;
+                  }
+                }
+              )(),
+            },
+            {
+              "label": "Credential Id",
+              "type": {
+                "range": {
+                  "min": 1,
+                  "max": (
+                    function () {
+                      try {
+                        // take the maximal number across all slots
+                        var maxSlotsNum = 0;
+                        for (k in data.credentials) {
+                          var credentialType = parseInt(k);
+                          if (!isNaN(credentialType)) {
+                            var slotsNum = data.credentials[credentialType].maxCredentials.value;
+                            if (maxSlotsNum < slotsNum) {
+                              maxSlotsNum = slotsNum;
+                            }
+                          }
+                        }
+                        return maxSlotsNum;
+                      } catch (err) {
+                        return 0xff;
+                      }
+                    }
+                  )(),
+                }
+              }
+            },
+          ],
+          "CredentialAdd": [
+            {
+              "label": "User Id",
+              "type": {
+                "range": {
+                  "min": 1,
+                  "max": (
+                    function () {
+                      try {
+                        return data.maxUsers.value;
+                      } catch (err) {
+                        return 0xffff;
+                      }
+                    }
+                  )(),
+                }
+              }
+            },
+            {
+              "label": "Credential type",
+              "type": (
+                function () {
+                  var fallbackTypes = {
+                    "range": {
+                      "min": 1,
+                      "max": 255
+                    }
+                  };
+                  try {
+                    var credentialTypes = [];
+                    for (k in data.credentials) {
+                      var credentialType = parseInt(k);
+                      if (!isNaN(credentialType)) {
+                        credentialTypes.push(
+                          {
+                            "label": data.credentials[credentialType].typeName.value,
+                            "type": {
+                              "fix": {
+                                "value": credentialType
+                              }
+                            }
+                          }
+                        );
+                      }
+                    }
+                    if (credentialTypes.length) {
+                      return {
+                        "enumof": credentialTypes
+                      };
+                    } else {
+                      return fallbackTypes;
+                    }
+                  } catch (err) {
+                    return fallbackTypes;
+                  }
+                }
+              )(),
+            },
+            {
+              "label": "Credential Id",
+              "type": {
+                "range": {
+                  "min": 1,
+                  "max": (
+                    function () {
+                      try {
+                        // take the maximal number across all slots
+                        var maxSlotsNum = 0;
+                        for (k in data.credentials) {
+                          var credentialType = parseInt(k);
+                          if (!isNaN(credentialType)) {
+                            var slotsNum = data.credentials[credentialType].maxCredentials.value;
+                            if (maxSlotsNum < slotsNum) {
+                              maxSlotsNum = slotsNum;
+                            }
+                          }
+                        }
+                        return maxSlotsNum;
+                      } catch (err) {
+                        return 0xff;
+                      }
+                    }
+                  )(),
+                }
+              }
+            },
+            {
+              "label": "Data",
+              "type": {
+                "string": {}
+              }
+            },
+          ],
+          "CredentialModify": [
+            {
+              "label": "User Id",
+              "type": {
+                "range": {
+                  "min": 1,
+                  "max": (
+                    function () {
+                      try {
+                        return data.maxUsers.value;
+                      } catch (err) {
+                        return 0xffff;
+                      }
+                    }
+                  )(),
+                }
+              }
+            },
+            {
+              "label": "Credential type",
+              "type": (
+                function () {
+                  var fallbackTypes = {
+                    "range": {
+                      "min": 1,
+                      "max": 255
+                    }
+                  };
+                  try {
+                    var credentialTypes = [];
+                    for (k in data.credentials) {
+                      var credentialType = parseInt(k);
+                      if (!isNaN(credentialType)) {
+                        credentialTypes.push(
+                          {
+                            "label": data.credentials[credentialType].typeName.value,
+                            "type": {
+                              "fix": {
+                                "value": credentialType
+                              }
+                            }
+                          }
+                        );
+                      }
+                    }
+                    if (credentialTypes.length) {
+                      return {
+                        "enumof": credentialTypes
+                      };
+                    } else {
+                      return fallbackTypes;
+                    }
+                  } catch (err) {
+                    return fallbackTypes;
+                  }
+                }
+              )(),
+            },
+            {
+              "label": "Credential Id",
+              "type": {
+                "range": {
+                  "min": 1,
+                  "max": (
+                    function () {
+                      try {
+                        // take the maximal number across all slots
+                        var maxSlotsNum = 0;
+                        for (k in data.credentials) {
+                          var credentialType = parseInt(k);
+                          if (!isNaN(credentialType)) {
+                            var slotsNum = data.credentials[credentialType].maxCredentials.value;
+                            if (maxSlotsNum < slotsNum) {
+                              maxSlotsNum = slotsNum;
+                            }
+                          }
+                        }
+                        return maxSlotsNum;
+                      } catch (err) {
+                        return 0xff;
+                      }
+                    }
+                  )(),
+                }
+              }
+            },
+            {
+              "label": "Data",
+              "type": {
+                "string": {}
+              }
+            },
+          ],
+          "CredentialDelete": [
+            {
+              "label": "User Id",
+              "type": {
+                "range": {
+                  "min": 1,
+                  "max": (
+                    function () {
+                      try {
+                        return data.maxUsers.value;
+                      } catch (err) {
+                        return 0xffff;
+                      }
+                    }
+                  )(),
+                }
+              }
+            },
+            {
+              "label": "Credential type",
+              "type": (
+                function () {
+                  var fallbackTypes = {
+                    "range": {
+                      "min": 1,
+                      "max": 255
+                    }
+                  };
+                  try {
+                    var credentialTypes = [];
+                    for (k in data.credentials) {
+                      var credentialType = parseInt(k);
+                      if (!isNaN(credentialType)) {
+                        credentialTypes.push(
+                          {
+                            "label": data.credentials[credentialType].typeName.value,
+                            "type": {
+                              "fix": {
+                                "value": credentialType
+                              }
+                            }
+                          }
+                        );
+                      }
+                    }
+                    if (credentialTypes.length) {
+                      return {
+                        "enumof": credentialTypes
+                      };
+                    } else {
+                      return fallbackTypes;
+                    }
+                  } catch (err) {
+                    return fallbackTypes;
+                  }
+                }
+              )(),
+            },
+            {
+              "label": "Credential Id",
+              "type": {
+                "range": {
+                  "min": 1,
+                  "max": (
+                    function () {
+                      try {
+                        // take the maximal number across all slots
+                        var maxSlotsNum = 0;
+                        for (k in data.credentials) {
+                          var credentialType = parseInt(k);
+                          if (!isNaN(credentialType)) {
+                            var slotsNum = data.credentials[credentialType].maxCredentials.value;
+                            if (maxSlotsNum < slotsNum) {
+                              maxSlotsNum = slotsNum;
+                            }
+                          }
+                        }
+                        return maxSlotsNum;
+                      } catch (err) {
+                        return 0xff;
+                      }
+                    }
+                  )(),
+                }
+              }
+            },
+          ],
+          "CredentialLearnStartAdd": [
+            {
+              "label": "User Id",
+              "type": {
+                "range": {
+                  "min": 1,
+                  "max": (
+                    function () {
+                      try {
+                        return data.maxUsers.value;
+                      } catch (err) {
+                        return 0xffff;
+                      }
+                    }
+                  )(),
+                }
+              }
+            },
+            {
+              "label": "Credential type",
+              "type": (
+                function () {
+                  var fallbackTypes = {
+                    "range": {
+                      "min": 1,
+                      "max": 255
+                    }
+                  };
+                  try {
+                    var credentialTypes = [];
+                    for (k in data.credentials) {
+                      var credentialType = parseInt(k);
+                      if (!isNaN(credentialType)) {
+                        credentialTypes.push(
+                          {
+                            "label": data.credentials[credentialType].typeName.value,
+                            "type": {
+                              "fix": {
+                                "value": credentialType
+                              }
+                            }
+                          }
+                        );
+                      }
+                    }
+                    if (credentialTypes.length) {
+                      return {
+                        "enumof": credentialTypes
+                      };
+                    } else {
+                      return fallbackTypes;
+                    }
+                  } catch (err) {
+                    return fallbackTypes;
+                  }
+                }
+              )(),
+            },
+            {
+              "label": "Credential Id",
+              "type": {
+                "range": {
+                  "min": 1,
+                  "max": (
+                    function () {
+                      try {
+                        // take the maximal number across all slots
+                        var maxSlotsNum = 0;
+                        for (k in data.credentials) {
+                          var credentialType = parseInt(k);
+                          if (!isNaN(credentialType)) {
+                            var slotsNum = data.credentials[credentialType].maxCredentials.value;
+                            if (maxSlotsNum < slotsNum) {
+                              maxSlotsNum = slotsNum;
+                            }
+                          }
+                        }
+                        return maxSlotsNum;
+                      } catch (err) {
+                        return 0xff;
+                      }
+                    }
+                  )(),
+                }
+              }
+            },
+            {
+              "label": "Learn timeout",
+              "type": {
+                "range": {
+                  "min": 1,
+                  "max": 300
+                }
+              }
+            },
+          ],
+          "CredentialLearnStartModify": [
+            {
+              "label": "User Id",
+              "type": {
+                "range": {
+                  "min": 1,
+                  "max": (
+                    function () {
+                      try {
+                        return data.maxUsers.value;
+                      } catch (err) {
+                        return 0xffff;
+                      }
+                    }
+                  )(),
+                }
+              }
+            },
+            {
+              "label": "Credential type",
+              "type": (
+                function () {
+                  var fallbackTypes = {
+                    "range": {
+                      "min": 1,
+                      "max": 255
+                    }
+                  };
+                  try {
+                    var credentialTypes = [];
+                    for (k in data.credentials) {
+                      var credentialType = parseInt(k);
+                      if (!isNaN(credentialType)) {
+                        credentialTypes.push(
+                          {
+                            "label": data.credentials[credentialType].typeName.value,
+                            "type": {
+                              "fix": {
+                                "value": credentialType
+                              }
+                            }
+                          }
+                        );
+                      }
+                    }
+                    if (credentialTypes.length) {
+                      return {
+                        "enumof": credentialTypes
+                      };
+                    } else {
+                      return fallbackTypes;
+                    }
+                  } catch (err) {
+                    return fallbackTypes;
+                  }
+                }
+              )(),
+            },
+            {
+              "label": "Credential Id",
+              "type": {
+                "range": {
+                  "min": 1,
+                  "max": (
+                    function () {
+                      try {
+                        // take the maximal number across all slots
+                        var maxSlotsNum = 0;
+                        for (k in data.credentials) {
+                          var credentialType = parseInt(k);
+                          if (!isNaN(credentialType)) {
+                            var slotsNum = data.credentials[credentialType].maxCredentials.value;
+                            if (maxSlotsNum < slotsNum) {
+                              maxSlotsNum = slotsNum;
+                            }
+                          }
+                        }
+                        return maxSlotsNum;
+                      } catch (err) {
+                        return 0xff;
+                      }
+                    }
+                  )(),
+                }
+              }
+            },
+            {
+              "label": "Learn timeout",
+              "type": {
+                "range": {
+                  "min": 1,
+                  "max": 300
+                }
+              }
+            },
+          ],
+          "CredentialLearnCancel": [],
+        };
       // Clock
       case 0x81:
         return {
