@@ -4343,7 +4343,7 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
               }
             },
           ],
-          "UserWithCredentials": [
+          "UserGetWithCredentials": [
             {
               "label": "User Id",
               "type": {
@@ -4425,7 +4425,7 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
               "type": {
                 "enumof": [
                   {
-                    "label": "General",
+                    "label": "Access Not Granted",
                     "type": {
                       "fix": {
                         "value": 0
@@ -4433,50 +4433,10 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
                     }
                   },
                   {
-                    "label": "Programming",
+                    "label": "Access Granted",
                     "type": {
                       "fix": {
-                        "value": 3
-                      }
-                    }
-                  },
-                  {
-                    "label": "Non-Access",
-                    "type": {
-                      "fix": {
-                        "value": 4
-                      }
-                    }
-                  },
-                  {
-                    "label": "Duress",
-                    "type": {
-                      "fix": {
-                        "value": 5
-                      }
-                    }
-                  },
-                  {
-                    "label": "Disposable",
-                    "type": {
-                      "fix": {
-                        "value": 6
-                      }
-                    }
-                  },
-                  {
-                    "label": "Expiring",
-                    "type": {
-                      "fix": {
-                        "value": 7
-                      }
-                    }
-                  },
-                  {
-                    "label": "Remote only",
-                    "type": {
-                      "fix": {
-                        "value": 9
+                        "value": 1
                       }
                     }
                   }
@@ -4527,7 +4487,7 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
               "label": "Expiration time",
               "type": {
                 "range": {
-                  "min": 1,
+                  "min": 0,
                   "max": 0xffff
                 }
               }
@@ -4610,7 +4570,7 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
               "type": {
                 "enumof": [
                   {
-                    "label": "General",
+                    "label": "Access Not Granted",
                     "type": {
                       "fix": {
                         "value": 0
@@ -4618,50 +4578,10 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
                     }
                   },
                   {
-                    "label": "Programming",
+                    "label": "Access Granted",
                     "type": {
                       "fix": {
-                        "value": 3
-                      }
-                    }
-                  },
-                  {
-                    "label": "Non-Access",
-                    "type": {
-                      "fix": {
-                        "value": 4
-                      }
-                    }
-                  },
-                  {
-                    "label": "Duress",
-                    "type": {
-                      "fix": {
-                        "value": 5
-                      }
-                    }
-                  },
-                  {
-                    "label": "Disposable",
-                    "type": {
-                      "fix": {
-                        "value": 6
-                      }
-                    }
-                  },
-                  {
-                    "label": "Expiring",
-                    "type": {
-                      "fix": {
-                        "value": 7
-                      }
-                    }
-                  },
-                  {
-                    "label": "Remote only",
-                    "type": {
-                      "fix": {
-                        "value": 9
+                        "value": 1
                       }
                     }
                   }
@@ -4712,7 +4632,7 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
               "label": "Expiration time",
               "type": {
                 "range": {
-                  "min": 1,
+                  "min": 0,
                   "max": 0xffff
                 }
               }
@@ -4786,7 +4706,7 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
                       if (!isNaN(credentialType)) {
                         credentialTypes.push(
                           {
-                            "label": data.credentials[credentialType].typeName.value,
+                            "label": data.credentials[credentialType].value,
                             "type": {
                               "fix": {
                                 "value": credentialType
@@ -4873,7 +4793,7 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
                       if (!isNaN(credentialType)) {
                         credentialTypes.push(
                           {
-                            "label": data.credentials[credentialType].typeName.value,
+                            "label": data.credentials[credentialType].value,
                             "type": {
                               "fix": {
                                 "value": credentialType
@@ -4966,7 +4886,7 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
                       if (!isNaN(credentialType)) {
                         credentialTypes.push(
                           {
-                            "label": data.credentials[credentialType].typeName.value,
+                            "label": data.credentials[credentialType].value,
                             "type": {
                               "fix": {
                                 "value": credentialType
@@ -5059,7 +4979,7 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
                       if (!isNaN(credentialType)) {
                         credentialTypes.push(
                           {
-                            "label": data.credentials[credentialType].typeName.value,
+                            "label": data.credentials[credentialType].value,
                             "type": {
                               "fix": {
                                 "value": credentialType
@@ -5146,7 +5066,7 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
                       if (!isNaN(credentialType)) {
                         credentialTypes.push(
                           {
-                            "label": data.credentials[credentialType].typeName.value,
+                            "label": data.credentials[credentialType].value,
                             "type": {
                               "fix": {
                                 "value": credentialType
@@ -5242,7 +5162,7 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
                       if (!isNaN(credentialType)) {
                         credentialTypes.push(
                           {
-                            "label": data.credentials[credentialType].typeName.value,
+                            "label": data.credentials[credentialType].value,
                             "type": {
                               "fix": {
                                 "value": credentialType
