@@ -236,7 +236,7 @@
     "foreign_frames_desc": "Fremde Packete",
     "forward_login": "Automatisches Login bei lokalem Zugang (gleiches Netzwerk)",
     "forward_login_info": "Aktivieren Sie diese Option, wenn Sie nicht auf bei jedem lokalen Zugriff (gleiches Netzwerk) aufgefordert werden möchten, Ihre Anmeldeinformationen einzugeben.",
-    "frequency_info": "Aktuelle Frequenz kann unbekannt (unknown) sein, nicht unterstützt werden (unsupported) oder ein Region sein (EU\/US\/RU\/....)",
+    "frequency_info": "Aktuelle Frequenz kann unbekannt (unknown) sein, nicht unterstützt werden (unsupported) oder ein Region sein (EU\/US\/RU\/....). To access all frequencies, enable Debug mode in Controller Info tab.",
     "fro": "von",
     "fw_update_checksum_err": "Beim Übertragen der Firmware auf das Gerät ist ein Checksum-Fehler aufgetreten. Update abgebrochen.",
     "fw_update_download_success_activation_cmd": "Firmware wurde erfolgreich übertragen. Warten auf Aktivierungsbefehl.",

@@ -323,6 +323,8 @@ appController.controller('ControlController', function ($scope, $interval, $time
         var hasDevices = Object.keys(ZWaveAPIData.devices).length;
         var limitReached = ZWaveAPIData.controller.data.manufacturerId.value != 0x147 && ((ZWaveAPIData.controller.data.firmware.caps.value[0] == 0 && ZWaveAPIData.controller.data.firmware.caps.value[1] == 0) || Object.keys(ZWaveAPIData.devices).length >= ZWaveAPIData.controller.data.firmware.caps.value[2]);
         var longRangeEnabled = ZWaveAPIData.controller.data.longRange && ZWaveAPIData.controller.data.longRange.enabled.value;
+        var longRangeUSAvailable = ZWaveAPIData.controller.data.APIVersionMajor.value > 7 || (ZWaveAPIData.controller.data.APIVersionMajor.value === 7 && ZWaveAPIData.controller.data.APIVersionMinor.value >= 20);
+        var longRangeEUAvailable = ZWaveAPIData.controller.data.APIVersionMajor.value > 7 || (ZWaveAPIData.controller.data.APIVersionMajor.value === 7 && ZWaveAPIData.controller.data.APIVersionMinor.value >= 45);
         var longRangeInclusion = ZWaveAPIData.controller.data.longRange && ZWaveAPIData.controller.data.longRange.inclusion.value;
         var controllerState = ZWaveAPIData.controller.data.controllerState.value;
         var joiningS2 = $filter('hasNode')(ZWaveAPIData,'devices.' + nodeId + '.data.joiningS2.value');
@@ -339,10 +341,12 @@ appController.controller('ControlController', function ($scope, $interval, $time
         var appVersionMinor = $filter('hasNode')(ZWaveAPIData,'devices.' + nodeId + '.data.applicationMinor.value');
         var installerIcon = $filter('hasNode')(ZWaveAPIData,'devices.' + nodeId + '.data.installerIcon.value');
         
-        // Customsettings
+        // Custom settings
         $scope.controlDh.controller.hasDevices = hasDevices > 1;
         $scope.controlDh.controller.limitReached = limitReached;
         $scope.controlDh.controller.longRangeEnabled = longRangeEnabled;
+        $scope.controlDh.controller.longRangeUSAvailable = longRangeUSAvailable;
+        $scope.controlDh.controller.longRangeEUAvailable = longRangeEUAvailable;
         $scope.controlDh.controller.longRangeInclusion = longRangeInclusion;
         $scope.controlDh.controller.disableSUCRequest = true;
         if (hasSUC && hasSUC != nodeId) {
@@ -1120,13 +1124,28 @@ appController.controller('ChangeFrequencyController', function ($scope, $timeout
      */
     $scope.frequency = {
         arrays: {
-            EuRuInCn: ['EU', 'RU', 'IN', 'CN'],
-            UsIl: ['US', 'IL'],
+            EuRuInCn: ['EU', 'EU Long Range', 'RU', 'IN', 'CN'],
+            UsIl: ['US', 'US Long Range', 'IL'],
             AnzHk: ['ANZ', 'HK'],
             KrJp: ['KR', 'JP']
         },
         currentFreqArr: '',
-        currentFreq: $scope.controlDh.controller.frequency
+        currentFreq: $scope.controlDh.controller.frequency,
+        supported: {
+            0: true,
+            1: true,
+            2: true,
+            3: true,
+            4: true,
+            5: true,
+            6: true,
+            7: true,
+            8: true,
+            9: true,
+            10: true,
+            11: $scope.controlDh.controller.longRangeUSAvailable,
+            12: $scope.controlDh.controller.longRangeEUAvailable,
+        }
     };
 
     if ($scope.frequency.currentFreq &&

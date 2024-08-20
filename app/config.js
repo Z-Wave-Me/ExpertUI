@@ -105,6 +105,7 @@ var config_data = {
 		'page_results_history': 20, // List of languages
 		'frequency': {
 			0: 'EU',
+			12: 'EU Long Range',
 			1: 'RU',
 			2: 'IN',
 			6: 'CN',
@@ -114,6 +115,7 @@ var config_data = {
 			8: 'KR',
 			7: 'JP',
 			3: 'US',
+			11: 'US Long Range',
 			9: 'IL'
 		}, // List of frequencies
 

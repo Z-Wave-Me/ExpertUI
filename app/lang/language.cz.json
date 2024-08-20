@@ -236,7 +236,7 @@
     "foreign_frames_desc": "Foreign Frames",
     "forward_login": "Automatic login on local access",
     "forward_login_info": "Activate this option if you don't want to be prompted for entering login credentials on on every local (same network) access.",
-    "frequency_info": "Neznámý, nepodporovaný nebo jiný region (EU \/ US \/ RU \/ ....)",
+    "frequency_info": "Neznámý, nepodporovaný nebo jiný region (EU \/ US \/ RU \/ ....). To access all frequencies, enable Debug mode in Controller Info tab.",
     "fro": "z \/ ze",
     "fw_update_checksum_err": "The device was unable to receive the requested firmware data without checksum error. Not updated.",
     "fw_update_download_success_activation_cmd": "Firmware image downloaded successfully. Waiting for activation command.",
