@@ -56,15 +56,9 @@ angApp.config(['$routeProvider',
         }).when('/device/type', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/device/type.html'
-        }).when('/device/type', {
-            requireLogin: requireLogin,
-            templateUrl: 'app/views/device/type.html'
         }).when('/device/associations', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/device/associations.html'
-        }).when('/device/security', {
-            requireLogin: requireLogin,
-            templateUrl: 'app/views/device/security.html'
         }).// Config
         when('/config/configuration/:nodeId?', {
             requireLogin: requireLogin,
@@ -107,9 +101,9 @@ angApp.config(['$routeProvider',
             templateUrl: 'app/views/network/routing.html'
         }).when('/network/reorganization', {
             templateUrl: 'app/views/network/reorganization.html'
-        }).when('/network/timing', {
+        }).when('/installer/timing', {
             requireLogin: requireLogin,
-            templateUrl: 'app/views/network/timing.html'
+            templateUrl: 'app/views/installer/timing.html'
         }).when('/network/controller', {
             requireLogin: requireLogin,
             templateUrl: 'app/views/network/controller.html'
@@ -135,7 +129,7 @@ angApp.config(['$routeProvider',
             templateUrl: 'app/views/smartstart/smartstart_dsk_list.html',
             requireLogin: requireLogin
         }).when('/installer/routemap', {
-            templateUrl: 'app/views/network/routemap.html'
+            templateUrl: 'app/views/installer/routemap.html'
         }).// Installer - zniffer
         when('/installer/zniffer', {
             requireLogin: requireLogin,
