@@ -3,32 +3,22 @@
     <p><strong>Network name:</strong> {{cfg.zwavecfg.network_name}}</p>
     <p><strong>Date:</strong> {{ nowDate | date :  'yyyy-MM-dd' }}</p>
 </div>
+
 <!-- Device Info und Device Status -->
 <div class="print-section">
-    <h2 class="section-title">Device Info und Device Status</h2>
+    <h2 class="section-title">Device Info and Device Status</h2>
+    
     <div class="print-entry">
-
         <div ng-include="'app/views/device/status.html'"></div>
-        <!--zeigt die Übersichten Device Status-->
     </div>
     <div class="print-entry">
         <div ng-include="'app/views/device/type.html'"></div>
-        <!--zeigt die Übersichten Device Information-->
-    </div>
-</div>
-
-<!-- Radio Situation -->
-<div class="print-section page-break">
-<h2 class="section-title">Radio Situation</h2>
-
-    <div class="print-entry">
-        <div ng-include="'app/views/installer/rssi_background.html'"></div>
-        <!--zeigt Background Noise-->
-
     </div>
     <div class="print-entry">
-        <div ng-include="'app/views/network/statistics.html'"></div>
-        <!--zeigt die noch zu entwerfende Network Statistik mit Eigene Pakete versus fremde Pakete, ...-->
+        <div ng-include="'app/views/device/battery.html'"></div>
+    </div>
+    <div class="print-entry">
+        <div ng-include="'app/views/device/associations.html'"></div>
     </div>
 </div>
 
@@ -38,11 +28,74 @@
 
     <div class="print-entry">
         <div ng-include="'app/views/network/neighbors.html'"></div>
-
     </div>
+    <!-- convas does not look good in this mode
+    <div class="print-entry">
+        <div ng-include="'app/views/network/map.html'"></div>
+    </div>
+    -->
     <div class="print-entry">
         <div ng-include="'app/views/network/linkstatus.html'"></div>
+    </div>
+</div>
 
+<!-- Analytics -->
+<div class="print-section page-break">
+<h2 class="section-title">Analytics</h2>
+    <div class="print-entry">
+        <div ng-include="'app/views/installer/timing.html'"></div>
+    </div>
+    <div class="print-entry">
+        <div ng-include="'app/views/installer/routemap.html'"></div>
+    </div>
+    <div class="print-entry">
+        <div ng-include="'app/views/installer/rssi_background.html'"></div>
+    </div>
+    <div class="print-entry">
+        <div ng-include="'app/views/installer/devices_rssi.html'"></div>
+    </div>
+    <div class="print-entry">
+        <div ng-include="'app/views/installer/rssi_report.html'"></div>
+    </div>
+    <div class="print-entry">
+        <div ng-include="'app/views/installer/packets.html'"></div>
+    </div>
+    <div class="print-entry">
+        <div ng-include="'app/views/installer/statistics.html'"></div>
+    </div>
+</div>
+
+<!-- Controller -->
+<div class="print-section page-break">
+<h2 class="section-title">Controller</h2>
+    <div class="print-entry">
+        <div ng-include="'app/views/network/controller.html'"></div>
+    </div>
+    <div class="print-entry">
+        <div ng-include="'app/views/network/queue.html'"></div>
+    </div>
+</div>
+
+<!-- Control -->
+<div class="print-section page-break">
+<h2 class="section-title">Devices</h2>
+    <div class="print-entry">
+        <div ng-include="'app/views/controll/switch.html'"></div>
+    </div>
+    <div class="print-entry">
+        <div ng-include="'app/views/controll/sensors.html'"></div>
+    </div>
+    <div class="print-entry">
+        <div ng-include="'app/views/controll/meters.html'"></div>
+    </div>
+    <div class="print-entry">
+        <div ng-include="'app/views/controll/thermostat.html'"></div>
+    </div>
+    <div class="print-entry">
+        <div ng-include="'app/views/controll/locks.html'"></div>
+    </div>
+    <div class="print-entry">
+        <div ng-include="'app/views/controll/notifications.html'"></div>
     </div>
 </div>
 
