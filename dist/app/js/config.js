@@ -9,7 +9,7 @@ var config_data = {
 		'dev_host': [],
 		'app_name': 'Z-Wave Expert',
 		'app_version': 'v1.6.10',
-		'app_built': '22-07-2024 01:39:19',
+		'app_built': '21-08-2024 02:17:53',
 		'app_id': 'ExpertUI',
 		'custom_ip': false,
 		'user_field': 'USERXXXX',
@@ -105,6 +105,7 @@ var config_data = {
 		'page_results_history': 20, // List of languages
 		'frequency': {
 			0: 'EU',
+			12: 'EU Long Range',
 			1: 'RU',
 			2: 'IN',
 			6: 'CN',
@@ -114,6 +115,7 @@ var config_data = {
 			8: 'KR',
 			7: 'JP',
 			3: 'US',
+			11: 'US Long Range',
 			9: 'IL'
 		}, // List of frequencies
 
