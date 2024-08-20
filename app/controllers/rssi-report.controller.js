@@ -71,6 +71,11 @@ appController.controller('RSSIReportController', function ($scope, $filter, $tim
                 }
 
                 $scope.report = fillWidth(report);
+
+                var data = packetApi.value.data.data;
+                $scope.stats = {};
+                $scope.stats.packetsNum = data.length;
+                $scope.stats.gatheringPeriod = $scope.stats.packetsNum ? ((data.at(-1).updateTime - data.at(0).updateTime) / 60 / 60).toFixed(0) : 0;
             }
         });
 
