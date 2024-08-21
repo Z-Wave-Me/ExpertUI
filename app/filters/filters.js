@@ -822,6 +822,31 @@ angApp.filter('securityIcon', function () {
 });
 
 /*
+ * Set classic icon
+ */
+angApp.filter('classicIcon', function () {
+    return function (input) {
+        var icon = '&nbsp';
+        if (input) {
+            icon = 'fa fa-spider-web text-success';
+        }
+        return icon;
+    };
+});
+/*
+ * Set longRange icon
+ */
+angApp.filter('longRangeIcon', function () {
+    return function (input) {
+        var icon = '&nbsp';
+        if (input) {
+            icon = 'fa fa-asterisk text-success';
+        }
+        return icon;
+    };
+});
+
+/*
  * Set mwief icon
  */
 angApp.filter('mwiefIcon', function () {
@@ -839,7 +864,7 @@ angApp.filter('mwiefIcon', function () {
 });
 
 /*
- * Set mwief icon
+ * Set checkedIcon icon
  */
 angApp.filter('checkedIcon', function () {
     return function (input) {

@@ -272,6 +272,7 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
     var deviceDescriptionAppVersion = parseInt(node.data.applicationMajor.value, 10);
     var deviceDescriptionAppSubVersion = parseInt(node.data.applicationMinor.value, 10);
     var isListening = node.data.isListening.value;
+    var isLR = node.data.isLR.value;
     var manualUrl = "";
     var certNumber = "";
     var productCode = "";
@@ -432,9 +433,15 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
         "val": '<i class="' + $filter('checkedIcon')(securityInterview) + '"></i>'
       };
     }
+    
     obj["u"] = {
       "key": "granted_keys",
       "val": securityS2Key.join()
+    };
+
+    obj["v"] = {
+      "key": "long_range_classic",
+      "val": isLR ? '<i class="' + $filter('longRangeIcon')(true) + '"></i> Long Range' : '<i class="' + $filter('classicIcon')(true) + '"></i> Classic'
     };
 
     if (certNumber != "") {

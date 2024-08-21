@@ -16,14 +16,14 @@
                              label="_t('device_name')"></sort-by>
                 </th>
                 <!-- security -->
-                <!--<th>
-                    <sort-by callback="orderBy(field)" obj="orderByArr" field="'security'"
-                             label="_t('th_security')"></sort-by>
-                </th>-->
-                <!-- security -->
                 <th>
                     <sort-by callback="orderBy(field)" obj="orderByArr" field="'security'"
                              label="_t('th_security')"></sort-by>
+                </th>
+                <!-- long range -->
+                <th>
+                    <sort-by callback="orderBy(field)" obj="orderByArr" field="'longRange'"
+                             label="_t('th_longRange')"></sort-by>
                 </th>
 
                 <!-- nwi -->
@@ -84,6 +84,8 @@
                         <i class="fa fa-lock fa-stack-1x icon-top"></i>
                     </span>&nbsp;
                 </td>
+                <!-- long range -->
+                <td data-title="{{ _t('th_longRange')}}"><i class="{{v.longRange| longRangeIcon}}"></i>&nbsp;</td>
                 <!-- nwi -->
                 <td data-title="{{ _t('th_mwief')}}"><i class="{{v.mwief| mwiefIcon}}"></i>&nbsp;</td>
                 <!-- zwaveplus -->

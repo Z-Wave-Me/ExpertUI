@@ -138,6 +138,7 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
             var basicType = node.data.basicType.value;
             var genericType = node.data.genericType.value;
             var specificType = node.data.specificType.value;
+            var isLR = node.data.isLR.value;
             var major = node.data.ZWProtocolMajor.value;
             var minor = node.data.ZWProtocolMinor.value;
             var isController = (controllerNodeId == nodeId);
@@ -225,6 +226,7 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
             obj['securityType'] = securityType;
             obj['security'] = security;
             obj['securityS2Key'] = securityS2Key.join();
+            obj['longRange'] = isLR;
             obj['mwief'] = mwief;
            // obj['ddr'] = ddr;
             obj['ZWavePlusInfo'] = ZWavePlusInfo;
