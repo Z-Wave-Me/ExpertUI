@@ -1378,6 +1378,22 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
                 )()
               }
             }
+          ],
+          "SetManufacturerSpecific": [
+            {
+              "label": "Type Manufacturer Specific",
+              "type": {
+                "fix": {
+                  "value": 31
+                }
+              }
+            },
+            {
+              "label": "Data in format [1,2,3,..,0xa,..]",
+              "type": {
+                "unquoted_string": {}
+              }
+            }
           ]
         };
 
@@ -2097,7 +2113,7 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
             {
               "label": "Data in format [1,2,3,..,0xa,..]",
               "type": {
-                "string": {}
+                "unquoted_string": {}
               }
             }
           ]
@@ -2122,7 +2138,7 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
             {
               "label": "Data in format [1,2,3,..,0xa,..]",
               "type": {
-                "string": {}
+                "unquoted_string": {}
               }
             }
           ]
