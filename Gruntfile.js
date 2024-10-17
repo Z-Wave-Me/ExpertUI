@@ -161,8 +161,6 @@ module.exports = function (grunt) {
                     'vendor/angular/angular-1.2.14/angular.hammer.min.js',
                     // Bootstrap
                     'vendor/bootstrap/bootstrap.min.js',
-                    // XML
-                    'vendor/xml/xml2json.min.js',
                     // CANVAS JS
                     'vendor/canvasjs/canvasjs.min.js',
                     // APP
