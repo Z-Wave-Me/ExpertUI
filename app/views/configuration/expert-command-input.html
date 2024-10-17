@@ -2,7 +2,7 @@
     <label>{{label}}</label>
     <ul class="list-group" ng-if="type !=='enumof'">
         <li class="list-group-item command-list">
-            <z-wave-input ng-if="['fix', 'range', 'string', 'node'].includes(type)"
+            <z-wave-input ng-if="['fix', 'range', 'string', 'unquoted_string', 'node'].includes(type)"
                           type="data.type"
                           label="label"
                           ng-model="value"

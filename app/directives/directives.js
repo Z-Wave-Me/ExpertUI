@@ -596,6 +596,8 @@ angApp.directive('expertCommandInput', function (cfg, $filter) {
                     input = getConstant(label, type, scope.defaultValue, name, scope.currValue);
                 } else if ('string' in type) {
                     input = getString(label, scope.values, name, scope.currValue);
+                } else if ('unquoted_string' in type) {
+                    input = getString(label, scope.values, name, scope.currValue);
                 } else {
                     input = getDefault(label);
                 }
@@ -639,6 +641,8 @@ angApp.directive('configDefaultValue', function () {
                 } else if ('constant' in type) {
                     //input = getConstant(label, type, scope.defaultValue, name);
                 } else if ('string' in type) {
+                    //input = getString(label, scope.values, name);
+                } else if ('unquoted_string' in type) {
                     //input = getString(label, scope.values, name);
                 } else if ('bitset' in type) {
                     input = scope.defaultValue;
@@ -750,6 +754,8 @@ angApp.directive('configValueTitle', function () {
                 } else if ('constant' in type) {
                     //input = getConstant(label, type, scope.defaultValue, name);
                 } else if ('string' in type) {
+                    //input = getString(label, scope.values, name);
+                } else if ('unquoted_string' in type) {
                     //input = getString(label, scope.values, name);
                 } else {
                     input = scope.showValue;

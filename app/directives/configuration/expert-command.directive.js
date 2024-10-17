@@ -246,6 +246,7 @@ angApp.directive('zWaveExpertCommand', function (dataService, _, $filter) {
           ng-model="local.data"
           >
         <input ng-if="_type === 'string'" ng-model="local.data" ng-disabled="!!disabled" class="commands-body form-control">
+        <input ng-if="_type === 'unquoted_string'" ng-model="local.data" ng-disabled="!!disabled" class="commands-body form-control">
         <select ng-if="_type === 'node'" 
             ng-options="item as item.name for item in store track by item.id" 
             ng-model="local.data" 
