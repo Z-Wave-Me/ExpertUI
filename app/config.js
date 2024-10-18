@@ -326,7 +326,7 @@ var config_data = {
 		'custom_cfg': {
 			'default': {
 				'logo': 'app/images/zplus.svg',
-				'footer_text': '&COPY; 2020 by Z-Wave.Me',
+				'footer_text': '&COPY; 2024 by Z-Wave.Me',
 				'logout': '/smarthome/#/logout',
 				'version_type': '',
 				'title': 'Z-Wave Expert UI',
@@ -336,7 +336,7 @@ var config_data = {
 			},
 			'wd': {
 				'logo': 'app/images/zplus.svg',
-				'footer_text': '&COPY; 2020 by Z-Wave.Me',
+				'footer_text': '&COPY; 2024 by Z-Wave.Me',
 				'logout': '/smarthome/#/logout',
 				'version_type': '',
 				'title': 'Z-Wave Expert UI',
@@ -345,7 +345,7 @@ var config_data = {
 			},
 			'popp': {
 				'logo': 'app/images/zplus.svg',
-				'footer_text': '&COPY; 2020 by Z-Wave.Me',
+				'footer_text': '&COPY; 2024 by Z-Wave.Me',
 				'logout': '/smarthome/#/logout',
 				'version_type': '',
 				'title': 'Z-Wave Expert UI',
@@ -355,7 +355,7 @@ var config_data = {
 			},
 			'jb': {
 				'logo': 'app/images/zplus.svg',
-				'footer_text': '&COPY; 2020 by Z-Wave.Me',
+				'footer_text': '&COPY; 2024 by Z-Wave.Me',
 				'logout': '/smarthome/#/logout',
 				'version_type': '',
 				'title': 'Z-Wave Expert UI',
