@@ -9,7 +9,7 @@ var config_data = {
 		'dev_host': [],
 		'app_name': 'Z-Wave Expert',
 		'app_version': 'v1.6.10',
-		'app_built': '21-08-2024 03:25:06',
+		'app_built': '18-10-2024 15:41:43',
 		'app_id': 'ExpertUI',
 		'custom_ip': false,
 		'user_field': 'USERXXXX',
@@ -325,8 +325,8 @@ var config_data = {
 		'app_type': 'default',
 		'custom_cfg': {
 			'default': {
-				'logo': 'app/images/zplus.jpg',
-				'footer_text': '&COPY; 2020 by Z-Wave.Me',
+				'logo': 'app/images/zplus.svg',
+				'footer_text': '&COPY; 2024 by Z-Wave.Me',
 				'logout': '/smarthome/#/logout',
 				'version_type': '',
 				'title': 'Z-Wave Expert UI',
@@ -335,8 +335,8 @@ var config_data = {
 				'latest_version_url': 'https://storage.z-wave.me/z-way/razberry/latest/VERSION'
 			},
 			'wd': {
-				'logo': 'app/images/zplus.jpg',
-				'footer_text': '&COPY; 2020 by Z-Wave.Me',
+				'logo': 'app/images/zplus.svg',
+				'footer_text': '&COPY; 2024 by Z-Wave.Me',
 				'logout': '/smarthome/#/logout',
 				'version_type': '',
 				'title': 'Z-Wave Expert UI',
@@ -344,8 +344,8 @@ var config_data = {
 				'hardware_vendor': 'RaZberry by Z-Wave.Me'
 			},
 			'popp': {
-				'logo': 'app/images/zplus.jpg',
-				'footer_text': '&COPY; 2020 by Z-Wave.Me',
+				'logo': 'app/images/zplus.svg',
+				'footer_text': '&COPY; 2024 by Z-Wave.Me',
 				'logout': '/smarthome/#/logout',
 				'version_type': '',
 				'title': 'Z-Wave Expert UI',
@@ -354,8 +354,8 @@ var config_data = {
 				'latest_version_url': 'https://storage.z-wave.me/z-way/popp_rpi/latest/VERSION'
 			},
 			'jb': {
-				'logo': 'app/images/zplus.jpg',
-				'footer_text': '&COPY; 2020 by Z-Wave.Me',
+				'logo': 'app/images/zplus.svg',
+				'footer_text': '&COPY; 2024 by Z-Wave.Me',
 				'logout': '/smarthome/#/logout',
 				'version_type': '',
 				'title': 'Z-Wave Expert UI',
