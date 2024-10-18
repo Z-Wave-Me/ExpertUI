@@ -325,7 +325,7 @@ var config_data = {
 		'app_type': 'default',
 		'custom_cfg': {
 			'default': {
-				'logo': 'app/images/zplus.jpg',
+				'logo': 'app/images/zplus.svg',
 				'footer_text': '&COPY; 2020 by Z-Wave.Me',
 				'logout': '/smarthome/#/logout',
 				'version_type': '',
@@ -335,7 +335,7 @@ var config_data = {
 				'latest_version_url': 'https://storage.z-wave.me/z-way/razberry/latest/VERSION'
 			},
 			'wd': {
-				'logo': 'app/images/zplus.jpg',
+				'logo': 'app/images/zplus.svg',
 				'footer_text': '&COPY; 2020 by Z-Wave.Me',
 				'logout': '/smarthome/#/logout',
 				'version_type': '',
@@ -344,7 +344,7 @@ var config_data = {
 				'hardware_vendor': 'RaZberry by Z-Wave.Me'
 			},
 			'popp': {
-				'logo': 'app/images/zplus.jpg',
+				'logo': 'app/images/zplus.svg',
 				'footer_text': '&COPY; 2020 by Z-Wave.Me',
 				'logout': '/smarthome/#/logout',
 				'version_type': '',
@@ -354,7 +354,7 @@ var config_data = {
 				'latest_version_url': 'https://storage.z-wave.me/z-way/popp_rpi/latest/VERSION'
 			},
 			'jb': {
-				'logo': 'app/images/zplus.jpg',
+				'logo': 'app/images/zplus.svg',
 				'footer_text': '&COPY; 2020 by Z-Wave.Me',
 				'logout': '/smarthome/#/logout',
 				'version_type': '',
