@@ -245,8 +245,8 @@ appController.controller('SwitchController', function ($scope, $filter, $timeout
             obj['levelStatus'] = level.level_status;
             obj['levelMax'] = level.level_max;
             obj['levelVal'] = level.level_val;
-            obj['urlToOff'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Set(0)';
-            obj['urlToOn'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Set(255)';
+            obj['urlToOff'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Set(' + (ccId == 0x25 ? 'false' : '0') + ')';
+            obj['urlToOn'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Set(' + (ccId == 0x25 ? 'true' : '255') + ')';
             obj['urlToFull'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + '].Set(99)';
             obj['urlToSlide'] = 'devices[' + nodeId + '].instances[' + instanceId + '].commandClasses[' + ccId + ']';
             obj['btnOn'] = btnOn;
