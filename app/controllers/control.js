@@ -891,7 +891,6 @@ appController.controller('IncludeExcludeDeviceController', function ($scope, $ro
      * @param {number} flag
      */
     $scope.addNodeToNetwork = function (flag) {
-        // $scope.controlDh.inclusion.lastIncludedDeviceId = 0;
         $scope.runZwaveCmd('controller.AddNodeToNetwork(' + flag + ')');
         $route.reload();
     };
@@ -904,7 +903,6 @@ appController.controller('IncludeExcludeDeviceController', function ($scope, $ro
      * @param {string} cmd
      */
     $scope.removeNodeToNetwork = function (cmd) {
-        //$scope.controlDh.inclusion.lastExcludedDevice = false;
         $scope.runZwaveCmd(cmd);
         $route.reload();
     };
