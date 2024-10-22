@@ -45,12 +45,12 @@
             <button class="btn btn-primary" id="btn_learn_start"
                     ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || (controlDh.controller.SUCNodeId == controlDh.controller.nodeId && controlDh.controller.isSIS && controlDh.controller.hasDevices) || controlDh.controller.isInOthersNetwork"
                     ng-show="[9].indexOf(controlDh.controller.controllerState) == -1 && controlDh.network.inclusionProcess !== 'processing'"
-                    ng-click="includeToNetwork('controller.SetLearnMode(1)')">
+                    ng-click="includeToNetwork('controller.SetLearnMode(true)')">
                 <i class="fa fa-play-circle"></i> {{_t('include_into_network')}}
             </button>
             <button class="btn btn-danger" id="btn_learn_stop"
                     ng-show="[9].indexOf(controlDh.controller.controllerState) > -1"
-                    ng-click="includeToNetwork('controller.SetLearnMode(0)')">
+                    ng-click="includeToNetwork('controller.SetLearnMode(false)')">
                 <i class="fa fa-stop-circle"></i> {{_t('include_into_network_stop')}}
             </button>
         </span>
@@ -75,12 +75,12 @@
             <button class="btn btn-info" id="btn_learn_start"
                     ng-disabled="[1, 2, 3, 4, 5, 6, 7].indexOf(controlDh.controller.controllerState) > -1 || (controlDh.controller.SUCNodeId == controlDh.controller.nodeId && controlDh.controller.isSIS && controlDh.controller.hasDevices) || !controlDh.controller.isInOthersNetwork"
                     ng-hide="(controlDh.network.inclusionProcess == 'processing' && !controlDh.network.modal) || [9].indexOf(controlDh.controller.controllerState) > -1"
-                    ng-click="includeToNetwork('controller.SetLearnMode(1)',_t('before_leaving_network'))">
+                    ng-click="includeToNetwork('controller.SetLearnMode(true)',_t('before_leaving_network'))">
                 <i class="fa fa-play-circle"></i> {{_t('leave_network')}}
             </button>
             <button class="btn btn-danger" id="btn_learn_stop"
                     ng-show="[9].indexOf(controlDh.controller.controllerState) > -1"
-                    ng-click="includeToNetwork('controller.SetLearnMode(0)')">
+                    ng-click="includeToNetwork('controller.SetLearnMode(false)')">
                 <i class="fa fa-stop-circle"></i> {{_t('leave_network_stop')}}
             </button>
         </span>

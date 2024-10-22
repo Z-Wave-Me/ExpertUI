@@ -945,7 +945,7 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
     $scope.runIncludeToNetwork = function (cmd) {
         var timeout = 240000;
         $scope.toggleRowSpinner(cmd);
-        if (cmd === 'controller.SetLearnMode(1)') {
+        if (cmd === 'controller.SetLearnMode(true)') {
             $scope.controlDh.network.include = true;
             $scope.controlDh.network.inclusionProcess = 'processing';
         } else {
@@ -955,7 +955,7 @@ appController.controller('IncludeDifferentNetworkController', function ($scope, 
         dataService.runZwaveCmd(cfg.store_url + cmd).then(function (response) {
             //console.log('Run cmd: ', cfg.store_url + cmd)
             $scope.controlDh.includeToNetworkTimeout = $timeout(function () {
-                dataService.runZwaveCmd(cfg.store_url + 'controller.SetLearnMode(0)');
+                dataService.runZwaveCmd(cfg.store_url + 'controller.SetLearnMode(false)');
                 $scope.controlDh.network.modal = true;
             }, timeout);
         }, function (error) {
@@ -1425,14 +1425,14 @@ appController.controller('SmartStartDeviceController', function ($scope, $route,
      */
     $scope.disableSmartStart = function (cmd) {
         timeout = 1000;
-        $scope.toggleRowSpinner('controller.RemoveNodeFromNetwork(0)');
-        dataService.runZwaveCmd(cfg.store_url + 'controller.RemoveNodeFromNetwork(0)').then(function (response) {
+        $scope.toggleRowSpinner('controller.RemoveNodeFromNetwork(false)');
+        dataService.runZwaveCmd(cfg.store_url + 'controller.RemoveNodeFromNetwork(false)').then(function (response) {
             $scope.smartStartEnabled = false;
             $timeout($scope.toggleRowSpinner, timeout);
         }, function (error) {
             $scope.toggleRowSpinner();
             if (!hideError) {
-                alertify.alertError($scope._t('error_update_data') + '\n' + 'controller.RemoveNodeFromNetwork(0)');
+                alertify.alertError($scope._t('error_update_data') + '\n' + 'controller.RemoveNodeFromNetwork(false)');
             }
         });
     };
