@@ -189,14 +189,12 @@ appController.controller('ControlController', function ($scope, $interval, $time
         $scope.controlDh.inclusion.grantKeys.show = false;
         $scope.controlDh.inclusion.grantKeys.done = true;
         $interval.cancel($scope.controlDh.inclusion.grantKeys.interval);
-        var nodeId = $scope.controlDh.inclusion.lastIncludedDeviceId.toString(10),
-                cmd =
-                'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S0=' + keysGranted.S0 + '; ' +
-                'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S2Unauthenticated=' + keysGranted.S2Unauthenticated + '; ' +
-                'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S2Authenticated=' + keysGranted.S2Authenticated + '; ' +
-                'devices[' + nodeId + '].SecurityS2.data.grantedKeys.S2Access=' + keysGranted.S2Access + '; ' +
-                'devices[' + nodeId + '].SecurityS2.data.grantedKeys=true';
-        $scope.runZwaveCmd(cmd)
+        var nodeId = $scope.controlDh.inclusion.lastIncludedDeviceId.toString(10);
+        $scope.runZwaveCmd('devices[' + nodeId + '].SecurityS2.data.grantedKeys.S0=' + keysGranted.S0);
+        $scope.runZwaveCmd('devices[' + nodeId + '].SecurityS2.data.grantedKeys.S2Unauthenticated=' + keysGranted.S2Unauthenticated);
+        $scope.runZwaveCmd('devices[' + nodeId + '].SecurityS2.data.grantedKeys.S2Authenticated=' + keysGranted.S2Authenticated);
+        $scope.runZwaveCmd('devices[' + nodeId + '].SecurityS2.data.grantedKeys.S2Access=' + keysGranted.S2Access);
+        $scope.runZwaveCmd('devices[' + nodeId + '].SecurityS2.data.grantedKeys=true');
     };
 
     /**
