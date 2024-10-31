@@ -241,7 +241,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
             }
         }
         console.log(publicKey.join(','))
-        var cmd = 'devices[' + nodeId + '].SecurityS2.data.publicKeyVerified=[' + publicKey.join(',') + '];';
+        var cmd = 'devices[' + nodeId + '].SecurityS2.data.publicKeyVerified=[' + publicKey.join(',') + ']';
         $scope.runZwaveCmd(cmd);
         $timeout(function () {
             checkS2Interview(nodeId);
@@ -294,7 +294,7 @@ appController.controller('ControlController', function ($scope, $interval, $time
             }
         }
         console.log(publicKey.join(','))
-        var cmd = 'devices[' + nodeId + '].SecurityS2.data.publicKeyVerified=[' + publicKey.join(',') + '];';
+        var cmd = 'devices[' + nodeId + '].SecurityS2.data.publicKeyVerified=[' + publicKey.join(',') + ']';
         $scope.runZwaveCmd(cmd);
         $timeout(function () {
             checkS2Interview(nodeId);
