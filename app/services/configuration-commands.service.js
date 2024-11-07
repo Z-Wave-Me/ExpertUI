@@ -78,6 +78,9 @@ configurationCommandsModule.service('configurationCommandsService', ['dataHolder
       },
       PowerLevel: {
         values: ['level', 'timeout']
+      },	
+      Indicator: {
+        arraysInArrays: ['state']
       }
     }
   }
