@@ -297,6 +297,30 @@ appService.service('deviceService', function ($filter, $log, $cookies, $window, 
         return securityS2Key;
     };
 
+    /**
+     * Get S2 non-granted keys
+     * @param {Object} hasSecurityS2Cc
+     * @returns {Array}
+     */
+    this.getS2NotGrantedKeys = function (hasSecurityS2Cc) {
+        var securityS2NotGrantedKey = [];
+        if($filter('hasNode')(hasSecurityS2Cc,'data.interviewDone.value')){
+          if($filter('hasNode')(hasSecurityS2Cc,'data.requestedKeys.S0.value') && !$filter('hasNode')(hasSecurityS2Cc,'data.grantedKeys.S0.value')){
+            securityS2NotGrantedKey.push('S0');
+           }
+            if($filter('hasNode')(hasSecurityS2Cc,'data.requestedKeys.S2Unauthenticated.value') && !$filter('hasNode')(hasSecurityS2Cc,'data.grantedKeys.S2Unauthenticated.value')){
+                securityS2NotGrantedKey.push('S2 Unauthenticated');
+            }
+            if ($filter('hasNode')(hasSecurityS2Cc, 'data.requestedKeys.S2Authenticated.value') && !$filter('hasNode')(hasSecurityS2Cc, 'data.grantedKeys.S2Authenticated.value')) {
+                securityS2NotGrantedKey.push('S2 Authenticated');
+            }
+            if ($filter('hasNode')(hasSecurityS2Cc, 'data.requestedKeys.S2Access.value') && !$filter('hasNode')(hasSecurityS2Cc, 'data.grantedKeys.S2Access.value')) {
+                securityS2NotGrantedKey.push('S2 Access');
+            }
+        }
+        return securityS2NotGrantedKey;
+    };
+
      /**
      * Get ZWAY session
      * @returns {string}

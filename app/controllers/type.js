@@ -170,16 +170,17 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
             }
             // Security S2
             var hasSecurityS2Cc = deviceService.hasCommandClass(node,159);
-            var securityS2Key = [];
+            var securityS2Key = [], securityS2NotGrantedKey = [];
             if (hasSecurityS2Cc){
                 security = $filter('hasNode')(hasSecurityS2Cc,'data.interviewDone.value') && !$filter('hasNode')(hasSecurityS2Cc,'data.securityAbandoned.value') && $filter('hasNode')(node,'data.secureChannelEstablished.value');
                 if (security) {
                     securityType = 'security-2';
                 }
                 securityS2Key = deviceService.getS2GrantedKeys(hasSecurityS2Cc);
+                securityS2NotGrantedKey = deviceService.getS2NotGrantedKeys(hasSecurityS2Cc);
             } else {
                 if ($filter('hasNode')(deviceService.hasCommandClass(node, 152),'data.security.value')) {
-                    securityS2Key = ['S0']
+                    securityS2Key = ['S0'];
                 }
             }
 
@@ -225,7 +226,7 @@ appController.controller('TypeController', function($scope, $filter, $timeout,$i
             obj['hasSecurityS2Cc'] = hasSecurityS2Cc;
             obj['securityType'] = securityType;
             obj['security'] = security;
-            obj['securityS2Key'] = securityS2Key.join();
+            obj['securityS2Key'] = securityS2Key.concat(securityS2NotGrantedKey.map(x => '<s>' + x + '</s>')).join();
             obj['longRange'] = isLR;
             obj['mwief'] = mwief;
            // obj['ddr'] = ddr;

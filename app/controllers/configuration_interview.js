@@ -280,6 +280,7 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
     // Security S2
     var hasSecurityS2Cc = deviceService.hasCommandClass(node, 159);
     var securityS2Key = deviceService.getS2GrantedKeys(hasSecurityS2Cc);
+    var securityS2NotGrantedKey = deviceService.getS2NotGrantedKeys(hasSecurityS2Cc);
 
     var hasWakeup = !isListening && !node.data.sensor250.value && !node.data.sensor1000.value;
     if (isNaN(deviceDescriptionAppVersion))
@@ -436,7 +437,7 @@ appController.controller('ConfigInterviewController', function ($scope, $routePa
     
     obj["u"] = {
       "key": "granted_keys",
-      "val": securityS2Key.join()
+      "val": securityS2Key.concat(securityS2NotGrantedKey.map(x => '<s>' + x + '</s>')).join()
     };
 
     obj["v"] = {
