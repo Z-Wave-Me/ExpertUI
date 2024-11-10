@@ -87,7 +87,7 @@
 
         <!-- S2 DSK -->
         <button class="btn btn-default"
-                ng-show="_.size(controlDh.controller.publicKey) && !controlDh.controller.isRealPrimary"
+                ng-show="_.size(controlDh.controller.publicKey) && (!controlDh.controller.isRealPrimary || !controlDh.controller.hasDevices)"
                 ng-click="handleModal('networkS2Modal')">
             S2 DSK
         </button>
