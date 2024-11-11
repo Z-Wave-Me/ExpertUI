@@ -43,14 +43,14 @@
         position: relative;
         transform: translateX(-50%);
         background: repeating-linear-gradient(
-                        300deg, rgb(0 0 0 / 50%) 0, rgb(0 0 0 / 50%) 1px, transparent 1px, transparent 2.4px
+                        300deg, rgba(0, 0, 0, 50%) 0, rgba(0, 0, 0, 50%) 1px, transparent 1px, transparent 2.4px
         );
         &::before {
             content: attr(data-std);
             position: absolute;
             top: 50%;
             left: 100%;
-            color: rgb(0 0 0 / 50%);
+            color: rgba(0, 0, 0, 50%);
             transform: translate(.5ch, -50%);
             font-size: .9rem;
         }
@@ -64,5 +64,5 @@
     width: 2px;
     height: 1.4rem;
     position: absolute;
-    border-left: 2px dashed rgb(0 0 0 / 50%);
+    border-left: 2px dashed rgba(0, 0, 0, 50%);
 }
