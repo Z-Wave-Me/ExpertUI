@@ -40,18 +40,19 @@ jobs:
              (cd app/sass/; ./compile.sh)
              grunt
 
+      - name: Build Tarball for ESP
+        run: ./pack-tar.sh
+
       - name: Archive build
         uses: actions/upload-artifact@v4
         with:
           name: z-way-expert-ui-packages
-          path: |
-            ./dist/*
+          path: ./dist/*
           if-no-files-found: error
 
       - name: Archive minimized .tar build
         uses: actions/upload-artifact@v4
         with:
           name: z-way-expert-ui-tar-packages
-          path: |
-            ./expert.tar
+          path: ./expert.tar
           if-no-files-found: error
