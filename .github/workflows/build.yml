@@ -18,7 +18,7 @@ jobs:
       contents: read
 
     container:
-      image: ghcr.io/tridentiot/z-way-build-docker:main-amd64
+      image: ghcr.io/tridentiot/z-way-build-docker-ui:pr-6
       options: --user root
 
     steps:
