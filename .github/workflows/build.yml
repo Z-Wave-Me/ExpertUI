@@ -1,0 +1,49 @@
+name: build-z-way-expert-ui
+run-name: Build Z-Way Expert UI
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: read
+      contents: read
+
+    container:
+      image: ghcr.io/tridentiot/z-way-build-docker:main-amd64
+      options: --user root
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-tags: true
+          fetch-depth: 0 
+
+      # This is required because otherwise git fails to get the commit hash during build.
+      - name: Add safe directory
+        run: git config --system --add safe.directory ${PWD}
+      
+      - name: Download npm modules
+        run: npm install --legacy-peer-deps
+
+      - name: Build Z-Way UI
+        run: |
+             (cd app/sass/; ./compile.sh)
+             grunt
+
+      - name: Archive build
+        uses: actions/upload-artifact@v4
+        with:
+          name: z-way-expert-ui-packages
+          path: |
+            ./dist/*
+          if-no-files-found: error
